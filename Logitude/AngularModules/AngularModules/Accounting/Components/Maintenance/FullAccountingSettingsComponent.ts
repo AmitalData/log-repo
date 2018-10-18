@@ -1,0 +1,464 @@
+import {Component, OnInit, AfterViewInit, ChangeDetectorRef} from '@angular/core';
+import {Response} from '@angular/http';
+import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
+import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {LogLabelComponent} from '../../../Infrastructure/Components/LogitudeComponents/LogLabelComponent';
+import {LogTextBoxComponent} from '../../../Infrastructure/Components/LogitudeComponents/LogTextBoxComponent';
+import {LogLovComponent} from '../../../Infrastructure/Components/LogitudeComponents/LogLovComponent';
+import {Validator} from '../../../Infrastructure/Validators/Validator';
+import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
+import {TextCodeTranslationPipe} from '../../../Controls/Pipes/TextCodeTranslationPipe';
+import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
+import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
+import {FullAccountingSettingPM} from '../../EntityPMs/FullAccountingSettingPM';
+import {FullAccountingSettingList} from '../../EntityLists/FullAccountingSettingList';
+import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
+import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
+import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
+import {TenantPMService} from '../../../Common/Services/StandardPMs/TenantPMService';
+import {PaymentTermList} from '../../../Common/EntityLists/PaymentTermList';
+import {FullAccountingSettingPMService} from '../../Services/StandardPMs/FullAccountingSettingPMService';
+import {FullAccountingSettingListService} from '../../Services/StandardLists/FullAccountingSettingListService';
+import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
+import { GLAccountPM } from '../../EntityPMs/GLAccountPM';
+//import {AutomaticExternalRconcilMthodsPM}  '../../Services/StandardPMs/AutomaticExternalRconcilMthodsPM';
+import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
+
+@Component({
+    moduleId: module.id,
+    selector: 'FullAccountingSettingsComponent',
+    templateUrl: './FullAccountingSettingsComponent.html',
+    providers: [ServiceArgs]
+})
+
+export class FullAccountingSettingsComponent extends BaseComponent implements OnInit, AfterViewInit {
+
+    public DataContext: FullAccountingSettingsComponent = this;
+    //public myForm: ControlGroup;
+    public ObjectTableName: string = "FullAccountingSetting";
+    public TenantPM: TenantPM;
+    public EntityPM: FullAccountingSettingPM;
+    public isRTL: boolean = false;
+
+    fullAccountingSettingPMService: FullAccountingSettingPMService = new FullAccountingSettingPMService();;
+    fullAccountingSettingListService: FullAccountingSettingListService;
+    tenantPMService: TenantPMService;
+
+    constructor(public serviceArgs: ServiceArgs, private _entityResourceService: EntityResourceService, private cd: ChangeDetectorRef) {
+        super();
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+
+        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+
+        this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => { });
+        });
+        this.fullAccountingSettingPMService.get(SessionLocator.Tenant.toString()).subscribe((myResult: any) => {
+            SessionLocator.CurrentSession.StopBusyIndicator();
+
+            this.EntityPM = myResult.Result;
+            if (this.EntityPM == null || this.EntityPM == undefined) {
+                console.log("There is no F. Accounting setting found for tenant: " + SessionLocator.Tenant);
+            } else {
+                this.AccountingActivationDate = this.EntityPM.AccountingActivationDate;
+                this.SetUIProperties();
+            }
+
+        });
+
+        this.UIProperties.SetEnabled("AccountingActivationDate", "Tenant", false);
+
+    }
+
+    ngOnInit() {
+        this.BuildTabs();
+    }
+
+    ngAfterViewInit() {
+        //this.SetUIProperties();
+    }
+
+    SetUIProperties() {
+
+        var enableAllFields = false;
+        if (this.AccountingActivated && this.AccountingActivationDate != null) {
+            enableAllFields = true;
+        }
+        this.UIProperties.SetEnabled("DeductionFileNumber", this.ObjectTableName, enableAllFields);
+        this.UIProperties.SetEnabled("ConsolidationVAT", this.ObjectTableName, enableAllFields);
+        this.UIProperties.SetEnabled("DefaultVATTypeId", this.ObjectTableName, enableAllFields);
+        this.UIProperties.SetEnabled("PaymentTermId", "Tenant", enableAllFields);
+        this.UIProperties.SetEnabled("VATInputsGLAccountId", this.ObjectTableName, enableAllFields);
+        this.UIProperties.SetEnabled("VATOutputGLAccountId", this.ObjectTableName, enableAllFields);
+        this.UIProperties.SetEnabled("AutomaticReconcileMethodId", this.ObjectTableName, enableAllFields);
+        this.UIProperties.SetEnabled("ExchangeRateDiffGLAccountId", this.ObjectTableName, enableAllFields);
+        this.UIProperties.SetEnabled("RevenueExpenseGLAccountId", this.ObjectTableName, enableAllFields);
+        this.UIProperties.SetEnabled("CustomerControlAccountId", this.ObjectTableName, enableAllFields);
+        this.UIProperties.SetEnabled("VendorControlAccountId", this.ObjectTableName, enableAllFields);
+        this.UIProperties.SetEnabled("FileControlAccountId", this.ObjectTableName, enableAllFields);
+        this.UIProperties.SetEnabled("OceanExportJobControlAccountId", this.ObjectTableName, enableAllFields);
+        this.UIProperties.SetEnabled("OceanImportJobControlAccountId", this.ObjectTableName, enableAllFields);
+        this.UIProperties.SetEnabled("AirExportJobControlAccountId", this.ObjectTableName, enableAllFields);
+        this.UIProperties.SetEnabled("AirImportJobControlAccountId", this.ObjectTableName, enableAllFields);
+    }
+
+    //#region Full Accounting Setting Properties
+    get AccountingActivationDate() { return this.EntityPM.AccountingActivationDate; }
+    set AccountingActivationDate(value: Date) {
+        if (this.EntityPM.AccountingActivationDate != value) {
+            this.EntityPM.AccountingActivationDate = value;
+            this.SetUIProperties();
+        }
+    }
+
+    get AccountingActivated() { return this.EntityPM.AccountingActivated; }
+    set AccountingActivated(value: boolean) {
+        if (this.EntityPM.AccountingActivated != value) {
+            this.EntityPM.AccountingActivated = value;
+            if (value == true) {
+                this.AccountingActivationDate = new Date();
+            } else if (value == false) {
+                this.AccountingActivationDate = null;
+            }
+            this.SetUIProperties();
+        }
+    }
+
+
+
+    get DeductionFileNumber() { return this.EntityPM.DeductionFileNumber; }
+    set DeductionFileNumber(value: string) {
+        if (this.EntityPM.DeductionFileNumber != value) {
+            this.EntityPM.DeductionFileNumber = value;
+        }
+    }
+
+    get ExternalReconciliationDefault() { return this.EntityPM.ExternalReconciliationDefault; }
+    set ExternalReconciliationDefault(value: string) {
+        if (this.EntityPM.ExternalReconciliationDefault != value) {
+            this.EntityPM.ExternalReconciliationDefault = value;
+        }
+    }
+    get TaxWithholdingGLAccountId() { return this.EntityPM.TaxWithholdingGLAccountId; }
+    set TaxWithholdingGLAccountId(value: string) {
+        if (this.EntityPM.TaxWithholdingGLAccountId != value) {
+            this.EntityPM.TaxWithholdingGLAccountId = value;
+        }
+    }
+
+    get ConsolidationVAT() { return this.EntityPM.ConsolidationVAT; }
+    set ConsolidationVAT(value: string) {
+        if (this.EntityPM.ConsolidationVAT != value) {
+            this.EntityPM.ConsolidationVAT = value;
+        }
+    }
+
+    get DefaultVATTypeId() { return this.EntityPM.DefaultVATTypeId; }
+    set DefaultVATTypeId(value: string) {
+        if (this.EntityPM.DefaultVATTypeId != value) {
+            this.EntityPM.DefaultVATTypeId = value;
+        }
+    }
+
+    get PaymentTermId() { return this.EntityPM.TenantPaymentTermId; }
+    set PaymentTermId(value: string) {
+        if (this.EntityPM.TenantPaymentTermId != value) {
+            this.EntityPM.TenantPaymentTermId = value;
+        }
+    }
+
+    get DefaultTaxWithholdPercentage() { return this.EntityPM.DefaultTaxWithholdPercentage; }
+    set DefaultTaxWithholdPercentage(value: number) {
+        if (this.EntityPM.DefaultTaxWithholdPercentage != value) {
+            this.EntityPM.DefaultTaxWithholdPercentage = value;
+        }
+    }
+
+    get VATInputsGLAccountId() { return this.EntityPM.VATInputsGLAccountId; }
+    set VATInputsGLAccountId(value: string) {
+        if (this.EntityPM.VATInputsGLAccountId != value) {
+            this.EntityPM.VATInputsGLAccountId = value;
+        }
+    }
+
+    get VATOutputGLAccountId() { return this.EntityPM.VATOutputGLAccountId; }
+    set VATOutputGLAccountId(value: string) {
+        if (this.EntityPM.VATOutputGLAccountId != value) {
+            this.EntityPM.VATOutputGLAccountId = value;
+        }
+    }
+
+    get AutomaticReconcileMethodId() { return this.EntityPM.AutomaticReconcileMethodId; }
+    set AutomaticReconcileMethodId(value: string) {
+        if (this.EntityPM.AutomaticReconcileMethodId != value) {
+            this.EntityPM.AutomaticReconcileMethodId = value;
+        }
+    }
+
+    get ExchangeRateDiffGLAccountId() { return this.EntityPM.ExchangeRateDiffGLAccountId; }
+    set ExchangeRateDiffGLAccountId(value: string) {
+        if (this.EntityPM.ExchangeRateDiffGLAccountId != value) {
+            this.EntityPM.ExchangeRateDiffGLAccountId = value;
+        }
+    }
+
+    get RevenueExpenseGLAccountId() { return this.EntityPM.RevenueExpenseGLAccountId; }
+    set RevenueExpenseGLAccountId(value: string) {
+        if (this.EntityPM.RevenueExpenseGLAccountId != value) {
+            this.EntityPM.RevenueExpenseGLAccountId = value;
+        }
+    }
+
+    get CustomerControlAccountId() { return this.EntityPM.CustomerControlAccountId; }
+    set CustomerControlAccountId(value: string) {
+        if (this.EntityPM.CustomerControlAccountId != value) {
+            this.EntityPM.CustomerControlAccountId = value;
+        }
+    }
+
+    get VendorControlAccountId() { return this.EntityPM.VendorControlAccountId; }
+    set VendorControlAccountId(value: string) {
+        if (this.EntityPM.VendorControlAccountId != value) {
+            this.EntityPM.VendorControlAccountId = value;
+        }
+    }
+
+    get FileControlAccountId() { return this.EntityPM.FileControlAccountId; }
+    set FileControlAccountId(value: string) {
+        if (this.EntityPM.FileControlAccountId != value) {
+            this.EntityPM.FileControlAccountId = value;
+        }
+    }
+
+    get OceanExportJobControlAccountId() { return this.EntityPM.OceanExportJobControlAccountId; }
+    set OceanExportJobControlAccountId(value: string) {
+        if (this.EntityPM.OceanExportJobControlAccountId != value) {
+            this.EntityPM.OceanExportJobControlAccountId = value;
+        }
+    }
+
+    get OceanImportJobControlAccountId() { return this.EntityPM.OceanImportJobControlAccountId; }
+    set OceanImportJobControlAccountId(value: string) {
+        if (this.EntityPM.OceanImportJobControlAccountId != value) {
+            this.EntityPM.OceanImportJobControlAccountId = value;
+        }
+    }
+
+    get AirExportJobControlAccountId() { return this.EntityPM.AirExportJobControlAccountId; }
+    set AirExportJobControlAccountId(value: string) {
+        if (this.EntityPM.AirExportJobControlAccountId != value) {
+            this.EntityPM.AirExportJobControlAccountId = value;
+        }
+    }
+
+  get CustomsGLAccountId() { return this.EntityPM.CustomsGLAccountId; }
+  set CustomsGLAccountId(value: string) {
+    if (this.EntityPM.CustomsGLAccountId != value) {
+      this.EntityPM.CustomsGLAccountId = value;
+    }
+  }
+
+    get AirImportJobControlAccountId() { return this.EntityPM.AirImportJobControlAccountId; }
+    set AirImportJobControlAccountId(value: string) {
+        if (this.EntityPM.AirImportJobControlAccountId != value) {
+            this.EntityPM.AirImportJobControlAccountId = value;
+        }
+    }
+
+    get DefaultDifferencesGLAccountId() { return this.EntityPM.DefaultDifferencesGLAccountId; }
+    set DefaultDifferencesGLAccountId(value: string) {
+        if (this.EntityPM.DefaultDifferencesGLAccountId != value) {
+            this.EntityPM.DefaultDifferencesGLAccountId = value;
+        }
+    }
+
+    get DefaultExternalDiffGLAccountId() { return this.EntityPM.DefaultExternalDiffGLAccountId; }
+    set DefaultExternalDiffGLAccountId(value: string) {
+        if (this.EntityPM.DefaultExternalDiffGLAccountId != value) {
+            this.EntityPM.DefaultExternalDiffGLAccountId = value;
+        }
+    }
+
+    // Properties
+    revenueExpenseGLAccount: GLAccountPM;
+    get RevenueExpenseGLAccount() { return this.revenueExpenseGLAccount; }
+    set RevenueExpenseGLAccount(value: GLAccountPM) {
+        if (this.revenueExpenseGLAccount != value) {
+            this.revenueExpenseGLAccount = value;
+            this.ValidateMulticurrencyAccounts();
+        }
+    }
+
+    customerControlAccount: GLAccountPM;
+    get CustomerControlAccount() { return this.customerControlAccount; }
+    set CustomerControlAccount(value: GLAccountPM) {
+        if (this.customerControlAccount != value) {
+            this.customerControlAccount = value;
+            this.ValidateMulticurrencyAccounts();
+        }
+    }
+
+    taxWithholdingGLAccount: GLAccountPM;
+    get TaxWithholdingGLAccount() { return this.taxWithholdingGLAccount; }
+    set TaxWithholdingGLAccount(value: GLAccountPM) {
+        if (this.taxWithholdingGLAccount != value) {
+            this.taxWithholdingGLAccount = value;
+            this.ValidateMulticurrencyAccounts();
+        }
+    }
+
+
+    //automaticExternalRconcilMthods: AutomaticExternalRconcilMthodsPM;
+    //get AutomaticExternalRconcilMthods() { return this.taxWithholdingGLAccount; }
+    //set AutomaticExternalRconcilMthods(value: GLAccountPM) {
+    //    if (this.automaticExternalRconcilMthods != value) {
+    //        this.automaticExternalRconcilMthods = value;
+
+    //    }
+    //}
+
+
+
+    vendorControlAccount: GLAccountPM;
+    get VendorControlAccount() { return this.vendorControlAccount; }
+    set VendorControlAccount(value: GLAccountPM) {
+        if (this.vendorControlAccount != value) {
+            this.vendorControlAccount = value;
+            this.ValidateMulticurrencyAccounts();
+        }
+    }
+
+    fileControlAccount: GLAccountPM;
+    get FileControlAccount() { return this.fileControlAccount; }
+    set FileControlAccount(value: GLAccountPM) {
+        if (this.fileControlAccount != value) {
+            this.fileControlAccount = value;
+            this.ValidateMulticurrencyAccounts();
+        }
+    }
+
+    jobControlAccount: GLAccountPM;
+    get JobControlAccount() { return this.jobControlAccount; }
+    set JobControlAccount(value: GLAccountPM) {
+        if (this.jobControlAccount != value) {
+            this.jobControlAccount = value;
+            this.ValidateMulticurrencyAccounts();
+        }
+    }
+    //#endregion
+
+    //Commands 
+    CancelButtonClicked() {
+        SessionLocator.CurrentSession.CloseCurrentWindow();
+    }
+
+    public ValidationErrorsList: string[];
+
+    OkButtonClicked() {
+        var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+        var errors: string[] = [];
+        Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
+
+        this.ValidationErrorsList = errors;
+
+        if (errors.length == 0)
+            this.ValidateMulticurrencyAccounts();
+
+
+        if (this.ValidationErrorsList.length == 0) {
+            SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+            this.SubmitChanges();
+        }
+
+
+    }
+
+    SubmitChanges() {
+        //console.log("EntityPM: ", this.EntityPM);
+        this.fullAccountingSettingPMService.update(this.EntityPM).subscribe(myResult => {
+
+            var mm: ServiceResponse = myResult;
+            if (!mm.HasError) { // Success
+                SessionLocator.CurrentSession.CloseCurrentWindow();
+            }
+
+            else {
+                this.ValidationErrorsList = mm.ErrorsArray;
+                SessionLocator.CurrentSession.StopBusyIndicator();
+            }
+        }, error => {
+            SessionLocator.CurrentSession.StopBusyIndicator();
+            var dd: Response = error;
+            console.log(dd.text);
+            this.ValidationErrorsList = [];
+            this.ValidationErrorsList.push('Server Error!');
+        });
+    }
+
+    ValidateMulticurrencyAccounts() {
+        console.log("ValidateMulticurrencyAccounts");
+        this.ValidationErrorsList = [];
+
+        this.UIProperties.SetValidity("FileControlAccountId", this.ObjectTableName, true, "");
+        this.UIProperties.SetValidity("RevenueExpenseGLAccountId", this.ObjectTableName, true, "");
+        this.UIProperties.SetValidity("VendorControlAccountId", this.ObjectTableName, true, "");
+        this.UIProperties.SetValidity("CustomerControlAccountId", this.ObjectTableName, true, "");
+        this.UIProperties.SetValidity("JobControlAccountId", this.ObjectTableName, true, "");
+
+        if (this.revenueExpenseGLAccount && !this.revenueExpenseGLAccount.IsMultiCurrency) {
+            this.ValidationErrorsList.push("Revenue Expense Account must be multi currency");
+            this.UIProperties.SetValidity("RevenueExpenseGLAccountId", this.ObjectTableName, false, "Revenue Expense Account must be multi currency");
+        }
+        if (this.customerControlAccount && !this.customerControlAccount.IsMultiCurrency) {
+            this.ValidationErrorsList.push("Customer Control Account must be multi currency");
+            this.UIProperties.SetValidity("CustomerControlAccountId", this.ObjectTableName, false, "Customer Control Account must be multi currency");
+
+        }
+        if (this.vendorControlAccount && !this.vendorControlAccount.IsMultiCurrency) {
+            this.ValidationErrorsList.push("Vendor Control Account must be multi currency");
+            this.UIProperties.SetValidity("VendorControlAccountId", this.ObjectTableName, false, "Vendor Control Account must be multi currency");
+
+        }
+        if (this.fileControlAccount && !this.fileControlAccount.IsMultiCurrency) {
+            this.ValidationErrorsList.push("File Control Account must be multi currency");
+            this.UIProperties.SetValidity("FileControlAccountId", this.ObjectTableName, false, "File Control Account must be multi currency");
+
+        }
+        if (this.jobControlAccount && !this.jobControlAccount.IsMultiCurrency) {
+            this.ValidationErrorsList.push("Job Control Account must be multi currency");
+            this.UIProperties.SetValidity("JobControlAccountId", this.ObjectTableName, false, "Job Control Account must be multi currency");
+
+        }
+    }
+
+
+    //#region Tabs Code
+    TabsSource: any[] = [];
+    SelectedTab: string = "";
+
+    BuildTabs() {
+        this.SelectedTab = "FullAccoutingSetting";
+        this.TabsSource.push({ Name: "FullAccoutingSetting", isSelected: true, Header: TextCodeTranslator.Translate("General.O.General") }); //Accounting.O.FullAccountingSettings
+        this.TabsSource.push({ Name: "ControlAccounts", isSelected: false, Header: TextCodeTranslator.Translate("Accounting.O.ControlGLAccounts") });
+    }
+    SelectionChanged(tab: any) {
+
+        this.TabsSource.forEach(item => { // reset selection
+            item.isSelected = false;
+        });
+
+        var index = this.TabsSource.indexOf(tab);
+        if (index < 0) {
+            console.log("The tab was not found, cant not delete it :( ", tab); return;
+        }
+        var item = this.TabsSource[index];
+        item.isSelected = true;
+        this.SelectedTab = item.Name;
+    }
+    //#endregion
+
+
+
+
+}

@@ -1,0 +1,66 @@
+<xs:schema
+    attributeFormDefault="unqualified"
+	elementFormDefault="qualified"
+    xmlns:GCCSCargoImp="http://www.champ.aero/GCCS/CargoXML"
+	targetNamespace="http://www.champ.aero/GCCS/CargoXML"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    version="1.0"
+>
+	<xs:include schemaLocation="common.xsd"/>
+
+    <xs:complexType name="AdviceOfDiscrepancy">
+        <xs:sequence>
+            <xs:element name="StandardMessageIdentification" type="GCCSCargoImp:StandardMessageIdentification"/>
+            <xs:element name="AWBConsignmentDetails" type="GCCSCargoImp:FAD_AWBConsignmentDetail"/>
+            <xs:element maxOccurs="2" name="DiscrepancyDetails" type="GCCSCargoImp:DiscrepancyDetails"/>
+            <xs:element name="OtherServiceInformation" type="GCCSCargoImp:FAD_OtherServiceInformation" minOccurs="0"/>
+            <xs:element name="DiscrepancyAdviceAddress" type="GCCSCargoImp:OfficeMessageAddress"/>
+        </xs:sequence>
+    </xs:complexType>
+
+	<xs:complexType name="FAD_AWBConsignmentDetail">
+        <xs:sequence>
+            <xs:element name="AWBIdentification" type="GCCSCargoImp:AWBIdentification"/>
+            <xs:element name="AWBOriginAndDestination" type="GCCSCargoImp:FAD_AWBOriginAndDestination" minOccurs="0"/>
+            <xs:element name="QuantityDetail" type="GCCSCargoImp:FAD_QuantityDetail"/>
+        </xs:sequence>
+    </xs:complexType>
+	
+	<xs:complexType name="FAD_AWBOriginAndDestination">
+        <xs:attribute name="AirportCityCodeOfOrigin" type="GCCSCargoImp:AirportCode"/>
+        <xs:attribute name="AirportCityCodeOfDestination" type="GCCSCargoImp:AirportCode"/>
+    </xs:complexType>
+
+    <xs:complexType name="FAD_QuantityDetail">
+        <xs:attribute name="ShipmentDescriptionCode" type="GCCSCargoImp:ShipmentDescriptionCode" use="required"/>
+        <xs:attribute name="NumberOfPieces" type="GCCSCargoImp:NumberOfPieces" use="required"/>
+        <xs:attribute name="WeightCode" type="GCCSCargoImp:WeightCode" use="optional"/>
+        <xs:attribute name="Weight" type="GCCSCargoImp:Weight" use="optional"/>
+        <xs:attribute name="TotalNumberOfPieces" type="GCCSCargoImp:NumberOfPieces" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="DiscrepancyDetails">
+	    <xs:sequence>
+            <xs:element name="FlightIdentification" type="GCCSCargoImp:FAD_FlightIdentification"/>
+        </xs:sequence>
+        <xs:attribute name="DiscrepancyCode" type="GCCSCargoImp:DiscrepancyCode"/>
+        <xs:attribute name="AirportCode" type="GCCSCargoImp:AirportCode"/>
+    </xs:complexType>
+
+   	<xs:complexType name="FAD_FlightIdentification">
+        <xs:complexContent>
+            <xs:extension base="GCCSCargoImp:AWBFlightIdentification">
+                <xs:attribute name="MonthOfScheduledDeparture" type="GCCSCargoImp:Month" use="required"/>
+                <xs:attribute name="AirportCodeOfDeparture" type="GCCSCargoImp:AirportCode" use="required"/>
+                <xs:attribute name="AirportCodeOfArrival" type="GCCSCargoImp:AirportCode" use="required"/>
+            </xs:extension>
+       </xs:complexContent>
+    </xs:complexType>
+
+	<xs:complexType name="FAD_OtherServiceInformation">
+        <xs:sequence>
+            <xs:element maxOccurs="3" name="OtherServiceInformationEntry" type="GCCSCargoImp:OtherServiceInformationEntry"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

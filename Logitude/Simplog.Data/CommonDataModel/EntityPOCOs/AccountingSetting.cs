@@ -1,0 +1,64 @@
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Simplog.Data.CommonDataModel.EntityPOCOs
+{
+    public class AccountingSetting
+    {
+        [Key]
+        public int Id { get; set; }
+        public string AccountingSystemCode { get; set; }
+        public bool AllowVoidARI { get; set; }
+        public bool AllowVoidARP { get; set; }
+        public bool AllowVoidAPI { get; set; }
+        public bool AllowVoidAPP { get; set; }
+        public bool AllowManualInvoiceNumber { get; set; }
+        public bool IsVatNumberMandatoryInAR { get; set; }
+        public bool IsVatNumberMandatoryInAP { get; set; }
+        public bool IsChronologicalDates { get; set; }
+        public string ReceivableVATableTempCard { get; set; }
+        public string ReceivableVATExemptTempCard { get; set; }
+        public string PayableVATableTempCard { get; set; }
+        public string PayableVATExemptTempCard { get; set; }
+        public bool AllowClosureWithoutPayables { get; set; }
+        public bool IsSingleTaxPerInvoice { get; set; }
+        public bool IsARInvoicesTransferEnabled { get; set; }
+        public bool IsAPInvoicesTransferEnabled { get; set; }
+        public bool IsARPaymentsTransferEnabled { get; set; }
+        public DateTime? ARInvoiceTransferStartDate { get; set; }
+        public DateTime? APInvoiceTransferStartDate { get; set; }
+        public DateTime? ARPaymentTransferStartDate { get; set; }
+        public string QBOrealMeID { get; set; }
+        public string QBOAccessToken { get; set; }
+        public string QBOAccessTokenSecret { get; set; }
+        public bool AllowMinusInvoicelines { get; set; }
+        public bool AllowPositiveAmountsInTheCreditNote { get; set; }
+        public bool EnableMultiPercentageVATTypes { get; set; }
+        public bool NotifyPastDateOnInvoiceEdit { get; set; }
+        public bool IsAPPaymentsTransferEnabled { get; set; }
+
+        
+        public string ReceivableVATCard { get; set; }
+        public string PayableVATCard { get; set; }
+
+        public virtual Tenant Tenant { get; set; }
+
+        [ForeignKey("AccountingSystemCode")]
+        public virtual AccountingSystem AccountingSystem { get; set; }
+
+        public bool TransferToDropboxActivated { get; set; }
+        public bool EnableMultiRateAPInvoices { get; set; }
+
+        [ForeignKey("RegistryDateTypeCode")]
+        public virtual RegistryDateType RegistryDateType { get; set; }
+        public string RegistryDateTypeCode { get; set; }
+
+        public bool EnableMultiCurrencyARPayments { get; set; }
+        public bool EnableMultiCurrencyAPPayments { get; set; }
+
+        public bool EnableNegativeOffsetARPayments { get; set; }
+        public bool EnableNegativeOffsetAPPayments { get; set; }
+        
+    }
+}

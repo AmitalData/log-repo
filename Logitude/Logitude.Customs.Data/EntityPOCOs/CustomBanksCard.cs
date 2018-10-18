@@ -1,0 +1,38 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Customs.Data.EntityPOCOs
+{
+   
+    public class CustomBanksCard
+    {
+	 string dbms;
+
+        [Key]
+        [Column("Id" ,Order = 1)]
+	    public string Id { get; set; }
+        [Column("Tenant" ,Order = 2)]
+	    public int Tenant { get; set; }
+        [ForeignKey("CustomBank")]
+        [Column("CustomBankId" ,Order = 3)]
+	    public string CustomBankId { get; set; }
+	      
+        public virtual CustomBank CustomBank { get; set; }
+        [ForeignKey("Card")]
+        [Column("CardId" ,Order = 4)]
+	    public string CardId { get; set; }
+	      
+        public virtual Card Card { get; set; }
+    }
+}
+	 

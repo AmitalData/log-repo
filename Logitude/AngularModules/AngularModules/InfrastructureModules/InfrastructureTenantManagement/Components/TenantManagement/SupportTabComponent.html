@@ -1,0 +1,72 @@
+﻿
+<div class="TabHolder">
+    <table>
+        <tr class="TabTitleRow">
+            <td>
+                <table>
+                    <tr>
+                        <td>{{'TenantManagement.TH.Support' | TextCodeTranslationPipe}}</td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr style="height:1px;">
+            <td>
+                <table>
+                    <tr>
+                        <td style="width:550px; vertical-align:top;">
+                            <table>
+                                <tr class="FormFieldRow">
+                                    <td style="width:140px;">
+                                        <LogLabel [ObjectFieldName]="'SupportActivated'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td style="width:400px;">
+                                        <LogCheckBox [ObjectFieldName]="'SupportActivated'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'SupportEmail'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'SupportEmail'" [Text]="SupportEmail" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>              
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td><div></div></td>
+        </tr> 
+    </table>
+</div>

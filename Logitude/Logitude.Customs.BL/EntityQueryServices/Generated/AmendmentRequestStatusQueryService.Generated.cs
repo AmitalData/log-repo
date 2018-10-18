@@ -1,0 +1,69 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.Customs.BL.EntityDataMappings;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Data.EntityKeys;
+using Logitude.Customs.Data;
+using Simplog.Server.Infrastructure;
+namespace Logitude.Customs.BL.EntityQueryServices
+{ 
+   public partial class AmendmentRequestStatusQueryService: EntityQueryService<AmendmentRequestStatus,AmendmentRequestStatusKeys,AmendmentRequestStatusPM,object,AmendmentRequestStatusKeys>
+   {
+   
+        AmendmentRequestStatusRepository repository;
+		ICustomContext  context;
+        public AmendmentRequestStatusQueryService(int tenant)
+        {
+		    context = CustomContext.GetContext(tenant);
+            MainContext = context;
+            repository = new AmendmentRequestStatusRepository(context);
+            Repository = repository;
+            mapping = new AmendmentRequestStatusDataMapping();
+        }
+
+        public AmendmentRequestStatusQueryService(AmendmentRequestStatusRepository repository)
+        {
+            this.repository = repository;
+            Repository = repository;
+            mapping = new AmendmentRequestStatusDataMapping();
+        }
+
+        public AmendmentRequestStatusQueryService(ICustomContext context)
+        {
+            this.repository = new AmendmentRequestStatusRepository(context);
+            this.context = context;
+
+            MainContext = context;
+            Repository = repository;
+            mapping = new AmendmentRequestStatusDataMapping();
+        }
+		 
+		public  AmendmentRequestStatusPM GetSingle(string code,bool getComposition, bool getFromCache)
+        {
+             EntityKeys = new AmendmentRequestStatusKeys(){ Code = code };
+
+			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
+        }
+
+       
+	    protected override EntityKeyFields GetKeys(AmendmentRequestStatus entityPOCO)
+        {
+            AmendmentRequestStatusKeys entityKeys = new AmendmentRequestStatusKeys() { Code = entityPOCO.Code,  };
+            return entityKeys;
+        }
+     
+	 
+   }
+   
+}
+	 

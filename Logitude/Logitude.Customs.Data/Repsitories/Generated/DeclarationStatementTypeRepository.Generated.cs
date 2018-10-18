@@ -1,0 +1,90 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.EntityKeys;
+using Simplog.Server.Infrastructure;
+
+namespace Logitude.Customs.Data.Repsitories
+{
+   public partial class DeclarationStatementTypeRepository:IRepository<DeclarationStatementType>
+   {
+   
+        private ICustomContext currentContext;
+        public DeclarationStatementTypeRepository(int tenant)
+        {
+            currentContext = CustomContext.GetContext(tenant);
+        }
+
+        public DeclarationStatementTypeRepository(ICustomContext context)
+        {
+            currentContext = context;
+        }
+
+		 
+		
+		public  DeclarationStatementType GetSingle(string code)
+        {
+            return (from a in context.DeclarationStatementTypes
+                    where a.Code == code 
+                    select a).FirstOrDefault();
+        }
+
+        public IQueryable<DeclarationStatementType> GetAll()
+        {
+            return from a in context.DeclarationStatementTypes  
+                   select a;
+        }
+				 
+        public DeclarationStatementType GetSingle(EntityKeyFields entityKeys)
+        {
+            DeclarationStatementTypeKeys keys = entityKeys as DeclarationStatementTypeKeys;
+            return (from a in context.DeclarationStatementTypes
+                    where a.Code == keys.Code
+                    select a).FirstOrDefault();
+        }
+		         
+        partial void onAdd();//Partial Methods Definition in Generated
+        public void Add(DeclarationStatementType entity)
+        {
+            onAdd();
+            context.DeclarationStatementTypes.Add(entity);
+        }
+
+        public void Remove(DeclarationStatementType entity)
+        {
+            context.DeclarationStatementTypes.Attach(entity);
+            context.DeclarationStatementTypes.Remove(entity);
+        }
+
+        partial void onUpdate();//Partial Methods Definition in Generated
+        public void Update(DeclarationStatementType entity)
+        {
+            onUpdate();
+            context.DeclarationStatementTypes.Attach(entity);
+            context.SetAsModified(entity);
+        }
+
+        public List<DeclarationStatementType> All()
+        {
+            return context.DeclarationStatementTypes.ToList();
+        }
+
+        private ICustomContext context
+        {
+            get { return currentContext; }
+        }
+
+        public void SubmitChanges()
+        {
+            context.SaveChanges();
+        }
+	 
+   }
+   }
+	 

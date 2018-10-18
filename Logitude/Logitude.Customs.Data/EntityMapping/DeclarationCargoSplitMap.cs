@@ -1,0 +1,58 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data;
+ 
+namespace Logitude.Customs.Data.EntityMapping
+{
+ 
+    public class DeclarationCargoSplitMap : EntityTypeConfiguration<DeclarationCargoSplit>
+    {
+	    string dbms;
+        public DeclarationCargoSplitMap()
+        { 
+			  this.ToTable("DeclarationCargoSplits", "Customs");
+		
+		    this.HasKey(t => new { t.Id });
+	 
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
+
+            this.Property(t => t.RequestDate).HasColumnName("RequestDate").IsRequired();
+
+            this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsMaxLength().IsUnicode(true);
+
+            this.Property(t => t.ActionTypeCode).HasColumnName("ActionTypeCode").IsRequired().HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.RequestReason).HasColumnName("RequestReason").IsRequired().HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.RequestNumber).HasColumnName("RequestNumber").HasMaxLength(9).IsUnicode(false);
+
+            this.Property(t => t.RequestRemarks).HasColumnName("RequestRemarks").HasMaxLength(255).IsUnicode(true);
+
+            this.Property(t => t.CargoTypeCode).HasColumnName("CargoTypeCode").IsRequired().HasMaxLength(4).IsUnicode(false);
+
+            this.Property(t => t.ManifestNumber).HasColumnName("ManifestNumber").IsRequired().HasMaxLength(35).IsUnicode(false);
+
+            this.Property(t => t.SecondCargoID).HasColumnName("SecondCargoID").HasMaxLength(35).IsUnicode(false);
+
+            this.Property(t => t.ThirdCargoID).HasColumnName("ThirdCargoID").HasMaxLength(35).IsUnicode(false);
+
+            this.Property(t => t.DeclarationId).HasColumnName("DeclarationId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.IsClosed).HasColumnName("IsClosed").IsRequired();
+
+            this.Property(t => t.ResponseStatusCode).HasColumnName("ResponseStatusCode").HasMaxLength(1).IsUnicode(false);
+        }
+    }
+}
+	 

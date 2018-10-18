@@ -1,0 +1,105 @@
+﻿
+            <table>
+
+                <tr>
+                    <td  class="CellStretch">
+                        <div class="SimpleGridView">
+                            <div class="SimpleGridViewHeader">
+                                <table>
+
+                                    <tr>
+
+                                        <td style="width: 70px; min-width: 70px;max-width:70px">Tenant</td>
+                                        <td style="width: 230px; min-width: 230px;max-width:230px">Tenant Name</td>
+                                        <td style="width: 150px; min-width: 150px;max-width:150px">Failed Threshold</td>
+                                        <td style="width: 150px; min-width: 150px;max-width:150px">Waiting Threshold</td>
+                                        <td style="width: 190px; min-width: 190px;max-width:190px">Last Update Date Time</td>
+                                        <td style="width: 100%; min-width: 100%;"></td>
+                                        
+                                    </tr>
+
+
+
+
+                                </table>
+                            </div>
+
+                            <div class="SimpleGridViewBody">
+                                <table>
+
+                                    <tr class="SimpleGridViewRow RowHover" *ngFor="let item of HybridTenantStateLists">
+                                        <td>
+                                            <table>
+                                                <tr [class.RowSelected]="item === SelectedHybridTenantStateList" >
+
+                                                    <td class="GridViewCell" style="width: 70px; min-width: 70px;max-width:70px">
+
+                                                        {{item.Tenant}}
+
+
+                                                    </td>
+                                                    <td class="GridViewCell" style="width: 230px; min-width: 230px;max-width:230px">
+                                                        <div [attr.title]="item.TenantName">{{item.TenantName}}</div>
+                                                    </td>
+
+                                                    <td class="GridViewCell" style="width: 150px; min-width: 150px;max-width:150px ">
+                                                        <div  [style.color]="item.FailedQueueTextColor">{{item.FailedQueue}}</div> 
+                                                    </td>
+
+                                                    <td class="GridViewCell" style="width: 150px; min-width: 150px;max-width:150px ">
+                                                        <div [style.color]="item.WaitingQueueTextColor">{{item.WaitingQueue}}</div> 
+                                                    </td>
+
+
+                                                    <td class="GridViewCell" style="width: 190px; min-width: 190px;max-width:190px">
+                                                        <div [style.color]="item.LastUpdateDateTimeTextColor">{{item.LastUpdateDateTime | DateTimeToDatePipe}} {{item.LastUpdateDateTime | DateTimeToTimePipe}} </div>
+                                                    </td>
+
+                                                    <td class="GridViewCell" style="position: relative;width:100%">
+                                                        <div>
+                                                            
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                                <tr><td colspan="4"></td></tr>
+                                            </table>
+
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr style="height: 32px;">
+                    <td style="vertical-align: bottom">
+                        <table style="height: 22px;margin-right:5px">
+                            <tr>
+                                <td>
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 57px;">
+                                    <button class="Button" (click)="CloseButtonClicked()">Close</button>
+                                </td>
+
+
+                                <td style="width: 5px;">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+            </table>
+    

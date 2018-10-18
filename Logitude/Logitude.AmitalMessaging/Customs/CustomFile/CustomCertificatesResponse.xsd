@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://tempuri.org/CustomCertificatesResponse" elementFormDefault="qualified" targetNamespace="http://tempuri.org/CustomCertificatesResponse" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="CUSTOMCERTIFICATES_UL">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="CUSTOMCERTIFICATES_UL.AMITAL" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CUSTOMCERTIFICATES_UL.AMITAL">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="DeclarationId" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Message" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="CertificateGroupResponse" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="HasException" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Succeeded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeclarationId" type="xs:string" />
+  <xs:element name="Message" type="xs:string" />
+  <xs:element name="CertificateGroupResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="ClassificationCode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ItemCode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="OriginCountryCode" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="CertificateDetails" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="VendorNumber" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ClassificationCode" type="xs:string" />
+  <xs:element name="ItemCode" type="xs:string" />
+  <xs:element name="OriginCountryCode" type="xs:string" />
+  <xs:element name="CertificateDetails">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="ResponseConfirmationTypeCode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CertificateNumber" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CertificateExemptionTypeCode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="AttachmentTypeCode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="RequestConfirmationTypeCode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CustomsAttachmentID" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ExternalCertificatCode" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ResponseConfirmationTypeCode" type="xs:string" />
+  <xs:element name="CertificateNumber" type="xs:string" />
+  <xs:element name="CertificateExemptionTypeCode" type="xs:string" />
+  <xs:element name="AttachmentTypeCode" type="xs:string" />
+  <xs:element name="RequestConfirmationTypeCode" type="xs:string" />
+  <xs:element name="CustomsAttachmentID" type="xs:string" />
+  <xs:element name="ExternalCertificatCode" type="xs:string" />
+  <xs:element name="VendorNumber" type="xs:string" />
+  <xs:element name="HasException" type="xs:string" />
+  <xs:element name="Succeeded" type="xs:string" />
+</xs:schema>

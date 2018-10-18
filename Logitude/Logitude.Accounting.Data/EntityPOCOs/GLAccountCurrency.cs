@@ -1,0 +1,43 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Accounting.Data.EntityPOCOs
+{
+   
+    public class GLAccountCurrency
+    {
+	 string dbms;
+
+        [Key]
+        [Column("Id")]
+	    public string Id { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+        [ForeignKey("GLAccount")]
+        [Column("GLAccountId")]
+	    public string GLAccountId { get; set; }
+	      
+        public virtual GLAccount GLAccount { get; set; }
+        [ForeignKey("Currency")]
+        [Column("CurrencyId")]
+	    public string CurrencyId { get; set; }
+	      
+        public virtual Currency Currency { get; set; }
+        [ForeignKey("MainGLAccount")]
+        [Column("MainGLAccountId")]
+	    public string MainGLAccountId { get; set; }
+	      
+        public virtual GLAccount MainGLAccount { get; set; }
+    }
+}
+	 

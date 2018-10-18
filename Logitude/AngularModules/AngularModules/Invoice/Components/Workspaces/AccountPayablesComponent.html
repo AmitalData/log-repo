@@ -1,0 +1,363 @@
+﻿
+<table>
+    <tr>
+        <td style="width:205px;min-width:205px;">
+            <table>
+                <tr class="SectionHeader">
+                    <td colspan="2">
+                        <label>{{'General.O.Views' | TextCodeTranslationPipe}}</label>
+                    </td>
+                </tr>
+
+                <tr style="height:5px;">
+                    <td colspan="2">
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="width:5px;">
+                        <div></div>
+                    </td>
+                    <td class="CellStretch">
+                        <div class="CellContent">
+                            <div class="ScrollViewer">
+                                <div class="ScrollContent">
+                                    <div class="QueriesSection">
+                                        <div>
+                                            <table>
+                                                <tr>
+                                                    <td style="width:1px;">
+                                                        <div>{{'General.O.Invoices' | TextCodeTranslationPipe}}</div>
+                                                    </td>
+                                                    <td width="3px;">
+                                                        <div></div>
+                                                    </td>
+                                                    <td style="width: 49px;">
+                                                        <HelpIcon style="width: 18px;height:18px;" [Header]="'General.O.AccountPayableInvoices' | TextCodeTranslationPipe" [Text]="'General.O.ManagePayableInvoices' | TextCodeTranslationPipe"></HelpIcon>
+                                                    </td>
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+
+                                        <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
+                                            <button class="Button" (click)="NewEntityClicked('APInvoiceMultiple')">{{'General.O.New' | TextCodeTranslationPipe}}</button>
+                                        </div>
+
+                                        <div>
+                                            <p class="QueryLink" (click)="ViewInvoiceQuery('APInvoice:Waiting for Approval')">{{'APInvoice.Q.WaitingApprovalAPInvoices'|TextCodeTranslationPipe}} ({{APInvoicesDraftsCount}})</p>
+                                            <p class="QueryLink" (click)="ViewInvoiceQuery('APInvoice:Unpaid Invoices')">{{'APInvoice.Q.UnpaidAPInvoices'|TextCodeTranslationPipe}} ({{APInvoicesUnpaidCount}})</p>
+                                            <p class="QueryLink" (click)="ViewInvoiceQuery('APInvoice:All Invoices')">{{'APInvoice.Q.AllAPInvoices'|TextCodeTranslationPipe}}</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="QueriesSection" *ngIf="MyViewsQueryVisibility">
+                                        <div>{{'General.O.MyViews' | TextCodeTranslationPipe}}</div>
+                                        <div>
+                                            <UsersQueryList [ShowNoViews]="true" [ReloadUserQueries]="ReloadUserQueries" [ObjectTableName]="'APInvoice'" [BackButtonTitle]="'Accounting'" (BackCompletedEvent)="onUserQueriesBackComplete($event)"></UsersQueryList>
+                                        </div>
+                                    </div>
+
+                                    <div class="QueriesSection">
+                                        <div>
+                                            <table>
+                                                <tr>
+                                                    <td style="width:1px;">
+                                                        <div>{{'General.O.Payments' | TextCodeTranslationPipe}}</div>
+                                                    </td>
+                                                    <td width="3px;">
+                                                        <div></div>
+                                                    </td>
+                                                    <td style="width: 49px;">
+                                                        <HelpIcon style="width: 18px;height:18px;" [Header]="'General.O.AccountPayablePayments' | TextCodeTranslationPipe" [Text]="'General.O.ManagePayablePayments' | TextCodeTranslationPipe"></HelpIcon>
+                                                    </td>
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+
+                                        <div>
+                                            <p class="QueryLink" (click)="ViewInvoiceQuery('APPayment:Draft Payments')">{{'APPayment.Q.DraftAPPayments'|TextCodeTranslationPipe}} ({{APPaymentsDraftsCount}})</p>
+                                            <p class="QueryLink" (click)="ViewInvoiceQuery('APPayment:Open Payments')">{{'APPayment.Q.OpenAPPayments'|TextCodeTranslationPipe}} ({{APPaymentsOpenedCount}})</p>
+                                            <p class="QueryLink" (click)="ViewInvoiceQuery('APPayment:All Payments')">{{'APPayment.Q.AllAPPayments'|TextCodeTranslationPipe}}</p>
+                                            <p class="QueryLink" (click)="NewEntityClicked('APPayment')">{{'General.O.NewPayment'|TextCodeTranslationPipe}}</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="QueriesSection" *ngIf="MyViewsQueryVisibility">
+                                        <div>{{'General.O.MyViews' | TextCodeTranslationPipe}}</div>
+                                        <div>
+                                            <UsersQueryList [ShowNoViews]="true" [ReloadUserQueries]="ReloadUserQueries" [ObjectTableName]="'APPayment'" [BackButtonTitle]="'Accounting'" (BackCompletedEvent)="onUserQueriesBackComplete($event)"></UsersQueryList>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+
+        <td style="width:10px;min-width:10px">
+            <div></div>
+        </td>
+
+        <!-- Dashboard -->
+        <td style="min-width:300px;">
+            <table>
+                <tr style="height: 50%;">
+                    <td>
+                        <table class="Section">
+
+                            <tr class="SectionHeader">
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <label>{{'General.O.APAgingReport'|TextCodeTranslationPipe}}</label>
+                                            </td>
+
+                                            <td style="width: 70px;">
+                                                <ul class="FiltersMenu">
+                                                    <li (click)="SetSelectedCurrencyAPChartIndex(0)" [class.SelectedFilter]="SelectedCurrencyIndex_APChart === 0" style="width:33px;">
+                                                        {{CurrencyCodeProfit}}
+                                                    </li>
+                                                    <li (click)="SetSelectedCurrencyAPChartIndex(1)" [class.SelectedFilter]="SelectedCurrencyIndex_APChart === 1" style="width:33px;">
+                                                        {{CurrencyCodeLocal}}
+                                                    </li>
+                                                </ul>
+                                            </td>
+
+                                            <td style="width: 3px;">
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr style="height:5px;">
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="CellStretch">
+                                    <div [attr.id]="PayablesChartId" style="height:100%;width:100%;direction: ltr;" class="CellContent">
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr style="height:5px;">
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </td>
+                </tr>
+
+                <tr style="height: 50%;">
+                    <td>
+                        <table>
+                            <tr style="height:5px;">
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <tr class="SectionHeader">
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <label>{{'General.O.DashBoard.MoneyOut' | TextCodeTranslationPipe}} {{MoneyOutLocalCurrency}}</label>
+
+                                            </td>
+                                            <td style="width:200px;padding-bottom:4px;font:small;vertical-align:central">
+                                                <label [style.float]="isRTL ? 'left' : 'right'" style="font-size:12px;margin-top:2px;margin-right:3px;margin-left:3px">{{'General.O.Payments' | TextCodeTranslationPipe}}</label>
+                                                <div [style.float]="isRTL ? 'left' : 'right'"style="width:15px;height:15px;background-color:rgb(42 , 168, 204);margin-top:4px;"></div>
+                                                <label [style.float]="isRTL ? 'left' : 'right'" style="margin-right:7px;margin-left:7px; font-size:12px;margin-top:2px;">{{'General.O.Invoices' | TextCodeTranslationPipe}}</label>
+                                                <div [style.float]="isRTL ? 'left' : 'right'" style="width:5px;"></div>
+                                                <div [style.float]="isRTL ? 'left' : 'right'" style="width:15px;height:15px;margin-top:4px;background-color:rgb(210, 145, 39);"></div>
+                                                <div [style.float]="isRTL ? 'left' : 'right'" style="width:5px;"></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr style="height:40px;">
+                                <td>
+                                    <div style="width:100%;padding-top:10px" class="CellContent">
+                                        <table>
+                                            <tr style="height:1px">
+                                                <td style="width:80px;vertical-align:top">
+                                                    <label style="width:auto;">{{'General.O.DashBoard.TimeRange' | TextCodeTranslationPipe}} :</label>
+                                                </td>
+
+                                                <td style="width:260px;vertical-align:top">
+                                                    <ComboBox style="width:260px" (SelectedItemChanged)="FilterSelectedChange($event)" [ItemsSource]="FilterList" [SelectedItem]="SelectedItem" [Binding]="'Title'"></ComboBox>
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3"></td>
+                                            </tr>
+                                        </table>
+
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="CellStretch" style="vertical-align:bottom">
+
+                                    <div [attr.id]="PayablesChartMoneyInOutId" style="width:100%;height:80%;direction: ltr;" class="CellContent"></div>
+                                </td>
+                            </tr>
+                            <tr></tr>
+
+                            <tr style="height:5px;">
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+
+        <td style="width:10px;">
+            <div></div>
+        </td>
+
+        <!-- Top 10-->
+        <td style="width:363px;">
+            <table class="Section">
+                <tr class="SectionHeader">
+                    <td>
+                        <table>
+                            <tr>
+                                <td>
+                                    <label>{{'General.O.Top10Creditors'|TextCodeTranslationPipe}}</label>
+                                </td>
+
+                                <td style="width: 70px;">
+                                    <ul class="FiltersMenu">
+                                        <li (click)="SetSelectedCurrencyIndex(0)" [class.SelectedFilter]="SelectedCurrencyIndex_APGrid === 0" style="width:33px;">
+                                            {{CurrencyCodeProfit}}
+                                        </li>
+                                        <li (click)="SetSelectedCurrencyIndex(1)" [class.SelectedFilter]="SelectedCurrencyIndex_APGrid === 1" style="width:33px;">
+                                            {{CurrencyCodeLocal}}
+                                        </li>
+                                    </ul>
+                                </td>
+
+                                <td style="width: 3px;">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr style="height:5px;">
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div class="MediaFill">
+                            <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource">
+                                <!-- TopName -->
+                                <log-column [width]="'150'" [header]="'General.O.TopName' | TextCodeTranslationPipe"  [Alignment]="isRTL ? 'right' : 'left'">
+                                    <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1"  [Alignment]="isRTL ? 'right' : 'left'">
+                                        {{item.CreditorName}}
+                                    </log-cell-template>
+                                </log-column>
+
+                                <!-- Outstanding -->
+                                <log-column [width]="'95'" [header]="'General.O.Outstanding' | TextCodeTranslationPipe"  [Alignment]="isRTL ? 'right' : 'left'">
+                                    <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [Alignment]="isRTL ? 'left' : 'right'">
+                                        {{item.Outstanding | NumbersPipe:'N2'}}
+                                    </log-cell-template>
+                                </log-column>
+
+                                <!-- Overdue -->
+                                <log-column [width]="'95'" [header]="'General.O.Overdue' | TextCodeTranslationPipe"  [Alignment]="isRTL ? 'right' : 'left'">
+                                    <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [Alignment]="isRTL ? 'left' : 'right'">
+                                        {{item.Overdue | NumbersPipe:'N2'}}
+                                    </log-cell-template>
+                                </log-column>
+                            </logitude-edit-grid>
+                        </div>
+                        <table *ngIf="false">
+                            <tr style="width:100%;height:100%;vertical-align:top;">
+                                <td style="width:5px;">
+                                    <div></div>
+                                </td>
+                                <td>
+                                    <div class="SimpleGridView" style="min-height:100px;vertical-align:top;">
+                                        <div class="SimpleGridViewHeader">
+                                            <table>
+                                                <tr>
+                                                    <td style="width: 150px; min-width: 150px; max-width: 150px;">{{'General.O.TopName' | TextCodeTranslationPipe}}</td>
+                                                    <td style="width: 75px; min-width: 75px; max-width: 75px;">{{'General.O.Outstanding'| TextCodeTranslationPipe}}</td>
+                                                    <td style="width: 75px; min-width: 75px; max-width: 75px;">{{'General.O.Overdue'| TextCodeTranslationPipe}}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+
+                                        <div class="SimpleGridViewBody">
+                                            <table>
+                                                <tr class="SimpleGridViewRow RowHover" *ngFor="let item of CreditorsObsList" (click)="LoadEditCustomer(item)">
+
+                                                    <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px;">
+                                                        {{item.CreditorName}}
+                                                    </td>
+
+                                                    <td [style.text-align]="isRTL ? 'left' : 'right'" class="GridViewCell" style="width: 70px; min-width: 70px; max-width: 70px;">
+                                                        {{item.Outstanding | NumbersPipe:'N2'}}
+                                                    </td>
+
+                                                    <td [style.text-align]="isRTL ? 'left' : 'right'" class="GridViewCell" style="width: 70px; min-width: 70px; max-width: 70px;">
+                                                        {{item.Overdue | NumbersPipe:'N2'}}
+                                                    </td>
+
+                                                </tr>
+
+                                                <tr>
+                                                    <td colspan="3">
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td style="width:5px;">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

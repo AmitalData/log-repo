@@ -1,0 +1,125 @@
+﻿
+<div class="TabHolder">
+    <table>
+        <tr>
+            <td>
+                <table>
+                    <tr class="TabTitleRow">
+                        <td>{{'DocumentsFiling.TH.General' | TextCodeTranslationPipe}}</td>
+                    </tr>
+
+                    <tr style="height:1px;">
+                        <td>
+                            <div>
+                                <!-- Code -->
+                                <div>
+                                    <table>
+                                        <tr>
+                                            <td [style.width.px]="120">
+                                                <LogLabel [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td [style.width.px]="220">
+                                                <LogTextBox [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                            </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <div style="margin-top: 10px; margin-bottom: 10px;"></div>
+
+                                </div>
+
+                                <!-- Description -->
+                                <div>
+                                    <table>
+                                        <tr>
+                                            <td [style.width.px]="120">
+                                                <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td [style.width.px]="220">
+                                                <LogTextBox [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                            </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <div style="margin-top: 10px; margin-bottom: 10px;"></div>
+
+                                </div>
+
+                                <!-- Notes -->
+                                <div>
+                                    <table>
+                                        <tr>
+                                            <td [style.width.px]="120">
+                                                <label class="Label" style="color:rgb(110, 113, 114);margin-left:12px;">Notes :</label>
+                                            </td>
+
+                                            <td [style.width.px]="220">
+                                                <LogTextBox [ObjectFieldName]="'Notes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [IsMultiline]="true"></LogTextBox>
+                                            </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <div style="margin-top: 10px; margin-bottom: 10px;"></div>
+
+                                </div>
+
+
+
+                            </div>
+
+                        </td>
+                    </tr>
+
+                    <tr><td><div></div></td></tr>
+
+
+                </table>
+            </td>
+            <td>
+                <table *ngIf="EntityPM.DocumentsFilingMetaDataValues && EntityPM.DocumentsFilingMetaDataValues.length > 0">
+                    <tr class="TabTitleRow">
+                        <td>Meta Data</td>
+                    </tr>
+
+                    <tr style="height:1px;">
+                        <td>
+                            <div> 
+                                <div *ngFor="let item of EntityPM.DocumentsFilingMetaDataValues">
+                                    <table>
+                                        <tr>
+                                            <td [style.width.px]="120">
+                                                <label class="Label" style="color:rgb(110, 113, 114);margin-left:12px;">{{item.DocumentsMetaDataTypeCode}} :</label>
+                                            </td>
+
+                                            <td [style.width.px]="220">
+                                                <LogTextBox [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [IsFreeText]="true" [Text]="item.MetaDataValue" [ObjectFieldName]="item.MetaDataValue"></LogTextBox>
+                                            </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <div style="margin-top: 10px; margin-bottom: 10px;"></div>
+
+                                </div> 
+                            </div>
+
+                        </td>
+                    </tr>
+
+                    <tr><td><div></div></td></tr>
+
+
+                </table>
+            </td>
+        </tr>
+    </table> 
+</div>

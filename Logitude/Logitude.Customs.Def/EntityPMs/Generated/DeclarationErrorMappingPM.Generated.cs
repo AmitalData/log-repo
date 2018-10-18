@@ -1,0 +1,164 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Customs.Def.Validators;
+  
+namespace Logitude.Customs.Def.EntityPMs
+{
+   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class DeclarationErrorMappingPM : EntityPM
+   {
+   	  private string id ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Id  
+	   {
+	    
+	     get
+		{
+		   return id;
+		 }
+		 set
+		 {
+		   if(id != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   id=value;
+		   }
+			
+		 }
+	   }
+	  private string documentSectionCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DocumentSectionCode  
+	   {
+	    
+	     get
+		{
+		   return documentSectionCode;
+		 }
+		 set
+		 {
+		   if(documentSectionCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DocumentSectionCode",OldValue=documentSectionCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   documentSectionCode=value;
+		   }
+			
+		 }
+	   }
+	  private string tagID ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TagID  
+	   {
+	    
+	     get
+		{
+		   return tagID;
+		 }
+		 set
+		 {
+		   if(tagID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TagID",OldValue=tagID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   tagID=value;
+		   }
+			
+		 }
+	   }
+	  private string field ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Field  
+	   {
+	    
+	     get
+		{
+		   return field;
+		 }
+		 set
+		 {
+		   if(field != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Field",OldValue=field,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   field=value;
+		   }
+			
+		 }
+	   }
+	  private string entity ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Entity  
+	   {
+	    
+	     get
+		{
+		   return entity;
+		 }
+		 set
+		 {
+		   if(entity != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Entity",OldValue=entity,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   entity=value;
+		   }
+			
+		 }
+	   }
+	  private bool skip ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool Skip  
+	   {
+	    
+	     get
+		{
+		   return skip;
+		 }
+		 set
+		 {
+		   if(skip != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Skip",OldValue=skip,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   skip=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

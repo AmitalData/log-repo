@@ -1,0 +1,2382 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2012 sp1 (x64) (http://www.altova.com) by Martin Lau (Global Logistics System (HK) Ltd) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<!-- © 2015 Global Logistics System (HK) Company Limited -->
+	<!-- GLSHK Cargo Message XML version 2.0.3 -->
+	<xs:element name="FSUAWB">
+		<xs:annotation>
+			<xs:documentation>FSU AWB Record</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="AWB" type="AWBID">
+					<xs:annotation>
+						<xs:documentation>AWB Identification</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="AWBOD" type="OriginDestination" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>AWB Origin and Destination</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Quantity" type="QTYDetail" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Quantity Detail</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="TotalPCS" type="ShipmentPieces" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Total Consignment Pieces</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="FSUStatusDetail" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="FSUStatusDetail">
+		<xs:annotation>
+			<xs:documentation>FSU Status Detail</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="RCSDetail" minOccurs="0"/>
+				<xs:element ref="RCTDetail" minOccurs="0"/>
+				<xs:element ref="RCFDetail" minOccurs="0"/>
+				<xs:element ref="BKDDetail" minOccurs="0"/>
+				<xs:element ref="MANDetail" minOccurs="0"/>
+				<xs:element ref="DEPDetail" minOccurs="0"/>
+				<xs:element ref="PREDetail" minOccurs="0"/>
+				<xs:element ref="TRMDetail" minOccurs="0"/>
+				<xs:element ref="TFDDetail" minOccurs="0"/>
+				<xs:element ref="NFDDetail" minOccurs="0"/>
+				<xs:element ref="AWDDetail" minOccurs="0"/>
+				<xs:element ref="CCDDetail" minOccurs="0"/>
+				<xs:element ref="DLVDetail" minOccurs="0"/>
+				<xs:element ref="DISDetail" minOccurs="0"/>
+				<xs:element ref="CRCDetail" minOccurs="0"/>
+				<xs:element ref="DDLDetail" minOccurs="0"/>
+				<xs:element ref="TGCDetail" minOccurs="0"/>
+				<xs:element ref="ARRDetail" minOccurs="0"/>
+				<xs:element ref="AWRDetail" minOccurs="0"/>
+				<xs:element ref="FOHDetail" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RCSDetail">
+		<xs:annotation>
+			<xs:documentation>FSU Status - RCS</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Movement" type="MovementDetail"/>
+				<xs:element name="Quantity" type="QTYDetail"/>
+				<xs:element name="ReceivedFrom" type="InvolvedCompanyDetail" minOccurs="0"/>
+				<xs:element name="Volume" type="VolumeDetail" minOccurs="0"/>
+				<xs:element name="DensityGroup" type="DensityGrp" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RCTDetail">
+		<xs:annotation>
+			<xs:documentation>FSU Status - RCT</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Movement" type="MovementDetail"/>
+				<xs:element name="Quantity" type="QTYDetail"/>
+				<xs:element name="ReceivedFrom" type="TransferringDetail" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RCFDetail">
+		<xs:annotation>
+			<xs:documentation>FSU Status - RCF</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Movement" type="MovementDetail"/>
+				<xs:element name="Quantity" type="QTYDetail"/>
+				<xs:element name="DEPTime" type="FlightTime" minOccurs="0"/>
+				<xs:element name="ARRTime" type="FlightTime" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="BKDDetail">
+		<xs:annotation>
+			<xs:documentation>FSU Status - BKD</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Movement" type="MovementDetail_DEPARR"/>
+				<xs:element name="Quantity" type="QTYDetail"/>
+				<xs:element name="DEPTime" type="FlightTime" minOccurs="0"/>
+				<xs:element name="ARRTime" type="FlightTime" minOccurs="0"/>
+				<xs:element name="Volume" type="VolumeDetail" minOccurs="0"/>
+				<xs:element name="DensityGroup" type="DensityGrp" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MANDetail">
+		<xs:annotation>
+			<xs:documentation>FSU Status - MAN</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Movement" type="MovementDetail_DEPARR"/>
+				<xs:element name="Quantity" type="QTYDetail"/>
+				<xs:element name="DEPTime" type="FlightTime" minOccurs="0"/>
+				<xs:element name="ARRTime" type="FlightTime" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DEPDetail">
+		<xs:annotation>
+			<xs:documentation>FSU Status - DEP</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Movement" type="MovementDetail_DEPARR"/>
+				<xs:element name="Quantity" type="QTYDetail"/>
+				<xs:element name="DEPTime" type="FlightTime" minOccurs="0"/>
+				<xs:element name="ARRTime" type="FlightTime" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PREDetail">
+		<xs:annotation>
+			<xs:documentation>FSU Status - PRE</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Movement" type="MovementDetail_DEPARR"/>
+				<xs:element name="Quantity" type="QTYDetail"/>
+				<xs:element name="DEPTime" type="FlightTime" minOccurs="0"/>
+				<xs:element name="ARRTime" type="FlightTime" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="TRMDetail">
+		<xs:annotation>
+			<xs:documentation>FSU Status - TRM</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Movement" type="MovementDetail_TRM"/>
+				<xs:element name="Quantity" type="QTYDetail"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="TFDDetail">
+		<xs:annotation>
+			<xs:documentation>FSU Status - TFD</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Movement" type="MovementDetail"/>
+				<xs:element name="Quantity" type="QTYDetail"/>
+				<xs:element name="TransferReference" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Transfer Manifest Number</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="6"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="TransferredFrom" type="TransferringDetail" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="NFDDetail">
+		<xs:annotation>
+			<xs:documentation>FSU Status - NFD</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Movement" type="MovementDetail"/>
+				<xs:element name="Quantity" type="QTYDetail"/>
+				<xs:element name="NotificationTo" type="InvolvedCompanyDetail" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AWDDetail">
+		<xs:annotation>
+			<xs:documentation>FSU Status - AWD</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Movement" type="MovementDetail"/>
+				<xs:element name="Quantity" type="QTYDetail"/>
+				<xs:element name="DeliveryTo" type="InvolvedCompanyDetail" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CCDDetail">
+		<xs:annotation>
+			<xs:documentation>FSU Status - CCD</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Movement" type="MovementDetail"/>
+				<xs:element name="Quantity" type="QTYDetail"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DLVDetail">
+		<xs:annotation>
+			<xs:documentation>FSU Status - DLV</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Movement" type="MovementDetail"/>
+				<xs:element name="Quantity" type="QTYDetail"/>
+				<xs:element name="DeliveryTo" type="InvolvedCompanyDetail" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DISDetail">
+		<xs:annotation>
+			<xs:documentation>FSU Status - DIS</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Movement" type="MovementDetail"/>
+				<xs:element name="DiscrepancyDesc">
+					<xs:annotation>
+						<xs:documentation>Discrepancy Code</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:minLength value="4"/>
+							<xs:maxLength value="4"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="Quantity" type="QTYDetail"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CRCDetail">
+		<xs:annotation>
+			<xs:documentation>FSU Status - CRC</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Reporting" type="MovementDetail"/>
+				<xs:element name="Quantity" type="QTYDetail"/>
+				<xs:element name="Movement" type="MovementDetail_DEPARR" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DDLDetail">
+		<xs:annotation>
+			<xs:documentation>FSU Status - DDL</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Movement" type="MovementDetail"/>
+				<xs:element name="Quantity" type="QTYDetail"/>
+				<xs:element name="DeliveryTo" type="InvolvedCompanyDetail" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="TGCDetail">
+		<xs:annotation>
+			<xs:documentation>FSU Status - TGC</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Movement" type="MovementDetail"/>
+				<xs:element name="Quantity" type="QTYDetail"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ARRDetail">
+		<xs:annotation>
+			<xs:documentation>FSU Status - ARR</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Movement" type="MovementDetail"/>
+				<xs:element name="Quantity" type="QTYDetail"/>
+				<xs:element name="DEPTime" type="FlightTime" minOccurs="0"/>
+				<xs:element name="ARRTime" type="FlightTime" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AWRDetail">
+		<xs:annotation>
+			<xs:documentation>FSU Status - AWR</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Movement" type="MovementDetail"/>
+				<xs:element name="Quantity" type="QTYDetail"/>
+				<xs:element name="DEPTime" type="FlightTime" minOccurs="0"/>
+				<xs:element name="ARRTime" type="FlightTime" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="FOHDetail">
+		<xs:annotation>
+			<xs:documentation>FSU Status - FOH</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Movement" type="MovementDetail"/>
+				<xs:element name="Quantity" type="QTYDetail"/>
+				<xs:element name="ReceivedFrom" type="InvolvedCompanyDetail" minOccurs="0"/>
+				<xs:element name="Volume" type="VolumeDetail" minOccurs="0"/>
+				<xs:element name="DensityGroup" type="DensityGrp" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="ULDDescriptionGrp">
+		<xs:annotation>
+			<xs:documentation>ULD Description Group</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ULDDetail" type="ULDDetail" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ULDDetail">
+		<xs:annotation>
+			<xs:documentation>ULD Description
+ Detail</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ULDNum" type="ULD">
+				<xs:annotation>
+					<xs:documentation>ULD Identification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ULDLoadingIndicator" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ULD">
+		<xs:annotation>
+			<xs:documentation>ULD Identification</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Type">
+				<xs:annotation>
+					<xs:documentation>ULD Type</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="3"/>
+						<xs:minLength value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="SerialNum">
+				<xs:annotation>
+					<xs:documentation>ULD Serial Number</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="5"/>
+						<xs:minLength value="4"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="OwnerCode">
+				<xs:annotation>
+					<xs:documentation>ULD Owner Code</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="2"/>
+						<xs:maxLength value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OtherServiceInfoGrp">
+		<xs:annotation>
+			<xs:documentation>Other Service Information Group</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="OSIDetail" type="OtherServiceInfo" maxOccurs="3"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OtherServiceInfo">
+		<xs:annotation>
+			<xs:documentation>Other Service Information</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="OtherServiceInformation">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="65"/>
+						<xs:whiteSpace value="collapse"/>
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AWBID">
+		<xs:annotation>
+			<xs:documentation>AWB Identification</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Prefix">
+				<xs:annotation>
+					<xs:documentation>Airline Prefix</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="3"/>
+						<xs:maxLength value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="SerialNum">
+				<xs:annotation>
+					<xs:documentation>AWB Serial Number</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="8" fixed="false"/>
+						<xs:minLength value="8"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OriginDestination">
+		<xs:annotation>
+			<xs:documentation>Origin and Destination</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Origin">
+				<xs:annotation>
+					<xs:documentation>Airport/City Code (of Origin)</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="3"/>
+						<xs:minLength value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Destination">
+				<xs:annotation>
+					<xs:documentation>Airport/City Code (of Destination)</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="3"/>
+						<xs:maxLength value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="QuantityDetail">
+		<xs:annotation>
+			<xs:documentation>Quantity Detail</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DescCode">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Pieces">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:pattern value="\d{1,4}"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="WeightCode">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Weight">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:totalDigits value="7"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="QTYDetail">
+		<xs:annotation>
+			<xs:documentation>FSU - Quantity Detail</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DescCode">
+				<xs:annotation>
+					<xs:documentation>Shipment Description Code (T or P)</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="1"/>
+						<xs:enumeration value="T"/>
+						<xs:enumeration value="P"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Pieces">
+				<xs:annotation>
+					<xs:documentation>Number of Pieces</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="4"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="WeightCode" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="1"/>
+						<xs:enumeration value="K"/>
+						<xs:enumeration value="L"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Weight" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:totalDigits value="7"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ShipmentPieces">
+		<xs:annotation>
+			<xs:documentation>Total consignment pieces</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DescriptionCode" default="T">
+				<xs:annotation>
+					<xs:documentation>Shipment Description Code (T)</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Pieces">
+				<xs:annotation>
+					<xs:documentation>Number of Pieces</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="4"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MovementDetail">
+		<xs:annotation>
+			<xs:documentation>Movement Detail</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CarrierCode" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="2"/>
+						<xs:minLength value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="FlightNum" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Day">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Month">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="3"/>
+						<xs:maxLength value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ActualTime" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="4"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="DayChangeIndicator" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="AirportCode">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="3"/>
+						<xs:maxLength value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MovementDetail_DEPARR">
+		<xs:annotation>
+			<xs:documentation>Movement Detail (Airport Code of Departure/Arrival) </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CarrierCode" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="2"/>
+						<xs:minLength value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="FlightNum" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Day" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Month" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="3"/>
+						<xs:maxLength value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ActualTime" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="4"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="DayChangeIndicator" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="DEPAirport">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="3"/>
+						<xs:maxLength value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ARRAirport">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="3"/>
+						<xs:maxLength value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MovementDetail_TRM">
+		<xs:annotation>
+			<xs:documentation>Movement Detail (Carrier Code and Airport Code of Transfer)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CarrierCode">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="2"/>
+						<xs:minLength value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="AirportCode">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="3"/>
+						<xs:maxLength value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InvolvedCompanyDetail">
+		<xs:annotation>
+			<xs:documentation>Received from / Notification-to / Delivery-to Detail</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Name">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="35"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TransferringDetail">
+		<xs:annotation>
+			<xs:documentation>Received from /Transferred from Detail</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CarrierCode">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="2"/>
+						<xs:minLength value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Name" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="35"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VolumeDetail">
+		<xs:annotation>
+			<xs:documentation>VOLUMEINFO</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Code">
+				<xs:annotation>
+					<xs:documentation>Volume Code</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:whiteSpace value="collapse"/>
+						<xs:minLength value="2"/>
+						<xs:maxLength value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Value">
+				<xs:annotation>
+					<xs:documentation>Volume Amount</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:whiteSpace value="collapse"/>
+						<xs:totalDigits value="9"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DensityGrp">
+		<xs:annotation>
+			<xs:documentation>Density Group</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DensityIndicator" default="DG">
+				<xs:annotation>
+					<xs:documentation>Density Indicator (DG)</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:whiteSpace value="collapse"/>
+						<xs:minLength value="2"/>
+						<xs:maxLength value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="DensityGroup">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:pattern value="\d{1,2}"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FlightTime">
+		<xs:annotation>
+			<xs:documentation>FlightTime</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TimeType">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Time">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="4"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="DayChangeIndicator" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FlightBookingGrp">
+		<xs:annotation>
+			<xs:documentation>Flight Bookings Group</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="FlightID" type="Booking" maxOccurs="2"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Booking">
+		<xs:annotation>
+			<xs:documentation>Flight Booking Info</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CarrierCode">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="2"/>
+						<xs:whiteSpace value="collapse"/>
+						<xs:minLength value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="FlightNum">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="3"/>
+						<xs:maxLength value="5"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Day" type="xs:date"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RoutingGrp">
+		<xs:annotation>
+			<xs:documentation>Flight Routing Group</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DestinationCarrier" type="RouteFirst"/>
+			<xs:element name="DestinationCarrierOnward" type="RouteOnward" minOccurs="0" maxOccurs="2"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RouteFirst">
+		<xs:annotation>
+			<xs:documentation>Flight Route 1st Info</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AirportCode" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="3"/>
+						<xs:whiteSpace value="collapse"/>
+						<xs:minLength value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="CarrierCode">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="2"/>
+						<xs:whiteSpace value="collapse"/>
+						<xs:minLength value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RouteOnward">
+		<xs:annotation>
+			<xs:documentation>Flight Route Onward Info</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AirportCode">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="3"/>
+						<xs:whiteSpace value="collapse"/>
+						<xs:minLength value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="CarrierCode" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="2"/>
+						<xs:whiteSpace value="collapse"/>
+						<xs:minLength value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContactAddress">
+		<xs:annotation>
+			<xs:documentation>Contact Address</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AccountNum" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="14"/>
+						<xs:minLength value="1"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Name">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="35"/>
+						<xs:minLength value="1"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Name2" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="35"/>
+						<xs:minLength value="1"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Address">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="35"/>
+						<xs:whiteSpace value="collapse"/>
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Address2" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="35"/>
+						<xs:whiteSpace value="collapse"/>
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Place">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="17"/>
+						<xs:minLength value="1"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="StateProvince" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="9"/>
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ISOCountryCode">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="2"/>
+						<xs:minLength value="1"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="PostCode" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="9"/>
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ContactDetail" type="Contact" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Account">
+		<xs:annotation>
+			<xs:documentation>Account Info</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AccountNum" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="14"/>
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="IATAAgentCode">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:pattern value="\d{7}"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="IATAAgentCASSAddress" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:pattern value="\d{4}"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ParticipantID" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="3"/>
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SSRGrp">
+		<xs:annotation>
+			<xs:documentation>SPECIAL SERVICE REQUEST Group</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SSRDetail" type="SSR" maxOccurs="3"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SSR">
+		<xs:annotation>
+			<xs:documentation>SPECIAL SERVICE REQUEST Detail</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SSRElement">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="65"/>
+						<xs:whiteSpace value="collapse"/>
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Contact">
+		<xs:annotation>
+			<xs:documentation>Contact</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ContactID">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="3"/>
+						<xs:whiteSpace value="collapse"/>
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ContactNum">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="25"/>
+						<xs:whiteSpace value="collapse"/>
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Agent">
+		<xs:annotation>
+			<xs:documentation>Agent Info</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AccountDetail" type="Account"/>
+			<xs:element name="Name">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="35"/>
+						<xs:whiteSpace value="collapse"/>
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Place">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="17"/>
+						<xs:whiteSpace value="collapse"/>
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AccountingGrp">
+		<xs:annotation>
+			<xs:documentation>Accounting Group</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AccountDetail" type="AccountingInfo" maxOccurs="7"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AccountingInfo">
+		<xs:annotation>
+			<xs:documentation>Accounting Info</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AccountingID">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="3"/>
+						<xs:whiteSpace value="collapse"/>
+						<xs:minLength value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="AccountingInfoElement">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="34"/>
+						<xs:whiteSpace value="collapse"/>
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ChargeDeclaration">
+		<xs:annotation>
+			<xs:documentation>Charge Declaration Info</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CurrencyCode">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="3"/>
+						<xs:minLength value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ChargeCode" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="2"/>
+						<xs:minLength value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="PrepaidCollectDeclarations" type="DeclaredPrepaidCollect" minOccurs="0"/>
+			<xs:element name="DeclaredValueCarriage" type="DeclaredValue"/>
+			<xs:element name="DeclaredValueCustoms" type="DeclaredValue"/>
+			<xs:element name="DeclaredValueInsurance" type="DeclaredValue"/>
+			<!--			
+			<xs:element name="PrepaidCollectDeclarations" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>			
+			-->
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DeclaredPrepaidCollect">
+		<xs:annotation>
+			<xs:documentation>Declared Prepaid Collect</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Weight">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="1"/>
+						<xs:enumeration value="P"/>
+						<xs:enumeration value="C"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="OtherCharge">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="1"/>
+						<xs:enumeration value="P"/>
+						<xs:enumeration value="C"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="WeightOrValuation">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:maxLength value="1"/>
+					<xs:enumeration value="V"/>
+					<xs:enumeration value="W"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="DeclaredValue">
+		<xs:annotation>
+			<xs:documentation>Declared Value Info</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="NoValue"/>
+			<xs:sequence>
+				<xs:element name="Value">
+					<xs:simpleType>
+						<xs:restriction base="xs:decimal">
+							<xs:totalDigits value="12"/>
+							<xs:whiteSpace value="collapse"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="ISOCurrencyCode" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="3"/>
+							<xs:whiteSpace value="collapse"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="RateDescGrp">
+		<xs:annotation>
+			<xs:documentation>Rate Description Group</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RateDescDetail" type="RateDescDetail" maxOccurs="11"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TotalDetail">
+		<xs:annotation>
+			<xs:documentation>TOTALDetailINFO</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="Charge">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:totalDigits value="12"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Discount">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:totalDigits value="12"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="RateDescDetail">
+		<xs:annotation>
+			<xs:documentation>Rate Description Detail</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AWBRateLineNum">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="Pieces" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="xs:integer">
+							<xs:totalDigits value="4"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="RateCombinationPoint" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:minLength value="3"/>
+							<xs:maxLength value="3"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="GrossWeight" type="Weight" minOccurs="0"/>
+			<xs:element name="RateClassCode" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="1"/>
+						<xs:whiteSpace value="collapse"/>
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="CommodityDetail" type="CommodityItem" minOccurs="0"/>
+			<xs:element name="ChargeableWeight" type="Weight" minOccurs="0"/>
+			<xs:element name="RateChargeDetail" type="RateCharge" minOccurs="0"/>
+			<xs:element name="TotalDetail" type="TotalDetail" minOccurs="0"/>
+			<xs:choice>
+				<xs:element name="GoodsDesc" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="20"/>
+							<xs:whiteSpace value="collapse"/>
+							<xs:minLength value="1"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="Consolidation" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="20"/>
+							<xs:whiteSpace value="collapse"/>
+							<xs:minLength value="1"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="Dimensions" type="Dimensions" minOccurs="0"/>
+				<xs:element name="Volume" type="VolumeDetail" minOccurs="0"/>
+				<xs:element name="ULDNum" type="ULD" minOccurs="0"/>
+				<xs:element name="ShipperLoadCount" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="xs:integer">
+							<xs:totalDigits value="5"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="HarmonisedCommodityCode" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="18"/>
+							<xs:whiteSpace value="collapse"/>
+							<xs:minLength value="6"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="CountryOfGoods" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="2"/>
+							<xs:minLength value="2"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="ServiceCode" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:length value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OtherChargesGrp">
+		<xs:annotation>
+			<xs:documentation>Other Charges Group</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="OtherChargesDetail" type="OtherCharges" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OtherCharges">
+		<xs:annotation>
+			<xs:documentation>Other Charges Info</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PCIndicator">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:whiteSpace value="collapse"/>
+						<xs:length value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="OtherChargeItems" maxOccurs="3">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="OtherChargeCode">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:whiteSpace value="collapse"/>
+									<xs:length value="2"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="EntitlementCode">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:whiteSpace value="collapse"/>
+									<xs:length value="1"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="ChargeAmount">
+							<xs:simpleType>
+								<xs:restriction base="xs:decimal">
+									<xs:totalDigits value="12"/>
+									<xs:whiteSpace value="collapse"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ChargeSummary">
+		<xs:annotation>
+			<xs:documentation>Charge Summary</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TotalWeightCharge" type="Charge" minOccurs="0"/>
+			<xs:element name="ValuationCharge" type="Charge" minOccurs="0"/>
+			<xs:element name="Taxes" type="Charge" minOccurs="0"/>
+			<xs:element name="TotalOtherChargesDueAgent" type="Charge" minOccurs="0"/>
+			<xs:element name="TotalOtherChargesDueCarrier" type="Charge" minOccurs="0"/>
+			<xs:element name="ChargeSummaryTotal" type="Charge"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Charge">
+		<xs:annotation>
+			<xs:documentation>Charge Info</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ChargeAmount">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:totalDigits value="12"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="CertSignature">
+		<xs:annotation>
+			<xs:documentation>Certificate Signature</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="Execution">
+		<xs:annotation>
+			<xs:documentation>Execuation Info</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="IssueDate" type="xs:date"/>
+			<xs:element name="IssuePlace">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="17"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Authorisation" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="20"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CCCharges">
+		<xs:annotation>
+			<xs:documentation>CC Charges Information</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ISOCurrencyCode">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="3"/>
+						<xs:whiteSpace value="collapse"/>
+						<xs:minLength value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="CurrencyConversionRate">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:totalDigits value="11"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="CCChargesInDestinationCurrency">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:totalDigits value="12"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ChargesAtDestination">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:totalDigits value="12"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="TotalCollectCharges">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:totalDigits value="12"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SenderRef">
+		<xs:annotation>
+			<xs:documentation>Sender Reference Information</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="OfficeMsgAddress">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Airport">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:length value="3"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="OfficeFunctionDesignator">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:length value="2"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="CompanyDesignator">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:length value="2"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="ParticipantID">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="ParticipantIDElement">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:maxLength value="3"/>
+										<xs:minLength value="1"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="ParticipantCode">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:maxLength value="17"/>
+										<xs:minLength value="1"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="Airport">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:length value="3"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="OfficeFileRef" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="15"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Commission">
+		<xs:annotation>
+			<xs:documentation>COMMISSIONINFO</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="NoCommissionIndication">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="CommissionAmount">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:totalDigits value="12"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="CommissionPercentage">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:totalDigits value="12"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="Weight">
+		<xs:annotation>
+			<xs:documentation>Weight Info</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Code" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="1"/>
+						<xs:whiteSpace value="collapse"/>
+						<xs:minLength value="1"/>
+						<xs:enumeration value="K"/>
+						<xs:enumeration value="L"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Value">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:totalDigits value="7"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SalesIncentive">
+		<xs:annotation>
+			<xs:documentation>SALES INCENTIVE INFO</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="IncentiveDetail">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:totalDigits value="12"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="IncentiveIndication" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SpecialHandlingGrp">
+		<xs:annotation>
+			<xs:documentation>SPECIALHANDLINGGROUP</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Requirements" type="SpecialHandling" maxOccurs="9"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SpecialHandling">
+		<xs:annotation>
+			<xs:documentation>SPECIALHANDLINGINFO</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SpecialHandlingCode">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="3"/>
+						<xs:whiteSpace value="collapse"/>
+						<xs:minLength value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="NominatedHandlingParty">
+		<xs:annotation>
+			<xs:documentation>NOMINATEDHANDLINGPARTYINFO</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Name">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="35"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Place">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="17"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ShipmentRef">
+		<xs:annotation>
+			<xs:documentation>SHIPMENTREFERENCEINFO</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ShipmentDetail" type="ShipmentDetail"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ShipmentDetail">
+		<xs:annotation>
+			<xs:documentation>SHIPMENTREFERENCEINFO</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ReferenceNum" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="14"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="SupplementaryShipmentInfo" minOccurs="0" maxOccurs="2">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="12"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OtherParticipantInfoGrp">
+		<xs:annotation>
+			<xs:documentation>OTHERPARTICIPANTINFO Group</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="OtherParticipantInfoDetail" type="OtherParticipant" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OtherParticipant">
+		<xs:annotation>
+			<xs:documentation>OTHERPARTICIPANTINFO</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Name">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="35"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:sequence>
+				<xs:choice>
+					<xs:element name="OfficeMessageAddress" type="OfficeMessageAddress"/>
+					<xs:element name="Participant" type="ParticipantID"/>
+				</xs:choice>
+				<xs:element name="OfficeFileReference" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="15"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OfficeMessageAddress">
+		<xs:annotation>
+			<xs:documentation>OFFICEMESSAGEADDRESS</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AirportCode">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="3"/>
+						<xs:minLength value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="OfficeFunctionDesignator">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="2"/>
+						<xs:minLength value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="CompanyDesignator">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="2"/>
+						<xs:minLength value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ParticipantID">
+		<xs:annotation>
+			<xs:documentation>PARTICIPANTIDENTIFICATION</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ParticipantID">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Code">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="17"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Airport">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="3"/>
+						<xs:minLength value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CommodityItem">
+		<xs:annotation>
+			<xs:documentation>COMMODITYITEMINFO</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="CommodityItemNum">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:pattern value="\d{4,7}"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ULDRateClassType">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="3"/>
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:sequence>
+				<xs:element name="RateClassCode">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:minLength value="1"/>
+							<xs:maxLength value="1"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="ClassRatePercentage">
+					<xs:simpleType>
+						<xs:restriction base="xs:integer">
+							<xs:totalDigits value="3"/>
+							<xs:pattern value="\d{1,3}"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="RateCharge">
+		<xs:annotation>
+			<xs:documentation>RATECHARGEINFO</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="RateOrCharge">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:totalDigits value="8"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Discount">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:totalDigits value="8"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="Dimensions">
+		<xs:annotation>
+			<xs:documentation>DIMENSIONSINFO</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Weight" type="Weight" minOccurs="0"/>
+			<xs:element name="MeasurementUnitCode">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="3"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Length">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Width">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Height">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Pieces">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="4"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OtherCustomsInfoGrp">
+		<xs:annotation>
+			<xs:documentation>OTHERCUSTOMSINFO Group</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="OtherCustomsInfoDetail" type="OtherCustoms" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OtherCustoms">
+		<xs:annotation>
+			<xs:documentation>OTHERCUSTOMSINFO</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:sequence>
+				<xs:element name="ISOCountryCode" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>ISO Country Code</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:whiteSpace value="collapse"/>
+							<xs:minLength value="2"/>
+							<xs:maxLength value="2"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="InformationID" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Information Identifier</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:minLength value="3"/>
+							<xs:maxLength value="3"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="CustomsInformationID" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Customs, Security and Regulatory Control Information Identifier</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="2"/>
+							<xs:minLength value="1"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+			<xs:element name="SupplementaryCustomsInfo">
+				<xs:annotation>
+					<xs:documentation>Supplementary Customs, Security and Regulatory Control Information</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="35"/>
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HWBGrp">
+		<xs:annotation>
+			<xs:documentation>HOUSEWAYBILLSUMMARY</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="HWBSerialNum">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:whiteSpace value="collapse"/>
+						<xs:minLength value="1"/>
+						<xs:maxLength value="12"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="AWBOD" type="OriginDestination"/>
+			<xs:element name="Pieces">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="4"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="WeightCode">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="1"/>
+						<xs:enumeration value="K"/>
+						<xs:enumeration value="L"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Weight">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:totalDigits value="7"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ShipperLoadCount" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="NatureOfGoods">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:whiteSpace value="collapse"/>
+						<xs:minLength value="1"/>
+						<xs:maxLength value="15"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="SpecialHandlingDetail" type="SHRGrp" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SHRGrp">
+		<xs:annotation>
+			<xs:documentation>Special Handling Requirements</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Requirements" type="SpecialHandling" maxOccurs="9"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HTSGrp">
+		<xs:annotation>
+			<xs:documentation>Free Text Description of Goods</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="HarmonisedCommodityCodeDetail" type="HTSDetail" maxOccurs="9"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HTSDetail">
+		<xs:annotation>
+			<xs:documentation>Free Text Description of Goods</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="HarmonisedCommodityCode">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="18"/>
+						<xs:whiteSpace value="collapse"/>
+						<xs:minLength value="6"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FreeTextDOGGrp">
+		<xs:annotation>
+			<xs:documentation>Free Text Description of Goods</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DescriptionOfGoodsDetail" type="FreeTextDOGDetail" maxOccurs="9"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FreeTextDOGDetail">
+		<xs:annotation>
+			<xs:documentation>Free Text Description of Goods</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DescriptionOfGoods">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:whiteSpace value="collapse"/>
+						<xs:maxLength value="65"/>
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HWBSegSummaryGrp">
+		<xs:annotation>
+			<xs:documentation>House Waybill Summary Detail (Segments)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="HouseWaybillSummaryDetail" type="HWBSegSummaryDetail" maxOccurs="999"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HWBSegSummaryDetail">
+		<xs:annotation>
+			<xs:documentation>House Waybill Summary Detail (Segments)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="HouseWaybillSummaryDetail" type="HWBGrp"/>
+			<xs:element name="FreeTextDescriptionOfGoods" type="FreeTextDOGGrp" minOccurs="0"/>
+			<xs:element name="HarmonisedTariffScheduleInfo" type="HTSGrp" minOccurs="0"/>
+			<xs:element name="OtherCustomsInfo" type="OtherCustomsInfoGrp" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HWBSegDetail">
+		<xs:annotation>
+			<xs:documentation>House Waybill Summary Detail (Segments)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="HouseWaybillSummaryDetail" type="HWBGrp"/>
+			<xs:element name="FreeTextDescriptionOfGoods" type="FreeTextDOGGrp" minOccurs="0"/>
+			<xs:element name="HarmonisedTariffScheduleInfo" type="HTSGrp" minOccurs="0"/>
+			<!-- 20130107, modify to use multiple OCI lines -->
+			<!--
+			<xs:element name="OtherCustomsInfo" type="OtherCustoms" minOccurs="0"/>
+-->
+			<xs:element name="OtherCustomsInfo" type="OtherCustomsInfoGrp" minOccurs="0"/>
+			<xs:element name="Shipper" type="ContactAddress"/>
+			<xs:element name="Consignee" type="ContactAddress"/>
+			<xs:element name="ChargeDeclarations" type="ChargeDeclaration" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReasonDetail">
+		<xs:annotation>
+			<xs:documentation>Reason for Acknowledgement, Rejection/Error</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Reason" maxOccurs="unbounded">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:whiteSpace value="collapse"/>
+						<xs:maxLength value="65"/>
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="FSU">
+		<xs:annotation>
+			<xs:documentation>FSU Detail</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="FSUAWB" maxOccurs="unbounded"/>
+				<xs:element name="OtherCustomsInfo" type="OtherCustomsInfoGrp" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Other Customs, Security and Regulatory Information</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="ULDDescription" type="ULDDescriptionGrp" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>ULD Description</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="OtherServiceInfo" type="OtherServiceInfoGrp" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Other Service Information</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="FWB">
+		<xs:annotation>
+			<xs:documentation>FWB Detail</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="AWB">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="AWBID"/>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="AWBOD" type="OriginDestination"/>
+				<xs:element name="Quantity" type="QuantityDetail"/>
+				<xs:choice>
+					<xs:element name="Volume" type="VolumeDetail" minOccurs="0"/>
+					<xs:element name="Density" type="DensityGrp" minOccurs="0"/>
+				</xs:choice>
+				<xs:element name="FlightBookings" type="FlightBookingGrp" minOccurs="0"/>
+				<xs:element name="Routing" type="RoutingGrp"/>
+				<xs:element name="Shipper" type="ContactAddress"/>
+				<xs:element name="Consignee" type="ContactAddress"/>
+				<xs:element name="Agent" type="Agent" minOccurs="0"/>
+				<xs:element name="SpecialServiceRequest" type="SSRGrp" minOccurs="0"/>
+				<xs:element name="AlsoNotify" type="ContactAddress" minOccurs="0"/>
+				<xs:element name="AccountingInfo" type="AccountingGrp" minOccurs="0"/>
+				<xs:element name="ChargeDeclarations" type="ChargeDeclaration"/>
+				<xs:element name="RateDescription" type="RateDescGrp"/>
+				<xs:element name="OtherCharges" type="OtherChargesGrp" minOccurs="0"/>
+				<xs:element name="PrepaidChargeSummary" type="ChargeSummary" minOccurs="0"/>
+				<xs:element name="CollectChargeSummary" type="ChargeSummary" minOccurs="0"/>
+				<xs:element name="ShipperCertification" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="CertSignature">
+							<xs:minLength value="1"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="CarrierExecution" type="Execution"/>
+				<xs:element name="OtherServiceInfo" type="OtherServiceInfoGrp" minOccurs="0"/>
+				<xs:element name="CCChargesInDestCurrency" type="CCCharges" minOccurs="0"/>
+				<xs:element name="SenderReference" type="SenderRef"/>
+				<xs:element name="CustomsOrigin" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="2"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="Commission" type="Commission" minOccurs="0"/>
+				<xs:element name="SalesIncentive" type="SalesIncentive" minOccurs="0"/>
+				<xs:element name="AgentRefData" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="15"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="SpecialHandlingDetail" type="SpecialHandlingGrp" minOccurs="0"/>
+				<xs:element name="NominatedHandlingParty" type="NominatedHandlingParty" minOccurs="0"/>
+				<xs:element name="ShipmentReference" type="ShipmentRef" minOccurs="0"/>
+				<xs:element name="OtherParticipantInfo" type="OtherParticipantInfoGrp" minOccurs="0"/>
+				<xs:element name="OtherCustomsInfo" type="OtherCustomsInfoGrp" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="FHL">
+		<xs:annotation>
+			<xs:documentation>FHL Detail</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="AWB">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="AWBID"/>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="AWBOD" type="OriginDestination"/>
+				<xs:element name="Quantity" type="QuantityDetail"/>
+				<xs:choice>
+					<xs:element name="HWBSegDetail" type="HWBSegDetail"/>
+					<xs:element name="HWBSegSummary" type="HWBSegSummaryGrp"/>
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="FMA">
+		<xs:annotation>
+			<xs:documentation>FMA Detail</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ReasonforAcknowledgement" type="ReasonDetail" minOccurs="0"/>
+				<xs:element name="ReceivedMessageDetail">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:whiteSpace value="collapse"/>
+							<xs:minLength value="1"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="FNA">
+		<xs:annotation>
+			<xs:documentation>FNA Detail</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ReasonforRejectionError" type="ReasonDetail"/>
+				<xs:element name="ReceivedMessageDetail">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:whiteSpace value="collapse"/>
+							<xs:minLength value="1"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

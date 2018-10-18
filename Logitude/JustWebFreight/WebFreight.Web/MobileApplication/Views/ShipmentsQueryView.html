@@ -1,0 +1,546 @@
+﻿ <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+
+    <style>
+
+    </style>
+
+
+</head>
+<body>
+
+    <div data-role="view" data-transition="fade" data-init ="onShipmentsViewInit"   id="listview-home">
+
+        <header data-role="header">
+           
+           <div style="height:45px;display:table;width:100%;">
+
+                  <div style="display:table-cell; width:203px; vertical-align:middle; text-align:left">
+                             
+                                 <div style="display:inline-block; width:7px"></div>
+                                <select class="selectclass"  style="height:22px; margin-top:2px; width:183px;">
+                                <option selected="selected">Dolphin Express</option>
+                                <option >Fridenson</option>
+                                <option >World Courier</option>
+                                <option >Orian</option>
+                             </select> 
+                            
+                    </div>
+                  
+
+                 
+
+                      <div style="display:table-cell;width:100px; vertical-align:middle ; text-align:right">
+                           <div style="display:inline-block;width:35px" ><button style="background-color:transparent; width:auto; height:auto;margin-top:1px; margin-top:7px;"><img style="width:25px;margin-top:3px; height:24px;" src="images/setting2.png" ></button> </div>
+                             <div style="display:inline-block; width:9px"></div>
+                             <div style="display:inline-block;width:35px;margin-bottom:5px;"><button style="background-color:transparent; width:auto; height:auto; margin-right:9px;"><img style="width:25px; height:24px;" src="images/setting.png" ></button> </div>
+                           
+                      </div>
+
+       
+            </div>
+           
+      </header>
+         
+
+          <div style="height:69px; width:100%; border-bottom:1px solid #B0B7BB;border-top:2px solid #B0B7BB;  background-color:White; margin-top:9px">
+
+                 <div style =" margin-left:10px; margin-right:10px ;">
+                   
+                     <select onchange="onQueryBoxChange();" id="QueryBox" style="height:39px; margin-top:10px; width : 100%; border: 1px solid #B1B6BA;">
+                                <option value="OS" selected="selected"> Open Shipments</option>
+                                <option value="IS">Import Shipments</option>
+                                <option value="ES">Export Shipments</option>
+                     </select> 
+               
+               </div>
+                
+
+            </div>
+        
+      
+         <!--<div class="ValueTextStyle TemplateItem" style="display:inline-block; width:6px;"></div>-->
+   
+      <!-- <div style="background-color:white ; height :10px;"></div>-->
+
+      <ul data-role="listview" data-style="inset" data-type="group"style="margin-top :-16px;">                 
+            <li>                                    
+                <ul id="ShipmentsListBox"></ul>                
+            </li>
+        </ul>
+          <div id="endline" style="height: 1px; width: 100%; background-color: White; border-bottom:1px solid #B0B7BB" ></div>
+    </div>
+    <!--font-size:10px; color:gray;-->
+     <!--<div style="  background: #= ItemBackground # ; ">--> 
+      <script type="text/x-kendo-tmpl" id="ShipmentItemTemplate">     
+               
+       
+        <a id="#= ShipmentId #" OnClick="ViewShipment(id)">
+
+             <div style="height:51px; display:inline-block; width:100%; display:table; border-top:1px solid \\#B0B7BB;"> 
+                 <div style ="margin-left :10px; margin-right:10px; margin-top:7px;  vertical-align:middle;">  
+          
+                                  <div style="display:table;width:100% ;" >
+
+                                                        <div style="display:table-cell; vertical-align:middle; text-align:left; width:135px;">
+                                                                    
+                                                                      <div  style="display:inline-block; width:29;"><img style="height:28px;  width:29px; padding:0px; margin:0px;" src="#= FromCountySRC #" /></div>
+                                                                      <div class="HederSHDQD2TextStyle TemplateItem" style="display:inline-block;  margin-top:4px;  max-width:98px; ">${FromPortName}</div>
+                                                        </div>
+
+                                                          <div style="display:table-cell; vertical-align:middle; text-align:center; width:35px; ">
+                                                                       <div   height:40px; width:35px; style="display:inline-block; "><img style=" height:23px; width:26px;"   src="#= TransportSRC  #" /></div>
+                                                       </div>
+        
+                                                        <div style="display:table-cell; vertical-align:middle; text-align:right; width:135px;">
+                                                                        <div class="HederSHDQD2TextStyle TemplateItem" style="display:inline-block; margin-top:4px; max-width:98px;" > ${ToPortName}</div>
+                                                                       <div  style="display:inline-block;  width:29;"><img style="height:28px;  width:29px; padding:0px; margin:0px;" src="#= ToCountySRC  #" /></div>
+                                                                      
+                                                         </div>
+          </div>
+          </div>
+
+              </div>
+            
+
+           
+             <div style="height:69px; display:inline-block; width:100%; display:table; border-top:1px solid \\#B0B7BB; border-bottom:1px solid \\#B0B7BB;">
+                
+            <div style="display:table-cell; vertical-align:middle; text-align:left;">
+                       <div>
+                               <div style="display:inline-block; width:6px;"></div>                        
+                               <div class="HederSHDQD2TextStyle TemplateItem" style="display:inline-block;">${MyPartnerName}</div>
+                            <div class="HederSHDQD2TextStyle TemplateItem" style="display:inline-block; visibility: #= DesignMyReferenceVisibility #; ">${DesignMyReference}</div>
+                            
+                       </div>
+                        <div>
+                               <div style="display:inline-block; width:6px;"></div> 
+                               <div class="SHDQD1TextStyle TemplateItem" style="display:inline-block; visibility: #= DateTimeVisibility #;">ETA :</div> 
+                               <div class="HederSHDQD2TextStyle TemplateItem" style="display:inline-block;">${ETA}</div>
+                                
+                       </div>
+                       </div>
+
+                   <div style="display:table-cell; vertical-align:middle; text-align:right;">
+                                <div class="LabelTextStyle TemplateItem" style="display:inline-block;height:28px; "><img style="height:24px; width:24px; padding:0px; margin:0px;" src="#= StarImage #" /></div>
+                                <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:6px;"></div>
+                       </div>
+
+
+
+                       </div>
+      
+
+
+           
+
+         
+         <div style="height:45px; display:inline-block; width:100%;  display:table; border-bottom:1px solid \\#B0B7BB;">
+
+                 <div style="display:table-cell; vertical-align:middle; text-align:left;">
+                              <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:6px;"></div>
+                             <div class="Value2boldTextStyle TemplateItem" style="display:inline-block;">${StatusName}</div>    
+                </div> 
+                <div style="display:table-cell; vertical-align:middle; text-align:right;">
+                             <div class="Value2boldTextStyle TemplateItem" style="display:inline-block;">${StatusDate}</div> 
+                             <div  style="display:inline-block; width:6px;"></div> 
+                            
+                 </div>
+          
+        
+         </div>    
+    
+          
+         
+          </a>    
+            
+    </script>  
+
+
+    <script>
+
+
+
+        jQuery.BuildShipmentsList = (function (list) {
+            var isColored = false;
+            var ShipmentsList = [];
+
+            $.each(list, function (index, shipment) {
+
+                isColored = !isColored;
+                var item = new ShipmentListClass();
+                item.ShipmentList = shipment;
+
+
+
+                if (item.ItemBackground = isColored) {
+                    item.ItemBackground = " #EFF5F5";
+                    item.StarImage = "images/NoRank.png";
+                    //item.StarImage = "images/starblue.png";
+
+                }
+                else {
+                    item.StarImage = "images/NoRank.png";
+                    item.ItemBackground = " #FFFFFF";
+                }
+
+                src =
+                item.ShipmentId = shipment.Id;
+
+
+                item.ShipmentNumber = $.trim(shipment.ShipmentNumber);
+                item.IncotermCode = $.trim(shipment.IncotermCode);
+                item.MainCarriageCarrierName = $.trim(shipment.MainCarriageCarrierName);
+                item.MainCarriageATD = $.trim(shipment.MainCarriageATD);
+                item.ATD = $.Convert.ToShortDate(shipment.MainCarriageATD);
+
+                //if ($.trim(shipment.MainCarriageCarrierCode) != "" || $.trim(shipment.MainCarriageCarrierNumber) != "") {
+                //    item.CarrierInfo = "( " + $.trim(shipment.MainCarriageCarrierCode) + $.trim(shipment.MainCarriageCarrierNumber) + " )";
+                //}
+                //else {
+                //    item.CarrierInfo = "";
+                //}
+
+                //if ($.trim(shipment.MainCarriageCarrierCode) != "" || $.trim(shipment.MainCarriageCarrierNumber) != "") {
+                //    item.CarrierText = $.trim(shipment.MainCarriageCarrierCode) + $.trim(shipment.MainCarriageCarrierNumber);
+                //}
+
+                //if ($.trim(shipment.MainCarriageCarrierCode) == "" && $.trim(shipment.MainCarriageCarrierNumber) == "" && $.trim(shipment.MainCarriageCarrierName == "")) {
+                //    item.NoCarrierTextVisibility = "visible";
+                //}
+
+                //else {
+
+                //    item.CarrierVisibility = "visible";
+                //}
+
+                item.CarrierName = $.trim(shipment.MainCarriageCarrierName);
+                item.CarrierCode = $.trim(shipment.MainCarriageCarrierCode);
+                item.CarrierNumber = $.trim(shipment.MainCarriageCarrierNumber);
+
+
+                if ($.Convert.ToShortDate(shipment.MainCarriageETA) != "") {
+                    item.DateTimeVisibility = "visible";
+                }
+
+                item.ETA = $.Convert.ToShortDate(shipment.MainCarriageETA);
+
+                if (shipment.DirectionId == "D" && shipment.TransportModeId == "I") {
+
+                    item.FromPortName = $.trim(shipment.MainCarriageFromCity);
+                    item.FromCountyCode = $.trim(shipment.MainCarriageFromCountryCode);
+                  
+                    item.FromCountySRC = "../images/Flags/" + item.FromCountyCode + ".png";
+
+                    item.ToPortName = $.trim(shipment.MainCarriageToCity);
+                    item.ToCountyCode = $.trim(shipment.MainCarriageToCountryCode);
+                    item.ToCountySRC = "../images/Flags/" + item.ToCountyCode + ".png";
+                }
+
+                else {
+
+                    item.FromPortCode = $.trim(shipment.FromPort);
+                    item.FromPortName = $.trim(shipment.FromPortName);
+                    item.FromCountyCode = $.trim(shipment.FromCountryCode);
+                    item.FromCountySRC = "../images/Flags/" + item.FromCountyCode + ".png";
+
+                    item.ToPortCode = $.trim(shipment.ToPort);
+                    item.ToPortName = $.trim(shipment.ToPortName);
+                    item.ToCountyCode = $.trim(shipment.ToCountryCode);
+                    item.ToCountySRC = "../images/Flags/" + item.ToCountyCode + ".png";
+                }
+
+                var _myRef = "";
+                var _myPartnerName = "";
+
+                if (shipment.DirectionId == "I") {
+
+                    _myRef = shipment.ShipperReference1;
+                    if ($.trim(shipment.ShipperReference2) != "") {
+                        _myRef = ($.trim(_myRef) == "") ? shipment.ShipperReference2 : _myRef + ", " + shipment.ShipperReference2;
+                    }
+
+                    _myPartnerName = shipment.Shipper;
+                }
+
+                else {
+
+                    _myRef = shipment.ConsigneeReference1;
+                    if ($.trim(shipment.ConsigneeReference2) != "") {
+                        _myRef = ($.trim(_myRef) == "") ? shipment.ConsigneeReference2 : _myRef + ", " + shipment.ConsigneeReference2;
+                    }
+
+                    _myPartnerName = shipment.Consignee;
+                }
+
+                item.MyReference = $.trim(_myRef) != "" ? _myRef : "";
+                item.DesignMyReference = "( " + item.MyReference + " )";
+
+
+                if ($.trim(_myRef) != "" ? _myRef : "" != "") {
+                    item.DesignMyReferenceVisibility = "visible";
+                }
+
+
+                item.MyPartnerName = $.trim(_myPartnerName) != "" ? _myPartnerName : "";
+
+                switch (shipment.DirectionId) {
+
+                    case "E": {
+                        item.DirectionSRC = "../HtmlHelpers/Images/Icons/Export.png";
+                        item.DirectionName = "Export";
+                        break;
+                    }
+
+                    case "I": {
+                        item.DirectionSRC = "../HtmlHelpers/Images/Icons/Import.png";
+                        item.DirectionName = "Import";
+                        break;
+                    }
+
+                    case "D": {
+                        item.DirectionSRC = "../HtmlHelpers/Images/Icons/Domestic.png";
+                        item.DirectionName = "Domestic";
+                        break;
+                    }
+                }
+
+                switch (shipment.TransportModeId) {
+
+                    case "A": {
+                        item.TransportSRC = "../HtmlHelpers/Images/Icons/Air-Moblie.png";
+                        item.TransportName = "Air";
+                        item.Carrierlable = "Flight No";
+                        break;
+                    }
+
+                    case "I": {
+                        item.TransportSRC = "../HtmlHelpers/Images/Icons/Inland-Moblie.png";
+                        item.TransportName = "Inland";
+                        item.Carrierlable = " Truck No";
+                        break;
+                    }
+
+                    case "O": {
+                        item.TransportSRC = "../HtmlHelpers/Images/Icons/Ocean-Moblie.png";
+                        item.TransportName = "Ocean";
+                        item.Carrierlable = " Voyage No";
+                        break;
+                    }
+                }
+
+                item.PackageTypeSRC = IsLCLShipment(shipment) ? "../HtmlHelpers/Images/Icons/Package.png" : "../HtmlHelpers/Images/Icons/Container.png";
+
+                if (IsLCLShipment(shipment)) {
+                    var num = $.trim(shipment.NumberOfPackages) == "" ? 0 : shipment.NumberOfPackages;
+
+                    if (num == 0) {
+                        num = $.trim(shipment.BookingNumberOfPackages) == "" ? 0 : shipment.BookingNumberOfPackages;
+                    }
+
+                    item.NumberOfPackages = num + " Packages";
+                }
+
+                else {
+                    var num = $.trim(shipment.NumberOfContainers) == "" ? 0 : shipment.NumberOfContainers;
+
+                    if (num == 0) {
+                        num = $.trim(shipment.BookingNumberOfPackages) == "" ? 0 : shipment.BookingNumberOfPackages;
+                    }
+
+                    item.NumberOfPackages = num + " Containers";
+                }
+
+                var charg = $.trim(shipment.ChargeableWeight) == "" ? 0 : shipment.ChargeableWeight;
+                if (charg == 0) {
+                    charg = $.trim(shipment.OrderChargeableWeight) == "" ? 0 : shipment.OrderChargeableWeight;
+                }
+
+                item.ChargeableWeight = charg.toFixed(3) + " (" + shipment.ChargeableWeightUnitCode + ")";
+
+                if ($.trim(shipment.MainCarriageATD) != "") {
+
+                    item.FromDate = $.Convert.ToShortDate(shipment.MainCarriageATD);
+                    item.FromTime = $.Convert.ToShortTime(shipment.MainCarriageATD);
+                    item.FromDateType = "(Actual)";
+                    item.FromDateColor = "#282E30";
+                    item.FromDateTypeColor = "#009161";
+                }
+
+                else {
+
+                    if ($.trim(shipment.MainCarriageETD) != "") {
+                        item.FromDate = $.Convert.ToShortDate(shipment.MainCarriageETD);
+                        item.FromTime = $.Convert.ToShortTime(shipment.MainCarriageETD);
+                        item.FromDateType = "(Estimate)";
+                        item.FromDateColor = "#282E30";
+                        item.FromDateTypeColor = "#6E7172";
+                    }
+
+                    else {
+                        item.FromDate = "No Date";
+                        item.FromDateColor = "Silver";
+                    }
+                }
+
+                if ($.trim(shipment.MainCarriageATA) != "") {
+
+                    item.ToDate = $.Convert.ToShortDate(shipment.MainCarriageATA);
+                    item.ToTime = $.Convert.ToShortTime(shipment.MainCarriageATA);
+                    item.ToDateType = "(Actual)";
+                    item.ToDateColor = "#282E30";
+                    item.ToDateTypeColor = "#009161";
+                }
+
+                else {
+
+                    if ($.trim(shipment.MainCarriageETA) != "") {
+                        item.ToDate = $.Convert.ToShortDate(shipment.MainCarriageETA);
+                        item.ToTime = $.Convert.ToShortTime(shipment.MainCarriageETA);
+                        item.ToDateType = "(Estimate)";
+                        item.ToDateColor = "#282E30";
+                        item.ToDateTypeColor = "#6E7172";
+                    }
+
+                    else {
+                        item.ToDate = "No Date";
+                        item.ToDateColor = "Silver";
+                    }
+                }
+
+                if (shipment.ShipmentLevelCode == "H") {
+
+                    item.Reference = $.trim(shipment.House);
+                    item.ReferenceLabel = "House:";
+
+
+                }
+
+                else {
+                    item.Reference = $.trim(shipment.LongMaster);
+                    item.ReferenceLabel = "Master:";
+                }
+
+                item.ShipmentType = $.trim(shipment.ShipmentType);
+                item.StatusName = $.trim(shipment.StatusName);
+                item.StatusColor = $.Convert.ToColor(shipment.StatusName);
+                item.StatusDate = $.Convert.ToShortDate(shipment.StatusDate);
+
+
+          
+
+                item.House = $.trim(shipment.House);
+                item.LableHouse = "MAWB";
+
+                item.Master = $.trim(shipment.LongMaster);
+                item.LableMaster = "OBL";
+
+                item.LableShipmentNumber = "CMR/RWB#";
+                ShipmentsList.push(item);
+            });
+
+
+
+            $.CurrentShipmentsList = ShipmentsList;
+
+            return ShipmentsList;
+        });
+
+        jQuery.LoadShipments = (function (dataCode) {
+
+            $.Application.showLoading();
+
+            function ShipmentFilters() {
+
+                this.PartnerId = $.CurrentCardId;
+                this.PartnerType = $.CurrentCardType;
+                this.IsOperationalClosed = false;
+
+                if (dataCode == "IS") {
+
+                    this.DirectionId = "I";
+                }
+
+                else if (dataCode == "ES") {
+
+                    this.DirectionId = "E";
+                }
+
+            };
+
+            var filters = new ShipmentFilters();
+
+            var url = "../api/shipments?tenant=" + $.CurrentTenant;
+
+            $.ajax({
+                url: url,
+                data: JSON.stringify(filters),
+                type: 'POST',
+                contentType: 'application/json',
+
+                success: function (result) {
+
+                    var dataSource = new kendo.data.DataSource({
+                        //pageSize: 10, //defines page size. Required by the "Endless scrolling"
+                        selectable: true,
+                        navigatable: true,
+                        endlessScroll: true,
+                        virtualViewSize: 10, // needed setting, since local data virtualization does not use paging
+                        serverPaging: true,
+                        serverSorting: true,
+                   
+                        data: $.BuildShipmentsList(result)
+                    });
+
+
+                    $("#ShipmentsListBox").kendoMobileListView(
+                    {
+                        dataSource: dataSource,
+                        template: kendo.template($("#ShipmentItemTemplate").html()),
+                        //endlessScroll: true,
+
+                    });
+
+                    $.Application.hideLoading();
+                },
+
+                error: function (jqXHR, textStatus, errorThrown) {
+
+                    $.Application.hideLoading();
+                }
+            });
+        });
+
+        function onQueryBoxChange(e) {
+            var selectedValue = $("#QueryBox").val();
+            $.LoadShipments(selectedValue);
+        }
+
+        //function onShipmentsViewshow(e) {
+        //    var scroller = e.view.scroller;
+        //    scroller.reset();
+
+        //}
+
+        function onShipmentsViewInit(e) {
+            $.LoadShipments("OS");
+        }
+
+        function ViewShipment(id) {
+            for (var i = 0, m = null; i < $.CurrentShipmentsList.length; ++i) {
+                if ($.CurrentShipmentsList[i].ShipmentId == id) {
+                    $.CurrentEntityList = $.CurrentShipmentsList[i];
+                    break;
+                }
+            }
+
+            $.CurrentEntityId = id;
+            $.Application.navigate("Views/ShipmentView.html");
+        }
+
+    </script>
+
+</body>
+</html>

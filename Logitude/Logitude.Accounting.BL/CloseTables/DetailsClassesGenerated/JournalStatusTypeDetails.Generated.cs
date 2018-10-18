@@ -1,0 +1,98 @@
+
+   
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.CloseTablesClasses;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Def.EntityPMs; 
+using Logitude.Accounting.Data;
+
+namespace Logitude.Accounting.BL
+{
+   public class JournalStatusTypeDetails : JournalStatusType, ICloseTable<JournalStatusType, JournalStatusTypeDetails>
+   {
+       public List<JournalStatusTypeDetails> GetAll()
+       {
+		    var all = new List<JournalStatusTypeDetails>();  
+            all.Add(new JournalStatusTypeDetails()
+            {    
+                JournalStatusID = "0", 
+                SearchFields = "0,Draft,פתוח", 
+                Inactive = false, 
+                EnglishName = "Draft", 
+                LocalName = "פתוח", 
+			});
+			 
+            all.Add(new JournalStatusTypeDetails()
+            {    
+                JournalStatusID = "1", 
+                SearchFields = "1,Waiting for Approval,מחכה לאישור", 
+                Inactive = false, 
+                EnglishName = "Waiting for Approval", 
+                LocalName = "מחכה לאישור", 
+			});
+			 
+            all.Add(new JournalStatusTypeDetails()
+            {    
+                JournalStatusID = "2", 
+                SearchFields = "2,Approved,מאושר", 
+                Inactive = false, 
+                EnglishName = "Approved", 
+                LocalName = "מאושר", 
+			});
+			 
+            all.Add(new JournalStatusTypeDetails()
+            {    
+                JournalStatusID = "3", 
+                SearchFields = "3,Voided,מבוטל", 
+                Inactive = false, 
+                EnglishName = "Voided", 
+                LocalName = "מבוטל", 
+			});
+			 
+            all.Add(new JournalStatusTypeDetails()
+            {    
+                JournalStatusID = "4", 
+                SearchFields = "4,Failed,נכשל", 
+                Inactive = false, 
+                EnglishName = "Failed", 
+                LocalName = "נכשל", 
+			});
+			
+            return all;
+       }
+
+	    public void MapPoco(JournalStatusType newPoco)
+        {   
+		    newPoco.JournalStatusID = this.JournalStatusID;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.EnglishName = this.EnglishName;  
+		    newPoco.LocalName = this.LocalName;   
+        }
+
+		public string GetSearchFields(JournalStatusType rec)
+        {   
+           return String.Concat(rec.JournalStatusID,",",rec.Inactive,",",rec.EnglishName,",",rec.LocalName,",");
+        }
+		public string Code
+        {
+            get
+            {
+                return JournalStatusID;//throw new NotImplementedException();
+            }
+            set
+            {
+                JournalStatusID = value;//throw new NotImplementedException();
+            }
+        }
+   }
+}
+

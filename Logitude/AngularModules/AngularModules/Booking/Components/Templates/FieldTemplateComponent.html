@@ -1,0 +1,53 @@
+﻿
+<table *ngIf="Entity">
+    <tr>
+        <td>
+            <div class="MediaFill">
+
+                <div *ngIf="FieldName == 'Routing'">{{FieldValue | ReplacePipe:',':'>'}}</div>
+
+                <div *ngIf="FieldName == 'CreateDate'">{{FieldValue | DateTimeToDatePipe}}</div>
+
+                <div *ngIf="FieldName == 'MainCarriageETD'">{{FieldValue | DateTimeToDatePipe}}</div>
+
+                <div *ngIf="FieldName == 'BookingStatusName'" [ngStyle]="{color: FieldValue | StringToColorPipe}">{{FieldValue}}</div>
+
+                <div *ngIf="FieldName == 'FFRStatusName'" [ngStyle]="{color: FieldValue | StringToColorPipe}">{{FieldValue}}</div>
+
+                <table *ngIf="FieldName == 'DirectionCode'">
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+                        <td style="width: 15px; min-width: 15px; max-width: 15px; text-indent:0; padding:0;">
+                            <img [attr.src]="'./Images/Directions/' + FieldValue + '.png'" title="Entity['DirectionName']" style="margin:0; padding:0; vertical-align: middle;" />
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+
+                <table *ngIf="FieldName == 'TransportModeCode'">
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+                        <td style="width: 15px; min-width: 15px; max-width: 15px; text-indent:0; padding:0;">
+                            <img [attr.src]="'./Images/Icons/' + FieldValue + '.png'" title="Entity['TransportModeName']" style="margin:0; padding:0; vertical-align: middle;" />
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+
+                <div *ngIf="IsSpotLightTemplate == true" style="position:absolute;top:0;bottom:0;left:0;right:0;">
+                    <div style="height:100%;width:100%;">
+
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>

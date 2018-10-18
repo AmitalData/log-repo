@@ -1,0 +1,334 @@
+﻿
+
+
+
+<div *ngIf="IsLoadPage" style="height:100%;width:100%;vertical-align:top">
+
+    <table style="height:100%;width:100%;vertical-align:top">
+
+
+        <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+            <td>
+                <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+            </td>
+        </tr>
+
+        <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:5px;">
+            <td>
+                <div style="height:5px"></div>
+            </td>
+        </tr>
+
+
+
+
+        <tr style="height:30px">
+
+        <td>
+         <table>
+
+    <tr>
+        <td>
+            <div class="RadioButton" style="width:66px;">
+                <input [attr.id]="RadioButtonChoice1Id" [attr.name]="NameRadioButtonChoice" type="radio" (change)="RadioButtonChoice('Blank')"  [checked]="true" />
+                <label [attr.for]="RadioButtonChoice1Id"  style="font-size: 12px">
+                    {{'DocumentTypeTemplate.O.Blank' | TextCodeTranslationPipe}}
+                </label>
+            </div>
+        </td>
+
+
+        <td>
+            <div class="RadioButton" style="width:90px;">
+                <input [attr.id]="RadioButtonChoice2Id" type="radio" [attr.name]="NameRadioButtonChoice" (change)="RadioButtonChoice('Duplicate')"  />
+                <label [attr.for]="RadioButtonChoice2Id" style="font-size: 12px">
+                    {{'DocumentTypeTemplate.O.Duplicate' | TextCodeTranslationPipe}}
+                </label>
+            </div>
+        </td>
+
+
+
+        <td>
+            <div class="RadioButton" style="width:110px;">
+                <input [attr.id]="RadioButtonChoice3Id" [attr.name]="NameRadioButtonChoice" type="radio"  (change)="RadioButtonChoice('FromLibrary')"  />
+                <label [attr.for]="RadioButtonChoice3Id" style="font-size: 12px">
+                    
+                    {{'DocumentTypeTemplate.O.FromLibrary' | TextCodeTranslationPipe}}
+                </label>
+            </div>
+        </td>
+
+
+
+        <td>
+            <div class="RadioButton" style="width:100px;">
+                <input [attr.id]="RadioButtonChoice4Id" [attr.name]="NameRadioButtonChoice" type="radio" (change)="RadioButtonChoice('FromFile')"    />
+                <label [attr.for]="RadioButtonChoice4Id" style="font-size: 12px">
+                    {{'DocumentTypeTemplate.O.FromFile' | TextCodeTranslationPipe}}
+                       
+                </label>
+            </div>
+        </td>
+
+        <td style="width:100%"><div></div></td>
+    </tr>
+</table>
+            </td>
+
+        </tr>
+
+        <tr *ngIf="EditorTypeVisibility" style="height:30px">
+
+            <td>
+                <table>
+
+                    <tr>
+                        <td>
+                            <div class="RadioButton" style="width:92px;">
+                                <input  [attr.id]="RadioEditorChoice1Id" [attr.name]="NameRadioEditorChoice" type="radio" (change)="EditorRadioButtonChoice('StimulSoft')"  [checked]="true" />
+                                <label  [attr.for]="RadioEditorChoice1Id" style="font-size: 12px">
+                                    {{'DocumentTypeTemplate.O.StimulSoft' | TextCodeTranslationPipe}}
+                                </label>
+                            </div>
+                        </td>
+
+
+                        <td>
+                            <div class="RadioButton" style="width:80px;">
+                                <input [attr.id]="RadioEditorChoice2Id"  [attr.name]="NameRadioEditorChoice" type="radio" (change)="EditorRadioButtonChoice('RichText')"  />
+                                <label [attr.for]="RadioEditorChoice2Id" style="font-size: 12px">
+                                    {{'DocumentTypeTemplate.O.RichText' | TextCodeTranslationPipe}}
+                                </label>
+                            </div>
+                        </td>
+
+
+
+                       
+
+                        <td style="width:100%"><div></div></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr *ngIf="!EditorTypeVisibility" style="height:10px">
+
+            <td>
+                <div></div>
+            </td>
+        </tr>
+
+
+
+
+        <tr style="vertical-align:top;height:25px">
+
+            <td>
+                <table>
+                    <tr>
+
+                        <td style="width:110px;">
+
+                            <table style="table-layout: fixed;">
+                                <tr>
+                                    <td style="width:10px; vertical-align: middle;">
+                                        <div *ngIf="!Description" style="width: 10px;">
+                                            <div style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
+
+                                        </div>
+                                    </td>
+                                    <td class="TextTrimming" style="text-align: left; vertical-align:middle;">
+                                        <label *ngIf="Description" class="Label" style="color:#6E7172">Description</label>
+                                        <label *ngIf="!Description" class="Label" style="color:red">Description</label>
+                                    </td>
+                                </tr>
+                            </table>
+
+
+                        </td>
+
+                        <td style="width:200px"><input type="text" style="height:22px;width:200px;" [(ngModel)]="Description" value="" /></td>
+                        <td><div></div></td>
+
+
+                    </tr>
+                </table>
+            </td>
+
+           
+        </tr>
+        
+            <tr  *ngIf="ValueRadioChoice == 'FromFile'" style="vertical-align:top;margin-top:5px;height:25px">
+                <td>
+                    <table>
+                        <tr>
+                  
+                            <td style="width:110px;"><div></div></td>
+                            <td style="width: 200px;">
+                                <button style="width: 200px;" class="Button" (click)="OpenUpLoadTemplateFile()">Load Template</button>
+                                <input *ngIf="ValueEditorRadio == 'RichText'" [attr.id] = "DocumentTemplateFileId" accept=".xml,.XML" type="file" (change)="UpLoadTemplateFileMethod($event)" style="display:none" class="upload" />
+                                <input *ngIf="ValueEditorRadio == 'StimulSoft'" [attr.id] = "DocumentTemplateFileId" accept=".mrt,.MRT" type="file" (change)="UpLoadTemplateFileMethod($event)" style="display:none" class="upload" />
+                            </td>
+                            <td><div></div></td>
+                        </tr>
+                    </table>
+                </td>
+
+
+            </tr>
+
+            <tr style="height:20px">
+
+                <td>
+                    <div></div>
+                </td>
+            </tr>
+
+
+            <tr *ngIf="DocumentsGridVisibility" style="height:100%;">
+                <td>
+
+                    <div>
+                        <div class="ScrollViewer">
+                            <div class="ScrollContent">
+
+
+                                <table>
+
+                                    <tr>
+
+                                        <td style="height:100%; position:relative;">
+                                            <div class="GridView">
+                                                <table>
+                                                    <thead>
+                                                        <tr>
+
+
+                                                            <th style="width: 150px; min-width: 200px;">{{'DocumentTypeTemplate.O.Description' | TextCodeTranslationPipe}}</th>
+                                                            <th style="width: 120px; min-width: 120px;">{{'DocumentTypeTemplate.O.LastUpdate' | TextCodeTranslationPipe}}</th>
+                                                            <th style="width: 120px; min-width: 120px;">{{'DocumentTypeTemplate.O.UpdatedBy' | TextCodeTranslationPipe}}</th>
+                                                            <th style="width: 60px; min-width: 60px;">{{'DocumentTypeTemplate.O.Default' | TextCodeTranslationPipe}}</th>
+
+
+                                                            <th style="width: 100%; min-width: 100%;"></th>
+
+                                                        </tr>
+                                                    </thead>
+
+                                                    <tbody>
+                                                        <tr [style.background]="item.DivSelectBackgroud" class="iwanttohover" *ngFor="let item of DocumentTypeTemplateLists">
+
+
+                                                            <td (click)="OnSelectedDocumentTypeTemplateLists(item)" style="width: 200px; min-width:200px;">
+
+                                                                <div style="display:block;text-align:left;width:190px;overflow:hidden;text-overflow: ellipsis;white-space: nowrap;display:inline-block">{{item.Description}}</div>
+
+                                                            </td>
+
+
+
+
+                                                            <td (click)="OnSelectedDocumentTypeTemplateLists(item)" style="width: 120px; min-width: 120px; ">
+                                                                {{item.LastUpdateDate | DateTimeToDatePipe}} {{item.LastUpdateDate | DateTimeToTimePipe}}
+                                                            </td>
+
+                                                            <td (click)="OnSelectedDocumentTypeTemplateLists(item)" style="width: 120px; min-width: 120px; ">
+                                                                <div style="display:block;text-align:left;width:110px;overflow:hidden;text-overflow: ellipsis;white-space: nowrap;display:inline-block">{{item.LastUpdateByUserName}}</div>
+
+                                                                 
+                                                            </td>
+ 
+                                                            <td (click)="OnSelectedDocumentTypeTemplateLists(item)" style="width: 60px; min-width: 60px;">
+
+
+                                                                <div class="CheckBox">
+                                                                    <input [disabled]="'true'" [attr.id]="item.Id" class="LeftCenter" style="text-align:center" type="checkbox" [(ngModel)]="item.IsDefault" />
+                                                                    <label class="LeftCenter" [attr.for]="item.Id"></label>
+                                                                </div>
+
+                                                            </td>
+
+                                                            <td style="width: 100%;">
+
+
+                                                                <div *ngIf="ValueRadioChoice == 'FromLibrary'">
+                                                                    <div style="text-align:right;display:inline;width:130px;float: right;vertical-align:middle">
+                                                                        <span><button class="Button" style="width:55px;height:22px;display:inline;" (click)="PreviewFromLibraryButtonClicked(item)">Preview</button></span>
+                                                                        <span><button class="GreenButton" style="width:55px;height:22px;display:inline;" (click)="AddFromLibraryButtonClicked(item)">Add</button></span>
+
+                                                                        <span style="width:5px"></span>
+                                                                    </div>
+                                                                </div>
+
+
+                                                            </td>
+
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td colspan="20">
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+
+                                </table>
+
+
+
+
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </td>
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    <div></div>
+                </td>
+            </tr>
+
+
+            <tr style="height: 32px;">
+                <td style="vertical-align: bottom">
+                    <table style="height: 22px;">
+                        <tr>
+                            <td>
+                                <div></div>
+                            </td>
+
+                            <td style="width: 57px;">
+                                <div>
+                                    <button class="Button" (click)="CloseButtonClicked()">{{CloseButtonLable}}</button>
+                                </div>
+                            </td>
+
+                            <td *ngIf="ShowSaveButton" style="width: 5px;">
+                                <div></div>
+                            </td>
+
+                            <td *ngIf="ShowSaveButton" style="width: 57px;">
+                                <button class="RedButton" (click)="SaveButtonClicked()">Ok</button>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+</table>
+
+
+</div>

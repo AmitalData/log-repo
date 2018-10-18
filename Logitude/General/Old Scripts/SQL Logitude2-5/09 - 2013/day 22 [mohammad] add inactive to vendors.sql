@@ -1,0 +1,1 @@
+alter table Customs.Vendors add InActive bit not null default 0

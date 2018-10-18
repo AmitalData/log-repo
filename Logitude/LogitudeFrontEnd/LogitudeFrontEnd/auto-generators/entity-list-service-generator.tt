@@ -1,0 +1,330 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ Assembly Name="System.Xml.dll" #>
+<#@ Assembly Name="System.Xml.Linq.dll" #>
+<#@ Assembly Name="System.Core.dll" #> 
+<#@ Assembly Name="Microsoft.CSharp.dll" #>
+<#@ Assembly name="$(SolutionDir)..\General\Dlls\AmazedSaint.Elastic.dll" #>
+<#@ Import Namespace="System.Xml" #>
+<#@ Import Namespace="System.Xml.Linq" #>
+<#@ Import Namespace="System.Linq" #>
+<#@ Import Namespace="AmazedSaint.Elastic" #>
+<#@ Import Namespace="AmazedSaint.Elastic.Lib" #>
+<#@ output extension=".cs" #>
+<#@ import Namespace="System.IO" #>
+<#@ import Namespace="System.Collections.Generic" #>
+ 
+ 
+
+<#+
+
+dynamic listservicenamespacestring;
+ 
+string ListSrcFolder;
+public void GenerateAllListServices(string sourceFolder,string destinationFolder,string modelname)
+{
+ ListSrcFolder = sourceFolder;
+ listservicenamespacestring = GetListServiceNameSpace(destinationFolder);
+ string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
+ string outputFilePath = Path.Combine(templateDirectory, sourceFolder);
+foreach (string file in Directory.EnumerateFiles(outputFilePath, "*.lxml"))
+{
+
+    var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(file);
+	GenerateEntityListService(file,destinationFolder+"/Generated/"+fileNameWithoutExtension.ToLower()+"-list.service.generated.ts",modelname);
+ 
+}
+
+}
+#>
+
+<#+  
+
+public void GenerateEntityListService(string xmlFilePath,string outputFilePath,string modelname)
+{
+	if(string.IsNullOrEmpty(listservicenamespacestring))
+    {
+		listservicenamespacestring = GetListServiceNameSpace(outputFilePath);
+    }
+
+        var entity = FromEntityListServiceFile(xmlFilePath);
+        if( entity.IsComposition.GetType() == typeof(string))
+      	{
+	    	if(entity.IsComposition == "true")
+	    	{
+	    		return;
+	    	}
+	    } 
+		
+          WriteEntityListServiceMethod(entity,modelname); 
+          SaveEntityListServiceOutput(outputFilePath);
+        
+
+ }
+
+
+
+#>
+
+<#+
+
+public dynamic GetListServiceNameSpace(string destinationFolder)
+{
+	string spacestring = "";
+	string[] path = destinationFolder.Split('/');
+	foreach(string dir in path)
+    {
+		if(dir != "..")
+        {
+			spacestring += dir + ".";
+        }
+    }
+
+	spacestring = spacestring.ToString().Replace("JustWebFreight.","").Trim('.');
+
+	return spacestring;
+}
+
+#>
+
+<#+
+void SaveEntityListServiceOutput(string outputFileName)
+  {
+      string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
+      string outputFilePath = Path.Combine(templateDirectory, outputFileName);
+     
+	    var manager = Manager.Create(Host, GenerationEnvironment);
+	  manager.CreateTestFile(outputFilePath,this.GenerationEnvironment.ToString());
+	  this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
+  }
+#>
+
+
+
+<#+
+ private void WriteEntityListServiceMethod(dynamic entity,string modelname)
+{
+    string tableName = entity.ObjectTableName.Trim('"');
+	string dBTableName = entity.DBTableName.Trim('"');
+	if(tableName.ToString().Trim('"').Contains("."))
+    {
+		tableName = tableName.ToString().Split('.')[1];
+		dBTableName = dBTableName.ToString().Split('.')[1];
+          
+    }
+
+	string parententity = "object";
+	string parentKeys = tableName + "Keys";
+	if(entity.ParentTableName.GetType() == typeof(string))
+    {
+		parententity = entity.ParentTableName +"PM";
+		parentKeys =entity.ParentTableName + "Keys";
+    }
+
+    string listName = tableName + "List";
+    
+	string controllerName = tableName.ToLower()+"views";
+
+   
+	   string importentitytring = "import {"+listName+"} from '../../entity-lists/generated/" + listName + ".generated';";
+	   //importentitytring += Environment.NewLine + BuildListImportEntitesString(entity);
+	 
+	  Dictionary<string,string> primaryKeys = new Dictionary<string,string>();
+	  string keysstring = "";
+	   
+	  bool hasTenant = false;
+		 foreach(var field in entity["field"])
+		 {
+		  if( field.IsPrimaryKey.GetType() == typeof(string))
+			{
+				if(field.IsPrimaryKey == "true")
+				{ 
+					 primaryKeys.Add(field.FieldName.Trim('"'),GetDataType(field));
+
+				}
+			}
+
+			if( field.FieldName.ToString().Trim('"') == "Tenant")
+			{
+				 hasTenant = true;
+			 
+			}
+		 }
+
+
+		 string tenantParam ="";
+		 string tenantonlyParam = "";
+		 string tenantCondition = "";
+		 string tenantKeyCondition = "";
+		 string getalltenantCondition = "";
+		 if(hasTenant)
+         {
+			 tenantParam = ", int tenant";
+			 tenantonlyParam = ", tenant";
+			 tenantCondition = "&& a.Tenant == tenant";
+			 getalltenantCondition = "\n                   where a.Tenant == tenant";
+
+		     tenantKeyCondition = "&& a.Tenant == keys.Tenant";
+         }
+
+		 string primarykeyParam="";
+		 string primaryonlyparam = "";
+		 string primarykeyCondition = "";
+		// string keyprimarykeyCondition = "";
+		int index = 0;
+		 foreach(string key in primaryKeys.Keys)
+         {
+		   if(index > 0)
+           {
+			   primaryonlyparam += "+'&'+";
+           }
+			 primarykeyParam +=  key.ToLower() + ": " + primaryKeys[key]+ ", ";
+			 primaryonlyparam +="'" +key.ToLower() + "=' + " + key.ToLower() ;
+			 primarykeyCondition += " a." + key +" == "  + key.ToLower() +" &&";
+			// keyprimarykeyCondition += " a." + key +" == a."  + key +" &&";
+
+
+
+			index++;
+         }
+		 
+		 primarykeyParam = primarykeyParam.TrimEnd(' ').TrimEnd(',');
+		 primaryonlyparam = primaryonlyparam.TrimEnd(' ').TrimEnd('&');
+		 primarykeyCondition = primarykeyCondition.TrimEnd('&').TrimEnd('&').Trim(' ');
+		// keyprimarykeyCondition = keyprimarykeyCondition.TrimEnd('&').TrimEnd('&').Trim(' ');
+#>
+import {Injectable} from 'angular2/core';
+import {Http, Headers} from 'angular2/http';
+import 'rxjs/add/operator/map';
+import Rx from 'rxjs/Rx';
+import {ServiceArgs} from '../../../infrastructure/data-contracts/service-args';
+import {ApiQueryFilters} from '../../../infrastructure/data-contracts/api-query-filters';
+<#= importentitytring #>
+@Injectable()
+export class <#= listName #>Service {
+
+    private _apiUrl: string = 'http://localhost:9996/api/<#= controllerName #>';
+    private _http: Http;
+    private _serviceArgs: ServiceArgs;
+    constructor() {
+        
+    }
+
+    setServiceArgs(serviceArgs: ServiceArgs) {
+        this._serviceArgs = serviceArgs;
+        this._http = serviceArgs.http;
+    }
+
+    getSingle(id: string) {
+	    console.log('--------------------------------------> calling getSingle:');
+        var authHeader = new Headers();
+        authHeader.append('Token', '2acc0a3d-a948-41fe-8a19-51a6d787e4fc');
+
+        return Rx.Observable.defer(() => {
+            return this._http.get(this._apiUrl+'?'+<#= primaryonlyparam #>, {
+                headers: authHeader
+            }).map(response => {
+                var list = response.json();
+                    
+                //var entity: IncotermList;
+                // entity = this.MapJsonToEntityList(list);
+                    
+                return list;
+            });
+        }
+
+        );
+    }
+
+    getAll() {
+        console.log('--------------------------------------> calling getAllEntityListsFromServer:');
+        return this._http.get(this._apiUrl)
+            .map(response => {
+                var dataList = response.json();
+                console.log(response.json());
+                return Promise.resolve(dataList);
+            });
+    }
+
+	
+    getByFilters(filters: ApiQueryFilters) {
+        console.log('--------------------------------------> calling the server with filters:');
+        var urlparameters = '?';
+        var mykeys = Object.keys(filters);
+        var addtionalFiltersValues = null;
+        for (var i in mykeys) {
+            var propName = mykeys[i];
+            var propValue = filters[propName];
+
+            var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
+
+            if (urlparameters != "?") {
+                urlparameters = urlparameters.concat('&');
+            }
+            if (!ignoreFilter)
+                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+
+            if (propName == "AdditionalFilters" && propValue.length > 0)
+                addtionalFiltersValues = JSON.stringify(propValue);
+
+
+        }
+        if (addtionalFiltersValues) {
+            urlparameters = urlparameters.concat("AdditionalFilters=").concat(JSON.stringify(propValue));
+        }
+
+        var authHeader = new Headers();
+        authHeader.append('Token', '2acc0a3d-a948-41fe-8a19-51a6d787e4fc');
+        var callUrl = this._apiUrl.concat(urlparameters);//
+        console.log("Calling Url:" + callUrl);
+
+        this._http.get(callUrl, {
+            headers: authHeader
+        }).subscribe(response => {
+            console.log('--------------------------------------> server Response:');
+            console.log(response.json());
+            console.log('TotalCount:' + response.headers.get('TotalCount'))
+        });
+    }
+}
+
+<#+		  
+     
+}
+#>
+<#+
+public string BuildListImportEntitesString( dynamic entity)
+{
+	string importentitystring = "";
+	
+
+	foreach(var field in entity["field"])  //get all classes
+	 { 
+		  if( field.HasPMField.GetType() == typeof(string))
+           {
+             if(field.HasPMField == "false")
+               {
+                  continue;
+               }
+           }
+		   string type = GetDataType(field);
+		   if(type == "List" || (field.IsMulti.GetType() == typeof(string) && field.IsMulti == "true"))
+           {
+			    string pmname = field.FieldName.ToString().Trim('"').TrimEnd('s') + "PM";
+				importentitystring += Environment.NewLine + "import {"+pmname+"} from '../../entity-pms/generated/" + pmname + ".generated';";
+
+           }
+		   
+	 }
+
+	 return importentitystring;
+}
+#>
+<#+
+//Create an elastic object
+private dynamic FromEntityListServiceFile(string file)
+{
+   var path= Host.ResolvePath(file);
+   return XDocument.Load(path).Root.ToElastic();
+}
+
+#>

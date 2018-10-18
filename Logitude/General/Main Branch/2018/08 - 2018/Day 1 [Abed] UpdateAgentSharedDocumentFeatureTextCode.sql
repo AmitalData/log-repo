@@ -1,0 +1,1 @@
+update TextCodes set Code = 'AgentSharedDocument.Features.DocsSharedViaEmail'  where Id =(select NameTextCodeId from Features where Code = 'DOCSSHAREDVIAEMAIL')

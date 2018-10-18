@@ -1,0 +1,152 @@
+﻿
+<div class="TabHolder">
+    <table>
+
+        <tr class="TabTitleRow">
+            <td>{{'MoveType.TH.General' | TextCodeTranslationPipe}}</td>
+        </tr>
+
+        <tr>
+            <td>
+                <table>
+                    <tr>
+                        <td style="width:340px;">
+                            <table>
+                                <tr class="FormFieldRow">
+                                    <td style="width:110px">
+                                        <LogLabel [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td style="width:200px">
+                                        <LogTextBox [HideLastColumn]="true" [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+
+                                    <td><div></div></td>
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'MoveTypeEnglishName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogTextBox [HideLastColumn]="true" [ObjectFieldName]="'MoveTypeEnglishName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+
+                                    <td><div></div></td>
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'MoveTypeLocalName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogTextBox [HideLastColumn]="true" [ObjectFieldName]="'MoveTypeLocalName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+
+                                    <td><div></div></td>
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogCheckBox [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                    </td>
+
+                                    <td><div></div></td>
+                                </tr>
+
+                                <tr>
+                                    <td><div></div></td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td style="width:50px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width:170px;">
+                            <table>
+                                <tr class="FormFieldRow">
+                                    <td style="width:90px">
+                                        <LogLabel [ObjectFieldName]="'IsAir'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td style="width:30px;">
+                                        <div class="RadioButton">
+                                            <input id="AirRadio" type="radio" name="TransportModeRadio" [checked]="IsAir" (click)="SetTransportMode('A')" />
+                                            <label for="AirRadio"></label>
+                                        </div>
+                                    </td>
+
+                                    <td style="width:20px;">
+                                        <img width="18" height="16" style="vertical-align: middle;" class="CenterCenter" src="./Images/TransportModes/A.png" />
+                                    </td>
+
+                                    <td><div></div></td>
+                                </tr>
+
+                                <tr class="FormFieldRow"> 
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'IsInland'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <div class="RadioButton">
+                                            <input id="InlandRadio" type="radio" name="TransportModeRadio" [checked]="IsInland" (click)="SetTransportMode('I')" />
+                                            <label for="InlandRadio"></label>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <img width="18" height="16" style="vertical-align: middle;" class="CenterCenter" src="./Images/TransportModes/I.png" />
+                                    </td>
+
+                                    <td><div></div></td>
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'IsOcean'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <div class="RadioButton">
+                                            <input id="OceanRadio" type="radio" name="TransportModeRadio" [checked]="IsOcean" (click)="SetTransportMode('O')" />
+                                            <label for="OceanRadio"></label>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <img width="18" height="16" style="vertical-align: middle;" class="CenterCenter" src="./Images/TransportModes/O.png" />
+                                    </td>
+
+                                    <td><div></div></td>
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <td colspan="4"><div></div></td>
+                                </tr>
+
+                                <tr>
+                                    <td><div></div></td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+
+                    </tr>
+                </table>
+            </td>
+        </tr>
+      
+    </table>
+</div>

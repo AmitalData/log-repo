@@ -1,0 +1,148 @@
+﻿<table style="min-width:1150px">
+    <tr style="height: 1px;">
+        <td>
+            <table>
+                <tr>
+                    <td style="width: 21px; vertical-align:middle;">
+                        <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
+                    </td>
+
+                    <td style="width: 15px; vertical-align:middle;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 45px; vertical-align:middle; font-size:11px; color : #6E7172;">Search:</td>
+
+                    <td style="width: 300px;">
+                        <SearchBox [ObjectTableName]="'TMProject'" [IsQuickSearch]="true" (ItemClicked)="EditTMProject($event)"></SearchBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 5px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <td style="width:265px;">
+                        <div class="MediaFill">
+                            <SectionBox [Scrolling]="true">
+                                <SectionHead>Projects Queries</SectionHead>
+                                <SectionBody>
+
+                                    <div class="QueriesSection">
+                                        <div>Projects</div>
+                                        <div style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px; right:2px;">
+                                            <button class="Button" (click)="NewProject()">New</button>
+                                        </div>
+                                        <div>
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <table>
+                                                            <tr>
+                                                                <td style="width:190px;">
+                                                                    <p *ngIf="MyProjectsQueriesVisibility" class="QueryLink" (click)="ViewProjectsQuery('My Projects')"> My Projects ({{MyProjectsCount}}) </p>
+                                                                    <p *ngIf="AllProjectsQueriesVisibility" class="QueryLink" (click)="ViewProjectsQuery('All Projects')"> All Projects ({{AllProjectsCount}})</p>
+                                                                </td>
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="QueriesSection">
+                                        <div></div>
+                                    </div>
+
+                                    <!-- My Views -->
+                                    <div class="QueriesSection">
+                                        <div>My Views</div>
+                                        <div style="height:80px;">
+                                            <UsersQueryList [ReloadUserQueries]="ReloadUserQueries" [ObjectTableName]="'TMProject'" [BackButtonTitle]="'Projects'" (BackCompletedEvent)="onUserQueriesBackComplete($event)"></UsersQueryList>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <SectionHead>Clock</SectionHead>
+                                        <SectionBody>
+
+                                            <div>
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <p class="QueryLink" style="color:#1B90CB;text-decoration:underline" (click)="UploadClockTimeFileClick()">Upload File</p>
+                                                        </td>
+                                                        <td>
+                                                            <input accept=".csv,.CSV" [attr.id]="ClockTimeHtmlId" type="file" (change)="UploadClockTimeFile($event)" style="display:none" class="upload" />
+
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </SectionBody>
+                                    </div>
+                                </SectionBody>
+                            </SectionBox>
+                        </div>
+                    </td>
+
+                    <td style="width:10px;">
+                        <div></div>
+                    </td>
+
+                    <td style="min-width: 500px;">
+                        <table>
+                            <tr>
+                                <td>
+                                    <div class="MediaFill">
+                                        <SectionBox>
+                                            <SectionHead> </SectionHead>
+                                            <SectionBody>
+                                               <div></div>
+                                            </SectionBody>
+                                        </SectionBox>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr style="height: 10px;">
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <div class="MediaFill">
+                                        <SectionBox>
+                                            <SectionHead> </SectionHead>
+                                            <SectionBody>
+                                              <div></div>
+                                            </SectionBody>
+                                        </SectionBox>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

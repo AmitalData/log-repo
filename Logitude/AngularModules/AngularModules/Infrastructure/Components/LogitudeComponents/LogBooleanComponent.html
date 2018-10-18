@@ -1,0 +1,15 @@
+﻿<div>
+    <ul class="FiltersMenu" style="direction:rtl; float:right;" [style.width]="Width">
+        <li id="no" (click)="FilterItemClicked('no')" class="FilterItem" style="width:50%; cursor:pointer !important"
+            [class.SelectedFilter]="FilterSelectedValue === 'no'">
+            {{'Customs.Declaration.O.No' | TextCodeTranslationPipe}}
+        </li>
+
+        <li id="yes" (click)="FilterItemClicked('yes')" class="FilterItem" style="width:50%;cursor:pointer !important"
+            [class.SelectedFilter]="FilterSelectedValue === 'yes'">
+            {{'Customs.Declaration.O.Yes' | TextCodeTranslationPipe}}
+        </li>
+        
+        
+    </ul>
+</div>

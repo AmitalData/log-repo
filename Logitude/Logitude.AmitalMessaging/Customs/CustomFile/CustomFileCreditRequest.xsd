@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://tempuri.org/CustomFileCredit" elementFormDefault="qualified" targetNamespace="http://tempuri.org/CustomFileCredit" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="CustomFileCredit">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="CustomsFile" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CustomsFile">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="FileNo" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Mode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="TotalTax" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="UpdatedByUser" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FileNo" type="xs:string" />
+  <xs:element name="Mode" type="xs:string" />
+  <xs:element name="TotalTax" type="xs:string" />
+  <xs:element name="UpdatedByUser" type="xs:string" />
+</xs:schema>

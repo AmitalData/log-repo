@@ -1,0 +1,130 @@
+﻿
+<table>
+
+    <!-- CurrencyId -->
+    <tr class="FormFieldRow">
+        <td style="width: 135px;">
+            <LogLabel [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        </td>
+
+        <td style="width:230px">
+            <LogLov [ObjectFieldName]="'CurrencyId'"
+                    [ObjectTableName]="ObjectTableName"
+                    [SelectedValue]="CurrencyId"
+                    [DataContext]="DataContext"
+                    [LookUpTableName]="'Currency'"
+                    [HideMaintenanceIcon]="true"
+                    [IsTenantZeroSearch]="true"
+                    [AutoCompleteSearchWindow]="true"
+                    [HideAdd]="true"
+                    [HideEdit]="true"
+                    [HideAddLink]="true">
+            </LogLov>
+        </td>
+
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <!-- ProfitCurrencyId -->
+    <tr class="FormFieldRow">
+        <td>
+            <LogLabel [ObjectFieldName]="'ProfitCurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        </td>
+
+        <td>
+            <LogLov [ObjectFieldName]="'ProfitCurrencyId'"
+                    [ObjectTableName]="ObjectTableName"
+                    [SelectedValue]="ProfitCurrencyId"
+                    [DataContext]="DataContext"
+                    [LookUpTableName]="'Currency'"
+                    [HideMaintenanceIcon]="true"
+                    [IsTenantZeroSearch]="true"
+                    [AutoCompleteSearchWindow]="true"
+                    [HideAdd]="true"
+                    [HideEdit]="true"
+                    [HideAddLink]="true">
+            </LogLov>
+        </td>
+
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <!-- ProfitCurrencyRate -->
+    <tr class="FormFieldRow">
+        <td>
+            <LogLabel [ObjectFieldName]="'ProfitCurrencyRate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        </td>
+
+        <td>
+            <LogTextBox [ObjectFieldName]="'ProfitCurrencyRate'" [Text]="ProfitCurrencyRate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+        </td>
+
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <!-- VatNumber -->
+    <tr class="FormFieldRow">
+        <td>
+            <LogLabel [ObjectFieldName]="'VatNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        </td>
+
+        <td>
+            <LogTextBox [ObjectFieldName]="'VatNumber'" [Text]="VatNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+        </td>
+
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <!-- STDVatPercentage -->
+    <tr class="FormFieldRow">
+        <td>
+            <LogLabel [ObjectFieldName]="'STDVatPercentage'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        </td>
+
+        <td>
+            <LogTextBox [ObjectFieldName]="'STDVatPercentage'" [Text]="STDVatPercentage" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+        </td>
+
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <!-- PaymentTermId -->
+    <tr class="FormFieldRow">
+        <td>
+            <LogLabel [ObjectFieldName]="'PaymentTermId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        </td>
+
+        <td>
+            <LogLov [ObjectFieldName]="'PaymentTermId'"
+                    [ObjectTableName]="ObjectTableName"
+                    [SelectedValue]="PaymentTermId"
+                    [DataContext]="DataContext"
+                    [LookUpTableName]="'PaymentTerm'"
+                    [HideMaintenanceIcon]="true"
+                    [HideAdd]="true"
+                    [HideEdit]="true"
+                    [HideAddLink]="true">
+            </LogLov>
+        </td>
+
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="3">
+            <div></div>
+        </td>
+    </tr>
+</table>

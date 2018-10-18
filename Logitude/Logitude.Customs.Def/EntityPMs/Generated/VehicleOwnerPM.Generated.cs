@@ -1,0 +1,327 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Customs.Def.Validators;
+  
+namespace Logitude.Customs.Def.EntityPMs
+{
+   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class VehicleOwnerPM : EntityPM
+   {
+   	  private int tenant ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+	  private string vehicleId ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string VehicleId  
+	   {
+	    
+	     get
+		{
+		   return vehicleId;
+		 }
+		 set
+		 {
+		   if(vehicleId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VehicleId",OldValue=vehicleId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   vehicleId=value;
+		   }
+			
+		 }
+	   }
+	  private int lineNumber ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int LineNumber  
+	   {
+	    
+	     get
+		{
+		   return lineNumber;
+		 }
+		 set
+		 {
+		   if(lineNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LineNumber",OldValue=lineNumber,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   lineNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string clientId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ClientId  
+	   {
+	    
+	     get
+		{
+		   return clientId;
+		 }
+		 set
+		 {
+		   if(clientId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ClientId",OldValue=clientId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   clientId=value;
+		   }
+			
+		 }
+	   }
+	  private string lastNameOrCorporationName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LastNameOrCorporationName  
+	   {
+	    
+	     get
+		{
+		   return lastNameOrCorporationName;
+		 }
+		 set
+		 {
+		   if(lastNameOrCorporationName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastNameOrCorporationName",OldValue=lastNameOrCorporationName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   lastNameOrCorporationName=value;
+		   }
+			
+		 }
+	   }
+	  private string firstName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FirstName  
+	   {
+	    
+	     get
+		{
+		   return firstName;
+		 }
+		 set
+		 {
+		   if(firstName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FirstName",OldValue=firstName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   firstName=value;
+		   }
+			
+		 }
+	   }
+	  private bool isMain ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsMain  
+	   {
+	    
+	     get
+		{
+		   return isMain;
+		 }
+		 set
+		 {
+		   if(isMain != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsMain",OldValue=isMain,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isMain=value;
+		   }
+			
+		 }
+	   }
+	  private string clientName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ClientName  
+	   {
+	    
+	     get
+		{
+		   return clientName;
+		 }
+		 set
+		 {
+		   if(clientName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ClientName",OldValue=clientName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   clientName=value;
+		   }
+			
+		 }
+	   }
+	  private string passportNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PassportNumber  
+	   {
+	    
+	     get
+		{
+		   return passportNumber;
+		 }
+		 set
+		 {
+		   if(passportNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PassportNumber",OldValue=passportNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   passportNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string passCountryCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PassCountryCode  
+	   {
+	    
+	     get
+		{
+		   return passCountryCode;
+		 }
+		 set
+		 {
+		   if(passCountryCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PassCountryCode",OldValue=passCountryCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   passCountryCode=value;
+		   }
+			
+		 }
+	   }
+	  private string passCountryName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PassCountryName  
+	   {
+	    
+	     get
+		{
+		   return passCountryName;
+		 }
+		 set
+		 {
+		   if(passCountryName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PassCountryName",OldValue=passCountryName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   passCountryName=value;
+		   }
+			
+		 }
+	   }
+	  private string importerPassportTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ImporterPassportTypeCode  
+	   {
+	    
+	     get
+		{
+		   return importerPassportTypeCode;
+		 }
+		 set
+		 {
+		   if(importerPassportTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ImporterPassportTypeCode",OldValue=importerPassportTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   importerPassportTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string importerPassportTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ImporterPassportTypeName  
+	   {
+	    
+	     get
+		{
+		   return importerPassportTypeName;
+		 }
+		 set
+		 {
+		   if(importerPassportTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ImporterPassportTypeName",OldValue=importerPassportTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   importerPassportTypeName=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

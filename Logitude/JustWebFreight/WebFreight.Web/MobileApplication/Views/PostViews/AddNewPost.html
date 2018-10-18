@@ -1,0 +1,247 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body style="height:100%; width:100%;">
+
+      <div data-role="view"  data-transition="slide" data-show="onAddPostShow">
+    
+          <header class="headerPost" data-role="header">
+              
+            <div style="height:43px; display: table;width:100%;">
+
+                <div style="display: table-cell; width: 80px; vertical-align: middle">
+             
+                                      <div id="backtoPosts" data-align="left" style="margin-left: 5px; margin-top: 2px;display:none; color:white;font-size: 15px; width: auto; height: auto;"><a  onclick="onClickBackButtom()">< Posts</a></div>
+                     <div id="backtoPost" data-align="left" style="margin-left: 5px; margin-top: 2px; color:white;display:none; font-size: 15px; width: auto; height: auto;"><a  onclick="onClickBackButtom()">< Post</a></div>
+                </div>
+
+                <div style="display: table-cell; width: 175px; vertical-align: middle;text-align:left">
+                    <div id="Send" style="height:auto; display:inline-block;height:auto;  margin-right:10px; text-align:left;font-size:14px;color:white;  width:auto;margin-top:3px; "></div> 
+                </div>
+                  
+
+                   <div style="display: table-cell; width: auto; vertical-align: middle;text-align:right">
+                                  
+                </div>
+                  <div style="display: table-cell; width: 25px;    vertical-align: middle;text-align:right">
+
+                       <button id="buttonSavePost" style="height: auto; width:auto;margin-right:15px; background-color: transparent; margin-top:3px;" onclick="buttonSavePostfun()"><img style="width:25px; height:24px;" src="images/true.png"/ ></button>
+                </div>
+             
+
+            </div>
+      </header>
+
+
+   
+
+            <div style="height:80%; display: inline-block; width: 100%; display: table; background-color: transparent; vertical-align: middle;margin-right:20px; margin-bottom: 5px; margin-top: 15px; margin-left: 5px;">
+                <div style="display: table-cell; vertical-align: middle;height:80%; width: 98%; margin-left:10px;margin-right:10px; text-align: center; background-color: transparent;">
+       <!--             <input id="PostValue" type="text" autofocus="autofocus" 
+                  
+
+                        style="height: 70px; margin-right:20px;overflow: hidden; margin-bottom: 20px; border: 2px solid #B0B7BB; text-justify: auto; text-overflow: ellipsis; text-wrap: normal"
+                        onfocus="textpostfun()" />-->
+                    <textarea id="PostValue"style="height:500px; width:99%; margin-right:20px;overflow: hidden; margin-bottom: 20px; border: 2px solid #B0B7BB; text-justify: auto; text-overflow: ellipsis; text-wrap: normal" onfocus="textpostfun()"></textarea>
+
+                </div>
+                   <div style="display: table-cell; vertical-align: middle; width:1%; margin-left:10px;margin-right:10px; text-align: center; background-color: white;"></div>
+        <!--        <div style="display: table-cell; vertical-align: middle; width: 21%; text-align: center; background-color: transparent;">
+                    <button id="buttonSavePost" style="height: 60px; width: 100%; margin-bottom: 20px; background-color: #B0B7BB; margin-left: 3px;" onclick="buttonSavePostfun()">Post</button>
+                </div>-->
+
+           
+            </div>
+       
+    
+                        
+    
+
+          </div>
+
+    <script>
+    
+        //textinput
+        function textpostfun() {
+            if ($("#PostValue").val() == "what are you working on?") {
+                $("#PostValue").val("");
+                $("#PostValue").css("color", "black");
+            }
+           
+            //$("#PostValue").css("height", "50");
+            //$("#Postbutton").css("height", "50");
+
+        }
+        //end
+
+        //Savebutton
+        function buttonSavePostfun() {
+        
+            $.Application.showLoading();
+         
+            if ($("#PostValue").val() != "" && $("#PostValue").val() != "what are you working on?") {
+
+                $("#buttonSavePost").prop('disabled', true);
+
+                var hash = $(location).attr('href');
+                var hashSplit = hash.split("?");
+                var CodeText = hashSplit[1].toLowerCase();
+           
+
+                function PostPM() {
+               
+
+                if (CodeText == "c") {
+
+                            this.BodyText = $("#PostValue").val();
+                            this.CreatedById = $.CurrentUserId;
+                            //this.CreatedById = "1-116";
+                            this.Tenant = $.CurrentTenant;
+                            this.ParentPostId = $.CurrentEntityPostList.PostId;
+                }
+
+
+                if (CodeText == "p") {
+              
+                       
+                            this.BodyText = $("#PostValue").val();
+                            this.CreatedById = $.CurrentUserId;
+                            this.Tenant = $.CurrentTenant;
+                  
+                   }
+
+
+                };
+
+
+                var Postpm = new PostPM();
+              
+                var url = "../api/Posts";
+
+                $.ajax({
+                    url: url,
+                    data: JSON.stringify(Postpm),
+                    type: 'POST',
+                    contentType: 'application/json',
+                    success: function (result) {
+                        $.Application.hideLoading();
+                        $("#buttonSavePost").prop('disabled', false);
+                        if (CodeText == "c") {
+
+                            $.Application.navigate("Views/PostDatilesView.html?comment");
+
+
+                        }
+                        if (CodeText == "p") {
+                            $.Application.navigate("Views/PostsView.html");
+
+                        }
+                    
+                        var value = "what are you working on?";
+                        $("#PostValue").css("color", "LightGray");
+                        $("#PostValue").val(value);
+                    }
+                });
+
+           
+            }
+       
+     
+        
+
+        }
+        //endSave
+
+
+        //backbutton
+        function onClickBackButtom(e) {
+
+            var hash = $(location).attr('href');
+            var hashSplit = hash.split("?");
+            var CodeText = hashSplit[1].toLowerCase();
+
+            if ($("#PostValue").val() != "" && $("#PostValue").val() != "what are you working on?") {
+                if (CodeText == "c") {
+
+                    if (confirm('Do you Want to discard this Comment?')) {
+                        $.Application.navigate("Views/PostDatilesView.html?comment");
+                    }
+                    else {
+                     
+                    }
+
+
+                }
+
+                if (CodeText == "p") {
+
+                    if (confirm('Do you Want to discard this Post?')) {
+                        $.Application.navigate("Views/PostsView.html");
+                    }
+                    else {
+                  
+                    }
+
+
+                }
+
+
+
+            }
+
+            else {
+                if (CodeText == "c") {
+                    $.Application.navigate("Views/PostDatilesView.html?comment");
+                }
+                if (CodeText == "p") {
+                    $.Application.navigate("Views/PostsView.html");
+                }
+            }
+
+           
+         
+
+
+        }
+        //endbackbutton
+
+
+       // show
+        function onAddPostShow(e) {
+            ko.applyBindings($.CurrentEntityPostList);
+            var value = "what are you working on?";
+            $("#PostValue").css("color", "LightGray");
+            $("#PostValue").val(value);
+
+
+            var hash = $(location).attr('href');
+            var hashSplit = hash.split("?");
+            var CodeText = hashSplit[1].toLowerCase();
+            if (CodeText == "c") {
+                
+                $("#Send").text("replay to " + $.CurrentEntityPostList.CreatedByUserName);
+                //$("#CreatedBy").text($.CurrentEntityPostList.CreatedByUserName);
+
+                document.getElementById('backtoPosts').style.display = "none";
+                document.getElementById('backtoPost').style.display = "block";
+              
+
+            }
+            if (CodeText == "p") {
+                $("#Send").text("Add New Post");
+                //$("#CreatedBy").text("Post");
+                document.getElementById('backtoPosts').style.display = "block";
+                document.getElementById('backtoPost').style.display = "none";
+              
+            }
+
+
+       
+
+        }
+        //endshow
+    </script>
+</body>
+</html>

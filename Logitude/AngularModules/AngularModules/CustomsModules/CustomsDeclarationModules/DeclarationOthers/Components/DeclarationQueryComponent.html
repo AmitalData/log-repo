@@ -1,0 +1,172 @@
+﻿<style>
+    .FieldRow {
+        height: 30px;
+    }
+
+    .subTitle {
+        color: #1b90cb;
+        font-size: 15px;
+        padding-top: 10px;
+        padding-bottom: 2px;
+    }
+</style>
+<table>
+
+    <tr>
+        <td>
+            <div class="TableHolder">   
+                <table>
+
+                    <!-- Filters Fields -->
+                    <tr >
+                        <td colspan="4" >
+                            <table >
+                                <tr class="FieldRow">
+                                    <!-- CustomerId -->
+                                    <td style="width: 100px; text-align:right !important;">
+                                        <LogLabel [ObjectFieldName]="'CustomerId'" [ObjectTableName]="'Customs.Declaration'"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td >
+                                        <LogLov [ObjectFieldName]="'CustomerId'"
+                                                [ObjectTableName]="'Customs.Declaration'"
+                                                [DataContext]="DataContext"
+                                                [SelectedValue]="CustomerId"
+                                                [DependencyFilter1Value]="'CS'"
+                                                [HideAddLink]="true"
+                                                [LookUpTableName]="'Card'"
+                                                [DisplayFieldsFromList]="'Code,LocalName,EnglishName,CityName,CountryName,PartnerTypeName'">
+                                        </LogLov>                                                                                   
+                                       </td>
+
+                                    <!--<td style="width: 40px;"><div></div></td>-->
+
+                                    <!-- TaxationDateTime -->
+                                    <td style="width: 150px; text-align:right;">
+                                        <LogLabel [ObjectFieldName]="'TaxationDateTime'" [ObjectTableName]="'Customs.Declaration'"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td style="width: 140px; text-align:right !important;">
+                                        <LogDatePicker  [ObjectFieldName]="'TaxationDateTime'" [ObjectTableName]="'Customs.Declaration'"
+                                                       [DataContext]="DataContext" [HideColumns]="true" [SelectedDateValue]="TaxationDateTime"></LogDatePicker>
+                                    </td>
+
+                                    <td style="width: 60px;"><div></div></td>
+
+                                    <!-- Department -->
+                                    <td style="width: 120px; text-align:right;left:10px">
+                                        <LogLabel [ObjectFieldName]="'DepartmentId'" [ObjectTableName]="'Customs.Declaration'"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td style="width: 180px; text-align:right !important;">
+                                        <LogLov [ObjectFieldName]="'DepartmentId'"
+                                                [ObjectTableName]="'Customs.Declaration'"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Department'"
+                                                [HideColumns]="true"
+                                               [HideAddLink]="true"
+
+                                                [SelectedValue]="DepartmentId">
+                                        </LogLov>     
+                                    </td>
+
+                                  
+                                </tr>
+                                <tr class="FieldRow">
+                                    <!-- DeclarationOfficeCode -->
+                                    <td style="text-align:right">
+                                        <LogLabel [ObjectFieldName]="'DeclarationOfficeCode'" [ObjectTableName]="'Customs.Declaration'"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td style="width:200px;  padding-left: 36px;">
+                                        <LogLov [ObjectFieldName]="'DeclarationOfficeCode'"
+                                                [ObjectTableName]="'Customs.Declaration'"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Customs.CustomsHouseType'"
+                                                [HideColumns]="true"
+                                                [SelectedValue]="DeclarationOfficeCode">
+                                        </LogLov>
+                                    </td>
+
+                                   <!-- <td style="width: 40px;"><div></div></td>-->
+
+                                    <!-- CustomsDocId -->
+                                    <td style="text-align:right">
+                                        <LogLabel [ObjectFieldName]="'PaymentDate'" [ObjectTableName]="'Customs.Declaration'"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td>
+
+                                        <LogDatePicker [ObjectFieldName]="'PaymentDate'" [ObjectTableName]="'Customs.Declaration'"
+                                                       [DataContext]="DataContext" [HideColumns]="true" [SelectedDateValue]="PaymentDate"></LogDatePicker>
+
+                                    </td>
+
+                                    <td></td>
+                                    
+                                    <!-- search text box -->
+                                    <td style="width:120px; text-align:right">
+                                        <div style="color: #72716E;">
+                                            שדות חיפוש:
+                                        </div>
+                                    </td>
+                                    <td style="width:180px;left:3px">
+
+                                        <SearchTextBox [PlaceHolder]="'תיק/הצהרה/מזהי מטען'" [ObjectTableName]="'Customs.Declaration'" (SearchTextChangeEvent)="Search($event)"></SearchTextBox>
+                                    </td>
+
+                                </tr>
+                            </table>
+                        </td>
+                      
+                    </tr>
+         
+
+                    <!-- Grid -->
+                    <tr>
+                        <td colspan="4" style="height: 100%;">
+
+                            <div style="height: 100%;">
+
+                                <table style="height: 100%;">
+                                    <tr>
+                                        <td>
+                                            <!-- Grid -->
+                                            <logitude-grid GridWidth="100%" GridHeight="100%" [ObjectTable]="'Customs.Declaration'" [dataSource]="DataSource"  
+                                                               (rowSelectedEvent)="OnRowSelected($event)"  [IsGradiantSelectedColor]="true"
+                                                               [SelectedRow]="SelectedRow"
+                                                               [columns]="columns" [autoLoad]="true" [QueryChangeEvent]="onQueryChangeEvent" >
+                                            </logitude-grid>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- footer -->
+                    <tr style="height: 30px;">
+                        <td>
+                            <div></div>
+                        </td>
+
+                        <td style="width: 57px;">
+                            <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Close' |TextCodeTranslationPipe}}</button>
+                        </td>
+
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 57px;">
+                            <button class="RedButton" [disabled]="IsDisplayOnly" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </td>
+    </tr>
+
+</table>

@@ -1,0 +1,259 @@
+﻿<style type="text/css">
+    .TabCloseIcon:hover {
+        background: url('./Images/Tab.X.Blue.png') no-repeat;
+    }
+
+    .TabCloseIcon {
+        background: url('./Images/Tab.X.Gray.png') no-repeat;
+    }
+
+    .LogTabControl {
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+
+        .LogTabControl .TabControlHead .NewTabItem {
+            width: 35px;
+            height: 23px;
+            line-height: 23px;
+            color: white;
+            display: inline-block;
+            float: left;
+            cursor: default;
+            overflow: hidden;
+            font-size: 20px;
+            font-weight: bold;
+            font-family: Arial;
+            text-align: center;
+            border-radius: 4px 4px 0px 0px;
+            -moz-border-radius: 4px 4px 0px 0px;
+            -webkit-border-radius: 4px 4px 0px 0px;
+            border: 1px solid #168d66;
+            border-bottom: 0px !important;
+            /*background: -moz-linear-gradient(rgba(0, 145, 97, 0.6) 0%, rgba(0, 145, 97, 1) 100%);
+            background: -webkit-linear-gradient(rgba(0, 145, 97, 0.6) 0%, rgba(0, 145, 97, 1) 100%);
+            background: linear-gradient(rgba(0, 145, 97, 0.6) 0%, rgba(0, 145, 97, 1) 100%);*/
+            /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#46a886+0,079465+100 */
+            /*background: #46a886;
+            background: -moz-radial-gradient(center, ellipse cover, #46a886 0%, #079465 100%);
+            background: -webkit-radial-gradient(center, ellipse cover, #46a886 0%,#079465 100%);
+            background: radial-gradient(ellipse at center, #46a886 0%,#079465 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#46a886', endColorstr='#079465',GradientType=1 );*/
+
+             /* 3- */
+            color: #fff !important;
+            border: 1px solid #529267;
+            /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#7ad6ba+0,a2e5cd+7,7ad6ba+9,199e7a+100 */
+            background: #7ad6ba; /* Old browsers */
+            background: -moz-linear-gradient(top, #7ad6ba 0%, #a2e5cd 7%, #7ad6ba 9%, #199e7a 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(top, #7ad6ba 0%,#a2e5cd 7%,#7ad6ba 9%,#199e7a 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(to bottom, #7ad6ba 0%,#a2e5cd 7%,#7ad6ba 9%,#199e7a 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7ad6ba', endColorstr='#199e7a',GradientType=0 ); /* IE6-9 */
+
+        }
+
+            .LogTabControl .TabControlHead .NewTabItem:hover {
+        
+                cursor: default;
+                border: 1px solid #r1c8945;
+                border-bottom: 0px !important;
+                /*background: -moz-linear-gradient(rgba(255, 255, 255, 1) 0%, rgba(0, 145, 97, 1) 100%);
+                background: -webkit-linear-gradient(rgba(255, 255, 255, 1) 0%, rgba(0, 145, 97, 1) 100%);
+                background: linear-gradient(rgba(255, 255, 255, 1) 0%, rgba(0, 145, 97, 1) 100%);*/
+                /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#50bfa1+0,08a350+100 */
+                /*background: #50bfa1;
+                background: -moz-radial-gradient(center, ellipse cover, #50bfa1 0%, #08a350 100%);
+                background: -webkit-radial-gradient(center, ellipse cover, #50bfa1 0%,#08a350 100%);
+                background: radial-gradient(ellipse at center, #50bfa1 0%,#08a350 100%);
+                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#50bfa1', endColorstr='#08a350',GradientType=1 );*/
+
+                /* 3- */
+                background: #7ad6ba; /* Old browsers */
+                background: -moz-linear-gradient(top, #7ad6ba 0%, #a2e5cd 7%, #7ad6ba 9%, #45d3b2 55%, #1cb28a 100%); /* FF3.6-15 */
+                background: -webkit-linear-gradient(top, #7ad6ba 0%,#a2e5cd 7%,#7ad6ba 9%,#45d3b2 55%,#1cb28a 100%); /* Chrome10-25,Safari5.1-6 */
+                background: linear-gradient(to bottom, #7ad6ba 0%,#a2e5cd 7%,#7ad6ba 9%,#45d3b2 55%,#1cb28a 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7ad6ba', endColorstr='#1cb28a',GradientType=0 ); /* IE6-9 */
+
+            }
+
+            .LogTabControl .TabControlHead .NewTabItem:active {
+            background: #7ad6ba; /* Old browsers */
+            background: -moz-linear-gradient(top, #7ad6ba 0%, #74bf9c 7%, #7ad6ba 9%, #1aa580 81%, #189b69 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(top, #7ad6ba 0%,#74bf9c 7%,#7ad6ba 9%,#1aa580 81%,#189b69 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(to bottom, #7ad6ba 0%,#74bf9c 7%,#7ad6ba 9%,#1aa580 81%,#189b69 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7ad6ba', endColorstr='#189b69',GradientType=0 ); /* IE6-9 */
+        }
+
+        .LogTabControl .TabControlHead li:not(.NewTabItem) {
+            height: 23px;
+            width: 95px;
+            line-height: 23px;
+            border: 1px solid #a7ccde;
+            display: inline-block;
+            float: left;
+            cursor: default;
+            overflow: hidden;
+            border-radius: 4px 4px 0px 0px;
+            -moz-border-radius: 4px 4px 0px 0px;
+            -webkit-border-radius: 4px 4px 0px 0px;
+            /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f7f7f7+0,efefef+18,e8e8e8+61,e5e5e5+100 */
+            background: #f7f7f7; /* Old browsers */
+            background: -moz-linear-gradient(top, #f7f7f7 0%, #efefef 18%, #e8e8e8 61%, #e5e5e5 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(top, #f7f7f7 0%,#efefef 18%,#e8e8e8 61%,#e5e5e5 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(to bottom, #f7f7f7 0%,#efefef 18%,#e8e8e8 61%,#e5e5e5 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7f7f7', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
+            /*blue*/
+            /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f9fcff+9,f2f9ff+56,e5eef9+100 */
+            background: #f9fcff; /* Old browsers */
+            background: -moz-linear-gradient(top, #f9fcff 9%, #f2f9ff 56%, #e5eef9 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(top, #f9fcff 9%,#f2f9ff 56%,#e5eef9 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(to bottom, #f9fcff 9%,#f2f9ff 56%,#e5eef9 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9fcff', endColorstr='#e5eef9',GradientType=0 ); /* IE6-9 */
+        }
+
+        .LogTabControl .TabControlHead li:not(.Selected) {
+            height: 23px;
+            margin-top: 2px;
+            border-bottom: 1px solid #3BB3E2;
+        }
+
+            .LogTabControl .TabControlHead li:not(.Selected):not(.NewTabItem):hover .InnerChild {
+                /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f7f7f7+0,f7f7f7+18,f7f7f7+61,eaeaea+100 */
+                background: #f7f7f7; /* Old browsers */
+                background: -moz-linear-gradient(top, #f7f7f7 0%, #f7f7f7 18%, #f7f7f7 61%, #eaeaea 100%); /* FF3.6-15 */
+                background: -webkit-linear-gradient(top, #f7f7f7 0%,#f7f7f7 18%,#f7f7f7 61%,#eaeaea 100%); /* Chrome10-25,Safari5.1-6 */
+                background: linear-gradient(to bottom, #f7f7f7 0%,#f7f7f7 18%,#f7f7f7 61%,#eaeaea 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7f7f7', endColorstr='#eaeaea',GradientType=0 ); /* IE6-9 */
+                /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f9fcff+9,e5f3ff+57,d4e4f7+100 */
+                background: #b3d7fb; /* Old browsers */
+                background: -moz-linear-gradient(top, #f9fcff 9%, #e5f3ff 57%, #d4e4f7 100%); /* FF3.6-15 */
+                background: -webkit-linear-gradient(top, #f9fcff 9%,#e5f3ff 57%,#d4e4f7 100%); /* Chrome10-25,Safari5.1-6 */
+                background: linear-gradient(to bottom, #f9fcff 9%,#e5f3ff 57%,#d4e4f7 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9fcff', endColorstr='#d4e4f7',GradientType=0 ); /* IE6-9 */
+            }
+
+            .LogTabControl .TabControlHead li:not(.Selected):not(.NewTabItem):hover {
+            background: #448DCA;
+        }
+
+        .LogTabControl .TabControlHead li:not(.NewTabItem) .InnerChild {
+            height: 100%;
+            width: 100%;
+            color: #1B1C1C;
+            font-size: 13px;
+            text-align: left;
+            padding-left: 5px;
+            padding-right: 3px;
+            background: transparent;
+        }
+
+        .LogTabControl .TabControlHead li.Selected {
+            height: 25px;
+            line-height: 25px;
+            margin-bottom: -1px;
+            background: white;
+            border: 1px solid #3BB3E2;
+            border-bottom: 1px solid white;
+        }
+
+        .LogTabControl .TabControlBody {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 25px;
+            bottom: 0;
+            background: white;
+            border-top: none !important;
+        }
+
+        .LogTabControl .TabControlHead {
+            width: 100%;
+            height: 25px;
+            position: relative;
+            border-bottom: 1px solid #3BB3E2;
+        }
+
+            .LogTabControl .TabControlHead ul {
+        width: 100%;
+        height: 100%;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    .CloseButtonWrapper {
+        BACKGROUND-COLOR: #fff;
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+    }
+
+        .CloseButtonWrapper:hover {
+            BACKGROUND-COLOR: #e5e5e5;
+        }
+
+        .CloseButtonWrapper:active {
+            BACKGROUND-COLOR: #b1b1b1;
+        }
+
+    .CloseButton {
+        cursor: pointer;
+        background: url('./Images/Tab.X.Blue.png') no-repeat;
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 10px;
+        height: 10px;
+        font-size: 12px;
+        color: #2d71aa;
+        border-radius: 50%;
+    }
+</style>
+<table>
+    <tr>
+        <td>
+            <div class="TableHolder">
+                <table>
+                    <tr>
+                        <td>
+                            <div style="position: absolute; top: 0;" class="LogTabControl">
+                                <div class="TabControlHead" >
+                                    <ul>
+                                        <li *ngFor="let tab of TabsSource" [class.Selected]="tab.IsSelected" [style.float]="IsRTL ? 'right' : 'left'" (click)="SelectionChanged(tab)">
+
+                                            <div style="position: relative; width: 100%;" class="InnerChild"
+                                                 [style.text-align]="IsRTL ? 'right' : 'left'"
+                                                 [title]="tab.Header"
+                                                 (mousedown)="onListMouseDown($event,tab)">
+
+                                                <div class="TextTrimming" [style.padding-left]="tab.IsSelected ? '3px' : ''">{{tab.Header}}</div>
+                                                <div *ngIf="!HideCloseButton && !Disabled && (tab.IsSelected && TabsSource.length > 1)" class="CloseButtonWrapper" [title]="'General.B.Close' | TextCodeTranslationPipe"><div class="CloseButton" (click)="CloseTab(tab)"></div></div>
+                                            </div>
+
+                                        </li>
+
+                                        <li *ngIf="!IsFixedTabs" class="NewTabItem" (click)="AddTab($event)" [style.float]="IsRTL ? 'right' : 'left'">+</li>
+                                    </ul>
+                                </div>
+
+                                
+                                <div class="TabControlBody" style="background: white;" [style.border]="NoBorder ? 'none' : '1px solid #3bb3e2'">
+                                    <div class="MediaFillAbsolute" *ngFor="let tab of TabsSource;" [hidden]="!tab.IsSelected">
+                                        <div LocationDirective Code="{{tab.Code}}" Index="{{tab.Index}}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </td>
+    </tr>
+</table>
+<div *ngIf="TabsSource.length <= 0" style="background: #f5f5f5; height: 100px; text-align: center; color: #a3a3a3; font-style: italic; padding-top: 40px; font-family: Verdana;">
+    No tabs!
+</div>

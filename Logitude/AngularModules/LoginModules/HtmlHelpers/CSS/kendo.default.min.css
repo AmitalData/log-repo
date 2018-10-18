@@ -1,0 +1,891 @@
+.k-block {
+	background-color: rgb(255, 255, 255);
+}
+.k-widget {
+	background-color: rgb(255, 255, 255);
+}
+.k-block {
+	border-color: rgb(197, 197, 197);
+}
+.k-widget {
+	border-color: rgb(197, 197, 197);
+}
+.k-input {
+	border-color: rgb(197, 197, 197);
+}
+.k-textbox {
+	border-color: rgb(197, 197, 197);
+}
+.k-group {
+	border-color: rgb(197, 197, 197);
+}
+.k-content {
+	border-color: rgb(197, 197, 197);
+}
+.k-header {
+	border-color: rgb(197, 197, 197);
+}
+.k-editable-area {
+	border-color: rgb(197, 197, 197);
+}
+.k-separator {
+	border-color: rgb(197, 197, 197);
+}
+.k-colorpicker .k-i-arrow-s {
+	border-color: rgb(197, 197, 197);
+}
+.k-textbox > input {
+	border-color: rgb(197, 197, 197);
+}
+.k-autocomplete {
+	border-color: rgb(197, 197, 197);
+}
+.k-dropdown-wrap {
+	border-color: rgb(197, 197, 197);
+}
+.k-toolbar {
+	border-color: rgb(197, 197, 197);
+}
+.k-group-footer td {
+	border-color: rgb(197, 197, 197);
+}
+.k-grid-footer {
+	border-color: rgb(197, 197, 197);
+}
+.k-footer-template td {
+	border-color: rgb(197, 197, 197);
+}
+.k-state-default {
+	border-color: rgb(197, 197, 197);
+}
+.k-state-default .k-select {
+	border-color: rgb(197, 197, 197);
+}
+.k-state-disabled {
+	border-color: rgb(197, 197, 197);
+}
+.k-grid-header-wrap {
+	border-color: rgb(197, 197, 197);
+}
+.k-grid-header {
+	border-color: rgb(197, 197, 197);
+}
+.k-grid td {
+	border-color: rgb(197, 197, 197);
+}
+.k-grid-footer-wrap {
+	border-color: rgb(197, 197, 197);
+}
+.k-pager-wrap {
+	border-color: rgb(197, 197, 197);
+}
+.k-pager-wrap .k-link {
+	border-color: rgb(197, 197, 197);
+}
+.k-pager-refresh {
+	border-color: rgb(197, 197, 197);
+}
+.k-grouping-header {
+	border-color: rgb(197, 197, 197);
+}
+.k-grouping-header .k-group-indicator {
+	border-color: rgb(197, 197, 197);
+}
+.k-dropdown-wrap {
+	border-color: rgb(197, 197, 197);
+}
+.k-panelbar > .k-item > .k-link {
+	border-color: rgb(197, 197, 197);
+}
+.k-panel > .k-item > .k-link {
+	border-color: rgb(197, 197, 197);
+}
+.k-panelbar .k-panel {
+	border-color: rgb(197, 197, 197);
+}
+.k-panelbar .k-content {
+	border-color: rgb(197, 197, 197);
+}
+.k-calendar th {
+	border-color: rgb(197, 197, 197);
+}
+.k-slider-track {
+	border-color: rgb(197, 197, 197);
+}
+.k-splitbar {
+	border-color: rgb(197, 197, 197);
+}
+.k-dropzone-active {
+	border-color: rgb(197, 197, 197);
+}
+.k-upload-files {
+	border-color: rgb(197, 197, 197);
+}
+.k-tiles {
+	border-color: rgb(197, 197, 197);
+}
+.k-toolbar {
+	border-color: rgb(197, 197, 197);
+}
+.k-dropdown-wrap {
+	border-color: rgb(197, 197, 197);
+}
+.k-tooltip {
+	border-color: rgb(197, 197, 197);
+}
+.k-progress {
+	border-color: rgb(197, 197, 197);
+}
+.k-group {
+	background-color: rgb(235, 235, 235);
+}
+.k-toolbar {
+	background-color: rgb(235, 235, 235);
+}
+.k-grouping-header {
+	background-color: rgb(235, 235, 235);
+}
+.k-pager-wrap {
+	background-color: rgb(235, 235, 235);
+}
+.k-group-footer td {
+	background-color: rgb(235, 235, 235);
+}
+.k-grid-footer {
+	background-color: rgb(235, 235, 235);
+}
+.k-footer-template td {
+	background-color: rgb(235, 235, 235);
+}
+.k-widget .k-status {
+	background-color: rgb(235, 235, 235);
+}
+.k-grouping-row td {
+	background-color: rgb(235, 235, 235);
+}
+td.k-group-cell {
+	background-color: rgb(235, 235, 235);
+}
+.k-calendar th {
+	background-color: rgb(235, 235, 235);
+}
+.k-dropzone-hovered {
+	background-color: rgb(235, 235, 235);
+}
+.k-upload-files {
+	background-color: rgb(235, 235, 235);
+}
+.k-list-container {
+	border-color: rgb(197, 197, 197); background-color: rgb(233, 233, 233);
+}
+.k-content {
+	background-color: rgb(255, 255, 255);
+}
+.k-editable-area {
+	background-color: rgb(255, 255, 255);
+}
+.k-panelbar > li.k-item {
+	background-color: rgb(255, 255, 255);
+}
+.k-panel > li.k-item {
+	background-color: rgb(255, 255, 255);
+}
+.k-tiles {
+	background-color: rgb(255, 255, 255);
+}
+.k-alt {
+	background-color: rgb(245, 245, 245);
+}
+.k-separator {
+	background-color: rgb(245, 245, 245);
+}
+.k-widget .k-dropdown-wrap {
+	border-color: rgb(197, 197, 197); background-color: rgb(233, 233, 233);
+}
+.k-widget .k-picker-wrap {
+	border-color: rgb(197, 197, 197); background-color: rgb(233, 233, 233);
+}
+.k-widget .k-numeric-wrap {
+	border-color: rgb(197, 197, 197); background-color: rgb(233, 233, 233);
+}
+.k-textbox {
+	border-color: rgb(197, 197, 197); background-color: rgb(233, 233, 233);
+}
+.k-header.k-autocomplete {
+	border-color: rgb(197, 197, 197); background-color: rgb(233, 233, 233);
+}
+.k-state-focused.k-autocomplete {
+	border-color: rgb(197, 197, 197); background-color: rgb(233, 233, 233);
+}
+div.k-state-active.k-dropdown-wrap {
+	border-color: rgb(197, 197, 197); background-color: rgb(233, 233, 233);
+}
+.k-state-focused.k-dropdown-wrap {
+	border-color: rgb(197, 197, 197); background-color: rgb(233, 233, 233);
+}
+.k-state-focused.k-dropdown-wrap:hover {
+	border-color: rgb(197, 197, 197); background-color: rgb(233, 233, 233);
+}
+div.k-state-active.k-picker-wrap {
+	border-color: rgb(197, 197, 197); background-color: rgb(233, 233, 233);
+}
+.k-state-focused.k-picker-wrap {
+	border-color: rgb(197, 197, 197); background-color: rgb(233, 233, 233);
+}
+.k-state-focused.k-picker-wrap:hover {
+	border-color: rgb(197, 197, 197); background-color: rgb(233, 233, 233);
+}
+span.k-state-active.k-numeric-wrap {
+	border-color: rgb(197, 197, 197); background-color: rgb(233, 233, 233);
+}
+.k-state-focused.k-numeric-wrap {
+	border-color: rgb(197, 197, 197); background-color: rgb(233, 233, 233);
+}
+.k-state-focused.k-numeric-wrap:hover {
+	border-color: rgb(197, 197, 197); background-color: rgb(233, 233, 233);
+}
+.k-textbox > input {
+	border-color: rgb(197, 197, 197);
+}
+.k-autocomplete .k-input {
+	border-color: rgb(197, 197, 197);
+}
+.k-dropdown-wrap .k-input {
+	border-color: rgb(197, 197, 197);
+}
+.k-state-focused.k-autocomplete .k-input {
+	border-color: rgb(197, 197, 197);
+}
+.k-state-focused.k-dropdown-wrap .k-input {
+	border-color: rgb(197, 197, 197);
+}
+.k-state-focused.k-picker-wrap .k-input {
+	border-color: rgb(197, 197, 197);
+}
+.k-state-focused.k-numeric-wrap .k-input {
+	border-color: rgb(197, 197, 197);
+}
+.k-input {
+	color: rgb(46, 46, 46); background-color: rgb(255, 255, 255);
+}
+input.k-textbox {
+	color: rgb(46, 46, 46); background-color: rgb(255, 255, 255);
+}
+textarea.k-textbox {
+	color: rgb(46, 46, 46); background-color: rgb(255, 255, 255);
+}
+input.k-textbox:hover {
+	color: rgb(46, 46, 46); background-color: rgb(255, 255, 255);
+}
+textarea.k-textbox:hover {
+	color: rgb(46, 46, 46); background-color: rgb(255, 255, 255);
+}
+.k-textbox > input {
+	color: rgb(46, 46, 46); background-color: rgb(255, 255, 255);
+}
+.k-block {
+	color: rgb(46, 46, 46);
+}
+.k-widget {
+	color: rgb(46, 46, 46);
+}
+.k-popup {
+	color: rgb(46, 46, 46);
+}
+.k-content {
+	color: rgb(46, 46, 46);
+}
+.k-dropdown .k-input {
+	color: rgb(46, 46, 46);
+}
+.k-link:link {
+	color: rgb(46, 46, 46);
+}
+.k-link:visited {
+	color: rgb(46, 46, 46);
+}
+.k-header {
+	color: rgb(46, 46, 46);
+}
+.k-header {
+	background-image: url("textures/highlight.png");
+}
+.k-grid-header {
+	background-image: url("textures/highlight.png");
+}
+.k-toolbar {
+	background-image: url("textures/highlight.png");
+}
+.k-dropdown-wrap {
+	background-image: url("textures/highlight.png");
+}
+.k-picker-wrap {
+	background-image: url("textures/highlight.png");
+}
+.k-grouping-header {
+	background-image: url("textures/highlight.png");
+}
+.k-tooltip {
+	background-image: url("textures/highlight.png");
+}
+.k-pager-wrap {
+	background-image: url("textures/highlight.png");
+}
+.k-button {
+	background-image: url("textures/highlight.png");
+}
+.k-draghandle {
+	background-image: url("textures/highlight.png");
+}
+.k-tile {
+	background-image: url("textures/highlight.png");
+}
+.k-textbox {
+	background-image: url("textures/highlight.png");
+}
+.k-autocomplete {
+	background-image: url("textures/highlight.png");
+}
+.k-state-hover {
+	background-image: url("textures/highlight.png");
+}
+.k-state-selected {
+	background-image: url("textures/highlight.png");
+}
+.k-state-focused {
+	background-image: url("textures/highlight.png");
+}
+.k-tabstrip-items .k-item {
+	background-image: url("textures/highlight.png");
+}
+.k-block {
+	background-color: rgb(227, 227, 227);
+}
+.k-header {
+	background-color: rgb(227, 227, 227);
+}
+.k-grid-header {
+	background-color: rgb(227, 227, 227);
+}
+.k-toolbar {
+	background-color: rgb(227, 227, 227);
+}
+.k-grouping-header {
+	background-color: rgb(227, 227, 227);
+}
+.k-tooltip {
+	background-color: rgb(227, 227, 227);
+}
+.k-pager-wrap {
+	background-color: rgb(227, 227, 227);
+}
+.k-button {
+	background-color: rgb(227, 227, 227);
+}
+.k-draghandle {
+	background-color: rgb(227, 227, 227);
+}
+.k-icon {
+	opacity: 0.8;
+}
+.k-column-menu .k-sprite {
+	opacity: 0.8;
+}
+.k-icon:hover {
+	opacity: 1;
+}
+.k-state-hover .k-icon {
+	opacity: 1;
+}
+.k-state-selected .k-icon {
+	opacity: 1;
+}
+.k-state-focused .k-icon {
+	opacity: 1;
+}
+.k-column-menu .k-state-hover .k-sprite {
+	opacity: 1;
+}
+.k-column-menu .k-state-active .k-sprite {
+	opacity: 1;
+}
+.k-icon {
+	background-image: url("Default/sprite.png");
+}
+.k-tool-icon {
+	background-image: url("Default/sprite.png");
+}
+.k-grouping-dropclue {
+	background-image: url("Default/sprite.png");
+}
+.k-drop-hint {
+	background-image: url("Default/sprite.png");
+}
+.k-callout {
+	background-image: url("Default/sprite.png");
+}
+.k-progress {
+	background-image: url("Default/sprite.png");
+}
+.k-progress-status {
+	background-image: url("Default/sprite.png");
+}
+.k-column-menu .k-sprite {
+	background-image: url("Default/sprite.png");
+}
+.k-loading {
+	background-image: url("Default/loading.gif");
+}
+.k-loading-image {
+	background-image: url("Default/loading-image.gif");
+}
+.k-loading-color {
+	background-color: rgb(255, 255, 255);
+}
+.k-button {
+	color: rgb(46, 46, 46);
+}
+.k-button {
+	border-color: rgb(197, 197, 197); background-color: rgb(227, 227, 227);
+}
+.k-state-disabled.k-button:hover {
+	border-color: rgb(197, 197, 197); background-color: rgb(227, 227, 227);
+}
+.k-state-disabled .k-button:hover {
+	border-color: rgb(197, 197, 197); background-color: rgb(227, 227, 227);
+}
+.k-draghandle {
+	border-color: rgb(197, 197, 197); background-color: rgb(227, 227, 227);
+}
+.k-button:hover {
+	border-color: rgb(169, 159, 154); background-color: rgb(169, 159, 154);
+}
+.k-draghandle:hover {
+	border-color: rgb(169, 159, 154); background-color: rgb(169, 159, 154);
+}
+.k-state-active {
+	border-color: rgb(240, 113, 58); color: rgb(46, 46, 46); background-color: rgb(255, 255, 255);
+}
+.k-state-active:hover {
+	border-color: rgb(240, 113, 58); color: rgb(46, 46, 46); background-color: rgb(255, 255, 255);
+}
+.k-active-filter {
+	border-color: rgb(240, 113, 58); color: rgb(46, 46, 46); background-color: rgb(255, 255, 255);
+}
+.k-state-focused {
+	border-color: rgb(169, 159, 154); color: rgb(46, 46, 46); background-color: rgb(169, 159, 154);
+}
+.k-state-selected {
+	border-color: rgb(240, 113, 58); color: rgb(255, 255, 255); background-color: rgb(240, 113, 58);
+}
+.k-list > .k-state-selected {
+	border-color: rgb(240, 113, 58); color: rgb(255, 255, 255); background-color: rgb(240, 113, 58);
+}
+.k-list > .k-state-focused {
+	border-color: rgb(240, 113, 58); color: rgb(255, 255, 255); background-color: rgb(240, 113, 58);
+}
+.k-panelbar > .k-state-selected {
+	border-color: rgb(240, 113, 58); color: rgb(255, 255, 255); background-color: rgb(240, 113, 58);
+}
+.k-panel > .k-state-selected {
+	border-color: rgb(240, 113, 58); color: rgb(255, 255, 255); background-color: rgb(240, 113, 58);
+}
+.k-button:active {
+	border-color: rgb(240, 113, 58); color: rgb(255, 255, 255); background-color: rgb(240, 113, 58);
+}
+.k-ghost-splitbar-vertical {
+	border-color: rgb(240, 113, 58); color: rgb(255, 255, 255); background-color: rgb(240, 113, 58);
+}
+.k-ghost-splitbar-horizontal {
+	border-color: rgb(240, 113, 58); color: rgb(255, 255, 255); background-color: rgb(240, 113, 58);
+}
+.k-state-selected.k-draghandle:hover {
+	border-color: rgb(240, 113, 58); color: rgb(255, 255, 255); background-color: rgb(240, 113, 58);
+}
+.k-state-focused.k-state-selected {
+	background-color: rgb(237, 86, 20);
+}
+.k-state-selected > .k-link {
+	color: rgb(255, 255, 255);
+}
+.k-state-hover {
+	border-color: rgb(169, 159, 154); color: rgb(46, 46, 46); background-color: rgb(169, 159, 154);
+}
+.k-state-hover:hover {
+	border-color: rgb(169, 159, 154); color: rgb(46, 46, 46); background-color: rgb(169, 159, 154);
+}
+.k-splitbar-horizontal-hover:hover {
+	border-color: rgb(169, 159, 154); color: rgb(46, 46, 46); background-color: rgb(169, 159, 154);
+}
+.k-splitbar-vertical-hover:hover {
+	border-color: rgb(169, 159, 154); color: rgb(46, 46, 46); background-color: rgb(169, 159, 154);
+}
+.k-list > .k-state-hover {
+	border-color: rgb(169, 159, 154); color: rgb(46, 46, 46); background-color: rgb(169, 159, 154);
+}
+.k-marquee {
+	border-color: rgb(169, 159, 154); color: rgb(46, 46, 46); background-color: rgb(169, 159, 154);
+}
+.k-pager-wrap .k-link:hover {
+	border-color: rgb(169, 159, 154); color: rgb(46, 46, 46); background-color: rgb(169, 159, 154);
+}
+.k-state-hover > .k-link {
+	color: rgb(46, 46, 46);
+}
+.k-state-hover.k-other-month .k-link {
+	color: rgb(46, 46, 46);
+}
+.k-textbox:hover {
+	border-color: rgb(169, 159, 154); background-color: rgb(169, 159, 154);
+}
+.k-state-hover.k-autocomplete {
+	border-color: rgb(169, 159, 154); background-color: rgb(169, 159, 154);
+}
+.k-state-hover.k-picker-wrap {
+	border-color: rgb(169, 159, 154); background-color: rgb(169, 159, 154);
+}
+.k-state-hover.k-numeric-wrap {
+	border-color: rgb(169, 159, 154); background-color: rgb(169, 159, 154);
+}
+.k-state-hover.k-dropdown-wrap {
+	border-color: rgb(169, 159, 154); background-color: rgb(169, 159, 154);
+}
+.k-calendar .k-state-focused.k-state-selected > .k-link {
+	background-color: transparent;
+}
+.k-dropdown .k-state-hover .k-input {
+	color: rgb(46, 46, 46);
+}
+.k-dropdown .k-state-focused .k-input {
+	color: rgb(46, 46, 46);
+}
+.k-state-error {
+	border-color: rgb(226, 0, 0); color: rgb(255, 255, 255); background-color: rgb(255, 82, 82);
+}
+.k-state-disabled {
+	filter: alpha(opacity=70); opacity: 0.7;
+}
+.k-state-disabled {
+	color: rgb(159, 158, 158);
+}
+.k-state-disabled .k-link {
+	color: rgb(159, 158, 158);
+}
+.k-state-disabled .k-button {
+	color: rgb(159, 158, 158);
+}
+.k-other-month .k-link {
+	color: rgb(159, 158, 158);
+}
+.k-dropzone em {
+	color: rgb(159, 158, 158);
+}
+.k-tile-empty strong {
+	color: rgb(159, 158, 158);
+}
+.k-slider .k-draghandle {
+	color: rgb(159, 158, 158);
+}
+.k-slider-track {
+	background-color: rgb(227, 227, 227);
+}
+.k-slider-selection {
+	background-color: rgb(240, 113, 58);
+}
+.k-slider-horizontal .k-tick {
+	background-image: url("Default/slider-h.gif");
+}
+.k-slider-vertical .k-tick {
+	background-image: url("Default/slider-v.gif");
+}
+.k-tooltip {
+	border-color: rgb(169, 159, 154); color: rgb(46, 46, 46); background-color: rgb(255, 255, 255);
+}
+.k-tooltip-validation {
+	border-color: rgb(255, 231, 158); color: rgb(99, 81, 69); background-color: rgb(255, 244, 201);
+}
+.k-splitbar {
+	background-color: rgb(227, 227, 227);
+}
+.k-restricted-size-vertical {
+	background-color: rgb(255, 255, 255);
+}
+.k-restricted-size-horizontal {
+	background-color: rgb(255, 255, 255);
+}
+.k-progress-status {
+	border-color: rgb(169, 159, 154) transparent;
+}
+.k-tile {
+	border-color: rgb(255, 255, 255);
+}
+.k-textbox:hover {
+	border-color: rgb(169, 159, 154);
+}
+.k-tiles li.k-state-hover {
+	border-color: rgb(169, 159, 154);
+}
+.k-tiles li.k-state-selected {
+	border-color: rgb(240, 113, 58);
+}
+.k-tile .k-folder {
+	background-image: url("Default/imagebrowser.png");
+}
+.k-popup {
+	box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.3); -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.3);
+}
+.k-menu .k-group {
+	box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.3); -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.3);
+}
+.k-grid .k-filter-options {
+	box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.3); -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.3);
+}
+.k-time-popup {
+	box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.3); -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.3);
+}
+.k-datepicker-calendar {
+	box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.3); -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.3);
+}
+.k-state-border-down.k-autocomplete {
+	box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.3); -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.3);
+}
+.k-state-border-up.k-autocomplete {
+	box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.3); -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.3);
+}
+.k-state-active.k-dropdown-wrap {
+	box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.3); -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.3);
+}
+.k-state-active.k-picker-wrap {
+	box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.3); -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.3);
+}
+.k-imagebrowser .k-image {
+	box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.3); -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.3);
+}
+.k-window {
+	border-color: rgba(0, 0, 0, 0.3); box-shadow: 1px 1px 7px 1px rgba(0,0,0,0.3); -webkit-box-shadow: 1px 1px 7px 1px rgba(0, 0, 0, 0.3);
+}
+.k-textbox > input {
+	box-shadow: inset 0px 0px 1px 1px #ddd; -webkit-box-shadow: inset 0 0 1px 1px #ddd;
+}
+.k-autocomplete .k-input {
+	box-shadow: inset 0px 0px 1px 1px #ddd; -webkit-box-shadow: inset 0 0 1px 1px #ddd;
+}
+.k-combobox .k-input {
+	box-shadow: inset 0px 0px 1px 1px #ddd; -webkit-box-shadow: inset 0 0 1px 1px #ddd;
+}
+.k-picker-wrap .k-input {
+	box-shadow: inset 0px 0px 1px 1px #ddd; -webkit-box-shadow: inset 0 0 1px 1px #ddd;
+}
+.k-shadow {
+	box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.3); -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+}
+.k-inset {
+	box-shadow: inset 0px 1px 1px rgba(0,0,0,0.3); -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.3);
+}
+.k-block {
+	border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px;
+}
+.k-button {
+	border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px;
+}
+.k-textbox {
+	border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px;
+}
+.k-drag-clue {
+	border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px;
+}
+.k-touch-scrollbar {
+	border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px;
+}
+.k-window {
+	border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px;
+}
+.k-window-titleless .k-window-content {
+	border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px;
+}
+.k-window-action {
+	border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px;
+}
+.k-inline-block {
+	border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px;
+}
+.k-grid .k-filter-options {
+	border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px;
+}
+.k-grouping-header .k-group-indicator {
+	border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px;
+}
+.k-autocomplete {
+	border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px;
+}
+.k-dropdown-wrap {
+	border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px;
+}
+.k-picker-wrap {
+	border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px;
+}
+.k-numeric-wrap {
+	border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px;
+}
+.k-list-container {
+	border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px;
+}
+.k-calendar-container {
+	border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px;
+}
+.k-calendar td {
+	border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px;
+}
+.k-calendar .k-link {
+	border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px;
+}
+.k-treeview .k-state-hover {
+	border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px;
+}
+.k-treeview .k-state-selected {
+	border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px;
+}
+.k-editor-button .k-state-hover {
+	border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px;
+}
+.k-editor-button .k-state-active {
+	border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px;
+}
+.k-tooltip {
+	border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px;
+}
+.k-tile {
+	border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px;
+}
+.k-slider-track {
+	border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px;
+}
+.k-slider-selection {
+	border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px;
+}
+.k-state-border-up.k-calendar-container {
+	border-radius: 0px 0px 4px 4px; -webkit-border-radius: 0 0 4px 4px; -moz-border-radius: 0 0 4px 4px;
+}
+.k-state-border-up.k-list-container {
+	border-radius: 0px 0px 4px 4px; -webkit-border-radius: 0 0 4px 4px; -moz-border-radius: 0 0 4px 4px;
+}
+.k-state-border-up.k-autocomplete {
+	border-radius: 0px 0px 4px 4px; -webkit-border-radius: 0 0 4px 4px; -moz-border-radius: 0 0 4px 4px;
+}
+.k-state-border-up.k-dropdown-wrap {
+	border-radius: 0px 0px 4px 4px; -webkit-border-radius: 0 0 4px 4px; -moz-border-radius: 0 0 4px 4px;
+}
+.k-state-border-up.k-picker-wrap {
+	border-radius: 0px 0px 4px 4px; -webkit-border-radius: 0 0 4px 4px; -moz-border-radius: 0 0 4px 4px;
+}
+.k-state-border-up.k-numeric-wrap {
+	border-radius: 0px 0px 4px 4px; -webkit-border-radius: 0 0 4px 4px; -moz-border-radius: 0 0 4px 4px;
+}
+.k-window-content {
+	border-radius: 0px 0px 4px 4px; -webkit-border-radius: 0 0 4px 4px; -moz-border-radius: 0 0 4px 4px;
+}
+.k-filter-menu {
+	border-radius: 0px 0px 4px 4px; -webkit-border-radius: 0 0 4px 4px; -moz-border-radius: 0 0 4px 4px;
+}
+.k-window-titlebar {
+	border-radius: 4px 4px 0px 0px; -webkit-border-radius: 4px 4px 0 0; -moz-border-radius: 4px 4px 0 0;
+}
+.k-block > .k-header {
+	border-radius: 4px 4px 0px 0px; -webkit-border-radius: 4px 4px 0 0; -moz-border-radius: 4px 4px 0 0;
+}
+.k-tabstrip-items .k-item {
+	border-radius: 4px 4px 0px 0px; -webkit-border-radius: 4px 4px 0 0; -moz-border-radius: 4px 4px 0 0;
+}
+.k-panelbar .k-tabstrip-items .k-item {
+	border-radius: 4px 4px 0px 0px; -webkit-border-radius: 4px 4px 0 0; -moz-border-radius: 4px 4px 0 0;
+}
+.k-tabstrip-items .k-link {
+	border-radius: 4px 4px 0px 0px; -webkit-border-radius: 4px 4px 0 0; -moz-border-radius: 4px 4px 0 0;
+}
+.k-state-border-down.k-calendar-container {
+	border-radius: 4px 4px 0px 0px; -webkit-border-radius: 4px 4px 0 0; -moz-border-radius: 4px 4px 0 0;
+}
+.k-state-border-down.k-list-container {
+	border-radius: 4px 4px 0px 0px; -webkit-border-radius: 4px 4px 0 0; -moz-border-radius: 4px 4px 0 0;
+}
+.k-state-border-down.k-autocomplete {
+	border-radius: 4px 4px 0px 0px; -webkit-border-radius: 4px 4px 0 0; -moz-border-radius: 4px 4px 0 0;
+}
+.k-state-border-down.k-dropdown-wrap {
+	border-radius: 4px 4px 0px 0px; -webkit-border-radius: 4px 4px 0 0; -moz-border-radius: 4px 4px 0 0;
+}
+.k-state-border-down.k-picker-wrap {
+	border-radius: 4px 4px 0px 0px; -webkit-border-radius: 4px 4px 0 0; -moz-border-radius: 4px 4px 0 0;
+}
+.k-state-border-down.k-numeric-wrap {
+	border-radius: 4px 4px 0px 0px; -webkit-border-radius: 4px 4px 0 0; -moz-border-radius: 4px 4px 0 0;
+}
+.k-dropdown-wrap .k-select {
+	border-radius: 0px 4px 4px 0px; -webkit-border-radius: 0 4px 4px 0; -moz-border-radius: 0 4px 4px 0;
+}
+.k-picker-wrap .k-select {
+	border-radius: 0px 4px 4px 0px; -webkit-border-radius: 0 4px 4px 0; -moz-border-radius: 0 4px 4px 0;
+}
+.k-numeric-wrap .k-select {
+	border-radius: 0px 4px 4px 0px; -webkit-border-radius: 0 4px 4px 0; -moz-border-radius: 0 4px 4px 0;
+}
+.k-datetimepicker .k-select + .k-select {
+	border-radius: 0px 4px 4px 0px; -webkit-border-radius: 0 4px 4px 0; -moz-border-radius: 0 4px 4px 0;
+}
+.k-animation-container .k-calendar-container {
+	border-radius: 0px 4px 4px 0px; -webkit-border-radius: 0 4px 4px 0; -moz-border-radius: 0 4px 4px 0;
+}
+.k-state-border-right.k-list-container {
+	border-radius: 0px 4px 4px 0px; -webkit-border-radius: 0 4px 4px 0; -moz-border-radius: 0 4px 4px 0;
+}
+.k-textbox > input {
+	border-radius: 2px; -webkit-border-radius: 2px; -moz-border-radius: 2px;
+}
+.k-autocomplete .k-input {
+	border-radius: 2px; -webkit-border-radius: 2px; -moz-border-radius: 2px;
+}
+.k-dropdown-wrap .k-input {
+	border-radius: 2px; -webkit-border-radius: 2px; -moz-border-radius: 2px;
+}
+.k-picker-wrap .k-input {
+	border-radius: 2px; -webkit-border-radius: 2px; -moz-border-radius: 2px;
+}
+.k-numeric-wrap .k-input {
+	border-radius: 2px; -webkit-border-radius: 2px; -moz-border-radius: 2px;
+}
+.k-numeric-wrap .k-link {
+	border-radius: 2px; -webkit-border-radius: 2px; -moz-border-radius: 2px;
+}
+.k-colorpicker .k-selected-color {
+	border-radius: 2px; -webkit-border-radius: 2px; -moz-border-radius: 2px;
+}
+.k-progress {
+	border-radius: 2px; -webkit-border-radius: 2px; -moz-border-radius: 2px;
+}
+.k-progress-status {
+	border-radius: 2px; -webkit-border-radius: 2px; -moz-border-radius: 2px;
+}
+.k-list .k-state-hover {
+	border-radius: 3px; -webkit-border-radius: 3px; -moz-border-radius: 3px;
+}
+.k-list .k-state-focused {
+	border-radius: 3px; -webkit-border-radius: 3px; -moz-border-radius: 3px;
+}
+.k-list .k-state-selected {
+	border-radius: 3px; -webkit-border-radius: 3px; -moz-border-radius: 3px;
+}
+.k-dropzone {
+	border-radius: 3px; -webkit-border-radius: 3px; -moz-border-radius: 3px;
+}
+.k-upload-files {
+	border-radius: 3px; -webkit-border-radius: 3px; -moz-border-radius: 3px;
+}
+.k-slider .k-button {
+	border-radius: 13px; -webkit-border-radius: 13px; -moz-border-radius: 13px;
+}
+.k-grid .k-slider .k-button {
+	border-radius: 13px; -webkit-border-radius: 13px; -moz-border-radius: 13px;
+}
+.k-draghandle {
+	border-radius: 7px; -webkit-border-radius: 7px; -moz-border-radius: 7px;
+}

@@ -1,0 +1,50 @@
+﻿create or replace PROCEDURE usp_UpdateQueueCommunicationLo(
+    pCommunicationLogId          IN VARCHAR2,
+    pTenant                      IN NUMBER,
+    pCommunicationStatusTypeCode IN VARCHAR2,
+    pLog                        IN NVARCHAR2,
+    pExceptionMessage            IN NVARCHAR2,
+    pMessageLockId               IN VARCHAR2 )
+AS
+  v_pLog NVARCHAR2(2000) := pLog;
+  v_LogString NVARCHAR2(2000);
+  v_OldLogString NVARCHAR2(2000);
+  v_NewLineChar CHAR(2)      := CHR(13) || CHR(10);
+  v_temp        NUMBER(1, 0) := 0;
+BEGIN
+  BEGIN
+    SELECT 1
+    INTO v_temp
+    FROM DUAL
+    WHERE EXISTS
+      (SELECT Id
+      FROM CommunicationLogs
+      WHERE Id   = pCommunicationLogId
+      AND Tenant = pTenant
+      );
+  EXCEPTION
+  WHEN OTHERS THEN
+    NULL;
+  END;
+  IF v_temp = 1 THEN
+    BEGIN
+      SELECT Logs_
+      INTO v_OldLogString
+      FROM CommunicationLogs
+      WHERE Id             = pCommunicationLogId
+      AND Tenant           = pTenant;
+      IF ( v_OldLogString IS NOT NULL ) THEN
+        BEGIN
+          v_pLog := v_OldLogString || v_NewLineChar || v_pLog ;
+        END;
+      END IF;
+      UPDATE CommunicationLogs
+      SET MessageLockId_             = pMessageLockId,
+        CommunicationStatusTypeCode = pCommunicationStatusTypeCode,
+        Logs_                        = v_pLog,
+        ExceptionMessage_            = pExceptionMessage
+      WHERE Id                      = pCommunicationLogId
+      AND Tenant                    = pTenant;
+    END;
+  END IF;
+END;

@@ -1,0 +1,131 @@
+﻿
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td colspan="3">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+    <tr class="FormFieldRow">
+        <td style="width: 150px;">
+            <LogLabel [ObjectFieldName]="'ClosingReasonId'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"></LogLabel>
+        </td>
+        <td>
+            <LogLov [ObjectFieldName]="'ClosingReasonId'"
+                    [ObjectTableName]="ObjectTableName"
+                    [DataContext]="DataContext"
+                    [LookUpTableName]="'OpportunityClosingReason'"
+                    [SelectedValue]="ClosingReasonId"
+                    [DependencyFilter1Value]="IsClosedLost">
+            </LogLov>
+        </td>
+        <td></td>
+    </tr>
+
+    <tr class="FormFieldRow" *ngIf="LostToCompetitionVisibility">
+        <td style="width: 150px;">
+            <table>
+                <tr>
+                    <td style="width:10px"></td>
+                    <td>
+                        <label style="vertical-align:middle;font-size:11px;cursor:text">
+                            Competitor:
+                        </label>
+                    </td>
+                </tr>
+            </table>
+
+        </td>
+        <td>
+            <LogLov [ObjectFieldName]="'ClosedToCompetitorId'"
+                    [ObjectTableName]="ObjectTableName"
+                    [DataContext]="DataContext"
+                    [LookUpTableName]="'Competitor'"
+                    [SelectedValue]="ClosedToCompetitorId">
+            </LogLov>
+        </td>
+        <td></td>
+    </tr>
+
+    <tr class="FormFieldRow">
+        <td style="width: 150px;">
+            <LogLabel [ObjectFieldName]="'ActualClosingDate'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"></LogLabel>
+        </td>
+        <td>
+
+            <LogDatePicker [ObjectFieldName]="'ActualClosingDate'" [ObjectTableName]="ObjectTableName"
+                           [DataContext]="DataContext"></LogDatePicker>
+        </td>
+        <td></td>
+    </tr>
+
+    <tr class="FormFieldRow" style="height:110px">
+        <td style="width: 150px;vertical-align:top">
+            <LogLabel [ObjectFieldName]="'ClosingDescription'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"></LogLabel>
+        </td>
+        <td>
+            <table>
+                <tr>
+                    <td>
+                        <div style="height:100%">
+
+                            <LogTextBox [ObjectFieldName]="'ClosingDescription'" [ObjectTableName]="ObjectTableName" [IsMultiline]="true" [Text]="ClosingDescription" [InputType]="'ntext'" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                        </div>
+                    </td>
+                    <td style="width:36px"></td>
+                </tr>
+            </table>
+
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td colspan="3"></td>
+    </tr>
+    <tr style="height:1px" *ngIf="SendPostVisibility">
+        <td colspan="3">
+            <table>
+                <tr>
+                    <td style="width: 16px">
+                        <CheckBox [IsChecked]="PostToFollowersAsWon" (Checked)="PostToFollowersAsWon = $event"></CheckBox>
+                    </td>
+                    <td style="width:5px;min-width:5px;max-width:5px"></td>
+                    <td>
+                        <label>Post to my followers</label>
+
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom" colspan="3">
+            <table style="height: 22px;">
+                <tr>
+
+                    <td>
+                        <div></div>
+                    </td>
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+
+
+
+
+
+</table>

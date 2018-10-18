@@ -1,0 +1,364 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{160CFF77-92DB-4578-BD3D-BF78A9258B00}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Logitude.DatabaseMigration</RootNamespace>
+    <AssemblyName>Logitude.DatabaseMigration</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'All Projects|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\All Projects\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|AnyCPU'">
+    <OutputPath>bin\None\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Logitude.TimeManagement.Data">
+      <HintPath>..\Logitude.TimeManagement.Data\obj\Debug\Logitude.TimeManagement.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="LogitudeModel\LogitudeMigrationContext.cs" />
+    <Compile Include="Migrations\201802141437145_ClassifiedREmarks.cs" />
+    <Compile Include="Migrations\201802141437145_ClassifiedREmarks.Designer.cs">
+      <DependentUpon>201802141437145_ClassifiedREmarks.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805031118166_missing20180503.cs" />
+    <Compile Include="Migrations\201805031118166_missing20180503.Designer.cs">
+      <DependentUpon>201805031118166_missing20180503.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809271204481_DeclarationCourierMigration.cs" />
+    <Compile Include="Migrations\201809271204481_DeclarationCourierMigration.Designer.cs">
+      <DependentUpon>201809271204481_DeclarationCourierMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809271218375_CourierPendingReasonMigration.cs" />
+    <Compile Include="Migrations\201809271218375_CourierPendingReasonMigration.Designer.cs">
+      <DependentUpon>201809271218375_CourierPendingReasonMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810110920077_JornalMoreDATA.cs" />
+    <Compile Include="Migrations\201810110920077_JornalMoreDATA.Designer.cs">
+      <DependentUpon>201810110920077_JornalMoreDATA.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810111215464_JornalMoreDATA2.cs" />
+    <Compile Include="Migrations\201810111215464_JornalMoreDATA2.Designer.cs">
+      <DependentUpon>201810111215464_JornalMoreDATA2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810111226119_JornalMoreDATA3.cs" />
+    <Compile Include="Migrations\201810111226119_JornalMoreDATA3.Designer.cs">
+      <DependentUpon>201810111226119_JornalMoreDATA3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810140602140_NewSnapShot.cs" />
+    <Compile Include="Migrations\201810140602140_NewSnapShot.Designer.cs">
+      <DependentUpon>201810140602140_NewSnapShot.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810140624357_LatestSnapShot.cs" />
+    <Compile Include="Migrations\201810140624357_LatestSnapShot.Designer.cs">
+      <DependentUpon>201810140624357_LatestSnapShot.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810140708468_LatestSnapShotTake2.cs" />
+    <Compile Include="Migrations\201810140708468_LatestSnapShotTake2.Designer.cs">
+      <DependentUpon>201810140708468_LatestSnapShotTake2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810140749007_AddNewTablesToTimeManagementProject.cs" />
+    <Compile Include="Migrations\201810140749007_AddNewTablesToTimeManagementProject.Designer.cs">
+      <DependentUpon>201810140749007_AddNewTablesToTimeManagementProject.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810141116008_AddBudgetandCategoryFieldsToTMProject_Maheera.cs" />
+    <Compile Include="Migrations\201810141116008_AddBudgetandCategoryFieldsToTMProject_Maheera.Designer.cs">
+      <DependentUpon>201810141116008_AddBudgetandCategoryFieldsToTMProject_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810141136244_UpdateTMProjectTable_Maheera1.cs" />
+    <Compile Include="Migrations\201810141136244_UpdateTMProjectTable_Maheera1.Designer.cs">
+      <DependentUpon>201810141136244_UpdateTMProjectTable_Maheera1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810141147567_AbedAddSessionTimeoutToTenantLoginPolicy.cs" />
+    <Compile Include="Migrations\201810141147567_AbedAddSessionTimeoutToTenantLoginPolicy.Designer.cs">
+      <DependentUpon>201810141147567_AbedAddSessionTimeoutToTenantLoginPolicy.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810141242515_latestSnapShottake3.cs" />
+    <Compile Include="Migrations\201810141242515_latestSnapShottake3.Designer.cs">
+      <DependentUpon>201810141242515_latestSnapShottake3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810151113048_SetOwnerNotRequiredInOwnerHistory_Samar.cs" />
+    <Compile Include="Migrations\201810151113048_SetOwnerNotRequiredInOwnerHistory_Samar.Designer.cs">
+      <DependentUpon>201810151113048_SetOwnerNotRequiredInOwnerHistory_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810151128319_TaxWithholdingDeductionTypeMigration.cs" />
+    <Compile Include="Migrations\201810151128319_TaxWithholdingDeductionTypeMigration.Designer.cs">
+      <DependentUpon>201810151128319_TaxWithholdingDeductionTypeMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810160541419_latestSnapShotTake4.cs" />
+    <Compile Include="Migrations\201810160541419_latestSnapShotTake4.Designer.cs">
+      <DependentUpon>201810160541419_latestSnapShotTake4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810170631228_LatestSnapShot20181017.cs" />
+    <Compile Include="Migrations\201810170631228_LatestSnapShot20181017.Designer.cs">
+      <DependentUpon>201810170631228_LatestSnapShot20181017.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810170718302_LatestSnapShot20181017_2.cs" />
+    <Compile Include="Migrations\201810170718302_LatestSnapShot20181017_2.Designer.cs">
+      <DependentUpon>201810170718302_LatestSnapShot20181017_2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810170750245_LatestSnapShot20181017_3.cs" />
+    <Compile Include="Migrations\201810170750245_LatestSnapShot20181017_3.Designer.cs">
+      <DependentUpon>201810170750245_LatestSnapShot20181017_3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810170648307_PhysicalCheckSpotlightMigration.cs" />
+    <Compile Include="Migrations\201810170648307_PhysicalCheckSpotlightMigration.Designer.cs">
+      <DependentUpon>201810170648307_PhysicalCheckSpotlightMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810170823194_AddSharedLogisticsSettingsTable.cs" />
+    <Compile Include="Migrations\201810170823194_AddSharedLogisticsSettingsTable.Designer.cs">
+      <DependentUpon>201810170823194_AddSharedLogisticsSettingsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810180041541_AddSprintIdToTMEmployeeTabes_Maheera.cs" />
+    <Compile Include="Migrations\201810180041541_AddSprintIdToTMEmployeeTabes_Maheera.Designer.cs">
+      <DependentUpon>201810180041541_AddSprintIdToTMEmployeeTabes_Maheera.cs</DependentUpon>
+    </Compile>
+     <Compile Include="Migrations\201810141302279_ModifyInttraSettingOutSettingOptional.cs" />
+    <Compile Include="Migrations\201810141302279_ModifyInttraSettingOutSettingOptional.Designer.cs">
+      <DependentUpon>201810141302279_ModifyInttraSettingOutSettingOptional.cs</DependentUpon>
+    </Compile>
+	<Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
+    <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
+      <DependentUpon>201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs</DependentUpon>
+    </Compile>
+    
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Migrations\201802141437145_ClassifiedREmarks.resx">
+      <DependentUpon>201802141437145_ClassifiedREmarks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805031118166_missing20180503.resx">
+      <DependentUpon>201805031118166_missing20180503.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809271204481_DeclarationCourierMigration.resx">
+      <DependentUpon>201809271204481_DeclarationCourierMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809271218375_CourierPendingReasonMigration.resx">
+      <DependentUpon>201809271218375_CourierPendingReasonMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810110920077_JornalMoreDATA.resx">
+      <DependentUpon>201810110920077_JornalMoreDATA.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810111215464_JornalMoreDATA2.resx">
+      <DependentUpon>201810111215464_JornalMoreDATA2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810111226119_JornalMoreDATA3.resx">
+      <DependentUpon>201810111226119_JornalMoreDATA3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810140749007_AddNewTablesToTimeManagementProject.resx">
+      <DependentUpon>201810140749007_AddNewTablesToTimeManagementProject.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810141116008_AddBudgetandCategoryFieldsToTMProject_Maheera.resx">
+      <DependentUpon>201810141116008_AddBudgetandCategoryFieldsToTMProject_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810141136244_UpdateTMProjectTable_Maheera1.resx">
+      <DependentUpon>201810141136244_UpdateTMProjectTable_Maheera1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810141147567_AbedAddSessionTimeoutToTenantLoginPolicy.resx">
+      <DependentUpon>201810141147567_AbedAddSessionTimeoutToTenantLoginPolicy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810141242515_latestSnapShottake3.resx">
+      <DependentUpon>201810141242515_latestSnapShottake3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810151113048_SetOwnerNotRequiredInOwnerHistory_Samar.resx">
+      <DependentUpon>201810151113048_SetOwnerNotRequiredInOwnerHistory_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810151128319_TaxWithholdingDeductionTypeMigration.resx">
+      <DependentUpon>201810151128319_TaxWithholdingDeductionTypeMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810160541419_latestSnapShotTake4.resx">
+      <DependentUpon>201810160541419_latestSnapShotTake4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810170631228_LatestSnapShot20181017.resx">
+      <DependentUpon>201810170631228_LatestSnapShot20181017.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810170718302_LatestSnapShot20181017_2.resx">
+      <DependentUpon>201810170718302_LatestSnapShot20181017_2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810170750245_LatestSnapShot20181017_3.resx">
+      <DependentUpon>201810170750245_LatestSnapShot20181017_3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810170648307_PhysicalCheckSpotlightMigration.resx">
+      <DependentUpon>201810170648307_PhysicalCheckSpotlightMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810170823194_AddSharedLogisticsSettingsTable.resx">
+      <DependentUpon>201810170823194_AddSharedLogisticsSettingsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810180041541_AddSprintIdToTMEmployeeTabes_Maheera.resx">
+      <DependentUpon>201810180041541_AddSprintIdToTMEmployeeTabes_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.resx">
+      <DependentUpon>201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+   <EmbeddedResource Include="Migrations\201810141302279_ModifyInttraSettingOutSettingOptional.resx">
+      <DependentUpon>201810141302279_ModifyInttraSettingOutSettingOptional.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">
+      <Project>{a3799525-14a2-42fc-a2de-69ed3fd1c5d1}</Project>
+      <Name>Logitude.Accounting.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.BookingLib.Data\Logitude.BookingLib.Data.csproj">
+      <Project>{147a706d-221a-4fd1-8f27-c12e4ab276cf}</Project>
+      <Name>Logitude.BookingLib.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.CRM.Data\Logitude.CRM.Data.csproj">
+      <Project>{4733f914-0e16-4412-84df-d98232dd43e9}</Project>
+      <Name>Logitude.CRM.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Customs.Data\Logitude.Customs.Data.csproj">
+      <Project>{643f92c9-7cf1-4429-b79e-1e354b758abf}</Project>
+      <Name>Logitude.Customs.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Infrastructure.Data\Logitude.Infrastructure.Data.csproj">
+      <Project>{b02e4d92-9226-4f3f-990f-66c7f66e9316}</Project>
+      <Name>Logitude.Infrastructure.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
+      <Project>{9b477a08-8ee2-4457-88fe-17e8a6ec4d00}</Project>
+      <Name>Logitude.Server.Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Social.Data\Logitude.Social.Data.csproj">
+      <Project>{a00ae10e-2560-4e06-99fa-859ea7488ec3}</Project>
+      <Name>Logitude.Social.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.WarehouseLib.Data\Logitude.WarehouseLib.Data.csproj">
+      <Project>{54a12a5c-659c-4410-a5e7-949acd43f3a5}</Project>
+      <Name>Logitude.WarehouseLib.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
+      <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
+      <Name>Simplog.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
+      <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
+      <Name>Simplog.Server.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">
+      <Project>{a3799525-14a2-42fc-a2de-69ed3fd1c5d1}</Project>
+      <Name>Logitude.Accounting.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.BookingLib.Data\Logitude.BookingLib.Data.csproj">
+      <Project>{147a706d-221a-4fd1-8f27-c12e4ab276cf}</Project>
+      <Name>Logitude.BookingLib.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.CRM.Data\Logitude.CRM.Data.csproj">
+      <Project>{4733f914-0e16-4412-84df-d98232dd43e9}</Project>
+      <Name>Logitude.CRM.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Customs.Data\Logitude.Customs.Data.csproj">
+      <Project>{643f92c9-7cf1-4429-b79e-1e354b758abf}</Project>
+      <Name>Logitude.Customs.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
+      <Project>{9b477a08-8ee2-4457-88fe-17e8a6ec4d00}</Project>
+      <Name>Logitude.Server.Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Social.Data\Logitude.Social.Data.csproj">
+      <Project>{a00ae10e-2560-4e06-99fa-859ea7488ec3}</Project>
+      <Name>Logitude.Social.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.TimeManagement.Data\Logitude.TimeManagement.Data.csproj">
+      <Project>{68f57541-574a-4ee9-b3fe-8c535c74456a}</Project>
+      <Name>Logitude.TimeManagement.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.WarehouseLib.Data\Logitude.WarehouseLib.Data.csproj">
+      <Project>{54a12a5c-659c-4410-a5e7-949acd43f3a5}</Project>
+      <Name>Logitude.WarehouseLib.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
+      <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
+      <Name>Simplog.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
+      <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
+      <Name>Simplog.Server.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201810140602140_NewSnapShot.resx">
+      <DependentUpon>201810140602140_NewSnapShot.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810140624357_LatestSnapShot.resx">
+      <DependentUpon>201810140624357_LatestSnapShot.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810140708468_LatestSnapShotTake2.resx">
+      <DependentUpon>201810140708468_LatestSnapShotTake2.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

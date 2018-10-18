@@ -1,0 +1,1 @@
+update CustomsInterfaceSettings set ImportToUSAInterfaceCode = 'NO', ExportFromUSAInterfaceCode = 'NO'

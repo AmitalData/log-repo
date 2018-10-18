@@ -1,0 +1,29 @@
+﻿
+<table>
+    <tr>
+        <td>
+            <div></div>
+        </td>
+
+        <td *ngIf="IsSupportNotesVisible" style="padding-right: 5px;">
+            <HelperNotes [Title]="'Support Notes'" title="Support Notes" [Text]="SupportNotes" (TextChanged)="SupportNotes = $event" [IconCode]="'G'"></HelperNotes>
+        </td>
+
+        <td *ngIf="IsSalesNotesVisible" style="padding-right: 5px;">
+            <SalesNotes [Title]="'Sales Notes'" 
+                        title="Sales Notes" 
+                        [IconCode]="'B'" 
+                        [EntityPM]="EntityPM"
+                        (OnAddButtonClicked)="AddSalesNoteClicked()"
+                        (OnEditButtonClicked)="EditSalesNoteClicked($event)"
+                        ></SalesNotes>
+        </td>
+
+        <td>
+            <HelperNotes [Title]="'Operational Notes'" title="Operational Notes" [Text]="Notes" (TextChanged)="Notes = $event"></HelperNotes>
+        </td>
+    </tr>
+</table>
+
+
+

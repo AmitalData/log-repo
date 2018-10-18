@@ -1,0 +1,94 @@
+﻿.TabControl .TabControlHead li:not(.Selected):hover .InnerChild {
+    background: -moz-linear-gradient(rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.949) 37.5%, rgba(255, 255, 255, 0.8) 62.5%, rgba(255, 255, 255, 0.498) 100%);
+    background: -webkit-linear-gradient(rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.949) 37.5%, rgba(255, 255, 255, 0.8) 62.5%, rgba(255, 255, 255, 0.498) 100%);
+    background: -o-linear-gradient(rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.949) 37.5%, rgba(255, 255, 255, 0.8) 62.5%, rgba(255, 255, 255, 0.498) 100%);
+    background: linear-gradient(rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.949) 37.5%, rgba(255, 255, 255, 0.8) 62.5%, rgba(255, 255, 255, 0.498) 100%);
+}
+
+.TabControl .TabControlHead li:not(.Selected):hover {
+    background: #448DCA;
+}
+
+.TabControl .TabControlHead li:not(.Selected) {
+    height: 23px;
+    margin-top: 1px;
+}
+
+.TabControl .TabControlHead li.Selected {
+    height: 25px;
+    background: white;
+}
+
+.TabControl .TabControlHead li:not(:first-child):not(.Selected) {
+    border-left: none;
+    border-radius: 0px 3px 0px 0px;
+    -moz-border-radius: 0px 3px 0px 0px;
+    -webkit-border-radius: 0px 3px 0px 0px;
+}
+
+.TabControl .TabControlHead li .InnerChild {
+    height: 100%;
+    width: 100%;
+    color: #1B90CB;
+    text-align: left;
+    padding-left: 3px;
+    padding-right: 3px;
+    border: 1px solid #FFFFFF;
+    border-radius: 1px 1px 0px 0px;
+    -moz-border-radius: 1px 1px 0px 0px;
+    -webkit-border-radius: 1px 1px 0px 0px;
+    background: -moz-linear-gradient(rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.976) 37.5%, rgba(255, 255, 255, 0.898) 62.5%, rgba(255, 255, 255, 0.776) 100%);
+    background: -webkit-linear-gradient(rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.976) 37.5%, rgba(255, 255, 255, 0.898) 62.5%, rgba(255, 255, 255, 0.776) 100%);
+    background: -o-linear-gradient(rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.976) 37.5%, rgba(255, 255, 255, 0.898) 62.5%, rgba(255, 255, 255, 0.776) 100%);
+    background: linear-gradient(rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.976) 37.5%, rgba(255, 255, 255, 0.898) 62.5%, rgba(255, 255, 255, 0.776) 100%);
+}
+
+.TabControl .TabControlHead li {
+    height: 23px;
+    line-height: 20px;
+    display: inline-block;
+    float: left;
+    cursor: default;
+    border: 1px solid #A3AEB9;
+    border-bottom: none;
+    overflow: hidden;
+    border-radius: 3px 3px 0px 0px;
+    -moz-border-radius: 3px 3px 0px 0px;
+    -webkit-border-radius: 3px 3px 0px 0px;
+    background: #1F3B53;
+}
+
+.TabControl .TabControlHead ul {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.TabControl .TabControlBody {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 25px;
+    border: 1px solid #A3AEB9;
+    border-top: none;
+    border-radius: 0px 0px 3px 3px;
+    -moz-border-radius: 0px 0px 3px 3px;
+    -webkit-border-radius: 0px 0px 3px 3px;
+    background: white;
+}
+
+.TabControl .TabControlHead {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 25px;
+    border-bottom: 1px solid #A3AEB9;
+}
+
+.TabControl {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}

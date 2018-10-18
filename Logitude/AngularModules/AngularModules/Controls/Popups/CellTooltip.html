@@ -1,0 +1,71 @@
+﻿
+<style type="text/css">
+    .LogitudeCellTooltipText {
+        white-space: pre-line;
+        color: #595B5B;
+        font-size: 11px;
+        line-height: 13px;
+    }
+
+    .LogitudeCellTooltip .LogitudeCellTooltipContent {
+        position: fixed;
+        background: url('./Images/CellIcons/CellTooltip.png') no-repeat;
+        background-size: 100% 100%;
+        visibility: hidden;
+        z-index: 10;
+    }
+
+    .LogitudeCellTooltip {
+        position: relative;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        padding: 0 !important;
+        vertical-align: middle;
+        display: block;
+    }
+</style>
+
+<div class="LogitudeCellTooltip" [attr.id]="TooltipId" [style.width.px]="IconWidth" [style.height.px]="IconHeight">
+    <button [attr.id]="TooltipButtonId" [style.width.px]="IconWidth" [style.height.px]="IconHeight" [ngStyle]="{background: IconBackground}" (mouseover)="mouseover()" (mouseleave)="mouseleave()" (click)="click()" (blur)="blur()" tabindex="-1"></button>
+
+    <div class="LogitudeCellTooltipContent" 
+         [attr.id]="TooltipContentId" 
+         [style.width.px]="Width" 
+         [style.max-width.px]="Width" 
+         [style.height.px]="Height" 
+         [style.min-height.px]="MinHeight" 
+         [style.max-height.px]="MaxHeight" 
+         (mouseover)="IsMouseOver = true;" 
+         (mouseleave)="IsMouseOver = false;">
+        <div class="MediaFixed" style="left: 12px; right: 30px; top: 12px; bottom: 13px;">
+            <table style="cursor:default; user-select:text;">
+                
+                <tr *ngIf="Head" style="height: 3px; min-height: 3px;">
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr *ngIf="Head" class="BlueTitle13">
+                    <td style="text-align: left; padding-left: 0px; text-indent: 0px;">{{Head}}</td>
+                </tr>
+
+                <tr *ngIf="Head" style="height: 3px; min-height: 3px;">
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="vertical-align: top; text-align: left; padding-left: 0px; text-indent: 0px;">
+                        <ScrollViewer>
+                            <div *ngIf="Body" class="LogitudeCellTooltipText">{{Body}}</div>
+                            <ng-content></ng-content>
+                        </ScrollViewer>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+</div>

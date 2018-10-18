@@ -1,0 +1,183 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <configSections>
+    <sectionGroup name="system.serviceModel">
+      <section name="domainServices" type="System.ServiceModel.DomainServices.Hosting.DomainServicesSection, System.ServiceModel.DomainServices.Hosting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" allowDefinition="MachineToApplication" requirePermission="false" />
+    </sectionGroup>
+    <section name="entityFramework" type="System.Data.Entity.Internal.ConfigFile.EntityFrameworkSection, EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
+  </configSections>
+  <appSettings>
+    <add key="UnifreightIIGServiceAddress" value="http://localhost:5050/UnifreightIIG/GatewayService/Basic" />
+    <add key="UnifreightIIGServiceAddress" value="http://iiggateway.cloudapp.net:5050/UnifreightIIG/GatewayService/Basic" />
+    <add key="UnifreightIIGServiceTimeout" value="361" />
+    <add key="ConsumerID" value="038623617_999" />
+    <add key="ConsumerID" value="038623617" /> 
+    <add key="TestMode" value="1" />
+    <add key="TestMode" value="" />
+    <add key="Cache2Disk" value="" />    
+    <add key="ClientSettingsProvider.ServiceUri" value="" />
+    <!--<add key="LogitudeURL" value="http://system.logitudeworld.com" />-->
+    <!--<add key="LogitudeURL" value="http://logitudeeu1.cloudapp.net" />-->
+    <!--<add key="LogitudeURL" value="http://127.0.0.1:95" />-->
+    <!--<add key="LogitudeURL" value="http://logitudetestr2.cloudapp.net" />-->
+    <!--<add key="LogitudeURL" value="http://logitudetestr2.cloudapp.net/" />-->
+    <!--<add key="LogitudeURL" value="http://amitalservice.cloudapp.net" />-->
+    <!--<add key="CustomerCareIP" value="82.213.2.230,213.6.5.182,213.6.5.176,192.116.221.91,::1" />-->
+  </appSettings>
+  <system.diagnostics>
+    <trace>     
+      <listeners>
+        <!--<add type="Microsoft.WindowsAzure.Diagnostics.DiagnosticMonitorTraceListener, Microsoft.WindowsAzure.Diagnostics, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" name="AzureDiagnostics">
+          <filter type="" />
+        </add>-->
+        
+      </listeners>          
+    </trace>                          
+  </system.diagnostics>
+  <!--
+    For a description of web.config changes for .NET 4.5 see http://go.microsoft.com/fwlink/?LinkId=235367.
+
+    The following attributes can be set on the <httpRuntime> tag.
+      <system.Web>
+        <httpRuntime targetFramework="4.5" />    
+      </system.Web> 
+  -->
+  <system.web>
+    <httpRuntime executionTimeout="3600000" />
+    <customErrors mode="Off" />
+    <authentication mode="Forms" />
+    <!--<forms name=".ASPXFORMSDEMO" loginUrl="logon.aspx"
+      protection="All" path="/" timeout="30" />
+    </authentication>-->
+    <!--<authorization>
+      <deny users ="?" />
+      <allow users = "*" />
+    </authorization>-->
+    <httpModules>
+      <add name="LogitudeHttpModule" type="WebFreight.Web.Security.LogitudeHttpModule" />
+      <!--<add name="TestHttpModule"  type="WebFreight.Web.TestHttpModule, WebFreight.Web"  />-->
+      <add name="DomainServiceModule" type="System.ServiceModel.DomainServices.Hosting.DomainServiceHttpModule, System.ServiceModel.DomainServices.Hosting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+      <!--The base class name and project name is TestSite
+      The namespace my class is in is BusinessLogic   
+      The class name is PageAuthorization   
+      in the Web.config file...
+ 
+      <configuration>
+        <system.web>
+          <httpModules>
+            <add type= "BusinessLogic.PageAuthorization, TestSite" name="PageAuthorization" />
+          </httpModules>
+        </system.web>
+      </configuration>-->
+      <!--<add name="RadCompression" type="Telerik.Web.UI.RadCompression" />-->
+    </httpModules>
+    <compilation debug="true" targetFramework="4.5">
+      <assemblies>
+        <add assembly="System.Data.Entity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />   
+        <add assembly="System.Web.Entity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089" />
+      </assemblies>
+    </compilation>
+    <machineKey decryption="AES" decryptionKey="0CA3EFAF0F7A5E7A62681C0BF656EE0ECE31ACEE3E1023BA3FAD20EA5F199DE8" validation="SHA1" validationKey="5DB079A93BF63C680F749FC29E3F0B52DF0030909DE62168764FF0DCE537184F0535D5D9AD66DEDC97DC1ABFF7FA540B4DFD82E5BB196B95D15FF81F75AD5328" />
+    <pages controlRenderingCompatibilityVersion="4.0" />
+  </system.web>
+  <system.webServer>
+    <caching enabled="true"  maxCacheSize="1500" />
+    <defaultDocument>
+      <files>
+        <clear />
+        <add value="login.aspx" />
+      </files>
+    </defaultDocument>
+    <modules runAllManagedModulesForAllRequests="true">  
+      <add name="LogitudeHttpModule" type="WebFreight.Web.Security.LogitudeHttpModule" />
+      <add name="DomainServiceModule" preCondition="managedHandler" type="System.ServiceModel.DomainServices.Hosting.DomainServiceHttpModule, System.ServiceModel.DomainServices.Hosting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+      <!--<add name="RadCompression" preCondition="managedHandler" type="Telerik.Web.UI.RadCompression" />-->
+    </modules>
+    <validation validateIntegratedModeConfiguration="false" />
+    <handlers>
+      <remove name="ExtensionlessUrlHandler-ISAPI-4.0_32bit" />
+      <remove name="ExtensionlessUrlHandler-ISAPI-4.0_64bit" />
+      <remove name="ExtensionlessUrlHandler-Integrated-4.0" />
+      <add name="ExtensionlessUrlHandler-ISAPI-4.0_32bit" path="*." verb="GET,HEAD,POST,DEBUG,PUT,DELETE,PATCH,OPTIONS" modules="IsapiModule" scriptProcessor="%windir%\Microsoft.NET\Framework\v4.0.30319\aspnet_isapi.dll" preCondition="classicMode,runtimeVersionv4.0,bitness32" responseBufferLimit="0" />
+      <add name="ExtensionlessUrlHandler-ISAPI-4.0_64bit" path="*." verb="GET,HEAD,POST,DEBUG,PUT,DELETE,PATCH,OPTIONS" modules="IsapiModule" scriptProcessor="%windir%\Microsoft.NET\Framework64\v4.0.30319\aspnet_isapi.dll" preCondition="classicMode,runtimeVersionv4.0,bitness64" responseBufferLimit="0" />
+      <add name="ExtensionlessUrlHandler-Integrated-4.0" path="*." verb="GET,HEAD,POST,DEBUG,PUT,DELETE,PATCH,OPTIONS" type="System.Web.Handlers.TransferRequestHandler" preCondition="integratedMode,runtimeVersionv4.0" />
+    </handlers>
+  </system.webServer>
+  <connectionStrings>
+
+    <!--<add name="Globalstr" connectionString="Global,sa,Saas256,amital.cloudapp.net" />
+    <add name="SystemLogsStr" connectionString="Logs,sa,Saas256,amital.cloudapp.net" />-->
+    
+    <!--<add name="Globalstr" connectionString="Logitude2-5_Global,sa,Saas256,amital.cloudapp.net" />
+    <add name="SystemLogsStr" connectionString="Logitude2-5_SystemLogs,sa,Saas256,amital.cloudapp.net" />-->
+
+     <!--<add name="Globalstr" connectionString="Logitude2-5_Global,sa,Saas256,." />
+    <add name="SystemLogsStr" connectionString="Logitude2-5_SystemLogs,sa,Saas256,." />-->
+
+    <!--<add name="Globalstr" connectionString="SimplogGlobal,simplog,Saas256!@,z0n0c08sao.database.windows.net" />
+    <add name="SystemLogsStr" connectionString="LogitudeSystemLogs,simplog,Saas256!@,z0n0c08sao.database.windows.net"/>-->
+
+    <!--<add name="Globalstr" connectionString="2014R2_Global,sa,Saas256,." />
+    <add name="SystemLogsStr" connectionString="2014R2_Logs,sa,Saas256,." />-->
+    
+
+
+    <add name="LogitudeStr" connectionString="Data Source=.;Initial Catalog=Logitude2-5_Main;Integrated Security=False;Persist Security Info=True;User ID=sa;Password=Saas256;MultipleActiveResultSets=True;" providerName="System.Data.SqlClient" />
+    <add name="LogitudeGlobalStr" connectionString="Data Source=.;Initial Catalog=Logitude2-5_Global;Integrated Security=False;Persist Security Info=True;User ID=sa;Password=Saas256;MultipleActiveResultSets=True;" providerName="System.Data.SqlClient" />
+    <add name="LogitudeSystemLogsStr" connectionString="Data Source=.;Initial Catalog=Logitude2-5_SystemLogs;Integrated Security=False;Persist Security Info=True;User ID=sa;Password=Saas256;MultipleActiveResultSets=True;" providerName="System.Data.SqlClient" />
+    
+    <add name="Globalstr" connectionString="Global_TestR3,logitudemanager,S@@s256.0,jubwciho7q.database.windows.net" />
+    <add name="SystemLogsStr" connectionString="Logs_TestR3,logitudemanager,S@@s256.0,jubwciho7q.database.windows.net"/>
+    
+    <!--Production-->
+    <!--<add name="Globalstr" connectionString="SimplogGlobal,simplog,Saas256!@,z0n0c08sao.database.windows.net" />
+    <add name="SystemLogsStr" connectionString="LogitudeSystemLogs,simplog,Saas256!@,z0n0c08sao.database.windows.net"/>-->
+    <!--Production-->
+    <!--<add name="TotangoServiceId" connectionString="SP-1146-01"  />-->
+    <!--Test-->
+    <!--<add name="TotangoServiceId" connectionString="SP-11460-01" />-->   
+  </connectionStrings>
+  <system.serviceModel>
+   <bindings>
+      <basicHttpBinding> 
+        <binding maxBufferPoolSize="2147483647" maxBufferSize="2147483647" maxReceivedMessageSize="2147483647" messageEncoding="Text">
+          <readerQuotas maxDepth="2000000" maxStringContentLength="2147483647" maxArrayLength="2147483647" maxBytesPerRead="2147483647" maxNameTableCharCount="2147483647" /> 
+        </binding>
+      </basicHttpBinding>
+  </bindings>
+    <behaviors>
+      <serviceBehaviors>
+        <behavior name="">
+          <serviceMetadata httpGetEnabled="true" httpsGetEnabled="true" />
+          <serviceDebug includeExceptionDetailInFaults="true" />
+        </behavior>
+      </serviceBehaviors>
+    </behaviors>
+    <diagnostics>
+      <endToEndTracing propagateActivity="true" activityTracing="true" messageFlowTracing="true" />
+    </diagnostics>
+    <!--<domainServices>
+      <endpoints>
+        <add name="OData" type="System.ServiceModel.DomainServices.Hosting.ODataEndpointFactory, System.ServiceModel.DomainServices.Hosting.OData, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+        <add name="soap" type="Microsoft.ServiceModel.DomainServices.Hosting.SoapXmlEndpointFactory, Microsoft.ServiceModel.DomainServices.Hosting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+        <add name="JSON" type="Microsoft.ServiceModel.DomainServices.Hosting.JsonEndpointFactory, Microsoft.ServiceModel.DomainServices.Hosting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+      </endpoints>
+    </domainServices>-->
+    <serviceHostingEnvironment aspNetCompatibilityEnabled="true" multipleSiteBindingsEnabled="true" />
+  </system.serviceModel>
+  <runtime>
+    <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.WindowsAzure.StorageClient" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-1.7.0.0" newVersion="1.7.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.WindowsAzure.ServiceRuntime" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-1.0.0.0" newVersion="1.0.0.0" />
+      </dependentAssembly>
+    </assemblyBinding>
+  </runtime>
+  <entityFramework>
+    <defaultConnectionFactory type="System.Data.Entity.Infrastructure.SqlConnectionFactory, EntityFramework" />
+  </entityFramework>
+</configuration>

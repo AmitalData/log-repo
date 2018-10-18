@@ -1,0 +1,17 @@
+<!ELEMENT GenericResponse (GenericResponseObj*)>
+<!ELEMENT GenericResponseObj (CorrelationId?, Status?, ExceptionLevel?, ExceptionType?, InnerException?, Stage?, Message?, ErrorDescription?, Log?, BindingXpath?, EnglishDescription?, ApplicationId?, Entity?, Field?, ResponseXml?)>
+<!ELEMENT CorrelationId (#PCDATA)>
+<!ELEMENT Status (#PCDATA)>
+<!ELEMENT ExceptionLevel (#PCDATA)>
+<!ELEMENT ExceptionType (#PCDATA)>
+<!ELEMENT InnerException (#PCDATA)>
+<!ELEMENT Stage (#PCDATA)>
+<!ELEMENT Message (#PCDATA)>
+<!ELEMENT ErrorDescription (#PCDATA)>
+<!ELEMENT Log (#PCDATA)>
+<!ELEMENT BindingXpath (#PCDATA)>
+<!ELEMENT EnglishDescription (#PCDATA)>
+<!ELEMENT ApplicationId (#PCDATA)>
+<!ELEMENT Entity (#PCDATA)>
+<!ELEMENT Field (#PCDATA)>
+<!ELEMENT ResponseXml (#PCDATA)>

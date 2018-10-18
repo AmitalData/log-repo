@@ -1,0 +1,43 @@
+﻿
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr style="height:30px;">
+        <td style="color:#1B90CB;font-size:14px;"> Filter By: </td>
+    </tr>
+
+    <tr style="height:30px;">
+        <td>
+            <table>
+                <tr>
+                    <td style="width:10px;"><div></div></td>
+
+                    <!--customer filter-->
+                    <td style="width:90px;">Customer:</td>
+                    <td style="width:200px;">
+                        <LogLov [ObjectFieldName]="'CustomerId'"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'Card'"
+                                [DependencyFilter1IsList]="true"
+                                [DependencyFilter1Value]="'CS, AG'"
+                                [ShowInActive]="true"
+                                [HideMaintenanceIcon]="true">
+                        </LogLov>
+                    </td>
+
+                    <!--run button-->
+                    <td style="width:25px;"><div></div></td>
+                    <td style="width:80px;">
+                        <button class="GreenButton" (click)="RunReport(true)">Run Report</button>
+                    </td>
+
+                    <td><div></div></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

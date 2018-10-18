@@ -1,0 +1,174 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#"#>
+<#@ Assembly Name="System.Xml.dll" #>
+<#@ Assembly Name="System.Xml.Linq.dll" #>
+<#@ Assembly Name="System.Core.dll" #>
+<#@ Assembly Name="Microsoft.CSharp.dll" #>
+
+<#@ Assembly name="$(SolutionDir)..\General\Dlls\AmazedSaint.Elastic.dll" #>
+
+<#@ Import Namespace="System.Xml" #>
+<#@ Import Namespace="System.Xml.Linq" #>
+<#@ Import Namespace="AmazedSaint.Elastic" #>
+<#@ Import Namespace="AmazedSaint.Elastic.Lib" #>
+<#@ output extension=".cs" #>
+
+<#@ import Namespace="System.IO" #>
+<#@ template debug="true" #>
+<#+
+dynamic listnamespacestring;
+public void GenerateAllListTS(string sourceFolder,string destinationFolder)
+{
+	// System.Diagnostics.Debugger.Launch();
+	Console.WriteLine(destinationFolder);
+ 
+ listnamespacestring = GetListNameSpace(destinationFolder);
+ string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
+ string sourceFilePath = Path.Combine(templateDirectory, sourceFolder);
+
+foreach (string file in Directory.EnumerateFiles(sourceFilePath, "*.lxml"))
+{
+
+    var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(file);
+	Console.WriteLine(fileNameWithoutExtension);
+	GenerateList(file,destinationFolder+"/Generated/"+fileNameWithoutExtension+"List.generated.ts");
+	 
+}
+
+ 
+}
+#>
+
+<#+  
+
+public void GenerateList(string xmlFilePath,string outputFilePath)
+{
+	if(string.IsNullOrEmpty(listnamespacestring))
+    {
+	 listnamespacestring = GetListNameSpace(outputFilePath);
+    }
+var entity = FromListFile(xmlFilePath);
+WriteListMethod(entity);
+SaveListOutput(outputFilePath);
+}
+ 
+#>
+
+
+<#+
+
+public dynamic GetListNameSpace(string destinationFolder)
+{
+	string spacestring = "";
+	string[] path = destinationFolder.Split('/');
+	foreach(string dir in path)
+    {
+		if(dir != "..")
+        {
+			spacestring += dir + ".";
+        }
+    }
+
+	spacestring = spacestring.ToString().Trim('.');
+
+	return spacestring;
+}
+
+#>
+
+<#+
+void SaveListOutput(string outputFileName)
+  {
+      string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
+      string outputFilePath = Path.Combine(templateDirectory, outputFileName);
+    
+	   var manager = Manager.Create(Host, GenerationEnvironment);
+	  manager.CreateTestFile(outputFilePath,this.GenerationEnvironment.ToString());
+	  this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
+  }
+#>
+
+
+<#+
+
+ private void WriteListMethod(dynamic entity)
+{
+	string tableName = entity.ObjectTableName.Trim('"');
+	string dBTableName = entity.DBTableName.Trim('"');
+	string schema ="";
+	
+	string parentname = "";
+	
+	 
+	if(tableName.ToString().Trim('"').Contains("."))
+    {
+		tableName = tableName.ToString().Split('.')[1];
+		dBTableName = dBTableName.ToString().Split('.')[1];
+		schema = entity.ObjectTableName.Trim('"').ToString().Split('.')[0];
+
+		 
+          
+    }
+	
+	
+
+#>
+export interface <#=tableName #>List {
+   <#+
+   #>
+
+	<#+
+ 	foreach(var field in entity["field"])  //get all classes
+	 { 
+		  if( field.HasPMField.GetType() == typeof(string))
+           {
+             if(field.HasPMField == "false")
+               {
+                  continue;
+               }
+           }
+		   string type = GetDataType(field);
+		   if(type == "List" || (field.IsMulti.GetType() == typeof(string) && field.IsMulti == "true"))
+           {
+			    //WritePMList(field);
+           }
+		   else
+           {
+	          WriteListProperty(field);
+
+           }
+	 }
+
+#>
+
+}
+ <#+
+    
+}
+
+#>
+
+
+<#+
+public void WriteListProperty(dynamic field)
+{
+	string type = GetDataType(field); 
+    string privatepropname = FirstCharacterToLower(field.FieldName.Trim('"'));
+	string publicpropname = field.FieldName.ToString().Trim('"');
+	
+	#><#= publicpropname #>: <#= type #>;
+	<#+ 
+  
+ }
+#>
+<#+
+//Create an elastic object
+private dynamic FromListFile(string file)
+{
+   var path= Host.ResolvePath(file);
+   return XDocument.Load(path).Root.ToElastic();
+}
+
+#>
+
+
+

@@ -1,0 +1,1382 @@
+<?xml version="1.0"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
+           xmlns:GCCSCargoImp="http://www.champ.aero/GCCS/CargoXML"
+           targetNamespace="http://www.champ.aero/GCCS/CargoXML"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" version="2.0">
+
+  <xs:simpleType name="TextWithSlash">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[A-Z0-9/ ]*"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Sender">
+    <xs:restriction base="GCCSCargoImp:TextWithSlash">
+      <xs:minLength value="7"/>
+      <xs:maxLength value="33"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Recipient">
+    <xs:restriction base="GCCSCargoImp:TextWithSlash">
+      <xs:minLength value="7"/>
+      <xs:maxLength value="33"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="Alpha">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Z]*"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Number">
+        <xs:restriction base="xs:int"/>
+    </xs:simpleType>
+    <xs:simpleType name="Decimal">
+        <xs:restriction base="xs:decimal"/>
+    </xs:simpleType>
+    <xs:simpleType name="AlphaNumeric">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Z0-9]*"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Text">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Z0-9\-\. ]*"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TextWithCRLF">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Z0-9\-\.\n ]*"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="StandardMessageIdentifier">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="3"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="LineIdentifier">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="3"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="AirlinePrefix">
+        <xs:restriction base="GCCSCargoImp:Number">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="999"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="AWBSerialNumber">
+        <xs:restriction base="GCCSCargoImp:Number">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="99999999"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="MessageTypeVersionNumber">
+        <xs:restriction base="GCCSCargoImp:Number">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="999"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="AirportCode">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="3"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Weight">
+        <xs:restriction base="GCCSCargoImp:Decimal">
+            <xs:minInclusive value="0"/>
+            <xs:totalDigits value="7"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="WeightCode">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="NumberOfPieces">
+        <xs:restriction base="GCCSCargoImp:Number">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="9999"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="SpecialHandlingCode">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="3"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="CarrierCode">
+        <xs:restriction base="GCCSCargoImp:AlphaNumeric">
+            <xs:length value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="OtherServiceInformationEntry">
+        <xs:restriction base="GCCSCargoImp:Text">
+            <xs:maxLength value="65"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="LastMessagePart">
+        <xs:restriction base="xs:boolean"/>
+    </xs:simpleType>
+    <xs:simpleType name="FlightNumber">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="3"/>
+            <xs:maxLength value="5"/>
+            <xs:pattern value="\d{3}"/>
+            <xs:pattern value="\d{4}"/>
+            <xs:pattern value="\d{4}[A-Z]"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="CustomsOriginCode">
+        <xs:restriction base="GCCSCargoImp:AlphaNumeric">
+            <xs:maxLength value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ManifestDescriptionOfGoods">
+        <xs:restriction base="GCCSCargoImp:Text">
+            <xs:maxLength value="15"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ShipmentDescriptionCode">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="MessageSequenceNumber">
+        <xs:restriction base="GCCSCargoImp:Number">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="99"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ULDSerialNumber">
+        <xs:restriction base="GCCSCargoImp:AlphaNumeric">
+            <xs:minLength value="4"/>
+            <xs:maxLength value="5"/>
+            <xs:pattern value="[A-Z0-9]\d{3,4}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="NilCargoCode">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="3"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="VolumeAmount">
+        <xs:restriction base="GCCSCargoImp:Decimal">
+            <xs:minInclusive value="0"/>
+            <xs:totalDigits value="9"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="DensityGroup">
+        <xs:restriction base="GCCSCargoImp:Number">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="99"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="DensityIndicator">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="VolumeCode">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Dimension">
+        <xs:restriction base="GCCSCargoImp:Number">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="99999"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="MeasurementUnitCode">
+        <xs:restriction base="GCCSCargoImp:AlphaNumeric">
+            <xs:maxLength value="3"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="MovementPriorityCode">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ULDOwnerCode">
+        <xs:restriction base="GCCSCargoImp:AlphaNumeric">
+            <xs:length value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ULDType">
+        <xs:restriction base="GCCSCargoImp:AlphaNumeric">
+            <xs:length value="3"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ULDVolumeAvailableCode">
+        <xs:restriction base="GCCSCargoImp:Number">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="9"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ULDRemarksEntry">
+        <xs:restriction base="GCCSCargoImp:Text">
+            <xs:maxLength value="53"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="AircraftRegistration">
+        <xs:restriction base="GCCSCargoImp:Text">
+            <xs:maxLength value="10"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ULDLoadingIndicator">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="CustomsReference">
+        <xs:restriction base="GCCSCargoImp:Text">
+            <xs:maxLength value="15"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ContactIdentifier">
+        <xs:restriction base="GCCSCargoImp:AlphaNumeric">
+            <xs:maxLength value="3"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ContactNumber">
+        <xs:restriction base="GCCSCargoImp:AlphaNumeric">
+            <xs:maxLength value="25"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Name">
+        <xs:restriction base="GCCSCargoImp:Text">
+            <xs:maxLength value="35"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="StreetAddress">
+        <xs:restriction base="GCCSCargoImp:Text">
+            <xs:maxLength value="35"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Place">
+        <xs:restriction base="GCCSCargoImp:Text">
+            <xs:maxLength value="17"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="StateOrProvince">
+        <xs:restriction base="GCCSCargoImp:Text">
+            <xs:maxLength value="9"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ISOCountryCode">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="PostCode">
+        <xs:restriction base="GCCSCargoImp:Text">
+            <xs:maxLength value="9"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="PrepaidCollectIndicator">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="CurrencyAmount">
+        <xs:restriction base="GCCSCargoImp:Decimal">
+            <xs:minInclusive value="0"/>
+            <xs:totalDigits value="12"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="DeclaredValueForCarriage">
+        <xs:restriction base="GCCSCargoImp:CurrencyAmount"/>
+    </xs:simpleType>
+    <xs:simpleType name="NoValueDeclared">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:enumeration value="NVD"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="DeclaredValueForCustoms">
+        <xs:restriction base="GCCSCargoImp:CurrencyAmount"/>
+    </xs:simpleType>
+    <xs:simpleType name="NoCustomsValue">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:enumeration value="NCV"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="AmountOfInsurance">
+        <xs:restriction base="GCCSCargoImp:Decimal">
+            <xs:minInclusive value="0"/>
+            <xs:totalDigits value="11"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="NoValue">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:enumeration value="XXX"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ISOCurrencyCode">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="3"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="EndOfMessageCode">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="4"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="AWBRateLineNumber">
+        <xs:restriction base="GCCSCargoImp:Number">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="99"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="OfficeFunctionDesignator">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="AccountNumber">
+        <xs:restriction base="GCCSCargoImp:Text">
+            <xs:maxLength value="14"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="FileReference">
+        <xs:restriction base="GCCSCargoImp:Text">
+            <xs:maxLength value="15"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ReferenceNumber">
+        <xs:restriction base="GCCSCargoImp:Text">
+            <xs:maxLength value="14"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Year">
+        <xs:restriction base="GCCSCargoImp:Number">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="99"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Month">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="3"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="DayOfMonth">
+        <xs:restriction base="GCCSCargoImp:Number">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="99"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Time">
+        <xs:restriction base="GCCSCargoImp:Number">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="9999"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="DayOfTheWeek">
+        <xs:restriction base="GCCSCargoImp:Number">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="9"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="DayChangeIndicator">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="CompanyDesignator">
+        <xs:restriction base="GCCSCargoImp:AlphaNumeric">
+            <xs:length value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="IATACargoAgentCASSAddress">
+        <xs:restriction base="GCCSCargoImp:Number">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="9999"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="IATACargoAgentNumericCode">
+        <xs:restriction base="GCCSCargoImp:Number">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="9999999"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="EntitlementCode">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="RateCombinationPoint">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="3"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ParticipantIdentifier">
+        <xs:restriction base="GCCSCargoImp:AlphaNumeric">
+            <xs:maxLength value="3"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ParticipantCode">
+        <xs:restriction base="GCCSCargoImp:AlphaNumeric">
+            <xs:maxLength value="17"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="SpecialServiceRequestEntry">
+        <xs:restriction base="GCCSCargoImp:Text">
+            <xs:maxLength value="65"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="AccountingInformationEntry">
+        <xs:restriction base="GCCSCargoImp:Text">
+            <xs:maxLength value="34"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="AccountingInformationIdentifier">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="3"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Signature">
+        <xs:restriction base="GCCSCargoImp:Text">
+            <xs:maxLength value="20"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ChargeIdentifier">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ChargeCode">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="OtherChargeCode">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="RateOrCharge">
+        <xs:restriction base="GCCSCargoImp:Decimal">
+            <xs:minInclusive value="0"/>
+            <xs:totalDigits value="8"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Discount">
+        <xs:restriction base="GCCSCargoImp:Decimal">
+            <xs:minInclusive value="0"/>
+            <xs:totalDigits value="8"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="RateClassCode">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="RateClassCodeBasisEntry">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ClassRatePercentage">
+        <xs:restriction base="GCCSCargoImp:Number">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="999"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ULDRateClassType">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="3"/>
+            <xs:pattern value="\d"/>
+            <xs:pattern value="\d[A-Z]"/>
+            <xs:pattern value="\d[A-Z]{2}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="RateOfExchange">
+        <xs:restriction base="GCCSCargoImp:Decimal">
+            <xs:minInclusive value="0"/>
+            <xs:totalDigits value="11"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="CASSCommissionCode">
+        <xs:restriction base="GCCSCargoImp:AlphaNumeric">
+            <xs:length value="3"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="CASSSettlementFactor">
+        <xs:restriction base="GCCSCargoImp:Decimal">
+            <xs:minInclusive value="0"/>
+            <xs:totalDigits value="12"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="CASSIndicator">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:maxLength value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="CommodityItemNumber">
+        <xs:restriction base="GCCSCargoImp:Number">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="9999999"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="HWBSerialNumber">
+        <xs:restriction base="GCCSCargoImp:AlphaNumeric">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="12"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="FreeText">
+        <xs:restriction base="GCCSCargoImp:Text">
+            <xs:maxLength value="65"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TelephoneNumber">
+        <xs:restriction base="GCCSCargoImp:Text">
+            <xs:maxLength value="14"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="EmbargoNumber">
+        <xs:restriction base="GCCSCargoImp:Number">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="999"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="CCASerialNumber">
+        <xs:restriction base="GCCSCargoImp:AlphaNumeric">
+            <xs:length value="6"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="BookingFileReference">
+        <xs:restriction base="GCCSCargoImp:Text">
+            <xs:maxLength value="15"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TransferManifestNumber">
+        <xs:restriction base="GCCSCargoImp:Number">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="999999"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="MasterAWBIndicator">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TransferTransitControlNumber">
+        <xs:restriction base="GCCSCargoImp:Text">
+            <xs:maxLength value="12"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TextSubjectQualifier">
+        <xs:restriction base="GCCSCargoImp:AlphaNumeric">
+            <xs:length value="3"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TextReference">
+        <xs:restriction base="GCCSCargoImp:AlphaNumeric">
+            <xs:length value="3"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="HWBasagreed">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ApplicationReferenceNumber">
+        <xs:restriction base="GCCSCargoImp:Text">
+            <xs:maxLength value="35"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="IdentificationNumber">
+        <xs:restriction base="GCCSCargoImp:Number">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="99999999"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="SupplementaryShipmentInformation">
+        <xs:restriction base="GCCSCargoImp:Text">
+            <xs:maxLength value="12"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="VehicleBookingReference">
+        <xs:restriction base="GCCSCargoImp:AlphaNumeric">
+            <xs:maxLength value="8"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="VehiclePlateNumber">
+        <xs:restriction base="GCCSCargoImp:Text">
+            <xs:maxLength value="10"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TypeOfTimeIndicator">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TypeOfInformationIndicator">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="AbbreviatedName">
+        <xs:restriction base="GCCSCargoImp:Text">
+            <xs:maxLength value="17"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="BondedPremisesIdentification">
+        <xs:restriction base="GCCSCargoImp:AlphaNumeric">
+            <xs:maxLength value="7"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="BondedPremisesLocation">
+        <xs:restriction base="GCCSCargoImp:AlphaNumeric">
+            <xs:maxLength value="7"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="NumberOfStops">
+        <xs:restriction base="GCCSCargoImp:Number">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="9"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="VehicleOperator">
+        <xs:restriction base="GCCSCargoImp:Text">
+            <xs:maxLength value="17"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="DriverID">
+        <xs:restriction base="GCCSCargoImp:Text">
+            <xs:maxLength value="10"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="NumberOfPassengers">
+        <xs:restriction base="GCCSCargoImp:Number">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="9"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="CargoTerminalBayIdentification">
+        <xs:restriction base="GCCSCargoImp:Text">
+            <xs:maxLength value="7"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="StatusCode">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="3"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ChangeCode">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="EmbargoDetail">
+        <xs:restriction base="GCCSCargoImp:Text">
+            <xs:maxLength value="65"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="SpaceAllocationCode">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="HandlingDetail">
+        <xs:restriction base="GCCSCargoImp:Text">
+            <xs:maxLength value="38"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="HandlingDetailIdentifier">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="3"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="AmendmentDetails">
+        <xs:restriction base="GCCSCargoImp:Text">
+            <xs:maxLength value="65"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="AllotmentIdentification">
+        <xs:restriction base="GCCSCargoImp:AlphaNumeric">
+            <xs:length value="6"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ReasonForAcknowledgement">
+        <xs:restriction base="GCCSCargoImp:Text">
+            <xs:maxLength value="65"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ReasonForRejectionError">
+        <xs:restriction base="GCCSCargoImp:Text">
+            <xs:maxLength value="65"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ConnectionRestrictionIndicator">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ReasonForNoDisplay">
+        <xs:restriction base="GCCSCargoImp:Text">
+            <xs:maxLength value="65"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="AllotmentStatusCode">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="DeliverPickupIndicator">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="LoadingOrderIndicator">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ServiceCode">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="SurchargePercentage">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="6"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="RateTypeCode">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="3"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ULDChargeCode">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="RateNote">
+        <xs:restriction base="GCCSCargoImp:AlphaNumeric">
+            <xs:length value="4"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="RateInformationType">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="CreditAmountIndicator">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TaxIdentificationCode">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="SurfaceChargeIdentifier">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="IATACurrencyCode">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="3"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="CASSBillingPeriod">
+        <xs:restriction base="GCCSCargoImp:Number">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="999"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="CASSReportingPeriod">
+        <xs:restriction base="GCCSCargoImp:Number">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="999"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="NumberOfULDs">
+        <xs:restriction base="GCCSCargoImp:Number">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="99"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="DiscrepancyCode">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="4"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="NatureAndQuantityOfGoods">
+        <xs:restriction base="GCCSCargoImp:Text">
+            <xs:maxLength value="20"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="DescriptionForDangerousGoods">
+        <xs:restriction base="GCCSCargoImp:Text">
+            <xs:maxLength value="20"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="GoodsDataIdentifier">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="SupplementaryRateInformation">
+        <xs:restriction base="GCCSCargoImp:Text">
+            <xs:maxLength value="65"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="SLAC">
+        <xs:restriction base="GCCSCargoImp:Number">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="99999"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="DGClassOrDivisionNumberandCompatibilityGroup">
+        <xs:restriction base="GCCSCargoImp:Text">
+            <xs:maxLength value="4"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="DGUNOrIDPrefix">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="DGUNOrIDNumber">
+        <xs:restriction base="GCCSCargoImp:Number">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="9999"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="DGSubsidiaryRisk">
+        <xs:restriction base="GCCSCargoImp:Decimal">
+            <xs:minInclusive value="0"/>
+            <xs:totalDigits value="3"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="OverpackIndicator">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Quantity">
+        <xs:restriction base="GCCSCargoImp:Decimal">
+            <xs:minInclusive value="0"/>
+            <xs:totalDigits value="7"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="DGUNPackagingSpecificationCode">
+        <xs:restriction base="GCCSCargoImp:AlphaNumeric">
+            <xs:maxLength value="4"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="DGQValue">
+        <xs:restriction base="GCCSCargoImp:Decimal">
+            <xs:minInclusive value="0"/>
+            <xs:totalDigits value="3"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="OverpackReference">
+        <xs:restriction base="GCCSCargoImp:AlphaNumeric">
+            <xs:maxLength value="10"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="RadioactiveActivity">
+        <xs:restriction base="GCCSCargoImp:Decimal">
+            <xs:minInclusive value="0"/>
+            <xs:totalDigits value="8"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="DGPackingInstructionNumber">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="6"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="DGPackingGroup">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:maxLength value="3"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="CategoryNumber">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:maxLength value="3"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="GroupNumber">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:maxLength value="3"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="CategoryColor">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="RadioactiveTransportIndex">
+        <xs:restriction base="GCCSCargoImp:Decimal">
+            <xs:minInclusive value="0"/>
+            <xs:totalDigits value="3"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="FissileExceptedIndicator">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="LSAOrSCOIndication">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="3"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="MainDeckOnlyIndicator">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="AircraftPossibilityCode">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="3"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="AircraftTypeCode">
+        <xs:restriction base="GCCSCargoImp:AlphaNumeric">
+            <xs:length value="3"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="VehicleType">
+        <xs:restriction base="GCCSCargoImp:Text">
+            <xs:maxLength value="15"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="RouteLabel">
+        <xs:restriction base="GCCSCargoImp:Number">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="999999"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="SupplementalTruckRouteIndicator">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="MovementIndicator">
+        <xs:restriction base="GCCSCargoImp:AlphaNumeric">
+            <xs:length value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="DelayReasonCodes">
+        <xs:restriction base="GCCSCargoImp:AlphaNumeric">
+            <xs:length value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="HarmonisedCommodityCodeEntry">
+        <xs:restriction base="GCCSCargoImp:AlphaNumeric">
+            <xs:minLength value="6"/>
+            <xs:maxLength value="18"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="CustomsAmendmentCode">
+        <xs:restriction base="GCCSCargoImp:Number">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="99"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="CustomsNotification">
+        <xs:restriction base="GCCSCargoImp:Text">
+            <xs:maxLength value="20"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="CustomsStatusCode">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="CustomsEntryNumber">
+        <xs:restriction base="GCCSCargoImp:AlphaNumeric">
+            <xs:maxLength value="17"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="CustomsActionCode">
+        <xs:restriction base="GCCSCargoImp:Number">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="999"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="MailConsignmentNumber">
+        <xs:restriction base="GCCSCargoImp:AlphaNumeric">
+            <xs:maxLength value="10"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="MailCategoryCode">
+        <xs:restriction base="GCCSCargoImp:AlphaNumeric">
+            <xs:length value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="MailClassCode">
+        <xs:restriction base="GCCSCargoImp:AlphaNumeric">
+            <xs:length value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="MailULDTypeCode">
+        <xs:restriction base="GCCSCargoImp:AlphaNumeric">
+            <xs:length value="4"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="MailULDSealNumber">
+        <xs:restriction base="GCCSCargoImp:AlphaNumeric">
+            <xs:maxLength value="10"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="SecuritySealNumber">
+        <xs:restriction base="GCCSCargoImp:AlphaNumeric">
+            <xs:maxLength value="10"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="DespatchSerialNumber">
+        <xs:restriction base="GCCSCargoImp:Number">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="9999"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="MailSub-ClassCode">
+        <xs:restriction base="GCCSCargoImp:AlphaNumeric">
+            <xs:length value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ReceptacleTypeCode">
+        <xs:restriction base="GCCSCargoImp:AlphaNumeric">
+            <xs:length value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ReceptacleNumber">
+        <xs:restriction base="GCCSCargoImp:AlphaNumeric">
+            <xs:maxLength value="35"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="MailDangerousGoodsIndicator">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="MailHandlingClassCode">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="NumberOfReceptacles">
+        <xs:restriction base="GCCSCargoImp:Number">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="99999"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="EDIFACTLocationCode">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:length value="4"/>
+        </xs:restriction>
+    </xs:simpleType>
+   
+    <xs:simpleType name="BloboOfData">
+        <xs:restriction base="GCCSCargoImp:TextWithCRLF">
+            <xs:maxLength value="3000"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="StandardMessageIdentification">
+        <xs:attribute name="StandardMessageIdentifier"
+                      type="GCCSCargoImp:StandardMessageIdentifier"
+                      use="required"/>
+        <xs:attribute name="MessageTypeVersionNumber"
+                      type="GCCSCargoImp:MessageTypeVersionNumber"
+                      use="required"/>
+    </xs:complexType>
+    <xs:complexType name="ConsignmentDetail">
+        <xs:sequence>
+            <xs:element name="AWBIdentification"
+                        type="GCCSCargoImp:AWBIdentification"/>
+            <xs:element name="AWBOriginAndDestination"
+                        type="GCCSCargoImp:AWBOriginAndDestination"
+                        minOccurs="1"/>
+            <xs:element name="QuantityDetail"
+                        type="GCCSCargoImp:QuantityDetail"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="AWBIdentification">
+        <xs:attribute name="AirlinePrefix" type="GCCSCargoImp:AirlinePrefix"
+                      use="required"/>
+        <xs:attribute name="AWBSerialNumber" type="GCCSCargoImp:AWBSerialNumber"
+                      use="required"/>
+    </xs:complexType>
+    <xs:complexType name="AWBOriginAndDestination">
+        <xs:attribute name="AirportCityCodeOfOrigin"
+                      type="GCCSCargoImp:AirportCode" use="required"/>
+        <xs:attribute name="AirportCityCodeOfDestination"
+                      type="GCCSCargoImp:AirportCode" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="QuantityDetail">
+        <xs:attribute name="ShipmentDescriptionCode"
+                      type="GCCSCargoImp:ShipmentDescriptionCode"
+                      use="required"/>
+        <xs:attribute name="NumberOfPieces" type="GCCSCargoImp:NumberOfPieces"
+                      use="required"/>
+        <xs:attribute name="WeightCode" type="GCCSCargoImp:WeightCode"
+                      use="required"/>
+        <xs:attribute name="Weight" type="GCCSCargoImp:Weight" use="required"/>
+        <xs:attribute name="TotalNumberOfPieces"
+                      type="GCCSCargoImp:NumberOfPieces" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="AWBFlightIdentification">
+        <xs:complexContent>
+            <xs:extension base="GCCSCargoImp:FlightIdentification">
+                <xs:attribute name="DayOfScheduledDeparture"
+                              type="GCCSCargoImp:DayOfMonth" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="FlightIdentification">
+        <xs:attribute name="CarrierCode" type="GCCSCargoImp:CarrierCode"
+                      use="required"/>
+        <xs:attribute name="FlightNumber" type="GCCSCargoImp:FlightNumber"
+                      use="required"/>
+    </xs:complexType>
+    <xs:complexType name="ParticipantIdentification">
+        <xs:attribute name="ParticipantIdentifier"
+                      type="GCCSCargoImp:ParticipantIdentifier" use="required"/>
+        <xs:attribute name="ParticipantCode" type="GCCSCargoImp:ParticipantCode"
+                      use="required"/>
+    </xs:complexType>
+    <xs:complexType name="AWBConsignmentDetails">
+        <xs:complexContent>
+            <xs:extension base="GCCSCargoImp:ConsignmentDetail">
+			  <xs:sequence>
+                <xs:element name="VolumeDetail" type="GCCSCargoImp:VolumeDetail" minOccurs="0"/>
+                <xs:element name="DensityGroup" type="GCCSCargoImp:DensityGroupSection" minOccurs="0"/>
+			  </xs:sequence>
+			</xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ULDIdentification">
+        <xs:attribute name="ULDType" type="GCCSCargoImp:ULDType"
+                      use="required"/>
+        <xs:attribute name="ULDSerialNumber" type="GCCSCargoImp:ULDSerialNumber"
+                      use="required"/>
+        <xs:attribute name="ULDOwnerCode" type="GCCSCargoImp:ULDOwnerCode"
+                      use="required"/>
+    </xs:complexType>
+    <xs:complexType name="VolumeDetail">
+        <xs:attribute name="VolumeCode" type="GCCSCargoImp:VolumeCode"
+                      use="required"/>
+        <xs:attribute name="VolumeAmount" type="GCCSCargoImp:VolumeAmount"
+                      use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="SpecialHandlingDetails">
+        <xs:sequence>
+            <xs:element maxOccurs="9" name="SpecialHandlingRequirements" type="GCCSCargoImp:SpecialHandlingCode"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ChargeDeclarations">
+        <xs:sequence>
+            <xs:element name="ValueForCarriageDeclaration"
+                        type="GCCSCargoImp:ValueForCarriageDeclaration"/>
+            <xs:element name="ValueForCustomsDeclaration"
+                        type="GCCSCargoImp:ValueForCustomsDeclaration"/>
+            <xs:element name="ValueForInsuranceDeclaration"
+                        type="GCCSCargoImp:ValueForInsuranceDeclaration"/>
+        </xs:sequence>
+        <xs:attribute name="ISOCurrencyCode" type="GCCSCargoImp:ISOCurrencyCode"
+                      use="required"/>
+    </xs:complexType>
+    <xs:complexType name="ValueForCarriageDeclaration">
+        <xs:choice>
+            <xs:element name="DeclaredValueForCarriage"
+                        type="GCCSCargoImp:DeclaredValueForCarriage"/>
+            <xs:element name="NoValueDeclared"
+                        type="GCCSCargoImp:NoValueDeclared"/>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="ValueForCustomsDeclaration">
+        <xs:choice>
+            <xs:element name="DeclaredValueForCustoms"
+                        type="GCCSCargoImp:DeclaredValueForCustoms"/>
+            <xs:element name="NoCustomsValue"
+                        type="GCCSCargoImp:NoCustomsValue"/>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="ValueForInsuranceDeclaration">
+        <xs:choice>
+            <xs:element name="AmountOfInsurance"
+                        type="GCCSCargoImp:AmountOfInsurance"/>
+            <xs:element name="NoValue" type="GCCSCargoImp:NoValue"/>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="PrepaidOrCollectChargeDeclarations">
+        <xs:attribute name="PrepaidCollectIndicatorOfWeightOrValuation"
+                      type="GCCSCargoImp:PrepaidCollectIndicator"
+                      use="required"/>
+        <xs:attribute name="PrepaidCollectIndicatorOfOtherCharges"
+                      type="GCCSCargoImp:PrepaidCollectIndicator"
+                      use="required"/>
+    </xs:complexType>
+    <xs:complexType name="Contact">
+        <xs:sequence>
+            <xs:element name="Location" type="GCCSCargoImp:Location"/>
+            <xs:element name="CodedLocation" type="GCCSCargoImp:CodedLocation"/>
+            <!-- maxOccurs hack to satisfy Windows -->
+            <xs:element maxOccurs="999" minOccurs="0" name="ContactDetail"
+                         type="GCCSCargoImp:ContactDetail"/>
+            <xs:element name="Name" type="GCCSCargoImp:Name" minOccurs="1" maxOccurs="2"/>
+            <xs:element name="StreetAddress" type="GCCSCargoImp:StreetAddress"
+                       minOccurs="1" maxOccurs="2"/>
+        </xs:sequence>        
+    </xs:complexType>
+    <xs:complexType name="Location">
+        <xs:attribute name="Place" type="GCCSCargoImp:Place" use="required"/>
+        <xs:attribute name="StateOrProvince" type="GCCSCargoImp:StateOrProvince"
+                      use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="CodedLocation">
+        <xs:attribute name="ISOCountryCode" type="GCCSCargoImp:ISOCountryCode"
+                      use="required"/>
+        <xs:attribute name="PostCode" type="GCCSCargoImp:PostCode"
+                      use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="ContactDetail">
+        <xs:attribute name="ContactIdentifier"
+                      type="GCCSCargoImp:ContactIdentifier" use="required"/>
+        <xs:attribute name="ContactNumber" type="GCCSCargoImp:ContactNumber"
+                      use="required"/>
+    </xs:complexType>
+    <xs:complexType name="OfficeMessageAddress">
+        <xs:attribute name="AirportCityCode" type="GCCSCargoImp:AirportCode"
+                      use="required"/>
+        <xs:attribute name="OfficeFunctionDesignator"
+                      type="GCCSCargoImp:OfficeFunctionDesignator"
+                      use="required"/>
+        <xs:attribute name="CompanyDesignator"
+                      type="GCCSCargoImp:CompanyDesignator" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="AWBParticipantIdentification">
+        <xs:complexContent>
+            <xs:extension base="GCCSCargoImp:ParticipantIdentification">
+                <xs:attribute name="AirportCityCode"
+                              type="GCCSCargoImp:AirportCode" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="FSAOtherServiceInformation">
+        <xs:sequence>
+            <xs:element name="OSIDetailsFirstLine"
+                        type="GCCSCargoImp:OtherServiceInformationEntry"/>
+            <xs:element minOccurs="0" name="OSIDetailsSecondLine"
+                        type="GCCSCargoImp:OtherServiceInformationEntry"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ULDPositionInformation">
+        <xs:attribute name="ULDLoadingIndicator"
+                      type="GCCSCargoImp:ULDLoadingIndicator" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="MovementPriority">
+        <xs:attribute name="MovementPriorityCode"
+                      type="GCCSCargoImp:MovementPriorityCode" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="FFMOtherServiceInformation">
+        <xs:sequence>
+            <xs:element name="OSIDetailsFirstLine"
+                        type="GCCSCargoImp:OtherServiceInformationEntry"/>
+            <xs:element minOccurs="0" name="OSIDetailsSecondLine"
+                        type="GCCSCargoImp:OtherServiceInformationEntry"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="FFMConsignmentDetail">
+        <xs:complexContent>
+            <xs:extension base="GCCSCargoImp:ConsignmentDetail">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="VolumeOrDensitySection" type="GCCSCargoImp:VolumeOrDensitySection"/>
+                    <xs:element minOccurs="0" name="TotalConsignmentPieces" type="GCCSCargoImp:TotalConsignmentPieces"/>
+                    <xs:element name="NatureOfGoods" type="GCCSCargoImp:ManifestDescriptionOfGoods"/>
+                    <xs:element minOccurs="0" name="SpecialHandlingDetails" type="GCCSCargoImp:SpecialHandlingDetails"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="VolumeOrDensitySection">
+        <xs:sequence>
+            <xs:choice>
+                <xs:element name="VolumeDetail"
+                            type="GCCSCargoImp:VolumeDetail"/>
+                <xs:element name="DensityGroupSection"
+                            type="GCCSCargoImp:DensityGroupSection"/>
+            </xs:choice>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="DensityGroupSection">
+        <xs:attribute name="DensityIndicator"
+                      type="GCCSCargoImp:DensityIndicator" use="required"/>
+        <xs:attribute name="DensityGroup" type="GCCSCargoImp:DensityGroup"
+                      use="required"/>
+    </xs:complexType>
+    <xs:complexType name="TotalConsignmentPieces">
+        <xs:attribute name="ShipmentDescriptionCode"
+                      type="GCCSCargoImp:ShipmentDescriptionCode"
+                      use="required"/>
+        <xs:attribute name="NumberOfPieces" type="GCCSCargoImp:NumberOfPieces"
+                      use="required"/>
+    </xs:complexType>
+    <xs:complexType name="DimensionsInformation">
+        <xs:sequence>
+            <xs:element name="TotalWeightDetails"
+                        type="GCCSCargoImp:TotalWeightDetails"/>
+            <xs:element name="DimensionsDetails"
+                        type="GCCSCargoImp:DimensionsDetails"/>
+        </xs:sequence>
+        <xs:attribute name="NumberOfPieces" type="GCCSCargoImp:NumberOfPieces"
+                      use="required"/>
+    </xs:complexType>
+    <xs:complexType name="TotalWeightDetails">
+        <xs:attribute name="WeightCode" type="GCCSCargoImp:WeightCode"
+                      use="required"/>
+        <xs:attribute name="Weight" type="GCCSCargoImp:Weight" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="DimensionsDetails">
+        <xs:attribute name="MeasurementUnitCode"
+                      type="GCCSCargoImp:MeasurementUnitCode" use="required"/>
+        <xs:attribute name="LengthDimension" type="GCCSCargoImp:Dimension"
+                      use="required"/>
+        <xs:attribute name="WidthDimension" type="GCCSCargoImp:Dimension"
+                      use="required"/>
+        <xs:attribute name="HeightDimension" type="GCCSCargoImp:Dimension"
+                      use="required"/>
+    </xs:complexType>
+    <xs:complexType name="PointOfUnloading">
+        <xs:attribute name="AirportCodeOfUnloading"
+                      type="GCCSCargoImp:AirportCode" use="required"/>
+        <xs:attribute name="NilCargoCode" type="GCCSCargoImp:NilCargoCode"
+                      use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="FFMFlightIdentification">
+        <xs:complexContent>
+            <xs:extension base="GCCSCargoImp:AWBFlightIdentification">
+                <xs:attribute name="MonthOfScheduledDeparture"
+                              type="GCCSCargoImp:Month" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="AircraftIdentification">
+        <xs:attribute name="AircraftRegistration"
+                      type="GCCSCargoImp:AircraftRegistration" use="required"/>
+    </xs:complexType>
+    <xs:simpleType name="CustomsInformationIdentifier">
+        <xs:restriction base="GCCSCargoImp:Alpha">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="SupplementaryCustomsInformation">
+        <xs:restriction base="GCCSCargoImp:Text">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="35"/>
+        </xs:restriction>
+    </xs:simpleType>    
+</xs:schema>

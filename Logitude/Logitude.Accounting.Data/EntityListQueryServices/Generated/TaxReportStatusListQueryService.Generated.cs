@@ -1,0 +1,173 @@
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Server.Infrastructure.Helpers;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
+
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.EntityLists;
+
+namespace Logitude.Accounting.Data.EntityListQueryServices
+{ 
+
+    public partial class TaxReportStatusListQueryService
+    {
+         private IAccountingContext context;
+        public TaxReportStatusListQueryService(IAccountingContext context)
+        {
+            this.context = context;
+        }
+
+        public List<TaxReportStatusList> GetList(QueryOperations queryOperations, int tenant)
+        {
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+
+            IQueryable<TaxReportStatus> iQueryable = (from a in context.TaxReportStatuses
+                                               select a);
+            			iQueryable = ApplyBusinessUnitFilters(queryOperations, iQueryable);
+						iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+
+            iQueryable = filter.GetFilteredQuery<TaxReportStatus>(nonListQueryOperation, iQueryable);
+
+            int skippedPorts = queryOperations.PageIndex;
+
+            IQueryable<TaxReportStatusList> query2 = GetIqueryableList(iQueryable);
+           
+            query2 = filter.GetFilteredQuery<TaxReportStatusList>(listQueryOperation, query2);
+
+            if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
+            {
+                PropertyInfo propInfo = typeof(TaxReportStatusList).GetProperty(queryOperations.SortByColumnName);
+                List<ObjectField> TaxReportStatusObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("TaxReportStatus",tenant).ToList();
+
+                ObjectField objectField = (from a in TaxReportStatusObjectFields
+                                           where a.FieldName == queryOperations.SortByColumnName
+                                           select a).FirstOrDefault();
+
+                if (objectField != null)
+                {
+				 if (objectField.IsCustom)
+                    {
+                        query2 = sortClass.GetSorterQuery<TaxReportStatusList, string>(queryOperations, query2);
+                    }
+                    else
+                    {
+                     switch (objectField.DataTypeCode.ToLower())
+                     {
+                         case "ntext":
+                        case "text":
+                            {
+                                query2 = sortClass.GetSorterQuery<TaxReportStatusList, string>(queryOperations, query2);
+                                break;
+                            }
+						case "sigdouble":
+						case "double":
+                            {
+                                query2 = sortClass.GetSorterQuery<TaxReportStatusList, double>(queryOperations, query2);
+                                break;
+                            }
+						case "date":
+                        case "datetime":
+                            {
+                                query2 = sortClass.GetSorterQuery<TaxReportStatusList, DateTime>(queryOperations, query2);
+                                break;
+                            }
+						case "unsinteger":
+                        case "integer":
+                            {
+                                query2 = sortClass.GetSorterQuery<TaxReportStatusList, int>(queryOperations, query2);
+                                break;
+                            }
+                        case "boolean":
+                            {
+                                query2 = sortClass.GetSorterQuery<TaxReportStatusList, bool>(queryOperations, query2);
+                                break;
+                            }
+						case "unsdecimal":
+						case "decimal":
+                            {
+                                query2 = sortClass.GetSorterQuery<TaxReportStatusList, decimal>(queryOperations, query2);
+                                break;
+                            }
+                        default:
+                            {
+                                query2 = query2.OrderBy(d => d.Code);
+                                break;
+                            }
+                    }
+				 }
+                }
+            }
+		    else
+            {
+                query2 = query2.OrderBy(d => d.Code);
+            }
+			if(!queryOperations.GetAll)
+			{
+             query2 = query2.Skip(skippedPorts);
+             query2 = query2.Take(queryOperations.PageSize);
+			}
+            return query2.ToList();
+
+    
+        }
+
+         public List<TaxReportStatusList> GetList(int tenant)
+         {
+             return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
+         }
+
+        public TaxReportStatusList GetSingle(string code)
+        {
+            IQueryable<TaxReportStatus> TaxReportStatusQuery = (from a in context.TaxReportStatuses
+                                                       where a.Code == code
+                                                       select a);
+
+             
+            IQueryable<TaxReportStatusList> TaxReportStatusListQuery = GetIqueryableList( TaxReportStatusQuery);
+            TaxReportStatusList TaxReportStatusList = TaxReportStatusListQuery.FirstOrDefault();
+            return TaxReportStatusList;
+           
+        }
+
+        public int GetListCount(QueryOperations queryOperations)
+        {
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+
+            IQueryable<TaxReportStatus> iQueryable = (from a in context.TaxReportStatuses  select a);
+
+			  			iQueryable = ApplyBusinessUnitFilters(queryOperations, iQueryable);
+						iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+            
+			iQueryable = filter.GetFilteredQuery<TaxReportStatus>(nonListQueryOperation, iQueryable);
+
+            IQueryable<TaxReportStatusList> query2 = GetIqueryableList(iQueryable);
+
+            query2 = filter.GetFilteredQuery<TaxReportStatusList>(listQueryOperation, query2);
+            int count = query2.Count();
+            return count;
+        }
+
+      
+    }
+}
+	 

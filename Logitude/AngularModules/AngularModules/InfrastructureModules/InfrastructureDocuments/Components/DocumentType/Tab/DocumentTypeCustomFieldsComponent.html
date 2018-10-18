@@ -1,0 +1,185 @@
+﻿
+
+
+
+<table>
+
+    <tr>
+        <td style="width:10px"></td>
+        <td>
+            <table *ngIf="IsVisibile">
+
+                <tr style="height:15px"> <td><div></div></td>  </tr>
+
+
+                <tr style="height:27px">
+                    <td>
+                        <div style="text-align:left;width:100%;height:27px;"><span style="vertical-align:central;text-align:left;font-size:16px;color:#1B90CB">{{'DocumentType.TH.CustomFields' | TextCodeTranslationPipe}}</span></div>
+
+
+                    </td>
+                </tr>
+
+
+                <tr style="height:32px;">
+                    <td>
+
+                        <div style="text-align:right;width:100%;height:32px;vertical-align:central;">
+                            <table style="height: 32px;">
+                                <tr style="height:32px">
+                                    <td>
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width: 100px;vertical-align:middle">
+
+                                        <button class="Button" [disabled]="EditingIsEnabled" (click)="AddCustomFieldButtonClicked()">{{'DocumentTypeCustomField.B.AddCustomField' | TextCodeTranslationPipe}}</button>
+                                    </td>
+                                    <td *ngIf="IsShowButtonDelete" style="width: 7px;"></td>
+
+
+                                    <td style="width: 7px;"></td>
+
+                                    <td style="width: 100px;vertical-align:middle">
+                                        <button [disabled]="EditingIsEnabled" class="Button" (click)="EditCustomFieldButtonClicked()">{{'DocumentTypeCustomField.B.EditCustomField' | TextCodeTranslationPipe}}</button>
+                                    </td>
+                                    <td style="width: 7px;"></td>
+                                    <td style="width:150px;vertical-align:middle;">
+                                        <SearchTextBox style="float: right;margin-right:0px;width:150px" [ObjectTableName]="'DocumentTypeCustomField'" [PlaceHolder]="'Search'" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)"></SearchTextBox>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </div>
+
+                    </td>
+                </tr>
+
+
+                <tr style="height:100%">
+
+
+
+
+                    <td class="CellStretch">
+                        <div class="SimpleGridView">
+                            <div class="SimpleGridViewHeader">
+                                <table>
+                                    <tr>
+
+                                        <td style="width: 120px; min-width: 120px;max-width: 120px">{{'DocumentTypeCustomField.F.FieldCode' | TextCodeTranslationPipe}}</td>
+                                        <td style="width: 70px; min-width: 70px;max-width: 70px">{{'DocumentTypeCustomField.F.FieldDataTypeCode' | TextCodeTranslationPipe}}</td>
+                                        <td style="width: 120px; min-width: 120px;max-width: 120px">{{'DocumentTypeCustomField.F.DefaultValue' | TextCodeTranslationPipe}}</td>
+                                        <td style="width: 60px; min-width: 60px;max-width: 60px">{{'DocumentTypeCustomField.F.InActive' | TextCodeTranslationPipe}}</td>
+                                        <td style="width: 60px; min-width: 60px;max-width: 60px">{{'DocumentTypeCustomField.F.IsRequired' | TextCodeTranslationPipe}}</td>
+
+                                        <td style="width:100%;">
+                                            <div></div>
+                                        </td>
+
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div class="SimpleGridViewBody">
+                                <table>
+                                    <tr style="height: 1px;">
+                                        <td>
+                                            <table>
+                                                <tr class="SimpleGridViewRow RowHover" *ngFor="let item of CustomFieldsLists">
+                                                    <td>
+                                                        <table>
+                                                            <tr style="height:25px;" (click)="SelectedDocumentTypeCustomFieldsViewModel=item" [class.RowSelected]="item === SelectedDocumentTypeCustomFieldsViewModel">
+
+
+
+                                                                <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; position: relative;">
+                                                                    {{item.FieldCode}}
+
+                                                                </td>
+                                                              
+
+                                                                <td class="GridViewCell" style="width: 70px; min-width: 70px; max-width: 70px; position: relative;">
+                                                                    {{item.FieldDataTypeCode}}
+
+                                                                </td>
+
+
+                                                                <td class="GridViewCell" style="width:120px; min-width: 120px; max-width: 120px; position: relative;">
+                                                                    {{item.DefaultValue}}
+                                                                </td>
+
+
+
+                                                                <td class="GridViewCell" style="width: 60px; min-width: 60px; max-width: 60px; position: relative;">
+                                                                    
+                                                                        <div class="CheckBox">
+                                                                        <input class="CenterCenter" style="text-align:center" [attr.id]="item.KeyInActive" type="checkbox" [(ngModel)]="item.InActive" [disabled]="'true'" />
+                                                                        <label class="CenterCenter" [attr.for]="item.KeyInActive"></label>
+                                                                    </div>
+                                                                </td>
+
+                                                                <td class="GridViewCell" style="width: 60px; min-width: 60px; max-width: 60px; position: relative;">
+
+                                                                    <div class="CheckBox">
+                                                                        <input class="CenterCenter" style="text-align:center" [attr.id]="item.KeyInRequired" type="checkbox" [(ngModel)]="item.IsRequired" [disabled]="'true'" />
+                                                                        <label class="CenterCenter" [attr.for]="item.KeyInRequired"></label>
+                                                                    </div>
+                                                                </td>
+
+
+
+
+                                                                <td>
+                                                                    <div> </div>
+                                                                </td>
+
+
+                                                            </tr>
+                                                            <tr><td colspan="4"></td></tr>
+                                                        </table>
+
+
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                    </td>
+
+
+                </tr>
+
+
+
+
+
+            </table>
+
+        </td>
+
+        <td style="width:10px"></td>
+    </tr>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+

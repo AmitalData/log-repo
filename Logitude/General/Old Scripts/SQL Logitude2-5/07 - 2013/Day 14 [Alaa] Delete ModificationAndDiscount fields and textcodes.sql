@@ -1,0 +1,2 @@
+delete from ObjectFields where ObjectTableId= (select id from ObjectTables where name='Customs.ModificationAndDiscountType')
+delete from TextCodes where ObjectTableId= (select id from ObjectTables where name='Customs.ModificationAndDiscountType')

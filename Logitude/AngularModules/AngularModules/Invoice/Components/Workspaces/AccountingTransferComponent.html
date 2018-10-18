@@ -1,0 +1,159 @@
+﻿
+<table *ngIf="IsResourcesReady">
+    <tr>
+        <td style="width: 300px;">
+            <table>
+
+                <!-- A/R Invoices -->
+                <tr style="height: 1px;" *ngIf="IsVisible_ARInvoice">
+                    <td>
+                        <div class="QueriesSection">
+                            <div>{{'General.O.ARInvoices' | TextCodeTranslationPipe}}</div>
+                            <div>
+                                <HyperlinkQuery *ngIf="IsVisible_NewTransfer" [IsEnabled]="IsARInvoicesEnabled" (click)="NewTransferClicked('ARInvoice')">{{'General.O.NewTransfer' | TextCodeTranslationPipe}}</HyperlinkQuery>
+
+                                <HyperlinkQuery *ngIf="IsVisible_ARInvoice_NotReady" [IsEnabled]="IsARInvoicesEnabled" (click)="ViewQueryClicked('ARInvoice:Not Ready Invoices')">
+                                    <span>{{'ARInvoice.Q.NotReadyInvoices' | TextCodeTranslationPipe}}</span>
+                                    <span *ngIf="IsARInvoicesEnabled" class="ColorRed">({{ARInvoicesNotReadyCount}})</span>
+                                </HyperlinkQuery>
+
+                                <HyperlinkQuery *ngIf="IsVisible_ARInvoice_MarkedAsBlocked" [IsEnabled]="IsARInvoicesEnabled" (click)="ViewQueryClicked('ARInvoice:Marked as blocked for transfer')">
+                                    <span>{{'ARInvoice.Q.MarkedAsBlockedForTransfer' | TextCodeTranslationPipe}}</span>
+                                    <span *ngIf="IsARInvoicesEnabled">({{ARInvoicesDontTransferCount}})</span>
+                                </HyperlinkQuery>
+
+                                <HyperlinkQuery *ngIf="IsVisible_ARInvoice_TransferHistory" [IsEnabled]="IsARInvoicesEnabled" (click)="ViewQueryClicked('AccountingTransferHeader:ARInvoiceTransferHistory')">{{'AccountingTransferHeader.Q.ARInvoiceTransferHistory' | TextCodeTranslationPipe}}</HyperlinkQuery>
+
+                                <HyperlinkQuery *ngIf="IsVisible_ARInvoice_ErrorInTransfer" [IsEnabled]="IsARInvoicesEnabled" (click)="ViewQueryClicked('ARInvoice:Error In Transfer Invoices')">
+                                    <span>{{'ARInvoice.Q.ErrorInTransferInvoices' | TextCodeTranslationPipe}}</span>
+                                    <span *ngIf="IsARInvoicesEnabled" class="ColorRed">({{ARInvoicesErrorInTransferCount}})</span>
+                                </HyperlinkQuery>
+
+                                <HyperlinkQuery *ngIf="IsVisible_ARInvoice_RecalculateExternals" [IsEnabled]="IsARInvoicesEnabled" (click)="RecalculateExternalClicked('ARInvoice')">{{'General.O.RecalculateExternalIDs' | TextCodeTranslationPipe}}</HyperlinkQuery>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- A/P Invoices -->
+                <tr style="height: 1px;" *ngIf="IsVisible_APInvoice">
+                    <td>
+                        <div class="QueriesSection">
+                            <div>{{'General.O.APInvoices' | TextCodeTranslationPipe}}</div>
+                            <div>
+                                <HyperlinkQuery *ngIf="IsVisible_NewTransfer" [IsEnabled]="IsAPInvoicesEnabled" (click)="NewTransferClicked('APInvoice')">{{'General.O.NewTransfer' | TextCodeTranslationPipe}}</HyperlinkQuery>
+
+                                <HyperlinkQuery *ngIf="IsVisible_APInvoice_NotReady" [IsEnabled]="IsAPInvoicesEnabled" (click)="ViewQueryClicked('APInvoice:Not Ready Invoices')">
+                                    <span>{{'APInvoice.Q.NotReadyInvoices' | TextCodeTranslationPipe}}</span>
+                                    <span *ngIf="IsAPInvoicesEnabled" class="ColorRed">({{APInvoicesNotReadyCount}})</span>
+                                </HyperlinkQuery>
+
+                                <HyperlinkQuery *ngIf="IsVisible_APInvoice_MarkedAsBlocked" [IsEnabled]="IsAPInvoicesEnabled" (click)="ViewQueryClicked('APInvoice:Marked as blocked for transfer')">
+                                    <span>{{'APInvoice.Q.MarkedAsBlockedForTransfer' | TextCodeTranslationPipe}}</span>
+                                    <span *ngIf="IsAPInvoicesEnabled">({{APInvoicesDontTransferCount}})</span>
+                                </HyperlinkQuery>
+
+                                <HyperlinkQuery *ngIf="IsVisible_APInvoice_TransferHistory" [IsEnabled]="IsAPInvoicesEnabled" (click)="ViewQueryClicked('AccountingTransferHeader:APInvoiceTransferHistory')">{{'AccountingTransferHeader.Q.APInvoiceTransferHistory' | TextCodeTranslationPipe}}</HyperlinkQuery>
+
+                                <HyperlinkQuery *ngIf="IsVisible_APInvoice_ErrorInTransfer" [IsEnabled]="IsAPInvoicesEnabled" (click)="ViewQueryClicked('APInvoice:Error In Transfer Invoices')">
+                                    <span>{{'APInvoice.Q.ErrorInTransferInvoices' | TextCodeTranslationPipe}}</span>
+                                    <span *ngIf="IsAPInvoicesEnabled" class="ColorRed">({{APInvoicesErrorInTransferCount}})</span>
+                                </HyperlinkQuery>
+
+                                <HyperlinkQuery *ngIf="IsVisible_APInvoice_RecalculateExternals" [IsEnabled]="IsAPInvoicesEnabled" (click)="RecalculateExternalClicked('APInvoice')">{{'General.O.RecalculateExternalIDs' | TextCodeTranslationPipe}}</HyperlinkQuery>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- Tax - open format -->
+                <tr style="height: 1px;" *ngIf="IsTaxesVisible">
+                    <td>
+                        <div class="QueriesSection">
+                            <div>Taxes</div>
+                            <div>
+                                <HyperlinkQuery (click)="OpenFormatReportClicked()">Open Format Report</HyperlinkQuery>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+
+        <td style="width: 10px;">
+            <div></div>
+        </td>
+
+        <td>
+            <table>
+
+                <!-- A/R Payments -->
+                <tr style="height: 1px;" *ngIf="IsVisible_ARPayment">
+                    <td>
+                        <div class="QueriesSection">
+                            <div>{{'General.O.ARPayments' | TextCodeTranslationPipe}}</div>
+                            <div>
+                                <HyperlinkQuery *ngIf="IsVisible_NewTransfer" [IsEnabled]="IsARPaymentsEnabled" (click)="NewTransferClicked('ARPayment')">{{'General.O.NewTransfer' | TextCodeTranslationPipe}}</HyperlinkQuery>
+
+                                <HyperlinkQuery *ngIf="IsVisible_ARPayment_NotReady" [IsEnabled]="IsARPaymentsEnabled" (click)="ViewQueryClicked('ARPayment:Not Ready Payments')">
+                                    <span>{{'ARPayment.Q.NotReadyPayments' | TextCodeTranslationPipe}}</span>
+                                    <span *ngIf="IsARPaymentsEnabled" class="ColorRed">({{ARPaymentsNotReadyCount}})</span>
+                                </HyperlinkQuery>
+
+                                <HyperlinkQuery *ngIf="IsVisible_ARPayment_MarkedAsBlocked" [IsEnabled]="IsARPaymentsEnabled" (click)="ViewQueryClicked('ARPayment:Marked as blocked for transfer')">
+                                    <span>{{'ARPayment.Q.MarkedAsBlockedForTransfer' | TextCodeTranslationPipe}}</span>
+                                    <span *ngIf="IsARPaymentsEnabled">({{ARPaymentsDontTransferCount}})</span>
+                                </HyperlinkQuery>
+
+                                <HyperlinkQuery *ngIf="IsVisible_ARPayment_TransferHistory" [IsEnabled]="IsARPaymentsEnabled" (click)="ViewQueryClicked('AccountingTransferHeader:ARPaymentTransferHistory')">{{'AccountingTransferHeader.Q.ARPaymentTransferHistory' | TextCodeTranslationPipe}}</HyperlinkQuery>
+
+                                <HyperlinkQuery *ngIf="IsVisible_ARPayment_RecalculateExternals" [IsEnabled]="IsARPaymentsEnabled" (click)="RecalculateExternalClicked('ARPayment')">{{'General.O.RecalculateExternalIDs' | TextCodeTranslationPipe}}</HyperlinkQuery>
+
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- A/P Payments -->
+                <tr style="height: 1px;" *ngIf="IsVisible_APPayment">
+                    <td>
+                        <div class="QueriesSection">
+                            <div>{{'General.O.APPayments' | TextCodeTranslationPipe}}</div>
+                            <div>
+                                <HyperlinkQuery *ngIf="IsVisible_NewTransfer" [IsEnabled]="IsAPPaymentsEnabled" (click)="NewTransferClicked('APPayment')">{{'General.O.NewTransfer' | TextCodeTranslationPipe}}</HyperlinkQuery>
+
+                                <HyperlinkQuery *ngIf="IsVisible_APPayment_NotReady" [IsEnabled]="IsAPPaymentsEnabled" (click)="ViewQueryClicked('APPayment:Not Ready Payments')">
+                                    <span>{{'APPayment.Q.NotReadyPayments' | TextCodeTranslationPipe}}</span>
+                                    <span *ngIf="IsAPPaymentsEnabled" class="ColorRed">({{APPaymentsNotReadyCount}})</span>
+                                </HyperlinkQuery>
+
+                                <HyperlinkQuery *ngIf="IsVisible_APPayment_MarkedAsBlocked" [IsEnabled]="IsAPPaymentsEnabled" (click)="ViewQueryClicked('APPayment:Marked as blocked for transfer')">
+                                    <span>{{'APPayment.Q.MarkedAsBlockedForTransfer' | TextCodeTranslationPipe}}</span>
+                                    <span *ngIf="IsAPPaymentsEnabled">({{APPaymentsDontTransferCount}})</span>
+                                </HyperlinkQuery>
+
+                                <HyperlinkQuery *ngIf="IsVisible_APPayment_TransferHistory" [IsEnabled]="IsAPPaymentsEnabled" (click)="ViewQueryClicked('AccountingTransferHeader:APPaymentTransferHistory')">{{'AccountingTransferHeader.Q.APPaymentTransferHistory' | TextCodeTranslationPipe}}</HyperlinkQuery>
+
+                                <HyperlinkQuery *ngIf="IsVisible_APPayment_RecalculateExternals" [IsEnabled]="IsAPPaymentsEnabled" (click)="RecalculateExternalClicked('APPayment')">{{'General.O.RecalculateExternalIDs' | TextCodeTranslationPipe}}</HyperlinkQuery>
+
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

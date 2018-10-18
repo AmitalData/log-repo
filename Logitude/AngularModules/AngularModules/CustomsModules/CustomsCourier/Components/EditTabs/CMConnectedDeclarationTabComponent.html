@@ -1,0 +1,69 @@
+﻿<table>
+    <tr>
+        <td>
+            <div class="TableHolder">
+                <table >
+                    <tr style="height:25px">
+                        <td class="TabTitleRow" style="width:250px"> {{'General.O.ConnectedDeclarations' | TextCodeTranslationPipe}}  </td>
+                        <td><div></div></td>
+                        <td style="width:250px">
+                            <SearchBox [SearchText]="ConnectedSearch" (TextChanged)="ConnectedSearchCompleted($event)"
+                                       [Watermark]="'תיק/הצהרה/שטר מטען בלדר/לקוח'"></SearchBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="height: 40%; padding: 5px;">
+                            <div class="GeneratedGridContainer" style="padding:5px"  *ngIf="IsVisibile">
+                                <logitude-grid GridWidth="100%" GridHeight="100%"
+                                               [ObjectTable]="ObjectTableName"
+                                               [dataSource]="DataSource"
+                                               (AfterViewInitCompleted)="ViewInitCompleted($event)"
+                                               [MenuHeaderchangeevent]="MenuHeaderchangeevent"
+                                               [columns]="columns"
+                                              [IsAllRecordsChecked]="true"
+                                               [SelectedRow]="SelectedRow2"
+                                               [IsCustomTemplate]="true"
+                                               (CheckBoxChecked)="onCheckBoxChecked($event)"
+                                                [IsGradiantSelectedColor]="true">
+                                </logitude-grid>
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+                        <td class="TabTitleRow" style="width:250px">{{'General.O.NotConnectedDeclarations' | TextCodeTranslationPipe}} </td>
+                        <td><div></div></td>
+                        <td style="width:250px">
+                            <SearchBox [SearchText]="NotConnectedSearch" (TextChanged)="NotConnectedSearchCompleted($event)"
+                                       [Watermark]="'תיק/הצהרה/שטר מטען בלדר/לקוח'"></SearchBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="height: 60%; padding: 5px;">
+
+                            <div class="GeneratedGridContainer" style="padding:5px" *ngIf="IsVisibile">
+                                <logitude-grid GridWidth="100%" GridHeight="100%"
+                                               [ObjectTable]="ObjectTableName"
+                                               [dataSource]="DataSource1"
+                                               (AfterViewInitCompleted)="ViewInitCompleted1($event)"
+                                               [MenuHeaderchangeevent]="MenuHeaderchangeevent1"
+                                               [columns]="columns1"
+                                               [IsCustomTemplate]="true"
+                                               (CheckBoxChecked)="onCheckBoxChecked1($event)"
+                                               [IsGradiantSelectedColor]="true">
+                                </logitude-grid>
+                            </div>
+
+                        
+                        </td>
+
+                    </tr>
+                </table>
+
+            </div>
+        </td>
+    </tr>
+</table>

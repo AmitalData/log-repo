@@ -1,0 +1,53 @@
+﻿<div *ngIf="_MyObject != null"     style="direction: ltr;">
+    <input placeholder="Search" [(ngModel)]="_SearchValue" />
+    <div style="position: relative;max-width: 100%;overflow: auto; "
+         [ngStyle]="{ 'height': MyNgStyleHeight }">
+        <table>
+            <tr>
+                <td>
+                    <table>
+                        <ng-container *ngFor="let myEle of _MyObjectElements">
+                            <tr *ngIf="toShow(myEle) &&  myEle.myElementType !=2  ">
+                                <td style="width:5px"><div></div></td>
+                                <th *ngIf="myEle.myElementType==1"
+                                    style="
+                                    border: solid 1px #b8c2ce;
+                                    text-align: center ;
+                                    font-size: 16px ;
+                                    color: #3d83b6"
+                                    colspan="2">
+                                    {{myEle.key}}
+                                </th>
+                                <!--<span *ngSwitchCase="2"><hr /></span>-->
+
+                                <td *ngIf="myEle.myElementType==3"
+                                    style="width:250px;">
+                                    {{myEle.key}}
+                                </td>
+                                <td *ngIf="myEle.myElementType==3">
+                                    <input style="font-weight:bold;"
+                                           type="text"
+                                           name="{{myEle.key}}"
+                                           value="{{myEle.value}}" disabled />
+                                </td>
+                                <td style="width:5px"><div></div></td>
+
+                            </tr>
+
+                        </ng-container>
+                        <tr></tr>
+
+                        <tr>
+                            <td style="width:5px"><div></div></td>
+                            <td><div></div></td>
+                            <td><div></div></td>
+                            <td style="width:5px"><div></div></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr></tr>
+        </table>
+  
+    </div>
+</div>

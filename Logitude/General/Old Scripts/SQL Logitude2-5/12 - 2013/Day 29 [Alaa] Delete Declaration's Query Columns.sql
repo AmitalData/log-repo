@@ -1,0 +1,1 @@
+delete from QueryColumns where ObjectFieldId in ( select id from ObjectFields where ObjectTableId = (select id  from ObjectTables where name= 'customs.declaration'))

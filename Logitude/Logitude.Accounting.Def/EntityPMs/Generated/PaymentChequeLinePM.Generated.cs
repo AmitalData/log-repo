@@ -1,0 +1,166 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Accounting.Def.Validators;
+  
+namespace Logitude.Accounting.Def.EntityPMs
+{
+   [CustomValidation(typeof(AccountingClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class PaymentChequeLinePM : EntityPM
+   {
+   	  private int tenant ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+	  private string paymentChequeId ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PaymentChequeId  
+	   {
+	    
+	     get
+		{
+		   return paymentChequeId;
+		 }
+		 set
+		 {
+		   if(paymentChequeId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PaymentChequeId",OldValue=paymentChequeId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   paymentChequeId=value;
+		   }
+			
+		 }
+	   }
+	  private int line ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Line  
+	   {
+	    
+	     get
+		{
+		   return line;
+		 }
+		 set
+		 {
+		   if(line != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Line",OldValue=line,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   line=value;
+		   }
+			
+		 }
+	   }
+	  private string notes ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Notes  
+	   {
+	    
+	     get
+		{
+		   return notes;
+		 }
+		 set
+		 {
+		   if(notes != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Notes",OldValue=notes,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   notes=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? amount ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? Amount  
+	   {
+	    
+	     get
+		{
+		   return amount;
+		 }
+		 set
+		 {
+		   if(amount != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Amount",OldValue=amount,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   amount=value;
+		   }
+			
+		 }
+	   }
+	  private int? sequenceNumeric ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? SequenceNumeric  
+	   {
+	    
+	     get
+		{
+		   return sequenceNumeric;
+		 }
+		 set
+		 {
+		   if(sequenceNumeric != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SequenceNumeric",OldValue=sequenceNumeric,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   sequenceNumeric=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

@@ -1,0 +1,1 @@
+alter table Customs.SubCountries add CountryCode varchar(2) null

@@ -1,0 +1,1 @@
+alter table  [Customs].[Declarations] drop column IssueDateTime 

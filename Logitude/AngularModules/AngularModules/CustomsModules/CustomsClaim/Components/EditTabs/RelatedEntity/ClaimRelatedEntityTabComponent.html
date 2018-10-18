@@ -1,0 +1,152 @@
+﻿
+<style>
+    .FlipImgHoriz {
+        transform: rotate(180deg);
+    }
+
+    .DisbleBox {
+        display: inline-block;
+        border: 1px solid #ffd800;
+        border-radius: 5px;
+        background: #faf5c0;
+        padding: 2px 10px;
+        margin: 5px;
+        color: gray;
+        font-family: sans-serif;
+    }
+</style>
+
+<table>
+
+    <tr style="height:22px">
+        <td colspan="6">
+            <div style="width:100%;text-align:center;margin:0 auto;">
+                <table>
+                    <tr>
+                        <td>
+                            <div style="width:5px;font-size: 18px; color: #1B90CB; padding-right: 7px; padding-bottom: 5px;">
+                                {{WindowTitle}}
+                            </div>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </td>
+    </tr>
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td colspan="4">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="3">
+            <table>
+                <tr style="height: 40%;">
+                    <td>
+                        <div class="FillParent CurvedArea">
+                            <table>
+                                <tr>
+                                    <td style="width: 100px">
+                                        <div class="FillParent AppLeftMenuBackgroundRTL">
+                                            <table>
+                                                <tr style="height:5px;">
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td style="vertical-align: top;">
+                                                        <ul>
+                                                            <li class="DefaultMenuItem" *ngFor="let item of TabsItemsSource" (click)="SelectedTabCode = item.code" [class.SelectedMenuItem]="item.code === SelectedTabCode"
+                                                                [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'">
+                                                                <div style="position:absolute; top:0; bottom:0; margin:auto; height: 22px; line-height: 22px;" [ngStyle]="LayoutDirection == 'rtl' ? {'right': '5px;','padding-right':'5px'} : {'left': '25px'}">{{item.textCode | TextCodeTranslationPipe}}</div>
+                                                                <img *ngIf="SelectedTabCode == item.code" [className]="LayoutDirection == 'rtl' ? 'LeftCenter' : 'RightCenter'" [class.FlipImgHoriz]="LayoutDirection" src="./Images/SelectedMenuArrow.png" style="margin-right: -1px;" />
+                                                            </li>
+
+                                                        </ul>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="FillParent">
+                                            <div class="ScrollViewer">
+                                                <div class="ScrollContent">
+                                                    <div class="FillParent" style="padding:7px;">
+
+                                                        <!-- FileData -->
+                                                        <div class="MediaStretch" [hidden]="SelectedTabCode != 'FileData'">
+                                                            <div LocationDirective Code="FileData"></div>
+                                                        </div>
+
+                                                        <!-- ReasonsAndExplanitaions -->
+                                                        <div class="MediaStretch" [hidden]="SelectedTabCode != 'ReasonsAndExplanitaions'">
+                                                            <div LocationDirective Code="ReasonsAndExplanitaions"></div>
+                                                        </div>
+
+                                                        <!-- ExportDeclaration -->
+                                                        <div class="MediaStretch" [hidden]="SelectedTabCode != 'ExportDeclaration'">
+                                                            <div LocationDirective Code="ExportDeclaration"></div>
+                                                        </div>
+
+                                                        <!-- CustomAnswer -->
+                                                        <div class="MediaStretch" [hidden]="SelectedTabCode != 'CustomAnswer'">
+                                                            <div LocationDirective Code="CustomAnswer"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height:10px"></tr>
+
+    <tr style="height: 22px;">
+        <td>
+            <table>
+                <tr>
+                    <td style="vertical-align: bottom">
+                        <table style="height: 22px;">
+                            <tr>
+                                <td>
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 57px;">
+                                    <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel' |TextCodeTranslationPipe}}</button>
+                                </td>
+
+                                <td style="width: 5px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 57px;">
+                                    <button class="RedButton" [disabled]="IsDisplayOnly" (click)="SaveButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+
+    </tr>
+</table>

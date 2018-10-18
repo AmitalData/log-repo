@@ -1,0 +1,212 @@
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs; 
+using Logitude.Customs.Data;
+
+namespace Logitude.Customs.BL.EntityDataMappings
+{
+   
+   public partial class PaymentOrderProtestReasonDataMapping: IMapping<PaymentOrderProtestReasonPM, PaymentOrderProtestReason>,IMappingEncodeBase64NVARCHARFields<PaymentOrderProtestReasonPM>
+   {
+          public enum POCOPropertyNames
+          { 
+		     None,  
+	         PaymentOrderId, 
+	         Line, 
+	         ProtestTypeCode, 
+	         CustomsAgentExplanation, 
+	         InvoiceNumber, 
+	         GoodsItemLineNumber, 
+	         GoodsItemClassification, 
+	         AmountInDispute, 
+	         Tenant,
+	      }
+
+
+	      public enum PMPropertyNames
+          { 
+		     None,  
+	         PaymentOrderId, 
+	         Line, 
+	         ProtestTypeCode, 
+	         CustomsAgentExplanation, 
+	         InvoiceNumber, 
+	         GoodsItemLineNumber, 
+	         GoodsItemClassification, 
+	         AmountInDispute, 
+	         Tenant, 
+	         ProtestTypeName,
+	      }
+
+		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
+        List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
+    
+	    public void PMToPOCO(PaymentOrderProtestReasonPM entityPM, PaymentOrderProtestReason entityPOCO)
+        {
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ProtestTypeCode))
+            {
+				entityPOCO.ProtestTypeCode = entityPM.ProtestTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsAgentExplanation))
+            {
+				entityPOCO.CustomsAgentExplanation = entityPM.CustomsAgentExplanation;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InvoiceNumber))
+            {
+				entityPOCO.InvoiceNumber = entityPM.InvoiceNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GoodsItemLineNumber))
+            {
+				entityPOCO.GoodsItemLineNumber = entityPM.GoodsItemLineNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GoodsItemClassification))
+            {
+				entityPOCO.GoodsItemClassification = entityPM.GoodsItemClassification;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmountInDispute))
+            {
+				entityPOCO.AmountInDispute = entityPM.AmountInDispute;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			}
+
+		public void POCOToPM(PaymentOrderProtestReasonPM entityPM, PaymentOrderProtestReason entityPOCO)
+        {
+			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PaymentOrderId))
+            {
+					entityPM.PaymentOrderId = entityPOCO.PaymentOrderId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Line))
+            {
+					entityPM.Line = entityPOCO.Line;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ProtestTypeCode))
+            {
+					entityPM.ProtestTypeCode = entityPOCO.ProtestTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomsAgentExplanation))
+            {
+					entityPM.CustomsAgentExplanation = entityPOCO.CustomsAgentExplanation;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.InvoiceNumber))
+            {
+					entityPM.InvoiceNumber = entityPOCO.InvoiceNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.GoodsItemLineNumber))
+            {
+					entityPM.GoodsItemLineNumber = entityPOCO.GoodsItemLineNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.GoodsItemClassification))
+            {
+					entityPM.GoodsItemClassification = entityPOCO.GoodsItemClassification;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AmountInDispute))
+            {
+					entityPM.AmountInDispute = entityPOCO.AmountInDispute;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
+            {
+					entityPM.Tenant = entityPOCO.Tenant;
+            }
+
+		}
+
+		public void PMToOldPM(PaymentOrderProtestReasonPM entityPM, PaymentOrderProtestReasonPM oldEntityPM)
+        {
+		     oldEntityPM.ChangedProperties.Clear();
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ProtestTypeCode))
+            {
+                oldEntityPM.ProtestTypeCode = entityPM.ProtestTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsAgentExplanation))
+            {
+                oldEntityPM.CustomsAgentExplanation = entityPM.CustomsAgentExplanation;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InvoiceNumber))
+            {
+                oldEntityPM.InvoiceNumber = entityPM.InvoiceNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GoodsItemLineNumber))
+            {
+                oldEntityPM.GoodsItemLineNumber = entityPM.GoodsItemLineNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GoodsItemClassification))
+            {
+                oldEntityPM.GoodsItemClassification = entityPM.GoodsItemClassification;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmountInDispute))
+            {
+                oldEntityPM.AmountInDispute = entityPM.AmountInDispute;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+                oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+		}
+
+	    public void EncodeBase64NVARCHARFields(PaymentOrderProtestReasonPM entityPM)
+        {
+            if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
+            {
+                return;
+
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.CustomsAgentExplanation)) //T4 find type == nText 
+            {
+                entityPM.CustomsAgentExplanation = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CustomsAgentExplanation));
+            }
+            entityPM.EncodeBase64NVARCHARFieldsBy=null;
+		}
+
+
+	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
+        {
+            CustomMappedPOCOProperties.Add(pocoPropertyName);
+        }
+
+        public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
+        {
+            CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+			  
+   }
+}
+	 

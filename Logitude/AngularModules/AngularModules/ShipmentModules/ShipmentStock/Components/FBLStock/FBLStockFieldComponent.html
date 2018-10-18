@@ -1,0 +1,16 @@
+﻿<table *ngIf="IsDataReady">
+    <tr>
+        <td style="width:100%;">
+            <div>
+                <LogTextBox [HideColumns]="HideCoumns" [ObjectFieldName]="ObjectField.FieldName" [ObjectTableName]="ObjectField.ObjectTableName" [Text]="DataContext[ObjectField.FieldName]" [DataContext]="DataContext" [IsNewEntityCall]="IsNewEntityCall"></LogTextBox>
+            </div>
+        </td>
+       
+        <td style="width:50px;padding-left:5px">
+            
+            <button class="Button" *ngIf="IsFromStockVisible" [disabled]="!IsFromStockEnabled" (click)="GetFBLStockClicked()" title="Get from stock">Stock</button>
+            <button class="Button" *ngIf="IsReturnStockVisible" [disabled]="!IsReturnStockEnabled" (click)="ReturnFBLStockClicked()" title="Return to stock">Return</button>
+        </td>
+    </tr>
+</table>
+

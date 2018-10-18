@@ -1,0 +1,112 @@
+﻿
+
+<style type="text/css">
+    .DateTimePickerBox {
+        width: 100%;
+        height: 100%;
+        border: 1px solid #BABABA;
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+    }
+
+    .DateTimePickerBoxHeader {
+        height: 12px;
+        font-size: 12px;
+        color: #1B90CB;
+        text-indent: 5px;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(245, 245, 245, 1) 0%,rgba(243, 243, 243, 1) 50.24%,rgba(236, 236, 236, 1) 69.98%,rgba(224, 224, 224, 1) 84.35%,rgba(207, 207, 207, 1) 96.04%,rgba(199, 199, 199, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(245, 245, 245, 1) ),color-stop(0.5024,rgba(243, 243, 243, 1) ),color-stop(0.6998,rgba(236, 236, 236, 1) ),color-stop(0.8435,rgba(224, 224, 224, 1) ),color-stop(0.9604,rgba(207, 207, 207, 1) ),color-stop(1,rgba(199, 199, 199, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
+        -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#F5F5F5', endColorstr='#C7C7C7' ,GradientType=0)";
+        background: linear-gradient(180deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
+    }
+
+    .TimeSelector {
+        width: 180px;
+        height: 152px;
+        border-radius: 5px;
+        box-shadow: 2.5px 2.5px #D1D1D1;
+    }
+
+    .TimeSelectorContainer {
+        position: relative;
+        height: 100%;
+        /*overflow: scroll;*/
+        overflow-x: hidden;
+        display: block;
+        text-align: center;
+        padding: 1px;
+    }
+    .TimeSelectorContainer::before, .TimeSelectorContainer::after {
+        clear: both;
+    }
+    .TimeHeader{
+        color: #454545;
+        font-size: 10px;
+        width: 100%;
+        padding: 2px;
+        text-align: center;
+    }
+    .TimeItem {
+        width: 100%;
+        text-decoration: none;
+        font-size: 11px;
+        color: #161616;
+        height: 20px;
+        padding: 2px;
+    }
+    .TimeItem:hover {
+        background: #ffe3b5;
+        outline: 1px solid #f8b555;
+    }
+    /*.TimeItemWrapper:nth-child(odd){
+        width: 100%;
+        background: #f3f3f3;
+    }*/
+    .TimeItemWrapper{
+        float: left;
+        width: calc(100%/4);
+        background: none;
+        height: 21px;
+        padding: 1px 6px;
+    }
+    /*.TimeItemWrapper:hover{
+        background: #ffe3b5;
+        outline: 1px solid #f8b555;
+    }*/
+    .selected{
+        background: -moz-linear-gradient(50% 100% 90deg,rgba(28, 131, 185, 1) 0%,rgba(32, 133, 187, 1) 13.69%,rgba(45, 141, 191, 1) 28.14%,rgba(66, 153, 198, 1) 42.94%,rgba(96, 170, 209, 1) 57.99%,rgba(134, 192, 222, 1) 73.22%,rgba(180, 219, 239, 1) 88.4%,rgba(220, 242, 253, 1) 100%) !important;
+        background: -webkit-linear-gradient(90deg, rgba(28, 131, 185, 1) 0%, rgba(32, 133, 187, 1) 13.69%, rgba(45, 141, 191, 1) 28.14%, rgba(66, 153, 198, 1) 42.94%, rgba(96, 170, 209, 1) 57.99%, rgba(134, 192, 222, 1) 73.22%, rgba(180, 219, 239, 1) 88.4%, rgba(220, 242, 253, 1) 100%)  !important;
+        background: -webkit-gradient(linear,50% 100%,50% 0%,color-stop(0,rgba(28, 131, 185, 1) ),color-stop(0.1369,rgba(32, 133, 187, 1) ),color-stop(0.2814,rgba(45, 141, 191, 1) ),color-stop(0.4294,rgba(66, 153, 198, 1) ),color-stop(0.5799,rgba(96, 170, 209, 1) ),color-stop(0.7322,rgba(134, 192, 222, 1) ),color-stop(0.884,rgba(180, 219, 239, 1) ),color-stop(1,rgba(220, 242, 253, 1) )) !important;
+        background: -o-linear-gradient(90deg, rgba(28, 131, 185, 1) 0%, rgba(32, 133, 187, 1) 13.69%, rgba(45, 141, 191, 1) 28.14%, rgba(66, 153, 198, 1) 42.94%, rgba(96, 170, 209, 1) 57.99%, rgba(134, 192, 222, 1) 73.22%, rgba(180, 219, 239, 1) 88.4%, rgba(220, 242, 253, 1) 100%) !important;
+        background: linear-gradient(0deg, rgba(28, 131, 185, 1) 0%, rgba(32, 133, 187, 1) 13.69%, rgba(45, 141, 191, 1) 28.14%, rgba(66, 153, 198, 1) 42.94%, rgba(96, 170, 209, 1) 57.99%, rgba(134, 192, 222, 1) 73.22%, rgba(180, 219, 239, 1) 88.4%, rgba(220, 242, 253, 1) 100%) !important;
+        color: white  !important;
+    }
+</style>
+
+<div class="TimeSelector">
+    <div class="DateTimePickerBox">
+        <table>
+            <tr class="DateTimePickerBoxHeader">
+                <div class="TimeHeader">Select Time</div>
+            </tr>
+            <tr>
+                <div class="TimeSelectorContainer">
+                    <div *ngFor="let time of TimeItemsSource; let timeIndex=index" class="TimeItemWrapper" 
+                         [class.selected]="isSelected(time)"
+                         >
+                        <div>
+                            <a class="TimeItem" tabindex="-1"
+                               href="#"
+                               (click)="OnTimeClick(time)">
+                                {{time}}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </tr>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,77 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Customs.Data.EntityPOCOs
+{
+   
+    public class CustomsVendor
+    {
+	 string dbms;
+
+        [Key]
+        [Column("Id")]
+	    public string Id { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+        [Column("SearchFields")]
+	    public string SearchFields { get; set; }
+        [Column("VendorNumber")]
+	    public string VendorNumber { get; set; }
+        [ForeignKey("VendorType")]
+        [Column("VendorTypeCode")]
+	    public string VendorTypeCode { get; set; }
+	      
+        public virtual VendorType VendorType { get; set; }
+        [Column("VendorName")]
+	    public string VendorName { get; set; }
+        [ForeignKey("Country")]
+        [Column("CountryCode")]
+	    public string CountryCode { get; set; }
+	      
+        public virtual CustomsCountry Country { get; set; }
+        [ForeignKey("SubCountry")]
+        [Column("SubCountryCode")]
+	    public string SubCountryCode { get; set; }
+	      
+        public virtual SubCountry SubCountry { get; set; }
+        [Column("CityName")]
+	    public string CityName { get; set; }
+        [Column("MainAddressLine")]
+	    public string MainAddressLine { get; set; }
+        [Column("PostalCode")]
+	    public string PostalCode { get; set; }
+        [Column("DunsNumber")]
+	    public string DunsNumber { get; set; }
+        [Column("VATNumber")]
+	    public string VATNumber { get; set; }
+        [ForeignKey("VendorStatus")]
+        [Column("StatusCode")]
+	    public string StatusCode { get; set; }
+	      
+        public virtual VendorStatus VendorStatus { get; set; }
+        [ForeignKey("VendorTransactionType")]
+        [Column("TransactionTypeID")]
+	    public string TransactionTypeID { get; set; }
+	      
+        public virtual VendorTransactionType VendorTransactionType { get; set; }
+        [Column("IsPalestinian")]
+	    public bool IsPalestinian { get; set; }
+        [Column("InActive")]
+	    public bool InActive { get; set; }
+        [Column("ExternalId")]
+	    public string ExternalId { get; set; }
+        [Column("ConcurrencyGUID")]
+	    public string ConcurrencyGUID { get; set; }
+    }
+}
+	 

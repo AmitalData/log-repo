@@ -1,0 +1,2 @@
+delete from ObjectFields where FieldName = 'Note' and ObjectTableId = (select Id from ObjectTables where Name = 'ShipmentReceivable')
+delete from ObjectFields where FieldName = 'Note' and ObjectTableId = (select Id from ObjectTables where Name = 'FollowUp')

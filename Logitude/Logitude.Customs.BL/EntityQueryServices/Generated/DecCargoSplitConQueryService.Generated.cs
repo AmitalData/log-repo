@@ -1,0 +1,69 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.Customs.BL.EntityDataMappings;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Data.EntityKeys;
+using Logitude.Customs.Data;
+using Simplog.Server.Infrastructure;
+namespace Logitude.Customs.BL.EntityQueryServices
+{ 
+   public partial class DecCargoSplitConQueryService: EntityQueryService<DecCargoSplitCon,DecCargoSplitConKeys,DecCargoSplitConPM,DeclarationCargoSplitPM,DeclarationCargoSplitKeys>
+   {
+   
+        DecCargoSplitConRepository repository;
+		ICustomContext  context;
+        public DecCargoSplitConQueryService(int tenant)
+        {
+		    context = CustomContext.GetContext(tenant);
+            MainContext = context;
+            repository = new DecCargoSplitConRepository(context);
+            Repository = repository;
+            mapping = new DecCargoSplitConDataMapping();
+        }
+
+        public DecCargoSplitConQueryService(DecCargoSplitConRepository repository)
+        {
+            this.repository = repository;
+            Repository = repository;
+            mapping = new DecCargoSplitConDataMapping();
+        }
+
+        public DecCargoSplitConQueryService(ICustomContext context)
+        {
+            this.repository = new DecCargoSplitConRepository(context);
+            this.context = context;
+
+            MainContext = context;
+            Repository = repository;
+            mapping = new DecCargoSplitConDataMapping();
+        }
+		 
+		public  DecCargoSplitConPM GetSingle(string declarationcargosplitid, int linenumber,bool getComposition, bool getFromCache)
+        {
+             EntityKeys = new DecCargoSplitConKeys(){ DeclarationCargoSplitId = declarationcargosplitid, LineNumber = linenumber };
+
+			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
+        }
+
+       
+	    protected override EntityKeyFields GetKeys(DecCargoSplitCon entityPOCO)
+        {
+            DecCargoSplitConKeys entityKeys = new DecCargoSplitConKeys() { DeclarationCargoSplitId = entityPOCO.DeclarationCargoSplitId, LineNumber = entityPOCO.LineNumber,  };
+            return entityKeys;
+        }
+     
+	 
+   }
+   
+}
+	 

@@ -1,0 +1,489 @@
+ ,WCO  CRI ,,,,,לטובת הסבות מסר קיים למסר חדש,,,v,,,,WCO  CRI ,לטובת הסבות מסר קיים למסר חדש,,כללי,,, 
+סודר,חטיבה,רמה,WCOID,מופעים,הערות יעקב,הערות,שדה במסר קיים ימי/יבשתי,חובה/אופציונלי,הנחיות המרה,שדה במסר קיים ימי/יבשתי,WCO DD Name,WCO XML Name,WCO-XML-NAME,כינון,שם שדה בעברית,הסבר כללי,הערות,המלצה,צריך
+,,,,,,,,,,,,,,,,,,,
+2,  declaration,1,42A,1,,,,,H,,,Declaration,Declaration,declaration,כותרת הצהרה,,,,צריך
+5,  declaration,2,017 ,0..1,,,,M,קבוע = 2 (קוד עדכון),קוד עדכון,"Message function, coded",FunctionCode,   FunctionCode,Declaration.FunctionCode,קוד פעולה,"הוספה(חדש) , עדכון",,קוד פעולה - למה נדרש ברמת קובץ. אין לו משמעות ברמת קובץ ולכן הוחלט שאין בו צורך,לא צריך
+6,  declaration,2,D014 ,0..1,,,מספר מצהר-רשומה 1-פוז' 018-023,M,העתקה מלאה,מספר מצהר,Declaration reference number,ID,   ID,Declaration.ID,מזהה מצהר,,מספר מצהר,,צריך
+10,  declaration,2,D013 ,0..1,,,,M,ערך קבוע 785,,"Declaration name, coded",TypeCode,   TypeCode,Declaration.TypeCode,סוג מסר,כיוון שהמבנה משמש להרבה מסרים נדרש לציין את סוג המסר שמדובר במסר מצהר,"
+Cargo manifest = 785
+",,צריך
+,  declaration,2,17B,0..1,,,,,לא צריך,,,Submitter,   Submitter,,פרטי משדר,,,,לא צריך
+37,  declaration,3,R059 ,0..1,,,,O,לא צריך,גורם מדווח,"Submitter, coded",ID,      ID,Declaration.Submitter.ID,מזהה גורם משדר,הגורם הטכני ששידר את המסר ,"מספר מזהה של הגורם  המשדר את הנתונים
+
+",הגורם הטכני ששידר את המסר . ,לא צריך
+54,  declaration,2,03A,0..*,,,,,H,,,AdditionalInformation,   AdditionalInformation,Declaration.AdditionalInformation,כותרת פרטי מידע נוסף,,,,צריך
+57,  declaration,3,226 ,0..1,,,,M,קבוע 1= מצהר ימי,,"Additional statement, coded",StatementCode,      StatementCode,Declaration.AdditionalInformation.StatementCode,קוד ערך נתון,"נתונים נוספים ברמת מצהר:
+1 = סוג מצהר",,,צריך
+59,  declaration,3,369,0..1,,,,M,תאור קוד 1 = מצהר ימי,,Additional statement type,StatementTypeCode,      StatementTypeCode,Declaration.AdditionalInformation.StatementTypeCode,קוד סוג נתון,,,,צריך
+2001,  declaration,3,226,0..1,,,,M,,,"Additional statement, coded",StatementCode,      StatementCode,Declaration.AdditionalInformation.StatementCode,ערך סוג מצהר,"ערכים לסוג מצהר
+1 -  ימי
+3-  אווירי
+2- יבשתי",שכפול של סודר 57,,צריך
+2002,  declaration,3,369,0..1,,,,M,,,Additional statement type,StatementTypeCode,      StatementTypeCode,Declaration.AdditionalInformation.StatementTypeCode,קוד סוג מצהר,"1= קוד סוג מצהר
+ManifestType",שכפול של סודר 59,,צריך
+79,  declaration,2,06A,0..*,,,,O,לא צריך,,,Amendment,   Amendment,,פרטי דיווח תיקונים,חטיבת תיקונים,"מיועד עבור תיקונים ושינויים/ביטול בהצהרה
+נשתמש רק בהצבעה על עיסקאות שהשתנו , נוספו (לא חובה), בוטלו . יש להגדיר את השדות שיצביעו על העסקה המתוקנת. למצוא פתרון לפיצול עסקאות.",לא להשתמש,לא צריך
+80,  declaration,3,099 ,0..1,,,,O,לא צריך,,Amendment code, ChangeReasonCode,       ChangeReasonCode,,קוד סיבת תיקון,,,,לא צריך
+81,  declaration,3,97A,0..*,,,,,לא צריך,,, Pointer,       Pointer,Declaration.Amendment.Pointer,מצביע על מיקום התיקון,,מצביע על השינוי,,לא צריך
+82,  declaration,4,375 ,0..1,,לא צריך,,,לא צריך,,"Document/message section, coded",DocumentSectionCode,         DocumentSectionCode,Declaration.Amendment.DocumentSectionCode,חטיבת נתונים,,מטען,,לא צריך
+83,  declaration,4,006 ,0..1,,לא צריך,,,לא צריך,,Sequence number,SequenceNumeric,         SequenceNumeric,Declaration.Amendment.SequenceNumeric,סידורי במצהר,,הצבעה לסידורי במצהר,,לא צריך
+84,  declaration,4,381 ,0..1,,לא צריך,,,לא צריך,,Tag identifier,TagID,         TagID,Declaration.Amendment.TagID,מספר מזהה שדה במסר,,,,לא צריך
+60,  declaration,2,05A,0..*,,,,C,H,,,Agent,   Agent,Declaration.Agent,כותרת פרטי סוכנים משתתפים,משמש לצורך דיווח סוכני האוניה המשתתפים בעלויות כלי התובלה ורק הם מוסמכים לשדר עסקאות ללא עסקאות אב ולשדר פקודות מסירה לאותם עסקאות,רלוונטי רק לימי,,צריך
+61,  declaration,3,R004 ,0..1,,מספר ח.פ שאותו ימלא הסוכן המתפעל בגין סוכנים אחרים שהביאו מכולות באנייה,קוד סוכן אחר-רשומה 3-פוז' 186-188,C,תנאי-אם יש סוכנים אחרים באנייה -העתקה מלאה של מספר ה-ח.פ,,"Agent, coded",ID,      ID,Declaration.Agent.ID,מזהה סוכן ,,,,צריך
+63,  declaration,3,R005,0..1,,לא צריך,,O,לא צריך,,Role Code,RoleCode,      RoleCode,Declaration.Agent.RoleCode,קוד תפקיד סוכן,,,,לא צריך
+103,  declaration,2,15A,0..*,,,,O,לא צריך,,,BorderTransportMeans,   BorderTransportMeans,declaration.BorderTransportMeans,כותרת נתוני כלי התובלה והמסע,,,,צריך
+104,  declaration,3,172 ,0..1,,,תאריך הגעה משוער- רשומה 2-פוז' 021-028,M,העתקה מלאה,תאריך הגעה משוער,Date and time of arrival at first port of arrival in Customs territory, ArrivalDateTime,       ArrivalDateTime,Declaration.BorderTransportMeans.ArrivalDateTime,תאריך הגעה משוער,,,,צריך
+105,  declaration,3,156 ,0..1,,מועד ההפלגה מהנמלהאחרון לנמל הנוכחי,,O,לא צריך,,Departure date and time, DepartureDateTime,       DepartureDateTime,Declaration.BorderTransportMeans.DepartureDateTime,תאריך ושעת יציאה מאתר יציאה אחרון ,,,,צריך
+106,  declaration,3,085 ,0..1,,הנמל אליו שודר המצהר,קוד אתר אליו נמסר המצהר-רשומה2 -פוז' 016-020,M,העתקה מלאה,,"First port of arrival, coded", FirstArrivalLocationID,       FirstArrivalLocationID,Declaration.BorderTransportMeans.FirstArrivalLocationID,אתר פקידה ראשון,,,,צריך
+107,  declaration,3,T006 ,0..1,,,מספר לויד'ס של האנייה-רשומה 2-פוז' 071-078,M,העתקה מלאה,קוד אוניה,"Identification of means of transport crossing the border, coded", ID,       ID,Declaration.BorderTransportMeans.ID,מספר מזהה כלי תובלה,,"
+בימי -מספר לוידס , באווירי -מספר זנב במטוס , ביבשתי מספר רישוי של המשאית",,צריך
+108,  declaration,3,149 ,0..1,,,"מספר הפלגה-רשומה 2- פוז' 037-042
+
+",M,העתקה מלאה,"מספר הפלגה
+
+",Conveyance reference number, JourneyID,       JourneyID,Declaration.BorderTransportMeans.JourneyID,מספר מסע,,"מספר הפלגה - בימי
+מספר טיסה - באווירי",,צריך
+109,  declaration,3,T005 ,0..1,,,שם אוניה-רשומה 2 -פוז' 051-070,M,העתקה מלאה,שם אוניה,Identification of means of transport crossing the border, Name,       Name,Declaration.BorderTransportMeans.Name,שם כלי תובלה,,רלוונטי רק למצהר ימי,,צריך
+110,  declaration,3,T014 ,0..1,,,קוד דגל-רשומה 2- פוז' 083-084,M,המרה לפי טבלת דגלים קהילתית V01- כניסה לפי ערך בעמודה: V01_DEGEL והכנסת ערך מעמודה: ISO3166 התואמת,קוד דגל,"Nationality of means of transport crossing the border, coded", RegistrationNationalityID,       RegistrationNationalityID,Declaration.BorderTransportMeans.RegistrationNationalityID,מדינת רישום,מספר מזהה מדינת רישום כלי תובלה,,"ייתכן שיש טבלת קשר בין קודי מדינות לקודי זנב.
+אם כן לא נדרש באווירי",צריך
+113,  declaration,3,T010 ,0..1,,סוג אנייה,,M,רק ביצירת כותרת דרך צפי -המרה לפי טבלה TBLOAD_V03_SUG_ONIYA- יש לקחת את הערך משדה: WCO_SHIP_TYPE,,"Mode/type of means of transport crossing the border, coded", TypeCode,       TypeCode,Declaration.BorderTransportMeans.TypeCode,קוד סוג כלי תובלה,,"לבדוק טבלת סוגים של אניות, מטוסים, יבשתי",,צריך
+135,  declaration,3,81A,0..*,,,,,H,,, Itinerary,       Itinerary,Declaration.BorderTransportMeans.Itinerary,כותרת מסלול כלי תובלה,,,,צריך
+136,  declaration,4,064 ,0..*,,משמש לציון מדינות שבהן עבר כלי השייט במסע SERVICE LANE,,M,רק ביצירת כותרת דרך צפי -מדיווח הצפי ילקחו רשימות הנמלים המדווחים לקו הפלגה. יש לקחת את 2 הפוז' הראשונות מקוד הנמל,,"Country(ies) of routing, coded",RoutingCountryCode,         RoutingCountryCode,Declaration.BorderTransportMeans.Itinerary.RoutingCountryCode,קוד מדינה במסלול,,,,צריך
+162,  declaration,3,32B,0..*,,,,,H,,, TransportMeansOperator,       TransportMeansOperator,Declaration.BorderTransportMeans.TransportMeansOperator,כותרת חברה מתפעלת כלי תובלה,,,,צריך
+163,  declaration,4,R056 ,0..1,,,מוביל - בימי,M,ח.פ סוכן אנייה מתפעל יתקבל רק בשלב יצירת כותרת ממסר צפי אנייה. לא ימולא בשלב ההמרות,מוביל - בימי,"Operator of means of transport, coded",ID,         ID,Declaration.BorderTransportMeans.TransportMeansOperator.ID,מזהה חברה מתפעלת,,,,צריך
+181,  declaration,2,18A,0..*,,,,,H,,,Carrier,   Carrier,Declaration.Carrier,כותרת חברת תובלה,,,,צריך
+182,  declaration,3,R012 ,0..1,,,קוד חברת ספנות- רשומה 3-פוז' 189-191,M,העתקה מלאה- קוד חברת ספנות,,Carrier identification,ID,      ID,Declaration.Carrier.ID, מזהה חברת תובלה,,,,צריך
+895,  declaration,2,17B,0..1,,,,,H,,,Submitter,   Submitter,Declaration.Submitter,כותרת פרטי גורם מדווח,,משמש לדיווח של גורם מדווח,,צריך
+896,  declaration,3,R059 ,0..1,,,,M,"בשידור כותרת ע""פ הצפי יאוכלס ב- ח.פ של חנ""י. במקרה של המרות למצהר יאוכלס בח.פ של הגורם המשדר(ס.אנייה/משלח)- ניתן לעבור בטבלת ס.אנייה ולשלוף ערך בשדה: S03_MISPAR_OSEK",,"Submitter, coded",ID,      ID,Declaration.Submitter.ID,מזהה גורם מדווח,,"מספר מזהה של גורם מדווח 
+הגורם המדווח הוא בעל הנתונים. הוא זה שמצהיר על הנתונים",,צריך
+199,Consignment,2,28A,0..*,,,,,H,,,Consignment,   Consignment,Declaration.Consignment,כותרת פרטי מטען,,כותרת פרטי מטען,,צריך
+201,Consignment,3,314 ,0..1,,לא רלוונטי למצהר ימי,,,לא צריך,,Boarded quantity,BoardedQuantity,      BoardedQuantity,Declaration.Consignment.BoardedQuantity,כמות אריזות שהוטענה,כמות אריזות מוצהרת שעלתה לכלי תובלה,רלוונטי רק למצהר אווירי,,צריך
+203,Consignment,3,134 ,0..1,,"נפח במ""ק. חובה למטענים שנפרקו בצינור.-מוצע להפוך לחובה לכלל המטענים","נפח במ""ק- רשומה 3-פוז' 109-116",O,העתקה מלאה,,Cube,GrossVolumeMeasure,      GrossVolumeMeasure,Declaration.Consignment.GrossVolumeMeasure,נפח,"נפח ביחידות של מ""ק","כאשר המטען נפרק לא בציוד אריזה אלא ע""י צינור או אמצעי אחר מהאוניה והמדדידה שלו היא ע""י מדדית הנפח , כגון נוזלים למינהם שנפרקים באמצעות צינור. ",,צריך
+204,Consignment,3,006 ,0..1,מספר סידורי של העסקה בשידור הנוכחי. שדה חדש,,רשומה B מספר סידוריים בעסקה- פוז' 032-035,M,העתקה מלאה,סידורי במצהר,Sequence number,SequenceNumeric,      SequenceNumeric,Declaration.Consignment.SequenceNumeric,סידורי במצהר,,מספר סידורי במצהר. ,,צריך
+205,Consignment,3,146 ,0..1,,"{כמות אריזות
+(ביחידות של ציוד אריזה)",כמות אריזות כוללת- רשומה B -פוז' 044-048,M,העתקה מלאה,"כמות אריזות
+(ביחידות של ציוד אריזה)",Total number of packages,TotalPackageQuantity,      TotalPackageQuantity,Declaration.Consignment.TotalPackageQuantity,כמות אריזות (ציוד אריזה) במטען,,"כמות אריזות  (ציוד אריזה) בשט""מ (ימי ואווירי)/בחשבון ספק(יבשתי)",,צריך
+206,Consignment,3,011 ,0..1,,לא רלוונטי לים,,,לא צריך,,Carrier split consignment indicator,TransportSplitIndicator,      TransportSplitIndicator,Declaration.Consignment.TransportSplitIndicator,אינדקציה למטען מפוצל,,"באווירי - כאשר מטען מגיע בטיסות שונות.
+",,צריך
+207,Consignment,3,110 ,0..1,,ערך מטען + קוד מטבע. ,לא קיים מקור,O,לא להסבה,,Consignment value,ValueAmount,      ValueAmount,Declaration.Consignment.ValueAmount,ערך המטען,,שווי ערך המטען + מטבע,,צריך
+208,Consignment,3,01A,0..*,"שדה חדש. מקום קבלת המטען ע""י סוכן אניה / משלח",,,,H,,,AcceptancePlace,      AcceptancePlace,Declaration.Consignment.AcceptancePlace,כותרת פרטי מקום קבלת המטען,,"בימי- 
+אתר קבלת המטען ע""י סוכן אוניה או משלח בחו""ל
+נקרא אצל סוכני האוניה Place of receive
+באווירי - 
+גם נקרא Place of receive","שדה חובה, השדה אתר מקור יהיה אופציונלי",צריך
+209,Consignment,4,L011 ,0..1,,קוד מדינת מקור (רשומה 8 ),קוד מדינת מקור -רשומה 8-פוז' 174-175,M,העתקה מלאה,שם אתר בו קיבל הגורם את המטען לאחריותו,Place of acceptance,Name,         Name,Declaration.Consignment.AcceptancePlace.Name,שם מקום קבלת המטען ,,"בימי- 
+אתר קבלת המטען ע""י סוכן אוניה או משלח בחו""ל
+נקרא אצל סוכני האוניה Place of receive
+באווירי - 
+נקרא Place of receive",,צריך
+210,Consignment,3,02A,0..*,,נועד למצבים בהם יש לצרף מסמכים נוספים. כרגע לא רלוונטי למצהר ימי,,O,לא להסבה,,,AdditionalDocument,      AdditionalDocument,Declaration.Consignment.AdditionalDocument,כותרת מסמכים מצורפים,,"משמש לצורך מסמכים נוספים שהם מצורפים פיזית למסר ,כגון: אסמכתאות לתיקונים- מסמך שקילה, חשבון הובלה , וגם מסמכים נלווים של חומרים מסוכנים",,צריך
+213,Consignment,4,D005 ,0..1,,לא רלוונטי למצהר ימי נועד למצבים בהם יש לצרף מסמכים נוספים. ,,M,לא להסבה,,Additional document reference number,ID,         ID,Declaration.Consignment.AdditionalDocument.ID,מזהה מסמך,,,להעביר ל- Additonal Information,צריך
+215,Consignment,4,D001 ,0..1,,לא רלוונטי למצהר ימי נועד למצבים בהם יש לצרף מסמכים נוספים. ,,O,לא להסבה,,"Additional document issuer, coded",IssuingPartyID,         IssuingPartyID,Declaration.Consignment.AdditionalDocument.IssuingPartyID,מזהה מפיק מסמך,,מזהה הגורם המפיק שהוציא את המסמך,,צריך 
+216,Consignment,4,D006 ,0..1,,לא רלוונטי למצהר ימי נועד למצבים בהם יש לצרף מסמכים נוספים. ,,M,לא להסבה,,"Additional document type, coded",TypeCode,         TypeCode,Declaration.Consignment.AdditionalDocument.TypeCode,קוד סוג מסמך,,,להעביר ל- Additonal Information,צריך
+253,Consignment,3,11A,0..*,לסנן את אלו שלא צריך. כל החטיבה לא רלוונטית,צרופות לא קיימות במסר הקיים,,,H,,,AssociatedTransportDocumet,      AssociatedTransportDocumet,Declaration.Consignment.AssociatedTransportDocumet,מסמכים מצורפים,,מסמכים מצורפים למטען הקשורים להובלה,,לא צריך
+254,Consignment,4,D008 ,0..1,,לפי תשובת מלמ מ-7/8/11 חובה רק למשלח אך חטיבה זו לא בשימוש????,,C,לא צריך,,Associated transport document number,ID,         ID,Declaration.Consignment.AssociatedTransportDocumet.ID,מזהה מסמך,,,,לא צריך
+255,Consignment,4,D009 ,0..1,,לפי תשובת מלמ מ-7/8/11 חובה רק למשלח אך חטיבה זו לא בשימוש????,,C,לא צריך,,"Associated transport document type, coded",TypeCode,         TypeCode,Declaration.Consignment.AssociatedTransportDocumet.TypeCode,סוג מסמך,,,,לא צריך
+274,Consignment,4,17B,0..1,,,,,H,,,Submitter,         Submitter,Declaration.Consignment.Submitter,פרטי גורם מדווח ,,,,לא צריך
+275,Consignment,5,R059 ,0..1,,"בים - מדובר בסוכן אוניה או משלח בינלאומי שמשדרים עיסקאות בנפרד
+כאשר המשדר הוא סוכן מתפעל אזי ה- submitter=carrier","ח.פ. המשדר ע""פ מבנה שם המסר בכספת",O,לא צריך,"
+סוכן אוניה/משלח בינלאומי","Submitter, coded",ID,            ID,Declaration.Consignment.Submitter.ID,"מזהה גורם מדווח
+מדובר במשלח שמשדר שטרי מטען HOUSE הקשורים לשטר מטען אב Master של חברת התעופה",,,,לא צריך
+292,Consignment,3,18A,0..*,,,,,H,,,Carrier,      Carrier,Declaration.Consignment.Carrier,פרטי חברת תובלה,,,,לא צריך
+293,Consignment,4,R012 ,0..1,,"חופף לשדה 30 , להשאיר אופציונלי או שלא צריך בכלל ברמת מטען.קוד חברת ספנות- לפי טבלת תס""ק ים",חברת ספנות-רשומה 3 -פוז' 189-191,O,העתקה מלאה,חברת ספנות,Carrier identification,ID,         ID,Declaration.Consignment.Carrier.ID,מזהה חברת תובלה,,"הועבר מרמת שורה לרמת מטען
+בימי - מספר חברת הספנות שמטפלת במכולה .
+באווירי - מספר חברת התעופה  שמטפלת במטען.
+ביבשתי- מספר חברת הובלה שמטפלת במטען.","חופף לשדה 30 , להשאיר אופציונלי או שלא צריך בכלל ברמת מטען",לא צריך
+310,Consignment,3,27A,0..*,,,,,H,נשגר,,Consignee,      Consignee,Declaration.Consignment.Consignee,כותרת פרטי נשגר,,,,צריך
+311,Consignment,4,R015 ,0..1,,"ערך תקף לפי טבלת יצואנים/יבואנים ממל""ם",קוד יבואן-רשומה 6-פוז' 144-152,O,העתקה מלאה,מספר מזהה נשגר ,"Consignee, coded",ID,         ID,Declaration.Consignment.Consignee.ID,מספר מזהה נשגר ,,"במצהר אווירי:
+ב- master לא חובה
+ב- direct חובה
+במצהר מלא - לא חובה
+
+במצהר יבשתי : 
+הנשגר תמיד היבואן ולכן מספר היבואן יוזן בשדה זה. 
+
+מספר מזהה נשגר  חובה ביבוא, אופציונלי בשיטעון",,צריך
+312,Consignment,4,R014 ,0..1,,,שם הנשגר-רשומה 6-פוז' 016-050,M,העתקה מלאה ,שם הנשגר ,Consignee name,Name,         Name,Declaration.Consignment.Consignee.Name,שם הנשגר ,,,,צריך
+313,Consignment,4,04A,0..*,,,,M,H,כתובת הנשגר,,Address,         Address,Declaration.Consignment.Consignee.Address,כותרת פרטי כתובת הנשגר,,,יש לקלוט,צריך
+314,Consignment,5,241 ,0..1,,,עיר הנשגר-רשומה 6-פוז' 081-100,M,העתקה מלאה,כתובת הנשגר,City name,CityName,            CityName,Declaration.Consignment.Consignee.Address.CityName,שם עיר,,,יש לקלוט,צריך
+315,Consignment,5,242 ,0..1,,,מדינת הנשגר-רשומה 6-פוז' 107-108,M,העתקה מלאה,כתובת הנשגר,"Country, coded",CountryCode,            CountryCode,Declaration.Consignment.Consignee.Address.CountryCode,קוד מדינה,,,יש לקלוט,צריך
+316,Consignment,5,244 ,0..1,,,,O,לא להסבה,כתובת הנשגר,Country sub-entity identification,CountrySubDivisionID,            CountrySubDivisionID,Declaration.Consignment.Consignee.Address.CountrySubDivisionID,קוד תת מדינה,,"ביבוא לארץ לא צריך , במצהר מלא כאשר המטען מיועד למדינה עם חלוקה לאזורים ",יש לקלוט,צריך
+317,Consignment,5,243 ,0..1,,,,O,לא להסבה,כתובת הנשגר,Country sub-entity name,CountrySubDivisionName,            CountrySubDivisionName,Declaration.Consignment.Consignee.Address.CountrySubDivisionName,שם תת מדינה,,"ביבוא לארץ לא צריך , במצהר מלא כאשר המטען מיועד למדינה עם חלוקה לאזורים ",יש לקלוט,צריך
+318,Consignment,5,239 ,0..1,"בכל נושא הכתובות ( יבואן, ספק, מיודע) ההעברה צריכה להיות לשדה רחוב ומספר שהוא טקסטואלי וחובה בכולם",,רחוב ומס' בית או ת.ד דואר- רשומה 6- פוז' 051-080,M,העתקה מלאה,כתובת הנשגר,Street and number/P.O. Box,Line,            Line,Declaration.Consignment.Consignee.Address.Line,כתובת הנשגר,במקרה שהכתובת לא מפורמטת יש לשדר בשדה זה את כל הכתובת כפי שרשומה בשטור מטען,"רחוב ומספר בית או תיבת דואר.
+במקרה שהכתובת לא מפורמטת יש לשדר בשדה זה את כל הכתובת כפי שרשומה בשטר מטען",יש לקלוט,צריך
+319,Consignment,5,245 ,0..1,,,מיקוד- רשומה 6- פוז' 091-096,O,העתקה מלאה,כתובת הנשגר,Postcode identification,PostcodeID,            PostcodeID,Declaration.Consignment.Consignee.Address.PostcodeID,מיקוד,,מיקוד,יש לקלוט,צריך
+320,Consignment,4,25A,0..*,,,,,H,,,Communication,         Communication,Declaration.Consignment.Consignee.Address.Communication,כותרת אמצעי קשר,,,יש לקלוט,צריך
+321,Consignment,5,240 ,0..1,,,טלפון הנשגר-רשומה 6- פוז' 109-120,O,העתקה מלאה,,Communication number,ID,            ID,Declaration.Consignment.Consignee.Address.Communication.ID,זיהוי אמצעי קשר,,"מספר פקס, טלפון, דוא""ל וכו'",יש לקלוט,צריך
+322,Consignment,5,253 ,0..1,,לא רלוונטי למצהר ימי,,O,לא להסבה,,Agent quality assurance indicator,TypeID,            TypeID,Declaration.Consignment.Consignee.Address.Communication.TypeID,סוג אמצעי קשר,"קוד אמצעי קשר: TE נייח, AL נייד, FX פקס, EM דוא""ל, AH אתר אינטרנט","פקס, טלפון, דוא""ל וכו'",יש לקלוט,צריך
+498,Consignment,3,30A,0..*,,,,,H,ספק,,Consignor,      Consignor,Declaration.Consignment.Consignor,כותרת פרטי שוגר,,"בימי ובאוורי- shipper
+",,צריך
+499,Consignment,4,R021 ,0..1,,הצעה-תו ראשון=סוג זיהוי (ערכים 1-3). ובהמשך זיהוי לפי אחד מהאפשרויות שהוגדרו בתו הראשון (מכס ישראל/זיהוי מקומי/DUNS NO ),זיהוי ספק -רשומה 8-סוג זיהוי ספק-פוז' 145-145 + זיהוי ספק פוז' 146+165,O,העתקה מלאה של השדות: רשומה 8-סוג זיהוי ספק-פוז' 145-145 + זיהוי ספק פוז' 146+165,זיהוי ספק,"Consignor, coded ",ID,         ID,Declaration.Consignment.Consignor.ID,זיהוי שוגר,זיהוי השוגר/ספק,"זיהוי הספק/שוגר לפי אחת מהאפשרויות הנ""ל:
+ספק במכס בישראל (9 ספרות), או 
+קוד זיהוי מקומי, או
+D-U-N-S- NUMBER
+לפי מה שנרשם בסודר  2009
+",,צריך
+500,Consignment,4,R020 ,0..1,,,שם שוגר-רשומה 8- פוז' 016-050,M,העתקה מלאה,שם שוגר,Consignor - name,Name,         Name,Declaration.Consignment.Consignor.Name,שם שוגר,,,,צריך
+501,Consignment,4,04A,0..*,,,,M,H,כתובת שוגר,,Address,         Address,Declaration.Consignment.Consignor.Address,כותרת פרטי כתובת שוגר,,,יש לקלוט,צריך
+502,Consignment,5,241 ,0..1,,,עיר השוגר-רשומה 8 -פוז' 081-100,C,העתקה מלאה-חובה במצהר מלא ,כתובת שוגר,City name,CityName,            CityName,Declaration.Consignment.Consignor.Address.CityName,שם עיר,,,יש לקלוט,צריך
+503,Consignment,5,242 ,0..1,,,מדינת השוגר-רשומה 8 -פוז' 107-108,C,העתקה מלאה-חובה במצהר מלא ,כתובת שוגר,"Country, coded",CountryCode,            CountryCode,Declaration.Consignment.Consignor.Address.CountryCode,קוד מדינה,,,יש לקלוט,צריך
+504,Consignment,5,244 ,0..1,,,,O,לא להסבה,כתובת שוגר,Country sub-entity identification,CountrySubDivisionID,            CountrySubDivisionID,Declaration.Consignment.Consignor.Address.CountrySubDivisionID,קוד תת מדינה,,,יש לקלוט,צריך
+506,Consignment,5,239 ,0..1,"בכל נושא הכתובות ( יבואן, ספק, מיודע) ההעברה צריכה להיות לשדה רחוב ומספר שהוא טקסטואלי וחובה בכולם",חובה במצהר מלא,רחוב ומס' בית של השוגר-רשומה 8- פוז' 051-080,C,העתקה מלאה,כתובת שוגר,Street and number/P.O. Box,Line,            Line,Declaration.Consignment.Consignor.Address.Line,"רחוב ומספר בית או תיבת דואר.
+במקרה שהכתובת לא מפורמטת יש לשדר בשדה זה את כל הכתובת כפי שרשומה בשטר מטען",,רחוב ומספר בית או תיבת דואר ,יש לקלוט,צריך
+507,Consignment,5,245 ,0..1,,,מיקוד השוגר-רשומה 8 - פוז' 101-106,O,העתקה מלאה של מיקוד שוגר,כתובת שוגר,Postcode identification,PostcodeID,            PostcodeID,Declaration.Consignment.Consignor.Address.PostcodeID,מיקוד,,מיקוד,יש לקלוט,צריך
+508,Consignment,4,25A,0..*,,,,O,H,אמצעי קשר,,Communication,         Communication,Declaration.Consignment.Consignor.Address.Communication,כותרת אמצעי קשר,,,יש לקלוט,צריך
+509,Consignment,5,240 ,0..1,,,טלפון השוגר-רשומה 8- פוז' 109-120,O,העתקה מלאה,מספר אמצעי קשר,Communication number,ID,            ID,Declaration.Consignment.Consignor.Address.Communication.ID,מספר אמצעי קשר,,"מספר פקס, טלפון, דוא""ל וכו'",יש לקלוט,צריך
+510,Consignment,5,253 ,0..1,,לא רלוונטי למצהר ימי,,O,לא להסבה,סוג אמצעי קשר,Agent quality assurance indicator,TypeID,            TypeID,Declaration.Consignment.Consignor.Address.Communication.TypeID,סוג אמצעי קשר,"קוד אמצעי קשר: TE נייח, AL נייד, FX פקס, EM דוא""ל, AH אתר אינטרנט", ,יש לקלוט,צריך
+559,Consignment,3,62A,0..*,,,,,H,,,Freight,      Freight,Declaration.Consignment.Freight,כותרת פרטי חשבון עלות הובלה,חשבון לכל סוג הובלה,"סה""כ העלות של ההובלה (מטבע) = ",,צריך
+560,Consignment,4,098 ,0..1,,לפי טבלה EDIFACT4215,תנאי תשלום -רשומה 6-פוז' 154-155,M,"יש לקחת את הערך מרשומה 6 ולהמיר אות כדלקמן:CO =CC(חדש)   ,CA=CA(חדש),  FR=NC (חדש),       PR = PO(חדש)     ,PA=PP (חדש)",תנאי תשלום ,"Transport charges method of payment, coded",PaymentMethodCode,         PaymentMethodCode,Declaration.Consignment.Freight.PaymentMethodCode,תנאי תשלום חשבון הובלה,"טבלת ערכים. לפי החלטת המכס, המערכת תאפשר שימוש ב 5 קודים בלבד מתוך הטבלה edifact4215 . הקודים שיורשו לשימוש:   CC - collect,                            CA - collect abroad,             NC - free,           PO - prepaid,              PP - prepaid abroad             ","לדוגמא:  PREPAID  , טבלת ערכים. לפי החלטת המכס, המערכת תאפשר שימוש ב 5 קודים בלבד מתוך הטבלה edifact4215 . הקודים שיורשו לשימוש:   CC - collect,        CA - collect abroad,             NC - free,   PO - prepaid,   PP - prepaid abroad            ",,צריך
+561,Consignment,4,310 ,0..1,שדה חדש. ערכי ההובלה,לא חובה במצהר מכולות ריקות,,C,לא ניתן,,Freight rate amount,RateAmount,         RateAmount,Declaration.Consignment.Freight.RateAmount,תעריף עלות ההובלה,,,,צריך
+562,Consignment,4,308 ,0..1,שדה חדש. ערכי ההובלה,יחידת מידה אליה מתייחס התעריף.חובה בדיווח משלח ימי,,C,לא ניתן,,Freight rate quantity,RateQuantity,         RateQuantity,Declaration.Consignment.Freight.RateQuantity,תעריף יחידת כמות,,נתון זה מאפשר לדעת כיצד חושבה עלות ההובלה - תעריף הובלה ליחידת כמות,,צריך
+563,Consignment,4,309 ,0..1,שדה חדש. ערכי ההובלה,קוד שיטת חישוב הובלה. חובה בדיווח של משלח ימי,,C,לא ניתן,,Freight rate type code,RateTypeCode,         RateTypeCode,Declaration.Consignment.Freight.RateTypeCode,קוד סוג שיטת חישוב עלות הובלה,,נתון זה מאפשר לדעת כיצד חושבה עלות ההובלה  - קוד סוג תעריף חישוב עלות הובלה.,,צריך
+564,Consignment,3,63A,1,,,,,H,,,GoodsConsignedPlace,      GoodsConsignedPlace,Declaration.Consignment.GoodsConsignedPlace,כותרת פרטי אתר מקור,,,,צריך
+565,Consignment,4,L024 ,0..1,לדעתי לא נמל טעינה. אם כבר נמל מקור. נמל טעינה הוא רשומה 134,"קוד נמל מחו""ל בו הוטען המטען על האנייה",נמל טעינה ימי-רשומה 3 - פוז' 048-052,M,העתקה מלאה,נמל מקור,"Place or country whence consigned, coded",ID,         ID,Declaration.Consignment.GoodsConsignedPlace.ID,קוד אתר מקור,,,,צריך
+569,Consignment,3,66A,0..*,,0,,,H,,,GoodsReceiptPlace,      GoodsReceiptPlace,Declaration.Consignment.GoodsReceiptPlace,כותרת פרטי אתר מסירה,,,,צריך
+570,Consignment,4,L004 ,0..1,,,נמל /אתר מסירה-רשומה 3- פוז' 117-121,M,העתקה מלאה,נמל /אתר מסירה,"Goods receipt place, coded",ID,         ID,Declaration.Consignment.GoodsReceiptPlace.ID,קוד אתר מסירה,,"אתר מסירה
+
+חובה כאשר התהליך הוא יבוא
+(בשטעון לא רלוונטי)
+",,צריך
+572,Consignment,3,68A,0..*,,,,M,H,,,GovernmentAgencyGoodsItem,      GovernmentAgencyGoodsItem,Declaration.Consignment.GovernmentAgencyGoodsItem,כותרת פרטי סחורות לרשות ממשלתית,,,,צריך
+618,Consignment,4,03A,0..*,,,,,H,,,AdditionalInformation,         AdditionalInformation,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.,כותרת מידע נוסף,,,,צריך
+619,Consignment,5,105,0..1,,,,O,לא צריך,,Free text,Content,            Content,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.Content,ערך נתון,,,,צריך
+621,Consignment,5,226 ,0..1,"יש בעיה להציג באקסל את השימושים השונים של החטיבה הזו שמשמשת להזנת שדות חובה כגון זיהוי ספק, זיהוי יבואן וכו' וגם לקודי פעולה כגון ביטול ופיצול / איחוד. מציע לרשום את ההתייחסות להמרה מול הטבלה המפרטת את הקודים השונים של AdditionalInformation",,רשומה B - פוז' 200-200= D,O,"תנאי - יהיה קבוע=1 כאשר ברשומה B פוז' 200 יש ערך = D, אחרת נשאר ריק",,"Additional statement, coded",StatementCode,            StatementCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementCode,קוד ערך נתון,קוד פעולה,"משמש לדיווח שדות נדרשים שאין להם שדה מוגדר . מורכב מסוג נתון והערך. (ראה שורות כחולות בהמשך)
+",,צריך
+623,Consignment,5,369 ,0..1,,,רשומה B - פוז' 200-200= D,C,"תנאי - יהיה קבוע=12 כאשר ברשומה B פוז' 200 יש ערך = D, אחרת נשאר ריק",,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementTypeCode,קוד סוג נתון,,"משמש לביטול מטען (קוד 12 )
+או לדיווח קוד יבואן (2)
+או לדיווח קוד אתר יעד סופי בחו""ל (3)
+או לדיווח אינדקציה לאגד עסקאות (15)
+או לדיווח קוד סוג זיהוי שוגר (5)
+או לדיווח קוד סוג מטען (16)",,צריך
+2045,Consignment,5,105,0..1,,,, ,,,Free text,Content,            Content,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.Content,"תאריך הקמה של שט""מ בלדר","תאריך הקמה של שט""מ בלדר","רלבנטי לשט""מ בלדר בלבד.",,צריך
+2046,Consignment,5,369,0..1,,,, ,,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementTypeCode,"סוג נתון תאריך הקמה של שט""מ בלדר","קוד פעולה = 20
+תאריך הקמה של שט""מ בלדר","תאריך הקמה של שט""מ בלדר",,צריך
+2023,Consignment,5,226 ,0..1,,,, ,,,"Additional statement, coded",StatementCode,            StatementCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementCode,קוד פעולה,קבוע:   1 ,שכפול של 621,,צריך
+2024,Consignment,5,369 ,0..1,,,, ,,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementTypeCode,קוד פעולה,"קוד פעולה= 12 (ביטול עסקה / שט""מ)",שכפול של 623,,צריך
+"2003
+",Consignment,5,105,0..1,,,קוד יבואן- רשומה 6-פוז' 144-152,M,העתקה מלאה,,Free text,Content,            Content,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.Content,מספר היבואן,ImporterID,"יש לדווח מספר מזהה ישות  (ח.פ או ת.ז) 
+במקרה של דרכון 
+יש לדווח סוג תעודה(תו אחד)+קוד מדינה(2 תוים)+מספר דרכון  כשדה אחד בצורה משורשרת
+לדוגמא: 2IL123456789
+שכפול של 619",,צריך
+"2004
+",Consignment,5,369 ,0..1,,תמיד למלא 2 = קוד המייצג מספר ח.פ,סוג מספר יבואן-רשומה 6 -פוז' 153-153,M,תנאי-ערך קבוע= 2 במידה ונמצא ערך ב-קוד יבואן- רשומה 6-פוז' 144-152 (אחרת ריק),,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementTypeCode,קוד מספר יבואן, קוד מספר יבואן = 2,"לכל המצהרים - מספר יבואן  חובה ביבוא, אופציונלי בשיטעון
+שכפול של 623",,צריך
+"2005
+",Consignment,5,226 ,0..1,,העתקה מלאה של קוד נמל כאשר: Consignment.AdditionalInformation.StatementTypeCode =3,נמל יעד סופי בשטעון -רשומה 8-פוז'181-185,C,העתקה מלאה של קוד נמל כאשר: Consignment.AdditionalInformation.StatementTypeCode =3,,"Additional statement, coded",StatementCode,            StatementCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementCode,"מזהה אתר יעד סופי בחו""ל",FinalDestinationLocationID,שכפול של 621,,צריך
+"2006
+",Consignment,5,369 ,0..1,,,נמל יעד סופי בשטעון -רשומה 8-פוז'181-185,C,תנאי:ערך קבוע = 3 - חובה במקרה של שטעון כאשר נמצא ערך בשדה: נמל יעד סופי בשטעון -רשומה 8-פוז'181-185,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementTypeCode,"קוד אתר יעד סופי בחו""ל","קוד אתר יעד סופי בחו""ל = 3",שכפול של 623,,צריך
+2007,Consignment,5,226 ,0..1,,קוד סוג שינוע/פריקה מהאוניה (חדש). מטבלת EDIFACT4451,,O,לא צריך,,"Additional statement, coded",StatementCode,            StatementCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementCode,קוד סוג שינוע/פריקה מהאוניה (חדש),UnloadingTypeCode,,,לא צריך
+2008,Consignment,5,226,0..1,,קוד סוג שינוע/פריקה מהאוניה (חדש). מטבלת EDIFACT4451,,O,לא צריך,,"Additional statement, coded",StatementTypeCode,            StatementTypeCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementTypeCode,קוד סוג שינוע/פריקה מהאוניה (חדש),קוד סוג שינוע/פריקה = 4,מידע זה נדרש לצרכים התפעוליים של הנמל הקשורים לתהליך הפריקה של האוניה,,לא צריך
+"2007
+",Consignment,5,105,0..1,,"חובה כאשר באותה מכולה יש הרבה עסקאות של אותו יבואן או יבואנים שונים והמכולה לא אמורה לעבור ריקון 
+(כן/לא)- יש לקשור לסוגי טיפול","קוד טיפול, רשומה 3, פוז' 091-092",C,"תנאי-אם רשומה 3, פוז' 091-092 =12 או 28 אזי ערך קבוע = 1, אחרת 2",,Free text,Content,            Content,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.Content,אינדקציה אגד עסקאות,"1= Yes
+2=No
+שכפול של 619","1= Yes
+2=No
+שכפול של 619",,צריך
+"2008
+",Consignment,5,369 ,0..1,,חובה כאשר במכולה יש מספר עסקאות קוד אינדקציה אגד עסקאות = 15- לקשר לסוגי טיפול,"קוד טיפול, רשומה 3, פוז' 091-092",C,"תנאי-אם רשומה 3, פוז' 091-092 =12 או 28,ערך קבוע=15 , אחרת להשאיר ריק",,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementTypeCode,קוד אינדקציה אגד עסקאות,קוד אינדקציה אגד עסקאות = 15,קוד אינדקציה אגד עסקאות = 15,,צריך
+"2009
+",Consignment,5,226 ,0..1,,,סוג זיהוי השוגר-רשומה 8- פוז' 145,O,1.זיהוי ספק במכס מקומי/2.קוד זיהוי מקומי/3.DUNS NO,,"Additional statement, coded",StatementCode,            StatementCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementCode,קוד סוג זיהוי שוגר,זיהוי הספק לפי : 1 = זיהוי הספק לפי טבלאות המכס - 9 ספרות.   2 = קוד זיהוי ספק מקומי (בארצו של הספק).  3.  DUNS NUMBER,"חובה אם הוזן ערך בסודר 499 (זיהוי ספק)
+זיהוי הספק לפי : 1 = זיהוי הספק לפי טבלאות המכס - 9 ספרות.   2 = קוד זיהוי ספק מקומי (בארצו של הספק).  3.  DUNS NUMBER",,צריך
+"2010
+",Consignment,5,369,0..1,,מספר המזהה ספק - העתקה מלאה,זיהוי ספק-רשומה 8- פוז' 146-165,O,העתקה מלאה,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementTypeCode,קוד סוג זיהוי שוגר,קוד סוג זיהוי שוגר = 5,שכפול של 623,מטופל במסגרת Data Type,צריך
+"2038
+",Consignment,5,226 ,0..1,,,,,,,"Additional statement, coded",StatementCode,            StatementCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementCode,סוג מטען,ערך מתוך טבלת ערכים של סוג מטען,שכפול של 621,,צריך
+"2039
+",Consignment,5,369,0..1,,,,,,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementTypeCode,קוד סוג מטען,קוד סוג מטען = 16,שכפול של 623,,צריך
+2047,Consignment,5,105,0..1,,,,,,,Free text,Content,            Content,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.Content, קוד אוניית ייצוא,ערך מתוך טבלת אוניות,שכפול של 621,,צריך
+2048,Consignment,5,369,0..1,,,,,,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementTypeCode,קוד נתון קוד אונית ייצוא,קוד סוג נתון קוד אוניית ייצוא = 22,שכפול של 623,,צריך
+627,Consignment,3,73A,0..*,"כל מה שמופיע בעמודה S כ""לא צריך"" לא צריך להופיע בכלל בגיליון ואל תתייחסו אליו",,,,H,,,Handling,      Handling,Declaration.Consignment.Handling,טיפול במטען,,שאלה לנמלים אם נדרש קוד טיפול,,לא צריך
+628,Consignment,4,092 ,0..1,,לא צריך,,O,לא צריך,,Handling instructions,Instructions,         Instructions,Declaration.Consignment.GovernmentAgencyGoodsItem.Handling.Instructions,הוראות טיפול,,,,לא צריך
+629,Consignment,4,093 ,0..1,,לא צריך,,O,לא צריך,,"Handling instructions, coded",InstructionsCode,         InstructionsCode,Declaration.Consignment.GovernmentAgencyGoodsItem.Handling.InstructionsCode,קוד טיפול ,,,,לא צריך
+630,Consignment,3,76A,0..*,,לא צריך,,,H,,,IntermediateCarrier,      IntermediateCarrier,Declaration.Consignment.IntermediateCarrier,,,,,לא צריך
+648,Consignment,3,77A,0..*,,לא צריך,,,H,,,IntermediateConsignee,      IntermediateConsignee,Declaration.Consignment.IntermediateConsignee,,,,,לא צריך
+649,Consignment,4,R036 ,0..1,,לא צריך,,,לא צריך,,"Intermediate Consignee, coded",ID,         ID,Declaration.Consignment.IntermediateConsignee.ID,,,,,לא צריך
+650,Consignment,4,04A,0..*,,לא צריך,,,H,,,Address,         Address,,פרטי כתובת,,,,לא צריך
+651,Consignment,5,241 ,0..1,,לא צריך,,,לא צריך,,City name,CityName,            CityName,,שם עיר,,,,לא צריך
+652,Consignment,5,242 ,0..1,,לא צריך,,,לא צריך,,"Country, coded",CountryCode,            CountryCode,,קוד מדינה,,,,לא צריך
+653,Consignment,5,244 ,0..1,,לא צריך,,,לא צריך,,Country sub-entity identification,CountrySubDivisionID,            CountrySubDivisionID,,,,,,לא צריך
+654,Consignment,5,243 ,0..1,,לא צריך,,,לא צריך,,Country sub-entity name,CountrySubDivisionName,            CountrySubDivisionName,,,,,,לא צריך
+655,Consignment,5,239 ,0..1,,לא צריך,,,לא צריך,,Street and number/P.O. Box,Line,            Line,,,,,,לא צריך
+656,Consignment,5,245 ,0..1,,לא צריך,,,לא צריך,,Postcode identification,PostcodeID,            PostcodeID,,,,,,לא צריך
+657,Consignment,4,25A,0..*,,,,,H,,,Communication,         Communication,,,,,,לא צריך
+658,Consignment,5,240 ,0..1,,לא צריך,,,לא צריך,,Communication number,ID,            ID,,,,,,לא צריך
+659,Consignment,5,253 ,0..1,,לא צריך,,,לא צריך,,Agent quality assurance indicator,TypeID,            TypeID,,,,,,לא צריך
+660,Consignment,4,34A,0..*,,,,,H,,,Contact,         Contact,,,,,,לא צריך
+661,Consignment,5,246 ,0..1,,לא צריך,,,לא צריך,,Department or employee  contact name,Name,            Name,,,,,,לא צריך
+662,Consignment,5,25A,0..*,,,,,H,,,Communication,            Communication,,,,,,לא צריך
+663,Consignment,6,240 ,0..1,,לא צריך,,,לא צריך,,Communication number,ID,               ID,,,,,,לא צריך
+664,Consignment,6,253 ,0..1,,לא צריך,,,לא צריך,,Agent quality assurance indicator,TypeID,               TypeID,,,,,,לא צריך
+2017,Consignment,5,105,0..1,,לא רלוונטי למצהר ימי,,,לא צריך,,Free text,Content,            Content,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.Content,חניית לילה/פריקת לילה,NightParkingIndicator ,"אינדקציית חניית לילה (כן/לא)
+שכפול של 619",,צריך
+2018,Consignment,5,369 ,0..1,,לא רלוונטי למצהר ימי,,,לא צריך,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementTypeCode,קוד חניית לילה/פריקת לילה,קוד חניית לילה = 9,שכפול של 623,,צריך
+2045,Consignment,5,105,1,,,,,,,Free text,Content,            Content,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.Content,סוג מארז לצורכי תפעול למטען יבשתי,fee,סוג מארז לצורכי תפעול למטען יבשתי,,צריך
+2046,Consignment,5,369 ,1,,,,,,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementTypeCode,קוד סוג מארז לצורכי תפעול למטען יבשתי,מאפיין אגרה = 18,קוד סוג מארז לצורכי תפעול למטען יבשתי,,צריך
+2040,Consignment,5,105,1,,,,,,,Free text,Content,            Content,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.Content,מספר מצהר יצוא,"רלוונטי למטענים בתהליך שטעון , מספר מצהר היצוא ","מספר מצהר יצוא
+",,צריך
+2041,Consignment,5,369 ,1,,,,,,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementTypeCode,קוד סוג נתון מספר מצהר יצוא  17,"רלוונטי למטענים בתהליך שטעון , קוד מספר מצהר היצוא   17","סוג נתון = 17  
+ מציין מספר מצהר יצוא               
+",,צריך
+2051,Consignment,3,226,0..1,,,,M,,,"Additional statement, coded",StatementCode,      StatementCode,Declaration.AdditionalInformation.StatementCode,ערך סוג גורם משדר מצהר,"ערכים לקוד סוג גורם משדר
+7 -  סוכן אוניה
+6 -  משלח בינלאומי
+","ערכים לקוד סוג גורם משדר
+7 -  סוכן אוניה
+6 -  משלח בינלאומי
+",,צריך
+2052,Consignment,3,369,0..1,,,,M,,,Additional statement type,StatementTypeCode,      StatementTypeCode,Declaration.AdditionalInformation.StatementTypeCode,קוד סוג נתון גורם משדר מצהר,"24= קוד סוג גורם משדר
+SubimterType","24= קוד סוג גורם משדר
+SubimterType",,צריך
+665,Consignment,3,83A,0..*,,,,M,H,,,LoadingLocation,      LoadingLocation,Declaration.Consignment.LoadingLocation,כותרתפרטי אתר טעינה,,,,צריך
+666,Consignment,4,L010 ,0..1,,"נמל טעינת המטען בחו""ל לפי טבלת חובה במצהר מלא+ריקות",נמל טעינה ימי-רשומה 3 - פוז' 048-052,C,העתקה מלאה ,נמל טעינה/נמל מוצא,"Place of loading, coded",ID,         ID,Declaration.Consignment.LoadingLocation.ID,נמל טעינה/נמל מוצא,"הנמל בחו""ל בו הוטען המטען לאניה או למטוס
+port of loading
+
+חובה לסוכן אוניה וחברת תעופה, רשות למשלח ימי",במקרה של מצהר יבשתי - האתר הקרוב מטבלת LOCODE  בו הוטען המטען למשאית,,צריך
+668,Consignment,3,89A,0..*,,,,,H,,,NotifyParty,      NotifyParty,Declaration.Consignment.NotifyParty,כותרת פרטי מיודע,,,,צריך
+670,Consignment,4,R045 ,0..1,,,שם המיודע-רשומה 7- פוז' 016-050,O,העתקה מלאה,שם המיודע,Notify party,Name,         Name,Consignment.NotifyParty.Name,שם מיודע,,,,צריך
+671,Consignment,4,04A,0..*,,,,,H,כתובת מיודע ,,Address,         Address,Declaration.Consignment.NotifyParty.Address,כותרת כתובת מיודע,,,,צריך
+672,Consignment,5,241 ,0..1,,,עיר המיודע-רשומה 7-פוז' 081-100,O,העתקה מלאה,כתובת מיודע ,City name,CityName,            CityName,Declaration.Consignment.NotifyParty.Address.CityName,שם עיר,,,,צריך
+673,Consignment,5,242 ,0..1,,,מדינת המיודע-רשומה 7-פוז' 107-108,O,העתקה מלאה,כתובת מיודע ,"Country, coded",CountryCode,            CountryCode,Declaration.Consignment.NotifyParty.Address.CountryCode,קוד מדינה,,,,צריך
+674,Consignment,5,244 ,0..1,,קוד תת מדינה,,O,לא צריך,כתובת מיודע ,Country sub-entity identification,CountrySubDivisionID,            CountrySubDivisionID,Declaration.Consignment.NotifyParty.Address.CountrySubDivisionID,קוד תת מדינה,,,,צריך
+676,Consignment,5,239 ,0..1,"בכל נושא הכתובות ( יבואן, ספק, מיודע) ההעברה צריכה להיות לשדה רחוב ומספר שהוא טקסטואלי וחובה בכולם",,רחוב ומספר בית של המיודע או ת.ד דואר- רשומה 7- פוז' 051-80,O,העתקה מלאה,כתובת מיודע ,Street and number/P.O. Box,Line,            Line,Declaration.Consignment.NotifyParty.Address.Line,"רחוב ומספר בית או תיבת דואר.
+במקרה שהכתובת לא מפורמטת יש לשדר בשדה זה את כל הכתובת כפי שרשומה בשטר מטען",,,,צריך
+677,Consignment,5,245 ,0..1,,,מיקוד המיודע-רשומה 7- פוז' 101-106,O,העתקה מלאה,כתובת מיודע ,Postcode identification,PostcodeID,            PostcodeID,Declaration.Consignment.NotifyParty.Address.PostcodeID,מיקוד,,,,צריך
+678,Consignment,4,25A,0..*,,,,,H,,,Communication,         Communication,Declaration.Consignment.NotifyParty.Address.Communication,כותרת פרטי אמצעי קשר,,"טלפון,פקס,email",,צריך
+679,Consignment,5,240 ,0..1,,,מספר טלפון של מיודע-רשומה 7-פוז' 109-120,O,העתקה מלאה,,Communication number,ID,            ID,Declaration.Consignment.NotifyParty.Address.Communication.ID,מספר אמצעי קשר,,,,צריך
+680,Consignment,5,253 ,0..1,,טבלת EDIFACT3155,,O,לא צריך,,Agent quality assurance indicator,TypeID,            TypeID,Declaration.Consignment.NotifyParty.Address.Communication.TypeID,סוג אמצעי קשר,"קוד אמצעי קשר: TE נייח, AL נייד, FX פקס, EM דוא""ל, AH אתר אינטרנט",,,צריך
+707,Consignment,3,23B,0..*,,,,,H,,,TranshipmentLocation,      TranshipmentLocation,Declaration.Consignment.NotifyParty.TranshipmentLocation,,,,,לא צריך
+708,Consignment,4,L015 ,0..1,,,נמל יעד סופי -רשומה 8 -פוז' 181-185,O,העתקה מלאה-חובה במקרה של שטעון/ש.בינמלי/מסוף גבול יבשתי,,"Transshipment place, coded",ID,         ID,Declaration.Consignment.TranshipmentLocation.ID,"נמל פריקה בחו""ל",לאן מיועד המטען המשוטען,קוד מטבלת LOCODE של האתר אליו יצאו הטובין מהארץ,,צריך
+710,Consignment,3,24B,0..*,,לא צריך,,,H,,,TransitControl,      TransitControl,,,,,,לא צריך
+713,Consignment,3,26B,0..*,,,,C,H,,,TransitDestination,      TransitDestination,Declaration.Consignment.TransitDestination,כותרת פרטי יעד המטען במקרה של שטעון,,,,צריך
+714,Consignment,4,L008 ,0..1,,חובה במקרה של שטעון/ש.בינמלי/מסוף גבול יבשתי,נמל היציאה מהארץ -רשומה 3-פוז' 122-126,C,העתקה מלאה,נמל היציאה מהארץ,"Place of destination of the transit, coded",ID,         ID,Declaration.Consignment.TransitDestination.ID,קוד אתר היציאה מהארץ במקרה של שטעון ,,"קוד מטבלת LOCODE של האתר ממנו יצאו הטובין מהארץ.
+שדה חובה כאשר סוג תהליך = שטעון.",,צריך
+718,Consignment,3,30B,0..*,,,,,H,שטר מטען,,TransportContractDocument,      TransportContractDocument,Declaration.Consignment.TransportContractDocument,כותרת פרטי מסמכי הובלה ,,"כותרת מסמכי הובלה.
+במקרה של דיווח מצהר עם מטענים - חובה מופע אחד לפחות",,צריך
+719,Consignment,4,091 ,0..1,,העתקה מלאה-קוד הסכם ותנאי משלוח לפי טבלה: EDIFACT4065,צורת טיפולׁ-רשומה 6-פוז' 156-157,M,"המרה:          חדש   קיים
+ 
+HH =27 
+HP =28 
+PH =29 
+PP =30 
+",צורת טיפול ,"Contract and carriage condition, coded",ConditionCode,         ConditionCode,Declaration.Consignment.TransportContractDocument.ConditionCode,צורת טיפול ,,"בימי - חובה.
+באווירי- אופציונלי בשלב זה.
+ביבשתי- חובה",,צריך
+723,Consignment,4,D024 ,0..1,"לבנות לפי ערך השדה לשט""מ , עסקה, עסקת אב, עסקה קודמת",סוג שטר מטען לפי טבלה EDIFACT1001,,M,"דיווח הקודים הבאים לפי הערך שיוכנס לשדה: Declaration.Consignment.TransportContractDocument.ID: שטר מטען  -  705
+שטר מטען אב (Mater)  - 704
+מזהה עסקה – IL1
+מזהה עסקת אב –  IL2
+",,"Transport document type, coded",TypeCode,         TypeCode,Declaration.Consignment.TransportContractDocument.TypeCode,קוד סוג מסמך הובלה,,"הקודים המותרים לשט""מ ימי ואווירי והקודים המותרים לעסקה ימית ויבשתית - מפורטים בשורות הכחולות בהמשך ",,צריך
+720,Consignment,4,D023 ,0..1,"זהו שדה שהערך שלו נקבע לפי הערך בשדה 159 (סוג שט""מ). גם כאן מוצע להציג את ההמרה בטבלה נפרדת",,"מספר שטר מטען-מזהה עסקה-רשומה 3-פוז' 148-163
+מזהה עסקה",M,העתקה מלאה,"מספר שטר מטען
+מזהה עסקה",Transport document number,ID,         ID,Declaration.Consignment.TransportContractDocument.ID,מספר מזהה מסמך הובלה ,,"ישמש עבור דיווח של:
+שטר מטען ,
+שטר מטען אב , 
+מספר עסקה,
+מספר עסקת אב",,צריך
+2030,Consignment,4,D023 ,0..1,,,שטר מטען-רשומה 3- פוז' 132-147,M,העתקה מלאה,מספר שטר מטען,Transport document number,ID,         ID,Declaration.Consignment.TransportContractDocument.ID,"
+מזהה שטר מטען","בעמודה U - ביטול עסקה חובה לרשום את המזהה של הישות שמבקשים לבטל. עסקה, עסקת אב, שט""מ ראשי, או שט""מ פנימי. לפי זה יש לבחור את הזוג שורות המתאים",שכפול של 720,,צריך
+2034,Consignment,4,D024 ,0..1,,לא לרוונטי לפי מייל מיום 7/8/11,,M,לא צריך,,"Transport document type, coded",TypeCode,         TypeCode,Declaration.Consignment.TransportContractDocument.TypeCode,"
+קוד סוג מסמך שטר מטען","קודים לשט""מ ימי: 705, 714, 704
+קודים לשט""מ אוירי: 740, 703, 741 
+קודים לשט""מ יבשתי: אין. לא רלבנטי","שטר מטען  רגיל, או שטר מטען פנימי
+שכפול של 723
+",,צריך
+2031,Consignment,4,D023 ,0..1,,העתקה מלאה-חובה במקרה של משלח ימי,שטר מטען אב- רשומה B - פוז'135-150,C,העתקה מלאה,מספר שטר מטען אב,Transport document number,ID,         ID,Declaration.Consignment.TransportContractDocument.ID,מזהה שטר מטען אב,,שכפול של 720,,צריך
+2035,Consignment,4,D024 ,0..1,,לא לרוונטי לפי מייל מיום 7/8/11,,M,לא צריך,,"Transport document type, coded",TypeCode,         TypeCode,Declaration.Consignment.TransportContractDocument.TypeCode,קוד סוג מסמך שטר מטען אב,,"שטר מטען  אב
+שכפול של 723",,צריך
+2032,Consignment,4,D023 ,0..1,,חובה במקרה של פיצול/איחוד עסקאות,מספר עסקה חדש- רשומה C- פוז' 036-051,C,העתקה מלאה,מספר עסקה,Transport document number,ID,         ID,Declaration.Consignment.TransportContractDocument.ID,מספר עסקה,,"מספר עסקה
+
+שכפול של 720",,צריך
+2036,Consignment,4,D024 ,0..1,,לא לרוונטי לפי מייל מיום 7/8/11,,M,לא צריך,,"Transport document type, coded",TypeCode,         TypeCode,Declaration.Consignment.TransportContractDocument.TypeCode,קוד סוג מסמך מספר עסקה,,"קודים: IL1 בעסקה ימית, IL3 בעסקה יבשתית, ILH בעסקת מכולות ריקות
+שכפול של 723",,צריך
+2033,Consignment,4,D023 ,0..1,,חובה במקרה של משלח ימי,מזהה עסקת אב- רשומה B- פוז' 135-150,O,העתקה מלאה,מספר עסקת אב,Transport document number,ID,         ID,Declaration.Consignment.TransportContractDocument.ID,מספר עסקת אב,,"מספר עסקת אב
+שכפול של 720",,צריך
+2037,Consignment,4,D024 ,0..1,,לא לרוונטי לפי מייל מיום 7/8/11,,M,לא צריך,,"Transport document type, coded",TypeCode,         TypeCode,Declaration.Consignment.TransportContractDocument.TypeCode,קוד סוג מסמך מספר עסקת אב,,"בעסקת אב, גם ימי וגם יבשתי   IL2 
+שכפול של 723",,צריך
+721,Consignment,4,D021 ,0..1,,מקום הצאת שטר המטען-טקסט חופשי,,O,לא להסבה,, ,IssueLocation,         IssueLocation,Declaration.Consignment.TransportContractDocument.IssueLocation,כותרת מקום הנפקת המסמך,,,,צריך
+724,Consignment,4,43A,0..*,,לא לרוונטי לפי מייל מיום 7/8/11,,O,לא צריך,,,Deconsolidator,         Deconsolidator,,פרטי משלח,,סוכן אוניה ידווח מי המשלח שאחראי על המכולה במקרה של קונסדיליזציה,"המשלח יהיה ידוע בעיסקת הבן וגם היא עוברת הערכת סיכונים והמשלח הוא ה-submiter ולכן לא צריך את השדה הנ""ל.",לא צריך
+725,Consignment,5,R023 ,0..1,,לא לרוונטי לפי מייל מיום 7/8/11,מספר משלח- רשומה 3- פוז' 180-182,M,בטבלת סוכני אנייה שליפת ח.פ משלח לפי קוד משלח,,"Deconsolidator, coded",ID,            ID,Declaration.Consignment.TransportContractDocument.Deconsolidator.ID,מספר מזהה משלח,,קוד מטבלת משלחים. במקרה של קונסולידציה. אמור להיות הנשגר,,צריך
+791,Consignment,3,37B,0..*,,,,,H,,,UNDGContact,      UNDGContact,Declaration.Consignment.UNDGContact,כותרת פרטי קשר חומרים מסוכנים,,פרטי איש קשר לטיפול בחומרים מסוכנים,,צריך
+792,Consignment,4,R047 ,0..1,,"שם חברה במקרה של חומ""ס. חובה במקרה של חומ""ס",,C,לא ניתן,,Dangerous goods contact,Name,         Name,Declaration.Consignment.UNDGContact.Name,שם החברה,,שם החברה של איש קשר לחומרים מסוכנים,,צריך
+800,Consignment,4,25A,0..*,,,,,H,,,Communication,         Communication,Declaration.Consignment.UNDGContact.Communication,כותרת פרטי אמצעי קשר,,פרטי קשר של החברה,,צריך
+801,Consignment,5,240 ,0..1,,מספר אמצעי קשר. חובה במקרה של מטען מסוכן,,C,לא ניתן,,Communication number,ID,            ID,Declaration.Consignment.UNDGContact.Communication.ID,מספר אמצעי קשר, ,,,צריך
+802,Consignment,5,253,0..1,,סוג אמצעי קשר במקרה של מטען מסוכן-טבלת EDIFACT3155,,C,לא ניתן,,Communication number type,TypeID,            TypeID,Declaration.Consignment.UNDGContact.Communication.TypeID,קוד סוג אמצעי קשר,"קוד אמצעי קשר: TE נייח, AL נייד, FX פקס, EM דוא""ל, AH אתר אינטרנט",,,צריך
+803,Consignment,4,34A,0..*,,,,,H,,,contact,         contact,Declaration.Consignment.UNDGContact.contact,כותרת פרטי איש קשר,,,,צריך
+804,Consignment,5,246 ,0..1,,"שם איש קשר במקרה של חומ""ס. חובה במקרה של חומ""ס",,C,לא צריך,,Department or employee  contact name,Name,            Name,Declaration.Consignment.UNDGContact.contact.Name,שם איש קשר,,שם איש קשר,,צריך
+805,Consignment,5,25A,0..*,,,,,H,,,Communication,            Communication,Declaration.Consignment.UNDGContact.contact.Communication,כותרת פרטי אמצעי קשר,,טלפון של איש קשר ,,צריך
+806,Consignment,6,240 ,0..1,,,,O,לא צריך,,Communication number,ID,               ID,Declaration.Consignment.UNDGContact.Communication.ID,מספר אמצעי קשר,,לדוגמא: מספר טלפון סלולרי של איש הקשר,,צריך
+807,Consignment,6,253,0..1,,טבלת EDIFACT3155,,O,לא צריך,,Communication number type,TypeID,               TypeID,Declaration.Consignment.UNDGContact.contact.Communication.TypeID,קוד סוג אמצעי קשר,"קוד אמצעי קשר: TE נייח, AL נייד, FX פקס, EM דוא""ל, AH אתר אינטרנט",לדוגמא: טלפון סלולרי,,צריך
+808,Consignment,3,38B,0..*,,,,,H,,,UnloadingLocation,      UnloadingLocation,Declaration.Consignment.UnloadingLocation,כותרת נתוני אתר פריקה,,קוד מטבלת LOCODE של האתר בו יפרקו הטובין,,צריך
+809,Consignment,4,173 ,0..1,,תאריך הגעה משוער של המטען. חובה כאשר האנייה פורקת בשני נמלים תחת אותו מצהר,,C,לא ניתן,,Date of arrival at place of discharge,ArrivalDateTime,         ArrivalDateTime,Declaration.Consignment.UnloadingLocation.ArrivalDateTime,תאריך הגעה משוער (רמת המטען),,"תאריך הגעה משוער ברמת המטען 
+",,צריך
+810,Consignment,4,L013 ,0..1,,,נמל פריקה-רשומה 3-פוז' 053-057  ,M,העתקה מלאה- נמל פריקה,נמל פריקה  ,"Place of discharge, coded",ID,         ID,Declaration.Consignment.UnloadingLocation.ID,אתר פריקה,,,,צריך
+328,ConsignmentItem,3,29A,1..*,,,,,H,,,ConsignmentItem,      ConsignmentItem,Declaration.Consignment.ConsignmentItem,כותרת פרטי שורה במטען,,חובה לפחות שורה אחת במטען,,צריך
+329,ConsignmentItem,4,094 ,0..1,,,קוד סיכון-רשומה 3 - פוז' 058-058,M,העתקה מלאה,קוד סיכון,Goods status code,GoodsStatusCode,         GoodsStatusCode,Declaration.Consignment.ConsignmentItem.GoodsStatusCode,קוד מטען מסוכן,סטאטוס המטען - משמש עבור דיווח מטען מסוכן,"אינדקציה האם חומר מסוכן או לא
+השדה קוד סיכון - אינדיקציה האם מדובר במטען המכיל חומרים מסוכנים  (מסוכן/לא מסוכן)   
+באווירי - Restricted  - R  או ריק , בימי - D מסוכן , N - לא מסוכן. ","שדה חובה
+D- מסוכן
+N - לא מסוכן",צריך
+330,ConsignmentItem,4,006 ,0..1,,לא חובה בדיווח מצהר מלא ומכולות ריקות (שונה לחובה במצהר מלא),סידורי בעיסקה-רשומה 3- פוז' 164-166,C,העתקה מלאה,סידורי בעיסקה,Sequence number,SequenceNumeric,         SequenceNumeric,Declaration.Consignment.ConsignmentItem.SequenceNumeric,מס' סידורי במטען,"השדה מוגדר n..5 ,  אך בשל אילוצים מול מערכות אחרות מותר לשלוח n..3 בלבד ",,,צריך
+374,ConsignmentItem,4,03A,0..*,,,,,H,,,AdditionalInformation,         AdditionalInformation,Declaration.Consignment.ConsignmentItem.AdditionalInformation,כותרת פרטי מידע נוסף לשורה במטען,,"משמש לדיווח שדות נדרשים שאין להם שדה מוגדר . מורכב מסוג נתון והערך.
+",,צריך
+375,ConsignmentItem,5,105,0..1,,,,O,"שדה רב מופעי. העתקה מלאה של מספר סידורי בעסקה ישן-רשומה C- פוז' 032-035 . העתקה מלאה של מספר עסקה ישן-רשומה C- פוז' 016-031 .  העתקה מלאה של ערך ב-קו אחסון- רשומה 3 - פוז' 183-184 .העתקה מלאה של ערך ב-משקל טרה בק""ג - רשומה 3 - פוז' 040-047",,Free text,Content,            Content,Declaration.Consignment.ConsignmentItem.AdditionalInformation.Content,ערך נתון,,,,צריך
+377,ConsignmentItem,5,226 ,1,,,,M,ראה סודר 379,,"Additional statement, coded",StatementCode,            StatementCode,Declaration.Consignment.ConsignmentItem.AdditionalInformation.StatementCode,קוד ערך נתון ,,"ישמש עבור:
+שידור מספר יבואן
+קוד סיבת תיקון/ביטול - change reason code
+ישמש גם עבור פיצול ואיחוד עיסקאות. פיצול עיסקאות - ישדרו כאן נתוני עיסקה וסידורי מקוריים שמהם נוצרה העיסקה החדשה.
+כנ""ל באיחוד 
+מצהר ימי - 
+מספר סידורי במטען אב,
+מספר מטען/עיסקת אב,
+קוד אחסון,
+
+סוג טיפול - ע""פ עבודה שנעשת ע""י איציק בן עוזר מחנ""י אין צורך בשדה הנ""ל במסר
+
+מצהר אווירי-
+סוג מסירה, - מסירה ישירה לא רלוונטי למצהר אווירי
+
+מצהר יבשתי -
+אינדקציית חניית לילה (כן/לא)
+אין מסירה ישירה (בהגדרה, גם גופה במעבר גבול אין רשימון ואין מסירה ישירה)",,צריך
+379,ConsignmentItem,5,369 ,1,,,,C,"שדה רב מופעי. אם התקבלה רשומה C יש ליצר רשומה עם קוד 12 . אם התקבל ערך ב-מספר סידורי בעסקה ישן-רשומה C- פוז' 032-035 יש להכניס קבוע = 6 . אם התקבל ערך ב-מספר עסקה ישן-רשומה C- פוז' 016-031 יש להכניס קבוע = 7.  אם התקבל ערך ב-קו אחסון- רשומה 3 - פוז' 183-184 יש להכניס קבוע =8 .אם התקבל ערך ב-משקל טרה בק""ג - רשומה 3 - פוז' 040-047 יש להכניס קבוע =10",,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.ConsignmentItem.AdditionalInformation.StatementTypeCode,קוד סוג הנתון,סוג שדה של  226 = WCOID ,"אחד מהערכים יהיה:
+change reason code ",,צריך
+2011,ConsignmentItem,5,105,1,,,,C,,,Free text,Content,            Content,Declaration.Consignment.ConsignmentItem.AdditionalInformation.Content,מספר סידורי בעסקת אב/עסקת מקור,ParentConsignmentItemID,"מזהה סידורי עסקת מקור/עסקת אב
+שכפול של 375",,צריך
+2012,ConsignmentItem,5,369 ,1,,,,C,ראה סודר 379,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.ConsignmentItem.AdditionalInformation.StatementTypeCode,קוד מספר סידורי בעסקת אב/מקור,קוד מספר סידורי בעסקת אב/מקור = 6,שכפול של 379,,צריך
+2013,ConsignmentItem,5,105,1,,"חובה בעת דיווח על פיצול/איחוד עסקה- כאשר בשדה StatementTypeCode יופיע ערך=7 , תכולת השדה הנ""ל הינה מעסקת אב",מספר עסקה ישן-רשומה C- פוז' 016-031,C,ראה סודר 375,"עסקת מקור
+רשומה C",Free text,Content,            Content,Declaration.Consignment.ConsignmentItem.AdditionalInformation.Content,מספר עסקת מקור,ParentConsignmentID,"מזהה עסקת מקור
+שכפול של 375",,צריך
+2014,ConsignmentItem,5,369 ,1,,"חובה בעת דיווח על פיצול/איחוד עסקה. כאשר יופיע ערך=7 , תכולת השדה Content הינה עסקת אב",,C,ראה סודר 379,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.ConsignmentItem.AdditionalInformation.StatementTypeCode,קוד מספר עסקת מקור,קוד מספר עסקת מקור = 7,שכפול של 379,,צריך
+2015,ConsignmentItem,5,105,1,,"כאשר שדה:StatementTypeCode=8 , חייב להיות קוד בן 2 תווים המציין את הקו של סוכן האנייה. רלוונטי בעיקר למכולות ריקות ומלאות ",קו אחסון- רשומה 3 - פוז' 183-184,O,ראה סודר 375,קו אחסון,Free text,Content,            Content,Declaration.Consignment.ConsignmentItem.AdditionalInformation.Content,קו אחסון,StorageLine,שכפול של 375,,צריך
+2016,ConsignmentItem,5,369 ,1,,"ערך=8 , אומר כי תכולת השדה Content הינה קו איחסון",קו אחסון- רשומה 3 - פוז' 183-184,O,ראה סודר 379,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.ConsignmentItem.AdditionalInformation.StatementTypeCode,קוד קו אחסון,קוד קו אחסון = 8,שכפול של 379,,צריך
+2017,ConsignmentItem,5,105,1,,לא רלוונטי למצהר ימי,,,לא צריך,,Free text,Content,            Content,Declaration.Consignment.ConsignmentItem.AdditionalInformation.Content,חניית לילה/פריקת לילה,NightParkingIndicator ,"אינדקציית חניית לילה (כן/לא)
+שכפול של 375",,לא צריך
+2018,ConsignmentItem,5,369 ,1,,לא רלוונטי למצהר ימי,,,לא צריך,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.ConsignmentItem.AdditionalInformation.StatementTypeCode,קוד חניית לילה/פריקת לילה,קוד חניית לילה = 9,שכפול של 379,,לא צריך
+2019,ConsignmentItem,5,105,1,,"העתקה מלאה כאשר שדה:StatementTypeCode=10 , בשדה זה יופיע משקל הטרה של המכולה בק""ג- חובה באריזה מסוג מכולה","משקל טרה בק""ג - רשומה 3 - פוז' 040-047",C,ראה סודר 375,,Free text,Content,            Content,Declaration.Consignment.ConsignmentItem.AdditionalInformation.Content,משקל טרה,TeraWheight,"משקל  טרה (משקל של ציוד הובלה)
+
+יהיה בגרסה WCO של ספטמבר
+
+TeraWheight
+שכפול של 375","לא מעניין את המכס , המלצה לוותר על השדה , לאשר מול הנמלים",צריך
+2020,ConsignmentItem,5,369 ,1,,"כאשר יופיע ערך=10 , תכולת השדה Content הינה משקל טרה-משקל ציוד ההובלה- חובה רק למכולות",קוד אריזה- רשומה 3 - פוז' 063-064,C,ראה סודר 379,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.ConsignmentItem.AdditionalInformation.StatementTypeCode,קוד משקל טרה,קוד משקל טרה =10,שכפול של 379,,צריך
+2021,ConsignmentItem,5,105,1,,"כאשר שדה:StatementTypeCode=11 , תופיע אינד' (Y/N) להפעלת ציוד קרור",,O,לא צריך,,Free text,Content,            Content,Declaration.Consignment.ConsignmentItem.AdditionalInformation.Content,אינדקציה האם מופעל קירור לציוד הובלה של קירור,CoolingIndicator ,"קוד קירור (כן/לא)  
+רלוונטי אם ציוד הובלה הוא קירור
+שכפול של 375
+CoolingIndicator ",,צריך
+2022,ConsignmentItem,5,369 ,1,,"כאשר יופיע ערך=11 , תכולת השדה Content הינה אינד' להפעלת ציוד קרור",,O,לא צריך,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.ConsignmentItem.AdditionalInformation.StatementTypeCode,קוד אינדקציה האם מופעל קירור לציוד הובלה של קירור,קוד אינדקציה האם מופעל קירור לציוד הובלה של קירור= 11,שכפול של 379,,צריך
+2027,ConsignmentItem,5,105,1,,,,,,,Free text,Content,            Content,Declaration.Consignment.ConsignmentItem.AdditionalInformation.Content,מאפיין אגרה למטען ימי,fee,מאפיין אגרה למטען ימי,,צריך
+2028,ConsignmentItem,5,369 ,1,,,,,,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.ConsignmentItem.AdditionalInformation.StatementTypeCode,קוד סוג נתון מאפיין אגרה למטען ימי,מאפיין אגרה = 18,קוד סוג נתון מאפיין אגרה למטען ימי,,צריך
+2043,ConsignmentItem,5,105,1,,"ישירה / עקיפה
+קיים אם לא מדובר במטען/מכולת שטעון.
+D – עבור מסירה ישירה.
+I  – עבורה מסירה עקיפה - אחסון בנמל.",,O,צריך,סוג מסירה ישירה/עקיפה,Free text,Content,            Content,Declaration.Consignment.ConsignmentItem.AdditionalInformation.Content,מסירה ישירה,DirectDelivery,"מסירה ישירה = D  ,
+אחרת I  או ריק (מסירה עקיפה)
+רלוונטי רק למטעני יבוא , לא רלוונטי למטעני שטעון",,צריך
+2044,ConsignmentItem,5,369 ,1,,,,,,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.ConsignmentItem.AdditionalInformation.StatementTypeCode,קוד סוג נתון מסירה ישירה  21,,,,צריך
+2049,ConsignmentItem,5,105,1,,,,,,,Free text,Content,            Content,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.Content,פארמה (מכולת קירור של תרופות),רלוונטי למצהר ימי בלבד,אינדקציית פארמה (מכולת קירור של תרופות),,צריך
+2050,ConsignmentItem,5,369 ,1,,,,,,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementTypeCode,קוד סוג נתון 23 אינדקציית פארמה מכולת תרופות  ,קוד סוג נתון 23 אינדקציית פארמה מכולת תרופות  ,קוד סוג נתון 23 אינדקציית פארמה מכולת תרופות  ,,צריך
+398,ConsignmentItem,4,23A,1,,,,,H,,,Commodity,         Commodity,Declaration.Consignment.ConsignmentItem.Commodity,כותרת פרטי סחורות בשורת מטען,,חד מופעי,,צריך
+399,ConsignmentItem,5,138 ,0..1,,העתקה מלאה-תאור מטען מקוצר לפי תקן ארופאי,"תאור המטען- רשומה 9 - פוז' 016-157, רשומה 4- פוז' 016-190",M,העתקה מלאה - שרשור תוכן שדה ברשומה 9 לתוכן שדה ברשומה 4,תאור טובין,Brief cargo description,CargoDescription,            CargoDescription,Declaration.Consignment.ConsignmentItem.Commodity.CargoDescription,תאור מטען,,תיאור מקוצר לפי תקן אירופאי,חובה,צריך
+400,ConsignmentItem,5,328 ,0..1,,לא צריך,,O,לא להסבה,,Commodity category,CategoryCode,            CategoryCode,Declaration.Consignment.ConsignmentItem.Commodity.CategoryCode,קוד קטגורית סיווג,,קבוצת סיווג עבור גופים נוספים,לא חובה,לא צריך
+401,ConsignmentItem,5,329 ,0..1,,לא רלוונטי למצהר ימי לפי מייל מ-7/8/11,,O,לא להסבה,,Commodity category qualifier,CategoryQualifierCode,            CategoryQualifierCode,Declaration.Consignment.ConsignmentItem.Commodity.CategoryQualifierCode, סיווג קטגוריית מטען,,קבוצת סיווג עבור גופים נוספים,לא חובה,לא צריך
+405,ConsignmentItem,5,147 ,0..1,,שדה חובה כאשר סוג האריזה הינו כלי רכב למינהם.- השדה יכיל את מספר השילדה או מספר אחר של כלי הרכב,,C,לא להסבה,,Identity number,ID,            ID,Declaration.Consignment.ConsignmentItem.Commodity.ID,מספר מזהה של המטען /סחורה,,"ישמש עבור מזהה מטען 
+לדגומא עבור רכב מספר השילדה ",,צריך
+406,ConsignmentItem,5,338 ,0..1,,לא רלוונטי למצהר ימי לפי מייל מ-7/8/11,,O,לא צריך,,Ballast or cargo type,IDTypeCode,            IDTypeCode,Declaration.Consignment.ConsignmentItem.Commodity.IDTypeCode,"סוג מזהה המטען/סחורה
+מטען כללי או מומכל",,"קשור ל- 257 WCOID שירד מהמסר ולכן גם השדה הנ""ל ירד מהמסר",,לא צריך
+407,ConsignmentItem,5,347 ,0..1,,חובה כשסוג האריזה= כלי רכב. קוד קבוע המזהה כי מדובר במספר שילדה,,C,לא ניתן,,Identity number qualifier,IdentityQualifierCode,            IdentityQualifierCode,Declaration.Consignment.ConsignmentItem.Commodity.IdentityQualifierCode,קוד סוג מספר מזהה הסחורה. חובה אם מופיע שדה WCOID= 147,,"קשור ל -WCOID= 147, בשלב זה יש סוג אחד רלוונטי מספר שילדה עבור רכבים",,צריך
+413,ConsignmentItem,5,21A,0..*,,,,,H,,,Classification,            Classification,Declaration.Consignment.ConsignmentItem.Commodity.Classification,כותרת פרטי סיווג מטען,,,,צריך
+414,ConsignmentItem,6,145 ,0..1,,קוד UN -אם בשדה: ConsignmentItem.GoodsStatusCode מופיע הערך D . אחרת יופיע מספר פרט המכס 6 ספרות,"אם קוד או""ם (רשומה 3 -פוז' 059-062 ). אם סיווג טובין (רשומה 9-פוז' 158-163)","C לקוד או""ם כאשר מטען מסוכן  ו- M עבור פרט מכס","העתקה מלאה של קוד או""ם או פרט המכס","קוד או""ם , סיווג טובין",Commodity classification, ID,                ID,Declaration.Consignment.ConsignmentItem.Commodity.Classification.ID,סיווג הסחורה במטען,"חובה לדווח  לפחות מופע אחד - עבור סיווג של פרט המכס.
+שאר המופעים הם רשות או מותנים כאשר מדובר על חומר מסוכן
+(על פי אינדיקציה בסודר 329). ","להשתמש  בערך SSO  לקוד או""ם  ולקוד HS לסיווג סחורות ( 4-6 ספרות )",,צריך
+415,ConsignmentItem,6,337 ,0..1,,סוג הסייוג בו משתמשים לשדה:Classification.ID לפי טבלת EDIFACT7143 .לדוגמה: SSM-קוד UN או HS לפרט מכס,,"C לקוד או""ם כאשר מטען מסוכן  ו- M עבור פרט מכס",ערך קבוע=SSO אם יש קוד אום.   ערך קבוע = HS לסיווג פרט מכס,"קוד או""ם , סיווג טובין",Ballast or cargo type, IdentificationTypeCode,                IdentificationTypeCode,Declaration.Consignment.ConsignmentItem.Commodity.Classification.IdentificationTypeCode,קוד סוג סיווג,"חובה רק במופע אחד - עבור סיווג של פרט המכס. שאר הנתונים מותנים כאשר החומר מסוכן 
+(אינדיקציה בסודר 329).","לפי טבלה:
+SSO  = קוד או""ם , 
+HS = קוד לסיווג מכס 
+",,צריך
+416,ConsignmentItem,5,24A,0..*,,,,,H,,,CommodityRelatedPackaging,            CommodityRelatedPackaging,Declaration.Consignment.ConsignmentItem.Commodity.CommodityRelatedPackaging,כותרת פרטי אריזות לטובין במטען,,,,צריך
+417,ConsignmentItem,6,341 ,0..1,,"העתקה מלאה- חובה בדיווח חומ""ס. הצרוף של קב' סיכון+רמת סיכון חייב להופיע בטבלה A18.",רמת סיכון - רשומה 3 -(פוז' 168 -168 ),C,העתקה מלאה,רמת סיכון,Commodity dangerous goods packing group code, DangerousGoodsPackingReq,                DangerousGoodsPackingReq,Declaration.Consignment.ConsignmentItem.Commodity.CommodityRelatedPackaging.DangerousGoodsPackingReq,קוד קבוצת אריזה נדרשת לחומר מסוכן,,"
+קוד קבוצת אריזה של חומר מסוכן
+47  - רמה   I 
+48 -  רמה   II 
+49  -  רמה  III 
+",קבוצת הנתונים בנושא חומרים מסוכנים באווירי הם ברמת המטען  Consignment,צריך
+422,ConsignmentItem,5,20B,0..*,,,,,H,,,Temperature,            Temperature,Declaration.Consignment.ConsignmentItem.Commodity.Temperature,כותרת טמפרטורה,,,,צריך
+423,ConsignmentItem,6,388 ,0..1,,"טמפרטורת התלקחות במקרה של חומ""ס",,O,לא להסבה,,Flashpoint temperature,FlashpointMeasure,               FlashpointMeasure,Declaration.Consignment.ConsignmentItem.Commodity.Temperature.FlashpointMeasure,טמפרטורת התלקחות,,האם נדרש לחומרים מסוכנים,,צריך
+424,ConsignmentItem,6,321 ,0..1,,טווח טמפ' דרוש לאיחסון המטען (מקס/מינ/מסויימת),,O,לא להסבה,,Storage temperature requirement,StorageRequirementMeasure,               StorageRequirementMeasure,Declaration.Consignment.ConsignmentItem.Commodity.Temperature.StorageRequirementMeasure,טווח או טמפרטורה נדרש לאחסון המטען,,"ניתן להזין טווח או טמפרטורה אין קוד
+קוד קירור ?",,צריך
+429,ConsignmentItem,4,65A,0..*,,,,,H,,,GoodsMeasure,         GoodsMeasure,Declaration.Consignment.ConsignmentItem.GoodsMeasure,כותרת פרטי מידות ומשקלים למטען,,חטיבה חד פעמית,,צריך
+430,ConsignmentItem,5,126 ,0..1,,משקל ברוטו (משקל מטען+אריזה),משקל טרה-רשומה 3-פוז' 040-047 + משקל נטו-רשומה 3-פוז' 032-039,M,סכום הערכים ברשומה 3 פוז' 032-039 עם פוז' 040-047,משקל ברוטו,Gross weight item level,GrossMassMeasure,            GrossMassMeasure,Declaration.Consignment.ConsignmentItem.GoodsMeasure.GrossMassMeasure,משקל מטען ,,"משקל המטען כולל אריזה בק""ג  וללא משקל ציוד ההובלה",בהנחה ש- Commodity  יהיה מופע אחד ,צריך
+431,ConsignmentItem,4,70A,0..*,,,,,H,,,GovernmentProcedure,         GovernmentProcedure,Declaration.Consignment.ConsignmentItem.GovernmentProcedure,כותרת פרטי תהליך ממשלתי,,חד מופעי,,צריך
+432,ConsignmentItem,5,166 ,0..1,,,סוג טיפול- תרגום לפי מסמך איציק- רשומה 3 (פוז' 091-092),M,"תנאי- אם רשומה 3 (פוז' 091-092) < 50 וגם שונה מ-8,27,21,22,25 אז קבוע=4000000 (יבוא), אחרת , קבוע = 8000000 (שטעון)",סוג טיפול,#N/A,CurrentCode,            CurrentCode,Declaration.Consignment.ConsignmentItem.GovernmentProcedure.CurrentCode,קוד סוג תהליך,"מבנה סוג תהליך
+xxyyzzz
+xx - תהליך נוכחי
+yy - תהליך קודם
+zzz - קוד פנימי
+","סוג התהליך המכסי 
+קוד תהליך לפי אמנת 
+קיוטו
+יבוא - Direct Import for Home Use = 4000000
+  שטעון - Transit=8000000",,צריך
+436,ConsignmentItem,4,93A,0..*,,,,,H,,,Packaging,         Packaging,Declaration.Consignment.ConsignmentItem.Packaging,כותרת פרטי אריזות משנה למטען,"בימי ויבשתי, חובה חטיבה זו או חטיבת   TransportEquipment  , או את שתיהן.
+באווירי , חובה חטיבה זו, וחטיבה   TransportEquipment הינה רשות","נגררת נתוני אריזות משנה
+בימי ויבשתי, חובה חטיבה זו  (Packaging  ) או חטיבת   TransportEquipment  , או את שתיהן.
+באווירי , חובה חטיבה זו (Packaging ) , וחטיבה   TransportEquipment הינה רשות",בהנחה ש- Commodity  יהיה מופע אחד ,צריך
+437,ConsignmentItem,5,142 ,0..1,,העתקה מלאה של סימנים ומספרים,סימנים ומספרים- רשומה 5-פוז' 016-135,O,העתקה מלאה,סימנים ומספרים,Shipping marks,MarksNumbers,            MarksNumbers,Declaration.Consignment.ConsignmentItem.Packaging.MarksNumbers,סימנים ומספרים,,,,צריך
+438,ConsignmentItem,5,144 ,0..1,,כמות האריזות כולל אריזות בתוך המכולה  ,כמות אריזות-אריזות משניות-רשומה 5(פוז' 138-146),M,העתקה מלאה ,כמות אריזות,Number of packages,QuantityQuantity,            QuantityQuantity,Declaration.Consignment.ConsignmentItem.Packaging.QuantityQuantity,כמות אריזות,,"מציין את כמות האריזות בתוך ציוד ההובלה או כמות האריזות של המטען עצמו.
+לדגומא פירוט כמות האריזות בתוך המכולה 
+בהתאם למוגדר ב- WCO.
+המידע חשוב מאוד למכס , בעיסקאות של יבשתי - המידע אמור להיות אצל המשלח.",,צריך
+439,ConsignmentItem,5,141 ,0..1,,סוג אריזה לפי טבלה UNCE21       ,קוד אריזה- רשומה 3 - פוז' 063-064,M,המרה לפי טבלת קודי אריזה קיימים (C01)למבנה החדש - לפי הערך בעמודה: WCO PKG TP,סוג אריזה ,"Type of packages identification, coded",TypeCode,            TypeCode,Declaration.Consignment.ConsignmentItem.Packaging.TypeCode,קוד סוג אריזה,,,,צריך
+482,ConsignmentItem,4,31B,0..*,,,,,H,,,TransportEquipment,         TransportEquipment,Declaration.Consignment.ConsignmentItem.TransportEquipment,כותרת פרטי ציוד הובלה,"בימי ויבשתי, חובה חטיבה Packaging  או חטיבת   TransportEquipment  , או את שתיהן.
+באווירי , חובה חטיבה  Packaging וחטיבה   TransportEquipment הינה רשות
+בעסקת ריקון, חטיבה זו הינה חובה למשלח ימי","קיים בשתי רמות ברמת המטען וברמת שורה במטען .
+הוחלט להשתמש ברמת שורה במטען
+היכן שחובת ההזנה מותנית, התנאי הוא שחובה חטיבה זו או חטיבת Packaging",,צריך
+483,ConsignmentItem,5,152 ,0..1,חובה בכל מקרה שציוד ההובלה הוא סוג של מכולה,סוג ציוד ההובלה.   חובה רק במצהר מלא/מכולות ריקות/ריקונים?,"רשומה 3 - סוג מכולה, פוז' 028-029 + אורך מכולה, פוז' 030-031",C,המרה: יש לשרשר את הנתונים ברשומה 3 פוז' 028-029 + 030-031. להכנס לטבלה: TBLOAD_A45_HCONT_TO_WCO    ולשלוף את הערך המתאים מעמודה: WCO_TYPE,"סוג אריזה 
+(של ציוד הובלה)",Equipment size and type identification,CharacteristicCode,            CharacteristicCode,Declaration.Consignment.ConsignmentItem.TransportEquipment.CharacteristicCode,קוד סוג  ציוד הובלה,"מכולה, טריילר וכו'
+בעסקת ריקון, שדה זה  חובה למשלח ימי","ISO 6346 למכולה
+או
+לפי  ULD סוגי 
+IATA",ללכת לפי תקן ISO  במכולות,צריך
+484,ConsignmentItem,5,351 ,0..1,מצהר מלא. לא להסבה,קוד סטטוס ציוד הובלה.ישמש במצהר מלא עם קוד 4 -REMAIN ON BOARD לציון מכולות שלא יורדות מאנייה,,C,לא להסבה,,Container status code,EventStatusCode,            EventStatusCode,Declaration.Consignment.ConsignmentItem.TransportEquipment.EventStatusCode,קוד סטאטוס ציוד הובלה,,"בימי - 
+ישמש למכולות שלא יורדות מהאוניה (מצהר מלא)
+קוד  4  (ורק קוד 4)   remain on board 
+ניתן להשתמש לצורך הרחבת סוג טיפול בציוד הובלה  
+באווירי -
+ישמש עבור ULD שלא יורדים מהמטוס
+(מצהר מלא  FROB - freight  freight remain on board )   
+קוד 4   (ורק קוד 4)  remain on board 
+
+",,צריך
+485,ConsignmentItem,5,154 ,0..1,,חובה במכולות ריקות בלבד-מציין מידת מילוי של כלי ההובלה-חובה במכולות ריקות ואיזוטנקים ריקים,"קוד טיפול, רשומה 3, פוז' 091-092",C,"אם קוד הטיפול הוא 15 או 23 יושם לשדה הערך ""4""' . עבור קוד טיפול 3 יש לכתוב ערך ""5"" . אחרת ישאר ריק",קוד תוכן מכולה מיוחדת ,Transport equipment loaded status,FullnessCode,            FullnessCode,Declaration.Consignment.ConsignmentItem.TransportEquipment..FullnessCode,קוד מידת מילוי של ציוד ההובלה,"בעסקת ריקון, אין להזין ערך 4 (מכולה ריקה)","ישמש לצורך דיווח מכולות ריקות שאינן בבעלות פרטית.
+ברמת מטען ( Consignment )  , אין לכלול גם מכולות ריקות וגם מכולות מלאות.",,צריך
+486,ConsignmentItem,5,159 ,0..1,,חובה רק עבור מכולות ומטענים מרוקנים,מספר מכולה- רשומה 3 - פוז' 016-027,C,העתקה מלאה של מספר המכולה. ,"מזהה אריזה
+(מספר מכולה/אחר)",Equipment identification number,ID,            ID,Declaration.Consignment.ConsignmentItem.TransportEquipment.ID,מספר מזהה ציוד הובלה,,"בימי - מספר מכולה
+באווירי- מספר ULD
+ביבשתי  - מספר מכולה אם מטען מגיע במכולה או מספר משאית אם מגיע לא במכולה",,צריך
+487,ConsignmentItem,5,157 ,0..1,,לא רלוונטי למצהר ימי,,O,לא צריך,,Container legal status indicator,LegalStatusIndicator,            LegalStatusIndicator,Declaration.Consignment.ConsignmentItem.Packaging.TransportEquipment.LegalStatusIndicator,אינדקציה אם ציוד ההובלה תקני,,"1 - ציוד תקני 
+0 - ציוד לא תקני
+לא נדרש  ע""י חנ""י",להחלטת הנמל,לא צריך
+488,ConsignmentItem,5,279 ,0..1,,קוד מדינת הרישוי של ציוד ההובלה. נראה לא רלוונטי למצהר ימי,,O,לא צריך,,Transport equipment country,LicensePlateIssuingCountry,            LicensePlateIssuingCountry,Declaration.Consignment.ConsignmentItem.TransportEquipment.LicensePlateIssuingCountry,מזהה מדינת רישוי של ציוד הובלה,,קוד מדינת לוחות זיהוי של טריילר המובא באוניה,,צריך
+492,ConsignmentItem,5,151 ,0..1,,חובה רק במכולות ריקות- EDIFACT8077,קוד בעלות-רשומה 6- פוז' 158,C,"המרה לפי הערך בקוד בעלות-רשומה 6- פוז' 158        מצהר קיים 1 = WCO 1 ,      מצהר קיים 0 =  WCO 2      ",קוד בעלות,"Equipment supplier type, coded",SupplierPartyTypeCode,            SupplierPartyTypeCode,Declaration.Consignment.ConsignmentItem.TransportEquipment.SupplierPartyTypeCode,קוד סוג הגורם שבבעלותו ציוד ההובלה,"ספק (בעלים) של ציוד ההובלה, עדיין לא נותן פתרון לבעלות פרטית ",לבדוק האם זהה לקוד קו למכולות,יש להוסיף ערך בעלות פרטית לטבלה,צריך
+1000,ConsignmentItem,5,44B,0..*,,,,,H,, ,Seal,            Seal,Declaration.Consignment.ConsignmentItem.TransportEquipment.Seal,כותרת חטיבת סגרים,,"כותרת חטיבת סגרים 
+חובה אם סוג המכולה מחייב סגר.
+בעסקת ריקון חטיבה זו הינה רשות למשלח ימי",,צריך
+1001,ConsignmentItem,6,006 ,0..1,,,,,,,Sequence number,SequenceNumeric,               SequenceNumeric,Declaration.Consignment.ConsignmentItem.TransportEquipment.Seal.SequenceNumeric ,מספר מופע,,בחטיבה רב מופעית זהו מספר המופע,,צריך
+1002,ConsignmentItem,6,165 ,0..1,,במסר הקיים יתכנו עד שני סגרים. במידה ויש יותר מאחד  - יש למפות גם אותו.,"מספר סגר-רשומה 3-פוז' 101-108, וברשומה 5 פוז' 147-154 - סגר נוסף",C,שרשור הערך ברשומה 5 לערך המופיע ברשומה 3-חובה רק במכולות- מספרי סגרים(רב מופעי),מספר סגר,Seal number,ID,               ID,Declaration.Consignment.ConsignmentItem.TransportEquipment.Seal.ID,מספר סגר,,,,צריך
+1003,ConsignmentItem,6,407 ,0..1,,,,,,,Seal Type Code  ,TypeCode,               TypeCode,Declaration.Consignment.ConsignmentItem.TransportEquipment.Seal.TypeCode,סוג סגר,,,,צריך
+1004,ConsignmentItem,6,408 ,0..1,,,,,,,Seal Condition Code,ConditionCode,               ConditionCode,Declaration.Consignment.ConsignmentItem.TransportEquipment.Seal.ConditionCode,מצב סגר,,,,צריך
+1005,ConsignmentItem,6, 53B,0..1,,,,,,,SealingParty,SealingParty,               SealingParty,,הגורם שהסגר שלו,,,,לא צריך
+1006,ConsignmentItem,7,R116,0..1,,,,,,,Sealing Party Name,Name,                  Name,,שם,,,,לא צריך
+1007,ConsignmentItem,7,R117,0..1,,,,,,,Sealing Party Identifier ,ID,                  ID,,מספר,,,,לא צריך
+490,ConsignmentItem,6,165 ,0..1,,במסר הקיים יתכנו עד שני סגרים. במידה ויש יותר מאחד  - יש למפות גם אותו.,"מספר סגר-רשומה 3-פוז' 101-108, וברשומה 5 פוז' 147-154 - סגר נוסף",C,שרשור הערך ברשומה 5 לערך המופיע ברשומה 3-חובה רק במכולות- מספרי סגרים(רב מופעי),מספר סגר,Seal number,SealID,               SealID,Declaration.Consignment.ConsignmentItem.Packaging.TransportEquipment.SealID,מספר מזהה סגר,,"נמצא גם ברמת מטען , בהנחה ש- Comodity יהיה חד מופעי אז השדה כאן מתאים לרמת שורה המטען","מספר סגר – מוביל ימי
++
+מספר סגר נוסף (O)  אופציונלי. רק לגבי מכולות שיש להן שני סגרים. ",בוטל
+495,ConsignmentItem,4,35B,0..*,,,,,H,,,UCR,         UCR,Declaration.Consignment.ConsignmentItem.UCR,UCR  כותרת   ,,,,צריך
+496,ConsignmentItem,5,016 ,0..1,,מזהה בנלאומי שילווה את המטען לכל אורך שרשרת לוגיסטית. אולי יחליף את שטר המטען,,O,לא להסבה,UCR,UCR,ID,            ID,Declaration.Consignment.ConsignmentItem.UCR.UCR.ID,מספר מזהה מטען בינלאומי,,כאשר במשלוחים של מטען שהם חלק מעיסקה אחת גדולה שמגיעה בחלקים כל תקופה,,צריך
+497,ConsignmentItem,5,009 ,0..1,,מזהה של הספק למטען,,O,לא להסבה,,Trader reference,TraderAssignedReferenceID,            TraderAssignedReferenceID,Declaration.Consignment.ConsignmentItem.UCR.TraderAssignedReferenceID,"מזהה מטען שניתן ע""י הספק",,מזהה של הספק למטען. יכול לשמש כרפרנס נוסף,,צריך

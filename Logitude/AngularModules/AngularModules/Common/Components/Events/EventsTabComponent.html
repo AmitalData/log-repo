@@ -1,0 +1,216 @@
+﻿
+<style type="text/css">
+    .EventItemBox {
+        height: 80px;
+        padding: 5px;
+        margin-bottom: 5px;
+        border: 1px solid #D1D1D1;
+        background: rgba(235, 235, 235, 0.5);
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+    }
+
+    .NotesTextArea {
+        padding: 2px;
+        padding-left: 4px;
+        text-indent: 0px;
+        font-size: 10px;
+        color: #45494A;
+        background: #FFFADC;
+        border: 1px Solid #FFFFFF;
+        border-radius: 2px;
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px;
+        -webkit-box-shadow: 0px 0px 5px 3px #C8C8C8;
+        -moz-box-shadow: 0px 0px 5px 3px #C8C8C8;
+        box-shadow: 0px 0px 5px 3px #C8C8C8;
+    }
+</style>
+
+<div class="TabHolder">
+    <table *ngIf="IsVisibile">
+
+        <tr class="TabTitleRow">
+            <td>
+                <table>
+                    <tr>
+                        <td style="width: 1px;">{{TabHeaderTextCode | TextCodeTranslationPipe}}</td>
+
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 1px;">({{EventsCount}})</td>
+
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>
+
+                        <td>
+                            <div>
+                                <ul class="PagesMenu" *ngIf="IsPagesMenuVisible">
+                                    <li *ngFor="let item of PagesMenu" (click)="OnPagesMenuSelecting(item)" [class.SelectedPageMenu]="item === SelectedMenu">{{item.Name}}</li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr style="height: 1px;">
+            <td>
+                <table>
+                    <tr>
+                        <td style="width: 1px;">
+                            <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+
+                        <td style="width: 200px;">
+                            <SearchBox (TextChanged)="SearchMethod($event)"></SearchBox>
+                        </td>
+
+                        <td style="width:14px;">
+                            <HelpIcon [IconSize]="14" [Header]="'TraceEvent.O.SearchBy' | TextCodeTranslationPipe" [Text]="'TraceEvent.SearchByHelpText' | TextCodeTranslationPipe"></HelpIcon>
+                        </td>
+
+                        <td style="width: 15px;">
+                            <div class="VerticalLine" style="height: 25px;"></div>
+                        </td>
+
+                        <td style="width: 16px;">
+                            <CheckBox [IsChecked]="IncludeDeleted" (Checked)="IncludeDeleted = $event"></CheckBox>
+                        </td>
+
+                        <td style="width: 3px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 1px; font-size: 11px; color: #6E7172;">{{'TraceEvent.O.IncludeDeleted' | TextCodeTranslationPipe}}</td>
+
+                        <td style="width: 15px;">
+                            <div class="VerticalLine" style="height: 25px;"></div>
+                        </td>
+
+                        <td style="width: 65px;">
+                            <button class="Button" (click)="AddButtonClicked()" [disabled]="IsHybrid || !EntityId">{{'TraceEvent.O.AddEvent' | TextCodeTranslationPipe}}</button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr style="height: 5px;">
+            <td>
+                <div></div>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <div class="MediaFill" style="border: 1px solid #D1D1D1; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;">
+                    <div class="ScrollViewer" style="top:5px; left: 5px; right: 5px; bottom: 5px;">
+                        <ul class="ScrollContent">
+                            <li class="EventItemBox" *ngFor="let item of ItemsSource" [ngStyle]="{background: item.Background}">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <table>
+                                                <tr>
+                                                    <td style="font-size: 16px; color: #1B90CB; vertical-align: top;">
+                                                        {{item.Name}}
+                                                        <span style="margin-left: 5px; font-size: 16px; color: #1B90CB;" *ngIf="item.Location">({{item.Location}})</span>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>
+                                                        <table class="FixedTable">
+
+                                                            <tr>
+                                                                <td [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" style="width: 70px;" class="Label">Log Date:</td>
+                                                                <td [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" style="width: 85px;" class="Value">{{item.LogDateTime | DateTimeToDatePipe}}</td>
+                                                                <td [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" style="width: 60px;" class="Value">{{item.LogDateTime | DateTimeToTimePipe}}</td>
+                                                                <td [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" style="width: 50px;" class="Label">{{item.LableUser}}:</td>
+                                                                <td [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" style="width: 150px; max-width: 150px;" class="Value TextTrimming">{{item.User}}</td>
+                                                                <td [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" style="width: 90px;" class="Label" *ngIf="IsCustomerCare">Customer Care:</td>
+                                                                <td [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" style="width: 150px; max-width: 150px;" class="value TextTrimming" *ngIf="IsCustomerCare">{{item.CustomerCare}}</td>
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr style="height: 5px;">
+                                                                <td colspan="8">
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td class="Label" [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'">Event Date:</td>
+                                                                <td class="Value" [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'">{{item.EventDateTime | DateTimeToDatePipe}}</td>
+                                                                <td class="Value" [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'">{{item.EventDateTime | DateTimeToTimePipe}}</td>
+                                                                <td class="Label" [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'">
+                                                                    <div *ngIf="item.Deleted">Deleted:</div>
+                                                                </td>
+                                                                <td>
+                                                                    <img *ngIf="item.Deleted" src="./Images/RedX.png" />
+                                                                </td>
+                                                                <td *ngIf="IsCustomerCare">
+                                                                    <div></div>
+                                                                </td>
+                                                                <td *ngIf="IsCustomerCare">
+                                                                    <div></div>
+                                                                </td>
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+
+                                        <td style="width: 5px;">
+                                            <div></div>
+                                        </td>
+
+                                        <td style="width: 300px;">
+                                            <div class="MediaFill">
+                                                <textarea class="NotesTextArea"
+                                                          [(ngModel)]="item.Notes"
+                                                          [readonly]="true"
+                                                          style="background: #FFFADC !important;"></textarea>
+                                            </div>
+                                        </td>
+
+                                        <td style="width: 5px;">
+                                            <div></div>
+                                        </td>
+
+                                        <td style="width: 18px; vertical-align: bottom;">
+                                            <div style="width: 18px; height: 18px;">
+                                                <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditItemClicked(item)" [disabled]="item.IsEditingDisabled"></IconButton>
+                                            </div>
+
+                                            <div style="width: 18px; height: 18px; margin-top: 3px;">
+                                                <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteItemClicked(item)" [disabled]="item.IsDeletingDisabled"></IconButton>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+

@@ -1,0 +1,199 @@
+﻿using System;
+using System.Linq;
+using System.Web;
+using System.Collections.Generic;
+using Logitude.BL.Helpers;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityLists;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Server.Infrastructure.Helpers;
+using Logitude.Server.Tools.Counters;
+using Logitude.BL.CommonDataModel.Tools.DataMapping;
+using Logitude.Server.Tools.Helpers;
+
+namespace Logitude.BL.CommonDataModel.EntityQueries
+{
+    public class DocumentsFilingMetaDataValueQuery
+    {
+        DocumentsFilingMetaDataValueRepository repository;
+
+        public DocumentsFilingMetaDataValueQuery()
+        {
+            repository = new DocumentsFilingMetaDataValueRepository();
+        }
+
+        public DocumentsFilingMetaDataValueQuery(ICommonDataContext context)
+        {
+            repository = new DocumentsFilingMetaDataValueRepository(context);
+        }
+        public DocumentsFilingMetaDataValueQuery(int tenant)
+        {
+            repository = new DocumentsFilingMetaDataValueRepository(tenant);
+        }
+
+        public void Create(DocumentsFilingPM parentPM, DocumentsFilingMetaDataValuePM itemPM)
+        {
+            itemPM.Id = IdCounter.GetNumber("DocumentsFilingMetaDataValue", parentPM.Tenant).ToString();
+            itemPM.DocumentsFilingId = parentPM.Id;
+            itemPM.Tenant = parentPM.Tenant;
+
+            DocumentsFilingMetaDataValue itemPoco = new DocumentsFilingMetaDataValue()
+            {
+                Id = itemPM.Id,
+            };
+
+            DocumentsFilingMetaDataValueMapping.MapEntity(itemPM, itemPoco, true);
+            repository.Add(itemPoco);
+        }
+
+
+
+        public static void UpSert(DocumentsFilingPM documentsFilingPM, string MetaDataTypeCode, string MetaDataTypeValue)
+        {
+            string documentsMetaDataTypeId = null;
+            var commonDataContext = CommonDataContext.GetContext(documentsFilingPM.Tenant);
+            DocumentsMetaDataTypeRepository TypesRepo = new DocumentsMetaDataTypeRepository(commonDataContext);
+            var pocoMDType = TypesRepo.GetSingleDocumentsMetaDataTypeByCode(MetaDataTypeCode, documentsFilingPM.Tenant);
+            if (pocoMDType == null)
+            {
+                LogMessagingUtil.Instance.AppendLine("GetDocumentsMetaDataTypeVERId is null !!!!! UpSertVERValue - failed ");
+                return;
+            }
+            documentsMetaDataTypeId = pocoMDType.Id;
+
+
+            var documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(commonDataContext);
+            var mydocumentsFilingMetaDataVERValuePM = documentsFilingMetaDataValueQuery
+                .GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(documentsFilingPM.Id, documentsFilingPM.Tenant)
+                .FirstOrDefault(r => r.DocumentsMetaDataTypeId == documentsMetaDataTypeId);
+            if (mydocumentsFilingMetaDataVERValuePM != null)
+            {
+                if (mydocumentsFilingMetaDataVERValuePM.MetaDataValue == MetaDataTypeValue)
+                {
+                    LogMessagingUtil.Instance.AppendLine("mydocumentsFilingMetaDataVERValue.MetaDataValue == DeclarationNumber ");
+                    return;
+                }
+                var itemPoco = new DocumentsFilingMetaDataValue();
+
+                mydocumentsFilingMetaDataVERValuePM.MetaDataValue = MetaDataTypeValue;
+                DocumentsFilingMetaDataValueMapping.MapEntity(mydocumentsFilingMetaDataVERValuePM, itemPoco,true /*false - if false do not map keys !!*/ );
+                var repository = new DocumentsFilingMetaDataValueRepository(commonDataContext);
+                repository.Update(itemPoco);
+                var pmInMem = documentsFilingPM.DocumentsFilingMetaDataValues.FirstOrDefault(r => r.DocumentsMetaDataTypeId == documentsMetaDataTypeId);
+                if (pmInMem != null)
+                {
+                    pmInMem.MetaDataValue = MetaDataTypeValue;
+                }
+                else
+                {
+                    documentsFilingPM.DocumentsFilingMetaDataValues.Add(mydocumentsFilingMetaDataVERValuePM);
+                }
+                
+            }
+            else
+            {
+                var temp = new DocumentsFilingMetaDataValuePM()
+                {
+                    DocumentsMetaDataTypeId = documentsMetaDataTypeId,
+                    MetaDataValue = MetaDataTypeValue,
+                    DocumentsMetaDataTypeCode = MetaDataTypeCode,
+
+                };
+                documentsFilingMetaDataValueQuery.Create(documentsFilingPM, temp);
+                documentsFilingPM.DocumentsFilingMetaDataValues.Add(temp);
+
+
+            }
+            commonDataContext.SaveChanges();
+        }
+
+        public DocumentsFilingMetaDataValueQuery(DocumentsFilingMetaDataValueRepository documentsFilingMetaDataValueRepository)
+        {
+            repository = documentsFilingMetaDataValueRepository;
+        }
+
+        public DocumentsFilingMetaDataValuePM GetSinglePM(string id, int tenant)
+        {
+            DocumentsFilingMetaDataValue poco = repository.GetSingleDocumentsFilingMetaDataValue(id, tenant);
+
+            return new DocumentsFilingMetaDataValuePM()
+                                             {
+
+                                                 Id = poco.Id,
+                                                 DocumentsFilingId = poco.DocumentsFilingId,
+                                                 DocumentsMetaDataTypeId = poco.DocumentsMetaDataTypeId,
+                                                 MetaDataValue = poco.MetaDataValue,
+                                                 Tenant = poco.Tenant,
+                                             };
+        }
+
+        public IQueryable<DocumentsFilingMetaDataValuePM> GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(string documentsFilingId, int tenant)
+        {
+            IQueryable<DocumentsFilingMetaDataValuePM> documents = from a in repository.context.DocumentsFilingMetaDataValues.Include("DocumentsMetaDataTypes")
+                                                                   where a.Tenant == tenant && a.DocumentsFilingId == documentsFilingId
+                                                                   select new DocumentsFilingMetaDataValuePM()
+                                             {
+
+                                                 Id = a.Id,
+                                                 DocumentsFilingId = a.DocumentsFilingId,
+                                                 DocumentsMetaDataTypeId = a.DocumentsMetaDataTypeId,
+                                                 MetaDataValue = a.MetaDataValue,
+                                                 Tenant = a.Tenant,
+                                                 DocumentsMetaDataTypeCode = a.DocumentsMetaDataType != null ? a.DocumentsMetaDataType.Code : ""
+                                             };
+            return documents;
+        }
+
+        public IQueryable<DocumentsFilingMetaDataValuePM> GetDocumentsFilingMetaDataValuePMsByTenant1(int tenant)
+        {
+            IQueryable<DocumentsFilingMetaDataValuePM> documents = from a in repository.context.DocumentsFilingMetaDataValues
+                                                                   where a.Tenant == tenant
+                                                                   select new DocumentsFilingMetaDataValuePM()
+                                                                   {
+                                                                       Id = a.Id,
+                                                                       DocumentsFilingId = a.DocumentsFilingId,
+                                                                       DocumentsMetaDataTypeId = a.DocumentsMetaDataTypeId,
+                                                                       MetaDataValue = a.MetaDataValue,
+                                                                       Tenant = a.Tenant,
+                                                                   };
+            return documents;
+        }
+
+        public IQueryable<DocumentsFilingMetaDataValuePM> GetDocumentsFilingMetaDataValuePMsByTenantAndDocumentIds(int tenant,string[] documentIds)
+        {
+            IQueryable<DocumentsFilingMetaDataValuePM> documents = from a in repository.context.DocumentsFilingMetaDataValues
+                                                                   where a.Tenant == tenant && documentIds.Contains(a.Id)
+                                                                   select new DocumentsFilingMetaDataValuePM()
+                                                                   {
+                                                                       Id = a.Id,
+                                                                       DocumentsFilingId = a.DocumentsFilingId,
+                                                                       DocumentsMetaDataTypeId = a.DocumentsMetaDataTypeId,
+                                                                       MetaDataValue = a.MetaDataValue,
+                                                                       Tenant = a.Tenant,
+                                                                   };
+            return documents;
+        }
+
+        public DocumentsFilingMetaDataValuePM GetDocumentsFilingMetaDataValuePMsByDocumentIdTypeTenant(string documentsFilingId, string Type, int tenant)
+        {
+            DocumentsFilingMetaDataValuePM documents = (from a in repository.context.DocumentsFilingMetaDataValues.Include("DocumentsMetaDataTypes")
+                                                                   where a.Tenant == tenant && a.DocumentsFilingId == documentsFilingId && a.DocumentsMetaDataTypeId == Type
+                                                                   select new DocumentsFilingMetaDataValuePM()
+                                                                   {
+
+                                                                       Id = a.Id,
+                                                                       DocumentsFilingId = a.DocumentsFilingId,
+                                                                       DocumentsMetaDataTypeId = a.DocumentsMetaDataTypeId,
+                                                                       MetaDataValue = a.MetaDataValue,
+                                                                       Tenant = a.Tenant,
+                                                                       DocumentsMetaDataTypeCode = a.DocumentsMetaDataType != null ? a.DocumentsMetaDataType.Code : ""
+                                                                   }).FirstOrDefault();
+            return documents;
+        }
+
+
+
+    }
+}

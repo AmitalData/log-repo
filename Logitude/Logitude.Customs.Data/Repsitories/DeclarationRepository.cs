@@ -1,0 +1,443 @@
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.EntityKeys;
+using Simplog.Server.Infrastructure;
+using Logitude.Customs.Data.EntityLists;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+
+namespace Logitude.Customs.Data.Repsitories
+{
+    public partial class DeclarationRepository : IRepository<Declaration>
+    {
+        partial void onUpdate()
+        {
+
+        }
+
+
+
+        public List<Declaration> GetMulti(EntityKeyFields entityKeys)
+        {
+
+            throw new NotImplementedException();
+        }
+
+        public Declaration GetSingleDeclarationByNumber(string number, int tenant)
+        {
+            return (from a in context.Declarations
+                    where a.DeclarationNumber == number && a.Tenant == tenant
+                    select a).FirstOrDefault();
+        }
+        public void GetDailyStatistic(int tenant,
+            out int TotDec,
+            out int TotDecPay,
+            out int TotDecOpen2Date,
+
+            out int TotLastMonthCreatedByUserId,
+            out int TotLastMonthReferentUserId,
+
+
+
+            out int LastMonthTotDecStandAlone,
+            out int LastMonthTotdecIsConnectedToUnf,
+
+            out DateTime LastPaidDeclarationDate,
+            out int TotWithHATARA
+            )
+        {
+            TotLastMonthCreatedByUserId =
+                TotLastMonthReferentUserId =
+            TotWithHATARA = TotDecOpen2Date = TotDecPay = TotDec = -1;
+            LastMonthTotDecStandAlone = LastMonthTotdecIsConnectedToUnf = -1;
+            LastPaidDeclarationDate = DateTime.MinValue;
+
+            var weekAgo = DateTime.Now.Date;//.AddDays(-7);
+            var monthAgo = DateTime.Now.Date;//.AddMonths(-1);
+
+            var qOpenLastWeek =
+                (from a in context.Declarations
+                 where
+                 a.Tenant == tenant &&
+                 a.CreateDateTime >= weekAgo
+                 select a);
+
+            var qOpenLastMonth =
+                (from a in context.Declarations
+                 where
+                 a.Tenant == tenant &&
+                 a.CreateDateTime >= monthAgo
+                 select a);
+
+            //var qOpenFrom =
+            //    (
+            //    from a in qOpenLastMonth
+            //    group a by a.IsConnectedToUnifreight into g
+            //    select new { g.Key, tot = g.Count() }
+            //    );
+
+
+            var qLastMonthTotDecStandAlone =
+                (
+                from a in qOpenLastMonth
+                where a.IsConnectedToUnifreight == false
+                select a
+                );
+            var qLastMonthTotdecIsConnectedToUnf =
+                (
+                from a in qOpenLastMonth
+                where a.IsConnectedToUnifreight == true
+                select a
+                );
+
+            var qOpenLastMonthCreatedByUserId =
+                (
+                from a in qOpenLastMonth
+                select a.CreatedByUserId
+                ).Distinct();
+            var qOpenLastMonthReferentUserId =
+                (
+                from a in qOpenLastMonth
+                select a.ReferentUserId
+                ).Distinct();
+            //var qOpenLastMonthCreatedByUserIdCount = qOpenLastMonthCreatedByUserId.
+
+
+
+
+            var qLastPaidDeclarationDate = (from a in qOpenLastMonth
+                                            where a.PaymentDate.HasValue &&
+                                            //!string.IsNullOrWhiteSpace(a.PaymentOrderNumber)
+                                            (a.PaymentOrderNumber != null || a.PaymentOrderNumber.Trim() != string.Empty)
+
+                                            orderby a.PaymentDate descending
+                                            select a.PaymentDate
+                     );
+            var qAllDecWithHATARA =
+                (
+                from a in context.Declarations
+                where a.HatraDate.HasValue
+                select a.Id
+                ).Distinct(); ;
+            var qq = (
+                 from a in qOpenLastWeek
+                 group a by 1 into gOpenLastWeek
+                 select new
+                 {
+                     Tot = 0,
+                     TotHATARA = 0,
+                     TotPayment = 0,
+                     TotOpenLastWeek = gOpenLastWeek.Count(),
+
+                     TotLastMonthCreatedByUserId = 0,
+                     TotLastMonthReferentUserId = 0,
+                     LastMonthTotDecStandAlone = 0,
+                     LastMonthTotdecIsConnectedToUnf = 0,
+                     LastPaidDeclarationDate = DateTime.MinValue,
+                 }
+                 ).Concat(
+
+                 from b in context.Declarations
+                .Where(r => r.Tenant == tenant)
+                .Where(r => r.PaymentDate.HasValue)
+                 group b by 1 into gPaymentDate
+                 select new //TotM()
+                 {
+                     Tot = 0,
+                     TotHATARA = 0,
+                     TotPayment = gPaymentDate.Count(),
+                     TotOpenLastWeek = 0,
+                     TotLastMonthCreatedByUserId = 0,
+                     TotLastMonthReferentUserId = 0,
+                     LastMonthTotDecStandAlone = 0,
+                     LastMonthTotdecIsConnectedToUnf = 0,
+                     LastPaidDeclarationDate = DateTime.MinValue,
+                 }
+                 ).Concat(
+                 from c in context.Declarations
+                 group c by 1 into gTot
+                 select new //TotM()
+                 {
+                     Tot = gTot.Count(),
+                     TotHATARA = qAllDecWithHATARA.Count(),
+                     TotPayment = 0,
+                     TotOpenLastWeek = 0,
+                     TotLastMonthCreatedByUserId = qOpenLastMonthCreatedByUserId.Count(),
+                     TotLastMonthReferentUserId = qOpenLastMonthReferentUserId.Count(),
+
+                     LastMonthTotDecStandAlone = qLastMonthTotDecStandAlone.Count(),
+                     LastMonthTotdecIsConnectedToUnf = qLastMonthTotdecIsConnectedToUnf.Count(),
+                     LastPaidDeclarationDate = DateTime.MinValue,
+                 }
+                 )
+
+                 ;
+
+            var list = qq.ToList();
+            if (list.Count > 0)
+            {
+                TotDec = list.Max(a => a.Tot);
+                TotWithHATARA = list.Max(a => a.TotHATARA);
+                TotDecPay = list.Max(a => a.TotPayment);
+                TotDecOpen2Date = list.Max(a => a.TotOpenLastWeek);
+                TotLastMonthCreatedByUserId = list.Max(a => a.TotLastMonthCreatedByUserId);
+                TotLastMonthReferentUserId = list.Max(a => a.TotLastMonthReferentUserId);
+                LastMonthTotDecStandAlone = list.Max(a => a.LastMonthTotDecStandAlone);
+                LastMonthTotdecIsConnectedToUnf = list.Max(a => a.LastMonthTotdecIsConnectedToUnf);
+                LastPaidDeclarationDate = qLastPaidDeclarationDate.FirstOrDefault().GetValueOrDefault();//  list.Max(A => A.LastPaidDeclarationDate); 
+            }
+
+            //return null;
+        }
+        //<--- Yuval Chalup 19.11.2015 TASK-17450
+        public IQueryable<Declaration> GetSingleDeclarationPMByNumber(string number, int tenant)
+        {
+            return (from a in context.Declarations
+                    where a.DeclarationNumber == number && a.Tenant == tenant
+                    select a);
+        }
+        //Yuval Chalup 19.11.2015 TASK-17450 --->
+
+        public string GetIdByCustomFileNo(string customFileNo, int tenant)
+        {
+            if (String.IsNullOrWhiteSpace(customFileNo)) return "";
+            return
+                  (
+                  from rec in context.Declarations
+                  where rec.CustomFileNo == customFileNo && rec.Tenant == tenant
+                  select rec.Id
+                  )
+                  .FirstOrDefault();
+        }
+        public string GetConcurrencyGUIDByCustomFileNo(string customFileNo, int tenant)
+        {
+            if (String.IsNullOrWhiteSpace(customFileNo)) return "";
+            return
+                  (
+                  from rec in context.Declarations
+                  where rec.CustomFileNo == customFileNo && rec.Tenant == tenant
+                  select rec.ConcurrencyGUID
+                  )
+                  .FirstOrDefault();
+        }
+
+
+        public string GetIdByExternalDeclarationNumber(string externalDeclarationNumber, int tenant)
+        {
+            if (String.IsNullOrWhiteSpace(externalDeclarationNumber)) return "";
+            return
+                  (
+                  from rec in context.Declarations
+                  where rec.ExternalDeclarationNumber == externalDeclarationNumber && rec.Tenant == tenant
+                  select rec.Id
+                  )
+                  .FirstOrDefault();
+        }
+
+        public string GetIdByDeclarationNumber(string declarationNumber, int tenant)
+        {
+            if (String.IsNullOrWhiteSpace(declarationNumber)) return "";
+            return
+                  (
+                  from rec in context.Declarations
+                  where rec.DeclarationNumber == declarationNumber && rec.Tenant == tenant
+                  select rec.Id
+                  )
+                  .FirstOrDefault();
+        }
+
+        public List<Declaration> GetDeclarationsById(List<string> declarationIds)
+        {
+
+            List<Declaration> declarations = (from a in context.Declarations
+                                              where declarationIds.Contains(a.Id)
+                                              select a).ToList();
+
+            return declarations;
+
+        }
+
+
+        public List<Declaration> GetDeclarationsThatCanResend(int tenant, int take)
+        {
+            DateTime month2Ago = DateTime.Now.AddDays(-60);
+            var statuss = new List<string>() { "12", "13" };
+            var myQ = (from a in context.Declarations
+                       where a.CreateDateTime > month2Ago
+                       where statuss.Contains(a.DeclarationStatusTypeCode)
+                       select a);
+            myQ = myQ.Take(take);
+            var list = myQ.ToList();
+            return list;
+        }
+        public Dictionary<string, string> GetCustomersByDeclarationIds(List<string> declarationIds, int tenant)
+        {
+            Dictionary<string, string> declarationCustomers = new Dictionary<string, string>();
+            Dictionary<string, string> DeclarationCustomers = new Dictionary<string, string>();
+
+            Dictionary<string, string> result = (from a in context.Declarations
+                                                 where declarationIds.Contains(a.Id) && a.Tenant == tenant
+                                                 select a).ToDictionary(d => d.Id, f => f.CustomerId);
+
+
+            CardRepository cardRep = new CardRepository(tenant);
+            declarationCustomers = cardRep.GetCustomerNamesById(result.Values.ToList());
+
+
+
+
+            foreach (var item in result)
+            {
+                if (item.Value != null)
+                {
+                    string customerName = declarationCustomers[item.Value];
+                    DeclarationCustomers.Add(item.Key, customerName);
+                }
+
+            }
+
+            //declarationCustomers = result.Select(t => new { t.Id, t.CustomerId })
+            //        .ToDictionary(t => t.Id, t => t.CustomerId);
+
+            //foreach (var item in declarationCustomers)
+            // {
+            //  Card customerCard = CardRepository.GetSingleCard(item.Value, tenant, true);
+            //  DeclarationCustomers.Add(item.Key,customerCard.LocalName);
+
+            // }
+
+            return DeclarationCustomers;
+
+        }
+
+
+        public List<SupplierInvoice> GetSupplierInvoicesByDeclaration(string declarationId, int tenant)
+        {
+            return (from a in context.SupplierInvoices
+                    where a.DeclarationId == declarationId && a.Tenant == tenant && a.InvoiceCurrencyTypeCode != null
+                    select a).ToList();
+        }
+
+        public string GetCustomFileNoByDeclarationId(string declarationId, int tenant)
+        {
+            if (String.IsNullOrWhiteSpace(declarationId)) return "";
+            return
+                  (
+                  from rec in context.Declarations
+                  where rec.Id == declarationId && rec.Tenant == tenant
+                  select rec.CustomFileNo
+                  )
+                  .FirstOrDefault();
+        }
+
+        public List<string> GetCustomsFileNumbersByDeclaraionIds(List<string> declarationIds, int tenant)
+        {
+            List<string> declarations = (from a in context.Declarations
+                                         where declarationIds.Contains(a.Id) && a.Tenant == tenant
+                                         select a.CustomFileNo).ToList();
+
+            return declarations;
+        }
+
+        public void FastDeleteMulti(DeclarationKeys entityKeyFields)
+        {
+
+            (context as DbContextBase)
+                .DeleteWhere<Declaration>(rec => rec.Id == entityKeyFields.Id);
+        }
+
+        public Declaration GetSingleDeclarationById(string id, int tenant)
+        {
+            Declaration declaration = (from a in context.Declarations
+                                       where a.Id == id && a.Tenant == tenant
+                                       select a).FirstOrDefault();
+
+            return declaration;
+        }
+
+        public int GetInvoiceItemsWithTradeAgreementCount(string declarationId, int tenant)
+        {
+            return (from a in context.SupplierInvoiceItems
+                    where a.DeclarationId == declarationId && a.Tenant == tenant && a.TradeAgreementCode != null
+                    select a).Count();
+        }
+
+        public IQueryable<Declaration> GetCourierConnectedDeclaratins(string CourierMasterId, int tenant)
+        {
+            List<string> courierDeclarations = (from a in context.CourierDeclarations
+                                                where a.CourierMasterId == CourierMasterId && a.Tenant == tenant
+                                                select a.DeclarationId).ToList();
+
+            IQueryable<Declaration> declarations = (from a in context.Declarations
+                                                    where courierDeclarations.Contains(a.Id)
+                                                    select a);
+
+            return declarations;
+        }
+
+        public IQueryable<Declaration> GetNotConnectedDeclaratins(int tenant)
+        {
+            List<string> courierDeclarations = (from a in context.CourierDeclarations
+                                                where a.CourierMasterId != null && a.Tenant == tenant
+                                                select a.DeclarationId).ToList();
+
+            IQueryable<Declaration> declarations = (from a in context.Declarations
+                                                    where !courierDeclarations.Contains(a.Id) && a.IsCourierDeclaration == true
+                                                    select a);
+
+            return declarations;
+        }
+
+
+        public void SetIsChangedAndSubmitChanges(Declaration declaration)
+        {
+            if (!declaration.PaymentDate.HasValue)
+            {
+                declaration.IsChanged = true;
+                this.Update(declaration);
+                this.SubmitChanges();
+            }
+        }
+
+        public bool GetIsValueForCustomsOnlyFromDeclaration(string declarationId, int tenant)
+        {
+            bool? IsValueForCustomsOnly = (from a in context.Declarations
+                                           where a.Id == declarationId && a.Tenant == tenant
+                                           select a.IsValueForCustomsOnly).FirstOrDefault();
+            return IsValueForCustomsOnly ?? IsValueForCustomsOnly.Value;
+        }
+
+        public string GetCusomFileNoForDeclaration(string declarationId, int tenant)
+        {
+            Declaration dec = (from a in context.Declarations
+                    where a.Id == declarationId && a.Tenant == tenant
+                    select a).FirstOrDefault();
+
+            return dec != null ? dec.CustomFileNo : null;
+        }
+
+        public Declaration GetByCustomFileNo(string customFileNo, int tenant)
+        {
+            if (String.IsNullOrWhiteSpace(customFileNo)) return null;
+            return
+                  (
+                  from rec in context.Declarations
+                  where rec.CustomFileNo == customFileNo && rec.Tenant == tenant
+                  select rec
+                  )
+                  .FirstOrDefault();
+        }
+
+    }
+    //class TotM {
+
+}
+  
+

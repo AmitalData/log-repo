@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<xs:schema
+    attributeFormDefault="unqualified"
+	elementFormDefault="qualified"
+    xmlns:GCCSCargoImp="http://www.champ.aero/GCCS/CargoXML"
+	targetNamespace="http://www.champ.aero/GCCS/CargoXML"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    version="2.0"
+>
+	<xs:include schemaLocation="common.xsd"/>
+
+    <xs:complexType name="SplitConsignment">
+        <xs:sequence>
+            <xs:element name="MasterAWBConsignmentDetail" type="GCCSCargoImp:FSA_ConsignmentDetail"/>
+            <xs:element maxOccurs="20" minOccurs="0" name="StatusDetail" type="GCCSCargoImp:StatusDetail"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="OtherServiceInformation" type="GCCSCargoImp:FSAOtherServiceInformation"/>
+        </xs:sequence>
+    </xs:complexType>
+
+	<xs:complexType name="FSA_ConsignmentDetail">
+        <xs:sequence>
+            <xs:element name="AWBIdentification" type="GCCSCargoImp:AWBIdentification"/>
+            <xs:element name="AWBOriginAndDestination" type="GCCSCargoImp:AWBOriginAndDestination" minOccurs="0"/>
+            <xs:element name="QuantityDetail" type="GCCSCargoImp:QuantityDetail" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="StatusDetail">
+        <xs:sequence>
+            <xs:element name="MovementDetail" type="GCCSCargoImp:MovementDetail"/>
+            <xs:element name="QuantityDetail" type="GCCSCargoImp:QuantityDetail"/>
+            <xs:element name="TimeOfDepartureInfo" type="GCCSCargoImp:TimeOfDepartureInfo" minOccurs="0"/>
+            <xs:element name="TimeOfArrivalInfo" type="GCCSCargoImp:TimeOfArrivalInfo" minOccurs="0"/>
+            <xs:element name="Name" type="GCCSCargoImp:Name" minOccurs="0"/>
+            <xs:element name="VolumeDetail" type="GCCSCargoImp:VolumeDetail" minOccurs="0"/>
+            <xs:element name="ULDIdentification" type="GCCSCargoImp:ULDIdentification" minOccurs="0" maxOccurs="20"/>
+            <xs:element name="OtherServiceInformation" type="GCCSCargoImp:FSAOtherServiceInformation" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute name="StatusCode" type="GCCSCargoImp:StatusCode" use="required"/>
+        <xs:attribute name="DiscrepancyCode" type="GCCSCargoImp:DiscrepancyCode" use="optional"/>
+        <xs:attribute name="TransferManifestNumber" type="GCCSCargoImp:TransferManifestNumber" use="optional"/>  
+    </xs:complexType>
+    <xs:complexType name="TimeOfDepartureInfo">
+        <xs:attribute name="TypeOfTimeIndicator" type="GCCSCargoImp:TypeOfTimeIndicator" use="optional"/>
+        <xs:attribute name="Time" type="GCCSCargoImp:Time" use="required"/>
+        <xs:attribute name="DayChangeIndicator" type="GCCSCargoImp:DayChangeIndicator" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="TimeOfArrivalInfo">
+        <xs:attribute name="TypeOfTimeIndicator" type="GCCSCargoImp:TypeOfTimeIndicator" use="optional"/>
+        <xs:attribute name="Time" type="GCCSCargoImp:Time" use="required"/>
+        <xs:attribute name="DayChangeIndicator" type="GCCSCargoImp:DayChangeIndicator" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="MovementDetail">
+        <xs:attribute name="CarrierCode" type="GCCSCargoImp:CarrierCode" use="optional"/>
+        <xs:attribute name="FlightNumber" type="GCCSCargoImp:FlightNumber" use="optional"/>
+        <xs:attribute name="Day" type="GCCSCargoImp:DayOfMonth" use="optional"/>
+        <xs:attribute name="Month" type="GCCSCargoImp:Month" use="optional"/>
+        <xs:attribute name="ActualTime" type="GCCSCargoImp:Time" use="optional"/>
+        <xs:attribute name="AirportCityCodeOfDeparture" type="GCCSCargoImp:AirportCode" use="optional"/>
+        <xs:attribute name="AirportCityCodeOfArrival" type="GCCSCargoImp:AirportCode" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="StatusAnswer">
+        <xs:sequence>
+            <xs:element name="StandardMessageIdentification" type="GCCSCargoImp:StandardMessageIdentification"/>
+            <xs:element maxOccurs="20" minOccurs="1" name="SplitConsignment" type="GCCSCargoImp:SplitConsignment"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

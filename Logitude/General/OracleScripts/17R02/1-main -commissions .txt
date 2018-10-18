@@ -1,0 +1,18 @@
+delete vendorcommissions ;
+/
+update supplierinvoices set VENDORCOMISSIONPERCENTAGE = '', vendorid='' where VENDORCOMISSIONPERCENTAGE is not null;
+
+/
+commit;
+
+
+
+ALTER TABLE supplierinvoices MODIFY (
+vendorcomissionpercentage NUMBER(7,4));
+/
+
+
+ALTER TABLE vendorcommissions MODIFY (
+ commisionpercentage NUMBER(7,4));
+
+/

@@ -1,0 +1,1 @@
+update AccountingSystems set AllowAPInvoicesTransfer = 1 where Code = 'HV' or Code = 'RH'

@@ -1,0 +1,644 @@
+﻿
+<style type="text/css">
+    .AdvancedSearchHeadNormal {
+        background: white;
+        border: 1px solid white;
+        border-bottom-color: #FFFADC;
+        border-radius: 4px 4px 0 0;
+        -moz-border-radius: 4px 4px 0 0;
+        -webkit-border-radius: 4px 4px 0 0;
+    }
+
+    .AdvancedSearchHead {
+        background: #FFFADC;
+        border: 1px solid #BABABA;
+        border-bottom-color: #FFFADC;
+        border-radius: 4px 4px 0 0;
+        -moz-border-radius: 4px 4px 0 0;
+        -webkit-border-radius: 4px 4px 0 0;
+    }
+
+    .AdvancedSearchArea {
+        background: #FFFADC;
+        border: 1px solid #BABABA;
+        border-radius: 0 0 4px 4px;
+        -moz-border-radius: 0 0 4px 4px;
+        -webkit-border-radius: 0 0 4px 4px;
+    }
+
+    .AdvancedSearchAreaLine {
+        background: #FFFADC;
+        height: 1px;
+        width: 249px;
+        position: absolute;
+        top: 0;
+        right: 1px;
+    }
+</style>
+
+<table>
+    <tr>
+        <td>
+            <div class="TabHolder">
+                <table>
+                    <tr class="TabTitleRow">
+                        <td>
+                            <table>
+                                <tr>
+                                    <td style="width: 1px;">{{ItemsSource1.length}} Houses Attached</td>
+
+                                    <td style="width: 1px; padding-left: 5px;">
+                                        <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width: 1px;">
+                                        <button class="Button" id="{{ 'NewHouseBtn' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled" (click)="NewShipmentClicked()">New house</button>
+                                    </td>
+
+                                    <td style="width: 5px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width: 250px;">
+                                        <div class="MediaFill">
+                                            <div class="MediaFixed AdvancedSearchHeadNormal" [class.AdvancedSearchHead]="IsAdvancedSearchOpened">
+                                                <table>
+                                                    <tr>
+                                                        <td style="width: 5px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td style="width: 200px;">
+                                                            <SearchBox [UseTimer]="true" (TextChanged)="SearchText = $event"></SearchBox>
+                                                        </td>
+
+                                                        <td style="width: 8px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td style="width: 32px">
+                                                            <table style="cursor: pointer;" (mousedown)="AdvancedSearchButtonClicked()">
+                                                                <tr>
+                                                                    <td style="width: 17px;">
+                                                                        <img style="float:left;" [hidden]="HasFilters" src="./Images/Buttons/Filter_Gray.png" title="No filters have been set" />
+                                                                        <img style="float:left;" [hidden]="!HasFilters" src="./Images/Buttons/Filter_Blue.png" title="Some filters have been set" />
+                                                                    </td>
+
+                                                                    <td style="width: 3px;">
+                                                                        <div></div>
+                                                                    </td>
+
+                                                                    <td style="width: 12px;">
+                                                                        <img style="float:left;" [hidden]="IsAdvancedSearchOpened" src="./Images/Buttons/FiltersOpen.png" />
+                                                                        <img style="float:left;" [hidden]="!IsAdvancedSearchOpened" src="./Images/Buttons/FiltersClose.png" />
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+
+                                                        <td style="width: 5px;">
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr *ngIf="IsAdvancedSearchOpened" style="height:140px;">
+                        <td>
+                            <div class="MediaFill">
+                                <div class="MediaFixed AdvancedSearchArea">
+                                    <table>
+                                        <tr>
+                                            <td style="color: #1B90CB; font-size: 14px; padding-left: 10px;">{{'General.O.AdvancedFilters' | TextCodeTranslationPipe}}</td>
+                                        </tr>
+
+                                        <tr style="height: 1px;">
+                                            <td>
+                                                <div style="height:1px; width: 100%; background: #AAAAAA; opacity:0.5;"></div>
+                                            </td>
+                                        </tr>
+
+                                        <tr style="height: 5px;">
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <tr style="height: 1px;">
+                                            <td>
+                                                <table>
+
+                                                    <!-- From -->
+                                                    <tr class="FormFieldRow">
+
+                                                        <td style="width: 120px; padding-left: 10px;">{{FromLabel}}</td>
+
+                                                        <td style="width: 220px">
+                                                            <LogLov [ObjectFieldName]="'FromPortId'"
+                                                                    [SelectedValue]="FromPortId"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'Port'"
+                                                                    [DependencyFilter1Value]="TransportModeId"
+                                                                    [NoObjectField]="true">
+                                                            </LogLov>
+                                                        </td>
+
+                                                        <td style="width: 200px">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td class="Value" style="width: 120px; font-size: 13px;">Direct Shipment:</td>
+
+                                                        <td style="width: 5px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="width: 50px;">
+                                                                        <div class="RadioButton">
+                                                                            <input id="DirectNoRadio" type="radio" name="DirectFilterRadio" [checked]="!IsDirectShipmentsIncluded" (click)="SetDirectShipmentsIncluded(false)" />
+                                                                            <label for="DirectNoRadio">No</label>
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <div class="RadioButton">
+                                                                            <input id="DirectYesRadio" type="radio" name="DirectFilterRadio" [checked]="IsDirectShipmentsIncluded" (click)="SetDirectShipmentsIncluded(true)" />
+                                                                            <label for="DirectYesRadio">Yes</label>
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- To -->
+                                                    <tr class="FormFieldRow">
+                                                        <td style="padding-left: 10px;">{{ToLabel}}</td>
+
+                                                        <td>
+                                                            <LogLov [ObjectFieldName]="'ToPortId'"
+                                                                    [SelectedValue]="ToPortId"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'Port'"
+                                                                    [DependencyFilter1Value]="TransportModeId"
+                                                                    [NoObjectField]="true">
+                                                            </LogLov>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td class="Value" style="font-size: 13px;">Connected Shipment:</td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="width: 50px;">
+                                                                        <div class="RadioButton">
+                                                                            <input id="ConnectedNoRadio" type="radio" name="ConnectedFilterRadio" [checked]="!IsConnectedShipmentsIncluded" (click)="SetConnectedShipmentsIncluded(false)" />
+                                                                            <label for="ConnectedNoRadio">No</label>
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <div class="RadioButton">
+                                                                            <input id="ConnectedYesRadio" type="radio" name="ConnectedFilterRadio" [checked]="IsConnectedShipmentsIncluded" (click)="SetConnectedShipmentsIncluded(true)" />
+                                                                            <label for="ConnectedYesRadio">Yes</label>
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- Branch -->
+                                                    <tr class="FormFieldRow">
+                                                        <td style="padding-left: 10px;">{{'Shipment.F.BranchId' | TextCodeTranslationPipe}}</td>
+
+                                                        <td>
+                                                            <LogLov [ObjectFieldName]="'BranchId'"
+                                                                    [SelectedValue]="BranchId"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'Branch'"
+                                                                    [NoObjectField]="true">
+                                                            </LogLov>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+
+                                        <tr style="height: 5px;">
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div class="AdvancedSearchAreaLine"></div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr style="height: 5px;">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="MediaFill">
+                                <div class="SimpleGridView">
+                                    <div class="SimpleGridViewHeader">
+                                        <table>
+                                            <tr>
+                                                <td style="width: 25px; min-width: 25px; max-width: 25px;">
+                                                    <div></div>
+                                                </td>
+                                                <td style="width: 25px; min-width: 25px; max-width: 25px;">
+                                                    <div></div>
+                                                </td>
+                                                <td style="width: 90px; min-width: 90px; max-width: 90px;">{{'Shipment.CH.ShipmentNumberListLable' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 100px; min-width: 100px; max-width: 100px;">{{'Shipment.CH.ShipmentTypeListLable' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 100px; min-width: 100px; max-width: 100px;">{{'Shipment.CH.CreateDateTimeListLable' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 130px; min-width: 130px; max-width: 130px;">{{'Shipment.CH.StatusNameLable' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 130px; min-width: 130px; max-width: 130px;">{{'Shipment.CH.BranchName' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 150px; min-width: 150px; max-width: 150px;">{{'Shipment.CH.HAWBFBLBLListLable' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 150px; min-width: 150px; max-width: 150px;">{{'Shipment.CH.CustomerName' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 50px; min-width: 50px; max-width: 50px;">{{'Shipment.CH.FromPortListLable' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 50px; min-width: 50px; max-width: 50px;">{{'Shipment.CH.ToPortListLable' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 90px; min-width: 90px; max-width: 90px;">{{'Shipment.CH.GrossWeightLable' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 115px; min-width: 115px; max-width: 115px;">{{'Shipment.CH.VolumeInKGLable' | TextCodeTranslationPipe}}</td>
+                                                <!--<td style="width: 120px; min-width: 120px; max-width: 120px;">{{'Shipment.CH.MasterShipmentNumberListLable' | TextCodeTranslationPipe}}</td>-->
+                                                <td style="width: 120px; min-width: 120px; max-width: 120px;">QTY</td>
+                                                <td class="LastChild" [style.min-width.px]="CellNotesWidth">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+
+                                    <div class="SimpleGridViewBody">
+                                        <table>
+
+                                            <!-- Connected  -->
+                                            <tr *ngIf="ItemsSource1.length > 0" style="height: 25px; min-height: 25px; max-height: 25px; background: #E4E4E4;">
+                                                <td style="height: 25px;">
+                                                    <table style="height: 25px;">
+
+                                                        <tr style="height: 2px;">
+                                                            <td style="width: 25px; min-width: 25px; max-width: 25px;">
+                                                                <div style="height: 2px; width: 100%; border-top: 1px solid #848484; border-bottom: 1px solid white;"></div>
+                                                            </td>
+
+                                                            <td>
+                                                                <div style="height: 2px; width: 100%; border-top: 1px solid #848484; border-bottom: 1px solid white;"></div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>
+                                                                <img src="./Images/CellIcons/Arrowup.png" class="CenterCenter" style="cursor: pointer;" [hidden]="ItemsSource1Hidden" (click)="ItemsSource1Hidden = true" />
+                                                                <img src="./Images/CellIcons/Arrowdown.png" class="CenterCenter" style="cursor: pointer;" [hidden]="!ItemsSource1Hidden" (click)="ItemsSource1Hidden = false" />
+                                                            </td>
+
+                                                            <td>
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width: 120px;">Connected</td>
+
+                                                                        <td style="width: 100px;">
+                                                                            <button class="Button" [disabled]="!IsEditingEnabled" (click)="DisconnectAllClicked()">Disconnect All</button>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr style="height: 2px;">
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td>
+                                                                <div [hidden]="ItemsSource1Hidden" style="height: 2px; width: 100%; border-top: 1px solid white; border-bottom: 1px solid #848484;"></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr class="SimpleGridViewRow CellBorder" style="background: #ECF2F6" *ngFor="let item of ItemsSource1" [hidden]="ItemsSource1Hidden || item == null">
+                                                <td style="height: 25px;">
+                                                    <table style="height: 25px;">
+                                                        <tr>
+
+                                                            <!-- Indent -->
+                                                            <td style="width: 25px; min-width: 25px; max-width: 25px; background: #E4E4E4; border-bottom: 1px solid #E4E4E4;">
+                                                                <table style="height: 25px;">
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td style="width: 1px; height: 100%;">
+                                                                            <div class="Stretch" style="background: white;"></div>
+                                                                        </td>
+
+                                                                        <td style="width: 1px; height: 100%;">
+                                                                            <div class="Stretch" style="background: #848484;"></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+
+                                                            <!-- Buttons -->
+                                                            <td class="GridViewCell" style="width: 25px; min-width: 25px; max-width: 25px;">
+                                                                <div>
+                                                                    <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event" [IsEnabled]="IsEditingEnabled"></CheckBox>
+                                                                </div>
+                                                            </td>
+
+                                                            <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px;">
+                                                                <Hyperlink (click)="ViewShipmentClicked(item)">{{item.ShipmentNumber}}</Hyperlink>
+                                                            </td>
+
+                                                            <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">{{item.ShipmentType}}</td>
+                                                            <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">{{item.CreateDateTime | DateTimeToDatePipe}}</td>
+                                                            <td class="GridViewCell" style="width: 130px; min-width: 130px; max-width: 130px;" [ngStyle]="{color: item.StatusName | StringToColorPipe}">{{item.StatusName}}</td>
+                                                            <td class="GridViewCell" style="width: 130px; min-width: 130px; max-width: 130px;">{{item.BranchName}}</td>
+                                                            <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px;">{{item.House}}</td>
+                                                            <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px;">{{item.CustomerName}}</td>
+                                                            <td class="GridViewCell" style="width: 50px; min-width: 50px; max-width: 50px;">{{item.FromPort}}</td>
+                                                            <td class="GridViewCell" style="width: 50px; min-width: 50px; max-width: 50px;">{{item.ToPort}}</td>
+                                                            <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px; text-align: right;">{{item.GrossWeight | NumbersPipe:'N2'}}</td>
+                                                            <td class="GridViewCell" style="width: 115px; min-width: 115px; max-width: 115px; text-align: right;">{{item.VolumetricWeight | NumbersPipe:'N2'}}</td>
+                                                            <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right;">{{item.Quantity}}</td>
+                                                            <td class="LastChild" [style.min-width.px]="CellNotesWidth">
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+
+                                            <!-- Not Connected  -->
+                                            <tr *ngIf="ItemsSource2.length > 0" style="height: 25px; min-height: 25px; max-height: 25px; background: #E4E4E4;">
+                                                <td style="height: 25px;">
+                                                    <table style="height: 25px;">
+                                                        <tr style="height: 2px;">
+                                                            <td style="width: 25px; min-width: 25px; max-width: 25px;">
+                                                                <div style="height: 2px; width: 100%; border-top: 1px solid #848484; border-bottom: 1px solid white;"></div>
+                                                            </td>
+                                                            <td>
+                                                                <div style="height: 2px; width: 100%; border-top: 1px solid #848484; border-bottom: 1px solid white;"></div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>
+                                                                <img src="./Images/CellIcons/Arrowup.png" class="CenterCenter" style="cursor: pointer;" [hidden]="ItemsSource2Hidden" (click)="ItemsSource2Hidden = true" />
+                                                                <img src="./Images/CellIcons/Arrowdown.png" class="CenterCenter" style="cursor: pointer;" [hidden]="!ItemsSource2Hidden" (click)="ItemsSource2Hidden = false" />
+                                                            </td>
+
+                                                            <td>
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width: 120px;">Not Connected</td>
+
+                                                                        <td style="width: 100px;">
+                                                                            <button class="Button" [disabled]="!IsEditingEnabled" (click)="ConnectAllClicked()">Connect All</button>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr style="height: 2px;">
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                            <td>
+                                                                <div [hidden]="ItemsSource2Hidden" style="height: 2px; width: 100%; border-top: 1px solid white; border-bottom: 1px solid #848484;"></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr class="SimpleGridViewRow CellBorder" style="background: #ECF2F6;" *ngFor="let item of ItemsSource2" [hidden]="ItemsSource2Hidden || item == null">
+                                                <td style="height: 25px;">
+                                                    <table style="height: 25px;">
+                                                        <tr style="height: 25px;">
+
+                                                            <!-- Indent -->
+                                                            <td style="width: 25px; min-width: 25px; max-width: 25px; background: #E4E4E4; border-bottom: 1px solid #E4E4E4;">
+                                                                <table style="height: 25px;">
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td style="width: 1px; height: 100%;">
+                                                                            <div class="Stretch" style="background: white;"></div>
+                                                                        </td>
+
+                                                                        <td style="width: 1px; height: 100%;">
+                                                                            <div class="Stretch" style="background: #848484;"></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+
+                                                            <!-- Buttons -->
+                                                            <td class="GridViewCell" style="width: 25px; min-width: 25px; max-width: 25px;">
+                                                                <img src="./Images/Info.png" class="CenterCenter" title="Not Matched" *ngIf="!item.IsMatched" />
+                                                                <div>
+                                                                    <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event" *ngIf="item.IsMatched" [IsEnabled]="IsEditingEnabled"></CheckBox>
+                                                                </div>
+                                                            </td>
+
+                                                            <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px;">
+                                                                <Hyperlink (click)="ViewShipmentClicked(item)">{{item.ShipmentNumber}}</Hyperlink>
+                                                            </td>
+
+                                                            <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">{{item.ShipmentType}}</td>
+                                                            <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">{{item.CreateDateTime | DateTimeToDatePipe}}</td>
+                                                            <td class="GridViewCell" style="width: 130px; min-width: 130px; max-width: 130px;" [ngStyle]="{color: item.StatusName | StringToColorPipe}">{{item.StatusName}}</td>
+                                                            <td class="GridViewCell" style="width: 130px; min-width: 130px; max-width: 130px;">{{item.BranchName}}</td>
+                                                            <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px;">{{item.House}}</td>
+                                                            <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px;">{{item.CustomerName}}</td>
+                                                            <td class="GridViewCell" style="width: 50px; min-width: 50px; max-width: 50px;">{{item.FromPort}}</td>
+                                                            <td class="GridViewCell" style="width: 50px; min-width: 50px; max-width: 50px;">{{item.ToPort}}</td>
+                                                            <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px; text-align: right;">{{item.GrossWeight | NumbersPipe:'N2'}}</td>
+                                                            <td class="GridViewCell" style="width: 115px; min-width: 115px; max-width: 115px; text-align: right;">{{item.VolumetricWeight | NumbersPipe:'N2'}}</td>
+                                                            <!--<td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px;">{{item.JobNumber}}</td>-->
+                                                            <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right;">{{item.Quantity}}</td>
+                                                            <td class="LastChild" [style.min-width.px]="CellNotesWidth">
+                                                                <div style="font-size: 11px;">{{item.CellNotes}}</div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+
+                                            <tr style="height: 1px;" *ngIf="ItemsSource1.length > 0 || ItemsSource2.length > 0">
+                                                <td>
+                                                    <div style="height:1px; width: 100%; background: #848484; margin-top: -1px;"></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="TabSummary">
+        <td>
+            <div class="TabSummaryBody">
+                <table>
+                    <tr>
+                        <td style="width: 200px; vertical-align: top;">
+                            <table>
+                                <tr style="height: 1px;">
+                                    <td class="TabSummaryTitle">{{'Master.O.Overview.GrossWeight' | TextCodeTranslationPipe}}</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="TabSummaryNumber" style="text-align: center;">
+                                        {{SummaryGrossWeight | NumbersPipe:'N2'}}
+                                        <b class="Label">KG</b>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td style="width: 15px;">
+                            <div class="VerticalLine"></div>
+                        </td>
+
+                        <td style="width: 200px; vertical-align: top;">
+                            <table>
+                                <tr style="height: 1px;">
+                                    <td class="TabSummaryTitle">{{'Master.O.Shipments.VolumetricWeight' | TextCodeTranslationPipe}}</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="TabSummaryNumber" style="text-align: center;">
+                                        {{SummaryVolumetricWeight | NumbersPipe:'N2'}}
+                                        <b class="Label">KG</b>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td style="width: 15px;">
+                            <div class="VerticalLine"></div>
+                        </td>
+
+                        <td style="width: 200px; vertical-align: top;">
+                            <table>
+                                <tr style="height: 1px;">
+                                    <td class="TabSummaryTitle">{{'Master.O.Overview.ChargeableWeight' | TextCodeTranslationPipe}}</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="TabSummaryNumber" style="text-align: center;">
+                                        {{SummaryChargeableWeight | NumbersPipe:'N2'}}
+                                        <b class="Label">KG</b>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td style="width: 15px;">
+                            <div class="VerticalLine"></div>
+                        </td>
+
+                        <td style="width: 200px; vertical-align: top;">
+                            <table>
+                                <tr style="height: 1px;">
+                                    <td class="TabSummaryTitle">Shipments QTY</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="TabSummaryNumber" style="text-align: center;">
+                                        {{SummaryQuantity | NumbersPipe:'N2'}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>

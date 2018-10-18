@@ -1,0 +1,132 @@
+﻿
+<table>
+    <tr>
+        <td>
+            <div class="MediaFill">
+                <div class="SimpleGridView">
+                    <div class="SimpleGridViewHeader">
+                        <table>
+                            <tr>
+                                <td style="width: 90px; min-width: 90px; max-width: 90px;">Quote Number</td>
+                                <td style="width: 100px; min-width: 100px; max-width: 100px;">Open Date</td>
+                                <td style="width: 100px; min-width: 100px; max-width: 100px;">Expiration Date</td>
+                                <td style="width: 85px; min-width: 85px; max-width: 85px;">Stage</td>
+                                <td style="width: 90px; min-width: 90px; max-width: 90px;">Type</td>
+                                <td style="width: 130px; min-width: 130px; max-width: 130px;">Carrier</td>
+                                <td style="width: 110px; min-width: 110px; max-width: 110px;">Chargeable Weight</td>
+                                <td style="width: 110px; min-width: 110px; max-width: 110px;">Weight Difference</td>
+                                <td style="width: 25px; min-width: 25px; max-width: 25px;"><div></div></td>
+                                <td class="LastChild">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="SimpleGridViewBody">
+                        <table>
+                            <tr class="SimpleGridViewRow RowHover" *ngFor="let item of ItemsSource" (mousedown)="SelectedItem = item" [class.RowSelected]="SelectedItem == item">
+
+                                <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px;">
+                                    <button class="HyperlinkButton" (click)="ViewQuoteClicked(item.Id)">{{item.QuoteNumber}}</button>
+                                </td>
+
+                                <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
+                                    {{item.OpenDate | DateTimeToDatePipe}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;" [ngStyle]="{color: item.ExpirationDate | DateTimeToColorPipe}">
+                                    {{item.ExpirationDate | DateTimeToDatePipe}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 85px; min-width: 85px; max-width: 85px;" [ngStyle]="{color: item.StageName | StringToColorPipe, background: item.StageBackground}">
+                                    {{item.StageName}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px;">
+                                    {{item.QuoteTypeName}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 130px; min-width: 130px; max-width: 130px;">
+                                    {{item.CarrierName}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 110px; min-width: 110px; max-width: 110px; text-align: right;">
+                                    {{item.ChargeableWeight | NumbersPipe:'N2'}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 110px; min-width: 110px; max-width: 110px; text-align: right;">
+                                    {{item.WeightDiffernece | NumbersPipe:'N2'}}
+                                </td>
+
+                                <td style="width: 25px; min-width: 25px; max-width: 25px; left:5px;">
+                                    <CellTooltip *ngIf="item.Notes" [IconPath]="'./Images/Notes_exists.png'" [Head]="'Notes'" [Body]="item.Notes"></CellTooltip>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="9">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div *ngIf="IsNoData" style="position:absolute; top:50%; left: 50%; transform: translate(-50%, -50%);">
+                    <div style="font-weight: bold; font-size: 13px; color: rgba(68, 83, 81,0.847); text-align: center;">
+                        No matching quotes found
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width: 20px;">
+                                    <CheckBox [IsChecked]="true" [IsEnabled]="false"></CheckBox>
+                                </td>
+
+                                <td class="Label" style="opacity: 0.7;">Generate Shipment Receivables</td>
+                            </tr>
+
+                            <tr style="height: 1px;">
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <CheckBox [IsChecked]="IsGeneratePayables" (Checked)="IsGeneratePayables = $event"></CheckBox>
+                                </td>
+                                <td class="Label">Generate Shipment Payables</td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td style="width: 57px; vertical-align: bottom;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px; vertical-align: bottom;">
+                        <button class="RedButton" (click)="GenerateButtonClicked()" [disabled]="!SelectedItem">Generate</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

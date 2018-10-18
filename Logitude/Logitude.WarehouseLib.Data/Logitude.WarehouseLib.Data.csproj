@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{54A12A5C-659C-4410-A5E7-949ACD43F3A5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Logitude.WarehouseLib.Data</RootNamespace>
+    <AssemblyName>Logitude.WarehouseLib.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Devart.Data.Oracle.Entity">
+      <HintPath>..\General\Dlls\Devart\Devart.Data.Oracle.Entity.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle.Entity.Spatials">
+      <HintPath>..\General\Dlls\Devart\Devart.Data.Oracle.Entity.Spatials.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\General\Dlls\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\General\Dlls\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CustomFilters\WarehouseEntryCustomFilter.cs" />
+    <Compile Include="CustomFilters\WarehouseReleaseCustomFilter.cs" />
+    <Compile Include="EntityKeys\WarehouseEntryKeys.cs" />
+    <Compile Include="EntityKeys\WarehouseEntryPackageKeys.cs" />
+    <Compile Include="EntityKeys\WarehouseEntryPackagesReleaseKeys.cs" />
+    <Compile Include="EntityKeys\WarehouseEntryStatusKeys.cs" />
+    <Compile Include="EntityKeys\WarehouseReleaseKeys.cs" />
+    <Compile Include="EntityKeys\WarehouseReleasePackageKeys.cs" />
+    <Compile Include="EntityKeys\WarehouseReleaseStatusKeys.cs" />
+    <Compile Include="EntityListQueryServices\Generated\WarehouseEntryListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\WarehouseEntryPackageListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\WarehouseEntryPackagesReleaseListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\WarehouseEntryStatusListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\WarehouseReleaseListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\WarehouseReleasePackageListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\WarehouseReleaseStatusListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\WarehouseEntryListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\WarehouseEntryPackageListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\WarehouseEntryPackagesReleaseListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\WarehouseEntryStatusListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\WarehouseReleaseListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\WarehouseReleasePackageListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\WarehouseReleaseStatusListQueryService.cs" />
+    <Compile Include="EntityLists\Generated\WarehouseEntryList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\WarehouseEntryPackageList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\WarehouseEntryPackagesReleaseList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\WarehouseEntryStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\WarehouseReleaseList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\WarehouseReleasePackageList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\WarehouseReleaseStatusList.Generated.cs" />
+    <Compile Include="EntityMapping\WarehouseEntryMap.cs" />
+    <Compile Include="EntityMapping\WarehouseEntryPackageMap.cs" />
+    <Compile Include="EntityMapping\WarehouseEntryPackagesReleaseMap.cs" />
+    <Compile Include="EntityMapping\WarehouseEntryStatusMap.cs" />
+    <Compile Include="EntityMapping\WarehouseReleaseMap.cs" />
+    <Compile Include="EntityMapping\WarehouseReleasePackageMap.cs" />
+    <Compile Include="EntityMapping\WarehouseReleaseStatusMap.cs" />
+    <Compile Include="EntityPOCOs\WarehouseEntry.cs" />
+    <Compile Include="EntityPOCOs\WarehouseEntryPackage.cs" />
+    <Compile Include="EntityPOCOs\WarehouseEntryPackagesRelease.cs" />
+    <Compile Include="EntityPOCOs\WarehouseEntryStatus.cs" />
+    <Compile Include="EntityPOCOs\WarehouseRelease.cs" />
+    <Compile Include="EntityPOCOs\WarehouseReleasePackage.cs" />
+    <Compile Include="EntityPOCOs\WarehouseReleaseStatus.cs" />
+    <Compile Include="IWarehouseContext.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\Generated\WarehouseEntryPackageRepository.Generated.cs" />
+    <Compile Include="Repositories\Generated\WarehouseEntryPackagesReleaseRepository.Generated.cs" />
+    <Compile Include="Repositories\Generated\WarehouseEntryRepository.Generated.cs" />
+    <Compile Include="Repositories\Generated\WarehouseEntryStatusRepository.Generated.cs" />
+    <Compile Include="Repositories\Generated\WarehouseReleasePackageRepository.Generated.cs" />
+    <Compile Include="Repositories\Generated\WarehouseReleaseRepository.Generated.cs" />
+    <Compile Include="Repositories\Generated\WarehouseReleaseStatusRepository.Generated.cs" />
+    <Compile Include="Repositories\WarehouseEntryPackageRepository.cs" />
+    <Compile Include="Repositories\WarehouseEntryPackagesReleaseRepository.cs" />
+    <Compile Include="Repositories\WarehouseEntryRepository.cs" />
+    <Compile Include="Repositories\WarehouseEntryStatusRepository.cs" />
+    <Compile Include="Repositories\WarehouseReleasePackageRepository.cs" />
+    <Compile Include="Repositories\WarehouseReleaseRepository.cs" />
+    <Compile Include="Repositories\WarehouseReleaseStatusRepository.cs" />
+    <Compile Include="WarehouseContext.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
+      <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
+      <Name>Simplog.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Global.Data.csproj">
+      <Project>{6d7ffad2-35b6-4133-8700-cf73e58d0c85}</Project>
+      <Name>Simplog.Global.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
+      <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
+      <Name>Simplog.Server.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,154 @@
+﻿<style>
+    .subTitle {
+        color: #1b90cb;
+        font-size: 15px;
+    }
+
+    .FlipImgHoriz {
+        transform: rotate(180deg);
+    }
+
+    .Warning {
+        max-width: 400px;
+        color: #696969;
+        text-align: left;
+        background: #fff5ce;
+        border: 1px solid #ffd598;
+        border-radius: 5px;
+        padding: 2px 10px;
+        margin: 5px;
+        margin: auto;
+        white-space: normal;
+    }
+
+        .Warning:hover {
+            transition: 0.3s all;
+            background: #fcf2c8;
+            color: black;
+            cursor: default;
+        }
+
+    .FormFieldRow {
+        height: 32px;
+    }
+</style>
+<table>
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td colspan="4">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+        </td>
+    </tr>
+
+    <!-- Filters Fields-->
+    <tr>
+        <td colspan="4" style="">
+
+            <table style="table-layout: fixed;" *ngIf="EntityPM">
+
+                <tr style="height: 20px;">
+                    <td style="width: 130px;"></td>
+                    <td style="width: 170px;"></td>
+                    <td></td>
+                </tr>
+
+                <!-- Code -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext" [HideColumns]="true" [InputType]="'integertext'"></LogTextBox>
+                    </td>
+                    <td></td>
+                </tr>
+
+                <!-- LocalName -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'LocalName'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'LocalName'" [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext" [HideColumns]="true" [InputType]="'nText'"></LogTextBox>
+                    </td>
+                    <td></td>
+                </tr>
+
+                <!-- EnglishName -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'EnglishName'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'EnglishName'" [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext" [HideColumns]="true" [InputType]="'Text'"></LogTextBox>
+                    </td>
+                    <td></td>
+                </tr>
+
+                <!-- InActive -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'Inactive'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogCheckBox [ObjectFieldName]="'Inactive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                    </td>
+                    <td></td>
+                </tr>
+
+                <!-- ErrorPlace -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'ErrorPlace'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'ErrorPlace'" [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                    </td>
+                    <td></td>
+                </tr>
+
+                <!-- UnifreightStatusCode -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'UnifreightStatusCode'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'UnifreightStatusCode'" [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                    </td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td></td>
+                </tr>
+
+            </table>
+
+        </td>
+    </tr>
+
+    <tr *ngIf="isWindowMode" style="height: 40px;">
+        <td>
+            <div></div>
+        </td>
+        <td style="width: 57px;vertical-align: bottom;">
+            <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Close' |TextCodeTranslationPipe}}</button>
+        </td>
+        <td style="width: 10px;"><div></div></td>
+        <td style="width: 50px;vertical-align: bottom;">
+            <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' |TextCodeTranslationPipe}}</button>
+        </td>
+    </tr>
+
+</table>

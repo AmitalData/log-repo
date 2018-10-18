@@ -1,0 +1,374 @@
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs; 
+using Logitude.Customs.Data;
+
+namespace Logitude.Customs.BL.EntityDataMappings
+{
+   
+   public partial class CustomsCollateralsAnswerDataMapping: IMapping<CustomsCollateralsAnswerPM, CustomsCollateralsAnswer>,IMappingEncodeBase64NVARCHARFields<CustomsCollateralsAnswerPM>
+   {
+          public enum POCOPropertyNames
+          { 
+		     None,  
+	         CustomsCollateralId, 
+	         LineNumber, 
+	         Tenant, 
+	         AnswerEntityTypeCode, 
+	         AllocatedAmount, 
+	         Remarks, 
+	         CustomsTapgFile, 
+	         CustomsNumeral, 
+	         AnswerForCollateralStatusCode, 
+	         Errors, 
+	         TapagId, 
+	         NewFileRequest, 
+	         RequestFileTypeCode, 
+	         RequestFileAmount, 
+	         IsClosed, 
+	         RequestedTapagNumeral, 
+	         RequestedTapagFile, 
+	         PaymentOrderId,
+	      }
+
+
+	      public enum PMPropertyNames
+          { 
+		     None,  
+	         CustomsCollateralId, 
+	         LineNumber, 
+	         Tenant, 
+	         AnswerEntityTypeCode, 
+	         AllocatedAmount, 
+	         Remarks, 
+	         CustomsTapgFile, 
+	         CustomsNumeral, 
+	         AnswerForCollateralStatusCode, 
+	         Errors, 
+	         AnswerEntityTypeName, 
+	         AnswerForCollateralStatusName, 
+	         TapagId, 
+	         NewFileRequest, 
+	         RequestFileTypeCode, 
+	         RequestFileAmount, 
+	         AnswerRequestFileConditionLastLineNumber, 
+	         RequestFileTypeName, 
+	         IsClosed, 
+	         RequestedTapagNumeral, 
+	         RequestedTapagFile, 
+	         PaymentOrderId, 
+	         PaymentOrderNumber, 
+	         PaymentOrderStatus,
+	      }
+
+		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
+        List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
+    
+	    public void PMToPOCO(CustomsCollateralsAnswerPM entityPM, CustomsCollateralsAnswer entityPOCO)
+        {
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AnswerEntityTypeCode))
+            {
+				entityPOCO.AnswerEntityTypeCode = entityPM.AnswerEntityTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AllocatedAmount))
+            {
+				entityPOCO.AllocatedAmount = entityPM.AllocatedAmount;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Remarks))
+            {
+				entityPOCO.Remarks = entityPM.Remarks;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsTapgFile))
+            {
+				entityPOCO.CustomsTapgFile = entityPM.CustomsTapgFile;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsNumeral))
+            {
+				entityPOCO.CustomsNumeral = entityPM.CustomsNumeral;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AnswerForCollateralStatusCode))
+            {
+				entityPOCO.AnswerForCollateralStatusCode = entityPM.AnswerForCollateralStatusCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Errors))
+            {
+				entityPOCO.Errors = entityPM.Errors;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TapagId))
+            {
+				entityPOCO.TapagId = entityPM.TapagId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NewFileRequest))
+            {
+				entityPOCO.NewFileRequest = entityPM.NewFileRequest;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RequestFileTypeCode))
+            {
+				entityPOCO.RequestFileTypeCode = entityPM.RequestFileTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RequestFileAmount))
+            {
+				entityPOCO.RequestFileAmount = entityPM.RequestFileAmount;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsClosed))
+            {
+				entityPOCO.IsClosed = entityPM.IsClosed;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RequestedTapagNumeral))
+            {
+				entityPOCO.RequestedTapagNumeral = entityPM.RequestedTapagNumeral;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RequestedTapagFile))
+            {
+				entityPOCO.RequestedTapagFile = entityPM.RequestedTapagFile;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PaymentOrderId))
+            {
+				entityPOCO.PaymentOrderId = entityPM.PaymentOrderId;
+			}
+			}
+
+		public void POCOToPM(CustomsCollateralsAnswerPM entityPM, CustomsCollateralsAnswer entityPOCO)
+        {
+			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomsCollateralId))
+            {
+					entityPM.CustomsCollateralId = entityPOCO.CustomsCollateralId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LineNumber))
+            {
+					entityPM.LineNumber = entityPOCO.LineNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
+            {
+					entityPM.Tenant = entityPOCO.Tenant;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AnswerEntityTypeCode))
+            {
+					entityPM.AnswerEntityTypeCode = entityPOCO.AnswerEntityTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AllocatedAmount))
+            {
+					entityPM.AllocatedAmount = entityPOCO.AllocatedAmount;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Remarks))
+            {
+					entityPM.Remarks = entityPOCO.Remarks;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomsTapgFile))
+            {
+					entityPM.CustomsTapgFile = entityPOCO.CustomsTapgFile;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomsNumeral))
+            {
+					entityPM.CustomsNumeral = entityPOCO.CustomsNumeral;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AnswerForCollateralStatusCode))
+            {
+					entityPM.AnswerForCollateralStatusCode = entityPOCO.AnswerForCollateralStatusCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Errors))
+            {
+					entityPM.Errors = entityPOCO.Errors;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TapagId))
+            {
+					entityPM.TapagId = entityPOCO.TapagId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.NewFileRequest))
+            {
+					entityPM.NewFileRequest = entityPOCO.NewFileRequest;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.RequestFileTypeCode))
+            {
+					entityPM.RequestFileTypeCode = entityPOCO.RequestFileTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.RequestFileAmount))
+            {
+					entityPM.RequestFileAmount = entityPOCO.RequestFileAmount;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsClosed))
+            {
+					entityPM.IsClosed = entityPOCO.IsClosed;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.RequestedTapagNumeral))
+            {
+					entityPM.RequestedTapagNumeral = entityPOCO.RequestedTapagNumeral;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.RequestedTapagFile))
+            {
+					entityPM.RequestedTapagFile = entityPOCO.RequestedTapagFile;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PaymentOrderId))
+            {
+					entityPM.PaymentOrderId = entityPOCO.PaymentOrderId;
+            }
+
+		}
+
+		public void PMToOldPM(CustomsCollateralsAnswerPM entityPM, CustomsCollateralsAnswerPM oldEntityPM)
+        {
+		     oldEntityPM.ChangedProperties.Clear();
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+                oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AnswerEntityTypeCode))
+            {
+                oldEntityPM.AnswerEntityTypeCode = entityPM.AnswerEntityTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AllocatedAmount))
+            {
+                oldEntityPM.AllocatedAmount = entityPM.AllocatedAmount;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Remarks))
+            {
+                oldEntityPM.Remarks = entityPM.Remarks;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsTapgFile))
+            {
+                oldEntityPM.CustomsTapgFile = entityPM.CustomsTapgFile;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsNumeral))
+            {
+                oldEntityPM.CustomsNumeral = entityPM.CustomsNumeral;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AnswerForCollateralStatusCode))
+            {
+                oldEntityPM.AnswerForCollateralStatusCode = entityPM.AnswerForCollateralStatusCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Errors))
+            {
+                oldEntityPM.Errors = entityPM.Errors;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TapagId))
+            {
+                oldEntityPM.TapagId = entityPM.TapagId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NewFileRequest))
+            {
+                oldEntityPM.NewFileRequest = entityPM.NewFileRequest;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RequestFileTypeCode))
+            {
+                oldEntityPM.RequestFileTypeCode = entityPM.RequestFileTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RequestFileAmount))
+            {
+                oldEntityPM.RequestFileAmount = entityPM.RequestFileAmount;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsClosed))
+            {
+                oldEntityPM.IsClosed = entityPM.IsClosed;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RequestedTapagNumeral))
+            {
+                oldEntityPM.RequestedTapagNumeral = entityPM.RequestedTapagNumeral;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RequestedTapagFile))
+            {
+                oldEntityPM.RequestedTapagFile = entityPM.RequestedTapagFile;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PaymentOrderId))
+            {
+                oldEntityPM.PaymentOrderId = entityPM.PaymentOrderId;
+            }
+			
+		}
+
+	    public void EncodeBase64NVARCHARFields(CustomsCollateralsAnswerPM entityPM)
+        {
+            if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
+            {
+                return;
+
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.Remarks)) //T4 find type == nText 
+            {
+                entityPM.Remarks = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Remarks));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.Errors)) //T4 find type == nText 
+            {
+                entityPM.Errors = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Errors));
+            }
+            entityPM.EncodeBase64NVARCHARFieldsBy=null;
+		}
+
+
+	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
+        {
+            CustomMappedPOCOProperties.Add(pocoPropertyName);
+        }
+
+        public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
+        {
+            CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+			  
+   }
+}
+	 

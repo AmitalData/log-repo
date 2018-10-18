@@ -1,0 +1,416 @@
+﻿<style>
+    /* Total Grid Styles */
+
+    .SimpleGridViewHeaderDark {
+        border: none !important;
+        border-radius: 0 !important;
+    }
+
+    .SimpleGridView .SimpleGridViewHeaderDark td:not(:last-child) {
+        border-right: none !important;
+    }
+
+    .SimpleGridView .SimpleGridViewHeader td:not(.LastChild):hover {
+        cursor: none;
+        color: white !important;
+        background: none;
+    }
+
+    .SimpleGridView .SimpleGridViewHeaderDark td:not(.LastChild):hover {
+        cursor: default;
+        color: white !important;
+        background: none;
+    }
+
+    /**  **/
+    .subTitle {
+        color: #4b90cb;
+        font-size: 14px;
+    }
+
+    .FormFieldRow {
+        height: 28px !important;
+    }
+
+        .FormFieldRow td {
+            text-align: right;
+            color: black;
+            font-size: 13px;
+        }
+
+    .GrayBox {
+        width: 100%;
+        min-height: 50px;
+        margin: 0 auto;
+        background: #ebf1f1;
+        border: 1px solid #adadad;
+        vertical-align: middle;
+        margin-bottom: 15px;
+        color: #747474;
+        padding: 15px;
+        word-wrap: break-word;
+        white-space: normal;
+        line-height: 1.5;
+    }
+
+    .YellowBox {
+        height: 70px;
+        margin: 0 auto;
+        margin-top: 5px;
+        background: #fffadc;
+        border: 1px solid #8c8c8c;
+        vertical-align: middle;
+        margin-bottom: 15px;
+        color: #747474;
+        padding: 10px 5px;
+        border-radius: 3px;
+    }
+
+    .noselect {
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none; /* Chrome/Safari/Opera */
+        -khtml-user-select: none; /* Konqueror */
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+        user-select: none; /* Non-prefixed version, currently
+                                  not supported by any browser */
+    }
+
+    /* Others */
+    .hidden {
+        opacity: 0;
+        visibility: collapse;
+    }
+</style>
+<table style="table-layout: fixed;">
+
+    <tr>
+        <td>
+            <div style="height: 100%; overflow-y: auto;">
+                <table style="table-layout: fixed;">
+
+                    <!-- Gray Box -->
+                    <tr style="height: 0;">
+                        <td>
+                            <div class="GrayBox">
+                                {{DeclarationError.Description}}
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Fields -->
+                    <tr style="height: 102px;">
+                        <td>
+                            <table style="height: 102px;">
+
+                                <tr class="FormFieldRow">
+                                    <!-- ConstraintStatusName -->
+                                    <td style="width: 90px;">
+                                        <LogLabel [ObjectFieldName]="'ConstraintStatusName'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td style="width: 150px; padding-left: 5px; color: #d89d0c;">
+                                        {{ConstraintPM.ConstraintStatusName}}
+                                    </td>
+
+                                    <td style="width: 10px;"><div></div></td>
+
+                                    <!-- EntityName -->
+                                    <td style="width: 100px; color: #6e7172; font-size: 11px;">
+                                        {{'Customs.DeclarationConstraint.O.EntityName' | TextCodeTranslationPipe}}
+                                    </td>
+                                    <td>
+                                        {{ DeclarationError.TableNameTextCode | TextCodeTranslationPipe }}
+                                    </td>
+
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <!-- ConstraintNumber -->
+                                    <td style="">
+                                        <LogLabel [ObjectFieldName]="'ConstraintNumber'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td style="padding-left: 5px;">
+                                        {{ConstraintPM.ConstraintNumber}}
+                                    </td>
+
+                                    <td style=""><div></div></td>
+
+                                    <!-- FieldName -->
+                                    <td style="color: #6e7172; font-size: 11px;">
+                                        {{'Customs.DeclarationConstraint.O.FieldName' | TextCodeTranslationPipe}}
+                                    </td>
+                                    <td>
+                                        {{ FieldName }}
+                                    </td>
+
+
+
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <!-- ConstraintTypeName -->
+                                    <td style="">
+                                        <LogLabel [ObjectFieldName]="'ConstraintTypeName'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td style="padding-left: 5px;">
+                                        {{ConstraintPM.ConstraintTypeName}}
+                                    </td>
+
+                                    <td style=""><div></div></td>
+
+                                    <!-- ApprovalDecisionName -->
+                                    <td style="color: #6e7172; font-size: 11px;">
+                                        {{'Customs.DeclarationConstraint.O.ApprovalDecision' | TextCodeTranslationPipe}}
+                                    </td>
+                                    <td>
+                                        {{ ConstraintPM.ApprovalDecisionName }}
+                                    </td>
+
+
+
+                                </tr>
+
+                                <tr style="height: 7px;"><td><div></div></td></tr>
+
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- AgentExplanation -->
+                    <tr style="height: 30px;">
+                        <td>
+                            <div class="subTitle">
+                                {{'Customs.DeclarationConstraint.F.AgentExplanation' | TextCodeTranslationPipe}}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="height: 0;">
+                        <td style="vertical-align: top;white-space: pre;line-height: 1.5;">{{ConstraintPM.AgentExplanation}}</td>
+                    </tr>
+
+                    <tr style="height: 5px;">
+                        <td></td>
+                    </tr>
+
+                    <!-- CollateralData Box -->
+                    <tr style="height: 22px;">
+                        <td>
+                            <div class="subTitle">
+                                {{'Customs.Declaration.O.CollateralData' | TextCodeTranslationPipe}}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="height: 70px;">
+                        <td>
+                            <div class="YellowBox">
+                                <table *ngIf="customsCollateralPM">
+                                    <tr>
+                                        <!-- 110 for n/full text -->
+                                        <td style="width: 135px;">
+                                            <LogLabel [ObjectFieldName]="'CollateralRequestStatusName'" [ObjectTableName]="'Customs.CustomsCollateral'"
+                                                      [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td style="width: 170px; color: black;">{{customsCollateralPM.CollateralRequestStatusName}}</td>
+
+                                        <!-- 112 for n/full text -->
+                                        <td style="width: 112px;border-right: 1px solid #8c8c8c;">
+                                            <LogLabel [ObjectFieldName]="'RequestedCollateralTypeName'" [ObjectTableName]="'Customs.CustomsCollateral'"
+                                                      [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td style="padding-right: 3px; color: black;">
+                                            {{customsCollateralPM.RequestedCollateralTypeName}}
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size: 11px; padding-right:10px;">
+                                            {{'Customs.Declaration.O.TotalAmount' | TextCodeTranslationPipe}}
+                                        </td>
+                                        <td style="padding-right: 3px; color: black;font-size: 15px;">{{TotalAmount | NumbersPipe:'N2'}}</td>
+
+                                        <td style="border-right: 1px solid #8c8c8c;"></td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Fields -->
+                    <tr style="height: 120px;">
+                        <td>
+                            <table style="height: 130px;" *ngIf="customsCollateralPM">
+
+                                <tr class="FormFieldRow">
+                                    <!-- CollateralRequestNumber -->
+                                    <!-- 120 for n/full text -->
+                                    <td style="width: 130px;">
+                                        <LogLabel [ObjectFieldName]="'CollateralRequestNumber'" [ObjectTableName]="'Customs.CustomsCollateral'"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td style="width: 130px; padding-left: 5px;">
+                                        {{customsCollateralPM.CollateralRequestNumber}}
+                                    </td>
+
+                                    <td style="width: 25px;"><div></div></td>
+
+                                    <!-- RequestValidityDate -->
+                                    <td style="width: 120px;">
+                                        <LogLabel [ObjectFieldName]="'RequestValidityDate'" [ObjectTableName]="'Customs.CustomsCollateral'"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td>
+                                        {{ customsCollateralPM.RequestValidityDate | DateTimeToDatePipe }}
+                                    </td>
+
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <!-- RequestedCollateralTypeName -->
+                                    <td style="">
+                                        <LogLabel [ObjectFieldName]="'RequestedCollateralTypeName'" [ObjectTableName]="'Customs.CustomsCollateral'"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td style="padding-left: 5px;">
+                                        {{customsCollateralPM.RequestedCollateralTypeName}}
+                                    </td>
+
+                                    <td style=""><div></div></td>
+
+                                    <!-- CollateralValidityDate -->
+                                    <td style="">
+                                        <LogLabel [ObjectFieldName]="'CollateralValidityDate'" [ObjectTableName]="'Customs.CustomsCollateral'"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td>
+                                        {{ customsCollateralPM.CollateralValidityDate | DateTimeToDatePipe }}
+                                    </td>
+
+
+
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <!-- CollateralRequestStatusName -->
+                                    <td style="">
+                                        <LogLabel [ObjectFieldName]="'CollateralRequestStatusName'" [ObjectTableName]="'Customs.CustomsCollateral'"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td style="padding-left: 5px;">
+                                        {{customsCollateralPM.CollateralRequestStatusName}}
+                                    </td>
+
+                                    <td style=""><div></div></td>
+
+                                    <!-- IncludingThirdPartyGuarantee -->
+                                    <td style="">
+                                        <LogLabel [ObjectFieldName]="'IncludingThirdPartyGuarantee'" [ObjectTableName]="'Customs.CustomsCollateral'"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td>
+                                        <img *ngIf="customsCollateralPM.IncludingThirdPartyGuarantee" src="./Images/CheckBoxIcon.png" style="width:14px; margin-top:3px;" />
+                                    </td>
+
+
+
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <td style=""></td>
+
+                                    <td></td>
+
+                                    <td style=""><div></div></td>
+
+                                    <!-- Remarks -->
+                                    <td style="">
+                                        <LogLabel [ObjectFieldName]="'Remarks'" [ObjectTableName]="'Customs.CustomsCollateral'"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td style="padding-left: 5px;">
+                                        {{customsCollateralPM.Remarks}}
+                                    </td>
+
+                                </tr>
+                                <tr style="height: 7px;"><td><div></div></td></tr>
+
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- ConditionList -->
+                    <tr>
+                        <td style="min-height: 53px;" [style.height.px]="gridHeight">
+                            <div class="SimpleGridView" style="border: 1px solid #8C8C8C;border-radius: 3px;">
+                                <div class="SimpleGridViewHeaderDark" style="height:25px;">
+                                    <table>
+                                        <tr>
+                                            <td style="text-align: right;right:5px;">
+                                                <label>{{'Customs.CustomsCollateralsCondition.F.ConditionName' | TextCodeTranslationPipe}}</label>
+                                            </td>
+
+                                            <td style="text-align: left;left:5px">
+                                                <label>{{'Customs.CustomsCollateralsCondition.F.RequestedAmount' |TextCodeTranslationPipe }}</label>
+                                            </td>
+
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div class="SimpleGridViewBody">
+                                    <table>
+                                        <tr class="SimpleGridViewRow" *ngFor="let condition of Conditionslist" style="border: none;height:29px">
+                                            <td class="GridViewCell" style="text-align:right;right:7px;width:400px">
+                                                <div>{{condition.ConditionName}}</div>
+                                            </td>
+
+                                            <td class="GridViewCell" style="text-align:right;padding-right:85px">
+                                                <div>{{condition.RequestedAmount |NumbersPipe:'N2'}}</div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Close' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button *ngIf="IsAgentObjectionButtonVisibile" class="Button" (click)="AgentButtonClicked()">{{'Customs.CustomsCollateral.O.AgentObjection' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="ColleteralButtonClicked()">{{'Customs.CustomsCollateral.O.EnterCollateral' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

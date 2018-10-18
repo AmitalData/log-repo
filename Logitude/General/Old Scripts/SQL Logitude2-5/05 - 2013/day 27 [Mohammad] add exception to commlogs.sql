@@ -1,0 +1,1 @@
+alter table communicationlogs add ExceptionMessage varchar(8000) null

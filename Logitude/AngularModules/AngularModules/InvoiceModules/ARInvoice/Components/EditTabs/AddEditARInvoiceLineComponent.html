@@ -1,0 +1,225 @@
+﻿
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr style="height: 1px;">
+                    <td style="width: 360px;">
+                        <table>
+
+                            <!-- Description -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 130px;">
+                                    <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'Description'" [Text]="DataContext.Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                            </tr>
+
+                            <!-- LocalDescription -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'LocalDescription'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'LocalDescription'" [Text]="DataContext.LocalDescription" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                            </tr>
+
+                            <!-- VatTypeId -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'VatTypeId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogLov [ObjectFieldName]="'VatTypeId'"
+                                            [SelectedValue]="DataContext.VatTypeId"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'VatType'"
+                                            [HideMaintenanceIcon]="true"
+                                            [HideAddLink]="true">
+                                    </LogLov>
+                                </td>
+                            </tr>
+
+                            <!-- VatPercentage -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'VatPercentage'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <div class="MediaFill">
+                                        <div class="MediaFillRelative">
+                                            <LogTextBox [ObjectFieldName]="'VatPercentage'" [Text]="DataContext.VatPercentage" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            <div class="Value" style="position: absolute; left: 10px; top: 7px;" *ngIf="DataContext.VatIsMultiPercentage">Multi</div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- ForiegnExchangeRate -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'ForiegnExchangeRate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td style="width: 100px;">
+                                                <LogTextBox [ObjectFieldName]="'ForiegnExchangeRate'" [Text]="DataContext.ForiegnExchangeRate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideLastColumn]="true" [DigitsAfterPoint]="5"></LogTextBox>
+                                            </td>
+
+                                            <td style="width: 3px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width: 1px;" *ngIf="DataContext.IsEditExchangeRateVisible">
+                                                <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="DataContext.UpdateCurrencyRateClicked()" [IsEnabled]="DataContext.IsRateEnabled"></IconButton>
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <!-- Quantity -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'Quantity'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'Quantity'" [Text]="DataContext.Quantity" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                            </tr>
+
+                            <!-- UnitPrice -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'UnitPrice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'UnitPrice'" [Text]="DataContext.UnitPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                            </tr>
+
+                            <!-- ForiegnCurrencyAmount -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'ForiegnCurrencyAmount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="AmountForiegnLabel"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'ForiegnCurrencyAmount'" [Text]="DataContext.ForiegnCurrencyAmount" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                            </tr>
+
+                            <!-- LocalCurrencyAmount -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'LocalCurrencyAmount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="AmountLocalLabel"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'LocalCurrencyAmount'" [Text]="DataContext.LocalCurrencyAmount" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                            </tr>
+
+                            <!-- InvoiceCurrencyAmount -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'InvoiceCurrencyAmount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="AmountInvoiceLabel"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'InvoiceCurrencyAmount'" [Text]="DataContext.InvoiceCurrencyAmount" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </td>
+
+                    <td style="width: 10px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 250px;">
+                        <table>
+                            <tr class="FormFieldRow">
+                                <td style="vertical-align: bottom">
+                                    <LogLabel [ObjectFieldName]="'Notes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow" style="height: 90px;">
+                                <td style="height: 90px;">
+                                    <div style="height: 90px;">
+                                        <LogTextBox [ObjectFieldName]="'Notes'" [Text]="DataContext.Notes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="3">
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <!-- (Ayman: Notes fields is always open for edit) [disabled]="!DataContext.IsEditingEnabled" -->
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

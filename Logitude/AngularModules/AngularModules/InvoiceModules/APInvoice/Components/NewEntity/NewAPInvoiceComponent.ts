@@ -1,0 +1,969 @@
+﻿import {Component} from '@angular/core';
+import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import {APInvoicePM} from '../../../../Invoice/EntityPMs/APInvoicePM';
+import {APInvoiceLinePM} from '../../../../Invoice/EntityPMs/APInvoiceLinePM';
+import {APInvoiceTotalVATPM} from '../../../../Invoice/EntityPMs/APInvoiceTotalVATPM';
+import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
+import {ShipmentPayablePM} from '../../../../Shipment/EntityPMs/ShipmentPayablePM';
+import {APInvoicePMService} from '../../../../Invoice/Services/StandardPMs/APInvoicePMService';
+import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
+import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
+import {DateTool, AppTool, ArrayTool} from '../../../../Infrastructure/Tools';
+import {InvoiceTool} from '../../../../Invoice/Tools';
+import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import {CardListService} from '../../../../Common/Services/StandardLists/CardListService';
+import {CardList} from '../../../../Common/EntityLists/CardList';
+import {VatTypeList} from '../../../../Common/EntityLists/VatTypeList';
+import {VatTypeListService} from '../../../../Common/Services/StandardLists/VatTypeListService';
+import {CurrencyRatesService, LastRate} from '../../../../Common/Services/CurrencyRatesService';
+import {CurrencyList} from '../../../../Common/EntityLists/CurrencyList';
+import {CommonDomainService} from '../../../../Common/Services/CommonDomainService';
+import {VatTypePercentagePM} from '../../../../Common/EntityPMs/VatTypePercentagePM';
+import {UpdateCurrencyRateComponent} from '../../../../CommonModules/CommonOthers/Components/UpdateCurrencyRate/UpdateCurrencyRateComponent';
+import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
+import {PaymentTermList} from '../../../../Common/EntityLists/PaymentTermList';
+import {PaymentTermListService} from '../../../../Common/Services/StandardLists/PaymentTermListService';
+import {CurrencyListService} from '../../../../Common/Services/StandardLists/CurrencyListService';
+import {ChargesTypeListService} from '../../../../Common/Services/StandardLists/ChargesTypeListService';
+import {ChargesTypeList} from '../../../../Common/EntityLists/ChargesTypeList';
+import {InvoiceDomainService} from '../../../../Invoice/Services/InvoiceDomainService';
+import {InvoiceTotalsClass} from '../../../../Invoice/Args';
+import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
+import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
+
+@Component({
+    moduleId: module.id,
+    templateUrl: './NewAPInvoiceComponent.html',
+})
+
+export class NewAPInvoiceComponent extends BaseComponent {
+    public EntityPM: APInvoicePM;
+    public ObjectTableName: string = "APInvoice";
+    public DataContext = this;
+    public ValidationErrorsList: string[] = [];
+    public ValidationWarningsList: string[] = [];
+    public IsResourcesReady: boolean = false;
+    public IsAccountingActivated = false;
+    public IsEditExchangeRateVisible: boolean = false;
+    public isRTL: boolean = false;
+    public IsFullAccounting: boolean = false;
+
+    constructor(private entityResourceService: EntityResourceService) {
+        super();
+        this.IsFullAccounting = SessionLocator.TenantPM.AccountingActivated;
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
+        this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
+        this.InitializeServices();
+
+        if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "APInvoiceEditExchangeRate")) {
+            this.IsEditExchangeRateVisible = true;
+        }
+    }
+
+    public AllVatTypes: VatTypeList[] = [];
+    private myCardListService: CardListService;
+    private myPaymentTermListService: PaymentTermListService;
+    private myCurrencyListService: CurrencyListService;
+    private myChargesTypeListService: ChargesTypeListService;
+    private myVatTypeListService: VatTypeListService;
+    private myInvoiceDomainService: InvoiceDomainService;
+    private myEntityPMService: APInvoicePMService;
+    InitializeServices() {
+        this.myCardListService = new CardListService();
+        this.myPaymentTermListService = new PaymentTermListService();
+        this.myCurrencyListService = new CurrencyListService();
+        this.myChargesTypeListService = new ChargesTypeListService();
+        this.myVatTypeListService = new VatTypeListService();
+        this.myInvoiceDomainService = new InvoiceDomainService();
+        this.myEntityPMService = new APInvoicePMService();
+
+        this.myVatTypeListService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.AllVatTypes = myResponse.Result;
+            }
+        });
+    }
+
+    private shipmentPM: ShipmentPM = null;
+    private isMultipleEntities: boolean = false;
+    SetWindowArgs(args: any) {
+        this.shipmentPM = args['ShipmentPM'];
+        this.isMultipleEntities = args['IsMultipleEntities'];
+
+        if (this.shipmentPM) {
+            this.isMultipleEntities = false;
+        }
+
+        this.entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((res: any) => {
+            this.EntityPM = this.myEntityPMService.GetNewEntityPM();
+            this.EntityPM.IsMultipleEntities = this.isMultipleEntities;
+
+            this.IsResourcesReady = true;
+
+            this.GetShipmentData(this.shipmentPM);
+            this.SetUIProperties();
+            this.LoadData();
+        });
+    }
+
+    // GetShipmentData
+    private myMainEntityObjectTableName;
+    private GetShipmentData(shipmentPM: ShipmentPM) {
+        if (!this.EntityPM.IsMultipleEntities) {
+            this.shipmentPM = shipmentPM;
+
+            if (shipmentPM.ShipmentLevelCode == "C") {
+                this.myMainEntityObjectTableName = "Master";
+            }
+
+            else {
+                this.myMainEntityObjectTableName = "Shipment";
+            }
+
+            this.EntityPM.MainEntityId = shipmentPM.Id;
+            this.EntityPM.MainEntityReference = shipmentPM.ShipmentNumber;
+            this.EntityPM.HouseNumber = shipmentPM.House;
+            this.EntityPM.MasterNumber = shipmentPM.LongMaster;
+            this.EntityPM.ProfitCurrencyId = shipmentPM.ProfitCurrencyId;
+            this.EntityPM.BranchId = shipmentPM.BranchId;
+
+            var myDescription = null;
+            switch (shipmentPM.DirectionId) {
+                case "E": { myDescription = "Export to " + shipmentPM.MainCarriageFinalDestinationPortCode; break; }
+                case "I": { myDescription = "Import from " + shipmentPM.MainCarriageFromPortCode; break; }
+                case "D": { myDescription = "Ship to " + shipmentPM.ToPartnerCity; break; }
+            }
+
+            this.EntityPM.Description = myDescription;
+            this.EntityPM.OperationalDate = InvoiceTool.GetOperationalDate(shipmentPM);
+        }
+    }
+
+    // SetUIProperties
+    public PaymentTermDisplayInLOV: boolean = true;
+    SetUIProperties() {
+        var isVatNumberRequired = false;
+
+        if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP) {
+            if (AppTool.IsNullOrEmpty(this.VATNumber)) {
+                isVatNumberRequired = true;
+            }
+        }
+
+        this.UIProperties.SetRequired("VATNumber", "APInvoice", isVatNumberRequired);
+
+        var isFieldtEnabled = true;
+
+        if (this.EntityPM.InvoiceCurrencyId == SessionLocator.TenantPM.CurrencyId || this.EntityPM.InvoiceCurrencyId == null || SessionLocator.TenantPM.CurrencyId == null) {
+            isFieldtEnabled = false;
+        }
+
+        this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", "APInvoice", isFieldtEnabled);
+        this.RateIsEnabled = isFieldtEnabled;
+
+        this.SetUIProperties_DueDate();
+
+        this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, AppTool.IsNullOrEmpty(this.AccountingDate));
+    }
+    SetUIProperties_DueDate() {
+        var AllowManuallyDueDate: boolean = false;
+
+        if (SessionLocator.AccountingSystemPM) {
+            AllowManuallyDueDate = SessionLocator.AccountingSystemPM.AllowManuallyDueDate;
+        }
+
+        this.UIProperties.SetEnabled("DueDate", this.ObjectTableName, AllowManuallyDueDate);
+
+        if (AllowManuallyDueDate) {
+            this.PaymentTermDisplayInLOV = null;
+        }
+    }
+
+    // Load Data 
+    private LastRatesList: LastRate[] = [];
+    private VatTypePercentagesList: VatTypePercentagePM[] = [];
+    LoadData() {
+
+        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+
+        var myCurrencyRatesService = new CurrencyRatesService();
+        var myCommonDomainService = new CommonDomainService();
+
+        var loadingDate = this.EntityPM.InvoiceDate;
+        if (loadingDate == null) {
+            loadingDate = DateTool.GetCurrentDateAsUtc();
+        }
+
+        myCurrencyRatesService.GetCurrenciesExchangeRateByValueDate(SessionLocator.LocalCurrencyId, loadingDate).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.LastRatesList = myResponse.Result;
+                this.SetCurrencyRateData();
+
+                myCommonDomainService.GetVatTypePercentagePMByDate(loadingDate).subscribe((myResponse2: ServiceResponse) => {
+                    if (!myResponse2.HasError) {
+                        this.VatTypePercentagesList = myResponse2.Result;
+                    }
+
+                    SessionLocator.CurrentSession.StopBusyIndicator();
+                });
+            }
+
+            else {
+                SessionLocator.CurrentSession.StopBusyIndicator();
+            }
+        });
+    }
+    GetCurrencyRate(currencyId: string) {
+        var myResult: number = null;
+
+        if (!AppTool.IsNullOrEmpty(currencyId)) {
+            if (currencyId == SessionLocator.TenantPM.CurrencyId) {
+                myResult = 1;
+            }
+
+            else {
+                var lastRate: LastRate = this.LastRatesList.filter(d => d.ForeignCurrencyId == currencyId)[0];
+                if (lastRate != null) {
+                    myResult = lastRate.Rate;
+                }
+            }
+        }
+
+        return myResult;
+    }
+    GetCurrencyRateDate(currencyId: string) {
+        var myResult: Date = null;
+
+        if (!AppTool.IsNullOrEmpty(currencyId)) {
+            if (currencyId == SessionLocator.TenantPM.CurrencyId) {
+                myResult = null;
+            }
+
+            else {
+                var lastRate: LastRate = this.LastRatesList.filter(d => d.ForeignCurrencyId == currencyId)[0];
+                if (lastRate != null) {
+                    myResult = lastRate.ValueDate;
+                }
+            }
+        }
+
+        return myResult;
+    }
+    GetVatTypePercentage(vatTypeId: string) {
+        var myResult: number = null;
+
+        var vatTypePercentagePM = this.VatTypePercentagesList.filter(d => d.VatTypeId == vatTypeId)[0];
+        if (vatTypePercentagePM != null) {
+            myResult = vatTypePercentagePM.Percentage;
+        }
+
+        return myResult;
+    }
+   
+    // Vendor Properties
+    get VendorDependencyProperty1() { return InvoiceTool.GetVendorPartnerTypes(); }
+
+    get VendorId() { return this.EntityPM.VendorId; }
+    set VendorId(value: string) {
+        if (this.EntityPM.VendorId != value) {
+            this.EntityPM.VendorId = value;
+
+            this.CheckDuplication();
+
+            if (AppTool.IsNullOrEmpty(value)) {
+                this.VATNumber = null;
+                this.VendorName = null;
+                this.EntityPM.VendorPartnerTypeId = null;
+                this.InvoiceCurrencyId = SessionLocator.AccountingCurrencyId;
+                this.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
+                this.VatTypeId = null;
+            }
+
+            else {
+                this.myCardListService.getSingle(value).subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
+                        var list: CardList = myResponse.Result;
+                        if (list != null) {
+                            this.VATNumber = list.VatNumber;
+                            this.VendorName = list.EnglishName;
+                            this.EntityPM.VendorPartnerTypeId = list.PartnerTypeId;
+                            this.VatTypeId = list.VatTypeId;
+
+                            if (!AppTool.IsNullOrEmpty(list.InvoiceCurrencyId)) {
+                                this.InvoiceCurrencyId = list.InvoiceCurrencyId;
+                            }
+
+                            if (!AppTool.IsNullOrEmpty(list.PaymentTermId)) {
+                                this.PaymentTermId = list.PaymentTermId;
+                            }                            
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+    get VendorName() { return this.EntityPM.VendorName; }
+    set VendorName(value: string) {
+        if (this.EntityPM.VendorName != value) {
+            this.EntityPM.VendorName = value;
+        }
+    }
+
+    get InvoiceNumber() { return this.EntityPM.InvoiceNumber; }
+    set InvoiceNumber(value: string) {
+        if (this.EntityPM.InvoiceNumber != value) {
+            this.EntityPM.InvoiceNumber = value;
+            this.CheckDuplication();
+        }
+    }
+
+    CheckDuplication() {
+        var warnings: string[] = [];
+        this.FillWarnings(warnings);
+
+        if (!AppTool.IsNullOrEmpty(this.VendorId) && !AppTool.IsNullOrEmpty(this.InvoiceNumber)) {
+            
+            this.myInvoiceDomainService.CheckVendor_NumberDuplication(this.EntityPM.VendorId, this.EntityPM.InvoiceNumber, this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    
+                    var isDuplicated: boolean = myResponse.Result;
+
+                    if (isDuplicated) {
+                        warnings.push("Please Note that there is already another invoice with the same number by the same vendor");
+                        this.FillWarnings(warnings);
+                    }
+                }
+            });
+        }
+    }
+
+    // Currency Properties
+    get InvoiceCurrencyId() { return this.EntityPM.InvoiceCurrencyId; }
+    set InvoiceCurrencyId(value: string) {
+        if (this.EntityPM.InvoiceCurrencyId != value) {
+            this.EntityPM.InvoiceCurrencyId = value;            
+            this.SetCurrencyRateData();
+            this.SetUIProperties();
+
+            if (AppTool.IsNullOrEmpty(value)) {
+                this.InvoiceCurrencyCode = null;
+            }
+
+            else {
+                this.myCurrencyListService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
+                        var list: CurrencyList = myResponse.Result;
+                        if (list != null) {
+                            this.InvoiceCurrencyCode = list.Code;
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+    get InvoiceCurrencyCode() { return this.EntityPM.InvoiceCurrencyCode; }
+    set InvoiceCurrencyCode(value: string) {
+        if (this.EntityPM.InvoiceCurrencyCode != value) {
+            this.EntityPM.InvoiceCurrencyCode = value;
+        }
+    }
+
+    SetCurrencyRateData() {
+        var myRate: number = null;
+        var myRateDate: Date = null;
+
+        if (!AppTool.IsNullOrEmpty(this.InvoiceCurrencyId)) {
+            if (this.InvoiceCurrencyId == SessionLocator.TenantPM.CurrencyId) {
+                myRate = 1;
+            }
+
+            else {
+                var lastRate: LastRate = this.LastRatesList.filter(d => d.ForeignCurrencyId == this.InvoiceCurrencyId)[0];
+                if (lastRate != null) {
+                    myRate = lastRate.Rate;
+                    myRateDate = lastRate.ValueDate;
+                }
+            }
+        }
+
+        this.InvoiceCurrencyExchangeRate = myRate;
+        this.ExchangeRateDate = myRateDate;
+    }
+
+    get InvoiceCurrencyExchangeRate() { return this.EntityPM.InvoiceCurrencyExchangeRate; }
+    set InvoiceCurrencyExchangeRate(value: number) {
+        var setValue: number = AppTool.Round(value, 5);
+        if (this.EntityPM.InvoiceCurrencyExchangeRate != setValue) {
+            this.EntityPM.InvoiceCurrencyExchangeRate = setValue;
+        }
+    }
+
+    get ExchangeRateDate() { return this.EntityPM.ExchangeRateDate; }
+    set ExchangeRateDate(value: Date) {
+        if (this.EntityPM.ExchangeRateDate != value) {
+            this.EntityPM.ExchangeRateDate = value;
+            this.ComputeRelativeRateDate();
+        }
+    }
+
+    private myRelativeRateDate: string = null;
+    get RelativeRateDate() { return this.myRelativeRateDate; }
+    set RelativeRateDate(value: string) {
+        if (this.myRelativeRateDate != value) {
+            this.myRelativeRateDate = value;
+        }
+    }
+    ComputeRelativeRateDate() {
+        this.RelativeRateDate = DateTool.GetRelativeRateDate(this.InvoiceDate, this.ExchangeRateDate, "old");
+    }
+
+    get ProfitCurrencyId() { return this.EntityPM.ProfitCurrencyId; }
+    set ProfitCurrencyId(value: string) {
+        if (this.EntityPM.ProfitCurrencyId != value) {
+            this.EntityPM.ProfitCurrencyId = value;
+            this.InvoiceCurrencyExchangeRate = this.GetCurrencyRate(value);   
+        }
+    }
+
+    get ProfitCurrencyExchangeRate() { return this.EntityPM.ProfitCurrencyExchangeRate; }
+    set ProfitCurrencyExchangeRate(value: number) {
+        if (this.EntityPM.ProfitCurrencyExchangeRate != value) {
+            this.EntityPM.ProfitCurrencyExchangeRate = AppTool.Round(value, 5);
+        }
+    }
+
+    // UpdateCurrencyRate
+    public RateIsEnabled: boolean = false;
+    UpdateCurrencyRateClicked() {
+        this.entityResourceService.getEntityResourceByTableName("RatesTable").subscribe((res: any) => {
+            var loadingDate = this.EntityPM.InvoiceDate;
+            if (loadingDate == null) {
+                loadingDate = DateTool.GetCurrentDateAsUtc();
+            }
+
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 600;
+            logWindow.Height = 350;
+            logWindow.Title = "Update Currency Rate";
+            logWindow.WindowArgs = { CurrencyId: this.InvoiceCurrencyId, CurrencyCode: this.InvoiceCurrencyCode, Rate: this.InvoiceCurrencyExchangeRate, Date: loadingDate };
+            logWindow.ComponentLoaded.subscribe(comp => {
+                logWindow.WindowClosed.subscribe(s => {
+                    if (s) {
+                        this.LastRatesList = comp.RatesList;
+                        this.InvoiceCurrencyExchangeRate = comp.Rate;
+                        this.ExchangeRateDate = comp.RateDate;
+                    }
+                });
+            });
+            logWindow.Show('./CommonModules/CommonOthers/Components/UpdateCurrencyRate/UpdateCurrencyRateComponent');
+        });
+    }
+
+    // Properties
+    get VATNumberRedDotVisibility() {
+        var myResult = false;
+        if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP) {
+            myResult = true;
+        }
+
+        return myResult;
+    }
+
+    private vatTypeId = null;
+    get VatTypeId() { return this.vatTypeId; }
+    set VatTypeId(value: string) {
+        if (this.vatTypeId != value) {
+            this.vatTypeId = value;
+        }
+    }
+
+    get VATNumber() { return this.EntityPM.VATNumber; }
+    set VATNumber(value: string) {
+        if (this.EntityPM.VATNumber != value) {
+            this.EntityPM.VATNumber = value;
+            this.SetUIProperties();
+        }
+    }
+
+    get PaymentTermId() { return this.EntityPM.PaymentTermId; }
+    set PaymentTermId(value: string) {
+        if (this.EntityPM.PaymentTermId != value) {
+            this.EntityPM.PaymentTermId = value;
+
+            if (AppTool.IsNullOrEmpty(value)) {
+                this.PaymentTermName = null;
+            }
+
+            else {
+                this.myPaymentTermListService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
+                        var list: PaymentTermList = myResponse.Result;
+                        if (list != null) {
+                            this.PaymentTermName = list.EnglishName;
+                        }                        
+                    }
+                });
+            }
+
+            if (!this.IsFullAccounting) {
+                InvoiceTool.ComputeAPInvoiceDueDate(this.EntityPM);
+            }
+            else {
+                InvoiceTool.ComputeFullAccountingAPInvoiceDueDate(this.EntityPM);
+            }
+        }
+    }
+
+    get PaymentTermName() { return this.EntityPM.PaymentTermName; }
+    set PaymentTermName(value: string) {
+        if (this.EntityPM.PaymentTermName != value) {
+            this.EntityPM.PaymentTermName = value;
+        }
+    }
+
+    get InvoiceDate() { return this.EntityPM.InvoiceDate; }
+    set InvoiceDate(value: Date) {
+        if (this.EntityPM.InvoiceDate != value) {
+            this.EntityPM.InvoiceDate = value;
+            if (!this.IsFullAccounting) {
+                InvoiceTool.ComputeAPInvoiceDueDate(this.EntityPM);
+            }
+            this.ComputeRelativeRateDate();
+            this.LoadData();
+        }
+    }
+
+    get DueDate() { return this.EntityPM.DueDate; }
+    set DueDate(value: Date) {
+        if (this.EntityPM.DueDate != value) {
+            this.EntityPM.DueDate = value;
+            InvoiceTool.ComputeAPInvoicePaymentTerm(this.EntityPM);
+        }
+    }
+
+    get AccountingDate() { return this.EntityPM.AccountingDate; }
+    set AccountingDate(value: Date) {
+        if (this.EntityPM.AccountingDate != value) {
+            this.EntityPM.AccountingDate = value;
+          
+            if (value == null) {
+                this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, true);
+            }
+            else {
+                this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, false);
+            }
+            if (this.IsFullAccounting) {
+                InvoiceTool.ComputeFullAccountingAPInvoiceDueDate(this.EntityPM);
+                this.LoadData();
+            }
+        }
+    }
+
+    // Commands    
+    FillWarnings(warnings: string[]) {
+        this.ValidationWarningsList = [];
+        if (warnings != null && warnings.length > 0) {
+            warnings.forEach(item => {
+                this.ValidationWarningsList.push(item);
+            });
+        }
+    }
+
+    CancelButtonClicked() {
+        SessionLocator.CurrentSession.CloseCurrentWindow();
+    }
+
+    OkButtonClicked() {
+        var errors: string[] = [];
+        var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+
+        if (AppTool.IsNullOrEmpty(this.EntityPM.VendorId)) {
+            errors.push(msg.replace("%FieldName", "Vendor"));
+        }
+
+        if (AppTool.IsNullOrEmpty(this.EntityPM.InvoiceNumber)) {
+            errors.push(msg.replace("%FieldName", "Invoice Number"));
+        }
+
+        if (this.EntityPM.InvoiceExpectedAmount == null) {
+            errors.push(msg.replace("%FieldName", "Invoice Amount"));
+        }
+
+        if (AppTool.IsNullOrEmpty(this.EntityPM.InvoiceCurrencyId)) {
+            errors.push(msg.replace("%FieldName", "Currency"));
+        }
+
+        if (this.EntityPM.InvoiceDate == null) {
+            errors.push(msg.replace("%FieldName", "Invoice Date"));
+        }
+
+        else if (DateTool.GetDateParts(this.InvoiceDate).DateTicks > DateTool.GetCurrentDateAsUtc().valueOf()) {
+            errors.push(TextCodeTranslator.Translate("APInvoice.M.CantReceiveFutureDateInvoice"));
+        }
+
+        if (AppTool.IsNullOrEmpty(this.EntityPM.PaymentTermId)) {
+            errors.push(msg.replace("%FieldName", "Payment Term"));
+        }
+
+        if (this.EntityPM.DueDate == null) {
+            errors.push(msg.replace("%FieldName", "Due Date"));
+        }
+
+        if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP) {
+            if (AppTool.IsNullOrEmpty(this.EntityPM.VATNumber)) {
+                errors.push(msg.replace("%FieldName", "Vat Number"));
+            }
+        }
+
+        if (this.IsAccountingActivated && this.AccountingDate == null) {
+            errors.push(msg.replace("%FieldName", "Accounting Date"));
+        }
+
+        this.ValidationErrorsList = errors;
+
+        if (this.ValidationErrorsList.length == 0) {
+            if (this.IsAccountingActivated == true) {
+                var invoiceDomainService: InvoiceDomainService = new InvoiceDomainService();
+                invoiceDomainService.ValidateAPInvoiceFullAccounting(this.EntityPM.InvoiceCurrencyId, this.EntityPM.VendorId, this.EntityPM.AccountingDate).subscribe((response: ServiceResponse) => {
+                    if (response != null) {
+                        if (!response.HasError) {
+                            this.CompleteSubmission(errors);
+                        }
+                        else {
+                            this.ValidationErrorsList = response.ErrorsArray;
+                        }
+                    }
+                });
+            }
+            else {
+                this.CompleteSubmission(errors);
+            }
+        }
+    }
+    CompleteSubmission(errors) {
+        this.ValidationErrorsList = errors;
+        if (this.ValidationErrorsList.length == 0) {
+            SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
+
+            this.InitializeProfitCurrency();
+
+            if (this.EntityPM.IsMultipleEntities) {
+                this.ComputeTotals();
+                SessionLocator.CurrentSession.CloseCurrentWindowEmit("Ok");
+            }
+
+            else {
+                this.BuildOpenAmounts();
+            }
+        }
+    }
+
+    private InitializeProfitCurrency() {
+        if (this.EntityPM.IsMultipleEntities) {
+            this.EntityPM.ProfitCurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
+        }
+
+        else if (AppTool.IsNullOrEmpty(this.EntityPM.ProfitCurrencyId)) {
+            this.EntityPM.ProfitCurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
+        }
+
+        this.myCurrencyListService.getSingleFromCache(this.EntityPM.ProfitCurrencyId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var list: CurrencyList = myResponse.Result;
+                if (list != null) {
+                    this.EntityPM.ProfitCurrencyCode = list.Code;
+                }
+            }
+        });
+
+        this.EntityPM.ProfitCurrencyExchangeRate = this.GetCurrencyRate(this.EntityPM.ProfitCurrencyId);
+    }
+
+    // BuildInvoiceLines
+
+    private BuildOpenAmounts() {
+        var filteredPayables: ShipmentPayablePM[] = this.shipmentPM.ShipmentPayables;
+
+        filteredPayables = filteredPayables.filter(d => d.ShipmentPayableParentId == null && (d.ShipmentPayableLineStatusCode == "OAMT" || d.ShipmentPayableLineStatusCode == "PACC"));
+        this.BuildInvoiceLines(filteredPayables);
+    }
+    private BuildInvoiceLines(filteredPayables: ShipmentPayablePM[]) {
+        if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+            filteredPayables.forEach(payable => {
+
+                var invoiceLine: APInvoiceLinePM = new APInvoiceLinePM(this.EntityPM);
+                invoiceLine.APInvoiceId = this.EntityPM.Id;
+                invoiceLine.Tenant = payable.Tenant;
+                invoiceLine.ChargesTypeId = payable.ChargesTypeId;
+                invoiceLine.ChargesTypeCode = payable.ChargesTypeCode;
+                invoiceLine.ChargesTypeName = payable.ChargesTypeName;
+                invoiceLine.EntityPayableId = payable.Id;
+                invoiceLine.EntityId = payable.ShipmentId;
+                invoiceLine.EntityReference = payable.ShipmentNumber;
+                invoiceLine.VendorId = payable.VendorId;
+                invoiceLine.VendorName = payable.VendorName;
+                invoiceLine.ExpectedAmount = payable.ExpectedAmount;
+                invoiceLine.OtherInvoicesAmounts = payable.AccountedAmount;
+                invoiceLine.OpenAmount = payable.OpenAmount;
+                invoiceLine.CorrectionAmount = payable.CorrectionAmount;
+                invoiceLine.CorrectionNote = payable.CorrectionNote;
+                invoiceLine.CorrectionByUserId = payable.CorrectionByUserId;
+                invoiceLine.CorrectionDate = payable.CorrectionDate;
+                invoiceLine.AmountTypeCode = payable.ShipmentPayableAmountTypeCode;
+                invoiceLine.ForiegnCurrencyId = payable.CurrencyId;
+                invoiceLine.ForiegnCurrencyCode = payable.CurrencyCode;
+                invoiceLine.Notes = payable.Notes;
+
+                if (invoiceLine.ForiegnCurrencyId == this.EntityPM.InvoiceCurrencyId) {
+                    invoiceLine.ForiegnExchangeRate = this.EntityPM.InvoiceCurrencyExchangeRate;
+                }
+
+                else {
+                    invoiceLine.ForiegnExchangeRate = this.GetCurrencyRate(payable.CurrencyId);
+                }
+
+                this.myChargesTypeListService.getSingleFromCache(invoiceLine.ChargesTypeId).subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
+
+                        var list: ChargesTypeList = myResponse.Result;
+
+                        this.SetInvoiceLineVatType(list, payable, invoiceLine);
+
+                        if (list != null) {
+                            invoiceLine.Description = list.EnglishName;
+                            invoiceLine.LocalDescription = list.LocalName;                            
+                        }
+                    }
+                });
+
+                this.EntityPM.InvoiceLines.push(invoiceLine);
+            });
+        }
+
+        this.ComputeTotals();
+        SessionLocator.CurrentSession.CloseCurrentWindowEmit("Ok");
+    }
+
+    SetInvoiceLineVatType(list: ChargesTypeList, payable: ShipmentPayablePM, invoiceLine: APInvoiceLinePM) {
+
+        if (!AppTool.IsNullOrEmpty(this.VatTypeId)) {
+            invoiceLine.VatTypeId = this.VatTypeId;
+        }
+
+        else if (payable.IsFromQuote && !AppTool.IsNullOrEmpty(payable.VatTypeId)) {
+            invoiceLine.VatTypeId = payable.VatTypeId;
+        }
+
+        else if (list) {
+            invoiceLine.VatTypeId = list.VatTypeId;
+        }
+
+        if (!AppTool.IsNullOrEmpty(invoiceLine.VatTypeId)) {
+            var list_VAT: VatTypeList = this.AllVatTypes.filter(f => f.Id == invoiceLine.VatTypeId)[0];
+            if (list_VAT) {
+                invoiceLine.VatTypeName = list_VAT.EnglishName;
+                invoiceLine.VatIsMultiPercentage = list_VAT.IsMultiPercentage;
+
+                if (!list_VAT.IsMultiPercentage) {
+                    invoiceLine.VatPercentage = this.GetVatTypePercentage(invoiceLine.VatTypeId);
+                }
+            }
+        }
+    }
+
+    //  ComputeTotals
+    ComputeTotals() {
+        this.ComputeAmounts();
+        this.BuildTotalVATs();
+
+        this.SubTotalInLocalCurrency = AppTool.Round(ArrayTool.Sum(this.EntityPM.InvoiceLines, "LocalCurrencyAmount"), 2);
+        this.SubTotalInInvoiceCurrency = AppTool.Round(ArrayTool.Sum(this.EntityPM.InvoiceLines, "InvoiceCurrencyAmount"), 2);
+        this.EntityPM.AmountInLocalCurrency_Summary = AppTool.Round(this.EntityPM.SubTotalInLocalCurrency + ArrayTool.Sum(this.EntityPM.TotalVATs, "LocalVATAmount"), 2);
+        this.EntityPM.AmountInInvoiceCurrency_Summary = AppTool.Round(this.EntityPM.SubTotalInInvoiceCurrency + ArrayTool.Sum(this.EntityPM.TotalVATs, "InvoiceCurrencyVATAmount"), 2);
+    }
+    ComputeAmounts() {
+        // Local
+        if (SessionLocator.LocalCurrencyId == this.EntityPM.InvoiceCurrencyId) {
+            this.EntityPM.AmountInLocalCurrency = this.AmountInInvoiceCurrency;
+        }
+        else {
+            this.EntityPM.AmountInLocalCurrency = AppTool.Round(this.AmountInInvoiceCurrency * this.InvoiceCurrencyExchangeRate, 2);
+        }
+
+        // Profit
+        if (this.EntityPM.ProfitCurrencyId == this.InvoiceCurrencyId) {
+            this.EntityPM.AmountInProfitCurrency = this.AmountInInvoiceCurrency;
+        }
+        else if (this.EntityPM.ProfitCurrencyId == SessionLocator.LocalCurrencyId) {
+            this.EntityPM.AmountInProfitCurrency = this.EntityPM.AmountInLocalCurrency;
+        }
+        else {
+            this.EntityPM.AmountInProfitCurrency = AppTool.Round(this.EntityPM.AmountInLocalCurrency / this.ProfitCurrencyExchangeRate, 2);
+        }
+
+        this.EntityPM.AmountDue = this.EntityPM.AmountInInvoiceCurrency == null ? 0 : this.EntityPM.AmountInInvoiceCurrency;
+        this.EntityPM.AmountDueInLocalCurrency = this.EntityPM.AmountInLocalCurrency == null ? 0 : this.EntityPM.AmountInLocalCurrency;
+        this.EntityPM.AmountDueInProfitCurrency = this.EntityPM.AmountInProfitCurrency == null ? 0 : this.EntityPM.AmountInProfitCurrency;
+    }
+    BuildTotalVATs() {
+        this.EntityPM.TotalVATs = [];
+
+        var myDataLines: APInvoiceLinePM[] = this.EntityPM.InvoiceLines.filter(f => f.VatTypeId != null);
+        if (myDataLines.length > 0) {
+
+            // Build Totals Class
+            var group_Source: InvoiceTotalsClass[] = [];
+            myDataLines.forEach(item => {
+                var lineVatType = this.AllVatTypes.filter(f => f.Id == item.VatTypeId)[0];
+
+                if (lineVatType) {
+
+                    if (AppTool.IsNullOrEmpty(item.LocalCurrencyAmount)) {
+                        item.LocalCurrencyAmount = 0;
+                    }
+
+                    if (AppTool.IsNullOrEmpty(item.InvoiceCurrencyAmount)) {
+                        item.InvoiceCurrencyAmount = 0;
+                    }
+
+                    if (AppTool.IsNullOrEmpty(item.ProfitCurrencyAmount)) {
+                        item.ProfitCurrencyAmount = 0;
+                    }
+
+                    if (!lineVatType.IsMultiPercentage) {
+                        var myQroupItem = new InvoiceTotalsClass();
+                        myQroupItem.Id = lineVatType.Id;
+                        myQroupItem.VatTypeId = lineVatType.Id;
+                        myQroupItem.VatTypePercentage = item.VatPercentage;
+                        myQroupItem.LocalCurrencyAmount = item.LocalCurrencyAmount;
+                        myQroupItem.InvoiceCurrencyAmount = item.InvoiceCurrencyAmount;
+                        myQroupItem.ProfitCurrencyAmount = item.ProfitCurrencyAmount;
+                        myQroupItem.ExternalVatCard = SessionLocator.AccountingSettingPM.PayableVATCard;
+                        myQroupItem.ExternalTAXItemId = lineVatType.ExternalTAXItemId;
+                        group_Source.push(myQroupItem);
+                    }
+
+                    else {
+                        var myVatGroups = SessionLocator.AllVatTypesGroups.filter(f => f.GroupVATTypeId == item.VatTypeId);
+
+                        myVatGroups.forEach(itemGroup => {
+                            var myQroupItem = new InvoiceTotalsClass();
+                            myQroupItem.Id = itemGroup.SingleVATTypeId;
+                            myQroupItem.VatTypeId = itemGroup.SingleVATTypeId;
+                            myQroupItem.LocalCurrencyAmount = item.LocalCurrencyAmount;
+                            myQroupItem.InvoiceCurrencyAmount = item.InvoiceCurrencyAmount;
+                            myQroupItem.ProfitCurrencyAmount = item.ProfitCurrencyAmount;
+                            myQroupItem.ExternalVatCard = SessionLocator.AccountingSettingPM.PayableVATCard;
+
+                            var vatType = this.AllVatTypes.filter(f => f.Id == itemGroup.SingleVATTypeId)[0];
+                            if (vatType) {
+                                myQroupItem.ExternalTAXItemId = vatType.ExternalTAXItemId;
+                                myQroupItem.VatTypePercentage = this.GetVatTypePercentage(vatType.Id);
+                            }
+
+                            group_Source.push(myQroupItem);
+                        });
+                    }
+                }
+            });
+
+            // Group Totals Class
+            var group_data: InvoiceTotalsClass[] = [];
+            group_Source.forEach(item => {
+                var record: InvoiceTotalsClass = group_data.filter(f => f.VatTypeId == item.VatTypeId && f.VatTypePercentage == item.VatTypePercentage && f.ExternalVatCard == item.ExternalVatCard && f.ExternalTAXItemId == item.ExternalTAXItemId)[0];
+                if (record) {
+                    record.LocalCurrencyAmount += item.LocalCurrencyAmount;
+                    record.InvoiceCurrencyAmount += item.InvoiceCurrencyAmount;
+                    record.ProfitCurrencyAmount += item.ProfitCurrencyAmount;
+                }
+
+                else {
+                    record = new InvoiceTotalsClass();
+                    record.Id = item.Id;
+                    record.VatTypeId = item.VatTypeId;
+                    record.VatTypePercentage = item.VatTypePercentage;
+                    record.ExternalVatCard = item.ExternalVatCard;
+                    record.ExternalTAXItemId = item.ExternalTAXItemId;
+                    record.LocalCurrencyAmount = item.LocalCurrencyAmount;
+                    record.InvoiceCurrencyAmount = item.InvoiceCurrencyAmount;
+                    record.ProfitCurrencyAmount = item.ProfitCurrencyAmount;
+                    group_data.push(record);
+                }
+            });
+
+            // Build Invoice Total VATs
+            group_data.forEach(item => {
+
+                var itemVatType = this.AllVatTypes.filter(f => f.Id == item.VatTypeId)[0];
+
+                var itemTotalVAT = new APInvoiceTotalVATPM(null);
+                itemTotalVAT.Tenant = SessionLocator.Tenant;
+                itemTotalVAT.APInvoiceId = this.EntityPM.Id;
+                itemTotalVAT.VatTypeId = item.VatTypeId;
+                itemTotalVAT.VatTypeName = itemVatType.EnglishName;
+                itemTotalVAT.ExternalVATCard = item.ExternalVatCard;
+                itemTotalVAT.ExternalTAXItemId = item.ExternalTAXItemId;
+                itemTotalVAT.VatPercent = AppTool.Round(item.VatTypePercentage, 2);
+                itemTotalVAT.LocalVatableAmount = AppTool.Round(item.LocalCurrencyAmount, 2);
+                itemTotalVAT.InvoiceCurrencyVatableAmount = AppTool.Round(item.InvoiceCurrencyAmount, 2);
+                itemTotalVAT.ProfitVatableAmount = AppTool.Round(item.ProfitCurrencyAmount, 2);
+                itemTotalVAT.LocalVATAmount = AppTool.Round((itemTotalVAT.LocalVatableAmount * itemTotalVAT.VatPercent / 100), 2);
+                itemTotalVAT.InvoiceCurrencyVATAmount = AppTool.Round((itemTotalVAT.InvoiceCurrencyVatableAmount * itemTotalVAT.VatPercent / 100), 2);
+                itemTotalVAT.ProfitCurrencyVATAmount = AppTool.Round((itemTotalVAT.ProfitVatableAmount * itemTotalVAT.VatPercent / 100), 2);
+                itemTotalVAT.VatTypeCell = itemTotalVAT.VatTypeName + " (" + itemTotalVAT.VatPercent + "%)";
+                this.EntityPM.AddAPInvoiceTotalVATPM(itemTotalVAT);
+            });
+        }
+    }
+
+    get AmountInInvoiceCurrency() { return this.EntityPM.AmountInInvoiceCurrency; }
+    set AmountInInvoiceCurrency(value: number) {
+        var setValue = AppTool.Round(value, 2);
+        if (this.EntityPM.AmountInInvoiceCurrency != setValue) {
+            this.EntityPM.AmountInInvoiceCurrency = setValue;
+            this.EntityPM.InvoiceExpectedAmount = setValue;
+        }
+    }
+
+    get AmountInLocalCurrency() { return this.EntityPM.AmountInLocalCurrency; }
+    set AmountInLocalCurrency(value: number)
+    {
+        var setValue = AppTool.Round(value, 2);
+        if (this.EntityPM.AmountInLocalCurrency != setValue) {
+            this.EntityPM.AmountInLocalCurrency = setValue;
+            this.EntityPM.AmountDueInLocalCurrency = setValue;
+        }
+    }
+
+    get AmountInProfitCurrency() { return this.EntityPM.AmountInProfitCurrency; }
+    set AmountInProfitCurrency(value: number) {
+        var setValue = AppTool.Round(value, 2);
+        if (this.EntityPM.AmountInProfitCurrency != setValue) {
+            this.EntityPM.AmountInProfitCurrency = setValue;
+            this.EntityPM.AmountDueInProfitCurrency = setValue;
+        }
+    }
+    
+    get SubTotalInLocalCurrency() {
+        return this.EntityPM.SubTotalInLocalCurrency;
+    }
+    set SubTotalInLocalCurrency(value: number) {
+        var setValue = AppTool.Round(value, 2);
+
+        if (this.EntityPM.SubTotalInLocalCurrency != setValue) {
+            this.EntityPM.SubTotalInLocalCurrency = setValue;
+        }
+    }
+    
+    get SubTotalInInvoiceCurrency() { return this.EntityPM.SubTotalInInvoiceCurrency; }
+    set SubTotalInInvoiceCurrency(value: number) {
+        var setValue = AppTool.Round(value, 2);
+
+        if (this.EntityPM.SubTotalInInvoiceCurrency != setValue) {
+            this.EntityPM.SubTotalInInvoiceCurrency = setValue;
+        }
+    }
+}

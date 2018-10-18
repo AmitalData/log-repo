@@ -1,0 +1,825 @@
+﻿
+<style type="text/css">
+    .RatioBox .NumericButtonDisabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+    .RatioBox .NumericButton:hover {
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(221, 232, 245, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(221, 232, 245, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+    }
+
+    .RatioBox .NumericButton {
+        width: 15px;
+        height: 10px;
+        border: 1px solid #6A8299;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        position: relative;
+    }
+
+    .RatioBoxDisabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+    .RatioBox {
+        height: 22px;
+        min-height: 22px;
+        max-height: 22px;
+        line-height: 21px;
+        width: 70px;
+        border: 1px solid #AAAAAA;
+        outline: none;
+        font-size: 11px;
+        color: #45494A;
+        background: white;
+        border-radius: 3px;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        -moz-box-shadow: inset 0 0 3px #AAAAAA;
+        -webkit-box-shadow: inset 0 0 3px #AAAAAA;
+        box-shadow: inset 0 0 3px #AAAAAA;
+        overflow: hidden;
+    }
+</style>
+
+<div class="TabHolder">
+    <table *ngIf="IsResourcesReady">
+        <tr class="TabTitleRow">
+            <td>
+                <table>
+                    <tr>
+                        <td style="width: 425px;">
+                            <table>
+                                <tr>
+                                    <td style="width: 1px;">{{TabHeaderLabel}}</td>
+                                    <td style="width: 5px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width: 1px;">
+                                        <button id="{{ 'Orders-AddPackage' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled" class="Button" (click)="AddPackage()">{{AddButtonLabel}}</button>
+                                    </td>
+
+                                    <td style="width: 3px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width: 21px;">
+                                        <IconButton [ExternalId]="'-Measurement'" [Name]="'Settings'" title="MeasurmentsButtonToolTip" (click)="MeasurmentsSettingsClicked()"></IconButton>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td style="width:15px"></td>
+                        <td style="width: 21px;">
+                            <img style="width: 30px;margin-top:10px; height: 30px; cursor: pointer;" src="./Images/lightbulb.png" (click)="TipsButtonClicked()">
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+
+        <!-- Tips -->
+
+        <tr style="height:5px;">
+            <td>
+                <div></div>
+            </td>
+        </tr>
+
+        <tr *ngIf="IsTipsOpened" style="height:80px">
+            <td>
+                <table>
+
+                    <tr>
+                        <td style="width:425px"></td>
+                        <td style="width:15px"></td>
+                        <td>
+                            <table>
+
+
+                                <tr style="height:80px;margin-top:5px;">
+                                    <td>
+                                        <div>
+                                            <TipsComponent [ObjectTableName]="ObjectTableName" [Code]="'ORDT'" [IsInternalTips]="'true'" [IsFirstTipLoad]="IsFirstTipLoad" (TipVisibilityChangedEvent)="TipVisibilityChanged($event)"></TipsComponent>
+                                        </div>
+                                        <div style="height:5px; width:100%;"></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+
+            </td>
+        </tr>
+
+        <tr style="height:3px;">
+            <td>
+                <div></div>
+            </td>
+        </tr>
+
+        <!-- Measurment -->
+        <tr style="height: 34px;" [hidden]="IsMeasurmentsHidden">
+            <td>
+                <table>
+                    <tr>
+                        <td>
+                            <div style="width: 145px; display: block; float:left;">
+                                <LogLabel [HideColumns]="true" [ObjectFieldName]="'GrossWeightUnitCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                <LogLov [ObjectFieldName]="'GrossWeightUnitCode'"
+                                        [SelectedValue]="GrossWeightUnitCode"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext"
+                                        [LookUpTableName]="'WeightUnit'"
+                                        [HideColumns]="true">
+                                </LogLov>
+                            </div>
+
+                            <div style="width: 170px; display: block; float:left; margin-left: 15px;">
+                                <LogLabel [HideColumns]="true" [ObjectFieldName]="'ChargeableWeightUnitCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="ChargeableWeightUnitCodeLabel"></LogLabel>
+                                <LogLov [ObjectFieldName]="'ChargeableWeightUnitCode'"
+                                        [SelectedValue]="ChargeableWeightUnitCode"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext"
+                                        [LookUpTableName]="'WeightUnit'"
+                                        [HideColumns]="true">
+                                </LogLov>
+                            </div>
+
+                            <div style="width: 140px; display: block; float:left; margin-left: 15px;">
+                                <LogLabel [HideColumns]="true" [ObjectFieldName]="'DimensionsUnitCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                <LogLov [ObjectFieldName]="'DimensionsUnitCode'"
+                                        [SelectedValue]="DimensionsUnitCode"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext"
+                                        [LookUpTableName]="'DimensionsUnit'"
+                                        [HideColumns]="true"
+                                        [DependencyFilter1Value]="DimensionsDependencyProperty1"
+                                        [DependencyFilter1IsList]="DimensionsDependencyProperty1IsList"                                          
+                                        >
+                                </LogLov>
+                            </div>
+
+                            <div style="width: 140px; display: block; float:left; margin-left: 15px;">
+                                <LogLabel [HideColumns]="true" [ObjectFieldName]="'VolumeUnitCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                <LogLov [ObjectFieldName]="'VolumeUnitCode'"
+                                        [SelectedValue]="VolumeUnitCode"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext"
+                                        [LookUpTableName]="'VolumeUnit'"
+                                        [HideColumns]="true">
+                                </LogLov>
+                            </div>
+
+                            <div style="width: 70px; display: block; float:left; margin-left: 15px;">
+                                <LogLabel [HideColumns]="true" [ObjectFieldName]="'Ratio'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+
+                                <div class="RatioBox" [class.RatioBoxDisabled]="!IsEditingEnabled">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 15px; font-size: 11px; padding-left: 3px;">1:</td>
+
+                                            <td style="font-size: 11px; padding-left: 2px;">
+                                                {{Ratio | NumbersPipe:'N2'}}
+                                            </td>
+
+                                            <td style="width: 15px;">
+                                                <div class="NumericButton" [class.NumericButtonDisabled]="!IsEditingEnabled" (mousedown)="NumericButtonClicked(true)">
+                                                    <img class="CenterCenter" style="height: 3px; width: 5px;" src="./Images/Buttons/Up.png" />
+                                                </div>
+                                                <div class="NumericButton" [class.NumericButtonDisabled]="!IsEditingEnabled" (mousedown)="NumericButtonClicked(false)">
+                                                    <img class="CenterCenter" style="height: 3px; width: 5px;" src="./Images/Buttons/Down.png" />
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!--<div style="width: 110px; display: block; float:left; margin-left: 2px;">
+                                <LogLabel [ObjectFieldName]="'DimFactor'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogLabel>
+                                <LogTextBox [ObjectFieldName]="'DimFactor'" [Text]="DimFactor" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                            </div>-->
+                        </td>
+                    </tr>
+
+                    <tr style="height: 5px;">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <table>
+                    <tr>
+                        <!-- OrderBookingDetails -->
+                        <td style="width: 430px;">
+                            <table class="Section">
+                                <tr class="SectionHeader">
+                                    <td>
+                                        <label>{{'Shipment.S.Orders.OrderBookingDetails' | TextCodeTranslationPipe}}</label>
+                                    </td>
+                                </tr>
+
+                                <tr style="height: 5px;">
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="CellStretch">
+                                        <div class="Stretch" *ngIf="IsResourcesReady">
+
+                                            <!-- LCL -->
+                                            <div class="SimpleGridView" *ngIf="IsLCLEntity">
+                                                <div class="SimpleGridViewHeader">
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width: 18px; min-width: 18px; max-width: 18px;">
+                                                                <div></div>
+                                                            </td>
+                                                            <td style="width: 55px; min-width: 55px; max-width: 55px; padding-left: 2px;" *ngIf="TransportModeId != 'A'">{{'ShipmentOrderPackage.CH.PackageTypeIdListLable' | TextCodeTranslationPipe}}</td>
+                                                            <td style="width: 55px; min-width: 55px; max-width: 55px;">{{'ShipmentOrderPackage.CH.QuantityListLable' | TextCodeTranslationPipe}}</td>
+                                                            <td style="width: 150px; min-width: 150px; max-width: 150px;">{{DimensionsColumnHeader}}</td>
+                                                            <td style="width: 105px; min-width: 105px; max-width: 105px;">{{WeightColumnHeader}}</td>
+                                                            <td class="LastChild" style="min-width: 45px;">
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+
+                                                <div class="SimpleGridViewBody">
+                                                    <table>
+                                                        <tr class="SimpleGridViewRow" *ngFor="let item of ItemsSource">
+
+                                                            <td class="CellDisabled" style="width: 18px; min-width: 18px; max-width: 18px; position: relative;">
+                                                                <img src="./Images/CellIcons/Package.png" class="CenterCenter" />
+                                                            </td>
+
+                                                            <td class="CellDisabled" style="width: 55px; min-width: 55px; max-width: 55px;" *ngIf="TransportModeId != 'A'">
+                                                                {{item.PackageTypeName}}
+                                                            </td>
+
+                                                            <td class="CellDisabled" style="width: 55px; min-width: 55px; max-width: 55px; text-align: right;">
+                                                                {{item.Quantity}}
+                                                            </td>
+
+                                                            <td class="CellDisabled" style="width: 150px; min-width: 150px; max-width: 150px; text-align: right;">
+                                                                {{item.Dimensions}}
+                                                            </td>
+
+                                                            <td class="CellDisabled" style="width: 105px; min-width: 105px; max-width: 105px; text-align: right;">
+                                                                {{item.GrossWeight | NumbersPipe:'N3'}}
+                                                            </td>
+
+                                                            <td class="CellTools" style="min-width: 45px;">
+                                                                <span class="CellSeparator"></span>
+                                                                <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditPackage(item)"></IconButton>
+                                                                <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeletePackage(item)" [IsEnabled]="IsEditingEnabled"></IconButton>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td colspan="5">
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                            <!-- FCL -->
+                                            <div class="SimpleGridView" *ngIf="IsFCLEntity">
+                                                <div class="SimpleGridViewHeader">
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width: 25px; min-width: 25px; max-width: 25px;">
+                                                                <div></div>
+                                                            </td>
+                                                            <td style="width: 100px; min-width: 100px; max-width: 100px;">{{'ShipmentOrderPackage.F.ContainerTypeId' | TextCodeTranslationPipe}}</td>
+                                                            <td style="width: 60px; min-width: 60px; max-width: 60px;">{{'ShipmentOrderPackage.CH.QuantityListLable' | TextCodeTranslationPipe}}</td>
+                                                            <td style="width: 85px; min-width: 85px; max-width: 85px;">{{VolumeColumnHeader}}</td>
+                                                            <td style="width: 110px; min-width: 110px; max-width: 110px;">{{WeightColumnHeader}}</td>
+                                                            <td class="LastChild">
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+
+                                                <div class="SimpleGridViewBody">
+                                                    <table>
+                                                        <tr class="SimpleGridViewRow" *ngFor="let item of ItemsSource">
+                                                            <td class="CellDisabled" style="width: 25px; position: relative;">
+                                                                <img src="./Images/CellIcons/Container.png" class="CenterCenter" />
+                                                            </td>
+
+                                                            <td class="CellDisabled" style="width: 100px; min-width: 100px; max-width: 100px;">
+                                                                {{item.PackageTypeName}}
+                                                            </td>
+
+                                                            <td class="CellDisabled" style="width: 60px; min-width: 60px; max-width: 60px; text-align: right;">
+                                                                {{item.Quantity}}
+                                                            </td>
+
+                                                            <td class="CellDisabled" style="width: 85px; min-width: 85px; max-width: 85px; text-align: right;">
+                                                                {{item.Volume | NumbersPipe:'N3'}}
+                                                            </td>
+
+                                                            <td class="CellDisabled" style="width: 110px; min-width: 110px; max-width: 110px; text-align: right;">
+                                                                {{item.GrossWeight | NumbersPipe:'N3'}}
+                                                            </td>
+
+                                                            <td class="CellTools">
+                                                                <span class="CellSeparator"></span>
+                                                                <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditPackage(item)"></IconButton>
+                                                                <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeletePackage(item)" [IsEnabled]="IsEditingEnabled"></IconButton>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td colspan="5">
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td style="width: 10px;">
+                            <div></div>
+                        </td>
+
+                        <!-- BookingConfirmation -->
+                        <td>
+                            <table class="Section">
+                                <tr class="SectionHeader">
+                                    <td>
+                                        <label>{{'Shipment.S.Orders.BookingConfirmation' | TextCodeTranslationPipe}}</label>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td style="width: 280px;">
+                                                    <table>
+
+                                                        <!-- CarrierId -->
+                                                        <tr class="FormFieldRow">
+                                                            <td style="width: 115px;">
+                                                                <LogLabel [ObjectFieldName]="'MainCarriageCarrierId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="CarrierTextCode"></LogLabel>
+                                                            </td>
+
+                                                            <td>
+                                                                <LogLov [ObjectFieldName]="'MainCarriageCarrierId'"
+                                                                        [SelectedValue]="MainCarriageCarrierId"
+                                                                        [ObjectTableName]="ObjectTableName"
+                                                                        [DataContext]="DataContext"
+                                                                        [LookUpTableName]="'Carrier'"
+                                                                        [DependencyFilter1Value]="CarrierDependencyFilter1Value">
+                                                                </LogLov>
+                                                            </td>
+                                                        </tr>
+
+                                                        <!-- CarrierNumber -->
+                                                        <tr class="FormFieldRow">
+                                                            <td>
+                                                                <LogLabel [ObjectFieldName]="'MainCarriageCarrierNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="CarrierNumberTextCode"></LogLabel>
+                                                            </td>
+                                                            <td>
+                                                                <LogTextBox [ObjectFieldName]="'MainCarriageCarrierNumber'" [Text]="MainCarriageCarrierNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                            </td>
+                                                        </tr>
+
+                                                        <!-- Confirmation Number -->
+                                                        <tr class="FormFieldRow">
+                                                            <td>
+                                                                <LogLabel [ObjectFieldName]="'BookingConfirmationNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                            </td>
+                                                            <td>
+                                                                <LogTextBox [ObjectFieldName]="'BookingConfirmationNumber'" [Text]="BookingConfirmationNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                            </td>
+                                                        </tr>
+
+                                                        <!-- Confirmed By -->
+                                                        <tr class="FormFieldRow">
+                                                            <td>
+                                                                <LogLabel [ObjectFieldName]="'BookingConfirmedBy'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                            </td>
+                                                            <td>
+                                                                <LogTextBox [ObjectFieldName]="'BookingConfirmedBy'" [Text]="BookingConfirmedBy" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                            </td>
+                                                        </tr>
+
+                                                        <!-- Cutoff Date -->
+                                                        <tr class="FormFieldRow" *ngIf="EntityPM.TransportModeId == 'A' || EntityPM.TransportModeId == 'O'">
+                                                            <td>
+                                                                <LogLabel [ObjectFieldName]="'CutoffDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                            </td>
+                                                            <td>
+                                                                <LogDatePicker [ObjectFieldName]="'CutoffDate'" [SelectedDateValue]="CutoffDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                                                            </td>
+                                                        </tr>
+
+                                                        <!-- Cutoff Time -->
+                                                        <tr class="FormFieldRow" *ngIf="EntityPM.TransportModeId == 'A' || EntityPM.TransportModeId == 'O'">
+                                                            <td>
+                                                                <LogLabel [ObjectFieldName]="'CutoffDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.S.Orders.CutOffTime'"></LogLabel>
+                                                            </td>
+                                                            <td>
+                                                                <table>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <LogDatePicker [ObjectFieldName]="'CutoffDate'" [SelectedDateValue]="CutoffDate" [ObjectTableName]="ObjectTableName" [InputType]="'time'" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                                        </td>
+
+                                                                        <td style="width: 36px;">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+
+                                                        <!-- Vessel -->
+                                                        <tr class="FormFieldRow" *ngIf="EntityPM.TransportModeId == 'O'">
+                                                            <td>
+                                                                <LogLabel [ObjectFieldName]="'MainCarriageVesselId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                            </td>
+                                                            <td>
+                                                                <LogLov [ObjectFieldName]="'MainCarriageVesselId'"
+                                                                        [SelectedValue]="MainCarriageVesselId"
+                                                                        [ObjectTableName]="ObjectTableName"
+                                                                        [DataContext]="DataContext"
+                                                                        [LookUpTableName]="'Vessel'">
+                                                                </LogLov>
+                                                            </td>
+                                                        </tr>
+
+                                                        <!-- Warehouse Fields: Pickups -->
+                                                        <tr style="height: 1px;" *ngIf="IsWarehouseFields_PickupsVisible">
+                                                            <td colspan="2">
+                                                                <table>
+                                                                    <tr class="FormFieldRow">
+                                                                        <td style="width: 115px;">
+                                                                            <LogLabel [ObjectFieldName]="'WarehouseLegCutOffDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogDatePicker [ObjectFieldName]="'WarehouseLegCutOffDate'" [SelectedDateValue]="WarehouseLegCutOffDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr class="FormFieldRow" *ngIf="IsFCLEntity">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'WarehouseLegVGMCutOffDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogDatePicker [ObjectFieldName]="'WarehouseLegVGMCutOffDate'" [SelectedDateValue]="WarehouseLegVGMCutOffDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+
+                                                        <!-- Warehouse Fields: Deliveries -->
+                                                        <tr style="height: 1px;" *ngIf="IsWarehouseFields_DeliveriesVisible">
+                                                            <td colspan="2">
+                                                                <table>
+                                                                    <tr class="FormFieldRow">
+                                                                        <td style="width: 115px;">
+                                                                            <LogLabel [ObjectFieldName]="'TerminalAvailable'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogDatePicker [ObjectFieldName]="'TerminalAvailable'" [SelectedDateValue]="TerminalAvailable" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'WarehouseLegLastFreeDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.WarehouseLegLastFreeDate'"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogDatePicker [ObjectFieldName]="'WarehouseLegLastFreeDate'" [SelectedDateValue]="WarehouseLegLastFreeDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+
+                                                        <!-- AMS Closing Date -->
+                                                        <tr class="FormFieldRow" *ngIf="IsAMSClosingDateVisible">
+                                                            <td>
+                                                                <LogLabel [ObjectFieldName]="'AMSClosingDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                            </td>
+
+                                                            <td>
+                                                                <LogDatePicker [ObjectFieldName]="'AMSClosingDate'" [SelectedDateValue]="AMSClosingDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+
+                                                <td style="width: 10px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <!-- Confirmation Notes -->
+                                                <td style="width: 180px;">
+                                                    <table>
+
+                                                        <tr class="FormFieldRow">
+                                                            <td>
+                                                                <LogLabel [ObjectFieldName]="'BookingConfirmationNotes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr class="FormFieldRow" style="height: 90px;">
+                                                            <td style="height: 90px;">
+                                                                <div style="height: 90px;">
+                                                                    <LogTextBox [ObjectFieldName]="'BookingConfirmationNotes'" [Text]="BookingConfirmationNotes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true" [HideColumns]="true"></LogTextBox>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr style="height: 10px;">
+            <td>
+                <div></div>
+            </td>
+        </tr>
+
+        <tr style="height: 150px; min-height: 150px;">
+            <td>
+                <table>
+                    <tr>
+                        <!-- Details -->
+                        <td style="width: 425px;">
+                            <table class="Section">
+                                <tr class="SectionHeader">
+                                    <td>
+                                        <label>{{'Shipment.S.Orders.Details' | TextCodeTranslationPipe}}</label>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td style="width: 250px;">
+                                                    <table>
+                                                        <tr class="FormFieldRow">
+                                                            <td>
+                                                                <LogLabel [ObjectFieldName]="'BookingNumberOfPackages'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                            </td>
+
+                                                            <td style="width: 100px;">
+                                                                <LogTextBox [HideColumns]="true" [ObjectFieldName]="'BookingNumberOfPackages'" [Text]="BookingNumberOfPackages" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr class="FormFieldRow">
+                                                            <td>
+                                                                <LogLabel [ObjectFieldName]="'OrderGrossWeight'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="BookingGrossWeightLabel"></LogLabel>
+                                                            </td>
+
+                                                            <td style="width: 100px;">
+                                                                <LogTextBox [HideColumns]="true" [ObjectFieldName]="'OrderGrossWeight'" [Text]="OrderGrossWeight" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr class="FormFieldRow">
+                                                            <td>
+                                                                <LogLabel [ObjectFieldName]="'BookingVolume'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="BookingVolumeLabel"></LogLabel>
+                                                            </td>
+
+                                                            <td style="width: 100px;">
+                                                                <LogTextBox [HideColumns]="true" [ObjectFieldName]="'BookingVolume'" [Text]="BookingVolume" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr class="FormFieldRow">
+                                                            <td>
+                                                                <LogLabel [ObjectFieldName]="'OrderChargeableWeight'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="BookingChargeableWeightLabel"></LogLabel>
+                                                            </td>
+
+                                                            <td style="width: 100px;">
+                                                                <LogTextBox [HideColumns]="true" [ObjectFieldName]="'OrderChargeableWeight'" [Text]="OrderChargeableWeight" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+
+                                                <td style="width: 15px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td>
+                                                    <table>
+                                                        <tr class="FormFieldRow">
+                                                            <td>
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width: 16px;">
+                                                                            <LogCheckBox [ObjectFieldName]="'OrderIsDangerouseGoods'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                        </td>
+
+                                                                        <td style="width: 5px;">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <label class="TextBlock">{{'Shipment.F.OrderIsDangerouseGoods' | TextCodeTranslationPipe}}</label>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr class="FormFieldRow" style="height: 20px;">
+                                                            <td>
+                                                                <LogLabel [ObjectFieldName]="'DescriptionOfGoods'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr class="FormFieldRow" style="height:auto;">
+                                                            <td>
+                                                                <div class="FillParent">
+                                                                    <LogTextBox [HideColumns]="true" [ObjectFieldName]="'DescriptionOfGoods'" [Text]="DescriptionOfGoods" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td style="width: 15px;">
+                            <div></div>
+                        </td>
+
+                        <!-- Pickup Details -->
+                        <td>
+                            <table class="Section">
+                                <tr class="SectionHeader">
+                                    <td>
+                                        <label>{{'Shipment.S.Orders.PickupDetails' | TextCodeTranslationPipe}}</label>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="padding-left: 5px;">
+
+                                        <table *ngIf="ShipmentPickup">
+                                            <tr style="height: 3px;">
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow" style="height: 20px;">
+                                                <td style="width: 100px;">
+                                                    <label class="Label">{{'ShipmentPickUpDelivery.O.From' | TextCodeTranslationPipe}}:</label>
+                                                </td>
+
+                                                <td colspan="2">
+                                                    <span style="position: relative;">
+                                                        <img class="LeftCenter" style="width: 16px; height: 16px;" [attr.src]="PickupFromCountryCode | CountryFlagPipe" [attr.title]="PickupFromCountryName" />
+                                                    </span>
+
+                                                    <span class="Value" style="margin-left: 20px;">{{PickupFromPortCode}}</span>
+                                                    <span class="Value">{{PickupFromPortName}}</span>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow" style="height: 20px;">
+                                                <td style="width: 100px;">
+                                                    <label class="Label">{{'ShipmentPickUpDelivery.O.To' | TextCodeTranslationPipe}}:</label>
+                                                </td>
+
+                                                <td colspan="2">
+                                                    <span style="position: relative;">
+                                                        <img class="LeftCenter" style="width: 16px; height: 16px;" [attr.src]="PickupToCountryCode | CountryFlagPipe" [attr.title]="PickupToCountryName" />
+                                                    </span>
+
+                                                    <span class="Value" style="margin-left: 20px;">{{PickupToPortCode}}</span>
+                                                    <span class="Value">{{PickupToPortName}}</span>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow" *ngIf="IsFCLEntity">
+                                                <td style="width: 100px;">
+                                                    <label class="Label">{{'ShipmentPickUpDelivery.F.EmptyPickupContainerPartnerId' | TextCodeTranslationPipe}}:</label>
+                                                </td>
+
+                                                <td style="width: 220px">
+                                                    <LogLov [ObjectFieldName]="'EmptyPickupContainerPartnerId'"
+                                                            [SelectedValue]="EmptyPickupContainerPartnerId"
+                                                            [ObjectTableName]="'ShipmentPickUpDelivery'"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'Card'"
+                                                            [DependencyFilter1Value]="'SL,VD,SG,CS,WH'"
+                                                            [DependencyFilter1IsList]="true">
+                                                    </LogLov>
+                                                </td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow" style="height: 100%;">
+                                                <td style="width: 100px; vertical-align: top; padding-top: 5px;">
+                                                    <label class="Label">{{'Shipment.S.Orders.Instructions' | TextCodeTranslationPipe}}:</label>
+                                                </td>
+
+                                                <td style="width: 220px; vertical-align: top;">
+                                                    <div style="height: 100%;">
+                                                        <LogTextBox style="width: 220px;" [ObjectFieldName]="'Notes'" [Text]="Notes" [ObjectTableName]="'ShipmentPickUpDelivery'" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                        </table>
+
+                                        <div *ngIf="!ShipmentPickup" class="NoDataText">{{'Shipment.M.Orders.NoPickupEntered' | TextCodeTranslationPipe}}</div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>

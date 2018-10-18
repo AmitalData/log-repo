@@ -1,0 +1,1 @@
+update supplierinvoiceitems set searchfields = (NVL( ClassificationCode,',') || ',' ||NVL( ItemCode,','));

@@ -1,0 +1,73 @@
+
+   
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.CloseTablesClasses;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Def.EntityPMs; 
+using Logitude.Accounting.Data;
+
+namespace Logitude.Accounting.BL
+{
+   public class AutomaticExternalRconcilMthodDetails : AutomaticExternalRconcilMthod, ICloseTable<AutomaticExternalRconcilMthod, AutomaticExternalRconcilMthodDetails>
+   {
+       public List<AutomaticExternalRconcilMthodDetails> GetAll()
+       {
+		    var all = new List<AutomaticExternalRconcilMthodDetails>();  
+            all.Add(new AutomaticExternalRconcilMthodDetails()
+            {    
+                Code = "1", 
+                Name = "Amount", 
+                SearchFields = "1,Amount,סכום", 
+                LocalName = "סכום", 
+			});
+			 
+            all.Add(new AutomaticExternalRconcilMthodDetails()
+            {    
+                Code = "2", 
+                Name = "Reference", 
+                SearchFields = "2,Reference,אסמכתא", 
+                LocalName = "אסמכתא", 
+			});
+			 
+            all.Add(new AutomaticExternalRconcilMthodDetails()
+            {    
+                Code = "3", 
+                Name = "Reference Date + Reference", 
+                SearchFields = "3,Reference Date + Reference,תאריך + אסמכתא", 
+                LocalName = "תאריך + אסמכתא", 
+			});
+			 
+            all.Add(new AutomaticExternalRconcilMthodDetails()
+            {    
+                Code = "4", 
+                Name = "Amount + Reference + Reference Date", 
+                SearchFields = "4,Amount + Reference + Reference Date,תאריך + סכום + אסמכתא", 
+                LocalName = "תאריך + סכום + אסמכתא", 
+			});
+			
+            return all;
+       }
+
+	    public void MapPoco(AutomaticExternalRconcilMthod newPoco)
+        {   
+		    newPoco.Code = this.Code;  
+		    newPoco.Name = this.Name;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.LocalName = this.LocalName;   
+        }
+
+		public string GetSearchFields(AutomaticExternalRconcilMthod rec)
+        {   
+           return String.Concat(rec.Code,",",rec.Name,",",rec.LocalName,",");
+        }
+   }
+}
+

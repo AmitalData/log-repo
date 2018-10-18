@@ -1,0 +1,2901 @@
+.fake {
+	color: red;
+}
+.k-reset {
+	list-style: none; margin: 0px; padding: 0px; outline: 0px; border: 0px currentColor; font-size: 100%; text-decoration: none;
+}
+.k-floatwrap::after {
+	height: 0px; overflow: hidden; clear: both; display: block; visibility: hidden; content: "";
+}
+.k-slider-items::after {
+	height: 0px; overflow: hidden; clear: both; display: block; visibility: hidden; content: "";
+}
+.k-grid-toolbar::after {
+	height: 0px; overflow: hidden; clear: both; display: block; visibility: hidden; content: "";
+}
+.k-floatwrap {
+	display: inline-block;
+}
+.k-slider-items {
+	display: inline-block;
+}
+.k-grid-toolbar {
+	display: inline-block;
+}
+.k-floatwrap {
+	display: block;
+}
+.k-slider-items {
+	display: block;
+}
+.k-grid-toolbar {
+	display: block;
+}
+.k-block {
+	background-position: 0px; background-repeat: repeat-x;
+}
+.k-button {
+	background-position: 0px; background-repeat: repeat-x;
+}
+.k-header {
+	background-position: 0px; background-repeat: repeat-x;
+}
+.k-grid-header {
+	background-position: 0px; background-repeat: repeat-x;
+}
+.k-toolbar {
+	background-position: 0px; background-repeat: repeat-x;
+}
+.k-grouping-header {
+	background-position: 0px; background-repeat: repeat-x;
+}
+.k-tooltip {
+	background-position: 0px; background-repeat: repeat-x;
+}
+.k-pager-wrap {
+	background-position: 0px; background-repeat: repeat-x;
+}
+.k-tabstrip-items .k-item {
+	background-position: 0px; background-repeat: repeat-x;
+}
+.k-state-hover.k-link {
+	background-position: 0px; background-repeat: repeat-x;
+}
+.k-textbox {
+	background-position: 0px; background-repeat: repeat-x;
+}
+.k-textbox:hover {
+	background-position: 0px; background-repeat: repeat-x;
+}
+.k-autocomplete {
+	background-position: 0px; background-repeat: repeat-x;
+}
+.k-dropdown-wrap {
+	background-position: 0px; background-repeat: repeat-x;
+}
+.k-picker-wrap {
+	background-position: 0px; background-repeat: repeat-x;
+}
+.k-numeric-wrap {
+	background-position: 0px; background-repeat: repeat-x;
+}
+.k-state-hover.k-autocomplete {
+	background-position: 0px; background-repeat: repeat-x;
+}
+.k-state-hover.k-dropdown-wrap {
+	background-position: 0px; background-repeat: repeat-x;
+}
+.k-state-hover.k-picker-wrap {
+	background-position: 0px; background-repeat: repeat-x;
+}
+.k-state-hover.k-numeric-wrap {
+	background-position: 0px; background-repeat: repeat-x;
+}
+.k-draghandle {
+	background-position: 0px; background-repeat: repeat-x;
+}
+.k-tabstrip {
+	background-position: 0px -258px;
+}
+.k-menu-vertical {
+	background-position: 0px -258px;
+}
+.k-editor {
+	background-position: 0px -258px;
+}
+.k-tooltip {
+	background-position: 0px -258px;
+}
+.k-state-hover {
+	background-position: 0px -258px;
+}
+.k-state-focused {
+	background-position: 0px -258px;
+}
+.k-state-selected {
+	background-position: 0px -258px;
+}
+.k-block {
+	border-width: 1px; border-style: solid; font-family: inherit; font-size: 100%; -webkit-appearance: none;
+}
+.k-widget {
+	border-width: 1px; border-style: solid; font-family: inherit; font-size: 100%; -webkit-appearance: none;
+}
+.k-inline-block {
+	border-width: 1px; border-style: solid; font-family: inherit; font-size: 100%; -webkit-appearance: none;
+}
+.k-textbox > input {
+	border-width: 1px; border-style: solid; font-family: inherit; font-size: 100%; -webkit-appearance: none;
+}
+[type='text'].k-input {
+	border-width: 1px; border-style: solid; font-family: inherit; font-size: 100%; -webkit-appearance: none;
+}
+[type='number'].k-input {
+	border-width: 1px; border-style: solid; font-family: inherit; font-size: 100%; -webkit-appearance: none;
+}
+.k-textbox {
+	border-width: 1px; border-style: solid; font-family: inherit; font-size: 100%; -webkit-appearance: none;
+}
+.k-picker-wrap .k-input {
+	border-width: 1px; border-style: solid; font-family: inherit; font-size: 100%; -webkit-appearance: none;
+}
+.k-button {
+	border-width: 1px; border-style: solid; font-family: inherit; font-size: 100%; -webkit-appearance: none;
+}
+.k-draghandle {
+	border-width: 1px; border-style: solid; font-family: inherit; font-size: 100%; -webkit-appearance: none;
+}
+.k-block {
+	line-height: normal;
+}
+.k-widget {
+	line-height: normal;
+}
+.k-block {
+	padding: 2px; width: 200px; height: 100px; box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box;
+}
+.k-button {
+	margin: 0px; padding: 2px 7px; outline: 0px; text-align: center; line-height: 1.66em; font-family: inherit; text-decoration: none; display: inline-block; cursor: pointer; box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box;
+}
+a.k-button {
+	-webkit-user-select: none; -moz-user-select: none; user-select: none;
+}
+* + html .k-button {
+	overflow: visible; margin-right: 4px;
+}
+* + html a.k-button {
+	line-height: 1.6; padding-right: 7px; padding-left: 7px;
+}
+* + html .k-button-expand {
+	margin-right: 0px; margin-left: 0px;
+}
+a.k-button-expand {
+	display: block;
+}
+button.k-button-expand {
+	width: 100%;
+}
+input[type='submit'].k-button-expand {
+	width: 100%;
+}
+input[type='button'].k-button-expand {
+	width: 100%;
+}
+input[type='reset'].k-button-expand {
+	width: 100%;
+}
+body .k-button-icon {
+	padding-right: 4px; padding-left: 4px;
+}
+* + html a.k-button-icon {
+	padding-right: 5px; padding-left: 5px;
+}
+.k-button-icontext {
+	overflow: visible; padding-right: 8px;
+}
+.k-button-icontext .k-icon {
+	margin: 0px 3px 0px -3px; vertical-align: text-top;
+}
+* + html .k-button-icontext .k-icon {
+	margin-right: 4px;
+}
+html body .k-button-bare {
+	border-width: 0px;
+}
+.k-link {
+	outline: 0px; text-decoration: none; cursor: pointer;
+}
+.k-grid-header span.k-link {
+	cursor: default;
+}
+.k-state-disabled {
+	outline: 0px; cursor: default;
+}
+.k-state-disabled .k-link {
+	outline: 0px; cursor: default;
+}
+.k-state-disabled .k-picker-wrap .k-icon {
+	outline: 0px; cursor: default;
+}
+.k-state-disabled .k-button {
+	outline: 0px; cursor: default;
+}
+.k-state-disabled .k-draghandle {
+	outline: 0px; cursor: default;
+}
+.k-state-disabled .k-slider .k-icon {
+	outline: 0px; cursor: default;
+}
+.k-state-disabled .k-upload-button input {
+	outline: 0px; cursor: default;
+}
+.k-state-error {
+	border-style: ridge;
+}
+.k-state-empty {
+	font-style: italic;
+}
+.k-icon {
+	width: 16px; height: 16px; text-align: center; line-height: 0; text-indent: -3333px; overflow: hidden; font-size: 0px; vertical-align: middle; display: inline-block; background-repeat: no-repeat; background-color: transparent;
+}
+.k-sprite {
+	width: 16px; height: 16px; text-align: center; line-height: 0; text-indent: -3333px; overflow: hidden; font-size: 0px; vertical-align: middle; display: inline-block; background-repeat: no-repeat; background-color: transparent;
+}
+.k-editor-button .k-tool-icon {
+	width: 16px; height: 16px; text-align: center; line-height: 0; text-indent: -3333px; overflow: hidden; font-size: 0px; vertical-align: middle; display: inline-block; background-repeat: no-repeat; background-color: transparent;
+}
+* + html .k-icon {
+	text-indent: 0px;
+}
+* + html .k-sprite {
+	text-indent: 0px;
+}
+.k-numerictextbox .k-i-arrow-n {
+	background-position: 0px -2px;
+}
+.k-numerictextbox .k-i-arrow-s {
+	background-position: 0px -35px;
+}
+.k-state-selected .k-i-arrow-n {
+	background-position: -16px 0px;
+}
+.k-numerictextbox .k-state-selected .k-i-arrow-n {
+	background-position: -16px -2px;
+}
+.k-state-selected .k-i-arrow-s {
+	background-position: -16px -32px;
+}
+.k-numerictextbox .k-state-selected .k-i-arrow-s {
+	background-position: -16px -35px;
+}
+.k-i-arrow-n {
+	
+}
+.k-i-arrow-e {
+	background-position: 0px -16px;
+}
+.k-i-arrow-s {
+	background-position: 0px -32px;
+}
+.k-i-arrow-w {
+	background-position: 0px -48px;
+}
+.k-i-seek-n {
+	background-position: 0px -64px;
+}
+.k-i-seek-e {
+	background-position: 0px -80px;
+}
+.k-i-seek-s {
+	background-position: 0px -96px;
+}
+.k-i-seek-w {
+	background-position: 0px -112px;
+}
+.k-si-arrow-n {
+	background-position: 0px -129px;
+}
+.k-si-arrow-e {
+	background-position: 0px -144px;
+}
+.k-si-arrow-s {
+	background-position: 0px -159px;
+}
+.k-si-arrow-w {
+	background-position: 0px -176px;
+}
+.k-i-arrowhead-n {
+	background-position: 0px -256px;
+}
+.k-i-arrowhead-e {
+	background-position: 0px -272px;
+}
+.k-i-arrowhead-s {
+	background-position: 0px -288px;
+}
+.k-i-arrowhead-w {
+	background-position: 0px -304px;
+}
+.k-i-expand {
+	background-position: 0px -192px;
+}
+.k-plus {
+	background-position: 0px -192px;
+}
+.k-i-expand-w {
+	background-position: 0px -208px;
+}
+.k-rtl .k-i-expand {
+	background-position: 0px -208px;
+}
+.k-rtl .k-plus {
+	background-position: 0px -208px;
+}
+.k-i-collapse {
+	background-position: 0px -226px;
+}
+.k-minus {
+	background-position: 0px -226px;
+}
+.k-i-collapse-w {
+	background-position: 0px -240px;
+}
+.k-rtl .k-i-collapse {
+	background-position: 0px -240px;
+}
+.k-rtl .k-minus {
+	background-position: 0px -240px;
+}
+.k-i-pencil {
+	background-position: -32px 0px;
+}
+.k-edit {
+	background-position: -32px 0px;
+}
+.k-i-close {
+	background-position: -32px -16px;
+}
+.k-delete {
+	background-position: -32px -16px;
+}
+.k-group-delete {
+	background-position: -32px -16px;
+}
+.k-i-tick {
+	background-position: -32px -32px;
+}
+.k-insert {
+	background-position: -32px -32px;
+}
+.k-update {
+	background-position: -32px -32px;
+}
+.k-i-cancel {
+	background-position: -32px -48px;
+}
+.k-cancel {
+	background-position: -32px -48px;
+}
+.k-denied {
+	background-position: -32px -48px;
+}
+.k-i-plus {
+	background-position: -32px -64px;
+}
+.k-add {
+	background-position: -32px -64px;
+}
+.k-i-funnel {
+	background-position: -32px -80px;
+}
+.k-filter {
+	background-position: -32px -80px;
+}
+.k-i-funnel-clear {
+	background-position: -32px -96px;
+}
+.k-clear-filter {
+	background-position: -32px -96px;
+}
+.k-i-refresh {
+	background-position: -32px -112px;
+}
+.k-i-restore {
+	background-position: -32px -128px;
+}
+.k-i-maximize {
+	background-position: -32px -144px;
+}
+.k-i-minimize {
+	background-position: -64px -288px;
+}
+.k-resize-se {
+	background-position: -32px -160px;
+}
+.k-i-calendar {
+	background-position: -32px -176px;
+}
+.k-i-clock {
+	background-position: -32px -192px;
+}
+.k-si-plus {
+	background-position: -32px -208px;
+}
+.k-si-minus {
+	background-position: -32px -224px;
+}
+.k-i-search {
+	background-position: -32px -240px;
+}
+.k-i-custom {
+	background-position: -115px -113px;
+}
+.k-editor .k-i-custom {
+	background-position: -112px -110px;
+}
+.k-viewHtml {
+	background-position: -112px -132px;
+}
+.k-i-insert-n {
+	background-position: -160px -32px;
+}
+.k-insert-top {
+	background-position: -160px -32px;
+}
+.k-i-insert-m {
+	background-position: -160px -48px;
+}
+.k-insert-middle {
+	background-position: -160px -48px;
+}
+.k-i-insert-s {
+	background-position: -160px -64px;
+}
+.k-insert-bottom {
+	background-position: -160px -64px;
+}
+.k-drop-hint {
+	background-position: 0px -326px;
+}
+.k-i-note {
+	background-position: -160px -240px;
+}
+.k-warning {
+	background-position: -160px -240px;
+}
+.k-i-sort-asc {
+	background-position: -112px -240px;
+}
+.k-i-sort-desc {
+	background-position: -112px -256px;
+}
+.k-i-group {
+	background-position: -112px -272px;
+}
+.k-i-ungroup {
+	background-position: -112px -288px;
+}
+.k-i-columns {
+	background-position: -112px -304px;
+}
+.k-image {
+	border: 0px currentColor;
+}
+html .k-success-colored {
+	border-color: rgb(208, 223, 208); color: rgb(80, 127, 80); background-color: rgb(240, 255, 240);
+}
+html .k-info-colored {
+	border-color: rgb(208, 217, 223); color: rgb(80, 96, 127); background-color: rgb(240, 249, 255);
+}
+html .k-error-colored {
+	border-color: rgb(223, 208, 208); color: rgb(127, 80, 80); background-color: rgb(255, 240, 240);
+}
+.k-inline-block {
+	padding: 0px 2px;
+}
+.k-loading {
+	background-position: center; background-repeat: no-repeat; background-color: transparent;
+}
+.k-loading-image {
+	background-position: center; background-repeat: no-repeat; background-color: transparent;
+}
+.k-loading-mask {
+	position: absolute;
+}
+.k-loading-image {
+	position: absolute;
+}
+.k-loading-text {
+	position: absolute;
+}
+.k-loading-text {
+	left: -4000px; top: -4000px;
+}
+.k-loading-image {
+	width: 100%; height: 100%;
+}
+.k-loading-color {
+	width: 100%; height: 100%;
+}
+.k-loading-image {
+	left: 0px; top: 0px; z-index: 2;
+}
+.k-loading-color {
+	filter: alpha(opacity=30); opacity: 0.3;
+}
+.k-content-frame {
+	border: 0px currentColor; width: 100%; height: 100%;
+}
+.k-content-frame + .k-overlay {
+	filter: alpha(opacity=0); position: absolute; opacity: 0;
+}
+.k-drag-clue {
+	border-width: 1px; border-style: solid; padding: 0.2em 0.4em; font-size: 0.9em; white-space: nowrap; position: absolute; z-index: 10003; cursor: default;
+}
+.k-drag-status {
+	margin-top: -3px; margin-right: 4px; vertical-align: middle;
+}
+.k-reorder-cue {
+	width: 1px; overflow: visible; position: absolute;
+}
+.k-reorder-cue .k-icon {
+	left: -4px; width: 8px; height: 4px; position: absolute;
+}
+.k-reorder-cue .k-i-arrow-s {
+	background-position: -4px -166px; top: -4px;
+}
+.k-reorder-cue .k-i-arrow-n {
+	background-position: -4px -134px; bottom: -4px;
+}
+.k-scrollbar {
+	overflow: scroll; position: absolute;
+}
+.k-scrollbar-vertical {
+	top: 0px; width: 17px; height: 100%; right: 0px; overflow-x: hidden;
+}
+.k-touch-scrollbar {
+	border: 1px solid rgb(138, 138, 138); width: 8px; height: 8px; display: none; position: absolute; z-index: 200000; background-color: rgb(133, 133, 133);
+}
+body .k-touch-scrollbar {
+	width: 12px; height: 12px; -webkit-border-radius: 7px;
+}
+div.k-window {
+	border-width: 1px; border-style: solid; padding-top: 2em; display: inline-block; position: absolute; z-index: 10001;
+}
+.k-block > .k-header {
+	padding: 0.4em 0px; width: 100%; height: 1.1em; line-height: 1.1em; font-size: 1.2em; margin-top: -2em; border-bottom-width: 1px; border-bottom-style: solid; white-space: nowrap; position: absolute; min-height: 16px;
+}
+.k-window-titlebar {
+	padding: 0.4em 0px; width: 100%; height: 1.1em; line-height: 1.1em; font-size: 1.2em; margin-top: -2em; border-bottom-width: 1px; border-bottom-style: solid; white-space: nowrap; position: absolute; min-height: 16px;
+}
+.k-block > .k-header {
+	margin: -2px 0px 0px -2px; padding: 0.3em 2px; position: relative;
+}
+.k-window-title {
+	left: 0.44em; right: 0.44em; overflow: hidden; position: absolute; cursor: default; text-overflow: ellipsis;
+}
+.k-window-title .k-image {
+	margin: 0px 5px 0px 0px; vertical-align: middle;
+}
+div.k-window-titleless {
+	padding-top: 0px;
+}
+div.k-window-content {
+	padding: 0.58em; height: 100%; overflow: auto; position: relative; z-index: -1; box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box;
+}
+* + html .k-window {
+	padding-bottom: 1.16em;
+}
+.k-window-titlebar .k-window-actions {
+	top: 0px; right: 0.5em; padding-top: 0.3em; white-space: nowrap; position: absolute;
+}
+.k-window-titlebar .k-window-action {
+	padding: 2px; width: 16px; height: 16px; text-decoration: none; vertical-align: middle; display: inline-block; filter: alpha(opacity=70); opacity: 0.7;
+}
+.k-window-titlebar .k-state-hover {
+	border-width: 1px; border-style: solid; padding: 1px; filter: alpha(opacity=100); opacity: 1;
+}
+.k-window-action .k-icon {
+	margin: 0px; vertical-align: top;
+}
+.k-window .k-resize-handle {
+	line-height: 6px; font-size: 0px; filter: alpha(opacity=0); position: absolute; z-index: 1; zoom: 1; opacity: 0; background-color: rgb(255, 255, 255);
+}
+.k-resize-n {
+	left: 0px; top: -3px; width: 100%; height: 6px; cursor: n-resize;
+}
+.k-resize-e {
+	top: 0px; width: 6px; height: 100%; right: -3px; cursor: e-resize;
+}
+.k-resize-s {
+	left: 0px; width: 100%; height: 6px; bottom: -3px; cursor: s-resize;
+}
+.k-resize-w {
+	left: -3px; top: 0px; width: 6px; height: 100%; cursor: w-resize;
+}
+.k-resize-se {
+	width: 16px; height: 16px; right: -3px; bottom: -3px; cursor: se-resize;
+}
+.k-resize-sw {
+	left: -3px; width: 6px; height: 6px; bottom: -3px; cursor: sw-resize;
+}
+.k-resize-ne {
+	top: -3px; width: 6px; height: 6px; right: -3px; cursor: ne-resize;
+}
+.k-resize-nw {
+	left: -3px; top: -3px; width: 6px; height: 6px; cursor: nw-resize;
+}
+.k-overlay {
+	left: 0px; top: 0px; width: 100%; height: 100%; filter: alpha(opacity=50); position: fixed; z-index: 10001; opacity: 0.5; background-color: rgb(0, 0, 0);
+}
+.k-window .k-overlay {
+	width: 100%; height: 100%; filter: alpha(opacity=0); position: absolute; opacity: 0; background-color: rgb(255, 255, 255);
+}
+.k-window .k-widget {
+	z-index: 10002;
+}
+.k-tabstrip {
+	margin: 0px; padding: 0px; zoom: 1;
+}
+.k-tabstrip .k-tabstrip-items {
+	padding: 0.3em 0.3em 0px;
+}
+.k-tabstrip-items .k-item {
+	border-width: 1px 1px 0px; border-style: solid; margin: 0px -1px 0px 0px; padding: 0px; vertical-align: top; display: inline-block; list-style-type: none; position: relative;
+}
+.k-panelbar .k-tabstrip-items .k-item {
+	border-width: 1px 1px 0px; border-style: solid; margin: 0px -1px 0px 0px; padding: 0px; vertical-align: top; display: inline-block; list-style-type: none; position: relative;
+}
+.k-tabstrip-items .k-tab-on-top {
+	padding-bottom: 1px; margin-bottom: -1px;
+}
+.k-tabstrip-items .k-state-active {
+	padding-bottom: 1px; margin-bottom: -1px;
+}
+.k-panelbar .k-tabstrip-items .k-state-active {
+	padding-bottom: 1px; margin-bottom: -1px;
+}
+.k-tabstrip-items .k-tab-on-top {
+	z-index: 1;
+}
+.k-tabstrip-items .k-link {
+	padding: 0.5em 0.92em; outline: 0px; border-bottom-width: 0px; display: inline-block;
+}
+.k-panelbar .k-tabstrip-items .k-link {
+	padding: 0.5em 0.92em; outline: 0px; border-bottom-width: 0px; display: inline-block;
+}
+.k-tabstrip-items .k-icon {
+	margin: -1px 4px 0px -3px; vertical-align: top;
+}
+.k-panelbar .k-tabstrip-items .k-icon {
+	margin: -1px 4px 0px -3px; vertical-align: top;
+}
+.k-tabstrip-items .k-item .k-image {
+	margin: -3px 3px 0px -6px; vertical-align: middle;
+}
+.k-tabstrip-items .k-item .k-sprite {
+	margin: -3px 3px 0px -6px; vertical-align: middle;
+}
+.k-panelbar .k-tabstrip-items .k-item .k-image {
+	margin: -3px 3px 0px -6px; vertical-align: middle;
+}
+.k-panelbar .k-tabstrip-items .k-item .k-sprite {
+	margin: -3px 3px 0px -6px; vertical-align: middle;
+}
+* + html .k-tabstrip-items .k-item .k-image {
+	margin-top: -1px; vertical-align: top;
+}
+* + html .k-tabstrip-items .k-item .k-sprite {
+	margin-top: -1px; vertical-align: top;
+}
+.k-tabstrip .k-content {
+	border-width: 1px; border-style: solid; margin: 0px 0.3em 0.3em; padding: 0.3em 0.92em; position: static; zoom: 1;
+}
+.k-panelbar .k-tabstrip .k-content {
+	border-width: 1px; border-style: solid; margin: 0px 0.3em 0.3em; padding: 0.3em 0.92em; position: static; zoom: 1;
+}
+.k-tabstrip > .k-content {
+	display: none;
+}
+.k-panelbar {
+	zoom: 1;
+}
+.k-panelbar > .k-item {
+	border-width: 0px; margin: 0px; border-radius: 0px; display: block; list-style-type: none; zoom: 1; -webkit-border-radius: 0; -moz-border-radius: 0;
+}
+.k-panel > .k-item {
+	border-width: 0px; margin: 0px; border-radius: 0px; display: block; list-style-type: none; zoom: 1; -webkit-border-radius: 0; -moz-border-radius: 0;
+}
+.k-panelbar .k-image {
+	margin-top: 4px; margin-right: 5px; vertical-align: middle; float: left;
+}
+.k-panelbar .k-sprite {
+	margin-top: 4px; margin-right: 5px; vertical-align: middle; float: left;
+}
+.k-panelbar > .k-item > .k-link {
+	padding: 0px 1em; line-height: 2.34em; text-decoration: none; border-bottom-width: 1px; border-bottom-style: solid; display: block; position: relative; zoom: 1;
+}
+.k-panel > .k-item > .k-link {
+	padding: 0px 1em; line-height: 2.34em; text-decoration: none; border-bottom-width: 1px; border-bottom-style: solid; display: block; position: relative; zoom: 1;
+}
+.k-panelbar-expand {
+	top: 5px; right: 2px; position: absolute;
+}
+.k-panelbar-collapse {
+	top: 5px; right: 2px; position: absolute;
+}
+.k-panelbar .k-panel {
+	margin: 0px; padding: 0px; border-bottom-width: 1px; border-bottom-style: solid; position: relative; zoom: 1;
+}
+.k-panelbar .k-content {
+	margin: 0px; padding: 0px; border-bottom-width: 1px; border-bottom-style: solid; position: relative; zoom: 1;
+}
+.k-panel > .k-item > .k-link {
+	line-height: 2.2; font-size: 0.95em; border-bottom-color: currentColor; border-bottom-width: 0px; border-bottom-style: none;
+}
+.k-panel .k-i-arrow-n {
+	top: 4px;
+}
+.k-panel .k-i-arrow-s {
+	top: 4px;
+}
+.k-panel .k-panel > .k-item > .k-link {
+	padding-left: 2em;
+}
+.k-panelbar .k-i-seek-e .k-link {
+	border-bottom-color: currentColor; border-bottom-width: 0px; border-bottom-style: none;
+}
+.k-panel .k-panel {
+	border-bottom-color: currentColor; border-bottom-width: 0px; border-bottom-style: none;
+}
+.k-menu {
+	cursor: default;
+}
+.k-menu {
+	list-style: none; margin: 0px; padding: 0px; zoom: 1;
+}
+.k-menu .k-group {
+	list-style: none; margin: 0px; padding: 0px; zoom: 1;
+}
+.k-menu::after {
+	width: 99%; height: 0px; overflow: hidden; display: block; content: "\A0";
+}
+.k-menu .k-item .k-item {
+	border-width: 0px; float: none; display: block;
+}
+ul.k-menu-vertical > .k-item {
+	border-width: 0px; float: none; display: block;
+}
+* + html .k-menu .k-item .k-item {
+	zoom: normal;
+}
+.k-menu .k-item > .k-link > .k-icon {
+	margin: -2px 4px 0px -4px; vertical-align: middle;
+}
+.k-menu .k-image {
+	margin: -2px 4px 0px -4px; vertical-align: middle;
+}
+.k-menu .k-sprite {
+	margin: -2px 4px 0px -4px; vertical-align: middle;
+}
+.k-menu .k-item > .k-link > .k-icon {
+	margin: -2px 0px 0px;
+}
+* + html .k-menu .k-item > .k-link > .k-i-arrow-s {
+	margin-top: 0px;
+}
+* + html .k-menu .k-image {
+	margin-top: 0px;
+}
+* + html .k-menu .k-sprite {
+	margin-top: 0px;
+}
+.k-menu .k-item > .k-link {
+	padding: 0.5em 0.9em 0.4em; line-height: 1.34em; display: block;
+}
+.k-menu .k-group {
+	border-width: 1px; border-style: solid; overflow: visible; display: none; white-space: nowrap;
+}
+.k-menu .k-group .k-item {
+	border-width: 0px; display: block;
+}
+.k-menu .k-item {
+	border-width: 0px 1px 0px 0px; border-style: solid; vertical-align: top; float: left; position: relative; zoom: 1; box-sizing: content-box;
+}
+.k-menu-horizontal.k-widget > .k-item {
+	border-width: 0px 1px 0px 0px; border-style: solid; vertical-align: top; float: left; position: relative; zoom: 1; box-sizing: content-box;
+}
+.k-menu .k-group .k-item > .k-link {
+	padding: 0.28em 1.8em 0.38em 0.9em;
+}
+* + html .k-menu .k-group .k-link {
+	width: 100%;
+}
+.k-menu .k-item > .k-link > .k-i-arrow-s {
+	margin-right: -8px;
+}
+.k-menu .k-item > .k-link > .k-i-arrow-e {
+	top: 50%; right: 2px; margin-top: -8px; position: absolute;
+}
+.k-menu .k-animation-container {
+	border: 0px currentColor;
+}
+.k-menu .k-animation-container {
+	left: 0px; position: absolute;
+}
+.k-menu .k-group {
+	left: 0px; position: absolute;
+}
+.k-menu .k-animation-container .k-animation-container {
+	left: 0px; top: 0px;
+}
+.k-menu .k-group .k-group {
+	left: 0px; top: 0px;
+}
+.k-menu-vertical .k-animation-container {
+	left: 0px; top: 0px;
+}
+.k-menu-vertical .k-group {
+	left: 0px; top: 0px;
+}
+.k-menu .k-animation-container .k-group {
+	left: auto; top: auto; margin-left: -1px;
+}
+.k-menu .k-animation-container {
+	padding-left: 1px; margin-top: -1px;
+}
+.k-popup .k-animation-container {
+	padding-left: 1px; margin-top: -1px;
+}
+.k-popup .k-animation-container .k-popup {
+	margin-left: -1px;
+}
+ul.k-menu .k-separator {
+	border-width: 0px 1px 0px 0px; padding: 0.25em 0px; width: 1px; height: 100%; line-height: 0; font-size: 0px;
+}
+ul.k-menu-vertical .k-separator {
+	border-width: 1px 0px 0px; padding: 0px; width: 100%; height: 1px;
+}
+.k-menu .k-group .k-separator {
+	border-width: 1px 0px 0px; padding: 0px; width: 100%; height: 1px;
+}
+.k-grid {
+	position: relative; zoom: 1;
+}
+.k-listview {
+	position: relative; zoom: 1;
+}
+.k-grid table {
+	border-width: 0px; width: 100%; border-collapse: separate; empty-cells: show;
+}
+.k-grid-header .k-header {
+	text-align: left;
+}
+.k-grid-header .k-header {
+	border-width: 0px 0px 1px 1px; border-style: solid; padding: 0.5em 0.6em 0.4em; overflow: hidden; font-weight: normal; white-space: nowrap; text-overflow: ellipsis;
+}
+.k-grid-header .k-header .k-link {
+	margin: -0.5em -0.6em -0.4em; padding: 0.5em 0.6em 0.4em; line-height: 18px; display: block; min-height: 18px;
+}
+.k-grid-header .k-filterable .k-link {
+	padding-right: 2.4em;
+}
+.k-grid-header .k-header .k-icon {
+	position: static;
+}
+.k-grid-header .k-link > .k-icon {
+	vertical-align: text-top;
+}
+.k-grid .k-state-hover {
+	cursor: pointer;
+}
+.k-grid td {
+	border-width: 0px 0px 0px 1px; border-style: solid; padding: 0.4em 0.6em; line-height: 1.6em; overflow: hidden; vertical-align: middle; text-overflow: ellipsis;
+}
+.k-grid .k-grouping-row td {
+	overflow: visible;
+}
+.k-grid .k-hierarchy-cell {
+	overflow: visible;
+}
+.k-grid-edit-row td {
+	text-overflow: clip;
+}
+.k-grid-edit-row .k-textbox {
+	margin-top: 0px; margin-bottom: 0px;
+}
+.k-grid-header-wrap {
+	border-width: 0px 1px 0px 0px; border-style: solid; width: 100%; overflow: hidden; position: relative; zoom: 1;
+}
+.k-grid-footer-wrap {
+	border-width: 0px 1px 0px 0px; border-style: solid; width: 100%; overflow: hidden; position: relative; zoom: 1;
+}
+div.k-grid-header {
+	padding-right: 17px; border-bottom-width: 1px; border-bottom-style: solid; zoom: 1;
+}
+div.k-grid-footer {
+	padding-right: 17px; border-bottom-width: 1px; border-bottom-style: solid; zoom: 1;
+}
+div.k-grid-header .k-header {
+	border-bottom-width: 0px;
+}
+.k-grid {
+	outline: 0px;
+}
+.k-grid-content {
+	width: 100%; overflow: auto; position: relative; overflow-x: auto; overflow-y: scroll; zoom: 1;
+}
+.k-grid {
+	height: auto !important;
+}
+.k-grid-header {
+	padding: 0px !important;
+}
+.k-grid-content {
+	height: auto !important; overflow: visible;
+}
+.k-virtual-scrollable-wrap {
+	height: 100%; position: relative; overflow-y: hidden;
+}
+.k-grid-header table {
+	table-layout: fixed;
+}
+.k-grid-content table {
+	table-layout: fixed;
+}
+.k-grid-footer table {
+	table-layout: fixed;
+}
+* + html .k-grid-content table {
+	width: auto;
+}
+.k-grid-toolbar {
+	border-width: 1px 0px 0px; border-style: solid;
+}
+.k-grid-header :first-child.k-header {
+	border-left-width: 0px;
+}
+.k-grid tbody td:first-child {
+	border-left-width: 0px;
+}
+.k-grid tfoot td:first-child {
+	border-left-width: 0px;
+}
+:first-child.k-grid-toolbar {
+	border-width: 0px 0px 1px;
+}
+.k-grouping-header + .k-grid-toolbar {
+	border-width: 0px 0px 1px;
+}
+.k-footer-template td {
+	border-width: 1px 0px 0px 1px; border-style: solid;
+}
+.k-group-footer td {
+	border-width: 1px 0px; border-style: solid;
+}
+.k-grid-footer {
+	border-width: 1px 0px 0px; border-style: solid;
+}
+.k-grid-footer td {
+	border-top-width: 0px;
+}
+.k-pager-wrap {
+	border-width: 1px; border-style: solid; padding: 4px 0px 4px 3px; line-height: 24px; overflow: auto;
+}
+.k-grid-pager {
+	border-width: 1px 0px 0px;
+}
+.k-grid .k-pager-numbers {
+	vertical-align: top; display: inline-block;
+}
+.k-pager-numbers .k-link {
+	vertical-align: top; display: inline-block;
+}
+.k-pager-numbers .k-state-selected {
+	vertical-align: top; display: inline-block;
+}
+.k-pager-numbers {
+	margin: 0px 2px;
+}
+.k-pager-numbers .k-state-selected {
+	vertical-align: top;
+}
+.k-pager-numbers li {
+	float: left;
+}
+.k-pager-input {
+	float: left;
+}
+.k-grid .k-pager-numbers {
+	float: left; cursor: default;
+}
+.k-pager-info {
+	padding: 0px 16px; float: right;
+}
+.k-pager-numbers .k-link {
+	text-decoration: none;
+}
+.k-pager-wrap > .k-link {
+	margin: 0px 1px; padding: 0px 3px; border-radius: 13px; height: 22px; line-height: 22px; float: left; cursor: pointer;
+}
+.k-pager-wrap > a.k-state-disabled:hover {
+	background: 0px; cursor: default;
+}
+.k-pager-wrap > .k-link .k-icon {
+	margin-top: 3px; vertical-align: top;
+}
+.k-pager-numbers .k-link {
+	padding: 0px 8px; border-radius: 13px;
+}
+.k-pager-numbers .k-link:hover {
+	border-width: 1px; border-style: solid; padding: 0px 7px; line-height: 22px;
+}
+.k-pager-wrap > .k-link {
+	border-width: 1px; border-style: solid;
+}
+.k-pager-wrap .k-pager-refresh {
+	border-width: 0px; border-radius: 0px; margin-right: 6px; float: right;
+}
+.k-pager-numbers .k-state-selected {
+	border-width: 1px; border-style: solid; padding: 0px 7px; border-radius: 13px; line-height: 22px;
+}
+.k-pager-wrap .k-textbox {
+	width: 40px;
+}
+* + html .k-pager-wrap .k-textbox {
+	height: 16px; margin-top: 2px;
+}
+.k-pager-wrap .k-dropdown {
+	width: 50px;
+}
+.k-pager-refresh {
+	float: right;
+}
+.k-pager-input {
+	padding: 0px 17px;
+}
+.k-pager-sizes {
+	padding: 0px 17px;
+}
+* + html .k-pager-sizes {
+	float: left;
+}
+.k-pager-wrap .k-textbox {
+	margin: -0.3em 0.4em 0px;
+}
+.k-pager-wrap .k-widget {
+	margin: -0.3em 0.4em 0px;
+}
+.k-grid-filter {
+	margin: -0.5em -0.6em -0.4em; padding: 0.5em 0.2em 0.4em; float: right;
+}
+.k-header-column-menu {
+	margin: -0.5em -0.6em -0.4em; padding: 0.5em 0.2em 0.4em; float: right;
+}
+.k-grid .k-animation-container {
+	position: absolute;
+}
+.k-filter-menu {
+	padding: 0.5em;
+}
+.k-filter-menu .k-widget {
+	display: block;
+}
+.k-filter-menu .k-textbox {
+	display: block;
+}
+.k-filter-help-text {
+	margin: 0.3em 0px 0px;
+}
+.k-filter-menu .k-widget {
+	margin: 0.3em 0px 0px;
+}
+.k-filter-menu .k-filter-and {
+	margin: 0.6em 0px 0px; width: 6em;
+}
+.k-filter-menu .k-button {
+	margin: 0.6em 4% 0px 0px; width: 48%;
+}
+.k-filter-menu .k-button + .k-button {
+	margin-right: 0px;
+}
+.k-grouping-row .k-icon {
+	margin: 0px 4px 0px 0px;
+}
+.k-grouping-row p {
+	padding: 0px 0.6em; margin-left: -0.6em; vertical-align: middle; display: inline-block;
+}
+.k-grid .k-group-cell + td {
+	border-left-width: 0px;
+}
+.k-grid .k-hierarchy-cell + td {
+	border-left-width: 0px;
+}
+.k-grid .k-group-col {
+	width: 30px;
+}
+.k-grid .k-hierarchy-col {
+	width: 30px;
+}
+.k-grouping-header {
+	border-bottom-width: 1px; border-bottom-style: solid;
+}
+.k-grouping-header {
+	line-height: 2;
+}
+.k-grouping-dropclue {
+	background-position: -165px -148px; width: 6px; height: 25px; position: absolute; background-repeat: no-repeat;
+}
+.k-grouping-header .k-group-indicator {
+	border-width: 1px; border-style: solid; margin: 0px 3px; padding: 0.15em 0.15em 0.15em 0.4em; line-height: 1.5em; display: inline-block;
+}
+.k-grouping-header .k-link {
+	border-width: 0px; padding: 0px; line-height: normal; text-decoration: none; display: inline-block;
+}
+.k-grouping-header .k-button {
+	padding: 0px; border: 0px currentColor; line-height: 1;
+}
+.k-grouping-header .k-link .k-icon {
+	margin: 0px 0px 0px -3px;
+}
+.k-grouping-header .k-button .k-icon {
+	margin: 0px 0px 0px 3px;
+}
+.k-grouping-header a {
+	vertical-align: middle; display: inline-block;
+}
+.k-grouping-header .k-button {
+	vertical-align: middle; display: inline-block;
+}
+.k-dirty {
+	border-width: 3px; border-style: solid; border-color: rgb(255, 0, 0) transparent transparent rgb(255, 0, 0); margin: -0.45em 0px 0px -0.6em; padding: 0px; width: 0px; height: 0px; overflow: hidden; vertical-align: top; position: absolute;
+}
+.k-grouping-header {
+	margin: 0px; padding: 0.2em 0.6em; cursor: default;
+}
+.k-grid-toolbar {
+	margin: 0px; padding: 0.2em 0.6em; cursor: default;
+}
+.k-grid .k-edit-container {
+	padding: 0px;
+}
+.k-edit-form {
+	margin: 0px; padding: 0px;
+}
+.k-grid-edit-row .k-edit-form td {
+	border-bottom-width: 0px;
+}
+.k-edit-form-container {
+	width: 400px; position: relative;
+}
+.k-edit-label {
+	padding-bottom: 1em; display: inline-block;
+}
+.k-edit-field {
+	padding-bottom: 1em; display: inline-block;
+}
+.editor-label {
+	padding-bottom: 1em; display: inline-block;
+}
+.editor-field {
+	padding-bottom: 1em; display: inline-block;
+}
+.k-edit-label {
+	width: 30%; text-align: right; padding-right: 3%;
+}
+.editor-label {
+	width: 30%; text-align: right; padding-right: 3%;
+}
+.k-edit-field {
+	width: 60%;
+}
+.editor-field {
+	width: 60%;
+}
+.k-grid .field-validation-error {
+	display: block;
+}
+.k-grid .input-validation-error {
+	border-style: ridge; border-color: rgb(255, 0, 0); background-color: rgb(255, 192, 203);
+}
+.k-grid-toolbar .k-button {
+	vertical-align: middle;
+}
+.k-grid-actions {
+	display: inline-block;
+}
+* + html .k-grid-actions {
+	vertical-align: bottom;
+}
+.k-grid .k-button {
+	margin: 0px 0.2em;
+}
+.k-edit-form-container .k-button {
+	margin: 0px 0.2em;
+}
+.k-grid tbody .k-button {
+	min-width: 64px;
+}
+.k-grid tbody button.k-button {
+	min-width: 78px;
+}
+#ie8 {
+	min-width: 78px;
+}
+* + html .k-grid tbody a.k-button {
+	min-width: 62px;
+}
+html body .k-grid tbody .k-button-icon {
+	width: auto; min-width: 0px;
+}
+.k-detail-row {
+	position: relative;
+}
+.k-grid .k-detail-cell {
+	overflow: visible;
+}
+.k-grid .k-edit-cell {
+	padding: 0px 0.3em;
+}
+.k-edit-cell .k-textbox {
+	width: 100%;
+}
+.k-edit-cell .k-widget {
+	width: 100%;
+}
+.k-grid-edit-row .k-textbox {
+	width: 100%;
+}
+.k-grid-edit-row .k-widget {
+	width: 100%;
+}
+.k-edit-cell .k-widget {
+	box-sizing: border-box; -moz-box-sizing: border-box;
+}
+.k-grid-edit-row .k-widget {
+	box-sizing: border-box; -moz-box-sizing: border-box;
+}
+* + html .k-edit-cell .k-textbox {
+	width: 90%; display: inline;
+}
+* + html .k-edit-cell .k-widget {
+	width: 90%; display: inline;
+}
+* + html .k-grid-edit-row .k-textbox {
+	width: 90%; display: inline;
+}
+* + html .k-grid-edit-row .k-widget {
+	width: 90%; display: inline;
+}
+html .k-edit-cell .k-tooltip {
+	width: auto; max-width: 300px;
+}
+html .k-grid-edit-row .k-tooltip {
+	width: auto; max-width: 300px;
+}
+.k-edit-cell input[type='checkbox'] {
+	margin-left: 0.6em;
+}
+.k-grid tbody td > .k-grid-delete {
+	margin-top: -0.2em; margin-bottom: -0.2em;
+}
+.k-grid-resize-indicator {
+	width: 2px; position: absolute; background-color: rgb(170, 170, 170);
+}
+.k-grid .k-resize-handle {
+	height: 25px; position: absolute; cursor: col-resize;
+}
+.k-marquee {
+	filter: alpha(opacity=30); position: absolute; opacity: 0.3;
+}
+.k-column-menu .k-sprite {
+	margin-right: 10px;
+}
+span.k-datepicker {
+	background: 0px;
+}
+span.k-numerictextbox {
+	background: 0px;
+}
+span.k-combobox {
+	background: 0px;
+}
+span.k-dropdown {
+	background: 0px;
+}
+.k-autocomplete {
+	border-width: 0px; width: 12.4em; overflow: visible; vertical-align: middle; display: inline-block; white-space: nowrap; position: relative;
+}
+.k-combobox {
+	border-width: 0px; width: 12.4em; overflow: visible; vertical-align: middle; display: inline-block; white-space: nowrap; position: relative;
+}
+.k-datepicker {
+	border-width: 0px; width: 12.4em; overflow: visible; vertical-align: middle; display: inline-block; white-space: nowrap; position: relative;
+}
+.k-timepicker {
+	border-width: 0px; width: 12.4em; overflow: visible; vertical-align: middle; display: inline-block; white-space: nowrap; position: relative;
+}
+.k-datetimepicker {
+	border-width: 0px; width: 12.4em; overflow: visible; vertical-align: middle; display: inline-block; white-space: nowrap; position: relative;
+}
+.k-numerictextbox {
+	border-width: 0px; width: 12.4em; overflow: visible; vertical-align: middle; display: inline-block; white-space: nowrap; position: relative;
+}
+.k-dropdown {
+	border-width: 0px; width: 12.4em; overflow: visible; vertical-align: middle; display: inline-block; white-space: nowrap; position: relative;
+}
+.k-selectbox {
+	border-width: 0px; width: 12.4em; overflow: visible; vertical-align: middle; display: inline-block; white-space: nowrap; position: relative;
+}
+.k-textbox {
+	border-width: 0px; width: 12.4em; overflow: visible; vertical-align: middle; display: inline-block; white-space: nowrap; position: relative;
+}
+.k-datetimepicker {
+	width: 15em;
+}
+.k-autocomplete {
+	position: relative; cursor: default;
+}
+.k-dropdown-wrap {
+	position: relative; cursor: default;
+}
+.k-picker-wrap {
+	position: relative; cursor: default;
+}
+.k-numeric-wrap {
+	position: relative; cursor: default;
+}
+.k-dropdown-wrap {
+	display: block;
+}
+.k-picker-wrap {
+	display: block;
+}
+.k-numeric-wrap {
+	display: block;
+}
+.k-calendar-container .k-header {
+	background: 0px;
+}
+.k-block {
+	-webkit-touch-callout: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.k-widget {
+	-webkit-touch-callout: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.k-grid {
+	-webkit-touch-callout: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.k-slider {
+	-webkit-touch-callout: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.k-splitter {
+	-webkit-touch-callout: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.k-treeview {
+	-webkit-touch-callout: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.k-panelbar {
+	-webkit-touch-callout: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.k-list-container.k-popup {
+	border-width: 1px; border-style: solid; padding: 2px; -webkit-touch-callout: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.k-calendar-container.k-popup {
+	border-width: 1px; border-style: solid; padding: 2px; -webkit-touch-callout: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.k-state-border-up.k-list-container {
+	padding-top: 3px; border-top-color: currentColor; border-top-width: 0px; border-top-style: none;
+}
+.k-state-border-up.k-autocomplete {
+	padding-top: 3px; border-top-color: currentColor; border-top-width: 0px; border-top-style: none;
+}
+.k-state-border-up.k-dropdown-wrap {
+	padding-top: 3px; border-top-color: currentColor; border-top-width: 0px; border-top-style: none;
+}
+.k-state-border-up.k-picker-wrap {
+	padding-top: 3px; border-top-color: currentColor; border-top-width: 0px; border-top-style: none;
+}
+.k-state-border-up.k-numeric-wrap {
+	padding-top: 3px; border-top-color: currentColor; border-top-width: 0px; border-top-style: none;
+}
+.k-state-border-up.k-dropdown-wrap .k-select {
+	top: 1px;
+}
+.k-state-border-up.k-picker-wrap .k-select {
+	top: 1px;
+}
+.k-state-border-down.k-list-container {
+	padding-bottom: 3px; border-bottom-color: currentColor; border-bottom-width: 0px; border-bottom-style: none;
+}
+.k-state-border-down.k-autocomplete {
+	padding-bottom: 3px; border-bottom-color: currentColor; border-bottom-width: 0px; border-bottom-style: none;
+}
+.k-state-border-down.k-dropdown-wrap {
+	padding-bottom: 3px; border-bottom-color: currentColor; border-bottom-width: 0px; border-bottom-style: none;
+}
+.k-state-border-down.k-picker-wrap {
+	padding-bottom: 3px; border-bottom-color: currentColor; border-bottom-width: 0px; border-bottom-style: none;
+}
+.k-state-border-down.k-numeric-wrap {
+	padding-bottom: 3px; border-bottom-color: currentColor; border-bottom-width: 0px; border-bottom-style: none;
+}
+.k-textbox {
+	border-width: 1px; border-style: solid; padding: 2px 22px 2px 2px;
+}
+.k-autocomplete {
+	border-width: 1px; border-style: solid; padding: 2px 22px 2px 2px;
+}
+.k-dropdown-wrap {
+	border-width: 1px; border-style: solid; padding: 2px 22px 2px 2px;
+}
+.k-picker-wrap {
+	border-width: 1px; border-style: solid; padding: 2px 22px 2px 2px;
+}
+.k-numeric-wrap {
+	border-width: 1px; border-style: solid; padding: 2px 22px 2px 2px;
+}
+.k-expand-padding.k-numeric-wrap {
+	padding-right: 2px;
+}
+.k-textbox {
+	padding: 2px;
+}
+.k-autocomplete {
+	padding: 2px;
+}
+.k-space-left.k-textbox {
+	padding-left: 22px;
+}
+.k-space-right.k-textbox {
+	padding-right: 22px;
+}
+.k-textbox .k-icon {
+	margin: -8px 0px 0px; top: 50%; font-size: inherit; position: absolute;
+}
+.k-space-left .k-icon {
+	left: 3px;
+}
+.k-space-right .k-icon {
+	right: 3px;
+}
+.k-autocomplete {
+	-webkit-transition: -webkit-box-shadow .15s ease-out; -moz-transition: -moz-box-shadow .15s ease-out; -ms-transition: box-shadow .15s ease-out; -o-transition: box-shadow .15s ease-out; transition: box-shadow .15s ease-out;
+}
+.k-state-focused.k-dropdown-wrap {
+	-webkit-transition: -webkit-box-shadow .15s ease-out; -moz-transition: -moz-box-shadow .15s ease-out; -ms-transition: box-shadow .15s ease-out; -o-transition: box-shadow .15s ease-out; transition: box-shadow .15s ease-out;
+}
+.k-state-hover.k-dropdown-wrap {
+	-webkit-transition: -webkit-box-shadow .15s ease-out; -moz-transition: -moz-box-shadow .15s ease-out; -ms-transition: box-shadow .15s ease-out; -o-transition: box-shadow .15s ease-out; transition: box-shadow .15s ease-out;
+}
+.k-state-focused.k-picker-wrap {
+	-webkit-transition: -webkit-box-shadow .15s ease-out; -moz-transition: -moz-box-shadow .15s ease-out; -ms-transition: box-shadow .15s ease-out; -o-transition: box-shadow .15s ease-out; transition: box-shadow .15s ease-out;
+}
+.k-state-hover.k-picker-wrap {
+	-webkit-transition: -webkit-box-shadow .15s ease-out; -moz-transition: -moz-box-shadow .15s ease-out; -ms-transition: box-shadow .15s ease-out; -o-transition: box-shadow .15s ease-out; transition: box-shadow .15s ease-out;
+}
+.k-state-focused.k-numeric-wrap {
+	-webkit-transition: -webkit-box-shadow .15s ease-out; -moz-transition: -moz-box-shadow .15s ease-out; -ms-transition: box-shadow .15s ease-out; -o-transition: box-shadow .15s ease-out; transition: box-shadow .15s ease-out;
+}
+.k-state-hover.k-numeric-wrap {
+	-webkit-transition: -webkit-box-shadow .15s ease-out; -moz-transition: -moz-box-shadow .15s ease-out; -ms-transition: box-shadow .15s ease-out; -o-transition: box-shadow .15s ease-out; transition: box-shadow .15s ease-out;
+}
+.k-textbox > input {
+	width: 100%; vertical-align: top;
+}
+.k-picker-wrap .k-input {
+	width: 100%; vertical-align: top;
+}
+.k-numeric-wrap .k-input {
+	width: 100%; vertical-align: top;
+}
+.k-combobox .k-input {
+	width: 100%; vertical-align: top;
+}
+.k-picker-wrap .k-input {
+	border-width: 0px; outline: 0px; font-family: inherit;
+}
+.k-numeric-wrap .k-input {
+	border-width: 0px; outline: 0px; font-family: inherit;
+}
+.k-dropdown-wrap .k-input {
+	border-width: 0px; outline: 0px; font-family: inherit;
+}
+.k-selectbox .k-input {
+	border-width: 0px; outline: 0px; font-family: inherit;
+}
+.k-dropdown {
+	outline: 0px;
+}
+.k-dropdown .k-input {
+	
+}
+.k-selectbox .k-input {
+	
+}
+* + html .k-picker-wrap .k-input {
+	margin: -1px 0px;
+}
+* + html .k-numeric-wrap .k-input {
+	margin: -1px 0px;
+}
+* + html .k-combobox .k-input {
+	margin: -1px 0px;
+}
+.k-picker-wrap .k-select {
+	top: 0px; right: 0px; text-decoration: none; vertical-align: top; display: inline-block; position: absolute; cursor: default;
+}
+.k-numeric-wrap .k-select {
+	top: 0px; right: 0px; text-decoration: none; vertical-align: top; display: inline-block; position: absolute; cursor: default;
+}
+.k-dropdown-wrap .k-select {
+	top: 0px; right: 0px; text-decoration: none; vertical-align: top; display: inline-block; position: absolute; cursor: default;
+}
+.k-combobox .k-select {
+	border-width: 0px; border-style: solid; border-color: inherit;
+}
+.k-picker-wrap .k-select {
+	border-width: 0px; border-style: solid; border-color: inherit;
+}
+.k-numeric-wrap .k-select {
+	border-width: 0px; border-style: solid; border-color: inherit;
+}
+.k-picker-wrap .k-select {
+	padding: 0px 2px;
+}
+.k-numeric-wrap .k-select {
+	padding: 0px 2px;
+}
+span.k-datetimepicker .k-select {
+	right: 0px;
+}
+span.k-datetimepicker .k-select + .k-select {
+	right: 0px;
+}
+.k-textbox {
+	box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box;
+}
+.k-autocomplete {
+	box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box;
+}
+.k-textbox > input {
+	display: block;
+}
+.k-autocomplete .k-input {
+	display: block;
+}
+.k-combobox .k-icon {
+	margin-top: 1px;
+}
+.k-dropdown .k-select {
+	font: inherit; border: 0px currentColor; color: inherit; overflow: hidden; text-decoration: none; cursor: default; font-size-adjust: inherit; font-stretch: inherit;
+}
+.k-selectbox .k-select {
+	font: inherit; border: 0px currentColor; color: inherit; overflow: hidden; text-decoration: none; cursor: default; font-size-adjust: inherit; font-stretch: inherit;
+}
+.k-dropdown .k-input {
+	overflow: hidden; display: block; text-overflow: ellipsis;
+}
+.k-selectbox .k-input {
+	overflow: hidden; display: block; text-overflow: ellipsis;
+}
+.k-textbox > input {
+	margin: 0px; padding: 0.18em 0px; border: 0px currentColor; height: 1.31em; line-height: 1.31em; text-indent: 4px;
+}
+.k-autocomplete .k-input {
+	margin: 0px; padding: 0.18em 0px; border: 0px currentColor; height: 1.31em; line-height: 1.31em; text-indent: 4px;
+}
+.k-picker-wrap .k-input {
+	margin: 0px; padding: 0.18em 0px; border: 0px currentColor; height: 1.31em; line-height: 1.31em; text-indent: 4px;
+}
+.k-numeric-wrap .k-input {
+	margin: 0px; padding: 0.18em 0px; border: 0px currentColor; height: 1.31em; line-height: 1.31em; text-indent: 4px;
+}
+.k-dropdown-wrap .k-input {
+	margin: 0px; padding: 0.18em 0px; border: 0px currentColor; height: 1.31em; line-height: 1.31em; text-indent: 4px;
+}
+.k-selectbox .k-input {
+	margin: 0px; padding: 0.18em 0px; border: 0px currentColor; height: 1.31em; line-height: 1.31em; text-indent: 4px;
+}
+* + html .k-autocomplete .k-input {
+	text-indent: 0px;
+}
+* + html .k-picker-wrap .k-input {
+	text-indent: 0px;
+}
+* + html .k-numeric-wrap .k-input {
+	text-indent: 0px;
+}
+* + html .k-dropdown-wrap .k-input {
+	text-indent: 0px;
+}
+* + html .k-selectbox .k-input {
+	text-indent: 0px;
+}
+.k-picker-wrap .k-select {
+	padding: 3px; line-height: 1.3em; vertical-align: middle; min-height: 1.3em;
+}
+.k-numeric-wrap .k-select {
+	padding: 3px; line-height: 1.3em; vertical-align: middle; min-height: 1.3em;
+}
+.k-dropdown-wrap .k-select {
+	padding: 3px; line-height: 1.3em; vertical-align: middle; min-height: 1.3em;
+}
+body .k-datetimepicker .k-select {
+	border-radius: 0px; -webkit-border-radius: 0; -moz-border-radius: 0;
+}
+.k-popup {
+	border-width: 1px; border-style: solid;
+}
+.k-popup .k-item {
+	cursor: default;
+}
+.k-popup .k-calendar {
+	border: 0px currentColor;
+}
+.k-list {
+	height: 100%;
+}
+.k-popup .k-list .k-item {
+	padding: 1px 5px; line-height: 1.8em;
+}
+.k-popup .k-list .k-state-hover {
+	border-width: 1px; border-style: solid; padding: 0px 4px;
+}
+.k-popup .k-list .k-state-focused {
+	border-width: 1px; border-style: solid; padding: 0px 4px;
+}
+.k-popup .k-list .k-state-selected {
+	border-width: 1px; border-style: solid; padding: 0px 4px;
+}
+.k-calendar {
+	width: 203px; overflow: hidden; display: inline-block; position: relative;
+}
+.k-calendar td {
+	text-decoration: none;
+}
+.k-calendar .k-link {
+	text-decoration: none;
+}
+.k-calendar .k-action-link {
+	text-decoration: underline;
+}
+.k-calendar .k-header {
+	text-align: center; position: relative; zoom: 1;
+}
+.k-calendar .k-footer {
+	text-align: center; position: relative; zoom: 1;
+}
+.k-calendar.k-widget .k-nav-prev {
+	padding: 0.22em; top: 0.3em; position: absolute;
+}
+.k-calendar.k-widget .k-nav-next {
+	padding: 0.22em; top: 0.3em; position: absolute;
+}
+.k-calendar.k-widget .k-nav-prev {
+	left: 1%;
+}
+.k-calendar.k-widget .k-nav-next {
+	right: 1%;
+}
+.k-calendar .k-content {
+	border-width: 0px; margin: 0px; width: 100%; height: 166px; text-align: right; float: left; table-layout: fixed; border-spacing: 0;
+}
+.k-calendar .k-animation-container .k-content {
+	height: 100%;
+}
+.k-calendar.k-widget .k-nav-fast {
+	width: 75%; height: 29px; line-height: 29px; display: inline-block;
+}
+.k-calendar .k-nav-fast .k-icon {
+	vertical-align: top;
+}
+.k-calendar th {
+	padding: 0.4em 0.45em 0.4em 0.1em; font-weight: normal; border-bottom-width: 1px; border-bottom-style: solid; cursor: default;
+}
+.k-calendar td {
+	padding: 1px; cursor: pointer;
+}
+.k-calendar .k-state-focus {
+	border-width: 1px; border-style: dotted; padding: 0px;
+}
+.k-calendar .k-content .k-link {
+	padding: 0px 0.45em 0px 0.1em; line-height: 22px; overflow: hidden; display: block; min-height: 22px;
+}
+.k-calendar .k-meta-view .k-link {
+	padding: 0.25em 0px 0.3em; text-align: center;
+}
+.k-calendar .k-footer {
+	padding: 0.5em 0px; clear: both;
+}
+.k-calendar .k-nav-today:hover {
+	text-decoration: underline;
+}
+span.k-timepicker {
+	background-color: transparent;
+}
+span.k-datetimepicker {
+	background-color: transparent;
+}
+span.k-datepicker {
+	background-color: transparent;
+}
+.k-datetimepicker .k-picker-wrap {
+	padding-right: 42px;
+}
+.k-datetimepicker .k-picker-wrap .k-icon {
+	margin-left: 3px;
+}
+.k-picker-wrap .k-icon {
+	cursor: pointer;
+}
+.k-button {
+	vertical-align: middle; display: inline-block;
+}
+.k-textbox {
+	vertical-align: middle; display: inline-block;
+}
+.k-timepicker {
+	vertical-align: middle; display: inline-block;
+}
+.k-datepicker {
+	vertical-align: middle; display: inline-block;
+}
+.k-datetimepicker {
+	vertical-align: middle; display: inline-block;
+}
+.k-picker-wrap .k-input {
+	margin: 0px;
+}
+.k-time-popup .k-item {
+	padding: 1px 3px;
+}
+div.k-treeview {
+	background: 0px; border-width: 0px; overflow: auto; white-space: nowrap;
+}
+.k-treeview .k-item {
+	border-width: 0px; margin: 0px; padding: 0px 0px 0px 16px; display: block;
+}
+.k-treeview .k-group {
+	background: 0px; margin: 0px; padding: 0px; list-style-type: none;
+}
+.k-treeview .k-content {
+	background: 0px; margin: 0px; padding: 0px; list-style-type: none;
+}
+.k-treeview .k-animation-container {
+	height: auto !important;
+}
+.k-treeview .k-icon {
+	vertical-align: top; display: inline-block;
+}
+.k-treeview .k-image {
+	vertical-align: top; display: inline-block;
+}
+.k-treeview .k-sprite {
+	vertical-align: top; display: inline-block;
+}
+.k-treeview .k-checkbox {
+	vertical-align: top; display: inline-block;
+}
+.k-treeview .k-in {
+	vertical-align: top; display: inline-block;
+}
+.k-treeview .k-plus {
+	margin-top: 3px; margin-left: -16px; float: left; cursor: pointer;
+}
+.k-treeview .k-minus {
+	margin-top: 3px; margin-left: -16px; float: left; cursor: pointer;
+}
+.k-treeview .k-plus-disabled {
+	margin-top: 3px; margin-left: -16px; float: left; cursor: pointer;
+}
+.k-treeview .k-minus-disabled {
+	margin-top: 3px; margin-left: -16px; float: left; cursor: pointer;
+}
+.k-treeview .k-plus-disabled {
+	cursor: default;
+}
+.k-treeview .k-minus-disabled {
+	cursor: default;
+}
+.k-treeview .k-sprite {
+	margin-right: 3px;
+}
+.k-treeview .k-image {
+	margin-right: 3px;
+}
+.k-treeview .k-in {
+	margin: 1px 0px 1px 2px; padding: 2px 4px 2px 3px; line-height: 16px; text-decoration: none;
+}
+.k-treeview span.k-in {
+	cursor: default;
+}
+.k-treeview .k-state-hover {
+	border-width: 1px; border-style: solid; padding: 1px 3px 1px 2px;
+}
+.k-treeview .k-state-selected {
+	border-width: 1px; border-style: solid; padding: 1px 3px 1px 2px;
+}
+.k-treeview .k-drop-hint {
+	width: 80px; height: 5px; margin-top: -3px; visibility: hidden; position: absolute; z-index: 10000; background-repeat: no-repeat; background-color: transparent;
+}
+.k-input {
+	padding: 0.25em 0px;
+}
+.k-input {
+	outline: 0px; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.k-textbox > input {
+	outline: 0px; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.k-textbox {
+	outline: 0px; width: 12.4em; text-indent: 2px; box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box;
+}
+input.k-textbox {
+	padding: 2px 0.3em; height: 2.12em; line-height: 1.6em;
+}
+textarea.k-textbox {
+	height: auto;
+}
+* + html .k-textbox {
+	padding: 1px 0px; text-indent: 0px;
+}
+span.k-numerictextbox {
+	
+}
+.k-numerictextbox .k-input {
+	margin: 0px;
+}
+.k-numerictextbox .k-select {
+	padding-top: 1px; padding-bottom: 1px;
+}
+.k-numerictextbox .k-link {
+	border-width: 0px; padding: 0px; height: 11px; line-height: 11px; display: block;
+}
+.k-numerictextbox .k-icon {
+	height: 11px; vertical-align: top;
+}
+.k-colorpicker {
+	vertical-align: middle; display: inline-block;
+}
+.k-colorpicker .k-tool-icon {
+	padding: 2px 3px; line-height: 0; font-size: 0px; vertical-align: top; display: inline-block;
+}
+.k-colorpicker .k-selected-color {
+	width: 16px; height: 16px; display: block;
+}
+.k-colorpicker .k-icon {
+	margin-top: 4px; vertical-align: middle;
+}
+.k-colorpicker-popup {
+	width: 136px; line-height: 0;
+}
+.k-colorpicker-popup .k-reset {
+	margin: 0px; padding: 0.25em; display: inline-block;
+}
+.k-colorpicker-popup .k-item {
+	margin: 0px 1px 1px 0px; padding: 0px; width: 12px; height: 12px; overflow: hidden; font-size: 0px; float: left; display: block;
+}
+.k-colorpicker-popup .k-item div {
+	margin: 1px; width: 100%; height: 100%;
+}
+.k-editor {
+	border-width: 1px; border-style: solid; width: 100%; height: 250px; font-size: 100%; vertical-align: top; border-collapse: separate; table-layout: fixed;
+}
+.k-editor .k-editor-toolbar-wrap {
+	padding: 0px; border: 0px currentColor;
+}
+.k-editor-toolbar {
+	margin: 0px; padding: 0.1em 0px; line-height: 1.3em; list-style-type: none; cursor: default;
+}
+.k-editor-toolbar li {
+	vertical-align: middle; display: inline;
+}
+.k-editor-toolbar .k-editor-dropdown {
+	margin-right: 2px;
+}
+.k-editor-toolbar .k-editor-combobox {
+	margin-right: 2px;
+}
+.k-editor-toolbar .k-editor-selectbox {
+	margin-right: 2px;
+}
+.k-editor-toolbar .k-editor-colorpicker {
+	margin-right: 2px;
+}
+.k-editor-toolbar .k-separator {
+	border-width: 0px 1px 0px 0px; border-style: solid; margin: 0px 0.15em; padding: 0px 0px 0px 1px; top: 1px; font-size: 1.3em; position: relative;
+}
+.k-editor-toolbar .k-break {
+	height: 1px; line-height: 0; font-size: 0px; display: block;
+}
+.k-editor-toolbar .k-dropdown {
+	vertical-align: middle;
+}
+.k-editor-toolbar .k-combobox {
+	vertical-align: middle;
+}
+.k-editor-toolbar .k-selectbox {
+	vertical-align: middle;
+}
+.k-editor-toolbar .k-colorpicker {
+	vertical-align: middle;
+}
+.k-editor-button .k-tool-icon {
+	margin: 1px; width: 22px; height: 22px; vertical-align: middle;
+}
+.k-editor-colorpicker .k-tool-icon {
+	padding: 17px 3px 2px;
+}
+.k-editor-colorpicker .k-icon {
+	border-width: 0px 0px 0px 1px; border-style: solid; border-color: rgb(204, 204, 204);
+}
+.k-editor-colorpicker .k-selected-color {
+	height: 3px;
+}
+.k-bold {
+	background-position: -64px 0px;
+}
+.k-italic {
+	background-position: -64px -22px;
+}
+.k-underline {
+	background-position: -64px -44px;
+}
+.k-strikethrough {
+	background-position: -64px -66px;
+}
+.k-foreColor .k-tool-icon {
+	background-position: -64px -88px;
+}
+.k-backColor .k-tool-icon {
+	background-position: -64px -110px;
+}
+.k-justifyLeft {
+	background-position: -64px -132px;
+}
+.k-justifyCenter {
+	background-position: -64px -154px;
+}
+.k-justifyRight {
+	background-position: -64px -176px;
+}
+.k-justifyFull {
+	background-position: -64px -198px;
+}
+.k-insertUnorderedList {
+	background-position: -64px -242px;
+}
+.k-insertOrderedList {
+	background-position: -64px -264px;
+}
+.k-indent {
+	background-position: -112px 0px;
+}
+.k-outdent {
+	background-position: -112px -22px;
+}
+.k-createLink {
+	background-position: -112px -44px;
+}
+.k-unlink {
+	background-position: -112px -66px;
+}
+.k-insertImage {
+	background-position: -112px -88px;
+}
+.k-subscript {
+	background-position: -112px -154px;
+}
+.k-superscript {
+	background-position: -112px -176px;
+}
+.k-fontName {
+	width: 110px;
+}
+.k-fontSize {
+	width: 124px;
+}
+.k-formatBlock {
+	width: 147px;
+}
+.k-editor-button .k-state-hover {
+	border-width: 1px; border-style: solid; margin: 0px; vertical-align: middle;
+}
+.k-editor-button .k-state-active {
+	border-width: 1px; border-style: solid; margin: 0px; vertical-align: middle;
+}
+.k-editor-button .k-state-disabled {
+	filter: alpha(opacity=30); opacity: 0.3;
+}
+.k-editor .k-editable-area {
+	border-width: 1px; border-style: solid; outline: 0px; width: 100%; height: 100%;
+}
+.k-editor .k-content {
+	margin: 0px; padding: 0px; border: 0px currentColor; width: 100%; height: 100%; display: block;
+}
+.k-editor iframe.k-content {
+	vertical-align: top; display: inline;
+}
+.k-editor .k-raw-content {
+	margin: 0px; padding: 0px; border: 0px currentColor;
+}
+.k-editor .k-raw-content {
+	font-family: consolas,"courier new",monospace; font-size: inherit;
+}
+.k-editor-dialog .k-editor-textarea {
+	font-family: consolas,"courier new",monospace; font-size: inherit;
+}
+.k-editor-dialog {
+	padding: 1em;
+}
+.k-editor-dialog ol {
+	list-style: none; margin: 0px; padding: 1em 0px 0px;
+}
+.k-form-text-row {
+	padding-bottom: 0.3em;
+}
+.k-form-checkbox-row {
+	padding-bottom: 0.3em;
+}
+.k-form-text-row input {
+	margin-right: 1em;
+}
+.k-form-text-row label {
+	width: 7em; text-align: right; padding-right: 0.5em; display: inline-block;
+}
+.k-form-checkbox-row input {
+	padding: 0px; font-size: inherit; margin-left: 7.5em;
+}
+.k-form-checkbox-row label {
+	padding-left: 0.3em;
+}
+.k-form-checkbox-row input {
+	vertical-align: middle;
+}
+.k-form-checkbox-row label {
+	vertical-align: middle;
+}
+.k-form-text-row label .k-form-text-row input {
+	vertical-align: middle;
+}
+.k-form-text-row select {
+	vertical-align: middle;
+}
+.k-form-text-row input {
+	width: 20em;
+}
+.k-form-text-row select {
+	width: 20em;
+}
+.k-editor-dialog .k-form-text-row label {
+	display: inline-block;
+}
+.k-editor-dialog .k-button {
+	display: inline-block;
+}
+.k-editor-dialog .k-button-wrapper {
+	padding: 1em; text-align: right;
+}
+.k-editor-dialog .k-button-wrapper button {
+	vertical-align: baseline;
+}
+.k-editor-dialog .k-editor-textarea {
+	border-width: 1px; border-style: solid; padding: 0.2em 0.2em 0.2em 0.4em; width: 600px; height: 350px; overflow: auto;
+}
+.k-button-wrapper .k-link:hover {
+	text-decoration: underline;
+}
+div.k-slider {
+	border-width: 0px; position: relative; background-color: transparent; -webkit-user-select: none; -moz-user-select: none; user-select: none; -khtml-user-select: none;
+}
+.k-slider-vertical {
+	width: 26px; height: 200px;
+}
+.k-slider-horizontal {
+	width: 200px; height: 26px; display: inline-block;
+}
+.k-slider-wrap {
+	width: 100%; height: 100%;
+}
+.k-slider .k-button {
+	margin: 0px; padding: 0px; outline: 0px; top: 0px; width: 24px; height: 24px; position: absolute; min-width: 0px;
+}
+.k-grid .k-slider .k-button {
+	margin: 0px; padding: 0px; outline: 0px; top: 0px; width: 24px; height: 24px; position: absolute; min-width: 0px;
+}
+.k-slider .k-button .k-icon {
+	margin-top: 4px; vertical-align: top;
+}
+.k-state-disabled .k-slider-wrap {
+	filter: alpha(opacity=60); opacity: 0.6;
+}
+.k-state-disabled .k-slider-wrap .k-slider-items {
+	color: rgb(51, 51, 51);
+}
+.k-slider .k-button-decrease {
+	left: 0px;
+}
+.k-slider-vertical .k-button-decrease {
+	top: auto; bottom: 0px;
+}
+.k-grid .k-slider-vertical .k-button-decrease {
+	top: auto; bottom: 0px;
+}
+.k-slider .k-button-increase {
+	right: 0px;
+}
+.k-slider .k-icon {
+	cursor: pointer;
+}
+* + html .k-slider .k-icon {
+	margin-top: 2px;
+}
+.k-slider-track {
+	margin: 0px; padding: 0px; position: absolute;
+}
+.k-slider-selection {
+	margin: 0px; padding: 0px; position: absolute;
+}
+.k-slider-horizontal .k-slider-track {
+	left: 0px; top: 50%; height: 8px; margin-top: -4px; background-repeat: repeat-x;
+}
+.k-slider-horizontal .k-slider-selection {
+	left: 0px; top: 50%; height: 8px; margin-top: -4px; background-repeat: repeat-x;
+}
+.k-slider-horizontal .k-slider-buttons .k-slider-track {
+	left: 34px;
+}
+.k-slider-vertical .k-slider-track {
+	left: 50%; width: 8px; bottom: 0px; margin-left: -4px; background-repeat: repeat-y;
+}
+.k-slider-vertical .k-slider-selection {
+	left: 50%; width: 8px; bottom: 0px; margin-left: -4px; background-repeat: repeat-y;
+}
+.k-slider-vertical .k-slider-buttons .k-slider-track {
+	bottom: 34px;
+}
+.k-draghandle {
+	text-align: center; text-indent: -3333px; overflow: hidden; text-decoration: none; position: absolute; cursor: pointer; background-repeat: no-repeat; background-color: transparent;
+}
+.k-slider-horizontal .k-draghandle {
+	top: -4px; width: 13px; height: 14px;
+}
+.k-slider-vertical .k-draghandle {
+	left: -4px; width: 14px; height: 13px;
+}
+.k-slider-buttons .k-slider-items {
+	margin-left: 34px;
+}
+.k-slider-horizontal .k-slider-items {
+	height: 100%;
+}
+.k-slider-vertical .k-slider-items {
+	padding-top: 1px;
+}
+.k-slider-vertical .k-slider-buttons .k-slider-items {
+	padding-top: 0px;
+}
+.k-slider-vertical .k-slider-buttons .k-slider-items {
+	margin: 0px; padding-top: 35px;
+}
+.k-slider .k-tick {
+	background-position: center; margin: 0px; padding: 0px; position: relative; cursor: default; background-repeat: no-repeat; background-color: transparent;
+}
+.k-slider-horizontal .k-tick {
+	height: 100%; text-align: center; float: left;
+}
+* + html .k-slider-vertical .k-tick {
+	width: 100%; clear: left; float: left;
+}
+.k-slider-horizontal .k-tick {
+	background-position: center -92px;
+}
+.k-slider-horizontal .k-slider-topleft .k-tick {
+	background-position: center -122px;
+}
+.k-slider-horizontal .k-slider-bottomright .k-tick {
+	background-position: center -152px;
+}
+.k-slider-horizontal .k-tick-large {
+	background-position: center -2px;
+}
+.k-slider-horizontal .k-slider-topleft .k-tick-large {
+	background-position: center -32px;
+}
+.k-slider-horizontal .k-slider-bottomright .k-tick-large {
+	background-position: center -62px;
+}
+.k-slider-vertical .k-tick {
+	background-position: -92px;
+}
+.k-slider-vertical .k-slider-topleft .k-tick {
+	background-position: -122px;
+}
+.k-slider-vertical .k-slider-bottomright .k-tick {
+	background-position: -152px;
+}
+.k-slider-vertical .k-tick-large {
+	background-position: -2px;
+}
+.k-slider-vertical .k-slider-topleft .k-tick-large {
+	background-position: -32px;
+}
+.k-slider-vertical .k-slider-bottomright .k-tick-large {
+	background-position: -62px;
+}
+.k-slider-horizontal .k-first {
+	background-position: 0px -92px;
+}
+.k-slider-horizontal .k-first.k-tick-large {
+	background-position: 0px -2px;
+}
+.k-slider-horizontal .k-slider-topleft .k-first {
+	background-position: 0px -122px;
+}
+.k-slider-horizontal .k-slider-topleft .k-first.k-tick-large {
+	background-position: 0px -32px;
+}
+.k-slider-horizontal .k-slider-bottomright .k-first {
+	background-position: 0px -152px;
+}
+.k-slider-horizontal .k-slider-bottomright .k-first.k-tick-large {
+	background-position: 0px -62px;
+}
+.k-slider-horizontal .k-last {
+	background-position: 100% -92px;
+}
+.k-slider-horizontal .k-last.k-tick-large {
+	background-position: 100% -2px;
+}
+.k-slider-horizontal .k-slider-topleft .k-last {
+	background-position: 100% -122px;
+}
+.k-slider-horizontal .k-slider-topleft .k-last.k-tick-large {
+	background-position: 100% -32px;
+}
+.k-slider-horizontal .k-slider-bottomright .k-last {
+	background-position: 100% -152px;
+}
+.k-slider-horizontal .k-slider-bottomright .k-last.k-tick-large {
+	background-position: 100% -62px;
+}
+.k-slider-vertical .k-first {
+	background-position: -92px 100%;
+}
+.k-slider-vertical .k-first.k-tick-large {
+	background-position: -2px 100%;
+}
+.k-slider-vertical .k-slider-topleft .k-first {
+	background-position: -122px 100%;
+}
+.k-slider-vertical .k-slider-topleft .k-first.k-tick-large {
+	background-position: -32px 100%;
+}
+.k-slider-vertical .k-slider-bottomright .k-first {
+	background-position: -152px 100%;
+}
+.k-slider-vertical .k-slider-bottomright .k-first.k-tick-large {
+	background-position: -62px 100%;
+}
+.k-slider-vertical .k-last {
+	background-position: -92px 0px;
+}
+.k-slider-vertical .k-last.k-tick-large {
+	background-position: -2px 0px;
+}
+.k-slider-vertical .k-slider-topleft .k-last {
+	background-position: -122px 0px;
+}
+.k-slider-vertical .k-slider-topleft .k-last.k-tick-large {
+	background-position: -32px 0px;
+}
+.k-slider-vertical .k-slider-bottomright .k-last {
+	background-position: -152px 0px;
+}
+.k-slider-vertical .k-slider-bottomright .k-last.k-tick-large {
+	background-position: -62px 0px;
+}
+.k-slider-vertical .k-tick {
+	text-align: right;
+}
+.k-slider-vertical .k-slider-topleft .k-tick {
+	text-align: left;
+}
+.k-slider .k-label {
+	font-size: 0.92em; white-space: nowrap; position: absolute;
+}
+.k-slider-horizontal .k-label {
+	left: 0px; width: 100%; line-height: 1;
+}
+.k-slider-horizontal .k-first .k-label {
+	left: -50%;
+}
+.k-slider-horizontal .k-last .k-label {
+	left: auto; right: -50%;
+}
+.k-slider-horizontal .k-label {
+	bottom: -1.2em;
+}
+.k-slider-horizontal .k-slider-topleft .k-label {
+	top: -1.2em;
+}
+.k-slider-vertical .k-label {
+	left: 120%; text-align: left; display: block;
+}
+.k-slider-vertical .k-last .k-label {
+	top: -0.5em;
+}
+.k-slider-vertical .k-first .k-label {
+	bottom: -0.5em;
+}
+.k-slider-vertical .k-slider-topleft .k-label {
+	left: auto; right: 120%;
+}
+.k-tooltip {
+	border-width: 2px; border-style: solid; padding: 4px 5px 4px 6px; text-align: center; filter: alpha(opacity=90); position: absolute; z-index: 20000; min-width: 10px; opacity: 0.9; background-repeat: repeat-x;
+}
+span.k-tooltip {
+	border-width: 1px; padding: 2px 5px 1px 6px; display: inline-block; position: static;
+}
+.k-invalid-msg {
+	display: none;
+}
+.k-callout {
+	position: absolute;
+}
+.k-callout-n {
+	width: 11px; height: 6px;
+}
+.k-callout-s {
+	width: 11px; height: 6px;
+}
+.k-callout-w {
+	width: 6px; height: 11px;
+}
+.k-callout-e {
+	width: 6px; height: 11px;
+}
+.k-callout-n {
+	background-position: -162px -181px; left: 49%; top: -7px; margin-left: -5px;
+}
+.k-tooltip-validation .k-callout-n {
+	background-position: -178px -181px;
+}
+.k-callout-w {
+	background-position: -165px -226px; left: -7px; top: 49%; margin-top: -5px;
+}
+.k-tooltip-validation .k-callout-w {
+	background-position: -181px -226px;
+}
+.k-callout-s {
+	background-position: -162px -213px; left: 49%; top: 100%; margin-top: 2px; margin-left: -5px;
+}
+.k-tooltip-validation .k-callout-s {
+	background-position: -178px -213px;
+}
+.k-callout-e {
+	background-position: -165px -194px; left: 100%; top: 49%; margin-top: -5px; margin-left: 2px;
+}
+.k-tooltip-validation .k-callout-e {
+	background-position: -181px -194px;
+}
+.k-tooltip-validation .k-warning {
+	margin-right: 3px; vertical-align: text-top;
+}
+.k-window .k-tooltip-validation {
+	z-index: 10010;
+}
+.k-splitter {
+	height: 300px; position: relative;
+}
+.k-pane > .k-splitter {
+	border-width: 0px; overflow: hidden;
+}
+.k-splitter .k-pane {
+	overflow: hidden;
+}
+.k-splitter .k-scrollable {
+	overflow: auto;
+}
+.k-splitter .k-pane-loading {
+	margin: -8px 0px 0px -8px; left: 50%; top: 50%; position: absolute;
+}
+.k-ghost-splitbar {
+	border-style: solid; font-size: 0px; position: absolute;
+}
+.k-splitbar {
+	border-style: solid; font-size: 0px; position: absolute;
+}
+.k-splitter .k-ghost-splitbar-horizontal {
+	border-width: 0px 1px; top: 0px; width: 5px; background-repeat: repeat-y;
+}
+.k-splitter .k-splitbar-horizontal {
+	border-width: 0px 1px; top: 0px; width: 5px; background-repeat: repeat-y;
+}
+.k-ghost-splitbar-vertical {
+	border-width: 1px 0px; left: 0px; height: 5px; background-repeat: repeat-x;
+}
+.k-splitbar-vertical {
+	border-width: 1px 0px; left: 0px; height: 5px; background-repeat: repeat-x;
+}
+.k-splitbar-draggable-horizontal {
+	cursor: w-resize;
+}
+.k-splitbar-draggable-vertical {
+	cursor: n-resize;
+}
+.k-splitbar .k-resize-handle {
+	display: none;
+}
+.k-restricted-size-horizontal {
+	background-color: rgb(255, 0, 0);
+}
+.k-restricted-size-vertical {
+	background-color: rgb(255, 0, 0);
+}
+.k-splitbar-horizontal .k-icon {
+	top: 50%; width: 5px; height: 20px; margin-top: -10px; position: absolute;
+}
+.k-collapse-prev {
+	cursor: pointer;
+}
+.k-collapse-next {
+	cursor: pointer;
+}
+.k-expand-prev {
+	cursor: pointer;
+}
+.k-expand-next {
+	cursor: pointer;
+}
+.k-splitbar-horizontal .k-collapse-prev {
+	margin-top: -31px;
+}
+.k-splitbar-horizontal .k-collapse-next {
+	margin-top: 11px;
+}
+.k-splitbar-static-horizontal {
+	width: 1px;
+}
+.k-splitbar-static-vertical {
+	height: 1px;
+}
+.k-splitbar-vertical .k-icon {
+	left: 50%; width: 20px; height: 5px; margin-left: -10px; position: absolute;
+}
+.k-splitbar-vertical .k-collapse-prev {
+	margin-left: -31px;
+}
+.k-splitbar-vertical .k-collapse-next {
+	margin-left: 11px;
+}
+.k-splitbar-draggable-vertical .k-resize-handle {
+	display: inline-block;
+}
+.k-splitbar-draggable-horizontal .k-resize-handle {
+	display: inline-block;
+}
+.k-splitbar-horizontal .k-resize-handle {
+	background-position: -165px -6px;
+}
+.k-splitbar-horizontal .k-collapse-prev {
+	background-position: -6px -174px;
+}
+.k-splitbar-horizontal .k-expand-next {
+	background-position: -6px -174px;
+}
+.k-splitbar-horizontal .k-collapse-next {
+	background-position: -5px -142px;
+}
+.k-splitbar-horizontal .k-expand-prev {
+	background-position: -5px -142px;
+}
+.k-splitbar-vertical .k-resize-handle {
+	background-position: -38px -309px;
+}
+.k-splitbar-vertical .k-collapse-prev {
+	background-position: 2px -134px;
+}
+.k-splitbar-vertical .k-expand-next {
+	background-position: 2px -134px;
+}
+.k-splitbar-vertical .k-collapse-next {
+	background-position: 2px -165px;
+}
+.k-splitbar-vertical .k-expand-prev {
+	background-position: 2px -165px;
+}
+html .k-upload {
+	background: 0px; border-width: 0px; position: relative;
+}
+.k-dropzone em {
+	vertical-align: middle;
+}
+.k-upload-button {
+	vertical-align: middle;
+}
+* + html .k-dropzone em {
+	vertical-align: baseline;
+}
+* + html .k-upload-button {
+	vertical-align: baseline;
+}
+.k-dropzone {
+	border-width: 0px; border-style: solid; padding: 4px; background-color: transparent;
+}
+.k-dropzone em {
+	margin-left: 0.6em; visibility: hidden;
+}
+.k-dropzone-active {
+	border-width: 1px; padding: 3px;
+}
+.k-dropzone-active em {
+	visibility: visible;
+}
+.k-upload-button {
+	width: 86px; overflow: hidden !important; position: relative; direction: ltr;
+}
+.k-upload-button input {
+	font: 200px/normal monospace !important; margin: 0px; padding: 0px; top: 0px; right: 0px; filter: alpha(opacity=0); position: absolute; z-index: 1; cursor: pointer; font-size-adjust: none !important; font-stretch: normal !important; opacity: 0;
+}
+.k-upload-files {
+	border-width: 1px; border-style: solid; margin: 0.2em 0px 0px; padding: 0.3em 0.7em 0.5em; line-height: 1.9em;
+}
+.k-upload-files .k-button {
+	top: 1px; padding-top: 0px; padding-bottom: 0px; font-size: 84%; margin-left: 8px; position: relative;
+}
+* + html .k-upload-files .k-button {
+	line-height: 1;
+}
+.k-upload .k-upload-action .k-icon {
+	width: 8px; height: 8px; vertical-align: baseline;
+}
+.k-upload .k-delete {
+	background-position: -164px -116px;
+}
+.k-upload .k-i-cancel {
+	background-position: -164px -116px;
+}
+.k-upload .k-fail {
+	background-position: -161px -111px;
+}
+.k-retry {
+	background-position: -164px -132px;
+}
+.k-si-refresh {
+	background-position: -160px -128px;
+}
+.k-si-tick {
+	background-position: -160px -96px;
+}
+.k-success {
+	background-position: -160px -96px;
+}
+.k-si-cancel {
+	background-position: -160px -112px;
+}
+.k-filename {
+	overflow: hidden; padding-bottom: 2px; vertical-align: middle; display: inline-block; white-space: nowrap; position: relative; text-overflow: ellipsis; min-width: 120px; max-width: 200px; -o-text-overflow: ellipsis;
+}
+.k-progress {
+	border-width: 1px; border-style: solid; left: 0px; width: 118px; height: 2px; bottom: 0px; position: absolute; background-repeat: repeat-x;
+}
+.k-progress-status {
+	border-width: 1px; border-style: solid; left: 0px; width: 118px; height: 2px; bottom: 0px; position: absolute; background-repeat: repeat-x;
+}
+.k-progress-status {
+	left: -1px; width: 50%; bottom: -1px;
+}
+.k-upload-selected {
+	margin: 3px 0px 0px; min-width: 86px; box-sizing: content-box; -moz-box-sizing: content-box; -ms-box-sizing: content-box;
+}
+* + html .k-upload-selected {
+	min-width: 100px;
+}
+.k-toolbar-wrap .k-dropzone em {
+	display: none;
+}
+.k-toolbar-wrap .k-upload-files {
+	display: none;
+}
+.k-toolbar-wrap .k-dropzone {
+	padding: 0px; border: 0px currentColor; background-color: transparent;
+}
+.k-search-wrap {
+	padding: 0px; width: auto; float: right; position: relative;
+}
+.k-search-wrap label {
+	left: 4px; top: 0px; line-height: 20px; font-style: italic; position: absolute;
+}
+.k-search-wrap input.k-input {
+	width: 158px; padding-right: 0px; padding-left: 0px;
+}
+.k-search-wrap .k-search {
+	top: 1px; right: 2px; position: absolute;
+}
+.k-breadcrumbs {
+	width: 560px; float: left; position: relative;
+}
+.k-breadcrumbs-wrap {
+	left: 0px; top: 0px; line-height: 18px; padding-left: 5px; position: absolute; z-index: 1;
+}
+html input.k-breadcrumbs-input {
+	width: 100%; padding-left: 2px; font-family: inherit;
+}
+.k-breadcrumbs .k-link {
+	text-decoration: none; margin-top: 0px; vertical-align: middle;
+}
+.k-breadcrumbs-wrap .k-icon {
+	text-decoration: none; margin-top: 0px; vertical-align: middle;
+}
+.k-breadcrumbs .k-link:hover {
+	text-decoration: underline;
+}
+.k-imagebrowser .k-breadcrumbs .k-i-seek-w {
+	text-decoration: none; cursor: default;
+}
+.k-imagebrowser .k-toolbar {
+	border-width: 1px; border-style: solid; margin: 8px 0px 0px; padding: 2px 0px 3px; line-height: 23px; clear: both; white-space: nowrap; background-repeat: repeat-x;
+}
+.k-imagebrowser .k-upload {
+	float: left;
+}
+.k-imagebrowser .k-upload-button {
+	width: auto; vertical-align: top;
+}
+.k-imagebrowser .k-upload .k-icon {
+	vertical-align: bottom;
+}
+* + html .k-imagebrowser .k-upload-button {
+	top: 1px; vertical-align: baseline; position: relative;
+}
+* + html .k-imagebrowser .k-upload .k-icon {
+	top: 1px; vertical-align: baseline; position: relative;
+}
+* + html .k-imagebrowser .k-upload .k-icon {
+	top: 2px;
+}
+* + html .k-imagebrowser .k-toolbar .k-button-icon {
+	vertical-align: middle;
+}
+.k-i-folder-add {
+	background-position: -32px -272px;
+}
+.k-addfolder {
+	background-position: -32px -272px;
+}
+.k-i-folder-up {
+	background-position: -32px -288px;
+}
+.k-goup {
+	background-position: -32px -288px;
+}
+.k-toolbar .k-state-disabled {
+	filter: alpha(opacity=50); opacity: 0.5;
+}
+.k-toolbar-wrap {
+	float: left;
+}
+.k-tiles-arrange {
+	float: right;
+}
+.k-tiles-arrange .k-i-arrow-s {
+	margin: 0px 2px 0px 3px;
+}
+.k-tiles-arrange a {
+	text-decoration: none;
+}
+.k-tiles {
+	border-width: 0px 1px 1px; border-style: solid; margin: 0px 0px 1.4em; padding: 9px; height: 390px; line-height: 1.2; overflow: auto; clear: both;
+}
+.k-tile {
+	background-position: 0px 100px; border-width: 1px; border-style: solid; margin: 1px; padding: 0px 0px 4px; width: 223px; height: 88px; overflow: hidden; float: left; cursor: pointer; background-repeat: repeat-x;
+}
+.k-tiles li.k-state-hover {
+	background-position: 0px;
+}
+.k-tiles li.k-state-selected {
+	background-position: 0px;
+}
+.k-imagebrowser .k-thumb {
+	margin: 4px 10px 0px 4px; width: 86px; height: 86px; float: left; display: inline; -webkit-user-select: none; -moz-user-select: none; user-select: none; -khtml-user-select: none;
+}
+.k-imagebrowser .k-image {
+	margin: 2px 0px 0px 2px;
+}
+.k-imagebrowser .k-folder {
+	background-position: 0px -200px; width: 80px; height: 80px; background-repeat: no-repeat;
+}
+.k-imagebrowser .k-loading {
+	margin: 35px 0px 0px 33px;
+}
+.k-tile strong {
+	margin: 10px 0px 4px; font-weight: normal;
+}
+.k-tile input {
+	margin: 10px 0px 4px; font-weight: normal;
+}
+.k-tile strong {
+	width: 120px; overflow: hidden; float: left; text-overflow: ellipsis;
+}
+.k-tile input {
+	width: 100px;
+}
+.k-tile em {
+	clear: left; font-style: normal; font-weight: normal;
+}
+.k-tile .k-filesize {
+	clear: left; font-style: normal; font-weight: normal;
+}
+.k-tile strong {
+	display: block;
+}
+.k-tile input {
+	display: block;
+}
+.k-tile em {
+	display: block;
+}
+.k-tile .k-filesize {
+	display: block;
+}
+.k-imagebrowser .k-form-text-row input {
+	width: 628px;
+}
+.k-tile-empty {
+	margin: 160px 0px 0px;
+}
+.k-tile-empty .k-dialog-upload {
+	font-size: 120%; font-weight: bold;
+}
+.k-tile-empty strong {
+	margin: 0px 0px 0.2em; font-size: 3em; font-weight: normal; display: block;
+}
+.k-tile-empty {
+	text-align: center;
+}
+.k-tile-empty .k-button-wrapper {
+	text-align: center;
+}
+* + html .k-button {
+	display: inline; zoom: 1;
+}
+* + html .k-grid-filter {
+	display: inline; zoom: 1;
+}
+* + html .k-header-column-menu {
+	display: inline; zoom: 1;
+}
+* + html .k-grid .k-pager-numbers {
+	display: inline; zoom: 1;
+}
+* + html .k-grid .k-status-text {
+	display: inline; zoom: 1;
+}
+* + html .k-pager-numbers .k-link {
+	display: inline; zoom: 1;
+}
+* + html .k-pager-numbers span {
+	display: inline; zoom: 1;
+}
+* + html .k-pager-numbers input {
+	display: inline; zoom: 1;
+}
+* + html .k-grouping-row p {
+	display: inline; zoom: 1;
+}
+* + html .k-grouping-header a {
+	display: inline; zoom: 1;
+}
+* + html .k-grouping-header .k-group-indicator {
+	display: inline; zoom: 1;
+}
+* + html .k-grouping-header .k-link {
+	display: inline; zoom: 1;
+}
+* + html .k-grouping-header .k-button {
+	display: inline; zoom: 1;
+}
+* + html .k-grid-actions {
+	display: inline; zoom: 1;
+}
+* + html .k-combobox {
+	display: inline; zoom: 1;
+}
+* + html .k-dropdown {
+	display: inline; zoom: 1;
+}
+* + html .k-selectbox {
+	display: inline; zoom: 1;
+}
+* + html .k-picker-wrap .k-select {
+	display: inline; zoom: 1;
+}
+* + html .k-dropdown-wrap .k-select {
+	display: inline; zoom: 1;
+}
+* + html .k-numerictextbox {
+	display: inline; zoom: 1;
+}
+* + html .k-timepicker {
+	display: inline; zoom: 1;
+}
+* + html .k-datepicker {
+	display: inline; zoom: 1;
+}
+* + html .k-datetimepicker {
+	display: inline; zoom: 1;
+}
+* + html .k-calendar {
+	display: inline; zoom: 1;
+}
+* + html .k-calendar .k-nav-fast {
+	display: inline; zoom: 1;
+}
+* + html .k-treeview .k-icon {
+	display: inline; zoom: 1;
+}
+* + html .k-treeview .k-image {
+	display: inline; zoom: 1;
+}
+* + html .k-treeview .k-sprite {
+	display: inline; zoom: 1;
+}
+* + html .k-treeview .k-in {
+	display: inline; zoom: 1;
+}
+* + html .k-colorpicker {
+	display: inline; zoom: 1;
+}
+* + html .k-colorpicker .k-tool-icon {
+	display: inline; zoom: 1;
+}
+* + html .k-colorpicker-popup .k-reset {
+	display: inline; zoom: 1;
+}
+* + html .k-editor-dialog .k-button {
+	display: inline; zoom: 1;
+}
+.k-form-text-row label {
+	display: inline; zoom: 1;
+}
+* + html .k-tabstrip-items .k-item {
+	display: inline; zoom: 1;
+}
+* + html .k-tabstrip-items .k-link {
+	display: inline; zoom: 1;
+}
+* + html .k-slider-horizontal {
+	display: inline; zoom: 1;
+}
+* + html .k-splitbar-draggable-vertical .k-resize-handle {
+	display: inline; zoom: 1;
+}
+* + html .k-splitbar-draggable-horizontal .k-resize-handle {
+	display: inline; zoom: 1;
+}
+* + html .t-filename {
+	display: inline; zoom: 1;
+}
+* + html div.k-window {
+	display: inline; zoom: 1;
+}
+* + html .k-window-titlebar .k-window-action {
+	display: inline; zoom: 1;
+}
+.km-scroll-container {
+	-webkit-transform: translatez(0); -webkit-user-select: none; -moz-user-select: -moz-none; user-select: none; -webkit-margin-collapse: separate;
+}
+.k-widget .km-scroll-wrapper {
+	padding-bottom: 0px; position: relative;
+}
+.km-touch-scrollbar {
+	width: 0.3em; height: 0.3em; visibility: hidden; position: absolute; z-index: 200000; opacity: 0; background-color: rgba(0, 0, 0, 0.7); -webkit-transition: opacity .3s linear; -moz-transition: opacity .3s linear; -ms-transition: opacity .3s linear; -o-transition: opacity .3s linear;
+}
+.km-vertical-scrollbar {
+	top: 2px; height: 100%; right: 2px;
+}
+.km-horizontal-scrollbar {
+	left: 2px; width: 100%; bottom: 2px;
+}

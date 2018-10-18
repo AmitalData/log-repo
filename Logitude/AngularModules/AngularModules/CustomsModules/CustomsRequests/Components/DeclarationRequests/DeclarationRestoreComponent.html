@@ -1,0 +1,61 @@
+﻿<div>
+    <!-- DeclarationRestoreComponent  view-->
+    <!--[CustomSendOptionsButtonIsDisable]="CustomSendOptionsButtonIsDisable"-->
+    <custom-message-wrapper 
+                            [CustomSendOptionsButtonCanForcePersonalSign]="false"
+                            >
+        <div class="class-request-content">
+
+            <table style="width: 370px; padding-top: 10px;">
+                <!--style="height:1px"-->
+                <tr class="FormFieldRow" >
+                    <td style="width: 120px">
+                        <LogLabel [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:10px"></td>
+
+                    <td style="width: 200px; padding-right: 36px;">
+                        <!-- DeclarationRestoreComponent  Request.CustomFileNo-->
+                        <LogTextBox [ObjectFieldName]="'CustomFileNo'" [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                            [HideColumns]="true" (LostFocus)="CustomFileNoTextChanged($event)" [Text]="CustomFileNo"></LogTextBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+                <!--style="height:200px"-->
+                <tr class="FormFieldRow" >
+                    <td style="width: 120px">
+                        <LogLabel [ObjectFieldName]="'DeclarationNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:10px"></td>
+                    <td style="width: 200px; padding-right: 36px;">
+                        <!-- DeclarationRestoreComponent  Request.DeclarationNumber-->
+                        <LogTextBox [ObjectFieldName]="'DeclarationNumber'" [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                            [HideColumns]="true" [Text]="DeclarationNumber" (LostFocus)="DeclarationNumberTextChanged($event)"></LogTextBox>
+
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+            </table>
+
+        </div>
+
+
+
+        <!-- DeclarationRestoreComponent  Response  -->
+        <div class="class-response-content">
+            <div style="height:210px;margin-top:1em;margin-bottom:1em;font-weight: bold;">
+                <div *ngIf="ResponseData != null">
+                    <object-viewer [MyNgStyleHeight]="'210px'" [MyObject]="_MyResponseObjectToShow"></object-viewer>
+                </div>
+            </div>
+        </div>
+
+
+        </custom-message-wrapper>
+</div>

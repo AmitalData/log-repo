@@ -1,0 +1,419 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{40502295-5A7F-4A20-91D2-768CA7CD35EC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Logitude.CRM.BL</RootNamespace>
+    <AssemblyName>Logitude.CRM.BL</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'All Projects|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\All Projects\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|AnyCPU'">
+    <OutputPath>bin\None\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\General\Dlls\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Shell.11.0, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CloseTables\DetailsClassesGenerated\ActivityPriorityDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\ActivityStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\ActivityTimeTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\ActivityTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\CallTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\EscalationActionTimeIndicatorDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\EscalationPreDefinitionDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\TicketCreatedByTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\TicketSourceDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\TimeUnitDetails.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ActivityPriorityStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\EscalationActionTimeIndicatorStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\TimeUnitStruct.Generated.cs" />
+    <Compile Include="DataContracts\CRMChartingClass.cs" />
+    <Compile Include="EntityDataMappings\ActivityDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ActivityEmailRecipientDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ActivityInviteeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ActivityNoteDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ActivityOwnerHistoryDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ActivityPriorityDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ActivityStatusDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ActivityTimeTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ActivityTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CallTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CorrespondenceDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CorrespondencesAttachmentDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CRMFilterSettingDataMapping.cs" />
+    <Compile Include="EntityDataMappings\EmployeeGroupDataMapping.cs" />
+    <Compile Include="EntityDataMappings\EmployeeGroupLineDataMapping.cs" />
+    <Compile Include="EntityDataMappings\EscalationActionTimeIndicatorDataMapping.cs" />
+    <Compile Include="EntityDataMappings\EscalationPreDefinitionDataMapping.cs" />
+    <Compile Include="EntityDataMappings\Generated\ActivityDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ActivityEmailRecipientDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ActivityInviteeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ActivityNoteDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ActivityOwnerHistoryDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ActivityPriorityDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ActivityStatusDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ActivityTimeTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ActivityTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CallTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CorrespondenceDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CorrespondencesAttachmentDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CRMFilterSettingDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\EmployeeGroupDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\EmployeeGroupLineDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\EscalationActionTimeIndicatorDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\EscalationPreDefinitionDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\OpportunityAdditionalServiceDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\OpportunityClosingReasonDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\OpportunityCompetitorDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\OpportunityCompetitorProductDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\OpportunityDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\OpportunityProductDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\OpportunityProductLocationDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\OpportunityStageDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\OpportunityTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\QuestionnaireAnswerDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\QuestionnaireAnswerLineDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\QuestionnaireDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\QuestionnaireQuestionDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\RatingDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\SLAEscalationDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\SLAEscalationRecepientDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\SLAHeaderDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\SLALineDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\StageDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TicketClassificationDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TicketCreatedByTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TicketDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TicketEscalationDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TicketSeverityDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TicketSourceDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TicketStageDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TicketTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TimeUnitDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\OpportunityAdditionalServiceDataMapping.cs" />
+    <Compile Include="EntityDataMappings\OpportunityClosingReasonDataMapping.cs" />
+    <Compile Include="EntityDataMappings\OpportunityCompetitorDataMapping.cs" />
+    <Compile Include="EntityDataMappings\OpportunityCompetitorProductDataMapping.cs" />
+    <Compile Include="EntityDataMappings\OpportunityDataMapping.cs" />
+    <Compile Include="EntityDataMappings\OpportunityProductDataMapping.cs" />
+    <Compile Include="EntityDataMappings\OpportunityProductLocationDataMapping.cs" />
+    <Compile Include="EntityDataMappings\OpportunityStageDataMapping.cs" />
+    <Compile Include="EntityDataMappings\OpportunityTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\QuestionnaireAnswerDataMapping.cs" />
+    <Compile Include="EntityDataMappings\QuestionnaireAnswerLineDataMapping.cs" />
+    <Compile Include="EntityDataMappings\QuestionnaireDataMapping.cs" />
+    <Compile Include="EntityDataMappings\QuestionnaireQuestionDataMapping.cs" />
+    <Compile Include="EntityDataMappings\RatingDataMapping.cs" />
+    <Compile Include="EntityDataMappings\SLAEscalationDataMapping.cs" />
+    <Compile Include="EntityDataMappings\SLAEscalationRecepientDataMapping.cs" />
+    <Compile Include="EntityDataMappings\SLAHeaderDataMapping.cs" />
+    <Compile Include="EntityDataMappings\SLALineDataMapping.cs" />
+    <Compile Include="EntityDataMappings\StageDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TicketClassificationDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TicketCreatedByTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TicketDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TicketEscalationDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TicketSeverityDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TicketSourceDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TicketStageDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TicketTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TimeUnitDataMapping.cs" />
+    <Compile Include="EntityDws\ActivitiyDW.cs" />
+    <Compile Include="EntityDws\OpportunityDW.cs" />
+    <Compile Include="EntityPMs\ActivityInviteePM.cs" />
+    <Compile Include="EntityPMs\ActivityNotePM.cs" />
+    <Compile Include="EntityPMs\ActivityPM.cs" />
+    <Compile Include="EntityPMs\CorrespondencePM.cs" />
+    <Compile Include="EntityPMs\Generated\ActivityEmailRecipientPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ActivityInviteePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ActivityNotePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ActivityOwnerHistoryPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ActivityPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ActivityPriorityPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ActivityStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ActivityTimeTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ActivityTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CallTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CorrespondencePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CorrespondencesAttachmentPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CRMFilterSettingPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\EmployeeGroupLinePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\EmployeeGroupPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\EscalationActionTimeIndicatorPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\EscalationPreDefinitionPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\OpportunityAdditionalServicePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\OpportunityClosingReasonPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\OpportunityCompetitorPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\OpportunityCompetitorProductPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\OpportunityPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\OpportunityProductLocationPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\OpportunityProductPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\OpportunityStagePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\OpportunityTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\QuestionnaireAnswerLinePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\QuestionnaireAnswerPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\QuestionnaireQuestionPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\QuestionnairePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\RatingPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SLAEscalationPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SLAEscalationRecepientPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SLAHeaderPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SLALinePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\StagePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\TicketClassificationPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\TicketCreatedByTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\TicketEscalationPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\TicketPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\TicketSeverityPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\TicketSourcePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\TicketStagePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\TicketTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\TimeUnitPM.Generated.cs" />
+    <Compile Include="EntityPMs\OpportunityPM.cs" />
+    <Compile Include="EntityPMs\QuestionnairePM.cs" />
+    <Compile Include="EntityPMs\QuestionnaireQuestionPM.cs" />
+    <Compile Include="EntityPMs\TicketPM.cs" />
+    <Compile Include="EntityQueryServices\ActivityOwnerHistoryQueryService.cs" />
+    <Compile Include="EntityQueryServices\ActivityQueryService.cs" />
+    <Compile Include="EntityQueryServices\CorrespondenceQueryService.cs" />
+    <Compile Include="EntityQueryServices\CorrespondencesAttachmentQueryService.cs" />
+    <Compile Include="EntityQueryServices\CRMDomainContext.cs" />
+    <Compile Include="EntityQueryServices\EmployeeGroupLineQueryService.cs" />
+    <Compile Include="EntityQueryServices\EmployeeGroupQueryService.cs" />
+    <Compile Include="EntityQueryServices\Generated\ActivityEmailRecipientQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ActivityInviteeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ActivityNoteQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ActivityOwnerHistoryQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ActivityPriorityQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ActivityQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ActivityStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ActivityTimeTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ActivityTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CallTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CorrespondenceQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CorrespondencesAttachmentQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CRMFilterSettingQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\EmployeeGroupLineQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\EmployeeGroupQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\EscalationActionTimeIndicatorQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\EscalationPreDefinitionQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\OpportunityAdditionalServiceQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\OpportunityClosingReasonQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\OpportunityCompetitorProductQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\OpportunityCompetitorQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\OpportunityProductLocationQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\OpportunityProductQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\OpportunityQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\OpportunityStageQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\OpportunityTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\QuestionnaireAnswerLineQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\QuestionnaireAnswerQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\QuestionnaireQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\QuestionnaireQuestionQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\RatingQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\SLAEscalationQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\SLAEscalationRecepientQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\SLAHeaderQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\SLALineQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\StageQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TicketClassificationQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TicketCreatedByTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TicketEscalationQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TicketQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TicketSeverityQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TicketSourceQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TicketStageQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TicketTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TimeUnitQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\OpportunityAdditionalServiceQueryService.cs" />
+    <Compile Include="EntityQueryServices\OpportunityProductLocationQueryService.cs" />
+    <Compile Include="EntityQueryServices\OpportunityProductQueryService.cs" />
+    <Compile Include="EntityQueryServices\OpportunityQueryService.cs" />
+    <Compile Include="EntityQueryServices\QuestionnaireAnswerQueryService..cs" />
+    <Compile Include="EntityQueryServices\QuestionnaireQueryService.cs" />
+    <Compile Include="EntityQueryServices\QuestionnaireQuestionQueryService.cs" />
+    <Compile Include="EntityQueryServices\SLAEscalationQueryService.cs" />
+    <Compile Include="EntityQueryServices\SLAEscalationRecepientQueryService.cs" />
+    <Compile Include="EntityQueryServices\SLAHeaderQueryService.cs" />
+    <Compile Include="EntityQueryServices\TicketEscalationQueryService.cs" />
+    <Compile Include="EntityQueryServices\TicketQueryService.cs" />
+    <Compile Include="EntityUpdateServices\ActivityEmailRecipientUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\ActivityInviteeUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\ActivityNoteUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\ActivityUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\CorrespondencesAttachmentUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\CorrespondenceUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\EmployeeGroupLineUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\EmployeeGroupUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ActivityEmailRecipientUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ActivityInviteeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ActivityNoteUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ActivityOwnerHistoryUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ActivityPriorityUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ActivityStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ActivityTimeTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ActivityTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ActivityUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CallTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CorrespondencesAttachmentUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CorrespondenceUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CRMFilterSettingUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\EmployeeGroupLineUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\EmployeeGroupUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\EscalationActionTimeIndicatorUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\EscalationPreDefinitionUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\OpportunityAdditionalServiceUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\OpportunityClosingReasonUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\OpportunityCompetitorProductUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\OpportunityCompetitorUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\OpportunityProductLocationUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\OpportunityProductUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\OpportunityStageUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\OpportunityTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\OpportunityUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\QuestionnaireAnswerLineUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\QuestionnaireAnswerUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\QuestionnaireQuestionUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\QuestionnaireUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\RatingUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\SLAEscalationRecepientUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\SLAEscalationUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\SLAHeaderUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\SLALineUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\StageUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\TicketClassificationUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\TicketCreatedByTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\TicketEscalationUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\TicketSeverityUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\TicketSourceUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\TicketStageUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\TicketTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\TicketUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\TimeUnitUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\OpportunityClosingReasonUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\OpportunityProductUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\OpportunityTypeUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\OpportunityUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\QuestionnaireAnswerLineUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\QuestionnaireAnswerUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\QuestionnaireQuestionUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\QuestionnaireUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\SLAEscalationRecepientUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\SLAEscalationUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\SLAHeaderUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\SLALineUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\StageUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\TicketClassificationUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\TicketEscalationUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\TicketSeverityUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\TicketStageUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\TicketTypeUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\TicketUpdateService.cs" />
+    <Compile Include="Helpers\CRMEmailAlertsHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TraceEvents\OpportunityTracing.cs" />
+    <Compile Include="Validators\CRMClassLevelValidator.cs" />
+    <Compile Include="Validators\CRMClassLevelValidator.Shared.cs" />
+    <Compile Include="Validators\CRMTranslateTextsClass.cs" />
+    <Compile Include="Validators\CRMValidationClass.cs" />
+    <Compile Include="Validators\CRMValidationClass.Shared.cs" />
+    <Compile Include="WorkRoles\BusinessHourCalcualtions.cs" />
+    <Compile Include="WorkRoles\TicketEscalationAnalyzer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
+      <Project>{a663e7ef-b858-4bb6-bc33-e473f51b8e56}</Project>
+      <Name>Logitude.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.CRM.Data\Logitude.CRM.Data.csproj">
+      <Project>{4733f914-0e16-4412-84df-d98232dd43e9}</Project>
+      <Name>Logitude.CRM.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
+      <Project>{9b477a08-8ee2-4457-88fe-17e8a6ec4d00}</Project>
+      <Name>Logitude.Server.Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Social.BL\Logitude.Social.BL.csproj">
+      <Project>{13ce8afb-6ada-4e96-b76c-67279095a018}</Project>
+      <Name>Logitude.Social.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
+      <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
+      <Name>Simplog.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Global.Data.csproj">
+      <Project>{6d7ffad2-35b6-4133-8700-cf73e58d0c85}</Project>
+      <Name>Simplog.Global.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
+      <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
+      <Name>Simplog.Server.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="APIDataContract\QueryService\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

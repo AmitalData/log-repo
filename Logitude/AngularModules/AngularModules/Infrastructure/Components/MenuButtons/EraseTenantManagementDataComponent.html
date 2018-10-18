@@ -1,0 +1,179 @@
+﻿
+<table>
+    <tr style="height: 1px;" *ngIf="Message">
+        <td>
+            <div class="OrangeInfo" style="margin: 5px;">
+                <label class="Value">{{Message}}</label>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr class="FormFieldRow">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:10px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:165px;">
+                                    <button class="Button" (click)="DeleteClicked('B')">Delete Business Records</button>
+                                </td>
+
+                                <td style="width:5px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:70px;">
+                                    <button class="Button" (click)="ResetCountersClicked('B')">Reset Counters</button>
+                                </td>
+
+                                <td style="width:5px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:400px;">
+                                    Delete / reset counters for Shipments , Quotes , Invoices & Payments (AR & AP)
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>                    
+                </tr>
+
+                <tr class="FormFieldRow">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:10px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:165px;">
+                                    <button class="Button" (click)="DeleteClicked('T')">Delete Tickets</button>
+                                </td>
+
+                                <td style="width:5px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:70px;">
+                                    <button class="Button" (click)="ResetCountersClicked('T')">Reset Counters</button>
+                                </td>
+
+                                <td style="width:5px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:400px;">
+                                    This button will delete / reset counters for Tickets
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    
+                </tr>
+
+                <tr class="FormFieldRow">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:10px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:165px;">
+                                    <button class="Button" (click)="DeleteClicked('C')">Delete CRM</button>
+                                </td>
+
+                                <td style="width:5px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:400px;">
+                                    This button will delete Activities and Opportunities
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>                    
+                </tr>
+
+                <tr class="FormFieldRow">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:10px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:165px;">
+                                    <button class="Button" (click)="DeleteClicked('P')">Delete Shippers & Consignees</button>
+                                </td>
+
+                                <td style="width:5px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:70px;">
+                                    <button class="Button" (click)="ResetCountersClicked('P')">Reset Counters</button>
+                                </td>
+
+                                <td style="width:5px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:400px;">
+                                    This button will delete / reset counters for customers , shippers and consignees
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>                    
+                </tr>
+
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <!-- Close -->
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CloseButtonClicked()">Close</button>
+                    </td>
+
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>
+

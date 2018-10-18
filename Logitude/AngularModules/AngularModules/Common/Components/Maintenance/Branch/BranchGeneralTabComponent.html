@@ -1,0 +1,234 @@
+﻿
+<style type="text/css">
+      .BoxItemRow td span {
+        color: #0B3861;
+        font-size: 10px;
+    }
+
+    .BoxItemRow td {
+        color: #0B3861;
+        font-size: 10px;
+    }
+
+    .BoxItemRow {
+        height: 15px;
+        color: #0B3861;
+        font-size: 10px;
+    }
+
+    .TemplateBoxItem:hover .Tools {
+        visibility: visible;
+    }
+
+    .TemplateBoxItem .Tools {
+        visibility: collapse;
+        vertical-align: top;
+    }
+
+    .TemplateBoxItem {
+        float: left;
+        width: 500px;
+        width: calc(33.33% - 3px);
+        height: 140px;
+        min-height: 135px;
+        margin-left: 3px;
+        margin-bottom: 3px;
+        padding: 5px;
+        display: block;
+        background: rgba(235, 235, 235, 0.5);
+        border: 1px solid #BABABA;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+    }
+</style>
+
+
+<div class="TabHolder">
+    <table>
+        <tr class="TabTitleRow">
+            <td>{{'Branch.TH.General' | TextCodeTranslationPipe}}</td>
+        </tr>
+
+        <tr style="height:1px;">
+            <td style="width: 600px;">
+                <table>
+
+                    <!-- EnglishName -->
+                    <tr class="FormFieldRow">
+                        <td style="width:115px;">
+                            <LogLabel [ObjectFieldName]="'EnglishName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td style="width:215px;">
+                            <LogTextBox [ObjectFieldName]="'EnglishName'" [Text]="EnglishName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <!-- LocalName -->
+                    <tr class="FormFieldRow">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'LocalName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogTextBox [ObjectFieldName]="'LocalName'" [Text]="LocalName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <!-- Code -->
+                    <tr class="FormFieldRow">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogTextBox [ObjectFieldName]="'Code'" [Text]="Code" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <!-- Signature -->
+                    <tr class="FormFieldRow">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'Signature'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogTextBox [ObjectFieldName]="'Signature'" [Text]="Signature" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <!-- InActive -->
+                    <tr class="FormFieldRow" *ngIf="!IsNewEntity">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogCheckBox [ObjectFieldName]="'InActive'" [Checked]="InActive" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                </table>
+            </td>
+        </tr>
+
+        <tr style="height:10px;">
+            <td>
+                <div></div>
+            </td>
+        </tr>
+
+        <tr style="height:1px;" *ngIf="!IsNewEntity">
+            <td style="width:600px;">
+                <div class="TemplateBoxItem">
+                    <table>
+                        <tr style="height: 22px;">
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td style="vertical-align: top; width: 1px;">
+                                            <div>
+                                                <span class="ColorBlue" style="font-size: 12px;">Address</span>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+
+                                        <td style="width: 18px;">
+                                            <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditAddressClicked()"></IconButton>
+                                        </td>
+
+                                        <td style="width: 5px;">
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <table>
+                                    <tr class="BoxItemRow">
+                                        <td>{{AddressName}}</td>
+                                    </tr>
+
+                                    <tr class="BoxItemRow" *ngIf="Address1">
+                                        <td>{{Address1}}</td>
+                                    </tr>
+
+                                    <tr class="BoxItemRow" *ngIf="Address2">
+                                        <td>{{Address2}}</td>
+                                    </tr>
+
+                                    <tr class="BoxItemRow">
+                                        <td>{{CityLineText}}</td>
+                                    </tr>
+
+                                    <tr class="BoxItemRow">
+                                        <td>{{CountryName}}</td>
+                                    </tr>
+
+                                    <tr class="BoxItemRow" *ngIf="PhoneNumber">
+                                        <td>
+                                            <span style="font-weight: bold; color: #282E30">Tel: </span>
+                                            <span>{{PhoneNumber}}</span>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="BoxItemRow" *ngIf="FaxNumber">
+                                        <td>
+                                            <span style="font-weight: bold; color: #282E30">Fax: </span>
+                                            <span>{{FaxNumber}}</span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div> </div>
+                                        </td>
+                                    </tr>
+
+                                </table>
+
+                                <div style="position: absolute; right:0px; top:0px; width: 45px; height: 45px;">
+                                    <Image [Width]="45" [Height]="45" [Src]="FlagSrc"></Image>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <div></div>
+            </td>
+        </tr>
+    </table>
+</div>
+

@@ -1,0 +1,1 @@
+alter table [Customs].[DeclarationPaymentMethods] add  InternalBankId  varchar(15) null

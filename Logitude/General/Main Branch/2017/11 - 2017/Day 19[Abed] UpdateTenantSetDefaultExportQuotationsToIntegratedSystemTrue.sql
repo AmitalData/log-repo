@@ -1,0 +1,1 @@
+update Tenants set ExportQuotationsToIntegratedSystem =1

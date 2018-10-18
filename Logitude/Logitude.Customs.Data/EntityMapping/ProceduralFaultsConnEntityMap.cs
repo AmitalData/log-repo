@@ -1,0 +1,44 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data;
+ 
+namespace Logitude.Customs.Data.EntityMapping
+{
+ 
+    public class ProceduralFaultsConnEntityMap : EntityTypeConfiguration<ProceduralFaultsConnEntity>
+    {
+	    string dbms;
+        public ProceduralFaultsConnEntityMap()
+        { 
+			  this.ToTable("ProceduralFaultsConnEntities", "Customs");
+		
+		    this.HasKey(t => new { t.Id });
+	 
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
+
+            this.Property(t => t.ProceduralFaultId).HasColumnName("ProceduralFaultId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.EntityType).HasColumnName("EntityType").HasMaxLength(40).IsUnicode(false);
+
+            this.Property(t => t.EntityIdKey1).HasColumnName("EntityIdKey1").HasMaxLength(35).IsUnicode(false);
+
+            this.Property(t => t.EntityIdKey2).HasColumnName("EntityIdKey2").HasMaxLength(35).IsUnicode(false);
+
+            this.Property(t => t.EntityIdKey3).HasColumnName("EntityIdKey3").HasMaxLength(35).IsUnicode(false);
+
+            this.Property(t => t.EntityPath).HasColumnName("EntityPath").HasMaxLength(100).IsUnicode(false);
+        }
+    }
+}
+	 

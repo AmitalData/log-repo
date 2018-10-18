@@ -1,0 +1,44 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#"  #>
+<#@ Assembly Name="Microsoft.CSharp.dll" #>
+ 
+<#@ Import Namespace="AmazedSaint.Elastic" #>
+<#@ Import Namespace="AmazedSaint.Elastic.Lib" #>
+<#@ output extension=".cs" #> 
+
+<#@ Assembly name="$(SolutionDir)..\General\Dlls\AmazedSaint.Elastic.dll" #>
+<#@ include file=".\Manager.ttinclude" #>
+<#@ include file=".\entity-pm-generator.tt" #>
+<#@ include file=".\entity-list-generator.tt" #>
+
+<#@ include file=".\entity-pm-service-generator.tt" #>
+<#@ include file=".\entity-list-service-generator.tt" #>
+<#@ import Namespace="System.IO" #> 
+<#@ template debug="true" #>
+<#
+
+	//System.Diagnostics.Debugger.Launch();
+this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
+	
+
+ 
+GenerateAllPMTS("../generated-xml-files/common-data","../app/common-data/entity-pms");
+GenerateAllPMTS("../generated-xml-files/shipment","../app/shipment/entity-pms");
+
+ 
+GenerateAllListTS("../generated-xml-files/common-data","../app/common-data/entity-lists");
+GenerateAllListTS("../generated-xml-files/shipment","../app/shipment/entity-lists");
+
+
+ GenerateAllServices("../generated-xml-files/common-data","../app/common-data/services","CommonDataModel");//Test.EntityServices
+ GenerateAllServices("../generated-xml-files/shipment","../app/shipment/services","ShipmentModel");//Test.EntityServices
+ //GenerateAllServices("../GeneratedFiles","../Test.EntityServices","CommonDataModel");//Test.EntityServices
+
+
+
+  GenerateAllListServices("../generated-xml-files/common-data","../app/common-data/services","CommonDataModel");
+  GenerateAllListServices("../generated-xml-files/shipment","../app/shipment/services","ShipmentModel");
+
+ #>
+
+
+

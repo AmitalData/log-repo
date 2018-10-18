@@ -1,0 +1,269 @@
+﻿<style type="text/css">
+    .ComboBox:focus ul {
+        /*transition: height 0.35s ease;*/
+    }
+
+    .ComboBox:focus .ComboBoxDropdown {
+        /*transition: visibility 0.35s ease, height 0.35s ease;*/
+        pointer-events: auto;
+    }
+
+    .ComboBox:focus {
+        pointer-events: none;
+    }
+
+    .ComboBox:hover, .ComboBox:focus {
+        border: 1px solid #3BB3E2;
+    }
+
+    .Selected {
+        background: rgba(232, 247, 255, 1);
+        background: -moz-linear-gradient(50% 106.14% 90deg,rgba(133, 203, 237, 1) 0%,rgba(150, 211, 240, 1) 22.59%,rgba(196, 231, 248, 1) 67.37%,rgba(232, 247, 255, 1) 99.68%);
+        background: -webkit-linear-gradient(90deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 99.68%);
+        background: -webkit-gradient(linear,50% 106.14%,50% -10.13%,color-stop(0,rgba(133, 203, 237, 1) ),color-stop(0.2259,rgba(150, 211, 240, 1) ),color-stop(0.6737,rgba(196, 231, 248, 1) ),color-stop(0.9968,rgba(232, 247, 255, 1) ));
+        background: -o-linear-gradient(90deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 99.68%);
+        background: linear-gradient(0deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 99.68%);
+    }
+
+    .ComboBoxItem:not(.Selected):hover {
+        background: -moz-linear-gradient(50% 17.31% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        background: -webkit-gradient(linear,50% 17.31%,50% 105.85%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    }
+
+    .ComboBoxItem {
+        height: 22px;
+        min-height: 22px;
+        line-height: 22px;
+        width: 100%;
+        border: 1px solid #AAAAAA;
+        border: 1px solid transparent;
+        margin-top: 1px;
+        text-align: left;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    .ComboBoxDropdown ul {
+        padding: 1px;
+        width: 100%;
+        height: 0;
+        overflow: hidden;
+    }
+
+    .ComboBoxDropdown {
+        background: white;
+        border: 1px solid #AAAAAA;
+        box-shadow: 0 4px 8px 0 #AAAAAA;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        border-top: none;
+        height: 0;
+        visibility: hidden;
+        /*transition: visibility 0.15s, height 0.15s;*/
+        z-index: 1;
+        overflow: hidden;
+    }
+
+    .ComboBoxBlueBox {
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    }
+
+    .ComboBox {
+        display: block;
+        height: 22px;
+        max-height: 22px;
+        line-height: 22px;
+        outline: none;
+        width: 100%;
+        background: white;
+        border: 1px solid #AAAAAA;
+        font-size: 11px;
+        color: #45494A;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        position: relative;
+        cursor: default;
+        overflow: hidden;
+    }
+
+    .ComboBoxDisabled {
+        display: block;
+        height: 22px;
+        max-height: 22px;
+        line-height: 22px;
+        outline: none;
+        width: 100%;
+        background: white;
+        border: 1px solid #AAAAAA;
+        font-size: 11px;
+        color: #45494A;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        position: relative;
+        opacity: 0.5;
+        pointer-events: none;
+    }
+</style>
+<div tabindex="0" class="ToggleButton" (mousedown)="mousedown()"  >
+
+    <label class="TextTrimming" style="width: calc(100% - 10px);padding-right:5px;" [title]="TotalPickedItems">{{TotalPickedItems}}</label>
+    <img src="./Images/ToggleIcon.png" />
+    <div *ngIf="!WithinImage && !CheckBoxOnly" [id]="ControlId" class="ToggleButtonMenu" style="width: 200px;-webkit-box-sizing: border-box;">
+        <div style="overflow-x: hidden;overflow-y: auto;height: 200px;z-index:10;background-color:white;border:solid;border-color:lightgray;border-width:1px" [attr.id]="DropdownId">
+                <table style="max-width:200px;height:1px">
+                    <tr style="height:10px">
+                        <td >
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td  >
+                            <RadioButton [Name]="'shipmentType'" [IsComboBoxWithCheck]="true" [Text]="' '+'All'" [IsChecked]="IsAll" (Checked)="isAllClicked()"></RadioButton>
+                        </td>                       
+                    </tr>
+                </table>
+                <table style="max-width:200px;height:1px">
+                    <tr style="height:5px">
+                        <td >
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td >
+                            <RadioButton [Name]="'shipmentType'" [IsComboBoxWithCheck]="true" [Text]="' '+ProductsSelectionType" [IsChecked]="!IsAll" (Checked)="isSelectedClicked()" ></RadioButton>
+                        </td>
+
+                                              
+                    </tr>
+                    <tr style="height:5px">
+                        <td >
+
+                        </td>
+                    </tr>
+                </table>
+
+
+            <div *ngFor="let item of ItemsSource; let i = index" style="margin-left:25px">
+                <table>
+                    <tr>
+                        <td style="width:100px" (mouseover)="IsMouseOverInput = true;" (mouseleave)="IsMouseOverInput = false;">
+                            <table>
+                                <tr>
+                                    <td style="width:20px">
+                                        <CheckBox (Checked)="clickItem(item,i)" [IsChecked]="item.Checked" [IsEnabled]="ShowSelected"></CheckBox>
+
+                                    </td>
+
+                                    <td>
+                                        <label style="float:left;" [attr.for]="item.Code" (focus)="setToggleButtonMenuTemp();" (blur)="setToggleButtonMenu();">{{item.Name}}</label>
+
+                                    </td>
+                                </tr>
+                                <tr style="height:3px">
+                                    <td colspan="2"></td>
+                                </tr>
+                            </table>
+
+
+</td>
+                        <td>
+
+                        </td>
+                       
+                        <td>
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <div *ngIf="WithinImage && !CheckBoxOnly" [id]="ControlId" class="ToggleButtonMenu" style="width: 230px;-webkit-box-sizing: border-box;left:0px">
+        <div style="overflow-x: hidden;overflow-y: auto;z-index:10;min-height: 220px;background-color:white;border:solid;border-color:lightgray;border-width:1px;left:0px" [attr.id]="DropdownId">
+            <div style="margin-left:10px;padding-top:3px">
+                <table style="max-width:230px">
+                    <tr style="height:4px">
+                        <td colspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td  style="width:100px">
+                            <RadioButton [Name]="'shipmentType'" [IsComboBoxWithCheck]="true" [Text]="'  '+'All'"  [IsChecked]="IsAll" (Checked)="isAllClicked()"></RadioButton>
+</td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+            <div style="margin-left:10px;padding-top:3px">
+                <table>
+                    <tr>
+                        <td style="width:100px">
+                            <RadioButton [Name]="'shipmentType'" [IsComboBoxWithCheck]="true" [Text]="' '+ProductsSelectionType" [IsChecked]="!IsAll" (Checked)="isSelectedClicked()" ></RadioButton>
+                        </td>
+
+                        <td></td>
+                    </tr>
+                </table>
+
+
+            </div>
+            <div *ngFor="let item of ItemsSource; let i = index" style="margin-left:25px;padding-top:3px">
+                <table>
+                    <tr style="height:4px">
+                        <td colspan="5"></td>
+                    </tr>
+                    <tr>
+                        <td style="width:25px">
+                            <CheckBox (Checked)="clickItem(item,i)" [IsChecked]="item.Checked" [IsEnabled]="ShowSelected"></CheckBox>                         
+                        </td>
+                        <td style="padding-left:2px;width:25px"><img style="margin-top:2px;" class="CenterCenter" *ngIf="item.Code[0] && (item.Code[0]=='A' || item.Code[0]=='I' || item.Code[0]=='O')" [attr.src]="'./Images/TransportModes/' + item.Code[0] + '.png'" /></td>
+                        <td style="padding-left:2px;width:25px"><img style="margin-top:2px;" class="CenterCenter" *ngIf="item.Code[1]" [attr.src]="'./Images/Directions/' + item.Code[1] + '.png'" /></td>
+                        <td style="padding-left:2px"><label style="float:left;" [attr.for]="item.Code" (focus)="setToggleButtonMenuTemp();" (blur)="setToggleButtonMenu();">{{item.Name}}</label></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="CheckBoxOnly" [id]="ControlId" class="ToggleButtonMenu" style="width: calc(100% + 30px);z-index:1;-webkit-box-sizing: border-box;">
+        <div style="overflow-x: hidden;overflow-y: auto;height: 200px;z-index:10;background-color:white;border:solid;border-color:lightgray;border-width:1px" [attr.id]="DropdownId">
+           
+            <div style="z-index:1">
+         
+                <div *ngFor="let item of ItemsSource; let i = index" style="z-index:1">
+                    <table>
+                        <tr style="height:5px">
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="CheckBox">
+                                    <input class="CenterCenter" style="float:left;" [attr.id]="item.Code+i" (click)="clickItem(item,i)" type="checkbox" (focus)="setToggleButtonMenuTemp();" (blur)="setToggleButtonMenu();" />
+                                    <label style="float:left;padding-left:3px" [attr.for]="item.Code+i" (focus)="setToggleButtonMenuTemp();" (blur)="setToggleButtonMenu();">{{item.Name}}</label>
+                                </div>
+</td>
+                          
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+        </div>
+    </div>
+
+
+</div>
+    </div>
+
+

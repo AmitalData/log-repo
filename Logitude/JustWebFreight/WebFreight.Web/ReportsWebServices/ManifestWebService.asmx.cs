@@ -1,0 +1,1346 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Web.Services;
+using System.Xml.Serialization;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.Helpers;
+using Simplog.Data.InfrastructureModel;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.Repositories;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using WebFreight.Web.DataProviders;
+using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.EntityQueries;
+using Simplog.Server.Infrastructure.Helpers;
+using WebFreight.Web.WebServices;
+using Logitude.BL.Helpers;
+using Logitude.BL.CommonDataModel.EntityLists;
+
+namespace WebFreight.Web.ReportsWebServices
+{
+    /// <summary>
+    /// Summary description for ManifestWebService
+    /// </summary>
+    [WebService(Namespace = "http://tempuri.org/")]
+    [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
+    [System.ComponentModel.ToolboxItem(false)]
+    // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
+    // [System.Web.Script.Services.ScriptService]
+    public class ManifestWebService : System.Web.Services.WebService
+    {
+        [WebMethod]
+        public byte[] GetManifestData(string masterId, int tenant)
+        {
+            ManifestDataProvider manifestDataProvider = GetManifestDataProvider(masterId, tenant);
+
+            #region Serialize and remove null region
+            try
+            {
+                Type manifestType = manifestDataProvider.GetType();
+                PropertyInfo[] properties = manifestType.GetProperties();
+
+                foreach (PropertyInfo pi in properties)
+                {
+                    Type piType = pi.PropertyType;
+
+                    if (piType.Name != "Double")
+                    {
+                        if (pi.GetValue(manifestDataProvider, null) == null || pi.GetValue(manifestDataProvider, null).ToString() == "0" || pi.GetValue(manifestDataProvider, null).ToString() == "00.00")
+                        {
+                            pi.SetValue(manifestDataProvider, "", null);
+                        }
+                    }
+                }
+            }
+            catch { }
+
+            XmlSerializer serializer = new XmlSerializer(typeof(ManifestDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, manifestDataProvider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+            #endregion
+        }
+
+        public ManifestDataProvider GetManifestDataProvider(string masterId, int tenant)
+        {
+            ManifestDataProvider manifestDataProvider = new ManifestDataProvider();
+            IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
+            IWebFreightContext context = WebFreightContext.GetContext(tenant);
+            ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+            ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
+            ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
+            ShipmentPM master = shipmentQuery.GetSinglePM(masterId, tenant);
+            PortRepository portRepository = new PortRepository(tenant);
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            ShipmentAssemblyRepository shipmentAssemblyRepository = new ShipmentAssemblyRepository(shipmentsContext);
+            ShipmentAssemblyQuery shipmentAssemblyQuery = new ShipmentAssemblyQuery(shipmentAssemblyRepository);
+
+            if (master != null)
+            {
+                CardQuery cardQuery = new CardQuery(tenant);
+                ShippingLineQuery shippingLineQuery = new ShippingLineQuery(tenant);
+                AddressRepository addressRepository = new AddressRepository(tenant);
+                DocumentTypeCustomFieldRepository documentTypeCustomFieldsRepository = new DocumentTypeCustomFieldRepository(tenant);
+                FormCustomFieldRepository formCustomFieldRepository = new FormCustomFieldRepository(tenant);
+                ShipmentPackageQuery packagesQuery = new ShipmentPackageQuery(tenant);
+                IncotermQuery incotermQuery = new IncotermQuery(tenant);
+                WebServiceHelper myServiceHelper = new WebServiceHelper(tenant);
+                CustomerQuery customerQuery = new CustomerQuery(tenant);
+
+                manifestDataProvider.MasterNumber = master.ShipmentNumber;
+                manifestDataProvider.Notes = master.Notes;
+                manifestDataProvider.BookingNumber = master.BookingConfirmationNumber;
+                manifestDataProvider.MainCarriageETA = master.MainCarriageETA == null ? "" : String.Format("{0:dd/MMM/yyyy}", master.MainCarriageETA);
+                manifestDataProvider.ETD = master.MainCarriageETD == null ? "" : String.Format("{0:dd/MMM/yyyy}", master.MainCarriageETD);
+                manifestDataProvider.MainCarriageCarrier = master.MainCarriageCarrierName;
+                manifestDataProvider.MainCarriageETD_DateTime = master.MainCarriageETD;
+                manifestDataProvider.MainCarriageETA_DateTime = master.MainCarriageETA;
+                manifestDataProvider.MainCarriageATD_DateTime = master.MainCarriageATD;
+                manifestDataProvider.MainCarriageATA_DateTime = master.MainCarriageATA;
+                manifestDataProvider.OpenPayablesInLocalCurrency = master.OpenPayablesInLocalCurrency;
+                manifestDataProvider.OpenPayablesInProfitCurrency = master.OpenPayablesInProfitCurrency;
+                manifestDataProvider.DocumentsClosingDate = master.DocumentsClosingDate;
+                manifestDataProvider.AWBHandlingInformation = master.AWBHandlingInformation;
+
+                if (master.BranchId != null)
+                {
+                    Branch myBranch = (from d in commonContext.Branches where d.Tenant == tenant && d.Id == master.BranchId select d).FirstOrDefault();
+                    if (myBranch != null)
+                    {
+                        manifestDataProvider.BranchSignature = myBranch.Signature;
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(master.OBLTypeCode))
+                {
+                    OBLType type = shipmentsContext.OBLTypes.Where(d => d.Code == master.OBLTypeCode).FirstOrDefault();
+
+                    if (type != null)
+                    {
+                        manifestDataProvider.OBLType = type.Name;
+                    }
+                }
+
+                customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, master, manifestDataProvider);
+
+                Address mainCarriageCarrierAddress = addressRepository.GetSingleAddress(master.MainCarriageCarrierAddressId, tenant);
+
+                if (mainCarriageCarrierAddress != null)
+                {
+                    manifestDataProvider.MainCarriageCarrierAddress = General.GetAddress(mainCarriageCarrierAddress);
+                }
+
+                TenantRepository tenantRepository = new TenantRepository(tenant);
+                Tenant myLoggedTenant = tenantRepository.GetSingleTenant(tenant);
+
+                if (myLoggedTenant != null)
+                {
+                    manifestDataProvider.FMCNumber = myLoggedTenant.FMCNumber;
+                }
+
+                #region IssuingCarrierAgent
+                if (!string.IsNullOrEmpty(master.IssuingCarrierAgentId))
+                {
+                    Card myCard = CardRepository.GetSingleCard(master.IssuingCarrierAgentId, tenant, true);
+                    if (myCard != null)
+                    {
+                        manifestDataProvider.IssuingCarrierAgentName = myCard.EnglishName;
+
+                        if (!string.IsNullOrEmpty(master.IssuingCarrierAddressId))
+                        {
+                            Address myAddress = addressRepository.GetSingleAddress(master.IssuingCarrierAddressId, tenant);
+
+                            if (myAddress != null)
+                            {
+                                if (myAddress.IsLocalLanguage && !string.IsNullOrEmpty(myCard.LocalName))
+                                {
+                                    manifestDataProvider.IssuingCarrierAgentName = myCard.LocalName;
+                                }
+
+                                manifestDataProvider.IssuingCarrierAgentAddress = DataProviders.General.GetAddress(myAddress);
+                            }
+                        }
+                    }
+                }
+                #endregion
+
+                #region Shipper
+                if (!string.IsNullOrEmpty(master.ShipperId))
+                {
+                    Card myCard = CardRepository.GetSingleCard(master.ShipperId, tenant, true);
+                    if (myCard != null)
+                    {
+                        manifestDataProvider.ShipperName = myCard.EnglishName;
+
+                        if (!string.IsNullOrEmpty(master.ShipperAddressId))
+                        {
+                            Address myAddress = addressRepository.GetSingleAddress(master.ShipperAddressId, tenant);
+                            if (myAddress != null)
+                            {
+                                if (myAddress.IsLocalLanguage && !string.IsNullOrEmpty(myCard.LocalName))
+                                {
+                                    manifestDataProvider.ShipperName = myCard.LocalName;
+                                }
+
+                                manifestDataProvider.ShipperAddress = DataProviders.General.GetAddress(myAddress);
+
+                                if (!string.IsNullOrEmpty(myAddress.PhoneNumber) || !string.IsNullOrEmpty(myAddress.FaxNumber))
+                                {
+                                    manifestDataProvider.ShipperAddress += System.Environment.NewLine;
+
+                                    if (!string.IsNullOrEmpty(myAddress.PhoneNumber))
+                                    {
+                                        manifestDataProvider.ShipperAddress += "Tel: " + myAddress.PhoneNumber + " ";
+                                    }
+
+                                    if (!string.IsNullOrEmpty(myAddress.FaxNumber))
+                                    {
+                                        manifestDataProvider.ShipperAddress += "Fax: " + myAddress.FaxNumber;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                #endregion
+
+                #region Agent Region
+                if (!string.IsNullOrEmpty(master.AgentId))
+                {
+                    CardPM agent = cardQuery.GetSinglePM(master.AgentId, tenant);
+                    if (agent != null)
+                    {
+                        manifestDataProvider.AgentName = agent.EnglishName;
+                        Address agentAddress = addressRepository.GetSingleAddress(master.AgentAddressId, tenant);
+                        if (agentAddress != null)
+                        {
+                            if (agentAddress.IsLocalLanguage && !string.IsNullOrEmpty(agent.LocalName))
+                            {
+                                manifestDataProvider.AgentName = agent.LocalName;
+                            }
+
+                            manifestDataProvider.AgentAddress = DataProviders.General.GetAddress(agentAddress);
+                        }
+                    }
+                }
+                else
+                {
+                    //if no agent in the master to take from the consignee in the export, domestic and from the shipper in the import
+                    if (master.DirectionId == "E" || master.DirectionId == "D")
+                    {
+                        CardPM agent = cardQuery.GetSinglePM(master.ConsigneeId, tenant);
+                        if (agent != null)
+                        {
+                            manifestDataProvider.AgentName = agent.EnglishName;
+                            Address agentAddress = addressRepository.GetSingleAddress(master.ConsigneeAddressId, tenant);
+                            if (agentAddress != null)
+                            {
+                                if (agentAddress.IsLocalLanguage && !string.IsNullOrEmpty(agent.LocalName))
+                                {
+                                    manifestDataProvider.AgentName = agent.LocalName;
+                                }
+
+                                manifestDataProvider.AgentAddress = DataProviders.General.GetAddress(agentAddress);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        CardPM agent = cardQuery.GetSinglePM(master.ShipperId, tenant);
+                        if (agent != null)
+                        {
+                            manifestDataProvider.AgentName = agent.EnglishName;
+                            Address agentAddress = addressRepository.GetSingleAddress(master.ShipperAddressId, tenant);
+                            if (agentAddress != null)
+                            {
+                                if (agentAddress.IsLocalLanguage && !string.IsNullOrEmpty(agent.LocalName))
+                                {
+                                    manifestDataProvider.AgentName = agent.LocalName;
+                                }
+
+                                manifestDataProvider.AgentAddress = DataProviders.General.GetAddress(agentAddress);
+                            }
+                        }
+                    }
+                }
+                #endregion
+
+                #region Master Region and airline and vessel and voyage
+                manifestDataProvider.WeightUnit = master.GrossWeightUnitCode != null ? master.GrossWeightUnitCode : ""; // "KG";
+                manifestDataProvider.VolumeUnit = master.VolumeUnitCode != null ? master.VolumeUnitCode : ""; //"M";
+                manifestDataProvider.FlightInfo = master.MainCarriageCarrierCode + master.MainCarriageCarrierNumber;
+                manifestDataProvider.FlightInfo_New = master.MainCarriageCarrierNumber;
+
+                if (master.TransportModeId == "A")
+                {
+                    manifestDataProvider.MAWB = master.LongMaster;
+                    manifestDataProvider.Airline = master.MainCarriageCarrierName;
+
+                    if (master.MainCarriageETD != null)
+                    {
+                        manifestDataProvider.FlightDate = String.Format("{0:dd.MMM.yy}", master.MainCarriageETD.Value);
+                    }
+                }
+                
+                else if (master.TransportModeId == "O")
+                {
+                    if (master.MainCarriageCarrierId != null)
+                    {
+                        ShippingLinePM shippingLine = shippingLineQuery.GetSinglePM(master.MainCarriageCarrierId, tenant);
+                        manifestDataProvider.ShippingAgentName = shippingLine.ShippingAgentName;
+
+                        if (!string.IsNullOrEmpty(shippingLine.ShippingAgentId))
+                        {
+                            Address address = addressRepository.GetSingleAddressByCardIdAndTypeId(shippingLine.ShippingAgentId, "M", tenant);
+                            if (address != null)
+                            {
+                                manifestDataProvider.ShippingAgentAddress = DataProviders.General.GetAddress(address);
+                            }
+                        }
+                    }
+
+                    manifestDataProvider.OBLNo = master.Master;
+                    manifestDataProvider.VoyageNumber = master.MainCarriageCarrierNumber;
+                    manifestDataProvider.VesselName = master.MainCarriageVesselName;
+                    if (master.MainCarriageETD != null)
+                    {
+                        manifestDataProvider.VoyageDate = master.MainCarriageETD.Value.ToShortDateString();
+                    }
+                }
+                #endregion
+
+                List<ShipmentDataView> connectedShipments = shipmentRepository.GetShipmentViewsByTenantAndMasterId(masterId, tenant).ToList();
+                #region manifest details region
+
+                List<FormCustomField> customfieldsList = formCustomFieldRepository.GetFormCustomFields(tenant).ToList();
+                List<DocumentTypeCustomField> documentCustomfieldsList = documentTypeCustomFieldsRepository.GetDocumentTypeCustomFields(tenant).ToList();
+                double grandTotalCollect = 0;
+                double grandTotalPrepaid = 0;
+                double totalWeight = 0;
+                double totalVolume = 0;
+                double totalPackagesQuantity = 0;
+                double totalContainersQuantity = 0;
+
+                foreach (ShipmentDataView shipmentView in connectedShipments)
+                {
+                    #region Start
+
+                    ManifestDetailsClass detail = new ManifestDetailsClass();
+                    NewManifestDetailsClass newDetail = new NewManifestDetailsClass();
+
+                    detail.FileNumber = newDetail.FileNumber = shipmentView.ShipmentNumber;
+                    detail.Direction = newDetail.Direction = shipmentView.DirectionName;
+                    detail.ENSNumber = newDetail.ENSNumber = shipmentView.ENSNumber;
+                    detail.ENSDate = newDetail.ENSDate = shipmentView.ENSDate;
+                    detail.DocumentsClosingDate = newDetail.DocumentsClosingDate = shipmentView.DocumentsClosingDate;
+                    detail.AWBHandlingInformation = newDetail.AWBHandlingInformation = shipmentView.AWBHandlingInformation;
+
+                    if (!string.IsNullOrEmpty(shipmentView.OBLTypeCode))
+                    {
+                        OBLType type = shipmentsContext.OBLTypes.Where(d => d.Code == shipmentView.OBLTypeCode).FirstOrDefault();
+
+                        if (type != null)
+                        {
+                            detail.OBLType = newDetail.OBLType = type.Name;
+                        }
+                    }
+
+                    if (myLoggedTenant != null)
+                    {
+                        detail.FMCNumber = newDetail.FMCNumber = myLoggedTenant.FMCNumber;
+                    }
+
+                    string volumeUnitCode = shipmentView.VolumeUnitCode != null ? shipmentView.VolumeUnitCode : "";
+
+                    #region Shipper
+                    CardPM shipper = cardQuery.GetSinglePM(shipmentView.ShipperId, tenant);
+                    CustomerPM shipperPM = customerQuery.GetSinglePM(shipmentView.ShipperId, tenant);
+
+                    if(shipperPM != null)
+                    {
+                        customFieldResolver.SetDataProviderCustomFieldsValues("Customer", tenant, shipperPM, detail, "Shipper");
+                        customFieldResolver.SetDataProviderCustomFieldsValues("Customer", tenant, shipperPM, newDetail, "Shipper");
+                    }
+
+                    if (shipper != null)
+                    {
+                        detail.ShipperVAT = newDetail.ShipperVAT = shipper.VatNumber;
+
+                        detail.ShipperName = newDetail.ShipperName = shipper.EnglishName;
+                        Address shipperAdderss = addressRepository.GetSingleAddress(shipmentView.ShipperAddressId, tenant);
+
+                        if (shipperAdderss != null)
+                        {
+                            if (shipperAdderss.IsLocalLanguage && !string.IsNullOrEmpty(shipper.LocalName))
+                            {
+                                detail.ShipperName = newDetail.ShipperName = shipper.LocalName;
+                            }
+
+                            detail.ShipperAddress = newDetail.ShipperAddress = DataProviders.General.GetAddress(shipperAdderss);
+
+                            if (!string.IsNullOrEmpty(shipperAdderss.PhoneNumber) || !string.IsNullOrEmpty(shipperAdderss.FaxNumber))
+                            {
+                                detail.ShipperAddress = newDetail.ShipperAddress += System.Environment.NewLine;
+
+                                if (!string.IsNullOrEmpty(shipperAdderss.PhoneNumber))
+                                {
+                                    detail.ShipperAddress = detail.ShipperAddress + "Tel: " + shipperAdderss.PhoneNumber + " ";
+                                    newDetail.ShipperAddress = newDetail.ShipperAddress + "Tel: " + shipperAdderss.PhoneNumber + " ";
+                                }
+                                if (!string.IsNullOrEmpty(shipperAdderss.FaxNumber))
+                                {
+                                    detail.ShipperAddress = detail.ShipperAddress + "Fax: " + shipperAdderss.FaxNumber;
+                                    newDetail.ShipperAddress = newDetail.ShipperAddress + "Fax: " + shipperAdderss.FaxNumber;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            detail.ShipperName = newDetail.ShipperName = "";
+                            detail.ShipperAddress = newDetail.ShipperAddress = "";
+                        }
+                    }
+                    else
+                    {
+                        detail.ShipperName = newDetail.ShipperName = "";
+                        detail.ShipperAddress = newDetail.ShipperAddress = "";
+                    }
+                    #endregion
+
+                    #region Consignee
+                    if (!string.IsNullOrEmpty(shipmentView.ConsigneeId))
+                    {
+                        CardPM consignee = cardQuery.GetSinglePM(shipmentView.ConsigneeId, tenant);
+                        CustomerPM consigneePM = customerQuery.GetSinglePM(shipmentView.ConsigneeId, tenant);
+
+                        if (consigneePM != null)
+                        {
+                            customFieldResolver.SetDataProviderCustomFieldsValues("Customer", tenant, consigneePM, detail, "Consignee");
+                            customFieldResolver.SetDataProviderCustomFieldsValues("Customer", tenant, consigneePM, newDetail, "Consignee");
+                        }
+
+                        if (consignee != null)
+                        {
+                            detail.ConsigneeVAT = newDetail.ConsigneeVAT = consignee.VatNumber;
+                            detail.ConsigneeName = newDetail.ConsigneeName = consignee.EnglishName;
+                            Address consigneeAdderss = addressRepository.GetSingleAddress(shipmentView.ConsigneeAddressId, tenant);
+                            if (consigneeAdderss != null)
+                            {
+                                if (consigneeAdderss.IsLocalLanguage && !string.IsNullOrEmpty(consignee.LocalName))
+                                {
+                                    detail.ConsigneeName = newDetail.ConsigneeName = consignee.LocalName;
+                                }
+
+                                detail.ConsigneeAddress = newDetail.ConsigneeAddress = DataProviders.General.GetAddress(consigneeAdderss);
+
+                                if (!string.IsNullOrEmpty(consigneeAdderss.PhoneNumber) || !string.IsNullOrEmpty(consigneeAdderss.FaxNumber))
+                                {
+                                    detail.ConsigneeAddress = newDetail.ConsigneeAddress += System.Environment.NewLine;
+
+                                    if (!string.IsNullOrEmpty(consigneeAdderss.PhoneNumber))
+                                    {
+                                        detail.ConsigneeAddress = detail.ConsigneeAddress + "Tel: " + consigneeAdderss.PhoneNumber + " ";
+                                        newDetail.ConsigneeAddress = newDetail.ConsigneeAddress + "Tel: " + consigneeAdderss.PhoneNumber + " ";
+                                    }
+                                    if (!string.IsNullOrEmpty(consigneeAdderss.FaxNumber))
+                                    {
+                                        detail.ConsigneeAddress = detail.ConsigneeAddress + "Fax: " + consigneeAdderss.FaxNumber;
+                                        newDetail.ConsigneeAddress = newDetail.ConsigneeAddress + "Fax: " + consigneeAdderss.FaxNumber;
+                                    }
+                                }
+                            }
+
+                        }
+                        else
+                        {
+                            detail.ConsigneeName = newDetail.ConsigneeName = "";
+                            detail.ConsigneeAddress = newDetail.ConsigneeAddress = "";
+                        }
+                    }
+                    else
+                    {
+                        detail.ConsigneeName = newDetail.ConsigneeName = "";
+                        detail.ConsigneeAddress = newDetail.ConsigneeAddress = "";
+                    }
+                    #endregion
+
+                    #region Notify
+                    CardPM notify = cardQuery.GetSinglePM(shipmentView.Notify1Id, tenant);
+
+                    if (notify != null)
+                    {
+                        detail.NotifyName = newDetail.NotifyName = notify.EnglishName;
+                        Address notifyAdderss = addressRepository.GetSingleAddress(shipmentView.Notify1AddressId, tenant);
+                        if (notifyAdderss != null)
+                        {
+                            if (notifyAdderss.IsLocalLanguage && !string.IsNullOrEmpty(notify.LocalName))
+                            {
+                                detail.NotifyName = newDetail.NotifyName = notify.LocalName;
+                            }
+
+                            detail.NotifyAddress = newDetail.NotifyAddress = DataProviders.General.GetAddress(notifyAdderss);
+                        }
+                        else
+                        {
+                            detail.NotifyName = newDetail.NotifyName = "";
+                            detail.NotifyAddress = newDetail.NotifyAddress = "";
+                        }
+                    }
+                    else
+                    {
+                        detail.NotifyName = newDetail.NotifyName = "";
+                        detail.NotifyAddress = newDetail.NotifyAddress = "";
+                    }
+                    #endregion
+
+                    #region Assemblies
+
+                    List<ShipmentAssemblyPM> shipmentAssemblies = shipmentAssemblyQuery.GetShipmentAssemblies(shipmentView.Id, tenant).ToList();                    
+                    if (shipmentAssemblies.Count > 0)
+                    {
+                        detail.Assemblies = new List<ShipmentAssemblyLine>();
+                        newDetail.Assemblies = new List<ShipmentAssemblyLine>();
+
+                        foreach (ShipmentAssemblyPM assembly in shipmentAssemblies)
+                        {
+                            detail.Assemblies.Add(new ShipmentAssemblyLine()
+                            {
+                                House = assembly.House,
+                                ShipperName = assembly.ShipperName
+                            });
+
+                            newDetail.Assemblies.Add(new ShipmentAssemblyLine()
+                            {
+                                House = assembly.House,
+                                ShipperName = assembly.ShipperName
+                            });
+                        }
+                    }
+                    #endregion
+
+                    ShipmentPickUpDelivery myLineFirstDelivery = (from d in shipmentsContext.ShipmentPickUpDeliveries
+                                                                  where d.ShipmentId == shipmentView.Id && d.PickUpDeliveryTypeCode == "DELV"
+                                                                  select d).OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
+
+                    string myPlaceOfDelivery = myServiceHelper.GetPlaceOfDelivery(shipmentView, myLineFirstDelivery);
+                    detail.PlaceOfDelivery = myPlaceOfDelivery;
+                    newDetail.PlaceOfDelivery = myPlaceOfDelivery;
+
+                    detail.Weight = shipmentView.GrossWeight != null ? shipmentView.GrossWeight != 0 ? (String.Format("{0:#,0.00}", shipmentView.GrossWeight) + " " + (shipmentView.GrossWeightUnitCode != null ? shipmentView.GrossWeightUnitCode : "")) : "" : "";
+                    detail.ChargeableWeight = newDetail.ChargeableWeight = shipmentView.ChargeableWeight != null ? shipmentView.ChargeableWeight != 0 ? (String.Format("{0:#,0.00}", shipmentView.ChargeableWeight) + " " + (shipmentView.ChargeableWeightUnitCode != null ? shipmentView.ChargeableWeightUnitCode : "")) : "" : "";
+                    detail.Volume = shipmentView.Volume != null ? shipmentView.Volume != 0 ? (shipmentView.Volume + " " + volumeUnitCode) : "" : "";
+                    newDetail.Weight = shipmentView.GrossWeight;
+                    newDetail.Volume = shipmentView.Volume;
+
+                    IncotermPM incoterm = incotermQuery.GetSinglePM(shipmentView.IncotermId, tenant);
+                    detail.Incoterm = newDetail.Incoterm = incoterm != null ? incoterm.Name : "";
+
+                    detail.House = newDetail.House = shipmentView.House != null ? shipmentView.House : "";
+
+                    detail.DestinationPortCode = newDetail.DestinationPortCode = shipmentView.MainCarriageFinalDestinationPortCode != null ? shipmentView.MainCarriageFinalDestinationPortCode : "";
+                    detail.DestinationPortName = newDetail.DestinationPortName = shipmentView.MainCarriageFinalDestinationPortName != null ? shipmentView.MainCarriageFinalDestinationPortName : "";
+
+                    if (shipmentView.TransportModeId == "A")
+                    {
+                        detail.HAWB = newDetail.HAWB = shipmentView.House;
+
+                        double totalPrepaid = 0;
+                        double totalCollect = 0;
+                        this.GetOtherCharges(shipmentView.Id, tenant, ref totalPrepaid, ref totalCollect);
+                        grandTotalCollect = grandTotalCollect + (shipmentView.AWBFreightAmountCollect != null ? shipmentView.AWBFreightAmountCollect.Value : 0) + (totalCollect);
+                        grandTotalPrepaid = grandTotalPrepaid + (shipmentView.AWBFreightAmountPrepaid != null ? shipmentView.AWBFreightAmountPrepaid.Value : 0) + (totalPrepaid);
+
+                        detail.Quantity = shipmentView.NumberOfPackages != null ? shipmentView.NumberOfPackages.ToString() : "";
+                        newDetail.Quantity = shipmentView.NumberOfPackages;
+                        totalPackagesQuantity = totalPackagesQuantity + (shipmentView.NumberOfPackages != null ? shipmentView.NumberOfPackages.Value : 0);
+
+                        #region custom fields
+                        //----Freight Cusotmfield---//
+                        FormCustomField freightField = (from a in customfieldsList
+                                                        where a.FieldCode == "IsFreight" && a.EntityId == masterId
+                                                        select a).FirstOrDefault();
+                        DocumentTypeCustomField freightDocumentCustom = (from a in documentCustomfieldsList
+                                                                         where a.FieldCode == "IsFreight"
+                                                                         select a).FirstOrDefault();
+
+                        FormCustomField otherField = (from a in customfieldsList
+                                                      where a.FieldCode == "IsOther" && a.EntityId == masterId
+                                                      select a).FirstOrDefault();
+
+                        DocumentTypeCustomField otherDocumentCustom = (from a in documentCustomfieldsList
+                                                                       where a.FieldCode == "IsOther"
+                                                                       select a).FirstOrDefault();
+
+                        if (freightField != null)
+                        {
+                            if (freightField.Value == "True")
+                            {
+                                detail.Prepaid = newDetail.Prepaid = "Freight: " + (shipmentView.AWBFreightAmountPrepaid != null ? shipmentView.AWBFreightAmountPrepaid.ToString() : "");
+                                detail.Collect = newDetail.Collect = "Freight: " + (shipmentView.AWBFreightAmountCollect != null ? shipmentView.AWBFreightAmountCollect.ToString() : "");
+                                if (otherField != null)
+                                {
+                                    if (otherField.Value == "True")
+                                    {
+                                        detail.Prepaid = newDetail.Prepaid = detail.Prepaid + Environment.NewLine + "Charges: " + totalPrepaid.ToString();
+                                        detail.Collect = newDetail.Collect = detail.Collect + Environment.NewLine + "Charges: " + totalCollect.ToString();
+                                    }
+                                    else
+                                    {
+                                        detail.Prepaid = newDetail.Prepaid = detail.Prepaid + Environment.NewLine + "Charges: ";
+                                        detail.Collect = newDetail.Collect = detail.Collect + Environment.NewLine + "Charges: ";
+                                    }
+                                }
+                                else
+                                {
+                                    detail.Prepaid = newDetail.Prepaid = detail.Prepaid + Environment.NewLine + "Charges: ";
+                                    detail.Collect = newDetail.Collect = detail.Collect + Environment.NewLine + "Charges: ";
+                                }
+                            }
+                            else
+                            {
+                                detail.Prepaid = newDetail.Prepaid = "Freight: ";
+                                detail.Collect = newDetail.Collect = "Freight: ";
+                            }
+                        }
+                        else if (freightDocumentCustom != null)
+                        {
+                            if (freightDocumentCustom.DefaultValue == "True")
+                            {
+                                detail.Prepaid = newDetail.Prepaid = "Freight: " + (shipmentView.AWBFreightAmountPrepaid != null ? shipmentView.AWBFreightAmountPrepaid.ToString() : "");
+                                detail.Collect = newDetail.Collect = "Freight: " + (shipmentView.AWBFreightAmountCollect != null ? shipmentView.AWBFreightAmountCollect.ToString() : "");
+                            }
+                            else
+                            {
+                                detail.Prepaid = newDetail.Prepaid = "Freight: ";
+                                detail.Collect = newDetail.Collect = "Freight: ";
+                            }
+                        }
+                        #endregion
+                    }
+
+                    else
+                    {
+                        ShipmentPackageQuery shipmentPackagesQuery = new ShipmentPackageQuery(tenant);
+
+                        detail.PortOfDischarge = newDetail.PortOfDischarge = shipmentView.MainCarriageToPortCode;
+
+                        totalPackagesQuantity = totalPackagesQuantity + (shipmentView.NumberOfPackages != null ? shipmentView.NumberOfPackages.Value : 0);
+                        totalContainersQuantity = totalContainersQuantity + (shipmentView.NumberOfContainers != null ? shipmentView.NumberOfContainers.Value : 0);
+
+                        # region packages region for kind and quantity
+
+                        List<ShipmentPackagePM> packages = shipmentPackagesQuery.GetShipmentPackages(shipmentView.Id, shipmentView.ShipmentNumber, tenant);
+                        //string packageKinds = "";
+                        //string packageQty = "";
+                        //int countDesc = 0;
+                        //int countMarks = 0;
+
+                        foreach (ShipmentPackagePM package in packages)
+                        {
+                            PackageDetails packageDetail = new PackageDetails();
+
+                            PackageType packagetype = (from pa in commonContext.PackageTypes
+                                                       where pa.Id == package.PackageTypeId
+                                                       select pa).FirstOrDefault();
+
+                            packageDetail.DescriptionOfGoods = !string.IsNullOrEmpty(package.Description) ? package.Description : "";
+                            if (!string.IsNullOrEmpty(package.Harmonize))
+                            {
+                                if (!string.IsNullOrEmpty(packageDetail.DescriptionOfGoods))
+                                {
+                                    packageDetail.DescriptionOfGoods += Environment.NewLine;
+                                }
+
+                                packageDetail.DescriptionOfGoods += "HS Code: " + package.Harmonize;
+                            }
+
+                            packageDetail.Weight = package.Weight != null ? (package.Weight != 0 ? String.Format("{0:#,0.00}", package.Weight + " " + (shipmentView.GrossWeightUnitCode != null ? shipmentView.GrossWeightUnitCode : "")) : "") : "";
+                            packageDetail.Volume = package.Volume != null ? (package.Volume != 0 ? package.Volume.ToString() + " " + volumeUnitCode : "") : "";
+                            packageDetail.PackageKind = packagetype != null ? packagetype.EnglishName : "";
+
+                            if (packagetype.IsContainer)
+                            {
+                                string alphaFormat = @"[^A-Za-z]*";
+                                string numericFormat = @"[^0-9]*";
+                                string alpha = Regex.Replace(packagetype.Code, alphaFormat, string.Empty, RegexOptions.Compiled);
+                                string num = Regex.Replace(packagetype.Code, numericFormat, string.Empty, RegexOptions.Compiled);
+
+                                packageDetail.Quantity = (package.Quantity != null ? package.Quantity.ToString() : "") + " x " + (num + "'" + alpha);
+                            }
+                            else
+                            {
+                                packageDetail.Quantity = (package.Quantity != null ? package.Quantity.ToString() : "") + " x " + packagetype.EnglishName;
+                            }
+
+                            if (string.IsNullOrEmpty(package.MarksAndNumbers))
+                            {
+                                // build logic
+                                string str = String.Empty;
+                                string importer = String.Empty;
+                                string importerRef1 = String.Empty;
+
+                                if (shipmentView.DirectionId == "E" || shipmentView.DirectionId == "D")
+                                {
+                                    importer = shipmentView.ConsigneeName;
+                                    importerRef1 = shipmentView.ConsigneeReference1;
+                                }
+                                else if (shipmentView.DirectionId == "I")
+                                {
+                                    importer = shipmentView.ShipperName;
+                                    importerRef1 = shipmentView.ShipperReference1;
+                                }
+
+                                if (package.IsContainer)
+                                {
+                                    if (!string.IsNullOrEmpty(package.ContainerNumber))
+                                    {
+                                        str = str + package.ContainerNumber + "\n";
+                                    }
+
+                                    if (!string.IsNullOrEmpty(package.ShipperSeal))
+                                    {
+                                        str = str + "Shipper Seal: " + package.ShipperSeal + "\n";
+                                    }
+
+                                    if (!string.IsNullOrEmpty(package.CarrierSeal))
+                                    {
+                                        str = str + "Carrier Seal: " + package.CarrierSeal + "\n";
+                                    }
+
+                                    if (package.Tare != null)
+                                    {
+                                        str = str + "Tare: " + package.Tare.ToString() + "\n";
+                                    }
+
+                                    if (!string.IsNullOrEmpty(importer))
+                                    {
+                                        str = str + importer;
+                                    }
+                                }
+                                else
+                                {
+                                    if (!string.IsNullOrEmpty(importer))
+                                    {
+                                        str = str + importer + "\n";
+                                    }
+
+                                    if (!string.IsNullOrEmpty(importerRef1))
+                                    {
+                                        str = str + "PO: " + importerRef1;
+                                    }
+                                }
+                                packageDetail.MarksAndNumbers = str;
+                            }
+                            else
+                            {
+                                packageDetail.MarksAndNumbers = package.MarksAndNumbers != null ? package.MarksAndNumbers : "";
+                            }
+
+                            packageDetail.Reference1 = package.Reference1;
+                            packageDetail.Reference2 = package.Reference2;
+                            packageDetail.Reference3 = package.Reference3;
+                            packageDetail.CommodityNumber = package.CommodityNumber;
+                            newDetail.PackageDetails.Add(packageDetail);
+
+                            #region commented Code
+                            //StringBuilder qty = new StringBuilder();
+                            //StringBuilder weight = new StringBuilder();
+                            //StringBuilder volume = new StringBuilder();
+                            //StringBuilder marks = new StringBuilder();
+                            //StringBuilder desc = new StringBuilder();
+
+                            //desc.Append(!string.IsNullOrEmpty(package.Description) ? package.Description : "");
+                            //if (!string.IsNullOrEmpty(package.Harmonize))
+                            //{
+                            //    if (!string.IsNullOrEmpty(desc.ToString()))
+                            //    {
+                            //        desc.Append(Environment.NewLine);
+                            //    }
+                            //    desc.Append("HS Code: " + package.Harmonize);
+                            //}
+
+                            //weight.Append(package.Weight != null ? (package.Weight != 0 ? String.Format("{0:#,0.00}", package.Weight + " " + (shipmentView.GrossWeightUnitCode != null ? shipmentView.GrossWeightUnitCode : "")) : "") : "");
+                            //volume.Append(package.Volume != null ? (package.Volume != 0 ? package.Volume.ToString() + " " + volumeUnitCode : "") : "");
+
+                            //if (string.IsNullOrEmpty(packageKinds))
+                            //{
+                            //    packageKinds = package.PackageTypeName;
+                            //}
+                            //else
+                            //{
+                            //    packageKinds = packageKinds + Environment.NewLine + package.PackageTypeName;
+                            //}
+
+                            //if (string.IsNullOrEmpty(packageQty))
+                            //{
+                            //    packageQty = (package.Quantity != null ? package.Quantity.ToString() : "");
+                            //}
+                            //else
+                            //{
+                            //    packageQty = packageQty + Environment.NewLine + (package.Quantity != null ? package.Quantity.ToString() : "");
+                            //}
+
+                            //if (packagetype.IsContainer)
+                            //{
+                            //    string alphaFormat = @"[^A-Za-z]*";
+                            //    string numericFormat = @"[^0-9]*";
+                            //    string alpha = Regex.Replace(packagetype.Code, alphaFormat, string.Empty, RegexOptions.Compiled);
+                            //    string num = Regex.Replace(packagetype.Code, numericFormat, string.Empty, RegexOptions.Compiled);
+
+                            //    qty.Append((package.Quantity != null ? package.Quantity.ToString() : "") + " x " + (num + "'" + alpha));
+                            //}
+                            //else
+                            //{
+                            //    qty.Append((package.Quantity != null ? package.Quantity.ToString() : "") + " x " + packagetype.EnglishName);
+                            //}
+
+                            //if (package.MarksAndNumbers == null)
+                            //{
+                            //    if (packagetype.IsContainer)
+                            //    {
+                            //        if (package.ContainerNumber != null)
+                            //        {
+                            //            if (package.ContainerNumber.Length > 10)
+                            //            {
+                            //                marks.Append(!string.IsNullOrEmpty(package.ContainerNumber) ? package.ContainerNumber.Substring(0, 4) + " " + package.ContainerNumber.Substring(4, 6) + "/" + package.ContainerNumber.Substring(10, 1) + Environment.NewLine : "");
+                            //            }
+                            //            else
+                            //            {
+                            //                marks.Append(package.ContainerNumber);
+                            //            }
+                            //        }
+
+                            //        if (!string.IsNullOrEmpty(package.Seal))
+                            //        {
+                            //            marks.Append("SEAL:" + package.Seal);
+                            //        }
+                            //    }
+                            //}
+                            //else
+                            //{
+                            //    marks.Append(package.MarksAndNumbers != null ? package.MarksAndNumbers : "");
+                            //}
+
+                            //countDesc = this.countLines(desc.ToString());
+                            //countMarks = this.countLines(marks.ToString());
+
+                            //if (countDesc > countMarks)
+                            //{
+                            //    for (int i = 0; i < countDesc; i++)
+                            //    {
+                            //        qty.Append('\n');
+                            //        marks.Append('\n');
+                            //        weight.Append('\n');
+                            //        volume.Append('\n');
+                            //    }
+                            //    desc.Append('\n');
+                            //    qty.Append('\n');
+                            //    weight.Append('\n');
+                            //    volume.Append('\n');
+                            //}
+                            //else if (countMarks > countDesc)
+                            //{
+                            //    for (int i = 0; i < countMarks; i++)
+                            //    {
+                            //        qty.Append('\n');
+                            //        desc.Append('\n');
+                            //        weight.Append('\n');
+                            //        volume.Append('\n');
+                            //    }
+                            //    marks.Append('\n');
+                            //    marks.Append('\n');
+                            //    qty.Append('\n');
+                            //    weight.Append('\n');
+                            //    volume.Append('\n');
+                            //}
+                            //else if (countMarks == countDesc)
+                            //{
+                            //    for (int i = 0; i <= countMarks; i++)
+                            //    {
+                            //        qty.Append('\n');
+                            //        weight.Append('\n');
+                            //        volume.Append('\n');
+                            //    }
+                            //    desc.Append('\n');
+                            //    desc.Append('\n');
+                            //    marks.Append('\n');
+                            //    marks.Append('\n');
+                            //}
+
+                            //newDetail.MarksAndNumbers += marks.ToString();
+                            //newDetail.PackageQtyKind += qty.ToString();
+                            //newDetail.Weight += weight.ToString();
+                            //newDetail.Volume += volume.ToString();
+                            //newDetail.DescriptionOfGoods += desc.ToString();
+                            #endregion
+                        }
+
+                        //newDetail.Weight = newDetail.Weight + packages.Sum(s => s.Weight) + " " + (shipmentView.GrossWeightUnitCode != null ? shipmentView.GrossWeightUnitCode : "");
+                        //newDetail.Volume = newDetail.Volume + packages.Sum(s => s.Volume) + " " + volumeUnitCode;
+
+                        //detail.PackageKind = packageKinds;
+                        //detail.PackageQuantity = packageQty;
+
+                        #endregion
+                    }
+
+                    StringBuilder strGoods = new StringBuilder();
+                    List<ShipmentPackagePM> shipmentPackagesList = packagesQuery.GetShipmentPackages(shipmentView.Id, shipmentView.ShipmentNumber, tenant);
+                    strGoods.Append(shipmentView.DescriptionOfGoods != null ? shipmentView.DescriptionOfGoods : "");
+
+                    if (shipmentView.ShipmentTypeName == "FCL" || shipmentView.ShipmentTypeName == "LCL")
+                    {
+                        strGoods.Append(Environment.NewLine);
+                        strGoods.Append(shipmentView.ShipmentTypeName);
+                        strGoods.Append(Environment.NewLine);
+
+                        for (int i = 0; i < shipmentPackagesList.Count; i++)
+                        {
+                            strGoods.Append(shipmentPackagesList[i].ContainerNumber != null ? "CNT " + shipmentPackagesList[i].ContainerNumber : "");
+                            strGoods.Append(Environment.NewLine);
+                        }
+                    }
+
+                    detail.DescriptionOfGoods = newDetail.DescriptionOfGoods = strGoods.ToString();
+
+                    totalWeight = totalWeight + (shipmentView.GrossWeight != null ? shipmentView.GrossWeight.Value : 0);
+                    totalVolume = totalVolume + (shipmentView.Volume != null ? shipmentView.Volume.Value : 0);
+
+                    detail.PC = newDetail.PC = shipmentView.FreightPrepaidCollectId;
+
+                    detail.OpenPayablesInLocalCurrency = shipmentView.OpenPayablesInLocalCurrency;
+                    detail.OpenPayablesInProfitCurrency = shipmentView.OpenPayablesInProfitCurrency;
+                    newDetail.OpenPayablesInLocalCurrency = shipmentView.OpenPayablesInLocalCurrency;
+                    newDetail.OpenPayablesInProfitCurrency = shipmentView.OpenPayablesInProfitCurrency;
+
+                    customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipmentView, detail);
+                    customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipmentView, newDetail);
+
+                    manifestDataProvider.ManifestDetails.Add(detail);
+                    manifestDataProvider.NewManifestDetails.Add(newDetail);
+                    #endregion
+                }
+
+                manifestDataProvider.TotalCollect = grandTotalCollect.ToString();
+                manifestDataProvider.TotalPrepaid = grandTotalPrepaid.ToString();
+
+                if (totalPackagesQuantity != 0)
+                    manifestDataProvider.TotalQuantity = totalPackagesQuantity.ToString();// + " Pcs" + Environment.NewLine;
+
+                if (totalContainersQuantity != 0)
+                    manifestDataProvider.TotalQuantity += totalContainersQuantity.ToString();// +" Con";
+
+                manifestDataProvider.TotalVolume = totalVolume != 0 ? (String.Format("{0:#,0.00}", totalVolume) + " " + (manifestDataProvider.VolumeUnit)) : ""; //CBM
+                manifestDataProvider.TotalWeight = totalWeight != 0 ? (String.Format("{0:#,0.00}", totalWeight) + " " + (manifestDataProvider.WeightUnit)) : ""; //KGS 
+                #endregion
+
+                #region NEW DESIGN
+
+                if (connectedShipments.Count > 0)
+                {
+                    manifestDataProvider.GroupedManifestDetailsList = new List<GroupedContainersClass>();
+
+                    ShipmentPackageRepository shipmentPackageRepository = new ShipmentPackageRepository(shipmentsContext);
+                    List<ShipmentPackage> masterPackages = shipmentPackageRepository.GetShipmentPackagesForShipmentTenant(master.Id, tenant).ToList();
+
+                    List<string> connectedShipmentsIds = connectedShipments.Select(s => s.Id).ToList();
+                    List<ShipmentPackage> connectedShipmentsPackages = shipmentPackageRepository.GetPackagesFromShipmentsIds(connectedShipmentsIds, tenant).ToList();
+
+                    foreach (ShipmentPackage masterPackage in masterPackages)
+                    {
+                        GroupedContainersClass myBigItem = new GroupedContainersClass();
+                        myBigItem.MasterContainerNumber = masterPackage.ContainerNumber;
+                        myBigItem.GroupedShipmentList = new List<GroupedShipmentClass>();
+
+                        List<ShipmentPackage> containerPackages = connectedShipmentsPackages.Where(d => d.ContainerNumber == masterPackage.ContainerNumber).ToList();
+
+                        List<NewTemplateClass> newTemplateList = new List<NewTemplateClass>();
+
+                        foreach (ShipmentPackage package in containerPackages)
+                        {
+                            NewTemplateClass newItem = new NewTemplateClass();
+                            
+                            newItem.MarksAndNumbers = package.MarksAndNumbers;
+                            newItem.Quantity = package.Quantity;
+                            newItem.DescriptionOfGoods = package.Description;
+                            newItem.Weight = package.Weight;
+                            newItem.Volume = package.Volume;
+                            newItem.ContainerNumber = package.ContainerNumber;
+                            newItem.ShipmentId = package.ShipmentId;                            
+
+                            newTemplateList.Add(newItem);
+                        }
+
+                        var groupedData = from item in newTemplateList
+                                          group item by new { item.ShipmentId, } into g
+                                          select new
+                                          {
+                                              ShipmentId = g.Key.ShipmentId,
+                                              GroupedPackageItems = g,
+                                          };
+
+                        foreach (var item in groupedData)
+                        {
+                            GroupedShipmentClass myShipmentItem = new GroupedShipmentClass()
+                            {
+                                GroupedManifestPackagesList = new List<GroupedManifestPackages>(),
+                                ShipmentId = item.ShipmentId,
+                            };
+
+                            ShipmentDataView myShipment = connectedShipments.Where(d => d.Id == item.ShipmentId).FirstOrDefault();
+                            myShipmentItem.ShipmentNumber = myShipment.ShipmentNumber;
+                            myShipmentItem.ShipperName = myShipment.ShipperName;
+                            myShipmentItem.ConsigneeName = myShipment.ConsigneeName;
+                            myShipmentItem.PortOfDischarge = myShipment.MainCarriageToPortCode;
+                            myShipmentItem.PC = myShipment.FreightPrepaidCollectId;
+
+                            #region Shipper
+                            CardPM shipper = cardQuery.GetSinglePM(myShipment.ShipperId, tenant);                            
+                            if (shipper != null)
+                            {
+                                Address shipperAdderss = addressRepository.GetSingleAddress(myShipment.ShipperAddressId, tenant);
+                                if (shipperAdderss != null)
+                                {
+                                    myShipmentItem.ShipperAddress = DataProviders.General.GetAddress(shipperAdderss);
+
+                                    if (!string.IsNullOrEmpty(shipperAdderss.PhoneNumber) || !string.IsNullOrEmpty(shipperAdderss.FaxNumber))
+                                    {
+                                        myShipmentItem.ShipperAddress += System.Environment.NewLine;
+
+                                        if (!string.IsNullOrEmpty(shipperAdderss.PhoneNumber))
+                                        {
+                                            myShipmentItem.ShipperAddress = myShipmentItem.ShipperAddress + "Tel: " + shipperAdderss.PhoneNumber + " ";
+                                        }
+                                        if (!string.IsNullOrEmpty(shipperAdderss.FaxNumber))
+                                        {
+                                            myShipmentItem.ShipperAddress = myShipmentItem.ShipperAddress + "Fax: " + shipperAdderss.FaxNumber;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    myShipmentItem.ShipperAddress = "";
+                                }
+                            }
+                            else
+                            {
+                                myShipmentItem.ShipperAddress= "";
+                            }
+                            #endregion
+
+                            #region Consignee
+                            if (!string.IsNullOrEmpty(myShipment.ConsigneeId))
+                            {
+                                CardPM consignee = cardQuery.GetSinglePM(myShipment.ConsigneeId, tenant);                               
+                                
+                                if (consignee != null)
+                                {
+                                    Address consigneeAdderss = addressRepository.GetSingleAddress(myShipment.ConsigneeAddressId, tenant);
+                                    if (consigneeAdderss != null)
+                                    {
+                                        myShipmentItem.ConsigneeAddress = DataProviders.General.GetAddress(consigneeAdderss);
+
+                                        if (!string.IsNullOrEmpty(consigneeAdderss.PhoneNumber) || !string.IsNullOrEmpty(consigneeAdderss.FaxNumber))
+                                        {
+                                            myShipmentItem.ConsigneeAddress += System.Environment.NewLine;
+
+                                            if (!string.IsNullOrEmpty(consigneeAdderss.PhoneNumber))
+                                            {
+                                                myShipmentItem.ConsigneeAddress = myShipmentItem.ConsigneeAddress + "Tel: " + consigneeAdderss.PhoneNumber + " ";
+                                            }
+                                            if (!string.IsNullOrEmpty(consigneeAdderss.FaxNumber))
+                                            {
+                                                myShipmentItem.ConsigneeAddress = myShipmentItem.ConsigneeAddress + "Fax: " + consigneeAdderss.FaxNumber;
+                                            }
+                                        }
+                                    }
+
+                                }
+                                else
+                                {
+                                    myShipmentItem.ConsigneeAddress = "";
+                                }
+                            }
+                            else
+                            {
+                                myShipmentItem.ConsigneeAddress = "";
+                            }
+                            #endregion
+
+                            foreach (var item11 in item.GroupedPackageItems)
+                            {
+                                myShipmentItem.GroupedManifestPackagesList.Add(new GroupedManifestPackages()
+                                {
+                                    ContainerNumber = item11.ContainerNumber,
+                                    MarksAndNumbers = item11.MarksAndNumbers,
+                                    DescriptionOfGoods = item11.DescriptionOfGoods,
+                                    Quantity = item11.Quantity,
+                                    Weight = item11.Weight,
+                                    Volume = item11.Volume,
+                                });
+                            }
+
+                            myBigItem.GroupedShipmentList.Add(myShipmentItem);
+                        }
+
+                        manifestDataProvider.GroupedManifestDetailsList.Add(myBigItem);
+                    }
+                }
+
+                #endregion
+
+                #region From to ports
+                manifestDataProvider.DeparturePortCode = master.MainCarriageFromPortCode != null ? master.MainCarriageFromPortCode : "";
+                manifestDataProvider.DestinationPortCode = master.MainCarriageFinalDestinationPortCode != null ? master.MainCarriageFinalDestinationPortCode : "";
+                #endregion
+
+                #region First Delivery | PlaceOfDelivery
+
+                ShipmentPickUpDelivery myFirstDelivery
+                    = (from d in shipmentsContext.ShipmentPickUpDeliveries
+                       where d.ShipmentId == master.Id && d.PickUpDeliveryTypeCode == "DELV"
+                       select d).OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
+
+
+                manifestDataProvider.PlaceOfDelivery = myServiceHelper.GetPlaceOfDelivery(master, myFirstDelivery);
+
+                #endregion
+
+                manifestDataProvider.PortOfDischargeName = master.MainCarriageToPortName != null ? master.MainCarriageToPortName : "";
+
+                if (master.Transshipment3ToPortCountryCode != null)
+                {
+                    manifestDataProvider.PortOfDischargeCountryCode = master.Transshipment3ToPortCountryCode;
+                }
+
+                else if (master.Transshipment2ToPortCountryCode != null)
+                {
+                    manifestDataProvider.PortOfDischargeCountryCode = master.Transshipment2ToPortCountryCode;
+                }
+                else if (master.Transshipment1ToPortCountryCode != null)
+                {
+                    manifestDataProvider.PortOfDischargeCountryCode = master.Transshipment1ToPortCountryCode;
+                }
+
+                else if (master.MainCarriageToPortCountryCode != null)
+                {
+                    manifestDataProvider.PortOfDischargeCountryCode = master.MainCarriageToPortCountryCode;
+                }
+
+                manifestDataProvider.PortOfLoadingName = master.MainCarriageFromPortName != null ? master.MainCarriageFromPortName : "";
+                manifestDataProvider.PortOfLoadingCountryCode = master.MainCarriageFromPortCountryCode != null ? master.MainCarriageFromPortCountryCode : "";
+                manifestDataProvider.TodaysDate = String.Format("{0:dd.MMM.yy}", TenantServerConfigration.GetCurrentDateTime(tenant));
+
+                StringBuilder strCon = new StringBuilder();
+                StringBuilder strSeal = new StringBuilder();
+
+                List<ShipmentPackagePM> packagesList = packagesQuery.GetShipmentPackages(master.Id, master.ShipmentNumber, tenant);
+                manifestDataProvider.ContainerNumbersLabel = "";
+                manifestDataProvider.SealNumbersLablel = "";
+
+                if (!string.IsNullOrEmpty(master.MoveTypeId))
+                {
+                    MoveType moveType = context.MoveTypes.Where(m => m.Id == master.MoveTypeId).FirstOrDefault();
+
+                    if (moveType != null)
+                    {
+                        manifestDataProvider.MoveTypeCode = moveType.Code;
+                        manifestDataProvider.MoveTypeName = moveType.MoveTypeEnglishName;
+                    }
+                }
+
+                bool computeFields = false;
+                if (master.TransportModeId == "I")
+                {
+                    if (master.ShipmentTypeId == "MyGI" || master.ShipmentTypeId == "FTL")
+                    {
+                        computeFields = true;
+                    }
+                }
+
+                if (master.TransportModeId == "O")
+                {
+                    if (master.ShipmentTypeId == "MyGO" || master.ShipmentTypeId == "FCLD")
+                    {
+                        computeFields = true;
+                    }
+                }
+
+                if (computeFields)
+                {
+                    manifestDataProvider.ContainerNumbersLabel = "Container Numbers";
+                    manifestDataProvider.SealNumbersLablel = "Seal Numbers";
+
+                    manifestDataProvider.ContainerNumbers = "";
+                    manifestDataProvider.SealNumbers = "";
+
+                    for (int i = 0; i < packagesList.Count; i++)
+                    {
+                        if (i != packagesList.Count - 1)
+                        {
+                            if (packagesList[i].ContainerNumber != null) { strCon.Append(packagesList[i].ContainerNumber.PadRight(15)).Append(", "); }
+                            else { strCon.Append(' ', 15); }
+
+                            if (packagesList[i].ShipperSeal != null) { strSeal.Append(packagesList[i].ShipperSeal.PadRight(15)).Append(", "); }
+                            else { strCon.Append(' ', 15); }
+                        }
+                        else
+                        {
+                            if (packagesList[i].ContainerNumber != null)
+                            {
+                                strCon.Append(packagesList[i].ContainerNumber.PadRight(15));
+                            }
+                            if (packagesList[i].ShipperSeal != null)
+                            {
+                                strSeal.Append(packagesList[i].ShipperSeal.PadRight(15));
+                            }
+                        }
+                    }
+                }
+
+                manifestDataProvider.ContainerNumbers = strCon.ToString();
+                manifestDataProvider.SealNumbers = strSeal.ToString();
+                manifestDataProvider.Logo = DataProviders.General.GetLogo(tenant);
+            }
+
+            #region Serialize and remove null region
+            try
+            {
+                Type manifestType = manifestDataProvider.GetType();
+                PropertyInfo[] properties = manifestType.GetProperties();
+
+                foreach (PropertyInfo pi in properties)
+                {
+                    Type piType = pi.PropertyType;
+
+                    if (piType.Name != "Double")
+                    {
+                        if (pi.GetValue(manifestDataProvider, null) == null || pi.GetValue(manifestDataProvider, null).ToString() == "0" || pi.GetValue(manifestDataProvider, null).ToString() == "00.00")
+                        {
+                            pi.SetValue(manifestDataProvider, "", null);
+                        }
+                    }
+                }
+            }
+            catch { }
+
+            return manifestDataProvider;
+            #endregion
+        }
+
+        private void GetOtherCharges(string shipmentId, int tenant, ref double totalPrepaidString, ref double totalCollectString) //test
+        {
+            IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
+            List<ShipmentReceivable> receivables = shipmentsContext.ShipmentReceivables.Include("ChargesType").Where(d => d.ShipmentId == shipmentId && d.Tenant == tenant).ToList();
+            List<ShipmentPayable> payables = shipmentsContext.ShipmentPayables.Include("ChargesType").Where(d => d.ShipmentId == shipmentId && d.Tenant == tenant).ToList();
+            List<ShipmentAWBPrintOnly> shipmentAWBPrintOnlies = shipmentsContext.ShipmentAWBPrintOnlies.Where(d => d.ShipmentId == shipmentId && d.Tenant == tenant).ToList();
+            double totalPrepaid = 0;
+            double totalCollect = 0;
+
+            #region Receivables
+            foreach (ShipmentReceivable receivable in receivables)
+            {
+                if (receivable.AWBPrint)
+                {
+                    if (receivable.ChargesType.ChargesGroupCode != "FRT")
+                    {
+                        if (receivable.AWBPrint && receivable.PrepaidCollectId == "P")
+                        {
+                            totalPrepaid = totalPrepaid + (receivable.TotalAmount != null ? receivable.TotalAmount.Value : 0);
+                        }
+                        if (receivable.AWBPrint && receivable.PrepaidCollectId == "C")
+                        {
+                            totalCollect = totalCollect + (receivable.TotalAmount != null ? receivable.TotalAmount.Value : 0);
+                        }
+                    }
+                }
+            }
+            #endregion
+
+            #region Payables
+            foreach (ShipmentPayable payable in payables)
+            {
+                if (payable.AWBPrint)
+                {
+                    if (payable.ChargesType.ChargesGroupCode != "FRT")
+                    {
+                        if (payable.AWBPrint && payable.PrepaidCollectId == "P")
+                        {
+                            totalPrepaid = totalPrepaid + (payable.ExpectedAmount != null ? payable.ExpectedAmount.Value : 0);
+                        }
+                        if (payable.AWBPrint && payable.PrepaidCollectId == "C")
+                        {
+                            totalCollect = totalCollect + (payable.ExpectedAmount != null ? payable.ExpectedAmount.Value : 0);
+                        }
+                    }
+                }
+            }
+            #endregion
+
+            #region awb only
+            foreach (ShipmentAWBPrintOnly awbOnly in shipmentAWBPrintOnlies)
+            {
+                if (awbOnly.PrepaidCollectId == "P")
+                {
+                    totalPrepaid = totalPrepaid + (awbOnly.Amount != null ? awbOnly.Amount.Value : 0);
+                }
+
+                if (awbOnly.PrepaidCollectId == "C")
+                {
+                    totalCollect = totalCollect + (awbOnly.Amount != null ? awbOnly.Amount.Value : 0);
+                }
+            }
+            #endregion
+
+            totalPrepaidString = totalPrepaid;
+            totalCollectString = totalCollect;
+        }
+
+        private int countLines(string str)
+        {
+            if (!string.IsNullOrEmpty(str))
+            {
+                int counter = 1;
+                string[] strTemp = str.Split(new string[] { "\r" }, StringSplitOptions.None);
+                if (strTemp.Length > 0)
+                {
+                    counter = strTemp.Length;
+                }
+                return counter;
+            }
+            else return 0;
+        }
+    }
+
+    public class NewTemplateClass
+    {
+        public string MarksAndNumbers { get; set; }
+        public int? Quantity { get; set; }
+        public string DescriptionOfGoods { get; set; }
+        public double? Weight { get; set; }
+        public double? Volume { get; set; }
+        public string ContainerNumber { get; set; }
+
+        public string ShipmentId { get; set; }
+        //public string ShipperName { get; set; }
+        //public string ShipperAddress { get; set; }
+        //public string ConsigneeName { get; set; }
+        //public string ConsigneeAddress { get; set; }
+        //public string PortOfDischarge { get; set; }
+        //public string PC { get; set; }
+    }
+}

@@ -1,0 +1,1 @@
+delete  from ScreenFields where ObjectFieldId in (select id from ObjectFields where ObjectTableId = (select id from ObjectTables where name = 'ticket') and (FieldName = 'ContactPhone' or FieldName ='ContactName'))

@@ -1,0 +1,102 @@
+﻿
+<table>
+
+    <tr style="height:22px">
+        <td>
+            <table>
+                <tr>
+                    <td style="width:5px;"></td>
+                    <td style="color:#1B90CB;font-size:14px;">Filter By:</td>
+
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 28px;">
+        <td>
+            <table>
+                <tr>
+                    <td style="width: 1px; padding-right: 15px;" class="Label">Paid Until Date:</td>
+                    <!-- From Date -->
+                    <td style="width: 1px; padding-right: 5px;" class="Label">From:</td>
+                    <td style="width: 150px; min-width: 150px;">
+                        <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'FromDate'" [SelectedDateValue]="FromDate" [DataContext]="DataContext"></LogDatePicker>
+                    </td>
+
+                    <!-- To Date -->
+                    <td style="width: 1px; padding-right: 5px;" class="Label">To:</td>
+                    <td style="width: 150px; min-width: 150px;">
+                        <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'ToDate'" [SelectedDateValue]="ToDate" [DataContext]="DataContext"></LogDatePicker>
+                    </td>
+
+                    <td style="width: 1px; padding-right: 5px;" class="Label">Recurring:</td>
+                    <td style="width:120px;">
+                        <ComboBox [ItemsSource]="RecurringComboList" [SelectedItem]="SelectedItemComboBox" [Binding]="'Name'" (SelectedItemChanged)="SelectedItemComboBox = $event"></ComboBox>
+                    </td>
+
+                    <td><div></div></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 28px;">
+        <td>
+            <table>
+                <tr>
+                    <td style="width: 1px; padding-right: 5px;" class="Label">Salesman:</td>
+                    <td style="width:180px;">
+                        <LogLov [ObjectFieldName]="'SalesmanId'"
+                                [DataContext]="DataContext"
+                                [ObjectTableName]="'Customer'"
+                                [LookUpTableName]="'User'">
+                        </LogLov>
+                    </td>
+                                        
+                    <td style="width: 1px; padding-right: 5px;" class="Label">Payment Channel:</td>
+                    <td style="width:180px;">
+                        <LogLov [ObjectFieldName]="'PaymentChannelCode'"
+                                [DataContext]="DataContext"
+                                [ObjectTableName]="'Customer'"
+                                [LookUpTableName]="'PaymentChannel'">
+                        </LogLov>
+                    </td>
+                                        
+                    <td style="width: 1px; padding-right: 5px;" class="Label">Country:</td>
+                    <td style="width:180px;">
+                        <LogLov [ObjectFieldName]="'CountryId'"
+                                [DataContext]="DataContext"
+                                [ObjectTableName]="'Customer'"
+                                [LookUpTableName]="'Country'">
+                        </LogLov>
+                    </td>
+
+                    <td style="width:285px;" [hidden]="!IsCRMTenant">
+                        <table>
+                            <tr>                                
+                                <td style="width: 1px; padding-right: 5px;" class="Label">Reseller:</td>
+                                <td style="width:180px;">
+                                    <LogLov [ObjectFieldName]="'ResellerId'"
+                                            [DataContext]="DataContext"
+                                            [ObjectTableName]="'Customer'"
+                                            [LookUpTableName]="'Card'">
+                                    </LogLov>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td style="width:40px"></td>
+
+                    <td style="width:90px;">
+                        <button (click)="RunReport()" class="GreenButton" style="width:90px; height:22px;">Run Report</button>
+                    </td>
+
+                    <td><div></div></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

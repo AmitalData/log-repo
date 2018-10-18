@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema 
+    attributeFormDefault="unqualified"
+    elementFormDefault="qualified"
+    xmlns:GCCSCargoImp="http://www.champ.aero/GCCS/CargoXML"
+    targetNamespace="http://www.champ.aero/GCCS/CargoXML"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    version="2.1"
+>
+	<xs:include schemaLocation="common.xsd"/>
+    <xs:include schemaLocation="StatusDetails.xsd"/>
+	<xs:include schemaLocation="StatusRequest.xsd"/>
+
+    <xs:element name="Envelope" type="GCCSCargoImp:Envelope"/>
+ 
+    <xs:complexType name="Envelope">
+        <xs:choice>
+            <xs:element name="StatusDetails" type="GCCSCargoImp:StatusAnswer"/>
+            <xs:element name="StatusRequest" type="GCCSCargoImp:StatusRequest"/>
+        </xs:choice>
+        <xs:attribute name="Sender" type="GCCSCargoImp:Sender" use="required"/>
+        <xs:attribute name="Recipient" type="GCCSCargoImp:Recipient" use="required"/>
+    </xs:complexType>
+</xs:schema>

@@ -1,0 +1,225 @@
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs; 
+using Logitude.Customs.Data;
+
+namespace Logitude.Customs.BL.EntityDataMappings
+{
+   
+   public partial class DeclarationPaymentDataMapping: IMapping<DeclarationPaymentPM, DeclarationPayment>,IMappingEncodeBase64NVARCHARFields<DeclarationPaymentPM>
+   {
+          public enum POCOPropertyNames
+          { 
+		     None,  
+	         DeclarationId, 
+	         PaymentDate, 
+	         CreatedByUserId, 
+	         SignatoryIdentification, 
+	         IsProcessA, 
+	         ProcessADescription, 
+	         Tenant, 
+	         ConcurrencyGUID, 
+	         FuturePaymentDateTime,
+	      }
+
+
+	      public enum PMPropertyNames
+          { 
+		     None,  
+	         DeclarationId, 
+	         PaymentDate, 
+	         CreatedByUserId, 
+	         SignatoryIdentification, 
+	         IsProcessA, 
+	         ProcessADescription, 
+	         Tenant, 
+	         PaymentMethodLastLineNumber, 
+	         PaymentProtestLastLineNumber, 
+	         ConcurrencyGUID, 
+	         NewConcurrencyGUID, 
+	         CustomsAgentExplanationDefault, 
+	         FuturePaymentDateTime,
+	      }
+
+		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
+        List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
+    
+	    public void PMToPOCO(DeclarationPaymentPM entityPM, DeclarationPayment entityPOCO)
+        {
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PaymentDate))
+            {
+				entityPOCO.PaymentDate = entityPM.PaymentDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreatedByUserId))
+            {
+				entityPOCO.CreatedByUserId = entityPM.CreatedByUserId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SignatoryIdentification))
+            {
+				entityPOCO.SignatoryIdentification = entityPM.SignatoryIdentification;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsProcessA))
+            {
+				entityPOCO.IsProcessA = entityPM.IsProcessA;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ProcessADescription))
+            {
+				entityPOCO.ProcessADescription = entityPM.ProcessADescription;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConcurrencyGUID))
+            {
+				entityPOCO.ConcurrencyGUID = entityPM.ConcurrencyGUID;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FuturePaymentDateTime))
+            {
+				entityPOCO.FuturePaymentDateTime = entityPM.FuturePaymentDateTime;
+			}
+			}
+
+		public void POCOToPM(DeclarationPaymentPM entityPM, DeclarationPayment entityPOCO)
+        {
+			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DeclarationId))
+            {
+					entityPM.DeclarationId = entityPOCO.DeclarationId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PaymentDate))
+            {
+					entityPM.PaymentDate = entityPOCO.PaymentDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CreatedByUserId))
+            {
+					entityPM.CreatedByUserId = entityPOCO.CreatedByUserId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SignatoryIdentification))
+            {
+					entityPM.SignatoryIdentification = entityPOCO.SignatoryIdentification;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsProcessA))
+            {
+					entityPM.IsProcessA = entityPOCO.IsProcessA;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ProcessADescription))
+            {
+					entityPM.ProcessADescription = entityPOCO.ProcessADescription;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
+            {
+					entityPM.Tenant = entityPOCO.Tenant;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ConcurrencyGUID))
+            {
+					entityPM.ConcurrencyGUID = entityPOCO.ConcurrencyGUID;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FuturePaymentDateTime))
+            {
+					entityPM.FuturePaymentDateTime = entityPOCO.FuturePaymentDateTime;
+            }
+
+		}
+
+		public void PMToOldPM(DeclarationPaymentPM entityPM, DeclarationPaymentPM oldEntityPM)
+        {
+		     oldEntityPM.ChangedProperties.Clear();
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PaymentDate))
+            {
+                oldEntityPM.PaymentDate = entityPM.PaymentDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreatedByUserId))
+            {
+                oldEntityPM.CreatedByUserId = entityPM.CreatedByUserId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SignatoryIdentification))
+            {
+                oldEntityPM.SignatoryIdentification = entityPM.SignatoryIdentification;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsProcessA))
+            {
+                oldEntityPM.IsProcessA = entityPM.IsProcessA;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ProcessADescription))
+            {
+                oldEntityPM.ProcessADescription = entityPM.ProcessADescription;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+                oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConcurrencyGUID))
+            {
+                oldEntityPM.ConcurrencyGUID = entityPM.ConcurrencyGUID;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FuturePaymentDateTime))
+            {
+                oldEntityPM.FuturePaymentDateTime = entityPM.FuturePaymentDateTime;
+            }
+			
+		}
+
+	    public void EncodeBase64NVARCHARFields(DeclarationPaymentPM entityPM)
+        {
+            if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
+            {
+                return;
+
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.ProcessADescription)) //T4 find type == nText 
+            {
+                entityPM.ProcessADescription = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ProcessADescription));
+            }
+            entityPM.EncodeBase64NVARCHARFieldsBy=null;
+		}
+
+
+	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
+        {
+            CustomMappedPOCOProperties.Add(pocoPropertyName);
+        }
+
+        public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
+        {
+            CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+			  
+   }
+}
+	 

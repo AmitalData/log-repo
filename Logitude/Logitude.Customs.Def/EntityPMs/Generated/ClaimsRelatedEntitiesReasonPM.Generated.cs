@@ -1,0 +1,203 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Customs.Def.Validators;
+  
+namespace Logitude.Customs.Def.EntityPMs
+{
+   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class ClaimsRelatedEntitiesReasonPM : EntityPM
+   {
+   	  private string claimId ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ClaimId  
+	   {
+	    
+	     get
+		{
+		   return claimId;
+		 }
+		 set
+		 {
+		   if(claimId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ClaimId",OldValue=claimId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   claimId=value;
+		   }
+			
+		 }
+	   }
+	  private int tenant ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+	  private int counterKey ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int CounterKey  
+	   {
+	    
+	     get
+		{
+		   return counterKey;
+		 }
+		 set
+		 {
+		   if(counterKey != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CounterKey",OldValue=counterKey,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   counterKey=value;
+		   }
+			
+		 }
+	   }
+	  private int lineNo ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int LineNo  
+	   {
+	    
+	     get
+		{
+		   return lineNo;
+		 }
+		 set
+		 {
+		   if(lineNo != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LineNo",OldValue=lineNo,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   lineNo=value;
+		   }
+			
+		 }
+	   }
+	  private string reasonListTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ReasonListTypeCode  
+	   {
+	    
+	     get
+		{
+		   return reasonListTypeCode;
+		 }
+		 set
+		 {
+		   if(reasonListTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ReasonListTypeCode",OldValue=reasonListTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   reasonListTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string reasonListTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ReasonListTypeName  
+	   {
+	    
+	     get
+		{
+		   return reasonListTypeName;
+		 }
+		 set
+		 {
+		   if(reasonListTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ReasonListTypeName",OldValue=reasonListTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   reasonListTypeName=value;
+		   }
+			
+		 }
+	   }
+
+	   private List<ClaimsRelatedEntsReasonsExpPM> claimsRelatedEntsReasonsExps;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("ClaimsRelatedEntsReasonsExps", "ClaimId,CounterKey,LineNo","ClaimId,CounterKey,ReasonLineNo")]
+	   [DataMember]
+	   public virtual List<ClaimsRelatedEntsReasonsExpPM> ClaimsRelatedEntsReasonsExps  
+	   {
+	        get
+             {
+                 if (claimsRelatedEntsReasonsExps == null)
+                 {
+                     claimsRelatedEntsReasonsExps = new List<ClaimsRelatedEntsReasonsExpPM>();
+                 }
+                 return claimsRelatedEntsReasonsExps;
+              }
+             set { claimsRelatedEntsReasonsExps = value; }
+	    }
+		   
+	   private List<ClaimsRelatedEntsReasonsExpPM>  deletedClaimsRelatedEntsReasonsExps;
+	   public virtual List<ClaimsRelatedEntsReasonsExpPM> DeletedClaimsRelatedEntsReasonsExps  
+	   {
+	        get
+             {
+                 if ( deletedClaimsRelatedEntsReasonsExps == null)
+                 {
+                      deletedClaimsRelatedEntsReasonsExps = new List<ClaimsRelatedEntsReasonsExpPM>();
+                 }
+                 return  deletedClaimsRelatedEntsReasonsExps;
+              }
+             set {  deletedClaimsRelatedEntsReasonsExps = value; }
+	    }
+	     }
+   
+}
+	 

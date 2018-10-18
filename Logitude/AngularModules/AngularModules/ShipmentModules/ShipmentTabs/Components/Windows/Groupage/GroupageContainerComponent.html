@@ -1,0 +1,132 @@
+﻿
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr *ngIf="WarningErrorsList != null && WarningErrorsList.length > 0" style="height:1px;">
+        <td>
+            <WarningSummary [ItemsSource]="WarningErrorsList" [SingleLine]="true"></WarningSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+
+                <!-- PackageTypeId -->
+                <tr class="FormFieldRow">
+                    <td style="width: 120px;">
+                        <LogLabel [ObjectFieldName]="'PackageTypeId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Container Type'"></LogLabel>
+                    </td>
+
+                    <td style="width: 260px;">
+                        <LogLov [ObjectFieldName]="'PackageTypeId'"
+                                [SelectedValue]="DataContext.PackageTypeId"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'PackageType'"
+                                [DependencyFilter2Value]="true">
+                        </LogLov>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- Container # -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'ContainerNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'ContainerNumber'" [Text]="DataContext.ContainerNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" (LostFocus)="ContainerNumberLostFocus($event)"></LogTextBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- Weight -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'Weight'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="GrossWeightLabel"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'Weight'" [Text]="DataContext.Weight" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- Tare -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'Tare'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="TareLabel"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'Tare'" [Text]="DataContext.Tare" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- ShipperSeal -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'ShipperSeal'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'ShipperSeal'" [Text]="DataContext.ShipperSeal" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="3">
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

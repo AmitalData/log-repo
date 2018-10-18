@@ -1,0 +1,56 @@
+import { CustomsRequestsSheetsListTemplate } from './Components/CustomsRequestsSheetsListTemplate';
+import { DeclarationSupplierInvoiceListTemplate } from './Components/DeclarationSupplierInvoiceListTemplate';
+import { CustomsClosedTablesListTemplate } from './Components/CustomsClosedTablesListTemplate';
+import { CertificateCheckBoxComponent } from './Components/CertificateCheckBoxComponent';
+import { CertificateTextBoxComponent } from './Components/CertificateTextBoxComponent';
+import { NotificationListTemplate } from './Components/NotificationListTemplate';
+import { SupplierInvoiceItemsTaxListTemplate } from './Components/SupplierInvoiceItemsTaxListTemplate';
+import { InterfaceManagementsListTemplate } from './Components/InterfaceManagementsListTemplate';
+import { CourierConnectedDeclarationListTemplate } from './Components/CourierConnectedDeclarationListTemplate';
+import { SignStationListTemplate } from './Components/SignStationListTemplate';
+import { CourierWorksheetListTemplate } from './Components/CourierWorksheetListTemplate';
+import { DeclarationQueryListTemplate } from './Components/DeclarationQueryListTemplate';
+
+
+export const Components =
+  [
+    CustomsRequestsSheetsListTemplate,
+    CustomsClosedTablesListTemplate,
+    CertificateCheckBoxComponent,
+    CertificateTextBoxComponent,
+    InterfaceManagementsListTemplate,
+    SignStationListTemplate,
+    CourierConnectedDeclarationListTemplate,
+    CourierWorksheetListTemplate,
+    DeclarationSupplierInvoiceListTemplate,
+    DeclarationQueryListTemplate,
+    NotificationListTemplate,
+    SupplierInvoiceItemsTaxListTemplate,
+  ];
+
+export class ModuleDeclarations {
+  public static Get(name: string) {
+
+    var myResult: any = null;
+
+    switch (name) {
+      case "CustomsRequestsSheetsListTemplate": { myResult = CustomsRequestsSheetsListTemplate; break; }
+      case "DeclarationSupplierInvoiceListTemplate": { myResult = DeclarationSupplierInvoiceListTemplate; break; }
+      case "CustomsClosedTablesListTemplate": { myResult = CustomsClosedTablesListTemplate; break; }
+      case "CertificateCheckBoxComponent": { myResult = CertificateCheckBoxComponent; break; }
+      case "CertificateTextBoxComponent": { myResult = CertificateTextBoxComponent; break; }
+      case "NotificationListTemplate": { myResult = NotificationListTemplate; break; }
+      case "SupplierInvoiceItemsTaxListTemplate": { myResult = SupplierInvoiceItemsTaxListTemplate; break; }
+      case "InterfaceManagementsListTemplate": { myResult = SupplierInvoiceItemsTaxListTemplate; break; }
+      case "SignStationListTemplate": { myResult = SignStationListTemplate; break; }
+      case "CourierWorksheetListTemplate": { myResult = CourierWorksheetListTemplate; break; }
+      case "CourierConnectedDeclarationListTemplate": { myResult = CourierConnectedDeclarationListTemplate; break; }
+      case "DeclarationQueryListTemplate": { myResult = DeclarationQueryListTemplate; break; }
+
+
+
+    }
+
+    return myResult;
+  }
+}

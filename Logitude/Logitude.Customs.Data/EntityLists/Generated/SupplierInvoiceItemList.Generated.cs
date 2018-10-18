@@ -1,0 +1,124 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization; 
+
+namespace Logitude.Customs.Data.EntityLists
+{
+   [DataContract]
+   public partial class SupplierInvoiceItemList
+   {
+   
+       [Key]
+       [DataMember]
+       public string DeclarationId  { get; set; }
+
+       [Key]
+       [DataMember]
+       public int CounterKey  { get; set; }
+
+       [Key]
+       [DataMember]
+       public int LineNumber  { get; set; }
+       [DataMember]
+       public string ItemCode  { get; set; }
+       [DataMember]
+       public string OriginCountryCode  { get; set; }
+       [DataMember]
+       public string ClassificationCode  { get; set; }
+       [DataMember]
+       public string DangerousClassificationCode  { get; set; }
+       [DataMember]
+       public string DangerousPackingGroupTypeCode  { get; set; }
+       [DataMember]
+       public decimal? ItemPrice  { get; set; }
+       [DataMember]
+       public decimal? NonCustomsItemPrice  { get; set; }
+       [DataMember]
+       public decimal? WholeSaleItemPrice  { get; set; }
+       [DataMember]
+       public string ManufactureIdentifier  { get; set; }
+       [DataMember]
+       public string CustomsBookTypeCode  { get; set; }
+       [DataMember]
+       public string TaxExemptCode  { get; set; }
+       [DataMember]
+       public decimal? OptionalTamaPercentage  { get; set; }
+       [DataMember]
+       public string SalesTaxExemptionTypeCode  { get; set; }
+       [DataMember]
+       public int Tenant  { get; set; }
+       [DataMember]
+       public int? SequenceNumeric  { get; set; }
+       [DataMember]
+       public string ItemPriceCurrencyCode  { get; set; }
+       [DataMember]
+       public string NonCustomsItemPriceCurCode  { get; set; }
+       [DataMember]
+       public string WholeSaleItemPriceCurrencyCode  { get; set; }
+       [DataMember]
+       public string ActualInvoiceLines  { get; set; }
+       [DataMember]
+       public string OriginCountryName  { get; set; }
+       [DataMember]
+       public string TradeAgreementCode  { get; set; }
+       [DataMember]
+       public string TradeAgreementName  { get; set; }
+       [DataMember]
+       public decimal? StatisticQuantity  { get; set; }
+       [DataMember]
+       public decimal? InvoiceQuantity  { get; set; }
+       [DataMember]
+       public decimal? AdditionalQuantity  { get; set; }
+       [DataMember]
+       public string InvoiceQuantityType  { get; set; }
+       [DataMember]
+       public string StatisticQuantityType  { get; set; }
+       [DataMember]
+       public string AdditionalQuantityType  { get; set; }
+       [DataMember]
+       public string InvoiceQuantityTypeName  { get; set; }
+       [DataMember]
+       public string StatisticQuantityTypeName  { get; set; }
+       [DataMember]
+       public string AdditionalQuantityTypeName  { get; set; }
+       [DataMember]
+       public string PreferenceDocumentNumber  { get; set; }
+       [DataMember]
+       public string ItemDescription  { get; set; }
+       [DataMember]
+       public bool IsItemChanged  { get; set; }
+       [DataMember]
+       public string CatalogNumber  { get; set; }
+       [DataMember]
+       public string CertificatesStatusCode  { get; set; }
+       [DataMember]
+       public bool IsUsed  { get; set; }
+       [DataMember]
+       public decimal? DeferredCustomsTax  { get; set; }
+       [DataMember]
+       public decimal? DeferredPurchaseTax  { get; set; }
+       [DataMember]
+       public bool VehicleStatus  { get; set; }
+       [DataMember]
+       public bool ItemAdditionalStatus  { get; set; }
+       [DataMember]
+       public string ItemHash  { get; set; }
+       [DataMember]
+       public int? ParentLineNumber  { get; set; }
+       [DataMember]
+       public bool NotForAccumaltion  { get; set; }
+       [DataMember]
+       public bool IsParent  { get; set; }
+       [DataMember]
+       public string ClasifiedRemarks  { get; set; }
+       [DataMember]
+       public string SearchFields  { get; set; }
+   }
+
+}
+	 

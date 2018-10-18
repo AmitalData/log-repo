@@ -1,0 +1,1 @@
+ delete from ScreenFields where ScreenId in (select id from Screens where Code = 'ARPayment.GeneralTabScreen')

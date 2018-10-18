@@ -1,0 +1,48 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Accounting.Data.EntityPOCOs
+{
+   
+    public class JournalReconcile
+    {
+	 string dbms;
+
+        [Key]
+        [ForeignKey("Journal")]
+        [Column("JournalId" ,Order = 1)]
+	    public string JournalId { get; set; }
+	      
+        public virtual Journal Journal { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+     [Key]
+        [ForeignKey("LedgerTransaction")]
+        [Column("LedgerTransactionId")]
+	    public string LedgerTransactionId { get; set; }
+	      
+        public virtual LedgerTransaction LedgerTransaction { get; set; }
+        [Column("Line" ,Order = 2)]
+	    public int Line { get; set; }
+        [ForeignKey("Currency")]
+        [Column("CurrencyId")]
+	    public string CurrencyId { get; set; }
+	      
+        public virtual Currency Currency { get; set; }
+        [Column("ReconciliationAmount")]
+	    public decimal ReconciliationAmount { get; set; }
+        [Column("IsPartial")]
+	    public bool IsPartial { get; set; }
+    }
+}
+	 

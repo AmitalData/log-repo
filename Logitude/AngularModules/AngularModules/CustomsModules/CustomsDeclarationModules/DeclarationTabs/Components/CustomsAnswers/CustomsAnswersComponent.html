@@ -1,0 +1,591 @@
+﻿
+<style>
+    .subTitle {
+        color: #4b90cb;
+        font-size: 17px;
+        padding-left: 5px;
+    }
+
+    .FormFieldRow {
+        height: auto !important;
+    }
+
+    .DisbleBox {
+        display: inline-block;
+        border: 1px solid #ffd800;
+        border-radius: 5px;
+        background: #faf5c0;
+        padding: 2px 10px;
+        margin: 5px;
+        color: gray;
+        font-family: sans-serif;
+    }
+
+    .noselect {
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none; /* Chrome/Safari/Opera */
+        -khtml-user-select: none; /* Konqueror */
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+        user-select: none; /* Non-prefixed version, currently
+                                  not supported by any browser */
+    }
+
+
+    /* Filters Overide styles */
+
+    .FiltersMenu li {
+        float: right !important;
+        border-width: 1px 1px 1px 0px !important;
+    }
+
+        .FiltersMenu li:first-child {
+            border-radius: 0px 3px 3px 0px !important;
+        }
+
+        .FiltersMenu li:last-child {
+            border-radius: 3px 0px 0px 3px !important;
+            border-left: 1px solid #6A8299 !important;
+        }
+
+        .FiltersMenu li:active:not(.SelectedFilter) {
+            /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#c4c6c6+0,dbdbdb+19,bcbec0+79,a2a4a5+100 */
+            background: #c4c6c6; /* Old browsers */
+            background: -moz-linear-gradient(top, #c4c6c6 0%, #dbdbdb 19%, #bcbec0 79%, #a2a4a5 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(top, #c4c6c6 0%,#dbdbdb 19%,#bcbec0 79%,#a2a4a5 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(to bottom, #c4c6c6 0%,#dbdbdb 19%,#bcbec0 79%,#a2a4a5 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c4c6c6', endColorstr='#a2a4a5',GradientType=0 ); /* IE6-9 */
+        }
+
+    /* List Styles */
+    .ConstraintList li {
+        position: relative;
+        border: 1px solid #DADADA;
+        border-radius: 4px;
+        -moz-border-radius: 4px;
+        -webkit-border-radius: 4px;
+        margin-bottom: 3px;
+        z-index: 0;
+    }
+
+        .ConstraintList li:hover {
+            cursor: auto;
+            background: rgba(232, 247, 255, 1);
+            border: 1px solid #3BB3E2;
+            background: -moz-linear-gradient(50% 106.14% 90deg,rgba(133, 203, 237, 1) 0%,rgba(150, 211, 240, 1) 22.59%,rgba(196, 231, 248, 1) 67.37%,rgba(232, 247, 255, 1) 99.68%);
+            background: -webkit-linear-gradient(90deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 99.68%);
+            background: -webkit-gradient(linear,50% 106.14%,50% -10.13%,color-stop(0,rgba(133, 203, 237, 1) ),color-stop(0.2259,rgba(150, 211, 240, 1) ),color-stop(0.6737,rgba(196, 231, 248, 1) ),color-stop(0.9968,rgba(232, 247, 255, 1) ));
+            background: -o-linear-gradient(90deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 99.68%);
+            background: linear-gradient(0deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 99.68%);
+            /*transition: 0.3s;*/
+        }
+
+    .ListItem-right {
+        padding: 10px;
+        display: inline-block;
+        width: 150px;
+        /*background: #ffa9e0;*/
+        background: white;
+        position: absolute;
+        height: 100%;
+        border-radius: 0px 3px 3px 0px;
+
+    }
+
+        .ListItem-right a {
+            font-size: 13px;
+            color: #1b90cb;
+        }
+
+            .ListItem-right a:hover {
+                color: #73a9d8;
+            }
+
+    .ListItem-middle {
+        vertical-align: top;
+        width: calc(100% - 660px);
+        margin-right: 150px;
+        padding: 10px;
+        display: inline-block;
+        /*background: rgba(232, 247, 255, 1);*/
+    }
+
+    .ListItem-left {
+        vertical-align: top;
+        min-height: 60px;
+        display: inline-block;
+        /*background: #ffd800;*/
+        width: 510px;
+        padding: 10px;
+        min-height: 60px;
+        /*background: #e2e2e2;*/
+        z-index: 1;
+    }
+    .leftDarkBackground{
+        width: 510px;
+        background: #e2e2e2;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        z-index: -1;
+        border-radius: 3px 0px 0px 3px;
+        pointer-events: none;
+    }
+
+    /* Others */
+    .hidden {
+        opacity: 0;
+        visibility: collapse;
+    }
+</style>
+<table>
+    <tr>
+        <td>
+            <div class="TableHolder">
+                <table *ngIf="EntityPM">
+
+                    <!--Disble Alert-->
+                    <tr *ngIf="IsDisplayOnly" style="height: 28px;">
+                        <td colspan="3">
+                            <div style="width: 100%;text-align:center">
+                                <div class="DisbleBox">
+                                    {{DisplayOnlyMessage}}
+                                    <span style="padding: 0px 16px;">-</span>
+                                    <span class="hyperlink" (click)="RefreshEntity()" style="font-size:12px;">רענן</span>
+
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr *ngIf="!IsDisplayOnly && ShowStorageStatusMessage" style="height: 28px;">
+                        <td colspan="3">
+                            <div style="width: 100%;text-align:center">
+                                <div class="DisbleBox">
+                                    {{DisplayOnlyMessage}}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- Title -->
+                    <tr style="height: 28px;">
+                        <td  style="width:70px" class="subTitle">{{'Customs.Declaration.TH.CustomsAnswers' | TextCodeTranslationPipe}}</td>
+                        <td style="width: 320px;" *ngIf="IsCourierDeclaration">
+                            <ul class="FiltersMenu">
+                                <li id="All" (click)="CourierFilterClicked('Declaration')" style="width: 80px; height: 22px;"
+                                    [class.SelectedFilter]="CourierFilterSelectedValue === 'Declaration'" class="noselect">
+                                   {{'Customs.Declaration.O.Declaration' | TextCodeTranslationPipe}}
+                                </li>
+                                <li id="Errors" (click)="CourierFilterClicked('Manifest')" style="width: 80px; height: 22px;"
+                                    [class.SelectedFilter]="CourierFilterSelectedValue === 'Manifest'" class="noselect">
+                                 {{'Customs.Declaration.O.Manifest' | TextCodeTranslationPipe}}
+                                </li>
+
+                            </ul>
+                        </td>
+                    
+                       </tr>
+
+                    <!-- Filters -->
+                    <tr style="height: 32px;">
+
+                        <td style="width: 50px; color: #747474">
+                            סנן לפי:
+                        </td>
+
+                        <td style="width: 320px;">
+                            <ul class="FiltersMenu">
+                                <li id="All" (click)="FilterItemClicked('All')" style="width: 80px; height: 22px;"
+                                    [class.SelectedFilter]="FilterSelectedValue === 'All'" class="noselect">
+                                    {{'Customs.DeclarationConstraint.O.All' | TextCodeTranslationPipe}} {{AllCount}}
+                                </li>
+                                <li id="Errors" (click)="FilterItemClicked('Errors')" style="width: 80px; height: 22px;"
+                                    [class.SelectedFilter]="FilterSelectedValue === 'Errors'" class="noselect">
+                                    {{'Customs.DeclarationConstraint.O.Errors' | TextCodeTranslationPipe}} {{ErrorsCount}}
+                                </li>
+                                <li id="Constraints" *ngIf="!IsManifest" (click)="FilterItemClicked('Constraints')" style="width: 80px; height: 22px;"
+                                    [class.SelectedFilter]="FilterSelectedValue === 'Constraints'" class="noselect">
+                                    {{'Customs.DeclarationConstraint.O.Constraints' | TextCodeTranslationPipe}} {{IsMoreThan50 ? ('('+AllConstraintCount+')'):ConstraintsCount}}
+                                </li>
+                                <li id="Warnings" (click)="FilterItemClicked('Warnings')" style="width: 80px; height: 22px;"
+                                    [class.SelectedFilter]="FilterSelectedValue === 'Warnings'" class="noselect">
+                                    {{'Customs.DeclarationConstraint.O.Warnings' | TextCodeTranslationPipe}} {{WarningsCount}}
+                                </li>
+                            </ul>
+                        </td>
+
+                        <td></td>
+                    </tr>
+
+                    <!--<tr style="height: 25px;">
+                        <td></td>
+                    </tr>-->
+
+                    <!-- System Messages -->
+                    <tr style="height: 28px;">
+                        <td colspan="3" class="subTitle">{{'Customs.Declaration.O.SystemMessages' | TextCodeTranslationPipe}}</td>
+                    </tr>
+                    <tr *ngIf="Description" style="height: 30px;">
+                        <td colspan="3">
+                            <div class="DisbleBox" style="max-width: 860px;word-wrap: break-word;word-break: break-word;white-space: initial;">
+                                {{Description}}
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr style="height: 25px;">
+                        <td></td>
+                    </tr>
+
+                    <!-- Errors -->
+                    <tr *ngIf="IsErrorsVisible" style="height: 28px;">
+                        <td colspan="3" class="subTitle">{{'Customs.DeclarationConstraint.O.Errors' | TextCodeTranslationPipe}} {{ErrorsCount}}</td>
+                    </tr>
+                    <tr *ngIf="IsErrorsVisible" style="height: 200px;">
+                        <td colspan="3" style="border: 1px solid gray;">
+                            <logitude-edit-grid GridWidth="100%"
+                                                GridHeight="100%"
+                                                [ItemSource]="Errorslist"
+                                                [UseVirtuallization]="true"
+                                                [IsDarkHeader]="true"
+                                                (SelectedItemChanged)="EditEntity($event)">
+
+                                <!-- Description -->
+                                <log-column [header]="'Customs.Declaration.O.Description' | TextCodeTranslationPipe"
+                                            [width]="'480'" [Alignment]="'right'" [binding]="'Description'">
+
+                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                        <div style="text-align: right;" class="TextTrimming" [title]="item.Description">
+                                            <span>{{item.Description}}</span>
+                                        </div>
+                                    </log-cell-template>
+
+                                </log-column>
+
+                                <!-- Entity -->
+                                <log-column [header]="'Customs.Declaration.O.Entity' | TextCodeTranslationPipe"
+                                            [width]="'200'" [Alignment]="'right'" [binding]="'TableNameTextCode'">
+
+                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                        <div style="text-align: right;" class="TextTrimming">
+                                            <span>{{item.TableNameTextCode | TextCodeTranslationPipe}}</span>
+                                        </div>
+                                    </log-cell-template>
+
+                                </log-column>
+
+                                <!-- Field -->
+                                <log-column [header]="'Customs.Declaration.O.Field' | TextCodeTranslationPipe"
+                                            [width]="'160'" [Alignment]="'right'" [binding]="'FieldNameTextCode'">
+
+                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                        <div style="text-align: right;" class="TextTrimming">
+                                            <span>{{item.FieldNameTextCode | TextCodeTranslationPipe}}</span>
+                                        </div>
+                                    </log-cell-template>
+
+                                </log-column>
+
+                                <!-- Line -->
+                                <log-column [header]="'Customs.Declaration.O.Line' | TextCodeTranslationPipe"
+                                            [width]="'160'" [Alignment]="'right'" [binding]="'LineNumber'">
+
+                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                        <div style="text-align: right;" class="TextTrimming">
+                                            <span>{{item.LineNumber}}</span>
+                                        </div>
+                                    </log-cell-template>
+
+                                </log-column>
+
+                                <!-- ErrorType -->
+                                <log-column [header]="'Customs.Declaration.O.ErrorType' | TextCodeTranslationPipe"
+                                            [width]="'160'" [Alignment]="'right'" [binding]="'ErrorType'">
+
+                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                        <div style="text-align: right;" class="TextTrimming">
+                                            <span>{{item.ErrorType}}</span>
+                                        </div>
+                                    </log-cell-template>
+
+                                </log-column>
+
+                            </logitude-edit-grid>
+                        </td>
+                    </tr>
+
+                    <tr *ngIf="IsErrorsVisible" style="height: 25px;">
+                        <td></td>
+                    </tr>
+
+                    <!-- Constraints -->
+                    <tr *ngIf="IsConstraintsVisible" style="height: 28px;">
+                        <td colspan="1" class="subTitle">{{'Customs.DeclarationConstraint.O.Constraints' | TextCodeTranslationPipe}} {{IsMoreThan50 ? AllConstraintCount:ConstraintsCount}}</td>
+                        <td *ngIf="IsMoreThan50" colspan="2">
+                            <div class="DisbleBox">
+                                <!--{{'מציג 50  אילוצים מתוך ' + AllConstraintCount}}-->
+
+                                קיימים {{AllConstraintCount}} אילוצים, 
+                                מציג אילוצים {{(currenctEndIndex > AllConstraintCount ? AllConstraintCount:currenctEndIndex) + '-' + (currenctStartIndex+1)}} &nbsp; &nbsp;
+                                <a style="font-size: 12px;" *ngIf="currenctStartIndex != 0" (click)="ConstraintNavigationButtonClicked('prev')" href="#">קודם </a>
+                                <span *ngIf="(currenctEndIndex <= AllConstraintCount) && (currenctStartIndex != 0)"> | </span>
+                                <a style="font-size: 12px;" *ngIf="currenctEndIndex <= AllConstraintCount" (click)="ConstraintNavigationButtonClicked('next')" href="#">הבא </a> 
+
+                            </div>
+                        </td>
+                    </tr>
+                    <tr  *ngIf="IsConstraintsVisible">
+                        <td style="vertical-align: top;" colspan="3">
+                            <div>
+
+                                <ul class="ConstraintList">
+                                    <li *ngFor="let constraint of ConstraintsList" >
+                                        <!-- Status-->
+                                        <div class="ListItem-right">
+                                            <a (click)="constraint.ViewConstraintDetails()" *ngIf="constraint.IsStatusHyperlinkVisibile" style="display: block;" href="#">{{constraint.ConstraintStatus}}</a>
+                                            <a (click)="constraint.ViewConstraintDetails()" *ngIf="constraint.IsApprovalDecisionHyperlinkVisibile" style="display: block;" href="#">{{constraint.ApprovalDecisionName}}</a>
+                                            <div style="color: #1b90cb;margin-top: 6px;" >מס' אילוץ {{ constraint.ConstraintId }} </div>
+                                        </div>
+
+                                        <!-- Error -->
+                                        <div class="ListItem-middle" (click)="EditEntity(constraint.hasNoError ? null : constraint.declarationError)">
+                                            <div style="display: inline-block;width: 40px; position: absolute; height: 100%;">
+                                                <span style="font-size: 12px;color: #1b90cb;">{{constraint.ConstraintTypeName}}</span>
+                                            </div>
+                                            <div style="display: inline-block; padding-right: 40px;">
+                                                <div style="white-space: pre-line;overflow-x: hidden;vertical-align: top;">{{constraint.ErrorMessage}}</div>
+                                                <div style="color:#7a7a7a;padding-top: 8px;white-space: pre-line">{{constraint.textcode_TableNameTextCode}}-{{constraint.FieldName}}  {{constraint.LineNumber}}</div>
+                                            </div>
+                                            <div class="leftDarkBackground"></div>
+                            </div>
+
+                                        <!-- Additional info -->
+                                        <div class="ListItem-left">
+
+                                            <!--Case status code 1 -->
+                                            <div *ngIf="constraint.IsStatus1Visibile">
+                                                <table>
+                                                    <tr>
+                                                        <td style="padding-left: 10px;">
+                                                            <!--<textarea style="height: 60px;" rows="3" >{{constraint.AgentExplanation}}</textarea>-->
+                                                            <LogTextBox style="height: 60px;"
+                                                                        [ObjectTableName]="'Customs.DeclarationConstraint'"
+                                                                        [DataContext]="constraint"
+                                                                        [ObjectFieldName]="'AgentExplanation'"
+                                                                        [IsMultiline]="true"></LogTextBox>
+                                                        </td>
+                                                        <td style="width: 110px">
+                                                            <custom-send-options [IsDisabled]="constraint.displayOnly"
+                                                                                 #MyCustomSendOptionsComponent
+                                                                                 (SendButtonClicked)="SendButtonClicked(constraint, $event)">
+                                                            </custom-send-options>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+
+                                            <!--Case status code 2 -->
+                                            <div *ngIf="constraint.IsStatus2Visibile">{{constraint.AgentExplanation}}</div>
+
+                                            <!--Case status code 3 -->
+                                            <div *ngIf="constraint.IsStatus3Visibile">
+
+                                                <!--case constraint has collateral-->
+                                                <table *ngIf="constraint.IsCollateralInfoVisibile" style="table-layout: fixed;">
+                                                    <tr style="height: 16px;">
+                                                        <td style="width: 125px; color: #6e7172">
+                                                            {{textcode_CollateralRequest}}
+                                                        </td>
+                                                        <td style="">
+                                                            <a href="#" style="font-size: 12px;" (click)="constraint.OpenCollateralWindow()">{{constraint.CollateralRequestNumber}}</a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="height: 16px;">
+                                                        <td style="color: #6e7172">
+                                                            {{textcode_RequestedAmount}}
+                                                        </td>
+                                                        <td style="">
+                                                            {{constraint.RequestedAmount}}
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="height: 16px;">
+                                                        <td style="color: #6e7172">
+                                                            {{textcode_CollateralRequestStatusCode}}
+                                                        </td>
+                                                        <td style="">
+                                                            {{constraint.CollateralRequestStatus}}
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="height: 16px;" *ngIf="!constraint.IsPaymentNumberVisibile">
+                                                        <div></div>
+                                                    </tr>
+                                                    <tr style="height: 16px;" *ngIf="constraint.IsPaymentNumberVisibile">
+                                                        <td style="color: #6e7172">
+                                                            {{textcode_PaymentNumber}}
+                                                        </td>
+                                                        <td style="">
+                                                            <a (click)="constraint.PaymentNumberLinkClicked()" href="#">{{constraint.PaymentNumber}}</a>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+
+                                                <!--case has requested document-->
+                                                <div *ngIf="constraint.IsRequestedDocumentVisibile" style="color: #6e7172;font-size: 11px;">{{'Customs.CustomsCollateral.O.HasRequestedDoc'  | TextCodeTranslationPipe}}</div>
+
+                                                <!--case agent objection not null-->
+                                                <table *ngIf="constraint.IsAgentObjectionVisibile" style="table-layout: fixed;">
+                                                    <tr style="height: 16px; ">
+                                                        <td style="width: 125px;color: #6e7172;font-size: 11px;">
+                                                            {{textcode_AgentObjection}}
+                                                        </td>
+                                                        <td style="font-size: 11px; white-space: initial;">
+                                                            {{constraint.AgentObjection}}
+                                                        </td>
+                                                    </tr>
+                                                </table>
+
+                                                <!--case has collateral answer records-->
+                                                <div *ngIf="constraint.IsCollateralAnswersVisibile" style="color: #6e7172;font-size: 11px;">{{'Customs.CustomsCollateral.O.CollateralAnswerSent'  | TextCodeTranslationPipe}}</div>
+
+
+
+                                            </div>
+
+                                            <!--Case status code 4 -->
+                                            <div *ngIf="constraint.IsStatus4Visibile">
+                                                <table style="table-layout: fixed;">
+                                                    <tr>
+                                                        <td style="width: 125px;color: #6e7172;font-size: 11px;">
+                                                            {{textcode_DenialReason}}
+                                                        </td>
+                                                        <td style="font-size: 11px;white-space: initial;">
+                                                            {{constraint.ApprovalNote}}
+                                                        </td>
+                                                    </tr>
+                                                    <tr *ngIf="constraint.IsStatus4AgentObjectionVisibile">
+                                                        <td style="color: #6e7172;font-size: 11px;">
+                                                            {{textcode_AgentObjection}}
+                                                        </td>
+                                                        <td style="font-size: 11px; white-space: initial;">
+                                                            {{constraint.AgentObjection}}
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+
+                                            <!--Case status code 5 -->
+                                            <div *ngIf="constraint.IsStatus5Visibile">
+                                                <table style="table-layout: fixed;">
+                                                    <tr>
+                                                        <td style="width: 125px;color: #6e7172;font-size: 11px;">
+                                                            {{textcode_ApprovalReason}}
+                                                        </td>
+                                                        <td style="font-size: 11px; white-space: initial;">
+                                                            {{constraint.AgentObjection}}
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+
+
+                                        </div>
+
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr style="height: 25px;">
+                        <td></td>
+                    </tr>
+
+                    <!-- Warnings -->
+                    <tr *ngIf="IsWarningsVisible" style="height: 28px;">
+                        <td colspan="3" class="subTitle">{{'Customs.DeclarationConstraint.O.Warnings' | TextCodeTranslationPipe}} {{WarningsCount}}</td>
+                    </tr>
+                    <tr *ngIf="IsWarningsVisible" style="height: 200px;">
+                        <td colspan="3" style="border: 1px solid gray;">
+                            <logitude-edit-grid GridWidth="100%"
+                                                GridHeight="100%"
+                                                [ItemSource]="Warninglist"
+                                                [UseVirtuallization]="true"
+                                                [IsDarkHeader]="true"
+                                                (SelectedItemChanged)="EditEntity($event)">
+
+
+                                <!-- Description -->
+                                <log-column [header]="'Customs.Declaration.O.Description' | TextCodeTranslationPipe"
+                                            [width]="'480'" [Alignment]="'right'" [binding]="'Description'">
+
+                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                        <div style="text-align: right;" class="TextTrimming"  [title]="item.Description">
+                                            <span>{{item.Description}}</span>
+                                        </div>
+                                    </log-cell-template>
+
+                                </log-column>
+
+                                <!-- Entity -->
+                                <log-column [header]="'Customs.Declaration.O.Entity' | TextCodeTranslationPipe"
+                                            [width]="'200'" [Alignment]="'right'" [binding]="'TableNameTextCode'">
+
+                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                        <div style="text-align: right;" class="TextTrimming">
+                                            <span>{{item.TableNameTextCode | TextCodeTranslationPipe}}</span>
+                                        </div>
+                                    </log-cell-template>
+
+                                </log-column>
+
+                                <!-- Field -->
+                                <log-column [header]="'Customs.Declaration.O.Field' | TextCodeTranslationPipe"
+                                            [width]="'160'" [Alignment]="'right'" [binding]="'FieldNameTextCode'">
+
+                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                        <div style="text-align: right;" class="TextTrimming">
+                                            <span>{{item.FieldNameTextCode | TextCodeTranslationPipe}}</span>
+                                        </div>
+                                    </log-cell-template>
+
+                                </log-column>
+
+                                <!-- Line -->
+                                <log-column [header]="'Customs.Declaration.O.Line' | TextCodeTranslationPipe"
+                                            [width]="'160'" [Alignment]="'right'" [binding]="'LineNumber'">
+
+                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                        <div style="text-align: right;" class="TextTrimming">
+                                            <span>{{item.LineNumber}}</span>
+                                        </div>
+                                    </log-cell-template>
+
+                                </log-column>
+
+                                <!-- ErrorType -->
+                                <log-column [header]="'Customs.Declaration.O.ErrorType' | TextCodeTranslationPipe"
+                                            [width]="'160'" [Alignment]="'right'" [binding]="'ErrorType'">
+
+                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                        <div style="text-align: right;" class="TextTrimming">
+                                            <span>{{item.ErrorType}}</span>
+                                        </div>
+                                    </log-cell-template>
+
+                                </log-column>
+
+                            </logitude-edit-grid>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td colspan="3"></td>
+                    </tr>
+
+                    </table>
+                </div>
+            </td>
+    </tr>
+</table>

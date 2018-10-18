@@ -1,0 +1,189 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Accounting.Def.Validators;
+  
+namespace Logitude.Accounting.Def.EntityPMs
+{
+   [CustomValidation(typeof(AccountingClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class JournalReconcilePM : EntityPM
+   {
+   	  private string journalId ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string JournalId  
+	   {
+	    
+	     get
+		{
+		   return journalId;
+		 }
+		 set
+		 {
+		   if(journalId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="JournalId",OldValue=journalId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   journalId=value;
+		   }
+			
+		 }
+	   }
+	  private int tenant ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+	  private string ledgerTransactionId ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LedgerTransactionId  
+	   {
+	    
+	     get
+		{
+		   return ledgerTransactionId;
+		 }
+		 set
+		 {
+		   if(ledgerTransactionId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LedgerTransactionId",OldValue=ledgerTransactionId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   ledgerTransactionId=value;
+		   }
+			
+		 }
+	   }
+	  private int line ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Line  
+	   {
+	    
+	     get
+		{
+		   return line;
+		 }
+		 set
+		 {
+		   if(line != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Line",OldValue=line,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   line=value;
+		   }
+			
+		 }
+	   }
+	  private string currencyId ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CurrencyId  
+	   {
+	    
+	     get
+		{
+		   return currencyId;
+		 }
+		 set
+		 {
+		   if(currencyId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CurrencyId",OldValue=currencyId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   currencyId=value;
+		   }
+			
+		 }
+	   }
+	  private decimal reconciliationAmount ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal ReconciliationAmount  
+	   {
+	    
+	     get
+		{
+		   return reconciliationAmount;
+		 }
+		 set
+		 {
+		   if(reconciliationAmount != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ReconciliationAmount",OldValue=reconciliationAmount,NewValue=value,PropertyType="decimal"};
+		    NotifyPropertyChanged(values);
+		   reconciliationAmount=value;
+		   }
+			
+		 }
+	   }
+	  private bool isPartial ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsPartial  
+	   {
+	    
+	     get
+		{
+		   return isPartial;
+		 }
+		 set
+		 {
+		   if(isPartial != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsPartial",OldValue=isPartial,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isPartial=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

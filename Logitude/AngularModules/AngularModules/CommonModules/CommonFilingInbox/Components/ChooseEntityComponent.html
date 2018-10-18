@@ -1,0 +1,188 @@
+﻿<table>
+    <tr style="height: 1px;">
+        <td>
+            <table>
+                <tr>
+                    <td style="width: 230px;float:left;">
+                        <SearchBox [UseTimer]="true" (TextChanged)="SearchText = $event"></SearchBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="float:right;">
+                        <table>
+                            <tr>
+                                <td style="width:55px; font-size:11px; color : #6E7172;">
+                                    <div>Filter by:</div>
+                                </td>
+
+                                <td style="width:117px;">
+                                    <TransportsFilter (SelectedValueChanged)="CurrentTransportModeId = $event"></TransportsFilter>
+                                </td>
+
+                                <td style="width:10px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:140px;">
+                                    <div>
+                                        <DirectionsFilter (SelectedValueChanged)="CurrentDirectionId = $event"></DirectionsFilter>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 5px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr style="width:100%;height:100%;vertical-align:top;">
+        <td>
+            <table>
+                <tr class="SectionHeader" style="height: 22px; border: 1px solid #AAAAAA; border-bottom:0;">
+                    <td style="font-size: 12px; padding-left: 10px;">{{ListTitle}}</td>
+                </tr>
+
+                <tr style="border: 1px solid #AAAAAA; border-top:0;width:100%;height:100%;vertical-align:top;">
+                    <td style="padding: 2px;">
+                        <div class="SimpleGridView" style="min-height:100px;vertical-align:top;">
+                            <div class="SimpleGridViewHeaderDark">
+                                <table>
+                                    <tr *ngIf="IsShipment">
+                                        <td style="width: 30px;min-width:30px;max-width:30px;"> </td>
+                                        <td style="width: 30px;min-width:30px;max-width:30px;"> </td>
+                                        <td style="width: 150px;min-width:150px;max-width:150px;">Shipment Number</td>
+                                        <td style="width: 250px;min-width:250px;max-width:250px;">Customer</td>
+                                        <td style="width: 100px;min-width:100px;max-width:100px;">Routing</td>
+                                        <td style="width: 100px;min-width:100px;max-width:100px;">Master</td>
+                                        <td style="width: 90px;min-width:90px;max-width:90px;">House</td>
+                                    </tr>
+
+                                    <tr *ngIf="IsQuote">
+                                        <td style="width: 30px;min-width:30px;max-width:30px;"> </td>
+                                        <td style="width: 30px;min-width:30px;max-width:30px;"> </td>
+                                        <td style="width: 150px;min-width:150px;max-width:150px;">Quote Number</td>
+                                        <td style="width: 250px;min-width:250px;max-width:250px;">Customer</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="7">
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </div>
+
+                            <div class="SimpleGridViewBody">
+                                <table *ngIf="IsShipment" >
+                                    <tr class="SimpleGridViewRow RowHover" *ngFor="let item of ItemsSource" (click)="Selecting(item)">
+
+                                        <td class="GridViewCell" title="{{item.DirectionName}}" style="width: 30px; min-width: 30px;max-width:30px;">
+                                            <img style="top: 2px;" [attr.src]="'./Images/Directions/' + item.DirectionId + '.png'" />
+                                        </td>
+
+                                        <td class="GridViewCell" title="{{item.TransportModeName}}" style="width: 30px; min-width: 30px;max-width:30px;">
+                                            <img style="top: 2px;" [attr.src]="'./Images/TransportModes/' + item.TransportModeId + '.png'" />
+                                        </td>
+
+                                        <td class="GridViewCell" style="width: 150px; min-width: 150px;max-width:150px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+                                            {{item.ShipmentNumber}}
+                                        </td>
+
+                                        <td class="GridViewCell" style="width: 250px; min-width: 250px;max-width:250px; color:#1B90CB; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+                                            {{item.CustomerName}}
+                                        </td>
+
+                                        <td class="GridViewCell" style="width: 100px; min-width: 100px;max-width:100px; color:#1B90CB; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+                                            {{item.Routing}}
+                                        </td>
+
+                                        <td class="GridViewCell" style="width: 100px;  min-width: 100px;max-width:100px; color:#1B90CB; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+                                            {{item.LongMaster}}
+                                        </td>
+
+                                        <td class="GridViewCell" style="width: 90px; min-width: 90px;max-width:90px;  overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+                                            {{item.House}}
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="7">
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                </table>
+
+                                <table *ngIf="IsQuote">
+
+                                    <tr class="SimpleGridViewRow RowHover" *ngFor="let item of ItemsSource" (click)="SelectingQuote(item)">
+
+                                        <td class="GridViewCell" title="{{item.DirectionName}}" style="width: 30px; min-width: 30px;max-width:30px;">
+                                            <img style="top: 2px;" [attr.src]="'./Images/Directions/' + item.DirectionId + '.png'" />
+                                        </td>
+
+                                        <td class="GridViewCell" title="{{item.TransportModeName}}" style="width: 30px; min-width: 30px;max-width:30px;">
+                                            <img style="top: 2px;" [attr.src]="'./Images/TransportModes/' + item.TransportModeId + '.png'" />
+                                        </td>
+
+                                        <td class="GridViewCell" style="width: 150px; min-width: 150px;max-width:150px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+                                            {{item.QuoteNumber}}
+                                        </td>
+
+                                        <td class="GridViewCell" style="width: 250px; min-width: 250px;max-width:250px; color:#1B90CB; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+                                            {{item.CustomerName}}
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="7">
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                </table>
+
+                                <div *ngIf="IsShipment && AllShipmentsCount == 0" style="top:50%;vertical-align:central;" class="NoDataText">
+                                    No Shipments
+                                </div>
+
+                                <div *ngIf="IsQuote && AllQuotesCount == 0" style="top:50%;vertical-align:central;" class="NoDataText">
+                                    No Quotes
+                                </div>
+
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CloseButtonClicked()">Close</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

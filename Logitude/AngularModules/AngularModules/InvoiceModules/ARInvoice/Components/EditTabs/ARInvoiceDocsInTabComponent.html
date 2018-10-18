@@ -1,0 +1,20 @@
+﻿
+<div [hidden]="EntityPM.StatusCode == 'VD'" class="MediaFill">
+    <DocsInTabControl [EntityPM]="EntityPM" [ObjectTableId]="ObjectTableId" [EntityId]="EntityId" [ChildEntityId]="ChildEntityId" [ChildEntityReference]="ChildEntityReference" [ChildObjectTableId]="ChildObjectTableId"></DocsInTabControl>
+</div>
+
+<div [hidden]="EntityPM.StatusCode != 'VD'" class="TabHolder">
+    <table>
+        <tr class="TabTitleRow">
+            <td>
+                {{'ARInvoice.TH.DocsIn' | TextCodeTranslationPipe}}
+            </td>
+        </tr>
+
+        <tr>
+            <td style="text-align: center; vertical-align: central; font-size: 54px; color: #6E7172;">
+                Void
+            </td>
+        </tr>
+    </table>
+</div>

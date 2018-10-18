@@ -1,0 +1,14 @@
+﻿<!ELEMENT CFIDATA (CFIDATA_DATA*)>
+<!ELEMENT CFIDATA_DATA (ImporterName?, ImporterAddress?, ImporterId?, CasualSupplierName?, CasualSupplierAddress?, ManifestNumber?, ThirdCargoID?, AirlineId?, MAWB?, HAWB?, COUWTVAL?, UNLOADDATE?)>
+<!ELEMENT ImporterName (#PCDATA)>
+<!ELEMENT ImporterAddress (#PCDATA)>
+<!ELEMENT ImporterId (#PCDATA)>
+<!ELEMENT CasualSupplierName (#PCDATA)>
+<!ELEMENT CasualSupplierAddress (#PCDATA)>
+<!ELEMENT ManifestNumber (#PCDATA)>
+<!ELEMENT ThirdCargoID (#PCDATA)>
+<!ELEMENT AirlineId (#PCDATA)>
+<!ELEMENT MAWB (#PCDATA)>
+<!ELEMENT HAWB (#PCDATA)>
+<!ELEMENT COUWTVAL (#PCDATA)>
+<!ELEMENT UNLOADDATE (#PCDATA)>

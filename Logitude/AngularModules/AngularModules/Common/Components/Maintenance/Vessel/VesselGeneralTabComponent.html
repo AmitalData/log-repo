@@ -1,0 +1,156 @@
+﻿
+<div class="TabHolder">
+    <table>
+        <tr class="TabTitleRow">
+            <td>{{'Vessel.TH.General' | TextCodeTranslationPipe}}</td>
+        </tr>
+
+        <tr style="height:1px;">
+            <td style="width: 350px;">
+                <table>
+                    <!-- Code -->
+                    <tr class="FormFieldRow" *ngIf="!IsNewEntity">
+                        <td style="width:115px;">
+                            <LogLabel [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td style="width:215px;">
+                            <LogTextBox [ObjectFieldName]="'Code'" [Text]="Code" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <!-- EnglishName -->
+                    <tr class="FormFieldRow">
+                        <td style="width:115px;">
+                            <LogLabel [ObjectFieldName]="'EnglishName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td style="width:215px;">
+                            <LogTextBox [ObjectFieldName]="'EnglishName'" [Text]="EnglishName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <!-- IMOCode -->
+                    <tr class="FormFieldRow">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'IMOCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogTextBox [ObjectFieldName]="'IMOCode'" [Text]="IMOCode" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <!-- LocalName -->
+                    <tr class="FormFieldRow">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'LocalName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogTextBox [ObjectFieldName]="'LocalName'" [Text]="LocalName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <!-- CountryId -->
+                    <tr class="FormFieldRow">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'CountryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogLov [ObjectFieldName]="'CountryId'"
+                                    [SelectedValue]="CountryId"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'Country'">
+                            </LogLov>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <!-- InActive -->
+                    <tr class="FormFieldRow" *ngIf="!IsNewEntity">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogCheckBox [ObjectFieldName]="'InActive'" [Checked]="InActive" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                </table>
+            </td>
+
+            <td style="width:10px;">
+                <div></div>
+            </td>
+
+            <td style="width: 250px;">
+                <table>
+                    <!-- Notes -->
+                    <tr style="height: 1px;">
+                        <td>
+                            <table>
+                                <tr style="height: 25px;">
+                                    <td style="vertical-align: bottom;">
+                                        <LogLabel [ObjectFieldName]="'Notes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                </tr>
+                                <tr style="height: 80px;">
+                                    <td style="height: 80px; vertical-align: top;">
+                                        <div style="height: 100%; width: 100%;">
+                                            <LogTextBox [ObjectFieldName]="'Notes'" [Text]="Notes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+
+            <td>
+                <div></div>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <div></div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+

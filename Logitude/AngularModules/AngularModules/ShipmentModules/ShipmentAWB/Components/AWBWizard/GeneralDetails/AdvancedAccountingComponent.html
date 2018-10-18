@@ -1,0 +1,184 @@
+﻿
+<table>
+    <tr style="height:1px;" *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+
+                <tr class="FormFieldRow">
+                    <td [style.width.px]="LabelColumnWidth">
+                        <LogLabel [ObjectFieldName]="'AccountingInformation1'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td [style.width.px]="ControlColumnWidth">
+                        <LogLov [ObjectFieldName]="'AccountingInformationIdentifierCode1'"
+                                [SelectedValue]="DataContext.AccountingInformationIdentifierCode1"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'AccountingInformationIdentifier'"
+                                [HideColumns]="true">
+                        </LogLov>
+                    </td>
+
+                    <td style="width: 3px;">
+                        <div></div>
+                    </td>
+
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'AccountingInformation1'" [Text]="AccountingInformation1" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+                </tr>
+                <tr class="FormFieldRow">
+                    <td [style.width.px]="LabelColumnWidth">
+                        <LogLabel [ObjectFieldName]="'AccountingInformation2'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td [style.width.px]="ControlColumnWidth">
+                        <LogLov [ObjectFieldName]="'AccountingInformationIdentifierCode2'"
+                                [SelectedValue]="DataContext.AccountingInformationIdentifierCode2"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'AccountingInformationIdentifier'"
+                                [HideColumns]="true">
+                        </LogLov>
+                    </td>
+
+                    <td style="width: 3px;">
+                        <div></div>
+                    </td>
+
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'AccountingInformation2'" [Text]="AccountingInformation2" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+                </tr>
+                <tr class="FormFieldRow">
+                    <td [style.width.px]="LabelColumnWidth">
+                        <LogLabel [ObjectFieldName]="'AccountingInformation3'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td [style.width.px]="ControlColumnWidth">
+                        <LogLov [ObjectFieldName]="'AccountingInformationIdentifierCode3'"
+                                [SelectedValue]="DataContext.AccountingInformationIdentifierCode3"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'AccountingInformationIdentifier'"
+                                [HideColumns]="true">
+                        </LogLov>
+                    </td>
+
+                    <td style="width: 3px;">
+                        <div></div>
+                    </td>
+
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'AccountingInformation3'" [Text]="AccountingInformation3" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+                </tr>
+                <tr class="FormFieldRow">
+                    <td [style.width.px]="LabelColumnWidth">
+                        <LogLabel [ObjectFieldName]="'AccountingInformation4'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td [style.width.px]="ControlColumnWidth">
+                        <LogLov [ObjectFieldName]="'AccountingInformationIdentifierCode4'"
+                                [SelectedValue]="DataContext.AccountingInformationIdentifierCode4"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'AccountingInformationIdentifier'"
+                                [HideColumns]="true">
+                        </LogLov>
+                    </td>
+
+                    <td style="width: 3px;">
+                        <div></div>
+                    </td>
+
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'AccountingInformation4'" [Text]="AccountingInformation4" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+                </tr>
+                <tr class="FormFieldRow">
+                    <td [style.width.px]="LabelColumnWidth">
+                        <LogLabel [ObjectFieldName]="'AccountingInformation5'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td [style.width.px]="ControlColumnWidth">
+                        <LogLov [ObjectFieldName]="'AccountingInformationIdentifierCode5'"
+                                [SelectedValue]="DataContext.AccountingInformationIdentifierCode5"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'AccountingInformationIdentifier'"
+                                [HideColumns]="true">
+                        </LogLov>
+                    </td>
+
+                    <td style="width: 3px;">
+                        <div></div>
+                    </td>
+
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'AccountingInformation5'" [Text]="AccountingInformation5" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+                </tr>
+                <tr class="FormFieldRow">
+                    <td [style.width.px]="LabelColumnWidth">
+                        <LogLabel [ObjectFieldName]="'AccountingInformation6'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td [style.width.px]="ControlColumnWidth">
+                        <LogLov [ObjectFieldName]="'AccountingInformationIdentifierCode6'"
+                                [SelectedValue]="DataContext.AccountingInformationIdentifierCode6"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'AccountingInformationIdentifier'"
+                                [HideColumns]="true">
+                        </LogLov>
+                    </td>
+
+                    <td style="width: 3px;">
+                        <div></div>
+                    </td>
+
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'AccountingInformation6'" [Text]="AccountingInformation6" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="4">
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button id="{{'CancelAdvanceBtn' | IdGeneratorPipe}}" class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button id="{{'OkAdvanceBtn' | IdGeneratorPipe}}"  class="RedButton" (click)="OkButtonClicked()" [disabled]="!IsEditingEnabled">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

@@ -1,0 +1,89 @@
+﻿
+<table *ngIf="IsVisibile">
+
+    <tr>
+        <td>
+            <table>
+                <!-- IsCorrespondenceRightToLeftEnabled -->
+                <tr class="FormFieldRow">
+                    <td style="width: 200px;">
+                        <LogLabel [ObjectFieldName]="'IsCorrespondenceRightToLeftEnabled'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width: 50px;">
+                        <LogCheckBox [ObjectFieldName]="'IsCorrespondenceRightToLeftEnabled'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- IsInternalTicketByDefault -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'IsInternalTicketByDefault'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogCheckBox [ObjectFieldName]="'IsInternalTicketByDefault'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+               <tr class="FormFieldRow">
+                    <td style="width:135px;">
+                        <LogLabel [NoObjectField]="true" [Text]="'Default SLA'" [ObjectFieldName]="'DefaultSLAId'" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:230px;">
+                        <LogLov [ObjectFieldName]="'DefaultSLAId'" 
+                                [SelectedValue]="DefaultSLAId"
+                                [NoObjectField]="true"
+                                [ObjectTableName]="'Tenant'"
+                                [DataContext]="DataContext"
+                                [HideLastColumn]="false"
+                                [HideAddLink]="true" 
+                                [QueryFilterItems]="Filters"
+                                [HideMaintenanceIcon]="true"
+                                [LookUpTableName]="'SLAHeader'">
+                        </LogLov>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="3">
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

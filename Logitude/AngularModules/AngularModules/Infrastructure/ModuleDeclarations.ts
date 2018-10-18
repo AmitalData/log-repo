@@ -1,0 +1,406 @@
+// Directives
+import {FocusMeDirective} from './Utilities/FocusMeDirective';
+import {LocationDirective} from './Utilities/LocationDirective';
+import {FixedPositionDirective} from './Utilities/FixedPositionDirective';
+
+// Pipes
+import {DateTimeToColorPipe} from './Pipes/DateTimePipes/DateTimeToColorPipe';
+import {NumbersPipe} from './Pipes/NumbersPipe';
+import {PaddingPipe} from './Pipes/PaddingPipe';
+import {ReplacePipe} from './Pipes/ReplacePipe';
+import {StringToColorPipe} from './Pipes/StringToColorPipe';
+import {DateTimeToTimePipe} from './Pipes/DateTimeToTimePipe';
+import {AttatchmentIconPipe} from './Pipes/AttatchmentIconPipe';
+import {GroupByPipe} from './Pipes/GroupByPipe';
+import {MenuButtonsItemsPipe} from './Pipes/MenuButtonsItemsPipe';
+import {StageAgePipe} from './Pipes/StageAgePipe';
+import {DateTimeToBackgroundPipe} from './Pipes/DateTimeToBackgroundPipe';
+import {ExchangeRateDatePipe} from './Pipes/ExchangeRateDatePipe';
+import {LogBoxStatusForegroundPipe} from './Pipes/LogBoxStatusForegroundPipe';
+import {InvoiceDueDateForegroundPipe} from './Pipes/InvoiceDueDateForegroundPipe';
+import {CustomNumbersPipe} from './Pipes/CustomNumbersPipe'
+import {RatesNumbersPipe} from './Pipes/RatesNumbersPipe';
+import {DateTimeToMSDYDatePipe} from './Pipes/DateTimeToMSDYDatePipe';
+import {FollowUpDatePipe} from './Pipes/FollowUpDatePipe';
+import {DateTimeToShortDatePipe} from './Pipes/DateTimeToShortDatePipe';
+import {SafePipe} from './Pipes/SafePipe';
+import {LogBoxStatusDatePipe} from './Pipes/LogBoxStatusDatePipe';
+import {TimeToHoursMinutesPipe} from './Pipes/TimeToHoursMinutesPipe';
+import {CustomFieldResolverPipe} from './Pipes/CustomFieldResolverPipe';
+
+// Controls Components
+import {GeneralSendComponent} from './Components/LogitudeComponents/GeneralSendComponent';
+import {LogLabelComponent} from './Components/LogitudeComponents/LogLabelComponent';
+import {LogTextBoxComponent} from './Components/LogitudeComponents/LogTextBoxComponent';
+import {LogTextBoxV2Component} from './Components/LogitudeComponents/LogTextBoxV2Component';
+import {LogLovComponent} from './Components/LogitudeComponents/LogLovComponent';
+import {LogLovV2Component} from './Components/LogitudeComponents/LogLovV2Component';
+
+import {DWLovComponent} from './Components/LogitudeComponents/DWLovComponent';
+import {LogDatePickerComponent} from './Components/LogitudeComponents/LogDatePickerComponent';
+import {LogCalendarComponent} from './Components/LogitudeComponents/LogCalendarComponent';
+import {TimeSelectComponent} from './Components/LogitudeComponents/TimeSelectComponent';
+import {LogCheckboxComponent} from './Components/LogitudeComponents/LogCheckboxComponent';
+import {CustomDatePickerComponent} from './Components/CustomControls/CustomDatePickerComponent';
+import {ObjectFieldTemplate} from './Components/Templates/ObjectFieldTemplate';
+import {StimulsoftViewerComponent} from './Components/StimulsoftComponent/StimulsoftViewerComponent';
+import {ListComponent} from './Components/ListComponent/ListComponent';
+import {LogGridComponent} from './Components/LogitudeComponents/LogGridComponent/LogGridComponent';
+import {ListHeaderTemplateComponent} from './Components/LogitudeComponents/LogGridComponent/ListHeaderTemplateComponent';
+import {ListTemplateComponent} from './Components/LogitudeComponents/LogGridComponent/ListTemplateComponent';
+import {UsersQueryList} from './Components/CustomControls/UsersQueryList';
+import {ChooseDatesComponent} from './Components/CustomControls/ChooseDatesComponent';
+import {SearchBox} from './Components/CustomControls/SearchBox';
+import {LogCellTemplateComponent} from './Components/LogitudeComponents/EditableLogGridComponent/LogCellTemplateComponent';
+import {LogColumnComponent} from './Components/LogitudeComponents/EditableLogGridComponent/LogColumnComponent';
+import {EditableLogGridComponent} from './Components/LogitudeComponents/EditableLogGridComponent/EditableLogGridComponent';
+import {InnerComponent} from './Components/LogitudeComponents/EditableLogGridComponent/InnerComponent';
+import {InnerSpanComponent} from './Components/LogitudeComponents/EditableLogGridComponent/InnerSpanComponent';
+import {LogRowDetailsTemplateComponent} from './Components/LogitudeComponents/EditableLogGridComponent/LogRowDetailsTemplateComponent';
+import {LogRowDetailsComponent} from './Components/LogitudeComponents/EditableLogGridComponent/LogRowDetailsComponent';
+import {EditableListTemplateComponent} from './Components/LogitudeComponents/EditableLogGridComponent/EditableListTemplateComponent';
+import {LogHeaderTemplateComponent} from './Components/LogitudeComponents/EditableLogGridComponent/LogHeaderTemplateComponent';
+import {LogFooterTemplateComponent} from './Components/LogitudeComponents/EditableLogGridComponent/LogFooterTemplateComponent';
+import {LogFooterComponent} from './Components/LogitudeComponents/EditableLogGridComponent/LogFooterComponent';
+import {ImageComponent} from './Components/LogitudeCustomComponents/ImageComponent';
+import {LogBooleanComponent} from './Components/LogitudeComponents/LogBooleanComponent';
+import {PickListComponent} from './Components/LogitudeComponents/PickListComponent';
+import {TextDesignComponent} from './Components/LogitudeCustomComponents/TextDesignComponent';
+import {SocialComponent} from './Components/LogitudeCustomComponents/SocialComponent';
+import {TimeInput} from './Components/LogitudeComponents/TimeInput';
+import {EntityFollowComponent} from './Components/LogitudeCustomComponents/EntityFollowComponent';
+import {AutomationsConditionAreaComponent} from './Components/Maintenance/Automation/AutomationsConditionAreaComponent';
+
+// Infrastructure Components
+import {RootComponent} from './RootComponent';
+import {RootComponent_Cust} from './RootComponent_Cust';
+import {LoginComponent} from './Components/LoginComponent/LoginComponent';
+import {DSVLoginProcessComponent} from './Components/LoginComponent/CustomLoginComponents/DSVLoginProcessComponent';
+import {DSVMobileLoginProcessComponent} from './Components/LoginComponent/CustomLoginComponents/DSVMobileLoginProcessComponent';
+import {BlockScreenComponent} from './Components/LoginComponent/BlockScreenComponent';
+import {HomeComponent} from './Components/HomeComponent/HomeComponent';
+import {SessionComponent} from './Components/Session/SessionComponent';
+import {MainMenuComponent} from './Components/MainMenuComponent/MainMenuComponent';
+import {EditComponent} from './Components/EditComponent/EditComponent';
+import {EditTabComponent} from './Components/EditComponent/EditTabComponent';
+import {MaintenanceComponent} from './Components/Maintenance/MaintenanceComponent';
+import {MenuButtonsComponent} from './Components/LogitudeComponents/MenuButtonsComponent/MenuButtonsComponent';
+import {AdvanceSearchComponent} from './Components/AdvanceSearchComponent/AdvanceSearchComponent';
+import {QueryListComponent} from './Components/LogitudeComponents/QueryListComponent/QueryListComponent';
+import {LogitudeListBoxComponent} from './Components/LogitudeComponents/LogitudeListBox/LogitudeListBoxComponent';
+import {GeneralTabComponent} from './GenericComponents/GeneralTabComponent';
+import {GeneratedComponent} from './GenericComponents/GeneratedComponent';
+
+
+
+
+
+import {TipsComponent} from './Components/LogitudeComponents/TipsComponent/TipsComponent';
+
+import {MainMenuAutomationComponent} from './Components/Maintenance/Automation/MainMenuAutomationComponent';
+import {AutomationsSettingsComponent} from './Components/Maintenance/Automation/AutomationsSettingsComponent';
+import {AddEditAutomationsComponent} from './Components/Maintenance/Automation/AddEditAutomationsComponent';
+import {DelayAutomationconditionsComponent} from './Components/Maintenance/Automation/DelayAutomationconditionsComponent';
+import {ViewAutomationHistoryComponent} from './Components/Maintenance/Automation/ViewAutomationHistoryComponent';
+import {AuditAutomationTabComponent} from './Components/Maintenance/Automation/AuditAutomationTabComponent';
+
+
+import {SelectDocumentTypesComponent} from './Components/Maintenance/Automation/SelectDocumentTypesComponent';
+
+import {NewViewComponent} from './Components/NewViewComponent/NewViewComponent';
+import {Export2ExcelControl} from './Components/Export2ExcelControl/Export2ExcelControl'
+import {QueryColumnsEditComponent} from './Components/QueryColumnsComponents/QueryColumnsEditComponent';
+import {btnComponent} from './Components/QueryColumnsComponents/btnComponent';
+import {ToComponent} from './Components/QueryColumnsComponents/ToComponent';
+import {NewEntityComponent} from './GenericComponents/NewEntityComponent';
+import {LogSearchWindowComponent} from './Components/LogitudeComponents/LogSearchWindowComponent';
+import {DWLogSearchWindowComponent} from './Components/LogitudeComponents/DWLogSearchWindowComponent';
+
+import {InfrastructureFieldTemplateComponent} from './Components/Templates/InfrastructureFieldTemplateComponent';
+import {LogSearchWindowButtonsComponent} from './Components/QueryColumnsComponents/LogSearchWindowButtonsComponent';
+import {LogTabsComponent} from './Components/LogitudeComponents/LogTabsComponent';
+import { MenuButtonsComponentLoader } from './Components/LogitudeComponents/MenuButtonsComponent/MenuButtonsComponentLoader';
+import { LogWaterMarkComponent } from './Components/Templates/LogWaterMarkComponent';
+import {DWLogSearchWindowFieldsComponent} from './Components/QueryColumnsComponents/DWLogSearchWindowFieldsComponent';
+
+
+
+
+
+
+// Followups
+import {HelperFollowups} from './Components/LogitudeComponents/Followups/HelperFollowups';
+import {MainMenuFollowups} from './Components/LogitudeComponents/Followups/MainMenuFollowups';
+import {FollowupButton} from './Components/LogitudeComponents/Followups/FollowupButton';
+import {AddFollowupComponent} from './Components/LogitudeComponents/Followups/AddFollowupComponent';
+import {AddDocumentFollowupComponent} from './Components/LogitudeComponents/Followups/AddDocumentFollowupComponent';
+
+import {DropBoxLogin} from './Components/HomeComponent/DropBoxLogin';
+import { StimulsoftDesigner } from './Components/StimulsoftDesigner/StimulsoftDesigner';
+import {ExportSettingAdvanceComponent} from './Components/StimulsoftComponent/ExportSettingAdvanceComponent';
+
+
+
+import {ObjectFieldComponent} from './Components/LogitudeComponents/ObjectFieldComponent';
+import {WizardBaseComponent} from './Components/Maintenance/Wizard/WizardBaseComponent';
+import {WizardAddressCompnent} from './Components/Maintenance/Wizard/WizardAddressCompnent';
+import {WizardAccountingComponent} from './Components/Maintenance/Wizard/WizardAccountingComponent';
+import {StimulsoftDesignerComponent} from './Components/StimulsoftComponent/StimulsoftDesignerComponent';
+import {EraseTenantManagementDataComponent} from './Components/MenuButtons/EraseTenantManagementDataComponent';
+import {FroalaEditorComponent} from './Components/FroalaEditorComponent/FroalaEditorComponent';
+import {DocsOutTabComponent} from './Components/Documents/DocsOutTabComponent';
+import {DocsInTabComponent} from './Components/Documents/DocsInTabComponent';
+import { BTEGeneralTabComponent } from './Components/Maintenance/BatchTaskExecution/BTEGeneralTabComponent';
+import { BTELogTabComponent } from './Components/Maintenance/BatchTaskExecution/BTELogTabComponent';
+
+export const Directives =
+    [
+        FocusMeDirective,
+        LocationDirective,
+        FixedPositionDirective,
+    ];
+export const Pipes =
+    [
+        NumbersPipe,
+        PaddingPipe,
+        ReplacePipe,
+        StringToColorPipe,
+        DateTimeToTimePipe,
+        AttatchmentIconPipe,
+        GroupByPipe,
+        MenuButtonsItemsPipe,
+        StageAgePipe,
+        DateTimeToColorPipe,
+        DateTimeToBackgroundPipe,
+        ExchangeRateDatePipe,
+        LogBoxStatusForegroundPipe,
+        InvoiceDueDateForegroundPipe,
+        RatesNumbersPipe,
+        DateTimeToMSDYDatePipe,
+        CustomNumbersPipe,
+        FollowUpDatePipe,
+        DateTimeToShortDatePipe,
+        SafePipe,
+        LogBoxStatusDatePipe,
+        TimeToHoursMinutesPipe,
+        CustomFieldResolverPipe,
+    ];
+export const ControlsComponents =
+    [
+        GeneralSendComponent,
+        LogLabelComponent,
+        LogTextBoxComponent,
+        LogTextBoxV2Component,
+        LogLovComponent,
+        LogLovV2Component,
+        DWLovComponent,
+
+        LogDatePickerComponent,
+        LogCalendarComponent,
+        TimeSelectComponent,
+        LogCheckboxComponent,
+        CustomDatePickerComponent,
+        ObjectFieldTemplate,
+        StimulsoftViewerComponent,
+
+        ListComponent,
+        LogGridComponent,
+        ListHeaderTemplateComponent,
+        ListTemplateComponent,
+        UsersQueryList,
+        ChooseDatesComponent,
+        SearchBox,
+        LogCellTemplateComponent,
+        LogColumnComponent,
+        EditableLogGridComponent,
+        InnerComponent,
+        InnerSpanComponent,
+        LogRowDetailsTemplateComponent,
+        LogRowDetailsComponent,
+        EditableListTemplateComponent,
+        LogHeaderTemplateComponent,
+        LogFooterTemplateComponent,
+        LogFooterComponent,
+        TipsComponent,
+        ImageComponent,
+        LogTabsComponent,
+        LogBooleanComponent,
+        LogWaterMarkComponent,
+        TextDesignComponent,
+        PickListComponent,
+        HelperFollowups,
+        MainMenuFollowups,
+        FollowupButton,
+        ObjectFieldComponent,
+        AuditAutomationTabComponent,
+        SocialComponent,
+        TimeInput,
+        EntityFollowComponent,
+        StimulsoftDesignerComponent,
+        AutomationsConditionAreaComponent,
+        LogitudeListBoxComponent,
+        FroalaEditorComponent,
+        DocsOutTabComponent,
+        DocsInTabComponent,
+    ];
+export const Components =
+    [
+        RootComponent,
+        RootComponent_Cust,
+        LoginComponent,
+        DSVLoginProcessComponent,
+        DSVMobileLoginProcessComponent,
+        BlockScreenComponent,
+        HomeComponent,
+        SessionComponent,
+        MainMenuComponent,
+        EditComponent,
+        EditTabComponent,
+        MaintenanceComponent,
+        MenuButtonsComponent,
+        MenuButtonsComponentLoader,
+        AdvanceSearchComponent,
+        QueryListComponent,
+        LogitudeListBoxComponent,
+        GeneralTabComponent,
+        GeneratedComponent,
+
+        MainMenuAutomationComponent,
+        AutomationsSettingsComponent,
+        AddEditAutomationsComponent,
+        DelayAutomationconditionsComponent,
+        ViewAutomationHistoryComponent,
+       
+
+        NewViewComponent,
+        Export2ExcelControl,
+        QueryColumnsEditComponent,
+        btnComponent,
+        ToComponent,
+        NewEntityComponent,
+        LogSearchWindowComponent,
+        DWLogSearchWindowComponent,
+       
+       
+        InfrastructureFieldTemplateComponent,
+       
+        LogSearchWindowButtonsComponent,
+        DWLogSearchWindowFieldsComponent,
+        AddFollowupComponent,
+        AddDocumentFollowupComponent,
+        DropBoxLogin,
+       
+        StimulsoftDesigner,
+       
+        ExportSettingAdvanceComponent,
+
+        AuditAutomationTabComponent,
+
+        WizardBaseComponent,
+        WizardAddressCompnent,
+        WizardAccountingComponent,
+        SelectDocumentTypesComponent,
+      
+        AutomationsConditionAreaComponent,
+
+        EraseTenantManagementDataComponent,
+
+        FroalaEditorComponent,
+        DocsOutTabComponent,
+        DocsInTabComponent,
+        BTEGeneralTabComponent,
+        BTELogTabComponent,
+    ];
+
+export class ModuleDeclarations {
+    public static Get(name: string) {
+
+        var myResult: any = null;
+
+        switch (name) {
+            case "RootComponent": { myResult = RootComponent; break; }
+            case "RootComponent_Cust": { myResult = RootComponent_Cust; break; }
+            case "LoginComponent": { myResult = LoginComponent; break; }
+            case "DSVLoginProcessComponent": { myResult = DSVLoginProcessComponent; break; }
+            case "DSVMobileLoginProcessComponent": { myResult = DSVMobileLoginProcessComponent; break; }
+            case "BlockScreenComponent": { myResult = BlockScreenComponent; break; }
+            case "HomeComponent": { myResult = HomeComponent; break; }
+            case "SessionComponent": { myResult = SessionComponent; break; }
+            case "MainMenuComponent": { myResult = MainMenuComponent; break; }
+            case "EditComponent": { myResult = EditComponent; break; }
+            case "EditTabComponent": { myResult = EditTabComponent; break; }
+            case "ListComponent": { myResult = ListComponent; break; }
+            case "MaintenanceComponent": { myResult = MaintenanceComponent; break; }
+            case "MenuButtonsComponent": { myResult = MenuButtonsComponent; break; }
+            case "MenuButtonsComponentLoader": { myResult = MenuButtonsComponentLoader; break; }
+            case "AdvanceSearchComponent": { myResult = AdvanceSearchComponent; break; }
+            case "QueryListComponent": { myResult = QueryListComponent; break; }
+            case "LogitudeListBoxComponent": { myResult = LogitudeListBoxComponent; break; }
+            case "GeneralTabComponent": { myResult = GeneralTabComponent; break; }
+            case "GeneratedComponent": { myResult = GeneratedComponent; break; }
+
+
+
+            case "ImageComponent": { myResult = ImageComponent; break; }
+            case "TextDesignComponent": { myResult = TextDesignComponent; break; }
+
+            case "MainMenuAutomationComponent": { myResult = MainMenuAutomationComponent; break; }
+            case "AutomationsSettingsComponent": { myResult = AutomationsSettingsComponent; break; }
+            case "AddEditAutomationsComponent": { myResult = AddEditAutomationsComponent; break; }
+            case "DelayAutomationconditionsComponent": { myResult = DelayAutomationconditionsComponent; break; }
+            case "ViewAutomationHistoryComponent": { myResult = ViewAutomationHistoryComponent; break; }
+
+         
+
+            case "NewViewComponent": { myResult = NewViewComponent; break; }
+            case "Export2ExcelControl": { myResult = Export2ExcelControl; break; }
+            case "QueryColumnsEditComponent": { myResult = QueryColumnsEditComponent; break; }
+            case "btnComponent": { myResult = btnComponent; break; }
+            case "ToComponent": { myResult = ToComponent; break; }
+            case "NewEntityComponent": { myResult = NewEntityComponent; break; }
+            case "LogSearchWindowComponent": { myResult = LogSearchWindowComponent; break; }
+            case "DWLogSearchWindowComponent": { myResult = DWLogSearchWindowComponent; break; }
+            case "StimulsoftViewerComponent": { myResult = StimulsoftViewerComponent; break; }
+            case "TipsComponent": { myResult = TipsComponent; break; }
+          
+            case "ChooseDatesComponent": { myResult = ChooseDatesComponent; break; }
+            case "InfrastructureFieldTemplateComponent": { myResult = InfrastructureFieldTemplateComponent; break; }
+            
+            case "GeneralSendComponent": { myResult = GeneralSendComponent; break; }
+            case "LogSearchWindowButtonsComponent": { myResult = LogSearchWindowButtonsComponent; break; }
+            case "DWLogSearchWindowFieldsComponent": { myResult = DWLogSearchWindowFieldsComponent; break; }
+            case "AddFollowupComponent": { myResult = AddFollowupComponent; break; }
+            case "AddDocumentFollowupComponent": { myResult = AddDocumentFollowupComponent; break; }
+            case "DropBoxLogin": { myResult = DropBoxLogin; break; }
+              case "StimulsoftDesigner": { myResult = StimulsoftDesigner; break; }
+
+         
+
+           
+            case "ObjectFieldComponent": { myResult = ObjectFieldComponent; break; }
+            case "ExportSettingAdvanceComponent": { myResult = ExportSettingAdvanceComponent; break; }
+            case "AuditAutomationTabComponent": { myResult = AuditAutomationTabComponent; break; }
+            case "SocialComponent": { myResult = SocialComponent; break; }           
+            case "LogTabsComponent": { myResult = LogTabsComponent; break; }
+            case "LogWaterMarkComponent": { myResult = LogWaterMarkComponent; break; }
+
+            case "EntityFollowComponent": { myResult = EntityFollowComponent; break; }                
+            case "WizardBaseComponent": { myResult = WizardBaseComponent; break; }
+            case "WizardAddressCompnent": { myResult = WizardAddressCompnent; break; }
+            case "WizardAccountingComponent": { myResult = WizardAccountingComponent; break; }
+            case "SelectDocumentTypesComponent": { myResult = SelectDocumentTypesComponent; break; } 
+            case "StimulsoftDesignerComponent": { myResult = StimulsoftDesignerComponent; break; } 
+              case "AutomationsConditionAreaComponent": { myResult = AutomationsConditionAreaComponent; break; }                 
+ 
+            case "EraseTenantManagementDataComponent": { myResult = EraseTenantManagementDataComponent; break; }
+ 
+            case "FroalaEditorComponent": { myResult = FroalaEditorComponent; break; }
+            case "DocsInTabComponent": { myResult = DocsInTabComponent; break; }
+            case "DocsOutTabComponent": { myResult = DocsOutTabComponent; break; }
+            case "BTEGeneralTabComponent": { myResult = BTEGeneralTabComponent; break; }
+            case "BTELogTabComponent": { myResult = BTELogTabComponent; break; }
+        }
+
+        return myResult;
+    }
+}

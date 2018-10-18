@@ -1,0 +1,169 @@
+﻿
+<div class="TabHolder">
+    <table>
+        <tr class="TabTitleRow">
+            <td>{{'CountryCity.TH.General' | TextCodeTranslationPipe}}</td>
+        </tr>
+
+        <tr>
+            <td>
+                <div class="MediaFill">
+                    <table>
+
+                        <!-- Code -->
+                        <tr class="FormFieldRow">
+                            <td style="width: 100px;">
+                                <LogLabel [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                            </td>
+
+                            <td style="width:240px;">
+                                <LogTextBox [ObjectFieldName]="'Code'" [Text]="Code" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                            </td>
+
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>
+
+                        <!-- EnglishName -->
+                        <tr class="FormFieldRow">
+                            <td>
+                                <LogLabel [ObjectFieldName]="'EnglishName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                            </td>
+
+                            <td>
+                                <LogTextBox [ObjectFieldName]="'EnglishName'" [Text]="EnglishName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                            </td>
+
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>
+
+                        <!-- LocalName -->
+                        <tr class="FormFieldRow">
+                            <td>
+                                <LogLabel [ObjectFieldName]="'LocalName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                            </td>
+
+                            <td>
+                                <LogTextBox [ObjectFieldName]="'LocalName'" [Text]="LocalName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                            </td>
+
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>
+
+                        <!-- CountryId -->
+                        <tr class="FormFieldRow">
+                            <td>
+                                <LogLabel [ObjectFieldName]="'CountryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                            </td>
+
+                            <td>
+                                <LogLov [ObjectFieldName]="'CountryId'"
+                                        [SelectedValue]="CountryId"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext"
+                                        [LookUpTableName]="'Country'"
+                                        (SelectedItemChanged)="Country = $event">
+                                </LogLov>
+                            </td>
+
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>
+
+                        <!-- StateId -->
+                        <tr class="FormFieldRow">
+                            <td>
+                                <LogLabel [ObjectFieldName]="'StateId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                            </td>
+
+                            <td>
+                                <LogLov [ObjectFieldName]="'StateId'"
+                                        [SelectedValue]="DataContext.StateId"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext"
+                                        [LookUpTableName]="'State'"
+                                        (SelectedItemChanged)="State = $event"
+                                        [DependencyFilter1Value]="CountryId">
+                                </LogLov>
+                            </td>
+
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>
+
+                        <!-- InActive -->
+                        <tr class="FormFieldRow" *ngIf="!IsNewEntity">
+                            <td>
+                                <LogLabel [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                            </td>
+
+                            <td>
+                                <LogCheckBox [ObjectFieldName]="'InActive'" [Checked]="InActive" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                            </td>
+
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>
+
+                        <!-- Notes -->
+                        <tr style="height: 110px;">
+                            <td colspan="3">
+                                <div class="MediaFill">
+                                    <table>
+                                        <tr style="height: 10px;">
+                                            <td style="width: 340px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <tr style="height: 1px;">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <div class="MediaFill">
+                                                    <LogTextBox [ObjectFieldName]="'Notes'" [Text]="Notes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td colspan="3">
+                                <div></div>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>

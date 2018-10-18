@@ -1,0 +1,1 @@
+﻿ alter table posts alter column BodyText nvarchar(4000)

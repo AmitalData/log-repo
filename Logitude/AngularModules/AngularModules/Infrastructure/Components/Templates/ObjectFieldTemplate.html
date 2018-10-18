@@ -1,0 +1,107 @@
+﻿
+<table>
+    <tr>
+        <td>
+            <div class="MediaFill">
+                <div class="MediaFillRelative">
+
+                    <div class="MediaFillAbsolute" [hidden]="HasTemplate != true && this.IsSpotLightTemplate != true" style="overflow: hidden;">
+                        <div #Template></div>
+                    </div>
+
+                    <div class="MediaFillAbsolute" *ngIf="HasTemplate != true && ObjectField">
+
+                        <div class="MediaFillRelative" *ngIf="!IsAutoFormat">
+
+                            <div class="TextTrimming" [style.textAlign]="TextAlign" *ngIf="ObjectField.DataTemplateName" title="{{FieldValue}}">{{FieldValue}}</div>
+
+                            <div class="MediaFill" *ngIf="!ObjectField.DataTemplateName">
+                                <div class="TextTrimming" [style.textAlign]="TextAlign" *ngIf="!IsHeaderScreenTemplate">{{FieldValue}}</div>
+
+                                <div class="MediaFill" *ngIf="IsHeaderScreenTemplate">
+
+                                    <div class="TextTrimming" [style.textAlign]="TextAlign" *ngIf="IsLookUp">{{LookUpFieldValue}}</div>
+
+                                    <div class="MediaFill" *ngIf="!IsLookUp">
+                                        <div class="MediaFill" *ngIf="CustomField">
+                                            <div class="TextTrimming" [style.textAlign]="TextAlign">{{CustomField['Value']}}</div>
+                                        </div>
+
+                                        <div class="MediaFill" *ngIf="!CustomField">
+                                            <div class="TextTrimming" [style.textAlign]="TextAlign">{{Entity[FieldName]}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- IsAutoFormat -->
+                        <div class="MediaFillRelative" *ngIf="IsAutoFormat">
+
+                            <div class="MediaFillRelative" *ngIf="!CustomField">
+                                <div class="TextTrimming" *ngIf="DataTypeCode == 'Integer'" [style.textAlign]="NumberFieldTextAlign">{{FieldValue}}</div>
+                                <div class="TextTrimming" *ngIf="DataTypeCode == 'Decimal' || DataTypeCode == 'Double'" [style.textAlign]="NumberFieldTextAlign">{{FieldValue | CustomNumbersPipe:DigitsAfterPoints}}</div>
+                                <div class="TextTrimming" *ngIf="DataTypeCode == 'Date' || DataTypeCode == 'DateTime'" [style.textAlign]="TextAlign">{{FieldValue | DateTimeToDatePipe}}</div>
+
+                                <div *ngIf="DataTypeCode == 'Boolean'">
+
+                                    <div *ngIf=IsHeaderScreenTemplate>
+                                        <img *ngIf="FieldValue" src="./Images/CheckBoxIcon.png" [className]="isRTL ? 'RightCenter' : 'LeftCenter'" />
+                                        <div *ngIf="!FieldValue">{{'General.O.False' | TextCodeTranslationPipe}}</div>
+                                    </div>
+
+                                    <div *ngIf=!IsHeaderScreenTemplate [style.textAlign]="TextAlign">
+                                        <img *ngIf="FieldValue" src="./Images/CheckBoxIcon.png" class="CenterCenter" />
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- CustomField -->
+                            <div class="MediaFillRelative" *ngIf="CustomField">
+                                <div class="MediaFillRelative" *ngIf="IsHeaderScreenTemplate">
+                                    <div class="TextTrimming" *ngIf="DataTypeCode == 'Integer'" [style.textAlign]="NumberFieldTextAlign">{{CustomField['ResolvedValue']}}</div>
+                                    <div class="TextTrimming" *ngIf="DataTypeCode == 'Decimal' || DataTypeCode == 'Double'" [style.textAlign]="NumberFieldTextAlign">{{CustomField['Value']}}</div>
+                                    <div class="TextTrimming" *ngIf="DataTypeCode == 'Date' || DataTypeCode == 'DateTime'" [style.textAlign]="TextAlign">{{CustomField['Value']}}</div>
+
+                                    <div *ngIf="DataTypeCode == 'Boolean'">
+
+                                        <div *ngIf=IsHeaderScreenTemplate>
+                                            <img *ngIf="FieldValue" src="./Images/CheckBoxIcon.png" [className]="isRTL ? 'RightCenter' : 'LeftCenter'" />
+                                            <div *ngIf="!FieldValue">{{FieldValue}}</div>
+                                        </div>
+
+                                        <div *ngIf=!IsHeaderScreenTemplate [style.textAlign]="TextAlign">
+                                            <img *ngIf="FieldValue" src="./Images/CheckBoxIcon.png" class="CenterCenter" />
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="MediaFillRelative" *ngIf="!IsHeaderScreenTemplate">
+                                    <div class="TextTrimming" *ngIf="DataTypeCode == 'Integer'" [style.textAlign]="NumberFieldTextAlign">{{FieldValue}}</div>
+                                    <div class="TextTrimming" *ngIf="DataTypeCode == 'Decimal' || DataTypeCode == 'Double'" [style.textAlign]="NumberFieldTextAlign">{{FieldValue}}</div>
+                                    <div class="TextTrimming" *ngIf="DataTypeCode == 'Date' || DataTypeCode == 'DateTime'" [style.textAlign]="TextAlign">{{FieldValue}}</div>
+
+                                    <div *ngIf="DataTypeCode == 'Boolean'">
+
+                                        <div *ngIf=IsHeaderScreenTemplate>
+                                            <img *ngIf="FieldValue" src="./Images/CheckBoxIcon.png" [className]="isRTL ? 'RightCenter' : 'LeftCenter'" />
+                                            <div *ngIf="!FieldValue">{{FieldValue}}</div>
+                                        </div>
+
+                                        <div *ngIf=!IsHeaderScreenTemplate [style.textAlign]="TextAlign">
+                                            <img *ngIf="FieldValue" src="./Images/CheckBoxIcon.png" class="CenterCenter" />
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>

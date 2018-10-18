@@ -1,0 +1,53 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Customs.Data.EntityPOCOs
+{
+   
+    public class ImporterDesposition
+    {
+	 string dbms;
+
+           [Column("DepositionNumber")]
+	    public string DepositionNumber { get; set; }
+        [ForeignKey("ImporterPeriodicDeclarStatus")]
+        [Column("ImporterDepositionStatusCode")]
+	    public string ImporterDepositionStatusCode { get; set; }
+	      
+        public virtual ImporterPeriodicDeclarStatus ImporterPeriodicDeclarStatus { get; set; }
+        [ForeignKey("Importer")]
+        [Column("ImporterlId")]
+	    public string ImporterlId { get; set; }
+	      
+        public virtual Client Importer { get; set; }
+        [ForeignKey("Vendor")]
+        [Column("VendorID")]
+	    public string VendorID { get; set; }
+	      
+        public virtual CustomsVendor Vendor { get; set; }
+        [Column("StartDate")]
+	    public DateTime? StartDate { get; set; }
+        [Column("EndDate")]
+	    public DateTime? EndDate { get; set; }
+        [Column("NotesToAgent")]
+	    public string NotesToAgent { get; set; }
+        [Column("ErrorMessage")]
+	    public string ErrorMessage { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+     [Key]
+        [Column("Id")]
+	    public string Id { get; set; }
+    }
+}
+	 

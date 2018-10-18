@@ -1,0 +1,360 @@
+﻿
+<style type="text/css">
+    .SquareIcon {
+        width: 10px;
+        height: 10px;
+        line-height: 10px;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+    }
+
+ 
+</style>
+
+<table style="min-width:1150px">
+    <tr style="height: 1px;">
+        <td>
+            <table>
+                <tr>
+                    <td style="width: 21px; vertical-align:middle;">
+                        <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
+                    </td>
+
+                    <td style="width: 15px; vertical-align:middle;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 45px; vertical-align:middle; font-size:11px; color : #6E7172;">Search:</td>
+
+                    <td style="width: 300px;">
+                        <SearchBox [ObjectTableName]="'Booking'" [IsQuickSearch]="true" (ItemClicked)="EditBooking($event)"></SearchBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 5px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <td style="width:265px;">
+                        <div class="MediaFill">
+                            <SectionBox [Scrolling]="true">
+                                <SectionHead>Booking Queries</SectionHead>
+                                <SectionBody>
+
+                                    <!-- e-Booking -->
+                                    <div class="QueriesSection">
+                                        <div>e-Booking</div>
+                                        <div style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px; right:2px;">
+                                            <button class="Button" (click)="RunBookingWizard()">New</button>
+                                        </div>
+                                        <div>
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <table>
+                                                            <tr>
+                                                                <td style="width:190px;">
+                                                                    <p class="QueryLink" (click)="ViewBookingQuery('CreatedBookings')"> Waiting for Transmission ({{WaitingForTransmissionCount}}) </p>
+                                                                </td>
+
+                                                                <td style="width:18px;">
+                                                                    <HelpIcon [Header]="'Waiting for Transmission'" [Text]="'Contains all the bookings that were not transmitted yet or the booking was cancelled'"></HelpIcon>
+                                                                </td>
+
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+
+
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>
+                                                        <table>
+                                                            <tr>
+                                                                <td style="width:230px;">
+                                                                    <p class="QueryLink" (click)="ViewBookingQuery('WatingForResponse')">Waiting for Airline Confirmation ({{WaitingForConfirmationCount}})</p>
+                                                                </td>
+
+                                                                <td style="width:18px;">
+                                                                    <HelpIcon [Header]="'Waiting for Airline Confirmation'" [Text]="'Contains all the bookings that are waiting for the airline response on booking/cancellation requests'"></HelpIcon>
+                                                                </td>
+
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>
+                                                        <table>
+                                                            <tr>
+                                                                <td style="width:215px;">
+                                                                    <p class="QueryLink" (click)="ViewBookingQuery('ConfirmedBookings')">Confirmed Without Shipment ({{ConfirmedCount}})</p>
+                                                                </td>
+
+                                                                <td style="width:18px;">
+                                                                    <HelpIcon [Header]="'Confirmed Without Shipment'" [Text]="'Contains all the bookings that were confirmed by the airline and were not used yet creating an AWB'"></HelpIcon>
+                                                                </td>
+
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>
+                                                        <table>
+                                                            <tr>
+                                                                <td style="width:165px;">
+                                                                    <p class="QueryLink" [class.RedQueryLink]="ErrorsCount != '0'" (click)="ViewBookingQuery('RejectedBookings')">Errors and Rejections ({{ErrorsCount}})</p>
+                                                                </td>
+
+                                                                <td style="width:18px;">
+                                                                    <HelpIcon [Header]="'Errors and rejections'" [Text]="'Contains all the bookings that were sent to the airlines and was not confirmed or the request itself has an error'"></HelpIcon>
+                                                                </td>
+
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <!-- Schedules -->
+                                    <div class="QueriesSection" *ngIf="IsFlightsSchedulesVisible">
+                                        <div>Schedules</div>
+                                        <div>
+                                            <p class="QueryLink" (click)="RunSchedulesControl()">Flight Schedules / Availability</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Others -->
+                                    <div class="QueriesSection">
+                                        <div>Others</div>
+                                        <div>
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <table>
+                                                            <tr>
+                                                                <td style="width:120px;">
+                                                                    <p class="QueryLink" (click)="ViewBookingQuery('InProgressBookings')">In Progress ({{InProgressCount}})</p>
+                                                                </td>
+
+                                                                <td style="width:18px;">
+                                                                    <HelpIcon [Header]="'In progress'" [Text]="'Contains all the bookings that were not used or cancelled'"></HelpIcon>
+                                                                </td>
+
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>
+                                                        <p class="QueryLink" (click)="ViewBookingQuery('AllBookings')">All Bookings ({{AllBookingsCount}})</p>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>
+                                                        <p class="QueryLink" (click)="ViewBookingQuery('CancelledBookings')">Cancelled Bookings ({{CancelledBookingsCount}})</p>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <!-- My Views -->
+                                    <div class="QueriesSection" *ngIf="IsQueryVisible_MyViewsGroup">
+                                        <div>My Views</div>
+                                        <div style="height:80px;">
+                                            <UsersQueryList [ReloadUserQueries]="ReloadUserQueries" [ObjectTableName]="'Booking'" [BackButtonTitle]="'Operations'" (BackCompletedEvent)="onUserQueriesBackComplete($event)" (click)="ClickOnQuiery()"></UsersQueryList>
+                                        </div>
+                                    </div>
+                                </SectionBody>
+                            </SectionBox>
+                        </div>
+                    </td>
+
+                    <td style="width:10px;">
+                        <div></div>
+                    </td>
+
+                    <td style="min-width: 500px;">
+                        <table>
+                            <tr>
+                                <td>
+                                    <div class="MediaFill">
+                                        <SectionBox [Scrolling]="true">
+                                            <SectionHead>{{RecentBookingsCount}} Recent Bookings</SectionHead>
+                                            <SectionBody>
+                                                <ul>
+                                                    <li class="RecentEntityItem" *ngFor="let item of RecentBookingsList" (click)="EditBooking(item)">
+                                                        <table>
+                                                            <tr>
+                                                                <td style="width: 5px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="width:80px; position: relative;" rowspan="2">
+                                                                    <div style="position: absolute; left: 3px; top: 3px; width: 20px; height: 20px;" title="{{item.LastActivityTypeName}}">
+                                                                        <div *ngIf="item.LastActivityTypeName == 'New'" style="width: 20px; height: 20px; background: url('Images/RecentEntity/Added.png') center center no-repeat; background-size: contain;"></div>
+                                                                        <div *ngIf="item.LastActivityTypeName == 'View'" style="width: 20px; height: 20px; background: url('Images/RecentEntity/Viewed.png') center center no-repeat; background-size: contain;"></div>
+                                                                        <div *ngIf="item.LastActivityTypeName == 'Update'" style="width: 20px; height: 20px; background: url('Images/RecentEntity/Edited.png') center center no-repeat; background-size: contain;"></div>
+                                                                    </div>
+
+                                                                    <div style="position: absolute; left: 3px; bottom: 1px; color: #282E30;">{{item.LastActivityDate | DateTimeToDatePipe}}</div>
+                                                                </td>
+
+                                                                <td style="width:160px;" [ngStyle]="{color: item.BookingStatusName | StringToColorPipe}">{{item.BookingStatusName}}</td>
+                                                                <td style="width:90px;" class="TextTrimming">{{item.LongMaster}}</td>
+                                                                <td style="width:200px;">{{item.MainCarriageCarrierName}}</td>
+
+                                                                <td style="width:7px; height: 100%;" rowspan="2">
+                                                                    <div style="width:1px; height: calc(100% - 5px); background: #DADADA; margin:auto;"></div>
+                                                                </td>
+
+                                                                <td style="width:20px; height: 100%;">
+                                                                    <div *ngIf="item.DirectionCode == 'E'" title="{{item.DirectionName}}" style="width: 100%; height: 100%; position:relative;">
+                                                                        <img class="CenterCenter" style="top: 2px;" src="./Images/Directions/E.png" />
+                                                                    </div>
+                                                                </td>
+
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="width: 3px;">
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td style="width: 5px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td [ngStyle]="{color: item.FFRStatusName | StringToColorPipe}">{{item.FFRStatusName}}</td>
+                                                                <td>{{item.Routing | ReplacePipe:',':'>'}}</td>
+                                                                <td style="color: #1B90CB">{{item.BookingNumber}}</td>
+
+                                                                <td style="width:20px; height: 100%;">
+                                                                    <div *ngIf="item.TransportModeCode == 'A'" title="{{item.TransportModeName}}" style="width: 100%; height: 100%; position:relative;">
+                                                                        <img class="CenterCenter" style="top: -2px;" src="./Images/Icons/A.png" />
+                                                                    </div>
+                                                                </td>
+
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="width: 3px;">
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </li>
+                                                </ul>
+                                            </SectionBody>
+                                        </SectionBox>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr style="height: 10px;">
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <div class="MediaFill">
+                                        <SectionBox>
+                                            <SectionHead>
+                                                <table>
+                                                    <tr>
+                                                        <td style="width:160px;">
+                                                            <label>In Progress Bookings</label>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td style="width: 165px; vertical-align:middle;">
+                                                            <div class="SquareIcon" style="background: #487E9F; display:inline-block;"></div>
+                                                            <span style="width:135px; max-width:135px; font-size: 11px; color: #282E30; text-indent: 15px;" class="TextTrimming">Waiting for Transmission</span>
+                                                        </td>
+
+                                                        <td style="width: 200px; vertical-align:middle;">
+                                                            <div class="SquareIcon" style="background: #DA7B38; display:inline-block;"></div>
+                                                            <span style="width:175px; max-width:175px; font-size: 11px; color: #282E30; text-indent: 15px;" class="TextTrimming">Waiting for Airline Confirmation</span>
+                                                        </td>
+
+                                                        <td style="width: 185px; vertical-align:middle;">
+                                                            <div class="SquareIcon" style="background: #21782E; display:inline-block;"></div>
+                                                            <span style="width:155px; max-width:155px; font-size: 11px; color: #282E30; text-indent: 15px;" class="TextTrimming">Confirmed Without Shipment</span>
+                                                        </td>
+
+                                                        <td style="width: 135px; vertical-align:middle;">
+                                                            <div class="SquareIcon" style="background: #FF0000; display:inline-block;"></div>
+                                                            <span style="width:115px; max-width:115px; font-size: 11px; color: #282E30; text-indent: 15px;" class="TextTrimming">Errors and Rejections</span>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </SectionHead>
+
+                                            <SectionBody>
+                                                <div class="MediaFill" [id]="ChartID" (mousedown)="OnMyMouseDown($event,'null')">
+                                                    <div class="MediaFill">
+                                                        <div #InProgressBookingDashboard></div>
+                                                        <div [attr.id]="InProgressBookingId" style="height:95%;width:100%" (click)="BarClicking()"></div>
+                                                    </div>
+                                                </div>
+                                            </SectionBody>
+                                        </SectionBox>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

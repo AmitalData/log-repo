@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
+           xmlns:GCCSCargoImp="http://www.champ.aero/GCCS/CargoXML"
+           targetNamespace="http://www.champ.aero/GCCS/CargoXML"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" version="3.0">
+    <xs:include schemaLocation="common.xsd"/>
+    <xs:include schemaLocation="ConsolidationList.xsd"/>
+	
+    <xs:element name="Envelope" type="GCCSCargoImp:Envelope"/>
+    <xs:complexType name="Envelope">
+        <xs:sequence>
+            <xs:element name="ConsolidationList" type="GCCSCargoImp:ConsolidationList"/>
+        </xs:sequence>
+        <xs:attribute name="Sender" type="GCCSCargoImp:Sender" use="required"/>
+        <xs:attribute name="Recipient" type="GCCSCargoImp:Recipient" use="required"/>
+    </xs:complexType>
+</xs:schema>

@@ -1,0 +1,216 @@
+﻿<table *ngIf="Entity">
+    <tr>
+        <td class="MediaFillAbsolute" style="direction:rtl">
+
+            <!-- Declaration -->
+            <div *ngIf="ObjectTableName == 'Customs.Declaration'">
+                <!-- DeclarationStatusTypeName -->
+                <div *ngIf="FieldName == 'DeclarationStatusTypeName'" style="position:relative;width:100%; height: 100%;">
+                    <div style="position: absolute;top: 0;bottom: 0px; left: 0px; right: 0px;text-align:right">
+
+
+                        <div *ngIf="!IsHeaderScreenTemplate">
+                            <!-- <div style="display: inline-block;" *ngIf="Entity['HasConstraint']">-->
+                            <img *ngIf="Entity['HasConstraint']" style="width:20px" src="./Images/Warning_icon.png" />
+
+                            <div class="TextTrimming"
+                                 style="display: inline; "
+                                 [ngStyle]="{color: Entity.DeclarationStatusTypeCode | StringToColorPipe:'DeclarationStatusTypeCode'}">
+                                <span style="font-weight: bold;">{{Entity[FieldName]}}</span>
+                            </div>
+                        </div>
+
+
+                        <div *ngIf="IsHeaderScreenTemplate">
+                            <div class="TextTrimming"
+                                 style="display: inline; position: absolute;left: 0px; padding-top: 1px;"
+                                 [ngStyle]="{color: Entity.DeclarationStatusTypeCode | StringToColorPipe:'DeclarationStatusTypeCode'}"
+                                 [style.right]="Entity['HasConstraint'] ? '25px' : '0px'">
+                                <span style="font-weight: bold;">{{Entity[FieldName]}}</span>
+                            </div>
+                            <div *ngIf="Entity['HasConstraint']">
+                                <img style="width:20px" src="./Images/Warning_icon.png" />
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- CourierCustomStatusName -->
+                <div *ngIf="FieldName == 'CourierCustomStatusName'" style="position:relative;width:100%; height: 100%;">
+                    <div style="position: absolute;top: 0;bottom: 0px; left: 0px; right: 0px;text-align:right">
+                        <div *ngIf="!IsHeaderScreenTemplate">
+                            <div class="TextTrimming"
+                                 style="display: inline; position: absolute;left: 0px; padding-top: 1px;"
+                                 [ngStyle]="{color: Entity.CourierCustomStatusCode | StringToColorPipe:'CourierCustomStatusCode'}"
+                                 [style.right]="Entity['HasConstraint'] ? '25px' : '0px'">
+                                <span style="font-weight: bold;">{{Entity[FieldName]}}</span>
+                            </div>
+                        </div>
+                        <div *ngIf="IsHeaderScreenTemplate">
+                            <div class="TextTrimming"
+                                 style="display: inline; position: absolute;left: 0px; padding-top: 1px;"
+                                 [ngStyle]="{color: Entity.CourierCustomStatusCode | StringToColorPipe:'CourierCustomStatusCode'}"
+                                 [style.right]="Entity['HasConstraint'] ? '25px' : '0px'">
+                                <span style="font-weight: bold;">{{Entity[FieldName]}}</span>
+                                <span *ngIf="Entity.CourierCustomStatusCode == '2'" style="font-weight: bold;">- {{Entity.CourierSuspentionReasonName}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- create date -->
+                <div *ngIf="FieldName == 'CreateDateTime'" style="position:relative;width:100%; height: 100%;">
+                    <div style="position: absolute;top: 0;bottom: 0px; left: 0px; right: 0px;">
+
+                        <div *ngIf="!IsHeaderScreenTemplate" class="TextTrimming"
+                             style="display: inline; padding-right:25px;">
+                            <span>{{Entity[FieldName] | DateTimePipe:'DT'}}</span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Declaration number -->
+                <div *ngIf="IsHeaderScreenTemplate">
+
+                    <div *ngIf="FieldName == 'DeclarationNumberandVersionId'" style="position:relative;width:100%; height: 100%;">
+                        <div style="position: absolute;top: 0;bottom: 0px; left: 0px; right: 0px;">
+
+
+
+                            <div class="TextTrimming"
+                                 style="display: inline-block;">
+                                <span>{{Entity[FieldName]}}</span>
+                            </div>
+
+                            <div style="display: inline;top:0px; padding-right:3px; padding-bottom:2px; position:absolute" *ngIf="Entity['IsSignedVersion']">
+                                <img style="width:15px;height:20px" src="./Images/SignedVersion.png" />
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div *ngIf="IsHeaderScreenTemplate">
+
+                    <div *ngIf="FieldName == 'CourierData'" style="position:relative;width:100%; height: 100%;">
+                        <div style="position: absolute;top: 0;bottom: 0px; left: 0px; right: 0px;">
+
+
+
+                            <div class="TextTrimming"
+                                 style="display: inline;">
+
+                                <a style="font-size:12px;" href="javascript:;" (click)="OpenCourierMaster()">{{Entity[FieldName]}}</a>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!-- PaymentOrder -->
+            <div *ngIf="ObjectTableName == 'Customs.PaymentOrder'">
+                <!-- ActualPayDate -->
+                <div *ngIf="FieldName == 'ActualPayDate'" style="position:relative;width:100%; height: 100%;">
+                    {{Entity[FieldName] | DateTimePipe:'DT'}}
+                </div>
+            </div>
+
+            <!-- Claim -->
+            <div *ngIf="ObjectTableName == 'Customs.Claim'">
+                <!-- IsClosed -->
+                <div *ngIf="FieldName == 'IsClosed'" style="position:relative;width:100%; height: 100%;">
+                    <div *ngIf="IsHeaderScreenTemplate">
+                        <div *ngIf="Entity['IsClosed']">
+                            <span>{{'כן'}}</span>
+                        </div>
+                        <div *ngIf="!Entity['IsClosed']">
+                            <span>{{'לא'}}</span>
+                        </div>
+                    </div>
+                    <div *ngIf="!IsHeaderScreenTemplate">
+                        <div *ngIf="Entity['IsClosed']">
+                            <img class="CenterCenter" style="width:10px;height:10px;margin-top:6px" title="Yes" src="./Images/CheckBoxIcon.png" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PhysicalCheck -->
+            <div *ngIf="ObjectTableName == 'Customs.PhysicalCheck'">
+
+                <!-- LimitDate -->
+                <div *ngIf="FieldName == 'LimitDate'" style="position:relative;width:100%; height: 100%;">
+                    {{Entity[FieldName] | DateTimePipe:'DT'}}
+                </div>
+
+                <!-- IsClosed -->
+                <div *ngIf="FieldName == 'IsClosed'" style="position:relative;width:100%; height: 100%;">
+                    <div *ngIf="IsHeaderScreenTemplate">
+                        <div *ngIf="Entity['IsClosed']">
+                            <span>{{'Customs.Declaration.O.Yes' | TextCodeTranslationPipe}}</span>
+                        </div>
+                        <div *ngIf="!Entity['IsClosed']">
+                            <span>{{'Customs.Declaration.O.No' | TextCodeTranslationPipe}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Courier Master -->
+            <div *ngIf="ObjectTableName == 'Customs.CourierMaster'">
+
+                <!-- create date -->
+                <div *ngIf="FieldName == 'CreateDateTime'" style="position:relative;width:100%; height: 100%;">
+                    <div style="position: absolute;top: 0;bottom: 0px; left: 0px; right: 0px;">
+
+
+                        <div *ngIf="IsHeaderScreenTemplate" class="TextTrimming"
+                                style="display: inline; padding-right:25px;">
+                            <span>{{Entity[FieldName] | DateTimePipe:'D'}}</span>
+
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!-- DeclarationCargoSplit -->
+            <div *ngIf="ObjectTableName == 'Customs.DeclarationCargoSplit'">
+
+                <!-- IsClosed -->
+                <div *ngIf="FieldName == 'IsClosed'" style="position:relative;width:100%; height: 100%;">
+                    <div *ngIf="!IsHeaderScreenTemplate">
+                        <div *ngIf="Entity['IsClosed']">
+                            <img class="CenterCenter" style="width:10px;height:10px;margin-top:6px" title="Yes" src="./Images/CheckBoxIcon.png" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Spot Light -->
+            <div *ngIf="IsSpotLightTemplate">
+                <div #SpotLight></div>
+            </div>
+
+
+            <!-- Spot Light -->
+            <div *ngIf="IsSpotLightTemplate">
+                <div #SpotLight></div>
+            </div>
+        </td>
+    </tr>
+</table>

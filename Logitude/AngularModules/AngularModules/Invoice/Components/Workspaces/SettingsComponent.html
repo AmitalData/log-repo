@@ -1,0 +1,60 @@
+﻿
+<table *ngIf="IsResourcesReady">
+    <tr>
+        <td style="width: 300px;">
+            <table>
+
+
+                <tr style="height: 1px;">
+                    <td>
+
+                        <div>
+                            <HyperlinkQuery (click)="OpenAccountingSettings()">{{'General.O.AccountingSettings' | TextCodeTranslationPipe}}</HyperlinkQuery>
+                        </div>
+
+                        <div>
+                            <table>
+                                <tr>
+                                    <td style="width: 1px;">
+                                        <HyperlinkQuery (click)="OpenAccountingSystem()" [IsEnabled]="HasTransferFeature">{{'General.O.AccountingSystem' | TextCodeTranslationPipe}}</HyperlinkQuery>
+                                    </td>
+
+                                    <td style="padding-left: 5px;">
+                                        <span class="Label">({{AccountingSystemName}})</span>
+                                    </td>
+                                </tr>
+                            </table>
+                            
+                        </div>
+
+                        <div>
+                            <table>
+                                <tr>
+                                    <td style="width: 1px;">
+                                        <HyperlinkQuery *ngIf="IsVisible_SATInterface" (click)="onSATSettingsClicked()">{{'General.O.SATInterfaceSettings' | TextCodeTranslationPipe}}</HyperlinkQuery>
+                                    </td>
+
+                                    <td>
+                                        <span class="Label">({{SATSettingsName}})</span>
+                                    </td>
+                                </tr>
+                            </table>
+
+                           
+                        </div>
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+
+
+
+    </tr>
+</table>

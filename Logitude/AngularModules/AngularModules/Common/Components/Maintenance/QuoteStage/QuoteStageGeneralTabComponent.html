@@ -1,0 +1,71 @@
+﻿
+<div class="TabHolder">
+    <table>
+        <tr class="TabTitleRow">
+            <td>{{'QuoteStage.TH.General' | TextCodeTranslationPipe}}</td>
+        </tr>
+
+        <tr>
+            <td>
+                <table>
+                    <tr class="FormFieldRow">
+                        <td style="width:80px;">
+                            <LogLabel [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td style="width:150px;">
+                            <LogTextBox [ObjectFieldName]="'Code'" [Text]="Code" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                        </td>
+
+                        <td> <div></div></td>
+                    </tr>
+
+                    <tr class="FormFieldRow">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                        </td>
+
+                        <td> <div></div></td>
+                    </tr>
+
+
+                    <tr class="FormFieldRow">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'MaxDays'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogTextBox [ObjectFieldName]="'MaxDays'" [Text]="MaxDays" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                        </td>
+
+                        <td> <div></div></td>
+                    </tr>
+
+                    <tr class="FormFieldRow">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogCheckBox [ObjectFieldName]="'InActive'" [Checked]="InActive" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                        </td>
+
+                        <td> <div></div></td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="3">
+                            <div></div>
+                        </td>
+                    </tr>
+
+                </table>
+            </td>
+        </tr>
+
+    </table>
+</div>

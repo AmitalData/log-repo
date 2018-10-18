@@ -1,0 +1,598 @@
+﻿
+<style>
+
+    .TitleBackGround {
+        background: #F0F0F0; /* For browsers that do not support gradients */
+        background: -webkit-linear-gradient(#F0F0F0, #C5C7C7); /* For Safari 5.1 to 6.0 */
+        background: -o-linear-gradient(#F0F0F0, #C5C7C7); /* For Opera 11.1 to 12.0 */
+        background: -moz-linear-gradient(#F0F0F0, #C5C7C7); /* For Firefox 3.6 to 15 */
+        background: linear-gradient(#F0F0F0, #C5C7C7); /* Standard syntax (must be last) */
+    }
+
+    .BodyBackground {
+        background: #F2F8FF; /* For browsers that do not support gradients */
+        background: -webkit-linear-gradient(#F2F8FF, #E6EBF0); /* For Safari 5.1 to 6.0 */
+        background: -o-linear-gradient(#F2F8FF, #E6EBF0); /* For Opera 11.1 to 12.0 */
+        background: -moz-linear-gradient(#F2F8FF, #E6EBF0); /* For Firefox 3.6 to 15 */
+        background: linear-gradient(#F2F8FF, #E6EBF0); /* Standard syntax (must be last) */
+    }
+
+    select {
+        border: none !important;
+    }
+
+    .ListBoxItem {
+        min-height: 25px;
+        background-color: transparent;
+    }
+
+        .ListBoxItem:hover {
+            background: #ffffff; /* For browsers that do not support gradients */
+            background: -webkit-linear-gradient(#ffffff, #DDE8F5); /* For Safari 5.1 to 6.0 */
+            background: -o-linear-gradient(#ffffff, #DDE8F5); /* For Opera 11.1 to 12.0 */
+            background: -moz-linear-gradient(#ffffff, #DDE8F5); /* For Firefox 3.6 to 15 */
+            background: linear-gradient(#ffffff, #E6EBF0); /* Standard syntax (must be last) */
+        }
+
+        .ListBoxItem:focus {
+            background-color: red;
+        }
+
+        .ListBoxItem:active {
+            background-color: green;
+        }
+
+    .FilterItem:hover .DeleteButton {
+        display: block;
+    }
+
+    .DeleteButton {
+        display: none;
+    }
+</style>
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr *ngIf="PageNumber===0">
+        <td>
+            <table>
+                <tr style="height: 1px;">
+                    <td>
+                        <table style="height:100%;vertical-align:top">
+                            <tr class="FormFieldRow">
+                                <td [style.width.px]="150">
+                                    <LogLabel Text="Code" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td style="width:250px">
+                                    <input type="text" [(ngModel)]="DataContext.RuleCode" [disabled]="!IsNewEntity" />
+                                </td>
+
+
+                            </tr>
+                            <tr class="FormFieldRow">
+                                <td [style.width.px]="150">
+                                    <LogLabel Text="Name" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td style="width:250px">
+                                    <input type="text" [(ngModel)]="DataContext.Name" />
+                                    <!--<LogTextBox [NoObjectField]="true" [ObjectFieldName]="'Name'" [Text]="Name" [DataContext]="DataContext" [HideColumns] ="true"></LogTextBox>-->
+
+                                </td>
+
+
+                            </tr>
+                            <tr class="FormFieldRow">
+                                <td [style.width.px]="150">
+                                    <LogLabel Text="Rule Type" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td style="width:250px">   
+                                     <ComboBox [ItemsSource]="RuleTypes" [Binding]="'Name'" [SelectedItem]="SelectedRuleType" (SelectedItemChanged)="SelectedRuleType = $event"></ComboBox>
+                                  </td>
+
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td [style.width.px]="150">
+                                    <LogLabel Text="Trigger Type" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td style="width:250px">
+                                    <ComboBox [ItemsSource]="TriggerTypes" [Binding]="'Name'" [SelectedItem]="SelectedTriggerType" (SelectedItemChanged)="SelectedTriggerType = $event"></ComboBox>
+                                </td>
+
+                            </tr>
+
+                            <tr class="FormFieldRow" *ngIf="DataContext.TriggerTypeCode === 'FLDC'">
+                                <td [style.width.px]="150">
+                                    <LogLabel Text="Trigger Field" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td style="width:250px">
+                                    <!--<ComboBox [ItemsSource]="ObjectFields" [Binding]="'FieldName'" [SelectedValue]="DataContext.TriggerFieldId"  [SelectedValuePath]="'Id'" ></ComboBox>-->
+                                    <LogLov 
+                                            [ObjectFieldName]="'TriggerFieldId'"
+                                            [QueryFilterItems]="FieldsLovQueryFilters"
+                                            [ObjectTableName]="'ObjectField'"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'ObjectField'"
+                                            [NoValidation]="true"
+                                            [IsFreeText]="true"
+                                            [SelectedValue]="DataContext.TriggerFieldId"
+                                            [HideColumns]="true"
+                                            [HideLastColumn]="true"
+                                            [DisplayMemberPath]="'FieldName'">
+                                    </LogLov>
+                                </td>
+
+                            </tr>
+                         
+                            <tr class="FormFieldRow" *ngIf="DataContext.RuleTypeCode != 'SETV' && DataContext.RuleTypeCode != 'BLCK'">
+                                <td [style.width.px]="150">
+                                    <LogLabel Text="Notification Type" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td style="width:250px">
+                                    <ComboBox [ItemsSource]="RuleNotificationTypes" [Binding]="'Name'" [SelectedItem]="SelectedRuleNotificationTypeCode" (SelectedItemChanged)="SelectedRuleNotificationTypeCode = $event"></ComboBox>
+                                </td>
+
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td [style.width.px]="150">
+                                    <div></div>
+                                </td>
+                                <td colspan="2">
+                                    <table>
+                                        <tr class="FormFieldRow">
+                                            <td style="width:140px">
+                                                <table>
+                                                    <tr>
+                                                        <td style="width:18px;">
+                                                            <LogCheckBox [ObjectFieldName]="'ActiveForNew'" [Checked]="ActiveForNew" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                        </td>
+
+                                                        <td style="width:100px;">
+                                                            Active For New
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td style="width:140px">
+                                                <table>
+                                                    <tr>
+                                                        <td style="width:18px;">
+                                                            <LogCheckBox [ObjectFieldName]="'ActiveForUpdate'" [Checked]="ActiveForUpdate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                        </td>
+
+                                                        <td style="width:100px;">
+                                                            Active For Update
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+
+                                            <td style="width:140px">
+                                                <table>
+                                                    <tr>
+                                                        <td style="width:18px;">
+                                                            <LogCheckBox [ObjectFieldName]="'AdvancedCondition'" [Checked]="AdvancedCondition" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                        </td>
+
+                                                        <td style="width:100px;">
+                                                            Advanced Condition
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td style="width:140px">
+                                                <table>
+                                                    <tr>
+                                                        <td style="width:18px;">
+                                                            <LogCheckBox [ObjectFieldName]="'InActive'" [Checked]="InActive" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                        </td>
+
+                                                        <td style="width:100px;">
+                                                            InActive
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td><div></div></td>
+                                        </tr>
+
+                                        <!--<tr>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>-->
+                                    </table>
+                                </td>
+
+                            </tr>
+
+                            <tr class="FormFieldRow"*ngIf="DataContext.TriggerTypeCode === 'COND' && DataContext.AdvancedCondition === true" >
+                                <td style="width:150px;vertical-align:top;">
+                                    <LogLabel Text="Condition" [DataContext]="DataContext" style="vertical-align:top"></LogLabel>
+                                </td>
+                                <td colspan="2">
+                                   <table>
+                                       <tr style="height:100px">
+                                           <td>
+                                               <textarea [attr.id]="ConditionTXTAreaId" type="text" [(ngModel)]="DataContext.Condition"  style="height: 100%; max-height:unset;vertical-align:top;margin-right:10px;"></textarea>
+                                           </td>
+                                           <td style="width:90px;vertical-align:top;">
+                                               <button class="Button" style="width:70px;margin-left:5px;" (click)="onAddFieldTagClicked()">Add Field</button>
+                                           </td>
+                                       </tr>
+                                   </table>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><div></div></td>
+                            </tr>
+                            <!--<tr class="FormFieldRow">
+                                <td [style.width.px]="LabelColumnWidth">
+                                    <LogLabel [ObjectFieldName]="'QuestionTypeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td style="width:220px">
+
+                                    <div style="width:220px">
+                                        <ComboBox [ItemsSource]="QuestionTypesList" [Binding]="'Name'" [SelectedItem]="SelectedType" (SelectedItemChanged)="SelectedType = $event"></ComboBox>
+                                    </div>
+                                </td>
+                            </tr>-->
+                        </table>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+                <!-- ---------------------------------------------------------------------------------------------- -->
+                <tr style="height:30px;" *ngIf="!DataContext.AdvancedCondition && DataContext.TriggerTypeCode == 'COND'">
+
+                    <td>
+                        <label style="font-size:12px;color:#595B5B;vertical-align:middle;">
+                            Add fields to the rule condition:
+                        </label>
+                    </td>
+
+                </tr>
+                <tr *ngIf="!DataContext.AdvancedCondition && DataContext.TriggerTypeCode == 'COND'">
+                    <td>
+                        <table style="vertical-align:top;">
+                            <tr>
+                                <td style="width:30%;">
+                                    <table>
+                                        <tr style="height:30px;">
+                                            <td>
+                                                <div style="float:left;">
+                                                    <label style="font-size:14px;color:#1B90CB;vertical-align:middle;font-weight:400;">
+                                                        Fields List
+                                                    </label>
+                                                </div>
+                                                <div style="float:left;margin-left:10px;">
+                                                    <div style="width:100%;height:100%;">
+                                                        <input type="text" [id]="FiltersSearchFieldsId" placeholder="Search" (focus)="ClearFiltersPlaceHolder();" (blur)="FillFiltersPlaceHolder();" [(ngModel)]="FilterssearchText" style="background-color:white;background: url(Images/Search.png) no-repeat scroll;background-position: right center;padding-right:30px;width:100%;height:100%;"><br>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="height:100%;vertical-align:top;">
+                                               
+                                                    <div class="BodyBackground" style="width:100%;height:100%;border:1px solid #BABABA;border-radius:5px;">
+                                                        <ScrollViewer>
+                                                            <div style="height: 100%;">
+                                                                <div style="float:left;width: 50%;">
+                                                                    <div *ngFor="let item of NEWallFilterFieldsClass.FilterFields" [hidden]="!NEWallFilterFieldsClass">
+                                                                        <div *ngIf="item" class="CheckBox" style="margin: 10px;">
+                                                                            <LogCheckBox [ObjectFieldName]="'Exists'" [DataContext]="item" [Text]="item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe" [Value]="item.Exists"></LogCheckBox>
+
+                                                                        <!--<input id="{{item.ControlId}}" type="checkbox" [(ngModel)]="item.Exists" />
+                                <label [attr.for]="item.FieldName">{{item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe}}</label>-->
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </ScrollViewer>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td style="width:10px;"></td>
+                                <td>
+                                    <table style="width:97%;">
+                                        <tr style="height:30px;">
+                                            <td>
+                                                <div style="float:left;">
+                                                    <label style="font-size:14px;color:#1B90CB;vertical-align:middle;font-weight:400;">
+                                                        Selected Fields
+                                                    </label>
+                                                </div>
+                                                <div style="float:right;">
+                                                    <div style="width:100%;height:100%;">
+                                                        <button class="Button" style="height:21px;width:64px;" (click)="CLearAll()">{{'General.O.ClearAll' | TextCodeTranslationPipe}}</button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="height:100%;vertical-align:top;">
+                                               
+                                                <div class="BodyBackground" style="width:100%;height:100%;border:1px solid #BABABA;border-radius:5px;">
+                                                    <ScrollViewer>
+                                                        <div style="float:left;height: 100%;overflow: auto;width: 100%;">
+                                                            <div *ngFor="let item of SelectedConditionObjectFields" style="margin:5px;">
+                                                                <table class="FilterItem" *ngIf="item">
+                                                                    <tr>
+                                                                        <td style="width: 10px;">
+                                                                            <img class="DeleteButton CenterCenter" *ngIf="item.ObjectField.DataTypeCode != 'Constant'" src="./Images/Trash-can.png" style="cursor: pointer;" (click)="item.onDeleteFilterClick()" />
+                                                                        </td>
+                                                                        <td style="width: 140px;">
+                                                                            <LogLabel *ngIf="item.ObjectField.DataTypeCode != 'Constant'" [NoValidation]="'true'" [ObjectFieldName]="item.ObjectField.FieldName" [TextCode]="item.ObjectField.FullNameTextCodeCode" [ObjectTableName]="item.ObjectField.ObjectTableName" [DataContext]="item.ObjectField"></LogLabel>
+                                                                        </td>
+                                                                        <td style="width:300px;" [ngSwitch]="item.ObjectField.DataTypeCode">
+                                                                            <div *ngSwitchCase="'Boolean'" style="display: inline-flex;">
+                                                                                <ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" (SelectedItemChanged)="item.OperationValueChanged($event)" [Binding]="'Name'"></ComboBox>
+                                                                                <div style="width:215px;margin-right:35px;">
+                                                                                    <!--<LogCheckBox (ValueChanged)="item.onTextChange($event)"  *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'"  [DataContext]="item"></LogCheckBox>-->
+                                                                                    <ComboBox (SelectedItemChanged)="item.onTextChange($event)" [ItemsSource]="BooleanValues" [SelectedItem]="item.ObjectField.DataTypeCode == 'Boolean' ? (item.TextValue ?item.TextValue.toString().substring(0, 1).toUpperCase() + item.TextValue.toString().substring(1,item.TextValue.length):''):item.TextValue"></ComboBox>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div *ngSwitchCase="'Text'" style="display: inline-flex;">
+                                                                                <ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" (SelectedItemChanged)="item.OperationValueChanged($event)" [Binding]="'Name'"></ComboBox>
+                                                                                <div style="width:250px;">
+                                                                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div *ngSwitchCase="'nText'" style="display: inline-flex;">
+                                                                                <ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>
+                                                                                <div style="width:250px;">
+                                                                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true" [InputType]="item.ObjectField.DataTypeCode"></LogTextBox>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div *ngSwitchCase="'LookUp'" style="display: inline-flex;">
+                                                                                <ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" (SelectedItemChanged)="item.OperationValueChanged($event)" [SelectedItem]="item.Operation" [Binding]="'Name'"></ComboBox>
+                                                                                <div style="width:250px;">
+                                                                                    <!--<LogLov
+                                                *ngIf="item.ObjectField"
+                                                [ObjectFieldName]="'TextValue'"
+
+                                                [DataContext]="item"
+                                                [LookUpTableName]="item.ObjectField.ObjectTable_LookUpTableName"
+                                                [PlaceHolder]="item.ObjectField.ObjectTable_LookUpTableName"
+                                                (ValueChanged)="item.onTextChange($event)">
+                                        </LogLov>-->
+                                                                                    <LogLov *ngIf="item.ObjectField"
+                                                                                            [SelectedValue]="item.TextValue"
+                                                                                            [ObjectFieldName]="'TextValue'"
+                                                                                            [DataContext]="item"
+                                                                                            [ObjectTableName]="CurrentObjectTable"
+                                                                                            [LookUpTableName]="item.ObjectField.ObjectTable_LookUpTableName"
+                                                                                            [PlaceHolder]="item.ObjectField.ObjectTable_LookUpTableName"
+                                                                                            (ValueChanged)="item.onTextChange($event)"
+                                                                                            [NoValidation]="true">
+                                                                                    </LogLov>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div *ngSwitchCase="'DateTime'" style="display: inline-flex;">
+                                                                                <ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" (SelectedItemChanged)="item.OperationValueChanged($event)" [SelectedItem]="item.Operation" [Binding]="'Name'"></ComboBox>
+
+                                                                                <div style="width:250px;">
+                                                                                    <LogDatePicker *ngIf="item.ObjectField" [ObjectFieldName]="'TextValue'" [ObjectTableName]="CurrentObjectTable" [SelectedDateValue]="item.TextValue" [DataContext]="item" (ValueChanged)="item.onTextChange($event)"></LogDatePicker>
+                                                                                </div>
+                                                                                <!--<div style="width:300px;">
+                                        <LogDatePicker (SelectedItemChanged)="item.onTextChange($event)" [QueryId]="QueryId" [ObjectField]="item.ObjectField"></LogDatePicker>
+
+                                    </div>-->
+                                                                            </div>
+                                                                            <div *ngSwitchCase="'Integer'" style="display: inline-flex;">
+                                                                                <ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" (SelectedItemChanged)="item.OperationValueChanged($event)" [Binding]="'Name'"></ComboBox>
+                                                                                <div style="width:250px;">
+                                                                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div *ngSwitchCase="'Double'" style="display: inline-flex;">
+                                                                                <ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" (SelectedItemChanged)="item.OperationValueChanged($event)" [Binding]="'Name'"></ComboBox>
+                                                                                <div style="width:250px;">
+                                                                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div *ngSwitchCase="'Decimal'" style="display: inline-flex;">
+                                                                                <ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>
+                                                                                <div style="width:250px;">
+                                                                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div *ngSwitchCase="'PickList'" style="display: inline-flex;">
+
+                                                                                <ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" (SelectedItemChanged)="item.OperationValueChanged($event)" [SelectedItem]="item.Operation" [Binding]="'Name'"></ComboBox>
+                                                                                <div style="width:250px;">
+                                                                                    <PickList [ObjectFieldName]="'TextValue'"
+                                                                                              [ObjectTableName]="item.ObjectField.ObjectTableName"
+                                                                                              [DataContext]="item"
+                                                                                              (SelectedItemChanged)="item.onTextChange($event ? $event.Id:'')"
+                                                                                              [NoValidation]="true"
+                                                                                              [PickListCode] ="item.ObjectField.CustomPickListCode">
+                                                                                    </PickList>
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+
+                                                                        <td style="width: 20px;">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </ScrollViewer>
+                                                </div>
+                                               
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <!--------------------------------------------------------------------------------------------------->
+                <!--<tr>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>-->
+            </table>
+        </td>
+    </tr>
+
+    <tr *ngIf="PageNumber===1">
+        <td>
+            <table>
+
+                <tr  *ngIf="DataContext.RuleTypeCode === 'EVAL' || DataContext.RuleTypeCode === 'REQ' || DataContext.RuleTypeCode === 'DUPL'" style="height:100px;">
+                    <td style="width:110px;vertical-align:top;">
+                        <LogLabel Text="Outpu Message" [DataContext]="DataContext" style="vertical-align:top"></LogLabel>
+                    </td>
+                    <td  style="vertical-align:top;">
+                        <textarea type="text" [(ngModel)]="DataContext.OutputMessage" style="height: 90px; max-height:unset;vertical-align:top;margin-right:10px;"></textarea>
+                    </td>
+
+                </tr>
+                <tr style="height:10px;"><td colspan="3"></td></tr>
+
+                <tr>
+                    <td style="width:110px;vertical-align:top;">
+                        <LogLabel Text="Rule Fields" [DataContext]="DataContext" style="vertical-align:top"></LogLabel>
+                    </td>
+                    <td>
+                        <div class="MediaFill">
+                            <div class="SimpleGridView">
+                                <div class="SimpleGridViewHeader">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 250px; min-width:250px; max-width:250px;">Name</td>
+                                            <td style="width: 250px; min-width:250px; max-width:250px;" *ngIf="DataContext.RuleTypeCode != 'SETV' && DataContext.RuleTypeCode != 'BLCK'">Notification Type</td>
+                                             <td style="width: 250px; min-width:250px; max-width:250px;" *ngIf="DataContext.RuleTypeCode == 'SETV'">Expression</td>
+                                            <td style="width: 100px; min-width:100px; max-width:100px;">System Level</td>
+                                            <td style="width: 30px; min-width:30px; max-width:30px;"></td>
+
+                                            <td style="width: 100%; min-width: 100%"></td>
+
+                                            <!--<td class="LastChild">
+                            <div></div>
+                        </td>-->
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div class="SimpleGridViewBody">
+                                    <table>
+                                        <tr class="SimpleGridViewRow" *ngFor="let item of RuleFields">
+                                            <td class="GridViewCell" style="width: 250px; min-width: 250px; max-width:250px">
+                                                {{item.ObjectFieldName}}
+                                            </td>
+                                            <td class="GridViewCell" style="width: 250px; min-width: 250px; max-width:250px" *ngIf="DataContext.RuleTypeCode != 'SETV' && DataContext.RuleTypeCode != 'BLCK'">
+                                                <ComboBox [ItemsSource]="RuleNotificationTypes"  [SelectedValue]="item.RuleNotificationTypeCode" [SelectedValuePath]="'Code'" [Binding]="'Name'"  (SelectedItemChanged)="item.RuleNotificationTypeCode = $event.Code"></ComboBox>
+
+                                            </td>
+
+                                            <td class="GridViewCell" style="width: 250px; min-width: 250px; max-width:250px" *ngIf="DataContext.RuleTypeCode == 'SETV'">
+                                                {{item.Expression}}
+                                            </td>
+
+                                            <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width:100px">
+                                                <img *ngIf="item.SystemLevel" width="18" height="18" style="vertical-align: middle;" src="./Images/Icons/MiniGreenTick.png" />
+
+                                            </td>
+                                            
+                                            <td class="CellStretched" style="width:30px; min-width:30px; max-width:30px; position: relative;">
+                                                <div class="DeleteButton" (click)="OnDeleteRuleField(item)" style="display:inline;width:18px;">
+                                                    <IconButton [Name]="'Delete'" [IsSmall]="true" style="display: block;margin-left:7px" [IsEnabled]="!item.SystemLevel"></IconButton>
+                                                </div>
+
+                                            </td>
+
+                                             <td class="CellStretched" style="width:100%;min-width:100%;max-width:100%;position:relative"></td>
+                                        </tr>
+
+
+                                        <tr>
+                                            <td colspan="6">
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td style="width:90px;vertical-align:top;">
+                        <button class="Button" style="width:70px;margin-left:5px;" (click)="onAddRuleFieldClicked()">Add Field</button>
+                    </td>
+                    <!--<td>
+                        <div></div>
+                    </td>-->
+                </tr>
+              
+                
+            </table>
+        </td>
+    </tr>
+
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                  
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelClicked()">Cancel</button>
+                    </td>
+                    <td><div></div></td>
+
+                    <td style="width:5px;"><div></div></td>
+
+                    <td style="width: 75px;">
+                        <!--<button class="RedButton" (click)="BackClicked()">Back</button>-->
+                        <!--<button (click)="PreviousPageClick()" class="Button" [disabled]="!IsHitState_PrevButton" style="height:20px; width:20px; margin-left:2px;">
+                            <img src="./Images/PagerIcons/previous.png" class="CenterCenter" style="height:10px; width:15px;" />
+                        </button>-->
+
+                        <button (click)="PreviousPageClicked()" class="Button" style="text-align:left" [disabled]="PageNumber === 0">
+                            <img src="./Images/PagerIcons/previous.png"    style="margin-bottom:3px;text-align:left;"/>
+                            Previous
+                        </button>
+                    </td>
+
+
+
+                    <td style="width:5px;"><div></div></td>
+
+                    <td style="width: 75px;">
+                        <!--<button class="RedButton" (click)="NextPageClicked()">Next</button>-->
+                        <button (click)="NextPageClicked()" class="Button"  style="text-align:right" [disabled]="PageNumber === 1">
+                            Next
+                            <img src="./Images/PagerIcons/next.png"  style="margin-bottom:3px;text-align:right;"/>
+                        </button>
+                    </td>
+
+                    <td style="width:5px;"><div></div></td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="SaveClicked()">Save</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

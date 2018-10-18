@@ -1,0 +1,2 @@
+delete from ScreenFields 
+where ScreenId = (select id from screens where ObjectTableId = (select id from ObjectTables where name = 'warehouserelease') and ObjectFieldId= (select id from ObjectFields where ObjectTableId= (select id from ObjectTables where name = 'warehouserelease') and FieldName = 'ActualReleaseDate'))

@@ -1,0 +1,1 @@
+delete from MenuButtons where EventCode = 'TransferInvoice'

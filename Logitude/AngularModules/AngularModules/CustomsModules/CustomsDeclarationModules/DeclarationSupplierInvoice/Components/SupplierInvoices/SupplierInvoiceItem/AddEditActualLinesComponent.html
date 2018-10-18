@@ -1,0 +1,122 @@
+﻿
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td colspan="7">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr style="height:32px">
+        <td>
+            <table>
+                <tr>
+                    <td style="width:120px">
+                        <table>
+                            <tr>
+                                <td style="width:20px"><span>מ: </span></td>
+                                <td style="width:100px">
+                                    <LogTextBox [ObjectFieldName]="'FromNumber'" [Text]="FromNumber"
+                                                [InputType]="'integer'" [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </td>
+                    <td style="width:20px"></td>
+                    <td style="width:130px">
+                        <table>
+                            <tr>
+                                <td style="width:30px"> <span>עד: </span></td>
+                                <td style="width:100px">
+                                    <LogTextBox [ObjectFieldName]="'ToNumber'" [Text]="ToNumber"
+                                                [InputType]="'integer'" [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+
+
+                    <td><div></div></td>
+                    <td style="width:30px">
+                        <button class="Button" (click)="AddActualLines()">{{'Customs.General.B.Add' |TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+       
+    </tr>
+
+    <tr>
+        <td colspan="5">
+            <div class="CellContent" style="bottom: 5px;padding:5px">
+                <logitude-edit-grid GridWidth="100%"
+                                    GridHeight="100%"
+                                
+                                    [IsReadOnly]="IsDisplayOnly"
+                                    [ItemSource]="ItemsSource">
+
+
+
+                    <log-column [header]="'מספר'" [width]="'70'" [Alignment]="'right'" [Editable]="true">
+                        <log-cell-template template="let item" #logcelltemplate >
+                            <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
+                                <span>{{item.Number}}</span>
+                            </div>
+                            <div *ngIf="logcelltemplate.IsEditMode">
+                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Number'" [DataContext]="item" [InputType]="'integer'"
+                                            [Text]="item.Number" [HideColumns]="true"></LogTextBox>
+
+
+                            </div>
+                        </log-cell-template>
+
+                     
+                    </log-column>
+
+                    <log-column [width]="'50'" [Editable]="true" [Alignment]="'right'" >
+                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                            <div style="width: 30px; float: right; height:20px;padding-top:3px">
+                                <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="item.DeleteButtonClicked(it)" [IsEnabled]="!IsDisplayOnly"></IconButton>
+                            </div>
+                           
+
+
+                        </log-cell-template>
+                    </log-column>
+
+
+
+
+
+
+                </logitude-edit-grid>
+            </div>
+
+        </td>
+    </tr>
+    <tr style="height: 32px;">
+        
+        <td colspan="5" style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="IsDisplayOnly">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

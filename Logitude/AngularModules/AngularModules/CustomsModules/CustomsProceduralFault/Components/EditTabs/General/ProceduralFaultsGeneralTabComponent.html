@@ -1,0 +1,218 @@
+﻿<!-- ProceduralFaultsGeneralTabComponent -->
+<style>
+    .HeaderBorder {
+        border: 1px ;
+        border-radius:5px;
+        background-color:#e6ede6;
+        height: 40px;
+    }
+
+    .LabelStyle {
+    position: absolute;
+    right: 0;
+    top: 10px;
+    bottom: 5px;
+    margin: auto;
+    font-size:12px;
+    color:black;
+}
+    .CustomMultiLinesText {
+        height: 60px;
+        width: 300px;
+        white-space: normal;
+        word-wrap: break-word;
+        overflow-x: hidden;
+        overflow-y: auto;
+        border: 0px solid LightGray;
+        border-radius: 3px;
+        direction: rtl;
+        text-align:right;
+        font-size:12px;
+        color:black;
+    }
+
+</style>
+
+
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td colspan="3">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr *ngIf="EntityPM">
+        <td style="width: 720px; padding-top: 10px;">
+            <table>
+                <tr>
+                    <td>
+                        <table>
+                            <tr style="height: 40px">
+                                <td colspan="10" >
+                                    <div class="HeaderBorder">
+                                        <table>
+                                            <tr>
+                                                <!-- DeclarationNumber -->
+                                                <td style="width: 110px;">
+                                                    <LogLabel [ObjectFieldName]="'DeclarationNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td><div></div></td>
+                                                <td style="width: 160px; ">
+                                                    <div >{{DeclarationNumber}}</div>
+                                                </td>
+
+                                                <td style="width: 160px;"></td>
+
+                                                <!-- InspectionTypeName -->
+                                                <td style="width: 110px">
+                                                    <LogLabel [ObjectFieldName]="'InspectionTypeName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td><div></div></td>
+                                                <td style="width: 160px;">
+                                                    <div >{{InspectionTypeName}}</div>
+                                                </td>
+
+                                                <td><div></div></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+
+                            </tr>
+
+                            <tr class="FormFieldRow" style="height: 40px">
+                                <!-- InputTypeCode -->
+                                <td style="width: 100px">
+                                    <LogLabel [ObjectFieldName]="'InputTypeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td><div></div></td>
+                                <td style="width: 100px;">
+                                    <div class="LabelStyle">{{InputTypeName}}</div>
+                                </td>
+
+                                <!-- RansomViolationSum -->
+                                <td style="width: 120px">
+                                    <LogLabel [ObjectFieldName]="'RansomViolationSum'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td><div></div></td>
+                                <td style="width: 100px;">
+                                    <div class="LabelStyle">{{RansomViolationSum}}</div>
+                                </td>
+
+                                <!-- UpdateDate -->
+                                <td style="width: 110px">
+                                    <LogLabel [ObjectFieldName]="'UpdateDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td><div></div></td>
+                                <td style="width: 160px;">
+                                    <div class="LabelStyle">{{UpdateDate | DateTimePipe:'D'}}</div>
+                                </td>
+
+                                <td><div></div></td>
+                            </tr>
+
+                            <tr class="FormFieldRow" style="height: 40px">
+                                <!-- IsCustProceduralFaultCountabl -->
+                                <td style="width: 100px">
+                                    <LogLabel [ObjectFieldName]="'IsCustProceduralFaultCountabl'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td><div></div></td>
+                                <td style="width: 100px;">
+                                    <div class="TextTrimming">
+                                        <img class="LabelStyle" *ngIf="IsCustProceduralFaultCountabl" title="IsCustProceduralFaultCountabl" src="./Images/CheckBoxIcon.png" />
+                                    </div>
+                                </td>
+
+                                <!-- IsAgentResponsibility -->
+                                <td style="width: 120px">
+                                    <LogLabel [ObjectFieldName]="'IsAgentResponsibility'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td><div></div></td>
+                                <td style="width: 100px;">
+                                    <div class="TextTrimming">
+                                        <img class="LabelStyle" *ngIf="IsAgentResponsibility" title="IsAgentResponsibility" src="./Images/CheckBoxIcon.png" />
+                                    </div>
+                                </td>
+
+                                <!-- LeadingDocumentVersion -->
+                                <td style="width: 110px">
+                                    <LogLabel [ObjectFieldName]="'LeadingDocumentVersion'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td><div></div></td>
+                                <td style="width: 160px;">
+                                    <div class="LabelStyle">{{LeadingDocumentVersion}}</div>
+                                </td>
+
+                                <td><div></div></td>
+                            </tr>
+
+                            <tr class="FormFieldRow" style="padding-top: 10px; vertical-align: top; height: 70px">
+                                <!-- Remarks -->
+                                <td style="width: 100px; padding-top: 10px; vertical-align: top">
+                                    <LogLabel [ObjectFieldName]="'Remarks'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td><div></div></td>
+
+                                <td style="height: 60px" colspan="4">
+                                    <div class="CustomMultiLinesText">
+                                        <div style="white-space: normal;word-wrap: break-word;margin-top:0px;margin-bottom:10px; margin-left:10px;margin-right:0px;">
+                                            {{Remarks}}
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <!-- Notes -->
+                                <td style="width: 110px; padding-top: 10px; vertical-align: top">
+                                    <LogLabel [ObjectFieldName]="'Notes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td><div></div></td>
+                                <td style="width: 160px; height: 60px; vertical-align: top;">
+                                    <div style="height: 60px; white-space: normal;word-wrap: break-word;margin-top:10px;margin-bottom:10px; margin-left:10px;margin-right:0px;font-size:11px">
+                                        <LogTextBox [ObjectFieldName]="'Notes'" [ObjectTableName]="ObjectTableName"
+                                                    [HideColumns]="true" [Text]="Notes"
+                                                    [IsMultiline]="true" [DataContext]="DataContext"></LogTextBox>
+                                    </div>
+                                </td>
+
+                                <td><div></div></td>
+                            </tr>
+
+                            <tr><td><div></div></td></tr>
+                        </table>
+
+                    </td>
+                </tr>
+            </table>
+        </td>
+
+        <td><div></div></td>
+
+
+    </tr>
+
+    <!-- Ok/Cancel Buttons-->
+    <tr style="height: 32px;">
+        <td colspan="4" style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

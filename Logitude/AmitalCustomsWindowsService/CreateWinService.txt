@@ -1,0 +1,10 @@
+﻿rem         Creates a service entry in the registry and Service Database
+rem        sc <server> create [service name] [binPath= ] <option1> <option2>...
+rem        this.AmitalCustomsServer.Description = "Amital Customs Server";
+rem        this.AmitalCustomsServer.DisplayName = "Amital Customs Server";
+rem        this.AmitalCustomsServer.ServiceName = "AmitalCustomsServer";
+rem        sc delete "UnifreightFileIndexServer-shipping"
+rem        sc create "UnifreightFileIndexServer-shipping"   binpath= "C:\Program Files (x86)\Amital\UnifreightFileIndexServer-shipping\UnifreightFileIndexServer.exe"  start= auto displayname= "Unifreight File IndexServer-shipping"
+
+sc delete "AmitalCustomsServerP"
+sc create "AmitalCustomsServerP" binpath=  "C:\Program Files (x86)\Amital\AmitalCustomsWindowsServiceP\AmitalCustomsWindowsService.exe" start= auto displayname= "Amital Customs Server Pilot"

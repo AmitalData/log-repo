@@ -1,0 +1,3 @@
+﻿Please run the following script to re-create a procedure in database : 
+
+	 C:\LogitudeWorld\main\Simplog.Data\ShipmentsModel\ShipmentDataViewScipt.sql

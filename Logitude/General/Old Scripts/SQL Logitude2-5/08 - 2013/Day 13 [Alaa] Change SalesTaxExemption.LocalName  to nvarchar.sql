@@ -1,0 +1,1 @@
+Alter table [Customs].[SalesTaxExemptionTypes]  alter column LocalName nvarchar(100)

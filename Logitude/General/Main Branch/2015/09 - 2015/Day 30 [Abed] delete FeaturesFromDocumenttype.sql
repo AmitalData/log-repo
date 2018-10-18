@@ -1,0 +1,7 @@
+ DELETE   RoleFeatures     WHERE FeatureId =(select Id from Features where Code = 'EDIT' and  ObjectTableId = (select Id from ObjectTables  where Name = 'DocumentType'  )) OR FeatureId =( select Id from Features where Code = 'HTMLTEMPLATES' and  ObjectTableId = (select Id from ObjectTables  where Name = 'DocumentType'  )) OR FeatureId =( select Id from Features where Code = 'TEMPLATES' and  ObjectTableId = (select Id from ObjectTables  where Name = 'DocumentType'  ))
+
+ DELETE  PackageFeatures     WHERE FeatureId =(select Id from Features where Code = 'EDIT' and  ObjectTableId = (select Id from ObjectTables  where Name = 'DocumentType'  )) OR FeatureId =( select Id from Features where Code = 'HTMLTEMPLATES' and  ObjectTableId = (select Id from ObjectTables  where Name = 'DocumentType'  )) OR FeatureId =( select Id from Features where Code = 'TEMPLATES' and  ObjectTableId = (select Id from ObjectTables  where Name = 'DocumentType'  ))
+
+ DELETE   Features     WHERE Id =(select Id from Features where Code = 'EDIT' and  ObjectTableId = (select Id from ObjectTables  where Name = 'DocumentType'  )) OR Id =( select Id from Features where Code = 'HTMLTEMPLATES' and  ObjectTableId = (select Id from ObjectTables  where Name = 'DocumentType'  )) OR Id =( select Id from Features where Code = 'TEMPLATES' and  ObjectTableId = (select Id from ObjectTables  where Name = 'DocumentType'  ))
+
+  

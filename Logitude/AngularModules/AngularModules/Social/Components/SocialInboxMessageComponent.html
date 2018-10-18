@@ -1,0 +1,417 @@
+﻿
+<style>
+        .Hyperlink:hover:not(:disabled), .HyperlinkQueryButtonControl:focus:not(:disabled) {
+        color: #1E8DC4;
+        text-decoration: underline;
+    }
+
+    .Hyperlink {
+        height: 21px !important;
+        width: auto !important;
+        line-height: 21px !important;
+        background: none !important;
+        border: none !important;
+        padding: 0 !important;
+        color: #1E4AC4;
+        font-size: 12px;
+        cursor: pointer;
+        white-space: nowrap;
+    }
+        .NewMessageButton {
+ border:1px solid gray;
+ color:white;
+  border-radius:3px;
+background: #a3d0ea; /* Old browsers */
+background: -moz-linear-gradient(top, #a3d0ea 0%, #2693ca 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, #a3d0ea 0%,#2693ca 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, #a3d0ea 0%,#2693ca 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a3d0ea', endColorstr='#2693ca',GradientType=0 ); /* IE6-9 */
+} 
+
+
+.NewMessageButton:hover:not(:disabled) {
+
+background: #2693ca; /* Old browsers */
+background: -moz-linear-gradient(top, #2693ca 0%, #a3d0ea 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, #2693ca 0%,#a3d0ea 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, #2693ca 0%,#a3d0ea 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2693ca', endColorstr='#a3d0ea',GradientType=0 ); /* IE6-9 */
+}
+
+
+.SocialMessageFiltersMenu .SelectedFilter {
+    color: white;
+    background: -moz-linear-gradient(50% 100% 90deg,rgba(24, 130, 184, 1) 0%,rgba(28, 132, 186, 1) 13.58%,rgba(41, 140, 190, 1) 27.91%,rgba(62, 152, 198, 1) 42.6%,rgba(92, 169, 209, 1) 57.53%,rgba(130, 191, 223, 1) 72.64%,rgba(176, 218, 239, 1) 87.7%,rgba(219, 243, 255, 1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(24, 130, 184, 1) 0%, rgba(28, 132, 186, 1) 13.58%, rgba(41, 140, 190, 1) 27.91%, rgba(62, 152, 198, 1) 42.6%, rgba(92, 169, 209, 1) 57.53%, rgba(130, 191, 223, 1) 72.64%, rgba(176, 218, 239, 1) 87.7%, rgba(219, 243, 255, 1) 100%);
+    background: -webkit-gradient(linear,50% 100%,50% 0%,color-stop(0,rgba(24, 130, 184, 1) ),color-stop(0.1358,rgba(28, 132, 186, 1) ),color-stop(0.2791,rgba(41, 140, 190, 1) ),color-stop(0.426,rgba(62, 152, 198, 1) ),color-stop(0.5753,rgba(92, 169, 209, 1) ),color-stop(0.7264,rgba(130, 191, 223, 1) ),color-stop(0.877,rgba(176, 218, 239, 1) ),color-stop(1,rgba(219, 243, 255, 1) ));
+    background: -o-linear-gradient(90deg, rgba(24, 130, 184, 1) 0%, rgba(28, 132, 186, 1) 13.58%, rgba(41, 140, 190, 1) 27.91%, rgba(62, 152, 198, 1) 42.6%, rgba(92, 169, 209, 1) 57.53%, rgba(130, 191, 223, 1) 72.64%, rgba(176, 218, 239, 1) 87.7%, rgba(219, 243, 255, 1) 100%);
+    background: linear-gradient(0deg, rgba(24, 130, 184, 1) 0%, rgba(28, 132, 186, 1) 13.58%, rgba(41, 140, 190, 1) 27.91%, rgba(62, 152, 198, 1) 42.6%, rgba(92, 169, 209, 1) 57.53%, rgba(130, 191, 223, 1) 72.64%, rgba(176, 218, 239, 1) 87.7%, rgba(219, 243, 255, 1) 100%);
+}
+
+.SocialMessageFiltersMenu li:first-child {
+    border-radius: 3px 0 0 3px;
+}
+
+.SocialMessageFiltersMenu li:last-child {
+    border: 1px Solid #6A8299;
+    border-radius: 0 3px 3px 0;
+}
+
+
+    .HyperlinkOther:hover:not(:disabled), .HyperlinkQueryButtonControl:focus:not(:disabled) {
+        color: #1E8DC4;
+        text-decoration: underline;
+    }
+
+    .HyperlinkOther {
+        height: 21px !important;
+        width: auto !important;
+        line-height: 21px !important;
+        background: none !important;
+        border: none !important;
+        padding: 0 !important;
+        font-size: 12px;
+        cursor: pointer;
+        white-space: nowrap;
+    }
+
+.SocialMessageFiltersMenu li {
+    float: left;
+    cursor: default;
+    width: 28px;
+    height: 23px;
+    line-height: 23px;
+    font-size: 11px;
+    color: #282E30;
+    text-indent: 0px;
+    text-align: center;
+    vertical-align: middle;
+    border-style: Solid;
+    border-color: #6A8299;
+    border-width: 1px 0 1px 1px;
+  background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
+    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    position: relative;
+}
+
+
+.SocialMessageFiltersMenuDisabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.SocialMessageFiltersMenu {
+    height: 21px;
+    max-height: 21px;
+    min-height: 21px;
+}
+
+
+
+       .SocialMessageFiltersMenuLable:hover:not(:disabled), .SocialMessageFiltersMenuLable:focus:not(:disabled) {
+        color: #1E8DC4;
+        
+    }
+
+    .SocialMessageFiltersMenuLable {
+
+        cursor: default;
+        color: #282E30;
+        text-align: center;
+    }
+
+  
+          .SectionItem:not(.SelectedSectionItem):hover {
+   
+    width: 100%;
+    /*border: 1px solid #BDBEC0;*/
+    cursor: pointer;
+    /*position: relative;*/
+    background: -moz-linear-gradient(50% 17.31% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    background: -webkit-gradient(linear,50% 17.31%,50% 105.85%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
+    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+}
+
+
+    .SectionItem {
+        width: 100%;
+        cursor: pointer;
+        /*height: 29px;*/
+        position: relative;
+    }
+
+        
+.SelectedSectionItem {
+    width: 100%;
+    cursor: pointer;
+    background: -moz-linear-gradient(50% 106.14% 90deg,rgba(133, 203, 237, 1) 0%,rgba(150, 211, 240, 1) 22.59%,rgba(196, 231, 248, 1) 67.37%,rgba(232, 247, 255, 1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 100%);
+    background: linear-gradient(0deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 100%);
+    position: relative;
+}
+
+
+    .MessageScrollViewer {
+        height: 100%;
+        width: 100%;
+        max-height: 100%;
+        max-width: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+        position: relative;
+    }
+
+
+</style>
+
+<div class="MediaFillAbsolute" style="background: white;">
+    <div class="MarginAbsolute0" style="top:0px;">
+        <table>
+
+
+            <tr style="height: 55px;border-bottom:1px solid #E1E1E1">
+                <td>
+                    <table>
+                        <tr>
+                            <td style="width:5px"><div style="width:5px"></div></td>
+                            <td style="width: 60px;">
+                                <BackButton [Text]="'Back'" style="text-align:center" (click)="BackButtonClicked()"></BackButton>
+                            </td>
+                            <td style="width:15px"><div style="width:10px"></div></td>
+                            <td style="width:70px"><div style="width:75px;font-size:22px;color:#333333;font-weight:bold;vertical-align:central">Inbox</div></td>
+                            <td style="width:60px"><div (click)="RefreshButtonClick()" class="Hyperlink" style="vertical-align:bottom;font-size:12px;margin-top:9px">Refresh</div></td>
+                            <td><div></div></td>
+                            <td style="width:130px"><div><button (click)="NewMessageButtonClick()" style="float:right;width:130px;height:24px;font-size:15px" class="NewMessageButton">New Message</button></div></td>
+                            <td style="width:15px"><div style="width:10px"></div></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+       
+            <tr>
+                <td>
+                   <table>
+                       <tr style="height:100%">
+                           <td style="width:600px;">
+                               <table>
+                                   <tr style="height:108px;border-bottom:1px solid #E1E1E1">
+                                       <td>
+                                           <div>
+                                               <table>
+                                                   <tr>
+                                                       <td style="width:20px;"><div style="width:20px;"></div></td>
+                                                       <td>
+                                                        <table>
+                                                            <tr style="height:15px;">
+                                                                <td><div></div></td>
+                                                            </tr>
+
+                                                            <tr style="height:20px;">
+                                                                <td style="width:70px"><div style="width:70px;font-size:20px;color:#231F20;">Message</div></td>
+                                                            </tr>
+                                                            <tr style="height:15px;">
+                                                                <td><div></div></td>
+                                                            </tr>
+
+                                                            <tr style="height:20px;">
+                                                                <td>
+
+                                                                    <div style="width:300px;vertical-align:central">
+
+                                                                        <ul style="height:40px;vertical-align:central;text-align:center" class="SocialMessageFiltersMenu">
+                                                                            <li style="width:50px;color:#45494A" (click)="InBoxMessageQueryChangedMethod(0)" [class.SelectedFilter]="InBoxMessageQuerySelectedValue === 'All'">
+                                                                                <span *ngIf="InBoxMessageQuerySelectedValue == 'All'" style="color:white;text-align:center">All</span>
+                                                                                <span class="SocialMessageFiltersMenuLable" *ngIf="InBoxMessageQuerySelectedValue != 'All'" >All</span>
+                                                                            </li>
+                                                                            <li style="width:60px;color:#45494A;vertical-align:central" (click)="InBoxMessageQueryChangedMethod(1)" [class.SelectedFilter]="InBoxMessageQuerySelectedValue === 'Unread'" title="Unread">
+
+                                                                                <span *ngIf="InBoxMessageQuerySelectedValue == 'Unread'" style="color:white;text-align:center">Unread</span>
+                                                               
+                                                                                <span class="SocialMessageFiltersMenuLable" *ngIf="InBoxMessageQuerySelectedValue != 'Unread'">Unread</span>
+                                                                            </li>
+                                                                            <li style="width:155px;color:#45494A" (click)="InBoxMessageQueryChangedMethod(2)" [class.SelectedFilter]="InBoxMessageQuerySelectedValue === 'Waiting for response'" title="Waiting for response">
+                                                                                <span *ngIf="InBoxMessageQuerySelectedValue == 'Waiting for response'" style="width:20px;"><img style="width:20px;height:14px;margin-top:-5px;margin-left:0px" src="./Images/Social/blueWaitngForResponce2.png" /></span>
+                                                                                <span *ngIf="InBoxMessageQuerySelectedValue != 'Waiting for response'" style="width:20px;"><img style="width:17px;height:13px;margin-top:-5px;margin-left:0px" src="./Images/Social/WaitingForResponse.png" /></span>
+
+                                                                                <span *ngIf="InBoxMessageQuerySelectedValue == 'Waiting for response'" style="color:white;text-align:center;margin-left:1px">Waiting for response</span>
+                                                                          
+                                                                                <span style="margin-left:3px" class="SocialMessageFiltersMenuLable" *ngIf="InBoxMessageQuerySelectedValue != 'Waiting for response'">Waiting for response</span>
+                                                                </li>
+
+
+
+                                                                </ul>
+
+                                                                       
+
+</div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr><td><div style="height:30px"></div></td></tr>
+
+                                                        </table>
+                                                       </td>
+                                                   </tr>
+                                               </table>
+                                           </div>
+                                       </td>
+                                   </tr>
+
+                                   <tr style="height:100%">
+                                       <td>
+                                           <div class="MediaFill">
+                                               <div (scroll)="onScroll()" [attr.id]="MessageListsId" class="MessageScrollViewer">
+                                                   <table>
+                                                       <tr style="height:100%;">
+
+                                                           <td *ngIf="!IsNoData" style="vertical-align:top;">
+
+                                                               <div *ngFor="let item of ConversationHeaderLists">
+                                                                   <div [class.SelectedSectionItem]="item === ConversationHeader" class="SectionItem" (mouseleave)="OnmMouseleave(item)" (mouseover)="OnmMouseOver(item)" [style.background-color]="item.BackgroundConversationHeader" style="min-height:60px;background-color:white;border-bottom:1px solid #DDDDDD; cursor:pointer">
+                                                                       <table>
+                                                                           <tr>
+                                                                               <td (click)="OnSelectMessage(item)" style="width:10px"><div style="width:10px"></div></td>
+                                                                               <td>
+                                                                                   <table>
+                                                                                       <tr (click)="OnSelectMessage(item)" style="height:5px"><td colspan="5"></td></tr>
+                                                                                       <tr style="height:55px">
+                                                                                           <td (click)="OnSelectMessage(item)" style="width:8px;"></td>
+                                                                                           <td (click)="OnSelectMessage(item)" style="width:40px;vertical-align:top">
+
+                                                                                               <div style="height:35px;width:35px;margin: auto;vertical-align:top">
+                                                                                                   <ImageComponent style="vertical-align:top" [HeightImage]="'35'" [WidthImage]="'35'" [EntityName]="'SocialMessage'" [ConversationHeaderId]="item.ConversationHeaderId"> </ImageComponent>
+                                                                                               </div>
+
+
+                                                                                           </td>
+                                                                                           <td (click)="OnSelectMessage(item)" style="width:10px;"></td>
+                                                                                           <td>
+                                                                                               <div style="height:19px">
+                                                                                                   <table style="table-layout: fixed; width: 100%">
+                                                                                                       <tr style="height:20px;vertical-align:top">
+
+                                                                                                           <td style="vertical-align:top">
+
+                                                                                                               <table>
+                                                                                                                   <tr>
+                                                                                                                       <td style="width:1px">
+                                                                                                                           <img (click)="OnSelectMessage(item)" *ngIf="item.DisplayEntityInformation && item.ObjectTableName!='Opportunity' && item.EntityImageSource" style="background-color:transparent;margin-top:-5px;height:20px;width:20px" [attr.src]="item.EntityImageSource" />
+
+                                                                                                                           <img (click)="OnSelectMessage(item)" *ngIf="item.DisplayEntityInformation && item.ObjectTableName=='Opportunity' && item.EntityImageSource" style="background-color:transparent;margin-top:-5px;height:25px;width:29px" [attr.src]="item.EntityImageSource" />
+
+                                                                                                                           <span *ngIf="item.DisplayEntityInformation" (click)="item.ViewEntityButtonClick(item)" class="Hyperlink">{{item.EntityDescription}}</span>
+                                                                                                                           <span (click)="OnSelectMessage(item)" *ngIf="item.DisplayEntityInformation"> — </span>
+                                                                                                                           <span (click)="OnSelectMessage(item)" [style.color]="item.ForegroundMessageParticipants" style="font-size:12px">{{item.MessageParticipants}}</span>
+                                                                                                                           <span *ngIf="item.MessageOthers" (click)="item.ViewMessageOthers(item)" class="HyperlinkOther" style="font-size:12px">{{item.MessageOthers}}</span>
+                                                                                                                       </td>
+                                                                                                                       <td (click)="OnSelectMessage(item)"></td>
+                                                                                                                   </tr>
+                                                                                                               </table>
+
+
+
+                                                                                                           </td>
+
+                                                                                                           <td (click)="OnSelectMessage(item)" style="width:20px;text-align:center;"><span style="color:#838889;font-size:12px;text-align:center">{{item.CreateDate | DateTimeToMSDYDatePipe}}</span></td>
+                                                                                                           <td style="width:5px;"><div style="width:5px"></div></td>
+
+
+                                                                                                       </tr>
+                                                                                                   </table>
+                                                                                               </div>
+
+                                                                                               <div style="height:20px;margin-top:1px">
+                                                                                                   <table style="table-layout: fixed; width: 100%">
+                                                                                                       <tr>
+                                                                                                           <td (click)="OnSelectMessage(item)" *ngIf="item.IsShowArrowReceiveMessage" style="width:18px"><div style="width:18px;"><img style="width:17px;cursor:pointer;height:12px;margin-top:-3px" src="./Images/Social/ArrowReceiveMessage.png" /></div></td>
+                                                                                                           <td (click)="OnSelectMessage(item)" *ngIf="item.IsShowArrowSend" style="width:12px"><div style="width:12px;"><img style="width:7px;cursor:pointer;height:10px;margin-top:-2px" src="./Images/Social/ArrowSend.png" /></div></td>
+                                                                                                           <td (click)="OnSelectMessage(item)"><div [style.color]="item.ForegroundMessageBody" [style.font-weight]="item.FontWeightbody" style="font-size:11px;" class="TextTrimming">{{item.LasMessageUserName}}{{item.MessageBody}}</div></td>
+                                                                                                           <td (click)="OnSelectMessage(item)" style="width:10px"><div style="width:10px"></div></td>
+
+                                                                                                           <td *ngIf="item.VisibilityIsWaitingForResponse && !item.VisibilityIsNotWaitingForResponse && !item.IsShowNumberUnreadComment" (click)="WaitingForResponse(item)" style="width:20px"><div style="width:20px;cursor:pointer"><img style="width:20px;cursor:pointer;height:15px;margin-top:3px" src="./Images/Social/WaitingForResponse.png" /></div></td>
+                                                                                                           <td *ngIf="item.VisibilityIsNotWaitingForResponse && !item.VisibilityIsWaitingForResponse && !item.IsShowNumberUnreadComment" (click)="WaitingForResponse(item)" style="width:20px"><div style="width:20px;cursor:pointer"><img style="width:20px;height:15px;cursor:pointer;margin-top:3px" src="./Images/Social/NotWaitingForResponse.png" /></div></td>
+
+
+
+                                                                                                           <td (click)="OnSelectMessage(item)" *ngIf="item.IsShowNumberUnreadComment" style="width:17px"><div style="height:17px;width:17px;vertical-align:central;text-align:center;margin-top:3px;color:white;background-color:#B24800;border:1px solid #B24800;border-radius:3px">{{item.NumberUnreadComment}}</div></td>
+                                                                                                           <td (click)="OnSelectMessage(item)" *ngIf="!item.VisibilityIsNotWaitingForResponse && !item.VisibilityIsWaitingForResponse && !item.IsShowNumberUnreadComment" style="width:27px"><div style="width:10px"></div></td>
+                                                                                                           <td style="width:5px;"><div style="width:5px"></div></td>
+                                                                                                       </tr>
+                                                                                                   </table>
+                                                                                               </div>
+
+                                                                                           
+                                                                                               <div style="height:16px;width:100%">
+                                                                                                   <table *ngIf="item.IsShowUnreadadndDeleteMessageArea" style="width: 100%">
+                                                                                                       <tr>
+                                                                                                           <td (click)="MarkAsReadButtonClick(item)" style="width:95px"><div style="width:95px;margin-top:-6px"><span class="Hyperlink">{{item.MarkAsReadLable}}</span></div></td>
+                                                                                                           <td  (click)="OnSelectMessage(item)" style="width:20px"><div style="width:20px"></div></td>
+                                                                                                           <td (click)="DeleteConversationButtonClick(item)" style="width:115px"><div style="width:115px;margin-top:-6px"><span class="Hyperlink">Delete Conversation</span></div></td>
+                                                                                                           <td (click)="OnSelectMessage(item)"><div></div></td>
+                                                                                                       </tr>
+                                                                                                   </table>
+                                                                                               </div>
+                                                                                  
+                                                                                           </td>
+                                                                                           <td (click)="OnSelectMessage(item)"></td>
+                                                                                       </tr>
+                                                                                   </table>
+
+                                                                               </td>
+                                                                               <td (click)="OnSelectMessage(item)" style="width:10px"><div style="width:10px"></div></td>
+                                                                           </tr>
+                                                                       </table>
+
+
+                                                                   </div>
+                                                               </div>
+
+
+                                                           </td>
+
+
+                                                           <td style="vertical-align:top;" *ngIf="IsNoData">
+                                                               <div class="NoDataTextStyle" style="text-align:center;vertical-align:top;font-size:14px;margin-left:-5px;margin-top:10PX;color:gray">No Recent Message</div>
+                                                           </td>
+
+
+                                                       </tr>
+                                                       <tr><td></td></tr>
+                                                   </table>
+                                               </div>
+                                           </div>
+                                           <BusyIndicator [Text]="BusyIndicatorText" [IsBusy]="ShowBusyIndicator"></BusyIndicator>
+                                       </td>
+                                   </tr>
+                               </table>
+
+                           </td>
+
+
+
+                           <td style="width:1px"><div  style="width:1px"></div></td>
+
+                           <td>
+
+                               <div style="border-left:1px solid #E1E1E1" class="MediaFill">
+                                   <ConversationMessageComponent *ngIf="ConversationHeader && SocialMessagesComponent && IsChangeConversationHeaderMessageComponent"  [SocialMessagesComponent]="SocialMessagesComponent" [ConversationHeader]="ConversationHeader" [Area]="'Inbox'" ></ConversationMessageComponent>
+                                   <ConversationMessageComponent *ngIf="ConversationHeader && SocialMessagesComponent && !IsChangeConversationHeaderMessageComponent"  [SocialMessagesComponent]="SocialMessagesComponent" [ConversationHeader]="ConversationHeader" [Area]="'Inbox'"></ConversationMessageComponent>
+                                  
+                               </div>
+                           </td>
+                       </tr>
+                   </table>
+                </td>
+            </tr>
+        </table>
+
+  
+    </div>
+</div>
+

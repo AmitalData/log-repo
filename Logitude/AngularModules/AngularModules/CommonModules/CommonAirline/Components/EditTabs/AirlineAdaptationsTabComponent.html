@@ -1,0 +1,562 @@
+﻿<style type="text/css">
+    .Box {
+        width: 100%;
+        height: 100%;
+        border: 1px solid #BABABA;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+    }
+
+    .BoxHeader {
+        height: 20px;
+        font-size: 13px;
+        color: #282E30;
+        text-indent: 5px;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(245, 245, 245, 1) 0%,rgba(243, 243, 243, 1) 50.24%,rgba(236, 236, 236, 1) 69.98%,rgba(224, 224, 224, 1) 84.35%,rgba(207, 207, 207, 1) 96.04%,rgba(199, 199, 199, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(245, 245, 245, 1) ),color-stop(0.5024,rgba(243, 243, 243, 1) ),color-stop(0.6998,rgba(236, 236, 236, 1) ),color-stop(0.8435,rgba(224, 224, 224, 1) ),color-stop(0.9604,rgba(207, 207, 207, 1) ),color-stop(1,rgba(199, 199, 199, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
+        -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#F5F5F5', endColorstr='#C7C7C7' ,GradientType=0)";
+        background: linear-gradient(180deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
+    }
+</style>
+
+<div class="TabHolder" style="overflow-x:auto">
+    <table>
+        <tr class="TabTitleRow">
+            <td>{{'Airline.TH.Adaptations' | TextCodeTranslationPipe}}</td>
+        </tr>
+
+        <tr style="height:10px;">
+            <td>
+                <div></div>
+            </td>
+        </tr>
+
+        <tr style="height:200px;">
+            <td>
+                <table>
+                    <tr>
+                        <!-- Special handling codes -->
+                        <td style="min-width:370px; width:370px; max-width:370px;">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div class="Box">
+                                            <table>
+                                                <tr class="BoxHeader">
+                                                    <td>
+                                                        <label>Special Handling Codes ({{HandlingCodesObslistCount}})</label>
+                                                    </td>
+                                                    <td style="width: 20px; padding: 3px;">
+                                                        <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddClicked('SpecialCode')"></IconButton>
+                                                    </td>
+                                                    <td style="width:5px;">
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td colspan="3" style="padding-left: 5px; padding-right: 5px;">
+                                                        <div class="MediaFill">
+                                                            <div class="SimpleGridView">
+                                                                <div class="SimpleGridViewHeader">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td style="width: 70px; min-width: 70px; max-width: 70px;">Code</td>
+                                                                            <td style="width: 250px; min-width: 250px; max-width: 250px;">Name</td>
+                                                                            <td class="LastChild">
+                                                                                <div></div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+
+                                                                <div class="SimpleGridViewBody">
+                                                                    <table>
+                                                                        <tr class="SimpleGridViewRow RowHover" *ngFor="let item of HandlingCodesObslist">
+                                                                            <td class="CellStretched" [class.CellInActive]="item.InActive" style="width: 70px; min-width: 70px; max-width: 70px;">
+                                                                                {{item.Code}}
+                                                                            </td>
+
+                                                                            <td class="CellStretched" [class.CellInActive]="item.InActive" style="width: 250px; min-width: 250px; max-width: 250px;">
+                                                                                <table>
+                                                                                    <tr>
+                                                                                        <td>{{item.Name}}</td>
+                                                                                        <td style="width:1px;"></td>
+                                                                                        <td style="width:52px;"><label *ngIf="item.InActive" style="color:red;">(Inactive)</label></td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </td>
+
+                                                                            <td class="CellTools" [class.CellInActive]="item.InActive">
+                                                                                <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditClicked(item, 'SpecialCode')"></IconButton>
+                                                                            </td>
+                                                                        </tr>
+
+                                                                        <tr>
+                                                                            <td colspan="3">
+                                                                                <div></div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td style="width:10px;min-width:10px;max-width:10px;">
+                            <div></div>
+                        </td>
+
+                        <!-- Commodities -->
+                        <td style="min-width:370px; width:370px; max-width:370px;">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div class="Box">
+                                            <table>
+                                                <tr class="BoxHeader">
+                                                    <td>
+                                                        <label>Commodities ({{CommoditiesObslistCount}})</label>
+                                                    </td>
+                                                    <td style="width: 20px; padding: 3px;">
+                                                        <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddClicked('Commodity')"></IconButton>
+                                                    </td>
+                                                    <td style="width:5px;">
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td colspan="3" style="padding-left: 5px; padding-right: 5px;">
+                                                        <div class="MediaFill">
+                                                            <div class="SimpleGridView">
+                                                                <div class="SimpleGridViewHeader">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td style="width: 70px; min-width: 70px; max-width: 70px;">Code</td>
+                                                                            <td style="width: 250px; min-width: 250px; max-width: 250px;">Name</td>
+                                                                            <td class="LastChild">
+                                                                                <div></div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+
+                                                                <div class="SimpleGridViewBody">
+                                                                    <table>
+                                                                        <tr class="SimpleGridViewRow RowHover" *ngFor="let item of CommoditiesObslist">
+                                                                            <td class="CellStretched" [class.CellInActive]="item.InActive" style="width: 70px; min-width: 70px; max-width: 70px;">
+                                                                                {{item.Code}}
+                                                                            </td>
+
+                                                                            <td class="CellStretched" [class.CellInActive]="item.InActive" style="width: 250px; min-width: 250px; max-width: 250px;">
+                                                                                <table>
+                                                                                    <tr>
+                                                                                        <td>{{item.Name}}</td>
+                                                                                        <td style="width:1px;"></td>
+                                                                                        <td style="width:52px;"><label *ngIf="item.InActive" style="color:red;">(Inactive)</label></td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </td>
+
+                                                                            <td class="CellTools" [class.CellInActive]="item.InActive">
+                                                                                <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditClicked(item, 'Commodity')"></IconButton>
+                                                                            </td>
+                                                                        </tr>
+
+                                                                        <tr>
+                                                                            <td colspan="3">
+                                                                                <div></div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td style="width:10px;min-width:10px;max-width:10px;">
+                            <div></div>
+                        </td>
+
+                        <!-- Message rules -->
+                        <td style="min-width:370px; width:370px; max-width:370px;">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div class="Box">
+                                            <table>
+                                                <tr class="BoxHeader">
+                                                    <td>
+                                                        <label>Messaging Rules ({{MessagingRulesObslistCount}})</label>
+                                                    </td>
+                                                    <td style="width: 20px; padding: 3px;">
+                                                        <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddClicked('MessagingRule')"></IconButton>
+                                                    </td>
+                                                    <td style="width:5px;">
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td colspan="3" style="padding-left: 5px; padding-right: 5px;">
+                                                        <div class="MediaFill">
+                                                            <div class="SimpleGridView">
+                                                                <div class="SimpleGridViewHeader">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td style="width: 90px; min-width: 90px; max-width: 90px;">Message Type</td>
+                                                                            <td style="width: 230px; min-width: 230px; max-width: 230px;">Rule Field</td>
+                                                                            <td class="LastChild">
+                                                                                <div></div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+
+                                                                <div class="SimpleGridViewBody">
+                                                                    <table>
+                                                                        <tr class="SimpleGridViewRow RowHover" *ngFor="let item of MessagingRulesObslist">
+                                                                            <td class="CellStretched" [class.CellInActive]="item.InActive" style="width: 90px; min-width: 90px; max-width: 90px;">
+                                                                                {{item.MessageTypeCode}}
+                                                                            </td>
+
+                                                                            <td class="CellStretched" [class.CellInActive]="item.InActive" style="width: 230px; min-width: 230px; max-width: 230px;">
+                                                                                <table>
+                                                                                    <tr>
+                                                                                        <td>{{item.RuleFieldName}}</td>
+                                                                                        <td style="width:1px;"></td>
+                                                                                        <td style="width:52px;"><label *ngIf="item.InActive" style="color:red;">(Inactive)</label></td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </td>
+
+                                                                            <td class="CellTools" [class.CellInActive]="item.InActive">
+                                                                                <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditRuleClicked(item)"></IconButton>
+                                                                            </td>
+                                                                        </tr>
+
+                                                                        <tr>
+                                                                            <td colspan="3">
+                                                                                <div></div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr style="height:10px;">
+            <td>
+                <div></div>
+            </td>
+        </tr>
+
+        <tr style="height:200px;">
+            <td>
+                <table>
+                    <tr>
+                        <!-- Charge codes -->
+                        <td style="min-width:370px; width:370px; max-width:370px;">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div class="Box">
+                                            <table>
+                                                <tr class="BoxHeader">
+                                                    <td>
+                                                        <label>Charge Codes ({{IATACodesObslistCount}})</label>
+                                                    </td>
+                                                    <td style="width: 20px; padding: 3px;">
+                                                        <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddClicked('IATACode')"></IconButton>
+                                                    </td>
+                                                    <td style="width:5px;">
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td colspan="3" style="padding-left: 5px; padding-right: 5px;">
+                                                        <div class="MediaFill">
+                                                            <div class="SimpleGridView">
+                                                                <div class="SimpleGridViewHeader">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td style="width: 70px; min-width: 70px; max-width: 70px;">Code</td>
+                                                                            <td style="width: 250px; min-width: 250px; max-width: 250px;">Name</td>
+                                                                            <td class="LastChild">
+                                                                                <div></div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+
+                                                                <div class="SimpleGridViewBody">
+                                                                    <table>
+                                                                        <tr class="SimpleGridViewRow RowHover" *ngFor="let item of IATACodesObslist">
+                                                                            <td class="CellStretched" [class.CellInActive]="item.InActive" style="width: 70px; min-width: 70px; max-width: 70px;">
+                                                                                {{item.Code}}
+                                                                            </td>
+
+                                                                            <td class="CellStretched" [class.CellInActive]="item.InActive" style="width: 250px; min-width: 250px; max-width: 250px;">
+                                                                                <table>
+                                                                                    <tr>
+                                                                                        <td>{{item.Name}}</td>
+                                                                                        <td style="width:1px;"></td>
+                                                                                        <td style="width:52px;"><label *ngIf="item.InActive" style="color:red;">(Inactive)</label></td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </td>
+
+                                                                            <td class="CellTools" [class.CellInActive]="item.InActive">
+                                                                                <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditClicked(item, 'IATACode')"></IconButton>
+                                                                            </td>
+                                                                        </tr>
+
+                                                                        <tr>
+                                                                            <td colspan="3">
+                                                                                <div></div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td style="width:10px;min-width:10px;max-width:10px;">
+                            <div></div>
+                        </td>
+
+                        <!-- Booking products -->
+                        <td style="min-width:370px; width:370px; max-width:370px;">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div class="Box">
+                                            <table>
+                                                <tr class="BoxHeader">
+                                                    <td>
+                                                        <label>Booking Products ({{BookingProductsObslistCount}})</label>
+                                                    </td>
+                                                    <td style="width: 20px; padding: 3px;">
+                                                        <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddClicked('BookingProduct')"></IconButton>
+                                                    </td>
+                                                    <td style="width:5px;">
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td colspan="3" style="padding-left: 5px; padding-right: 5px;">
+                                                        <div class="MediaFill">
+                                                            <div class="SimpleGridView">
+                                                                <div class="SimpleGridViewHeader">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td style="width: 70px; min-width: 70px; max-width: 70px;">Code</td>
+                                                                            <td style="width: 250px; min-width: 250px; max-width: 250px;">Name</td>
+                                                                            <td class="LastChild">
+                                                                                <div></div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+
+                                                                <div class="SimpleGridViewBody">
+                                                                    <table>
+                                                                        <tr class="SimpleGridViewRow RowHover" *ngFor="let item of BookingProductsObslist">
+                                                                            <td class="CellStretched" [class.CellInActive]="item.InActive" style="width: 70px; min-width: 70px; max-width: 70px;">
+                                                                                {{item.Code}}
+                                                                            </td>
+
+                                                                            <td class="CellStretched" [class.CellInActive]="item.InActive" style="width: 250px; min-width: 250px; max-width: 250px;">
+                                                                                <table>
+                                                                                    <tr>
+                                                                                        <td>{{item.Name}}</td>
+                                                                                        <td style="width:1px;"></td>
+                                                                                        <td style="width:52px;"><label *ngIf="item.InActive" style="color:red;">(Inactive)</label></td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </td>
+
+                                                                            <td class="CellTools" [class.CellInActive]="item.InActive">
+                                                                                <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditClicked(item, 'BookingProduct')"></IconButton>
+                                                                            </td>
+                                                                        </tr>
+
+                                                                        <tr>
+                                                                            <td colspan="3">
+                                                                                <div></div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td style="width:10px;min-width:10px;max-width:10px;">
+                            <div></div>
+                        </td>
+
+                        <!-- settings -->
+                        <td style="min-width:370px; width:370px; max-width:370px;">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div class="Box">
+                                            <table>
+                                                <tr class="BoxHeader">
+                                                    <td>
+                                                        <label>Settings</label>
+                                                    </td>
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td colspan="2" style="padding-left: 5px; padding-right: 5px;">
+                                                        <table>
+                                                            <tr class="FormFieldRow">
+                                                                <td style="width: 230px;">
+                                                                    <LogLabel [ObjectFieldName]="'IsManagingProduct'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                </td>
+
+                                                                <td style="width:60px;">
+                                                                    <LogCheckBox [ObjectFieldName]="'IsManagingProduct'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                </td>
+
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr class="FormFieldRow">
+                                                                <td>
+                                                                    <LogLabel [ObjectFieldName]="'IsProductMandatory'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                </td>
+
+                                                                <td>
+                                                                    <LogCheckBox [ObjectFieldName]="'IsProductMandatory'" [Checked]="IsProductMandatory" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                </td>
+
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr class="FormFieldRow">
+                                                                <td>
+                                                                    <LogLabel [ObjectFieldName]="'IsDescriptionOfGoodsFromList'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                </td>
+
+                                                                <td>
+                                                                    <LogCheckBox [ObjectFieldName]="'IsDescriptionOfGoodsFromList'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                </td>
+
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr class="FormFieldRow">
+                                                                <td>
+                                                                    <LogLabel [ObjectFieldName]="'ScheduleDays'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                </td>
+
+                                                                <td>
+                                                                    <LogTextBox [HideColumns]="true" [ObjectFieldName]="'ScheduleDays'" [Text]="ScheduleDays" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                </td>
+
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr class="FormFieldRow">
+                                                                <td>
+                                                                    <LogLabel [ObjectFieldName]="'NoAvailabilityInFVAMessages'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                </td>
+
+                                                                <td>
+                                                                    <LogCheckBox [ObjectFieldName]="'NoAvailabilityInFVAMessages'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                </td>
+
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <div></div>
+            </td>
+        </tr>
+    </table>
+</div>

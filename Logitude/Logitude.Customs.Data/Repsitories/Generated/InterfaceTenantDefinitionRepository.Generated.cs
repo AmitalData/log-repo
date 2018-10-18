@@ -1,0 +1,91 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.EntityKeys;
+using Simplog.Server.Infrastructure;
+
+namespace Logitude.Customs.Data.Repsitories
+{
+   public partial class InterfaceTenantDefinitionRepository:IRepository<InterfaceTenantDefinition>
+   {
+   
+        private ICustomContext currentContext;
+        public InterfaceTenantDefinitionRepository(int tenant)
+        {
+            currentContext = CustomContext.GetContext(tenant);
+        }
+
+        public InterfaceTenantDefinitionRepository(ICustomContext context)
+        {
+            currentContext = context;
+        }
+
+		 
+		
+		public  InterfaceTenantDefinition GetSingle(string id, int tenant)
+        {
+            return (from a in context.InterfaceTenantDefinitions
+                    where a.Id == id && a.Tenant == tenant
+                    select a).FirstOrDefault();
+        }
+
+        public IQueryable<InterfaceTenantDefinition> GetAll(int tenant)
+        {
+            return from a in context.InterfaceTenantDefinitions  
+                   where a.Tenant == tenant
+                   select a;
+        }
+				 
+        public InterfaceTenantDefinition GetSingle(EntityKeyFields entityKeys)
+        {
+            InterfaceTenantDefinitionKeys keys = entityKeys as InterfaceTenantDefinitionKeys;
+            return (from a in context.InterfaceTenantDefinitions
+                    where a.Id == keys.Id
+                    select a).FirstOrDefault();
+        }
+		         
+        partial void onAdd();//Partial Methods Definition in Generated
+        public void Add(InterfaceTenantDefinition entity)
+        {
+            onAdd();
+            context.InterfaceTenantDefinitions.Add(entity);
+        }
+
+        public void Remove(InterfaceTenantDefinition entity)
+        {
+            context.InterfaceTenantDefinitions.Attach(entity);
+            context.InterfaceTenantDefinitions.Remove(entity);
+        }
+
+        partial void onUpdate();//Partial Methods Definition in Generated
+        public void Update(InterfaceTenantDefinition entity)
+        {
+            onUpdate();
+            context.InterfaceTenantDefinitions.Attach(entity);
+            context.SetAsModified(entity);
+        }
+
+        public List<InterfaceTenantDefinition> All()
+        {
+            return context.InterfaceTenantDefinitions.ToList();
+        }
+
+        private ICustomContext context
+        {
+            get { return currentContext; }
+        }
+
+        public void SubmitChanges()
+        {
+            context.SaveChanges();
+        }
+	 
+   }
+   }
+	 

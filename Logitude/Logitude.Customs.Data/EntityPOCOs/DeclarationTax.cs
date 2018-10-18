@@ -1,0 +1,43 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Customs.Data.EntityPOCOs
+{
+   
+    public class DeclarationTax
+    {
+	 string dbms;
+
+        [Key]
+        [ForeignKey("Declaration")]
+        [Column("DeclarationId" ,Order = 1)]
+	    public string DeclarationId { get; set; }
+	      
+        public virtual Declaration Declaration { get; set; }
+     [Key]
+        [ForeignKey("ParagraphType")]
+        [Column("TaxTypeCode" ,Order = 2)]
+	    public string TaxTypeCode { get; set; }
+	      
+        public virtual ParagraphType ParagraphType { get; set; }
+        [Column("TotalAmount")]
+	    public decimal? TotalAmount { get; set; }
+        [Column("DeferredTaxAmount")]
+	    public decimal? DeferredTaxAmount { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+        [Column("TaxBaseAmount")]
+	    public decimal? TaxBaseAmount { get; set; }
+    }
+}
+	 

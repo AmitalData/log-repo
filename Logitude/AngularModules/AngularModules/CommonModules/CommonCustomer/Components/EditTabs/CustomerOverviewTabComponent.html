@@ -1,0 +1,523 @@
+﻿
+<style>
+    #chartdiv {
+        width: 100%;
+        height: 80%;
+    }
+</style>
+
+<div class="TabHolder" style="overflow-x:auto" *ngIf="!CustomerOverViewTabHide">
+    <table>
+        <tr class="TabTitleRow">
+            <td>{{'Customer.TH.Overview' | TextCodeTranslationPipe}}</td>
+        </tr>
+
+        <tr>
+            <td>
+                <table>
+                    <tr>
+                        <td style="width:0.5%;min-width:10px">
+                            <div style="width:0.5%"></div>
+                        </td>
+
+                        <td style="border:solid;border-color:lightgrey;border-width:1px;border-top:none;width:32.7%">
+                            <table>
+                                <tr class="SectionHeader">
+                                    <td>
+                                        <div>
+                                            <label>Money Information</label>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td style="height:10px">
+                                                    <div style="height:10px"></div>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:1px">
+                                                <td style="vertical-align:top;height:1px">
+                                                    <table>
+                                                        <tr style="height:1px">
+
+                                                            <td style="position:center;text-align:center;height:1px">
+                                                                <span style="position:center"><label style="font-size:large;text-decoration:underline" class="QueryLink" (click)="ShowOpenARInvoices()"> {{OpenARInvoices |  NumbersPipe:'N2'}} </label><label style="color:grey;margin-left:auto">{{CurrencyCodeLocal}}</label></span>
+
+                                                            </td>
+
+                                                        </tr>
+
+                                                        <tr style="height:1px">
+                                                            <td style="vertical-align:top;position:center;text-align:center">
+                                                                <label style="font-size:small;position:center;color:grey;vertical-align:top">Outstanding</label>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+
+                                                </td>
+
+                                                <td style="vertical-align:top;height:1px">
+                                                    <table>
+                                                        <tr style="height:1px">
+                                                            <td style="position:center;text-align:center">
+                                                                <span style="position:center"><label style="font-size:large;text-decoration:underline" class="QueryLink" (click)="ShowInvoicesDue()"> {{InvoicesDue | NumbersPipe:'N2'}} </label><label style="color:grey;margin-left:auto">{{CurrencyCodeLocal}}</label></span>
+
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr style="height:1px">
+                                                            <td style="position:center;text-align:center;vertical-align:top">
+                                                                <label style="font-size:small;position:center;color:grey;vertical-align:top">Overdue</label>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td style="height:10px">
+                                                    <div style="height:10px"></div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+
+                                                <td style="vertical-align:top;height:1px">
+                                                    <table>
+                                                        <tr style="height:1px">
+                                                            <td style="position:center;text-align:center">
+                                                                <span style="position:center"><label style="font-size:large;text-decoration:underline" class="QueryLink" (click)="ShowOpenReceivables()"> {{OpenReceivables | NumbersPipe:'N2'}} </label><label style="color:grey;margin-left:auto">{{CurrencyCodeLocal}}</label></span>
+
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr style="height:1px">
+                                                            <td style="vertical-align:top;text-align:center;vertical-align:top">
+                                                                <label style="font-size:small;position:center;color:grey">Open Receivables</label>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+
+                                                <td style="vertical-align:top;height:1px">
+                                                    <table>
+                                                        <tr style="height:1px">
+                                                            <td style="position:center;text-align:center;align-items:center;align-content:center;align-self:center">
+
+                                                                <label style="font-size:large;text-decoration:underline" class="QueryLink" (click)="ShowARPayments()"> {{ARPayments | NumbersPipe:'N2'}} </label>
+                                                                <label style="color:grey;margin-left:auto">{{CurrencyCodeLocal}}</label>
+
+                                                                <IconButton [Name]="'Add'" [IsSmall]="true" [Top]="'3px'" style="margin-left:4px;margin-top:2px;display:inline-block;vertical-align:central" (click)="NewARPayment()"></IconButton>
+
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr style="height:1px">
+                                                            <td style="position:center;text-align:center;vertical-align:top">
+                                                                <label style="font-size:small;position:center;color:grey">Open A/R Payments</label>
+
+
+                                                            </td>
+
+
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                                <tr></tr>
+
+                            </table>
+                        </td>
+                        <td style="width:0.5%;min-width:10px">
+                            <div style="width:0.5%"></div>
+                        </td>
+                        <td style="border:solid;border-color:lightgrey;border-width:1px;border-top:none;width:32.7%">
+                            <table>
+                                <tr class="SectionHeader">
+                                    <td>
+                                        <div>
+                                            <label>Business Records</label>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="vertical-align:top;padding-top:5px">
+                                        <table style="height:50%">
+
+                                            <tr class="TabTitleRow">
+                                                <td style="width:5px">
+                                                    <div style="width:5px"></div>
+                                                </td>
+
+                                                <td>
+                                                    <label style="font-size:large">Quotes</label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:5px">
+                                                    <div style="width:5px"></div>
+                                                </td>
+
+                                                <td>
+                                                    <p class="QueryLink" style="padding-left:7px" (click)="BusinessClick('OpenQuotes')">Open Quotes({{OpenQuotes}})</p>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td style="width:5px">
+                                                    <div style="width:5px"></div>
+                                                </td>
+
+                                                <td>
+                                                    <p class="QueryLink" style="padding-left:7px" (click)="BusinessClick('AllQuotes')">All Quotes</p>
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td style="width:5px">
+                                                    <div style="width:5px"></div>
+                                                </td>
+
+                                                <td>
+                                                    <p class="QueryLink" style="padding-left:7px" (click)="BusinessClickNew('Quote')">New Quote</p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:5px">
+                                                    <div style="width:5px"></div>
+                                                </td>
+
+                                                <td style="height:5px">
+                                                    <div style="height:5px"></div>
+                                                </td>
+                                            </tr>
+                                            <tr class="TabTitleRow">
+                                                <td style="width:5px">
+                                                    <div style="width:5px"></div>
+                                                </td>
+
+                                                <td>
+                                                    <label style="font-size:large">Shipments</label>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td style="width:5px">
+                                                    <div style="width:5px"></div>
+                                                </td>
+
+                                                <td>
+                                                    <p class="QueryLink" style="padding-left:7px" (click)="BusinessClick('OpenShipments')">Open Shipments({{OpenShipments}})</p>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td style="width:5px">
+                                                    <div style="width:5px"></div>
+                                                </td>
+
+                                                <td>
+                                                    <p class="QueryLink" style="padding-left:7px" (click)="BusinessClick('AllShipments')">All Shipments</p>
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td style="width:5px">
+                                                    <div style="width:5px"></div>
+                                                </td>
+
+                                                <td>
+                                                    <p class="QueryLink" style="padding-left:7px" (click)="BusinessClickNew('Shipment')">New Shipment</p>
+                                                </td>
+                                            </tr>
+
+                                        </table>
+                                    </td>
+                                </tr>
+
+
+                            </table>
+                        </td>
+
+                        <td style="width:0.5%;min-width:10px">
+                            <div style="width:0.5%"></div>
+                        </td>
+                        <td style="border:solid;border-color:lightgrey;border-width:1px;border-top:none;width:auto;vertical-align:top;width:32.7%;height:50%">
+                            <table>
+                                <tr class="SectionHeader">
+                                    <td>
+                                        <div>
+                                            <label>Customer Details</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="height:10px">
+                                        <div style="height:10px"></div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="height:10px">
+                                        <div style="height:10px"></div>
+                                    </td>
+                                </tr>
+
+                                <tr style="height:1px">
+                                    <td>
+                                        <div>
+                                            <table>
+                                                <tr>
+                                                    <td style="width:150px">
+                                                        <label style="margin-left:7px">Customer Rank:</label>
+
+                                                    </td>
+                                                    <td>
+                                                        <span style="float:left"><img style="width: 20px; height: 20px;float:left; vertical-align: middle; margin:0; margin-left: -0px;z-index:1" [attr.src]="RankSourceText1" (mouseover)="RankSource1('1')" (mouseout)="RankSource1()" [attr.title]="RankName" (click)="ChangeRank('1')" /></span>
+                                                        <span style="float:left"><img style="width: 20px; height: 20px;float:left; vertical-align: middle; margin:0; margin-left: -3px;z-index:1" [attr.src]="RankSourceText2" (mouseover)="RankSource2('2')" (mouseout)="RankSource2()" [attr.title]="RankName" (click)="ChangeRank('2')" /></span>
+                                                        <span style="float:left"><img style="width: 20px; height: 20px;float:left; vertical-align: middle; margin:0; margin-left: -3px;z-index:1" [attr.src]="RankSourceText3" (mouseover)="RankSource3('3')" (mouseout)="RankSource3()" [attr.title]="RankName" (click)="ChangeRank('3')" /></span>
+
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+
+                                    </td>
+
+
+
+
+                                </tr>
+                                <tr>
+                                    <td style="height:10px">
+                                        <div style="height:10px"></div>
+                                    </td>
+                                </tr>
+
+                                <tr style="height:1px">
+
+                                    <td>
+                                        <table>
+                                            <tr>
+
+                                                <td style="width:150px">
+                                                    <label style="margin-left:7px">Start Working Date: </label>
+
+                                                </td>
+
+                                                <td style="width:100px">
+                                                    <LogDatePicker [ObjectFieldName]="'StartWorkingDate'" [ObjectTableName]="'Customer'" [InputType]="'date'" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+
+
+
+
+
+
+                                </tr>
+
+
+
+
+                                <tr>
+                                    <td style="height:10px">
+                                        <div style="height:10px"></div>
+                                    </td>
+                                </tr>
+
+
+
+                                <tr style="height:1px">
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td style="width:150px;vertical-align:top;margin-top:10px">
+                                                    <label style="padding-left:7px">Logo:</label>
+                                                </td>
+
+                                                <td>
+                                                    <div style="width:100px;height:100px">
+                                                        <ImageComponent [WidthImage]="'95px'" [HeightImage]="'95px'" [ImageId]="ImageId" [EntityId]="EntityId" [EntityName]="EntityName" (UploadCompleted)="ImageUploadedCompleted($event)" style="height:72px;width:72px"> </ImageComponent>
+                                                        <!--<span><img style="width: 70px; height: 70px; vertical-align: middle; margin:0; margin-left: -0px;" src="../../../../../Images/Maintenance/Customer.png" (click)="OpenUpLoadLogo()" [attr.id]="LogoFileHtmlId" /></span>
+                                        <span>
+                                            <input [attr.id]="LogoInput" accept=".jpg,.jpeg,.JPG,.JPEG" type="file" [(ngModel)]="DataImage" (change)="UploadogoFile($event)" style="display:none" class="upload" />
+                                        </span>-->
+
+
+
+                                                    </div>
+
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+
+
+                                </tr>
+
+                                <tr>
+                                    <td></td>
+                                </tr>
+
+
+
+                            </table>
+                        </td>
+
+                        <td style="width:0.5%;min-width:10px">
+                            <div style="width:0.5%"></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr style="height:5px">
+            <td><div></div></td>
+        </tr>
+
+        <tr style="height:50%">
+            <td>
+                <table>
+                    <tr>
+                        <td style="width:10px;min-width:10px">
+                            <div style="width:10px"></div>
+                        </td>
+
+                        <td>
+                            <table>
+                                <tr class="SectionHeader">
+                                    <td>
+
+                                        <table>
+                                            <tr>
+                                                <td>Activity Status</td>
+
+                                                <td style="font-size:x-small; width:50px;">
+                                                    <span class="hyperlink" (click)="MoreDetails()">More Details</span>                                                   
+                                                </td>
+
+                                                <td style="width:5px;">
+                                                   <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <table>
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width:120px">
+                                                                <ComboBox (SelectedItemChanged)="SelectedDateTypeItem = $event" [ItemsSource]="DateTypeFilterList" [SelectedItem]="SelectedDateTypeItem" [Binding]="'Title'"></ComboBox>
+                                                            </td>
+                                                            <td style="width:3px"></td>
+
+                                                            <td style="width:120px">
+                                                                <ComboBox (SelectedItemChanged)="SelectedTimeRangeItem = $event" [ItemsSource]="TimeRangeFilterList" [SelectedItem]="SelectedTimeRangeItem" [Binding]="'Title'"></ComboBox>
+                                                            </td>
+                                                            <td style="width:3px"></td>
+
+                                                            <td style="width:120px">
+                                                                <LogDatePicker [NoObjectField]="true" [SelectedDateValue]="ActivityToDate" [ObjectTableName]="'Shipment'" [HideColumns]="true" [ObjectFieldName]="'ActivityToDate'" [DataContext]="DataContext"></LogDatePicker>
+                                                            </td>
+                                                           
+                                                            <td style="width:3px"></td>
+                                                           
+                                                            <td style="width:120px">
+                                                                <LogDatePicker [NoObjectField]="true" [SelectedDateValue]="ActivityFromDate" [ObjectTableName]="'Shipment'" [HideColumns]="true" [ObjectFieldName]="'ActivityFromDate'" [DataContext]="DataContext"></LogDatePicker>
+                                                            </td>
+                                                            <td></td>
+
+                                                            <td style="width:50px">Show:</td>
+                                                            <td style="width:130px">
+                                                                <ComboBox (SelectedItemChanged)="SelectedShowItem = $event" [ItemsSource]="ShowFilterList" [SelectedItem]="SelectedShowItem" [Binding]="'Title'"></ComboBox>
+                                                            </td>
+
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            
+                                            <tr style="height:100%">
+                                                <td>            
+                                                    <div [attr.id]="ActivityStatusOverViewDashboardId" class="CellContent"></div>
+                                                                                           <div *ngIf="NoData" style="text-align:center;vertical-align:central;width:100%;overflow-y:hidden">
+                                                        <label style="font-size:large;text-align:center;vertical-align:central;width:100%;height:100%">No Shipments</label>
+                                                    </div>
+
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </td>
+                        <td style="width:0.5%;min-width:10px">
+                            <div style="width:0.5%"></div>
+                        </td>
+
+                        <td style="width:280px">
+                            <div class="MediaFill">
+                                <SectionBox>
+                                    <SectionHead>
+                                        <table>
+                                            <tr>
+                                                <td style="width: 16px; position: relative;">
+                                                    <img *ngIf="EntityPM.Notes" class="CenterCenter" src="./Images/Notes_exists.png" />
+                                                    <img *ngIf="!EntityPM.Notes" class="CenterCenter" src="./Images/Notes_notexists.png" />
+                                                </td>
+
+                                                <td style="padding-left: 5px;">
+                                                    Operational Notes
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </SectionHead>
+
+                                    <SectionBody>
+                                        <div class="MarginAbsolute5">
+                                            <div class="NotesYellowBox">
+                                                <div class="MediaFillAbsolute" style="top: 2px; bottom: 2px;">
+                                                    <textarea class="NotesTextArea" [readonly]="true">{{EntityPM.Notes}}</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </SectionBody>
+                                </SectionBox>
+                            </div>
+                        </td>
+
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div #MoreDetailsView></div>

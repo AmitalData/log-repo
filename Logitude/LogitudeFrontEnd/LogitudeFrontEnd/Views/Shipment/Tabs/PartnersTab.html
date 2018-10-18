@@ -1,0 +1,314 @@
+﻿
+<style type="text/css">
+    .BoxItemContent .Body > td {
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(247, 247, 247, 1) 0%,rgba(245, 245, 245, 1) 49.79%,rgba(238, 238, 238, 1) 69.34%,rgba(226, 226, 226, 1) 83.57%,rgba(209, 209, 209, 1) 95.15%,rgba(199, 199, 199, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 49.79%, rgba(238, 238, 238, 1) 69.34%, rgba(226, 226, 226, 1) 83.57%, rgba(209, 209, 209, 1) 95.15%, rgba(199, 199, 199, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(247, 247, 247, 1) ),color-stop(0.4979,rgba(245, 245, 245, 1) ),color-stop(0.6934,rgba(238, 238, 238, 1) ),color-stop(0.8357,rgba(226, 226, 226, 1) ),color-stop(0.9515,rgba(209, 209, 209, 1) ),color-stop(1,rgba(199, 199, 199, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 49.79%, rgba(238, 238, 238, 1) 69.34%, rgba(226, 226, 226, 1) 83.57%, rgba(209, 209, 209, 1) 95.15%, rgba(199, 199, 199, 1) 100%);
+        -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#F7F7F7', endColorstr='#C7C7C7' ,GradientType=0)";
+        background: linear-gradient(180deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 49.79%, rgba(238, 238, 238, 1) 69.34%, rgba(226, 226, 226, 1) 83.57%, rgba(209, 209, 209, 1) 95.15%, rgba(199, 199, 199, 1) 100%);
+    }
+
+    .BoxItemContent .Title > td {
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(245, 245, 245, 1) 0%,rgba(243, 243, 243, 1) 50.24%,rgba(236, 236, 236, 1) 69.98%,rgba(224, 224, 224, 1) 84.35%,rgba(207, 207, 207, 1) 96.04%,rgba(199, 199, 199, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(245, 245, 245, 1) ),color-stop(0.5024,rgba(243, 243, 243, 1) ),color-stop(0.6998,rgba(236, 236, 236, 1) ),color-stop(0.8435,rgba(224, 224, 224, 1) ),color-stop(0.9604,rgba(207, 207, 207, 1) ),color-stop(1,rgba(199, 199, 199, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
+        -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#F5F5F5', endColorstr='#C7C7C7' ,GradientType=0)";
+        background: linear-gradient(180deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
+    }
+
+    .BoxItemContent .Title td, .BoxItemContent .Title div, .BoxItemContent .Title span {
+        line-height: 25px;
+        white-space: nowrap;
+    }
+
+    .PartnerTemplateRow, .PartnerTemplateRow td, .PartnerTemplateRow td span {
+        color: #6E7172;
+        font-size: 10px;
+        height: 15px;
+        line-height: 15px;
+        white-space: nowrap;
+    }
+
+    .BoxItemContent {
+        height: calc(100% - 2px);
+        border: 1px solid #BABABA;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    .BoxItem:nth-of-type(odd) {
+        margin-right: 3px;
+    }
+
+    .BoxItem:nth-of-type(even) {
+        margin-left: 3px;
+    }
+
+    .BoxItem {
+        float: left;
+        display: block;
+        width: calc(50% - 3px);
+        height: 150px;
+    }
+
+    select {
+        border: 1px solid red;
+        icon: url(images/Delete.png);
+        /*appearance:none;*/
+        /*-moz-appearance:button;*/
+        /*-webkit-appearance:none;*/
+        background: green url(images/Delete.png) no-repeat 95% center;
+        background-image: none;
+        box-shadow: none;
+        overflow: hidden;
+    }
+
+    option {
+        background: red;
+        height: 22px;
+    }
+
+    select::-ms-expand { /* for IE 11 */
+        display: none;
+    }
+</style>
+
+<table>
+    <tr style="height:5px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <td style="width:15px;">
+                        <div></div>
+                    </td>
+
+                    <td>
+                        <table>
+                            <tr class="TabTitleRow">
+                                <td>{{'Shipment.TH.Partners' | textcodeTranslation}}</td>
+
+                                <td style="width: 100px">
+                                    <div tabindex="0" class="ToggleButton">
+                                        <div class="LeftCenter" style="margin-left: 3px;">{{'Shipment.B.Partners.AddPartners' | textcodeTranslation}}</div>
+                                        <img class="RightCenter" style="margin-right: 3px;" src="images/ToggleIcon.png" />
+                                        <div class="ToggleButtonMenu">
+                                            <button>{{'Shipment.B.Partners.AddShipper' | textcodeTranslation}}</button>
+                                            <button>{{'Shipment.B.Partners.AddConsignee' | textcodeTranslation}}</button>
+                                            <button>{{'Shipment.B.Partners.AddAgent' | textcodeTranslation}}</button>
+                                            <button>{{'Shipment.B.Partners.AddIssuingCarrierAgent' | textcodeTranslation}}</button>
+                                            <button>{{'Shipment.B.Partners.AddCustomsAgentImport' | textcodeTranslation}}</button>
+                                            <button>{{'Shipment.B.Partners.AddCustomsAgentExport' | textcodeTranslation}}</button>
+                                            <button>{{'Shipment.B.Partners.AddNotify1' | textcodeTranslation}}</button>
+                                            <button>{{'Shipment.B.Partners.AddNotify2' | textcodeTranslation}}</button>
+                                            <button>{{'Shipment.B.Partners.AddShipperNotExporter' | textcodeTranslation}}</button>
+                                            <button>{{'Shipment.B.Partners.AddConsigneeNotImporter' | textcodeTranslation}}</button>
+                                            <button>{{'Shipment.B.Partners.AddFreightForwarder' | textcodeTranslation}}</button>
+                                            <button>Add Coloader</button>
+                                            <button>Add Custom Clearance Point</button>
+                                            <button>Add Consolidator</button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="height:100%;" colspan="2">
+                                    <div class="ScrollViewer">
+                                        <ul class="ScrollContent">
+                                            <li class="BoxItem" *ngFor="#item of ItemsCollection">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="BoxItemContent">
+                                                                <table>
+                                                                    <tr class="Title" style="height: 25px;">
+                                                                        <td>
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td style="width: 5px;">
+                                                                                        <div></div>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <div>
+                                                                                            <span style="color: #1B90CB; font-size: 12px;">{{item.PartnerType}}: </span>
+                                                                                            <span style="color: #282E30; font-size: 14px;">{{item.PartnerName}}</span>
+                                                                                        </div>
+                                                                                    </td>
+
+                                                                                    <td style="width: 18px; vertical-align: middle;">
+                                                                                        <IconButton [Name]="'Edit'" [IsSmall]="true"></IconButton>
+                                                                                    </td>
+
+                                                                                    <td *ngIf="item.IsRemoveButtonVisible" style="width: 21px; vertical-align: middle;">
+                                                                                        <IconButton [Name]="'Delete'" [IsSmall]="true" style="float: right;"></IconButton>
+                                                                                    </td>
+
+                                                                                    <td style="width: 5px;">
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr class="Body" style="height: calc(100% - 25px)">
+                                                                        <td>
+                                                                            <table>
+                                                                                <tr style="height: 5px;">
+                                                                                    <td colspan="3">
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <tr>
+                                                                                    <td style="width: 5px;">
+                                                                                        <div></div>
+                                                                                    </td>
+
+                                                                                    <td style="position:relative;">
+
+                                                                                        <table style="table-layout: fixed;">
+                                                                                            <tr class="PartnerTemplateRow">
+                                                                                                <td>{{item.Name}}</td>
+                                                                                                <td style="width: 5px;">
+                                                                                                    <div></div>
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <div></div>
+                                                                                                </td>
+                                                                                            </tr>
+
+                                                                                            <tr class="PartnerTemplateRow">
+                                                                                                <td>{{item.Address1}}</td>
+                                                                                                <td style="width: 5px;">
+                                                                                                    <div></div>
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <div></div>
+                                                                                                </td>
+                                                                                            </tr>
+
+                                                                                            <tr class="PartnerTemplateRow">
+                                                                                                <td>{{item.Address2}}</td>
+                                                                                                <td style="width: 5px;">
+                                                                                                    <div></div>
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <div></div>
+                                                                                                </td>
+                                                                                            </tr>
+
+                                                                                            <tr class="PartnerTemplateRow">
+                                                                                                <td>{{item.CityCell}}</td>
+                                                                                                <td style="width: 5px;">
+                                                                                                    <div></div>
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <span style="font-size:11px; color: #282E30">Tel: </span>
+                                                                                                    <span>{{item.Phone}}</span>
+                                                                                                </td>
+                                                                                            </tr>
+
+                                                                                            <tr class="PartnerTemplateRow">
+                                                                                                <td>{{item.Country}}</td>
+                                                                                                <td style="width: 5px;">
+                                                                                                    <div></div>
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <span style="font-size:11px; color: #282E30;">Fax: </span>
+                                                                                                    <span>{{item.Fax}}</span>
+                                                                                                </td>
+                                                                                            </tr>
+
+                                                                                            <tr class="PartnerTemplateRow">
+                                                                                                <td colspan="3">
+                                                                                                    <span style="font-size:11px; color: #282E30;">Contact: </span>
+                                                                                                    <span>{{item.Contact}}</span>
+                                                                                                </td>
+                                                                                            </tr>
+
+                                                                                            <tr class="PartnerTemplateRow">
+                                                                                                <td>
+                                                                                                    <span style="font-size:11px; color: #282E30;">Reference 1: </span>
+                                                                                                    <span>{{item.Reference1}}</span>
+                                                                                                </td>
+                                                                                                <td style="width: 5px;">
+                                                                                                    <div></div>
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <span style="font-size:11px; color: #282E30;">Reference 2: </span>
+                                                                                                    <span>{{item.Reference2}}</span>
+                                                                                                </td>
+                                                                                            </tr>
+
+                                                                                            <tr>
+                                                                                                <td colspan="3">
+                                                                                                    <div></div>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+
+                                                                                        <div style="position: absolute; right:0; top:0; height: 14px; line-height: 14px;">
+                                                                                            <img src="images/Menu/Person.png" style="width: 14px; height: 14px; display:block; float: right;" />
+                                                                                            <span style="font-size:11px; color: #0075AF; height: 14px; line-height: 14px; display:block; float: right; margin-right: 5px;">My Customer</span>
+                                                                                        </div>
+
+                                                                                        <img [attr.src]="item.FlagSource" style="width: 45px; height: 45px; position:absolute; right:-1px; bottom: -7px; margin: auto;" />
+
+                                                                                    </td>
+
+                                                                                    <td style="width: 5px;">
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <tr style="height: 5px;">
+                                                                                    <td colspan="3">
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr style="height: 5px;">
+                                                        <td></td>
+                                                    </tr>
+                                                </table>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td style="width:15px;">
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height:5px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+</table>

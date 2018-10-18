@@ -1,0 +1,412 @@
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Def.EntityPMs; 
+using Logitude.Accounting.Data;
+
+namespace Logitude.Accounting.BL.EntityDataMappings
+{
+   
+   public partial class JournalLineDataMapping: IMapping<JournalLinePM, JournalLine>,IMappingEncodeBase64NVARCHARFields<JournalLinePM>
+   {
+          public enum POCOPropertyNames
+          { 
+		     None,  
+	         JournalId, 
+	         Tenant, 
+	         Line, 
+	         ActionCode, 
+	         DebitControlAccountId, 
+	         DebitAccountId, 
+	         CreditControlAccountId, 
+	         CreditAccountId, 
+	         DocumentDate, 
+	         AccountingDate, 
+	         DueDate, 
+	         LocalAmount, 
+	         CurrencyId, 
+	         ForeignAmount, 
+	         ExchangeRate, 
+	         Reference1, 
+	         Reference2, 
+	         Reference3, 
+	         Notes, 
+	         ExternalOpenAmount,
+	      }
+
+
+	      public enum PMPropertyNames
+          { 
+		     None,  
+	         JournalId, 
+	         Tenant, 
+	         Line, 
+	         ActionCode, 
+	         DebitControlAccountId, 
+	         DebitAccountId, 
+	         CreditControlAccountId, 
+	         CreditAccountId, 
+	         DocumentDate, 
+	         AccountingDate, 
+	         DueDate, 
+	         LocalAmount, 
+	         CurrencyId, 
+	         ForeignAmount, 
+	         ExchangeRate, 
+	         Reference1, 
+	         Reference2, 
+	         Reference3, 
+	         ActionName, 
+	         DebitControlAccountName, 
+	         CreditAccountName, 
+	         DebitAccountName, 
+	         CreditControlAccountName, 
+	         CreditControlAccountNumber, 
+	         DebitControlAccountNumber, 
+	         CreditAccountNumber, 
+	         DebitAccountNumber, 
+	         CurrencyName, 
+	         Notes, 
+	         CurrencyCode, 
+	         ActionTypeCode, 
+	         ExternalOpenAmount, 
+	         IsCreditAccountMulti, 
+	         IsDebitAccountMulti,
+	      }
+
+		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
+        List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
+    
+	    public void PMToPOCO(JournalLinePM entityPM, JournalLine entityPOCO)
+        {
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ActionCode))
+            {
+				entityPOCO.ActionCode = entityPM.ActionCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DebitControlAccountId))
+            {
+				entityPOCO.DebitControlAccountId = entityPM.DebitControlAccountId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DebitAccountId))
+            {
+				entityPOCO.DebitAccountId = entityPM.DebitAccountId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreditControlAccountId))
+            {
+				entityPOCO.CreditControlAccountId = entityPM.CreditControlAccountId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreditAccountId))
+            {
+				entityPOCO.CreditAccountId = entityPM.CreditAccountId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DocumentDate))
+            {
+				entityPOCO.DocumentDate = entityPM.DocumentDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AccountingDate))
+            {
+				entityPOCO.AccountingDate = entityPM.AccountingDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DueDate))
+            {
+				entityPOCO.DueDate = entityPM.DueDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LocalAmount))
+            {
+				entityPOCO.LocalAmount = entityPM.LocalAmount;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CurrencyId))
+            {
+				entityPOCO.CurrencyId = entityPM.CurrencyId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForeignAmount))
+            {
+				entityPOCO.ForeignAmount = entityPM.ForeignAmount;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExchangeRate))
+            {
+				entityPOCO.ExchangeRate = entityPM.ExchangeRate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Reference1))
+            {
+				entityPOCO.Reference1 = entityPM.Reference1;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Reference2))
+            {
+				entityPOCO.Reference2 = entityPM.Reference2;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Reference3))
+            {
+				entityPOCO.Reference3 = entityPM.Reference3;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Notes))
+            {
+				entityPOCO.Notes = entityPM.Notes;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExternalOpenAmount))
+            {
+				entityPOCO.ExternalOpenAmount = entityPM.ExternalOpenAmount;
+			}
+			}
+
+		public void POCOToPM(JournalLinePM entityPM, JournalLine entityPOCO)
+        {
+			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.JournalId))
+            {
+					entityPM.JournalId = entityPOCO.JournalId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
+            {
+					entityPM.Tenant = entityPOCO.Tenant;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Line))
+            {
+					entityPM.Line = entityPOCO.Line;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ActionCode))
+            {
+					entityPM.ActionCode = entityPOCO.ActionCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DebitControlAccountId))
+            {
+					entityPM.DebitControlAccountId = entityPOCO.DebitControlAccountId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DebitAccountId))
+            {
+					entityPM.DebitAccountId = entityPOCO.DebitAccountId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CreditControlAccountId))
+            {
+					entityPM.CreditControlAccountId = entityPOCO.CreditControlAccountId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CreditAccountId))
+            {
+					entityPM.CreditAccountId = entityPOCO.CreditAccountId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DocumentDate))
+            {
+					entityPM.DocumentDate = entityPOCO.DocumentDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AccountingDate))
+            {
+					entityPM.AccountingDate = entityPOCO.AccountingDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DueDate))
+            {
+					entityPM.DueDate = entityPOCO.DueDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LocalAmount))
+            {
+					entityPM.LocalAmount = entityPOCO.LocalAmount;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CurrencyId))
+            {
+					entityPM.CurrencyId = entityPOCO.CurrencyId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ForeignAmount))
+            {
+					entityPM.ForeignAmount = entityPOCO.ForeignAmount;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExchangeRate))
+            {
+					entityPM.ExchangeRate = entityPOCO.ExchangeRate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Reference1))
+            {
+					entityPM.Reference1 = entityPOCO.Reference1;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Reference2))
+            {
+					entityPM.Reference2 = entityPOCO.Reference2;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Reference3))
+            {
+					entityPM.Reference3 = entityPOCO.Reference3;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Notes))
+            {
+					entityPM.Notes = entityPOCO.Notes;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExternalOpenAmount))
+            {
+					entityPM.ExternalOpenAmount = entityPOCO.ExternalOpenAmount;
+            }
+
+		}
+
+		public void PMToOldPM(JournalLinePM entityPM, JournalLinePM oldEntityPM)
+        {
+		     oldEntityPM.ChangedProperties.Clear();
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+                oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ActionCode))
+            {
+                oldEntityPM.ActionCode = entityPM.ActionCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DebitControlAccountId))
+            {
+                oldEntityPM.DebitControlAccountId = entityPM.DebitControlAccountId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DebitAccountId))
+            {
+                oldEntityPM.DebitAccountId = entityPM.DebitAccountId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreditControlAccountId))
+            {
+                oldEntityPM.CreditControlAccountId = entityPM.CreditControlAccountId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreditAccountId))
+            {
+                oldEntityPM.CreditAccountId = entityPM.CreditAccountId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DocumentDate))
+            {
+                oldEntityPM.DocumentDate = entityPM.DocumentDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AccountingDate))
+            {
+                oldEntityPM.AccountingDate = entityPM.AccountingDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DueDate))
+            {
+                oldEntityPM.DueDate = entityPM.DueDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LocalAmount))
+            {
+                oldEntityPM.LocalAmount = entityPM.LocalAmount;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CurrencyId))
+            {
+                oldEntityPM.CurrencyId = entityPM.CurrencyId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForeignAmount))
+            {
+                oldEntityPM.ForeignAmount = entityPM.ForeignAmount;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExchangeRate))
+            {
+                oldEntityPM.ExchangeRate = entityPM.ExchangeRate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Reference1))
+            {
+                oldEntityPM.Reference1 = entityPM.Reference1;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Reference2))
+            {
+                oldEntityPM.Reference2 = entityPM.Reference2;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Reference3))
+            {
+                oldEntityPM.Reference3 = entityPM.Reference3;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Notes))
+            {
+                oldEntityPM.Notes = entityPM.Notes;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExternalOpenAmount))
+            {
+                oldEntityPM.ExternalOpenAmount = entityPM.ExternalOpenAmount;
+            }
+			
+		}
+
+	    public void EncodeBase64NVARCHARFields(JournalLinePM entityPM)
+        {
+            if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
+            {
+                return;
+
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.Notes)) //T4 find type == nText 
+            {
+                entityPM.Notes = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Notes));
+            }
+            entityPM.EncodeBase64NVARCHARFieldsBy=null;
+		}
+
+
+	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
+        {
+            CustomMappedPOCOProperties.Add(pocoPropertyName);
+        }
+
+        public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
+        {
+            CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+			  
+   }
+}
+	 

@@ -1,0 +1,405 @@
+﻿<!ELEMENT CFIFILEM (customs_file*, customs_file_more_details*)>
+<!ELEMENT customs_file (file_number, transp_type, flight-voyage, manifest_no, deal_no, mawb, mawb_date, hawb, hawb_short, hawb_date, arrival_date, quantity, volume, weight, open_date, insurance, freight, wtval_code, gush, file_closed, old_cc_file, volume_kg?, goods_value?, reshimon_no?, gush_no?, entry_file_no?, release_file_no?, currency?, charg_wt?, eta?, awb_type?, departure_date?, customer*, customs_branch*, department*, supplier*, carrier*, vessel*, origin*, destination*, pack_type*, incoterms*, branch*, contact*, salesman*, file_type*, customer_order*, customs_packtype*, customs_origin*, supplier_mehes*, supplier_invoice*, container*, origin_country*, origin_port*, payment_terms*, reshimon_type*, import_file*, bonded_details*, forwarder*, forwarder-reference*, user*, money*, storage_site?, cont_list?, imp_file?, inland_carrier?, inland_remarks?, for_cur_value?, for_cur?, accepted_price?, hamara_fc?, price_index?, currency_rate?, customs_file_prefix*, fcl_lcl?, print_user*, reshimon_date?, for_hawb?, team*, custom_agent?, import_job?, inv_list?, pay_tax?, special_imp_file_no?, tracking_no?, buyer*, special?, impFileData*, teva_first_inv?, ClientCCAddress*, first_invoice?)>
+<!ATTLIST customs_file id CDATA #REQUIRED>
+<!ELEMENT file_number (#PCDATA)>
+<!ATTLIST file_number primary CDATA #FIXED "yes">
+<!ELEMENT transp_type (#PCDATA)>
+<!ELEMENT flight-voyage (#PCDATA)>
+<!ELEMENT manifest_no (#PCDATA)>
+<!ELEMENT deal_no (#PCDATA)>
+<!ELEMENT mawb (#PCDATA)>
+<!ELEMENT mawb_date (#PCDATA)>
+<!ELEMENT hawb (#PCDATA)>
+<!ELEMENT hawb_short (#PCDATA)>
+<!ELEMENT hawb_date (#PCDATA)>
+<!ELEMENT arrival_date (#PCDATA)>
+<!ELEMENT quantity (#PCDATA)>
+<!ELEMENT volume (#PCDATA)>
+<!ELEMENT weight (#PCDATA)>
+<!ELEMENT open_date (#PCDATA)>
+<!ELEMENT insurance (#PCDATA)>
+<!ELEMENT freight (#PCDATA)>
+<!ELEMENT wtval_code (#PCDATA)>
+<!ELEMENT gush (#PCDATA)>
+<!ELEMENT file_closed (#PCDATA)>
+<!ELEMENT old_cc_file (#PCDATA)>
+<!ELEMENT volume_kg (#PCDATA)>
+<!ELEMENT goods_value (#PCDATA)>
+<!ELEMENT reshimon_no (#PCDATA)>
+<!ELEMENT gush_no (#PCDATA)>
+<!ELEMENT entry_file_no (#PCDATA)>
+<!ELEMENT release_file_no (#PCDATA)>
+<!ELEMENT currency (#PCDATA)>
+<!ELEMENT charg_wt (#PCDATA)>
+<!ELEMENT eta (#PCDATA)>
+<!ELEMENT awb_type (#PCDATA)>
+<!ELEMENT departure_date (#PCDATA)>
+<!ELEMENT customer (customer-id, customer-name, customer-address, customer-address_2, customer-zip_code, customer-city, customer-fax, customer-contact_person, customer-telephone, customer-e_mail, customer-state, customer-partner_id, customer-country*, customer-mamps_no, customer-operational_card, customer-collector?, customer-vat?, customer-collector_phone?, customer-balance?, customer-name_eng?, customer-name_heb?, customer-collector_heb?, customer-collector_eng?, customer-collector_email?, customer-app_remarks?, customer-checks_from?, customer-checks_until?)>
+<!ELEMENT customer-id (#PCDATA)>
+<!ELEMENT customer-name (#PCDATA)>
+<!ELEMENT customer-address (#PCDATA)>
+<!ELEMENT customer-address_2 (#PCDATA)>
+<!ELEMENT customer-zip_code (#PCDATA)>
+<!ELEMENT customer-city (#PCDATA)>
+<!ELEMENT customer-fax (#PCDATA)>
+<!ELEMENT customer-contact_person (#PCDATA)>
+<!ELEMENT customer-telephone (#PCDATA)>
+<!ELEMENT customer-e_mail (#PCDATA)>
+<!ELEMENT customer-state (#PCDATA)>
+<!ELEMENT customer-partner_id (#PCDATA)>
+<!ELEMENT customer-country (customer-country-id, customer-country-name, customer-country-partner_id)>
+<!ELEMENT customer-country-id (#PCDATA)>
+<!ELEMENT customer-country-name (#PCDATA)>
+<!ELEMENT customer-country-partner_id (#PCDATA)>
+<!ELEMENT customer-mamps_no (#PCDATA)>
+<!ELEMENT customer-operational_card (#PCDATA)>
+<!ELEMENT customer-collector (#PCDATA)>
+<!ELEMENT customer-vat (#PCDATA)>
+<!ELEMENT customer-collector_phone (#PCDATA)>
+<!ELEMENT customer-balance (#PCDATA)>
+<!ELEMENT customer-name_eng (#PCDATA)>
+<!ELEMENT customer-name_heb (#PCDATA)>
+<!ELEMENT customer-collector_heb (#PCDATA)>
+<!ELEMENT customer-collector_eng (#PCDATA)>
+<!ELEMENT customer-collector_email (#PCDATA)>
+<!ELEMENT customer-app_remarks (#PCDATA)>
+<!ELEMENT customer-checks_from (#PCDATA)>
+<!ELEMENT customer-checks_until (#PCDATA)>
+<!ELEMENT customs_branch (customs_branch-id, customs_branch-name, customs_branch-partner_id, customs_branch-ulport*, customs_branch-name_eng?, customs_branch-name_heb?)>
+<!ELEMENT customs_branch-id (#PCDATA)>
+<!ELEMENT customs_branch-name (#PCDATA)>
+<!ELEMENT customs_branch-partner_id (#PCDATA)>
+<!ELEMENT customs_branch-ulport (customs_branch-ulport-id?, customs_branch-ulport-name?, customs_branch-ulport-partner_id?)>
+<!ELEMENT customs_branch-ulport-id (#PCDATA)>
+<!ELEMENT customs_branch-ulport-name (#PCDATA)>
+<!ELEMENT customs_branch-ulport-partner_id (#PCDATA)>
+<!ELEMENT customs_branch-name_eng (#PCDATA)>
+<!ELEMENT customs_branch-name_heb (#PCDATA)>
+<!ELEMENT department (department-id, department-name, department-partner_id, department-name_eng?, department-name_heb?)>
+<!ELEMENT department-id (#PCDATA)>
+<!ELEMENT department-name (#PCDATA)>
+<!ELEMENT department-partner_id (#PCDATA)>
+<!ELEMENT department-name_eng (#PCDATA)>
+<!ELEMENT department-name_heb (#PCDATA)>
+<!ELEMENT supplier (supplier-id, supplier-old_card, supplier-name, supplier-address, supplier-address_2, supplier-zip_code, supplier-city, supplier-fax, supplier-contact_person, supplier-telephone, supplier-e_mail, supplier-state, supplier-partner_id, supplier-country*, supplier-mamps_no, supplier-name_eng?, supplier-name_heb?)>
+<!ELEMENT supplier-id (#PCDATA)>
+<!ELEMENT supplier-old_card (#PCDATA)>
+<!ELEMENT supplier-name (#PCDATA)>
+<!ELEMENT supplier-address (#PCDATA)>
+<!ELEMENT supplier-address_2 (#PCDATA)>
+<!ELEMENT supplier-zip_code (#PCDATA)>
+<!ELEMENT supplier-city (#PCDATA)>
+<!ELEMENT supplier-fax (#PCDATA)>
+<!ELEMENT supplier-contact_person (#PCDATA)>
+<!ELEMENT supplier-telephone (#PCDATA)>
+<!ELEMENT supplier-e_mail (#PCDATA)>
+<!ELEMENT supplier-state (#PCDATA)>
+<!ELEMENT supplier-partner_id (#PCDATA)>
+<!ELEMENT supplier-country (supplier-country-id, supplier-country-name, supplier-country-partner_id, supplier-country-name_eng?, supplier-country-name_heb?)>
+<!ELEMENT supplier-country-id (#PCDATA)>
+<!ELEMENT supplier-country-name (#PCDATA)>
+<!ELEMENT supplier-country-partner_id (#PCDATA)>
+<!ELEMENT supplier-country-name_eng (#PCDATA)>
+<!ELEMENT supplier-country-name_heb (#PCDATA)>
+<!ELEMENT supplier-mamps_no (#PCDATA)>
+<!ELEMENT supplier-name_eng (#PCDATA)>
+<!ELEMENT supplier-name_heb (#PCDATA)>
+<!ELEMENT carrier (carrier-id, carrier-name, carrier-prefix, carrier-partner_id, carrier-name_eng?, carrier-name_heb?)>
+<!ELEMENT carrier-id (#PCDATA)>
+<!ELEMENT carrier-name (#PCDATA)>
+<!ELEMENT carrier-prefix (#PCDATA)>
+<!ELEMENT carrier-partner_id (#PCDATA)>
+<!ELEMENT carrier-name_eng (#PCDATA)>
+<!ELEMENT carrier-name_heb (#PCDATA)>
+<!ELEMENT vessel (vessel-code, vessel-name, vessel-partner_id, vessel-name_eng?, vessel-name_heb?)>
+<!ELEMENT vessel-code (#PCDATA)>
+<!ELEMENT vessel-name (#PCDATA)>
+<!ELEMENT vessel-partner_id (#PCDATA)>
+<!ELEMENT vessel-name_eng (#PCDATA)>
+<!ELEMENT vessel-name_heb (#PCDATA)>
+<!ELEMENT origin (origin-id, origin-name, origin-partner_id, origin-name_eng?, origin-name_heb?)>
+<!ELEMENT origin-id (#PCDATA)>
+<!ELEMENT origin-name (#PCDATA)>
+<!ELEMENT origin-partner_id (#PCDATA)>
+<!ELEMENT origin-name_eng (#PCDATA)>
+<!ELEMENT origin-name_heb (#PCDATA)>
+<!ELEMENT destination (destination-id, destination-name, destination-partner_id, destination-name_eng?, destination-name_heb?)>
+<!ELEMENT destination-id (#PCDATA)>
+<!ELEMENT destination-name (#PCDATA)>
+<!ELEMENT destination-partner_id (#PCDATA)>
+<!ELEMENT destination-name_eng (#PCDATA)>
+<!ELEMENT destination-name_heb (#PCDATA)>
+<!ELEMENT pack_type (pack_type-id, pack_type-name, pack_type-partner_id, pack_type-name_eng?, pack_type-name_heb?)>
+<!ELEMENT pack_type-id (#PCDATA)>
+<!ELEMENT pack_type-name (#PCDATA)>
+<!ELEMENT pack_type-partner_id (#PCDATA)>
+<!ELEMENT pack_type-name_eng (#PCDATA)>
+<!ELEMENT pack_type-name_heb (#PCDATA)>
+<!ELEMENT incoterms (incoterms-id, incoterms-name, incoterms-partner_id, incoterms-name_eng?, incoterms-name_heb?)>
+<!ELEMENT incoterms-id (#PCDATA)>
+<!ELEMENT incoterms-name (#PCDATA)>
+<!ELEMENT incoterms-partner_id (#PCDATA)>
+<!ELEMENT incoterms-name_eng (#PCDATA)>
+<!ELEMENT incoterms-name_heb (#PCDATA)>
+<!ELEMENT branch (branch-id, branch-name, branch-partner_id, branch-name_eng?, branch-name_heb?)>
+<!ELEMENT branch-id (#PCDATA)>
+<!ELEMENT branch-name (#PCDATA)>
+<!ELEMENT branch-partner_id (#PCDATA)>
+<!ELEMENT branch-name_eng (#PCDATA)>
+<!ELEMENT branch-name_heb (#PCDATA)>
+<!ELEMENT contact (contact-code, contact-usr_grp, contact-usr_super, contact-usr_branch, contact-name, contact-department, contact-partner_id, contact-name_eng?, contact-name_heb?)>
+<!ELEMENT contact-code (#PCDATA)>
+<!ELEMENT contact-usr_grp (#PCDATA)>
+<!ELEMENT contact-usr_super (#PCDATA)>
+<!ELEMENT contact-usr_branch (#PCDATA)>
+<!ELEMENT contact-name (#PCDATA)>
+<!ELEMENT contact-department (#PCDATA)>
+<!ELEMENT contact-partner_id (#PCDATA)>
+<!ELEMENT contact-name_eng (#PCDATA)>
+<!ELEMENT contact-name_heb (#PCDATA)>
+<!ELEMENT salesman (salesman-code, salesman-usr_grp, salesman-usr_super, salesman-usr_branch, salesman-name, salesman-department, salesman-partner_id, salesman-name_eng?, salesman-name_heb?)>
+<!ELEMENT salesman-code (#PCDATA)>
+<!ELEMENT salesman-usr_grp (#PCDATA)>
+<!ELEMENT salesman-usr_super (#PCDATA)>
+<!ELEMENT salesman-usr_branch (#PCDATA)>
+<!ELEMENT salesman-name (#PCDATA)>
+<!ELEMENT salesman-department (#PCDATA)>
+<!ELEMENT salesman-partner_id (#PCDATA)>
+<!ELEMENT salesman-name_eng (#PCDATA)>
+<!ELEMENT salesman-name_heb (#PCDATA)>
+<!ELEMENT file_type (file_type-id, file_type-name, file_type-partner_id, file_type-name_eng?, file_type-name_heb?)>
+<!ELEMENT file_type-id (#PCDATA)>
+<!ELEMENT file_type-name (#PCDATA)>
+<!ELEMENT file_type-partner_id (#PCDATA)>
+<!ELEMENT file_type-name_eng (#PCDATA)>
+<!ELEMENT file_type-name_heb (#PCDATA)>
+<!ELEMENT customer_order (customer_order-id)>
+<!ATTLIST customer_order multi_line CDATA #FIXED "yes">
+<!ELEMENT customer_order-id (#PCDATA)>
+<!ELEMENT customs_packtype (customs_packtype-id, customs_packtype-name, customs_packtype-partner_id, customs_packtype-name_eng?, customs_packtype-name_heb?)>
+<!ELEMENT customs_packtype-id (#PCDATA)>
+<!ELEMENT customs_packtype-name (#PCDATA)>
+<!ELEMENT customs_packtype-partner_id (#PCDATA)>
+<!ELEMENT customs_packtype-name_eng (#PCDATA)>
+<!ELEMENT customs_packtype-name_heb (#PCDATA)>
+<!ELEMENT customs_origin (customs_origin-id, customs_origin-name, customs_origin-partner_id, customs_origin-name_eng?, customs_origin-name_heb?)>
+<!ELEMENT customs_origin-id (#PCDATA)>
+<!ELEMENT customs_origin-name (#PCDATA)>
+<!ELEMENT customs_origin-partner_id (#PCDATA)>
+<!ELEMENT customs_origin-name_eng (#PCDATA)>
+<!ELEMENT customs_origin-name_heb (#PCDATA)>
+<!ELEMENT supplier_mehes (supplier_mehes-id, supplier_mehes-name, supplier_mehes-partner_id, supplier_mehes-name_eng?, supplier_mehes-name_heb?)>
+<!ELEMENT supplier_mehes-id (#PCDATA)>
+<!ELEMENT supplier_mehes-name (#PCDATA)>
+<!ELEMENT supplier_mehes-partner_id (#PCDATA)>
+<!ELEMENT supplier_mehes-name_eng (#PCDATA)>
+<!ELEMENT supplier_mehes-name_heb (#PCDATA)>
+<!ELEMENT supplier_invoice (supplier_invoice-no)>
+<!ATTLIST supplier_invoice multi_line CDATA #FIXED "yes">
+<!ELEMENT supplier_invoice-no (#PCDATA)>
+<!ELEMENT container (container-no, container-seal, container-weight, container-qty_add, container-packtype*)>
+<!ATTLIST container multi_line CDATA #FIXED "yes">
+<!ELEMENT container-no (#PCDATA)>
+<!ELEMENT container-seal (#PCDATA)>
+<!ELEMENT container-weight (#PCDATA)>
+<!ELEMENT container-qty_add (#PCDATA)>
+<!ELEMENT container-packtype (container-packtype-id?, container-packtype-name?, container-packtype-partner_id?)>
+<!ELEMENT container-packtype-id (#PCDATA)>
+<!ELEMENT container-packtype-name (#PCDATA)>
+<!ELEMENT container-packtype-partner_id (#PCDATA)>
+<!ELEMENT origin_country (origin_country-id?, origin_country-name?, origin_country-partner_id?, origin_country-name_eng?, origin_country-name_heb?, country_code*)>
+<!ELEMENT origin_country-id (#PCDATA)>
+<!ELEMENT origin_country-name (#PCDATA)>
+<!ELEMENT origin_country-partner_id (#PCDATA)>
+<!ELEMENT origin_country-name_eng (#PCDATA)>
+<!ELEMENT origin_country-name_heb (#PCDATA)>
+<!ELEMENT country_code (country_code-id?, country_code-name?, country_code-partner_id?)>
+<!ELEMENT country_code-id (#PCDATA)>
+<!ELEMENT country_code-name (#PCDATA)>
+<!ELEMENT country_code-partner_id (#PCDATA)>
+<!ELEMENT origin_port (origin_port-id?, origin_port-name?, origin_port-name_eng?, origin_port-name_heb?)>
+<!ELEMENT origin_port-id (#PCDATA)>
+<!ELEMENT origin_port-name (#PCDATA)>
+<!ELEMENT origin_port-name_eng (#PCDATA)>
+<!ELEMENT origin_port-name_heb (#PCDATA)>
+<!ELEMENT payment_terms (payment_terms-id?, payment_terms-name?, payment_terms-name_eng?, payment_terms-name_heb?)>
+<!ELEMENT payment_terms-id (#PCDATA)>
+<!ELEMENT payment_terms-name (#PCDATA)>
+<!ELEMENT payment_terms-name_eng (#PCDATA)>
+<!ELEMENT payment_terms-name_heb (#PCDATA)>
+<!ELEMENT reshimon_type (reshimon_type-id?, reshimon_type-name?, reshimon_type-partner_id?, reshimon_type-name_eng?, reshimon_type-name_heb?)>
+<!ELEMENT reshimon_type-id (#PCDATA)>
+<!ELEMENT reshimon_type-name (#PCDATA)>
+<!ELEMENT reshimon_type-partner_id (#PCDATA)>
+<!ELEMENT reshimon_type-name_eng (#PCDATA)>
+<!ELEMENT reshimon_type-name_heb (#PCDATA)>
+<!ELEMENT import_file (import_file-id?)>
+<!ATTLIST import_file multi_line CDATA #FIXED "yes">
+<!ELEMENT import_file-id (#PCDATA)>
+<!ELEMENT bonded_details (bonded_details-id?, bonded_details-name?, bonded_details-partner_id?, bonded_details-name_eng?, bonded_details-name_heb?)>
+<!ELEMENT bonded_details-id (#PCDATA)>
+<!ELEMENT bonded_details-name (#PCDATA)>
+<!ELEMENT bonded_details-partner_id (#PCDATA)>
+<!ELEMENT bonded_details-name_eng (#PCDATA)>
+<!ELEMENT bonded_details-name_heb (#PCDATA)>
+<!ELEMENT forwarder (forwarder-id?, forwarder-old_card?, forwarder-name?, forwarder-address?, forwarder-address_2?, forwarder-zip_code?, forwarder-city?, forwarder-fax?, forwarder-contact_person?, forwarder-telephone?, forwarder-e_mail?, forwarder-state?, forwarder-partner_id?, forwarder-country*, forwarder-name_eng?, forwarder-name_heb?)>
+<!ELEMENT forwarder-id (#PCDATA)>
+<!ELEMENT forwarder-old_card (#PCDATA)>
+<!ELEMENT forwarder-name (#PCDATA)>
+<!ELEMENT forwarder-address (#PCDATA)>
+<!ELEMENT forwarder-address_2 (#PCDATA)>
+<!ELEMENT forwarder-zip_code (#PCDATA)>
+<!ELEMENT forwarder-city (#PCDATA)>
+<!ELEMENT forwarder-fax (#PCDATA)>
+<!ELEMENT forwarder-contact_person (#PCDATA)>
+<!ELEMENT forwarder-telephone (#PCDATA)>
+<!ELEMENT forwarder-e_mail (#PCDATA)>
+<!ELEMENT forwarder-state (#PCDATA)>
+<!ELEMENT forwarder-partner_id (#PCDATA)>
+<!ELEMENT forwarder-country (forwarder-country-id?, forwarder-country-name?, forwarder-country-partner_id?)>
+<!ELEMENT forwarder-country-id (#PCDATA)>
+<!ELEMENT forwarder-country-name (#PCDATA)>
+<!ELEMENT forwarder-country-partner_id (#PCDATA)>
+<!ELEMENT forwarder-name_eng (#PCDATA)>
+<!ELEMENT forwarder-name_heb (#PCDATA)>
+<!ELEMENT forwarder-reference (forwarder-reference-id?, forwarder-reference-type?)>
+<!ELEMENT forwarder-reference-id (#PCDATA)>
+<!ELEMENT forwarder-reference-type (#PCDATA)>
+<!ELEMENT user (user-id?, user-name?, user-partner_id?, user-name_eng?, user-name_heb?)>
+<!ELEMENT user-id (#PCDATA)>
+<!ELEMENT user-name (#PCDATA)>
+<!ELEMENT user-partner_id (#PCDATA)>
+<!ELEMENT user-name_eng (#PCDATA)>
+<!ELEMENT user-name_heb (#PCDATA)>
+<!ELEMENT money (money-date?, money-time?, money-remarks_mny?, money-user_email?, money-default_remarks?, money-line*, money_usr*, services_vat?, total_with_vat?, total_no_vat?, money_default_remarks_e?, money_default_type?, money-masav_remarks?, money-order_sent?)>
+<!ELEMENT money-date (#PCDATA)>
+<!ELEMENT money-time (#PCDATA)>
+<!ELEMENT money-remarks_mny (#PCDATA)>
+<!ELEMENT money-user_email (#PCDATA)>
+<!ELEMENT money-default_remarks (#PCDATA)>
+<!ELEMENT money-line (money-line-amount?, money-line-sertype*, money-line-vat?, money-line-vat_amount?, money-line-amount_incvat?)>
+<!ELEMENT money-line-amount (#PCDATA)>
+<!ELEMENT money-line-sertype (money-line-sertype-id?, money-line-sertype-name?, money-line-sertype-partner_id?, money-line-sertype-vat?, money-line-sertype-name_eng?, money-line-sertype-name_heb?)>
+<!ELEMENT money-line-sertype-id (#PCDATA)>
+<!ELEMENT money-line-sertype-name (#PCDATA)>
+<!ELEMENT money-line-sertype-partner_id (#PCDATA)>
+<!ELEMENT money-line-sertype-vat (#PCDATA)>
+<!ELEMENT money-line-sertype-name_eng (#PCDATA)>
+<!ELEMENT money-line-sertype-name_heb (#PCDATA)>
+<!ELEMENT money-line-vat (#PCDATA)>
+<!ELEMENT money-line-vat_amount (#PCDATA)>
+<!ELEMENT money-line-amount_incvat (#PCDATA)>
+<!ELEMENT money_usr (money_usr-id?, money_usr-name?, money_usr-partner_id?, money_usr-telephone?, money_usr-name_heb?, USR_NAME_H.GSCUSR_2.AMITAL?)>
+<!ELEMENT money_usr-id (#PCDATA)>
+<!ELEMENT money_usr-name (#PCDATA)>
+<!ELEMENT money_usr-partner_id (#PCDATA)>
+<!ELEMENT money_usr-telephone (#PCDATA)>
+<!ELEMENT money_usr-name_heb (#PCDATA)>
+<!ELEMENT USR_NAME_H.GSCUSR_2.AMITAL (#PCDATA)>
+<!ELEMENT services_vat (#PCDATA)>
+<!ELEMENT total_with_vat (#PCDATA)>
+<!ELEMENT total_no_vat (#PCDATA)>
+<!ELEMENT money_default_remarks_e (#PCDATA)>
+<!ELEMENT money_default_type (#PCDATA)>
+<!ELEMENT money-masav_remarks (#PCDATA)>
+<!ELEMENT money-order_sent (#PCDATA)>
+<!ELEMENT storage_site (#PCDATA)>
+<!ELEMENT cont_list (#PCDATA)>
+<!ELEMENT imp_file (#PCDATA)>
+<!ELEMENT inland_carrier (#PCDATA)>
+<!ELEMENT inland_remarks (#PCDATA)>
+<!ELEMENT for_cur_value (#PCDATA)>
+<!ELEMENT for_cur (#PCDATA)>
+<!ELEMENT accepted_price (#PCDATA)>
+<!ELEMENT hamara_fc (#PCDATA)>
+<!ELEMENT price_index (#PCDATA)>
+<!ELEMENT currency_rate (#PCDATA)>
+<!ELEMENT customs_file_prefix (customs_file_prefix-length?, prefix_accounting_group*, prefix_transport_type*, prefix_customs_branch*, prefix_department*)>
+<!ELEMENT customs_file_prefix-length (#PCDATA)>
+<!ELEMENT prefix_accounting_group (prefix_accounting_group-code?)>
+<!ELEMENT prefix_accounting_group-code (#PCDATA)>
+<!ELEMENT prefix_transport_type (prefix_transport_type-code?, prefix_transport_type-value?, prefix_transport_type-other?)>
+<!ELEMENT prefix_transport_type-code (#PCDATA)>
+<!ELEMENT prefix_transport_type-value (#PCDATA)>
+<!ELEMENT prefix_transport_type-other (#PCDATA)>
+<!ELEMENT prefix_customs_branch (prefix_customs_branch-code?, prefix_customs_branch-value?, prefix_customs_branch-other?)>
+<!ELEMENT prefix_customs_branch-code (#PCDATA)>
+<!ELEMENT prefix_customs_branch-value (#PCDATA)>
+<!ELEMENT prefix_customs_branch-other (#PCDATA)>
+<!ELEMENT prefix_department (prefix_department-code?, prefix_department-value?, prefix_department-other?)>
+<!ELEMENT prefix_department-code (#PCDATA)>
+<!ELEMENT prefix_department-value (#PCDATA)>
+<!ELEMENT prefix_department-other (#PCDATA)>
+<!ELEMENT fcl_lcl (#PCDATA)>
+<!ELEMENT print_user (print_user-user_id?, print_user-name_heb?, print_user-name_eng?)>
+<!ELEMENT print_user-user_id (#PCDATA)>
+<!ELEMENT print_user-name_heb (#PCDATA)>
+<!ELEMENT print_user-name_eng (#PCDATA)>
+<!ELEMENT reshimon_date (#PCDATA)>
+<!ELEMENT for_hawb (#PCDATA)>
+<!ELEMENT team (team-team_id?, team-name_heb?, team-name_eng?)>
+<!ELEMENT team-team_id (#PCDATA)>
+<!ELEMENT team-name_heb (#PCDATA)>
+<!ELEMENT team-name_eng (#PCDATA)>
+<!ELEMENT custom_agent (#PCDATA)>
+<!ELEMENT import_job (#PCDATA)>
+<!ELEMENT inv_list (#PCDATA)>
+<!ELEMENT pay_tax (#PCDATA)>
+<!ELEMENT special_imp_file_no (#PCDATA)>
+<!ELEMENT tracking_no (#PCDATA)>
+<!ELEMENT buyer (buyer-id?, buyer-old_card?, buyer-name?, buyer-address?, buyer-address_2?, buyer-zip_code?, buyer-city?, buyer-fax?, buyer-contact_person?, buyer-telephone?, buyer-e_mail?, buyer-state?, buyer-partner_id?, buyer-country*, buyer-mamps_no?, buyer-name_eng?, buyer-name_heb?)>
+<!ELEMENT buyer-id (#PCDATA)>
+<!ELEMENT buyer-old_card (#PCDATA)>
+<!ELEMENT buyer-name (#PCDATA)>
+<!ELEMENT buyer-address (#PCDATA)>
+<!ELEMENT buyer-address_2 (#PCDATA)>
+<!ELEMENT buyer-zip_code (#PCDATA)>
+<!ELEMENT buyer-city (#PCDATA)>
+<!ELEMENT buyer-fax (#PCDATA)>
+<!ELEMENT buyer-contact_person (#PCDATA)>
+<!ELEMENT buyer-telephone (#PCDATA)>
+<!ELEMENT buyer-e_mail (#PCDATA)>
+<!ELEMENT buyer-state (#PCDATA)>
+<!ELEMENT buyer-partner_id (#PCDATA)>
+<!ELEMENT buyer-country (buyer-country-id?, buyer-country-name?, buyer-country-partner_id?)>
+<!ELEMENT buyer-country-id (#PCDATA)>
+<!ELEMENT buyer-country-name (#PCDATA)>
+<!ELEMENT buyer-country-partner_id (#PCDATA)>
+<!ELEMENT buyer-mamps_no (#PCDATA)>
+<!ELEMENT buyer-name_eng (#PCDATA)>
+<!ELEMENT buyer-name_heb (#PCDATA)>
+<!ELEMENT special (#PCDATA)>
+<!ELEMENT impFileData (impFileData-hawb?, impFileData-mawb?, impFileData-job_type?)>
+<!ELEMENT impFileData-hawb (#PCDATA)>
+<!ELEMENT impFileData-mawb (#PCDATA)>
+<!ELEMENT impFileData-job_type (#PCDATA)>
+<!ELEMENT teva_first_inv (#PCDATA)>
+<!ELEMENT ClientCCAddress (customer-id-cc?, old-customer-cc?, customer-name-cc?, customer-address-cc?, customer-address-2-cc?, customer-zip-code-cc?, customer-city-cc?, customer-fax-cc?, customer-contact_person-cc?, customer-telephone-cc?, customer-e_mail-cc?, customer-state-cc?, customer-partner-id-cc?, customer-country-id-cc?, customer-country-name-cc?, customer-country-partner-cc?)>
+<!ATTLIST ClientCCAddress id CDATA #REQUIRED>
+<!ATTLIST ClientCCAddress crc CDATA #REQUIRED>
+<!ATTLIST ClientCCAddress status CDATA #REQUIRED>
+<!ATTLIST ClientCCAddress valerr CDATA #IMPLIED>
+<!ELEMENT customer-id-cc (#PCDATA)>
+<!ELEMENT old-customer-cc (#PCDATA)>
+<!ELEMENT customer-name-cc (#PCDATA)>
+<!ELEMENT customer-address-cc (#PCDATA)>
+<!ELEMENT customer-address-2-cc (#PCDATA)>
+<!ELEMENT customer-zip-code-cc (#PCDATA)>
+<!ELEMENT customer-city-cc (#PCDATA)>
+<!ELEMENT customer-fax-cc (#PCDATA)>
+<!ELEMENT customer-contact_person-cc (#PCDATA)>
+<!ELEMENT customer-telephone-cc (#PCDATA)>
+<!ELEMENT customer-e_mail-cc (#PCDATA)>
+<!ELEMENT customer-state-cc (#PCDATA)>
+<!ELEMENT customer-partner-id-cc (#PCDATA)>
+<!ELEMENT customer-country-id-cc (#PCDATA)>
+<!ELEMENT customer-country-name-cc (#PCDATA)>
+<!ELEMENT customer-country-partner-cc (#PCDATA)>
+<!ELEMENT first_invoice (#PCDATA)>
+<!ELEMENT customs_file_more_details (desc_of_goods, remarks, remarks_deliveries?)>
+<!ATTLIST customs_file_more_details id CDATA #REQUIRED>
+<!ELEMENT desc_of_goods (#PCDATA)>
+<!ATTLIST desc_of_goods multi_line CDATA #FIXED "yes">
+<!ELEMENT remarks (#PCDATA)>
+<!ATTLIST remarks multi_line CDATA #FIXED "yes">
+<!ELEMENT remarks_deliveries (#PCDATA)>

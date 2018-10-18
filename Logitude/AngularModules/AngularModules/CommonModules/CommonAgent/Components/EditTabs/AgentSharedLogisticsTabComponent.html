@@ -1,0 +1,173 @@
+﻿
+<style>
+     .TemplateSection {
+
+        border-radius: 8px;
+        -moz-border-radius: 8px;
+        -webkit-border-radius: 8px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-shadow: 0px 0px 1px 1px rgba(170, 170, 170, 0.7);
+        -moz-box-shadow: 0px 0px 1px 1px rgba(170, 170, 170, 0.7);
+        -webkit-box-shadow: 0px 0px 1px 1px rgba(170, 170, 170, 0.7);
+    }
+
+</style>
+
+
+
+
+
+
+
+
+
+
+<div class="TabHolder">
+    <table>
+        <tr style="height:20px" class="TabTitleRow">
+            <td>{{'Agent.TH.SharedLogistics' | TextCodeTranslationPipe}}</td>
+      
+        </tr>
+
+        <!--message text-->
+        <tr style="height:20px">
+
+            <td>
+            <span style="font-style:italic;margin-left:-4px">
+                Manage Shipment Sharing definitions and options
+            </span>
+
+            </td>
+        </tr>
+        
+        <tr style="height:15px"><td></td> </tr>
+       
+        <!--Defult button-->
+        <tr *ngIf="IsShowDefultButton" style="height:55px">
+            <td>
+                
+                    <table style="margin-left:35px;width:300px">
+                        <tr style="height:25px">
+
+                            <td>
+                                <button class="Button" style="width:120px;" (click)="SendInvitation()">Send Invitation</button>
+                            </td>
+                        </tr>
+
+                        <tr style="height:5px"><td></td> </tr>
+                        <tr style="height:35px">
+
+                            <td>
+                                <button class="Button" style="width:120px;" (click)="Acceptinvitation()">Accept invitation</button>
+                            </td>
+                        </tr>
+                    </table>
+            
+            </td>
+        </tr>
+
+        
+
+        <tr *ngIf="!IsShowDefultButton" style="height:30PX">
+            <td *ngIf="agentSharedLogisticsKey">
+
+                <table style="width:340px">
+                    <tr style="height:25px">
+
+                        <td style="width:27px">
+                            <div style="font-size:11px">Key</div>
+                        </td>
+
+                        <td style="width:220px;"><input [disabled]="true" type="text" [(ngModel)]="agentSharedLogisticsKey.SharedKey" style="height:22px;border-radius:3px;border:1px solid black;width:100%;color:black" /></td>
+                       
+                        <td style="width:10px"></td>
+
+                        <td style="width:90px">
+                            <button class="Button" style="width:90px;" (click)="OnStopSharing()">Stop sharing</button>
+                        </td>
+                        <td></td>
+                    </tr>
+
+                </table>
+
+            </td>
+        </tr>
+
+
+
+        <tr style="height:15px"><td></td> </tr>
+
+
+        <!--Table Info-->
+
+        <tr *ngIf="agentSharedLogisticsKey" style="height:155px">
+            <td>
+                <div class="TemplateSection" style="width:280px">
+                    <table>
+
+                        <tr style="height:5px"><td colspan="2"></td></tr>
+                        <tr *ngIf="StatusName" style="height:20px">
+                            <td style="width:10px"> </td>
+                            <td style="width:90px"><div style="color:#6E7172;font-size:12px;width:90px">Status:</div> </td>
+                            <td  style="width:175px"><div class="TextTrimming" style="font-size:12px;width:175px">{{StatusName}}  </div> </td>
+                            <td><div></div></td>
+                        </tr>
+                      
+                        <tr *ngIf="agentSharedLogisticsKey.CreateDate" style="height:20px">
+                            <td style="width:10px"> </td>
+                            <td style="width:75px"><div style="color:#6E7172;font-size:12px;width:90px">Create Date:</div> </td>
+                            <td style="width:175px"><div class="TextTrimming" style="font-size:12px;width:175px">{{agentSharedLogisticsKey.CreateDate | DateTimeToDatePipe}}  </div> </td>
+                            <td><div></div></td>
+                        </tr>
+
+
+                        <tr *ngIf="agentSharedLogisticsKey.CreatedByUserEmail" style="height:20px">
+                            <td style="width:10px"> </td>
+                            <td style="width:90px"><div style="color:#6E7172;font-size:12px;width:90px">Create By:</div> </td>
+
+                            <td style="width:175px"><div class="TextTrimming" style="font-size:12px;width:175px;">{{agentSharedLogisticsKey.CreatedByUserEmail}}  </div> </td>
+                            <td><div></div></td>
+                        </tr>
+
+                        <tr *ngIf="agentSharedLogisticsKey.ApproveDate" style="height:20px">
+                            <td style="width:10px"> </td>
+                            <td style="width:90px"><div style="color:#6E7172;font-size:12px;width:90px">Approve Date:</div> </td>
+                            <td style="width:175px"><div class="TextTrimming" style="font-size:12px;width:175px">{{agentSharedLogisticsKey.ApproveDate | DateTimeToDatePipe}}   </div> </td>
+                            <td><div></div></td>
+                        </tr>
+
+                        <tr *ngIf="agentSharedLogisticsKey.ApprovedByUserEmail" style="height:20px">
+                            <td style="width:10px"> </td>
+                            <td style="width:90px"><div style="color:#6E7172;font-size:12px;width:90px">Approve By:</div> </td>
+      
+                            <td style="width:175px"><div class="TextTrimming" style="font-size:12px;width:175px">{{agentSharedLogisticsKey.ApprovedByUserEmail}}  </div> </td>
+                            <td><div></div></td>
+                        </tr>
+
+                        <tr  *ngIf="agentSharedLogisticsKey.InactiveDate" style="height:20px">
+                            <td style="width:10px"> </td>
+                            <td style="width:90px"><div style="color:#6E7172;font-size:12px;width:90px">Inactive Date:</div> </td>
+                            <td style="width:175px"><div class="TextTrimming" style="font-size:12px;width:175px">{{agentSharedLogisticsKey.InactiveDate | DateTimeToDatePipe}}   </div> </td>
+
+                            <td><div></div></td>
+                        </tr>
+
+                        <tr *ngIf="agentSharedLogisticsKey.InactiveByUserEmail" style="height:20px">
+                            <td style="width:10px"> </td>
+                            <td style="width:90px"><div style="color:#6E7172;font-size:12px;width:90px">Inactive By:</div> </td>
+
+                            <td style="width:175px"><div class="TextTrimming" style="font-size:12px;width:175px">{{agentSharedLogisticsKey.InactiveByUserEmail}}  </div> </td>
+                            <td><div></div></td>
+                        </tr>
+                        <tr style="height:5px"><td colspan="2"></td></tr>
+                        <tr><td colspan="4"></td></tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+       
+        <tr ><td></td> </tr>
+    </table>
+</div>

@@ -1,0 +1,82 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Customs.Data.EntityPOCOs
+{
+   
+    public class SupplierInvoiceItemsTax
+    {
+	 string dbms;
+
+        [Key]
+        [ForeignKey("SupplierInvoiceItem")]
+        [Column("DeclarationId" ,Order = 1)]
+	    public string DeclarationId { get; set; }
+	      
+        public virtual SupplierInvoiceItem SupplierInvoiceItem { get; set; }
+     [Key]
+        [ForeignKey("SupplierInvoiceItem")]
+        [Column("InvoiceCounterKey" ,Order = 2)]
+	    public int InvoiceCounterKey { get; set; }
+     [Key]
+        [ForeignKey("SupplierInvoiceItem")]
+        [Column("LineNumber" ,Order = 3)]
+	    public int LineNumber { get; set; }
+     [Key]
+        [ForeignKey("ParagraphType")]
+        [Column("TaxTypeCode" ,Order = 4)]
+	    public string TaxTypeCode { get; set; }
+	      
+        public virtual ParagraphType ParagraphType { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+        [ForeignKey("TradeAgreement")]
+        [Column("TradeAgreementTypeCode")]
+	    public string TradeAgreementTypeCode { get; set; }
+	      
+        public virtual TradeAgreement TradeAgreement { get; set; }
+        [Column("TaxRate")]
+	    public decimal? TaxRate { get; set; }
+        [Column("TaxBaseAmount")]
+	    public decimal? TaxBaseAmount { get; set; }
+        [Column("TaxAmount")]
+	    public decimal? TaxAmount { get; set; }
+        [Column("DeferedTaxAmount")]
+	    public decimal? DeferedTaxAmount { get; set; }
+        [Column("DefinedPerUnitMeasure")]
+	    public decimal? DefinedPerUnitMeasure { get; set; }
+        [Column("AlternateDefinedPerUnitMeasure")]
+	    public decimal? AlternateDefinedPerUnitMeasure { get; set; }
+        [Column("DefinedPerUnitQuantity")]
+	    public decimal? DefinedPerUnitQuantity { get; set; }
+        [Column("AlternateDefinedPerUnitQuant")]
+	    public decimal? AlternateDefinedPerUnitQuant { get; set; }
+        [ForeignKey("MeasurmentUnit")]
+        [Column("MeasurementUnitCode")]
+	    public string MeasurementUnitCode { get; set; }
+	      
+        public virtual MeasurmentUnit MeasurmentUnit { get; set; }
+        [ForeignKey("AlternateMeasurmentUnit")]
+        [Column("AlternateMeasurementUnitCode")]
+	    public string AlternateMeasurementUnitCode { get; set; }
+	      
+        public virtual MeasurmentUnit AlternateMeasurmentUnit { get; set; }
+        [Column("TradeLevyNumber")]
+	    public string TradeLevyNumber { get; set; }
+        [Column("TotalBtlCoverageNIS")]
+	    public decimal? TotalBtlCoverageNIS { get; set; }
+        [Column("AlternateRate")]
+	    public decimal? AlternateRate { get; set; }
+    }
+}
+	 

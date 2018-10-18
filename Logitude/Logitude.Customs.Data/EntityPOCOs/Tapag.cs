@@ -1,0 +1,75 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Customs.Data.EntityPOCOs
+{
+   
+    public class Tapag
+    {
+	 string dbms;
+
+        [Key]
+        [Column("Id")]
+	    public string Id { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+        [Column("TapagNumber")]
+	    public string TapagNumber { get; set; }
+        [Column("LeadingFileNumber")]
+	    public string LeadingFileNumber { get; set; }
+        [ForeignKey("TapagType")]
+        [Column("TapagTypeCode")]
+	    public string TapagTypeCode { get; set; }
+	      
+        public virtual TapagType TapagType { get; set; }
+        [ForeignKey("CustomerCard")]
+        [Column("CustomerId")]
+	    public string CustomerId { get; set; }
+	      
+        public virtual Card CustomerCard { get; set; }
+        [ForeignKey("Importer")]
+        [Column("ImporterId")]
+	    public string ImporterId { get; set; }
+	      
+        public virtual Client Importer { get; set; }
+        [ForeignKey("CustomsBranch")]
+        [Column("CustomsBranchCode")]
+	    public string CustomsBranchCode { get; set; }
+	      
+        public virtual CustomsHouseType CustomsBranch { get; set; }
+        [ForeignKey("ProfessionUnitType")]
+        [Column("ProfessionUnitTypeCode")]
+	    public string ProfessionUnitTypeCode { get; set; }
+	      
+        public virtual OrganizationUnitType ProfessionUnitType { get; set; }
+        [ForeignKey("SpecializationType")]
+        [Column("SpecializationTypeCode")]
+	    public string SpecializationTypeCode { get; set; }
+	      
+        public virtual SpecializationType SpecializationType { get; set; }
+        [Column("CreateDate")]
+	    public DateTime? CreateDate { get; set; }
+        [Column("FollowDate")]
+	    public DateTime? FollowDate { get; set; }
+        [Column("ValidityDate")]
+	    public DateTime? ValidityDate { get; set; }
+        [Column("IsClosed")]
+	    public bool IsClosed { get; set; }
+        [ForeignKey("ReferantUser")]
+        [Column("ReferantId")]
+	    public string ReferantId { get; set; }
+	      
+        public virtual User ReferantUser { get; set; }
+    }
+}
+	 

@@ -1,0 +1,173 @@
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Server.Infrastructure.Helpers;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
+
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.EntityLists;
+
+namespace Logitude.Accounting.Data.EntityListQueryServices
+{ 
+
+    public partial class JournalTypeListQueryService
+    {
+         private IAccountingContext context;
+        public JournalTypeListQueryService(IAccountingContext context)
+        {
+            this.context = context;
+        }
+
+        public List<JournalTypeList> GetList(QueryOperations queryOperations, int tenant)
+        {
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+
+            IQueryable<JournalType> iQueryable = (from a in context.JournalTypes
+                                               select a);
+            			iQueryable = ApplyBusinessUnitFilters(queryOperations, iQueryable);
+						iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+
+            iQueryable = filter.GetFilteredQuery<JournalType>(nonListQueryOperation, iQueryable);
+
+            int skippedPorts = queryOperations.PageIndex;
+
+            IQueryable<JournalTypeList> query2 = GetIqueryableList(iQueryable);
+           
+            query2 = filter.GetFilteredQuery<JournalTypeList>(listQueryOperation, query2);
+
+            if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
+            {
+                PropertyInfo propInfo = typeof(JournalTypeList).GetProperty(queryOperations.SortByColumnName);
+                List<ObjectField> JournalTypeObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("JournalType",tenant).ToList();
+
+                ObjectField objectField = (from a in JournalTypeObjectFields
+                                           where a.FieldName == queryOperations.SortByColumnName
+                                           select a).FirstOrDefault();
+
+                if (objectField != null)
+                {
+				 if (objectField.IsCustom)
+                    {
+                        query2 = sortClass.GetSorterQuery<JournalTypeList, string>(queryOperations, query2);
+                    }
+                    else
+                    {
+                     switch (objectField.DataTypeCode.ToLower())
+                     {
+                         case "ntext":
+                        case "text":
+                            {
+                                query2 = sortClass.GetSorterQuery<JournalTypeList, string>(queryOperations, query2);
+                                break;
+                            }
+						case "sigdouble":
+						case "double":
+                            {
+                                query2 = sortClass.GetSorterQuery<JournalTypeList, double>(queryOperations, query2);
+                                break;
+                            }
+						case "date":
+                        case "datetime":
+                            {
+                                query2 = sortClass.GetSorterQuery<JournalTypeList, DateTime>(queryOperations, query2);
+                                break;
+                            }
+						case "unsinteger":
+                        case "integer":
+                            {
+                                query2 = sortClass.GetSorterQuery<JournalTypeList, int>(queryOperations, query2);
+                                break;
+                            }
+                        case "boolean":
+                            {
+                                query2 = sortClass.GetSorterQuery<JournalTypeList, bool>(queryOperations, query2);
+                                break;
+                            }
+						case "unsdecimal":
+						case "decimal":
+                            {
+                                query2 = sortClass.GetSorterQuery<JournalTypeList, decimal>(queryOperations, query2);
+                                break;
+                            }
+                        default:
+                            {
+                                query2 = query2.OrderBy(d => d.JournalTypeID);
+                                break;
+                            }
+                    }
+				 }
+                }
+            }
+		    else
+            {
+                query2 = query2.OrderBy(d => d.JournalTypeID);
+            }
+			if(!queryOperations.GetAll)
+			{
+             query2 = query2.Skip(skippedPorts);
+             query2 = query2.Take(queryOperations.PageSize);
+			}
+            return query2.ToList();
+
+    
+        }
+
+         public List<JournalTypeList> GetList(int tenant)
+         {
+             return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
+         }
+
+        public JournalTypeList GetSingle(string journaltypeid)
+        {
+            IQueryable<JournalType> JournalTypeQuery = (from a in context.JournalTypes
+                                                       where a.JournalTypeID == journaltypeid
+                                                       select a);
+
+             
+            IQueryable<JournalTypeList> JournalTypeListQuery = GetIqueryableList( JournalTypeQuery);
+            JournalTypeList JournalTypeList = JournalTypeListQuery.FirstOrDefault();
+            return JournalTypeList;
+           
+        }
+
+        public int GetListCount(QueryOperations queryOperations)
+        {
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+
+            IQueryable<JournalType> iQueryable = (from a in context.JournalTypes  select a);
+
+			  			iQueryable = ApplyBusinessUnitFilters(queryOperations, iQueryable);
+						iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+            
+			iQueryable = filter.GetFilteredQuery<JournalType>(nonListQueryOperation, iQueryable);
+
+            IQueryable<JournalTypeList> query2 = GetIqueryableList(iQueryable);
+
+            query2 = filter.GetFilteredQuery<JournalTypeList>(listQueryOperation, query2);
+            int count = query2.Count();
+            return count;
+        }
+
+      
+    }
+}
+	 

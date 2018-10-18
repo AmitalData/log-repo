@@ -1,0 +1,375 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9CCA4B66-A764-4FCB-B790-DD46263D9B9B}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LoginModules</RootNamespace>
+    <AssemblyName>LoginModules</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>3.0</TypeScriptToolsVersion>
+    <Use64BitIISExpress />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.0.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.0.6\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.DependencyCollector, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.2.0\lib\net45\Microsoft.AI.DependencyCollector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.PerfCounterCollector, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.2.0\lib\net45\Microsoft.AI.PerfCounterCollector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.ServerTelemetryChannel, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.2.0\lib\net45\Microsoft.AI.ServerTelemetryChannel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.Web, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Web.2.2.0\lib\net45\Microsoft.AI.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.WindowsServer, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.2.2.0\lib\net45\Microsoft.AI.WindowsServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.2.2.0\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Js\ChangePasswordFunctions.js" />
+    <Content Include="Login\Components\ChangePasswordComponent.css" />
+    <Content Include="Login\Components\ChangePasswordComponent.html" />
+    <Content Include="Login\Components\DSVChangePasswordComponent.html" />
+    <Content Include="Login\Components\DSVMobileLoginComponent.css" />
+    <Content Include="Login\Components\DSVMobileLoginComponent.html" />
+    <Content Include="Login\Components\DSVResetPasswordComponent.html" />
+    <Content Include="Login\Components\ResetPasswordComponent.html" />
+    <Content Include="packages.config" />
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="angular.pubxml" />
+    <Content Include="bower.json" />
+    <Content Include="package.json" />
+    <Content Include="rollup-config.js" />
+    <Content Include="tsconfig-aot.json" />
+    <Content Include="tsconfig.json" />
+    <Content Include="typings.json" />
+    <Content Include="Js\zone\ng_zone.js.map" />
+    <Content Include="Js\zone\ng_zone_impl.js.map" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="angular.pubxml.user" />
+    <Content Include="HtmlHelpers\CSS\app.css" />
+    <Content Include="HtmlHelpers\CSS\bootstrap-responsive.min.css" />
+    <Content Include="HtmlHelpers\CSS\bootstrap.min.css" />
+    <Content Include="HtmlHelpers\CSS\kendo.common.min.css" />
+    <Content Include="HtmlHelpers\CSS\kendo.dataviz.min.css" />
+    <Content Include="HtmlHelpers\CSS\kendo.default.min.css" />
+    <Content Include="HtmlHelpers\CSS\kendo.mobile.all.min.css" />
+    <Content Include="HtmlHelpers\CSS\LogitudeMainCss.css" />
+    <Content Include="HtmlHelpers\CSS\sunburst.css" />
+    <Content Include="HtmlHelpers\Images\Arrow.png" />
+    <Content Include="HtmlHelpers\Images\Bars_Images\BigBlueBar.png" />
+    <Content Include="HtmlHelpers\Images\Bars_Images\BlueBar.png" />
+    <Content Include="HtmlHelpers\Images\Bars_Images\bottom-left.png" />
+    <Content Include="HtmlHelpers\Images\Bars_Images\bottom-middle.png" />
+    <Content Include="HtmlHelpers\Images\Bars_Images\bottom-right.png" />
+    <Content Include="HtmlHelpers\Images\Bars_Images\DarkGrayBar.png" />
+    <Content Include="HtmlHelpers\Images\Bars_Images\GridHeaderRow.png" />
+    <Content Include="HtmlHelpers\Images\Bars_Images\HeaderBar.png" />
+    <Content Include="HtmlHelpers\Images\Bars_Images\HeaderBrush.png" />
+    <Content Include="HtmlHelpers\Images\Bars_Images\ItemHead.png" />
+    <Content Include="HtmlHelpers\Images\Bars_Images\Left-side.png" />
+    <Content Include="HtmlHelpers\Images\Bars_Images\loginback.png" />
+    <Content Include="HtmlHelpers\Images\Bars_Images\loginbackground.png" />
+    <Content Include="HtmlHelpers\Images\Bars_Images\MainBar.png" />
+    <Content Include="HtmlHelpers\Images\Bars_Images\Middle-side.png" />
+    <Content Include="HtmlHelpers\Images\Bars_Images\PartnerItemBody.png" />
+    <Content Include="HtmlHelpers\Images\Bars_Images\Queries.png" />
+    <Content Include="HtmlHelpers\Images\Bars_Images\QueryArea.png" />
+    <Content Include="HtmlHelpers\Images\Bars_Images\Right-side.png" />
+    <Content Include="HtmlHelpers\Images\Bars_Images\RoutingItemBody.png" />
+    <Content Include="HtmlHelpers\Images\Bars_Images\SelectedQuery.png" />
+    <Content Include="HtmlHelpers\Images\Bars_Images\tab-normal.png" />
+    <Content Include="HtmlHelpers\Images\Bars_Images\tab-over.png" />
+    <Content Include="HtmlHelpers\Images\Bars_Images\top-left.png" />
+    <Content Include="HtmlHelpers\Images\Bars_Images\top-middle.png" />
+    <Content Include="HtmlHelpers\Images\Bars_Images\top-right.png" />
+    <Content Include="HtmlHelpers\Images\Filter_Images\Air.N.png" />
+    <Content Include="HtmlHelpers\Images\Filter_Images\Air.O.png" />
+    <Content Include="HtmlHelpers\Images\Filter_Images\Air.S.png" />
+    <Content Include="HtmlHelpers\Images\Filter_Images\All.N.png" />
+    <Content Include="HtmlHelpers\Images\Filter_Images\All.O.png" />
+    <Content Include="HtmlHelpers\Images\Filter_Images\All.S.png" />
+    <Content Include="HtmlHelpers\Images\Filter_Images\CustomsImport.N.png" />
+    <Content Include="HtmlHelpers\Images\Filter_Images\CustomsImport.O.png" />
+    <Content Include="HtmlHelpers\Images\Filter_Images\CustomsImport.S.png" />
+    <Content Include="HtmlHelpers\Images\Filter_Images\Domestic.N.png" />
+    <Content Include="HtmlHelpers\Images\Filter_Images\Domestic.O.png" />
+    <Content Include="HtmlHelpers\Images\Filter_Images\Domestic.S.png" />
+    <Content Include="HtmlHelpers\Images\Filter_Images\Drop.N.png" />
+    <Content Include="HtmlHelpers\Images\Filter_Images\Drop.O.png" />
+    <Content Include="HtmlHelpers\Images\Filter_Images\Drop.S.png" />
+    <Content Include="HtmlHelpers\Images\Filter_Images\Export.N.png" />
+    <Content Include="HtmlHelpers\Images\Filter_Images\Export.O.png" />
+    <Content Include="HtmlHelpers\Images\Filter_Images\Export.S.png" />
+    <Content Include="HtmlHelpers\Images\Filter_Images\Filter_N.png" />
+    <Content Include="HtmlHelpers\Images\Filter_Images\Filter_O.png" />
+    <Content Include="HtmlHelpers\Images\Filter_Images\Filter_S.png" />
+    <Content Include="HtmlHelpers\Images\Filter_Images\Import.N.png" />
+    <Content Include="HtmlHelpers\Images\Filter_Images\Import.O.png" />
+    <Content Include="HtmlHelpers\Images\Filter_Images\Import.S.png" />
+    <Content Include="HtmlHelpers\Images\Filter_Images\Inland.N.png" />
+    <Content Include="HtmlHelpers\Images\Filter_Images\Inland.O.png" />
+    <Content Include="HtmlHelpers\Images\Filter_Images\Inland.S.png" />
+    <Content Include="HtmlHelpers\Images\Filter_Images\Ocean.N.png" />
+    <Content Include="HtmlHelpers\Images\Filter_Images\Ocean.O.png" />
+    <Content Include="HtmlHelpers\Images\Filter_Images\Ocean.S.png" />
+    <Content Include="HtmlHelpers\Images\Icons\Air-Moblie.png" />
+    <Content Include="HtmlHelpers\Images\Icons\Air.png" />
+    <Content Include="HtmlHelpers\Images\Icons\Back-N.png" />
+    <Content Include="HtmlHelpers\Images\Icons\Back-O.png" />
+    <Content Include="HtmlHelpers\Images\Icons\Container.png" />
+    <Content Include="HtmlHelpers\Images\Icons\CustomsImport.png" />
+    <Content Include="HtmlHelpers\Images\Icons\Domestic.png" />
+    <Content Include="HtmlHelpers\Images\Icons\Drop.png" />
+    <Content Include="HtmlHelpers\Images\Icons\DropArrow.png" />
+    <Content Include="HtmlHelpers\Images\Icons\Export.png" />
+    <Content Include="HtmlHelpers\Images\Icons\Import.png" />
+    <Content Include="HtmlHelpers\Images\Icons\Inland-Moblie.png" />
+    <Content Include="HtmlHelpers\Images\Icons\Inland.png" />
+    <Content Include="HtmlHelpers\Images\Icons\Logitude.png" />
+    <Content Include="HtmlHelpers\Images\Icons\LogitudeLogo.png" />
+    <Content Include="HtmlHelpers\Images\Icons\Logo.png" />
+    <Content Include="HtmlHelpers\Images\Icons\Ocean-Moblie.png" />
+    <Content Include="HtmlHelpers\Images\Icons\Ocean.png" />
+    <Content Include="HtmlHelpers\Images\Icons\Package.png" />
+    <Content Include="HtmlHelpers\Images\Icons\Progress.gif" />
+    <Content Include="HtmlHelpers\Images\Icons\Routing.A.png" />
+    <Content Include="HtmlHelpers\Images\Icons\Routing.I.png" />
+    <Content Include="HtmlHelpers\Images\Icons\Routing.II.png" />
+    <Content Include="HtmlHelpers\Images\Icons\Routing.O.png" />
+    <Content Include="HtmlHelpers\Images\Icons\Search.png" />
+    <Content Include="HtmlHelpers\Images\Icons\Signout-N.png" />
+    <Content Include="HtmlHelpers\Images\Icons\Signout-O.png" />
+    <Content Include="HtmlHelpers\Images\Icons\Tick.png" />
+    <Content Include="HtmlHelpers\Images\Icons\x.png" />
+    <Content Include="HtmlHelpers\Images\pdf.png" />
+    <Content Include="HtmlHelpers\Images\print.png" />
+    <Content Include="HtmlHelpers\Images\refresh.png" />
+    <Content Include="HtmlHelpers\Images\Tabs_Images\Cargo.png" />
+    <Content Include="HtmlHelpers\Images\Tabs_Images\Dashboard-N.png" />
+    <Content Include="HtmlHelpers\Images\Tabs_Images\Dashboard-O.png" />
+    <Content Include="HtmlHelpers\Images\Tabs_Images\Dashboard-S.png" />
+    <Content Include="HtmlHelpers\Images\Tabs_Images\Document.png" />
+    <Content Include="HtmlHelpers\Images\Tabs_Images\Events.png" />
+    <Content Include="HtmlHelpers\Images\Tabs_Images\Home.png" />
+    <Content Include="HtmlHelpers\Images\Tabs_Images\Invoices-N.png" />
+    <Content Include="HtmlHelpers\Images\Tabs_Images\Invoices-O.png" />
+    <Content Include="HtmlHelpers\Images\Tabs_Images\Invoices-S.png" />
+    <Content Include="HtmlHelpers\Images\Tabs_Images\Lines.png" />
+    <Content Include="HtmlHelpers\Images\Tabs_Images\Money.png" />
+    <Content Include="HtmlHelpers\Images\Tabs_Images\Partners.png" />
+    <Content Include="HtmlHelpers\Images\Tabs_Images\Quotes-N.png" />
+    <Content Include="HtmlHelpers\Images\Tabs_Images\Quotes-O.png" />
+    <Content Include="HtmlHelpers\Images\Tabs_Images\Quotes-S.png" />
+    <Content Include="HtmlHelpers\Images\Tabs_Images\Routing.png" />
+    <Content Include="HtmlHelpers\Images\Tabs_Images\Settings-N.png" />
+    <Content Include="HtmlHelpers\Images\Tabs_Images\Settings-O.png" />
+    <Content Include="HtmlHelpers\Images\Tabs_Images\Settings-S.png" />
+    <Content Include="HtmlHelpers\Images\Tabs_Images\Shipments-N.png" />
+    <Content Include="HtmlHelpers\Images\Tabs_Images\Shipments-O.png" />
+    <Content Include="HtmlHelpers\Images\Tabs_Images\Shipments-S.png" />
+    <Content Include="HtmlHelpers\JS\highlight.pack.js" />
+    <Content Include="HtmlHelpers\JS\kendo.all.min.js" />
+    <Content Include="HtmlHelpers\JS\knockout-2.2.0.js" />
+    <Content Include="HtmlHelpers\JS\knockout-kendo.min.js" />
+    <Content Include="HtmlHelpers\Kendo.2013.2.918\kendo.all.min.js" />
+    <Content Include="HtmlHelpers\Kendo.2013.2.918\kendo.common.min.css" />
+    <Content Include="HtmlHelpers\Kendo.2013.2.918\kendo.dataviz.min.css" />
+    <Content Include="HtmlHelpers\Kendo.2013.2.918\kendo.default.min.css" />
+    <Content Include="HtmlHelpers\Kendo.2013.2.918\kendo.mobile.all.min.css" />
+    <Content Include="Images\Bluespin.gif" />
+    <Content Include="Images\LoginScreen\champ.png" />
+    <Content Include="Images\LoginScreen\header.jpg" />
+    <Content Include="Images\LoginScreen\HeaderLogo.jpg" />
+    <Content Include="Images\LoginScreen\indicator.gif" />
+    <Content Include="Images\LoginScreen\Layer.png" />
+    <Content Include="Images\LoginScreen\line.png" />
+    <Content Include="Images\LoginScreen\map.png" />
+    <Content Include="Images\LoginScreen\screen_bg.jpg" />
+    <Content Include="Images\LoginScreen\screen_boy.jpg" />
+    <Content Include="Images\LoginScreen\screen_kids.jpg" />
+    <Content Include="Images\LoginScreen\screen_trucks.jpg" />
+    <Content Include="Images\LoginScreen\shadow1.png" />
+    <Content Include="Images\LoginScreen\shadow2.png" />
+    <Content Include="Js\Chart.js" />
+    <Content Include="Js\codemirror.min.js" />
+    <Content Include="Js\jquery-2.0.0.min.js" />
+    <Content Include="Js\jquery.signalR.js" />
+    <Content Include="Js\jszip-web-worker.js" />
+    <Content Include="Js\jszip.js" />
+    <Content Include="Js\KindoWork.js" />
+    <Content Include="Js\Reflect.js" />
+    <Content Include="Js\rx.all.js" />
+    <Content Include="Js\shim.min.js" />
+    <Content Include="Js\system.src.js" />
+    <Content Include="Js\xml.min.js" />
+    <Content Include="Js\zone.js" />
+    <Content Include="Js\zone\ng_zone.js" />
+    <Content Include="Js\zone\ng_zone_impl.js" />
+    <Content Include="log.config.js" />
+    <Content Include="index.html" />
+    <Content Include="Login\Components\DSVLoginComponent.css" />
+    <Content Include="Login\Components\DSVLoginComponent.html" />
+    <Content Include="Login\Components\LoginComponent.css" />
+    <Content Include="Login\Components\LoginComponent.html" />
+    <Content Include="rollup.js" />
+    <Content Include="systemjs.config.js" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Js\zone\ng_zone.d.ts" />
+    <TypeScriptCompile Include="Js\zone\ng_zone_impl.d.ts" />
+    <TypeScriptCompile Include="Login\Bootstraper.ts" />
+    <TypeScriptCompile Include="Login\BootstraperAOT.ts" />
+    <TypeScriptCompile Include="Login\Components\ChangePasswordComponent.ts" />
+    <TypeScriptCompile Include="Login\Components\DSVChangePasswordComponent.ts" />
+    <TypeScriptCompile Include="Login\Components\DSVLoginComponent.ts" />
+    <TypeScriptCompile Include="Login\Components\DSVMobileLoginComponent.ts" />
+    <TypeScriptCompile Include="Login\Components\DSVResetPasswordComponent.ts" />
+    <TypeScriptCompile Include="Login\Components\LoginComponent.ts" />
+    <TypeScriptCompile Include="Login\Components\ResetPasswordComponent.ts" />
+    <TypeScriptCompile Include="Login\LoginService.ts" />
+    <TypeScriptCompile Include="Login\LogitudeLoginModuleAOT.ts" />
+    <TypeScriptCompile Include="Login\LogitudeLoginModule.ts" />
+    <TypeScriptCompile Include="Login\ModuleDeclarations.ts" />
+    <TypeScriptCompile Include="Login\PasswordChangeService.ts" />
+    <TypeScriptCompile Include="Login\RootComponent.ts" />
+    <TypeScriptCompile Include="Login\RootComponentAOT.ts" />
+    <TypeScriptCompile Include="Login\SessionInfo.ts" />
+    <TypeScriptCompile Include="Login\Utilities\DynamicLoaderAOT.ts" />
+    <TypeScriptCompile Include="Login\Utilities\DynamicLoaderTSC.ts" />
+    <TypeScriptCompile Include="Login\Utilities\ExternalParams.ts" />
+    <TypeScriptCompile Include="Login\Utilities\Tools.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup />
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>14814</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:30538/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

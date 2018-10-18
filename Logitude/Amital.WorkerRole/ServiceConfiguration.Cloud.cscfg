@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ServiceConfiguration serviceName="Amital.WorkerRole" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="4" osVersion="*" schemaVersion="2015-04.2.6">
+  <Role name="CommunicationWorkerRole">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" value="true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" value="Jalal" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" value="MIIBnQYJKoZIhvcNAQcDoIIBjjCCAYoCAQAxggFOMIIBSgIBADAyMB4xHDAaBgNVBAMME1dpbmRvd3MgQXp1cmUgVG9vbHMCEFemyp1QSc6RQxf0wTLABuwwDQYJKoZIhvcNAQEBBQAEggEAx95GZwndpFiPUUxn+B3HcMry6YiL1mngZCubo0dADG59YkiYSucSugLXX+OMNEqwBWPzT2DpB64opxcksxv0TxDQQKllMYTdk/6Xve5kFtCZbAuijSEK7aKcMgXOMDCTSmPrW3lCS0sH9uyfOwOgT1mmmJdcBoNpi3C7nJitXn7EyBtBFUQYdXUovTdlTTH7RexOC/DAF5jK0S2a5BPjp4rM+PYco24AG+7tudA//ZX9BowHut8O42aE9S3K6xGIbdkt3gqGEsfYGDzb/9uBWPL22DfGgwmqViPEQXnkhk+csVgiLmWNKmR9qhjabH9b8hlNjBTQKykujO4OdlohlDAzBgkqhkiG9w0BBwEwFAYIKoZIhvcNAwcECHOjxzqhiwcVgBCGkxExQpZTQuQUq4NeFcvn" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" value="2020-11-20T23:59:59.0000000+02:00" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteForwarder.Enabled" value="true" />
+    </ConfigurationSettings>
+    <Certificates>
+      <Certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" thumbprint="984A3F5A2E268FAB7DD1192C6E278734E65B489D" thumbprintAlgorithm="sha1" />
+    </Certificates>
+  </Role>
+</ServiceConfiguration>

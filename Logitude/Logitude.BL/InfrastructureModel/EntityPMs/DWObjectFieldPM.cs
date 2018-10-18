@@ -1,0 +1,26 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Logitude.BL.InfrastructureModel.EntityPMs
+{
+    public class DWObjectFieldPM
+    {
+        public string Id { get; set; }
+        public int Tenant { get; set; }
+        public string Name { get; set; }
+        public string Code { get; set; }
+        public string DWObjectTableCode { get; set; }
+        public string DataTypeCode { get; set; }
+        public string DimensionTableCode { get; set; }
+        public int MaxLength { get; set; }
+        public int MinLength { get; set; }
+        public bool IsRequiered { get; set; }
+        public bool IsPrimaryKey { get; set; }
+        public bool IsMeasurement { get; set; }
+        public string AggregationTypeCode { get; set; }
+    }
+
+}

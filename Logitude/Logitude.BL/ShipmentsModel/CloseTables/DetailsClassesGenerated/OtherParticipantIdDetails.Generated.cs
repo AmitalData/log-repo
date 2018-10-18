@@ -1,0 +1,131 @@
+
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.CloseTablesClasses;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.ShipmentsModel.EntityPMs; 
+using Simplog.Data.ShipmentsModel;
+
+namespace Logitude.BL.ShipmentsModel
+{
+   public class OtherParticipantIdDetails : OtherParticipantId, ICloseTable<OtherParticipantId, OtherParticipantIdDetails>
+   {
+       public List<OtherParticipantIdDetails> GetAll()
+       {
+		    var all = new List<OtherParticipantIdDetails>();  
+            all.Add(new OtherParticipantIdDetails()
+            {    
+                Code = "AGT", 
+                SearchFields = "AGT,Agent", 
+                Name = "Agent", 
+			});
+			 
+            all.Add(new OtherParticipantIdDetails()
+            {    
+                Code = "AIR", 
+                SearchFields = "AIR,Airline", 
+                Name = "Airline", 
+			});
+			 
+            all.Add(new OtherParticipantIdDetails()
+            {    
+                Code = "APT", 
+                SearchFields = "APT,Airport Authority", 
+                Name = "Airport Authority", 
+			});
+			 
+            all.Add(new OtherParticipantIdDetails()
+            {    
+                Code = "BRK", 
+                SearchFields = "BRK,Broker", 
+                Name = "Broker", 
+			});
+			 
+            all.Add(new OtherParticipantIdDetails()
+            {    
+                Code = "CAG", 
+                SearchFields = "CAG,Commissionable Agent", 
+                Name = "Commissionable Agent", 
+			});
+			 
+            all.Add(new OtherParticipantIdDetails()
+            {    
+                Code = "CNE", 
+                SearchFields = "CNE,Consignee", 
+                Name = "Consignee", 
+			});
+			 
+            all.Add(new OtherParticipantIdDetails()
+            {    
+                Code = "CTM", 
+                SearchFields = "CTM,Customs", 
+                Name = "Customs", 
+			});
+			 
+            all.Add(new OtherParticipantIdDetails()
+            {    
+                Code = "DEC", 
+                SearchFields = "DEC,Deconsolidator", 
+                Name = "Deconsolidator", 
+			});
+			 
+            all.Add(new OtherParticipantIdDetails()
+            {    
+                Code = "FFW", 
+                SearchFields = "FFW,Freight Forwarder", 
+                Name = "Freight Forwarder", 
+			});
+			 
+            all.Add(new OtherParticipantIdDetails()
+            {    
+                Code = "GHA", 
+                SearchFields = "GHA,Ground Handling Agent", 
+                Name = "Ground Handling Agent", 
+			});
+			 
+            all.Add(new OtherParticipantIdDetails()
+            {    
+                Code = "PTT", 
+                SearchFields = "PTT,Post Office", 
+                Name = "Post Office", 
+			});
+			 
+            all.Add(new OtherParticipantIdDetails()
+            {    
+                Code = "SHP", 
+                SearchFields = "SHP,Shipper", 
+                Name = "Shipper", 
+			});
+			 
+            all.Add(new OtherParticipantIdDetails()
+            {    
+                Code = "TRK", 
+                SearchFields = "TRK,Trucker", 
+                Name = "Trucker", 
+			});
+			
+            return all;
+       }
+
+	    public void MapPoco(OtherParticipantId newPoco)
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Name = this.Name;   
+        }
+
+		public string GetSearchFields(OtherParticipantId rec)
+        {   
+           return String.Concat(rec.Code,",",rec.Name,",");
+        }
+   }
+}
+

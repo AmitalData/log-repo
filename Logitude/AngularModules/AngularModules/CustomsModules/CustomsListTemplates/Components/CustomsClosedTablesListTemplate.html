@@ -1,0 +1,53 @@
+﻿<style>
+
+</style>
+<div>
+    <!--(click)="ShowDetails()"-->
+    <div class="TextTrimming RightCenter"
+         *ngIf="fieldName == 'Id'">
+        <span>{{_CustomsClosedTable.Id }}</span>
+    </div>
+    <div class="TextTrimming RightCenter"
+         *ngIf="fieldName == 'CustomsName'">
+        <span>{{_CustomsClosedTable.CustomsName }}</span>
+    </div>
+    <div class="TextTrimming RightCenter"
+         *ngIf="fieldName == 'CustomsLocalName'">
+        <span>{{_CustomsClosedTable.CustomsLocalName }}</span>
+    </div>
+
+    <div class="TextTrimming RightCenter"
+         *ngIf="fieldName == 'LastUpdateDate'">
+
+        <span>{{_CustomsClosedTable.LastUpdateDate  | DateTimeToDatePipe  }}</span> <span>{{_CustomsClosedTable.LastUpdateDate    | DateTimeToTimePipe :'L12' }}</span>
+
+    </div>
+    <div class="TextTrimming RightCenter"
+         *ngIf="fieldName == 'StatusName'">
+        <span>{{_CustomsClosedTable.StatusName }}</span>
+    </div>
+
+    <div class="TextTrimming RightCenter"
+         [style.opacity]="TableUpdateButtonOpacity"
+         *ngIf="fieldName == 'TableUpdateButton' && UpdateButtonVisibility  ">
+        <button style="padding-right:10px;min-width:25px;"
+                class="Button"
+                (click)="TableUpdateButtonCommandAction()">
+            {{'Customs.CustomsClosedTable.B.Update' | TextCodeTranslationPipe}}
+            
+        </button>
+
+    </div>
+    <div class="TextTrimming RightCenter"
+         *ngIf="fieldName == 'ShowDetailsButton'  ">
+        <button 
+                style="padding-right:10px;min-width:30px;"
+                class="Button"
+                (click)="ShowDetails()">
+            <!--{{'CommunicationLog.B.View' |   TextCodeTranslationPipe }}-->
+            {{CommunicationLogBView}}
+        </button>
+
+    </div>
+
+</div>

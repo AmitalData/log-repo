@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://tempuri.org/CFIData" elementFormDefault="qualified" targetNamespace="http://tempuri.org/CFIData" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="CFIDATA">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="CFIDATA_DATA" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CFIDATA_DATA">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="ImporterName" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ImporterAddress" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ImporterId" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CasualSupplierName" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CasualSupplierAddress" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ManifestNumber" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ThirdCargoID" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="AirlineId" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="MAWB" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="HAWB" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="COUWTVAL" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="UNLOADDATE" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ImporterName" type="xs:string" />
+  <xs:element name="ImporterAddress" type="xs:string" />
+  <xs:element name="ImporterId" type="xs:string" />
+  <xs:element name="CasualSupplierName" type="xs:string" />
+  <xs:element name="CasualSupplierAddress" type="xs:string" />
+  <xs:element name="ManifestNumber" type="xs:string" />
+  <xs:element name="ThirdCargoID" type="xs:string" />
+  <xs:element name="AirlineId" type="xs:string" />
+  <xs:element name="MAWB" type="xs:string" />
+  <xs:element name="HAWB" type="xs:string" />
+  <xs:element name="COUWTVAL" type="xs:string" />
+  <xs:element name="UNLOADDATE" type="xs:string" />
+</xs:schema>

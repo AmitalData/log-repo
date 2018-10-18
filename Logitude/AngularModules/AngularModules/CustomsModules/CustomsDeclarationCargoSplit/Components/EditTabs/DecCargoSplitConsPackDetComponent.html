@@ -1,0 +1,176 @@
+﻿
+
+<table>
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td colspan="7">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+        </td>
+    </tr>
+    <tr >
+        
+        <td>
+            
+        </td>
+        <td>
+            
+
+        </td>
+
+        <td>
+            
+        </td>
+        <td>
+            
+        </td>
+
+        <td>
+        </td>
+        <td style="">
+        </td>
+
+
+        <td style="width: 25px;height: 20px;padding: 5px;padding-bottom: 0px;">
+            <div><IconButton [IsEnabled]="!IsDisplayOnly" [IsSmall]="true" [Name]="'Add'" (click)="Add()" style="float:left;" ></IconButton></div>
+        </td>
+    </tr>
+
+    <tr style="height:5px"></tr>
+    <tr style="height:100%;bottom:5px">
+        <td colspan="7">
+            <table>
+                <tr>
+                    <td style="width:10px"></td>
+                    <td colspan="5" style="padding-right:10px">
+
+                        <div class="CellContent" style="bottom: 5px;padding:5px">
+                            <logitude-edit-grid GridWidth="100%"
+                                                GridHeight="100%"
+                                                (RowEnded)="OnRowEnded($event)"
+                                                (Ondblclick)="OnFocus()"
+                                                [IsReadOnly]="IsDisplayOnly"
+                                                [ItemSource]="ItemsSource"
+                                                (SelectedItemChanged)="OnRowSelected($event)"
+                                                [SelectedRow]="SelectedRow">
+
+
+
+                                <log-column [header]="'Customs.DecCargoSplitConsPackDet.F.PackageTypeCode' | TextCodeTranslationPipe" [binding]="'PackageTypeCode'"  [width]="'130'" [Alignment]="'right'">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div style="text-align:right" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                            <span>{{item.PackageTypeName}}</span>
+                                        </div>
+                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                            <LogLov [ObjectFieldName]="'PackageTypeCode'"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="item"
+                                                    [LookUpTableName]="'Customs.PackingType'"
+                                                    (SelectedItemChanged)="item.SetLocalName($event, 'PackageTypeName')"
+                                                    [FocusOnMe]="'true'"
+                                                    [HideColumns]="true">
+                                            </LogLov>
+
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
+
+
+                                <log-column [header]="'Customs.DecCargoSplitConsPackDet.F.PackageQuantity' | TextCodeTranslationPipe" [binding]="'PackageQuantity'" [width]="'110'" [Editable]="true" [Alignment]="'right'">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
+                                            <span>{{item.PackageQuantity}}</span>
+                                        </div>
+                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                            <LogTextBox #PackageQuantityTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'PackageQuantity'" [InputType]="'integer'" [DataContext]="item"
+                                                        [Text]="item.PackageQuantity" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
+                                                        (LostFocus)="item.OnPackageQuantityLostFocus(logcelltemplate,PackageQuantityTextBox)" [DebounceTime]="1" (KeyUp)="item.PackageQuantityKeyUp($event,logcelltemplate,PackageQuantityTextBox)"></LogTextBox>
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
+                                <log-column [header]="'Customs.DecCargoSplitConsPackDet.F.GrossMassMeasure' | TextCodeTranslationPipe" [binding]="'GrossMassMeasure'" [width]="'130'" [Editable]="true" [Alignment]="'right'">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
+                                            <span>{{item.GrossMassMeasure | NumbersPipe:'N2'}}</span>
+                                        </div>
+                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                            <LogTextBox #GrossMassMeasureTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'GrossMassMeasure'" [InputType]="'double'" [DataContext]="item"
+                                                        [Text]="item.GrossMassMeasure" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
+                                                        (LostFocus)="item.OnGrossMassMeasureLostFocus(logcelltemplate,GrossMassMeasureTextBox)" [DebounceTime]="1" (KeyUp)="item.GrossMassMeasureKeyUp($event,logcelltemplate,GrossMassMeasureTextBox)">
+                                            </LogTextBox>
+
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
+                                <log-column [header]="'Customs.DecCargoSplitConsPackDet.F.MarksNumbers' | TextCodeTranslationPipe" [binding]="'MarksNumbers'" [width]="'150'" [Editable]="true" [Alignment]="'right'">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
+                                            <span>{{item.MarksNumbers}}</span>
+                                        </div>
+                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                            <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'MarksNumbers'"  [InputType]="'ntext'" [DataContext]="item"
+                                                        [Text]="item.MarksNumbers" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
+                                <log-column [header]="'Customs.DecCargoSplitConsPackDet.F.ManifestNumber' | TextCodeTranslationPipe" [binding]="'ManifestNumber'" [width]="'130'" [Editable]="true" [Alignment]="'right'">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
+                                            <span>{{item.ManifestNumber}}</span>
+                                        </div>
+                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                            <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'ManifestNumber'" [DataContext]="item"
+                                                        [Text]="item.ManifestNumber" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
+                                <log-column [width]="'40'" [Editable]="true" [Alignment]="'right'" [visibility]="'collapsed'">
+                                    <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                                        <div style="width: 30px; float: right; height:20px;padding-top:3px">
+                                            <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="item.DeleteButtonClicked()" [IsEnabled]="!IsDisplayOnly"></IconButton>
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+                            </logitude-edit-grid>
+                        </div>
+                    </td>
+
+                </tr>
+            </table>
+        </td>
+    
+
+
+    </tr>
+
+    <tr style="height: 32px;">
+        <td colspan="7" style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()" >{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="IsDisplayOnly">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

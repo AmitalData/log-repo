@@ -1,0 +1,268 @@
+﻿
+
+<style>
+    .TemplateSection {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        border-radius: 8px;
+        -moz-border-radius: 8px;
+        -webkit-border-radius: 8px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-shadow: 0px 0px 1px 1px rgba(170, 170, 170, 0.7);
+        -moz-box-shadow: 0px 0px 1px 1px rgba(170, 170, 170, 0.7);
+        -webkit-box-shadow: 0px 0px 1px 1px rgba(170, 170, 170, 0.7);
+    }
+
+    .WarehouseReleasesBoxItem:hover {
+        cursor: default;
+        background: rgba(232, 247, 255, 1);
+        border: 1px solid #3BB3E2;
+        background: -moz-linear-gradient(50% 106.14% 90deg,rgba(133, 203, 237, 1) 0%,rgba(150, 211, 240, 1) 22.59%,rgba(196, 231, 248, 1) 67.37%,rgba(232, 247, 255, 1) 99.68%);
+        background: -webkit-linear-gradient(90deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 99.68%);
+        background: -webkit-gradient(linear,50% 106.14%,50% -10.13%,color-stop(0,rgba(133, 203, 237, 1) ),color-stop(0.2259,rgba(150, 211, 240, 1) ),color-stop(0.6737,rgba(196, 231, 248, 1) ),color-stop(0.9968,rgba(232, 247, 255, 1) ));
+        background: -o-linear-gradient(90deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 99.68%);
+        background: linear-gradient(0deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 99.68%);
+        transition: 0.3s;
+    }
+
+    .WarehouseReleasesBoxItem {
+        /*height: 60px;*/
+        height: 60px;
+        padding: 5px;
+        margin-bottom: 5px;
+        border: 1px solid #D1D1D1;
+        background: white;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+    }
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+<table>
+
+
+    <tr style="height:10px"><td><div></div></td></tr>
+
+
+
+
+    <tr style="height:100%">
+        <td style="vertical-align:top;height:100%">
+            <div style="height:100%;width:100%;border-right:1px solid #E4E3E1;border-left:1px solid #E4E3E1;border-bottom:1px solid #E4E3E1;border-radius:6px;vertical-align:top">
+                <table style="border :none;">
+
+
+                    <tr style="height:25px">
+                        <td>
+
+
+                            <div style="background-color:#EDEDED;height:25px;border-top:1px solid #E4E3E1;border-top-Right-radius:6px; border-top-left-radius:6px;color:black;vertical-align:central">
+
+                                <table>
+                                    <tr>
+                                        <td style="width:5px"><div style="width:5px"></div></td>
+                                        <td style="text-align:left"><div style="font-size:11px;font-style:italic;margin-top:1px">{{LabelPackageRleaseArea}}</div></td>
+                                    </tr>
+                                </table>
+
+                            </div>
+
+                        </td>
+
+
+
+                    </tr>
+
+
+
+                    <tr class="SectionBody">
+                        <td *ngIf="!IsNoReleasePackage">
+
+
+                            <table>
+                                <tr style="height:5px;"><td colspan="3"><div style="height:5px"></div></td></tr>
+                                <tr>
+                                    <td style="width:5px;"><div style="width:5px"></div></td>
+                                    <td>
+                                        <div class="ScrollViewer">
+                                            <ul class="ScrollContent">
+
+                                                <li class="WarehouseReleasesBoxItem" *ngFor="let item of WarehouseReleaseLists">
+
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width:15px"></td>
+                                                        
+                                                            <td style="vertical-align:central;">
+
+                                                                <table>
+                                                                    <tr style="height:5px;"><td colspan="3"></td></tr>
+
+                                                                    <tr style="height:20px;">
+                                                                    
+                                                                        <td style="width:155px;vertical-align:central">
+
+                                                                            <table>
+                                                                                <tr>
+
+                                                                                    <td style="color:#6E7172;width:55px;">Release #</td>
+                                                                                    <td style="width:100px;">
+                                                                                        <span style="width:100px;text-align:left;font-size:12px" class="hyperlink" (click)="ViewEntity(item)">{{item.ReleaseNumberValue}}</span>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+
+
+                                                                        </td>
+
+
+                                                                        <td></td>
+
+
+                                                                        <td style="width:290px;vertical-align:central">
+
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td style="color:#6E7172;width:85px;">Release Date:</td>
+                                                                                    <td style="width:205px;">
+                                                                                        <div class="TextTrimming" style="width:195px;text-align:left">
+                                                                                            <span style="font-weight: bold;" [ngStyle]="{color: item.ReleaseDateBackgroudColor}">{{item.ReleaseDate | DateTimeToDatePipe}} {{item.WarehouseReleaseDateType}}</span>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+
+
+                                                                        </td>
+
+
+
+                                                                    </tr>
+
+                                                                    <tr style="height:20px;">
+                                                                     
+                                                                        <td style="width:155px;vertical-align:central">
+
+                                                                            <table>
+                                                                                <tr>
+
+                                                                                    <td style="color:#6E7172;width:55px;">Status:</td>
+                                                                                    <td style="width:100px;">
+                                                                                        <div class="TextTrimming" style="width:100px;text-align:left">
+                                                                                            {{item.StatusName}}
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+
+
+                                                                        </td>
+
+
+
+
+
+                                                                        <td></td>
+
+                                                                        <td style="width:290px;vertical-align:central">
+
+                                                                            <table>
+                                                                                <tr>
+                                                                                 
+                                                                                    <td style="color:#6E7172;width:85px;">Release By:</td>
+                                                                                    <td style="width:205px;">
+                                                                                        <div class="TextTrimming" style="width:175px;text-align:left">
+                                                                                            {{item.ReleaseBy}} 
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+
+
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr style="height:7px;"><td colspan="3"></td></tr>
+                                                                </table>
+                                                                
+
+                                                            </td>
+
+                                                            <td style="width:5px"></td>
+
+                                                            <td style="width:110px;">
+
+                                                                <div style="vertical-align:central">
+                                                                    <button class="Button" style="float:left;width:110px;" (click)="CopyPackagebuttonClick(item)"><span>Copy Packages</span></button>
+
+                                                                </div>
+
+                                                            </td>
+                                                            <td style="width:15px"></td>
+                                                        </tr>
+
+
+
+
+                                                    </table>
+
+
+
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td style="width:5px;"><div style="width:5px"></div></td>
+                                </tr>
+                                <tr style="height:5px;"><td colspan="3"><div style="height:5px"></div></td></tr>
+                            </table>
+
+
+
+                        </td>
+
+                        <td style="vertical-align:top;text-align:center" *ngIf="IsNoReleasePackage"><div class="NoDataTextStyle" style="text-align:center;margin-top:15px;vertical-align:top">No Warehouse Releases Found</div></td>
+
+
+                    </tr>
+
+
+                </table>
+
+
+
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CloseButtonClicked()">Close</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

@@ -1,0 +1,170 @@
+﻿<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+
+                <!-- Owner Id -->
+                <tr class="FormFieldRow">
+                    <td style="width:120px;">
+                        <LogLabel [ObjectFieldName]="'OwnerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:370px;">
+                        <LogLov [ObjectFieldName]="'OwnerId'"
+                                [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableName"
+                                [SelectedValue]="OwnerId"
+                                [LookUpTableName]="'User'" >
+                        </LogLov>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- Name -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- Customer Id -->
+                <tr class="FormFieldRow">
+                    <td style="width:120px;">
+                        <LogLabel [ObjectFieldName]="'CustomerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:370px;">
+                        <LogLov [ObjectFieldName]="'CustomerId'"
+                                [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableName"
+                                [SelectedValue]="CustomerId"
+                                [LookUpTableName]="'Card'"
+                                [DependencyFilter1Value]="'CS,PO'" [DependencyFilter1IsList]="true">
+                        </LogLov>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- BudgetId -->
+                <tr class="FormFieldRow">
+                    <td style="width:120px;">
+                        <LogLabel [ObjectFieldName]="'BudgetId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:370px;">
+                        <LogLov [ObjectFieldName]="'BudgetId'"
+                                [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableName"
+                                [SelectedValue]="BudgetId"
+                                [LookUpTableName]="'TMBudget'">
+                        </LogLov>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- CategoryId -->
+                <tr class="FormFieldRow">
+                    <td style="width:120px;">
+                        <LogLabel [ObjectFieldName]="'CategoryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:370px;">
+                        <LogLov [ObjectFieldName]="'CategoryId'"
+                                [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableName"
+                                [SelectedValue]="CategoryId"
+                                [LookUpTableName]="'TMProjectCategory'">
+                        </LogLov>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- IsProrated -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'IsProrated'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogCheckBox [ObjectFieldName]="'IsProrated'" [Checked]="IsProrated" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- Description -->
+                <tr class="FormFieldRow">
+                    <td style="vertical-align:top;">
+                        <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:370px;height:85px;">
+                                    <div class="MediaFill">
+                                        <LogTextBox [ObjectFieldName]="'Description'" [Text]="Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                    </div>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="3">
+                        <div></div>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Create</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

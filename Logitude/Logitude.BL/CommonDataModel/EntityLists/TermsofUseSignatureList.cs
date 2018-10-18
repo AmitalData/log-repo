@@ -1,0 +1,16 @@
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace Logitude.BL.CommonDataModel.EntityLists
+{
+    public class TermsofUseSignatureList
+    {
+        [Key]
+        public string Id { get; set; }
+        public int Tenant { get; set; }
+        public DateTime SignedDatetime { get; set; }
+        public string ContactId { get; set; }
+        public int TermsofUseVersion { get; set; }
+
+    }
+}

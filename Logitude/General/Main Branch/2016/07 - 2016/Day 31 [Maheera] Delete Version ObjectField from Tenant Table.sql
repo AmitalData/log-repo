@@ -1,0 +1,1 @@
+delete objectfields where ObjectTableId = (select id from ObjectTables where name = 'tenant' ) and  FieldName = 'version'

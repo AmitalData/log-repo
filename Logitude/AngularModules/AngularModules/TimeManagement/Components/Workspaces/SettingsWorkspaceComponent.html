@@ -1,0 +1,191 @@
+﻿<style type="text/css">
+    .BoxItem:hover {
+        background: #EAEEF5;
+    }
+
+    .BoxItem .Title {
+        cursor: pointer;
+        width: 1px;
+        white-space: nowrap;
+    }
+
+    .BoxItem .Description {
+        width: 100%;
+        height: 70px;
+        max-height: 70px;
+        font-size: 12px;
+        line-height: 18px;
+        color: #595B5B;
+        white-space: normal;
+        word-wrap: break-word;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .BoxItem {
+        float: left;
+        width: calc(50% - 24px);
+        height: 110px;
+        border: 1px solid #DADADA;
+        margin-top: 5px;
+        margin-bottom: 10px;
+        -webkit-border-radius: 7px;
+        -moz-border-radius: 7px;
+        border-radius: 7px;
+        -webkit-box-shadow: 0px 0px 4px 2px rgba(209,209,209,0.5);
+        -moz-box-shadow: 0px 0px 4px 2px rgba(209,209,209,0.5);
+        box-shadow: 0px 0px 4px 2px rgba(209,209,209,0.5);
+    }
+</style>
+
+<table>
+    <tr>
+        <td class="CellStretch">
+            <div class="CellContent">
+                <div class="ScrollViewer">
+                    <ul class="ScrollContent">
+                        <li class="BoxItem" style="margin-right:20px">
+                            <table>
+                                <tr>
+                                    <td style="width:100px;">
+                                        <img class="CenterCenter" src="./Images/projects.png"/>
+                                    </td>
+
+                                    <td style="vertical-align: top;">
+                                        <table>
+                                            <tr style="height:30px;">
+                                                <td style="vertical-align: bottom">
+                                                    <div (click)="ProjectsClicked()" class="Title" style="font-size:16px; color: #1B90CB; text-decoration: underline;">Projects</div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td style="height: 100%;">
+                                                    <div class="Description">
+                                                        Add and manage all kind of projects and inner projects. Specify project name, subject, customers and project owners. 
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                    </td>
+
+                                    <td style="width: 15px;">
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </li>
+
+                        <li class="BoxItem" style="margin-right:20px">
+                            <table>
+                                <tr>
+                                    <td style="width:100px;">
+                                        <img class="CenterCenter" src="./Images/category.png" />
+                                    </td>
+
+                                    <td style="vertical-align: top;">
+                                        <table>
+                                            <tr style="height:30px;">
+                                                <td style="vertical-align: bottom">
+                                                    <div (click)="CategoriesClicked()" class="Title" style="font-size:16px; color: #1B90CB; text-decoration: underline;">Categories</div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td style="height: 100%;">
+                                                    <div class="Description">
+                                                        Add and manage categories for all projects.
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+
+                                    <td style="width: 15px;">
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </li>
+
+                        <li class="BoxItem" style="margin-right:20px">
+                            <table>
+                                <tr>
+                                    <td style="width:100px;">
+                                        <img class="CenterCenter" src="./Images/clock.png" />
+                                    </td>
+
+                                    <td style="vertical-align: top;">
+                                        <table>
+                                            <tr style="height:30px;">
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td style="vertical-align: bottom">
+                                                                <div (click)="ClockClicked()" class="Title" style="font-size:16px; color: #1B90CB; text-decoration: underline;">Clock</div>
+                                                            </td>
+                                                            <td>
+                                                                <input accept=".csv,.CSV" [attr.id]="ClockTimeHtmlId" type="file" (change)="UploadClockTimeFile($event)" style="display:none" class="upload" />
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td style="height: 100%;">
+                                                    <div class="Description">
+                                                        To upload the clock records for each employee in csv format.
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                    </td>
+
+                                    <td style="width: 15px;">
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </li>
+
+                        <li class="BoxItem" style="margin-right:20px">
+                            <table>
+                                <tr>
+                                    <td style="width:100px;">
+                                        <img class="CenterCenter" src="./Images/sprint.png" />
+                                    </td>
+
+                                    <td style="vertical-align: top;">
+                                        <table>
+                                            <tr style="height:30px;">
+                                                <td style="vertical-align: bottom">
+                                                    <div (click)="SprintsClicked()" class="Title" style="font-size:16px; color: #1B90CB; text-decoration: underline;">Sprints</div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td style="height: 100%;">
+                                                    <div class="Description">
+                                                       Define the sprints of each release with their specified time range.
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                    </td>
+
+                                    <td style="width: 15px;">
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>

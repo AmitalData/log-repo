@@ -1,0 +1,233 @@
+﻿
+<div>
+    <!-- MorningMessageComponent  view  -->
+    <custom-message-wrapper [CustomSendOptionsButtonCanForcePersonalSign]="'true'">
+
+        <!-- MorningMessageComponent  Request  -->
+        <div class="class-request-content">
+            <table style="width: 650px;padding-top: 10px;">
+
+                <tr class="FormFieldRow">
+                    <td style="width: 120px">
+                        <LogLabel [NoObjectField]="true" [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Customs.CustomsExchangeRate.F.DateFrom'"></LogLabel>
+                    </td>
+                    <td style="width:10px"></td>
+
+                    <td style="width: 200px; padding-right: 36px;">
+                        <!-- MorningMessageComponent  Request.FromDate-->
+                        <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName"
+                                       [InputType]="'date'" [DataContext]="DataContext"
+                                       [HideColumns]="true"></LogDatePicker>
+
+                    </td>
+
+                    <td><div></div></td>
+                    <td style="width: 120px">
+                        <LogLabel [NoObjectField]="true" [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Customs.CustomsExchangeRate.F.DateTo'"></LogLabel>
+                    </td>
+                    <td style="width:10px"></td>
+
+                    <td style="width: 200px; padding-right: 36px;">
+                        <!-- MorningMessageComponent  Request.ToDate-->
+
+                        <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'ToDate'"
+                                       [ObjectTableName]="ObjectTableName" [InputType]="'date'"
+                                       [DataContext]="DataContext"
+                                       [HideColumns]="true"></LogDatePicker>
+                    </td>
+
+                    <td><div></div></td>
+                </tr>
+
+                <tr class="FormFieldRow">
+                    <td style="width: 120px">
+                        <LogLabel [NoObjectField]="true" [ObjectFieldName]="'SubjectText'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'טקסט בנושא'"></LogLabel>
+                    </td>
+                    <td style="width:10px"></td>
+
+                    <td style="width: 200px; padding-right: 36px;">
+                        <!-- MorningMessageComponent  Request.SubjectText-->
+                        <LogTextBox [NoObjectField]="true"
+                                    [ObjectFieldName]="'SubjectText'" [InputType]="'ntext'"
+                                    [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                    [HideColumns]="true"></LogTextBox>
+
+                    </td>
+
+                    <td><div></div></td>
+                    <td style="width: 120px">
+                        <LogLabel [NoObjectField]="true" [ObjectFieldName]="'ContentText'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'טקסט בתוכן'"></LogLabel>
+                    </td>
+                    <td style="width:10px"></td>
+
+                    <td style="width: 200px; padding-right: 36px;">
+                        <!-- MorningMessageComponent  Request.ContentText-->
+                        <LogTextBox [NoObjectField]="true"
+                                    [ObjectFieldName]="'ContentText'" [InputType]="'ntext'"
+                                    [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                    [HideColumns]="true"></LogTextBox>
+
+                    </td>
+
+                    <td><div></div></td>
+                </tr>
+
+                <tr class="FormFieldRow">
+                    <td style="width: 120px">
+                        <LogLabel [NoObjectField]="true" [ObjectFieldName]="'Category'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'קטגוריה'"></LogLabel>
+                    </td>
+                    <td style="width:10px"></td>
+
+                    <td style="width: 200px; padding-right: 36px;">
+                        <!-- MorningMessageComponent  Request.SubjectText-->
+                        <LogLov [ObjectFieldName]="'Category'"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [HideColumns]="true"
+                                [LookUpTableName]="'Customs.MorningMessageType'"
+                                [DisplayMemberPath]="'LocalName'">
+                        </LogLov>
+
+                        <!--<LogitudeControls:LOV x:Name="CategoryLov" Grid.Row="2" Grid.Column="1" Height="22" VerticalAlignment="Center"
+                                      ObjectTableName="Customs.MorningMessageType" FieldName="Category"
+                                      SelectedValue="Category"
+                                      ValueMemberPath="Code"
+                                      SelectedValueBinding="{Binding Category,Mode=TwoWay,NotifyOnValidationError=True, ValidatesOnDataErrors=True,ValidatesOnExceptions=True,ValidatesOnNotifyDataErrors=True}" />-->
+
+                    </td>
+
+                    <td><div></div></td>
+                    <td style="width: 120px"></td>
+                    <td style="width:10px"></td>
+
+                    <td style="width: 200px; padding-right: 36px;"></td>
+
+                    <td><div></div></td>
+                </tr>
+
+                <!--<tr class="FormFieldRow">
+                    <td style="width: 200px"></td>
+                    <td style="width:10px"></td>
+
+                    <td style="width: 200px; padding-right: 36px;">
+                         MorningMessageComponent  Request.SubjectText
+
+                    </td>
+
+                    <td><div></div></td>
+                    <td style="width: 200px"></td>
+                    <td style="width:10px"></td>
+
+                    <td style="width: 200px; padding-right: 36px;"></td>
+
+                    <td><div></div></td>
+                </tr>-->
+
+            </table>
+        </div>
+
+
+        <div class="class-response-content">
+            <table style="width: 750px;height: 320px;padding-top: 10px;">
+                <!--<tr class="TabTitleRow" style="width:150px">
+                    <td colspan="5" > {{'Customs.MorningMessage.O.MorningMessageResults'| TextCodeTranslationPipe}} </td>
+                </tr>-->
+                <tr class="FormFieldRow" style="height:1px">
+                    <!--background-color :aquamarine;-->
+                    <td colspan="5" style="width: 100% ; height : 100%">
+                        <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
+                            <logitude-edit-grid GridWidth="100%"
+                                                GridHeight="100%"
+                                                (RowDataLoaded)="OnRowLoaded($event)" 
+                                                [ItemSource]="MorningMessageObservableList">
+                                <!--<log-row-details>
+                                    <row-template template="let item">
+                                        
+                                        <div style="white-space: pre-wrap; height: 80px; width: 90%; background: #E8F7FF; position: relative;overflow-y:auto;">
+                                                {{item.Content}}
+                                            
+                                        </div>
+                                    </row-template>
+                                </log-row-details>-->
+                                
+                                
+                                <!-- MessageDate -->
+                                <log-column [header]="'Customs.MorningMessage.O.MessageDate' | TextCodeTranslationPipe"
+                                            [width]="'100'" [Alignment]="'right'"
+                                            [binding]="'Content'">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div class="TextTrimming RightCenter">
+                                            <span>{{item.MessageDate}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
+                                <!-- MessageID -->
+                                <log-column [header]="'Customs.MorningMessage.O.MessageID' | TextCodeTranslationPipe"
+                                            [binding]="'MessageID'"
+                                            [width]="'90'" [Alignment]="'right'">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div class="RightCenter">
+                                            <span>{{item.MessageID}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
+                                <!-- CategoryName -->
+                                <log-column [header]="'Customs.MorningMessage.O.Category' | TextCodeTranslationPipe"
+                                            [width]="'100'" [Alignment]="'right'"
+                                            [binding]="'CategoryName'">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div class="RightCenter">
+                                            <span>{{item.CategoryName }}</span>
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
+                                <!-- Subject -->
+                                <log-column [width]="'200'" [binding]="'Subject'"
+                                            [Alignment]="'right'"
+                                            [header]="'Customs.MorningMessage.O.Subject' | TextCodeTranslationPipe">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div style="width:100%;height:100%;">
+                                            <div class="TextTrimming RightCenter">
+                                                <span>{{item.Subject }}</span>
+                                            </div>
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
+                                <!-- Content -->
+                                <log-column [header]="'Customs.MorningMessage.O.Content' | TextCodeTranslationPipe"
+                                            [width]="'200'" [Alignment]="'right'"
+                                            [binding]="'Content'">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div style="width:100%;height:100%;white-space: nowrap;">
+                                            <!--<div style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">-->
+                                                <a *ngIf="item.NeedExpandaple" title="Show more"  href="#" (click)="ShowMore(item.Content,item.Subject)">
+                                                    {{item.Content }} 
+                                                </a>
+                                                <span *ngIf="!item.NeedExpandaple" >
+                                                    {{item.Content }}
+                                                    
+                                                </span>
+                                            </div>
+
+
+                                    </log-cell-template>
+                                </log-column>
+
+
+
+
+
+                            </logitude-edit-grid>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+
+    </custom-message-wrapper>
+</div>

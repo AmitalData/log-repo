@@ -1,0 +1,72 @@
+﻿<table style="height:100%;vertical-align:top" class="MediaFill">
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr style="height:100%;vertical-align:top;" *ngIf="IsResourcesReady">
+        <td>
+            <table style="height:100%;vertical-align:top">
+
+                <tr class="FormFieldRow">
+                    <td [style.width.px]="LabelColumnWidth">
+                        <LogLabel [ObjectFieldName]="'ObjectFieldId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:220px">
+
+                        <div style="width:220px">
+                            <ComboBox [ItemsSource]="ObjectFieldPMLists" [Binding]="'FieldName'" [SelectedItem]="SelectedObjectField" (SelectedItemChanged)="SelectedObjectField = $event"></ComboBox>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="FormFieldRow">
+                    <td [style.width.px]="LabelColumnWidth">
+                        <LogLabel [ObjectFieldName]="'UpdateDirection'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:220px">
+                      
+                        <div style="width:220px">
+                            <ComboBox [ItemsSource]="UpdateDirectionLists" [Binding]="'Name'" [SelectedItem]="SelectedUpdateDirection" (SelectedItemChanged)="SelectedUpdateDirection = $event"></ComboBox>
+                        </div>
+                    </td>
+                </tr>
+ 
+
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

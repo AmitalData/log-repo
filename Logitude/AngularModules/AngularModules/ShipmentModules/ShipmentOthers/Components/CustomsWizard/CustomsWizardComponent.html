@@ -1,0 +1,53 @@
+﻿
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr style="height:1px;">
+                    <td style="vertical-align: top;">
+                        <span style="font-size: 12px;" class="Value">Checking required fields for sending to customs</span>
+                        <img width="20" height="20" style="vertical-align: middle;" src="./Images/Icons/MiniGreenTick.png" />
+                    </td>
+                </tr>
+                
+                <tr><td><div></div></td></tr>
+
+                <tr style="height: 30px;" *ngIf="IsSendingMessageVisible">
+                    <td style="text-align: center; vertical-align: middle; font-size: 14px; color:#009161;">
+                        The message has been sent successfully
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{CancelButtonContent}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!IsSendButtonEnabled">Send</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

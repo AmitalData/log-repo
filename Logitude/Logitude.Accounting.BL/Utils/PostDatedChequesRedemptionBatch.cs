@@ -1,0 +1,264 @@
+﻿using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.BL.EntityUpdateServices;
+using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityListQueryServices;
+using Logitude.Accounting.Data.EntityLists;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Transactions;
+using Logitude.BL.InvoiceModel.EntityQueries;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+//using AmitalCustomsWindowsService.Utils;
+
+namespace Logitude.Accounting.BL.Utils
+{
+    public class PostDatedChequesRedemptionBatch
+    {
+        private string _ResponseText;
+        private HttpStatusCode _StatusCode;
+
+        public PostDatedChequesRedemptionBatch()
+        {
+            _ResponseText = "";
+            _StatusCode = HttpStatusCode.Accepted;
+        }
+
+        public string ResponseText()
+        {
+            return _ResponseText;
+        }
+
+        public HttpStatusCode StatusCode()
+        {
+            return _StatusCode;
+        }
+
+
+
+
+
+        public void RunAllPayablePostDatedARPaymentCheques(int tenant)
+        {
+            List<ARPaymentChequeList> aRPaymentCheques = null;
+            using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(3)))
+            {
+                IAccountingContext context = AccountingContext.GetContext(tenant);
+                ARPaymentChequeListQueryService aRPaymentChequeListQueryService = new ARPaymentChequeListQueryService(context);
+                aRPaymentCheques = aRPaymentChequeListQueryService.GetPayablePostDatedARPaymentChequeList(tenant);
+            }
+                
+            
+            if (aRPaymentCheques != null)
+            {
+                foreach (ARPaymentChequeList chq in aRPaymentCheques)
+                {
+                    if (chq != null)
+                    {
+                        RunOnePayableARPaymentCheque(chq.Id, tenant);
+                    }
+                }
+            }
+        }
+
+
+        public void RunOnePayableARPaymentCheque(string id, int tenant)
+        {
+            IAccountingContext context = AccountingContext.GetContext(tenant);
+            try
+            {
+                using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(3)))
+                {
+                    if (!String.IsNullOrEmpty(id))
+                    {
+                        ARPaymentChequeListQueryService aRPaymentChequeListQueryService = new ARPaymentChequeListQueryService(context);
+                        ARPaymentChequeList aRPaymentCheque = aRPaymentChequeListQueryService.GetSingle(id);
+                        AccountingLogger.LogMe("ARPaymentCheque - run one cheque: " + aRPaymentCheque.ChequeNumber, false, "CHQ");
+
+
+                        BankDepositLineListQueryService bankDepositLineListQueryService = new BankDepositLineListQueryService(context);
+                        List<BankDepositLineList> bankDepositLines = bankDepositLineListQueryService.GetByARPaymentChequeId(id, "", tenant);
+                        if (bankDepositLines == null)
+                        {
+                            string errorMessage = "E1: " + TranslateTextsClass.Translate("Cheques.Q.ChequeNotDeposited", tenant);
+                            throw new Exception(errorMessage);
+                        }
+                        BankDepositLineList bankDepositLineList = bankDepositLines.FirstOrDefault();
+                        if (bankDepositLineList == null || String.IsNullOrEmpty(bankDepositLineList.DepositId))
+                        {
+                            string errorMessage = "E2: " + TranslateTextsClass.Translate("Cheques.Q.ChequeNotDeposited", tenant);
+                            throw new Exception(errorMessage);
+                        }
+
+                        BankDepositListQueryService bankDepositListQueryService = new BankDepositListQueryService(context);
+                        BankDepositList bankDeposit = bankDepositListQueryService.GetSingle(bankDepositLineList.DepositId);
+                        if (bankDeposit == null)
+                        {
+                            string errorMessage = "E3: " + TranslateTextsClass.Translate("Cheques.Q.ChequeNotDeposited", tenant);
+                            throw new Exception(errorMessage);
+                        }
+
+                        BankAccountListQueryService bankAccountListQueryService = new BankAccountListQueryService(context);
+                        BankAccountList bankAccount = bankAccountListQueryService.GetByDeferedGLAccount(bankDeposit.DepositBankAccountId);
+                        if (bankAccount == null)
+                        {
+                            string errorMessage = "E4: " + TranslateTextsClass.Translate("Cheques.Q.ChequeNotDeposited", tenant);
+                            throw new Exception(errorMessage);
+                        }
+
+
+
+                        JournalUpdateService journalUpdateService = new JournalUpdateService(context, new Dictionary<string, IContext>(), tenant);
+                        List<JournalLineList> lineList = new List<JournalLineList>();
+                        JournalLineList journalLine_credit = new JournalLineList
+                        {
+                            ActionCode = "1", // Credit
+                            AccountingDate = DateTime.Now.Date,
+                            Tenant = aRPaymentCheque.Tenant,
+                            CreditAccountId = bankAccount.DeferredGLAccountId,
+                            DocumentDate = aRPaymentCheque.ValueDate.Date,
+                            DueDate = aRPaymentCheque.ValueDate.Date,
+                            LocalAmount = aRPaymentCheque.LocalAmount,
+                            CurrencyId = aRPaymentCheque.CurrencyId, 
+                            ForeignAmount = aRPaymentCheque.ForeignAmount, 
+                            Reference1 = aRPaymentCheque.ChequeNumber,
+                        };
+                        AccountingLogger.LogMe("Credit Cheque = " + aRPaymentCheque.ChequeNumber, false, "CHQ");
+                        lineList.Add(journalLine_credit);
+                        JournalLineList journalLine_debit = new JournalLineList
+                        {
+                            ActionCode = "2", // Debit
+                            AccountingDate = DateTime.Now.Date,
+                            Tenant = aRPaymentCheque.Tenant,
+                            DebitAccountId = bankAccount.GLAccountId,
+                            //  DebitControlAccountId = gLAccountPM.ControlAccountId,
+                            DocumentDate = aRPaymentCheque.ValueDate.Date,
+                            DueDate = aRPaymentCheque.ValueDate.Date,
+                            LocalAmount = aRPaymentCheque.LocalAmount,
+                            CurrencyId = aRPaymentCheque.CurrencyId,
+                            ForeignAmount = aRPaymentCheque.ForeignAmount,
+                            Reference1 = aRPaymentCheque.ChequeNumber,
+                        };
+                        AccountingLogger.LogMe("Debit Cheque = " + aRPaymentCheque.ChequeNumber, false, "CHQ");
+                        lineList.Add(journalLine_debit);
+
+                        if (aRPaymentCheque != null && aRPaymentCheque.ValueDate != null)
+                        {
+
+                            WriteJournal(journalUpdateService, lineList, aRPaymentCheque);
+                            lineList.Clear();
+
+                        }
+
+                    }
+                    UpdateARPaymentChequeStatus(id, tenant, "3", context);
+
+                    scope.Complete();
+                }//using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(3)))
+            }
+            catch (Exception e)
+            {
+                using (TransactionScope excScope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(1)))
+                {
+                    {
+                        string errorMessage = e.Message.Split(new[] { '\r', '\n' }).FirstOrDefault();
+                        _ResponseText = errorMessage;
+                        _StatusCode = HttpStatusCode.InternalServerError;
+                 //       UpdateARPaymentChequeStatus(id, tenant, "2", context);
+                    }
+                    excScope.Complete();
+                }
+
+            }
+
+        }
+
+        private static void UpdateARPaymentChequeStatus(string id, int tenant, string status, IAccountingContext context)
+        {
+            ARPaymentChequeQueryService myARPaymentChequeService = new ARPaymentChequeQueryService(context);
+            ARPaymentChequePM aRPaymentChequePM = myARPaymentChequeService.GetSingle(id, false, false);
+            if (aRPaymentChequePM != null)
+            {
+                aRPaymentChequePM.StatusCode = status;
+                ARPaymentChequeUpdateService myARPaymentChequeUpdateService = new ARPaymentChequeUpdateService(context, new Dictionary<string, IContext>(), tenant);
+                myARPaymentChequeUpdateService.Update(aRPaymentChequePM, true);
+            }
+        }
+
+
+
+
+        private static void WriteJournal(JournalUpdateService journalUpdateService, List<JournalLineList> lineList, ARPaymentChequeList aRPaymentCheque)
+        {
+            // Start
+            JournalPM newJournal = new JournalPM();
+
+            // Head
+            newJournal.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+            newJournal.Tenant = lineList.First().Tenant;
+            newJournal.CreateDate = DateTime.Now;
+            newJournal.AccountingDate = DateTime.Now.Date; //lineList.First().AccountingDate;
+            newJournal.TypeCode = "0"; //Regular
+            newJournal.StatusCode = "2"; // Approved
+            ARPaymentQuery aRPaymentQuery = new ARPaymentQuery(aRPaymentCheque.Tenant);
+            if (!String.IsNullOrEmpty(aRPaymentCheque.PaymentId))
+            {
+                ARPayment aRPayment = aRPaymentQuery.GetSingleARPayment(aRPaymentCheque.PaymentId, aRPaymentCheque.Tenant);
+                if (aRPayment != null)
+                {
+                    newJournal.CreatedByUserId = aRPayment.CreatedByUserId;
+                }
+            }
+            newJournal.AccountingEntityCode = "9"; //PaymentCheque
+            newJournal.AccountingEntityId = aRPaymentCheque.Id;
+            newJournal.ExternalNo = null;
+            newJournal.UpdateDate = DateTime.Now;
+            newJournal.UpdatedByUserId = newJournal.CreatedByUserId;
+            newJournal.ApproveDate = DateTime.Now;
+            newJournal.ApprovedByUserId = newJournal.CreatedByUserId;
+
+            // Lines
+            int LineNumber = 0;
+            foreach (JournalLineList line in lineList)
+            {
+                LineNumber++;
+                JournalLinePM newJournalLine = new JournalLinePM
+                {
+                    ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+                    Tenant = newJournal.Tenant,
+                    Line = LineNumber,
+                    ActionCode = line.ActionCode,
+                    CreditAccountId = line.CreditAccountId,
+                    CreditControlAccountId = line.CreditControlAccountId,
+                    CurrencyId = line.CurrencyId,
+                    DebitAccountId = line.DebitAccountId,
+                    DebitControlAccountId = line.DebitControlAccountId,
+                    DocumentDate = line.DocumentDate,
+                    AccountingDate = newJournal.AccountingDate,
+                    DueDate = line.DueDate,
+                    ExchangeRate = line.ExchangeRate,
+                    ForeignAmount = line.ForeignAmount,
+                    LocalAmount = line.LocalAmount,
+                    Notes = line.Notes,
+                    Reference1 = line.Reference1,
+                    Reference2 = line.Reference2,
+                    Reference3 = line.Reference3,
+                };
+                newJournal.JournalLines.Add(newJournalLine);
+
+            }
+            // End
+            journalUpdateService.Update(newJournal, true);
+
+        }
+
+
+
+    }
+}

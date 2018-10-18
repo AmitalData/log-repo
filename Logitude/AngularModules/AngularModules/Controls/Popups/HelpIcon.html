@@ -1,0 +1,115 @@
+﻿
+<style type="text/css">
+    .TooltipText {
+        /*white-space: normal;*/
+        /*word-wrap: break-word;*/
+        white-space: pre-line;
+        overflow-x: hidden;
+        overflow-y: auto;
+        line-height: 13px;
+    }
+
+    .Tooltip:hover .TooltipContent {
+        visibility: visible;
+    }
+
+    .Tooltip .TooltipContent {
+        /*padding: 10px 14px 17px 16px;*/
+        /*background: url('./Images/Tootip.png') no-repeat;*/
+        position: fixed;
+        padding-left: 12px;
+        padding-right: 14px;
+        padding-top: 10px;
+        padding-bottom: 20px;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        visibility: hidden;
+        z-index: 1;
+    }
+
+    .Tooltip {
+        position: relative;
+        background-image: url('./Images/Help.png');
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+    }
+
+    .LogitudeHelpIconTextBox {
+        padding: 0px;
+        text-indent: 0px;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        -moz-box-shadow: none;
+        -webkit-box-shadow: none;
+        font-size: 11px;
+        color: #595B5B;
+        line-height: 11px;
+    }
+</style>
+
+<div *ngIf="IsVisible" style="position: relative; width: 18px; height: 18px;">
+    <div class="RightCenter" [style.width.px]="IconSize" [style.height.px]="IconSize">
+        <div [attr.id]="TooltipId" class="Tooltip" [style.width.px]="IconSize" [style.height.px]="IconSize" (mouseover)="mouseover()" [ngStyle]="{'background-image': IconBackground}">
+            <div [attr.id]="TooltipContentId"
+                 class="TooltipContent"
+                 [style.width.px]="Width"
+                 [style.height.px]="Height"
+                 [style.max-width.px]="Width"
+                 [style.max-height.px]="Width">
+
+                <div class="FillContent">
+                    <table>
+
+                        <tr style="height: 20px;" [hidden]="HideHeader || IconPath != './Images/Help.png'">
+                            <td style="width: 15px; border: none !important; background: none !important; padding: 0 !important;">
+                                <div class="MediaFill">
+                                    <div class="MediaFillRelative">
+                                        <div [hidden]="IconPath != './Images/Help.png'" [attr.title]="Header" class="LeftCenter" style="width: 13px; height: 13px; background:url(./Images/Help.png) no-repeat; background-size: 100% 100%;"></div>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td style="border: none !important; background: none !important; padding: 0 !important;">
+                                <div class="MediaFill TextTrimming" style="color: #1B90CB; font-size: 13px; text-align: left; line-height: 20px;">
+                                    {{Header}}
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr style="height: 20px;" [hidden]="HideHeader || IconPath == './Images/Help.png'">
+                            <td  colspan="2" style="border: none !important; background: none !important; padding: 0 !important;">
+                                <div class="MediaFill TextTrimming" style="color: #1B90CB; font-size: 13px; text-align: left; line-height: 20px;" [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'">
+                                    {{Header}}
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr style="height: 2px;" [hidden]="HideHeader">
+                            <td colspan="2" style="border: none !important; background: none !important; padding: 0 !important;">
+                                <div></div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="2" style="border: none !important; background: none !important; padding: 0 !important;">
+                                <div class="MediaFill">
+                                    <textarea class="LogitudeHelpIconTextBox"
+                                              [(ngModel)]="Text"
+                                              autocomplete="off"
+                                              autocorrect="off"
+                                              autocapitalize="off"
+                                              spellcheck="false"
+                                              [readonly]="true"></textarea>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

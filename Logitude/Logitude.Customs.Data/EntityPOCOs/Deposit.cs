@@ -1,0 +1,63 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Customs.Data.EntityPOCOs
+{
+   
+    public class Deposit
+    {
+	 string dbms;
+
+        [Key]
+        [Column("Id")]
+	    public string Id { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+        [ForeignKey("Tapag")]
+        [Column("TapagID")]
+	    public string TapagID { get; set; }
+	      
+        public virtual Tapag Tapag { get; set; }
+        [ForeignKey("DepositFileType")]
+        [Column("DepositEssenceTypeCode")]
+	    public string DepositEssenceTypeCode { get; set; }
+	      
+        public virtual DepositFileType DepositFileType { get; set; }
+        [Column("DepositAmount")]
+	    public decimal? DepositAmount { get; set; }
+        [Column("RequestValidityDate")]
+	    public DateTime? RequestValidityDate { get; set; }
+        [Column("DepositValidityDate")]
+	    public DateTime? DepositValidityDate { get; set; }
+        [ForeignKey("EntityTypeLookup")]
+        [Column("EntityTypeCode")]
+	    public string EntityTypeCode { get; set; }
+	      
+        public virtual EntityTypeLookup EntityTypeLookup { get; set; }
+        [Column("EntityNumber")]
+	    public string EntityNumber { get; set; }
+        [Column("PaymentNumber")]
+	    public string PaymentNumber { get; set; }
+        [Column("TradeMarkNumber")]
+	    public string TradeMarkNumber { get; set; }
+        [Column("LawyerNumber")]
+	    public string LawyerNumber { get; set; }
+        [Column("VehicleChassisNumber")]
+	    public string VehicleChassisNumber { get; set; }
+        [Column("EngineNumber")]
+	    public string EngineNumber { get; set; }
+        [Column("BirthDate")]
+	    public DateTime? BirthDate { get; set; }
+    }
+}
+	 

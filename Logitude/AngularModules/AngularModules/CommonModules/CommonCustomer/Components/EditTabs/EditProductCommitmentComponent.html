@@ -1,0 +1,378 @@
+﻿
+<style>
+    .ToggleButton.ToggleButtonMenu .DeleteButton RightCenter:hover {
+        cursor: pointer;
+    }
+</style>
+
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <td style="width:365px;">
+                        <table>
+                            <tr style="height:20px">
+                                <td style="font-style:italic;color:gray" colspan="3">
+                                    (Values are inserted per month)
+                                </td>
+                            </tr>
+                            <tr style="height:10px">
+                                <td colspan="3"></td>
+                            </tr>
+                            <tr class="FormFieldRow">
+                                <td style="width:125px">
+                                    <LogLabel [ObjectFieldName]="'CommitmentNumberOfShipments'" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM.DataContext"></LogLabel>
+
+                                </td>
+
+                                <td style="width:240px">
+                                    <div style="width:100%">
+                                        <LogTextBox [ObjectFieldName]="'CommitmentNumberOfShipments'" [Text]="EntityPM.CommitmentNumberOfShipments" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM.DataContext"></LogTextBox>
+                                    </div>
+                                </td>
+                                <td></td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'CommitmentChargeableWeight'" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM.DataContext"></LogLabel>
+
+                                </td>
+
+                                <td>
+                                    <div style="width:100%">
+                                        <LogTextBox [ObjectFieldName]="'CommitmentChargeableWeight'" [Text]="EntityPM.CommitmentChargeableWeight" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM.DataContext"></LogTextBox>
+                                    </div>
+                                </td>
+                                <td></td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'CommitmentRevenue'" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM.DataContext"></LogLabel>
+
+                                </td>
+
+                                <td>
+                                    <div style="width:100%">
+                                        <LogTextBox [ObjectFieldName]="'CommitmentRevenue'" [Text]="EntityPM.CommitmentRevenue" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM.DataContext"></LogTextBox>
+                                    </div>
+                                </td>
+                                <td></td>
+                            </tr>
+
+                            <tr class="FormFieldRow" *ngIf="CommitmentTEUVisibility">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'CommitmentTEU'" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM.DataContext"></LogLabel>
+
+                                </td>
+
+                                <td>
+                                    <div style="width:100%">
+                                        <LogTextBox [ObjectFieldName]="'CommitmentTEU'" [Text]="EntityPM.CommitmentTEU" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM.DataContext"></LogTextBox>
+                                    </div>
+                                </td>
+                                <td></td>
+                            </tr>
+
+
+                            <tr class="FormFieldRow">
+                                <td style="vertical-align:top;">
+                                    <LogLabel [ObjectFieldName]="'Notes'" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM.DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <table>
+                                        <tr style="height:5px;">
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="height:110px">
+                                                <div style="width:100%;height:100%">
+                                                    <LogTextBox [ngStyle]="{direction: EntityPM.NotesFlowDirection}" [ObjectFieldName]="'Notes'" [HideColumns]="EntityPM.IsNotesRightToLeftEnabled" [IsMultiline]="true" [InputType]="'ntext'" [Text]="EntityPM.Notes" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM.DataContext"></LogTextBox>
+                                                </div>
+                                            </td>
+                                            <td *ngIf="EntityPM.IsNotesRightToLeftEnabled" style="width: 50px;height:20px; vertical-align:top;">
+                                                <table style="width: 50px;height:20px; vertical-align:top;">
+                                                    <tr style="width: 50px;height:20px; vertical-align:top;">
+                                                        <td width="5px;">
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="width: 20px;height: 25px;" [ngStyle]="{background:EntityPM.NotesBackgroundAlignLeft}">
+                                                            <img src="./Images/Align-left-icon.png" style="width: 16px;height: 22px;" (click)="EntityPM.AlignNotesLeftClicked()" />
+                                                        </td>
+                                                        <td width="5px;">
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="width: 20px;height: 25px;" [ngStyle]="{background: EntityPM.NotesBackgroundAlignRight}">
+                                                            <img src="./Images/Align-right-icon.png" style="width: 16px;height: 22px;" (click)="EntityPM.AlignNotesRightClicked()" />
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                </td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="3"></td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td style="width:10px;">
+                        <div></div>
+                    </td>
+
+                    <td>
+                        <table>
+                            <tr style="height:32px">
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <tr style="height:1px">
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td style="color:#1B90CB;vertical-align:central;font-size:14px;">
+                                                Split by countries
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width:100px;">
+                                                <ToggleButton [Title]="'Add/Remove'" [DropDownWidth]="260" [DropDownHeight]="350">
+                                                    <table>
+                                                        <tr style="height: 32px">
+                                                            <td>
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width:10px">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td style="width: 1px;" class="Label">Countries:</td>
+
+                                                                        <td style="width: 5px;">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <SearchBox (TextChanged)="SearchText = $event"></SearchBox>
+
+                                                                            <!--<input type="text" [attr.id]="SearchTextId" placeholder="Search" (focus)="ClearPlaceHolder();" (blur)="FillPlaceHolder();" [(ngModel)]="SearchText" style="background: url(Images/Search.png) no-repeat scroll;background-position: right center;padding-right:30px;margin: 7px;width:160px;">
+                                                                            <img *ngIf="SearchText" class="DeleteButton RightCenter" style="right:4px;position: relative;display:inline-block;margin-left: -25px;top: 7px;" src="Images/RedX.png" (click)="OnDeleteValue()" />-->
+
+                                                                        </td>
+
+                                                                        <td style="width:10px">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>
+                                                                <div class="MediaFill">
+                                                                    <ScrollViewer>
+                                                                        <table>
+                                                                            <tr style="height:22px;" *ngFor="let item of EntityPM.CountriesToggleObsList; let i = index">
+                                                                                <td>
+                                                                                    <table>
+                                                                                        <tr>
+                                                                                            <td style="width:5px"></td>
+
+                                                                                            <td style="width:22px">
+                                                                                                <div style="width:22px;">
+                                                                                                    <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event;CountyClicked(item,i)"></CheckBox>
+                                                                                                </div>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <table>
+                                                                                                    <tr>
+                                                                                                        <td style="width:5px"></td>
+
+                                                                                                        <td style="width:16px">
+                                                                                                            <Image [Title]="item.Name" [Src]="item.src"></Image>
+                                                                                                        </td>
+
+                                                                                                        <td>
+                                                                                                            <div style="margin-left:5px;margin-top:0px">
+                                                                                                                <label style="font-size:small" *ngIf="!item.IsChecked">{{item.Name}}</label>
+                                                                                                                <label style="font-size:small;color:lightgray" *ngIf="item.IsChecked">{{item.Name}}</label>
+                                                                                                            </div>
+                                                                                                        </td>
+
+                                                                                                    </tr>
+                                                                                                </table>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr>
+                                                                                <td></td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </ScrollViewer>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </ToggleButton>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr style="height:5px">
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <div class="MediaFill">
+                                        <logitude-edit-grid GridWidth="100%" [HeaderHeight]="25" GridHeight="100%" [ItemSource]="EntityPM.ItemsSource">
+
+                                            <log-column [width]="'100'" [header]="'Per'">
+                                                <log-cell-template template="let item" #logcelltemplate [IsEnabled]="true">
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width:18px;">
+                                                                <!--<img [attr.title]="item.Name" style="height:16px;width:16px;float:left;" src="{{item.CountryCode | CountryFlagPipe}}" *ngIf="item.ButtonsVisibility" />-->
+                                                                <Image *ngIf="item.ButtonsVisibility" [Title]="item.Name" [Src]="item.src"></Image>
+                                                            </td>
+                                                            <td style="text-align:left;padding-left:3px;"> {{item.CountryName}} </td>
+                                                        </tr>
+                                                    </table>
+                                                </log-cell-template>
+                                            </log-column>
+
+                                            <log-column [width]="'90'" [header]="'CustomerProductLocation.F.CommitmentNumberOfShipments' | TextCodeTranslationPipe ">
+
+                                                <log-cell-template template="let item" #logcelltemplate>
+                                                    <div style="width: 100%; text-align: right;" *ngIf="logcelltemplate.IsDisplayMode" [ngStyle]="{color:item.CommitmentNumberOfShipmentsForeground}">
+                                                        {{item.CommitmentNumberOfShipments  | NumbersPipe:'N0'}}
+                                                    </div>
+
+                                                    <div style="width: 100%; text-align: center;" *ngIf="logcelltemplate.IsEditMode">
+                                                        <LogTextBox [FocusOnMe]="'true'" [InputType]="'integer'" [ObjectFieldName]="'CommitmentNumberOfShipments'" [NoObjectField]="true" [Text]="item.CommitmentNumberOfShipments" [DataContext]="item" [ObjectTableName]="'CustomerProductLocation'" [HideColumns]="true"></LogTextBox>
+                                                    </div>
+                                                </log-cell-template>
+                                            </log-column>
+
+
+
+                                            <log-column [width]="'120'" [header]="'CustomerProductLocation.F.CommitmentChargeableWeight' | TextCodeTranslationPipe " [Alignment]="'left'">
+
+                                                <log-cell-template template="let item" #logcelltemplate>
+                                                    <div style="width: 100%; text-align: right;" *ngIf="logcelltemplate.IsDisplayMode" [ngStyle]="{color:item.CommitmentChargeableWeightForeground}">
+                                                        {{item.CommitmentChargeableWeight | NumbersPipe:'N2'}}
+                                                    </div>
+
+                                                    <div style="width: 100%; text-align: center;" *ngIf="logcelltemplate.IsEditMode">
+                                                        <LogTextBox [FocusOnMe]="'true'" [InputType]="'double'" [ObjectFieldName]="'CommitmentChargeableWeight'" [NoObjectField]="true" [Text]="item.CommitmentChargeableWeight" [DataContext]="item" [ObjectTableName]="'CustomerProductLocation'" [HideColumns]="true"></LogTextBox>
+                                                    </div>
+                                                </log-cell-template>
+                                            </log-column>
+
+                                            <log-column [width]="'90'" [header]="CustomerProductionRevenueHeader" [Alignment]="'left'">
+
+                                                <log-cell-template template="let item" #logcelltemplate>
+                                                    <div style="width: 100%; text-align: right;" *ngIf="logcelltemplate.IsDisplayMode" [ngStyle]="{color:item.CommitmentRevenueForeground}">
+                                                        {{item.CommitmentRevenue | NumbersPipe:'N2' }}
+                                                    </div>
+
+                                                    <div style="width: 100%; text-align: center;" *ngIf="logcelltemplate.IsEditMode">
+                                                        <LogTextBox [FocusOnMe]="'true'" [InputType]="'double'" [ObjectFieldName]="'CommitmentRevenue'" [NoObjectField]="true" [Text]="item.CommitmentRevenue" [DataContext]="item" [ObjectTableName]="'CustomerProductLocation'" [HideColumns]="true"></LogTextBox>
+                                                    </div>
+                                                </log-cell-template>
+                                            </log-column>
+
+
+                                            <log-column [width]="'90'" [header]="'CustomerProductLocation.F.CommitmentTEU' | TextCodeTranslationPipe " [Alignment]="'left'" *ngIf="CommitmentTEUVisibility">
+
+                                                <log-cell-template template="let item" #logcelltemplate>
+                                                    <div style="width: 100%; text-align: right;" *ngIf="logcelltemplate.IsDisplayMode" [ngStyle]="{color:item.CommitmentTEUForeground}">
+                                                        {{item.CommitmentTEU | NumbersPipe:'N2'}}
+                                                    </div>
+
+                                                    <div style="width: 100%; text-align: center;" *ngIf="logcelltemplate.IsEditMode">
+                                                        <LogTextBox [FocusOnMe]="'true'" [InputType]="'double'" [ObjectFieldName]="'CommitmentTEU'" [NoObjectField]="true" [Text]="item.CommitmentTEU" [DataContext]="item" [ObjectTableName]="'CustomerProductLocation'" [HideColumns]="true"></LogTextBox>
+                                                    </div>
+                                                </log-cell-template>
+                                            </log-column>
+                                            <log-column [width]="'30'">
+                                                <log-cell-template template="let item" #logcelltemplate [IsEnabled]="true">
+                                                    <div style="width: 100%; height: 100%; position: relative;">
+                                                        <div class="CenterCenter" style="height: 20px;">
+                                                            <span class="CellSeparator"></span>
+                                                            <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" [Top]="3" *ngIf="item.ButtonsVisibility" (click)="item.DeleteCountry()"></IconButton>
+                                                        </div>
+                                                    </div>
+                                                </log-cell-template>
+                                            </log-column>
+
+                                        </logitude-edit-grid>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td style="width:5px;">
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

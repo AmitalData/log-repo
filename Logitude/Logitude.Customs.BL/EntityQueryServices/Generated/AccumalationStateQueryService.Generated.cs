@@ -1,0 +1,69 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.Customs.BL.EntityDataMappings;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Data.EntityKeys;
+using Logitude.Customs.Data;
+using Simplog.Server.Infrastructure;
+namespace Logitude.Customs.BL.EntityQueryServices
+{ 
+   public partial class AccumalationStateQueryService: EntityQueryService<AccumalationState,AccumalationStateKeys,AccumalationStatePM,object,AccumalationStateKeys>
+   {
+   
+        AccumalationStateRepository repository;
+		ICustomContext  context;
+        public AccumalationStateQueryService(int tenant)
+        {
+		    context = CustomContext.GetContext(tenant);
+            MainContext = context;
+            repository = new AccumalationStateRepository(context);
+            Repository = repository;
+            mapping = new AccumalationStateDataMapping();
+        }
+
+        public AccumalationStateQueryService(AccumalationStateRepository repository)
+        {
+            this.repository = repository;
+            Repository = repository;
+            mapping = new AccumalationStateDataMapping();
+        }
+
+        public AccumalationStateQueryService(ICustomContext context)
+        {
+            this.repository = new AccumalationStateRepository(context);
+            this.context = context;
+
+            MainContext = context;
+            Repository = repository;
+            mapping = new AccumalationStateDataMapping();
+        }
+		 
+		public  AccumalationStatePM GetSingle(string code,bool getComposition, bool getFromCache)
+        {
+             EntityKeys = new AccumalationStateKeys(){ Code = code };
+
+			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
+        }
+
+       
+	    protected override EntityKeyFields GetKeys(AccumalationState entityPOCO)
+        {
+            AccumalationStateKeys entityKeys = new AccumalationStateKeys() { Code = entityPOCO.Code,  };
+            return entityKeys;
+        }
+     
+	 
+   }
+   
+}
+	 

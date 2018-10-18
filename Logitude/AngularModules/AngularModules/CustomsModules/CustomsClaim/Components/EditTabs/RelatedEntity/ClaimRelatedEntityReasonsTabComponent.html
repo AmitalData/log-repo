@@ -1,0 +1,164 @@
+﻿
+<table>
+    <tr>
+        <td>
+            <fieldset [disabled]="!IsControlEnabled">
+                <div class="TableHolder">
+                    <table style="width: 550px; height: 400px;padding-top: 10px;">
+                        <tr *ngIf="ValidationErrors != null && ValidationErrors.length > 0" style="height:1px;">
+                            <td colspan="4">
+                                <ValidationSummary [ItemsSource]="ValidationErrors" [SingleLine]="false"></ValidationSummary>
+                            </td>
+                        </tr>
+
+                        <!--General Fields -->
+                        <tr style="width: 550px; height: 20px;">
+                            <td class="TabTitleRow" style="width: 200px;height:20px;">
+                                {{'Customs.Claim.O.ReasonAndExplanations'| TextCodeTranslationPipe}}
+                            </td>
+                        </tr>
+                        <tr style="width: 550px; height: 70px">
+                            <td style="width: 550px; height: 70px">
+                                <div style="width: 550px; height: 70px;">
+                                    <table style="width: 550px; height: 70px">
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 300px; ">
+                                                <LogLabel [ObjectFieldName]="'ClaimExplanation'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                             <td><div></div></td>
+                                        </tr>
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 300px; height:70px">
+                                                <div style="width: 100%; height:100%; text-align:center;">
+                                                    <textarea [(ngModel)]="ClaimExplanation"></textarea>
+                                                </div>
+                                            </td>
+
+                                            <td><div></div></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+
+                            <td><div></div></td>
+                        </tr>
+
+                        <tr style="height: 1px;"><td><div style="width: 15px;"></div></td></tr>
+
+                        <!-- Claims Related Entities Reasons -->
+                        <tr style="height: 200px; width: 500px; top:0px">
+                            <td style="height: 200px; width: 500px;">
+                                <div style="height: 200px; width: 500px;">
+                                    <table style="height: 200px; width: 500px;">
+                                        <tr style="height: 30px">
+                                            <td class="TabTitleRow" style="width:150px">
+                                                {{'Customs.Claim.O.ClaimsRelatedEntitiesReasons'| TextCodeTranslationPipe}}
+                                            </td>
+
+                                            <td> <div></div> </td>
+                                            <td style="height: 20px;padding: 5px;padding-bottom: 0px;">
+                                                <div>
+                                                    <IconButton [IsSmall]="true"
+                                                                [Name]="'Add'"
+                                                                (click)="AddEntityReasonCommand()"
+                                                                style="float:left;"></IconButton>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr style="height: 170px; overflow: auto;">
+                                            <td colspan="5">
+                                                <div class="CellContent">
+                                                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [FooterTop]="FooterMethods"
+                                                                        [ItemSource]="ClaimsRelatedEntityReasonslist" [IsReadOnly]="!IsControlEnabled">
+
+                                                        <!-- ReasonListTypeCode -->
+                                                        <log-column [header]="'Customs.ClaimsRelatedEntitiesReason.F.ReasonListTypeCode' | TextCodeTranslationPipe"
+                                                                    [width]="'120'" [Alignment]="'right'" [binding]="'ReasonListTypeCode'">
+                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                    <span>{{item.ReasonListTypeName}}</span>
+                                                                </div>
+                                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                                    <LogLov [ObjectFieldName]="'ReasonListTypeCode'"
+                                                                            [ObjectTableName]="ObjectTableName"
+                                                                            [DataContext]="item"
+                                                                            [LookUpTableName]="'Customs.ProcessingReason'"
+                                                                            (SelectedItemChanged)="item.SetLocalName($event,'ReasonListTypeName')"
+                                                                            [HideColumns]="true"
+                                                                            [FocusOnMe]="true"
+                                                                            [SelectedValue]="item.ReasonListTypeCode">
+                                                                    </LogLov>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </log-column>
+
+                                                        <!-- ClaimExplanationTypeCode -->
+                                                        <log-column [header]="'Customs.ClaimsRelatedEntsReasonsExp.F.ClaimExplanationTypeCode' | TextCodeTranslationPipe"
+                                                                    [width]="'120'" [Alignment]="'right'" [binding]="'ClaimExplanationTypeCode'">
+                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                    <span>{{item.ClaimExplanationTypeName}}</span>
+                                                                </div>
+                                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                                    <LogLov [ObjectFieldName]="'ClaimExplanationTypeCode'"
+                                                                            [ObjectTableName]="'Customs.ClaimExplanationCode'"
+                                                                            [DataContext]="item"
+                                                                            [LookUpTableName]="'Customs.ClaimExplanationCode'"
+                                                                            (SelectedItemChanged)="item.SetLocalName($event,'ClaimExplanationTypeName')"
+                                                                            [HideColumns]="true"
+                                                                            [FocusOnMe]="true"
+                                                                            (LostFocus)="item.ReasonsExplanationLostFocus($event)"
+                                                                            [SelectedValue]="item.ClaimExplanationTypeCode">
+                                                                    </LogLov>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </log-column>
+
+                                                        <!-- ExplanationNote -->
+                                                        <log-column [header]="'Customs.ClaimsRelatedEntsReasonsExp.F.ExplanationNote' | TextCodeTranslationPipe"
+                                                                    [width]="'180'" [Alignment]="'right'" [binding]="'ExplanationNote'">
+                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                    <span>{{item.ExplanationNote}}</span>
+                                                                </div>
+                                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                                    <LogTextBox [ObjectFieldName]="'ExplanationNote'" [DataContext]="item"
+                                                                                [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
+                                                                                (LostFocus)="item.ReasonsExplanationLostFocus($event)"
+                                                                                [Text]="item.ExplanationNote" [HideColumns]="true"></LogTextBox>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </log-column>
+
+                                                        <!-- Delete & Edit Button-->
+                                                        <log-column [width]="'50'" [Alignment]="'right'">
+                                                            <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
+                                                                <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditButtonClicked(item)"
+                                                                            style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
+
+                                                                <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteExportDeclarationCommand(item)"
+                                                                            [IsEnabled]="!IsDisplayOnly"
+                                                                            style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
+                                                            </log-cell-template>
+                                                        </log-column>
+
+                                                    </logitude-edit-grid>
+                                                </div>
+                                            </td>
+
+                                            <td> <div></div> </td>
+                                        </tr>
+
+                                        <tr><td><div></div></td></tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+            </fieldset>
+        </td>
+    </tr>
+</table>

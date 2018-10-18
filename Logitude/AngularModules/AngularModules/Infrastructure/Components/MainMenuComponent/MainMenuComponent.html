@@ -1,0 +1,89 @@
+﻿
+
+<style>
+    .FlipImgHoriz {
+        transform: rotate(180deg);
+    }
+</style>
+<div class="MediaFillAbsolute MarginAbsolute10" style="background: white;">
+    <table>
+        <tr>
+            <td>
+                <div class="MediaFill CurvedArea">
+                    <table>
+                        <tr>
+                            <td style="width: 142px;">
+                                <div [className]="LayoutDirection == 'rtl' ? 'MediaFill AppLeftMenuBackgroundRTL' : 'MediaFill AppLeftMenuBackground'">
+                                    <table class="PreventSelect">
+                                        <tr style="height: 20px;">
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <tr style="height: 1px; background: rgba(212, 212, 212, 0.5);">
+                                            <td>
+                                                <table>
+                                                    <tr style="height: 1px; background: #CCCCCC;">
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr style="height: 26px;">
+                                                        <td style="font-size: 13px; text-indent: 10px; color: #464A4B;">
+                                                            {{'General.O.Menu' | TextCodeTranslationPipe}}
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            <ul>
+                                                                <li class="DefaultMenuItem" id="{{item.TextCode | IdGeneratorPipe}}" [style.pointer-events]="pointerEvents" *ngFor="let item of MainMenuItems"
+                                                                    (click)="SelectionChanged(item)"
+                                                                    [class.SelectedMenuItem]="item === SelectedMenu"
+                                                                    [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'">
+                                                                    <img *ngIf="item != SelectedMenu" style="position:absolute; top:0; bottom:0; margin:auto;" [attr.src]="item.IconSource" [ngStyle]="LayoutDirection == 'rtl' ? {'right': '10px'} : {'left': '10px'}" />
+                                                                    <img *ngIf="item == SelectedMenu" style="position:absolute; top:0; bottom:0; margin:auto;" [attr.src]="item.IconSelectedSource" [ngStyle]="LayoutDirection == 'rtl' ? {'right': '11px'} : {'left': '11px'}" />
+                                                                    <div style="position:absolute; top:0; bottom:0; margin:auto; height: 22px; line-height: 22px;" [ngStyle]="LayoutDirection == 'rtl' ? {'right': '25px','padding-right':'0px'} : {'left': '25px'}">{{item.TextCode | TextCodeTranslationPipe}}</div>
+                                                                    <img *ngIf="item == SelectedMenu" [className]="LayoutDirection == 'rtl' ? 'LeftCenter' : 'RightCenter'" [class.FlipImgHoriz]="LayoutDirection == 'rtl'" src="./Images/SelectedMenuArrow.png" style="margin-right: -1px;" />
+                                                                </li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr style="height: 1px; background: #CCCCCC;">
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <div class="MediaFill">
+                                                    <MainMenuFollowups *ngIf="ShowFollowUps" [ObjectTableId]="FollowUpsTableId"></MainMenuFollowups>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="MediaFill">
+                                    <div class="MediaFillAbsolute MarginAbsolute10">
+                                        <div #Child LocationDirective Code="MainMenuContainer"></div>
+                                    </div>
+                                </div>
+                            </td>
+
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>

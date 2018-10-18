@@ -1,0 +1,46 @@
+﻿
+@import url("css/Standards.css");
+@import url("css/ScrollViewer.css");
+@import url("css/Lists.css");
+
+@import url("css/Menus.css");
+@import url("css/FiltersMenu.css");
+
+@import url("css/Images.css");
+@import url("css/Queries.css");
+@import url("css/Inputs.css");
+@import url("css/Sections.css");
+@import url("css/Tabs.css");
+@import url("css/GridView.css");
+@import url("css/GeneratedGrid.css");
+@import url("css/Buttons.css");
+@import url("css/Validation.css");
+/*@import url("css/GridView.css");*/
+@import url("css/Dialogs.css");
+@import url("css/ToggleButton.css");
+
+
+
+.AppHeaderBrush {
+    background: #F0F0F0;
+    background: -moz-linear-gradient(50% 0% -90deg,rgba(235, 235, 235, 0.5) 0%,rgba(179, 179, 179, 0.5) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(235, 235, 235, 0.5) 0%, rgba(179, 179, 179, 0.5) 100%);
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(235, 235, 235, 0.5) ),color-stop(1,rgba(179, 179, 179, 0.5) ));
+    background: -o-linear-gradient(-90deg, rgba(235, 235, 235, 0.5) 0%, rgba(179, 179, 179, 0.5) 100%);
+    background: linear-gradient(180deg, rgba(235, 235, 235, 0.3) 0%, rgba(179, 179, 179, 0.3) 100%);
+    border-bottom: 1px solid #3EB2E0;
+}
+
+#PageContent {
+    width: calc(100% - 2px);
+    height: 100%;
+    overflow: hidden;
+    border: 1px solid #DADADA;
+    -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+    border-radius: 7px;
+    -webkit-box-shadow: 0px 0px 3px 1px #DADADA;
+    -moz-box-shadow: 0px 0px 3px 1px #DADADA;
+    box-shadow: 0px 0px 3px 1px #DADADA;
+}
+

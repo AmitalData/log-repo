@@ -1,0 +1,14 @@
+-----------------*** FRom Pre !!! my script
+--
+-- Create unique key "TEXTCODES_CTOT_UQ" on table "TEXTCODES"
+--
+ALTER TABLE TEXTCODES
+  ADD CONSTRAINT TEXTCODES_CTOT_UQ UNIQUE (CODE, TENANT, OBJECTTABLEID) ;
+
+
+
+--------------------------
+
+
+
+

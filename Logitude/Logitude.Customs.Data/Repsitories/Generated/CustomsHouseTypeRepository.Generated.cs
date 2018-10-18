@@ -1,0 +1,90 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.EntityKeys;
+using Simplog.Server.Infrastructure;
+
+namespace Logitude.Customs.Data.Repsitories
+{
+   public partial class CustomsHouseTypeRepository:IRepository<CustomsHouseType>
+   {
+   
+        private ICustomContext currentContext;
+        public CustomsHouseTypeRepository(int tenant)
+        {
+            currentContext = CustomContext.GetContext(tenant);
+        }
+
+        public CustomsHouseTypeRepository(ICustomContext context)
+        {
+            currentContext = context;
+        }
+
+		 
+		
+		public  CustomsHouseType GetSingle(string code)
+        {
+            return (from a in context.CustomsHouseTypes
+                    where a.Code == code 
+                    select a).FirstOrDefault();
+        }
+
+        public IQueryable<CustomsHouseType> GetAll()
+        {
+            return from a in context.CustomsHouseTypes  
+                   select a;
+        }
+				 
+        public CustomsHouseType GetSingle(EntityKeyFields entityKeys)
+        {
+            CustomsHouseTypeKeys keys = entityKeys as CustomsHouseTypeKeys;
+            return (from a in context.CustomsHouseTypes
+                    where a.Code == keys.Code
+                    select a).FirstOrDefault();
+        }
+		         
+        partial void onAdd();//Partial Methods Definition in Generated
+        public void Add(CustomsHouseType entity)
+        {
+            onAdd();
+            context.CustomsHouseTypes.Add(entity);
+        }
+
+        public void Remove(CustomsHouseType entity)
+        {
+            context.CustomsHouseTypes.Attach(entity);
+            context.CustomsHouseTypes.Remove(entity);
+        }
+
+        partial void onUpdate();//Partial Methods Definition in Generated
+        public void Update(CustomsHouseType entity)
+        {
+            onUpdate();
+            context.CustomsHouseTypes.Attach(entity);
+            context.SetAsModified(entity);
+        }
+
+        public List<CustomsHouseType> All()
+        {
+            return context.CustomsHouseTypes.ToList();
+        }
+
+        private ICustomContext context
+        {
+            get { return currentContext; }
+        }
+
+        public void SubmitChanges()
+        {
+            context.SaveChanges();
+        }
+	 
+   }
+   }
+	 

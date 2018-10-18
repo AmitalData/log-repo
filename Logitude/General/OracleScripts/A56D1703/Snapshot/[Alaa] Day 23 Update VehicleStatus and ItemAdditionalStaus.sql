@@ -1,0 +1,99 @@
+
+
+ declare @id varchar(15)
+ declare @counterKey integer
+ declare @lineNumber integer
+ declare @tenant integer
+ declare @statisticQuantity decimal(14,3)
+ declare @statisticQuantityType varchar(3)
+ declare @additionalQuantity decimal(14,3)
+ declare @additionalQuantityType varchar(3)
+ declare @customsBookType varchar(4)
+ declare @pereferenceDocument varchar(35)
+ declare @actualInvoiceLine varchar(512)
+ declare @deferredCustomsTax decimal(5,2)
+ declare @deferredPurchaseTax decimal(5,2)
+ declare @salesTaxExemption varchar(4)
+ declare @TaxExemptCode nvarchar(15)
+ declare @optionalTamaPercentage decimal(18,2)
+ declare @nonCustomsItemPrice decimal(16,2)
+ declare @nonCustomsItemPriceCode varchar(3)
+ declare @WholeSalesItemPrice decimal(16,2)
+ declare @WholeSalesItemPriceCode varchar(3)
+ declare @manufactureIdentifire varchar(17)
+ declare @dangerousClassificationCode varchar(11)
+ declare @dangerousPakingGroup varchar(3)
+ declare @AdditionalItemStatus bit
+ declare @modificationsCount integer
+ declare @processCount integer
+ declare @connectedDeclarationsCount integer
+ declare @serialNumbersCount integer
+ declare @descriptionsCount integer
+ declare @productIdentificationsCount integer
+ declare @leviesCount integer
+ declare @vehiclesCount integer
+ declare @used bit
+
+Declare InvoiceItemsStatus cursor 
+for 
+select DeclarationId, CounterKey,LineNumber,Tenant,StatisticQuantity, StatisticQuantityType,AdditionalQuantity,AdditionalQuantityType,CustomsBookTypeCode,PreferenceDocumentNumber,
+ActualInvoiceLines,DeferredCustomsTax,DeferredPurchaseTax,SalesTaxExemptionTypeCode,TaxExemptCode,OptionalTamaPercentage,NonCustomsItemPrice,NonCustomsItemPriceCurCode,WholeSaleItemPrice,WholeSaleItemPriceCurrencyCode,
+ManufactureIdentifier,DangerousClassificationCode,DangerousPackingGroupTypeCode,IsUsed from customs.SupplierInvoiceItems 
+	OPEN InvoiceItemsStatus FETCH NEXT FROM InvoiceItemsStatus INTO @id, @counterKey, @lineNumber,@tenant,@statisticQuantity, @statisticQuantityType,@additionalQuantity,@additionalQuantityType,@customsBookType,
+	@pereferenceDocument,@actualInvoiceLine,@deferredCustomsTax,@deferredPurchaseTax,@salesTaxExemption,@TaxExemptCode,@optionalTamaPercentage,@nonCustomsItemPrice,@nonCustomsItemPriceCode,@WholeSalesItemPrice,
+	@nonCustomsItemPriceCode,@manufactureIdentifire,@dangerousClassificationCode,@dangerousPakingGroup,@used
+
+		WHILE @@FETCH_STATUS = 0
+	BEGIN
+
+	 set @AdditionalItemStatus = 0
+     set @modificationsCount = (select count(*) from customs.SupplierInvoiceItemsMods where DeclarationId = @Id and InvoiceCounterKey = @counterKey and LineNumber = @lineNumber and Tenant = @tenant)
+     set @processCount = (select count(*) from customs.SupplierInvoiceItemProcesTypes where DeclarationId = @Id and InvoiceCounterKey = @counterKey and InvoiceItemLineNumber = @lineNumber and Tenant = @tenant)
+     set @connectedDeclarationsCount = (select count(*) from customs.SupplierInvoiceItemsConDeclars where DeclarationId = @Id and InvoiceCounterKey = @counterKey and InvoiceItemLineNumber = @lineNumber and Tenant = @tenant)
+	 set @serialNumbersCount = (select count(*) from customs.SupplierInvoiceItemsSerialNums where DeclarationId = @Id and InvoiceCounterKey = @counterKey and InvoiceItemLineNumber = @lineNumber  and Tenant = @tenant)
+	 set @descriptionsCount = (select count(*) from customs.SupplierInvoiceItemsDescripts where DeclarationId = @Id and InvoiceCounterKey = @counterKey and InvoiceItemLineNumber = @lineNumber and Tenant = @tenant)
+	 set @productIdentificationsCount = (select count(*) from customs.SupplierInvoiceItemsProdIdents where DeclarationId = @Id and InvoiceCounterKey = @counterKey and InvoiceItemLineNumber = @lineNumber and Tenant = @tenant)
+	 set @leviesCount = (select count(*) from customs.SupplierInvoiceItemsLevies where DeclarationId = @Id and InvoiceCounterKey = @counterKey and InvoiceItemLineNumber = @lineNumber and Tenant = @tenant)
+  	 set @vehiclesCount = (select count(*) from customs.SupplierInvoiceItemVehicles where DeclarationId = @Id and InvoiceCounterKey = @counterKey and InvoiceItemLineNumber = @lineNumber and Tenant = @tenant)
+
+    if(@statisticQuantity is not null or  @statisticQuantityType  is not null or @additionalQuantity  is not null or @additionalQuantityType  is not null or @customsBookType  is not null or
+	@pereferenceDocument   is not null or @actualInvoiceLine  is not null or @deferredCustomsTax  is not null or @deferredPurchaseTax  is not null or  @salesTaxExemption  is not null or  @TaxExemptCode  is not null or   @optionalTamaPercentage  is not null or @nonCustomsItemPrice  is not null or @nonCustomsItemPriceCode  is not null or  @WholeSalesItemPrice  is not null or
+	@nonCustomsItemPriceCode   is not null or  @manufactureIdentifire  is not null or  @dangerousClassificationCode   is not null or @dangerousPakingGroup  is not null or @used=1)
+	begin
+	 set @AdditionalItemStatus = 1
+	end
+
+	else if (@modificationsCount >0 or @processCount >0 or @connectedDeclarationsCount >0 or @serialNumbersCount >0 or @descriptionsCount >0 or @productIdentificationsCount >0 or @leviesCount >0)
+	begin
+	 set @AdditionalItemStatus =1
+	end
+		
+   update customs.SupplierInvoiceItems set ItemAdditionalStatus =@AdditionalItemStatus where DeclarationId = @id and CounterKey = @counterKey and LineNumber = @lineNumber and Tenant = @tenant
+
+
+	if(@vehiclesCount >0)
+	begin
+
+			update customs.SupplierInvoiceItems set VehicleStatus = 1 where DeclarationId = @id and CounterKey = @counterKey and LineNumber = @lineNumber and Tenant = @tenant
+	end
+
+	else  if(@vehiclesCount = 0)
+	begin 
+	
+	update customs.SupplierInvoiceItems set VehicleStatus = 0 where DeclarationId = @id and CounterKey = @counterKey and LineNumber = @lineNumber and Tenant = @tenant
+
+	end 
+
+	
+	FETCH NEXT FROM InvoiceItemsStatus INTO  @id, @counterKey, @lineNumber,@tenant,@statisticQuantity, @statisticQuantityType,@additionalQuantity,@additionalQuantityType,@customsBookType,
+	@pereferenceDocument,@actualInvoiceLine,@deferredCustomsTax,@deferredPurchaseTax,@salesTaxExemption,@TaxExemptCode,@optionalTamaPercentage,@nonCustomsItemPrice,@nonCustomsItemPriceCode,@WholeSalesItemPrice,
+	@nonCustomsItemPriceCode,@manufactureIdentifire,@dangerousClassificationCode,@dangerousPakingGroup,@used
+	END
+	--select * from customs.SupplierInvoiceItems  where DeclarationId = '1-2' and CounterKey = @counterKey and LineNumber = @lineNumber and Tenant = @tenant
+	CLOSE InvoiceItemsStatus
+	DEALLOCATE InvoiceItemsStatus
+
+	select * from customs.SupplierInvoiceItems where DeclarationId='1-2'
+	----select * from customs.declarations where CustomFileNo='456'
+	--select * from customs.SupplierInvoiceItemVehicles where declarationId='1-2'
+	--select count(*) from customs.SupplierInvoiceItemVehicles where DeclarationId = '1-2' and InvoiceCounterKey = @counterKey and LineNumber = @lineNumber and Tenant = @tenant)

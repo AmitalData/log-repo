@@ -1,0 +1,631 @@
+﻿
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table *ngIf="IsResourcesReady">
+                <tr style="height: 1px;">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width: 200px;">
+                                    <SearchBox (TextChanged)="SearchTextChanged($event)"></SearchBox>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 1px;" *ngIf="IsShowNewFeaturesButtonVisible">
+                                    <button class="Button" (click)="ShowNewFeaturesClicked()">Show New Features</button>
+                                </td>
+
+                                <td style="width: 5px;" *ngIf="IsShowNewFeaturesButtonVisible">
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 1px;" *ngIf="IsEventsButtonVisible">
+                                    <button class="Button" (click)="ShowEventsClicked()">Show Events</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr style="height: 5px;">
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <table>
+                            <tr>
+
+                                <!-- Tables -->
+                                <td>
+                                    <div class="MediaFill">
+                                        <div class="SimpleGridView">
+                                            <div class="SimpleGridViewHeader">
+                                                <table>
+                                                    <tr>
+                                                        <td style="width: 25px; min-width: 25px; max-width: 25px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td style="width: 250px; min-width: 250px; max-width: 250px;">Name</td>
+                                                        <td style="width: 50px; min-width: 50px; max-width: 50px; text-align: center; padding:0;">Read</td>
+                                                        <td style="width: 50px; min-width: 50px; max-width: 50px; text-align: center; padding:0;">Update</td>
+                                                        <td style="width: 50px; min-width: 50px; max-width: 50px; text-align: center; padding:0;">New</td>
+                                                        <td style="width: 50px; min-width: 50px; max-width: 50px; text-align: center; padding:0;">Actions</td>
+                                                        <td style="width: 50px; min-width: 50px; max-width: 50px; text-align: center; padding:0;">Areas</td>
+                                                        <td style="width: 50px; min-width: 50px; max-width: 50px; text-align: center; padding:0;">Queries</td>
+                                                        <td class="LastChild">
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+
+                                            <div class="SimpleGridViewBody">
+                                                <table>
+
+                                                    <!-- Buisness Records -->
+                                                    <tr *ngIf="ItemsSource1.length > 0" style="height: 25px; min-height: 25px; max-height: 25px; background: #E4E4E4;">
+                                                        <td style="height: 25px;">
+                                                            <table style="height: 25px;">
+                                                                <tr style="height: 2px;">
+                                                                    <td style="width: 25px; min-width: 25px; max-width: 25px;">
+                                                                        <div style="height: 2px; width: 100%; border-top: 1px solid #848484; border-bottom: 1px solid white;"></div>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <div style="height: 2px; width: 100%; border-top: 1px solid #848484; border-bottom: 1px solid white;"></div>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td>
+                                                                        <img src="./Images/CellIcons/Arrowup.png" class="CenterCenter" style="cursor: pointer;" [hidden]="ItemsSource1Hidden" (click)="ItemsSource1Hidden = true" />
+                                                                        <img src="./Images/CellIcons/Arrowdown.png" class="CenterCenter" style="cursor: pointer;" [hidden]="!ItemsSource1Hidden" (click)="ItemsSource1Hidden = false" />
+                                                                    </td>
+
+                                                                    <td>Buisness Records {{ItemsSource1.length}}</td>
+                                                                </tr>
+
+                                                                <tr style="height: 2px;">
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div [hidden]="ItemsSource1Hidden" style="height: 2px; width: 100%; border-top: 1px solid white; border-bottom: 1px solid #848484;"></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="SimpleGridViewRow CellBorder" style="background: white" *ngFor="let item of ItemsSource1" [hidden]="ItemsSource1Hidden || item == null">
+                                                        <td style="height: 25px;">
+                                                            <table style="height: 25px;">
+                                                                <tr>
+
+                                                                    <td style="width: 25px; min-width: 25px; max-width: 25px; background: #E4E4E4; border-bottom: 1px solid #E4E4E4;">
+                                                                        <table style="height: 25px;">
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <div></div>
+                                                                                </td>
+
+                                                                                <td style="width: 1px; height: 100%;">
+                                                                                    <div class="Stretch" style="background: white;"></div>
+                                                                                </td>
+
+                                                                                <td style="width: 1px; height: 100%;">
+                                                                                    <div class="Stretch" style="background: #848484;"></div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>                                                                  
+
+                                                                    <!-- Name -->
+                                                                    <td class="GridViewCell" style="width: 250px; min-width: 250px; max-width: 250px;">
+                                                                        {{item.Name}}
+                                                                    </td>
+
+                                                                    <!-- Read -->
+                                                                    <td class="GridViewCell" style="width: 50px; min-width: 50px; max-width: 50px;">
+                                                                        <div class="MediaFill">
+                                                                            <div class="MediaFillRelative">
+                                                                                <div class="CenterCenter" style="width: 16px; height: 16px;">
+                                                                                    <AccessLevelButton [Feature]="item.ReadFeature" [AccessLevelCode]="item.AccessLevelCode_Read" (AccessLevelChanged)="item.AccessLevelCode_Read = $event" [IsEnabled]="item.IsEditingEnabled"></AccessLevelButton>
+                                                                                </div>
+
+                                                                                <div class="RightCenter" style="width: 14px; height: 14px; right: 0px;" *ngIf="item.IsCustomRoleFeature_Read">
+                                                                                    <img src="./_Resources/Images/Icons/Buttons/Pincel.Orange.png" style="vertical-align: middle; display: block;" />
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <!-- Update -->
+                                                                    <td class="GridViewCell" style="width: 50px; min-width: 50px; max-width: 50px;">
+                                                                        <div class="MediaFill">
+                                                                            <div class="MediaFillRelative">
+                                                                                <div class="CenterCenter" style="width: 16px; height: 16px;">
+                                                                                    <AccessLevelButton [Feature]="item.UpdateFeature" [AccessLevelCode]="item.AccessLevelCode_Update" (AccessLevelChanged)="item.AccessLevelCode_Update = $event" [IsEnabled]="item.IsUpdateFeatureEnabled"></AccessLevelButton>
+                                                                                </div>
+
+                                                                                <div class="RightCenter" style="width: 14px; height: 14px; right: 0px;" *ngIf="item.IsCustomRoleFeature_Update">
+                                                                                    <img src="./_Resources/Images/Icons/Buttons/Pincel.Orange.png" style="vertical-align: middle; display: block;" />
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <!-- New -->
+                                                                    <td class="GridViewCell" style="width: 50px; min-width: 50px; max-width: 50px;">
+                                                                        <div class="MediaFill">
+                                                                            <div class="MediaFillRelative">
+                                                                                <div class="CenterCenter" style="width: 16px; height: 16px;">
+                                                                                    <AccessLevelButton [Feature]="item.AddNewFeature" [AccessLevelCode]="item.AccessLevelCode_AddNew" (AccessLevelChanged)="item.AccessLevelCode_AddNew = $event" [IsEnabled]="item.IsAddNewFeatureEnabled"></AccessLevelButton>
+                                                                                </div>
+
+                                                                                <div class="RightCenter" style="width: 14px; height: 14px; right: 0px;" *ngIf="item.IsCustomRoleFeature_AddNew">
+                                                                                    <img src="./_Resources/Images/Icons/Buttons/Pincel.Orange.png" style="vertical-align: middle; display: block;" />
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <!-- Actions -->
+                                                                    <td class="GridViewCell" style="width: 50px; min-width: 50px; max-width: 50px;">
+                                                                        <div class="MediaFill" style="padding-left: 5px;">
+                                                                            <Hyperlink *ngIf="item.ActionsFeatures.length > 0" [Color]="item.ActionsLinkColor" (click)="item.HyperlinkClicked('Actions')">{{item.ActionsLinkText}}</Hyperlink>
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <!-- Areas -->
+                                                                    <td class="GridViewCell" style="width: 50px; min-width: 50px; max-width: 50px;">
+                                                                        <div class="MediaFill" style="padding-left: 5px;">
+                                                                            <Hyperlink *ngIf="item.AreasFeatures.length > 0" [Color]="item.AreasLinkColor" (click)="item.HyperlinkClicked('Areas')">{{item.AreasLinkText}}</Hyperlink>
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <!-- Queries -->
+                                                                    <td class="GridViewCell" style="width: 50px; min-width: 50px; max-width: 50px;">
+                                                                        <div class="MediaFill" style="padding-left: 5px;">
+                                                                            <Hyperlink *ngIf="item.QueriesFeatures.length > 0" [Color]="item.QueriesLinkColor" (click)="item.HyperlinkClicked('Queries')">{{item.QueriesLinkText}}</Hyperlink>
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <td class="LastChild">
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- Master Data -->
+                                                    <tr *ngIf="ItemsSource2.length > 0" style="height: 25px; min-height: 25px; max-height: 25px; background: #E4E4E4;">
+                                                        <td style="height: 25px;">
+                                                            <table style="height: 25px;">
+                                                                <tr style="height: 2px;">
+                                                                    <td style="width: 25px; min-width: 25px; max-width: 25px;">
+                                                                        <div style="height: 2px; width: 100%; border-top: 1px solid #848484; border-bottom: 1px solid white;"></div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div style="height: 2px; width: 100%; border-top: 1px solid #848484; border-bottom: 1px solid white;"></div>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td>
+                                                                        <img src="./Images/CellIcons/Arrowup.png" class="CenterCenter" style="cursor: pointer;" [hidden]="ItemsSource2Hidden" (click)="ItemsSource2Hidden = true" />
+                                                                        <img src="./Images/CellIcons/Arrowdown.png" class="CenterCenter" style="cursor: pointer;" [hidden]="!ItemsSource2Hidden" (click)="ItemsSource2Hidden = false" />
+                                                                    </td>
+
+                                                                    <td>Master Data {{ItemsSource2.length}}</td>
+                                                                </tr>
+
+                                                                <tr style="height: 2px;">
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div [hidden]="ItemsSource2Hidden" style="height: 2px; width: 100%; border-top: 1px solid white; border-bottom: 1px solid #848484;"></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="SimpleGridViewRow CellBorder" style="background: white" *ngFor="let item of ItemsSource2" [hidden]="ItemsSource2Hidden || item == null">
+                                                        <td style="height: 25px;">
+                                                            <table style="height: 25px;">
+                                                                <tr>
+
+                                                                    <td style="width: 25px; min-width: 25px; max-width: 25px; background: #E4E4E4; border-bottom: 1px solid #E4E4E4;">
+                                                                        <table style="height: 25px;">
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <div></div>
+                                                                                </td>
+
+                                                                                <td style="width: 1px; height: 100%;">
+                                                                                    <div class="Stretch" style="background: white;"></div>
+                                                                                </td>
+
+                                                                                <td style="width: 1px; height: 100%;">
+                                                                                    <div class="Stretch" style="background: #848484;"></div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+
+                                                                    <!-- Name -->
+                                                                    <td class="GridViewCell" style="width: 250px; min-width: 250px; max-width: 250px;">
+                                                                        {{item.Name}}
+                                                                    </td>
+
+                                                                    <!-- Read -->
+                                                                    <td class="GridViewCell" style="width: 50px; min-width: 50px; max-width: 50px;">
+                                                                        <div class="MediaFill">
+                                                                            <div class="MediaFillRelative">
+                                                                                <div class="CenterCenter" style="width: 16px; height: 16px;">
+                                                                                    <AccessLevelButton [Feature]="item.ReadFeature" [AccessLevelCode]="item.AccessLevelCode_Read" (AccessLevelChanged)="item.AccessLevelCode_Read = $event" [IsEnabled]="item.IsEditingEnabled"></AccessLevelButton>
+                                                                                </div>
+
+                                                                                <div class="RightCenter" style="width: 14px; height: 14px; right: 0px;" *ngIf="item.IsCustomRoleFeature_Read">
+                                                                                    <img src="./_Resources/Images/Icons/Buttons/Pincel.Orange.png" style="vertical-align: middle; display: block;" />
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <!-- Update -->
+                                                                    <td class="GridViewCell" style="width: 50px; min-width: 50px; max-width: 50px;">
+                                                                        <div class="MediaFill">
+                                                                            <div class="MediaFillRelative">
+                                                                                <div class="CenterCenter" style="width: 16px; height: 16px;">
+                                                                                    <AccessLevelButton [Feature]="item.UpdateFeature" [AccessLevelCode]="item.AccessLevelCode_Update" (AccessLevelChanged)="item.AccessLevelCode_Update = $event" [IsEnabled]="item.IsUpdateFeatureEnabled"></AccessLevelButton>
+                                                                                </div>
+
+                                                                                <div class="RightCenter" style="width: 14px; height: 14px; right: 0px;" *ngIf="item.IsCustomRoleFeature_Update">
+                                                                                    <img src="./_Resources/Images/Icons/Buttons/Pincel.Orange.png" style="vertical-align: middle; display: block;" />
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <!-- New -->
+                                                                    <td class="GridViewCell" style="width: 50px; min-width: 50px; max-width: 50px;">
+                                                                        <div class="MediaFill">
+                                                                            <div class="MediaFillRelative">
+                                                                                <div class="CenterCenter" style="width: 16px; height: 16px;">
+                                                                                    <AccessLevelButton [Feature]="item.AddNewFeature" [AccessLevelCode]="item.AccessLevelCode_AddNew" (AccessLevelChanged)="item.AccessLevelCode_AddNew = $event" [IsEnabled]="item.IsAddNewFeatureEnabled"></AccessLevelButton>
+                                                                                </div>
+
+                                                                                <div class="RightCenter" style="width: 14px; height: 14px; right: 0px;" *ngIf="item.IsCustomRoleFeature_AddNew">
+                                                                                    <img src="./_Resources/Images/Icons/Buttons/Pincel.Orange.png" style="vertical-align: middle; display: block;" />
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <!-- Actions -->
+                                                                    <td class="GridViewCell" style="width: 50px; min-width: 50px; max-width: 50px;">
+                                                                        <div class="MediaFill" style="padding-left: 5px;">
+                                                                            <Hyperlink *ngIf="item.ActionsFeatures.length > 0" [Color]="item.ActionsLinkColor" (click)="item.HyperlinkClicked('Actions')">{{item.ActionsLinkText}}</Hyperlink>
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <!-- Areas -->
+                                                                    <td class="GridViewCell" style="width: 50px; min-width: 50px; max-width: 50px;">
+                                                                        <div class="MediaFill" style="padding-left: 5px;">
+                                                                            <Hyperlink *ngIf="item.AreasFeatures.length > 0" [Color]="item.AreasLinkColor" (click)="item.HyperlinkClicked('Areas')">{{item.AreasLinkText}}</Hyperlink>
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <!-- Queries -->
+                                                                    <td class="GridViewCell" style="width: 50px; min-width: 50px; max-width: 50px;">
+                                                                        <div class="MediaFill" style="padding-left: 5px;">
+                                                                            <Hyperlink *ngIf="item.QueriesFeatures.length > 0" [Color]="item.QueriesLinkColor" (click)="item.HyperlinkClicked('Queries')">{{item.QueriesLinkText}}</Hyperlink>
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <td class="LastChild">
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr style="height: 1px;" *ngIf="ItemsSource1.length > 0 || ItemsSource2.length > 0">
+                                                        <td>
+                                                            <div style="height:1px; width: 100%; background: #848484; margin-top: -1px;"></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td style="width: 25px;">
+                                    <div></div>
+                                </td>
+
+                                <td>
+                                    <div class="MediaFill">
+                                        <table>
+
+                                            <!-- Menus -->
+                                            <tr>
+                                                <td>
+                                                    <div class="MediaFill">
+                                                        <table>
+                                                            <tr style="height: 1px;">
+                                                                <td>
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td style="width: 1px; font-size: 16px; color: #1B90CB;">Menus</td>
+
+                                                                            <td style="width: 5px;">
+                                                                                <div></div>
+                                                                            </td>
+
+                                                                            <td style="font-size: 12px; color: #282E30;">{{MenusList.length}}</td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr style="height: 5px;">
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="MediaFill">
+                                                                        <div class="SimpleGridView">
+                                                                            <div class="SimpleGridViewHeader">
+                                                                                <table>
+                                                                                    <tr>
+                                                                                        <td style="width: 250px; min-width: 250px; max-width: 250px;">Name</td>
+                                                                                        <td style="width: 50px; min-width: 50px; max-width: 50px; text-align: center; padding:0;">Active</td>
+                                                                                        <td class="LastChild">
+                                                                                            <div></div>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </div>
+
+                                                                            <div class="SimpleGridViewBody">
+                                                                                <table>
+                                                                                    <tr class="SimpleGridViewRow" *ngFor="let item of MenusList">
+                                                                                        <td class="GridViewCell" style="width: 250px; min-width: 250px; max-width: 250px;">
+                                                                                            {{item.Name}}
+                                                                                        </td>
+
+                                                                                        <td class="GridViewCell" style="width: 50px; min-width: 50px; max-width: 50px;">
+                                                                                            <div class="MediaFill">
+                                                                                                <div class="MediaFillRelative">
+                                                                                                    <div class="CenterCenter" style="width: 16px; height: 16px;">
+                                                                                                        <AccessLevelButton [Feature]="item.Feature" [AccessLevelCode]="item.AccessLevelCode" (AccessLevelChanged)="item.AccessLevelCode = $event" [IsEnabled]="item.IsEditingEnabled"></AccessLevelButton>
+                                                                                                    </div>
+
+                                                                                                    <div class="RightCenter" style="width: 14px; height: 14px; right: 2px;" *ngIf="item.IsCustomRoleFeature">
+                                                                                                        <img src="./_Resources/Images/Icons/Buttons/Pincel.Orange.png" style="vertical-align: middle; display: block;" />
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </td>
+
+                                                                                        <td>
+                                                                                            <div></div>
+                                                                                        </td>
+                                                                                    </tr>
+
+                                                                                    <tr>
+                                                                                        <td colspan="3">
+                                                                                            <div></div>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr style="height: 25px;">
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <!-- Settings and Others -->
+                                            <tr>
+                                                <td>
+                                                    <div class="MediaFill">
+                                                        <table>
+                                                            <tr style="height: 1px;">
+                                                                <td>
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td style="width: 1px; font-size: 16px; color: #1B90CB;">Settings and Others</td>
+
+                                                                            <td style="width: 5px;">
+                                                                                <div></div>
+                                                                            </td>
+
+                                                                            <td style="font-size: 12px; color: #282E30;">{{OthersList.length}}</td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr style="height: 5px;">
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="MediaFill">
+                                                                        <div class="SimpleGridView">
+                                                                            <div class="SimpleGridViewHeader">
+                                                                                <table>
+                                                                                    <tr>
+                                                                                        <td style="width: 250px; min-width: 250px; max-width: 250px;">Name</td>
+                                                                                        <td style="width: 50px; min-width: 50px; max-width: 50px; text-align: center; padding:0;">Active</td>
+                                                                                        <td class="LastChild">
+                                                                                            <div></div>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </div>
+
+                                                                            <div class="SimpleGridViewBody">
+                                                                                <table>
+                                                                                    <tr class="SimpleGridViewRow" *ngFor="let item of OthersList">
+                                                                                        <td class="GridViewCell" style="width: 250px; min-width: 250px; max-width: 250px;">
+                                                                                            {{item.Name}}
+                                                                                        </td>
+
+                                                                                        <td class="GridViewCell" style="width: 50px; min-width: 50px; max-width: 50px;">
+                                                                                            <div class="MediaFill">
+                                                                                                <div class="MediaFillRelative">
+                                                                                                    <div class="CenterCenter" style="width: 16px; height: 16px;">
+                                                                                                        <AccessLevelButton [Feature]="item.Feature" [AccessLevelCode]="item.AccessLevelCode" (AccessLevelChanged)="item.AccessLevelCode = $event" [IsEnabled]="item.IsEditingEnabled"></AccessLevelButton>
+                                                                                                    </div>
+
+                                                                                                    <div class="RightCenter" style="width: 14px; height: 14px; right: 2px;" *ngIf="item.IsCustomRoleFeature">
+                                                                                                        <img src="./_Resources/Images/Icons/Buttons/Pincel.Orange.png" style="vertical-align: middle; display: block;" />
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </td>
+
+                                                                                        <td>
+                                                                                            <div></div>
+                                                                                        </td>
+                                                                                    </tr>
+
+                                                                                    <tr>
+                                                                                        <td colspan="3">
+                                                                                            <div></div>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <table>
+                            <tr>
+
+                                <!-- NO -->
+                                <td style="width: 20px;">
+                                    <img style="float: left; vertical-align: middle;" src="./_Resources/Images/Icons/AccessLevels/NO.png" />
+                                </td>
+                                <td style="width: 1px;" class="Value">None Selected</td>
+
+                                <!-- US -->
+                                <td style="width: 25px;">
+                                    <div></div>
+                                </td>
+                                <td style="width: 20px;">
+                                    <img style="float: left; vertical-align: middle;" src="./_Resources/Images/Icons/AccessLevels/US.png" />
+                                </td>
+                                <td style="width: 1px;" class="Value">User</td>
+
+                                <!-- BU -->
+                                <td style="width: 25px;">
+                                    <div></div>
+                                </td>
+                                <td style="width: 20px;">
+                                    <img style="float: left; vertical-align: middle;" src="./_Resources/Images/Icons/AccessLevels/BU.png" />
+                                </td>
+                                <td style="width: 1px;" class="Value">Business Unit</td>
+
+                                <!-- PR -->
+                                <td style="width: 25px;">
+                                    <div></div>
+                                </td>
+                                <td style="width: 20px;">
+                                    <img style="float: left; vertical-align: middle;" src="./_Resources/Images/Icons/AccessLevels/PR.png" />
+                                </td>
+                                <td style="width: 1px;" class="Value">Parent: Child Business Units</td>
+
+                                <!-- OR -->
+                                <td style="width: 25px;">
+                                    <div></div>
+                                </td>
+                                <td style="width: 20px;">
+                                    <img style="float: left; vertical-align: middle;" src="./_Resources/Images/Icons/AccessLevels/OR.png" />
+                                </td>
+                                <td style="width: 1px;" class="Value">Organization</td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{CancelButtonTextCode | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;" *ngIf="IsOkButtonVisible">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;" *ngIf="IsOkButtonVisible">
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

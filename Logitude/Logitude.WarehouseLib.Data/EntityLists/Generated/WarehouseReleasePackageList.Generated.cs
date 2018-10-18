@@ -1,0 +1,70 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization; 
+
+namespace Logitude.WarehouseLib.Data.EntityLists
+{
+   [DataContract]
+   public partial class WarehouseReleasePackageList
+   {
+   
+       [Key]
+       [DataMember]
+       public string Id  { get; set; }
+       [DataMember]
+       public int Tenant  { get; set; }
+       [DataMember]
+       public DateTime CreateDate  { get; set; }
+       [DataMember]
+       public string CreatedByUserId  { get; set; }
+       [DataMember]
+       public DateTime UpdateDate  { get; set; }
+       [DataMember]
+       public string UpdatedByUserId  { get; set; }
+       [DataMember]
+       public string WarehouseReleaseId  { get; set; }
+       [DataMember]
+       public string ContainerNumber  { get; set; }
+       [DataMember]
+       public int Quantity  { get; set; }
+       [DataMember]
+       public decimal? Weight  { get; set; }
+       [DataMember]
+       public decimal? Volume  { get; set; }
+       [DataMember]
+       public string Description  { get; set; }
+       [DataMember]
+       public string PackageTypeId  { get; set; }
+       [DataMember]
+       public string Seal  { get; set; }
+       [DataMember]
+       public string Harmonize  { get; set; }
+       [DataMember]
+       public double? Width  { get; set; }
+       [DataMember]
+       public double? Length  { get; set; }
+       [DataMember]
+       public double? Height  { get; set; }
+       [DataMember]
+       public string PackageTypeName  { get; set; }
+       [DataMember]
+       public string Dimensions  { get; set; }
+       [DataMember]
+       public bool IsContainer  { get; set; }
+       [DataMember]
+       public DateTime? ActualReleaseDate  { get; set; }
+       [DataMember]
+       public string DimensionUnitCode  { get; set; }
+       [DataMember]
+       public string VolumeUnitCode  { get; set; }
+       [DataMember]
+       public string GrossWeightUnitCode  { get; set; }
+   }
+
+}
+	 

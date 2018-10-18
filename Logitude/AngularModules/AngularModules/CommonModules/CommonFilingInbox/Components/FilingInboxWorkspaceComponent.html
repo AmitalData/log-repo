@@ -1,0 +1,914 @@
+﻿<style>
+    .DeleteButton {
+        display: none;
+    }
+
+    .ItemBox:hover .DeleteButton {
+        display: block;
+    }
+
+    .ItemBox:hover .DeleteButtonDisabled {
+        display: block;
+    }
+
+    .ItemBox {
+        height: 70px;
+        border: 1px solid #AAAAAA;
+        border-radius: 4px;
+        -moz-border-radius: 4px;
+        -webkit-border-radius: 4px;
+        margin-bottom: 3px;
+        padding: 2px;
+    }
+
+        .ItemBox:hover {
+            cursor: pointer;
+            background: #DEEBEF;
+            transition: 0.3s;
+        }
+
+    .DescriptionTextArea {
+        padding: 2px;
+        padding-left: 4px;
+        text-indent: 0px;
+        border: 1px Solid #FFFFFF;
+        border-radius: 2px;
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px;
+    }
+
+    .SelectedFilingItem {
+        background: #DEEBEF;
+    }
+    .Disable{
+        pointer-events:none;
+        opacity:0.5;
+    }
+</style>
+
+<div style="width:100%;height:100%">
+    <table>
+        <tr style="height:1px;">
+            <td colspan="3">
+                <table>
+                    <tr style="height:22px;text-align:left;">
+                        <td class="TabTitle" style="vertical-align:top;width:120px;">Filing Inbox</td>
+                        <td style="width: 30px; vertical-align: top;float:left;">
+                            <img  title="Display the filing inbox email" (click)="OpenToolTipArea()" style="height:30px;width:30px;margin-right:8px;margin-top:-5px;" src="./Images/lightbulb.png" />
+                        </td>
+                        <td style="width:20px;">
+                            <div></div>
+                        </td>
+                        <td *ngIf="!DontShowInboxToolTip" style="width:calc(100%-10px);">
+                            <div [style.height.px]="50" style="background-color:#FFF9BA; border:1px solid #FEAC10;  border-radius:3px; -webkit-border-radius:3px; width:calc(100%-10px);">
+                                <table>
+                                    <tr style="height:20px;">
+                                        <td style="height:20px;" colspan="2">
+                                            <table style="width:170px;height:22px;margin-left:8px;">
+                                                <tr>
+                                                    <td style="width:130px;">
+                                                        <div class="MediaFill">
+                                                            Please send to the following email in order to file documents: {{SettingsDomain}}
+                                                            <span class="FillContent" style="width:18px;display: inline-block;vertical-align:central;top:5px;"><IconButton [Title]="'Copy'" [Name]="'copy'" [IsSmall]="true" (click)="CopyDomain()"></IconButton></span> you can change
+                                                            <span class="FillContent" style="width:18px;display: inline-block;vertical-align:central;top:5px;"><IconButton [Title]="'Edit'" [Name]="'Edit'" [IsSmall]="true" (click)="ViewUser()"></IconButton></span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr style="height:20px;float:right;">
+                                        <td>
+                                            <table>
+                                                <tr>
+                                                    <td style="width:130px;">
+                                                        <LogCheckBox [ObjectFieldName]="'DontShowAgain'" [Text]="DontShowagainText" [NoObjectField]="true" [Checked]="DontShowAgain" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                    </td>
+                                                    <td style="width:40px;">
+                                                        <a class="Link" style="font-size:10px;height:auto" (click)="CloseToolTipArea()">Close</a>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr style="height:5px;">
+            <td colspan="3">
+                <div></div>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:280px;">
+                <div class="MediaFill">
+                    <SectionBox [Scrolling]="true">
+                        <SectionHead>
+                            <table>
+                                <tr>
+                                    <td>
+                                        Filing Emails
+                                        <span style="font-size:10px;" class="ItalicArialText">  Filing Emails are saved for 2 months only </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </SectionHead>
+                        <SectionBody>
+                            <table>
+                                <tr style="height:70px;">
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td style="vertical-align: middle;">
+                                                                <SearchTextBox [ObjectTableName]="'FilingInbox'" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)" [SearchText]="SearchFilter" [PlaceHolder]="'Search by Mail Subject, Attachment Description ...'"></SearchTextBox>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width:110px;">
+                                                                <UserFilter (SelectedValueChanged)="SelectedUserFilter = $event"></UserFilter>
+                                                            </td>
+                                                            <td style="width:2px;">
+                                                                <div></div>
+                                                            </td>
+                                                            <td *ngIf="SelectedUserFilter != 'M'">
+                                                                <LogLov [ObjectFieldName]="'UserId'"
+                                                                        [ObjectTableName]="'UserFilter'"
+                                                                        [SelectedValue]="UserId"
+                                                                        [DataContext]="DataContext"
+                                                                        [LookUpTableName]="'User'"
+                                                                        [HideColumns]="true"
+                                                                        [NoObjectField]="true">
+                                                                </LogLov>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr style="padding:2px;">
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width:30px;">
+                                                                <div style="float:left;vertical-align:central">
+                                                                    <IconButton [IsEnabled]="IsRefreshEnabled" [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
+                                                                </div>
+                                                            </td>
+                                                            <td style="text-align:left;vertical-align:middle">
+                                                                <LogCheckBox [Text]="'show deleted'" [NoObjectField]="true" [ObjectFieldName]="'IsShowDeletedEnabled'" [HideColumns]="true" [DataContext]="DataContext"></LogCheckBox>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr style="height:3px;">
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="MediaFill">
+                                            <ScrollViewer>
+                                                <ul>
+                                                    <li class="ItemBox" style="position: relative;height:80px;padding:3px;" *ngFor="let item of ItemsSource">
+                                                        <table (mousedown)="SelectedFilingInbox = item" [class.SelectedFilingItem]="item === SelectedFilingInbox">
+                                                            <tr style="height:2px;">
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td style="float:left;">
+                                                                                <div class="TextTrimming" style="text-align:left;width:250px;">
+                                                                                    {{item.Subject}}
+                                                                                </div>
+                                                                            </td>
+                                                                            <td *ngIf="item.HasAttachmanets" style="float:right;padding-right:2px;width:17px;height:17px;">
+                                                                                <span><img style="width:17px;height:17px;margin-top:2px" src="Images/SimplogIcons/attachment-icon.png" /></span>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <div class="TextTrimming Label" style="text-align:left;width:100px;">
+                                                                                    {{item.SenderName}}
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div class="TextTrimming Label" style="text-align:right;width:70px;">
+                                                                                    {{item.CreateDate | DateTimePipe:'FIDATE'}}
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                            <tr style="text-align:right;float:right;height:12px;">
+                                                                <td style="height:12px;">
+                                                                    <div *ngIf="item.IsDeleted" style="text-align:right;float:right;color:red;">
+                                                                        Deleted
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr style="height:2px;">
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+
+                                                        <div style="position: absolute; left: 205px;bottom:5px;">
+                                                            <div *ngIf="!item.IsDeleted" class="DeleteButton">
+                                                                <button style="width:50px;height:22px;" class="Button" (click)="DeleteFilingInbox(item)">Delete</button>
+                                                            </div>
+                                                            <!--<div *ngIf="item.IsDeleted" style="color:red;vertical-align:bottom;">
+                                                                Deleted
+                                                            </div>-->
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </ScrollViewer>
+                                            <div *ngIf="ItemsSource == null || ItemsSource.length == 0" class="NoDataText" style="top:5px;">No Filing Inboxes</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr style="height:10px;">
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                                <tr style="height: 32px;">
+                                    <td style="width: 160px;text-align:center;vertical-align:bottom;">
+                                        <table>
+                                            <tr>
+                                                <td style="width:20px;">
+                                                    <button (click)="FirstPageClick()" class="Button" [disabled]="!IsHitState_FirstButton" style="height:20px; width:20px;">
+                                                        <img src="./Images/PagerIcons/first.png" class="CenterCenter" style="height:10px; width:15px;" />
+                                                    </button>
+                                                </td>
+                                                <td style="width:20px;">
+                                                    <button (click)="PreviousPageClick()" class="Button" [disabled]="!IsHitState_PrevButton" style="height:20px; width:20px; margin-left:2px;">
+                                                        <img src="./Images/PagerIcons/previous.png" class="CenterCenter" style="height:10px; width:15px;" />
+                                                    </button>
+                                                </td>
+                                                <td style="width:2px;">
+                                                    <div></div>
+                                                </td>
+                                                <td style="text-align:center;"> {{PageIndex}} of {{TotalPagesCount}} </td>
+                                                <td style="width:2px;">
+                                                    <div></div>
+                                                </td>
+                                                <td style="width:20px;">
+                                                    <button (click)="NextPageClick()" class="Button" [disabled]="!IsHitState_NextButton" style="height:20px; width:20px;">
+                                                        <img src="./Images/PagerIcons/next.png" class="CenterCenter" style="height:10px; width:15px;" />
+                                                    </button>
+                                                </td>
+                                                <td style="width:20px;">
+                                                    <button (click)="LastPageClick()" class="Button" [disabled]="!IsHitState_LastButton" style="height:20px; width:20px; margin-left:2px; margin-right:2px;">
+                                                        <img src="./Images/PagerIcons/last.png" class="CenterCenter" style="height:10px; width:15px;" />
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </SectionBody>
+                    </SectionBox>
+                </div>
+            </td>
+            <td style="width:10px;">
+                <div></div>
+            </td>
+            <td>
+                <div class="MediaFill">
+                    <SectionBox [Scrolling]="true">
+                        <SectionHead> Connect To </SectionHead>
+                        <SectionBody>
+                            <table>
+                                <tr style="height:70px;">
+                                    <td *ngIf="IsConnectToFilterVisible">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <ConnectToFilter (SelectedValueChanged)="SelectedConnectToFilter = $event"></ConnectToFilter>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width:80px;">
+                                                                            <LogLabel [Text]="ConnectToFilterLabel" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+                                                                        <td>
+                                                                            <table>
+                                                                                <tr class="FormFieldRow">
+                                                                                    <td style="width:230px;">
+                                                                                        <div *ngIf="EntityObjectTableName =='Shipment'">
+                                                                                            <QuickSearchTextBox [IsItemSelected]="IsItemSelected" (OnTextChanged)="IsItemSelected = $event" [Area]="'FilingInbox'" [Filters]="Filters" [ShowViewAll]="true" [IsIconsVisible]="false" [ObjectTableName]="EntityObjectTableName" [DropDownWidth]="230" [ItemHeight]="25" (DataLoaded)="QuickSearchItems = $event" (ViewAllClicked)="ChooseEntity(null)" [Watermark]="' '" [DisplayText]="EntityNumber">
+                                                                                                <ul>
+                                                                                                    <li class="LogitudeQuickSearchItem" style="height:25px;" *ngFor="let item of QuickSearchItems" (mousedown)="QuickSearchTextChanged(item)">
+                                                                                                        <table>
+                                                                                                            <tr>
+                                                                                                                <td *ngIf="!IsLogBox" style="width: 20px;min-width:20px;max-width:20px;">
+                                                                                                                    <div title="{{item.DirectionName}}" style="width: 20px;min-width:20px;max-width:20px; height: 20px; position:relative;">
+                                                                                                                        <img class="CenterCenter" [attr.src]="'./Images/Directions/' + item.DirectionId + '.png'" />
+                                                                                                                    </div>
+                                                                                                                </td>
+
+                                                                                                                <td style="width: 2px;">
+                                                                                                                    <div></div>
+                                                                                                                </td>
+
+                                                                                                                <td style="width: 20px;min-width:20px;max-width:20px;">
+                                                                                                                    <div title="{{item.TransportModeName}}" style="width: 20px;min-width:20px;max-width:20px; height: 20px; position:relative;">
+                                                                                                                        <img class="CenterCenter" [attr.src]="'./Images/Icons/' + item.TransportModeId + '.png'" />
+                                                                                                                    </div>
+                                                                                                                </td>
+
+                                                                                                                <td style="width: 2px;">
+                                                                                                                    <div></div>
+                                                                                                                </td>
+
+                                                                                                                <td *ngIf="!IsLogBox" class="TextTrimming" style="width: 85px; min-width: 85px; max-width: 85px; font-size: 10px; color: #6E7172;">{{item.ShipmentNumber}}</td>
+                                                                                                                <td *ngIf="IsLogBox" class="TextTrimming" style="width: 85px; min-width: 85px; max-width: 85px; font-size: 10px; color: #6E7172;">{{item.ForwarderShipmentNumber == null ? item.CustomerReference1 : item.ForwarderShipmentNumber}}</td>
+                                                                                                                <td *ngIf="!IsLogBox" class="TextTrimming" style="width: 100px; min-width:100px; max-width:100px;" title="Customer">
+                                                                                                                    <span style="font-size: 10px; color: #1B90CB;" class="TextTrimming">{{item.CustomerName}}</span>
+                                                                                                                </td>
+                                                                                                                <td *ngIf="IsLogBox" class="TextTrimming" style="width: 100px; min-width:100px; max-width:100px;" title="Supplier">
+                                                                                                                    <span style="font-size: 10px; color: #1B90CB;" class="TextTrimming">{{item.ShipperName}}</span>
+                                                                                                                </td>
+
+                                                                                                                <td>
+                                                                                                                    <div></div>
+                                                                                                                </td>
+                                                                                                            </tr>
+                                                                                                        </table>
+                                                                                                    </li>
+                                                                                                </ul>
+                                                                                            </QuickSearchTextBox>
+                                                                                        </div>
+                                                                                        <div *ngIf="EntityObjectTableName=='Master'">
+                                                                                            <QuickSearchTextBox [IsItemSelected]="IsItemSelected" (OnTextChanged)="IsItemSelected = $event" [Area]="'FilingInbox'" [Filters]="Filters" [ShowViewAll]="true" [IsIconsVisible]="false" [ObjectTableName]="EntityObjectTableName" [DropDownWidth]="230" [ItemHeight]="25" (DataLoaded)="QuickSearchItems = $event" (ViewAllClicked)="ChooseEntity(null)" [Watermark]="' '" [DisplayText]="EntityNumber">
+                                                                                                <ul>
+                                                                                                    <li class="LogitudeQuickSearchItem" style="height:25px;" *ngFor="let item of QuickSearchItems" (mousedown)="QuickSearchTextChanged(item)">
+                                                                                                        <table>
+                                                                                                            <tr>
+                                                                                                                <td *ngIf="!IsLogBox" style="width: 20px;min-width:20px;max-width:20px;">
+                                                                                                                    <div title="{{item.DirectionName}}" style="width: 20px;min-width:20px;max-width:20px; height: 20px; position:relative;">
+                                                                                                                        <img class="CenterCenter" [attr.src]="'./Images/Directions/' + item.DirectionId + '.png'" />
+                                                                                                                    </div>
+                                                                                                                </td>
+
+                                                                                                                <td style="width: 2px;">
+                                                                                                                    <div></div>
+                                                                                                                </td>
+
+                                                                                                                <td *ngIf="!IsLogBox" style="width: 20px;min-width:20px;max-width:20px;">
+                                                                                                                    <div title="{{item.TransportModeName}}" style="width: 20px;min-width:20px;max-width:20px; height: 20px; position:relative;">
+                                                                                                                        <img class="CenterCenter" [attr.src]="'./Images/Icons/' + item.TransportModeId + '.png'" />
+                                                                                                                    </div>
+                                                                                                                </td>
+
+                                                                                                                <td style="width: 2px;">
+                                                                                                                    <div></div>
+                                                                                                                </td>
+
+                                                                                                                <td *ngIf="!IsLogBox" class="TextTrimming" style="width: 85px; min-width: 85px; max-width: 85px; font-size: 10px; color: #6E7172;">{{item.ShipmentNumber}}</td>
+                                                                                                                <td *ngIf="IsLogBox" class="TextTrimming" style="width: 85px; min-width: 85px; max-width: 85px; font-size: 10px; color: #6E7172;">{{item.ForwarderShipmentNumber}}</td>
+                                                                                                                <td *ngIf="!IsLogBox" class="TextTrimming" style="width: 100px; min-width:100px; max-width:100px;" title="Customer">
+                                                                                                                    <span style="font-size: 10px; color: #1B90CB;" class="TextTrimming">{{item.CustomerName}}</span>
+                                                                                                                </td>
+                                                                                                                <td *ngIf="IsLogBox" class="TextTrimming" style="width: 100px; min-width:100px; max-width:100px;" title="Supplier">
+                                                                                                                    <span style="font-size: 10px; color: #1B90CB;" class="TextTrimming">{{item.ShipperName}}</span>
+                                                                                                                </td>
+
+                                                                                                                <td>
+                                                                                                                    <div></div>
+                                                                                                                </td>
+                                                                                                            </tr>
+                                                                                                        </table>
+                                                                                                    </li>
+                                                                                                </ul>
+                                                                                            </QuickSearchTextBox>
+                                                                                        </div>
+                                                                                        <div *ngIf="EntityObjectTableName =='Quote'">
+                                                                                            <QuickSearchTextBox [IsItemSelected]="IsItemSelected" (OnTextChanged)="IsItemSelected = $event" [Area]="'FilingInbox'" [Filters]="Filters" [ShowViewAll]="true" [IsIconsVisible]="false" [ObjectTableName]="EntityObjectTableName" [DropDownWidth]="230" [ItemHeight]="25" (DataLoaded)="QuickSearchItems = $event" (ViewAllClicked)="ChooseEntity(null)" [Watermark]="' '" [DisplayText]="EntityNumber">
+                                                                                                <ul>
+                                                                                                    <li class="LogitudeQuickSearchItem" style="height:25px;" *ngFor="let item of QuickSearchItems" (mousedown)="QuickSearchTextChanged(item)">
+                                                                                                        <table>
+                                                                                                            <tr>
+                                                                                                                <td style="width: 20px;min-width:20px;max-width:20px;">
+                                                                                                                    <div title="{{item.DirectionName}}" style="width: 20px;min-width:20px;max-width:20px; height: 20px; position:relative;">
+                                                                                                                        <img class="CenterCenter" [attr.src]="'./Images/Directions/' + item.DirectionId + '.png'" />
+                                                                                                                    </div>
+                                                                                                                </td>
+
+                                                                                                                <td style="width: 2px;">
+                                                                                                                    <div></div>
+                                                                                                                </td>
+
+                                                                                                                <td style="width: 20px;min-width:20px;max-width:20px;">
+                                                                                                                    <div title="{{item.TransportModeName}}" style="width: 20px;min-width:20px;max-width:20px; height: 20px; position:relative;">
+                                                                                                                        <img class="CenterCenter" [attr.src]="'./Images/Icons/' + item.TransportModeId + '.png'" />
+                                                                                                                    </div>
+                                                                                                                </td>
+
+                                                                                                                <td style="width: 2px;">
+                                                                                                                    <div></div>
+                                                                                                                </td>
+
+                                                                                                                <td class="TextTrimming" style="width: 85px; min-width: 85px; max-width: 85px; font-size: 10px; color: #6E7172;">{{item.QuoteNumber}}</td>
+
+                                                                                                                <td class="TextTrimming" style="width: 100px; min-width:100px; max-width:100px;" title="Customer">
+                                                                                                                    <span style="font-size: 10px; color: #1B90CB;" class="TextTrimming">{{item.CustomerName}}</span>
+                                                                                                                </td>
+
+                                                                                                                <td>
+                                                                                                                    <div></div>
+                                                                                                                </td>
+                                                                                                            </tr>
+                                                                                                        </table>
+                                                                                                    </li>
+                                                                                                </ul>
+                                                                                            </QuickSearchTextBox>
+                                                                                        </div>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <table>
+                                                                                            <tr>
+                                                                                                <td style="width:5px;">
+                                                                                                    <div></div>
+                                                                                                </td>
+                                                                                                <td style="width:15px;">
+                                                                                                    <img style="width: 14px; height: 14px; cursor: pointer;" src="./Images/LOVSearch.png" (click)="ChooseEntity(null)" />
+                                                                                                </td>
+                                                                                                <td style="width:2px;">
+                                                                                                    <div></div>
+                                                                                                </td>
+                                                                                                <td style="width:15px;">
+                                                                                                    <img style="width: 14px; height: 14px; cursor: pointer;" src="./Images/RedX2.png" (click)="ClearConnectToFilter()" />
+                                                                                                </td>
+                                                                                                <td style="width:5px;">
+                                                                                                    <div></div>
+                                                                                                </td>
+
+                                                                                                <td style="width: 120px;">
+                                                                                                    <div style="text-align:left;float:left; ">
+                                                                                                        clear selection
+                                                                                                    </div>
+                                                                                                </td>
+
+                                                                                                <td *ngIf="EntityObjectTableName =='Shipment' && IsNewShipmentVisible" style="text-align:left;width: 85px;">
+                                                                                                    <button class="Button" (click)="NewShipmentClicked()">New Shipment</button>
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <div></div>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <table>
+                                                                    <tr>
+                                                                        <td *ngIf="!IsLogBox && EntityObjectTableName!='Master'" style="width:80px;">
+                                                                            <LogLabel [Text]="'Customer'" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td *ngIf="!IsLogBox && EntityObjectTableName=='Master'" style="width:80px;">
+                                                                            <LogLabel [Text]="'Agent'" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td *ngIf="IsLogBox" style="width:80px;">
+                                                                            <LogLabel [Text]="'Supplier'" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+                                                                        <td style="width:170px;">
+                                                                            <div class="TextTrimming" style="width: 170px;">
+                                                                                {{Customer}}
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width:80px;">
+                                                                            <LogLabel [Text]="'Route'" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+                                                                        <td style="width:170px;">
+                                                                            <div class="TextTrimming" style="width: 170px;">
+                                                                                {{Route}}
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr style="height:3px;">
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="MediaFill" style="background:#DEEBEF;vertical-align:top;overflow-x:auto;">
+                                            <table style="min-width:1300px">
+                                                <tr>
+                                                    <td>
+                                                        <div *ngIf="IsVisible" class="MediaFixedPadding5">
+                                                            <table>
+                                                                <tr style="height:1px;vertical-align:top;">
+                                                                    <td>
+                                                                        <ul class="PagesMenu">
+                                                                            <li *ngFor="let item of FilingInboxAttachments" (click)="AttachmentChanged(item)" [class.SelectedPageMenu]="item === SelectedAttachment" style="float:left;vertical-align:central;">
+                                                                                <table>
+                                                                                    <tr>
+                                                                                        <td>
+                                                                                            <table>
+                                                                                                <tr>
+                                                                                                    <td *ngIf="item.IsSingleTick && item.AttachLogs == null" style="width:16px;height:11px; padding-right:2px;vertical-align:middle;">
+                                                                                                        <div *ngIf="item != SelectedAttachment" class="MediaFill CenterCenter" style="width:16px;height:11px;">
+                                                                                                            <button style="width:16px;height:11px;background:url(./Images/single-tick.png) no-repeat;background-size: 100% 100%; position: fixed;padding: 0 !important;vertical-align: middle;display: block;" tabindex="-1"></button>
+                                                                                                        </div>
+                                                                                                        <div *ngIf="item == SelectedAttachment" class="MediaFill CenterCenter" style="width:16px;height:11px;">
+                                                                                                            <button style="width:16px;height:11px;background:url(./Images/single-tick-white.png) no-repeat;background-size: 100% 100%; position: fixed;padding: 0 !important;vertical-align: middle;display: block;" tabindex="-1"></button>
+                                                                                                        </div>
+                                                                                                    </td>
+
+                                                                                                    <td *ngIf="item.AttachLogs != null && item == SelectedAttachment" style="width:20px;height:15px; padding-right:2px;vertical-align:middle;">
+                                                                                                        <CellTooltip [IconWidth]="20" [IconHeight]="15" [Width]="SelectedAttachment.EntityNumberColumnWidth+230" [IconPath]="'./Images/double-tick-white.png'" [Head]="'Logs'">
+                                                                                                            <table>
+                                                                                                                <tr *ngFor="let log of SelectedAttachment.AttachLogs" style="vertical-align:top;height:22px;">
+                                                                                                                    <td style="width:2px;">
+                                                                                                                        <div></div>
+                                                                                                                    </td>
+                                                                                                                    <td style="width: 140px;max-width:140px;">
+                                                                                                                        <div style="width:140px;float:left" class="TextTrimming Label">
+                                                                                                                            {{log.DocumentName}}
+                                                                                                                        </div>
+                                                                                                                    </td>
+                                                                                                                    <td style="width:2px;">
+                                                                                                                        <div></div>
+                                                                                                                    </td>
+                                                                                                                    <td [style.width.px]="SelectedAttachment.EntityNumberColumnWidth+70">
+                                                                                                                        <div class="MediaFill Label" style="float:left">
+                                                                                                                            ({{log.EntityNumber}})
+                                                                                                                        </div>
+                                                                                                                    </td>
+                                                                                                                </tr>
+                                                                                                                <tr>
+                                                                                                                    <td>
+                                                                                                                        <div></div>
+                                                                                                                    </td>
+                                                                                                                </tr>
+                                                                                                            </table>
+                                                                                                        </CellTooltip>
+                                                                                                    </td>
+                                                                                                    <td *ngIf="item.AttachLogs != null && item != SelectedAttachment" style="width:20px;height:15px; padding-right:2px;vertical-align:middle;">
+                                                                                                        <CellTooltip [IconWidth]="20" [IconHeight]="15" [Width]="item.EntityNumberColumnWidth + 230" [IconPath]="'./Images/double-tick.png'" [Head]="'Logs'">
+                                                                                                            <table>
+                                                                                                                <tr *ngFor="let log of item.AttachLogs" style="vertical-align:top;height:22px;">
+                                                                                                                    <td style="width:2px;">
+                                                                                                                        <div></div>
+                                                                                                                    </td>
+                                                                                                                    <td style="width: 140px;max-width:140px;">
+                                                                                                                        <div style="width:140px;float:left" class="TextTrimming Label">
+                                                                                                                            {{log.DocumentName}}
+                                                                                                                        </div>
+                                                                                                                    </td>
+                                                                                                                    <td style="width:2px;">
+                                                                                                                        <div></div>
+                                                                                                                    </td>
+                                                                                                                    <td [style.width.px]="item.EntityNumberColumnWidth+70">
+                                                                                                                        <div class="MediaFill Label" style="float:left">
+                                                                                                                            ({{log.EntityNumber}})
+                                                                                                                        </div>
+                                                                                                                    </td>
+                                                                                                                </tr>
+                                                                                                                <tr>
+                                                                                                                    <td>
+                                                                                                                        <div></div>
+                                                                                                                    </td>
+                                                                                                                </tr>
+                                                                                                            </table>
+                                                                                                        </CellTooltip>
+                                                                                                    </td>
+
+                                                                                                    <td style="width:20px;">
+                                                                                                        <img class="LeftCenter" [src]="item.FileName | AttatchmentIconPipe:'FilingInboxCode'" style="width:17px;height:17px;" />
+                                                                                                    </td>
+                                                                                                    <td style="width:80px;">
+                                                                                                        <div [title]="item.FileName" class="LeftCenter TextTrimming" style="width:80px;"> {{item.FileName}} </div>
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        <div></div>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            </table>
+
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </li>
+
+                                                                            <li *ngIf="ItemsSource!= null && ItemsSource.length > 0" (click)="IsMailBody = true" [class.SelectedPageMenu]="IsMailBody === true"
+                                                                                style="float:left; margin-left:0px;margin-right:10px;">
+                                                                                <div style="width:80px;">
+                                                                                    Mail Body
+                                                                                </div>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr style="height:5px;">
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr *ngIf="ItemsSource!= null && ItemsSource.length > 0">
+                                                                    <td style="min-width:1400px;">
+                                                                        <div *ngIf="!IsMailBody" style="text-align:center;height:100%;padding:15px;" class="MediaFill">
+                                                                            <table>
+                                                                                <tr style="height:32px;">
+                                                                                    <td>
+                                                                                        <table>
+                                                                                            <tr>
+                                                                                                <td style="width:500px;">
+                                                                                                    <table>
+                                                                                                        <tr>
+                                                                                                            <td style="width:100px;float:left;">
+                                                                                                                <LogLabel [NoObjectField]="true" [Text]="'Document Type'" [DataContext]="DataContext"></LogLabel>
+                                                                                                            </td>
+                                                                                                            <td style="float:left;">
+                                                                                                                <ul class="FiltersMenu" style="float: left;width:235px;" *ngIf="SelectedAttachment.TypeSelected == false">
+                                                                                                                    <li *ngFor="let item of TopTypes" [title]="item.Name" (click)="SelectedAttachment.itemClicked(item.Id,item.Name)" style="width:45px;" [class.SelectedFilter]="SelectedAttachment.DocumentType === item.Id">
+                                                                                                                        {{item.OrderedDisplayName}}
+                                                                                                                    </li>
+                                                                                                                    <li (click)="SelectedAttachment.itemClicked('O','')" style="width:55px;" [class.SelectedFilter]="SelectedAttachment.SelectedValue === 'O'">
+                                                                                                                        Others
+                                                                                                                    </li>
+                                                                                                                </ul>
+
+                                                                                                                <LogLov *ngIf="SelectedAttachment.ShowTypes == true" [LogitudeForm]="myForm" style="float: left;width: 130px;margin-left: 5px;"
+                                                                                                                        [ObjectFieldName]="'DocumentTypeId'"
+                                                                                                                        [SelectedValue]="SelectedAttachment.DocumentTypeId"
+                                                                                                                        [DataContext]="SelectedAttachment.DataContext"
+                                                                                                                        [LookUpTableName]="'DocumentType'"
+                                                                                                                        [QueryFilterItems]="MyInActiveFilter"
+                                                                                                                        (SelectedItemChanged)="SelectedAttachment.OnDocumentTypeChanged($event)"
+                                                                                                                        [HideColumns]="true"
+                                                                                                                        [DependencyFilter1Value]="ObjectTableId"
+                                                                                                                        [NoObjectField]="true">
+                                                                                                                </LogLov>
+
+                                                                                                                <div *ngIf="SelectedAttachment.TypeSelected == true">
+                                                                                                                    <span style="color:#00C3FF;">{{SelectedAttachment.SelectedName}}<img style="margin-left:5px;cursor:pointer;" src="./Images/RedX.png" (click)="SelectedAttachment.RedxClick()" /></span>
+                                                                                                                </div>
+                                                                                                            </td>
+                                                                                                            <td style="width:5px;">
+                                                                                                                <div></div>
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                    </table>
+                                                                                                </td>
+                                                                                                <td style="width:5px;">
+                                                                                                    <div></div>
+                                                                                                </td>
+                                                                                                <td *ngIf="IsDescriptionVisible == true" style="width:300px;">
+                                                                                                    <table>
+                                                                                                        <tr>
+                                                                                                            <td style="width:80px;float:left;">
+                                                                                                                <LogLabel [NoObjectField]="true" [Text]="'Description'" [ObjectFieldName]="'Description'" [DataContext]="SelectedAttachment.DataContext"></LogLabel>
+                                                                                                            </td>
+
+                                                                                                            <td style="float:left;width:200px;">
+                                                                                                                <LogTextBox [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'Description'" [Text]="SelectedAttachment.Description" [DataContext]="SelectedAttachment.DataContext"></LogTextBox>
+                                                                                                            </td>
+                                                                                                            <td>
+                                                                                                                <div></div>
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                    </table>
+                                                                                                </td>
+                                                                                                <td style="width:5px;">
+                                                                                                    <div></div>
+                                                                                                </td>
+                                                                                                <td *ngIf="SelectedConnectToFilter == 'M' && IsHouseVisible == true" style="width:250px;">
+                                                                                                    <table>
+                                                                                                        <tr>
+                                                                                                            <td style="width:50px;float:left;vertical-align:central">
+                                                                                                                <LogLabel [NoObjectField]="true" [Text]="'House'" [DataContext]="DataContext"></LogLabel>
+                                                                                                            </td>
+                                                                                                            <td style="float:left; vertical-align:central;width:100px;">
+                                                                                                                <div>
+                                                                                                                    <QuickSearchTextBox [IsItemSelected]="IsItemSelected" (OnTextChanged)="IsItemSelected = $event" [Area]="'FilingInboxHouses'" [ShowViewAll]="true" [Filters]="SelectedAttachment.HouseFilters" [IsIconsVisible]="false" [ObjectTableName]="'Shipment'" [DropDownWidth]="250" [ItemHeight]="25" (DataLoaded)="SelectedAttachment.QuickSearchHouses = $event" [Watermark]="' '" [DisplayText]="SelectedAttachment.HouseNumber" [IsDisabled]="IsHouseDisabled" (ViewAllClicked)="ChooseEntity('house')">
+                                                                                                                        <ul>
+                                                                                                                            <li class="LogitudeQuickSearchItem" style="height:25px;" *ngFor="let item of SelectedAttachment.QuickSearchHouses" (mousedown)="SelectedAttachment.QuickSearchHouseChanged(item)">
+                                                                                                                                <table>
+                                                                                                                                    <tr>
+                                                                                                                                        <td style="width: 20px;min-width:20px;max-width:20px;">
+                                                                                                                                            <div title="{{item.DirectionName}}" style="width: 20px;min-width:20px;max-width:20px; height: 20px; position:relative;">
+                                                                                                                                                <img class="CenterCenter" [attr.src]="'./Images/Directions/' + item.DirectionId + '.png'" />
+                                                                                                                                            </div>
+                                                                                                                                        </td>
+
+                                                                                                                                        <td style="width: 3px;">
+                                                                                                                                            <div></div>
+                                                                                                                                        </td>
+
+                                                                                                                                        <td style="width: 20px;min-width:20px;max-width:20px;">
+                                                                                                                                            <div title="{{item.TransportModeName}}" style="width: 20px;min-width:20px;max-width:20px; height: 20px; position:relative;">
+                                                                                                                                                <img class="CenterCenter" [attr.src]="'./Images/Icons/' + item.TransportModeId + '.png'" />
+                                                                                                                                            </div>
+                                                                                                                                        </td>
+
+                                                                                                                                        <td style="width: 3px;">
+                                                                                                                                            <div></div>
+                                                                                                                                        </td>
+
+                                                                                                                                        <td class="TextTrimming" style="width: 100px; min-width: 100px; max-width: 100px; font-size: 10px; color: #6E7172;">{{item.ShipmentNumber}}</td>
+
+                                                                                                                                        <td class="TextTrimming" style="width: 175px; min-width:175px; max-width:175px;" title="Customer">
+                                                                                                                                            <span style="font-size: 10px; color: #1B90CB;" class="TextTrimming">{{item.CustomerName}}</span>
+                                                                                                                                        </td>
+
+                                                                                                                                        <td>
+                                                                                                                                            <div></div>
+                                                                                                                                        </td>
+                                                                                                                                    </tr>
+                                                                                                                                </table>
+                                                                                                                            </li>
+                                                                                                                        </ul>
+                                                                                                                    </QuickSearchTextBox>
+                                                                                                                </div>
+                                                                                                            </td>
+                                                                                                            <td style="width:5px;max-width:5px;float:left;">
+                                                                                                                <div></div>
+                                                                                                            </td>
+                                                                                                            <td style="width:15px;float:left;">
+                                                                                                                <img style="width: 14px; height: 14px; cursor: pointer;margin-left:3px;" src="./Images/LOVSearch.png" (click)="ChooseEntity('house')" />
+                                                                                                            </td>
+                                                                                                            <td>
+                                                                                                                <div></div>
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                    </table>
+                                                                                                </td>
+                                                                                                <td *ngIf="IsShareAgentVisible == true" style="width:120px;float:left;vertical-align:central;">
+                                                                                                    <LogCheckBox [Checked]="SelectedAttachment.IsSharedWithAgent" [Text]="'Share With Agent'" [NoObjectField]="true" [ObjectFieldName]="'IsSharedWithAgent'" [HideColumns]="true" [DataContext]="SelectedAttachment.DataContext"></LogCheckBox>
+                                                                                                </td>
+                                                                                                <td *ngIf="IsDigitallySignVisible && IsPDF" style="width:120px;float:left;vertical-align:central;" [class.Disable]="IsDigitallySignDisabled">
+                                                                                                    <LogCheckBox [Checked]="SelectedAttachment.IsDigitallySign" [Text]="'Digitally Sign'" [NoObjectField]="true" [ObjectFieldName]="'IsDigitallySign'" [HideColumns]="true" [DataContext]="SelectedAttachment.DataContext"></LogCheckBox>
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <div></div>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <div *ngIf="IsPDF" style="width:100%;height:100%">
+                                                                                            <iframe id="pdfQuoteViewerFrame" name="pdfQuoteViewerFrame" [src]="IFrameURI | SafePipe" style="width:100%;height:100%">Loading...</iframe>
+                                                                                        </div>
+                                                                                        <div *ngIf="!IsPDF">
+                                                                                            <table>
+                                                                                                <tr style="height:1px;">
+                                                                                                    <td>
+                                                                                                        No Preview Available
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td>
+                                                                                                        <Hyperlink (click)="PreviewButtonClicked()" [FontSize]="12" [Text]="'click here to download'"></Hyperlink>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            </table>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </div>
+
+                                                                        <div [hidden]="!IsMailBody" style="text-align:left;height:100%;padding:15px;vertical-align:top">
+                                                                            <table [hidden]="!IsSetHtml" >
+                                                                                <tr style="height:100%;vertical-align:top">
+                                                                                    <td>
+                                                                                        <div class="MediaFill" [attr.id]="PreviewDivId"></div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr style="height:3px;">
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr *ngIf="IsVisible" style="height: 32px;">
+                                                    <td style="vertical-align: bottom">
+                                                        <table style="height: 22px;">
+                                                            <tr>
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="width: 57px;">
+                                                                    <button [disabled]="!IsFilingButtonEnabled" class="RedButton" (click)="FileButtonClicked()">File</button>
+                                                                </td>
+
+                                                                <td style="width: 5px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="width: 57px;">
+                                                                    <button [disabled]="!IsFilingButtonEnabled" class="RedButton" (click)="FileAndDeleteButtonClicked()">File & Delete</button>
+                                                                </td>
+
+                                                                <td style="width: 5px;">
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </SectionBody>
+                    </SectionBox>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>

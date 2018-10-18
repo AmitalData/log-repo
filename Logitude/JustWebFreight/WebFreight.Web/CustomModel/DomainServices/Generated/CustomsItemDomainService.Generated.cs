@@ -1,0 +1,115 @@
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Server.Infrastructure.Helpers;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
+using WebFreight.Web.Security;
+using WebFreight.Web.Helpers;
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.Interfaces;
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
+using System.ServiceModel.DomainServices.Hosting; 
+using System.ServiceModel.DomainServices.Server;
+using System.Web;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.Customs.Data;
+using Logitude.Customs.BL;
+using Logitude.Customs.Data.EntityLists;
+using Logitude.Customs.BL.EntityUpdateServices;
+using Logitude.Customs.Data.EntityListQueryServices;
+using Logitude.Customs.BL.EntityQueryServices;
+
+namespace WebFreight.Web.CustomModel.DomainServices
+{ 
+
+    [EnableClientAccess()]
+    public partial class CustomsItemDomainService : LogitudeDomainService
+    {
+	    IDomainServiceUpdateClass<CustomsItemPM> service;
+		ICustomContext MyContext;
+     	public CustomsItemDomainService()
+		{ 
+		  //service = ContainerAccessor.Container.Resolve(typeof(IDomainServiceUpdateClass<CustomsItemPM>), "CustomDomainServiceUpdateClass", new ParameterOverride("", 1)) as IDomainServiceUpdateClass<CustomsItemPM>;
+		}
+       
+        public CustomsItemPM GetSingleCustomsItemPM(string id,int tenant)
+        {
+            if (MyContext == null)
+            {
+                  MyContext = CustomContext.GetContext(tenant);
+            }
+
+            CustomsItemQueryService customsItemQuery = new CustomsItemQueryService(MyContext);
+            CustomsItemPM customsItemPM = customsItemQuery.GetSingle(id,false,false);
+            return customsItemPM;
+           
+        }
+
+         
+		public CustomsItemList GetSingleCustomsItemList(string id,int tenant)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+			             SecurityUtility.CheckContactFeature("Customs.CustomsItem", "READ", tenant); if ( MyContext == null)
+            {
+                 MyContext = CustomContext.GetContext(tenant);
+            }
+
+          
+            CustomsItemListQueryService listService = new CustomsItemListQueryService(MyContext);
+            return listService.GetSingle(id);
+        }
+
+		public List<CustomsItemList> GetCustomsItemLists(int tenant)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+			             SecurityUtility.CheckContactFeature("Customs.CustomsItem", "READ", tenant);if ( MyContext == null)
+            {
+                  MyContext = CustomContext.GetContext(tenant);
+            }
+            CustomsItemListQueryService listService = new CustomsItemListQueryService(MyContext);
+            return listService.GetList(tenant);
+        }
+       
+	    public List<CustomsItemList> GetCustomsItemFilters(byte[] xmlFilters, int tenant)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+			            SecurityUtility.CheckContactFeature("Customs.CustomsItem", "READ", tenant);
+if ( MyContext == null)
+            {
+                  MyContext = CustomContext.GetContext(tenant);
+            };
+            CustomsItemListQueryService listService = new CustomsItemListQueryService(MyContext);
+            QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
+            return listService.GetList(queryOperations, tenant);
+           
+        }
+
+	    public int GetCustomsItemFiltersCount(byte[] xmlFilters, int tenant)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+			            SecurityUtility.CheckContactFeature("Customs.CustomsItem", "READ", tenant);if ( MyContext == null)
+            {
+                  MyContext = CustomContext.GetContext(tenant);
+            };
+            CustomsItemListQueryService queryService = new CustomsItemListQueryService(MyContext);
+            QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
+            return queryService.GetListCount(queryOperations);
+
+        }
+				
+      
+    }
+}
+	 

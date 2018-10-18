@@ -1,0 +1,1107 @@
+﻿declare var window: any;
+import {Component, ViewContainerRef, OnInit, AfterViewInit, ViewChildren, QueryList, Output, EventEmitter, ChangeDetectorRef} from '@angular/core';
+import {TextCodeTranslationPipe} from '../../../Controls/Pipes/TextCodeTranslationPipe';
+import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import {AdvancedQueryFilterPM} from '../../../Infrastructure/EntityPMs/AdvancedQueryFilterPM';
+import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
+import {AdvancedQueryFiltersPMService} from '../../../Infrastructure/Services/StandardPMs/AdvancedQueryFiltersPMService';
+import {QueriesPMService} from '../../../Infrastructure/Services/StandardPMs/QueriesPMService';
+import {TextCodePMService} from '../../../Infrastructure/Services/StandardPMs/TextCodePMService';
+import {GeneralEntitiesService} from '../../../Infrastructure/Services/StandardPMs/GeneralEntitiesService';
+import {Http} from '@angular/http';
+import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
+import {ObjectFieldPM} from '../../../Infrastructure/EntityPMs/ObjectFieldPM';
+import {QueryPM} from '../../../Infrastructure/EntityPMs/QueryPM';
+import {FormGroup, FormBuilder} from '@angular/forms';
+import {LogEvents} from '../../../Infrastructure/Utilities/LogEvents';
+import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
+import {QueryColumnDetails} from '../../../Infrastructure/Components/QueryColumnsComponents/QueryColumnsEditComponent';
+import {QueryColumnPM} from '../../../Infrastructure/EntityPMs/QueryColumnPM';
+import {FilterField, FilterFieldsClass, FieldsValues} from '../../../Infrastructure/Components/LogitudeComponents/QueryListComponent/FilterField';
+import {GeneralEntitiesArgs} from '../../../Infrastructure/DataContracts/GeneralEntitiesArgs';
+import {AppTool, DateTool} from '../../../Infrastructure/Tools';
+import {PubSubService} from '../../../Infrastructure/Utilities/events/ApiFiltersEvent';
+import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
+import {CachedDataManager} from '../../../Infrastructure/Utilities/CachedDataManager';
+import {ObjectsLocator} from '../../Locators/ObjectsLocator';
+import {ServiceLocator} from '../../Locators/ServiceLocator';
+
+@Component({
+    selector: 'NewViewComponent',
+    moduleId: module.id,
+
+    templateUrl: './NewViewComponent.html',
+    //pipes: [TextCodeTranslationPipe],
+    inputs: ['ObjectTableName', 'event', 'isWindowViewMode', 'isNewViewMode', 'QueryId', 'Filterchangeevent', 'rabaia'],
+    providers: [Http, ServiceArgs],
+    //directives: [LogLabelComponent, LogTextBoxComponent, LogDatePickerComponent, LogCheckboxComponent, QueryColumnsEditComponent, LogitudeListBoxComponent, LogLovComponent, ComboBox, ValidationSummary]
+})
+
+export class NewViewComponent {
+    RTL: boolean = ObjectsLocator.GlobalSetting == undefined ? false : (ObjectsLocator.GlobalSetting.LayoutDirection == 'rtl' ? true : false);
+    @Output() onDataSourceChangedEvent = new EventEmitter();
+    @Output() onUnSelectedDataLoadedEvent = new EventEmitter();
+    @Output() onSelectedDataLoadedEvent = new EventEmitter();
+    @Output() onUnSelectedDataSourceChangedEvent = new EventEmitter(); 
+    SelectedTabCode: string;
+    SearchFieldsId: string;
+    FiltersSearchFieldsId: string;
+    queryColumnsList: any[];
+    unselectedObjectFields: any[];
+    staticColumnsList: any[];
+    addedQueryColumnList: any[];
+    removedQueryColumnList: any[];
+    unSelectedList: any[];
+    OrderedQueryColumnsList: any[];
+    unselected: any[];
+    Fixedunselected: any[];
+    QueryId: string;
+    CurrentObjectTable: string;
+    IsEnabled: boolean;
+    ObjectTable: any;
+    ObjectTableId: string;
+    IsNew: boolean = true;
+    removedQueryFilters: any[];
+    public myForm: FormGroup;
+    GeneralEntitiesArgs: GeneralEntitiesArgs;
+    pubSubAdvanceQueryFiltersService: PubSubService;
+    ValidationErrorsList: string[]; 
+    CreateBtnText: string = TextCodeTranslator.Translate("General.B.Create");
+    public serviceArgs: ServiceArgs;
+    public _http: Http;
+    public BooleanValues = ["True", "False", "No Filter"];
+    constructor(fb: FormBuilder, private CD: ChangeDetectorRef) {
+        this.serviceArgs = new ServiceArgs();
+        this.serviceArgs.http = ServiceHelper.Http;
+        this._http = ServiceHelper.Http;
+        this.removedQueryFilters = [];
+        if (this.GeneralEntitiesArgs == null) {
+            this.GeneralEntitiesArgs = new GeneralEntitiesArgs();
+            this.GeneralEntitiesArgs.AdvancedQueryFilterPMs = [];
+            this.GeneralEntitiesArgs.QueryColumnsPMs = [];
+        }
+        else {
+            if (this.GeneralEntitiesArgs.AdvancedQueryFilterPMs == null) {
+                this.GeneralEntitiesArgs.AdvancedQueryFilterPMs = [];
+            }
+            if (this.GeneralEntitiesArgs.QueryColumnsPMs == null) {
+                this.GeneralEntitiesArgs.QueryColumnsPMs = [];
+            }
+        }
+        if (SessionLocator.CurrentSession == null) {
+            this.SearchFieldsId = "SearchFields_-1_-1";
+            this.FiltersSearchFieldsId = "FiltersSearchFieldsId_-1_-1";
+        }
+
+        else {
+            this.SearchFieldsId = "NewViewSearchFields_" + SessionLocator.CurrentSession.GetNewId("NewViewSearchFields");
+            this.FiltersSearchFieldsId = "NewViewFiltersSearchFieldsId_" + SessionLocator.CurrentSession.GetNewId("NewViewFiltersSearchFieldsId");
+        }
+        this.SelectedTabCode = "COL";
+        
+        this.myForm = fb.group({
+            //'ShipperName': ['', Validators.required]
+
+        }); 
+    }
+
+    SetWindowArgs(args: any) {
+        this.IsNew = args.IsNew;
+        this.pubSubAdvanceQueryFiltersService = args.pubSubAdvanceQueryFiltersService;
+        if (!this.IsNew) {
+            this.QueryName = args.QueryName;
+            this.CreateBtnText = TextCodeTranslator.Translate("General.B.Save");
+        }
+        else {
+            this.CreateBtnText = TextCodeTranslator.Translate("General.B.Create");
+        }
+        this.QueryId = args.queryId;
+        this.CurrentObjectTable = args.currentObjectTable;
+        this.IsEnabled = false;
+        this.ObjectTable = window.ObjectTables.filter((d:any) => d.Name == args.currentObjectTable)[0];
+        this.ObjectTableId = this.ObjectTable.Id;
+        this.ObjectFields = window.ObjectFields.filter((d:any) => d.ObjectTableId === this.ObjectTableId && d.CanFilter === true);
+        this.filterFields = new FilterFieldsClass(true, this, this.pubSubAdvanceQueryFiltersService);
+        this.NEWallFilterFieldsClass = new FilterFieldsClass(true, this, this.pubSubAdvanceQueryFiltersService);
+        this.constantFilterFields = new FilterFieldsClass(true, this, this.pubSubAdvanceQueryFiltersService);
+        this.Run();
+    }
+
+    ClearPlaceHolder() {
+        var temp = document.getElementById(this.SearchFieldsId) as HTMLInputElement;
+        temp.placeholder = "";
+        temp.style.background = "rgba(0, 0, 0, 0)";
+    }
+
+    FillPlaceHolder() {
+        var temp = document.getElementById(this.SearchFieldsId) as HTMLInputElement;
+        temp.placeholder = TextCodeTranslator.Translate("General.O.Search");
+        temp.style.background = "url(Images/Search.png) no-repeat scroll";
+        temp.style.backgroundPosition = "right center";
+        temp.style.paddingRight = "30px";
+    }
+
+    ClearFiltersPlaceHolder() {
+        var temp = document.getElementById(this.FiltersSearchFieldsId) as HTMLInputElement;
+        temp.placeholder = "";
+        temp.style.background = "rgba(0, 0, 0, 0)";
+    }
+
+    FillFiltersPlaceHolder() {
+        var temp = document.getElementById(this.FiltersSearchFieldsId) as HTMLInputElement;
+        temp.placeholder = TextCodeTranslator.Translate("General.O.Search");
+        temp.style.background = "url(Images/Search.png) no-repeat scroll";
+        temp.style.backgroundPosition = "right center";
+        temp.style.paddingRight = "30px";
+    }
+
+    Run() {
+
+        ServiceLocator.SendTotangoUserActivity("Customization", "QueryDefinition");
+        var copy = false;
+
+        var currentQuery = window.Queries.filter(d => d.Id == this.QueryId)[0];
+        this.addedQueryColumnList = [];
+        this.removedQueryColumnList = [];
+        //queriesByUser = TenantContext.Current.Queries.Where(d => d.UserId == TenantContext.Current.LoggedContactId).ToList();
+        this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=" + SessionInfo.LoggedUserTenant + "&queryid=" + this.QueryId + "&objecttableid=" + this.ObjectTable.Id + "&userid=" + SessionInfo.LoggedUserId)
+            .subscribe((response : any) => {
+                this.queryColumnsList = response.json();
+                // this.queryColumnsList = TenantContext.Current.GeneralContext.QueryColumnPMs.Where(d => d.QueryId == QueryId && ((d.UserId == TenantContext.Current.LoggedContactId && d.Tenant == TenantContext.Current.Id)) && d.DisplayInList).OrderBy(d => d.IndexOrder).ToList();
+                this.queryColumnsList = this.queryColumnsList.sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
+
+                if (this.queryColumnsList.length == 0) // Copy query columns to my tenant
+                {
+                    var zeroColumnsList: any[] = [];
+                    this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=0&queryid=" + this.QueryId + "&objecttableid=" + this.ObjectTable.Id + "&userid=null")
+                        .subscribe((response) => {
+                            zeroColumnsList = response.json();
+                            zeroColumnsList = zeroColumnsList.sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
+                            zeroColumnsList.forEach((querycolumn, key) => {
+                                var newcolumn = new QueryColumnPM();
+
+                                newcolumn.Tenant = SessionInfo.LoggedUserTenant,
+                                    newcolumn.UserId = SessionInfo.LoggedUserId,
+                                    newcolumn.DisplayInList = querycolumn.DisplayInList,
+                                    newcolumn.ObjectFieldName = querycolumn.ObjectFieldName,
+                                    newcolumn.ColumnWidth = querycolumn.ColumnWidth,
+                                    newcolumn.ConverterName = querycolumn.ConverterName,
+                                    newcolumn.DataTemplateName = querycolumn.DataTemplateName,
+                                    newcolumn.ColumnHeaderTemplateName = querycolumn.ColumnHeaderTemplateName,
+                                    newcolumn.IndexOrder = querycolumn.IndexOrder,
+                                    newcolumn.ObjectFieldDataTypeCode = querycolumn.ObjectFieldDataTypeCode,
+                                    newcolumn.ObjectFieldFieldLableTextCodeDefaultText = querycolumn.ObjectFieldFieldLableTextCodeDefaultText,
+                                    newcolumn.ObjectFieldId = querycolumn.ObjectFieldId,
+                                    newcolumn.ObjectFieldListLabelTextCodeCode = querycolumn.ObjectFieldListLabelTextCodeCode,
+                                    newcolumn.QueryCode = querycolumn.QueryCode,
+                                    newcolumn.QueryId = querycolumn.QueryId,
+                                    newcolumn.QueryObjectTableName = querycolumn.QueryObjectTableName,
+                                    newcolumn.ObjectFieldFieldLableTextCodeCode = querycolumn.ObjectFieldFieldLableTextCodeCode,
+                                    // TenantContext.Current.GeneralContext.QueryColumnPMs.Add(newcolumn);
+                                    this.queryColumnsList.push(newcolumn);
+                                this.addedQueryColumnList.push(newcolumn);
+                                //copy = true;
+
+                            });
+
+                        });
+
+                }
+
+
+                this.staticColumnsList = this.queryColumnsList.filter(q => q.QueryId == this.QueryId && ((q.UserId == SessionInfo.LoggedUserId && q.Tenant == SessionInfo.LoggedUserTenant))).sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
+
+                var listColumns = this.queryColumnsList.filter(q => q.QueryId == this.QueryId && ((q.UserId == SessionInfo.LoggedUserId && q.Tenant == SessionInfo.LoggedUserTenant))).sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
+
+
+                this.unselectedObjectFields = window.ObjectFields.filter(a => a.ObjectTableName == this.CurrentObjectTable).filter(d => d.DisplayInList == true && (d.Tenant == SessionInfo.LoggedUserTenant || d.Tenant == 0) && ((d.ValidForQuerySection1 == currentQuery.QuerySection || d.ValidForQuerySection2 == currentQuery.QuerySection) || d.IsCustom == true));
+
+
+                this.unselected = [];
+                this.unselectedObjectFields.forEach((field, key) => {
+                    var xx = this.queryColumnsList.filter(q => q.QueryId == this.QueryId && q.ObjectFieldId == field.Id && field.FieldName != "TimeFrameFilter");
+                    if (xx.length == 0) {
+                        this.unselected.push(field);
+                    }
+                });
+
+
+                //this.UnSelectedQueryColumnsList.ItemsSource = unselected.OrderBy(c => c.FieldName);
+                this.OrderedQueryColumnsList = [];
+                this.unSelectedList = this.unselected.sort((a, b) => { return (a.FieldName.toLowerCase() === b.FieldName.toLowerCase()) ? 0 : (a.FieldName.toLowerCase() < b.FieldName.toLowerCase()) ? -1 : 1 });
+                this.queryColumnsList.forEach((qc, key) => {
+                    this.OrderedQueryColumnsList.push(new QueryColumnDetails(qc));
+                });
+
+                this.OrderedQueryColumnsList = this.OrderedQueryColumnsList.sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
+                this.CD.detectChanges();
+                //SelectedQueryColumnsList.ItemsSource = OrderedQueryColumnsList;
+                this.Fixedunselected = this.unSelectedList;
+
+                this.IsEnabled = true;
+                this.onUnSelectedDataLoadedEvent.emit(this.SelectedItem);
+                this.onSelectedDataLoadedEvent.emit(this.FieldSelectedItem);
+            });
+        this.QueryFilterChangedAction(this.QueryId);
+        var xx = this.NEWallFilterFieldsClass;
+    }
+
+    //txtSearch_TextChanged
+    private searchText: string;
+    public get SearchText() { return this.searchText; }
+    public set SearchText(newValue: string) {
+        this.searchText = newValue;
+        if (newValue != null && newValue != "") {
+            this.unSelectedList = this.Fixedunselected.filter(f => f.ListTextCodeCode.toLowerCase().indexOf(newValue.toLowerCase()) > -1 || ((f.FullNameTextCodeLocalDefaultText != null && f.FullNameTextCodeLocalDefaultText != "") && f.FullNameTextCodeLocalDefaultText.toLowerCase().indexOf(newValue.toLowerCase()) > -1));
+        }
+        else {
+            this.unSelectedList = this.Fixedunselected;
+        }
+        this.onUnSelectedDataSourceChangedEvent.emit(this.unSelectedList);
+        //this.onUnSelectedDataLoadedEvent.emit(this.SelectedItem);
+
+    }
+    private selectedItem: any;
+    public get SelectedItem() { return this.selectedItem; }
+    public set SelectedItem(newValue: any) {
+        this.selectedItem = newValue;
+    }
+
+    private queryName: string;
+    public get QueryName() { return this.queryName; }
+    public set QueryName(newValue: string) {
+        this.queryName = newValue;
+    }
+
+
+    private fieldSelectedItem: any;
+    public get FieldSelectedItem() { return this.fieldSelectedItem; }
+    public set FieldSelectedItem(newValue: any) {
+        this.fieldSelectedItem = newValue;
+    }
+
+    private isbtnAddEnabled: boolean = true;
+    public get IsbtnAddEnabled() { return this.isbtnAddEnabled; }
+    public set IsbtnAddEnabled(newValue: boolean) {
+        this.isbtnAddEnabled = newValue;
+    }
+
+    private isbtnRemoveEnabled: boolean = true;
+    public get IsbtnRemoveEnabled() { return this.isbtnRemoveEnabled; }
+    public set IsbtnRemoveEnabled(newValue: boolean) {
+        this.isbtnRemoveEnabled = newValue;
+    }
+
+    private isbtnUpEnabled: boolean = true;
+    public get IsbtnUpEnabled() { return this.isbtnUpEnabled; }
+    public set IsbtnUpEnabled(newValue: boolean) {
+        this.isbtnUpEnabled = newValue;
+    }
+
+    private isbtnDownEnabled: boolean = true;
+    public get IsbtnDownEnabled() { return this.isbtnDownEnabled; }
+    public set IsbtnDownEnabled(newValue: boolean) {
+        this.isbtnDownEnabled = newValue;
+    }
+
+    onSelectedItemChanged(item) {
+        this.SelectedItem = item;
+        this.IsbtnAddEnabled = true;
+        this.IsbtnRemoveEnabled = false;
+        this.IsbtnUpEnabled = false;
+        this.IsbtnDownEnabled = false;
+        this.onUnSelectedDataLoadedEvent.emit(null);
+    }
+
+    onFieldSelectedItemChanged(item) {
+        this.FieldSelectedItem = item;
+        //if (UnSelectedQueryColumnsList.SelectedItem != null) {
+        this.IsbtnAddEnabled = false;
+        this.IsbtnRemoveEnabled = true;
+        this.IsbtnUpEnabled = true;
+        this.IsbtnDownEnabled = true;
+        this.onSelectedDataLoadedEvent.emit(null);
+        //SelectedQueryColumnsList.SelectedItem = null;
+        //}
+    }
+
+    btnUp_Click() {
+
+        var item = this.SelectedItem;
+        if (item != null) {
+            var i = this.OrderedQueryColumnsList.indexOf(item);
+
+            this.ReorderColumnsList();
+            var upColumn = this.OrderedQueryColumnsList.filter(d => d.ObjectFieldId == item.ObjectFieldId && ((d.Tenant == SessionInfo.LoggedUserTenant && d.UserId == SessionInfo.LoggedUserId) || d.Tenant == 0) && d.QueryId == this.QueryId)[0];
+
+            if (i > 0) {
+                this.OrderedQueryColumnsList = this.OrderedQueryColumnsList.filter(d => d.ObjectFieldId != upColumn.ObjectFieldId);
+                this.OrderedQueryColumnsList.filter(o => o.IndexOrder == i - 1)[0].IndexOrder = i;
+                upColumn.IndexOrder = i - 1;
+                this.OrderedQueryColumnsList.splice(i - 1, 0, upColumn);
+                this.onDataSourceChangedEvent.emit(this.OrderedQueryColumnsList);
+                //this.ReorderColumnsList();
+                this.onSelectedDataLoadedEvent.emit(this.SelectedItem);
+            }
+        }
+
+    }
+
+    btnDown_Click() {
+        var item = this.SelectedItem;
+        if (item != null) {
+
+            var i = this.OrderedQueryColumnsList.indexOf(item);
+
+            this.ReorderColumnsList();
+
+            var downColumn = this.OrderedQueryColumnsList.filter(d => d.ObjectFieldId == item.ObjectFieldId && ((d.Tenant == SessionInfo.LoggedUserTenant && d.UserId == SessionInfo.LoggedUserId) || d.Tenant == 0) && d.QueryId == this.QueryId)[0];
+
+            if (i < this.OrderedQueryColumnsList.length - 1) {
+                this.OrderedQueryColumnsList = this.OrderedQueryColumnsList.filter(d => d.ObjectFieldId != downColumn.ObjectFieldId);
+
+                this.OrderedQueryColumnsList.filter(o => o.IndexOrder == i + 1)[0].IndexOrder = i;
+                downColumn.IndexOrder = i + 1;
+                this.OrderedQueryColumnsList.splice(i + 1, 0, downColumn);
+                this.onDataSourceChangedEvent.emit(this.OrderedQueryColumnsList);
+                //this.ReorderColumnsList();
+                this.onSelectedDataLoadedEvent.emit(this.SelectedItem);
+            }
+        }
+
+    }
+
+    btnAdd_Click() {
+        if (this.FieldSelectedItem != null) {
+
+            var field = this.FieldSelectedItem;
+
+            var queryColumn = this.unSelectedList.filter(a => a.QueryId == this.QueryId && a.FieldName == field.FieldName)[0];
+            if (queryColumn) {
+                this.removedQueryColumnList = this.removedQueryColumnList.filter(a => a.FieldName != queryColumn.FieldName);
+            }
+            if (queryColumn) {
+                if (queryColumn.Id) {
+                    var newQueryColumn = new QueryColumnPM();
+
+                    newQueryColumn.QueryId = this.QueryId,
+                        newQueryColumn.ObjectFieldId = field.Id,
+                        //ObjectField = field,
+                        newQueryColumn.ObjectFieldName = field.FieldName,
+                        newQueryColumn.ObjectFieldFieldLableTextCodeDefaultText = field.FullNameTextCodeDefaultText,
+                        newQueryColumn.Tenant = SessionInfo.LoggedUserTenant,
+                        newQueryColumn.IndexOrder = (this.OrderedQueryColumnsList.length > 0 ? this.OrderedQueryColumnsList[this.OrderedQueryColumnsList.length - 1].IndexOrder + 1 : 0),
+                        newQueryColumn.ColumnWidth = 100,
+                        newQueryColumn.ConverterName = field.ConverterName,
+                        newQueryColumn.DataTemplateName = field.DataTemplateName,
+                        newQueryColumn.ObjectFieldListLabelTextCodeCode = field.ListTextCodeCode,
+                        newQueryColumn.DisplayInList = true,
+                        newQueryColumn.UserId = SessionInfo.LoggedUserId,
+                        newQueryColumn.ObjectFieldFieldLableTextCodeCode = field.FullNameTextCodeCode,
+
+
+                        this.OrderedQueryColumnsList.push(new QueryColumnDetails(newQueryColumn));
+
+                    this.addedQueryColumnList.push(newQueryColumn);
+
+
+                }
+                else {
+
+                    queryColumn.IndexOrder = (this.OrderedQueryColumnsList.length > 0 ? this.OrderedQueryColumnsList[this.OrderedQueryColumnsList.length - 1].IndexOrder + 1 : 0);
+                    this.OrderedQueryColumnsList.push(new QueryColumnDetails(queryColumn));
+                }
+            }
+            else {
+                var newQueryColumn = new QueryColumnPM();
+
+                newQueryColumn.QueryId = this.QueryId,
+                    newQueryColumn.ObjectFieldId = field.Id,
+                    //  ObjectField = field,
+                    newQueryColumn.ObjectFieldName = field.FieldName,
+                    newQueryColumn.ObjectFieldFieldLableTextCodeDefaultText = field.FullNameTextCodeDefaultText,
+                    newQueryColumn.Tenant = SessionInfo.LoggedUserTenant,
+                    newQueryColumn.IndexOrder = (this.OrderedQueryColumnsList.length > 0 ? this.OrderedQueryColumnsList[this.OrderedQueryColumnsList.length - 1].IndexOrder + 1 : 0),
+                    newQueryColumn.ColumnWidth = 100,
+                    newQueryColumn.ConverterName = field.ConverterName,
+                    newQueryColumn.DataTemplateName = field.DataTemplateName,
+
+                    newQueryColumn.ObjectFieldListLabelTextCodeCode = field.ListTextCodeCode,
+                    newQueryColumn.DisplayInList = true,
+                    newQueryColumn.UserId = SessionInfo.LoggedUserId,
+                    newQueryColumn.ObjectFieldFieldLableTextCodeCode = field.FullNameTextCodeCode,
+
+
+                    this.OrderedQueryColumnsList.push(new QueryColumnDetails(newQueryColumn));
+
+                this.addedQueryColumnList.push(newQueryColumn);
+
+            }
+
+
+            this.unSelectedList = this.unSelectedList.filter(a => a.FieldName != field.FieldName);
+            this.IsbtnAddEnabled = false;
+            this.CD.detectChanges();
+
+
+            if (this.SearchText != null && this.SearchText != "") {
+                this.unSelectedList = this.unSelectedList.filter(f => f.FullNameTextCodeDefaultText.toLowerCase().indexOf(this.SearchText.toLowerCase()) >= 0 || ((f.FullNameTextCodeLocalDefaultText != null && f.FullNameTextCodeLocalDefaultText != "") && f.FullNameTextCodeLocalDefaultText.toLowerCase().indexOf(this.SearchText.toLowerCase())));
+            }
+            this.onUnSelectedDataLoadedEvent.emit(this.SelectedItem);
+
+
+        }
+        //this.ReorderColumnsList();
+        this.onSelectedDataLoadedEvent.emit(this.FieldSelectedItem);
+        this.FieldSelectedItem = null;
+        this.SelectedItem = null;
+    }
+
+    btnRemove_Click() {
+        if (this.SelectedItem) {
+            var queryColumn = this.SelectedItem;
+
+            var objectField = window.ObjectFields.filter(a => a.Id == queryColumn.ObjectFieldId)[0];
+
+            this.unSelectedList.push(objectField);
+            //-----
+            this.OrderedQueryColumnsList = this.OrderedQueryColumnsList.filter(a => a.ObjectFieldId != queryColumn.ObjectFieldId);
+
+
+            var pm = this.queryColumnsList.filter(a => a.ObjectFieldId == queryColumn.ObjectFieldId && a.QueryId == this.QueryId)[0];
+
+            if (pm != null) {
+                this.removedQueryColumnList.push(pm);
+            }
+
+            var queryColumn2 = this.addedQueryColumnList.filter(a => a.ObjectFieldId == queryColumn.ObjectFieldId && a.QueryId == this.QueryId)[0];
+
+            if (queryColumn2 != null) {
+                this.addedQueryColumnList = this.addedQueryColumnList.filter(a => a.ObjectFieldId != queryColumn2.ObjectFieldId);
+            }
+
+            this.OrderedQueryColumnsList.forEach((column, key) => {
+                if (column.IndexOrder > queryColumn.IndexOrder) {
+                    column.IndexOrder--;
+                }
+            });
+
+            //this.ReorderColumnsList();
+            this.IsbtnRemoveEnabled = false;
+            this.CD.detectChanges();
+            this.onUnSelectedDataLoadedEvent.emit(this.SelectedItem);
+            this.onSelectedDataLoadedEvent.emit(this.FieldSelectedItem);
+            this.FieldSelectedItem = null;
+            this.SelectedItem = null;
+        }
+    }
+
+    ReorderColumnsList() {
+        var queryColumnList = this.OrderedQueryColumnsList.sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
+        //.filter(d => d.Id != null && d.QueryId == this.QueryId && d.UserId == SessionInfo.LoggedUserId && d.Tenant == SessionInfo.LoggedUserTenant)
+        //var TenantZeroqueryColumnList = this.OrderedQueryColumnsList.filter(d => d.QueryId == this.QueryId && d.UserId == null && d.Tenant == 0).sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
+
+        var i = 0;
+        for (; i < queryColumnList.length; i++) {
+            queryColumnList[i].IndexOrder = i;
+        }
+        //var queryColumnList = this.OrderedQueryColumnsList.filter(d => d.QueryId == this.QueryId && d.UserId == SessionInfo.LoggedUserId && d.Tenant == SessionInfo.LoggedUserTenant).sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
+        //var i = 0;
+        //for (; i < queryColumnList.length; i++) {
+        //    queryColumnList[i].IndexOrder = i;
+        //}
+
+    }
+
+    CancelButtonClicked() {
+        SessionLocator.CurrentSession.CurrentWindow.Close(this.QueryId);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    NEWallFilterFieldsClass: FilterFieldsClass;
+    filterFields: FilterFieldsClass;
+    constantFilterFields: FilterFieldsClass;
+    public temp: FilterField[];
+
+    allFilterFields: ObjectFieldPM[];// = new List<ObjectFieldPM>();
+    constantFilterFieldsList: ObjectFieldPM[];// = new List<ObjectFieldPM>();
+    CurrentFilters: ObjectFieldPM[];// = new List<ObjectFieldPM>();
+    advancedQueryFiltersList: AdvancedQueryFilterPM[]; //List<AdvancedQueryFilterPM> 
+    fieldsStaticList: FilterField[];//FilterField
+
+    timeFilterFieldsClass: FilterFieldsClass = new FilterFieldsClass(false, this, this.pubSubAdvanceQueryFiltersService);
+    timeFrameFields: FilterField[];
+    noFiltersField: FilterField;
+    objectField: ObjectFieldPM;
+    private myAdvancedQueryFiltersPMService: AdvancedQueryFiltersPMService;
+    public AdvancedQueryFilterPMs: AdvancedQueryFilterPM[];
+    public ObjectFields: any;
+    public FieldsValues: FieldsValues;
+    currentQuery: QueryPM;
+    QueryFilterChangedAction(QueryID: string) {
+        this.allFilterFields = [];
+        this.constantFilterFieldsList = [];
+        this.CurrentFilters = [];
+        this.advancedQueryFiltersList = [];
+        this.fieldsStaticList = [];
+        this.timeFrameFields = [];
+        this.AdvancedQueryFilterPMs = [];
+        if (this.myAdvancedQueryFiltersPMService == null) {
+            this.myAdvancedQueryFiltersPMService = new AdvancedQueryFiltersPMService();
+            this.myAdvancedQueryFiltersPMService.setServiceArgs(this.serviceArgs);
+        }
+
+        this.myAdvancedQueryFiltersPMService.getadvancedqueryfiltersbytenant(SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId).subscribe(myResult => {
+            this.GetFiltersComplete(myResult, QueryID);
+        });
+
+    }
+
+    GetFiltersComplete(myResult: any, QueryID: any) {
+        if (myResult == null) {
+            this.AdvancedQueryFilterPMs = [];
+        }
+
+        else {
+            this.AdvancedQueryFilterPMs = myResult;
+        }
+        this.timeFilterFieldsClass = new FilterFieldsClass(true, this, this.pubSubAdvanceQueryFiltersService);
+        this.FieldsValues = new FieldsValues();
+        this.currentQuery = window.Queries.filter(q => q.Id == QueryID)[0];
+
+        if (this.currentQuery.DisplayAsCustom) {
+            //btnEditView.IsEnabled = true;
+        }
+
+        if (this.ObjectFields) {
+
+            this.allFilterFields = window.ObjectFields.filter(o => o.CanFilter == true && o.DataTypeCode != "Constant" && ((o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection) || o.IsCustom == true));
+
+            this.constantFilterFieldsList = window.ObjectFields.filter(o => o.CanFilter == true && o.DataTypeCode == "Constant" && ((o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection) || o.IsCustom == true));
+
+            this.timeFilterFieldsClass.AddFiltersList(window.ObjectFields.filter(o => o.CanFilter == true && o.FieldName != "TimeFrameFilter" && o.IsTimeFrameFilter == true && (o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection)), this.currentQuery.Id, myResult);
+
+            this.NEWallFilterFieldsClass.AddFiltersList(window.ObjectFields.filter(o => o.CanFilter == true && o.DataTypeCode != "Constant" && ((o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection) || o.IsCustom == true)), this.currentQuery.Id, myResult);
+
+        }
+        else {
+            this.allFilterFields = [];
+            this.constantFilterFieldsList = [];
+
+            this.NEWallFilterFieldsClass.AddFiltersList([], this.currentQuery.Id, myResult);
+        }
+
+
+        this.filterFields.AddFiltersList(this.allFilterFields, this.currentQuery.Id, myResult);
+
+        this.constantFilterFields.AddFiltersList(this.constantFilterFieldsList, this.currentQuery.Id, myResult);
+
+        this.fieldsStaticList = this.NEWallFilterFieldsClass.FilterFields;
+
+
+        this.timeFrameFields = this.timeFilterFieldsClass.FilterFields;//fieldsStaticList.Where(d => d.ObjectField.IsTimeFrameFilter == true).ToList();
+        var OFPM = new ObjectFieldPM();
+        OFPM.FieldName = "NoFilter";
+        OFPM.FullNameTextCodeCode = "No Filter";
+
+        this.noFiltersField = new FilterField(OFPM, this.currentQuery.Id, true, myResult, this, this.pubSubAdvanceQueryFiltersService);
+        this.timeFrameFields.push(this.noFiltersField);
+        //if (!this.IsNew) {
+            this.advancedQueryFiltersList = myResult.filter(q => q.QueryId == QueryID);
+        //}
+        //else {
+        //    this.advancedQueryFiltersList = [];
+        //}
+        this.fillqueryfilters();
+    }
+
+    fillqueryfilters() {
+        //if (this.advancedQueryFiltersList == undefined || this.advancedQueryFiltersList == null) {
+        this.SelectedObjectFields = [];
+        //}
+        //else {
+        this.advancedQueryFiltersList.forEach((item, key) => {
+            this.objectField = window.ObjectFields.filter(o => o.Id === item.ObjectFieldId)[0];
+            var xx = this.MapJsonToEntityPM(this.objectField);
+            this.AddFilterField(xx);
+        });
+        //}
+    }
+
+    MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true) {
+
+        var entityPM: ObjectFieldPM;
+        entityPM = new ObjectFieldPM();
+        var jsonPMKeys = Object.keys(jsonPM);
+
+        for (var key in jsonPMKeys) {
+            if (jsonPMKeys[key] === "UIProperties") {
+
+                continue;
+            }
+            var property = jsonPMKeys[key];
+            entityPM[property] = jsonPM[property];
+        }
+
+        entityPM.IsDirty = false;
+        return entityPM;
+    }
+    SelectedObjectFields: FilterField[];
+    public AddFilterField(field: ObjectFieldPM) {
+        
+        if (this.SelectedObjectFields == undefined) {
+            this.SelectedObjectFields = [];
+        } 
+        var filters = this.AdvancedQueryFilterPMs.filter(d => d.IsPredefined == true && d.ObjectFieldId == field.Id);
+        if (filters != null && filters[0] != null) {
+            var value = this.AdvancedQueryFilterPMs.filter(d => d.IsPredefined == true && d.ObjectFieldId == field.Id)[0].PredefinedValue;
+            this.FieldsValues.SetFieldValue(field.Id, value);
+        }
+        if (!this.IsNew) {
+            this.SelectedObjectFields.push(new FilterField(field, this.QueryId, true, filters, this, this.pubSubAdvanceQueryFiltersService));
+        }
+        else {
+            this.SelectedObjectFields.push(new FilterField(field, "", true, filters, this, this.pubSubAdvanceQueryFiltersService));
+        }
+        if (this.SelectedObjectFields.length > 10) {
+            this.ValidationErrorsList = [];
+            this.ValidationErrorsList.push("The max. number of filters you can use is 10");
+            this.NEWallFilterFieldsClass.SetExists(field, false);
+            return;
+        }
+        this.NEWallFilterFieldsClass.SetExists(field, true);
+    }
+
+    public RemoveFilterField(field: ObjectFieldPM) {
+        if (this.SelectedObjectFields != null) {
+            this.SelectedObjectFields = this.SelectedObjectFields.filter(a => a.ObjectField.Id != field.Id);
+        }
+    }
+
+
+    OnQueryFilterChanged(QueryID: string) {
+        this.QueryId = QueryID;
+        this.QueryFilterChangedAction(this.QueryId);
+        //if (this.IsOpened) {
+        //    this.SaveChangesAndRecreate();
+        //}
+    }
+
+    private filterssearchText: string;
+    public get FilterssearchText() { return this.filterssearchText; }
+    public set FilterssearchText(newValue: string) {
+        this.filterssearchText = newValue;
+        if (newValue != null && newValue != "") {
+
+            this.NEWallFilterFieldsClass.FilterFields = this.fieldsStaticList.filter(f => TextCodeTranslator.Translate(f.ObjectField.FullNameTextCodeCode).toLowerCase().indexOf(newValue.toLowerCase()) > -1);
+            this.SelectedObjectFields.forEach((item, key) => {
+                this.NEWallFilterFieldsClass.SetExists(item, true);
+                this.filterFields.SetExists(item, true);
+            });
+
+        }
+        else {
+            this.NEWallFilterFieldsClass.FilterFields = this.fieldsStaticList;
+            this.SelectedObjectFields.forEach((item, key) => {
+                this.NEWallFilterFieldsClass.SetExists(item, true);
+                this.filterFields.SetExists(item, true);
+            });
+        }
+
+
+    }
+
+    public DeteteFilter(field: FilterField) {
+        //if (this.AdvancedQueryFilterPMs.filter(f => f.ObjectFieldId == field.ObjectField.Id && f.QueryId == this.QueryId)[0] != null) {
+        //    var advanceFilter = this.AdvancedQueryFilterPMs.filter(f => f.ObjectFieldId == field.ObjectField.Id && f.QueryId == this.QueryId)[0];
+        //var myService: AdvancedQueryFiltersPMService = new AdvancedQueryFiltersPMService();
+        //myService.setServiceArgs(this.serviceArgs);
+        //myService.delete(advanceFilter).subscribe(myResult => {
+        if (this.SelectedObjectFields != null) {
+            this.removedQueryFilters.push(this.SelectedObjectFields.filter(a => a.ObjectField.Id == field.ObjectField.Id)[0]);
+            this.SelectedObjectFields = this.SelectedObjectFields.filter(a => a.ObjectField.Id != field.ObjectField.Id);
+        }
+        if (this.NEWallFilterFieldsClass != null) {
+            this.NEWallFilterFieldsClass.SetExists(field, false);
+        }
+        //});
+        //}
+    }
+
+    public CLearAll() {
+
+        if (this.NEWallFilterFieldsClass != null) {
+            this.SelectedObjectFields.forEach((field, key) => {
+                this.NEWallFilterFieldsClass.SetExists(field, false);
+            });
+        }
+        if (this.SelectedObjectFields != null) {
+            this.SelectedObjectFields = [];
+        }
+
+    }
+
+    btnCreateNewQuery_Click() {
+        if (this.IsNew) {
+            this.SavePredifinedQuery(this.QueryName);
+        }
+        else {
+            this.SaveAndClose(this.QueryName);
+        }
+    }
+
+    SavePredifinedQuery(queryName: string) {
+        var DoSaving = false;
+        var myService: QueriesPMService = new QueriesPMService();
+        var textCodesService: TextCodePMService = new TextCodePMService();
+
+        this.ValidationErrorsList = [];
+
+
+        if (!AppTool.IsNullOrEmpty(queryName)) {
+            if (queryName.length > 30) {
+                DoSaving = false;
+                this.ValidationErrorsList.push(TextCodeTranslator.Translate("General.M.QueryNameLength"));
+                return;
+            }
+            if (this.SelectedObjectFields.length == 0) {
+                DoSaving = true;
+            }
+            else {
+                this.SelectedObjectFields.forEach((item, key) => {
+                    if (item.TextValue == null || item.TextValue == "") {
+                        if (item.ObjectField.DataTypeCode != "Boolean") { 
+                            DoSaving = false;
+                            this.ValidationErrorsList.push(TextCodeTranslator.Translate("General.M.SomeFiltersHaveNoValue"));
+                            return;
+                        }
+                        else {
+                            DoSaving = true;
+                        } 
+                    }
+                    else {
+                        DoSaving = true;
+                    }
+                });
+            }
+            if (DoSaving) {
+                SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+
+                var theCurrentQuery = (window.Queries.filter(q => q.Id == this.QueryId)[0]);
+                var temp = window.Queries.filter(q => q.ObjectTableId == theCurrentQuery.ObjectTableId && q.UserId == theCurrentQuery.UserId && q.QueryGroupCode == theCurrentQuery.QueryGroupCode).sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
+                var maxIndex = temp[temp.length - 1];
+                var newQuery = new QueryPM();
+
+                newQuery.QuerySection = theCurrentQuery.QuerySection,
+                    newQuery.ObjectTableId = theCurrentQuery.ObjectTableId,
+                    newQuery.ObjectTableName = theCurrentQuery.ObjectTableName,
+                    newQuery.Tenant = SessionInfo.LoggedUserTenant,
+                    newQuery.UserId = SessionInfo.LoggedUserId,
+                    newQuery.Code = "111",//txtViewCode.Text,
+                    newQuery.IndexOrder = maxIndex.IndexOrder + 1,
+                    newQuery.ObjectTableIsNewWizard = theCurrentQuery.ObjectTableIsNewWizard,
+                    newQuery.ObjectTableNewWizardControlName = theCurrentQuery.ObjectTableNewWizardControlName,
+                    newQuery.OriginalQueryId = theCurrentQuery.Id,
+                    newQuery.QueryGroupCode = theCurrentQuery.QueryGroupCode,
+                    //QueryLabel = queryName,
+                    newQuery.IsAddNewEntityEnabled = theCurrentQuery.IsAddNewEntityEnabled,
+                    newQuery.NewViewName = queryName,
+                    newQuery.Perspective = theCurrentQuery.Perspective,
+                    newQuery.EditWizardName = theCurrentQuery.EditWizardName;
+
+                    //this.QueryFiltersArgs.QueryPM = newQuery; 
+                    myService.setServiceArgs(this.serviceArgs);
+                textCodesService.setServiceArgs(this.serviceArgs);
+                myService.insert(newQuery).subscribe(myResult => {
+                    textCodesService.get(myResult.Result.NameTextCodeId, myResult.Result.Tenant).subscribe(res => {
+                        window.TextCodesTranslations.push(res);
+                        this.AddFiltersAndColumns(myResult.Result);
+                        window.Queries.push(myResult.Result);
+                    });
+
+                });
+            }
+        }
+
+        else {
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate("General.M.QueryNamecannotBeEmpty"));
+        }
+    }
+
+    AddFiltersAndColumns(newQuery) {
+        var myGeneralService: GeneralEntitiesService = new GeneralEntitiesService();
+        var columns = this.OrderedQueryColumnsList;
+        columns.forEach((column, key) => {
+            var newColumn = new QueryColumnPM();
+
+            newColumn.IndexOrder = column.IndexOrder,
+                newColumn.ObjectFieldId = column.ObjectFieldId,
+                newColumn.QueryId = this.IsNew ? newQuery.Id : this.QueryId,
+                newColumn.Tenant = newQuery.Tenant,
+                newColumn.ColumnWidth = column.ColumnWidth,
+                newColumn.ConverterName = column.ConverterName,
+                newColumn.DataTemplateName = column.DataTemplateName,
+                newColumn.ObjectFieldFieldLableTextCodeDefaultText = column.ObjectFieldFieldLableTextCodeDefaultText,
+                newColumn.ObjectFieldListLabelTextCodeCode = column.ObjectFieldListLabelTextCodeCode,
+                newColumn.ObjectFieldName = column.ObjectFieldName,
+                newColumn.QueryCode = column.QueryCode,
+                newColumn.QueryObjectTableName = column.QueryObjectTableName,
+                newColumn.DisplayInList = true,
+                newColumn.UserId = SessionInfo.LoggedUserId,
+
+
+                this.GeneralEntitiesArgs.QueryColumnsPMs.push(newColumn);
+        });
+
+        this.SelectedObjectFields.forEach((field, key) => {
+            if (field.TextValue != null) {
+                var advanceFilter = new AdvancedQueryFilterPM();
+
+                advanceFilter.Tenant = SessionInfo.LoggedUserTenant,
+                    advanceFilter.ObjectFieldId = field.ObjectField.Id;
+                advanceFilter.QueryId = this.IsNew ? newQuery.Id : this.QueryId,
+                    advanceFilter.DataTypeCode = field.ObjectField.DataTypeCode;
+                advanceFilter.DisplayInList = field.ObjectField.DisplayInList;
+                advanceFilter.IsCustomFilter = field.ObjectField.IsCustomFilter;
+                advanceFilter.ObjectFieldName = field.ObjectField.FieldName;
+                advanceFilter.QueryCode = this.currentQuery.Code;
+                advanceFilter.QueryObjectTableName = this.currentQuery.ObjectTableName;
+                advanceFilter.QueryUserId = this.currentQuery.UserId;
+                advanceFilter.ObjectFieldOperator = field.ObjectField.Operator;
+                advanceFilter.Operator = field.Operation.Code;
+                advanceFilter.PredefinedValue = field.TextValue;//this.FieldsValues.GetFieldValue(field.ObjectField.Id);
+                advanceFilter.IsPredefined = true;
+                advanceFilter.UserId = SessionInfo.LoggedUserId;
+
+                if (!AppTool.IsNullOrEmpty(field.MyName)) {
+                    advanceFilter.PredefinedValue = field.MyName;
+                }
+                else if (field.ObjectField.DataTypeCode == "DateTime") {
+                    var date = this.FieldsValues.GetFieldValue(field.ObjectField.Id);
+                    if (field.TextValue != null && date != null && field.Operation.Code != "LargerThan" && field.Operation.Code != "LessThan") {
+                        advanceFilter.PredefinedValue = date;
+                    }
+
+                }
+                this.GeneralEntitiesArgs.AdvancedQueryFilterPMs.push(advanceFilter);
+
+            }
+            else {
+                this.ValidationErrorsList.push(TextCodeTranslator.Translate("General.M.SomeFiltersHaveNoValue"));
+            }
+        });
+        this.GeneralEntitiesArgs.Tenant = SessionInfo.LoggedUserTenant;
+        myGeneralService.setServiceArgs(this.serviceArgs);
+        if (this.IsNew) {
+            myGeneralService.insert(this.GeneralEntitiesArgs).subscribe(myResult => {
+                myResult.Result.AdvancedQueryFilterPMs.forEach((filter, key) => {
+                    window.PreDefinedFilters.push(filter);
+                });
+                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                SessionLocator.CurrentSession.CurrentWindow.Close(newQuery.Id);
+            });
+        }
+        else {
+            myGeneralService.update(this.GeneralEntitiesArgs).subscribe(myResult => {
+                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                SessionLocator.CurrentSession.CurrentWindow.Close(newQuery.Id);
+            });
+        }
+        //generalContext.SubmitChanges().Completed += (sss, eee) => {
+        //    LoadOperation op = generalContext.Load(generalContext.GetSingleFieldTranslationForTextCodeQuery(newQuery.NameTextCodeCode, TenantContext.Current.Id), LoadBehavior.RefreshCurrent, false);
+        //    op.Completed += (sss1, eee1) => {
+        //        //refresh translations
+        //        dataLoader.LoadTenantDataCompleted += (ssss1) => {
+        //            currentAssemlyLocator.CurrentSimplogWindow.Close();
+        //            RefreshQueries(newQuery);
+        //        };
+
+        //        dataLoader.LoadTranslations(TenantContext.Current.Id, true);
+
+        //    };
+
+
+
+        //}; 
+    }
+
+    SaveAndClose(queryName) {
+        var myService: QueriesPMService = new QueriesPMService();
+        var textCodesService: TextCodePMService = new TextCodePMService();
+        var DoSaving = false;
+        var CurrentQuery = window.Queries.filter(x => x.Id == this.QueryId)[0];
+
+        if (!AppTool.IsNullOrEmpty(queryName)) {
+            if (queryName.length > 30) {
+                DoSaving = false;
+                if (this.ValidationErrorsList == null) {
+                    this.ValidationErrorsList = [];
+                }
+                this.ValidationErrorsList.push(TextCodeTranslator.Translate("General.M.QueryNameLength"));
+                return;
+            }
+            if (this.SelectedObjectFields.length == 0) {
+                DoSaving = true;
+            }
+            else {
+                this.SelectedObjectFields.forEach((item, key) => {
+                    if (item.TextValue == null || item.TextValue == "") {
+                       
+                        if (item.ObjectField.DataTypeCode != "Boolean") {
+                            DoSaving = false;
+                            if (this.ValidationErrorsList == null) {
+                                this.ValidationErrorsList = [];
+                            }
+                            this.ValidationErrorsList.push(TextCodeTranslator.Translate("General.M.SomeFiltersHaveNoValue"));
+                            return;
+                        }
+                        else {
+                            DoSaving = true;
+                        }
+                    }
+                    else {
+                        DoSaving = true;
+                    }
+                });
+            }
+        }
+        if (DoSaving == true) {
+            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+            CurrentQuery.NewViewName = queryName;
+            myService.setServiceArgs(this.serviceArgs);
+            textCodesService.setServiceArgs(this.serviceArgs);
+            myService.update(CurrentQuery).subscribe(myResult => {
+                if (!SessionLocator.UseCachedData) {
+                textCodesService.get(myResult.Result.NameTextCodeId, myResult.Result.Tenant).subscribe(res => {
+                    window.TextCodesTranslations = window.TextCodesTranslations.filter(a => a.TextCodeId != myResult.Result.NameTextCodeId);
+                    window.TranslationsCache = window.TranslationsCache.filter(d => d.Code != myResult.Result.NameTextCodeCode);
+                    window.TextCodesTranslations.push(res);
+                    window.TranslationsCache.push(res);
+                    this.UpdateColumnsAndFilters();
+                    //window.Queries.push(myResult.Result);
+                });
+                }
+                else {
+                    CachedDataManager.RefreshTenantTextCodes().subscribe(response=> {
+                        //window.TextCodesTranslations = window.TextCodesTranslations.filter(a => a.TextCodeId != myResult.Result.NameTextCodeId);
+                        //window.TranslationsCache = window.TranslationsCache.filter(d => d.Code != myResult.Result.NameTextCodeCode);
+                        //window.TextCodesTranslations.push(res);
+                        //window.TranslationsCache.push(res);
+                        this.UpdateColumnsAndFilters();
+                    });
+                }
+
+            }); 
+        }
+    }
+
+    UpdateColumnsAndFilters() {
+        var myGeneralService: GeneralEntitiesService = new GeneralEntitiesService();
+        this.GeneralEntitiesArgs.QueryColumnsPMs = [];
+        this.GeneralEntitiesArgs.RemovedQueryColumnsPMs = [];
+        this.GeneralEntitiesArgs.RemovedQueryFilters = [];
+        this.removedQueryColumnList.forEach((queryColumn, key) => {
+            this.GeneralEntitiesArgs.RemovedQueryColumnsPMs.push(queryColumn);
+        });
+
+        this.OrderedQueryColumnsList.forEach((queryColumn, key) => {
+            this.GeneralEntitiesArgs.QueryColumnsPMs.push(queryColumn);
+        });
+
+        this.removedQueryFilters.forEach((item, key) => {
+            if (item != null && item.AdvancedQueryFilterPM != null) {
+                this.GeneralEntitiesArgs.RemovedQueryFilters.push(item.AdvancedQueryFilterPM);
+                window.PreDefinedFilters = window.PreDefinedFilters.filter(a => a.ObjectFieldId != item.AdvancedQueryFilterPM.objectFieldId);
+                this.AdvancedQueryFilterPMs = this.AdvancedQueryFilterPMs.filter(a => a.ObjectFieldId != item.AdvancedQueryFilterPM.objectFieldId);
+            }
+        });
+
+        this.SelectedObjectFields.forEach((item, key) => {
+            //this.myAdvancedQueryFiltersPMService.getuseradvancedqueryfilterbytenantobjecttablequery(SessionInfo.LoggedUserTenant, item.ObjectField.Id, this.QueryId, SessionInfo.LoggedUserId).subscribe(filter => {
+            //    this.GeneralEntitiesArgs.AdvancedQueryFilterPMs.push(filter);
+            //});
+            if (item.AdvancedQueryFilterPM != null) {
+                if (item.ObjectField.DataTypeCode != "DateTime" && item.ObjectField.DataTypeCode != "Date") {
+                    item.AdvancedQueryFilterPM.PredefinedValue = item.TextValue;
+                }
+                else if (!AppTool.IsNullOrEmpty(item.MyName)) {
+                    item.AdvancedQueryFilterPM.PredefinedValue = item.MyName;
+                }
+                else {
+                    if (item.Operation.Code == "LargerThan" || item.Operation.Code == "LessThan") {
+                        var myDate: Date = new Date(item.TextValue.toString());
+                        var temp = DateTool.GetDateParts(myDate);
+                        var dt = temp.Year + "-" + temp.Month + "-" + temp.Day;//myDate.getDay() + "-" + (myDate.getMonth() + 1) + "-" + myDate.getFullYear();
+                        item.AdvancedQueryFilterPM.PredefinedValue = dt;
+                    }
+                    item.AdvancedQueryFilterPM.PredefinedValue2 = null;
+                }
+                //item.AdvancedQueryFilterPM.PredefinedValue2 = item.TextValue1;
+                item.AdvancedQueryFilterPM.Operator = item.Operation.Code;
+                //item.AdvancedQueryFilterPM.PredefinedValue = item.TextValue;
+                //item.AdvancedQueryFilterPM.PredefinedValue2 = item.TextValue1;
+                this.GeneralEntitiesArgs.AdvancedQueryFilterPMs.push(item.AdvancedQueryFilterPM);
+            }
+            else {
+                var advanceFilter = new AdvancedQueryFilterPM();
+
+                advanceFilter.Tenant = SessionInfo.LoggedUserTenant,
+                    advanceFilter.ObjectFieldId = item.ObjectField.Id;
+                advanceFilter.QueryId = this.QueryId,
+                    advanceFilter.DataTypeCode = item.ObjectField.DataTypeCode;
+                advanceFilter.DisplayInList = item.ObjectField.DisplayInList;
+                advanceFilter.IsCustomFilter = item.ObjectField.IsCustomFilter;
+                advanceFilter.ObjectFieldName = item.ObjectField.FieldName;
+                advanceFilter.QueryCode = this.currentQuery.Code;
+                advanceFilter.QueryObjectTableName = this.currentQuery.ObjectTableName;
+                advanceFilter.QueryUserId = this.currentQuery.UserId;
+                advanceFilter.ObjectFieldOperator = item.ObjectField.Operator;
+                advanceFilter.Operator = item.Operation.Code;
+                advanceFilter.PredefinedValue = item.TextValue;//this.FieldsValues.GetFieldValue(field.ObjectField.Id);
+                advanceFilter.IsPredefined = true;
+                advanceFilter.UserId = SessionInfo.LoggedUserId;
+
+
+                if (!AppTool.IsNullOrEmpty(item.MyName)) {
+                    advanceFilter.PredefinedValue = item.MyName;
+                }
+                else if (item.ObjectField.DataTypeCode == "DateTime") {
+
+                    var date = this.FieldsValues.GetFieldValue(item.ObjectField.Id);
+                    if (item.TextValue != null && date != null) {
+                        advanceFilter.PredefinedValue = date;
+                    }
+                    //advanceFilter.PredefinedValue = date;
+
+                }
+                this.GeneralEntitiesArgs.AdvancedQueryFilterPMs.push(advanceFilter);
+            }
+        });
+
+
+        this.GeneralEntitiesArgs.Tenant = SessionInfo.LoggedUserTenant;
+        myGeneralService.setServiceArgs(this.serviceArgs);
+        myGeneralService.update(this.GeneralEntitiesArgs).subscribe(myResult => {
+            myResult.Result.AdvancedQueryFilterPMs.forEach((filter, key) => {
+                if (window.PreDefinedFilters.filter(o => o.Id === filter.Id).length == 0) {
+                    window.PreDefinedFilters.push(filter);
+                }
+                else {
+                    window.PreDefinedFilters = window.PreDefinedFilters.filter(o => o.Id != filter.Id);
+                    window.PreDefinedFilters.push(filter);
+                }
+            });
+            this.removedQueryFilters.forEach((item, key) => {
+                if (item != null && item.AdvancedQueryFilterPM != null) { 
+                    window.PreDefinedFilters = window.PreDefinedFilters.filter(a => a.Id != item.AdvancedQueryFilterPM.Id); 
+                }
+            });
+            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            SessionLocator.CurrentSession.CurrentWindow.Close(this.QueryId);
+        });
+    }
+}
+
+
+

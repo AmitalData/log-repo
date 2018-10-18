@@ -1,0 +1,52 @@
+﻿
+<table >
+
+    <tr>
+        <td>
+            <div class="MediaFill">
+                <div  style="border:0px;"class="TabControl">
+                  
+                    <div class="TabControlHead">
+                        <ul>
+                            <li [class.Selected]="SelectedTabCode === 'SOP'"  style="margin-left:10px;text-align:center;" (click)="SelectedTabCode = 'SOP'">
+                                <div style="text-align:center;color:black;" class="InnerChild">Posts</div>
+                            </li>
+
+                            <li style="text-align:center;" [class.Selected]="SelectedTabCode === 'SOM'" (click)="SelectedTabCode = 'SOM'">
+                                <div style="text-align:center;color:black;" class="InnerChild">{{MessageTabTitle}}</div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div  class="TabControlBody">
+
+                        <!--   Tab 1-->
+                        <div class="MediaFillRelative" [hidden]="SelectedTabCode != 'SOP'">
+                            <div  class="MediaFillAbsolute">
+
+                                <div LocationDirective Code="SOP"></div>
+
+                            </div>
+                        </div>
+
+                        <!--   Tab 2-->
+                     
+                        <div class="MediaFillRelative" [hidden]="SelectedTabCode != 'SOM'">
+                            <div style="margin:0px" class="MediaFillAbsolute">
+
+                                <div LocationDirective Code="SOM"></div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+
+
+</table>
+

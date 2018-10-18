@@ -1,0 +1,100 @@
+﻿<style>
+    .ul {
+        list-style: circle;
+    }
+
+    .li {
+        margin-left: 20px;
+    }
+</style>
+
+<div style="position: absolute; top:0px; bottom:0px; left:0px; right:0px;margin:auto; background:white;">
+    <table style="height:100%">
+
+        <tr style="height:1px;">
+            <td>
+                <table>
+                    <tr>
+                        <td style="width:100px" valign="middle">
+                            <BackButton [Text]="'General.MH.Maintenance'| TextCodeTranslationPipe" (click)="BackButtonClicked()"></BackButton>
+                        </td>
+                        <td style="width:5px;">
+                            <div></div>
+                        </td>
+                        <td style="color:#1B90CB;font-size:16px;vertical-align:middle;float:left;">Ticket Classifications</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr style="height:1px;">
+            <td>
+                <span style="float:right;font-size:12px;color:#1B90CB;text-decoration:none;cursor:pointer;" (click)="CollapseAllClicked()">Collapse All</span>
+            </td>
+        </tr>
+
+        <tr style="height:10px;">
+            <td><div></div></td>
+        </tr>
+
+        <tr>
+            <td>
+                <div class="MediaFill" style="border:1px solid #D1D1D1;border-radius:3px;margin:5px;">
+                    <ScrollViewer>
+                        <ClassificationsTree [CollapseAll]="CollapseAll"></ClassificationsTree>
+                    </ScrollViewer>
+                </div>
+
+                <div class="MediaFill"  style="border:1px solid #D1D1D1;border-radius:3px;margin:5px;" *ngIf="false">
+                    <ScrollViewer>
+
+                        <ul>
+                            <li *ngFor="let item of Classifications">
+                                <table>
+                                    <tr>
+                                        <td *ngIf="item.ChildClassifications.length > 0" style="width:17px;">
+                                            <img class="LeftCenter" (click)="item.IsExpanded = !item.IsExpanded" style="width:17px;height:17px;padding-left:2px;padding-right:2px;cursor:pointer;" src="./Images/Buttons/expand.png" />
+                                        </td>
+                                        <td style="width:17px;">
+                                            <img class="LeftCenter" (click)="item.AddNewClassificationChild()" style="width:17px;height:12px;padding-left:2px;padding-right:2px;cursor:pointer;" src="./Images/Buttons/AddGreenSolid.png" />
+                                        </td>
+                                        <td style="float:left;">
+                                            <span style="padding-left:5px;cursor:pointer;" (click)="item.EditClassificationChild(item.Id)">{{item.Name}}</span>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <ul *ngIf="item.IsExpanded">
+                                    <li  *ngFor="let subItem of item.ChildClassifications">
+                                        <table>
+                                            <tr>
+                                                <td style="width: 17px; min-width: 17px;"><div></div></td>
+
+                                                <td  style="width:17px;">
+                                                    <img *ngIf="subItem.ChildClassifications.length > 0" class="LeftCenter" (click)="subItem.IsExpanded = true" style="width:17px;height:17px;padding-left:2px;padding-right:2px;cursor:pointer;" src="./Images/Buttons/expand.png" />
+                                                </td>
+
+                                                <td style="width:17px;">
+                                                    <img class="LeftCenter" (click)="subItem.AddNewClassificationChild()" style="width:17px;height:12px;padding-left:2px;padding-right:2px;cursor:pointer;" src="./Images/Buttons/AddGreenSolid.png" />
+                                                </td>
+                                                <td style="float:left;">
+                                                    <span style="padding-left:5px;cursor:pointer;" (click)="subItem.EditClassificationChild(subItem.Id)">{{subItem.Name}}</span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    </ScrollViewer>
+                </div>
+            </td>
+        </tr>
+
+        <tr style="height:10px;">
+            <td><div></div></td>
+        </tr>
+
+    </table>
+</div>

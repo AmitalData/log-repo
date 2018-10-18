@@ -1,0 +1,200 @@
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs; 
+using Logitude.Customs.Data;
+
+namespace Logitude.Customs.BL.EntityDataMappings
+{
+   
+   public partial class ProceduralFaultsConnEntityDataMapping: IMapping<ProceduralFaultsConnEntityPM, ProceduralFaultsConnEntity>,IMappingEncodeBase64NVARCHARFields<ProceduralFaultsConnEntityPM>
+   {
+          public enum POCOPropertyNames
+          { 
+		     None,  
+	         Id, 
+	         Tenant, 
+	         ProceduralFaultId, 
+	         EntityType, 
+	         EntityIdKey1, 
+	         EntityIdKey2, 
+	         EntityIdKey3, 
+	         EntityPath,
+	      }
+
+
+	      public enum PMPropertyNames
+          { 
+		     None,  
+	         Id, 
+	         Tenant, 
+	         ProceduralFaultId, 
+	         EntityType, 
+	         EntityIdKey1, 
+	         EntityIdKey2, 
+	         EntityIdKey3, 
+	         EntityPath,
+	      }
+
+		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
+        List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
+    
+	    public void PMToPOCO(ProceduralFaultsConnEntityPM entityPM, ProceduralFaultsConnEntity entityPOCO)
+        {
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ProceduralFaultId))
+            {
+				entityPOCO.ProceduralFaultId = entityPM.ProceduralFaultId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntityType))
+            {
+				entityPOCO.EntityType = entityPM.EntityType;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntityIdKey1))
+            {
+				entityPOCO.EntityIdKey1 = entityPM.EntityIdKey1;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntityIdKey2))
+            {
+				entityPOCO.EntityIdKey2 = entityPM.EntityIdKey2;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntityIdKey3))
+            {
+				entityPOCO.EntityIdKey3 = entityPM.EntityIdKey3;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntityPath))
+            {
+				entityPOCO.EntityPath = entityPM.EntityPath;
+			}
+			}
+
+		public void POCOToPM(ProceduralFaultsConnEntityPM entityPM, ProceduralFaultsConnEntity entityPOCO)
+        {
+			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
+            {
+					entityPM.Id = entityPOCO.Id;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
+            {
+					entityPM.Tenant = entityPOCO.Tenant;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ProceduralFaultId))
+            {
+					entityPM.ProceduralFaultId = entityPOCO.ProceduralFaultId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EntityType))
+            {
+					entityPM.EntityType = entityPOCO.EntityType;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EntityIdKey1))
+            {
+					entityPM.EntityIdKey1 = entityPOCO.EntityIdKey1;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EntityIdKey2))
+            {
+					entityPM.EntityIdKey2 = entityPOCO.EntityIdKey2;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EntityIdKey3))
+            {
+					entityPM.EntityIdKey3 = entityPOCO.EntityIdKey3;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EntityPath))
+            {
+					entityPM.EntityPath = entityPOCO.EntityPath;
+            }
+
+		}
+
+		public void PMToOldPM(ProceduralFaultsConnEntityPM entityPM, ProceduralFaultsConnEntityPM oldEntityPM)
+        {
+		     oldEntityPM.ChangedProperties.Clear();
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+                oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ProceduralFaultId))
+            {
+                oldEntityPM.ProceduralFaultId = entityPM.ProceduralFaultId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntityType))
+            {
+                oldEntityPM.EntityType = entityPM.EntityType;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntityIdKey1))
+            {
+                oldEntityPM.EntityIdKey1 = entityPM.EntityIdKey1;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntityIdKey2))
+            {
+                oldEntityPM.EntityIdKey2 = entityPM.EntityIdKey2;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntityIdKey3))
+            {
+                oldEntityPM.EntityIdKey3 = entityPM.EntityIdKey3;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntityPath))
+            {
+                oldEntityPM.EntityPath = entityPM.EntityPath;
+            }
+			
+		}
+
+	    public void EncodeBase64NVARCHARFields(ProceduralFaultsConnEntityPM entityPM)
+        {
+            if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
+            {
+                return;
+
+            }
+            entityPM.EncodeBase64NVARCHARFieldsBy=null;
+		}
+
+
+	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
+        {
+            CustomMappedPOCOProperties.Add(pocoPropertyName);
+        }
+
+        public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
+        {
+            CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+			  
+   }
+}
+	 

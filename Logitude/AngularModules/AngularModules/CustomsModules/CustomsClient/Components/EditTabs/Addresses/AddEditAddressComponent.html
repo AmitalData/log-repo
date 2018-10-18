@@ -1,0 +1,726 @@
+﻿
+<style type="text/css">
+    .TabCloseIcon:hover {
+        background: url('./Images/Tab.X.Blue.png') no-repeat;
+    }
+
+    .TabCloseIcon {
+        background: url('./Images/Tab.X.Gray.png') no-repeat;
+    }
+
+    /* HOVER */
+    .LogTabControl .TabControlHead li:not(.Selected):not(.NewTabItem):hover .InnerChild {
+        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,ffffff+18,b3d2f2+94,ffffff+95,ffffff+100 */
+        background: #ffffff; /* Old browsers */
+        background: -moz-linear-gradient(top, #ffffff 0%, #ffffff 18%, #b3d2f2 94%, #ffffff 95%, #ffffff 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #ffffff 0%,#ffffff 18%,#b3d2f2 94%,#ffffff 95%,#ffffff 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #ffffff 0%,#ffffff 18%,#b3d2f2 94%,#ffffff 95%,#ffffff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+    }
+
+    /* ACTIVE */
+    .LogTabControl .TabControlHead li:not(.Selected):not(.NewTabItem):active .InnerChild {
+        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#c2d7ed+0,eff2f4+16,b4d0ed+94,ffffff+95,ffffff+100 */
+        background: #c2d7ed; /* Old browsers */
+        background: -moz-linear-gradient(top, #c2d7ed 0%, #eff2f4 16%, #b4d0ed 94%, #ffffff 95%, #ffffff 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #c2d7ed 0%,#eff2f4 16%,#b4d0ed 94%,#ffffff 95%,#ffffff 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #c2d7ed 0%,#eff2f4 16%,#b4d0ed 94%,#ffffff 95%,#ffffff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c2d7ed', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+    }
+
+    .LogTabControl .TabControlHead li:not(.Selected):not(.NewTabItem):hover {
+        background: #448DCA;
+    }
+
+    .LogTabControl .TabControlHead li:not(.NewTabItem) .InnerChild {
+        height: 100%;
+        width: 100%;
+        color: black;
+        font-size: 13px;
+        text-align: left;
+        padding-left: 5px;
+        padding-right: 3px;
+        background: transparent;
+    }
+
+    .LogTabControl .TabControlHead li:not(.NewTabItem) {
+        height: 23px;
+        width: 95px;
+        line-height: 23px;
+        border: 1px solid #b1b1b1;
+        display: inline-block;
+        float: left;
+        cursor: default;
+        overflow: hidden;
+        border-radius: 4px 4px 0px 0px;
+        -moz-border-radius: 4px 4px 0px 0px;
+        -webkit-border-radius: 4px 4px 0px 0px;
+        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,ffffff+21,e2e2e2+94,e2e2e2+94,ffffff+95,ffffff+100 */
+        background: #ffffff; /* Old browsers */
+        background: -moz-linear-gradient(top, #ffffff 0%, #ffffff 21%, #e2e2e2 94%, #e2e2e2 94%, #ffffff 95%, #ffffff 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #ffffff 0%,#ffffff 21%,#e2e2e2 94%,#e2e2e2 94%,#ffffff 95%,#ffffff 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #ffffff 0%,#ffffff 21%,#e2e2e2 94%,#e2e2e2 94%,#ffffff 95%,#ffffff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+    }
+
+    .LogTabControl .TabControlHead li:not(.Selected) {
+        height: 23px;
+        margin-top: 2px;
+        border-bottom: 1px solid #b9b9b9;
+    }
+
+    .LogTabControl .TabControlHead li.Selected {
+        pointer-events: none;
+        height: 25px;
+        line-height: 25px;
+        margin-bottom: -1px;
+        background: white;
+        border: 1px solid #6dbdd1;
+        border-bottom: 1px solid white;
+        transition: margin 0.2s;
+    }
+
+    .LogTabControl .TabControlBody {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 25px;
+        bottom: 0;
+        background: white;
+        border: 1px solid #b9b9b9;
+        border-top: none;
+    }
+
+    .LogTabControl .TabControlHead ul {
+        width: 100%;
+        height: 100%;
+        padding-left: 8px;
+        padding-right: 0px;
+    }
+
+    .LogTabControl .TabControlHead {
+        width: 100%;
+        height: 25px;
+        position: relative;
+        border-bottom: 1px solid #a3aeb9;
+    }
+
+    .LogTabControl {
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+
+    .FormFieldRow{
+        height: 30px;
+    }
+    .subTitle{
+        color: #1b90cb;
+        font-size: 15px;
+        padding-top: 10px;
+        padding-bottom: 2px;
+    }
+</style>
+
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td colspan="3">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="ScrollViewer">
+                <div class="ScrollContent">
+                    <table style="padding-bottom:5px">
+                        <tr style="height:100px">
+                            <td style="width:200px">
+
+                                <table>
+                                    <tr style="vertical-align:top">
+                                        <td>
+                                            <div style="width:700px">
+                                                <table>
+                                                    <tr style="height:32px; vertical-align:top">
+                                                        <td style="width:200px">
+                                                            <LogLabel [ObjectFieldName]="'AddressTypeCode'" [ObjectTableName]="ObjectTableName"
+                                                                      [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td style="width:200px">
+                                                            <LogLov [ObjectFieldName]="'AddressTypeCode'"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'Customs.CustomsAddressType'"
+                                                                    [HideColumns]="true"
+                                                                    [SelectedValue]="AddressTypeCode">
+                                                            </LogLov>
+
+                                                        </td>
+
+                                                        <td><div style="width:20px"></div></td>
+                                                        <td style="width:200px">
+                                                            <LogLabel [ObjectFieldName]="'AddressPurposeCode'" [ObjectTableName]="ObjectTableName"
+                                                                      [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td style="width:200px">
+                                                            <LogLov [ObjectFieldName]="'AddressPurposeCode'"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'Customs.AddressPurpose'"
+                                                                    [HideColumns]="true"
+                                                                    [SelectedValue]="AddressPurposeCode">
+                                                            </LogLov>
+
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr style="height:32px; ">
+                                                        <td style="width:200px">
+                                                            <LogLabel [ObjectFieldName]="'IsHebrewAddress'" [ObjectTableName]="ObjectTableName"
+                                                                      [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+
+                                                        <td style="width:120px">
+
+                                                            <RadioButton [Name]="'HebrewAddress'" [IsChecked]="IsHebrewAddress" (Checked)="UseHebrewAddress(true)"></RadioButton>
+
+                                                            <!--<div class="RadioButton">
+
+                                                <input id="ByHebrewAddress" type="radio" name="HebrewAddress" [checked]="IsHebrewAddress" (click)="UseHebrewAddress(true)" />
+
+                                            </div>-->
+                                                        </td>
+                                                        <!--  <LogCheckBox [Checked]="IsHebrewAddress" [ObjectTableName]="ObjectTableName" [ObjectFieldName]="'IsHebrewAddress'" [DataContext]="DataContext"></LogCheckBox>-->
+
+
+                                                        <td><div style="width:20px"></div></td>
+                                                        <td style="width:200px">
+                                                            <LogLabel [ObjectFieldName]="'IsPalestinianCity'" [ObjectTableName]="ObjectTableName"
+                                                                      [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+                                                        <td>
+                                                            <RadioButton [Name]="'PalestinianCity'" [IsChecked]="IsPalestinianCity" (Checked)="UsePalestinianAddress(true)"></RadioButton>
+
+                                                            <!--<div class="RadioButton">
+                                                <input id="ByPalestinianCity" type="radio" name="PalestinianCity" [checked]="IsPalestinianCity" (click)="UsePalestinianAddress(true)" />
+
+                                            </div>-->
+                                                            <!--  <LogCheckBox [Checked]="IsPalestinianCity" [ObjectTableName]="ObjectTableName" [ObjectFieldName]="'IsPalestinianCity'" [DataContext]="DataContext"></LogCheckBox>-->
+
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                </table>
+
+
+                            </td>
+                        </tr>
+
+                        <tr style="height: 220px;margin:5px">
+                            <td>
+
+                                <div style="position: absolute; top: 0;height: 210px;" class="LogTabControl">
+
+                                    <!-- Tab Header-->
+                                    <div class="TabControlHead">
+                                        <ul>
+                                            <li *ngFor="let tab of TabsSource" style="width: auto; min-width: 48px;" [class.Selected]="tab.isSelected" [style.float]="LayoutDirection ? 'right' : 'left'" (click)="SelectionChanged(tab)">
+
+                                                <div style="position: relative; width: 100%;" class="InnerChild"
+                                                     [style.text-align]="'center'">
+                                                    <div class="TextTrimming" style="font-size: 11px;">{{tab.Header}}</div>
+                                                </div>
+
+                                            </li>
+                                        </ul>
+                                    </div>
+
+
+                                    <!-- Tab Body -->
+                                    <div class="TabControlBody" style="background: white;">
+                                        <div class="MediaFillAbsolute" style="top:5px">
+                                            <div style="height: 100%;padding: 15px;" [ngSwitch]="SelectedTab">
+
+                                                <!-- #region Heberw Tab -->
+                                                <div *ngSwitchCase="'Hebrew'" style="height: 100%;">
+
+                                                    <!-- Filters Fields-->
+                                                    <table style="height: 150px;width:700px">
+
+                                                        <tr>
+
+                                                            <td style="width: 85px;">
+                                                                <LogLabel [ObjectFieldName]="'LocalCityCode'" [ObjectTableName]="ObjectTableName"
+                                                                          [DataContext]="DataContext"></LogLabel>
+                                                            </td>
+
+                                                            <td style="width: 70px;">
+                                                                <LogLov [ObjectFieldName]="'LocalCityCode'"
+                                                                        [ObjectTableName]="ObjectTableName"
+                                                                        [DataContext]="DataContext"
+                                                                        [LookUpTableName]="'Customs.City'"
+                                                                        [HideColumns]="true">
+                                                                </LogLov>
+                                                            </td>
+
+                                                            <td style="width: 20px;"><div></div></td>
+
+
+                                                            <td style="width: 85px;">
+                                                                <LogLabel [ObjectFieldName]="'BranchName'" [ObjectTableName]="ObjectTableName"
+                                                                          [DataContext]="DataContext"></LogLabel>
+                                                            </td>
+                                                            <td style="width: 75px;">
+                                                                <LogTextBox [ObjectFieldName]="'BranchName'" [ObjectTableName]="ObjectTableName"
+                                                                            [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                                                            </td>
+
+                                                        </tr>
+
+
+                                                        <tr>
+
+                                                            <td style="width: 85px;">
+                                                                <LogLabel [ObjectFieldName]="'LocalStreetName'" [ObjectTableName]="ObjectTableName"
+                                                                          [DataContext]="DataContext"></LogLabel>
+                                                            </td>
+
+                                                            <td style="width: 70px;">
+                                                                <LogTextBox [ObjectFieldName]="'LocalStreetName'" [ObjectTableName]="ObjectTableName"
+                                                                            [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                                                            </td>
+
+                                                            <td style="width: 20px;"><div></div></td>
+
+
+                                                            <td style="width: 85px;">
+                                                                <LogLabel [ObjectFieldName]="'LocalSecondLine'" [ObjectTableName]="ObjectTableName"
+                                                                          [DataContext]="DataContext"></LogLabel>
+                                                            </td>
+                                                            <td style="width: 75px;">
+                                                                <LogTextBox [ObjectFieldName]="'LocalSecondLine'" [ObjectTableName]="ObjectTableName"
+                                                                            [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+
+                                                            <td style="width: 85px;">
+                                                                <LogLabel [ObjectFieldName]="'LocalHouseNumber'" [ObjectTableName]="ObjectTableName"
+                                                                          [DataContext]="DataContext"></LogLabel>
+                                                            </td>
+
+                                                            <td style="width: 70px;">
+                                                                <LogTextBox [ObjectFieldName]="'LocalHouseNumber'" [ObjectTableName]="ObjectTableName"
+                                                                            [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                                                            </td>
+
+                                                            <td style="width: 20px;"><div></div></td>
+
+
+                                                            <td style="width: 85px;">
+                                                                <LogLabel [ObjectFieldName]="'LocalPOBox'" [ObjectTableName]="ObjectTableName"
+                                                                          [DataContext]="DataContext"></LogLabel>
+                                                            </td>
+                                                            <td style="width: 75px;">
+                                                                <LogTextBox [ObjectFieldName]="'LocalPOBox'" [ObjectTableName]="ObjectTableName"
+                                                                            [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+
+                                                            <td style="width: 85px;">
+                                                                <LogLabel [ObjectFieldName]="'LocalPostalCode'" [ObjectTableName]="ObjectTableName"
+                                                                          [DataContext]="DataContext"></LogLabel>
+                                                            </td>
+
+                                                            <td style="width: 70px;">
+                                                                <LogTextBox [ObjectFieldName]="'LocalPostalCode'" [ObjectTableName]="ObjectTableName"
+                                                                            [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                                                            </td>
+                                                        </tr>
+
+
+
+
+
+
+
+                                                        <tr style="height: 7px;"><td><div></div></td></tr>
+
+                                                    </table>
+
+
+                                                </div>
+                                                <!-- #endregion -->
+                                                <!-- #region English Tab -->
+                                                <div *ngSwitchCase="'English'" style="height: 100%;">
+
+                                                    <!-- Filters Fields-->
+                                                    <table style="height: 120px;width:700px">
+
+                                                        <tr>
+
+                                                            <td style="width: 85px;">
+                                                                <LogLabel [ObjectFieldName]="'EnglishCountryCode'" [ObjectTableName]="ObjectTableName"
+                                                                          [DataContext]="DataContext"></LogLabel>
+                                                            </td>
+
+                                                            <td style="width: 70px;">
+                                                                <LogLov [ObjectFieldName]="'EnglishCountryCode'"
+                                                                        [ObjectTableName]="ObjectTableName"
+                                                                        [DataContext]="DataContext"
+                                                                        [LookUpTableName]="'Customs.CustomsCountry'"
+                                                                        [HideColumns]="true">
+                                                                </LogLov>
+                                                            </td>
+
+                                                            <td style="width: 20px;"><div></div></td>
+
+
+                                                            <td style="width: 85px;">
+                                                                <LogLabel [ObjectFieldName]="'EnglishSubCountryCode'" [ObjectTableName]="ObjectTableName"
+                                                                          [DataContext]="DataContext"></LogLabel>
+                                                            </td>
+                                                            <td style="width: 75px;">
+                                                                <LogLov [ObjectFieldName]="'EnglishSubCountryCode'"
+                                                                        [ObjectTableName]="ObjectTableName"
+                                                                        [DataContext]="DataContext"
+                                                                       [DependencyFilter1Value]="EnglishCountryCode"
+                                                                        [LookUpTableName]="'Customs.SubCountry'"
+                                                                        [HideColumns]="true">
+                                                                </LogLov>
+                                                            </td>
+
+                                                        </tr>
+
+
+                                                        <tr>
+
+                                                            <td style="width: 85px;">
+                                                                <LogLabel [ObjectFieldName]="'EnglishCityName'" [ObjectTableName]="ObjectTableName"
+                                                                          [DataContext]="DataContext"></LogLabel>
+                                                            </td>
+
+                                                            <td style="width: 70px;">
+                                                                <LogTextBox [ObjectFieldName]="'EnglishCityName'" [ObjectTableName]="ObjectTableName"
+                                                                            [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                                                            </td>
+
+                                                            <td style="width: 20px;"><div></div></td>
+
+
+                                                            <td style="width: 85px;">
+                                                                <LogLabel [ObjectFieldName]="'EnglishMainAddressLine'" [ObjectTableName]="ObjectTableName"
+                                                                          [DataContext]="DataContext"></LogLabel>
+                                                            </td>
+                                                            <td style="width: 75px;">
+                                                                <LogTextBox [ObjectFieldName]="'EnglishMainAddressLine'" [ObjectTableName]="ObjectTableName"
+                                                                            [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+
+                                                            <td style="width: 85px;">
+                                                                <LogLabel [ObjectFieldName]="'EnglishPostalCode'" [ObjectTableName]="ObjectTableName"
+                                                                          [DataContext]="DataContext"></LogLabel>
+                                                            </td>
+
+                                                            <td style="width: 70px;">
+                                                                <LogTextBox [ObjectFieldName]="'EnglishPostalCode'" [ObjectTableName]="ObjectTableName"
+                                                                            [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                                                            </td>
+
+
+                                                        </tr>
+
+                                                        <tr>
+
+
+
+
+
+
+
+
+                                                        <tr style="height: 7px;"><td><div></div></td></tr>
+
+                                                    </table>
+
+
+                                                </div>
+                                                <!-- #endregion -->
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </td>
+                            <td style="width:10px"></td>
+                        </tr>
+
+                        <tr style="width: 70px;margin:5px;height:130px">
+                            <td>
+                                <table>
+
+                                    <tr>
+                                        <td>
+                                            <div class="subTitle">{{'Customs.Vendor.O.Communications' | TextCodeTranslationPipe}}</div>
+                                        </td>
+                                        <td style="width: 30px;">
+                                            <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddButonClicked()"></IconButton>
+                                        </td>
+
+                                    </tr>
+                                    <!-- Grid -->
+                                    <tr>
+                                        <td colspan="2" style="height: 100%;">
+
+                                            <div style="height: 100%;">
+
+                                                <table style="height: 100%;">
+                                                    <tr>
+                                                        <td>
+
+                                                            <!-- Grid -->
+                                                            <table>
+
+                                                                <tr>
+                                                                    <td colspan="2" style="height: 100%;">
+                                                                        <div class="CellContent">
+                                                                            <logitude-edit-grid GridWidth="100%"
+                                                                                                GridHeight="100%"
+                                                                                                [ItemSource]="CommunicationsList">
+
+                                                                                <!-- CommunicationTypeCode -->
+                                                                                <log-column [header]="'Customs.ClientsAddressCommType.F.CommunicationTypeCode' | TextCodeTranslationPipe" [width]="'130'" [Alignment]="'right'" [binding]="'CommunicationTypeCode'">
+                                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                                        <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                                            <span>{{item.CommunicationTypeName}}</span>
+                                                                                        </div>
+                                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                                            <LogLov [ObjectFieldName]="'CommunicationTypeCode'"
+                                                                                                    [ObjectTableName]="'Customs.ClientsAddressCommType'"
+                                                                                                    [DataContext]="item"
+                                                                                                    [HideColumns]="true"
+                                                                                                    [LookUpTableName]="'Customs.CommunicationType'"
+                                                                                                    (SelectedItemChanged)="item.SetLocalName($event, 'CommunicationTypeName')"
+                                                                                                    [FocusOnMe]="true">
+                                                                                            </LogLov>
+
+                                                                                        </div>
+                                                                                    </log-cell-template>
+                                                                                </log-column>
+
+                                                                                <!-- CommunicationAddress -->
+                                                                                <log-column [header]="'Customs.ClientsAddressCommType.F.CommunicationAddress' | TextCodeTranslationPipe" [width]="'140'" [Alignment]="'right'" [binding]="'CommunicationAddress'">
+                                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                                        <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                                            <span>{{item.CommunicationAddress}}</span>
+                                                                                        </div>
+                                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                                            <LogTextBox [ObjectFieldName]="'CommunicationAddress'" [InputType]="'ntext'" [DataContext]="item"
+                                                                                                        [ObjectTableName]="'Customs.ClientsAddressCommType'" [HideColumns]="true" [FocusOnMe]="true"></LogTextBox>
+                                                                                        </div>
+                                                                                    </log-cell-template>
+                                                                                </log-column>
+
+                                                                                <!-- Buttons -->
+                                                                                <log-column [width]="'40'" [Alignment]="'right'">
+                                                                                    <log-cell-template template="let item" [TabIndex]="-1">
+                                                                                        <span class="CellSeparator" [style.float]="'right'"></span>
+                                                                                        <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="RemoveRow(item)"
+                                                                                                    style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
+                                                                                    </log-cell-template>
+                                                                                </log-column>
+
+                                                                            </logitude-edit-grid>
+                                                                        </div>
+
+                                                                    </td>
+                                                                </tr>
+
+                                                            </table>
+
+                                                        </td>
+                                                    </tr>
+                                                </table>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </td>
+
+                            <td style="width:10px"></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+
+                                <table>
+                                    <tr style="vertical-align:top">
+                                        <td>
+                                            <div style="width:700px">
+                                                <table>
+                                                    <tr style="height:32px; vertical-align:top">
+                                                        <td style="width:200px">
+                                                            <LogLabel [ObjectFieldName]="'ContactIdentifier'" [ObjectTableName]="ObjectTableName"
+                                                                      [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td style="width:200px">
+                                                            <LogTextBox [ObjectFieldName]="'ContactIdentifier'" [ObjectTableName]="ObjectTableName"
+                                                                        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+
+                                                        </td>
+
+                                                        <td><div style="width:20px"></div></td>
+                                                        <td style="width:200px">
+                                                            <LogLabel [ObjectFieldName]="'AuthorizedSignerPermit1'" [ObjectTableName]="ObjectTableName"
+                                                                      [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td style="width:200px">
+                                                            <LogLov [ObjectFieldName]="'AuthorizedSignerPermit1'"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'Customs.AuthorizedSignerPermit'"
+                                                                    [HideColumns]="true"
+                                                                    [SelectedValue]="AuthorizedSignerPermit1">
+                                                            </LogLov>
+
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr style="height:32px; ">
+                                                        <td style="width:200px">
+                                                            <LogLabel [ObjectFieldName]="'ContactFirstName'" [ObjectTableName]="ObjectTableName"
+                                                                      [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+                                                        <td>
+                                                            <LogTextBox [ObjectFieldName]="'ContactFirstName'" [ObjectTableName]="ObjectTableName"
+                                                                        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+
+                                                        </td>
+                                                        <td><div style="width:20px"></div></td>
+                                                        <td style="width:200px">
+                                                            <LogLabel [ObjectFieldName]="'AuthorizedSignerPermit2'" [ObjectTableName]="ObjectTableName"
+                                                                      [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+                                                        <td>
+                                                            <LogLov [ObjectFieldName]="'AuthorizedSignerPermit2'"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'Customs.AuthorizedSignerPermit'"
+                                                                    [HideColumns]="true"
+                                                                    [SelectedValue]="AuthorizedSignerPermit2">
+                                                            </LogLov>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr style="height:32px; ">
+                                                        <td style="width:200px">
+                                                            <LogLabel [ObjectFieldName]="'ContactRoleTypeCode'" [ObjectTableName]="ObjectTableName"
+                                                                      [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+                                                        <td>
+                                                            <LogLov [ObjectFieldName]="'ContactRoleTypeCode'"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'Customs.ContactRoleType'"
+                                                                    [HideColumns]="true"
+                                                                    [SelectedValue]="ContactRoleTypeCode">
+                                                            </LogLov>
+
+                                                        </td>
+                                                        <td><div style="width:20px"></div></td>
+                                                        <td style="width:200px">
+                                                            <LogLabel [ObjectFieldName]="'AuthorizedSignerPermit3'" [ObjectTableName]="ObjectTableName"
+                                                                      [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+                                                        <td>
+                                                            <LogLov [ObjectFieldName]="'AuthorizedSignerPermit3'"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'Customs.AuthorizedSignerPermit'"
+                                                                    [HideColumns]="true"
+                                                                    [SelectedValue]="AuthorizedSignerPermit3">
+                                                            </LogLov>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr style="height:32px; ">
+                                                        <td style="width:200px">
+                                                            <LogLabel [ObjectFieldName]="'ContactLastName'" [ObjectTableName]="ObjectTableName"
+                                                                      [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+                                                        <td>
+                                                            <LogTextBox [ObjectFieldName]="'ContactLastName'" [ObjectTableName]="ObjectTableName"
+                                                                        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+
+
+                                                        </td>
+
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                </table>
+
+
+                            </td>
+
+                        </tr>
+
+                        <tr style="height: 30px;padding-bottom:5px">
+
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                        <td style="width: 57px;vertical-align: bottom;">
+                                            <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel' |TextCodeTranslationPipe}}</button>
+                                        </td>
+
+                                        <td style="width: 10px;vertical-align: bottom;">
+                                            <div></div>
+                                        </td>
+
+                                        <td style="width: 57px;vertical-align: bottom;" *ngIf="isNewClient">
+                                            <button class="RedButton" [disabled]="IsDisplayOnly" (click)="OkButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
+                                        </td>
+                                        <td style="width:110px;  vertical-align: bottom;" *ngIf="!isNewClient">
+                                            <custom-send-options #MyCustomSendOptionsComponent
+                                                                 [CustomSendOptionsButtonCanForcePersonalSign]="CustomSendOptionsButtonCanForcePersonalSign" (SendButtonClicked)="OnCustomSendOptionsButtonClick($event)"></custom-send-options>
+                                            <!--   <button class="RedButton" [disabled]="IsDisplayOnly" (click)="OkButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}}</button>-->
+                                        </td>
+
+                                    </tr>
+                                </table>
+                            </td>
+
+                        </tr>
+
+                    </table>
+                    </div>
+                </div>
+        </td>
+    </tr>
+</table>

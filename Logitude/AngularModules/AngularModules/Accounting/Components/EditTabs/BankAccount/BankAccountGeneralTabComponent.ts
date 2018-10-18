@@ -1,0 +1,188 @@
+﻿import {Component, ChangeDetectorRef}  from '@angular/core';
+import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
+import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
+import {BankAccountPM} from '../../../EntityPMs/BankAccountPM';
+import {GLAccountPM} from '../../../EntityPMs/GLAccountPM';
+import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import {AppTool} from '../../../../Infrastructure/Tools';
+import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
+
+@Component({
+    moduleId: module.id,
+    templateUrl: './BankAccountGeneralTabComponent.html'
+})
+
+export class BankAccountGeneralTabComponent extends BaseComponent {
+    public oldCurrency: string = null;
+    public EntityPM: BankAccountPM = null;
+    public ObjectTableName = "BankAccount";
+    public DataContext = this;
+    public GLAccountsFilterItems: ApiQueryFilters;
+    
+
+    public isRTL: boolean = false;
+
+
+
+    constructor(private entityArgs: EntityArgs) {
+        super();
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+
+        // Set Entity
+        this.EntityPM = entityArgs.EntityPM;
+        this.SetUIProperties();
+        this.InitLOVFilters();
+
+        this.Listen();
+    }
+
+    private SaveCompletedEvent: any = null;
+    private LoadCompletedEvent: any = null;
+    Listen() {
+        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+            if (this.SaveCompletedEvent == null) {
+                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    }
+                });
+            }
+
+            if (this.LoadCompletedEvent == null) {
+                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                    if (isLoadSuccess) {
+                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        console.log("Entity Reloaded");
+                    }
+                });
+            }
+        }
+    }
+
+    InitLOVFilters() {
+        // initialize query filters for Accounts
+        this.GLAccountsFilterItems = new ApiQueryFilters();
+        this.GLAccountsFilterItems.addAdditionalFilter("ChartOfAccountsTypeCode", "5", null, null, "Equals", false, false, false, "string");
+        this.GLAccountsFilterItems.addAdditionalFilter("IsMultiCurrency", false, null, null, "Equals", false, false, false, "string");
+    }
+
+    //#region Properties
+    get AccountNumber() { return this.EntityPM.AccountNumber; }
+    set AccountNumber(value: string) {
+        if (this.EntityPM.AccountNumber != value) {
+            this.EntityPM.AccountNumber = value;
+        }
+    }
+
+    get GLAccountId() { return this.EntityPM.GLAccountId; }
+    set GLAccountId(value: string) {
+        if (this.EntityPM.GLAccountId != value) {
+            this.EntityPM.GLAccountId = value;
+        }
+    }
+
+    glAccount: GLAccountPM;
+    get GLAccount() { return this.glAccount; }
+    set GLAccount(value: GLAccountPM) {
+        if (this.glAccount != value) {
+            this.glAccount = value;
+        }
+    }
+
+    get DeferredGLAccountId() { return this.EntityPM.DeferredGLAccountId; }
+    set DeferredGLAccountId(value: string) {
+        if (this.EntityPM.DeferredGLAccountId != value) {
+            this.EntityPM.DeferredGLAccountId = value;
+        }
+    }
+
+    deferredGLAccount: GLAccountPM;
+    get DeferredGLAccount() { return this.deferredGLAccount; }
+    set DeferredGLAccount(value: GLAccountPM) {
+        if (this.deferredGLAccount != value) {
+            this.deferredGLAccount = value;
+        }
+    }
+
+    get TransferGLAcccountId() { return this.EntityPM.TransferGLAcccountId; }
+    set TransferGLAcccountId(value: string) {
+        if (this.EntityPM.TransferGLAcccountId != value) {
+            this.EntityPM.TransferGLAcccountId = value;
+        }
+    }
+
+    get BankId() { return this.EntityPM.BankId; }
+    set BankId(value: string) {
+        if (this.EntityPM.BankId != value) {
+            this.EntityPM.BankId = value;
+        }
+    }
+
+    get BranchNumber() { return this.EntityPM.BranchNumber; }
+    set BranchNumber(value: string) {
+        if (this.EntityPM.BranchNumber != value) {
+            this.EntityPM.BranchNumber = value;
+        }
+    }
+    
+    get ChequeCounter() { return this.EntityPM.ChequeCounter; }
+    set ChequeCounter(value: number) {
+        if (this.EntityPM.ChequeCounter != value) {
+            this.EntityPM.ChequeCounter = value;
+        }
+    }
+
+    get IBAN() { return this.EntityPM.IBAN; }
+    set IBAN(value: string) {
+        if (this.EntityPM.IBAN != value) {
+            this.EntityPM.IBAN = value;
+        }
+    }
+
+    get SwiftCode() { return this.EntityPM.SwiftCode; }
+    set SwiftCode(value: string) {
+        if (this.EntityPM.SwiftCode != value) {
+            this.EntityPM.SwiftCode = value;
+        }
+    }
+
+    get BranchAddress() { return this.EntityPM.BranchAddress; }
+    set BranchAddress(value: string) {
+        if (this.EntityPM.BranchAddress != value) {
+            this.EntityPM.BranchAddress = value;
+        }
+    }
+
+    get Inactive() { return this.EntityPM.Inactive; }
+    set Inactive(value: boolean) {
+        if (this.EntityPM.Inactive != value) {
+            this.EntityPM.Inactive = value;
+        }
+    }
+
+    get LocalName() { return this.EntityPM.LocalName; }
+    set LocalName(value: string) {
+        if (this.EntityPM.LocalName != value) {
+            this.EntityPM.LocalName = value;
+        }
+    }
+
+    get EnglishName() { return this.EntityPM.EnglishName; }
+    set EnglishName(value: string) {
+        if (this.EntityPM.EnglishName != value) {
+            this.EntityPM.EnglishName = value;
+        }
+    }
+
+    //#endregion
+
+    SetUIProperties() {
+        //if (!this.EntityPM.TypeCode) {
+        //    this.UIProperties.SetEnabled("ParentId", this.ObjectTableName, false);
+        //}
+
+    }
+
+}

@@ -1,0 +1,55 @@
+﻿<div class="TabHolder" style="overflow-x:auto">
+    <div class="TabControl" style="position: absolute; height: calc(100% - 20px);width: calc(100% - 20px)">
+        <div class="TabControlHead">
+            <ul style="margin-left: 2px;">
+                <li [class.Selected]="SelectedTabCode == 'Daily'" (click)="SelectedTabCode = 'Daily'">
+                    <div class="InnerChild">
+                        Data Entry
+                    </div>
+                </li>
+
+                <li [class.Selected]="SelectedTabCode == 'Weekly'" (click)="SelectedTabCode = 'Weekly'">
+                    <div class="InnerChild">
+                        Weekly
+                    </div>
+                </li>
+
+                <li [class.Selected]="SelectedTabCode == 'Monthly'" (click)="SelectedTabCode = 'Monthly'">
+                    <div class="InnerChild">
+                        Monthly
+                    </div>
+                </li>
+
+                <li [class.Selected]="SelectedTabCode == 'ClockTime'" (click)="SelectedTabCode = 'ClockTime'">
+                    <div class="InnerChild">
+                        Clock Time
+                    </div>
+                </li>
+
+               
+
+            </ul>
+        </div>
+
+        <div class="TabControlBody">
+            <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'Daily'">
+                <div class="LocationDirective" LocationDirective Code="Daily"></div>
+            </div>
+
+            <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'Weekly'">
+                <div class="LocationDirective" LocationDirective Code="Weekly"></div>
+            </div>
+
+            <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'Monthly'">
+                <div class="LocationDirective" LocationDirective Code="Monthly"></div>
+            </div>
+
+            <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'ClockTime'">
+                <div class="LocationDirective" LocationDirective Code="ClockTime"></div>
+            </div>
+
+          
+        </div>
+    </div>
+
+</div>

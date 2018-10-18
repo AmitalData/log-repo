@@ -1,0 +1,316 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+    </script>
+</head>
+<body>
+
+    <div data-role="view" data-transition="fade" data-show="onPostViewShow">
+             <header class="headerPost" data-role="header">
+              
+            <div style="height:43px; display: table;width:100%;">
+
+               <div style="display: table-cell; width: 80px; vertical-align: middle">
+             
+                  
+                </div>
+
+
+                <div style="display: table-cell; width: 175px; vertical-align: middle;text-align:left">
+                              <select  onchange="onQueryPostBoxChange();" id="QueryBoxPost"  style="height:25px;font-weight: bold;margin-top:2px; background-color:#2D83BA;font-family: Lucida Sans ;  color: white; width:auto;">
+                                <option value="Following">What I Follow</option>
+                                <option value="ToMe"  >To Me</option>
+                                <option value="All" selected="selected">All Company</option>
+                            
+                             </select> 
+                </div>
+                  
+
+                   <div style="display: table-cell; width: auto; vertical-align: middle;text-align:right">
+                                   <button id="buttonrefershPost" style="height: auto; margin-left:15px;  margin-bottom:0px; width:auto; background-color: transparent; " onclick="buttrefershPostfun()"><img style="width:22px;margin-right:20px; height:22px;margin-top:4px;" src="images/refersh.png"/ ></button>
+                </div>
+
+                  <div style="display: table-cell; width: 25px; vertical-align: middle;text-align:right">
+
+                     <button id="buttonViewNeEpostPage" style="height: auto;margin-right:15px; margin-bottom:2px; width: auto; background-color: transparent ;" onclick="buttonViewNeEpostPagefun()"><img style="width:25px; height:25px;margin-top:5px;" src="images/AddComment.png"/ ></button>
+                </div>
+          
+
+            </div>
+      </header>
+
+        <ul id="PostListBox" data-role="listview" data-type="group" style="margin-top:15px;"></ul>
+        <div id="endlinePost" style="height: 1px; width:100%; background-color: white;border-bottom:1px solid #F7F3F7" ></div>
+
+    </div>
+<!--      <div    style="font-size:13px; display:none;color:\\#C1C6C9;  display: #= DisplayYouLike #">You</div>
+      <div    style="font-size:13px; display:none;color:\\#C1C6C9;  display: #= DisplayYouAndOthersLike #">You and others</div>-->
+     <!--background-color:\\#F0F2F4;-->
+        <script type="text/x-kendo-tmpl" id="PostItemTemplate">
+         <a id="#= PostId #" OnClick="ViewPost(id)">
+        <div style="width:100%; border-bottom:1px solid darkgray">
+            <div style="margin-top:5px;margin-left:5px;margin-right:5px;width:100%;">
+                          <div  style="height:auto; display:inline-block;width:30px;"><img style="height:37px; width:35px; margin-top:5px; padding:0px; margin:0px;" src="images/009.png" /></div>
+          
+             <div  style="height:auto; display:inline-block; vertical-align:top; margin-left:10px;margin-right:5px; max-width:230px;">
+
+                         <div class="CreatePost"  style="height:auto; display:block; vertical-align:top;font-weight: bold;"> ${CreatedByUserName}</div>
+                         <div class="bodypost"  style="height:auto; display:block; vertical-align:top;">${BodyText}</div>
+                         <div  style="height:15px; display:block; vertical-align:top;"></div>
+
+                          <div  style="height:auto; display:block; vertical-align:top;width:auto; display: #= DisplayLikeCommentDiv #">
+
+
+                               
+
+                                       <div  style="height:auto;font-size:13px; color:\\#C1C6C9;  display:none; display: #= DisplayComment #">${NumberOfComments}</div>
+                                        <div  style="height:auto;font-size:13px; color:\\#C1C6C9;  display:none; display: #= DisplayComment #">comment</div>
+
+                          
+
+
+                           
+
+                                        <div  style="height:auto; display:none;  vertical-align:middle; display: #= DisplayArePostLike #"> <img style="width:30px;height:30px;"src="images/LikeIcon.png" /></div>
+                                        <div  style="font-size:13px; color:\\#C1C6C9; display:none; vertical-align:middle; display: #= DisplayArePostLike #"> ${TextLikePost}</div>
+                           
+
+                           </div>
+                 
+                     
+        </div>
+    </div>
+              </div>
+        </a>
+    </script>
+                    
+         <script>
+
+
+      //Posts
+        var PostListClass = function () {
+         this.BodyText = "";
+         this.CreateDate = "";
+         this.CreateDateTime = "";
+         this.CreatedByUserName = "";
+         this.PostId = "";
+         this.NumberOfLikes = "";
+         this.NumberOfComments = "";
+
+
+         //this.DisplayImageLike = "";
+         //this.DisplayYouLike = "";
+         //this.DisplayNumberLike = "";
+            //this.DisplayYouAndOthersLike = "";
+
+         this.DisplayComment = "";
+         this.DisplayLikeCommentDiv = "";
+         this.DisplayArePostLike = "";
+         this.TextLikePost = "";
+
+
+     }
+        jQuery.BuildPostList = (function (list) {
+    
+            var PostList = [];
+        
+            $.CurrentPostsList = PostList;
+
+            $.each(list, function (index, Post) {
+            
+           
+                var item = new PostListClass();
+
+                item.PostList = Post;
+                if ($.trim(Post.NumberOfLikes) == 0 && $.trim(Post.NumberOfComments) == 0) {
+                    item.DisplayLikeCommentDiv = "none";
+                }
+         
+
+                var a = "";
+                var b = "";
+     
+                if ($.trim(Post.NumberOfLikes) == 0) {
+                    item.NumberOfLikes = $.trim(Post.NumberOfLikes);
+                    //item.DisplayArePostLike = "none";
+                    //item.DisplayYouLike = "none";
+                    //item.DisplayNumberLike = "none";
+                    //item.DisplayYouAndOthersLike = "none";
+
+                }
+
+                else {
+                    //$.CurrentUserId
+                    item.DisplayArePostLike = "inline-block";
+
+                              if ($.trim(Post.NumberOfLikes) == 1) {
+                                        item.NumberOfLikes = $.trim(Post.NumberOfLikes);
+
+                                         $.each(Post.PostLikes, function (index, PLike) {
+                                             if ($.trim(PLike.UserId) == $.CurrentUserId) {
+                                                  b = 1;
+                                                }
+                                         });
+                                         if (b == 1) {
+                                             item.TextLikePost ="You";
+                                             //item.DisplayImageLike = "inline-block";
+                                             //item.DisplayYouLike = "inline-block";
+                                         }
+                                         else {
+                                             item.TextLikePost = item.NumberOfLikes;
+                                         }
+
+                              
+                                   }
+                  
+                              else {
+
+                                            $.each(Post.PostLikes, function (index, PLike) {
+                                                if ($.trim(PLike.UserId) == $.CurrentUserId) {
+                                                    a = 1;
+                                                  }
+                                            });
+
+                                            if (a == "1") {
+                                                //item.DisplayImageLike = "inline-block";
+                                                //item.DisplayYouAndOthersLike = "inline-block";
+                                                //item.DisplayNumberLike = "inline-block";
+                                                item.NumberOfLikes = $.trim(Post.NumberOfLikes) - 1;
+                                                item.TextLikePost = "You and others " + item.NumberOfLikes;
+                                            }
+                                            else {
+                                                  //item.DisplayImageLike = "inline-block";
+                                                  //  item.DisplayNumberLike = "inline-block";
+                                                item.NumberOfLikes = $.trim(Post.NumberOfLikes);
+                                                item.TextLikePost = item.NumberOfLikes;
+                                            }
+                                 
+                              }
+
+      
+                      }
+
+
+
+                if ($.trim(Post.NumberOfComments) == 0) {
+                    item.DisplayComment = "none";
+                }
+                else {
+                    item.DisplayComment = "inline-block";
+                }
+
+
+                item.PostId = $.trim(Post.Id);
+
+                item.BodyText = $.trim(Post.BodyText);
+                item.CreateDateTime = $.Convert.ToShortTime(Post.CreateDate);
+                item.CreateDate = $.Convert.ToShortDate(Post.CreateDate);
+                item.CreatedByUserName = $.trim(Post.CreatedByUserName);
+                item.NumberOfComments = $.trim(Post.NumberOfComments);
+
+                PostList.push(item);
+
+            });
+            $.CurrentPostsList = PostList;
+
+            return PostList;
+         
+        });
+        jQuery.LoadPosts = (function (QueryCode) {
+            if (QueryCode == "") {
+                QueryCode = $("#QueryBoxPost").val();
+            }
+  
+            $.Application.showLoading();
+            function PostFilters() {
+                    this.QueryName = QueryCode;
+                    this.UserId = $.CurrentUserId;
+            };
+
+            var filters = new PostFilters();
+            var url = "../api/Posts?tenant=" + $.CurrentTenant;
+            $.ajax({
+                url: url,
+                data: JSON.stringify(filters),
+                type: 'POST',
+                contentType: 'application/json',
+                success: function (result) {
+                        if (result.length  > 0) {
+                        document.getElementById('endlinePost').style.display = "block";
+                    }
+                    else {
+                        document.getElementById('endlinePost').style.display = "none";
+                    }
+
+                    var dataSource = new kendo.data.DataSource({
+                        data: $.BuildPostList(result),
+                
+                    });
+
+                    $("#PostListBox").kendoMobileListView(
+                    {
+                        dataSource: dataSource,
+                        template: kendo.template($("#PostItemTemplate").html()),
+
+                    });
+      
+                    $.Application.hideLoading();
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $.Application.hideLoading();
+
+                }
+            });
+ 
+        })
+     //EndPosts
+
+
+     //Headerbottoms
+        function onQueryPostBoxChange(e) {
+     
+            var selectValue = $("#QueryBoxPost").val();
+            $.LoadPosts(selectValue);
+            var scroller = param.view.scroller;
+            scroller.reset();
+       
+        }
+        function buttonViewNeEpostPagefun() {
+            $.Application.navigate("Views/PostViews/AddNewPost.html?p");
+        }
+
+        function buttrefershPostfun()
+        {
+            $.LoadPosts("");
+        }
+     //Headerbottoms
+
+
+      //OnShowPage
+        var param = null;
+        function onPostViewShow(e) {
+            param = e;
+            $.LoadPosts("");
+            $("#PostValue").css("color", "LightGray");
+            $("#PostValue").val("what are you working on?");
+        }
+     //EndOnShowPage
+
+      
+        function ViewPost(id) {
+            for (var i = 0, m = null; i < $.CurrentPostsList.length; ++i) {
+                if ($.CurrentPostsList[i].PostId == id) {
+                    $.CurrentEntityPostList = $.CurrentPostsList[i];
+                    break;
+                }
+            }
+            $.CurrentEntityPostId = id;  
+            $.Application.navigate("Views/PostDatilesView.html?posts");
+        }
+    </script>
+
+</body>
+</html>

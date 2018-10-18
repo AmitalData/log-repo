@@ -1,0 +1,1073 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://tempuri.org/DeclarationSReport" elementFormDefault="qualified" targetNamespace="http://tempuri.org/DeclarationSReport" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="DeclarationSReport">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="mehes_file" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="mehes_file">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="file_number" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="customs_file_num" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="draw_num" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="reshimon_num" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="draft_date" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="autonomy" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="storage_request" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="custom_agent" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="open_date" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="follow_up_date" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="file_close" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="open_close" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="change" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="transfer_importer_id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="reshimon_date" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="warning_date" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="incoterms_id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="index_value" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="changing_value" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="region_value" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="transport_value" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="insurance_value" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="service_value" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="expense_value" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="closure_value" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="fee_carrier" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="fee_platform" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="currency_rate" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="price_index" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="goods_value" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cif_value" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="accepted_price" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="total_tax" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="transport_value_fc" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="insurance_percent" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="insurance_amount_fc" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="pay_date" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="pay_time" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mehes_draft_status" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="company_name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="user_print" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="passport_no" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="passp_ctry" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="importer_sts" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="family_name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="first_name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="city_symbol" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="street" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="house" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="entrance" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="apartment_no" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="zip_code" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="trans_import_name" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="customs_branch" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="currency" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="department" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="owner_right" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="reshimon_type" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="tsrufot" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="add_toll" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="tax" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="secur_declar" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="cust_items" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="acc_supplier" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="mishgor" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="incoterms" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="importer" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="message_details" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="tax_details" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="customer" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="print_user" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="transp_currency" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="insurance_currency" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="print_103" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="transport_fc_value" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="rihbit" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="trans_import_id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="volume" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="volume_kg" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="container_list" />
+      </xs:sequence>
+      <xs:attribute name="id" type="xs:string" use="required" />
+      <xs:attribute name="status" type="xs:string" use="required" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="file_number" type="xs:string" />
+  <xs:element name="customs_file_num" type="xs:string" />
+  <xs:element name="draw_num" type="xs:string" />
+  <xs:element name="reshimon_num" type="xs:string" />
+  <xs:element name="draft_date" type="xs:string" />
+  <xs:element name="autonomy" type="xs:string" />
+  <xs:element name="storage_request" type="xs:string" />
+  <xs:element name="custom_agent" type="xs:string" />
+  <xs:element name="open_date" type="xs:string" />
+  <xs:element name="follow_up_date" type="xs:string" />
+  <xs:element name="file_close" type="xs:string" />
+  <xs:element name="open_close" type="xs:string" />
+  <xs:element name="change" type="xs:string" />
+  <xs:element name="transfer_importer_id" type="xs:string" />
+  <xs:element name="reshimon_date" type="xs:string" />
+  <xs:element name="warning_date" type="xs:string" />
+  <xs:element name="incoterms_id" type="xs:string" />
+  <xs:element name="index_value" type="xs:string" />
+  <xs:element name="changing_value" type="xs:string" />
+  <xs:element name="region_value" type="xs:string" />
+  <xs:element name="transport_value" type="xs:string" />
+  <xs:element name="insurance_value" type="xs:string" />
+  <xs:element name="service_value" type="xs:string" />
+  <xs:element name="expense_value" type="xs:string" />
+  <xs:element name="closure_value" type="xs:string" />
+  <xs:element name="fee_carrier" type="xs:string" />
+  <xs:element name="fee_platform" type="xs:string" />
+  <xs:element name="currency_rate" type="xs:string" />
+  <xs:element name="price_index" type="xs:string" />
+  <xs:element name="goods_value" type="xs:string" />
+  <xs:element name="cif_value" type="xs:string" />
+  <xs:element name="accepted_price" type="xs:string" />
+  <xs:element name="total_tax" type="xs:string" />
+  <xs:element name="transport_value_fc" type="xs:string" />
+  <xs:element name="insurance_percent" type="xs:string" />
+  <xs:element name="insurance_amount_fc" type="xs:string" />
+  <xs:element name="pay_date" type="xs:string" />
+  <xs:element name="pay_time" type="xs:string" />
+  <xs:element name="mehes_draft_status" type="xs:string" />
+  <xs:element name="company_name" type="xs:string" />
+  <xs:element name="user_print" type="xs:string" />
+  <xs:element name="passport_no" type="xs:string" />
+  <xs:element name="passp_ctry" type="xs:string" />
+  <xs:element name="importer_sts" type="xs:string" />
+  <xs:element name="family_name" type="xs:string" />
+  <xs:element name="first_name" type="xs:string" />
+  <xs:element name="city_symbol" type="xs:string" />
+  <xs:element name="street" type="xs:string" />
+  <xs:element name="house" type="xs:string" />
+  <xs:element name="entrance" type="xs:string" />
+  <xs:element name="apartment_no" type="xs:string" />
+  <xs:element name="zip_code" type="xs:string" />
+  <xs:element name="trans_import_name" type="xs:string" />
+  <xs:element name="customs_branch">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="customs_branch-id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="customs_branch-name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="customs_branch-partner_id" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="customs_branch-id" type="xs:string" />
+  <xs:element name="customs_branch-name" type="xs:string" />
+  <xs:element name="customs_branch-partner_id" type="xs:string" />
+  <xs:element name="currency">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="currency-id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="currency-name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="currency-partner_id" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="currency-id" type="xs:string" />
+  <xs:element name="currency-name" type="xs:string" />
+  <xs:element name="currency-partner_id" type="xs:string" />
+  <xs:element name="department">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="department-id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="department-name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="department-partner_id" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="department-id" type="xs:string" />
+  <xs:element name="department-name" type="xs:string" />
+  <xs:element name="department-partner_id" type="xs:string" />
+  <xs:element name="owner_right">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="owner_right-id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="owner_right-name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="owner_right-partner_id" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="owner_right-id" type="xs:string" />
+  <xs:element name="owner_right-name" type="xs:string" />
+  <xs:element name="owner_right-partner_id" type="xs:string" />
+  <xs:element name="reshimon_type">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="reshimon_type-id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="reshimon_type-name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="resfimon_type-partner_id" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="reshimon_type-id" type="xs:string" />
+  <xs:element name="reshimon_type-name" type="xs:string" />
+  <xs:element name="resfimon_type-partner_id" type="xs:string" />
+  <xs:element name="tsrufot">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="tsrufot-line" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="tsrufot-quantity" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="tsrufot-number" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="tsrufot-tsruf_type" />
+      </xs:sequence>
+      <xs:attribute fixed="yes" name="multi_line" type="xs:string" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="tsrufot-line" type="xs:string" />
+  <xs:element name="tsrufot-quantity" type="xs:string" />
+  <xs:element name="tsrufot-number" type="xs:string" />
+  <xs:element name="tsrufot-tsruf_type">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="tsrufot-tsruf_type-id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="tsrufot-tsruf_type-name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="tsrufot-tsruf_type-partner_id" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="tsrufot-tsruf_type-id" type="xs:string" />
+  <xs:element name="tsrufot-tsruf_type-name" type="xs:string" />
+  <xs:element name="tsrufot-tsruf_type-partner_id" type="xs:string" />
+  <xs:element name="add_toll">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="add_toll-amount" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="add_toll-tax_type" />
+      </xs:sequence>
+      <xs:attribute fixed="yes" name="multi_line" type="xs:string" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="add_toll-amount" type="xs:string" />
+  <xs:element name="add_toll-tax_type">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="add_toll-tax_type-id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="add_toll-tax_type-name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="add_toll-tax_type-partner_id" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="add_toll-tax_type-id" type="xs:string" />
+  <xs:element name="add_toll-tax_type-name" type="xs:string" />
+  <xs:element name="add_toll-tax_type-partner_id" type="xs:string" />
+  <xs:element name="tax">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="tax-line" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="tax-prat_mehes" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="tax-goods_num" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="tax-tax_basis" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="tax-tax_amount" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="tax-postponed_tax" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="tax-tax_to_pay" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="tax-calc_code" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="tax-rate" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="tax-defined_tax" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="tax-add_tax_rate" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="tax-add_defined_tax" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="tax-add_import" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="tax-taxtype" />
+      </xs:sequence>
+      <xs:attribute fixed="yes" name="multi_line" type="xs:string" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="tax-line" type="xs:string" />
+  <xs:element name="tax-prat_mehes" type="xs:string" />
+  <xs:element name="tax-goods_num" type="xs:string" />
+  <xs:element name="tax-tax_basis" type="xs:string" />
+  <xs:element name="tax-tax_amount" type="xs:string" />
+  <xs:element name="tax-postponed_tax" type="xs:string" />
+  <xs:element name="tax-tax_to_pay" type="xs:string" />
+  <xs:element name="tax-calc_code" type="xs:string" />
+  <xs:element name="tax-rate" type="xs:string" />
+  <xs:element name="tax-defined_tax" type="xs:string" />
+  <xs:element name="tax-add_tax_rate" type="xs:string" />
+  <xs:element name="tax-add_defined_tax" type="xs:string" />
+  <xs:element name="tax-add_import" type="xs:string" />
+  <xs:element name="tax-taxtype">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="tax-taxtype-id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="tax-taxtype-name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="tax-taxtype-partner_id" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="tax-taxtype-id" type="xs:string" />
+  <xs:element name="tax-taxtype-name" type="xs:string" />
+  <xs:element name="tax-taxtype-partner_id" type="xs:string" />
+  <xs:element name="secur_declar">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="secur_declar-quest_code" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="secur_declar-answer" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="secur_declar-quest_name" />
+      </xs:sequence>
+      <xs:attribute fixed="yes" name="multi_line" type="xs:string" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="secur_declar-quest_code" type="xs:string" />
+  <xs:element name="secur_declar-answer" type="xs:string" />
+  <xs:element name="secur_declar-quest_name" type="xs:string" />
+  <xs:element name="cust_items">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-line" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-prat_mehes" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-supplier_account" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-essential_item" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-bitha_tax_item" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-value_fc" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-raise_percent" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-raise_value" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-value_nis" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-quantity" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-extra_qnty" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-wholesale_price" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-import_addition" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-license_no" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-standard_num" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-agnt_pay_cust" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-gnt_pay_tax" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-agnt_pay_bitha" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-nidhe_mehes_pcnt" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-nidhe_mas_pcnt" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-abs_amount" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-airbags_amount" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-air_cond_amount" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-exp_reshim_num" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-exp_prat" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-guarantee_num" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-guarantee_type" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-goods_desc" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-currency_code" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-prat_mehes_can" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-autonomy_book" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-private_imp_curr" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-origin_country" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-purch_country" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-tsvira" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-katalog_num" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="cust_items-tariff" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="cust_items-discount" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="cust_items-vehicle" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="cust_items-exemption" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="cust_items-guarant_pc" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="cust_items-item_apprv" />
+      </xs:sequence>
+      <xs:attribute fixed="yes" name="multi_line" type="xs:string" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="cust_items-line" type="xs:string" />
+  <xs:element name="cust_items-prat_mehes" type="xs:string" />
+  <xs:element name="cust_items-supplier_account" type="xs:string" />
+  <xs:element name="cust_items-essential_item" type="xs:string" />
+  <xs:element name="cust_items-bitha_tax_item" type="xs:string" />
+  <xs:element name="cust_items-value_fc" type="xs:string" />
+  <xs:element name="cust_items-raise_percent" type="xs:string" />
+  <xs:element name="cust_items-raise_value" type="xs:string" />
+  <xs:element name="cust_items-value_nis" type="xs:string" />
+  <xs:element name="cust_items-quantity" type="xs:string" />
+  <xs:element name="cust_items-extra_qnty" type="xs:string" />
+  <xs:element name="cust_items-wholesale_price" type="xs:string" />
+  <xs:element name="cust_items-import_addition" type="xs:string" />
+  <xs:element name="cust_items-license_no" type="xs:string" />
+  <xs:element name="cust_items-standard_num" type="xs:string" />
+  <xs:element name="cust_items-agnt_pay_cust" type="xs:string" />
+  <xs:element name="cust_items-gnt_pay_tax" type="xs:string" />
+  <xs:element name="cust_items-agnt_pay_bitha" type="xs:string" />
+  <xs:element name="cust_items-nidhe_mehes_pcnt" type="xs:string" />
+  <xs:element name="cust_items-nidhe_mas_pcnt" type="xs:string" />
+  <xs:element name="cust_items-abs_amount" type="xs:string" />
+  <xs:element name="cust_items-airbags_amount" type="xs:string" />
+  <xs:element name="cust_items-air_cond_amount" type="xs:string" />
+  <xs:element name="cust_items-exp_reshim_num" type="xs:string" />
+  <xs:element name="cust_items-exp_prat" type="xs:string" />
+  <xs:element name="cust_items-guarantee_num" type="xs:string" />
+  <xs:element name="cust_items-guarantee_type" type="xs:string" />
+  <xs:element name="cust_items-goods_desc" type="xs:string" />
+  <xs:element name="cust_items-currency_code" type="xs:string" />
+  <xs:element name="cust_items-prat_mehes_can" type="xs:string" />
+  <xs:element name="cust_items-autonomy_book" type="xs:string" />
+  <xs:element name="cust_items-private_imp_curr" type="xs:string" />
+  <xs:element name="cust_items-origin_country" type="xs:string" />
+  <xs:element name="cust_items-purch_country" type="xs:string" />
+  <xs:element name="cust_items-tsvira" type="xs:string" />
+  <xs:element name="cust_items-katalog_num" type="xs:string" />
+  <xs:element name="cust_items-tariff">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-tariff-id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-tariff-name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-tariff-partner_id" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="cust_items-tariff-id" type="xs:string" />
+  <xs:element name="cust_items-tariff-name" type="xs:string" />
+  <xs:element name="cust_items-tariff-partner_id" type="xs:string" />
+  <xs:element name="cust_items-discount">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-discount-id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-discount-name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-discount-partner_id" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="cust_items-discount-id" type="xs:string" />
+  <xs:element name="cust_items-discount-name" type="xs:string" />
+  <xs:element name="cust_items-discount-partner_id" type="xs:string" />
+  <xs:element name="cust_items-vehicle">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-vehicle-id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-vehicle-name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-vehicle-partner_id" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="cust_items-vehicle-id" type="xs:string" />
+  <xs:element name="cust_items-vehicle-name" type="xs:string" />
+  <xs:element name="cust_items-vehicle-partner_id" type="xs:string" />
+  <xs:element name="cust_items-exemption">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-exemption-id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-exemption-name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-exemption-partner_id" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="cust_items-exemption-id" type="xs:string" />
+  <xs:element name="cust_items-exemption-name" type="xs:string" />
+  <xs:element name="cust_items-exemption-partner_id" type="xs:string" />
+  <xs:element name="cust_items-guarant_pc">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-guarant_pc-id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-guarant_pc-name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-guarant_pc-partner_id" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="cust_items-guarant_pc-id" type="xs:string" />
+  <xs:element name="cust_items-guarant_pc-name" type="xs:string" />
+  <xs:element name="cust_items-guarant_pc-partner_id" type="xs:string" />
+  <xs:element name="cust_items-item_apprv">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-item_apprv-line" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-item_apprv-approv_num" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="cust_items-item_apprv-appr" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="cust_items-item_apprv-apptp" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="cust_items-item_apprv-line" type="xs:string" />
+  <xs:element name="cust_items-item_apprv-approv_num" type="xs:string" />
+  <xs:element name="cust_items-item_apprv-appr">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-item_apprv-appr-id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-item_apprv-appr-name" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="cust_items-item_apprv-appr-id" type="xs:string" />
+  <xs:element name="cust_items-item_apprv-appr-name" type="xs:string" />
+  <xs:element name="cust_items-item_apprv-apptp">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-item_apprv-apptp-id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="cust_items-item_apprv-apptp-name" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="cust_items-item_apprv-apptp-id" type="xs:string" />
+  <xs:element name="cust_items-item_apprv-apptp-name" type="xs:string" />
+  <xs:element name="acc_supplier">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-line" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-main_account" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-sup_account" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-value" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-commission" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-declar_num" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="acc_supplier-spec_decl" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="acc_supplier-supplier" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="acc_supplier-incoterm" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="acc_supplier-country" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="acc_supplier-currency" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="acc_supplier-acc_type" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="acc_supplier-sup_items" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-changing_value" />
+      </xs:sequence>
+      <xs:attribute fixed="yes" name="multi_line" type="xs:string" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="acc_supplier-line" type="xs:string" />
+  <xs:element name="acc_supplier-main_account" type="xs:string" />
+  <xs:element name="acc_supplier-sup_account" type="xs:string" />
+  <xs:element name="acc_supplier-value" type="xs:string" />
+  <xs:element name="acc_supplier-commission" type="xs:string" />
+  <xs:element name="acc_supplier-declar_num" type="xs:string" />
+  <xs:element name="acc_supplier-spec_decl">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-spec_decl-code" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-spec_decl-answer" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-spec_decl-code_name" />
+      </xs:sequence>
+      <xs:attribute fixed="yes" name="multi_line" type="xs:string" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="acc_supplier-spec_decl-code" type="xs:string" />
+  <xs:element name="acc_supplier-spec_decl-answer" type="xs:string" />
+  <xs:element name="acc_supplier-spec_decl-code_name" type="xs:string" />
+  <xs:element name="acc_supplier-supplier">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-supplier-id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-supplier-name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-supplier-partner_id" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="acc_supplier-supplier-id" type="xs:string" />
+  <xs:element name="acc_supplier-supplier-name" type="xs:string" />
+  <xs:element name="acc_supplier-supplier-partner_id" type="xs:string" />
+  <xs:element name="acc_supplier-incoterm">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-incoterm-id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-incoterm-name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-incoterm-partner_id" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="acc_supplier-incoterm-id" type="xs:string" />
+  <xs:element name="acc_supplier-incoterm-name" type="xs:string" />
+  <xs:element name="acc_supplier-incoterm-partner_id" type="xs:string" />
+  <xs:element name="acc_supplier-country">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-country-id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-country-name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-country-partner_id" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="acc_supplier-country-id" type="xs:string" />
+  <xs:element name="acc_supplier-country-name" type="xs:string" />
+  <xs:element name="acc_supplier-country-partner_id" type="xs:string" />
+  <xs:element name="acc_supplier-currency">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-currency-id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-currency-name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-currency-partner_id" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="acc_supplier-currency-id" type="xs:string" />
+  <xs:element name="acc_supplier-currency-name" type="xs:string" />
+  <xs:element name="acc_supplier-currency-partner_id" type="xs:string" />
+  <xs:element name="acc_supplier-acc_type">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-acc_type-id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-acc_type-name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-acc_type-partner_id" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="acc_supplier-acc_type-id" type="xs:string" />
+  <xs:element name="acc_supplier-acc_type-name" type="xs:string" />
+  <xs:element name="acc_supplier-acc_type-partner_id" type="xs:string" />
+  <xs:element name="acc_supplier-sup_items">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-sup_items-file_no" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ACC_LINE_NO.CCUSUPITEMS.AMITAL" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-sup_items-line_no" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-sup_items-prat_mehs" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-sup_items-orig_cnty" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-sup_items-pur_cnty" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-sup_items-fc_val" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-sup_items-licnse_no" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-sup_items-stndrt_no" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-sup_items-nidh_mhs" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-sup_items-nidh_mas" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-sup_items-quantity" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-sup_items-orig_val" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-sup_items-tariff" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-sup_items-item_no" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-sup_items-no_tsvira" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-sup_items-item_desc" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="acc_supplier-sup_items_app" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="acc_supplier-sup_items-file_no" type="xs:string" />
+  <xs:element name="ACC_LINE_NO.CCUSUPITEMS.AMITAL" type="xs:string" />
+  <xs:element name="acc_supplier-sup_items-line_no" type="xs:string" />
+  <xs:element name="acc_supplier-sup_items-prat_mehs" type="xs:string" />
+  <xs:element name="acc_supplier-sup_items-orig_cnty" type="xs:string" />
+  <xs:element name="acc_supplier-sup_items-pur_cnty" type="xs:string" />
+  <xs:element name="acc_supplier-sup_items-fc_val" type="xs:string" />
+  <xs:element name="acc_supplier-sup_items-licnse_no" type="xs:string" />
+  <xs:element name="acc_supplier-sup_items-stndrt_no" type="xs:string" />
+  <xs:element name="acc_supplier-sup_items-nidh_mhs" type="xs:string" />
+  <xs:element name="acc_supplier-sup_items-nidh_mas" type="xs:string" />
+  <xs:element name="acc_supplier-sup_items-quantity" type="xs:string" />
+  <xs:element name="acc_supplier-sup_items-orig_val" type="xs:string" />
+  <xs:element name="acc_supplier-sup_items-tariff" type="xs:string" />
+  <xs:element name="acc_supplier-sup_items-item_no" type="xs:string" />
+  <xs:element name="acc_supplier-sup_items-no_tsvira" type="xs:string" />
+  <xs:element name="acc_supplier-sup_items-item_desc" type="xs:string" />
+  <xs:element name="acc_supplier-sup_items_app">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-sup_items_app-file_no" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-sup_items_app-line_no" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-sup_items_app-approv_code" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-sup_items_app-approv_code_name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-sup_items_app-approv_type" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-sup_items_app-approv_type_name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="acc_supplier-sup_items_app-approv_no" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="acc_supplier-sup_items_app-file_no" type="xs:string" />
+  <xs:element name="acc_supplier-sup_items_app-line_no" type="xs:string" />
+  <xs:element name="acc_supplier-sup_items_app-approv_code" type="xs:string" />
+  <xs:element name="acc_supplier-sup_items_app-approv_code_name" type="xs:string" />
+  <xs:element name="acc_supplier-sup_items_app-approv_type" type="xs:string" />
+  <xs:element name="acc_supplier-sup_items_app-approv_type_name" type="xs:string" />
+  <xs:element name="acc_supplier-sup_items_app-approv_no" type="xs:string" />
+  <xs:element name="acc_supplier-changing_value" type="xs:string" />
+  <xs:element name="mishgor">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-line" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-number" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-manifest" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-ident_num" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-hawb" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-hawb_date" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-carnet_num" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-desc_of_goods1" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-unload_date" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-quantity" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-weight" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-seal_qty" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-pack_det" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-add_quantity" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-desc_of_goods2" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-desc_of_goods3" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-carrier_id" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="mishgor-transp_type" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="mishgor-ident_type" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="mishgor-bonded" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="mishgor-storage_type" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="mishgor-bonded_rec" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="mishgor-export_land" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="mishgor-load_port" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="mishgor-unload_port" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="mishgor-pack_type" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="mishgor-mishgor_type" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="mishgor-sign_num" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="mishgor-partiality" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-sign_num_list" />
+      </xs:sequence>
+      <xs:attribute fixed="yes" name="multi_line" type="xs:string" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="mishgor-line" type="xs:string" />
+  <xs:element name="mishgor-number" type="xs:string" />
+  <xs:element name="mishgor-manifest" type="xs:string" />
+  <xs:element name="mishgor-ident_num" type="xs:string" />
+  <xs:element name="mishgor-hawb" type="xs:string" />
+  <xs:element name="mishgor-hawb_date" type="xs:string" />
+  <xs:element name="mishgor-carnet_num" type="xs:string" />
+  <xs:element name="mishgor-desc_of_goods1" type="xs:string" />
+  <xs:element name="mishgor-unload_date" type="xs:string" />
+  <xs:element name="mishgor-quantity" type="xs:string" />
+  <xs:element name="mishgor-weight" type="xs:string" />
+  <xs:element name="mishgor-seal_qty" type="xs:string" />
+  <xs:element name="mishgor-pack_det" type="xs:string" />
+  <xs:element name="mishgor-add_quantity" type="xs:string" />
+  <xs:element name="mishgor-desc_of_goods2" type="xs:string" />
+  <xs:element name="mishgor-desc_of_goods3" type="xs:string" />
+  <xs:element name="mishgor-carrier_id" type="xs:string" />
+  <xs:element name="mishgor-transp_type">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-transp_type-id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-transp_type-name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-transp_type-partner_id" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="mishgor-transp_type-id" type="xs:string" />
+  <xs:element name="mishgor-transp_type-name" type="xs:string" />
+  <xs:element name="mishgor-transp_type-partner_id" type="xs:string" />
+  <xs:element name="mishgor-ident_type">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-ident_type-id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-ident_type-name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-ident_type-partner_id" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="mishgor-ident_type-id" type="xs:string" />
+  <xs:element name="mishgor-ident_type-name" type="xs:string" />
+  <xs:element name="mishgor-ident_type-partner_id" type="xs:string" />
+  <xs:element name="mishgor-bonded">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-bonded-warehouse_id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-bonded-name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-bonded-partner_id" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="mishgor-bonded-warehouse_id" type="xs:string" />
+  <xs:element name="mishgor-bonded-name" type="xs:string" />
+  <xs:element name="mishgor-bonded-partner_id" type="xs:string" />
+  <xs:element name="mishgor-storage_type">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-storage_type-id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-storage_type-name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-storage_type-partner_id" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="mishgor-storage_type-id" type="xs:string" />
+  <xs:element name="mishgor-storage_type-name" type="xs:string" />
+  <xs:element name="mishgor-storage_type-partner_id" type="xs:string" />
+  <xs:element name="mishgor-bonded_rec">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-bonded_rec-id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-bonded_rec-name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-bonded_rec-partner_id" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="mishgor-bonded_rec-id" type="xs:string" />
+  <xs:element name="mishgor-bonded_rec-name" type="xs:string" />
+  <xs:element name="mishgor-bonded_rec-partner_id" type="xs:string" />
+  <xs:element name="mishgor-export_land">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-export_land-id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-export_land-name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-export_land-partner_id" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="mishgor-export_land-id" type="xs:string" />
+  <xs:element name="mishgor-export_land-name" type="xs:string" />
+  <xs:element name="mishgor-export_land-partner_id" type="xs:string" />
+  <xs:element name="mishgor-load_port">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-load_port-id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-load_port-name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-load_port-partner_id" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="mishgor-load_port-id" type="xs:string" />
+  <xs:element name="mishgor-load_port-name" type="xs:string" />
+  <xs:element name="mishgor-load_port-partner_id" type="xs:string" />
+  <xs:element name="mishgor-unload_port">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-unload_port-id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-unload_port-name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-unload_port-partner_id" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="mishgor-unload_port-id" type="xs:string" />
+  <xs:element name="mishgor-unload_port-name" type="xs:string" />
+  <xs:element name="mishgor-unload_port-partner_id" type="xs:string" />
+  <xs:element name="mishgor-pack_type">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-pack_type-id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-pack_type-name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-pack_type-partner_id" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="mishgor-pack_type-id" type="xs:string" />
+  <xs:element name="mishgor-pack_type-name" type="xs:string" />
+  <xs:element name="mishgor-pack_type-partner_id" type="xs:string" />
+  <xs:element name="mishgor-mishgor_type">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-mishgor_type-id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-mishgor_type-name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-mishgor_type-partner_id" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="mishgor-mishgor_type-id" type="xs:string" />
+  <xs:element name="mishgor-mishgor_type-name" type="xs:string" />
+  <xs:element name="mishgor-mishgor_type-partner_id" type="xs:string" />
+  <xs:element name="mishgor-sign_num">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-sign_num-line" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-sign_num-numbers" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="mishgor-sign_num-line" type="xs:string" />
+  <xs:element name="mishgor-sign_num-numbers" type="xs:string" />
+  <xs:element name="mishgor-partiality">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-partiality-id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-partiality-name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mishgor-partiality-partner_id" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="mishgor-partiality-id" type="xs:string" />
+  <xs:element name="mishgor-partiality-name" type="xs:string" />
+  <xs:element name="mishgor-partiality-partner_id" type="xs:string" />
+  <xs:element name="mishgor-sign_num_list" type="xs:string" />
+  <xs:element name="incoterms">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="incoterms-id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="incoterms-name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="incoterms-partner_id" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="incoterms-id" type="xs:string" />
+  <xs:element name="incoterms-name" type="xs:string" />
+  <xs:element name="incoterms-partner_id" type="xs:string" />
+  <xs:element name="importer">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="importer-id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="importer-name" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="importer-id" type="xs:string" />
+  <xs:element name="importer-name" type="xs:string" />
+  <xs:element name="message_details">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="message_details-segment" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="message_details-number" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="message_details-code" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="message_details-error_message" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="message_details-segment" type="xs:string" />
+  <xs:element name="message_details-number" type="xs:string" />
+  <xs:element name="message_details-code" type="xs:string" />
+  <xs:element name="message_details-error_message" type="xs:string" />
+  <xs:element name="tax_details">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="tax_details-line" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="tax_details-prat_mehes" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="tax_details-goods_num" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="tax_details-tax_basis" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="tax_details-tax_amount" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="tax_details-postponed_tax" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="tax_details-tax_to_pay" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="tax_details-tax_calc_code" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="tax_details-tax_rate" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="tax_details-defined_tax" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="tax_details-add_tax_rate" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="tax_details-add_defined_tax" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="tax_details-add_import" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="tax_details-taxtype" />
+      </xs:sequence>
+      <xs:attribute fixed="yes" name="multi_line" type="xs:string" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="tax_details-line" type="xs:string" />
+  <xs:element name="tax_details-prat_mehes" type="xs:string" />
+  <xs:element name="tax_details-goods_num" type="xs:string" />
+  <xs:element name="tax_details-tax_basis" type="xs:string" />
+  <xs:element name="tax_details-tax_amount" type="xs:string" />
+  <xs:element name="tax_details-postponed_tax" type="xs:string" />
+  <xs:element name="tax_details-tax_to_pay" type="xs:string" />
+  <xs:element name="tax_details-tax_calc_code" type="xs:string" />
+  <xs:element name="tax_details-tax_rate" type="xs:string" />
+  <xs:element name="tax_details-defined_tax" type="xs:string" />
+  <xs:element name="tax_details-add_tax_rate" type="xs:string" />
+  <xs:element name="tax_details-add_defined_tax" type="xs:string" />
+  <xs:element name="tax_details-add_import" type="xs:string" />
+  <xs:element name="tax_details-taxtype">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="tax_details-taxtype-id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="tax_details-taxtype-name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="tax_details-taxtype-partner_id" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="tax_details-taxtype-id" type="xs:string" />
+  <xs:element name="tax_details-taxtype-name" type="xs:string" />
+  <xs:element name="tax_details-taxtype-partner_id" type="xs:string" />
+  <xs:element name="customer">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="customer-id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="customer-name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="customer-address" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="customer-address2" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="customer-zip_code" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="customer-city" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="customer-contact_person" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="customer-telephone" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="customer-e_maill" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="customer-state" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="customer-partner_id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="customer-company_id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="customer-mamps_no" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="customer-operational_card" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="customer-country" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="customer-fax" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="customer-id" type="xs:string" />
+  <xs:element name="customer-name" type="xs:string" />
+  <xs:element name="customer-address" type="xs:string" />
+  <xs:element name="customer-address2" type="xs:string" />
+  <xs:element name="customer-zip_code" type="xs:string" />
+  <xs:element name="customer-city" type="xs:string" />
+  <xs:element name="customer-contact_person" type="xs:string" />
+  <xs:element name="customer-telephone" type="xs:string" />
+  <xs:element name="customer-e_maill" type="xs:string" />
+  <xs:element name="customer-state" type="xs:string" />
+  <xs:element name="customer-partner_id" type="xs:string" />
+  <xs:element name="customer-company_id" type="xs:string" />
+  <xs:element name="customer-mamps_no" type="xs:string" />
+  <xs:element name="customer-operational_card" type="xs:string" />
+  <xs:element name="customer-country">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="customer-country-id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="customer-country-name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="customer-country-partner_id" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="customer-country-id" type="xs:string" />
+  <xs:element name="customer-country-name" type="xs:string" />
+  <xs:element name="customer-country-partner_id" type="xs:string" />
+  <xs:element name="customer-fax" type="xs:string" />
+  <xs:element name="print_user">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="print_user-id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="print_user-name" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="print_user-id" type="xs:string" />
+  <xs:element name="print_user-name" type="xs:string" />
+  <xs:element name="transp_currency">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="transp_currency-id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="transp_currency-name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="transp_currency-partner_id" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="transp_currency-id" type="xs:string" />
+  <xs:element name="transp_currency-name" type="xs:string" />
+  <xs:element name="transp_currency-partner_id" type="xs:string" />
+  <xs:element name="insurance_currency">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="insurance_currency-id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="insurance_currency-name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="insurance_currency-partner_id" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="insurance_currency-id" type="xs:string" />
+  <xs:element name="insurance_currency-name" type="xs:string" />
+  <xs:element name="insurance_currency-partner_id" type="xs:string" />
+  <xs:element name="print_103" type="xs:string" />
+  <xs:element name="transport_fc_value">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="transport_fc_value-line" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="transport_fc_value-val_fc" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="transport_fc_value-val" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="trans_fc_val-currency" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="transport_fc_value-line" type="xs:string" />
+  <xs:element name="transport_fc_value-val_fc" type="xs:string" />
+  <xs:element name="transport_fc_value-val" type="xs:string" />
+  <xs:element name="trans_fc_val-currency">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="trans_fc_val-currency-id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="trans_fc_val-currency-name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="trans_fc_val-currency-partner_id" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="trans_fc_val-currency-id" type="xs:string" />
+  <xs:element name="trans_fc_val-currency-name" type="xs:string" />
+  <xs:element name="trans_fc_val-currency-partner_id" type="xs:string" />
+  <xs:element name="rihbit">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="rihbit-line_no" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="rihbit-abs_deduct" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="rihbit-karit_deduct" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="rihbit-bakara_deduct" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="rihbit-memir_deduct" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="rihbit-madad_deduct" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="rihbit-prat" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="rihbit-sheild_no" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="rihbit-rihbit_file" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="rihbit-line_no" type="xs:string" />
+  <xs:element name="rihbit-abs_deduct" type="xs:string" />
+  <xs:element name="rihbit-karit_deduct" type="xs:string" />
+  <xs:element name="rihbit-bakara_deduct" type="xs:string" />
+  <xs:element name="rihbit-memir_deduct" type="xs:string" />
+  <xs:element name="rihbit-madad_deduct" type="xs:string" />
+  <xs:element name="rihbit-prat" type="xs:string" />
+  <xs:element name="rihbit-sheild_no" type="xs:string" />
+  <xs:element name="rihbit-rihbit_file" type="xs:string" />
+  <xs:element name="trans_import_id" type="xs:string" />
+  <xs:element name="volume" type="xs:string" />
+  <xs:element name="volume_kg" type="xs:string" />
+  <xs:element name="container_list" type="xs:string" />
+</xs:schema>

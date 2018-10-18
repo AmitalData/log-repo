@@ -1,0 +1,95 @@
+﻿
+
+<table>
+
+
+
+
+
+    <tr style="height:100%;vertical-align:top">
+
+
+        <td class="CellStretch">
+            <div class="SimpleGridView">
+
+                <div style="margin-left:3px;">Available Documents :</div>
+
+                <div class="SimpleGridViewBody">
+                    <table>
+                        <tr style="height: 1px;">
+                            <td>
+                                <table>
+                                    <tr style="border:0px" class="SimpleGridViewRow RowHover" *ngFor="let item of DocumentCopiesList">
+                                        <td>
+                                            <table>
+                                                <tr style="height:25px;border:0px" (click)="SelectedDocumentCopiesList = item" [class.RowSelected]="item === SelectedDocumentCopiesList">
+
+
+                                                    <td class="GridViewCell" style="width: 30px; min-width: 30px; max-width: 30px; position: relative;border:0px">
+                                                        <div class="CheckBox">
+                                                            <input class="LeftCenter" style="text-align:center" (change)="CheckboxClick(item)" [attr.id]="item.Key" type="checkbox" />
+                                                            <label class="LeftCenter" [attr.for]="item.Key"></label>
+                                                        </div>
+                                                    </td>
+
+
+                                                    <td class="GridViewCell" style="width: 100%; min-width: 100%; max-width: 100%; position: relative;border:0px">
+                                                        {{item.DocumentTypeCopyNameWithDocumentTypeName}}
+                                                    </td>
+
+
+                                                </tr>
+                                                <tr><td colspan="5"></td></tr>
+                                            </table>
+
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </td>
+
+
+
+    </tr>
+
+
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <div>
+                            <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
+                        </div>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="SaveButtonClicked()">OK</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

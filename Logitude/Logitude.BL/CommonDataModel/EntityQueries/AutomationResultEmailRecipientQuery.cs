@@ -1,0 +1,109 @@
+﻿using System;
+using System.Linq;
+using System.Web;
+using System.Collections.Generic;
+using Logitude.BL.Helpers;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityLists;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Server.Infrastructure.Helpers;
+
+namespace Logitude.BL.CommonDataModel.EntityQueries
+{
+    public class AutomationResultEmailRecipientQuery
+    {
+        AutomationResultEmailRecipientRepository repository;
+        public AutomationResultEmailRecipientQuery()
+        {
+            repository = new AutomationResultEmailRecipientRepository();
+        }
+
+        public AutomationResultEmailRecipientQuery(int tenant)
+        {
+            repository = new AutomationResultEmailRecipientRepository(tenant);
+        }
+
+        public AutomationResultEmailRecipientQuery(AutomationResultEmailRecipientRepository AutomationResultEmailRecipientRepository)
+        {
+            repository = AutomationResultEmailRecipientRepository;
+        }
+
+        public List<AutomationResultEmailRecipientPM> GetAutomationResultEmailRecipientPMsByAutomationId(string automationId, int tenant)
+        {
+            List<AutomationResultEmailRecipientPM> AutomationResultEmailRecipientes = (from a in repository.context.AutomationResultEmailRecipients
+                                                                                       where a.Tenant == tenant && a.AutomationsId == automationId
+                                                                                       select new AutomationResultEmailRecipientPM()
+                                                                                            {
+                                                                                                Id = a.Id,
+                                                                                                AutomationsId = a.AutomationsId,
+                                                                                                RecipientValue = a.RecipientValue,
+                                                                                                RecipientType = a.RecipientType,
+                                                                                                Tenant = a.Tenant,
+
+                                                                                            }).ToList();
+            return AutomationResultEmailRecipientes;
+        }
+
+        public List<AutomationResultEmailRecipientList> GetAutomationResultEmailRecipientListsByAutomationId(string automationId, int tenant)
+        {
+            List<AutomationResultEmailRecipientList> automationResultEmailRecipientes = (from a in repository.context.AutomationResultEmailRecipients
+                                                                                       where a.Tenant == tenant && a.AutomationsId == automationId
+                                                                                       select new AutomationResultEmailRecipientList()
+                                                                                       {
+                                                                                           Id = a.Id,
+                                                                                           AutomationsId = a.AutomationsId,
+                                                                                           RecipientValue = a.RecipientValue,
+                                                                                           RecipientType = a.RecipientType,
+                                                                                           Tenant = a.Tenant,
+
+                                                                                       }).ToList();
+            return automationResultEmailRecipientes;
+        }
+
+
+
+        public AutomationResultEmailRecipientPM GetSinglePM(string id, int tenant)
+        {
+
+            var query = (from a in repository.context.AutomationResultEmailRecipients
+                         where a.Tenant == tenant && a.Id == id
+                         select new AutomationResultEmailRecipientPM()
+                         {
+                             Id = a.Id,
+                             AutomationsId = a.AutomationsId,
+                             RecipientValue = a.RecipientValue,
+                             RecipientType = a.RecipientType,
+                             Tenant = a.Tenant,
+
+                         }).FirstOrDefault();
+            return query;
+        }
+
+        public IQueryable<AutomationResultEmailRecipientList> GetIQueryableEntityList(IQueryable<AutomationResultEmailRecipient> iQueryable)
+        {
+            IQueryable<AutomationResultEmailRecipientList> result = from a in iQueryable
+                                                                    select new AutomationResultEmailRecipientList()
+                                                                    {
+                                                                        Id = a.Id,
+                                                                        AutomationsId = a.AutomationsId,
+                                                                        RecipientValue = a.RecipientValue,
+                                                                        RecipientType = a.RecipientType,
+                                                                        Tenant = a.Tenant,
+                                                                    };
+            return result;
+        }
+
+        public AutomationResultEmailRecipient GetFirstAutomationResultEmailRecipientForTenant(int tenant)
+        {
+            return (from a in repository.context.AutomationResultEmailRecipients
+                    where a.Tenant == tenant
+                    select a).FirstOrDefault();
+        }
+
+      
+
+  
+    }
+}

@@ -1,0 +1,1085 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://tempuri.org/CFIFILEM" elementFormDefault="qualified" targetNamespace="http://tempuri.org/CFIFILEM" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+ <xs:element name="CFIFILEM">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="customs_file" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="customs_file_more_details" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="customs_file">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element ref="file_number" />
+    <xs:element ref="transp_type" />
+    <xs:element ref="flight-voyage" />
+    <xs:element ref="manifest_no" />
+    <xs:element ref="deal_no" />
+    <xs:element ref="mawb" />
+    <xs:element ref="mawb_date" />
+    <xs:element ref="hawb" />
+    <xs:element ref="hawb_short" />
+    <xs:element ref="hawb_date" />
+    <xs:element ref="arrival_date" />
+    <xs:element ref="quantity" />
+    <xs:element ref="volume" />
+    <xs:element ref="weight" />
+    <xs:element ref="open_date" />
+    <xs:element ref="insurance" />
+    <xs:element ref="freight" />
+    <xs:element ref="wtval_code" />
+    <xs:element ref="gush" />
+    <xs:element ref="file_closed" />
+    <xs:element ref="old_cc_file" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="volume_kg" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="goods_value" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="reshimon_no" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="gush_no" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="entry_file_no" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="release_file_no" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="currency" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="charg_wt" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="eta" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="awb_type" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="departure_date" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="customer" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="customs_branch" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="department" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="supplier" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="carrier" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="vessel" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="origin" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="destination" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="pack_type" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="incoterms" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="branch" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="contact" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="salesman" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="file_type" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="customer_order" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="customs_packtype" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="customs_origin" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="supplier_mehes" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="supplier_invoice" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="container" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="origin_country" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="origin_port" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="payment_terms" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="reshimon_type" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="import_file" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="bonded_details" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="forwarder" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="forwarder-reference" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="user" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="money" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="storage_site" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="cont_list" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="imp_file" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="inland_carrier" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="inland_remarks" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="for_cur_value" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="for_cur" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="accepted_price" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="hamara_fc" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="price_index" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="currency_rate" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="customs_file_prefix" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="fcl_lcl" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="print_user" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="reshimon_date" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="for_hawb" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="team" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="custom_agent" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="import_job" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="inv_list" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="pay_tax" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="special_imp_file_no" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="tracking_no" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="buyer" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="special" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="impFileData" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="teva_first_inv" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="ClientCCAddress" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="first_invoice" />
+   </xs:sequence>
+   <xs:attribute name="id" type="xs:string" use="required" />
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="file_number">
+  <xs:complexType>
+   <xs:simpleContent>
+    <xs:extension base="xs:string">
+     <xs:attribute fixed="yes" name="primary" type="xs:string" />
+    </xs:extension>
+   </xs:simpleContent>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="transp_type" type="xs:string" />
+ <xs:element name="flight-voyage" type="xs:string" />
+ <xs:element name="manifest_no" type="xs:string" />
+ <xs:element name="deal_no" type="xs:string" />
+ <xs:element name="mawb" type="xs:string" />
+ <xs:element name="mawb_date" type="xs:string" />
+ <xs:element name="hawb" type="xs:string" />
+ <xs:element name="hawb_short" type="xs:string" />
+ <xs:element name="hawb_date" type="xs:string" />
+ <xs:element name="arrival_date" type="xs:string" />
+ <xs:element name="quantity" type="xs:string" />
+ <xs:element name="volume" type="xs:string" />
+ <xs:element name="weight" type="xs:string" />
+ <xs:element name="open_date" type="xs:string" />
+ <xs:element name="insurance" type="xs:string" />
+ <xs:element name="freight" type="xs:string" />
+ <xs:element name="wtval_code" type="xs:string" />
+ <xs:element name="gush" type="xs:string" />
+ <xs:element name="file_closed" type="xs:string" />
+ <xs:element name="old_cc_file" type="xs:string" />
+ <xs:element name="volume_kg" type="xs:string" />
+ <xs:element name="goods_value" type="xs:string" />
+ <xs:element name="reshimon_no" type="xs:string" />
+ <xs:element name="gush_no" type="xs:string" />
+ <xs:element name="entry_file_no" type="xs:string" />
+ <xs:element name="release_file_no" type="xs:string" />
+ <xs:element name="currency" type="xs:string" />
+ <xs:element name="charg_wt" type="xs:string" />
+ <xs:element name="eta" type="xs:string" />
+ <xs:element name="awb_type" type="xs:string" />
+ <xs:element name="departure_date" type="xs:string" />
+ <xs:element name="customer">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element ref="customer-id" />
+    <xs:element ref="customer-name" />
+    <xs:element ref="customer-address" />
+    <xs:element ref="customer-address_2" />
+    <xs:element ref="customer-zip_code" />
+    <xs:element ref="customer-city" />
+    <xs:element ref="customer-fax" />
+    <xs:element ref="customer-contact_person" />
+    <xs:element ref="customer-telephone" />
+    <xs:element ref="customer-e_mail" />
+    <xs:element ref="customer-state" />
+    <xs:element ref="customer-partner_id" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="customer-country" />
+    <xs:element ref="customer-mamps_no" />
+    <xs:element ref="customer-operational_card" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="customer-collector" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="customer-vat" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="customer-collector_phone" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="customer-balance" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="customer-name_eng" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="customer-name_heb" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="customer-collector_heb" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="customer-collector_eng" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="customer-collector_email" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="customer-app_remarks" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="customer-checks_from" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="customer-checks_until" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="customer-id" type="xs:string" />
+ <xs:element name="customer-name" type="xs:string" />
+ <xs:element name="customer-address" type="xs:string" />
+ <xs:element name="customer-address_2" type="xs:string" />
+ <xs:element name="customer-zip_code" type="xs:string" />
+ <xs:element name="customer-city" type="xs:string" />
+ <xs:element name="customer-fax" type="xs:string" />
+ <xs:element name="customer-contact_person" type="xs:string" />
+ <xs:element name="customer-telephone" type="xs:string" />
+ <xs:element name="customer-e_mail" type="xs:string" />
+ <xs:element name="customer-state" type="xs:string" />
+ <xs:element name="customer-partner_id" type="xs:string" />
+ <xs:element name="customer-country">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element ref="customer-country-id" />
+    <xs:element ref="customer-country-name" />
+    <xs:element ref="customer-country-partner_id" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="customer-country-id" type="xs:string" />
+ <xs:element name="customer-country-name" type="xs:string" />
+ <xs:element name="customer-country-partner_id" type="xs:string" />
+ <xs:element name="customer-mamps_no" type="xs:string" />
+ <xs:element name="customer-operational_card" type="xs:string" />
+ <xs:element name="customer-collector" type="xs:string" />
+ <xs:element name="customer-vat" type="xs:string" />
+ <xs:element name="customer-collector_phone" type="xs:string" />
+ <xs:element name="customer-balance" type="xs:string" />
+ <xs:element name="customer-name_eng" type="xs:string" />
+ <xs:element name="customer-name_heb" type="xs:string" />
+ <xs:element name="customer-collector_heb" type="xs:string" />
+ <xs:element name="customer-collector_eng" type="xs:string" />
+ <xs:element name="customer-collector_email" type="xs:string" />
+ <xs:element name="customer-app_remarks" type="xs:string" />
+ <xs:element name="customer-checks_from" type="xs:string" />
+ <xs:element name="customer-checks_until" type="xs:string" />
+ <xs:element name="customs_branch">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element ref="customs_branch-id" />
+    <xs:element ref="customs_branch-name" />
+    <xs:element ref="customs_branch-partner_id" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="customs_branch-ulport" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="customs_branch-name_eng" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="customs_branch-name_heb" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="customs_branch-id" type="xs:string" />
+ <xs:element name="customs_branch-name" type="xs:string" />
+ <xs:element name="customs_branch-partner_id" type="xs:string" />
+ <xs:element name="customs_branch-ulport">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element minOccurs="0" maxOccurs="1" ref="customs_branch-ulport-id" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="customs_branch-ulport-name" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="customs_branch-ulport-partner_id" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="customs_branch-ulport-id" type="xs:string" />
+ <xs:element name="customs_branch-ulport-name" type="xs:string" />
+ <xs:element name="customs_branch-ulport-partner_id" type="xs:string" />
+ <xs:element name="customs_branch-name_eng" type="xs:string" />
+ <xs:element name="customs_branch-name_heb" type="xs:string" />
+ <xs:element name="department">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element ref="department-id" />
+    <xs:element ref="department-name" />
+    <xs:element ref="department-partner_id" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="department-name_eng" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="department-name_heb" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="department-id" type="xs:string" />
+ <xs:element name="department-name" type="xs:string" />
+ <xs:element name="department-partner_id" type="xs:string" />
+ <xs:element name="department-name_eng" type="xs:string" />
+ <xs:element name="department-name_heb" type="xs:string" />
+ <xs:element name="supplier">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element ref="supplier-id" />
+    <xs:element ref="supplier-old_card" />
+    <xs:element ref="supplier-name" />
+    <xs:element ref="supplier-address" />
+    <xs:element ref="supplier-address_2" />
+    <xs:element ref="supplier-zip_code" />
+    <xs:element ref="supplier-city" />
+    <xs:element ref="supplier-fax" />
+    <xs:element ref="supplier-contact_person" />
+    <xs:element ref="supplier-telephone" />
+    <xs:element ref="supplier-e_mail" />
+    <xs:element ref="supplier-state" />
+    <xs:element ref="supplier-partner_id" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="supplier-country" />
+    <xs:element ref="supplier-mamps_no" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="supplier-name_eng" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="supplier-name_heb" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="supplier-id" type="xs:string" />
+ <xs:element name="supplier-old_card" type="xs:string" />
+ <xs:element name="supplier-name" type="xs:string" />
+ <xs:element name="supplier-address" type="xs:string" />
+ <xs:element name="supplier-address_2" type="xs:string" />
+ <xs:element name="supplier-zip_code" type="xs:string" />
+ <xs:element name="supplier-city" type="xs:string" />
+ <xs:element name="supplier-fax" type="xs:string" />
+ <xs:element name="supplier-contact_person" type="xs:string" />
+ <xs:element name="supplier-telephone" type="xs:string" />
+ <xs:element name="supplier-e_mail" type="xs:string" />
+ <xs:element name="supplier-state" type="xs:string" />
+ <xs:element name="supplier-partner_id" type="xs:string" />
+ <xs:element name="supplier-country">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element ref="supplier-country-id" />
+    <xs:element ref="supplier-country-name" />
+    <xs:element ref="supplier-country-partner_id" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="supplier-country-name_eng" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="supplier-country-name_heb" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="supplier-country-id" type="xs:string" />
+ <xs:element name="supplier-country-name" type="xs:string" />
+ <xs:element name="supplier-country-partner_id" type="xs:string" />
+ <xs:element name="supplier-country-name_eng" type="xs:string" />
+ <xs:element name="supplier-country-name_heb" type="xs:string" />
+ <xs:element name="supplier-mamps_no" type="xs:string" />
+ <xs:element name="supplier-name_eng" type="xs:string" />
+ <xs:element name="supplier-name_heb" type="xs:string" />
+ <xs:element name="carrier">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element ref="carrier-id" />
+    <xs:element ref="carrier-name" />
+    <xs:element ref="carrier-prefix" />
+    <xs:element ref="carrier-partner_id" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="carrier-name_eng" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="carrier-name_heb" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="carrier-id" type="xs:string" />
+ <xs:element name="carrier-name" type="xs:string" />
+ <xs:element name="carrier-prefix" type="xs:string" />
+ <xs:element name="carrier-partner_id" type="xs:string" />
+ <xs:element name="carrier-name_eng" type="xs:string" />
+ <xs:element name="carrier-name_heb" type="xs:string" />
+ <xs:element name="vessel">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element ref="vessel-code" />
+    <xs:element ref="vessel-name" />
+    <xs:element ref="vessel-partner_id" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="vessel-name_eng" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="vessel-name_heb" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="vessel-code" type="xs:string" />
+ <xs:element name="vessel-name" type="xs:string" />
+ <xs:element name="vessel-partner_id" type="xs:string" />
+ <xs:element name="vessel-name_eng" type="xs:string" />
+ <xs:element name="vessel-name_heb" type="xs:string" />
+ <xs:element name="origin">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element ref="origin-id" />
+    <xs:element ref="origin-name" />
+    <xs:element ref="origin-partner_id" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="origin-name_eng" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="origin-name_heb" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="origin-id" type="xs:string" />
+ <xs:element name="origin-name" type="xs:string" />
+ <xs:element name="origin-partner_id" type="xs:string" />
+ <xs:element name="origin-name_eng" type="xs:string" />
+ <xs:element name="origin-name_heb" type="xs:string" />
+ <xs:element name="destination">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element ref="destination-id" />
+    <xs:element ref="destination-name" />
+    <xs:element ref="destination-partner_id" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="destination-name_eng" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="destination-name_heb" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="destination-id" type="xs:string" />
+ <xs:element name="destination-name" type="xs:string" />
+ <xs:element name="destination-partner_id" type="xs:string" />
+ <xs:element name="destination-name_eng" type="xs:string" />
+ <xs:element name="destination-name_heb" type="xs:string" />
+ <xs:element name="pack_type">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element ref="pack_type-id" />
+    <xs:element ref="pack_type-name" />
+    <xs:element ref="pack_type-partner_id" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="pack_type-name_eng" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="pack_type-name_heb" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="pack_type-id" type="xs:string" />
+ <xs:element name="pack_type-name" type="xs:string" />
+ <xs:element name="pack_type-partner_id" type="xs:string" />
+ <xs:element name="pack_type-name_eng" type="xs:string" />
+ <xs:element name="pack_type-name_heb" type="xs:string" />
+ <xs:element name="incoterms">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element ref="incoterms-id" />
+    <xs:element ref="incoterms-name" />
+    <xs:element ref="incoterms-partner_id" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="incoterms-name_eng" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="incoterms-name_heb" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="incoterms-id" type="xs:string" />
+ <xs:element name="incoterms-name" type="xs:string" />
+ <xs:element name="incoterms-partner_id" type="xs:string" />
+ <xs:element name="incoterms-name_eng" type="xs:string" />
+ <xs:element name="incoterms-name_heb" type="xs:string" />
+ <xs:element name="branch">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element ref="branch-id" />
+    <xs:element ref="branch-name" />
+    <xs:element ref="branch-partner_id" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="branch-name_eng" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="branch-name_heb" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="branch-id" type="xs:string" />
+ <xs:element name="branch-name" type="xs:string" />
+ <xs:element name="branch-partner_id" type="xs:string" />
+ <xs:element name="branch-name_eng" type="xs:string" />
+ <xs:element name="branch-name_heb" type="xs:string" />
+ <xs:element name="contact">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element ref="contact-code" />
+    <xs:element ref="contact-usr_grp" />
+    <xs:element ref="contact-usr_super" />
+    <xs:element ref="contact-usr_branch" />
+    <xs:element ref="contact-name" />
+    <xs:element ref="contact-department" />
+    <xs:element ref="contact-partner_id" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="contact-name_eng" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="contact-name_heb" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="contact-code" type="xs:string" />
+ <xs:element name="contact-usr_grp" type="xs:string" />
+ <xs:element name="contact-usr_super" type="xs:string" />
+ <xs:element name="contact-usr_branch" type="xs:string" />
+ <xs:element name="contact-name" type="xs:string" />
+ <xs:element name="contact-department" type="xs:string" />
+ <xs:element name="contact-partner_id" type="xs:string" />
+ <xs:element name="contact-name_eng" type="xs:string" />
+ <xs:element name="contact-name_heb" type="xs:string" />
+ <xs:element name="salesman">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element ref="salesman-code" />
+    <xs:element ref="salesman-usr_grp" />
+    <xs:element ref="salesman-usr_super" />
+    <xs:element ref="salesman-usr_branch" />
+    <xs:element ref="salesman-name" />
+    <xs:element ref="salesman-department" />
+    <xs:element ref="salesman-partner_id" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="salesman-name_eng" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="salesman-name_heb" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="salesman-code" type="xs:string" />
+ <xs:element name="salesman-usr_grp" type="xs:string" />
+ <xs:element name="salesman-usr_super" type="xs:string" />
+ <xs:element name="salesman-usr_branch" type="xs:string" />
+ <xs:element name="salesman-name" type="xs:string" />
+ <xs:element name="salesman-department" type="xs:string" />
+ <xs:element name="salesman-partner_id" type="xs:string" />
+ <xs:element name="salesman-name_eng" type="xs:string" />
+ <xs:element name="salesman-name_heb" type="xs:string" />
+ <xs:element name="file_type">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element ref="file_type-id" />
+    <xs:element ref="file_type-name" />
+    <xs:element ref="file_type-partner_id" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="file_type-name_eng" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="file_type-name_heb" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="file_type-id" type="xs:string" />
+ <xs:element name="file_type-name" type="xs:string" />
+ <xs:element name="file_type-partner_id" type="xs:string" />
+ <xs:element name="file_type-name_eng" type="xs:string" />
+ <xs:element name="file_type-name_heb" type="xs:string" />
+ <xs:element name="customer_order">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element ref="customer_order-id" />
+   </xs:sequence>
+   <xs:attribute fixed="yes" name="multi_line" type="xs:string" />
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="customer_order-id" type="xs:string" />
+ <xs:element name="customs_packtype">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element ref="customs_packtype-id" />
+    <xs:element ref="customs_packtype-name" />
+    <xs:element ref="customs_packtype-partner_id" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="customs_packtype-name_eng" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="customs_packtype-name_heb" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="customs_packtype-id" type="xs:string" />
+ <xs:element name="customs_packtype-name" type="xs:string" />
+ <xs:element name="customs_packtype-partner_id" type="xs:string" />
+ <xs:element name="customs_packtype-name_eng" type="xs:string" />
+ <xs:element name="customs_packtype-name_heb" type="xs:string" />
+ <xs:element name="customs_origin">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element ref="customs_origin-id" />
+    <xs:element ref="customs_origin-name" />
+    <xs:element ref="customs_origin-partner_id" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="customs_origin-name_eng" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="customs_origin-name_heb" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="customs_origin-id" type="xs:string" />
+ <xs:element name="customs_origin-name" type="xs:string" />
+ <xs:element name="customs_origin-partner_id" type="xs:string" />
+ <xs:element name="customs_origin-name_eng" type="xs:string" />
+ <xs:element name="customs_origin-name_heb" type="xs:string" />
+ <xs:element name="supplier_mehes">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element ref="supplier_mehes-id" />
+    <xs:element ref="supplier_mehes-name" />
+    <xs:element ref="supplier_mehes-partner_id" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="supplier_mehes-name_eng" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="supplier_mehes-name_heb" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="supplier_mehes-id" type="xs:string" />
+ <xs:element name="supplier_mehes-name" type="xs:string" />
+ <xs:element name="supplier_mehes-partner_id" type="xs:string" />
+ <xs:element name="supplier_mehes-name_eng" type="xs:string" />
+ <xs:element name="supplier_mehes-name_heb" type="xs:string" />
+ <xs:element name="supplier_invoice">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element ref="supplier_invoice-no" />
+   </xs:sequence>
+   <xs:attribute fixed="yes" name="multi_line" type="xs:string" />
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="supplier_invoice-no" type="xs:string" />
+ <xs:element name="container">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element ref="container-no" />
+    <xs:element ref="container-seal" />
+    <xs:element ref="container-weight" />
+    <xs:element ref="container-qty_add" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="container-packtype" />
+   </xs:sequence>
+   <xs:attribute fixed="yes" name="multi_line" type="xs:string" />
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="container-no" type="xs:string" />
+ <xs:element name="container-seal" type="xs:string" />
+ <xs:element name="container-weight" type="xs:string" />
+ <xs:element name="container-qty_add" type="xs:string" />
+ <xs:element name="container-packtype">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element minOccurs="0" maxOccurs="1" ref="container-packtype-id" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="container-packtype-name" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="container-packtype-partner_id" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="container-packtype-id" type="xs:string" />
+ <xs:element name="container-packtype-name" type="xs:string" />
+ <xs:element name="container-packtype-partner_id" type="xs:string" />
+ <xs:element name="origin_country">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element minOccurs="0" maxOccurs="1" ref="origin_country-id" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="origin_country-name" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="origin_country-partner_id" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="origin_country-name_eng" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="origin_country-name_heb" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="country_code" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="origin_country-id" type="xs:string" />
+ <xs:element name="origin_country-name" type="xs:string" />
+ <xs:element name="origin_country-partner_id" type="xs:string" />
+ <xs:element name="origin_country-name_eng" type="xs:string" />
+ <xs:element name="origin_country-name_heb" type="xs:string" />
+ <xs:element name="country_code">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element minOccurs="0" maxOccurs="1" ref="country_code-id" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="country_code-name" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="country_code-partner_id" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="country_code-id" type="xs:string" />
+ <xs:element name="country_code-name" type="xs:string" />
+ <xs:element name="country_code-partner_id" type="xs:string" />
+ <xs:element name="origin_port">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element minOccurs="0" maxOccurs="1" ref="origin_port-id" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="origin_port-name" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="origin_port-name_eng" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="origin_port-name_heb" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="origin_port-id" type="xs:string" />
+ <xs:element name="origin_port-name" type="xs:string" />
+ <xs:element name="origin_port-name_eng" type="xs:string" />
+ <xs:element name="origin_port-name_heb" type="xs:string" />
+ <xs:element name="payment_terms">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element minOccurs="0" maxOccurs="1" ref="payment_terms-id" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="payment_terms-name" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="payment_terms-name_eng" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="payment_terms-name_heb" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="payment_terms-id" type="xs:string" />
+ <xs:element name="payment_terms-name" type="xs:string" />
+ <xs:element name="payment_terms-name_eng" type="xs:string" />
+ <xs:element name="payment_terms-name_heb" type="xs:string" />
+ <xs:element name="reshimon_type">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element minOccurs="0" maxOccurs="1" ref="reshimon_type-id" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="reshimon_type-name" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="reshimon_type-partner_id" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="reshimon_type-name_eng" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="reshimon_type-name_heb" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="reshimon_type-id" type="xs:string" />
+ <xs:element name="reshimon_type-name" type="xs:string" />
+ <xs:element name="reshimon_type-partner_id" type="xs:string" />
+ <xs:element name="reshimon_type-name_eng" type="xs:string" />
+ <xs:element name="reshimon_type-name_heb" type="xs:string" />
+ <xs:element name="import_file">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element minOccurs="0" maxOccurs="1" ref="import_file-id" />
+   </xs:sequence>
+   <xs:attribute fixed="yes" name="multi_line" type="xs:string" />
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="import_file-id" type="xs:string" />
+ <xs:element name="bonded_details">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element minOccurs="0" maxOccurs="1" ref="bonded_details-id" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="bonded_details-name" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="bonded_details-partner_id" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="bonded_details-name_eng" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="bonded_details-name_heb" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="bonded_details-id" type="xs:string" />
+ <xs:element name="bonded_details-name" type="xs:string" />
+ <xs:element name="bonded_details-partner_id" type="xs:string" />
+ <xs:element name="bonded_details-name_eng" type="xs:string" />
+ <xs:element name="bonded_details-name_heb" type="xs:string" />
+ <xs:element name="forwarder">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element minOccurs="0" maxOccurs="1" ref="forwarder-id" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="forwarder-old_card" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="forwarder-name" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="forwarder-address" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="forwarder-address_2" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="forwarder-zip_code" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="forwarder-city" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="forwarder-fax" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="forwarder-contact_person" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="forwarder-telephone" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="forwarder-e_mail" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="forwarder-state" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="forwarder-partner_id" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="forwarder-country" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="forwarder-name_eng" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="forwarder-name_heb" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="forwarder-id" type="xs:string" />
+ <xs:element name="forwarder-old_card" type="xs:string" />
+ <xs:element name="forwarder-name" type="xs:string" />
+ <xs:element name="forwarder-address" type="xs:string" />
+ <xs:element name="forwarder-address_2" type="xs:string" />
+ <xs:element name="forwarder-zip_code" type="xs:string" />
+ <xs:element name="forwarder-city" type="xs:string" />
+ <xs:element name="forwarder-fax" type="xs:string" />
+ <xs:element name="forwarder-contact_person" type="xs:string" />
+ <xs:element name="forwarder-telephone" type="xs:string" />
+ <xs:element name="forwarder-e_mail" type="xs:string" />
+ <xs:element name="forwarder-state" type="xs:string" />
+ <xs:element name="forwarder-partner_id" type="xs:string" />
+ <xs:element name="forwarder-country">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element minOccurs="0" maxOccurs="1" ref="forwarder-country-id" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="forwarder-country-name" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="forwarder-country-partner_id" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="forwarder-country-id" type="xs:string" />
+ <xs:element name="forwarder-country-name" type="xs:string" />
+ <xs:element name="forwarder-country-partner_id" type="xs:string" />
+ <xs:element name="forwarder-name_eng" type="xs:string" />
+ <xs:element name="forwarder-name_heb" type="xs:string" />
+ <xs:element name="forwarder-reference">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element minOccurs="0" maxOccurs="1" ref="forwarder-reference-id" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="forwarder-reference-type" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="forwarder-reference-id" type="xs:string" />
+ <xs:element name="forwarder-reference-type" type="xs:string" />
+ <xs:element name="user">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element minOccurs="0" maxOccurs="1" ref="user-id" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="user-name" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="user-partner_id" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="user-name_eng" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="user-name_heb" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="user-id" type="xs:string" />
+ <xs:element name="user-name" type="xs:string" />
+ <xs:element name="user-partner_id" type="xs:string" />
+ <xs:element name="user-name_eng" type="xs:string" />
+ <xs:element name="user-name_heb" type="xs:string" />
+ <xs:element name="money">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element minOccurs="0" maxOccurs="1" ref="money-date" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="money-time" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="money-remarks_mny" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="money-user_email" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="money-default_remarks" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="money-line" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="money_usr" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="services_vat" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="total_with_vat" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="total_no_vat" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="money_default_remarks_e" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="money_default_type" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="money-masav_remarks" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="money-order_sent" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="money-date" type="xs:string" />
+ <xs:element name="money-time" type="xs:string" />
+ <xs:element name="money-remarks_mny" type="xs:string" />
+ <xs:element name="money-user_email" type="xs:string" />
+ <xs:element name="money-default_remarks" type="xs:string" />
+ <xs:element name="money-line">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element minOccurs="0" maxOccurs="1" ref="money-line-amount" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="money-line-sertype" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="money-line-vat" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="money-line-vat_amount" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="money-line-amount_incvat" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="money-line-amount" type="xs:string" />
+ <xs:element name="money-line-sertype">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element minOccurs="0" maxOccurs="1" ref="money-line-sertype-id" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="money-line-sertype-name" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="money-line-sertype-partner_id" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="money-line-sertype-vat" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="money-line-sertype-name_eng" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="money-line-sertype-name_heb" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="money-line-sertype-id" type="xs:string" />
+ <xs:element name="money-line-sertype-name" type="xs:string" />
+ <xs:element name="money-line-sertype-partner_id" type="xs:string" />
+ <xs:element name="money-line-sertype-vat" type="xs:string" />
+ <xs:element name="money-line-sertype-name_eng" type="xs:string" />
+ <xs:element name="money-line-sertype-name_heb" type="xs:string" />
+ <xs:element name="money-line-vat" type="xs:string" />
+ <xs:element name="money-line-vat_amount" type="xs:string" />
+ <xs:element name="money-line-amount_incvat" type="xs:string" />
+ <xs:element name="money_usr">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element minOccurs="0" maxOccurs="1" ref="money_usr-id" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="money_usr-name" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="money_usr-partner_id" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="money_usr-telephone" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="money_usr-name_heb" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="USR_NAME_H.GSCUSR_2.AMITAL" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="money_usr-id" type="xs:string" />
+ <xs:element name="money_usr-name" type="xs:string" />
+ <xs:element name="money_usr-partner_id" type="xs:string" />
+ <xs:element name="money_usr-telephone" type="xs:string" />
+ <xs:element name="money_usr-name_heb" type="xs:string" />
+ <xs:element name="USR_NAME_H.GSCUSR_2.AMITAL" type="xs:string" />
+ <xs:element name="services_vat" type="xs:string" />
+ <xs:element name="total_with_vat" type="xs:string" />
+ <xs:element name="total_no_vat" type="xs:string" />
+ <xs:element name="money_default_remarks_e" type="xs:string" />
+ <xs:element name="money_default_type" type="xs:string" />
+ <xs:element name="money-masav_remarks" type="xs:string" />
+ <xs:element name="money-order_sent" type="xs:string" />
+ <xs:element name="storage_site" type="xs:string" />
+ <xs:element name="cont_list" type="xs:string" />
+ <xs:element name="imp_file" type="xs:string" />
+ <xs:element name="inland_carrier" type="xs:string" />
+ <xs:element name="inland_remarks" type="xs:string" />
+ <xs:element name="for_cur_value" type="xs:string" />
+ <xs:element name="for_cur" type="xs:string" />
+ <xs:element name="accepted_price" type="xs:string" />
+ <xs:element name="hamara_fc" type="xs:string" />
+ <xs:element name="price_index" type="xs:string" />
+ <xs:element name="currency_rate" type="xs:string" />
+ <xs:element name="customs_file_prefix">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element minOccurs="0" maxOccurs="1" ref="customs_file_prefix-length" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="prefix_accounting_group" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="prefix_transport_type" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="prefix_customs_branch" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="prefix_department" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="customs_file_prefix-length" type="xs:string" />
+ <xs:element name="prefix_accounting_group">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element minOccurs="0" maxOccurs="1" ref="prefix_accounting_group-code" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="prefix_accounting_group-code" type="xs:string" />
+ <xs:element name="prefix_transport_type">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element minOccurs="0" maxOccurs="1" ref="prefix_transport_type-code" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="prefix_transport_type-value" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="prefix_transport_type-other" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="prefix_transport_type-code" type="xs:string" />
+ <xs:element name="prefix_transport_type-value" type="xs:string" />
+ <xs:element name="prefix_transport_type-other" type="xs:string" />
+ <xs:element name="prefix_customs_branch">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element minOccurs="0" maxOccurs="1" ref="prefix_customs_branch-code" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="prefix_customs_branch-value" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="prefix_customs_branch-other" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="prefix_customs_branch-code" type="xs:string" />
+ <xs:element name="prefix_customs_branch-value" type="xs:string" />
+ <xs:element name="prefix_customs_branch-other" type="xs:string" />
+ <xs:element name="prefix_department">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element minOccurs="0" maxOccurs="1" ref="prefix_department-code" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="prefix_department-value" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="prefix_department-other" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="prefix_department-code" type="xs:string" />
+ <xs:element name="prefix_department-value" type="xs:string" />
+ <xs:element name="prefix_department-other" type="xs:string" />
+ <xs:element name="fcl_lcl" type="xs:string" />
+ <xs:element name="print_user">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element minOccurs="0" maxOccurs="1" ref="print_user-user_id" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="print_user-name_heb" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="print_user-name_eng" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="print_user-user_id" type="xs:string" />
+ <xs:element name="print_user-name_heb" type="xs:string" />
+ <xs:element name="print_user-name_eng" type="xs:string" />
+ <xs:element name="reshimon_date" type="xs:string" />
+ <xs:element name="for_hawb" type="xs:string" />
+ <xs:element name="team">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element minOccurs="0" maxOccurs="1" ref="team-team_id" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="team-name_heb" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="team-name_eng" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="team-team_id" type="xs:string" />
+ <xs:element name="team-name_heb" type="xs:string" />
+ <xs:element name="team-name_eng" type="xs:string" />
+ <xs:element name="custom_agent" type="xs:string" />
+ <xs:element name="import_job" type="xs:string" />
+ <xs:element name="inv_list" type="xs:string" />
+ <xs:element name="pay_tax" type="xs:string" />
+ <xs:element name="special_imp_file_no" type="xs:string" />
+ <xs:element name="tracking_no" type="xs:string" />
+ <xs:element name="buyer">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element minOccurs="0" maxOccurs="1" ref="buyer-id" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="buyer-old_card" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="buyer-name" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="buyer-address" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="buyer-address_2" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="buyer-zip_code" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="buyer-city" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="buyer-fax" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="buyer-contact_person" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="buyer-telephone" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="buyer-e_mail" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="buyer-state" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="buyer-partner_id" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="buyer-country" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="buyer-mamps_no" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="buyer-name_eng" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="buyer-name_heb" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="buyer-id" type="xs:string" />
+ <xs:element name="buyer-old_card" type="xs:string" />
+ <xs:element name="buyer-name" type="xs:string" />
+ <xs:element name="buyer-address" type="xs:string" />
+ <xs:element name="buyer-address_2" type="xs:string" />
+ <xs:element name="buyer-zip_code" type="xs:string" />
+ <xs:element name="buyer-city" type="xs:string" />
+ <xs:element name="buyer-fax" type="xs:string" />
+ <xs:element name="buyer-contact_person" type="xs:string" />
+ <xs:element name="buyer-telephone" type="xs:string" />
+ <xs:element name="buyer-e_mail" type="xs:string" />
+ <xs:element name="buyer-state" type="xs:string" />
+ <xs:element name="buyer-partner_id" type="xs:string" />
+ <xs:element name="buyer-country">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element minOccurs="0" maxOccurs="1" ref="buyer-country-id" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="buyer-country-name" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="buyer-country-partner_id" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="buyer-country-id" type="xs:string" />
+ <xs:element name="buyer-country-name" type="xs:string" />
+ <xs:element name="buyer-country-partner_id" type="xs:string" />
+ <xs:element name="buyer-mamps_no" type="xs:string" />
+ <xs:element name="buyer-name_eng" type="xs:string" />
+ <xs:element name="buyer-name_heb" type="xs:string" />
+ <xs:element name="special" type="xs:string" />
+ <xs:element name="impFileData">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element minOccurs="0" maxOccurs="1" ref="impFileData-hawb" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="impFileData-mawb" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="impFileData-job_type" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="impFileData-hawb" type="xs:string" />
+ <xs:element name="impFileData-mawb" type="xs:string" />
+ <xs:element name="impFileData-job_type" type="xs:string" />
+ <xs:element name="teva_first_inv" type="xs:string" />
+ <xs:element name="ClientCCAddress">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element minOccurs="0" maxOccurs="1" ref="customer-id-cc" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="old-customer-cc" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="customer-name-cc" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="customer-address-cc" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="customer-address-2-cc" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="customer-zip-code-cc" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="customer-city-cc" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="customer-fax-cc" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="customer-contact_person-cc" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="customer-telephone-cc" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="customer-e_mail-cc" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="customer-state-cc" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="customer-partner-id-cc" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="customer-country-id-cc" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="customer-country-name-cc" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="customer-country-partner-cc" />
+   </xs:sequence>
+   <xs:attribute name="id" type="xs:string" use="required" />
+   <xs:attribute name="crc" type="xs:string" use="required" />
+   <xs:attribute name="status" type="xs:string" use="required" />
+   <xs:attribute name="valerr" type="xs:string" />
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="customer-id-cc" type="xs:string" />
+ <xs:element name="old-customer-cc" type="xs:string" />
+ <xs:element name="customer-name-cc" type="xs:string" />
+ <xs:element name="customer-address-cc" type="xs:string" />
+ <xs:element name="customer-address-2-cc" type="xs:string" />
+ <xs:element name="customer-zip-code-cc" type="xs:string" />
+ <xs:element name="customer-city-cc" type="xs:string" />
+ <xs:element name="customer-fax-cc" type="xs:string" />
+ <xs:element name="customer-contact_person-cc" type="xs:string" />
+ <xs:element name="customer-telephone-cc" type="xs:string" />
+ <xs:element name="customer-e_mail-cc" type="xs:string" />
+ <xs:element name="customer-state-cc" type="xs:string" />
+ <xs:element name="customer-partner-id-cc" type="xs:string" />
+ <xs:element name="customer-country-id-cc" type="xs:string" />
+ <xs:element name="customer-country-name-cc" type="xs:string" />
+ <xs:element name="customer-country-partner-cc" type="xs:string" />
+ <xs:element name="first_invoice" type="xs:string" />
+ <xs:element name="customs_file_more_details">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element ref="desc_of_goods" />
+    <xs:element ref="remarks" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="remarks_deliveries" />
+   </xs:sequence>
+   <xs:attribute name="id" type="xs:string" use="required" />
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="desc_of_goods">
+  <xs:complexType>
+   <xs:simpleContent>
+    <xs:extension base="xs:string">
+     <xs:attribute fixed="yes" name="multi_line" type="xs:string" />
+    </xs:extension>
+   </xs:simpleContent>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="remarks">
+  <xs:complexType>
+   <xs:simpleContent>
+    <xs:extension base="xs:string">
+     <xs:attribute fixed="yes" name="multi_line" type="xs:string" />
+    </xs:extension>
+   </xs:simpleContent>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="remarks_deliveries" type="xs:string" />
+</xs:schema>

@@ -1,0 +1,1 @@
+delete from ObjectFields where ObjectTableId = (select id from ObjectTables where Name ='ticket') and DataTypeCode = 'Lookup' and FieldName = 'CreatedByUserId'

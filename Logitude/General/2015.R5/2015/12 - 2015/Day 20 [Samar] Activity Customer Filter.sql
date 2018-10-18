@@ -1,0 +1,1 @@
+update ObjectFields set ValidForQuerySection1 = 'Activity' where FieldName = 'CustomerId' and ObjectTableId = (select Id from ObjectTables where Name = 'Activity')

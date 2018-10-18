@@ -1,0 +1,22 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import url("_Resources/css/css.css");
+@import url("_Resources/js/Charts/export.css");
+
+
+@import url("_Resources/Froala/css/font-awesome.min.css");
+@import url("_Resources/Froala/css/froala_editor.css");
+@import url("_Resources/Froala/css/froala_style.css");
+@import url("_Resources/Froala/css/plugins/code_view.css");
+@import url("_Resources/Froala/css/plugins/colors.css");
+@import url("_Resources/Froala/css/plugins/emoticons.css");
+@import url("_Resources/Froala/css/plugins/image_manager.css");
+@import url("_Resources/Froala/css/plugins/image.css");
+@import url("_Resources/Froala/css/plugins/line_breaker.css");
+@import url("_Resources/Froala/css/plugins/table.css");
+@import url("_Resources/Froala/css/plugins/char_counter.css");
+@import url("_Resources/Froala/css/plugins/video.css");
+@import url("_Resources/Froala/css/plugins/fullscreen.css");
+@import url("_Resources/Froala/css/plugins/quick_insert.css");
+@import url("_Resources/Froala/css/plugins/file.css");
+@import url("_Resources/Froala/css/codemirror.min.css");

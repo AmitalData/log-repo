@@ -1,0 +1,251 @@
+﻿
+<table>
+    <tr style="height: 21px;">
+        <td style="height: 21px;">
+            <table>
+                <tr>
+                    <td style="width: 21px; vertical-align:middle;">
+                        <IconButton [Name]="'Refresh'"></IconButton>
+                    </td>
+                    <td style="width: 15px; vertical-align:middle;">
+                        <div></div>
+                    </td>
+                    <td style="width: 45px; vertical-align:middle; font-size:11px; color : #6E7172;">Search:</td>
+                    <td style="width: 250px; vertical-align:middle;">
+                        <div class="SearchBox">
+                            <input type="text" placeholder="{{SearchText}}" />
+                            <img class="SearchIcon" src="images/Search.png" />
+                        </div>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width:55px; vertical-align:middle; font-size:11px; color : #6E7172;">
+                        <div>Filter by:</div>
+                    </td>
+
+                    <td style="width:117px; vertical-align:middle;">
+                        <ul class="FiltersMenu">
+                            <li (click)="onSelectTransport('All')" [class.SelectedFilter]="SelectedTransportFilter === 'All'">
+                                All
+                            </li>
+                            <li (click)="onSelectTransport('A')" [class.SelectedFilter]="SelectedTransportFilter === 'A'">
+                                <img class="CenterCenter" src="images/TransportModes/A.png" style="top:1px;"/>
+                            </li>
+                            <li (click)="onSelectTransport('O')" [class.SelectedFilter]="SelectedTransportFilter === 'O'">
+                                <img class="CenterCenter" src="images/TransportModes/O.png" />
+                            </li>
+                            <li (click)="onSelectTransport('I')" [class.SelectedFilter]="SelectedTransportFilter === 'I'">
+                                <img class="CenterCenter" src="images/TransportModes/I.png" />
+                            </li>
+                        </ul>
+                    </td>
+
+                    <td style="width:10px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width:88px; vertical-align:middle;">
+                        <ul class="FiltersMenu">
+                            <li (click)="onSelectDirection('All')" [class.SelectedFilter]="SelectedDirectionFilter === 'All'">
+                                All
+                            </li>
+                            <li (click)="onSelectDirection('E')" [class.SelectedFilter]="SelectedDirectionFilter === 'E'">
+                                <img class="CenterCenter" src="images/Directions/E.png" />
+                            </li>
+                            <li (click)="onSelectDirection('I')" [class.SelectedFilter]="SelectedDirectionFilter === 'I'">
+                                <img class="CenterCenter" src="images/Directions/I.png" />
+                            </li>
+                        </ul>
+                    </td>
+
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 8px;">
+        <td style="height: 8px;">
+            <div></div>
+        </td>
+    </tr>
+
+    <tr style="height: 100%">
+        <td style="height: 100%">
+            <table>
+                <tr>
+                    <td style="width:265px;">
+                        <table class="Section">
+                            <tr class="SectionHeader">
+                                <td>Shipments Queries</td>
+                            </tr>
+
+                            <tr style="height:5px;">
+                                <td></td>
+                            </tr>
+
+                            <tr class="SectionBody">
+                                <td>
+                                    <div class="ScrollViewer">
+                                        <div class="ScrollContent">
+
+                                            <div class="QueriesSection">
+                                                <div>Operational Open</div>
+                                                <div class="Button">New</div>
+                                                <div>
+                                                    <p class="QueryLink" (click)="onClickQuery()">Shipments (1000+)</p>
+                                                    <p class="QueryLink">Import Shipments (154)</p>
+                                                    <p class="QueryLink">Masters (1000+)</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="QueriesSection">
+                                                <div>Accounting Open</div>
+                                                <div>
+                                                    <p class="QueryLink">Open Reveivables - Shipments (128)</p>
+                                                    <p class="QueryLink">Open Payables - Masters (210)</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="QueriesSection">
+                                                <div>e-AWB</div>
+                                                <div class="Button">New</div>
+                                                <div>
+                                                    <p class="QueryLink">Expected Departure Shipments (13)</p>
+                                                    <p class="QueryLink">Arrival Updates - Last 7 Days (0)</p>
+                                                    <p class="QueryLink">Messaging Stock</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="QueriesSection">
+                                                <div>Others</div>
+                                                <div>
+                                                    <p class="QueryLink">All Follow Ups (90)</p>
+                                                    <p class="QueryLink">My Follow Ups (23)</p>
+                                                    <p class="QueryLink">All Shipments</p>
+                                                    <p class="QueryLink">All Masters</p>
+                                                    <p class="QueryLink">Cancelled Shipments</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="QueriesSection">
+                                                <div>FSR</div>
+                                                <div class="Button" style="width:60px;">Send FSR</div>
+                                                <div>
+                                                    <p class="QueryLink">FSR Request - Last 7 Days (11)</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="QueriesSection">
+                                                <div>My Views</div>
+                                                <div>
+                                                    <!--<p class="QueryLink">Test for Scrolling</p>
+                                                    <p class="QueryLink">Test for Scrolling</p>
+                                                    <p class="QueryLink">Test for Scrolling</p>
+                                                    <p class="QueryLink">Test for Scrolling</p>
+                                                    <p class="QueryLink">Test for Scrolling</p>
+                                                    <p class="QueryLink">Test for Scrolling</p>
+                                                    <p class="QueryLink">Test for Scrolling</p>
+                                                    <p class="QueryLink">Test for Scrolling</p>
+                                                    <p class="QueryLink">Test for Scrolling</p>
+                                                    <p class="QueryLink">Test for Scrolling</p>
+                                                    <p class="QueryLink">Test for Scrolling</p>
+                                                    <p class="QueryLink">Test for Scrolling</p>
+                                                    <p class="QueryLink">Test for Scrolling</p>
+                                                    <p class="QueryLink">Test for Scrolling</p>
+                                                    <p class="QueryLink">Test for Scrolling</p>
+                                                    <p class="QueryLink">Test for Scrolling</p>
+                                                    <p class="QueryLink">Test for Scrolling</p>
+                                                    <p class="QueryLink">Test for Scrolling</p>
+                                                    <p class="QueryLink">Test for Scrolling</p>
+                                                    <p class="QueryLink">Test for Scrolling</p>-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td style="width:15px;"><div></div></td>
+
+                    <td>
+                        <table>
+                            <tr style="height:50%;">
+                                <td>
+                                    <table class="Section">
+                                        <tr class="SectionHeader">
+                                            <td>3 Recent Shipments</td>
+                                        </tr>
+
+                                        <tr style="height:5px;">
+                                            <td></td>
+                                        </tr>
+
+                                        <tr class="SectionBody">
+                                            <td>
+                                                <div class="ScrollViewer">
+                                                    <ul class="ScrollContent">
+                                                        <li class="RecentEntityItem" *ngFor="#item of RecentShipmentsList">
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="vertical-align:middle; font-size:11px; width:100px;">{{item.ShipmentNumber}}</td>
+                                                                    <td style="vertical-align:middle; font-size:11px; width:10px;"></td>
+                                                                    <td style="vertical-align:middle; font-size:11px; width:100px;">{{item.Routing}}</td>
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="vertical-align:middle; font-size:11px; width:100px;">{{item.ShipmentNumber}}</td>
+                                                                    <td style="vertical-align:middle; font-size:11px; width:10px;"></td>
+                                                                    <td style="vertical-align:middle; font-size:11px; width:100px;">{{item.Routing}}</td>
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr style="height:10px;">
+                                <td></td>
+                            </tr>
+
+                            <tr style="height:50%;">
+                                <td>
+                                    <table class="Section">
+                                        <tr class="SectionHeader">
+                                            <td>Departures and Arrivals</td>
+                                        </tr>
+
+                                        <tr style="height:5px;">
+                                            <td></td>
+                                        </tr>
+
+                                        <tr class="SectionBody">
+                                            <td>
+                                                <div class="ScrollViewer">
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

@@ -1,0 +1,457 @@
+﻿
+<style type="text/css">
+    .ResultsArea {
+        border: 1px solid #BCBDBF;
+        border-radius: 3px 3px 0 0;
+        -moz-border-radius: 3px 3px 0 0;
+        -webkit-border-radius: 3px 3px 0 0;
+    }
+
+    .ResponseProgressLayout {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        background: -moz-linear-gradient(rgba(21, 61, 110, 0.4) 0%, rgba(21, 61, 110, 0.1) 50%, rgba(21, 61, 110, 0.4) 100%);
+        background: -webkit-linear-gradient(rgba(21, 61, 110, 0.4) 0%, rgba(21, 61, 110, 0.1) 50%, rgba(21, 61, 110, 0.4) 100%);
+        background: linear-gradient(rgba(21, 61, 110, 0.4) 0%, rgba(21, 61, 110, 0.1) 50%, rgba(21, 61, 110, 0.4) 100%);
+    }
+
+    .ResponseProgressWindow {
+        width: 230px;
+        height: 110px;
+        position: absolute;
+        left: 50%;
+        bottom: 100px;
+        transform: translateX(-50%);
+    }
+
+    .ResponseProgressWindowHeader {
+        height: 25px;
+        line-height: 25px;
+        font-size: 13px;
+        padding-left: 10px;
+        border-radius: 8px 8px 0 0;
+        -moz-border-radius: 8px 8px 0 0;
+        -webkit-border-radius: 8px 8px 0 0;
+        border: 1px solid #8F9192;
+        border-bottom: 0px;
+        background: linear-gradient(rgba(189, 191, 191, 1) 0%, rgba(143, 145, 146, 1) 100%);
+    }
+
+    .ResponseProgressWindowBody {
+        height: 100%;
+        width: 100%;
+        position: relative;
+        border-radius: 0 0 8px 8px;
+        -moz-border-radius: 0 0 8px 8px;
+        -webkit-border-radius: 0 0 8px 8px;
+        border: 1px solid #DADADA;
+        border-top: 0px;
+        background: linear-gradient(rgba(255, 255, 255, 1) 0%, rgba(208, 208, 208, 0.5) 100%);
+    }
+
+    .ProgressLink:hover {
+        color: #1BAECB;
+    }
+
+    .ProgressLink:hover {
+        color: #1BAECB;
+    }
+
+    .ProgressLink {
+        cursor: pointer;
+        text-decoration: underline;
+        font-size: 12px;
+        color: #1B90CB;
+    }
+
+    .ResponseBox {
+        background: rgba(235, 235, 235, 0.5);
+        border: 1px solid #DADADA;
+        margin: 2px;
+        padding: 5px;
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+    }
+</style>
+
+
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table *ngIf="IsResourcesReady">
+                <tr style="height: 1px;">
+                    <td class="NoDataTextStyle" style="text-align: left;">
+                        In order to check availability as well please insert the weight and the volume
+                    </td>
+                </tr>
+
+                <tr style="height: 5px;">
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr style="height: 1px;">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width: 370px;">
+                                    <table>
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 120px;">
+                                                <LogLabel [ObjectFieldName]="'AirlineId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td>
+                                                <LogLov [ObjectFieldName]="'AirlineId'"
+                                                        [SelectedValue]="AirlineId"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'Carrier'"
+                                                        [DependencyFilter1Value]="'AL'">
+                                                </LogLov>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'FromPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td>
+                                                <LogLov [ObjectFieldName]="'FromPortId'"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'Port'"
+                                                        [DependencyFilter1Value]="'A'">
+                                                </LogLov>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'ToPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td>
+                                                <LogLov [ObjectFieldName]="'ToPortId'"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'Port'"
+                                                        [DependencyFilter1Value]="'A'">
+                                                </LogLov>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'ETD'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td>
+                                                <LogDatePicker [ObjectFieldName]="'ETD'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                                            </td>
+                                        </tr>
+
+                                    </table>
+                                </td>
+
+                                <td style="width: 10px;">
+                                    <div></div>
+                                </td>
+
+                                <td>
+                                    <table>
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 60px;">
+                                                <LogLabel [ObjectFieldName]="'GrossWeight'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td style="width: 100px;">
+                                                <LogTextBox [ObjectFieldName]="'GrossWeight'" [Text]="GrossWeight" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                            </td>
+
+                                            <td style="width: 3px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width: 100px;">
+                                                <LogLov [ObjectFieldName]="'GrossWeightUnitCode'"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'WeightUnit'"
+                                                        [HideColumns]="true">
+                                                </LogLov>
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 60px;">
+                                                <LogLabel [ObjectFieldName]="'Volume'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td style="width: 100px;">
+                                                <LogTextBox [ObjectFieldName]="'Volume'" [Text]="Volume" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                            </td>
+
+                                            <td style="width: 3px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width: 100px;">
+                                                <LogLov [ObjectFieldName]="'VolumeUnitCode'"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'VolumeUnit'"
+                                                        [HideColumns]="true">
+                                                </LogLov>
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">
+                                                <div></div>
+                                            </td>
+
+                                            <td>
+                                                <table>
+                                                    <tr>
+                                                        <td style="width: 150px;">
+                                                            <div class="FillParent">
+                                                                <button class="GreenButton" style="height: 100%;" (click)="FindFlightsClicked()">Find Flights</button>
+                                                            </div>
+                                                        </td>
+
+                                                        <td style="width: 5px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td>
+                                                            <div class="FillParent">
+                                                                <button [hidden]="!IsSimulateVisible" class="GreenButton" style="height: 100%;" (click)="BuildXMLClicked()">Build XML</button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr style="height: 5px;">
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div class="FillParent ResultsArea">
+                            <table>
+                                <tr class="SectionHeader" style="height: 25px;">
+                                    <td style="padding-left: 5px;">
+                                        <span style="color: #282E30; font-size: 13px;">Response</span>
+                                        <span style="color: #6E7172; font-size: 11px; font-style: italic;">{{ResponseHelpMessage}}</span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div class="ScrollViewer">
+                                            <ul class="ScrollContent">
+                                                <li class="ResponseBox" *ngFor="let Response of ItemsSource">
+
+                                                    <!-- Leg -->
+                                                    <table *ngIf="Response.IsFlightsLeg">
+                                                        <tr>
+                                                            <td>
+                                                                <ul>
+                                                                    <li *ngFor="let item of Response.ItemsSource">
+                                                                        <table>
+                                                                            <tr style="height: 2px;" *ngIf="item.IsLineVisible">
+                                                                                <td>
+                                                                                    <table>
+                                                                                        <tr>
+                                                                                            <td style="width: 70px;">
+                                                                                                <div></div>
+                                                                                            </td>
+
+                                                                                            <td>
+                                                                                                <div style="height: 1px; background: #CCCCCC"></div>
+                                                                                                <div style="height: 1px; background: white"></div>
+                                                                                            </td>
+
+                                                                                            <td style="width: 60px;">
+                                                                                                <div></div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr style="height: 50px;">
+                                                                                <td>
+                                                                                    <table>
+                                                                                        <tr>
+                                                                                            <td class="Label" style="width: 40px; font-style:italic;">From:</td>
+
+                                                                                            <td style="width: 30px;">
+                                                                                                <img class="LeftCenter" style="width: 24px; height: 24px;" [attr.title]="item.FromPortCountryName" [attr.src]="item.FromPortCountryCode | CountryFlagPipe" />
+                                                                                            </td>
+
+                                                                                            <td style="width: 60px;">{{item.FromPortCode}}</td>
+
+                                                                                            <td class="Label" style="width: 95px; font-style:italic;">Departure Time:</td>
+                                                                                            <td class="Value" style="width: 80px;">{{item.ETD | DateTimeToDatePipe}}</td>
+                                                                                            <td class="Label" style="width: 60px;">{{item.ETD | DateTimeToTimePipe}}</td>
+
+                                                                                            <td class="Label" style="width: 55px; font-style:italic;">Carrier:</td>
+                                                                                            <td class="Value" style="width: 100px;">{{item.Carrier}}</td>
+
+                                                                                            <td class="Label" style="width: 35px; font-style:italic;">Stops:</td>
+                                                                                            <td class="Value" style="width: 30px;">{{item.NumberOfStops}}</td>
+
+                                                                                            <td>
+                                                                                                <div></div>
+                                                                                            </td>
+                                                                                        </tr>
+
+                                                                                        <tr>
+                                                                                            <td class="Label" style="font-style:italic;">To:</td>
+
+                                                                                            <td>
+                                                                                                <img class="LeftCenter" style="width: 24px; height: 24px;" [attr.title]="item.ToPortCountryName" [attr.src]="item.ToPortCountryCode | CountryFlagPipe" />
+                                                                                            </td>
+
+                                                                                            <td>{{item.ToPortCode}}</td>
+
+                                                                                            <td class="Label" style="font-style:italic;">Arrival Time:</td>
+                                                                                            <td class="Value">{{item.ETA | DateTimeToDatePipe}}</td>
+                                                                                            <td class="Label">{{item.ETA | DateTimeToTimePipe}}</td>
+
+                                                                                            <td class="Label" style="font-style:italic;">Airplane:</td>
+                                                                                            <td class="Value">{{item.AirplaneType}}</td>
+
+                                                                                            <td class="Label" style="font-style:italic;">
+                                                                                                <div></div>
+                                                                                            </td>
+                                                                                            <td class="Value">
+                                                                                                <div></div>
+                                                                                            </td>
+
+                                                                                            <td>
+                                                                                                <div></div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </li>
+                                                                </ul>
+
+                                                                <div style="width: 57px; position: absolute; top:0; right:0;">
+                                                                    <button class="Button" (click)="Response.BookButtonClicked()" *ngIf="Response.IsFromOutSide">Book</button>
+                                                                    <button class="Button" (click)="Response.SelectButtonClicked()" *ngIf="!Response.IsFromOutSide">Select</button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+
+                                                    <table *ngIf="!Response.IsFlightsLeg" style="height: 45px;">
+                                                        <tr>
+                                                            <td class="Label" style="vertical-align:top; width: 1px;">{{Response.LegHeader}}</td>
+                                                            <td class="Value" style="vertical-align:top; padding-left: 5px;">
+                                                                <div class="MultiLinesText">
+                                                                    {{Response.LegDescription}}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="ResponseProgressLayout" *ngIf="IsResponseProgressVisible">
+                <div class="FillContent">
+                    <div class="ResponseProgressWindow">
+                        <table>
+                            <tr style="height: 25px;">
+                                <td>
+                                    <div class="ResponseProgressWindowHeader">
+                                        Waiting for Response
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <div class="ResponseProgressWindowBody">
+                                        <img class="CenterCenter" style="bottom: 20px;" src="./Images/ProgressBar.gif" />
+
+                                        <div style="position: absolute; right: 10px; bottom: 5px;">
+                                            <span class="ProgressLink" (click)="CancelResponseProgressClicked()">Cancel</span>
+                                            <span class="ProgressLink" (click)="CloseResponseProgressClicked()" style="margin-left: 10px;">Close</span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;" *ngIf="IsSimulateVisible">
+                        <button class="Button" (click)="SendFVAClicked()" [disabled]="!IsSimulatorEnabled">Send FVA</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CloseClicked()">Close</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

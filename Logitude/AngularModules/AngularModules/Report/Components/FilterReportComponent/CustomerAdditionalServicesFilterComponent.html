@@ -1,0 +1,94 @@
+﻿<table>
+    <tr style="height:30px;">
+        <td style="color:#1B90CB;font-size:14px;"> Filter By: </td>
+    </tr>
+
+    <tr style="height:25px;">
+        <td>
+            <table>
+                <tr>
+                    <td style="width:10px;"><div></div></td>
+
+                    <td style="width:50px">
+                        <div class="RadioButton">
+                            <input type="radio" [attr.id]="IsAllId" [attr.name]="TypeRadio" (click)="IsAllClicked() " [checked]="IsAll == true" style="width:15px" />
+                            <label [attr.for]="IsAllId" style="font-size: 12px">
+                                All
+                            </label>
+                        </div>
+                    </td>
+
+                    <td style="width:90px">
+                        <div class="RadioButton">
+                            <input type="radio" [attr.id]="IsPotentialId" [attr.name]="TypeRadio" (click)="IsPotentialClicked()" [checked]="IsPotential == true" style="width:15px" />
+                            <label [attr.for]="IsPotentialId" style="font-size: 12px">
+                                Potential
+                            </label>
+                        </div>
+                    </td> 
+
+                    <td style="width:60px">
+                        <div class="RadioButton">
+                            <input type="radio" [attr.id]="IsInUseId" [attr.name]="TypeRadio" (click)="IsInUseClicked()" [checked]="IsInUse == true" style="width:15px" />
+                            <label [attr.for]="IsInUseId" style="font-size: 12px">
+                                In Use
+                            </label>
+                        </div>
+                    </td> 
+
+                    <td style="width:20px"><div></div></td>
+                    <td style="width:110px;">Additional Service</td>
+                    <td style="width:200px;">
+                        <ComboBoxWithInCheckBox (EditedItemSource)="EditedItemSource($event)" [ItemsSource]="FilterdAdditionalService" (SelectedItemChanged)="SelectedAdditionalServiceChanged($event)" [Binding]="'lastTitle'"></ComboBoxWithInCheckBox>
+                    </td>
+
+                    <td style="width:20px"><div></div></td>
+                    <td style="width:90px;">Busniess Unit</td>
+                    <td style="width:130px;">
+                        <ComboBox (SelectedItemChanged)="SelectedBusniessUnitChanged($event)" [SelectedItem]="SelectedItemBusniessFilterd" [ItemsSource]="BusniessItemSource" [Binding]="'Name'"></ComboBox>
+                    </td>
+
+                    <td style="width:1px;"><div></div></td>
+                    <td style="width:200px">
+                        <table>
+                            <tr>
+                                <td>
+                                    <ComboBox *ngIf="!IsListOfValuesVisible()" [ItemsSource]="UsersFilterList" [SelectedItem]="SelectedITemUsers" [IsDisabled]="CheckUsersEnabled()" [Binding]="'Name'"></ComboBox>
+                                    <LogLov *ngIf="IsListOfValuesVisible()"
+                                            [ObjectFieldName]="'ListOfValuesUserId'"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'User'">
+                                    </LogLov>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    
+                    <!--run button-->
+                    <td style="width:15px;"><div></div></td>
+                    <td style="width:80px;">
+                        <button class="GreenButton" (click)="RunReport(true)">Run Report</button>
+                    </td>
+                    <td><div></div></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height:25px;">
+        <td>
+            <table>
+                <tr>
+                    <td style="width:10px;"><div></div></td>
+
+                    <td style="width:80px;">Customer</td>
+                    <td style="width:100px;">
+                        <ComboBox [ItemsSource]="CustomerStatusList" [Binding]="'Name'" [SelectedItem]="SelectedCustomerStatus" (SelectedItemChanged)="SelectedCustomerStatus = $event"></ComboBox>
+                    </td>
+                    
+                    <td><div></div></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

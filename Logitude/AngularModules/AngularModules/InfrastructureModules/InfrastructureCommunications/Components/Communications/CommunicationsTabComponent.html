@@ -1,0 +1,137 @@
+﻿
+<div class="TabHolder">
+    <table>
+        <tr class="TabTitleRow">
+            <td>
+                <table>
+                    <tr>
+                        <td>
+                            <div class="TabTitle" [hidden]="IsTitleHidden">{{'General.O.Communications' | TextCodeTranslationPipe}}</div>
+                        </td>
+
+                        <td style="width: 21px;">
+                            <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="CellStretch">
+                <div class="SimpleGridView" *ngIf="IsResourcesReady">
+                    <div class="SimpleGridViewHeader">
+                        <table>
+                            <tr>
+                                <td style="width: 65px; min-width: 65px; max-width: 65px;">{{'CommunicationLog.CH.InOutListLable' | TextCodeTranslationPipe}}</td>
+                                <td style="width: 60px; min-width: 60px; max-width: 60px;">{{'CommunicationLog.CH.CommunicationLogTypeNameListLable' | TextCodeTranslationPipe}}</td>
+                                <td style="width: 150px; min-width: 150px; max-width: 150px;">{{'CommunicationLog.CH.SubjectListLable' | TextCodeTranslationPipe}}</td>
+                                <td style="width: 180px; min-width: 180px; max-width: 180px;">{{'CommunicationLog.O.Status' | TextCodeTranslationPipe}}</td>
+                                <td style="width: 80px; min-width: 80px; max-width: 80px;">{{'CommunicationLog.O.From/To' | TextCodeTranslationPipe}}</td>
+                                <td style="width: 165px; min-width: 165px; max-width: 165px;">{{'CommunicationLog.O.User' | TextCodeTranslationPipe}}</td>
+                                <td style="width: 140px; min-width: 140px; max-width: 140px;">{{'CommunicationLog.CH.CreateDateListLable' | TextCodeTranslationPipe}}</td>
+                                <td style="width: 140px; min-width: 140px; max-width: 140px;">{{'CommunicationLog.CH.LastStatusDateListLable' | TextCodeTranslationPipe}}</td>
+                                <td style="width: 140px; min-width: 140px; max-width: 140px;">{{'CommunicationLog.CH.LastStatusDateUTCListLable' | TextCodeTranslationPipe}}</td>
+                                <td style="width: 60px; min-width: 60px; max-width: 60px;">
+                                    <div></div>
+                                </td>
+
+                                <td class="LastChild" style="min-width: 20px;">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="SimpleGridViewBody">
+                        <table>
+                            <tr class="SimpleGridViewRow" *ngFor="let item of ItemsSource">
+
+                                <td class="GridViewCell" style="width: 65px; min-width: 65px; max-width: 65px; position: relative;">
+                                    <img src="./Images/Icons/ArrowRight.png" class="CenterCenter" title="Out" *ngIf="item.InOut == 'Out'" />
+                                    <img src="./Images/Icons/ArrowLeft.png" class="CenterCenter" title="In" *ngIf="item.InOut == 'In'" />
+                                </td>
+
+                                <td class="GridViewCell" style="width: 60px; min-width: 60px; max-width: 60px; position: relative;">
+                                    <img src="./Images/Icons/Directions_Gray.png" class="CenterCenter" [attr.title]="item.CommunicationLogTypeName" *ngIf="item.CommunicationLogTypeName == 'Transmission'" />
+                                    <img src="./Images/Icons/Email.png" class="CenterCenter" [attr.title]="item.CommunicationLogTypeName" *ngIf="item.CommunicationLogTypeName == 'Email'" />
+                                </td>
+
+                                <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px;">
+                                    {{item.Subject}}
+                                </td>
+
+                                <td style="width: 180px; min-width: 180px; max-width: 180px;">
+                                    <div class="TemplateTrimming">
+                                        <table>
+                                            <tr>
+                                                <td style="width:80px;">
+                                                    <div style="text-align:left;">{{item.CommunicationStatusTypeName}}</div>
+                                                </td>
+                                                <td style="width:2px;">
+                                                    <div></div>
+                                                </td>
+                                                <td style="width:25px;" *ngIf="item.EmailDeliveryError != null && item.CommunicationStatusTypeCode == 'D'">
+                                                    <HelpIcon [IconSize]='25' [Header]="'Email Delivery Error'" [Text]="item.EmailDeliveryError" [IconPath]="'./Images/Warning_icon_24.png'"></HelpIcon>
+                                                 </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>                                   
+                                </td>
+
+                                <td class="GridViewCell" style="width: 80px; min-width: 80px; max-width: 80px;">
+
+                                    <div *ngIf="!EntityPM.IsManifestSentToAgent">
+
+                                        <div [attr.title]="item.From" *ngIf="item.InOut == 'I' || item.InOut == 'In'">{{item.From}}</div>
+                                        <div [attr.title]="item.To" *ngIf="item.InOut == 'O' || item.InOut == 'Out'">{{item.To}}</div>
+                                    </div>
+
+                                    <div *ngIf="EntityPM.IsManifestSentToAgent">
+                                        <div [attr.title]="item.To">{{item.To}}</div>
+                                    </div>
+                                </td>
+
+                                <td class="GridViewCell" style="width: 165px; min-width: 165px; max-width: 165px;">
+                                    {{item.CreatedByUserName}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 140px; min-width: 140px; max-width: 140px;">
+                                    <span class="Value">{{item.CreateDate | DateTimeToDatePipe}}</span>
+                                    <span class="Value">{{item.CreateDate | DateTimeToTimePipe}}</span>
+                                </td>
+
+                                <td class="GridViewCell" style="width: 140px; min-width: 140px; max-width: 140px;">
+                                    <span class="Value">{{item.LastStatusDate | DateTimeToDatePipe}}</span>
+                                    <span class="Value">{{item.LastStatusDate | DateTimeToTimePipe}}</span>
+                                </td>
+
+                                <td class="GridViewCell" style="width: 140px; min-width: 140px; max-width: 140px;">
+                                    <span class="Value">{{item.LastStatusDateUTC | DateTimeToDatePipe}}</span>
+                                    <span class="Value">{{item.LastStatusDateUTC | DateTimeToTimePipe}}</span>
+                                </td>
+
+                                <td class="CellStretched" style="width: 60px; min-width: 60px; max-width: 60px;">
+                                    <button class="Button" (click)="ViewXMLClicked(item)">{{'CommunicationLog.B.View' | TextCodeTranslationPipe}}</button>
+                                </td>
+
+                                <td class="LastChild" style="min-width: 20px;">
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="11">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>

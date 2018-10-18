@@ -1,0 +1,286 @@
+﻿<!--VehicleModificationsComponent-->
+<!--https://www.w3schools.com/css/css_rwd_grid.asp-->
+
+<style>
+    .RowVehicleModification {
+        height: 30px;
+    }
+
+    .AdjustmentTypeClass {
+        width: 90px;
+    }
+
+    .DeductAmountClass {
+        width: 60px;
+    }
+
+    .MyCell {
+        font-size: 12px;
+        font-weight: bold;
+        color: #838889;
+    }
+
+    .MyTotal {
+        font-style: italic;
+        color: #1B90CB;
+    }
+</style>
+
+
+
+
+
+
+<div style="width:425px;" *ngIf="Loaded">
+    <table style="width:425px;">
+        <tr>
+
+            <td class="subTitle" style="width:100px">
+                <div style="width: 200px;height:25px; font-size: 12px; color: #1B90CB;">
+                    {{'Customs.Declaration.O.VehiclesModifications'| TextCodeTranslationPipe}}
+                </div>
+
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                <div style="width:425px;height:40px;">
+                    <table>
+                        <tr class="FormFieldRow">
+                            <td style="width:150px;">
+
+                                <SearchBox [SearchText]="ChassisNumber" (TextChanged)="ChassisNumberTextChanged($event)"
+                                           [Watermark]="'סנן לפי שילדה'"></SearchBox>
+
+                            </td>
+
+                            <td >
+                                <!--<div 
+                                     *ngIf="IsProd"  
+                                     style="position: relative;width:166px;height:22px;" 
+                                     (mouseleave)="IsFucos(false)"  
+                                       >
+
+                                   
+                                    <LogLov 
+                                            
+                                            style="position: absolute;top: 0px;left: 0px;"
+                                            [ObjectFieldName]="'AdjustmentTypeCode'"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [HideColumns]="true"
+                                            [LookUpTableName]="'Customs.VehicleReductionType'"
+                                            (SelectedItemChanged)="OnLovItemChanged($event)"
+                                            [DisplayMemberPath]="'LocalName'">
+                                    </LogLov>
+
+                                    <input style="position: absolute;top: 0px;left: 0px;opacity:0.7;"
+                                          (click)="IsFucos(true)"  
+                                          *ngIf="ShowWaterMark"
+                                           placeholder="סנן לפי שילדה" />
+                                </div>-->
+
+                                <!--סנן לפי סוג התאמה-->
+                                <LogWaterMark
+                                              [Watermark]="'סנן לפי סוג התאמה'"
+                                              [LogWaterMarkValue]="AdjustmentTypeCode"              
+                                              >
+                                    <LogLov 
+                                            
+                                            [ObjectFieldName]="'AdjustmentTypeCode'"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [HideColumns]="true"
+                                            [LookUpTableName]="'Customs.VehicleReductionType'"
+                                            (SelectedItemChanged)="OnLovItemChanged($event)"
+                                            [DisplayMemberPath]="'LocalName'">
+                                    </LogLov>
+                                </LogWaterMark>
+                            </td>
+                            <td style="width:110px;"></td>
+
+                        </tr>
+
+                    </table>
+                </div>
+            </td>
+        </tr>
+   
+        <tr>
+            <td>
+                <div style="width:425px;">
+                    <div div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
+
+                        <div _ngcontent-wld-48="" gridheight="100%" gridwidth="100%" _nghost-wld-42="" ng-reflect--grid-width="100%" ng-reflect--grid-height="100%" ng-reflect--item-source="[object Object]">
+                            <div _ngcontent-wld-42="" class="outer-container">
+                                <div _ngcontent-wld-42="" class="EditableGrid noselect inner-container" ng-reflect-id="edit-log-grid_1_5" id="edit-log-grid_1_5" ng-reflect-tab-index="0" tabindex="0" style="direction: rtl;">
+
+                                    <!--template bindings={
+                                      "ng-reflect-ng-if": "[object Object],[object Object],[object Object]"
+                                    }-->
+                                    <div _ngcontent-wld-42="" class="EditableGridHeader" style="position: relative; height: 27px; width: 430px; min-width: 100%;" ng-reflect-ng-style="[object Object]" ng-reflect-id="edit-log-gridColumns_1_5" id="edit-log-gridColumns_1_5">
+
+                                        <!--template bindings={
+                                          "ng-reflect-ng-for-of": "[object Object],[object Object],[object Object]"
+                                        }-->
+                                        <div _ngcontent-wld-42="" class="ag-header-cell" style="position: absolute; display: inline-block; min-width: 25px; height: 26px; line-height: 26px; width: 150px; right: 0px; text-align: right;" ng-reflect-ng-style="[object Object]" colid="1_30" ng-reflect-id="ColumnId_1_9resizable-column-,0" id="ColumnId_1_9resizable-column-,0">
+                                            <div _ngcontent-wld-42="" style="display: inline-block; width: calc(100% - 5px); float: right;" ng-reflect-id="HeaderTemplateDiv0" id="HeaderTemplateDiv0">
+
+                                                <!--template bindings={
+                                                  "ng-reflect-ng-if": "false"
+                                                }-->
+                                                <!--template bindings={
+                                                  "ng-reflect-ng-if": "true"
+                                                }-->
+                                                <div _ngcontent-wld-42="" style="overflow: hidden; text-overflow: ellipsis; line-height: 26px; height: 26px;">סנן לפי שילדה </div>
+
+                                                <!--template bindings={
+                                                  "ng-reflect-ng-if": "false"
+                                                }-->
+                                                <!--template bindings={
+                                                  "ng-reflect-ng-if": "false"
+                                                }-->
+
+                                            </div>
+                                            <div _ngcontent-wld-42="" class="resizer"></div>
+                                        </div><div _ngcontent-wld-42="" class="ag-header-cell" style="position: absolute; display: inline-block; min-width: 25px; height: 26px; line-height: 26px; width: 170px; right: 150px; text-align: right;" ng-reflect-ng-style="[object Object]" colid="1_31" ng-reflect-id="ColumnId_1_9resizable-column-,1" id="ColumnId_1_9resizable-column-,1">
+                                            <div _ngcontent-wld-42="" style="display: inline-block; width: calc(100% - 5px); float: right;" ng-reflect-id="HeaderTemplateDiv1" id="HeaderTemplateDiv1">
+
+                                                <!--template bindings={
+                                                  "ng-reflect-ng-if": "false"
+                                                }-->
+                                                <!--template bindings={
+                                                  "ng-reflect-ng-if": "true"
+                                                }-->
+                                                <div _ngcontent-wld-42="" style="overflow: hidden; text-overflow: ellipsis; line-height: 26px; height: 26px;">סוג התאמה</div>
+
+                                                <!--template bindings={
+                                                  "ng-reflect-ng-if": "false"
+                                                }-->
+                                                <!--template bindings={
+                                                  "ng-reflect-ng-if": "false"
+                                                }-->
+
+                                            </div>
+                                            <div _ngcontent-wld-42="" class="resizer"></div>
+                                        </div><div _ngcontent-wld-42="" class="ag-header-cell" style="position: absolute; display: inline-block; min-width: 25px; height: 26px; line-height: 26px; width: 110px; right: 320px; text-align: right;" ng-reflect-ng-style="[object Object]" colid="1_32" ng-reflect-id="ColumnId_1_9resizable-column-,2" id="ColumnId_1_9resizable-column-,2">
+                                            <div _ngcontent-wld-42="" style="display: inline-block; width: calc(100% - 5px); float: right;" ng-reflect-id="HeaderTemplateDiv2" id="HeaderTemplateDiv2">
+
+                                                <!--template bindings={
+                                                  "ng-reflect-ng-if": "false"
+                                                }-->
+                                                <!--template bindings={
+                                                  "ng-reflect-ng-if": "true"
+                                                }-->
+                                                <div _ngcontent-wld-42="" style="overflow: hidden; text-overflow: ellipsis; line-height: 26px; height: 26px;">סכום התאמה</div>
+
+                                                <!--template bindings={
+                                                  "ng-reflect-ng-if": "false"
+                                                }-->
+                                                <!--template bindings={
+                                                  "ng-reflect-ng-if": "false"
+                                                }-->
+
+                                            </div>
+                                            <div _ngcontent-wld-42="" class="resizer"></div>
+                                        </div>
+                                        <div _ngcontent-wld-42="" class="Mask" style="height: 25px; width: 0px; cursor: move; text-overflow: ellipsis; display: none;" ng-reflect-id="ColumnId_1_9Mask" id="ColumnId_1_9Mask"></div>
+
+                                    </div>
+
+                                    <div _ngcontent-wld-42="" class="EditableGridBody" style="position: absolute; overflow: auto; min-height: 50px; top: 27px; bottom: 0px;" ng-reflect-id="edit-log-gridRows_1_5" id="edit-log-gridRows_1_5">
+                                        <div _ngcontent-wld-42="" style="position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px; height: 0px; width: 100%; min-width: 430px;" ng-reflect-ng-style="[object Object]">
+                                            <!--template bindings={
+                                              "ng-reflect-ng-for-of": ""
+                                            }-->
+                                        </div>
+                                    </div>
+
+
+                                    <!--template bindings={
+                                      "ng-reflect-ng-if": "false"
+                                    }-->
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div style="width:425px; height:400px; overflow:auto">
+                    <table >
+
+                        <ng-container  *ngFor="let myGroup of VehicleModiGroupList;
+                                      let lastGroup = last">
+
+                            <tr>
+                                <td style="width:150px;">
+                                    <!--width: 25%;-->
+                                    <div>
+                                        <table>
+                                            <tr><td></td></tr>
+                                            <tr style="height:20px;"><td style="text-align:center;">{{myGroup.ChassisNumber}}</td></tr>
+                                            <tr style="height:5px;"><td></td></tr>
+                                            <tr style="height:20px;"><td style="text-align:center;">{{myGroup.MyList[0].VehicleNumber}}</td></tr>
+                                            <tr><td></td></tr>
+                                        </table>
+                                    </div>
+
+                                </td>
+
+                                <td style="width:5px"><div></div></td>
+
+                                <td style="width:270px">
+                                    <!--width: 75%;-->
+                                    <table>
+                                        <ng-container *ngFor="let myVehicleModification of myGroup.MyList;let last = last">
+                                            <tr class="RowVehicleModification">
+                                                <td class="AdjustmentTypeClass MyCell"
+                                                    style="width:170px;">
+                                                    {{myVehicleModification.AdjustmentTypeName}}
+                                                </td>
+                                                <td class="DeductAmountClass MyCell" style="width:100px;"
+                                                    *ngIf="last != myVehicleModification">
+                                                    {{myVehicleModification.DeductAmount}}
+                                                </td>
+                                            </tr>
+
+                                            <tr style="opacity: 0.4;outline-style: solid;outline-width: 0.1px;outline-offset: inherit;outline-color: #838889;">
+                                                <!--<td colspan="2"
+                                                    style="border-top: thin solid; border-bottom: thin solid; border-right: thin solid;">
+                                                    &nbsp;
+                                                </td>-->
+
+                                            </tr>
+                                        </ng-container>
+                                        <tr class="RowVehicleModification">
+                                            <td class="AdjustmentTypeClass MyTotal"
+                                                style="width:170px;">
+                                                <!--{{'Customs.PaymentOrder.O.Total' | TextCodeTranslationPipe }}-->
+                                                <div style="text-align:left;margin-left:5px;">סה"כ</div>
+                                            </td>
+                                            <td class="DeductAmountClass MyTotal" style="width:100px;">
+                                                {{myGroup.Total}}
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+
+                                <td><div></div></td>
+
+                            </tr>
+                            <tr style="opacity: 0.4;outline-style: solid;outline-width: 0.1px;outline-offset: inherit;outline-color: #838889;"></tr>
+                        </ng-container>
+
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+

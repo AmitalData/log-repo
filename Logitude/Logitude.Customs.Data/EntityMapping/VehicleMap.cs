@@ -1,0 +1,132 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data;
+ 
+namespace Logitude.Customs.Data.EntityMapping
+{
+ 
+    public class VehicleMap : EntityTypeConfiguration<Vehicle>
+    {
+	    string dbms;
+        public VehicleMap()
+        { 
+			  this.ToTable("Vehicles", "Customs");
+		
+		    this.HasKey(t => new { t.Id });
+	 
+            this.Property(t => t.Id).HasColumnName("Id").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
+
+            this.Property(t => t.RichbitFileNumber).HasColumnName("RichbitFileNumber").HasMaxLength(10).IsUnicode(false);
+
+            this.Property(t => t.VehicleChassisNumber).HasColumnName("VehicleChassisNumber").IsRequired().HasMaxLength(20).IsUnicode(false);
+
+            this.Property(t => t.VehiclePoolTypeCode).HasColumnName("VehiclePoolTypeCode").IsRequired().HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.VehiclePriceListTypeCode).HasColumnName("VehiclePriceListTypeCode").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.VehicleManufacturerCode).HasColumnName("VehicleManufacturerCode").HasMaxLength(5).IsUnicode(false);
+
+            this.Property(t => t.ModelCode).HasColumnName("ModelCode").HasMaxLength(5).IsUnicode(false);
+
+            this.Property(t => t.IsABS).HasColumnName("IsABS");
+
+            this.Property(t => t.AirBagsNumber).HasColumnName("AirBagsNumber");
+
+            this.Property(t => t.ConverterTypeCode).HasColumnName("ConverterTypeCode").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.IsArmoredVehicle).HasColumnName("IsArmoredVehicle");
+
+            this.Property(t => t.IsLoweringVehicleForInvalid).HasColumnName("IsLoweringVehicleForInvalid");
+
+            this.Property(t => t.GreenIndex).HasColumnName("GreenIndex").HasPrecision(9, 3);
+
+            this.Property(t => t.GreenIndexGroup).HasColumnName("GreenIndexGroup");
+
+            this.Property(t => t.IsStabilityControl).HasColumnName("IsStabilityControl");
+
+            this.Property(t => t.IsraelEnterDate).HasColumnName("IsraelEnterDate");
+
+            this.Property(t => t.EngineCapacity).HasColumnName("EngineCapacity");
+
+            this.Property(t => t.VehiclePowerKW).HasColumnName("VehiclePowerKW").HasPrecision(12, 2);
+
+            this.Property(t => t.VehicleTecnologyTypeCode).HasColumnName("VehicleTecnologyTypeCode").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.FuelTypeCode).HasColumnName("FuelTypeCode").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.VehicleWindowNumber).HasColumnName("VehicleWindowNumber").HasMaxLength(20).IsUnicode(false);
+
+            this.Property(t => t.ManufactureCountryCode).HasColumnName("ManufactureCountryCode").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.MedalNumber).HasColumnName("MedalNumber").HasMaxLength(9).IsUnicode(false);
+
+            this.Property(t => t.CommercialNickname).HasColumnName("CommercialNickname").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.ModelDescription).HasColumnName("ModelDescription").HasMaxLength(18).IsUnicode(false);
+
+            this.Property(t => t.NumberOfSeats).HasColumnName("NumberOfSeats");
+
+            this.Property(t => t.TotalVehicleWeight).HasColumnName("TotalVehicleWeight");
+
+            this.Property(t => t.SelfVehicleWeight).HasColumnName("SelfVehicleWeight");
+
+            this.Property(t => t.NumberOfWheels).HasColumnName("NumberOfWheels");
+
+            this.Property(t => t.VehicleManufactureDate).HasColumnName("VehicleManufactureDate").IsRequired();
+
+            this.Property(t => t.VehicleTypeCode).HasColumnName("VehicleTypeCode").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.TransmissionDateWithoutTax).HasColumnName("TransmissionDateWithoutTax");
+
+            this.Property(t => t.ImporterIdentityId).HasColumnName("ImporterIdentityId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.DateOnRoadAbroad).HasColumnName("DateOnRoadAbroad");
+
+            this.Property(t => t.VehicleSafetyAccessoryPoints).HasColumnName("VehicleSafetyAccessoryPoints").HasPrecision(4, 2);
+
+            this.Property(t => t.StatusCode).HasColumnName("StatusCode").HasMaxLength(1).IsUnicode(false);
+
+            this.Property(t => t.SearchFields).HasColumnName("SearchFields").HasMaxLength(1000).IsUnicode(true);
+
+            this.Property(t => t.ConcurrencyGUID).HasColumnName("ConcurrencyGUID").HasMaxLength(40).IsUnicode(false);
+
+            this.Property(t => t.DeclarationId).HasColumnName("DeclarationId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.IsThreeWheeledForReduction).HasColumnName("IsThreeWheeledForReduction");
+
+            this.Property(t => t.TaxiMedalOwner).HasColumnName("TaxiMedalOwner").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.ImporterPassportNumber).HasColumnName("ImporterPassportNumber").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.ImporterPassCountryCode).HasColumnName("ImporterPassCountryCode").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.ImporterPassportTypeCode).HasColumnName("ImporterPassportTypeCode").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.IsCBS).HasColumnName("IsCBS");
+
+            this.Property(t => t.IsSlipperClutch).HasColumnName("IsSlipperClutch");
+
+            this.Property(t => t.IsSteeringDamper).HasColumnName("IsSteeringDamper");
+
+            this.Property(t => t.IsTCS).HasColumnName("IsTCS");
+
+            this.Property(t => t.IsTPS).HasColumnName("IsTPS");
+
+            this.Property(t => t.VehicleCategory).HasColumnName("VehicleCategory").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.VehicleMaxPowerKW).HasColumnName("VehicleMaxPowerKW").HasPrecision(7, 2);
+        }
+    }
+}
+	 

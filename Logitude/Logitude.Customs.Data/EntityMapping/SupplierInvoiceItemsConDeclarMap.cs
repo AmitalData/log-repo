@@ -1,0 +1,50 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data;
+ 
+namespace Logitude.Customs.Data.EntityMapping
+{
+ 
+    public class SupplierInvoiceItemsConDeclarMap : EntityTypeConfiguration<SupplierInvoiceItemsConDeclar>
+    {
+	    string dbms;
+        public SupplierInvoiceItemsConDeclarMap()
+        { 
+			  this.ToTable("SupplierInvoiceItemsConDeclars", "Customs");
+		
+		    this.HasKey(t => new { t.DeclarationId, t.InvoiceCounterKey, t.InvoiceItemLineNumber, t.LineNumber });
+	 
+            this.Property(t => t.DeclarationId).HasColumnName("DeclarationId").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.InvoiceCounterKey).HasColumnName("InvoiceCounterKey").IsRequired().HasDatabaseGeneratedOption(null);
+
+            this.Property(t => t.InvoiceItemLineNumber).HasColumnName("InvoiceItemLineNumber").IsRequired().HasDatabaseGeneratedOption(null);
+
+            this.Property(t => t.LineNumber).HasColumnName("LineNumber").IsRequired().HasDatabaseGeneratedOption(null);
+
+            this.Property(t => t.Tenant).HasColumnName("Tenant");
+
+            this.Property(t => t.DeclarationNumber).HasColumnName("DeclarationNumber").HasMaxLength(35).IsUnicode(false);
+
+            this.Property(t => t.ItemSequence).HasColumnName("ItemSequence");
+
+            this.Property(t => t.DeclarationTypeCode).HasColumnName("DeclarationTypeCode").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.InvoiceNumber).HasColumnName("InvoiceNumber");
+
+            this.Property(t => t.Quantity).HasColumnName("Quantity").HasPrecision(14, 3);
+
+            this.Property(t => t.QuantityTypeCode).HasColumnName("QuantityTypeCode").HasMaxLength(3).IsUnicode(false);
+        }
+    }
+}
+	 

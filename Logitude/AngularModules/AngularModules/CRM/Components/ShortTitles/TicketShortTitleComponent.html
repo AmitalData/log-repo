@@ -1,0 +1,30 @@
+﻿<table style="height: 24px">
+    <tr>
+        <td>
+            <div class="ShortTitleMainControl" style="float: left;">
+                <div class="ShortTitleDiv">
+                    <span><img style="vertical-align: middle; margin:0;" src="./Images/TicketLogo.PNG"/></span>
+                </div>
+
+                <div class="ShortTitleDiv" style="padding-left: 5px; font-size: 18px; color: #333333;font-family: Arial;font-weight: bold;">
+                    Ticket  {{EntityPM.TicketNumber}} : <span style="font-family: Arial; font-size: 18px; font-weight: bold;text-decoration:none" class="hyperlink" (click)="ViewCustomerMethod()">{{EntityPM.CompanyName}}</span>
+                </div>
+
+                <div *ngIf="IsRankVisible" class="ShortTitleDiv" style="padding-left: 5px;">
+                    <span><img style="width: 20px; height: 20px; vertical-align: middle; margin:0; margin-left: -0px;" [attr.src]="RankSource1" [attr.title]="RankName" /></span>
+                    <span><img style="width: 20px; height: 20px; vertical-align: middle; margin:0; margin-left: -3px;" [attr.src]="RankSource2" [attr.title]="RankName" /></span>
+                    <span><img style="width: 20px; height: 20px; vertical-align: middle; margin:0; margin-left: -3px;" [attr.src]="RankSource3" [attr.title]="RankName" /></span>
+                </div>
+
+            </div>
+
+            <div class="ShortTitleControl" style="float:left; background: red; color: white; margin-left: 5px;" *ngIf="IsCancelled">
+                Cancelled
+            </div>
+
+            <div class="ShortTitleControl" style="float:left; background: red; color: white; margin-left: 5px;" *ngIf="IsClosed">
+                Closed
+            </div>
+        </td>
+    </tr>
+</table>

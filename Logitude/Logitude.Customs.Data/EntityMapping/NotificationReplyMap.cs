@@ -1,0 +1,51 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data;
+ 
+namespace Logitude.Customs.Data.EntityMapping
+{
+ 
+    public class NotificationReplyMap : EntityTypeConfiguration<NotificationReply>
+    {
+	    string dbms;
+        public NotificationReplyMap()
+        { 
+			  this.ToTable("NotificationReplies", "Customs");
+		
+		    this.HasKey(t => new { t.NotificationId, t.Line });
+	 
+            this.Property(t => t.NotificationId).HasColumnName("NotificationId").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Line).HasColumnName("Line").IsRequired().HasDatabaseGeneratedOption(null);
+
+            this.Property(t => t.Tenant).HasColumnName("Tenant");
+
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.ResponseToCustoms).HasMaxLength(2000);
+			}
+            else
+            {
+              this.Property(t => t.ResponseToCustoms).HasMaxLength(32000);
+			}
+
+
+            this.Property(t => t.ResponseToCustoms).HasColumnName("ResponseToCustoms").IsUnicode(true);
+
+            this.Property(t => t.RepliedByUserId).HasColumnName("RepliedByUserId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.ReplyDateTime).HasColumnName("ReplyDateTime");
+        }
+    }
+}
+	 

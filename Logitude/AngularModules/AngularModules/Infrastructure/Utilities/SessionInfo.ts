@@ -1,0 +1,71 @@
+import {UserPM} from '../../Common/EntityPMs/UserPM';
+import {SessionLocator} from './SessionLocator';
+
+
+export class SessionInfo {
+
+    private static loggedUserId: string;
+    public static get LoggedUserId(): string { return this.loggedUserId; }
+    public static set LoggedUserId(newValue: string) { this.loggedUserId = newValue; }
+
+    private static loggedUserTenant: number;
+    public static get LoggedUserTenant(): number { return this.loggedUserTenant; }
+    public static set LoggedUserTenant(newValue: number) { this.loggedUserTenant = newValue; }
+
+    private static token: string;
+    public static get Token(): string { return this.token; }
+    public static set Token(newValue: string) { this.token = newValue; }
+
+    private static documentDownloadToken: string;
+    public static get DocumentDownloadToken(): string { return this.documentDownloadToken; }
+    public static set DocumentDownloadToken(newValue: string) { this.documentDownloadToken = newValue; }
+
+
+    private static loggedSessionToken: string;
+    public static get LoggedSessionToken(): string { return this.loggedSessionToken; }
+    public static set LoggedSessionToken(newValue: string) { this.loggedSessionToken = newValue; }
+
+    private static loggedUserEmail: string;
+    public static get LoggedUserEmail(): string { return this.loggedUserEmail; }
+    public static set LoggedUserEmail(newValue: string) { this.loggedUserEmail = newValue; }
+
+    private static sessionTimeout: number;
+    public static get SessionTimeout(): number { return this.sessionTimeout; }
+    public static set SessionTimeout(newValue: number) { this.sessionTimeout = newValue; }
+
+    private static webTokenLifeTime: number;
+    public static get WebTokenLifeTime(): number { return this.webTokenLifeTime; }
+    public static set WebTokenLifeTime(newValue: number) { this.webTokenLifeTime = newValue; }
+
+    private static webTokenExpirationWarning: number;
+    public static get WebTokenExpirationWarning(): number { return this.webTokenExpirationWarning; }
+    public static set WebTokenExpirationWarning(newValue: number) { this.webTokenExpirationWarning = newValue; }
+
+    private static keepUserLoggedIn: boolean;
+    public static get KeepUserLoggedIn(): boolean { return this.keepUserLoggedIn; }
+    public static set KeepUserLoggedIn(newValue: boolean) { this.keepUserLoggedIn = newValue; }
+
+
+
+    private static loggedUserPM: UserPM;
+    public static get LoggedUserPM(): UserPM { return this.loggedUserPM; }
+    public static set LoggedUserPM(newValue: UserPM)
+    {
+        if (this.loggedUserPM != newValue) {
+            this.loggedUserPM = newValue;
+            SessionLocator.LoggedUserPM = newValue;
+
+            if (newValue) {
+                SessionLocator.LoggedUserId = newValue.Id;
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+}

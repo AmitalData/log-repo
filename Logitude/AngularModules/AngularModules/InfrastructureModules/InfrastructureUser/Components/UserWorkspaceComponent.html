@@ -1,0 +1,389 @@
+﻿
+<div style="position: absolute; top:0px; bottom:0px; left:0px; right:0px;margin:auto; background:white;" *ngIf="IsDemoTenant">
+    <table style="height:100%">
+        <tr style="height:22px;">
+            <td>
+                <table>
+                    <tr>
+                        <td style="width:100px;">
+                            <BackButton [Text]="BackButtonText" (click)="BackButtonClicked()"></BackButton>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td style="font-size:32px; text-align:center; padding:100px;">
+                Users Workspace area is restricted in the demo environment
+            </td>
+        </tr>
+
+        <tr><td><div></div></td></tr>
+    </table>
+</div>
+
+<div style="position: absolute; top:0px; bottom:0px; left:0px; right:0px;margin:auto; background:white;" *ngIf="!IsDemoTenant">
+    <table style="height:100%">
+        <tr style="height:1px;">
+            <td>
+                <table>
+                    <tr>
+                        <!-- back button + title + search -->
+                        <td style="width:380px;">
+                            <table>
+                                <tr style="height:22px;">
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td style="width:100px;">
+                                                    <BackButton [Text]="BackButtonText" (click)="BackButtonClicked()"></BackButton>
+                                                </td>
+
+                                                <td style="width:5px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width:100px; text-align:left; font-size:15px; color:#1B90CB;">Users Workspace</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                                <tr style="height:10px;">
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <tr style="height:22px;">
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td style="width: 21px;">
+                                                    <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
+                                                </td>
+
+                                                <td style="width: 10px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width: 45px; font-size:11px; color : #6E7172;">Search:</td>
+
+                                                <td style="width: 300px;">
+                                                    <SearchBox [Watermark]="SearchText" [ObjectTableName]="'User'" [IsQuickSearch]="true" (ItemClicked)="EditUser($event)"></SearchBox>
+                                                </td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <!-- data counts -->
+                        <td>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width: 1px; padding-left:20px;">
+                                        <div style="color:#282E30; font-size:24px; text-align: center">{{ActiveUsersCount}}</div>
+                                        <div style="color:#1B90CB; font-size:14px; text-align: center">Active Users</div>
+                                    </td>
+
+                                    <td style="width: 1px; padding-left:20px; margin-left:50px;" *ngIf="!IsLicensesManagmentSystem">
+                                        <div style="color:#282E30; font-size:24px; text-align: center">{{LicensesCount}}</div>
+                                        <div style="color:#1B90CB; font-size:14px; text-align: center">Licenses</div>
+                                    </td>
+
+                                    <td style="width: 1px; padding-left:20px; margin-left:50px;" [hidden]="!IsLicensesManagmentSystem" *ngFor="let item of LicensesManagmentsList">
+                                        <div style="color:#282E30; font-size:24px; text-align: center">{{item.CountText}}</div>
+                                        <div style="color:#1B90CB; font-size:14px; text-align: center">{{item.PackageName}}</div>
+                                    </td>
+
+                                    <td style="width: 1px; padding-left:20px; margin-left:50px;" *ngIf="IsLicensesVisibile">
+                                        <div style="color:#282E30; font-size:24px; text-align: center">{{ActiveLicensedCount}}</div>
+                                        <div style="color:#1B90CB; font-size:14px; text-align: center">Licensed Users</div>
+                                    </td>
+
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr style="height:10px;">
+            <td>
+                <div></div>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <table>
+                    <tr>
+                        <td style="width:250px;">
+                            <div class="MediaFill">
+                                <table>
+                                    <!-- Queries -->
+                                    <tr>
+                                        <td>
+                                            <SectionBox>
+                                                <SectionHead>Users Queries</SectionHead>
+                                                <SectionBody>
+                                                    <div class="QueriesSection">
+                                                        <div>Users</div>
+                                                        <div style="height:22px; width: 45px; position: absolute; top:0px; right:0px;">
+                                                            <button class="Button" (click)="ViewNewUserWindow()">New User</button>
+                                                        </div>
+                                                        <div>
+                                                            <div>
+                                                                <p class="QueryLink" (click)="ViewUserQuery('ACTV')" *ngIf="ActiveUsersQueryVisibility">Active Users ({{ActiveUsersCount}})</p>
+                                                                <p class="QueryLink" (click)="ViewUserQuery('NTLC')" *ngIf="ActiveNotLicensedQueryVisibility">Active Not Licensed({{ActiveNotLicensedCount}})</p>
+                                                                <p class="QueryLink" (click)="ViewUserQuery('INAC')" *ngIf="InactiveUsersQueryVisibility">Inactive Users ({{InactiveUsersCount}})</p>
+                                                                <p class="QueryLink" (click)="ViewUserQuery('All')" *ngIf="AllUsersQueryVisibility">All Users</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="QueriesSection" *ngIf="MyViewsQueryVisibility">
+                                                        <div>My Views</div>
+                                                        <div style="height:80px;">
+                                                            <UsersQueryList [ReloadUserQueries]="ReloadUserQueries" [ObjectTableName]="'User'" [BackButtonTitle]="'Users WorkSpace'" (BackCompletedEvent)="onUserQueriesBackComplete($event)"></UsersQueryList>
+                                                        </div>
+                                                    </div>
+                                                </SectionBody>
+                                            </SectionBox>
+                                        </td>
+                                    </tr>
+
+                                    <tr style="height:100px;">
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Licenses Management -->
+                                    <tr *ngIf="IsLicensesManagmentSystem">
+                                        <td>
+                                            <SectionBox>
+                                                <SectionHead>
+                                                    <table>
+                                                        <tr>
+                                                            <td>Licenses Management</td>
+                                                            <td style="width:10px;">
+                                                                <div></div>
+                                                            </td>
+                                                            <td style="width:18px; height:18px;">
+                                                                <img style="width:18px; height:18px;" class="CenterCenter" src="./Images/YellowInfo.png" title="You have unactivated licenses" />
+                                                            </td>
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+
+                                                </SectionHead>
+
+                                                <SectionBody>
+                                                    <div class="QueriesSection">
+                                                        <div>
+                                                            <div>
+                                                                <p class="QueryLink" (click)="LicensesManagementClicked()">Licenses Management</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </SectionBody>
+                                            </SectionBox>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Actions -->
+                                    <tr style="height:80px;">
+                                        <td>
+                                            <SectionBox>
+                                                <SectionHead>Actions</SectionHead>
+                                                <SectionBody>
+                                                    <div class="QueriesSection">
+                                                        <div>
+                                                            <div>
+                                                                <p class="QueryLink" (click)="SupportManagement()">Support Management </p>
+                                                                <p class="QueryLink" (click)="ResetUserPassword()">Reset User Password</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </SectionBody>
+                                            </SectionBox>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                        </td>
+
+                        <td style="width:10px;">
+                            <div></div>
+                        </td>
+
+                        <td>
+                            <table>
+                                <tr style="height: 50%;">
+                                    <td>
+                                        <table>
+                                            <tr class="SectionHeader">
+                                                <td>
+                                                    <label> Recent Users Login</label>
+                                                </td>
+                                            </tr>
+
+                                            <tr style="height:5px;">
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <div class="ScrollViewer">
+                                                        <div class="ScrollContent">
+                                                            <table>
+                                                                <tr>
+                                                                    <td class="CellStretch">
+                                                                        <div class="SimpleGridView">
+                                                                            <div class="SimpleGridViewHeader">
+                                                                                <table>
+                                                                                    <tr>
+
+                                                                                        <td style="width: 250px; min-width: 250px;max-width: 250px;">User</td>
+                                                                                        <td style="width: 120px; min-width: 120px;max-width: 120px;">Business Unit</td>
+                                                                                        <td style="width: 150px; min-width: 150px;max-width: 150px;">Last Login</td>
+                                                                                        <td style="width: 150px; min-width: 150px;max-width: 150px;">IP</td>
+                                                                                        <td style="width: 80px; min-width: 80px;max-width: 80px;"></td>
+                                                                                        <td style="width:100%;">
+                                                                                            <div></div>
+                                                                                        </td>
+
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </div>
+
+                                                                            <div class="SimpleGridViewBody">
+                                                                                <table>
+                                                                                    <tr style="height: 1px;">
+                                                                                        <td>
+                                                                                            <table>
+                                                                                                <tr class="SimpleGridViewRow RowHover" *ngFor="let item of RecentUserLists">
+                                                                                                    <td>
+                                                                                                        <table>
+                                                                                                            <tr style="height:25px;" (click)="SelectedUserViewModel=item" [class.RowSelected]="item === SelectedUserViewModel">
+
+
+                                                                                                                <td class="GridViewCell" style="width: 250px; min-width:250px; max-width:250px; position: relative;">
+                                                                                                                    {{item.Username}}
+                                                                                                                </td>
+
+
+                                                                                                                <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; position: relative;">
+                                                                                                                    {{item.BusinessUnit}}
+                                                                                                                </td>
+
+
+                                                                                                                <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px; position: relative;">
+                                                                                                                    {{item.LastAccessDate | ExchangeRateDatePipe}}
+
+                                                                                                                </td>
+
+
+                                                                                                                <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px; position: relative;">
+
+                                                                                                                    <a style="font-size:12px" target="_blank" href="{{item.IPSiteUri}}">  {{item.IP}}</a>
+
+                                                                                                                </td>
+
+                                                                                                                <td class="GridViewCell" style="width: 80px; min-width: 80px; max-width: 80px; position: relative;">
+                                                                                                                    <span style="display:inline" class="LeftCenter">
+                                                                                                                        <button (click)="ShowHistory(item)" style="width:51px;display: inline;" class="Button">History</button>
+
+                                                                                                                    </span>
+
+                                                                                                                    <span class="EditButton" (click)="EditUser(item)" style="display:inline;width:18px;margin-left:0px;float: right">
+                                                                                                                        <IconButton [Name]="'Edit'" [IsSmall]="true" style="display: inline; float: right;margin-top:0px;"></IconButton>
+                                                                                                                    </span>
+
+                                                                                                                </td>
+                                                                                                                <td>
+                                                                                                                    <div></div>
+                                                                                                                </td>
+
+
+                                                                                                            </tr>
+                                                                                                            <tr>
+                                                                                                                <td colspan="6"></td>
+                                                                                                            </tr>
+                                                                                                        </table>
+
+
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            </table>
+                                                                                        </td>
+                                                                                    </tr>
+
+                                                                                    <tr>
+                                                                                        <td>
+                                                                                            <div></div>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </td>
+
+                                                                </tr>
+
+                                                            </table>
+
+
+
+
+
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr style="height:5px;">
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+    </table>
+</div>

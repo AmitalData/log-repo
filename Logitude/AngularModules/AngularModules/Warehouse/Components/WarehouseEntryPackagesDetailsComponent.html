@@ -1,0 +1,387 @@
+﻿
+<div class="MediaFill">
+
+    <table style="height:100%">
+
+        <tr   class="TabTitleRow" style="height: 1px;">
+            <td>
+                <table>
+                    <tr>
+
+                        <td *ngIf="!IsFromFullWarehouseEntryComponent">{{'WarehouseEntry.TH.Packages' | TextCodeTranslationPipe}}</td>
+
+                        <!--<td style="width: 1px;" *ngIf="IsFromShipment">
+                            <div><span style="font-size:15px;color:#1B90CB;margin-left:5px">Packages</span> </div>
+                        </td>-->
+
+                        <td>
+                            <div></div>
+                        </td>
+
+                        <td *ngIf="ShowAddPackageButton" style="width: 1px;">
+                            <button class="Button" (click)="AddPackage(false)">Add Package</button>
+                        </td>
+
+                        <td *ngIf="ShowAddPackageButton && !IsLCLEntity" style="width: 5px;">
+                            <span style="width:5px"></span>
+                        </td>
+
+                        <td  *ngIf="!IsLCLEntity && ShowAddPackageButton" style="width: 1px;">
+                            <button class="Button" (click)="AddPackage(true)">Add Container</button>
+                        </td>
+                     
+                        <td *ngIf="ShowAddPackageButton && IsEditMode" style="width: 5px;">
+                            <span style="width:5px"></span>
+                        </td>
+
+
+                        <td *ngIf="IsEditMode" style="width: 1px">
+                            <IconButton [Name]="'Settings'" title="MeasurmentsButtonToolTip" (click)="MeasurmentsSettingsClicked()"></IconButton>
+                        </td>
+
+
+                        <td  *ngIf="IsEditMode" style="width:5px;">
+                            <div></div>
+                        </td>
+
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr  style="height: 5px;">
+            <td></td>
+        </tr>
+
+
+        <!-- Measurment -->
+        <tr *ngIf="IsEditMode" style="height: 34px;" [hidden]="IsMeasurmentsHidden">
+            <td>
+                <table>
+                    <tr>
+                        <td>
+                            <div style="width: 145px; display: block; float:left;">
+                                <LogLabel [HideColumns]="true" [ObjectFieldName]="'GrossWeightUnitCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Gross Weight Unit Code'"></LogLabel>
+                                <LogLov [ObjectFieldName]="'GrossWeightUnitCode'"
+                                        [SelectedValue]="GrossWeightUnitCode"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext"
+                                        [LookUpTableName]="'WeightUnit'"
+                                        [HideColumns]="true">
+                                </LogLov>
+                            </div>
+
+                            <!--<div style="width: 170px; display: block; float:left; margin-left: 15px;">
+                                <LogLabel [HideColumns]="true" [ObjectFieldName]="'ChargeableWeightUnitCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="ChargeableWeightUnitCodeLabel"></LogLabel>
+                                <LogLov [ObjectFieldName]="'ChargeableWeightUnitCode'"
+                                        [SelectedValue]="ChargeableWeightUnitCode"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext"
+                                        [LookUpTableName]="'WeightUnit'"
+                                        [HideColumns]="true">
+                                </LogLov>
+                            </div>-->
+
+                            <div style="width: 140px; display: block; float:left; margin-left: 15px;">
+                                <LogLabel [HideColumns]="true" [ObjectFieldName]="'DimensionsUnitCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Dimension Unit Code'"></LogLabel>
+                                <LogLov [ObjectFieldName]="'DimensionsUnitCode'"
+                                        [SelectedValue]="DimensionsUnitCode"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext"
+                                        [LookUpTableName]="'DimensionsUnit'"
+                                        [HideColumns]="true"
+                                        [DependencyFilter1Value]="DimensionsDependencyProperty1"
+                                        [DependencyFilter1IsList]="DimensionsDependencyProperty1IsList">
+                                </LogLov>
+                            </div>
+
+                            <div style="width: 140px; display: block; float:left; margin-left: 15px;">
+                                <LogLabel [HideColumns]="true" [ObjectFieldName]="'VolumeUnitCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Volume Unit Code'"></LogLabel>
+                                <LogLov [ObjectFieldName]="'VolumeUnitCode'"
+                                        [SelectedValue]="VolumeUnitCode"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext"
+                                        [LookUpTableName]="'VolumeUnit'"
+                                        [HideColumns]="true">
+                                </LogLov>
+                            </div>
+
+                            <!--<div style="width: 70px; display: block; float:left; margin-left: 15px;">
+                                <LogLabel [HideColumns]="true" [ObjectFieldName]="'Ratio'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+
+                                <div class="RatioBox" [class.RatioBoxDisabled]="!IsEditingEnabled">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 15px; font-size: 11px; padding-left: 3px;">1:</td>
+
+                                            <td style="font-size: 11px; padding-left: 2px;">
+                                                {{Ratio | NumbersPipe:'N2'}}
+                                            </td>
+
+                                            <td style="width: 15px;">
+                                                <div class="NumericButton" [class.NumericButtonDisabled]="!IsEditingEnabled" (mousedown)="NumericButtonClicked(true)">
+                                                    <img class="CenterCenter" style="height: 3px; width: 5px;" src="./Images/Buttons/Up.png" />
+                                                </div>
+                                                <div class="NumericButton" [class.NumericButtonDisabled]="!IsEditingEnabled" (mousedown)="NumericButtonClicked(false)">
+                                                    <img class="CenterCenter" style="height: 3px; width: 5px;" src="./Images/Buttons/Down.png" />
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div style="width: 110px; display: block; float:left; margin-left: 2px;">
+                                <LogLabel [ObjectFieldName]="'DimFactor'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogLabel>
+                                <LogTextBox [ObjectFieldName]="'DimFactor'" [Text]="DimFactor" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                            </div>-->
+                        </td>
+                    </tr>
+
+                    <tr style="height: 5px;">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+
+        <tr style="height:100%">
+            <td>
+                <div class="MediaFill">
+                    <div class="SimpleGridView">
+                        <div class="SimpleGridViewHeader">
+                            <table>
+                                <tr>
+                                    <td style="width: 30px; min-width: 30px;max-width: 30px;"></td>
+                                    <td style="width: 120px; min-width: 120px;max-width: 120px;">Package Type</td>
+                                    <td *ngIf="!IsLCLEntity" style="width: 110px; min-width: 110px;max-width: 110px;">Container Number</td>
+                                    <td style="width: 115px; min-width: 115px;max-width: 115px;">{{DimensionsLabel}}</td>
+                                    <td style="width: 65px; min-width: 65px;max-width: 65px;">Quantity</td>
+                                    <td style="width: 90px; min-width: 90px;max-width: 90px;">{{VolumeLabel}}</td>
+                                    <td style="width: 110px;min-width: 110px;max-width: 110px;">{{GrossWeightLabel}}</td>
+                                    <td style="width: 90px;min-width: 90px;max-width: 90px;">Location</td>
+
+                                    <td [style.width]="IsEditMode ? '170px':'100%'" [style.min-width]="IsEditMode ? '170px':'100%'">Description Of Goods</td>
+
+                                    <td *ngIf="IsEditMode" style="width: 100px;min-width:100px;">In stock</td>
+                                    <td style="width: 50px;min-width :50px;max-width: 50px;"></td>
+                                    <td *ngIf="IsEditMode" style="width: 100%;min-width:100%;"></td>
+
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="SimpleGridViewBody">
+                            <table>
+                                <tr style="height: 1px;">
+                                    <td>
+                                        <table>
+                                            <tr class="SimpleGridViewRow RowHover" *ngFor="let item of WarehouseEntryPackagesLists">
+                                                <td>
+                                                    <table>
+                                                        <tr style="height:25px;" (click)="SelectedWarehouseEntryPackage = item" [class.RowSelected]="item === SelectedWarehouseEntryPackage">
+
+
+
+                                                            <td class="GridViewCell" style="width: 30px; min-width: 30px; max-width: 30px; position: relative;vertical-align:central">
+
+                                                                <img *ngIf="!item.IsContainer" src="./Images/CellIcons/Package.png" class="CenterCenter" />
+                                                                <img *ngIf="item.IsContainer" src="./Images/CellIcons/Container.png" class="CenterCenter" />
+
+
+
+                                                            </td>
+
+
+                                                            <td [attr.title]="item.PackageTypeName" class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px;">
+
+                                                                {{item.PackageTypeName}}
+
+                                                            </td>
+
+                                                            <td class="GridViewCell" *ngIf="!IsLCLEntity" style="width: 110px; min-width: 110px; max-width: 110px;">
+
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width: 15px;" *ngIf="item.ContainerNumberWarning">
+                                                                            <img [attr.title]="item.ContainerNumberWarning" src="./Images/WarningIcon.png" style="vertical-align: middle; display: block; margin:auto;" />
+                                                                        </td>
+
+                                                                        <td style="width: 5px;" *ngIf="item.ContainerNumberWarning">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td>{{item.ContainerNumber}}</td>
+
+                                                                    </tr>
+                                                                </table>
+
+                                                            </td>
+
+
+
+                                                            <td class="GridViewCell" style="width: 115px; min-width: 115px; max-width: 115px;text-align:right">
+
+                                                                {{item.Dimensions}}
+
+                                                            </td>
+
+                                                            <td class="GridViewCell" style="width: 65px; min-width: 65px; max-width: 65px;text-align:right">
+
+                                                                {{item.Quantity}}
+
+                                                            </td>
+
+                                                            <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px;text-align:right">
+                                                                {{item.Volume | NumbersPipe:'N3'}}
+
+
+                                                            </td>
+
+
+
+                                                            <td class="GridViewCell" style="width: 110px; min-width: 110px; max-width: 110px;text-align:right">
+                                                                {{item.Weight | NumbersPipe:'N3'}}
+
+
+                                                            </td>
+
+                                                            <td [attr.title]="item.Location" class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px;">
+
+                                                                {{item.Location}}
+
+                                                            </td>
+
+                                                            <td [attr.title]="item.Description" [style.width]="IsEditMode ? '170px':'100%'" [style.min-width]="IsEditMode ? '170px':'100%'" [style.max-width]="IsEditMode ? '170px':'100%'" class="GridViewCell" style="position: relative;">
+                                                                <div *ngIf="!IsLCLEntity&&!IsEditMode" style="width:150px;max-width:150px">{{item.Description}}</div>
+                                                                <div *ngIf="IsLCLEntity&&!IsEditMode" style="width:240px;max-width:240px">{{item.Description}}</div>
+                                                                <div *ngIf="IsEditMode" style="width:170px;max-width:170px">{{item.Description}}</div>
+
+                                                            </td>
+
+
+                                                            <td *ngIf="IsEditMode" class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;text-align:right">
+
+                                                                {{item.Instock}}
+
+                                                            </td>
+
+                                                            <td class="GridViewCell" style="width: 50px; min-width: 50px; max-width: 50px;vertical-align:central">
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width: 23px; padding-left: 5px;">
+                                                                            <IconButton [disabled]="item.Quantity != item.Instock" [Name]="'Edit'" [IsSmall]="true" style="display: block; float: left;" (click)="EditPackage(item)"></IconButton>
+                                                                        </td>
+
+                                                                        <td style="width: 20px; padding-left: 2px;">
+                                                                            <IconButton [disabled]="item.Quantity != item.Instock" [Name]="'Delete'" [IsSmall]="true" style="display: block; float: left;" (click)="DeletePackage(item)"></IconButton>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+
+                                                            <td *ngIf="IsEditMode" class="GridViewCell" style="width:100%; min-width: 100%; max-width: 100%; position: relative;">
+                                                                <div>
+
+                                                                </div>
+                                                            </td>
+
+
+                                                        </tr>
+                                                        <tr><td colspan="8"></td></tr>
+                                                    </table>
+
+
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+
+
+        <tr [style.height]="IsEditMode ? '120px':'80px'" *ngIf="ShowPackageSummary" class="TabSummaryRounded" style="height: 120px;">
+            <td [style.height]="IsEditMode ? '120px':'80px'">
+                <div class="TabSummaryBody">
+                    <table>
+                        <tr style="height: 1px;">
+                            <td class="TabSummaryTitle">Summary</td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td style="width: 1px; padding-left: 20px;">
+                                            <div class="TabSummaryValue">{{TotalPieces | NumbersPipe:'N0'}}</div>
+                                            <div class="TabSummaryLabel">{{QuantityLabel}}</div>
+                                        </td>
+
+                                        <td style="width: 1px; padding-left: 20px;">
+                                            <div class="TabSummaryValue">{{TotalGrossWeight | NumbersPipe:'N3'}}</div>
+                                            <div class="TabSummaryLabel">{{GrossWeightLabel}}</div>
+                                        </td>
+
+                                        <td style="width: 1px; padding-left: 20px;">
+                                            <div class="TabSummaryValue">{{TotalVolume | NumbersPipe:'N3'}}</div>
+                                            <div class="TabSummaryLabel">{{VolumeLabel}}</div>
+                                        </td>
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+
+        <tr *ngIf="IsFromFullWarehouseEntryComponent && !IsEditMode" style="height: 32px;">
+            <td style="vertical-align: bottom">
+                <table style="height: 22px;">
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+
+                        <td style="width: 57px;">
+                            <div>
+                                <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                            </div>
+                        </td>
+
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 57px;">
+                            <button class="RedButton" (click)="SaveButtonClicked()">Ok</button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+    </table>
+</div>

@@ -1,0 +1,456 @@
+<?xml version="1.0"?>
+
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
+           xmlns:GCCSCargoImp="http://www.champ.aero/GCCS/CargoXML"
+           targetNamespace="http://www.champ.aero/GCCS/CargoXML"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0">
+		   
+    <xs:include schemaLocation="common.xsd"/>
+	
+    <xs:complexType name="FlightBookings">
+        <xs:sequence>
+            <xs:element maxOccurs="2" name="FlightIdentification"
+                        type="GCCSCargoImp:AWBFlightIdentification"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="FirstDestinationAndCarrier">
+        <xs:attribute name="AirportCityCode" type="GCCSCargoImp:AirportCode"
+                      use="optional"/>
+        <xs:attribute name="CarrierCode" type="GCCSCargoImp:CarrierCode"
+                      use="required"/>
+    </xs:complexType>
+    <xs:complexType name="OnwardDestinationAndCarrier">
+        <xs:attribute name="AirportCityCode" type="GCCSCargoImp:AirportCode"
+                      use="required"/>
+        <xs:attribute name="CarrierCode" type="GCCSCargoImp:CarrierCode"
+                      use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="Routing">
+        <xs:sequence>
+            <xs:element name="FirstDestinationAndCarrier"
+                        type="GCCSCargoImp:FirstDestinationAndCarrier"/>
+            <xs:element maxOccurs="2" minOccurs="0"
+                        name="OnwardDestinationAndCarrier"
+                        type="GCCSCargoImp:OnwardDestinationAndCarrier"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="AccountDetail">
+        <xs:attribute name="AccountNumber" type="GCCSCargoImp:AccountNumber"
+                      use="required"/>
+    </xs:complexType>
+    <xs:complexType name="Account">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="AccountDetail"
+                        type="GCCSCargoImp:AccountDetail"/>
+            <xs:element name="Contact" type="GCCSCargoImp:Contact"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="AgentAccountDetail">
+        <xs:attribute name="AccountNumber" type="GCCSCargoImp:AccountNumber"
+                      use="optional"/>
+        <xs:attribute name="IATACargoAgentNumericCode"
+                      type="GCCSCargoImp:IATACargoAgentNumericCode"
+                      use="required"/>
+        <xs:attribute name="IATACargoAgentCASSAddress"
+                      type="GCCSCargoImp:IATACargoAgentCASSAddress"
+                      use="optional"/>
+        <xs:attribute name="ParticipantIdentifier"
+                      type="GCCSCargoImp:ParticipantIdentifier" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="Agent">
+        <xs:sequence>
+            <xs:element name="AgentAccountDetail"
+                        type="GCCSCargoImp:AgentAccountDetail"/>
+        </xs:sequence>
+        <xs:attribute name="Name" type="GCCSCargoImp:Name" use="required"/>
+        <xs:attribute name="Place" type="GCCSCargoImp:Place" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="SpecialServiceRequest">
+        <xs:sequence>
+            <xs:element maxOccurs="3" name="SpecialServiceRequestEntry"
+                        type="GCCSCargoImp:SpecialServiceRequestEntry"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="AccountingInformationDetail">
+        <xs:attribute name="AccountingInformationIdentifier"
+                      type="GCCSCargoImp:AccountingInformationIdentifier"
+                      use="required"/>
+        <xs:attribute name="AccountingInformationEntry"
+                      type="GCCSCargoImp:AccountingInformationEntry"
+                      use="required"/>
+    </xs:complexType>
+    <xs:complexType name="AccountingInformation">
+        <xs:sequence>
+            <xs:element maxOccurs="6" name="AccountingInformationDetail"
+                        type="GCCSCargoImp:AccountingInformationDetail"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="FWBChargeDeclarations">
+        <xs:complexContent>
+            <xs:extension base="GCCSCargoImp:ChargeDeclarations">
+                <xs:sequence>
+                    <xs:element minOccurs="0"
+                                name="PrepaidOrCollectChargeDeclarations"
+                                type="GCCSCargoImp:PrepaidOrCollectChargeDeclarations"/>
+                </xs:sequence>
+                <xs:attribute name="ChargeCode" type="GCCSCargoImp:ChargeCode"
+                              use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ChargeLineCount">
+        <xs:sequence>
+            <xs:element name="AWBRateLineNumber"
+                        type="GCCSCargoImp:AWBRateLineNumber"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="NumberOfPiecesRCPDetails">
+        <xs:choice>
+            <xs:element name="NumberOfPieces"
+                        type="GCCSCargoImp:NumberOfPieces"/>
+            <xs:element name="RateCombinationPoint"
+                        type="GCCSCargoImp:RateCombinationPoint"/>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="GrossWeightDetails">
+        <xs:attribute name="WeightCode" type="GCCSCargoImp:WeightCode"
+                      use="required"/>
+        <xs:attribute name="Weight" type="GCCSCargoImp:Weight" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="RateClassDetails">
+        <xs:attribute name="RateClassCode" type="GCCSCargoImp:RateClassCode"
+                      use="required"/>
+    </xs:complexType>
+    <xs:complexType name="RateClassCodeBasis">
+        <xs:attribute name="RateClassCodeBasisEntry"
+                      type="GCCSCargoImp:RateClassCodeBasisEntry"
+                      use="required"/>
+        <xs:attribute name="ClassRatePercentage"
+                      type="GCCSCargoImp:ClassRatePercentage" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="CommodityItemNumberDetails">
+        <xs:choice>
+            <xs:element name="CommodityItemNumber"
+                        type="GCCSCargoImp:CommodityItemNumber"/>
+            <xs:element name="ULDRateClassType"
+                        type="GCCSCargoImp:ULDRateClassType"/>
+            <xs:element name="RateClassCodeBasis"
+                        type="GCCSCargoImp:RateClassCodeBasis"/>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="ChargeableWeightDetails">
+        <xs:attribute name="Weight" type="GCCSCargoImp:Weight" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="RateChargeDetails">
+        <xs:choice>
+            <xs:element name="RateOrCharge" type="GCCSCargoImp:RateOrCharge"/>
+            <xs:element name="Discount" type="GCCSCargoImp:Discount"/>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="TotalDetails">
+        <xs:choice>
+            <xs:element name="ChargeAmount" type="GCCSCargoImp:CurrencyAmount"/>
+            <xs:element name="DiscountAmount"
+                        type="GCCSCargoImp:CurrencyAmount"/>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="GoodsDescription">
+        <xs:attribute name="NatureAndQuantityOfGoods"
+                      type="GCCSCargoImp:NatureAndQuantityOfGoods"
+                      use="required"/>
+    </xs:complexType>
+    <xs:complexType name="Consolidation">
+        <xs:attribute name="NatureAndQuantityOfGoods"
+                      type="GCCSCargoImp:NatureAndQuantityOfGoods"
+                      use="required"/>
+    </xs:complexType>
+    <xs:complexType name="WeightInformation">
+        <xs:attribute name="WeightCode" type="GCCSCargoImp:WeightCode"
+                      use="required"/>
+        <xs:attribute name="Weight" type="GCCSCargoImp:Weight" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="Dimensions">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="WeightInformation"
+                        type="GCCSCargoImp:WeightInformation"/>
+        </xs:sequence>
+        <xs:attribute name="MeasurementUnitCode"
+                      type="GCCSCargoImp:MeasurementUnitCode" use="optional"/>
+        <xs:attribute name="LengthDimension" type="GCCSCargoImp:Dimension"
+                      use="required"/>
+        <xs:attribute name="WidthDimension" type="GCCSCargoImp:Dimension"
+                      use="required"/>
+        <xs:attribute name="HeightDimension" type="GCCSCargoImp:Dimension"
+                      use="required"/>
+        <xs:attribute name="NumberOfPieces" type="GCCSCargoImp:NumberOfPieces"
+                      use="required"/>
+    </xs:complexType>
+    <xs:complexType name="Volume">
+        <xs:attribute name="VolumeCode" type="GCCSCargoImp:VolumeCode"
+                      use="required"/>
+        <xs:attribute name="VolumeAmount" type="GCCSCargoImp:VolumeAmount"
+                      use="required"/>
+    </xs:complexType>
+    <xs:complexType name="ULDNumber">
+        <xs:attribute name="ULDType" type="GCCSCargoImp:ULDType"
+                      use="required"/>
+        <xs:attribute name="ULDSerialNumber" type="GCCSCargoImp:ULDSerialNumber"
+                      use="required"/>
+        <xs:attribute name="ULDOwnerCode" type="GCCSCargoImp:ULDOwnerCode"
+                      use="required"/>
+    </xs:complexType>
+    <xs:complexType name="ShippersLoadAndCount">
+        <xs:attribute name="SLAC" type="GCCSCargoImp:SLAC" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="HarmonisedCommodityCode">
+        <xs:attribute name="HarmonisedCommodityCodeEntry"
+                      type="GCCSCargoImp:HarmonisedCommodityCodeEntry"
+                      use="required"/>
+    </xs:complexType>
+    <xs:complexType name="CountryOfOriginOfGoods">
+        <xs:attribute name="ISOCountryCode" type="GCCSCargoImp:ISOCountryCode"
+                      use="required"/>
+    </xs:complexType>
+    <xs:complexType name="ServiceCodeDetails">
+        <xs:attribute name="ServiceCode" type="GCCSCargoImp:ServiceCode"
+                      use="required"/>
+    </xs:complexType>
+
+	<xs:complexType name="RateDescription">
+        <xs:sequence>
+            <xs:element maxOccurs="12"
+						name="RateDescriptionFullBody"
+						type="GCCSCargoImp:RateDescriptionFullBody"/>
+        </xs:sequence>
+    </xs:complexType>
+	
+	<xs:complexType name="RateDescriptionFullBody">
+        <xs:sequence>
+            <xs:element name="ChargeLineCount"
+						type="GCCSCargoImp:ChargeLineCount"/>
+            <xs:element name="RateDescriptionFullChoices"
+						type="GCCSCargoImp:RateDescriptionFullChoices"/>
+        </xs:sequence>
+    </xs:complexType>
+	
+	<xs:complexType name="RateDescriptionFullChoices">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="NumberOfPiecesRCPDetails"
+                        type="GCCSCargoImp:NumberOfPiecesRCPDetails"/>
+            <xs:element minOccurs="0" name="GrossWeightDetails"
+                        type="GCCSCargoImp:GrossWeightDetails"/>
+            <xs:element minOccurs="0" name="RateClassDetails"
+                        type="GCCSCargoImp:RateClassDetails"/>
+            <xs:element minOccurs="0" name="CommodityItemNumberDetails"
+                        type="GCCSCargoImp:CommodityItemNumberDetails"/>
+            <xs:element minOccurs="0" name="ChargeableWeightDetails"
+                        type="GCCSCargoImp:ChargeableWeightDetails"/>
+            <xs:element minOccurs="0" name="RateChargeDetails"
+                        type="GCCSCargoImp:RateChargeDetails"/>
+            <xs:element minOccurs="0" name="TotalDetails"
+                        type="GCCSCargoImp:TotalDetails"/>
+            <xs:element minOccurs="0" name="RateDescriptionMainBody"
+                        type="GCCSCargoImp:RateDescriptionMainBody"/>
+            <xs:element minOccurs="0" name="ServiceCodeDetails"
+                        type="GCCSCargoImp:ServiceCodeDetails"/>
+        </xs:sequence>
+    </xs:complexType>
+	
+    <xs:complexType name="RateDescriptionMainBody">
+        <xs:choice>
+            <xs:element name="GoodsDescription"
+                        type="GCCSCargoImp:GoodsDescription"/>
+            <xs:element name="Consolidation" type="GCCSCargoImp:Consolidation"/>
+            <xs:element name="Dimensions" type="GCCSCargoImp:Dimensions"/>
+            <xs:element name="Volume" type="GCCSCargoImp:Volume"/>
+            <xs:element name="ULDNumber" type="GCCSCargoImp:ULDNumber"/>
+            <xs:element name="ShippersLoadAndCount"
+                        type="GCCSCargoImp:ShippersLoadAndCount"/>
+            <xs:element name="HarmonisedCommodityCode"
+                        type="GCCSCargoImp:HarmonisedCommodityCode"/>
+            <xs:element name="CountryOfOriginOfGoods"
+                        type="GCCSCargoImp:CountryOfOriginOfGoods"/>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="RateDescriptionLimitedBody">
+        <xs:sequence>
+            <xs:element name="ChargeLineCount"
+						type="GCCSCargoImp:ChargeLineCount"/>
+            <xs:element name="RateDescriptionMainBody"
+						type="GCCSCargoImp:RateDescriptionMainBody"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ChargeLine">
+        <xs:attribute name="PrepaidCollectIndicatorOfOtherCharges" type="GCCSCargoImp:PrepaidCollectIndicator" use="required"/>
+    </xs:complexType>
+	
+    <xs:complexType name="OtherChargeItems">
+        <xs:attribute name="OtherChargeCode" type="GCCSCargoImp:OtherChargeCode"
+                      use="required"/>
+        <xs:attribute name="EntitlementCode" type="GCCSCargoImp:EntitlementCode"
+                      use="required"/>
+        <xs:attribute name="ChargeAmount" type="GCCSCargoImp:CurrencyAmount"
+                      use="required"/>
+    </xs:complexType>
+    <xs:complexType name="OtherChargesBody">
+        <xs:sequence>
+            <xs:element name="ChargeLine" type="GCCSCargoImp:ChargeLine"/>
+            <xs:element maxOccurs="3" name="OtherChargeItems"
+                        type="GCCSCargoImp:OtherChargeItems"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="OtherCharges">
+        <xs:sequence>
+            <xs:element maxOccurs="999"
+						name="OtherChargesBody"
+                        type="GCCSCargoImp:OtherChargesBody"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ChargeSummary">
+        <xs:attribute name="TotalWeightCharge"
+                      type="GCCSCargoImp:CurrencyAmount" use="optional"/>
+        <xs:attribute name="ValuationCharge" type="GCCSCargoImp:CurrencyAmount"
+                      use="optional"/>
+        <xs:attribute name="Taxes" type="GCCSCargoImp:CurrencyAmount"
+                      use="optional"/>
+        <xs:attribute name="TotalOtherChargesDueAgent"
+                      type="GCCSCargoImp:CurrencyAmount" use="optional"/>
+        <xs:attribute name="TotalOtherChargesDueCarrier"
+                      type="GCCSCargoImp:CurrencyAmount" use="optional"/>
+        <xs:attribute name="ChargeSummaryTotal"
+                      type="GCCSCargoImp:CurrencyAmount" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="ShippersCertification">
+        <xs:attribute name="Signature" type="GCCSCargoImp:Signature"
+                      use="required"/>
+    </xs:complexType>
+    <xs:complexType name="AWBIssueDetails">
+        <xs:choice>
+            <xs:element name="Place" type="GCCSCargoImp:Place"/>
+            <xs:element name="AirportCityCode" type="GCCSCargoImp:AirportCode"/>
+        </xs:choice>
+        <xs:attribute name="DayOfMonth" type="GCCSCargoImp:DayOfMonth"
+                      use="required"/>
+        <xs:attribute name="Month" type="GCCSCargoImp:Month" use="required"/>
+        <xs:attribute name="Year" type="GCCSCargoImp:Year" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="Authorisation">
+        <xs:attribute name="Signature" type="GCCSCargoImp:Signature"/>
+    </xs:complexType>
+    <xs:complexType name="CarriersExecution">
+        <xs:sequence>
+            <xs:element name="AWBIssueDetails"
+                        type="GCCSCargoImp:AWBIssueDetails"/>
+            <xs:element minOccurs="0" name="Authorisation"
+                        type="GCCSCargoImp:Authorisation"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="FWBOtherServiceInformation">
+        <xs:sequence>
+            <xs:element maxOccurs="3" name="OtherServiceInformationEntry"
+                        type="GCCSCargoImp:OtherServiceInformationEntry"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="CCChargesInDestinationCurrency">
+        <xs:attribute name="DestinationCurrency"
+                      type="GCCSCargoImp:ISOCurrencyCode" use="required"/>
+        <xs:attribute name="CurrencyConversionRate"
+                      type="GCCSCargoImp:RateOfExchange" use="required"/>
+        <xs:attribute name="CCChargesInDestinationCurrency"
+                      type="GCCSCargoImp:CurrencyAmount" use="required"/>
+        <xs:attribute name="ChargesAtDestination"
+                      type="GCCSCargoImp:CurrencyAmount" use="required"/>
+        <xs:attribute name="TotalCollectionCharges"
+                      type="GCCSCargoImp:CurrencyAmount" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="SenderReference">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="SenderOfficeMessageAddress"
+                        type="GCCSCargoImp:OfficeMessageAddress"/>
+            <xs:element minOccurs="0" name="SenderParticipantIdentification"
+                        type="GCCSCargoImp:AWBParticipantIdentification"/>
+        </xs:sequence>
+        <xs:attribute name="SenderOfficeFileReference"
+                      type="GCCSCargoImp:FileReference" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="CustomsOrigin">
+        <xs:attribute name="CustomsOriginCode"
+                      type="GCCSCargoImp:CustomsOriginCode" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="CommissionInformation">
+        <xs:attribute name="NoCommissionIndication"
+                      type="GCCSCargoImp:CASSIndicator" use="optional"/>
+        <xs:attribute name="CommissionAmount"
+                      type="GCCSCargoImp:CASSSettlementFactor" use="optional"/>
+        <xs:attribute name="CommissionPercentage"
+                      type="GCCSCargoImp:CASSSettlementFactor" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="SalesIncentiveInformation">
+        <xs:attribute name="SalesIncentiveDetail"
+                      type="GCCSCargoImp:CurrencyAmount" use="required"/>
+        <xs:attribute name="SalesIncentiveIndication"
+                      type="GCCSCargoImp:CASSIndicator" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="AgentReferenceData">
+        <xs:attribute name="AgentReference" type="GCCSCargoImp:FileReference"
+                      use="required"/>
+    </xs:complexType>
+    <xs:complexType name="NominatedHandlingParty">
+        <xs:attribute name="Name" type="GCCSCargoImp:Name" use="required"/>
+        <xs:attribute name="Place" type="GCCSCargoImp:Place" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="ShipmentReferenceInformation">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="ReferenceNumber" type="GCCSCargoImp:ReferenceNumber"/>		
+            <xs:element maxOccurs="2" minOccurs="0" name="SupplementaryShipmentInformation" type="GCCSCargoImp:SupplementaryShipmentInformation"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="OtherParticipantInformationBody">
+        <xs:sequence>
+            <xs:element minOccurs="0"
+                        name="OtherParticipantOfficeMessageAddress"
+                        type="GCCSCargoImp:OfficeMessageAddress"/>
+            <xs:element minOccurs="0" name="OtherParticipantIdentification"
+                        type="GCCSCargoImp:AWBParticipantIdentification"/>
+        </xs:sequence>
+        <xs:attribute name="Name" type="GCCSCargoImp:Name" use="required"/>
+        <xs:attribute name="OtherParticipantOfficeFileReference"
+                      type="GCCSCargoImp:FileReference" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="OtherParticipantInformation">
+        <xs:sequence>
+            <xs:element maxOccurs="999" name="OtherParticipantInformationBody"
+                        type="GCCSCargoImp:OtherParticipantInformationBody"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="HWBLetterofCreditDetails">
+        <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="10" name="Details"
+                        type="GCCSCargoImp:OtherServiceInformationEntry"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="OtherCustomsInformation">
+        <xs:sequence>
+            <xs:element minOccurs="0"
+						name="ISOCountryCode"
+                        type="GCCSCargoImp:ISOCountryCode"/>
+            <xs:element minOccurs="0"
+						name="InformationIdentifier"
+                        type="GCCSCargoImp:LineIdentifier"/>
+            <xs:element minOccurs="0"
+						name="CustomsInformationIdentifier"
+                        type="GCCSCargoImp:CustomsInformationIdentifier"/>
+            <xs:element name="SupplementaryCustomsInformation"
+                        type="GCCSCargoImp:SupplementaryCustomsInformation"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="FZB_Contact">
+        <xs:sequence>
+            <xs:element name="Location" type="GCCSCargoImp:Location"/>
+            <xs:element name="CodedLocation" type="GCCSCargoImp:CodedLocation"/>
+        </xs:sequence>
+        <xs:attribute name="Name" type="GCCSCargoImp:Name" use="required"/>
+        <xs:attribute name="StreetAddress" type="GCCSCargoImp:StreetAddress"
+                      use="required"/>
+    </xs:complexType>
+</xs:schema>

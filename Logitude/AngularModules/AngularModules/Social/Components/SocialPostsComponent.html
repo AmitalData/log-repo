@@ -1,0 +1,775 @@
+﻿
+
+<style>
+    .SocailMultiLinesText {
+        width: 100%;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        overflow-x: hidden;
+        overflow-y: auto;
+        font-size: 13px;
+        color: #282E30;
+    }
+      .SocialScrollViewer {
+        height: 100%;
+        width: 100%;
+        max-height: 100%;
+        max-width: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+        position: relative;
+    }
+     
+    .InputDiv {
+        width: 100%;
+        vertical-align: top;
+        border: 1px solid #AAAAAA;
+        outline: none;
+        font-size: 11px;
+        color: #45494A;
+        background: white;
+        /*text-indent: 5px;*/
+        border-radius: 3px;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        -moz-box-shadow: inset 0 0 3px #AAAAAA;
+        -webkit-box-shadow: inset 0 0 3px #AAAAAA;
+        box-shadow: inset 0 0 3px #AAAAAA;
+    }
+
+        .InputDiv:hover {
+            border: 1px solid #3BB3E2;
+        }
+
+    .InputDivDisabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+
+    .PostButton {
+        border: 1px solid gray;
+        color: white;
+        height: 27px;
+        border-radius: 3px;
+        background: #a3d0ea; /* Old browsers */
+        background: -moz-linear-gradient(top, #a3d0ea 0%, #2693ca 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #a3d0ea 0%,#2693ca 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #a3d0ea 0%,#2693ca 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a3d0ea', endColorstr='#2693ca',GradientType=0 ); /* IE6-9 */
+    }
+
+
+        .PostButton:hover:not(:disabled) {
+            background: #2693ca; /* Old browsers */
+            background: -moz-linear-gradient(top, #2693ca 0%, #a3d0ea 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(top, #2693ca 0%,#a3d0ea 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(to bottom, #2693ca 0%,#a3d0ea 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2693ca', endColorstr='#a3d0ea',GradientType=0 ); /* IE6-9 */
+
+        }
+
+          /*.PostButton .comment { display: none; }
+.PostButton:hover .replies { display: none; }
+.PostButton:hover .comment { display: inline; }*/
+
+
+
+
+    .PostHeaderListClass {
+        height: 20px;
+        margin-left: 5px;
+        line-height: 20px;
+        font-size: 14px;
+        color: #1B90CB;
+    }
+
+
+
+
+    .SectionItem:not(.SelectedSectionItem):hover {
+        width: 100%;
+        /*border: 1px solid #BDBEC0;*/
+        cursor: pointer;
+        position: relative;
+        background: -moz-linear-gradient(50% 17.31% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        background: -webkit-gradient(linear,50% 17.31%,50% 105.85%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    }
+
+
+    .SectionItem {
+        margin-left: 15px;
+        width: 100%;
+        cursor: pointer;
+        height: 18px;
+        position: relative;
+    }
+
+
+    .SelectedSectionItem {
+        width: 100%;
+        cursor: pointer;
+        background: -moz-linear-gradient(50% 106.14% 90deg,rgba(133, 203, 237, 1) 0%,rgba(150, 211, 240, 1) 22.59%,rgba(196, 231, 248, 1) 67.37%,rgba(232, 247, 255, 1) 100%);
+        background: -webkit-linear-gradient(90deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 100%);
+        background: linear-gradient(0deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 100%);
+        position: relative;
+    }
+
+
+    .Hyperlink:hover:not(:disabled), .HyperlinkQueryButtonControl:focus:not(:disabled) {
+        color: #1E8DC4;
+      
+    }
+
+    .Hyperlink {
+        height: 21px !important;
+        width: auto !important;
+        line-height: 21px !important;
+        background: none !important;
+        border: none !important;
+        padding: 0 !important;
+        color: #1E4AC4;
+        font-size: 13px;
+        cursor: pointer;
+        white-space: nowrap;
+    }
+
+    .Hyperlink2:hover:not(:disabled), .HyperlinkQueryButtonControl:focus:not(:disabled) {
+        color: #1E8DC4;
+    }
+
+    .Hyperlink2 {
+        background: none !important;
+        border: none !important;
+        color: #1E4AC4;
+        font-size: 16px;
+        cursor: pointer;
+        white-space: nowrap;
+    }
+</style>
+
+
+
+
+
+
+<div  class="MediaFillAbsolute" style="background: white;width:100%;height:100%">
+    <div class="MarginAbsolute0" style="top: 0px;">
+
+
+        <table>
+
+            <tr *ngIf="IsUserMode" style="height:5px"><td colspan="5"><div style="height:5px"></div></td></tr>
+            <tr style="height:100%">
+                <!--IsUserMode-->
+
+
+                <td *ngIf="IsUserMode && !HideLeftArea" style="width:10px"><div style="width:10px"></div></td>
+                <td   style="width:150px;border-right:1px solid lightgray;" *ngIf="IsUserMode && !HideLeftArea">
+                    <table>
+                        <tr style="height:171px">
+                            <td style="vertical-align:top">
+
+                                <div *ngIf="IsShowUserImage" style="height:170px;width:140px;">
+                                    <ImageComponent [WidthImage]="'135px'" [HeightImage]="'170px'" [DisplayOnly]="!IsLoggedUser" [ImageId]="ImageId" (UploadCompleted)="ImageUploadedCompleted($event)"> </ImageComponent>
+                                </div>
+
+                            </td>
+                        </tr>
+
+                        <tr style="height:20px"> <td style="height:20px"><div></div></td></tr>
+
+                        <tr style="vertical-align:top;height:20px">
+                            <td>
+                                <div style="vertical-align:top;font-size:18px;font-weight:bold">
+                                    {{UserViewName}}
+                                </div>
+
+                            </td>
+                        </tr>
+                        <tr style="height:5px"> <td style="height:5px"><div></div></td></tr>
+                        <tr style="vertical-align:top;height:30px">
+                            <td>
+                                <table>
+                                    <tr style="height:15px">
+                                        <td style="width:100px"><div>Followers:</div></td>
+                                        <td style="width:100px;color:#1B90CB;font-size:14px"><div>{{CoundFollowerUser}}</div></td>
+                                    </tr>
+                                    <tr style="height:15px">
+                                        <td style="width:100px"><div>Likes received:</div></td>
+                                        <td style="width:100px;color:#1B90CB;font-size:14px"><div>{{Coundlikesreceived}}</div></td>
+                                    </tr>
+                                </table>
+
+                            </td>
+                        </tr>
+
+
+                        <tr><td><div></div></td></tr>
+
+                    </table>
+
+
+
+                </td>
+
+
+
+                <td *ngIf="!IsUserMode && !HideLeftArea" style="width:250px;border-right:1px solid lightgray;">
+
+                    <table>
+                        <tr style="height:96px">
+                            <td>
+                                <table>
+                                    <tr style="height:5px"><td colspan="3"></td></tr>
+                                    <tr style="height:60px">
+                                        <td style="width:5px"><div></div></td>
+                                        <td style="width:60px;">
+
+                                            <div *ngIf="IsShowUserImage && !IsRefreshImage" style="height:55px;width:55px;margin: auto;">
+                                                <ImageComponent [WidthImage]="'52px'" [HeightImage]="'52px'"   [EntityId]="UserId" [ImageId]="ImageId" (UploadCompleted)="ImageUploadedCompleted($event)"> </ImageComponent>
+                                            </div>
+
+                                            <div *ngIf="IsShowUserImage&& IsRefreshImage" style="height:55px;width:55px;margin: auto;">
+                                                <ImageComponent  [WidthImage]="'52px'" [HeightImage]="'52px'"   [EntityId]="UserId" [ImageId]="ImageId" (UploadCompleted)="ImageUploadedCompleted($event)"> </ImageComponent>
+                                            </div>
+                                            
+
+
+
+                                        </td>
+
+                                        <td>
+                                            <div style="margin-left:5px">{{UserViewName}}</div>
+
+                                        </td>
+                                    </tr>
+                                    <tr><td colspan="3"></td></tr>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <tr style="height:140px;border-top:1px solid lightgray;border-bottom:1px solid lightgray">
+                            <td>
+
+                                <div style="margin-top:10px" class="MediaFill">
+                                    <ScrollViewer>
+                                        <div *ngFor="let item of PostQueryHeaderLists">
+                                            <div class="PostHeaderListClass">{{item.Name}}</div>
+                                            <div>
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                          
+                                                            <div class="SectionItem" [class.SelectedSectionItem]="postQueryLineList === SelectedMainMenu" (click)="OnMainListSelectedItemChanged(postQueryLineList)" *ngFor="let postQueryLineList of item.PostQueryLineLists">
+                                                                <div>
+                                                                    {{postQueryLineList.Name}}
+                                                                </div>
+                                                            </div>
+                                                        </td>
+
+
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </ScrollViewer>
+                                </div>
+
+
+                            </td>
+                        </tr>
+
+                        <tr><td></td></tr>
+                    </table>
+                </td>
+
+                <td *ngIf="!IsShowPeopleComponent">
+
+                    <table>
+
+                        <tr *ngIf="IsUserMode" style="height:20px">
+                           <td>
+                               <table>
+                                   <tr>
+                                       <td style="width:10px"></td>
+                                       <td>
+                                           <div style="width:70px;"><BackButton style="width:70px;text-align:center;" [Text]="'Back'" (click)="BackButtonClicked()"></BackButton></div>
+                                       </td>
+                                   </tr>
+                               </table>
+                           </td>
+                           
+                        </tr>
+
+                        <tr style="height:5px"><td style="height:5px"><div style="height:5px"></div></td></tr>
+
+                        <tr *ngIf="IsShowAreaPost" [style.height]="AreaPostHeight">
+
+                            <td>
+
+                                <table>
+                                    <tr style="height:75px">
+                                        <td style="width:10px"></td>
+
+                                        <td>
+
+                                            <table>
+
+                                                <tr style="height:20px"><td style="font-size:15px">Post</td></tr>
+                                                <tr style="height:5px"><td></td></tr>
+                                                <tr [style.opacity]="OpacityAreaInPutPost" [style.pointer-events]="PointerEventsInPutPost" [style.height]="HeightInPutPost">
+                                                    <td>
+
+                                                        <table>
+                                                            <tr [style.height]="HeightInPutPost">
+                                                                <td>
+                                                                    <div class="InputDiv" [style.height]="HeightInPutPost" style="max-height:unset;">
+                                                                        <textarea wrap="hard"
+                                                                                  [(ngModel)]="MessagePost"
+                                                                                  (focus)="PostInputFocus()"
+                                                                                  style="box-shadow:none;border:1px solid transparent;text-indent:10px;font-size:13px" ondrop="return false"></textarea>
+
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+
+
+
+                                                    </td>
+                                                </tr>
+
+                                                <tr><td></td></tr>
+                                            </table>
+
+
+
+                                        </td>
+
+                                        <td style="width:10px"></td>
+                                    </tr>
+
+                                    <tr *ngIf="IsShowButtonNewPost" style="height:7px">
+                                        <td colspan="3"></td>
+                                    </tr>
+
+                                    <tr *ngIf="IsShowButtonNewPost" style="height:20px">
+                                        <td style="width:10px"></td>
+                                        <td>
+                                            <button (click)="CreateNewPostButtonClick()" style="float:right;width:80px;font-size:15px;" class="PostButton">
+                                                Post
+                                                <!--<span class="replies">5 Replies</span>
+                                <span class="comment">Reply!</span>-->
+
+
+                                            </button>
+                                        </td>
+
+                                        <td style="width:10px"></td>
+                                    </tr>
+
+                                    <tr *ngIf="IsShowButtonNewPost" style="height:7px">
+                                        <td colspan="3"></td>
+                                    </tr>
+
+
+                                </table>
+
+
+                            </td>
+                        </tr>
+                        <tr style="height:1px;border-bottom:1px solid gray"><td style="height:1px;"><div style="height:1px;"></div></td></tr>
+                        <!--[style.border-left]="IsUserMode?'1px solid gray':''"-->
+                        <tr style="background-color:#DCE9EE">
+                            <td>
+                                <table>
+                                    <tr style="height:10px"><td style="height:10px"><div></div></td></tr>
+                                    <tr style="height:20px;">
+
+                                        <td style="text-align:center;height:20px">
+
+                                            <table class="CenterCenter" style="width:120px;height:20px;">
+                                                <tr>
+                                                    <td style="width:125px;font-size:14px;">Show: <span style="color:#1E4AC4;font-size:14px;width:100px"> {{SubQueryName}} &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; </span></td>
+                                                    <td style="width:5px;"><div></div></td>
+
+                                                    <td class="RightCenter" style="width:13px;">
+                                                        <div style="border:0px;width:0px" tabindex="0" class="ToggleButton">
+
+                                                            <img style="margin-top:1px;border:0px;background-color:transparent;height:14px;width:13px;" src="./Images/SimplogIcons/ArrowDownBlue.png" />
+
+                                                            <div style="left:-78px" class="ToggleButtonMenu">
+                                                                <button style="color:#1E4AC4;font-size:11px" (click)="QueryPostMethod('All')">All Posts</button>
+                                                                <button style="color:#1E4AC4;font-size:11px" (click)="QueryPostMethod('User')"> User Posts </button>
+                                                                <!--[disabled]="'true'"-->
+                                                                <button style="color:#1E4AC4;font-size:11px" (click)="QueryPostMethod('Auto')">Auto Posts</button>
+
+                                                            </div>
+
+                                                        </div>
+
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+                                            </table>
+
+
+                                            <IconButton style="float:right;margin-right:10px" [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
+
+
+
+
+
+
+                                        </td>
+
+
+
+
+                                    </tr>
+
+                                    <tr style="height:7px"><td style="height:7px"><div></div></td></tr>
+                                    <tr style="height:100%">
+                                        <td style="vertical-align:top">
+
+                                            <div class="MediaFill">
+                                                <div (scroll)="onScroll()" [attr.id]="PostListsId" class="SocialScrollViewer">
+                                                    <table>
+                                                        <tr style="height:100%;">
+                                                            <td style="vertical-align:top;width:10px"><div style="width:10px;"></div></td>
+                                                            <td *ngIf="!IsNoData" style="vertical-align:top;">
+
+                                                                <div *ngFor="let item of PostsLists">
+                                                                    <div style="min-height:82px;background-color:white;margin-top:10px;border-radius:5px">
+
+                                                                        <table>
+                                                                            <tr style="height:10px"><td colspan="5"></td></tr>
+                                                                            <tr style="height:45px">
+                                                                                <td style="width:8px;"></td>
+                                                                                <td style="width:45px;vertical-align:top">
+                                                                                    <div *ngIf="item.UserImageDetailId" style="height:45px;width:45px;margin: auto;vertical-align:top">
+                                                                                        <ImageComponent style="vertical-align:top" [DisplayOnly]="true" [HideBorder]="true" [ImageId]="item.UserImageDetailId" (UploadCompleted)="ImageUploadedCompleted($event)"> </ImageComponent>
+                                                                                    </div>
+                                                                                    <div [style.background-color]="item.UserImagebackground" *ngIf="!item.UserImageDetailId" style="height:45px;width:45px;border-color:#6B8499;border-radius:2px;vertical-align:central;text-align:center">
+                                                                                        <div style="height:8px"></div>
+                                                                                        <div style="font-size:22px;text-align:center;color:white">{{item.UserNameImage}}</div>
+                                                                                        <div style="height:8px"></div>
+                                                                                    </div>
+
+                                                                                </td>
+                                                                                <td style="width:10px;"></td>
+                                                                                <td>
+
+                                                                                    <table style="table-layout: fixed; width: 100%">
+
+                                                                                        <tr style="height:30px;vertical-align:top">
+
+                                                                                            <td style="vertical-align:top;height:30px;">
+                                                                                                <img *ngIf="item.DisplayEntityInformation && item.ObjectTableName!='Opportunity' && item.EntityImageSource" style="background-color:transparent;margin-top:-7px;height:22px;width:22px" [attr.src]="item.EntityImageSource" />
+                                                                                                <img *ngIf="item.DisplayEntityInformation && item.ObjectTableName=='Opportunity' && item.EntityImageSource" style="background-color:transparent;margin-top:-7px;" [attr.src]="item.EntityImageSource" />
+
+                                                                                                <span *ngIf="item.DisplayEntityInformation" (click)="ViewEntityButtonClick(item)" class="Hyperlink2">{{item.EntityDescription}}</span>
+                                                                                                <span *ngIf="item.DisplayEntityInformation"> — </span>
+
+                                                                                             
+                                                                                               
+                                                                                                <span *ngIf="IsUserMode" style="color: #1E4AC4;font-size: 16px;">{{item.CreatedByUserName}}</span>
+                                                                                                <span *ngIf="!IsUserMode" (click)="ViewPostUserFeedsButtonClick(item)" class="Hyperlink2">{{item.CreatedByUserName}}</span>
+                                                                                              
+                                                                                            </td>
+                                                                                            <td style="width:20px"><span style="color:#838889;font-size:14px">{{item.CreateDate | DateTimeToMSDYDatePipe}}</span></td>
+                                                                                            <td style="width:20px;"><div style="width:20px"></div></td>
+
+                                                                                        </tr>
+                                                                                        
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <div class="SocailMultiLinesText">{{item.BodyText}}</div>
+
+
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr style="height:5px"><td></td></tr>
+                                                                                    </table>
+
+
+
+                                                                                </td>
+                                                                                <td></td>
+                                                                            </tr>
+                                                                            <tr style="height:25px;background-color:#F3F3F3;border-radius:2px;border-bottom:1px solid lightgray;">
+                                                                                <td colspan="5">
+                                                                                    <table>
+                                                                                        <tr>
+                                                                                            <td style="width:7px"><div></div></td>
+                                                                                            <td style="width:50px">
+                                                                                                <img *ngIf="item.LikeLabel=='Like'" style="width:12px;height:15px;margin-top:-4px" src="./Images/Social/Like.png" />
+                                                                                                <span class="Hyperlink" (click)="LikePostButtonClick(item)">{{item.LikeLabel}}</span>
+                                                                                                <span *ngIf="item.DisplayNumberOfLike" style="text-align:left;">{{item.NumberPostLike}}</span>
+
+                                                                                            </td>
+                                                                                            <td [style.width]="item.LikeLabel=='Like' ?'5px':'12px'"><div></div></td>
+                                                                                            <td style="width:50px">
+
+                                                                                                <img style="width:16px;height:14px;margin-top:-5px;margin-right:-2px" src="./Images/Social/CommentIcon.png" />
+                                                                                                <span class="Hyperlink" (click)="CommentPostButtonClick(item)">Comment</span>
+                                                                                                <span *ngIf="item.NumberPostComments">{{item.NumberPostComments}}</span>
+                                                                                            </td>
+                                                                                            <td>
+
+                                                                                                <div>
+                                                                                                    <div *ngIf="item.VisibityEditDeletPost" style="border:0px;width:0px;float:right" tabindex="0" class="ToggleButton">
+
+                                                                                                        <img style="margin-top:1px;border:0px;background-color:transparent;height:14px;width:13px;margin-right:7px;" src="./Images/SimplogIcons/ArrowDownBlue.png" />
+
+                                                                                                        <div style="width:75px;margin-right:7px;min-width:75px;max-width:75px" class="ToggleButtonMenu">
+                                                                                                            <button style="color:#1E4AC4;font-size:12px" (click)="EditPostButtonClicked(item)">
+
+                                                                                                                <table>
+                                                                                                                    <tr>
+
+                                                                                                                        <td style="width:14px;"><div style="width:14px;margin-left:5px"><img style="width:14px;height:15px;" src="./Images/Buttons/Edit.png" /></div></td>
+                                                                                                                        <td><div> Edit</div></td>
+
+                                                                                                                    </tr>
+                                                                                                                </table>
+
+                                                                                                            </button>
+
+                                                                                                            <button style="color:#1E4AC4;font-size:12px" (click)="RemovePostButtonClicked(item)">
+
+                                                                                                                <table>
+                                                                                                                    <tr>
+
+                                                                                                                        <td style="width:14px;"><div style="width:14px;margin-left:5px"><img style="width:13px;height:13px;margin-top:-1px" src="./Images/deleteIcon.png" /></div></td>
+                                                                                                                        <td><div> Delete</div></td>
+                                                                                                                        <td></td>
+                                                                                                                    </tr>
+                                                                                                                </table>
+                                                                                                           
+                                                                                                            </button>
+                                                                                                        </div>
+
+
+                                                                                                    </div>
+
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr *ngIf="item.DisplayTextOfLike" style="height:26px;background-color:#EFF7FA;border-left:1px solid lightgray;border-right:1px solid lightgray;border-bottom:1px solid lightgray">
+                                                                                <td colspan="5">
+                                                                                    <table>
+                                                                                        <tr>
+                                                                                            <td style="width:5px"></td>
+                                                                                            <td style="width:25px;height:25px"><img style="width:25px;height:25px" src="./Images/Social/LikeIcon.png" /></td>
+                                                                                            <td>{{item.DisplayTextOfLike}}<span style="color:#1E8DC4;cursor:pointer" *ngIf="item.CountOtherLike" [attr.title]="item.ToolTipLike">{{item.CountOtherLike}}</span>  <span *ngIf="item.ToolTipLike">{{item.DisplayOtherLike}}</span></td>
+                                                                                        </tr>
+                                                                                    </table>
+
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr *ngIf="item.CommentsList && item.CommentsList.length>0" style="height:5px"><td colspan="2"><div></div></td></tr>
+                                                                            <tr *ngIf="item.CommentsList && item.CommentsList.length>0">
+                                                                                <td colspan="5">
+                                                                                    <div *ngFor="let comments of item.CommentsList">
+                                                                                        <div style="min-height:40px;background-color:white;border-radius:5px">
+
+
+                                                                                            <table>
+                                                                                                <tr style="height:7px"><td colspan="5" style="height:7px"><div></div></td></tr>
+                                                                                                <tr style="height:40px">
+                                                                                                    <td style="width:40px;"></td>
+                                                                                                    <td style="width:38px;vertical-align:top">
+                                                                                                        <div *ngIf="comments.UserImageDetailId" style="height:38px;width:38px;margin: auto;vertical-align:top">
+                                                                                                            <ImageComponent style="vertical-align:top" [DisplayOnly]="true" [HideBorder]="true" [ImageId]="comments.UserImageDetailId" (UploadCompleted)="ImageUploadedCompleted($event)"> </ImageComponent>
+                                                                                                        </div><!--6B8499-->
+                                                                                                        <div [style.background-color]="comments.UserImagebackground" *ngIf="!comments.UserImageDetailId" style="height:38px;width:38px;border:1px solid #6B8499;border-radius:2px;vertical-align:central;text-align:center">
+                                                                                                            <div style="height:5px"></div>
+                                                                                                            <div style="font-size:20px;text-align:center;color:white">{{comments.UserNameImage}}</div>
+                                                                                                            <div style="height:5px"></div>
+                                                                                                        </div>
+
+                                                                                                    </td>
+                                                                                                    <td style="width:15px;"></td>
+                                                                                                    <td>
+
+                                                                                                        <table style="table-layout: fixed; width: 100%">
+
+                                                                                                            <tr style="height:20px;vertical-align:top">
+
+                                                                                                                <td style="vertical-align:top">
+                                                                                                                    <span *ngIf="IsUserMode" style="color: #1E4AC4;font-size: 16px;">{{comments.CreatedByUserName}}</span>
+                                                                                                                    <span *ngIf="!IsUserMode" (click)="ViewPostUserFeedsButtonClick(comments)" class="Hyperlink2">{{comments.CreatedByUserName}}</span>
+                                                                                                                    <span style="float:right;margin-right:7px;color:#838889;font-size:14px;">{{comments.CreateDate | DateTimeToMSDYDatePipe}}</span>
+                                                                                                                </td>
+
+                                                                                                            </tr>
+                                                                                                            <tr><td></td></tr>
+
+                                                                                                            <tr>
+                                                                                                                <td>
+                                                                                                                    <div class="SocailMultiLinesText">{{comments.BodyText}}</div>
+
+                                                                                                                </td>
+                                                                                                            </tr>
+                                                                                                            <tr style="height:5px"><td></td></tr>
+                                                                                                            <tr style="height:20px">
+
+                                                                                                                <td>
+                                                                                                                    <table>
+                                                                                                                        <tr>
+                                                                                                                            <!--<td style="width:60px"><div style="width:60px"></div></td>-->
+                                                                                                                            <td style="width:50px;">
+
+                                                                                                                                <img *ngIf="comments.LikeLabel=='Like'" style="width:12px;height:15px;margin-top:-4px" src="./Images/Social/Like.png" />
+                                                                                                                                <span class="Hyperlink" (click)="LikeCommentButtonClick(comments)">{{comments.LikeLabel}}</span>
+
+                                                                                                                            <td>
+                                                                                                                                <span style="cursor:pointer" *ngIf="comments.NumberPostLike" [attr.title]="comments.ToolTipLike">{{comments.NumberPostLike}}</span>
+                                                                                                                            </td>
+                                                                                                                            <td><div></div></td>
+
+                                                                                                                        </tr>
+                                                                                                                    </table>
+                                                                                                                </td>
+
+                                                                                                            </tr>
+
+                                                                                                        </table>
+
+
+
+                                                                                                    </td>
+                                                                                                    <td></td>
+                                                                                                </tr>
+                                                                                                <tr style="height:7px"><td colspan="5" style="height:7px"><div></div></td></tr>
+                                                                                                <tr><td colspan="5"></td></tr>
+
+                                                                                            </table>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </td>
+
+                                                                            </tr>
+
+                                                                            <tr [style.height]="item.AreaAddCommentHeight" *ngIf="item.IsShowReplyCommentArea" style="background-color:#EFF7FA;border-top:1px solid lightgray">
+                                                                                <td colspan="5">
+                                                                                    <table>
+                                                                                        <tr [style.height]="item.HeightInPutComment">
+                                                                                            <td>
+
+                                                                                                <table>
+                                                                                                    <tr [style.height]="item.HeightInPutComment">
+                                                                                                        <td style="width:5px"><div style="width:5px"></div></td>
+                                                                                                        <td>
+                                                                                                            <div class="InputDiv" [style.height]="item.HeightInPutComment" style="max-height:unset;">
+                                                                                                                <textarea wrap="hard"
+                                                                                                                          [(ngModel)]="item.MessageComment"
+                                                                                                                          (focus)="item.CommentInputFocus()"
+                                                                                                                          style="box-shadow:none;border:1px solid transparent;text-indent:10px" ondrop="return false"></textarea>
+
+                                                                                                            </div>
+                                                                                                        </td>
+                                                                                                        <td style="width:5px"><div style="width:5px"></div></td>
+                                                                                                    </tr>
+                                                                                                </table>
+
+
+
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr *ngIf="item.IsShowButtonNewComment" style="height:22px">
+                                                                                <td colspan="5">
+                                                                                    <table>
+
+                                                                                        <tr *ngIf="item.IsShowButtonNewComment" style="height:22px">
+                                                                                            <td style="width:5px"></td>
+                                                                                            <td>
+                                                                                                <button (click)="item.CreateNewCommentButtonClick(item)" style="float:right;width:60px;height:22px;font-size:10px" class="PostButton">Comment</button>
+                                                                                            </td>
+
+                                                                                            <td style="width:5px"></td>
+                                                                                        </tr>
+                                                                                        <tr style="height:3px"><td colspan="3"><div></div></td></tr>
+                                                                                    </table>
+
+                                                                                </td>
+                                                                            </tr>
+
+
+
+
+
+
+                                                                        </table>
+
+                                                                    </div>
+                                                                </div>
+
+
+                                                            </td>
+
+
+                                                            <td style="vertical-align:top;" *ngIf="IsNoData">
+                                                                <div class="NoDataTextStyle" style="text-align:center;vertical-align:top;font-size:16px;margin-left:-5px;color:gray">No recent posts</div>
+                                                            </td>
+
+                                                            <td style="vertical-align:top;width:10px"><div style="width:10px;"></div></td>
+                                                        </tr>
+                                                        <tr><td></td></tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+
+
+
+
+                                            <!--</ScrollViewer>-->
+
+
+
+
+
+
+
+
+                                        </td>
+
+
+                                    </tr>
+
+
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+
+                </td>
+
+                <td *ngIf="IsShowPeopleComponent">
+                    <div style="height:100%;vertical-align:top">
+                        <div #Child></div>
+                    </div>
+                   
+                   
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<BusyIndicator [Text]="BusyIndicatorText" [IsBusy]="ShowBusyIndicator"></BusyIndicator>

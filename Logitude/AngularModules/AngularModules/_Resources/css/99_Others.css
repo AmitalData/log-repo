@@ -1,0 +1,240 @@
+﻿
+
+.FillContent {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.FillParent {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+.LocationDirectiveHolder {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.LocationDirective {
+    height: 0px;
+}
+
+.PreventSelect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                                  not supported by any browser */
+}
+
+
+.ScrollViewer {
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+.ScrollContent {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    padding-right: 1px;
+}
+
+.BusyIndicator {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    pointer-events: none;
+    background: rgba(255, 255, 255, 0.5);
+    z-index: 1000;
+}
+
+.BusyIndicatorOuter {
+    width: 200px;
+    height: 120px;
+    border: 1px solid #DADADA;
+    border-radius: 2px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    background: white;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+.BusyIndicatorInner {
+    width: 200px;
+    height: 120px;
+    border-radius: 2px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    background: linear-gradient(rgba(240, 240, 240, 0.5), rgba(198, 198, 198, 0.5));
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+
+
+
+
+
+
+#LoadingTable {
+    background: -moz-linear-gradient(50% 0% -90deg,rgba(235, 235, 235, 0.5) 0%,rgba(179, 179, 179, 0.5) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(235, 235, 235, 0.5) 0%, rgba(179, 179, 179, 0.5) 100%);
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(235, 235, 235, 0.5) ),color-stop (1,rgba(179, 179, 179, 0.5) ));
+    background: -o-linear-gradient(-90deg, rgba(235, 235, 235, 0.5) 0%, rgba(179, 179, 179, 0.5) 100%);
+    background: linear-gradient(180deg, rgba(235, 235, 235, 0.3) 0%, rgba(179, 179, 179, 0.3) 100%);
+}
+
+#Loading {
+    text-align: center;
+    color: #27B2C9;
+    text-shadow: 2px 2px black;
+    font-family: arial;
+    font-weight: bold;
+    font-size: 100px;
+}
+
+.NotReadyTabText {
+    text-align: center;
+    vertical-align: top;
+    padding-top: 250px;
+    color: teal;
+    text-shadow: 2px 2px #282E30;
+    font-family: arial;
+    font-weight: bold;
+    font-size: 70px;
+}
+
+
+
+
+
+
+.NewQuoteFieldsDisabled {
+    color: #1E4AC4;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+
+
+
+.SmallLabel {
+    font-size: 9px;
+    color: #6E7172;
+    text-align: left;
+    cursor: text !important;
+    -moz-user-select: text !important;
+    -webkit-user-select: text !important;
+    -ms-user-select: text !important;
+    user-select: text !important;
+}
+
+
+
+
+
+
+.Replacit {
+    background: pink;
+    width: calc(100% - 36px);
+}
+
+.DisableCell {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.amcharts-pie-slice {
+  cursor: auto;
+}
+
+.amcharts-funnel-slice {
+  cursor: pointer;
+}
+
+
+/* Change width of VERTICAL SCROLLBAR */
+/*scrollbar[orient="vertical"], scrollbar[orient="vertical"] thumb, scrollbar[orient="vertical"] scrollbarbutton {
+    max-width: 5px !important;
+    -moz-appearance: none !important;
+}*/
+
+/* Change width of HORIZONTAL SCROLLBAR */
+/*scrollbar[orient="horizontal"], scrollbar[orient="horizontal"] thumb, scrollbar[orient="horizontal"] scrollbarbutton {
+    max-height: 5px !important;
+    -moz-appearance: none !important;
+}*/
+
+/*scrollbar {
+  -moz-appearance: scrollbartrack-horizontal;
+  -moz-binding: url("chrome://global/content/bindings/scrollbar.xml#scrollbar");
+  cursor: default;
+  background: url("chrome://global/skin/scrollbar/slider.gif") scrollbar;
+}*/
+
+/*.ScrollViewer1 {
+    scrollbar-base-color:red;
+    scrollbar-face-color: #000000;
+    scrollbar-shadow-color: #2D2C4D;
+    scrollbar-highlight-color: #7D7E94;
+    scrollbar-3dlight-color: #7D7E94;
+    scrollbar-darkshadow-color: #2D2C4D;
+    scrollbar-track-color: #7D7E94;
+    scrollbar-arrow-color: #C1C1D1;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+.ScrollViewer1::-webkit-scrollbar
+{
+  width: 5px;  
+  height: 5px;
+}
+
+.ScrollViewer1::-webkit-scrollbar-track
+{
+  background: red;
+}
+
+.ScrollViewer1::-webkit-scrollbar-thumb
+{
+  background: blue;
+}*/
+
+/*
+    https://css-tricks.com/custom-scrollbars-in-webkit/
+    http://stackoverflow.com/questions/7725652/css-scrollbar-style-cross-browser
+
+    IE
+    http://codemug.com/html/custom-scrollbars-using-css/
+
+*/
+
+
+

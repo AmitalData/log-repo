@@ -1,0 +1,1 @@
+delete from customs.CustomsVerificationStatusTypes where Code <> '4' and Code <> '5' and Code <> '6' and Code <> '8'

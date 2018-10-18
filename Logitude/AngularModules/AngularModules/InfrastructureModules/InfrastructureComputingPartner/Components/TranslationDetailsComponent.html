@@ -1,0 +1,110 @@
+﻿
+<table>
+    <tr>
+        <td>
+        <table>
+            <tr style="height:32px">
+                <td>
+                    <table>
+                    <tr>
+                        <td class="BlueTitle" style="width:150px">
+                            Our Code
+                        </td>
+                        <td>
+                            {{OurCode}}
+                        </td>             
+                    </tr>
+                    </table>
+                </td>
+              
+            </tr>
+            <tr *ngIf="DefaultTranslationVisibility" style="height:32px">
+                <td>
+                    <table>
+                        <tr>
+                            <td style="width:150px" class="BlueTitle">Default Translation </td>
+                            <td>{{DefaultTranslation}}</td>
+                        </tr>
+                        <tr>
+                            <td style="width:150px" >Created by: </td>
+                            <td>
+                            <table>
+                                <tr>
+                                    <td style="width:1px">System</td>
+                                    <td style="width:5px"></td>
+                                    <td style="width:1px">{{CreateDate_Default | DateTimePipe:'DTL12'}}</td>
+                                </tr>
+                            </table>
+                            
+                         </td>
+                        </tr>
+                        <tr>
+                            <td style="width:150px" >Updated by: </td>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td style="width:1px">System</td>
+                                        <td style="width:5px"></td>
+                                        <td style="width:1px">{{UpdateDate_Default | DateTimePipe:'DTL12'}}</td>
+                                    </tr>
+                                </table>
+
+                            </td>                           
+                        </tr>
+                    </table>
+                </td>
+               
+            </tr>
+
+            <tr *ngIf="DefaultTranslationVisibility" style="height:10px">
+                <td></td>
+                </tr>
+<tr style="height:32px">
+                <td>
+                    <table>
+                        <tr>
+                            <td style="width:150px" class="BlueTitle">Partner Code </td>
+                            <td>
+                                {{PartnerCode}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:150px" >Created by: </td>
+                            <td>{{CreatedByUserName}}   {{CreateDate | DateTimePipe:'DTL12'}}</td>
+                        </tr>
+                        <tr>
+                            <td style="width:150px">Updated by: </td>
+                            <td>{{UpdatedByUserName}}   {{UpdateDate | DateTimePipe:'DTL12'}}</td>
+                        </tr>
+                    </table>
+                </td>
+
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+        </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CloseButtonClick()">Close</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+

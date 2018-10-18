@@ -1,0 +1,45 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Customs.Data.EntityPOCOs
+{
+   
+    public class ClientsAddressCommType
+    {
+	 string dbms;
+
+        [Key]
+        [ForeignKey("ClientAddress")]
+        [Column("ClientId" ,Order = 1)]
+	    public string ClientId { get; set; }
+	      
+        public virtual ClientAddress ClientAddress { get; set; }
+     [Key]
+        [ForeignKey("ClientAddress")]
+        [Column("AddressId" ,Order = 2)]
+	    public string AddressId { get; set; }
+     [Key]
+        [Column("Line" ,Order = 3)]
+	    public int Line { get; set; }
+        [ForeignKey("CommunicationType")]
+        [Column("CommunicationTypeCode")]
+	    public string CommunicationTypeCode { get; set; }
+	      
+        public virtual CommunicationType CommunicationType { get; set; }
+        [Column("CommunicationAddress")]
+	    public string CommunicationAddress { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+    }
+}
+	 

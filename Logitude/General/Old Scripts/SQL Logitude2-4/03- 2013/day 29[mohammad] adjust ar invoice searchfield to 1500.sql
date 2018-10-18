@@ -1,0 +1,1 @@
+alter table arinvoices alter column searchfields nvarchar (1500) null

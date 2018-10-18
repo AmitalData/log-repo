@@ -1,0 +1,438 @@
+﻿using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.BL.EntityUpdateServices;
+using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityListQueryServices;
+using Logitude.Accounting.Data.EntityLists;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Transactions;
+using Logitude.Server.Tools.QueueService;
+using System.Threading;
+using Logitude.SystemLogs;
+//using AmitalCustomsWindowsService.Utils;
+
+namespace Logitude.Accounting.BL.Utils
+{
+    public class RevaluationBatch
+    {
+        private string _ResponseText;
+        private HttpStatusCode _StatusCode;
+
+        public RevaluationBatch()
+        {
+            _ResponseText = "";
+            _StatusCode = HttpStatusCode.Accepted;
+        }
+
+
+
+        public string ResponseText()
+        {
+            return _ResponseText;
+        }
+
+        public HttpStatusCode StatusCode()
+        {
+            return _StatusCode;
+        }
+
+
+        public void RunAllOpenRevaluations(int tenant)
+
+        {
+            IAccountingContext context = AccountingContext.GetContext(tenant);
+            RevaluationListQueryService revaluationListQueryService = new RevaluationListQueryService(context);
+            List<RevaluationList> revaluations = revaluationListQueryService.GetOpenRevaluationList(tenant);
+            if (revaluations != null)
+            {
+                foreach (RevaluationList rev in revaluations)
+                {
+                    if (rev != null)
+                    {
+                        RunOneRevaluation(rev.Id, tenant);
+                    }
+                }
+            }
+        }
+
+
+        public void RunOneRevaluation(string id, int tenant)
+        {
+            IAccountingContext context = AccountingContext.GetContext(tenant);
+            try
+            {
+                using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(3)))
+                {
+                    if (!String.IsNullOrEmpty(id))
+                    {
+
+                        RevaluationListQueryService revaluationListQueryService = new RevaluationListQueryService(context);
+                        GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(context);
+                        RatesTableQuery ratesTableQuery = new RatesTableQuery(tenant);
+                        TenantQuery tenantQuery = new TenantQuery(tenant);
+                        TenantPM tPM = tenantQuery.GetSinglePM(tenant);
+                        string accountingCurrencyId = tPM.CurrencyId;
+                        List<RatesTablePM> ratesList = new List<RatesTablePM>(); // ratesList is one per revaluation 
+                        List<JournalLineList> lineList = new List<JournalLineList>();
+                        FullAccountingSettingQueryService settingQuery = new FullAccountingSettingQueryService(tenant);
+                        //JournalUpdateService(context);
+                        JournalUpdateService journalUpdateService = new JournalUpdateService(context, new Dictionary<string, IContext>(), tenant);
+                        string diffAccountId = "";
+                        FullAccountingSettingPM setting = settingQuery.GetSingleFullAccountingSetting(tenant);
+                        if (setting != null)
+                        {
+                            diffAccountId = setting.ExchangeRateDiffGLAccountId;
+                        }
+                        if (String.IsNullOrEmpty(diffAccountId))
+                        {
+                            string errorMessage = TranslateTextsClass.Translate("Revaluations.Q.DiffAccountNotDefined", tenant);
+                            throw new Exception(errorMessage);
+                        }
+                        RevaluationList revaluation = revaluationListQueryService.GetSingle(id);
+                        if (revaluation != null && revaluation.RevaluationDate != null)
+                        {
+                            List<GLAccountPM> gLAccountPMList = gLAccountQueryService.GetByRevaluationEnabled_OtherParams(revaluation.RevaluationEnabled, null, revaluation.ChartOfAccountsId, null, revaluation.GLAccountId, accountingCurrencyId, tenant);
+                            if (gLAccountPMList != null)
+                            {
+
+                                foreach (GLAccountPM gLAccountPM in gLAccountPMList)
+                                {
+                                    RunOneAccount(gLAccountPM, gLAccountQueryService, journalUpdateService, ratesTableQuery, revaluation.RevaluationDate,
+                                                    accountingCurrencyId, diffAccountId, ratesList, lineList, revaluation, scope);
+                                }
+                                if (lineList.Count > 0)
+                                {
+                                    WriteJournal(journalUpdateService, lineList, revaluation);
+                                    lineList.Clear();
+                                }
+
+                            }
+                        }
+                    }
+                    UpdateRevaluationStatus(id, tenant, "2", "Success", context);
+
+                    scope.Complete();
+                }//using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(3)))
+            }
+            catch (Exception e)
+            {
+                using (TransactionScope excScope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(1)))
+                {
+                    {
+                        string errorMessage = e.Message.Split(new[] { '\r', '\n' }).FirstOrDefault();
+                        _ResponseText = errorMessage;
+                        _StatusCode = HttpStatusCode.InternalServerError;
+                        UpdateRevaluationStatus(id, tenant, "2", errorMessage, context);
+                    }
+                    excScope.Complete();
+                }
+
+            }
+
+        }
+
+        private static void UpdateRevaluationStatus(string id, int tenant, string status, string message, IAccountingContext context)
+        {
+            RevaluationQueryService myRevaluationService = new RevaluationQueryService(context);
+            RevaluationPM revaluationPM = myRevaluationService.GetSingle(id, false, false);
+            if (revaluationPM != null)
+            {
+                revaluationPM.Status = status;
+                revaluationPM.Message = message;
+                RevaluationUpdateService myRevaluationUpdateService = new RevaluationUpdateService(context, new Dictionary<string, IContext>(), tenant);
+                myRevaluationUpdateService.Update(revaluationPM, true);
+            }
+        }
+
+
+
+        private static void RunOneAccount(GLAccountPM gLAccountPM, GLAccountQueryService gLAccountQueryService, JournalUpdateService journalUpdateService,
+            RatesTableQuery ratesTableQuery, DateTime revaluationDate, string accountingCurrencyId, string diffAccountId,
+            List<RatesTablePM> ratesList, List<JournalLineList> lineList, RevaluationList revaluation, TransactionScope scope)
+        {
+            AccountingLogger.LogMe("Revaluation " + revaluation.RevaluationNumber + " run one account: " + gLAccountPM.DisplayNumber, false, "REV");
+            List<GLAccountCurrencyBalance> allBalances = gLAccountQueryService.GetCurrencyBalances(gLAccountPM, revaluationDate, gLAccountPM.Tenant);
+
+            if (allBalances != null && allBalances.Count != 0)
+            {
+                foreach (GLAccountCurrencyBalance item in allBalances)
+                {
+                    if (!String.IsNullOrEmpty(item.CurrencyId) && !String.IsNullOrEmpty(accountingCurrencyId) && item.CurrencyId != accountingCurrencyId && (decimal)item.ForeignAmount != 0m)
+                    {
+                        AccountingLogger.LogMe(" Balance in " + item.CurrencyId + " = " + item.ForeignAmount, false, "REV");
+
+                        RatesTablePM lastRate = ratesList.Where(d => d.ForeignCurrencyId == item.CurrencyId).FirstOrDefault(); // caching, ratesList is one per revaluation
+                        if (lastRate == null)
+                        {
+                            lastRate = ratesTableQuery.GetLastRateByValueDate(gLAccountPM.Tenant, item.CurrencyId, accountingCurrencyId, revaluationDate);
+                            if (lastRate != null)
+                            {
+                                ratesList.Add(lastRate);
+                            }
+                            else
+                            {
+                                CurrencyQuery currencyQuery = new CurrencyQuery(gLAccountPM.Tenant);
+                                CurrencyPM curr = currencyQuery.GetSinglePM(item.CurrencyId, gLAccountPM.Tenant);
+                                string revError = TranslateTextsClass.Translate("Revaluations.Q.RevaluationError", gLAccountPM.Tenant);
+                                string rateNotFound = TranslateTextsClass.Translate("GLAccounts.Q.RateNotFound", gLAccountPM.Tenant);
+                                AccountingLogger.LogMe(revError + curr.Code + rateNotFound + revaluationDate.ToShortDateString(), true, "REV");
+                                throw new Exception(revError + curr.Code + rateNotFound + revaluationDate.ToShortDateString());
+                            }
+                        }
+
+                        AccountingLogger.LogMe(" Rate = " + lastRate.Rate + " on " + revaluationDate.ToShortDateString(), false, "REV");
+                        double localFromForeign_double = (double)item.ForeignAmount * (double)lastRate.Rate;
+                        localFromForeign_double = Math.Round(localFromForeign_double, 2);
+                        decimal localFromForeign_decimal = (decimal)localFromForeign_double;
+                        decimal difference = (decimal)item.LocalAmount - localFromForeign_decimal;
+                        AccountingLogger.LogMe(" Local(foreign) = " + localFromForeign_decimal, false, "REV");
+                        AccountingLogger.LogMe(" Local = " + (decimal)item.LocalAmount, false, "REV");
+                        AccountingLogger.LogMe(" Difference = " + difference, false, "REV");
+
+                        if (difference != 0m)
+                        {
+                            JournalLineList journalLine_credit;
+                            journalLine_credit = lineList.FirstOrDefault<JournalLineList>(l => l.ActionCode == "1" && l.CurrencyId == item.CurrencyId);
+                            if (journalLine_credit == null)
+                            {
+                                journalLine_credit = new JournalLineList
+                                {
+                                    ActionCode = "1", // Credit
+                                    AccountingDate = revaluationDate,
+                                    Tenant = gLAccountPM.Tenant,
+                                    CreditAccountId = diffAccountId,
+                                    DocumentDate = revaluationDate,
+                                    DueDate = revaluationDate,
+                                    LocalAmount = difference,
+                                    CurrencyId = item.CurrencyId, // was     ... = accountingCurrencyId,
+                                    ForeignAmount = 0m, // was     ... = difference, 
+                                };
+                                AccountingLogger.LogMe("Credit Difference = " + difference, false, "REV");
+                                lineList.Add(journalLine_credit);
+                            }
+                            else
+                            {
+                                int index = lineList.FindIndex(l => l.ActionCode == "1" && l.CurrencyId == item.CurrencyId);
+                                AccountingLogger.LogMe("Credit Difference = " + journalLine_credit.LocalAmount + " += " + difference + " = " + (journalLine_credit.LocalAmount + difference), false, "REV");
+                                journalLine_credit.LocalAmount += difference;
+                                //journalLine_credit.ForeignAmount += difference; // now it is 0 
+                                lineList[index] = journalLine_credit;
+                            }
+
+                            JournalLineList journalLine_debit = new JournalLineList
+                            {
+                                ActionCode = "2", // Debit
+                                AccountingDate = revaluationDate,
+                                Tenant = gLAccountPM.Tenant,
+                                DebitAccountId = gLAccountPM.Id,
+                                DebitControlAccountId = gLAccountPM.ControlAccountId,
+                                DocumentDate = revaluationDate,
+                                DueDate = revaluationDate,
+                                LocalAmount = difference,
+                                CurrencyId = item.CurrencyId,
+                                ForeignAmount = 0m,
+                            };
+                            AccountingLogger.LogMe("Debit Difference = " + difference, false, "REV");
+                            lineList.Add(journalLine_debit);
+
+
+                            if (lineList.Count >= 100)
+                            {
+                                WriteJournal(journalUpdateService, lineList, revaluation);
+                                lineList.Clear();
+                                scope.Complete();
+                            }
+                        }
+                    }
+                }
+
+                //if (lineList.Count > 0)
+                //{
+                //    WriteJournal(journalUpdateService, lineList, revaluation);
+                //    lineList.Clear();
+                //}
+            }
+
+        }
+
+        private static void WriteJournal(JournalUpdateService journalUpdateService, List<JournalLineList> lineList, RevaluationList revaluation)
+        {
+            // Start
+            JournalPM newJournal = new JournalPM();
+
+            // Head
+            newJournal.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+            newJournal.Tenant = lineList.First().Tenant;
+            newJournal.CreateDate = DateTime.Now;
+            newJournal.AccountingDate = lineList.First().AccountingDate;
+            newJournal.TypeCode = "0"; //Manual
+            newJournal.StatusCode = "2"; // Approved
+            newJournal.CreatedByUserId = revaluation.CreatedByUserId;
+            newJournal.AccountingEntityCode = "8"; //Revaluation
+            newJournal.AccountingEntityId = revaluation.Id;
+            newJournal.ExternalNo = null;
+            newJournal.UpdateDate = DateTime.Now;
+            newJournal.UpdatedByUserId = revaluation.CreatedByUserId;
+            newJournal.ApproveDate = revaluation.CreateDate;
+            newJournal.ApprovedByUserId = revaluation.CreatedByUserId;
+
+            // Lines
+            int LineNumber = 0;
+            foreach (JournalLineList line in lineList)
+            {
+                LineNumber++;
+                JournalLinePM newJournalLine = new JournalLinePM
+                {
+                    ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+                    Tenant = newJournal.Tenant,
+                    Line = LineNumber,
+                    ActionCode = line.ActionCode,
+                    CreditAccountId = line.CreditAccountId,
+                    CreditControlAccountId = line.CreditControlAccountId,
+                    CurrencyId = line.CurrencyId,
+                    DebitAccountId = line.DebitAccountId,
+                    DebitControlAccountId = line.DebitControlAccountId,
+                    DocumentDate = line.DocumentDate,
+                    AccountingDate = newJournal.AccountingDate,
+                    DueDate = line.DueDate,
+                    ExchangeRate = line.ExchangeRate,
+                    ForeignAmount = line.ForeignAmount,
+                    LocalAmount = line.LocalAmount,
+                    Notes = line.Notes,
+                    Reference1 = line.Reference1,
+                    Reference2 = line.Reference2,
+                    Reference3 = line.Reference3,
+                };
+                newJournal.JournalLines.Add(newJournalLine);
+
+            }
+            // End
+            journalUpdateService.Update(newJournal, true);
+
+        }
+
+
+
+        public class RevaluationWorkerRole
+        {
+
+
+            public const string K_RevaluationWorkerRole = "RevaluationWorkerRole";
+            public const string QP_Tenant = "Tenant";
+            public const string QP_RevaluationNumber = "RevaluationNumber";
+            public void EnQueue(int tenant, int revaluationNumber)
+            {
+                var queueservice = new DbQueueService();
+                queueservice.InitializeQueue(K_RevaluationWorkerRole, 0);
+                queueservice.Send(new Dictionary<string, string>()
+                    {
+                        { QP_Tenant, tenant.ToString() },
+                        { QP_RevaluationNumber, revaluationNumber.ToString() }
+                    });
+            }
+
+            public void WorkUntilQEmptyQueueDB()
+            {
+
+
+
+                QueueResponse response = null;
+                while (true)
+                {
+
+                    DbQueueService queueservice = null;
+
+                    try
+                    {
+
+                        queueservice = new DbQueueService(RevaluationWorkerRole.K_RevaluationWorkerRole, 0);
+
+                        response = queueservice.Receive(new TimeSpan(0, 0, 0, 5));
+
+
+                    }
+                    catch (Exception)
+                    {
+
+                        throw;
+                    }
+
+
+                    if (response == null || (response != null && response.MessageId == null))
+                    {
+                        break;
+                    }
+
+
+
+                    ProcessMessage_Db(queueservice, response);
+                    Thread.Sleep(10);//itzik - let other thread abilty to use GLAccout !!!
+                }
+
+
+
+
+            }
+
+            private void ProcessMessage_Db(DbQueueService myDbQueueService, QueueResponse message)
+            {
+                string MessageId = "";
+                int tenant = -1;
+                string qpJournalId = null;
+                try
+                {
+
+
+
+                    int.TryParse(message.MessageValues[QP_Tenant].ToString(), out tenant);
+                    if (tenant == -1)
+                    {
+                        ExceptionHandler.HandleException(null, DateTime.Now, 0, "", "WorkerRole", "RevaluationWorkerRole: ProcessMessage() Method :tenant==-1", null);
+                        return;
+                    }
+
+
+                    //qpJournalId = message.MessageValues[QP_RevaluationNumber].ToString();
+                    MessageId = message.MessageId;
+                    LogMessagingUtil.Instance.AppendLine("receivedMessage.DeliveryCount =" + message.RetryNumber.ToString());
+
+                    var myRevaluationBatch = new RevaluationBatch();
+                    myRevaluationBatch.RunAllOpenRevaluations(tenant);
+
+                    myDbQueueService.Complete();
+                    
+                }
+                catch (Exception ex)
+                {
+                    var ex1 = new Exception("RevaluationWorkerRole.RunAllOpenRevaluations(" + tenant.ToString() + "," + MessageId.ToString() + ").SubmitApprove():FailDue=" + ex.ToString());
+                    OnException(myDbQueueService, message, qpJournalId, tenant, ex);
+                }
+            }
+        }
+        private static void OnException(DbQueueService myDbQueueService, QueueResponse message, string seedJournalId, int tenant, Exception ex)
+        {
+
+            LogMessagingUtil.Instance.AppendLine(message?.MessageId?.ToString() + " " + ex.ToString());
+            ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "WorkerRole", "RevaluationWorkerRole: ProcessMessage() Method", null);
+            if (message == null || message.RetryNumber > 5)
+            {
+                //var journalFailedService = new JournalFailedService(tenant, seedJournalId);
+                //journalFailedService.MarkAsFailed();
+                //if (myDbQueueService != null)
+                {
+                    myDbQueueService.Complete();
+                }
+            }
+        }
+    }
+}

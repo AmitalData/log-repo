@@ -1,0 +1,173 @@
+﻿<!-- CustomsRestoreMessagesComponent view  -->
+<div>
+
+    <custom-message-wrapper [CustomSendOptionsButtonCanForcePersonalSign]="false"
+                            [IsShowCustomResponseContent] ="false">
+
+        <!-- Request -->
+        <div class="class-request-content">
+            <div style="width: 460px; height: 200px;padding-top: 10px;">
+                <table *ngIf="_isVisible">
+                    <!-- Request Fields -->
+                    <!--Radio Buttons-->
+                    <tr class="FormFieldRow">
+                        <td>
+                            <table>
+                                <tr>
+                                    <td style="width:140px">
+                                        <div class="RadioButton">
+                                            <input id="CorrelationRadio" type="radio" name="CorrelationRadio" 
+                                                   [checked]="IsRestoreByCorrelation" 
+                                                   (click)="IsRestoreByCorrelation =true" />
+                                            <label for="CorrelationRadio">{{'Customs.Declaration.O.RestoreByCorrelation' | TextCodeTranslationPipe}}</label>
+                                        </div>
+                                    </td>
+
+                                    <td style="width:140px">
+                                        <div class="RadioButton">
+                                            <input id="ByDates" type="radio" name="ByDates" 
+                                                   [checked]="IsRestoreByDates" 
+                                                   (click)="IsRestoreByDates =true" />
+                                            <label for="ByDates">{{'Customs.Declaration.O.RestoreByDates' | TextCodeTranslationPipe}}</label>
+                                        </div>
+                                    </td>
+
+                                    <td> <div></div> </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!--IsRestoreByCorrelation-->
+                    <tr class="FormFieldRow" *ngIf="IsRestoreByCorrelation" style="height: 25px">
+                        <td>
+                            <table style="width: 460px; padding-top: 10px;">
+                                <tr class="FormFieldRow" style="height: 44px">
+                                    <!-- Request.CorrelationNo-->
+                                    <td style="width: 90px">
+                                        <LogLabel [TextCode]="'Customs.Declaration.O.CorrelationNo'"
+                                                  [ObjectFieldName]="'CorrelationNo'" 
+                                                  [ObjectTableName]="ObjectTableName" 
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td class="FormFieldRow" style="width: 300px;">
+                                        <LogTextBox [ObjectFieldName]="'CorrelationNo'" [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                                    [HideColumns]="true"
+                                                    (LostFocus)="CorrelationNoTextChanged($event)"
+                                                    [Text]="CorrelationNo"></LogTextBox>
+                                    </td>
+
+                                    <td style="width: 10px;"><div></div></td>
+
+                                    <td><div></div></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!--IsRestoreByDates-->
+                    <tr class="FormFieldRow" *ngIf="!IsRestoreByCorrelation" style="height: 25px;">
+                        <td>
+                            <table style="width: 460px; padding-top: 10px;">
+                                <tr class="FormFieldRow">
+                                    <td style="width: 90px;">
+                                        <LogLabel 
+                                                  [Text]="'תיאור מסר'"
+                                                  [ObjectFieldName]="'InterfaceManagementsCode'" 
+                                                  [ObjectTableName]="'Customs.Declaration'" 
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td colspan="3" style="width: 185px;">
+                                        <LogLov [ObjectFieldName]="'InterfaceManagementsCode'"
+                                                [ObjectTableName]="'Customs.Declaration'"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Customs.InterfaceManagement'"
+                                                [HideLastColumn]="true"
+                                                [HideColumns]="true"
+                                                (SelectedItemChanged)="DataContext.InterfaceManagementSelectedItem = $event"
+                                                [AutoCompleteSearchWindow]="false">
+                                        </LogLov>
+                                    </td>
+
+                                    <td><div></div></td>
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <td style="width: 90px;">
+                                        <LogLabel 
+                                                  [TextCode]="'Customs.CustomsExchangeRate.F.DateFrom'"
+                                                  [ObjectFieldName]="'FromDate'"
+                                                  [ObjectTableName]="'Customs.CustomsExchangeRate'"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td style="width: 110px;">
+                                        <!-- ExchangeRatesQueryComponent  Request.FromDate-->
+                                        <LogDatePicker [NoObjectField]="true" 
+                                                       [ObjectFieldName]="'FromDate'"
+                                                       [ObjectTableName]="'Customs.CustomsExchangeRate'"
+                                                       [InputType]="'date'"
+                                                       [DataContext]="DataContext"
+                                                       [HideColumns]="true"></LogDatePicker>
+                                    </td>
+                                    <td style="width: 5px;"><div></div></td>
+                                    <td style="width: 70px;">
+                                        <LogDatePicker [ObjectFieldName]="'FromDateTime'"
+                                                       [ObjectTableName]="ObjectTableName"
+                                                       [InputType]="'time'" [DataContext]="DataContext"
+                                                       [TimeMode]="24" [SelectedDateValue]="FromDateTime"
+                                                       [HideColumns]="true"></LogDatePicker>
+                                    </td>
+
+                                    <td><div></div></td>
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <td style="width: 90px;">
+                                        <LogLabel 
+                                                  [TextCode]="'Customs.CustomsExchangeRate.F.DateTo'"
+                                                  [ObjectFieldName]="'ToDate'" 
+                                                  [ObjectTableName]="'Customs.CustomsExchangeRate'" 
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td style="width: 110px;">
+                                        <!-- ExchangeRatesQueryComponent  Request.FromDate-->
+                                        <LogDatePicker [NoObjectField]="true"
+                                                       [ObjectFieldName]="'ToDate'"
+                                                       [ObjectTableName]="'Customs.CustomsExchangeRate'"
+                                                       [InputType]="'date'"
+                                                       [DataContext]="DataContext"
+                                                       [HideColumns]="true"></LogDatePicker>
+                                    </td>
+                                    <td style="width: 5px;"><div></div></td>
+                                    <td style="width: 70px;">
+                                        <LogDatePicker [ObjectFieldName]="'ToDateTime'"
+                                                       [ObjectTableName]="ObjectTableName"
+                                                       [InputType]="'time'" [DataContext]="DataContext"
+                                                       [TimeMode]="24" [SelectedDateValue]="ToDateTime"
+                                                       [HideColumns]="true"></LogDatePicker>
+                                    </td>
+
+                                    <td><div></div></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><div></div></td>
+                    </tr>
+                </table>
+            </div>
+    
+        </div>
+
+        <!-- Response -->
+        <div class="class-response-content" >
+            <div style="width: 460px;height: 200px;" >
+                <div>{{ResponseStatusXML}}</div>
+            </div>
+            
+        </div>
+
+    </custom-message-wrapper>
+</div>

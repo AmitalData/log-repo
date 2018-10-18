@@ -1,0 +1,111 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data;
+ 
+namespace Logitude.Customs.Data.EntityMapping
+{
+ 
+    public class NotificationMap : EntityTypeConfiguration<Notification>
+    {
+	    string dbms;
+        public NotificationMap()
+        { 
+			  this.ToTable("Notifications", "Customs");
+		
+		    this.HasKey(t => new { t.Id });
+	 
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
+
+            this.Property(t => t.NotificationDefinitionCode).HasColumnName("NotificationDefinitionCode").HasMaxLength(5).IsUnicode(false);
+
+            this.Property(t => t.CreateDate).HasColumnName("CreateDate");
+
+            this.Property(t => t.AssigneToId).HasColumnName("AssigneToId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.AssigneToNotificationTypeCode).HasColumnName("AssigneToNotificationTypeCode").HasMaxLength(1).IsUnicode(false);
+
+            this.Property(t => t.DeclarationOfficeCode).HasColumnName("DeclarationOfficeCode").HasMaxLength(17).IsUnicode(false);
+
+            this.Property(t => t.EntityId).HasColumnName("EntityId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.ObjectTableId).HasColumnName("ObjectTableId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.IsClosedBCustomOffice).HasColumnName("IsClosedBCustomOffice");
+
+            this.Property(t => t.IsClosedByAssignee).HasColumnName("IsClosedByAssignee");
+
+            this.Property(t => t.DueDate).HasColumnName("DueDate");
+
+            this.Property(t => t.IsSeenByAssignee).HasColumnName("IsSeenByAssignee");
+
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.ResponseNotes).HasMaxLength(2000);
+			}
+            else
+            {
+              this.Property(t => t.ResponseNotes).HasMaxLength(4000);
+			}
+
+
+            this.Property(t => t.ResponseNotes).HasColumnName("ResponseNotes").IsUnicode(true);
+
+            this.Property(t => t.CreatedByRequestID).HasColumnName("CreatedByRequestID").HasMaxLength(40).IsUnicode(false);
+
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.SearchFields).HasMaxLength(2000);
+			}
+            else
+            {
+              this.Property(t => t.SearchFields).HasMaxLength(5000);
+			}
+
+
+            this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsUnicode(true);
+
+            this.Property(t => t.IsHandledByCustomOffice).HasColumnName("IsHandledByCustomOffice");
+
+            this.Property(t => t.Reference1Number).HasColumnName("Reference1Number").HasMaxLength(256).IsUnicode(false);
+
+            this.Property(t => t.Reference2Number).HasColumnName("Reference2Number").HasMaxLength(256).IsUnicode(false);
+
+            this.Property(t => t.DepartmentId).HasColumnName("DepartmentId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.ClosedByCustomOfficeUserId).HasColumnName("ClosedByCustomOfficeUserId").HasMaxLength(15).IsUnicode(false);
+
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.Description).HasMaxLength(2000);
+			}
+            else
+            {
+              this.Property(t => t.Description).HasMaxLength(32000);
+			}
+
+
+            this.Property(t => t.Description).HasColumnName("Description").IsUnicode(true);
+
+            this.Property(t => t.ClosedByAssignee).HasColumnName("ClosedByAssignee").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.BadjCount).HasColumnName("BadjCount");
+
+            this.Property(t => t.CustomerId).HasColumnName("CustomerId").HasMaxLength(15).IsUnicode(false);
+        }
+    }
+}
+	 

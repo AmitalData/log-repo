@@ -1,0 +1,32 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization; 
+
+namespace Logitude.Customs.Data.EntityLists
+{
+   [DataContract]
+   public partial class PropertiesDetailsHistoryList
+   {
+          [DataMember]
+       public string CustomsItemID  { get; set; }
+
+       [Key]
+       [DataMember]
+       public string ID  { get; set; }
+       [DataMember]
+       public DateTime StartDate  { get; set; }
+       [DataMember]
+       public DateTime EndDate  { get; set; }
+       [DataMember]
+       public int EntityStatusID  { get; set; }
+       [DataMember]
+       public int? MeasurementUnitID  { get; set; }
+   }
+
+}
+	 

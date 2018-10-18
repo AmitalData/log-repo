@@ -1,0 +1,980 @@
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs; 
+using Logitude.Customs.Data;
+
+namespace Logitude.Customs.BL.EntityDataMappings
+{
+   
+   public partial class VehicleDataMapping: IMapping<VehiclePM, Vehicle>,IMappingEncodeBase64NVARCHARFields<VehiclePM>
+   {
+          public enum POCOPropertyNames
+          { 
+		     None,  
+	         Id, 
+	         Tenant, 
+	         RichbitFileNumber, 
+	         VehicleChassisNumber, 
+	         VehiclePoolTypeCode, 
+	         VehiclePriceListTypeCode, 
+	         VehicleManufacturerCode, 
+	         ModelCode, 
+	         IsABS, 
+	         AirBagsNumber, 
+	         ConverterTypeCode, 
+	         IsArmoredVehicle, 
+	         IsLoweringVehicleForInvalid, 
+	         GreenIndex, 
+	         GreenIndexGroup, 
+	         IsStabilityControl, 
+	         IsraelEnterDate, 
+	         EngineCapacity, 
+	         VehiclePowerKW, 
+	         VehicleTecnologyTypeCode, 
+	         FuelTypeCode, 
+	         VehicleWindowNumber, 
+	         ManufactureCountryCode, 
+	         MedalNumber, 
+	         CommercialNickname, 
+	         ModelDescription, 
+	         NumberOfSeats, 
+	         TotalVehicleWeight, 
+	         SelfVehicleWeight, 
+	         NumberOfWheels, 
+	         VehicleManufactureDate, 
+	         VehicleTypeCode, 
+	         TransmissionDateWithoutTax, 
+	         ImporterIdentityId, 
+	         DateOnRoadAbroad, 
+	         VehicleSafetyAccessoryPoints, 
+	         StatusCode, 
+	         SearchFields, 
+	         ConcurrencyGUID, 
+	         DeclarationId, 
+	         IsThreeWheeledForReduction, 
+	         TaxiMedalOwner, 
+	         ImporterPassportNumber, 
+	         ImporterPassCountryCode, 
+	         ImporterPassportTypeCode, 
+	         IsCBS, 
+	         IsSlipperClutch, 
+	         IsSteeringDamper, 
+	         IsTCS, 
+	         IsTPS, 
+	         VehicleCategory, 
+	         VehicleMaxPowerKW,
+	      }
+
+
+	      public enum PMPropertyNames
+          { 
+		     None,  
+	         Id, 
+	         Tenant, 
+	         RichbitFileNumber, 
+	         VehicleChassisNumber, 
+	         VehiclePoolTypeCode, 
+	         VehiclePriceListTypeCode, 
+	         VehicleManufacturerCode, 
+	         ModelCode, 
+	         IsABS, 
+	         AirBagsNumber, 
+	         ConverterTypeCode, 
+	         IsArmoredVehicle, 
+	         IsLoweringVehicleForInvalid, 
+	         GreenIndex, 
+	         GreenIndexGroup, 
+	         IsStabilityControl, 
+	         IsraelEnterDate, 
+	         EngineCapacity, 
+	         VehiclePowerKW, 
+	         VehicleTecnologyTypeCode, 
+	         FuelTypeCode, 
+	         VehicleWindowNumber, 
+	         ManufactureCountryCode, 
+	         MedalNumber, 
+	         CommercialNickname, 
+	         ModelDescription, 
+	         NumberOfSeats, 
+	         TotalVehicleWeight, 
+	         SelfVehicleWeight, 
+	         NumberOfWheels, 
+	         VehicleManufactureDate, 
+	         VehicleTypeCode, 
+	         TransmissionDateWithoutTax, 
+	         ImporterIdentityId, 
+	         DateOnRoadAbroad, 
+	         VehicleSafetyAccessoryPoints, 
+	         StatusCode, 
+	         ImporterName, 
+	         VehiclePoolTypeName, 
+	         VehicleManufacturerName, 
+	         LastSaftyLineNumber, 
+	         LastOwnerLineNumber, 
+	         VehiclePriceListTypeName, 
+	         ConverterTypeName, 
+	         VehicleTecnologyTypeName, 
+	         ManufactureCountryName, 
+	         VehicleTypeName, 
+	         StatusName, 
+	         SearchFields, 
+	         FuelTypeName, 
+	         InvalidChassisNumber, 
+	         ConcurrencyGUID, 
+	         NewConcurrencyGUID, 
+	         DeclarationId, 
+	         CustomFileNumber, 
+	         IsThreeWheeledForReduction, 
+	         TaxiMedalOwner, 
+	         ImporterPassportNumber, 
+	         ImporterPassCountryCode, 
+	         ImporterPassCountryName, 
+	         ImporterPassportTypeCode, 
+	         ImporterPassportTypeName, 
+	         IsCBS, 
+	         IsSlipperClutch, 
+	         IsSteeringDamper, 
+	         IsTCS, 
+	         IsTPS, 
+	         VehicleCategory, 
+	         VehicleMaxPowerKW,
+	      }
+
+		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
+        List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
+    
+	    public void PMToPOCO(VehiclePM entityPM, Vehicle entityPOCO)
+        {
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RichbitFileNumber))
+            {
+				entityPOCO.RichbitFileNumber = entityPM.RichbitFileNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VehicleChassisNumber))
+            {
+				entityPOCO.VehicleChassisNumber = entityPM.VehicleChassisNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VehiclePoolTypeCode))
+            {
+				entityPOCO.VehiclePoolTypeCode = entityPM.VehiclePoolTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VehiclePriceListTypeCode))
+            {
+				entityPOCO.VehiclePriceListTypeCode = entityPM.VehiclePriceListTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VehicleManufacturerCode))
+            {
+				entityPOCO.VehicleManufacturerCode = entityPM.VehicleManufacturerCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ModelCode))
+            {
+				entityPOCO.ModelCode = entityPM.ModelCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsABS))
+            {
+				entityPOCO.IsABS = entityPM.IsABS;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AirBagsNumber))
+            {
+				entityPOCO.AirBagsNumber = entityPM.AirBagsNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConverterTypeCode))
+            {
+				entityPOCO.ConverterTypeCode = entityPM.ConverterTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsArmoredVehicle))
+            {
+				entityPOCO.IsArmoredVehicle = entityPM.IsArmoredVehicle;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsLoweringVehicleForInvalid))
+            {
+				entityPOCO.IsLoweringVehicleForInvalid = entityPM.IsLoweringVehicleForInvalid;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GreenIndex))
+            {
+				entityPOCO.GreenIndex = entityPM.GreenIndex;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GreenIndexGroup))
+            {
+				entityPOCO.GreenIndexGroup = entityPM.GreenIndexGroup;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsStabilityControl))
+            {
+				entityPOCO.IsStabilityControl = entityPM.IsStabilityControl;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsraelEnterDate))
+            {
+				entityPOCO.IsraelEnterDate = entityPM.IsraelEnterDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EngineCapacity))
+            {
+				entityPOCO.EngineCapacity = entityPM.EngineCapacity;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VehiclePowerKW))
+            {
+				entityPOCO.VehiclePowerKW = entityPM.VehiclePowerKW;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VehicleTecnologyTypeCode))
+            {
+				entityPOCO.VehicleTecnologyTypeCode = entityPM.VehicleTecnologyTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FuelTypeCode))
+            {
+				entityPOCO.FuelTypeCode = entityPM.FuelTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VehicleWindowNumber))
+            {
+				entityPOCO.VehicleWindowNumber = entityPM.VehicleWindowNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ManufactureCountryCode))
+            {
+				entityPOCO.ManufactureCountryCode = entityPM.ManufactureCountryCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MedalNumber))
+            {
+				entityPOCO.MedalNumber = entityPM.MedalNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CommercialNickname))
+            {
+				entityPOCO.CommercialNickname = entityPM.CommercialNickname;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ModelDescription))
+            {
+				entityPOCO.ModelDescription = entityPM.ModelDescription;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NumberOfSeats))
+            {
+				entityPOCO.NumberOfSeats = entityPM.NumberOfSeats;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TotalVehicleWeight))
+            {
+				entityPOCO.TotalVehicleWeight = entityPM.TotalVehicleWeight;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SelfVehicleWeight))
+            {
+				entityPOCO.SelfVehicleWeight = entityPM.SelfVehicleWeight;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NumberOfWheels))
+            {
+				entityPOCO.NumberOfWheels = entityPM.NumberOfWheels;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VehicleManufactureDate))
+            {
+				entityPOCO.VehicleManufactureDate = entityPM.VehicleManufactureDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VehicleTypeCode))
+            {
+				entityPOCO.VehicleTypeCode = entityPM.VehicleTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TransmissionDateWithoutTax))
+            {
+				entityPOCO.TransmissionDateWithoutTax = entityPM.TransmissionDateWithoutTax;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ImporterIdentityId))
+            {
+				entityPOCO.ImporterIdentityId = entityPM.ImporterIdentityId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DateOnRoadAbroad))
+            {
+				entityPOCO.DateOnRoadAbroad = entityPM.DateOnRoadAbroad;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VehicleSafetyAccessoryPoints))
+            {
+				entityPOCO.VehicleSafetyAccessoryPoints = entityPM.VehicleSafetyAccessoryPoints;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatusCode))
+            {
+				entityPOCO.StatusCode = entityPM.StatusCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
+            {
+				entityPOCO.SearchFields = entityPM.SearchFields;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConcurrencyGUID))
+            {
+				entityPOCO.ConcurrencyGUID = entityPM.ConcurrencyGUID;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeclarationId))
+            {
+				entityPOCO.DeclarationId = entityPM.DeclarationId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsThreeWheeledForReduction))
+            {
+				entityPOCO.IsThreeWheeledForReduction = entityPM.IsThreeWheeledForReduction;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TaxiMedalOwner))
+            {
+				entityPOCO.TaxiMedalOwner = entityPM.TaxiMedalOwner;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ImporterPassportNumber))
+            {
+				entityPOCO.ImporterPassportNumber = entityPM.ImporterPassportNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ImporterPassCountryCode))
+            {
+				entityPOCO.ImporterPassCountryCode = entityPM.ImporterPassCountryCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ImporterPassportTypeCode))
+            {
+				entityPOCO.ImporterPassportTypeCode = entityPM.ImporterPassportTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCBS))
+            {
+				entityPOCO.IsCBS = entityPM.IsCBS;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsSlipperClutch))
+            {
+				entityPOCO.IsSlipperClutch = entityPM.IsSlipperClutch;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsSteeringDamper))
+            {
+				entityPOCO.IsSteeringDamper = entityPM.IsSteeringDamper;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsTCS))
+            {
+				entityPOCO.IsTCS = entityPM.IsTCS;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsTPS))
+            {
+				entityPOCO.IsTPS = entityPM.IsTPS;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VehicleCategory))
+            {
+				entityPOCO.VehicleCategory = entityPM.VehicleCategory;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VehicleMaxPowerKW))
+            {
+				entityPOCO.VehicleMaxPowerKW = entityPM.VehicleMaxPowerKW;
+			}
+			
+				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
+		  }
+
+		public void POCOToPM(VehiclePM entityPM, Vehicle entityPOCO)
+        {
+			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
+            {
+					entityPM.Id = entityPOCO.Id;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
+            {
+					entityPM.Tenant = entityPOCO.Tenant;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.RichbitFileNumber))
+            {
+					entityPM.RichbitFileNumber = entityPOCO.RichbitFileNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.VehicleChassisNumber))
+            {
+					entityPM.VehicleChassisNumber = entityPOCO.VehicleChassisNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.VehiclePoolTypeCode))
+            {
+					entityPM.VehiclePoolTypeCode = entityPOCO.VehiclePoolTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.VehiclePriceListTypeCode))
+            {
+					entityPM.VehiclePriceListTypeCode = entityPOCO.VehiclePriceListTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.VehicleManufacturerCode))
+            {
+					entityPM.VehicleManufacturerCode = entityPOCO.VehicleManufacturerCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ModelCode))
+            {
+					entityPM.ModelCode = entityPOCO.ModelCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsABS))
+            {
+					entityPM.IsABS = entityPOCO.IsABS;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AirBagsNumber))
+            {
+					entityPM.AirBagsNumber = entityPOCO.AirBagsNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ConverterTypeCode))
+            {
+					entityPM.ConverterTypeCode = entityPOCO.ConverterTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsArmoredVehicle))
+            {
+					entityPM.IsArmoredVehicle = entityPOCO.IsArmoredVehicle;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsLoweringVehicleForInvalid))
+            {
+					entityPM.IsLoweringVehicleForInvalid = entityPOCO.IsLoweringVehicleForInvalid;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.GreenIndex))
+            {
+					entityPM.GreenIndex = entityPOCO.GreenIndex;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.GreenIndexGroup))
+            {
+					entityPM.GreenIndexGroup = entityPOCO.GreenIndexGroup;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsStabilityControl))
+            {
+					entityPM.IsStabilityControl = entityPOCO.IsStabilityControl;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsraelEnterDate))
+            {
+					entityPM.IsraelEnterDate = entityPOCO.IsraelEnterDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EngineCapacity))
+            {
+					entityPM.EngineCapacity = entityPOCO.EngineCapacity;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.VehiclePowerKW))
+            {
+					entityPM.VehiclePowerKW = entityPOCO.VehiclePowerKW;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.VehicleTecnologyTypeCode))
+            {
+					entityPM.VehicleTecnologyTypeCode = entityPOCO.VehicleTecnologyTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FuelTypeCode))
+            {
+					entityPM.FuelTypeCode = entityPOCO.FuelTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.VehicleWindowNumber))
+            {
+					entityPM.VehicleWindowNumber = entityPOCO.VehicleWindowNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ManufactureCountryCode))
+            {
+					entityPM.ManufactureCountryCode = entityPOCO.ManufactureCountryCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MedalNumber))
+            {
+					entityPM.MedalNumber = entityPOCO.MedalNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CommercialNickname))
+            {
+					entityPM.CommercialNickname = entityPOCO.CommercialNickname;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ModelDescription))
+            {
+					entityPM.ModelDescription = entityPOCO.ModelDescription;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.NumberOfSeats))
+            {
+					entityPM.NumberOfSeats = entityPOCO.NumberOfSeats;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TotalVehicleWeight))
+            {
+					entityPM.TotalVehicleWeight = entityPOCO.TotalVehicleWeight;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SelfVehicleWeight))
+            {
+					entityPM.SelfVehicleWeight = entityPOCO.SelfVehicleWeight;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.NumberOfWheels))
+            {
+					entityPM.NumberOfWheels = entityPOCO.NumberOfWheels;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.VehicleManufactureDate))
+            {
+					entityPM.VehicleManufactureDate = entityPOCO.VehicleManufactureDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.VehicleTypeCode))
+            {
+					entityPM.VehicleTypeCode = entityPOCO.VehicleTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TransmissionDateWithoutTax))
+            {
+					entityPM.TransmissionDateWithoutTax = entityPOCO.TransmissionDateWithoutTax;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ImporterIdentityId))
+            {
+					entityPM.ImporterIdentityId = entityPOCO.ImporterIdentityId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DateOnRoadAbroad))
+            {
+					entityPM.DateOnRoadAbroad = entityPOCO.DateOnRoadAbroad;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.VehicleSafetyAccessoryPoints))
+            {
+					entityPM.VehicleSafetyAccessoryPoints = entityPOCO.VehicleSafetyAccessoryPoints;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.StatusCode))
+            {
+					entityPM.StatusCode = entityPOCO.StatusCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SearchFields))
+            {
+					entityPM.SearchFields = entityPOCO.SearchFields;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ConcurrencyGUID))
+            {
+					entityPM.ConcurrencyGUID = entityPOCO.ConcurrencyGUID;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DeclarationId))
+            {
+					entityPM.DeclarationId = entityPOCO.DeclarationId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsThreeWheeledForReduction))
+            {
+					entityPM.IsThreeWheeledForReduction = entityPOCO.IsThreeWheeledForReduction;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TaxiMedalOwner))
+            {
+					entityPM.TaxiMedalOwner = entityPOCO.TaxiMedalOwner;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ImporterPassportNumber))
+            {
+					entityPM.ImporterPassportNumber = entityPOCO.ImporterPassportNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ImporterPassCountryCode))
+            {
+					entityPM.ImporterPassCountryCode = entityPOCO.ImporterPassCountryCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ImporterPassportTypeCode))
+            {
+					entityPM.ImporterPassportTypeCode = entityPOCO.ImporterPassportTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsCBS))
+            {
+					entityPM.IsCBS = entityPOCO.IsCBS;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsSlipperClutch))
+            {
+					entityPM.IsSlipperClutch = entityPOCO.IsSlipperClutch;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsSteeringDamper))
+            {
+					entityPM.IsSteeringDamper = entityPOCO.IsSteeringDamper;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsTCS))
+            {
+					entityPM.IsTCS = entityPOCO.IsTCS;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsTPS))
+            {
+					entityPM.IsTPS = entityPOCO.IsTPS;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.VehicleCategory))
+            {
+					entityPM.VehicleCategory = entityPOCO.VehicleCategory;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.VehicleMaxPowerKW))
+            {
+					entityPM.VehicleMaxPowerKW = entityPOCO.VehicleMaxPowerKW;
+            }
+
+		}
+
+		public void PMToOldPM(VehiclePM entityPM, VehiclePM oldEntityPM)
+        {
+		     oldEntityPM.ChangedProperties.Clear();
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+                oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RichbitFileNumber))
+            {
+                oldEntityPM.RichbitFileNumber = entityPM.RichbitFileNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VehicleChassisNumber))
+            {
+                oldEntityPM.VehicleChassisNumber = entityPM.VehicleChassisNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VehiclePoolTypeCode))
+            {
+                oldEntityPM.VehiclePoolTypeCode = entityPM.VehiclePoolTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VehiclePriceListTypeCode))
+            {
+                oldEntityPM.VehiclePriceListTypeCode = entityPM.VehiclePriceListTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VehicleManufacturerCode))
+            {
+                oldEntityPM.VehicleManufacturerCode = entityPM.VehicleManufacturerCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ModelCode))
+            {
+                oldEntityPM.ModelCode = entityPM.ModelCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsABS))
+            {
+                oldEntityPM.IsABS = entityPM.IsABS;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AirBagsNumber))
+            {
+                oldEntityPM.AirBagsNumber = entityPM.AirBagsNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConverterTypeCode))
+            {
+                oldEntityPM.ConverterTypeCode = entityPM.ConverterTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsArmoredVehicle))
+            {
+                oldEntityPM.IsArmoredVehicle = entityPM.IsArmoredVehicle;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsLoweringVehicleForInvalid))
+            {
+                oldEntityPM.IsLoweringVehicleForInvalid = entityPM.IsLoweringVehicleForInvalid;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GreenIndex))
+            {
+                oldEntityPM.GreenIndex = entityPM.GreenIndex;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GreenIndexGroup))
+            {
+                oldEntityPM.GreenIndexGroup = entityPM.GreenIndexGroup;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsStabilityControl))
+            {
+                oldEntityPM.IsStabilityControl = entityPM.IsStabilityControl;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsraelEnterDate))
+            {
+                oldEntityPM.IsraelEnterDate = entityPM.IsraelEnterDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EngineCapacity))
+            {
+                oldEntityPM.EngineCapacity = entityPM.EngineCapacity;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VehiclePowerKW))
+            {
+                oldEntityPM.VehiclePowerKW = entityPM.VehiclePowerKW;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VehicleTecnologyTypeCode))
+            {
+                oldEntityPM.VehicleTecnologyTypeCode = entityPM.VehicleTecnologyTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FuelTypeCode))
+            {
+                oldEntityPM.FuelTypeCode = entityPM.FuelTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VehicleWindowNumber))
+            {
+                oldEntityPM.VehicleWindowNumber = entityPM.VehicleWindowNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ManufactureCountryCode))
+            {
+                oldEntityPM.ManufactureCountryCode = entityPM.ManufactureCountryCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MedalNumber))
+            {
+                oldEntityPM.MedalNumber = entityPM.MedalNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CommercialNickname))
+            {
+                oldEntityPM.CommercialNickname = entityPM.CommercialNickname;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ModelDescription))
+            {
+                oldEntityPM.ModelDescription = entityPM.ModelDescription;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NumberOfSeats))
+            {
+                oldEntityPM.NumberOfSeats = entityPM.NumberOfSeats;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TotalVehicleWeight))
+            {
+                oldEntityPM.TotalVehicleWeight = entityPM.TotalVehicleWeight;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SelfVehicleWeight))
+            {
+                oldEntityPM.SelfVehicleWeight = entityPM.SelfVehicleWeight;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NumberOfWheels))
+            {
+                oldEntityPM.NumberOfWheels = entityPM.NumberOfWheels;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VehicleManufactureDate))
+            {
+                oldEntityPM.VehicleManufactureDate = entityPM.VehicleManufactureDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VehicleTypeCode))
+            {
+                oldEntityPM.VehicleTypeCode = entityPM.VehicleTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TransmissionDateWithoutTax))
+            {
+                oldEntityPM.TransmissionDateWithoutTax = entityPM.TransmissionDateWithoutTax;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ImporterIdentityId))
+            {
+                oldEntityPM.ImporterIdentityId = entityPM.ImporterIdentityId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DateOnRoadAbroad))
+            {
+                oldEntityPM.DateOnRoadAbroad = entityPM.DateOnRoadAbroad;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VehicleSafetyAccessoryPoints))
+            {
+                oldEntityPM.VehicleSafetyAccessoryPoints = entityPM.VehicleSafetyAccessoryPoints;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatusCode))
+            {
+                oldEntityPM.StatusCode = entityPM.StatusCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
+            {
+                oldEntityPM.SearchFields = entityPM.SearchFields;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConcurrencyGUID))
+            {
+                oldEntityPM.ConcurrencyGUID = entityPM.ConcurrencyGUID;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeclarationId))
+            {
+                oldEntityPM.DeclarationId = entityPM.DeclarationId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsThreeWheeledForReduction))
+            {
+                oldEntityPM.IsThreeWheeledForReduction = entityPM.IsThreeWheeledForReduction;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TaxiMedalOwner))
+            {
+                oldEntityPM.TaxiMedalOwner = entityPM.TaxiMedalOwner;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ImporterPassportNumber))
+            {
+                oldEntityPM.ImporterPassportNumber = entityPM.ImporterPassportNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ImporterPassCountryCode))
+            {
+                oldEntityPM.ImporterPassCountryCode = entityPM.ImporterPassCountryCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ImporterPassportTypeCode))
+            {
+                oldEntityPM.ImporterPassportTypeCode = entityPM.ImporterPassportTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCBS))
+            {
+                oldEntityPM.IsCBS = entityPM.IsCBS;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsSlipperClutch))
+            {
+                oldEntityPM.IsSlipperClutch = entityPM.IsSlipperClutch;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsSteeringDamper))
+            {
+                oldEntityPM.IsSteeringDamper = entityPM.IsSteeringDamper;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsTCS))
+            {
+                oldEntityPM.IsTCS = entityPM.IsTCS;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsTPS))
+            {
+                oldEntityPM.IsTPS = entityPM.IsTPS;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VehicleCategory))
+            {
+                oldEntityPM.VehicleCategory = entityPM.VehicleCategory;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VehicleMaxPowerKW))
+            {
+                oldEntityPM.VehicleMaxPowerKW = entityPM.VehicleMaxPowerKW;
+            }
+			
+		}
+
+	    public void EncodeBase64NVARCHARFields(VehiclePM entityPM)
+        {
+            if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
+            {
+                return;
+
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.SearchFields)) //T4 find type == nText 
+            {
+                entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
+            }
+            entityPM.EncodeBase64NVARCHARFieldsBy=null;
+		}
+
+
+	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
+        {
+            CustomMappedPOCOProperties.Add(pocoPropertyName);
+        }
+
+        public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
+        {
+            CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+		
+		private void BuildSearchFieldsGenerated(VehiclePM entityPM, Vehicle entityPOCO, bool isNewEntity)
+        {
+            string mySearchFields = "";
+			
+           
+            entityPM.SearchFields += mySearchFields;
+            entityPOCO.SearchFields += mySearchFields;
+        }
+			  
+   }
+}
+	 

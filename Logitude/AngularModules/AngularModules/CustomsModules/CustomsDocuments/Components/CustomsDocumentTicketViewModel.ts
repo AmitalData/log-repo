@@ -1,0 +1,1175 @@
+import {CustomsDocumentPM} from "../../../Customs/EntityPMs/CustomsDocumentPM";
+import {CustomsDocumentsTicketPM} from "../../../Customs/EntityPMs/CustomsDocumentsTicketPM";
+import {CustomsDocumentPointerPM} from "../../../Customs/EntityPMs/CustomsDocumentPointerPM";
+import {DocumentsFilingPM} from "../../../Common/EntityPMs/DocumentsFilingPM";
+import {CustomsDocumentMetaDataValuePM} from '../../../Customs/EntityPMs/CustomsDocumentMetaDataValuePM';
+import {CustomDocumentTypeList} from '../../../Customs/EntityLists/CustomDocumentTypeList';
+import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
+import {CustomDocumentTypeMetaDataListService} from '../../../Customs/Services/StandardLists/CustomDocumentTypeMetaDataListService';
+import {CustomDocumentTypeListService} from '../../../Customs/Services/StandardLists/CustomDocumentTypeListService';
+import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
+import {CustomDocumentTypeMetaDataList} from '../../../Customs/EntityLists/CustomDocumentTypeMetaDataList';
+import {AppTool, ArrayTool} from '../../../Infrastructure/Tools';
+import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import {RelatedDocumentViewModel} from './RelatedDocumentViewModel';
+import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
+import {CustomsDocumentPMService} from '../../../Customs/Services/StandardPMs/CustomsDocumentPMService';
+import {CustomsDocumentsTicketPMService} from '../../../Customs/Services/StandardPMs/CustomsDocumentsTicketPMService';
+import {CustomsDocumentsComponent} from './CustomsDocumentsComponent';
+import {ICustomsDocumentsController} from './ICustomsDocumentsController';
+import {CustomsDocumentsTicketsExtendedService} from '../../../Customs/Services/ExtendedPMs/CustomsDocumentsTicketsExtendedService'
+import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
+import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
+import {CustDocRelatedDocsWebService} from '../../../Customs/Services/WebServices/CustDocRelatedDocsWebService';
+import {CustDocMetaDataValuesWebService} from '../../../Customs/Services/WebServices/CustDocMetaDataValuesWebService';
+import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
+import {DeclarationPM} from "../../../Customs/EntityPMs/DeclarationPM";
+
+export class CustomsDocumentTicketViewModel {
+
+    //****************Properties****************//
+    get Id() { return this.customsDocumentsTicketPM.Id; }
+    set Id(value: string) {
+
+        if (this.customsDocumentsTicketPM.Id != value) {
+            this.customsDocumentsTicketPM.Id = value;
+        }
+    }
+
+    get DocumentTypeCode() { return this.customsDocumentsTicketPM.DocumentTypeCode; }
+    set DocumentTypeCode(value: string) {
+
+        if (this.customsDocumentsTicketPM.DocumentTypeCode != value) {
+            this.customsDocumentsTicketPM.DocumentTypeCode = value;
+        }
+    }
+
+    get CustomsDocId() { return this.customsDocumentsTicketPM.CustomsDocId; }
+    set CustomsDocId(value: string) {
+
+        if (this.customsDocumentsTicketPM.CustomsDocId != value) {
+            this.customsDocumentsTicketPM.CustomsDocId = value;
+        }
+    }
+
+    get RequestedDocumentId() { return this.customsDocumentsTicketPM.RequestedCustomsDocId; }
+    set RequestedDocumentId(value: string) {
+
+        if (this.customsDocumentsTicketPM.RequestedCustomsDocId != value) {
+            this.customsDocumentsTicketPM.RequestedCustomsDocId = value;
+        }
+    }
+
+    get DocumentsFilingId() { return this.customsDocumentsTicketPM.DocumentsFilingId; }
+    set DocumentsFilingId(value: string) {
+
+        if (this.customsDocumentsTicketPM.DocumentsFilingId != value) {
+            this.customsDocumentsTicketPM.DocumentsFilingId = value;
+        }
+    }
+
+    get Extension() { return this.customsDocumentsTicketPM.Extension; }
+    set Extension(value: string) {
+
+        if (this.customsDocumentsTicketPM.Extension != value) {
+            this.customsDocumentsTicketPM.Extension = value;
+        }
+    }
+
+    get ExternalAttachmentId() { return this.customsDocumentsTicketPM.ExternalAttachmentId; }
+    set ExternalAttachmentId(value: string) {
+
+        if (this.customsDocumentsTicketPM.ExternalAttachmentId != value) {
+            this.customsDocumentsTicketPM.ExternalAttachmentId = value;
+        }
+  }
+    public FromCompanyDocumentType2Add: boolean = false;
+
+    private customDocumentTypeMetaDataLists: CustomDocumentTypeMetaDataList[];
+    public MetaDataCount: number;
+    public IsMetaDataVisible: boolean;
+    public LeadingMetaDataName: string;
+    public LeadingMetaDataValue: string;
+    public metaDataList: MetaDataValueViewModel[] = [];
+    private customsDocumentTypeLists: CustomDocumentTypeList[];
+    public DocumentTypeName: string;
+    public DocumentStatusName: string;
+    public CustomsDocIdLabelText: string;
+    public Status1ImageGreen: boolean;
+    public Status1ImageGray: boolean;
+    public Status2ImageGreen: boolean;
+    public Status2ImageGray: boolean;
+    public Status2ErrorImage: boolean;
+    get ExternalAttachmentIdVisibility() {
+        if (this.ExternalAttachmentId) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    DeniedImageVisibility: boolean;
+    ApprovedImageVisibility: boolean;
+    private customsDocumentMetaDataValuePMs: CustomsDocumentMetaDataValuePM[];
+    DataContext: CustomsDocumentsComponent;
+    PreventEdit: boolean = false;
+    _SInvoiceNumber: string = null;
+    _IsClassified: boolean = false;
+    private EntityResourceService: EntityResourceService;
+    //*****************************************//
+    constructor(public customsDocumentsTicketPM: CustomsDocumentsTicketPM, customsDocumentMetaDataValuePMs: CustomsDocumentMetaDataValuePM[], 
+        private isNew: boolean, public isDisplayOnly: boolean, public EntityPM: any, private objectTableName: string, private iCustomsDocumentsController: ICustomsDocumentsController) {
+        this.EntityResourceService = new EntityResourceService();
+        if (customsDocumentMetaDataValuePMs != null) {
+            this.customsDocumentMetaDataValuePMs = customsDocumentMetaDataValuePMs.filter(d => d.CustomsDocumentId == customsDocumentsTicketPM.DocumentsFilingId);
+        }
+        var customDocumentTypeListService: CustomDocumentTypeListService = new CustomDocumentTypeListService();
+        customDocumentTypeListService.getAllFromCache().subscribe((resp: ServiceResponse) => {
+            this.customsDocumentTypeLists = resp.Result;
+            var customDocumentType = this.customsDocumentTypeLists.filter(d => d.Code == this.customsDocumentsTicketPM.DocumentTypeCode)[0];
+            this.DocumentTypeName = customDocumentType.LocalName;
+        });
+        this.DocumentStatusName = this.customsDocumentsTicketPM.DocumentStatusName;
+        this.CustomsDocIdLabelText = this.GetCustomsDocIdLabelText();
+        this.SetStatusImages();
+        this.SetApprovedDeniedImages();
+        if (!this.isNew) {
+            this.SetCustomDocumentMetaData();
+        }
+        if (customsDocumentsTicketPM.DocumentTypeCode == "380" && !AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.ConnectedInvoicesSequences)) {
+
+            var dec: DeclarationPM = EntityPM as DeclarationPM;
+            if (dec) {
+
+                var ary = this.customsDocumentsTicketPM.ConnectedInvoicesSequences.split(",");
+                var firstSeq = ary[0];
+                var sp = dec.SupplierInvoices.filter(r => r.SequenceNumeric.toString() == firstSeq)[0];
+                if (sp) {
+                    this._SInvoiceNumber = sp.InvoiceNumber;
+                    if (ary.length > 1) {
+                        this._SInvoiceNumber = this._SInvoiceNumber + "...";
+                    }
+                    if (!AppTool.IsNullOrEmpty(customsDocumentsTicketPM.DocumentsFilingId)) {
+                        var custDocRelatedDocsWebService: CustDocRelatedDocsWebService = new CustDocRelatedDocsWebService();
+                        custDocRelatedDocsWebService.GetSingleDocumentsFilingPM(customsDocumentsTicketPM.DocumentsFilingId).
+                            subscribe((resp: ServiceResponse) => {
+                                var documentFiling: DocumentsFilingPM = resp.Result;
+                                if (documentFiling.DocumentTypeCode == "CLSI") {
+                                    this._IsClassified = true;
+                                }
+
+                            });
+                    }
+
+
+                }
+
+            }
+
+        }
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe(response => {
+            CustomsDocumentTicketViewModel.Customs_Claim_TH_CustomAnswer = TextCodeTranslator.Translate("Customs.Claim.TH.CustomAnswer");
+        });
+    }
+    public ListOfStatusCode2Show: string[] = ["1", "2"];
+    public get HaveCustomAnswer(): boolean {
+        if (AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.DocumentStatusCode) ||
+            AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.DocumentsFilingId) ||
+            //entityPm.DocumentStatusCode!= "1" 
+            this.ListOfStatusCode2Show.indexOf(this.customsDocumentsTicketPM.DocumentStatusCode) == -1
+        ) {
+
+            return false;
+        }
+        return true;
+    }
+
+    static Customs_Claim_TH_CustomAnswer: string;
+    public get CustomAnswerTitle() {
+        if (this.HaveCustomAnswer) {
+            return CustomsDocumentTicketViewModel.Customs_Claim_TH_CustomAnswer;//
+        } else {
+            return TextCodeTranslator.Translate("General.B.Edit");;
+
+        }
+    }
+
+    public SetCustomDocumentMetaData(metaData: { [Code: string]: any; } = {} = null) {
+        var customDocumentTypeMetaDataListService: CustomDocumentTypeMetaDataListService = new CustomDocumentTypeMetaDataListService();
+        this.EntityResourceService.getEntityResourceByTableName("Customs.CustomDocumentTypeMetaData").subscribe(response => {
+
+            customDocumentTypeMetaDataListService.getAllFromCache().subscribe((res: ServiceResponse) => {
+                this.customDocumentTypeMetaDataLists = res.Result;
+                if (metaData == null) {
+                    this.SetCustomDocumentMetaDataFromAll();
+                }
+                else {
+                    this.SetCustomDocumentMetaDataFromDictionary(metaData);
+                }
+            });
+        });
+    }
+
+    private SetCustomDocumentMetaDataFromDictionary(metaData: { [Code: string]: any; } = {}) {
+        this.metaDataList = [];
+        var keys: string[] = Object.keys(metaData);
+        keys.forEach((key) => {
+            var my = this.customDocumentTypeMetaDataLists.filter(d => d.MetaDataTypeCode == key)[0];
+            var viewmodel: MetaDataValueViewModel = new MetaDataValueViewModel();
+            viewmodel.MetaDataValue = metaData[key] != null ? metaData[key] + "" : null;
+            viewmodel.Tenant = SessionLocator.Tenant;
+            viewmodel.MetaDataTypeCode = key;
+            if (my != null) {
+                viewmodel.IsLeading = my.IsLeading;
+                viewmodel.MetaDataTypeName = my.MetaDataTypeName;
+            }
+            this.metaDataList.push(viewmodel);
+        });
+        var leading: MetaDataValueViewModel = this.metaDataList.filter(d => d.IsLeading)[0];
+        if (leading) {
+            this.LeadingMetaDataValue = leading.MetaDataValue == "True" ? "כן" : (leading.MetaDataValue == "False" ? "לא" : leading.MetaDataValue);
+            this.LeadingMetaDataName = leading.MetaDataTypeName;
+        }
+        else if (this.customDocumentTypeMetaDataLists != null) {
+            {
+                var types: CustomDocumentTypeMetaDataList[] = this.customDocumentTypeMetaDataLists.filter(d => d.DocumentTypeCode == this.customsDocumentsTicketPM.DocumentTypeCode).sort((a, b) => { return (a.MetaDataTypeCode === b.MetaDataTypeCode) ? 0 : (a.MetaDataTypeCode < b.MetaDataTypeCode) ? -1 : 1 });;
+                var leadingType: CustomDocumentTypeMetaDataList = types.filter(d => d.Mandatory && d.DocumentTypeCode == this.customsDocumentsTicketPM.DocumentTypeCode)[0];
+                if (leadingType) {
+                    var leadingValue: MetaDataValueViewModel = this.metaDataList.filter(d => d.MetaDataTypeCode == leadingType.MetaDataTypeCode)[0];
+                    this.LeadingMetaDataValue = leadingValue != null ? leadingValue.MetaDataValue : null;
+                    this.LeadingMetaDataName = leadingType.MetaDataTypeName;
+                }
+            }
+        }
+    }
+
+    private SetCustomDocumentMetaDataFromAll() {
+
+
+        this.customDocumentTypeMetaDataLists = this.customDocumentTypeMetaDataLists.filter(d => d.DocumentTypeCode === this.customsDocumentsTicketPM.DocumentTypeCode);
+        if (this.customDocumentTypeMetaDataLists) {
+            var requiredMetaDatas: CustomDocumentTypeMetaDataList[] = this.customDocumentTypeMetaDataLists.filter(d => d.Mandatory && d.DocumentTypeCode === this.customsDocumentsTicketPM.DocumentTypeCode);
+            var counter: number = 0;
+            if (this.customsDocumentMetaDataValuePMs == null) {
+                counter = requiredMetaDatas.length;
+            }
+            else {
+                requiredMetaDatas.forEach((item) => {
+                    var value: CustomsDocumentMetaDataValuePM = this.customsDocumentMetaDataValuePMs.filter(d => d.MetaDataTypeCode == item.MetaDataTypeCode)[0];
+                    if (value && AppTool.IsNullOrEmpty(value.MetaDataValue)) {
+                        counter++;
+                    }
+                    else if (value == null || value == undefined) {
+                        counter++;
+                    }
+                });
+
+            }
+            this.MetaDataCount = counter;
+            if (this.MetaDataCount > 0) {
+                this.IsMetaDataVisible = true;
+            }
+            else {
+                this.IsMetaDataVisible = false;
+            }
+        }
+
+        if (this.customsDocumentMetaDataValuePMs && this.customDocumentTypeMetaDataLists) {
+            var leading: CustomDocumentTypeMetaDataList = this.customDocumentTypeMetaDataLists.filter(d => d.IsLeading && d.DocumentTypeCode == this.customsDocumentsTicketPM.DocumentTypeCode)[0];
+            if (leading) {
+                var leadingValue: CustomsDocumentMetaDataValuePM = this.customsDocumentMetaDataValuePMs.filter(d => d.MetaDataTypeCode == leading.MetaDataTypeCode)[0];
+                this.LeadingMetaDataValue = leadingValue != null ? (leadingValue.MetaDataValue == "True" ? "כן" : (leadingValue.MetaDataValue == "False" ? "לא" : leadingValue.MetaDataValue)) : null;
+                this.LeadingMetaDataName = leading.MetaDataTypeName;
+            }
+            else if (this.customDocumentTypeMetaDataLists != null) {
+                var types: CustomDocumentTypeMetaDataList[] = this.customDocumentTypeMetaDataLists.filter(d => d.DocumentTypeCode == this.customsDocumentsTicketPM.DocumentTypeCode).sort((a, b) => { return (a.MetaDataTypeCode === b.MetaDataTypeCode) ? 0 : (a.MetaDataTypeCode < b.MetaDataTypeCode) ? -1 : 1 });;
+                // var leadingType: CustomDocumentTypeMetaDataList = types.filter(d => d.Mandatory && d.DocumentTypeCode == this.customsDocumentsTicketPM.DocumentTypeCode)[0];
+                leading = types.filter(d => d.Mandatory && d.DocumentTypeCode == this.customsDocumentsTicketPM.DocumentTypeCode)[0];
+                if (leading != null) {
+                    var leadingValue: CustomsDocumentMetaDataValuePM = this.customsDocumentMetaDataValuePMs.filter(d => d.MetaDataTypeCode == leading.MetaDataTypeCode)[0];
+                    this.LeadingMetaDataValue = leadingValue != null ? (leadingValue.MetaDataValue == "True" ? "כן" : (leadingValue.MetaDataValue == "False" ? "לא" : leadingValue.MetaDataValue)) : null;
+                    this.LeadingMetaDataName = leading.MetaDataTypeName;
+                }
+            }
+        }
+
+
+
+    }
+
+    GetStatusFontColor() {
+        var customsDocIdForeground = null;
+
+        if (this.customsDocumentsTicketPM.VerificationStatusTypeCode == "8") {
+            return "#F78232";
+        }
+
+        if (this.customsDocumentsTicketPM.DocumentStatusCode == "1") {
+            customsDocIdForeground = "#018057";
+        }
+        else if (this.customsDocumentsTicketPM.DocumentStatusCode == "2") {
+            customsDocIdForeground = "red";
+        }
+        else if (AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.DocumentStatusCode)) {
+            customsDocIdForeground = "#881C1D";
+        }
+        else if (this.customsDocumentsTicketPM.DocumentStatusCode == "7" || this.customsDocumentsTicketPM.DocumentStatusCode == "8") {
+            customsDocIdForeground = "#F78232";
+        }
+        else {
+            customsDocIdForeground = "#312C31";
+        }
+        return customsDocIdForeground;
+
+    }
+
+    GetCustomsDocIdLabelText() {
+        
+        var customsDocIdLabelText = null;
+        if (AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.DocumentStatusCode) ){// this will cause a problem in statuses. || (AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.VerificationStatusTypeCode) && this.customsDocumentsTicketPM.RequestedCustomsDocId)) { //WI 35024
+            this.DocumentStatusName = TextCodeTranslator.Translate("Customs.CustomsDocuments.CustomsDocNotSentYet");
+            customsDocIdLabelText = null;//TextCodeTranslator.Translate("Customs.CustomsDocuments.CustomsDocNotSentYet");
+        }
+        else if (this.customsDocumentsTicketPM.VerificationStatusTypeCode == "8") {//WI 35024
+            this.DocumentStatusName = TextCodeTranslator.Translate("Customs.CustomsDocuments.CustomsDocInVerificationProgress");
+            customsDocIdLabelText = null;
+        }
+        else if (!AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.VerificationStatusTypeCode)) {
+            // already filled in the init
+            customsDocIdLabelText = null;
+        }
+        else if (this.customsDocumentsTicketPM.DocumentStatusCode == "7") {
+            this.DocumentStatusName = TextCodeTranslator.Translate("Customs.CustomsDocuments.CustomsDocSendInProgress");
+            customsDocIdLabelText = null;//TextCodeTranslator.Translate("Customs.CustomsDocuments.CustomsDocSendInProgress");
+        }
+     
+        
+        else {
+            customsDocIdLabelText = TextCodeTranslator.Translate("Customs.CustomsDocuments.CustomsDocIdLabel");
+        }
+        return customsDocIdLabelText;
+    }
+
+    SetStatusImages() {
+        if (this.customsDocumentsTicketPM.DocumentStatusCode == "1" || this.customsDocumentsTicketPM.DocumentStatusCode == "2" || this.customsDocumentsTicketPM.DocumentStatusCode == "7") {
+            this.Status1ImageGreen = true;
+            this.Status1ImageGray = false;
+        }
+        else {
+            this.Status1ImageGreen = false;
+            this.Status1ImageGray = true;
+        }
+
+        if (this.customsDocumentsTicketPM.DocumentStatusCode == "2") {
+            this.Status2ImageGreen = false;
+            this.Status2ImageGray = false;
+            this.Status2ErrorImage = true;
+        }
+        else if (this.customsDocumentsTicketPM.DocumentStatusCode == "1") {
+            this.Status2ImageGreen = true;
+            this.Status2ImageGray = false;
+            this.Status2ErrorImage = false;
+        }
+        else {
+            this.Status2ImageGreen = false;
+            this.Status2ImageGray = true;
+            this.Status2ErrorImage = false;
+        }
+    }
+
+    SetApprovedDeniedImages() {
+
+        if (this.customsDocumentsTicketPM.VerificationStatusTypeCode == "4" || this.customsDocumentsTicketPM.VerificationStatusTypeCode == "5") {
+            //approvedDeniedImageSource = "/Images/icons/ApprovedDocument.png";
+            this.DeniedImageVisibility = false;
+            this.ApprovedImageVisibility = true;
+        }
+        else if (this.customsDocumentsTicketPM.VerificationStatusTypeCode == "6") {
+            // approvedDeniedImageSource = "/Images/icons/DeniedStamp.png";
+            this.DeniedImageVisibility = true;
+            this.ApprovedImageVisibility = false;
+        }
+        else {
+            this.DeniedImageVisibility = false;
+            this.ApprovedImageVisibility = false;
+        }
+    }
+
+    allowDrop(event: DragEvent) {
+        event.preventDefault();
+        
+        var documentFilingPMId = event.dataTransfer.getData("Id");
+        //if (!documentFilingPMId) {
+        //    event.dataTransfer.effectAllowed = "none";
+        //    event.dataTransfer.dropEffect = "none";
+        //}
+
+    }
+
+    ConnectDocumentToTicket(event: DragEvent, RelatedDocuments: RelatedDocumentViewModel[], dataContext: CustomsDocumentsComponent) {
+        if (SessionLocator.CurrentSession.CurrentEditComponent) {
+            if (SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.IsDirty) {
+                SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+            }
+        }
+        if (this.isDisplayOnly && !this.customsDocumentsTicketPM.RequestedCustomsDocId) {
+            var messageWindow = new MessageWindow();
+            messageWindow.Width = 400;
+            messageWindow.Height = 200;
+            messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+            messageWindow.Show("ההצהרה כבר שולמה - לא ניתן לקשר מסמכים חדשים");
+            messageWindow.WindowClosed.subscribe((event: any) => {
+
+                messageWindow.Close();
+
+            });
+            return;
+        }
+        this.DataContext = dataContext;
+        var documentFilingPMId = event.dataTransfer.getData("Id");
+        if (!AppTool.IsNullOrEmpty(documentFilingPMId)) {
+            var relatedDocumentViewModel: RelatedDocumentViewModel = RelatedDocuments.filter(d => d.Id == documentFilingPMId)[0];
+            if (!this.isDisplayOnly || !AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.RequestedCustomsDocId)) {
+                if (AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.DocumentsFilingId)) {
+                    SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Saving"));
+                    if (relatedDocumentViewModel.CustomDocument == null) {
+                        var customsDocumentPMService: CustomsDocumentPMService = new CustomsDocumentPMService();
+                        var docId = encodeURIComponent(relatedDocumentViewModel.Id);
+                        customsDocumentPMService.get(docId).subscribe((response: ServiceResponse) => {
+                            relatedDocumentViewModel.CustomDocument = response.Result;
+                            if (relatedDocumentViewModel.CustomDocument) {
+                                this.StartCustomsDocumentMetaDataCheck(relatedDocumentViewModel);
+                            }
+                            else {
+                                var customsDocumentPM: CustomsDocumentPM = new CustomsDocumentPM();
+                                customsDocumentPM.DocumentsFilingId = relatedDocumentViewModel.Id;
+                                customsDocumentPM.Tenant = SessionLocator.Tenant;
+                                customsDocumentPM.DocumentTypeCode = this.customsDocumentsTicketPM.DocumentTypeCode;
+                                customsDocumentPM.DeclarationId = this.EntityPM.Id;
+                                customsDocumentPM.IsPartOfDeclaration = true;
+                                relatedDocumentViewModel.CustomDocument = customsDocumentPM;
+                                customsDocumentPMService.insert(customsDocumentPM).subscribe((resp: ServiceResponse) => {
+                                    if (!resp.HasError) {
+                                        this.StartCustomsDocumentMetaDataCheck(relatedDocumentViewModel);
+                                    }
+                                    else {
+                                        SessionLocator.CurrentSession.StopBusyIndicator();
+                                        if (SessionLocator.CurrentSession.CurrentEditComponent) {
+                                            SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = resp.ErrorsArray;
+                                        }
+                                        else {
+                                            var messageWindow = new MessageWindow();
+                                            messageWindow.Width = 400;
+                                            messageWindow.Height = 200;
+                                            messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                                            if (resp.ErrorsArray && resp.ErrorsArray.length > 0) {
+                                                messageWindow.Show(resp.ErrorsArray[0]);
+                                            }
+                                            else {
+                                                messageWindow.Show("Server Error");
+                                            }
+                                            messageWindow.WindowClosed.subscribe((event: any) => {
+
+                                                messageWindow.Close();
+
+                                            });
+                                        }
+                                    }
+                                    //SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                                    //                                SessionLocator.CurrentSession.StopBusyIndicator();
+
+                                });
+                            }
+
+                        });
+                    }
+                    else if (relatedDocumentViewModel.CustomDocument != null) {
+                        this.StartCustomsDocumentMetaDataCheck(relatedDocumentViewModel);
+
+                    }
+
+                }
+            }
+        }
+    }
+
+    StartCustomsDocumentMetaDataCheck(relatedDocumentViewModel: RelatedDocumentViewModel) {
+        var isDifferentData = false;
+        relatedDocumentViewModel.CustomDocument.CustomsDocumentMetaDataValues.forEach((metaDataValue) => {
+            var metaDataViewModel = this.metaDataList.filter(d => d.MetaDataTypeCode == metaDataValue.MetaDataTypeCode)[0];
+            if (metaDataViewModel != null) {
+                if (metaDataViewModel.MetaDataValue != null && metaDataValue.MetaDataValue != null) {
+                    if (metaDataViewModel.MetaDataValue != metaDataValue.MetaDataValue) {
+                        isDifferentData = true;
+                    }
+                }
+            }
+        });
+
+        if (isDifferentData && this.customsDocumentsTicketPM.CustomsDocumentPointers.length == 1) {
+            SessionLocator.CurrentSession.StopBusyIndicator();
+            var confirmWindow = new ConfirmWindow();
+            confirmWindow.Width = 400;
+            confirmWindow.Height = 200;
+            confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+            confirmWindow.ShowNoButton = true;
+            confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.No");
+            confirmWindow.Show(TextCodeTranslator.Translate("Customs.CustomsDocuments.MetaDataDifference"));
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    this.ProcessConnectDocument(relatedDocumentViewModel);
+                    confirmWindow.Close();
+                }
+                if (confirmWindow.No) {
+                    confirmWindow.Close();
+                }
+
+            });
+        }
+        else {
+            this.ProcessConnectDocument(relatedDocumentViewModel);
+        }
+    }
+
+    private SaveGeneratedPointer(relatedDocumentViewModel: RelatedDocumentViewModel = null) {
+        var customsDocumentsTicketPMService: CustomsDocumentsTicketPMService = new CustomsDocumentsTicketPMService();
+        customsDocumentsTicketPMService.insert(this.customsDocumentsTicketPM).subscribe((myResp: ServiceResponse) => {
+            if (!myResp.HasError) {
+                this.SetSavedMetaData(relatedDocumentViewModel);
+                this.isNew = false;
+            }
+            else {
+                SessionLocator.CurrentSession.StopBusyIndicator();
+                if (SessionLocator.CurrentSession.CurrentEditComponent) {
+                    SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = myResp.ErrorsArray;
+                }
+                else {
+                    var messageWindow = new MessageWindow();
+                    messageWindow.Width = 400;
+                    messageWindow.Height = 200;
+                    messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                    if (myResp.ErrorsArray && myResp.ErrorsArray.length > 0) {
+                        messageWindow.Show(myResp.ErrorsArray[0]);
+                    }
+                    else {
+                        messageWindow.Show("Server Error");
+                    }
+                    messageWindow.WindowClosed.subscribe((event: any) => {
+
+                        messageWindow.Close();
+
+                    });
+                }
+            }
+        });
+    }
+
+    private SetSavedMetaData(relatedDocumentViewModel: RelatedDocumentViewModel) {
+        var documentsFilingId = encodeURIComponent(relatedDocumentViewModel.Id);
+        var customsDocumentPMService: CustomsDocumentPMService = new CustomsDocumentPMService();
+        if (relatedDocumentViewModel.CustomDocument == null) {
+            customsDocumentPMService.get(documentsFilingId).subscribe((response: ServiceResponse) => {
+                relatedDocumentViewModel.CustomDocument = response.Result;
+                this.ApplySaveMetaData(relatedDocumentViewModel);
+            });
+        }
+        else {
+            this.ApplySaveMetaData(relatedDocumentViewModel);
+        }
+    }
+
+    ApplySaveMetaData(relatedDocumentViewModel: RelatedDocumentViewModel) {
+        this.metaDataList.forEach((value) => {
+            var metadata: CustomsDocumentMetaDataValuePM = null;
+            if (this.customsDocumentMetaDataValuePMs != null) {
+                metadata = this.customsDocumentMetaDataValuePMs.filter(d => d.MetaDataTypeCode == value.MetaDataTypeCode)[0];
+            }
+            var metadataValue: string = null;
+            if (metadata != null) {
+                metadataValue = metadata.MetaDataValue;
+                var editedValue: CustomsDocumentMetaDataValuePM = relatedDocumentViewModel.CustomDocument.CustomsDocumentMetaDataValues.filter(d => d.MetaDataTypeCode == metadata.MetaDataTypeCode)[0];
+                if (editedValue != null) {
+                    editedValue.MetaDataValue = metadata.MetaDataValue != null ? metadata.MetaDataValue : value.MetaDataValue;
+                }
+            }
+            else {
+                var newValue: CustomsDocumentMetaDataValuePM = new CustomsDocumentMetaDataValuePM(relatedDocumentViewModel.CustomDocument);
+                newValue.MetaDataTypeCode = value.MetaDataTypeCode;
+                newValue.CustomsDocumentId = relatedDocumentViewModel.Id;
+                newValue.MetaDataValue = metadataValue != null ? metadataValue : value.MetaDataValue;
+                newValue.Tenant = SessionLocator.Tenant;
+                relatedDocumentViewModel.CustomDocument.AddCustomsDocumentMetaDataValue(newValue);
+
+            }
+        });
+        var customsDocumentPMService: CustomsDocumentPMService = new CustomsDocumentPMService();
+        customsDocumentPMService.update(relatedDocumentViewModel.CustomDocument).subscribe((response: ServiceResponse) => {
+            SessionLocator.CurrentSession.StopBusyIndicator();
+
+            if (response.HasError) {
+
+                if (SessionLocator.CurrentSession.CurrentEditComponent) {
+                    SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = response.ErrorsArray;
+                }
+                else {
+                    var messageWindow = new MessageWindow();
+                    messageWindow.Width = 400;
+                    messageWindow.Height = 200;
+                    messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                    if (response.ErrorsArray && response.ErrorsArray.length > 0) {
+                        messageWindow.Show(response.ErrorsArray[0]);
+                    }
+                    else {
+                        messageWindow.Show("Server Error");
+                    }
+                    messageWindow.WindowClosed.subscribe((event: any) => {
+
+                        messageWindow.Close();
+
+                    });
+                }
+            }
+            else {
+                this.DataContext.SelectedDocumentId = this.Id;
+                this.DataContext.RefreshEntity();
+                //if (SessionLocator.CurrentSession.CurrentEditComponent) {
+                //    SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                //}
+                //this.DataContext.RefreshButtonClicked(this.Id);
+                //this.DataContext.EditCustomsDocumentsTicket(this);
+            }
+        });
+    }
+
+    ProcessConnectDocument(relatedDocumentViewModel: RelatedDocumentViewModel) {
+        SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Saving"));
+        if (relatedDocumentViewModel != null) {
+            var fileSizeInMB = relatedDocumentViewModel.FileSize / (1024 * 1024);
+            if (fileSizeInMB > 30) {
+                SessionLocator.CurrentSession.StopBusyIndicator();
+                var confirmWindow = new ConfirmWindow();
+                confirmWindow.Width = 400;
+                confirmWindow.Height = 200;
+                confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                confirmWindow.ShowNoButton = false;
+                confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.No");
+                confirmWindow.Show(TextCodeTranslator.Translate("Customs.General.O.DocumentSizeLimit"));
+                confirmWindow.WindowClosed.subscribe((event: any) => {
+                    if (confirmWindow.Yes) {
+                        confirmWindow.Close();
+                    }
+                });
+                return;
+            }
+            if (relatedDocumentViewModel.CustomDocument.DocumentTypeCode == null) {
+                relatedDocumentViewModel.CustomDocument.DocumentTypeCode = this.customsDocumentsTicketPM.DocumentTypeCode;
+            }
+
+            if (relatedDocumentViewModel.CustomDocument.DocumentTypeCode == this.customsDocumentsTicketPM.DocumentTypeCode) {
+                this.customsDocumentMetaDataValuePMs = relatedDocumentViewModel.CustomDocument.CustomsDocumentMetaDataValues;
+
+                //CustomsDocumentsTicketId adjustment mohammad 18.10.14
+                this.customsDocumentsTicketPM.DocumentsFilingId = relatedDocumentViewModel.documentsFilingPM.Id;
+                this.customsDocumentsTicketPM.Name = relatedDocumentViewModel.documentsFilingPM.DocumentTypeName;
+                this.customsDocumentsTicketPM.Extension = relatedDocumentViewModel.documentsFilingPM.FileExtension;
+                this.customsDocumentsTicketPM.FileSize = relatedDocumentViewModel.documentsFilingPM.FileSize;
+                this.customsDocumentsTicketPM.IsMetaDataReady = relatedDocumentViewModel.CustomDocument.IsMetaDataReady;
+
+
+                /// <---field to refresh Screen
+                this.customsDocumentsTicketPM.DocumentStatusName = relatedDocumentViewModel.CustomDocument.DocumentStatusName;
+                this.customsDocumentsTicketPM.DocumentStatusCode = relatedDocumentViewModel.CustomDocument.DocumentStatusCode;
+                this.customsDocumentsTicketPM.CustomsDocId = relatedDocumentViewModel.CustomDocument.CustomsDocId;
+                this.customsDocumentsTicketPM.ExternalAttachmentId = relatedDocumentViewModel.CustomDocument.ExternalAttachmentId;
+
+
+                if (this.isNew) {
+                   
+                    this.SaveGeneratedPointer(relatedDocumentViewModel);
+                }
+                else {
+                    var customsDocumentsTicketPMService: CustomsDocumentsTicketPMService = new CustomsDocumentsTicketPMService();
+                    customsDocumentsTicketPMService.update(this.customsDocumentsTicketPM).subscribe((response: ServiceResponse) => {
+                        if (!response.HasError) {
+                            relatedDocumentViewModel.IsConnected = true;
+                            relatedDocumentViewModel.CustomDocument.IsPartOfDeclaration = true;
+                            this.SetSavedMetaData(relatedDocumentViewModel);
+                        }
+                        else {
+                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            if (SessionLocator.CurrentSession.CurrentEditComponent) {
+                                SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = response.ErrorsArray;
+                            }
+                            else {
+                                var messageWindow = new MessageWindow();
+                                messageWindow.Width = 400;
+                                messageWindow.Height = 200;
+                                messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                                if (response.ErrorsArray && response.ErrorsArray.length > 0) {
+                                    messageWindow.Show(response.ErrorsArray[0]);
+                                }
+                                else {
+                                    messageWindow.Show("Server Error");
+                                }
+                                messageWindow.WindowClosed.subscribe((event: any) => {
+
+                                    messageWindow.Close();
+
+                                });
+                            }
+                        }
+                    });
+                   
+                }
+
+            }
+
+            else {
+                SessionLocator.CurrentSession.StopBusyIndicator();
+                var messageWindow = new MessageWindow();
+                messageWindow.Width = 400;
+                messageWindow.Height = 200;
+                messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                messageWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.DocumentAndCustomDocumentType"));
+                messageWindow.WindowClosed.subscribe((event: any) => {
+                    
+                        messageWindow.Close();
+                    
+                });
+
+            }
+
+        }
+    }
+
+    DisconnectButtonClicked_old(dataContext: CustomsDocumentsComponent) {
+        this.DataContext = dataContext;
+        if (this.customsDocumentsTicketPM.DocumentStatusCode == "8" ) {
+            //var message: string = TextCodeTranslator.Translate("Customs.Declaration.O.DisconnectNotAllowed");
+            //if (AppTool.IsNullOrEmpty(message) || message == "Customs.Declaration.O.DisconnectNotAllowed") {
+            var message = ".לא ניתן לנתק מסמך בתהליך אימות";
+            //}
+            var confirmWindow = new ConfirmWindow();
+            confirmWindow.Width = 400;
+            confirmWindow.Height = 200;
+            confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+            confirmWindow.ShowNoButton = false;
+            confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.No");
+            confirmWindow.Show(message);
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    confirmWindow.Close();
+                }
+            });
+        }
+        else if (this.customsDocumentsTicketPM.VerificationStatusTypeCode == "4" || this.customsDocumentsTicketPM.VerificationStatusTypeCode == "5" || this.customsDocumentsTicketPM.VerificationStatusTypeCode == "6") {
+            //var message: string = TextCodeTranslator.Translate("Customs.Declaration.O.DisconnectNotAllowed");
+            //if (AppTool.IsNullOrEmpty(message) || message == "Customs.Declaration.O.DisconnectNotAllowed") {
+            var message = ".לא ניתן לנתק מסמך אומת/נדחה";
+            //}
+            var confirmWindow = new ConfirmWindow();
+            confirmWindow.Width = 400;
+            confirmWindow.Height = 200;
+            confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+            confirmWindow.ShowNoButton = false;
+            confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.No");
+            confirmWindow.Show(message);
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    confirmWindow.Close();
+                }
+            });
+        }
+        else {
+            this.iCustomsDocumentsController.CheckRequestsInProgress(this.customsDocumentsTicketPM.DocumentsFilingId).subscribe((response: ServiceResponse) => {
+                if (!AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.CustomsDocId)) {
+                    if (response.Result.IsDisplayOnly) {
+                        if (this.isDisplayOnly) {
+                            var message: string = TextCodeTranslator.Translate("Customs.Declaration.O.DisconnectNotAllowed");
+                            if (AppTool.IsNullOrEmpty(message) || message == "Customs.Declaration.O.DisconnectNotAllowed") {
+                                message = ".לא ניתן לנתק מסמך עם סימוכין - הצהרה לתצוגה בלבד";
+                            }
+                            var confirmWindow = new ConfirmWindow();
+                            confirmWindow.Width = 400;
+                            confirmWindow.Height = 200;
+                            confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                            confirmWindow.ShowNoButton = false;
+                            confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.No");
+                            confirmWindow.Show(message);
+                            confirmWindow.WindowClosed.subscribe((event: any) => {
+                                if (confirmWindow.Yes) {
+                                    confirmWindow.Close();
+                                }
+                            });
+                        }
+                        else {
+                            this.ApplyDisconnectFromDocument(true);
+                        }
+                    }
+                    else {
+                        this.ApplyDisconnectFromDocument(true);
+                    }
+                }
+                else {
+                    if (this.isDisplayOnly && response.Result.IsDisplayOnly) {
+                        if (!AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.RequestedCustomsDocId) && !(response.Result.IsDisplayOnly)) {
+                            this.ApplyDisconnectFromDocument(true);
+                        }
+                        else {
+                            var message: string = TextCodeTranslator.Translate("Customs.Declaration.O.DisconnectNotAllowed");
+                            if (AppTool.IsNullOrEmpty(message) || message == "Customs.Declaration.O.DisconnectNotAllowed") {
+                                message = "לא ניתן לנתק מסמך נדרש – קיימת בקשה בתהליך";
+                            }
+                            var confirmWindow = new ConfirmWindow();
+                            confirmWindow.Width = 400;
+                            confirmWindow.Height = 200;
+                            confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                            confirmWindow.ShowNoButton = false;
+                            confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.No");
+                            confirmWindow.Show(message);
+                            confirmWindow.WindowClosed.subscribe((event: any) => {
+                                if (confirmWindow.Yes) {
+                                    confirmWindow.Close();
+                                }
+                            });
+                        }
+                    }
+                    else {
+                        if (response.Result.IsDisplayOnly) {
+                            var message: string = TextCodeTranslator.Translate("Customs.Declaration.O.DisconnectNotAllowed");
+                            if (AppTool.IsNullOrEmpty(message) || message == "Customs.Declaration.O.DisconnectNotAllowed") {
+                                message = ".לא ניתן לנתק מסמך עם בקשה בתהליך";
+                            }
+                            var confirmWindow = new ConfirmWindow();
+                            confirmWindow.Width = 400;
+                            confirmWindow.Height = 200;
+                            confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                            confirmWindow.ShowNoButton = false;
+                            confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.No");
+                            confirmWindow.Show(message);
+                            confirmWindow.WindowClosed.subscribe((event: any) => {
+                                if (confirmWindow.Yes) {
+                                    confirmWindow.Close();
+                                }
+                            });
+                        }
+                        else {
+                            this.ApplyDisconnectFromDocument(true);
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    DisconnectButtonClicked(dataContext: CustomsDocumentsComponent) {
+        //Display only Logic - (Task 35024)
+        var applyDisconnect: boolean = true;
+        var message: string = "";
+        if (this.customsDocumentsTicketPM) {
+            var entitySpecialCondition = this.iCustomsDocumentsController.GetAddEditDocumentsEntitySpecialCondition();
+            if ((this.isDisplayOnly || !entitySpecialCondition) && AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.RequestedCustomsDocId)) {//(Regular doc in a paid declaration) or just disabled declaration
+                applyDisconnect = false;
+                message = "ההצהרה לתצוגה בלבד - לא ניתן לנתק מסמכים";
+            }
+            if (this.isDisplayOnly && AppTool.IsNullOrEmpty( this.customsDocumentsTicketPM.RequestedCustomsDocId) && !AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.CustomsDocId)) {//(Regular doc that was already sent to customs)
+                applyDisconnect = false;
+                message = ".לא ניתן לנתק מסמך עם סימוכין - הצהרה לתצוגה בלבד";
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.RequestedCustomsDocId) && !AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.VerificationStatusTypeCode)) {//(Requested doc that was verified/denied/in verification process)
+                applyDisconnect = false;
+                message = ".לא ניתן לנתק מסמך אומת/נדחה/בתהליך אימות";
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.RequestedCustomsDocId) && AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.VerificationStatusTypeCode)) {//Requested Doc that wasn't send to customs for verification allow disconnect according to design.
+                applyDisconnect = true;
+                //message = "לא ניתן לנתק מסמך נדרש – קיימת בקשה בתהליך";
+            }
+            if (this.customsDocumentsTicketPM.DocumentStatusCode == '7') {
+                applyDisconnect = false;
+                message = "לא ניתן לנתק את המסמך - קיימת בקשה בתהליך";
+            }
+        }
+        if (applyDisconnect) {
+            this.ApplyDisconnectFromDocument(true);
+        }
+        else {
+            var confirmWindow = new ConfirmWindow();
+            confirmWindow.Width = 400;
+            confirmWindow.Height = 200;
+            confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+            confirmWindow.ShowNoButton = false;
+            confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.No");
+            confirmWindow.Show(message);
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    confirmWindow.Close();
+                }
+            });
+        }
+    }
+
+    ApplyDisconnectFromDocument(submit: boolean) {
+        if (SessionLocator.CurrentSession.CurrentEditComponent) {
+            if (SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.IsDirty) {
+                SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+            }
+        }
+        SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Saving"));
+        
+        this.customsDocumentsTicketPM.DocumentsFilingId = null;
+        this.customsDocumentsTicketPM.Extension = null;
+        this.customsDocumentsTicketPM.Name = null;
+        this.customsDocumentsTicketPM.FileSize = null;
+        this.LeadingMetaDataName = null;
+        this.LeadingMetaDataValue = null;
+        if (this.customsDocumentMetaDataValuePMs != null) {
+            this.customsDocumentMetaDataValuePMs = [];
+            this.customsDocumentMetaDataValuePMs = null;
+        }
+        this.customsDocumentsTicketPM.IsMetaDataReady = false;
+        if (submit) {
+            var customsDocumentsTicketPMService: CustomsDocumentsTicketPMService = new CustomsDocumentsTicketPMService();
+            customsDocumentsTicketPMService.update(this.customsDocumentsTicketPM).subscribe((response: ServiceResponse) => {
+                SessionLocator.CurrentSession.StopBusyIndicator();
+                if (response.HasError) {
+                    if (SessionLocator.CurrentSession.CurrentEditComponent) {
+                        SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = response.ErrorsArray;
+                    }
+                    else {
+                        var messageWindow = new MessageWindow();
+                        messageWindow.Width = 400;
+                        messageWindow.Height = 200;
+                        messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                        if (response.ErrorsArray && response.ErrorsArray.length > 0) {
+                            messageWindow.Show(response.ErrorsArray[0]);
+                        }
+                        else {
+                            messageWindow.Show("Server Error");
+                        }
+                        messageWindow.WindowClosed.subscribe((event: any) => {
+
+                            messageWindow.Close();
+
+                        });
+                    }
+                }
+                else {
+                    //this.DataContext.RefreshButtonClicked();
+                    
+
+                    this.DataContext.RefreshEntity();
+                    //if (SessionLocator.CurrentSession.CurrentEditComponent) {
+                    //    SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    //}
+                }
+            });
+        }
+    }
+
+    DeleteButtonClicked(dataContext: CustomsDocumentsComponent) {
+        this.DataContext = dataContext;
+        SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Saving"));
+        if (!this.isNew) {
+            if (!AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.RequestedCustomsDocId)) {
+                SessionLocator.CurrentSession.StopBusyIndicator();
+                var confirmWindow = new ConfirmWindow();
+                confirmWindow.Width = 400;
+                confirmWindow.Height = 200;
+                confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                confirmWindow.ShowNoButton = false;
+                confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.No");
+                confirmWindow.Show("Can't delete a ticket with a requested document id");//(TextCodeTranslator.Translate("Customs.General.O.DocumentSizeLimit"));
+                confirmWindow.WindowClosed.subscribe((event: any) => {
+                    if (confirmWindow.Yes) {
+                        confirmWindow.Close();
+                    }
+                });
+            }
+            else {
+                this.iCustomsDocumentsController.CheckRequestsInProgress(this.customsDocumentsTicketPM.DocumentsFilingId).subscribe((response: ServiceResponse) => {
+                    if (response.Result.IsDisplayOnly) {
+                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        var confirmWindow = new ConfirmWindow();
+                        confirmWindow.Width = 400;
+                        confirmWindow.Height = 200;
+                        confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                        confirmWindow.ShowNoButton = false;
+                        confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.No");
+                        confirmWindow.Show("Can't delete a ticket with a request in progress");//(TextCodeTranslator.Translate("Customs.General.O.DocumentSizeLimit"));
+                        confirmWindow.WindowClosed.subscribe((event: any) => {
+                            if (confirmWindow.Yes) {
+                                confirmWindow.Close();
+                            }
+                        });
+                    }
+                    else {
+
+                        var customsDocumentsTicketPMService: CustomsDocumentsTicketsExtendedService = new CustomsDocumentsTicketsExtendedService();
+                        customsDocumentsTicketPMService.delete(this.customsDocumentsTicketPM.Id).subscribe((deleteResp: ServiceResponse) => {
+                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            if (!deleteResp.HasError) {
+                                this.DataContext.RefreshButtonClicked();
+                            }
+                            else {
+                                if (SessionLocator.CurrentSession.CurrentEditComponent) {
+                                    SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = deleteResp.ErrorsArray;
+                                }
+                                else {
+                                    var messageWindow = new MessageWindow();
+                                    messageWindow.Width = 400;
+                                    messageWindow.Height = 200;
+                                    messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                                    if (deleteResp.ErrorsArray && deleteResp.ErrorsArray.length > 0) {
+                                        messageWindow.Show(deleteResp.ErrorsArray[0]);
+                                    }
+                                    else {
+                                        messageWindow.Show("Server Error");
+                                    }
+                                    messageWindow.WindowClosed.subscribe((event: any) => {
+
+                                        messageWindow.Close();
+
+                                    });
+                                }
+                            }
+                        });
+
+                    }
+                });
+            }
+        }
+        else {
+            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.DataContext.RefreshButtonClicked();
+        }
+    }
+
+    ViewDocumentsQuery() {
+
+       
+        var windowArgs: any = {};
+       
+        var entityInfo = this.iCustomsDocumentsController.GetParentAndChildrenEntityCodesAndIds();
+       
+        var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.RelatedDocuments");
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 1000;
+        logWindow.Height = 800;
+        logWindow.Title = windowTitle;
+        logWindow.ShowCloseButton = false;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(($event: any) => this.OnAddEditWindowClosed($event));
+        logWindow.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
+      logWindow.Show('./CustomsModules/CustomsDocuments/Components/DocumentsFilingsQueryComponent');
+    }
+
+    OnAddEditWindowClosed(event) {
+        if (event != 'cancel' && this.isDisplayOnly && !this.customsDocumentsTicketPM.RequestedCustomsDocId) {
+            var messageWindow = new MessageWindow();
+            messageWindow.Width = 400;
+            messageWindow.Height = 200;
+            messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+            messageWindow.Show("ההצהרה כבר שולמה - לא ניתן לקשר מסמכים חדשים");
+            messageWindow.WindowClosed.subscribe((event: any) => {
+
+                messageWindow.Close();
+
+            });
+            return;
+        }
+        if (event != 'cancel' && !AppTool.IsNullOrEmpty(event)) {
+            var documentsFilingId = event;//encodeURIComponent(event);
+            var custDocRelatedDocsWebService: CustDocRelatedDocsWebService = new CustDocRelatedDocsWebService();
+            custDocRelatedDocsWebService.GetSingleDocumentsFilingPM(documentsFilingId).subscribe((resp: ServiceResponse) => {
+                var documentFiling: DocumentsFilingPM = resp.Result;
+                var custDocMetaDataValuesWebService: CustDocMetaDataValuesWebService = new CustDocMetaDataValuesWebService();
+                custDocMetaDataValuesWebService.GetCustomsDocumentMetaDataValuesByConnectedEntity(documentFiling.EntityId).subscribe((metadataResp: ServiceResponse) => {
+                    var values: CustomsDocumentMetaDataValuePM[] = metadataResp.Result;
+                    var customsDocumentPMService: CustomsDocumentPMService = new CustomsDocumentPMService();
+
+                    var documentsFilingIdEnc = encodeURIComponent(documentsFilingId);
+                    customsDocumentPMService.get(documentsFilingIdEnc).subscribe((response: ServiceResponse) => {
+                        var relatedDocumentViewModel: RelatedDocumentViewModel = new RelatedDocumentViewModel(documentFiling, values, this.isDisplayOnly);
+                        relatedDocumentViewModel.CustomDocument = response.Result;
+                        if (relatedDocumentViewModel.CustomDocument) {
+                            this.StartCustomsDocumentMetaDataCheck(relatedDocumentViewModel);
+                        }
+                        else {
+                            var customsDocumentPM: CustomsDocumentPM = new CustomsDocumentPM();
+                            customsDocumentPM.DocumentsFilingId = relatedDocumentViewModel.Id;
+                            customsDocumentPM.Tenant = SessionLocator.Tenant;
+                            customsDocumentPM.DocumentTypeCode = this.customsDocumentsTicketPM.DocumentTypeCode;
+                            customsDocumentPM.DeclarationId = this.EntityPM.Id;
+                            relatedDocumentViewModel.CustomDocument = customsDocumentPM;
+                            customsDocumentPMService.insert(customsDocumentPM).subscribe((resp: ServiceResponse) => {
+                                if (!resp.HasError) {
+                                    this.StartCustomsDocumentMetaDataCheck(relatedDocumentViewModel);
+                                }
+                                else {
+                                    SessionLocator.CurrentSession.StopBusyIndicator();
+                                    
+                                    if (SessionLocator.CurrentSession.CurrentEditComponent) {
+                                        SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = resp.ErrorsArray;
+                                    }
+                                    else {
+                                        var messageWindow = new MessageWindow();
+                                        messageWindow.Width = 400;
+                                        messageWindow.Height = 200;
+                                        messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                                        if (resp.ErrorsArray && resp.ErrorsArray.length > 0) {
+                                            messageWindow.Show(resp.ErrorsArray[0]);
+                                        }
+                                        else {
+                                            messageWindow.Show("Server Error");
+                                        }
+                                        messageWindow.WindowClosed.subscribe((event: any) => {
+
+                                            messageWindow.Close();
+
+                                        });
+                                    }
+                                }
+                                //SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                                //                                SessionLocator.CurrentSession.StopBusyIndicator();
+
+                            });
+                        }
+
+                    });
+                });
+            });
+        }
+    }
+
+    PreventEditTicket() {
+        this.PreventEdit = true;
+    }
+
+    AllowEditTicket() {
+        this.PreventEdit = false;
+    }
+    ShowMustSend(): boolean {
+        if (!this.customsDocumentsTicketPM.IsSendMandatory) {
+            return false;
+        }
+        if (AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.CustomsDocId)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+}
+
+export class MetaDataValueViewModel {
+    public CustomsDocumentId: string;
+    public Tenant: number;
+    public MetaDataTypeCode: string;
+    public MetaDataValue: string
+    public MetaDataTypeName: string
+    public IsLeading: boolean;
+    public IsMandatory: boolean;
+}

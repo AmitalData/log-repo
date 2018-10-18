@@ -1,0 +1,103 @@
+﻿import {Injectable} from '@angular/core';
+import {Http, Headers} from '@angular/http';
+import {Observable} from 'rxjs/Rx';
+import {ServiceHelper} from '../Utilities/ServiceHelper';
+import {ServiceResponse} from '../DataContracts/ServiceResponse';
+import {TextCodePM} from '../EntityPMs/TextCodePM';
+import {TextCodePMService} from './StandardPMs/TextCodePMService';
+
+@Injectable()
+
+export class DefaultTranslationService {
+    private _apiUrl: string;
+    private _http: Http;
+    constructor() {
+        this._http = ServiceHelper.Http;
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/DefaultTranslation';
+    }
+
+    Post(args: DefaultTranslationAPIHelper) {
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+            authHeader.append('Content-Type', 'application/json');
+
+            var mappedEntity: DefaultTranslationAPIHelper = this.MapJsonToDefaultTranslationAPIHelper(args, false);
+
+            return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), { headers: authHeader }).map((res) => {
+                var myJsonResult = res.json();
+
+                var mappedResult: DefaultTranslationAPIHelper = this.MapJsonToDefaultTranslationAPIHelper(myJsonResult, true, args);
+
+                var myResponse = new ServiceResponse();
+                myResponse.Result = mappedResult;
+                return myResponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
+    private MapJsonToDefaultTranslationAPIHelper(jsonPM: any, getCallMap: boolean = true, entity: DefaultTranslationAPIHelper = null) {
+        if (!entity) {
+            entity = new DefaultTranslationAPIHelper();
+        }
+
+        var jsonPMKeys = Object.keys(jsonPM);
+
+        var myPMService = new TextCodePMService();
+
+        for (var key in jsonPMKeys) {
+            var property = jsonPMKeys[key];
+
+            if (property === "TextCodes") {
+
+                entity.TextCodes = new Array<TextCodePM>();
+
+                for (var item in jsonPM.TextCodes) {
+                    var jItem = jsonPM.TextCodes[item];
+
+                    var newItemPM: TextCodePM = myPMService.MapJsonToEntityPM(jItem, getCallMap);
+
+                    entity.TextCodes.push(newItemPM);
+                }
+            }
+
+            else if (property === "UpdatedTextCodes") {
+
+                entity.UpdatedTextCodes = new Array<TextCodePM>();
+
+                for (var item in jsonPM.UpdatedTextCodes) {
+                    var jItem = jsonPM.UpdatedTextCodes[item];
+
+                    var newItemPM: TextCodePM = myPMService.MapJsonToEntityPM(jItem, getCallMap);
+
+                    entity.UpdatedTextCodes.push(newItemPM);
+                }
+            }
+
+            else {
+                entity[property] = jsonPM[property];
+            }
+        }
+
+        return entity;
+    }
+}
+
+export class DefaultTranslationAPIHelper {
+    Id: number;
+    ObjectTableId: string;
+    SpellCheckedFilterCode: string;
+    CheckDateFilerCode: string;
+    TextCodeTypeCode: string;
+    SearchText: string;
+    SkipDigit: number;
+    TakeDigit: number;
+    SelectedCheckDate: Date;
+    Count: number;
+    TextCodes: TextCodePM[] = [];
+    UpdatedTextCodes: TextCodePM[] = [];
+    IsUpdatingOnly: boolean;
+    IsNewSearching: boolean;
+}

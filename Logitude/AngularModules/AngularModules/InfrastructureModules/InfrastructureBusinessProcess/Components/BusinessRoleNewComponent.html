@@ -1,0 +1,79 @@
+﻿        
+        <table>
+            <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px">
+                <td>
+                    <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table>
+                       
+
+                        <tr class="FormFieldRow">
+                            <td style="width:75px;vertical-align:top">
+                                <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                            </td>
+                            <td style="width:260px;vertical-align:top">
+                                <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideLastColumn]="true"></LogTextBox>
+                            </td>
+                            <td></td>
+                        </tr>
+
+                        <tr class="FormFieldRow">
+                            <td style="width:75px;vertical-align:top">
+                                <LogLabel [ObjectFieldName]="'LocalName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                            </td>
+                            <td style="width:260px;vertical-align:top">
+                                <LogTextBox [ObjectFieldName]="'LocalName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideLastColumn]="true"></LogTextBox>
+                            </td>
+                            <td></td>
+                        </tr>
+
+                        <tr style="height:100px">
+                            <td style="width:90px;vertical-align:top">
+                                <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+
+                            </td>
+                            <td style="width:300px;vertical-align:middle">
+                                <div style="height: 100%; width: 100%;">
+                                    <LogTextBox [ObjectFieldName]="'Description'" [IsMultiline]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideLastColumn]="true"></LogTextBox>
+                                </div>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+               
+                         
+                <tr style="height: 32px;">
+                    <td style="vertical-align: bottom">
+                        <table style="height: 22px;">
+                            <tr>
+                                <td>
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 57px;">
+                                    <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                                </td>
+
+                                <td style="width: 5px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 57px;">
+                                    <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+</table>

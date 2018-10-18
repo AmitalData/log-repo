@@ -1,0 +1,129 @@
+<style>
+    .subTitle{
+        color: #1b90cb;
+        font-size: 16px;
+    }
+</style>
+<table>
+    <tr>
+        <td>
+            <div class="TableHolder">
+                <table>
+                    <tr class="TabTitleRow">
+                        <td>{{'BatchTaskExecution.TH.General' | TextCodeTranslationPipe}} </td>
+                    </tr>
+                    
+                    <tr style="height: 15px;"><td><div style="width: 15px;"></div></td></tr>
+                    
+                    <tr *ngIf="isReady">
+                        <td style="width:500px;">
+                            <table>
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <table>
+                                            <!-- ClassName -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    <LogLabel [ObjectFieldName]="'ClassName'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    {{ClassName}}
+                                                </td>
+
+                                            </tr>
+                                             
+                                            <!-- StartDateTime -->
+                                            <tr class="FormFieldRow">
+                                                <td [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    <LogLabel [ObjectFieldName]="'StartDateTime'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    {{ StartDateTime | DateTimePipe:'DTL12NW' }}
+                                                </td>
+
+                                            </tr>
+
+                                            <!-- DoneDateTime -->
+                                            <tr class="FormFieldRow">
+                                                <td [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    <LogLabel [ObjectFieldName]="'DoneDateTime'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    {{DoneDateTime | DateTimePipe:'DTL12NW'}}
+                                                </td>
+
+                                            </tr>
+
+                                            <!-- ProgressMessage -->
+                                            <tr class="FormFieldRow">
+                                                <td [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    <LogLabel [ObjectFieldName]="'ProgressMessage'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    {{ProgressMessage}}
+                                                </td>
+
+                                            </tr>
+
+                                            <!-- ProgressPercentage -->
+                                            <tr class="FormFieldRow">
+                                                <td [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    <LogLabel [ObjectFieldName]="'ProgressPercentage'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    {{ProgressPercentage}}
+                                                </td>
+
+                                            </tr>
+
+
+                                            <tr><td><div></div></td></tr>
+                                        </table>
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td style="width: 80px;"><div></div></td>
+
+                        <td>
+                            <table>
+                                <!-- PrametersXml -->
+                                <tr class="FormFieldRow">
+                                    <td style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                                        <LogLabel [ObjectFieldName]="'PrametersXml'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td [style.text-align]="isRTL ? 'right' : 'left'">
+                                        {{PrametersXml}}
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td >
+                                    </td>
+                                </tr>
+                            </table>
+
+
+                        </td>
+                        <td><div></div></td>
+                    </tr>
+
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>

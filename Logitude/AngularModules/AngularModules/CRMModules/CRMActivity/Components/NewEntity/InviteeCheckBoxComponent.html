@@ -1,0 +1,5 @@
+﻿<div class="CheckBox" style="vertical-align:central;margin-top:5px">
+    <input  class="CenterCenter" [(ngModel)]="IsChecked" style="text-align:center" (click)="Checkclick(rowData)" [attr.id]="Key" type="checkbox"/>
+    <label class="CenterCenter" [attr.for]="Key"></label>
+    <!--<LogCheckBox [ObjectFieldName]="'IsChecked'" [Checked]="IsChecked" (ValueChanged)="Checkclick(rowData)" [DataContext]="DataContext"></LogCheckBox>--> 
+</div>

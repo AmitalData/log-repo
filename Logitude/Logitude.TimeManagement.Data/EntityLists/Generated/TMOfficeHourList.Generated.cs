@@ -1,0 +1,50 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization; 
+
+namespace Logitude.TimeManagement.Data.EntityLists
+{
+   [DataContract]
+   public partial class TMOfficeHourList
+   {
+   
+       [Key]
+       [DataMember]
+       public string Id  { get; set; }
+       [DataMember]
+       public int Tenant  { get; set; }
+       [DataMember]
+       public DateTime CreateDate  { get; set; }
+       [DataMember]
+       public string CreatedByUserId  { get; set; }
+       [DataMember]
+       public DateTime UpdateDate  { get; set; }
+       [DataMember]
+       public string UpdatedByUserId  { get; set; }
+       [DataMember]
+       public string SearchFields  { get; set; }
+       [DataMember]
+       public string UserId  { get; set; }
+       [DataMember]
+       public DateTime WorkDate  { get; set; }
+       [DataMember]
+       public DateTime? RecordedEntryTime  { get; set; }
+       [DataMember]
+       public DateTime? RecordedExitTime  { get; set; }
+       [DataMember]
+       public DateTime? EntryTime  { get; set; }
+       [DataMember]
+       public DateTime? ExitTime  { get; set; }
+       [DataMember]
+       public string Description  { get; set; }
+       [DataMember]
+       public bool Inactive  { get; set; }
+   }
+
+}
+	 

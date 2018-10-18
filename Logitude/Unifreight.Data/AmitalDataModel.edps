@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<EntityDeveloper Version="5.7.299.0">
+  <ModelSettings xmlns:ed="http://devart.com/schemas/EntityDeveloper/1.0" AppConnectionStringName="DevartAmitalConnectionString" ConnectionStringInAppConfig="True" RegenareteConnectionStringInAppConfig="True" TargetFramework="Net45" DetectTPTInheritance="False" EntityFrameworkVersion="Version5" IncludeForeignKeysInModel="true" DetectFunctionBasedColumnDefault="false">
+    <Connection ConnectionString="User Id=amitestm;Password=amitestm;Server=10.10.10.67;Direct=True;Sid=amital;Persist Security Info=True" Provider="Devart.Data.Oracle" />
+    <Generation>
+      <GeneratedFiles>
+        <File Name="AmitalDataModel.AmitalContext.cs" />
+        <File Name="AmitalDataModel.YCULTASK.cs" />
+        <File Name="AmitalDataModel.YCULPROCESS.cs" />
+        <File Name="AmitalDataModel.GGGQ.cs" />
+        <File Name="AmitalDataModel.CCUACCSUP.cs" />
+        <File Name="AmitalDataModel.CCUMSHGR.cs" />
+        <File Name="AmitalDataModel.CCUPAYHAND.cs" />
+        <File Name="AmitalDataModel.CCUSUPITEM.cs" />
+        <File Name="AmitalDataModel.GDFDATA.cs" />
+        <File Name="AmitalDataModel.CCUCRREQ.cs" />
+        <File Name="AmitalDataModel.GTRTRAN.cs" />
+        <File Name="AmitalDataModel.GRTRATE.cs" />
+        <File Name="AmitalDataModel.CCUCUSTITEM.cs" />
+        <File Name="AmitalDataModel.CCUQUELOCK.cs" />
+        <File Name="AmitalDataModel.CCUPAYLINEF.cs" />
+        <File Name="AmitalDataModel.CCUTAX.cs" />
+        <File Name="AmitalDataModel.CCUFILEM.cs" />
+        <File Name="AmitalDataModel.HQAFILEDATA.cs" />
+        <File Name="AmitalDataModel.GTBMANDT.cs" />
+        <File Name="AmitalDataModel.GNDCARD.cs" />
+        <File Name="AmitalDataModel.CTBPACKTYPE.cs" />
+        <File Name="AmitalDataModel.GAQFILEDATA.cs" />
+        <File Name="AmitalDataModel.CTBBONDED.cs" />
+        <File Name="AmitalDataModel.CTBCOUNTRY.cs" />
+        <File Name="AmitalDataModel.CTBIDNTP.cs" />
+        <File Name="AmitalDataModel.CTBIMPORT.cs" />
+        <File Name="AmitalDataModel.CTBMISHGUR.cs" />
+        <File Name="AmitalDataModel.CTBRESHTYPE.cs" />
+        <File Name="AmitalDataModel.CTBRGOWN.cs" />
+        <File Name="AmitalDataModel.CTBSTORAGE.cs" />
+        <File Name="AmitalDataModel.CTBTRANSP.cs" />
+        <File Name="AmitalDataModel.CTBUNLOAD.cs" />
+        <File Name="AmitalDataModel.ATBPTIL.cs" />
+        <File Name="AmitalDataModel.CTBLOAD.cs" />
+        <File Name="AmitalDataModel.GNDADR.cs" />
+        <File Name="AmitalDataModel.CTBPART.cs" />
+        <File Name="AmitalDataModel.CTBPKDT.cs" />
+      </GeneratedFiles>
+    </Generation>
+    <DatabaseFirstNamingRules>
+      <EntitySet PluralizationName="Pluralize" />
+      <Class UseSchemaAsPrefix="False" PluralizeCollectionNavigationPropertyName="True" RemoveUnderscores="True" CodeCase="FirstLetterUppercase" AddPrefix="" AddSuffix="" RemovePrefixes="" RemoveSuffixes="" PluralizationName="Singularize" />
+      <Property RemoveUnderscores="True" CodeCase="FirstLetterUppercase" AddPrefix="" AddSuffix="" RemovePrefixes="" RemoveSuffixes="" PluralizationName="Unchanged" />
+    </DatabaseFirstNamingRules>
+    <ModelFirst StorageSynchronizationEnabled="False" TargetSchema="AMITESTM" TargetProviderName="Devart.Data.Oracle">
+      <TargetServer Server="Oracle" ServerVersion="10gR2" />
+      <ModelFirstNamingRules>
+        <Table RemoveUnderscores="False" CodeCase="Unchanged" AddPrefix="" AddSuffix="" RemovePrefixes="" RemoveSuffixes="" PluralizationName="Pluralize" />
+        <Column RemoveUnderscores="False" CodeCase="Unchanged" AddPrefix="" AddSuffix="" RemovePrefixes="" RemoveSuffixes="" PluralizationName="Unchanged" />
+      </ModelFirstNamingRules>
+    </ModelFirst>
+    <Diagrams>
+      <Diagram Name="Diagram1" DefaultDiagram="True" />
+    </Diagrams>
+    <Templates>
+      <Template Name="EntityObject" Description="Use this template to generate a strongly-typed ObjectContext class and persistence-aware classes." Enabled="True" PredefinedTemplateName="Entity C#">
+        <ed:Property Name="ValidationFramework" Type="EntityDeveloper.TemplateEngine.ValidationFramework, EntityDeveloper.Common, Version=5.7.299.0, Culture=neutral, PublicKeyToken=09af7300eec23701">
+          <ValidationFramework>None</ValidationFramework>
+        </ed:Property>
+        <ed:Property Name="ValidationErrorMessages" Type="EntityDeveloper.TemplateEngine.ValidationErrorMessages, EntityDeveloper.Common, Version=5.7.299.0, Culture=neutral, PublicKeyToken=09af7300eec23701">
+          <ValidationErrorMessages xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+        </ed:Property>
+        <ed:Property Name="FilePerClass" Type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+          <boolean>true</boolean>
+        </ed:Property>
+        <ed:Property Name="ModelNameAsFilesPrefix" Type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+          <boolean>true</boolean>
+        </ed:Property>
+        <ed:Property Name="HeaderTimestampVersionControlTag" Type="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+          <string d6p1:nil="true" xmlns:d6p1="http://www.w3.org/2001/XMLSchema-instance" />
+        </ed:Property>
+        <ed:Property Name="EntitiesOutput" Type="EntityDeveloper.TemplateEngine.OutputInfo, EntityDeveloper.Common, Version=5.7.299.0, Culture=neutral, PublicKeyToken=09af7300eec23701">
+          <OutputInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <Project />
+            <ProjectFolder />
+            <DestinationFolder />
+          </OutputInfo>
+        </ed:Property>
+        <ed:Property Name="ContextOutput" Type="EntityDeveloper.TemplateEngine.OutputInfo, EntityDeveloper.Common, Version=5.7.299.0, Culture=neutral, PublicKeyToken=09af7300eec23701">
+          <OutputInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <Project />
+            <ProjectFolder />
+            <DestinationFolder />
+          </OutputInfo>
+        </ed:Property>
+        <ed:Property Name="GeneratePartialClass" Type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+          <boolean>false</boolean>
+        </ed:Property>
+        <ed:Property Name="ImplementCloneable" Type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+          <boolean>false</boolean>
+        </ed:Property>
+      </Template>
+    </Templates>
+    <AttributeAssemblies />
+  </ModelSettings>
+</EntityDeveloper>

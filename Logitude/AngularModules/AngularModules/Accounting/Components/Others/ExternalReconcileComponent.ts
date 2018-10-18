@@ -1,0 +1,1706 @@
+import {Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRef}  from '@angular/core';
+import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
+import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import {Validator} from '../../../Infrastructure/Validators/Validator';
+import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
+import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
+import {EntityListService} from '../../../Infrastructure/Services/EntityListService';
+import {ApiQueryFilters, FilterItem} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import {ObservableCollection} from '../../../Infrastructure/Utilities/ObservableCollection';
+import {AppTool, DateTool} from '../../../Infrastructure/Tools';
+import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
+import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
+import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
+import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
+import {ReconcileEventManager} from '../../Utilities/ReconcileEventManager';
+import {FullAccountingSettingPM} from '../../EntityPMs/FullAccountingSettingPM';
+import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
+
+
+//Entities
+import {ExternalReconciliationPM} from '../../EntityPMs/ExternalReconciliationPM';
+import {ExternalReconciliationLinePM} from '../../EntityPMs/ExternalReconciliationLinePM';
+import {ExternalReconciliationList} from '../../EntityLists/ExternalReconciliationList';
+import {LedgerTransactionPM} from '../../EntityPMs/LedgerTransactionPM';
+import {LedgerTransactionList} from '../../EntityLists/LedgerTransactionList';
+import {GLAccountPM} from '../../EntityPMs/GLAccountPM';
+import {BankAccountPM} from '../../EntityPMs/BankAccountPM';
+import {ReconcileExternalPagePM} from '../../EntityPMs/ReconcileExternalPagePM';
+import {ReconcileExternalPageLinePM} from '../../EntityPMs/ReconcileExternalPageLinePM';
+
+
+//Services
+import {ExternalReconciliationPMService} from '../../Services/StandardPMs/ExternalReconciliationPMService';
+import {ExternalReconciliationExtendedPMService} from '../../Services/ExtendedPMs/ExternalReconciliationExtendedPMService';
+import {LedgerTransactionExtendedListService} from '../../Services/ExtendedLists/LedgerTransactionExtendedListService';
+import {ExternalReconciliationExtendedListService} from '../../Services/ExtendedLists/ExternalReconciliationExtendedListService';
+
+
+
+
+@Component({
+    selector: 'ExternalReconcileComponent',
+    moduleId: './Accounting/Components/Others/',
+    providers: [EntityListService],
+    templateUrl: 'ExternalReconcileComponent.html',
+})
+
+export class ExternalReconcileComponent extends BaseComponent implements OnInit, AfterViewInit {
+    public DataContext: ExternalReconcileComponent = this;
+    public ObjectTableName: string = "ExternalReconciliation";
+    public FireCheckBoxChecked: EventEmitter<any> = new EventEmitter();
+
+    public PagePM: ReconcileExternalPagePM;
+    public GLAccountPM: GLAccountPM;
+    public BankAccountPM: BankAccountPM;
+    public ExternalRecoPM: ExternalReconciliationPM;
+
+    public ValidationErrorsList: string[] = [];
+
+    TransactionSelectedLines: ObservableCollection;
+    BankSelectedLines: ObservableCollection;
+
+    text_SumOfXRowsSelected: string = TextCodeTranslator.Translate("ReconcileExternalPage.O.SumOfXRowsSelected");
+
+    public isRTL: boolean = false;
+
+    public OperatorsList: any[] = [];
+    public DateFilterList: any[] = [];
+
+    IsEntityValid: boolean = true;
+
+    entityListService: EntityListService = new EntityListService();
+    ledgerTransactionExtendedListService: LedgerTransactionExtendedListService = new LedgerTransactionExtendedListService();
+    _ExternalReconciliationExtendedListService: ExternalReconciliationExtendedListService = new ExternalReconciliationExtendedListService();
+    externalReconciliationExtendedPMService: ExternalReconciliationExtendedPMService = new ExternalReconciliationExtendedPMService();
+    externalReconciliationPMService: ExternalReconciliationPMService = new ExternalReconciliationPMService();
+
+    txt_FiltersSelected: string = "";
+    LoadGrids: boolean = false;
+
+    constructor(private CD: ChangeDetectorRef) {
+        super();
+        this.isRTL = SessionLocator.TenantPM.LayoutDirection === 'rtl';
+
+        this.ExternalRecoPM = new ExternalReconciliationPM();
+        this.ExternalRecoPM.Tenant = SessionLocator.Tenant;
+
+        this.TransactionSelectedLines = new ObservableCollection([]);
+        this.BankSelectedLines = new ObservableCollection([]);
+
+        var filters = new ApiQueryFilters();
+
+        this.txt_FiltersSelected = TextCodeTranslator.Translate("Accounting.O.FiltersSelected");
+
+        this.OperatorsList =
+            [{ EnglishName: 'Equals', LocalName: TextCodeTranslator.Translate("Accounting.General.O.Equals") },
+                { EnglishName: 'Not Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.NotEqual") },
+                { EnglishName: 'Larger Than', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LargerThan") },
+                { EnglishName: 'Less Than', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LessThan") },
+                { EnglishName: 'Less Than Or Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LessThanOrEqual") },
+                { EnglishName: 'Greater Than Or Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.GreaterThanOrEqual") },
+            ];
+        this.DateFilterList =
+            [
+                { EnglishName: 'Last 7 days', LocalName: TextCodeTranslator.Translate("Accounting.O.Last7days") },
+                { EnglishName: 'Last month', LocalName: TextCodeTranslator.Translate("Accounting.O.Lastmonth") },
+                { EnglishName: 'Last 3 months', LocalName: TextCodeTranslator.Translate("Accounting.O.Last3months") },
+                { EnglishName: 'Last year', LocalName: TextCodeTranslator.Translate("Accounting.O.Lastyear") },
+                { EnglishName: 'Custom', LocalName: TextCodeTranslator.Translate("Accounting.O.Custom") },
+            ];
+
+
+        //#endregion
+
+        this.AmountCheckBoxChecked = true;
+        this.GetDefaultValues();
+
+    }
+
+    SetWindowArgs(args: any) {
+        if (args != null) {
+            this.BankAccountPM = args.BankAccountPM;
+            this.openAmountCurrency = args.openAmountCurrency;
+            this.SetUIProperty();
+        }
+    }
+
+    SetUIProperty() {
+        this.UIProperties.SetEnabled("FromDate", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("ToDate", this.ObjectTableName, false);
+    }
+
+    ngOnInit() {
+        this.TransactionBuildColumns();
+        this.BankBuildColumns();
+        this.ReloadScreen();
+        this.BankReloadScreen();
+    }
+
+    ngAfterViewInit() {
+        var t = setTimeout(() => {
+            this.LoadGrids = true;
+        }, 100);
+    }
+
+    //#region Properties
+
+    //#endregion
+
+    //#region Search Fields
+    private timerToken: any;
+    TextChanged(searchtext) {
+        if (searchtext != null || searchtext != undefined) {
+
+            this.timerToken = setTimeout(() => {
+                this.searchFieldFilter = new FilterItem("SearchFields", searchtext, null, null, "Contains", false, false, false, "string", false);
+
+                this.ReloadScreen();
+                this.BankReloadScreen();
+            }, 700);
+
+        } else {
+            this.searchFieldFilter = null;
+            this.ReloadScreen();
+            this.BankReloadScreen();
+        }
+    }
+    OpenAmountTextChanged(num) {
+        if (!AppTool.IsNullOrEmpty(num) && !AppTool.IsNullOrEmpty(this.SelectedOperator)) {
+
+            this.timerToken = setTimeout(() => {
+                if (!AppTool.IsNullOrEmpty(num) && !AppTool.IsNullOrEmpty(this.SelectedOperator)) {
+
+                    var OpenAmountFilterOperator = this.SelectedOperator.EnglishName.replace(/ /g, ''); // remove white spaces
+                    if (OpenAmountFilterOperator == "Equals") {
+                        this.openAmountFilter = new FilterItem("ForeignAmount", num, -1 * num, null, OpenAmountFilterOperator, false, false, false, "number", false);
+                    }
+                    else if (OpenAmountFilterOperator == "LessThan") {
+                        num = Math.abs(num);
+                        this.openAmountFilter = new FilterItem("ForeignAmount", -1 * --num, +num, null, "Between", false, false, false, "number", false);
+                    }
+                    else if (OpenAmountFilterOperator == "LessThanOrEqual") {
+                        num = Math.abs(num);
+                        this.openAmountFilter = new FilterItem("ForeignAmount", -1 * num, +num, null, "Between", false, false, false, "number", false);
+                    }
+                    else {
+                        this.openAmountFilter = new FilterItem("ForeignAmount", num, null, null, OpenAmountFilterOperator, false, false, false, "number", false);
+                    }
+                    this.ReloadScreen();
+                    this.BankReloadScreen();
+                } else {
+                    this.openAmountFilter = null;
+
+                    this.ReloadScreen();
+                    this.BankReloadScreen();
+                }
+            }, 700);
+
+        } else {
+            this.timerToken = setTimeout(() => {
+
+                this.openAmountFilter = null;
+
+                this.ReloadScreen();
+                this.BankReloadScreen();
+            }, 700);
+        }
+    }
+    //#endregion
+
+    //#region Buttons Handlers
+    ReconcilButton() {
+        var errors: string[] = [];
+
+        // Local Validate
+        if (this.totalDifference != 0) {
+            //errors.push(TextCodeTranslator.Translate("Accounting.General.O.DifferenceMustEqual0"));//"The difference must be equal to zero"
+        } else {
+            //Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
+        }
+        if (this.BankSelectedLines.Length == 0 && this.TransactionSelectedLines.Length == 0)
+            errors.push(TextCodeTranslator.Translate("Accounting.O.SelectTwoTransactionAtLeast"));
+
+        this.ValidationErrorsList = errors;
+        if (this.ValidationErrorsList.length == 0) {
+            var entity = this.CreateReconciliation();
+            this.SubmitChanges(entity);
+
+        }
+    }
+
+    SaveAsDraftButton() {
+
+        //if (this.SelectedLines.Length > 0) {
+
+        //    // 1- prepare transactions
+        //    var transactionsList = [];
+        //    this.SelectedLines.Collection.forEach((lineModel: LineModel) => {
+        //        var transaction = lineModel.LedgerTransactionPM;
+        //        //transaction.Mark = !transaction.Mark; // the service will take this misson
+
+        //        transactionsList.push(transaction);
+        //    });
+
+        //    // 2- call the service
+        //    SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        //    this._ReconciliationExtendedPMService.delsertDraftLedgerTransaction(transactionsList).subscribe((serviceResponse: ServiceResponse) => {
+        //        console.log("_ReconciliationExtendedPMService.delsertDraftLedgerTransaction", serviceResponse);
+        //        SessionLocator.CurrentSession.StopBusyIndicator();
+
+        //        var result = serviceResponse.Result;
+
+        //        var msg = new MessageWindow();
+        //        msg.ShowSuccessIcon = true;
+        //        msg.Width = 400;
+        //        msg.Show(TextCodeTranslator.Translate("Reconciliations.Q.reconciliationwassavedas"));
+        //        msg.WindowClosed.subscribe((event: any) => {
+        //            this.CancelButtonClicked();
+        //        });
+
+        //    });
+
+        //} else {
+        //    this.ValidationErrorsList = [];
+        //    this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.NotransactionsSelected")); //"No transactions selected!"
+        //}
+    }
+
+    CancelButtonClicked() {
+        SessionLocator.CurrentSession.CloseCurrentWindowEmit("ExternalReco");
+    }
+
+    RefreshButtonClicked() {
+        this.ReloadScreen();
+        this.BankReloadScreen();
+        if (this.IsAutoReconcile) {
+            this.AutoReco();
+        }
+    }
+    //#endregion
+
+    //#region [A] Transactions Data Source
+
+    public TransactionFireCheckBoxChecked: EventEmitter<any> = new EventEmitter();
+    public TransactionColumnsReady: EventEmitter<any> = new EventEmitter();
+    public TransactionMarkIsChecked: EventEmitter<any> = new EventEmitter();
+
+    @Output() TransactionMenuHeaderchangeevent = new EventEmitter();
+    @Output() TransactiononQueryChangeEvent = new EventEmitter();
+    dateFilter: FilterItem;
+    currencyFilter: FilterItem;
+    searchFieldFilter: FilterItem;
+    openAmountFilter: FilterItem;
+
+    public TransactionsColumns: any[] = null;
+    TransactionBuildColumns() {
+        this.TransactionsColumns = [];
+        this.TransactionsColumns.push({
+            FieldName: 'SelectCheckBox',
+            DataTypeCode: 'Boolean',
+            Display: '',
+            Styles: { width: '30px' },
+            HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
+            IsCustomTemplate: true
+        });
+        //this.TransactionsColumns.push({
+        //    FieldName: 'GroupHash',
+        //    DataTypeCode: 'String',
+        //    Display: '#',
+        //    Styles: { width: '30px' },
+        //    HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
+        //    HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
+        //    IsCustomTemplate: true
+        //});
+        this.TransactionsColumns.push({
+            FieldName: 'DocumentDate',
+            DataTypeCode: 'DateTime',
+            Display: TextCodeTranslator.Translate("LedgerTransaction.F.DocumentDate"),
+            Styles: { width: '100px' },
+            HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
+            IsCustomTemplate: true
+        });
+        //this.TransactionsColumns.push({
+        //    FieldName: 'DocumentDate',
+        //    DataTypeCode: 'DateTime',
+        //    Display: TextCodeTranslator.Translate("LedgerTransaction.F.DocumentDate"), //'Ref. Date',
+        //    Styles: { width: '100px' },
+        //    HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
+        //    HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
+        //    IsCustomTemplate: true
+        //});
+        //this.TransactionsColumns.push({
+        //    FieldName: 'DueDate',
+        //    DataTypeCode: 'DateTime',
+        //    Display: TextCodeTranslator.Translate("LedgerTransaction.F.DueDate"), // 'Due Date',
+        //    Styles: { width: '100px' },
+        //    HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
+        //    HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
+        //    IsCustomTemplate: true
+        //});
+        this.TransactionsColumns.push({
+            FieldName: 'Source',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("LedgerTransaction.F.Source"), // 'Source',
+            Styles: { width: '100px' },
+            HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
+            IsCustomTemplate: true
+        });
+
+        //this.TransactionsColumns.push({ // Check ReconcileMethodCode.GLAccounts:
+        //    FieldName: 'OriginalAmount',
+        //    DataTypeCode: 'String',
+        //    Display: TextCodeTranslator.Translate("Accounting.General.O.OriginalAmount") + ' (' + this.originalAmountCurrency + ')',
+        //    Styles: { width: '150px' },
+        //    HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
+        //    HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
+        //    IsCustomTemplate: true,
+        //});
+        //this.TransactionsColumns.push({
+        //    FieldName: 'OpenAmount',
+        //    DataTypeCode: 'String',
+        //    Display: TextCodeTranslator.Translate("LedgerTransaction.F.OpenAmount") + ' (' + this.openAmountCurrency + ')',
+        //    Styles: { width: '120px' },
+        //    HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
+        //    HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
+        //    IsCustomTemplate: true
+        //});
+        this.TransactionsColumns.push({
+            FieldName: 'ForeignAmount',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("LedgerTransaction.F.ForeignAmount") + ' (' + this.openAmountCurrency + ')',
+            Styles: { width: '120px' },
+            HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
+            IsCustomTemplate: true
+        });
+        this.TransactionsColumns.push({
+            FieldName: 'Reference1',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("LedgerTransaction.F.Reference1"), // 'Ref. 1',
+            Styles: { width: '80px' },
+            IsCustomTemplate: true
+        });
+        this.TransactionsColumns.push({
+            FieldName: 'Reference2',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("LedgerTransaction.F.Reference2"), // 'Ref. 2',
+            Styles: { width: '80px' },
+            IsCustomTemplate: true
+        });
+        this.TransactionsColumns.push({
+            FieldName: 'Reference3',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("LedgerTransaction.F.Reference3"), // 'Ref. 3',
+            Styles: { width: '80px' },
+            IsCustomTemplate: true
+        });
+        //this.TransactionsColumns.push({
+        //    FieldName: 'JournalNumber',
+        //    DataTypeCode: 'String',
+        //    Display: TextCodeTranslator.Translate("LedgerTransaction.F.JournalNumber"), // 'Journal No.',
+        //    Styles: { width: '80px' },
+        //    HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
+        //    HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
+        //    IsCustomTemplate: true
+        //});
+
+        this.TransactionsColumns.push({
+            FieldName: 'Notes',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("LedgerTransaction.F.Notes"), // 'Notes',
+            Styles: { width: '120px' },
+            HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
+            IsCustomTemplate: true
+        });
+
+        ReconcileEventManager.CheckBoxChecked.subscribe(($event) => {
+            if (!AppTool.IsNullOrEmpty($event)) {
+                var row = $event.line;
+                var rowId = $event.line.Id;
+                var RowIndex = $event.RowIndex;
+                var isChecked = $event.isChecked;
+                var oneTime = $event.oneTime;
+                console.log("---->> Row Selected: ", rowId, row, isChecked);
+
+                if (isChecked) {
+                    this.PushLine(row, RowIndex);
+                } else {
+                    this.PopLine(rowId);
+                }
+                this.TransactionFireCheckBoxChecked.emit({ rowData: row, IsChecked: isChecked, RowIndex: RowIndex });
+
+
+            }
+        });
+    }
+    TransactiononDataLoaded() {
+
+        //this.TransactionsCheckBoxFilterChanged.emit({ UseFilteredCheckBox: true, FilteredRecordsCheckedFieldName: "Mark", FilteredRecordsCheckedFieldValue: true, IsAutoRecClicked: this.IsAutoRecClicked});
+
+    }
+    TransactionDataSource = {
+        pageSize: 30,
+        rowCount: null,
+        sortingCol: "DocumentDate",
+        sortingDir: "Descending",
+        getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
+            var tempo = this.getRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
+            return tempo;
+        },
+    };
+    transCount: number;
+    onCountReadyTrans(count) {
+        this.transCount = count;
+    }
+    getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
+        var filters = new ApiQueryFilters;
+        if (this.dateFilter) {
+            filters.AdditionalFilters.push(this.dateFilter);
+        }
+        //else {
+        //    return;
+        //}
+        //if (this.currencyFilter) {
+        //    filters.AdditionalFilters.push(this.currencyFilter);
+        //}
+        if (this.searchFieldFilter) {
+            filters.AdditionalFilters.push(this.searchFieldFilter);
+        }
+        if (this.openAmountFilter) {
+            filters.AdditionalFilters.push(this.openAmountFilter);
+        }
+
+        filters.SortBy = sortingCol;
+        filters.SortDirection = sortingDir;
+        filters.PageSize = take;
+        filters.PageIndex = skip + 1; // decremented 1 in the service
+        filters.GetAll = true;
+        filters.GetCount = true;
+
+        filters.addAdditionalFilter("IsExternalReconcile", false, null, null, "Equals", false, false, false, "Boolean");
+
+        return this.entityListService.getOpenReconciliationsByFilter("LedgerTransaction", this.BankAccountPM.GLAccountId, filters);
+    }
+
+    PushLine(row, RowIndex) {
+        var index = this.TransactionSelectedLines.Collection.findIndex(c => c.Id == row.Id);
+        if (index < 0) { // DNE
+            var r = new TransactionLineModel(row, this, RowIndex);
+            this.TransactionSelectedLines.Insert(r);
+            this.CalculateTotals();
+        }
+    }
+
+    PopLine(id, specialCase = false) {
+        //Automatic reconcile
+        if (this.IsAutoReconcile) {
+            // 1- find id of opposit line
+            var transactionRow = this.TransactionSelectedLines.Collection.find(d => d.Id == id);
+            var oppositLine = this.BankSelectedLines.Collection.find(d => d.GroupHash == transactionRow.GroupHash);
+
+            // 2- popline
+            if (!specialCase) this.BankPopLine(oppositLine.Id, true);
+        }
+        //
+
+        this.TransactionSelectedLines.Remove(this.TransactionSelectedLines.Collection.find(c => c.Id == id));
+        this.CalculateTotals();
+    }
+
+    CheckBoxValueChanged(Row) {
+        this.TransactionFireCheckBoxChecked.emit({ rowData: Row.LedgerTransactionPM, IsChecked: false, RowIndex: Row.RowIndex, ById: true });
+        this.PopLine(Row.LedgerTransactionPM.Id);
+    }
+
+    CalculateTotals() {
+        this.accountTransactionsTotal = 0;
+        var total = 0;
+        for (let line of this.TransactionSelectedLines.Collection) {
+            //total += +line.OpenAmount;
+            total += +line.ForeignAmount;
+        }
+        this.accountTransactionsTotal = total;
+        var def = (this.bankTransactionsTotal - this.accountTransactionsTotal)
+        this.totalDifference = def < 0 ? def * -1 : def;
+    }
+
+    ReloadScreen() {
+        this.TransactiononQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); // refresh grid
+        this.TransactionSelectedLines.Clear();
+        this.CalculateTotals();
+    }
+    //#endregion
+
+    //#region [B] Bank transactions Data Source
+
+    public BankFireCheckBoxChecked: EventEmitter<any> = new EventEmitter();
+    public BankColumnsReady: EventEmitter<any> = new EventEmitter();
+    public BankMarkIsChecked: EventEmitter<any> = new EventEmitter();
+
+    @Output() BankMenuHeaderchangeevent = new EventEmitter();
+    @Output() BankonQueryChangeEvent = new EventEmitter();
+    Bank_dateFilter: FilterItem;
+    Bank_currencyFilter: FilterItem;
+    Bank_searchFieldFilter: FilterItem;
+    Bank_openAmountFilter: FilterItem;
+
+    public BankColumns: any[] = null;
+    BankBuildColumns() {
+        this.BankColumns = [];
+        this.BankColumns.push({
+            FieldName: 'SelectCheckBox',
+            DataTypeCode: 'Boolean',
+            Display: '',
+            Styles: { width: '30px' },
+            HtmlListComponentName: 'ReconcileExternalPageLineListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/ReconcileExternalPageLineListTemplate',
+            IsCustomTemplate: true
+        });
+
+        //this.BankColumns.push({
+        //    FieldName: 'GroupHash',
+        //    DataTypeCode: 'String',
+        //    Display: '#',
+        //    Styles: { width: '30px' },
+        //    HtmlListComponentName: 'ReconcileExternalPageLineListTemplate',
+        //    HtmlListComponentUrl: './Accounting/Components/ListTemplates/ReconcileExternalPageLineListTemplate',
+        //    IsCustomTemplate: true
+        //});
+        this.BankColumns.push({
+            FieldName: 'ReferenceDate',
+            DataTypeCode: 'DateTime',
+            Display: TextCodeTranslator.Translate("ReconcileExternalPageLine.F.ReferenceDate"),
+            Styles: { width: '100px' },
+            HtmlListComponentName: 'ReconcileExternalPageLineListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/ReconcileExternalPageLineListTemplate',
+            IsCustomTemplate: true
+        });
+        this.BankColumns.push({
+            FieldName: 'Amount',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("ReconcileExternalPageLine.F.Amount") + ' (' + this.openAmountCurrency + ')',
+            Styles: { width: '120px' },
+            HtmlListComponentName: 'ReconcileExternalPageLineListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/ReconcileExternalPageLineListTemplate',
+            IsCustomTemplate: true
+        });
+        this.BankColumns.push({
+            FieldName: 'Reference',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("ReconcileExternalPageLine.F.Reference"),
+            Styles: { width: '150px' },
+            HtmlListComponentName: 'ReconcileExternalPageLineListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/ReconcileExternalPageLineListTemplate',
+            IsCustomTemplate: true
+        });
+
+        this.BankColumns.push({
+            FieldName: 'Notes',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("ReconcileExternalPageLine.F.Notes"),
+            Styles: { width: '150px' },
+            HtmlListComponentName: 'ReconcileExternalPageLineListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/ReconcileExternalPageLineListTemplate',
+            IsCustomTemplate: true
+        });
+
+        ReconcileEventManager.BankCheckBoxChecked.subscribe(($event) => {
+            if (!AppTool.IsNullOrEmpty($event)) {
+                var row = $event.line;
+                var rowId = $event.line.Id;
+                var RowIndex = $event.RowIndex;
+                var isChecked = $event.isChecked;
+                var oneTime = $event.oneTime;
+                console.log("---->> Bank Row Selected: ", rowId, row, isChecked);
+
+                if (isChecked) {
+                    this.BankPushLine(row, RowIndex);
+                } else {
+                    this.BankPopLine(rowId);
+                }
+                this.BankFireCheckBoxChecked.emit({ rowData: row, IsChecked: isChecked, RowIndex: RowIndex });
+
+
+            }
+        });
+
+    }
+    BankonDataLoaded() {
+
+        //this.CheckBoxFilterChanged.emit({ UseFilteredCheckBox: true, FilteredRecordsCheckedFieldName: "Mark", FilteredRecordsCheckedFieldValue: true, IsAutoRecClicked: this.IsAutoRecClicked});
+
+    }
+    BankDataSource = {
+        pageSize: 30,
+        rowCount: null,
+        sortingCol: "ReferenceDate",
+        sortingDir: "Descending",
+        getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
+            var tempo = this.getBankRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
+            return tempo;
+        },
+    };
+
+    bankCount: number;
+    onCountReadyBank(count) {
+        this.bankCount = count;
+    }
+
+    getBankRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
+        var filters = new ApiQueryFilters;
+        if (this.dateFilter) {
+            var refDateFilter = new FilterItem("ReferenceDate", new Date(this.FromDate.getFullYear(), this.FromDate.getMonth(), this.FromDate.getDate(), 0, 0, 0), new Date(this.ToDate.setHours(23, 59, 59, 59)), null, "Between", false, false, false, "Date", false);
+            filters.AdditionalFilters.push(refDateFilter);
+        }
+        //else {
+        //    return;
+        //}
+        //if (this.currencyFilter) {
+        //    filters.AdditionalFilters.push(this.currencyFilter);
+        //}
+        if (this.searchFieldFilter) {
+            filters.AdditionalFilters.push(this.searchFieldFilter);
+        }
+        if (this.openAmountFilter) {
+            var amountFilter = new FilterItem("Amount", this.openAmountFilter.FieldValue, this.openAmountFilter.FieldValue2, null, this.openAmountFilter.Operator, false, false, false, "number", false);
+            filters.AdditionalFilters.push(amountFilter);
+        }
+
+        filters.PageSize = take;
+        filters.PageIndex = skip + 1; // decremented 1 in the service
+        filters.GetAll = true;
+        filters.GetCount = true;
+
+        //filters.addAdditionalFilter("AccountingDate", true, null, null, "Between", false, false, false, "datetime");
+
+        return this.entityListService.getExternalReoncilioationsByFilter("ReconcileExternalPage", this.BankAccountPM.Id, filters);
+    }
+
+    BankPushLine(row, RowIndex) {
+        var index = this.BankSelectedLines.Collection.findIndex(c => c.Id == row.Id);
+        if (index < 0) { // DNE
+            row.AmountToReconcile = row.Amount;
+            var r = new BankLineModel(row, this, RowIndex);
+            this.BankSelectedLines.Insert(r);
+            this.CalculateBankTotals();
+        }
+    }
+
+    BankPopLine(id, specialCase = false) {
+
+        //Automatic reconcile
+        if (this.IsAutoReconcile) {
+            // 1- find id of opposit line
+            var pageLineRow = this.BankSelectedLines.Collection.find(d => d.Id == id);
+            var oppositLine = this.TransactionSelectedLines.Collection.find(d => d.GroupHash == pageLineRow.GroupHash);
+
+            // 2- popline
+            if (!specialCase) this.PopLine(oppositLine.Id, true);
+        }
+        //
+
+        this.BankSelectedLines.Remove(this.BankSelectedLines.Collection.find(c => c.Id == id));
+        this.CalculateBankTotals();
+    }
+
+    BankCheckBoxValueChanged(Row) {
+        this.BankFireCheckBoxChecked.emit({ rowData: Row.PageLinePM, IsChecked: false, RowIndex: Row.RowIndex });
+        this.BankPopLine(Row.PageLinePM.Id);
+    }
+
+    BankReloadScreen() {
+        this.BankonQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); // refresh grid
+        this.BankSelectedLines.Clear();
+        this.CalculateBankTotals();
+    }
+    //#endregion
+
+    //#region Totals Work
+    accountTransactionsTotal: number = 0;
+    bankTransactionsTotal: number = 0;
+    totalDifference: number = 0;
+    CalculateBankTotals() {
+        this.bankTransactionsTotal = 0;
+        var total = 0;
+        for (let line of this.BankSelectedLines.Collection) {
+            total += +line.Amount;
+        }
+        this.bankTransactionsTotal = total;
+        var def = (this.bankTransactionsTotal - this.accountTransactionsTotal)
+        this.totalDifference = def < 0 ? def * -1 : def;
+    }
+    //#endregion
+
+    //#region Automatic Reconcile + Filters
+    isFiltersSelected: boolean = false;
+    isFiltersVisible: boolean = false;
+    IsAutoReconcile: boolean = false;
+
+    AmountCheckBoxChecked: boolean = false;
+    ReferenceCheckBoxChecked: boolean = false;
+    ReferenceDateCheckBoxChecked: boolean = false;
+
+    AutoReco() {
+        console.log("[AUTO RECO] ", this.AmountCheckBoxChecked, this.ReferenceCheckBoxChecked, this.ReferenceDateCheckBoxChecked);
+
+        this.IsAutoReconcile = true;
+
+        //this.IsAutoRecClicked = true;
+        //if (this.SelectedLines.Length > 0) {
+        //    // Show prompt
+        //    var confirmWindow = new ConfirmWindow();
+        //    confirmWindow.Width = 390;
+        //    confirmWindow.Show("Automatic Reconcile will clear all selected lines, continue?"); // "קיימות תנועות שנבחרו , האם להמשיך בהתאמה אוטומטית ?"
+
+        //    confirmWindow.WindowClosed.subscribe((event: any) => {
+        //        if (confirmWindow.Yes) {
+        //            this.SelectedLines.Clear();// = [];
+
+        //            this.RunAutomaticReconcile();
+
+        //        } else if (confirmWindow.No) {
+
+        //        }
+        //    });
+        //} else {
+        //    this.RunAutomaticReconcile();
+        //}
+
+        this.RunAutomaticReconcile();
+
+    }
+
+    RunAutomaticReconcile() {
+
+        // Reload screen
+        this.ReloadScreen();
+        this.BankReloadScreen();
+
+        var t = setTimeout(() => {
+
+            this.ValidationErrorsList = [];
+
+            //#region filters
+            var filters = new ApiQueryFilters;
+            if (this.dateFilter) {
+                filters.AdditionalFilters.push(this.dateFilter);
+            }
+            if (this.searchFieldFilter) {
+                filters.AdditionalFilters.push(this.searchFieldFilter);
+            }
+            if (this.openAmountFilter) {
+                filters.AdditionalFilters.push(this.openAmountFilter);
+            }
+
+            filters.PageSize = 30;
+            filters.PageIndex = 0;
+            filters.GetAll = true;
+            filters.GetCount = true;
+
+            filters.addAdditionalFilter("IsExternalReconcile", false, null, null, "Equals", false, false, false, "Boolean");
+            //#endregion
+
+            SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.PrepareTransactions")); //"Preparing Transactions..."
+
+
+            this._ExternalReconciliationExtendedListService.getExternalAutomaticReconcilationsByFilter(this.AmountCheckBoxChecked, this.ReferenceCheckBoxChecked, this.ReferenceDateCheckBoxChecked,
+                this.BankAccountPM.Id, this.BankAccountPM.GLAccountId, filters).subscribe(myResult => {
+
+                    var mm: ServiceResponse = myResult;
+                    var result = mm.Result;
+                    if (!mm.HasError) {
+
+                        if (!AppTool.IsNullOrEmpty(result)) {
+
+                            if (result) {
+                                if (result.Count > 0) {
+
+                                    //fill result
+
+                                    //...ledger lines
+                                    var lineModelList = [];
+                                    var transactionLines = result.transactionLines;
+                                    transactionLines.forEach(line => {
+                                        var newLineModel = new TransactionLineModel(line, this, -1);
+                                        lineModelList.push(newLineModel);
+                                    });
+                                    this.TransactionSelectedLines.InsertCollection(lineModelList, true);
+                                    this.transCount = transactionLines.length;
+                                    //.
+
+
+                                    //...bank lines
+                                    var banklineModelList = [];
+                                    var pageLines = result.pageLines;
+                                    pageLines.forEach(line => {
+                                        line.AmountToReconcile = line.Amount;
+                                        var newLineModel = new BankLineModel(line, this, -1);
+                                        banklineModelList.push(newLineModel);
+                                    });
+                                    this.BankSelectedLines.InsertCollection(banklineModelList, true);
+                                    this.bankCount = pageLines.length;
+                                    //.
+
+                                    this.CalculateTotals();
+                                    this.CalculateBankTotals();
+                                }
+                                else {
+                                    this.ShowEmptyAutoReco();
+                                }
+                            }
+                        }
+                    }
+                    else {
+                        this.ValidationErrorsList = mm.ErrorsArray;
+                        SessionLocator.CurrentSession.StopBusyIndicator();
+                    }
+                    SessionLocator.CurrentSession.StopBusyIndicator();
+                });
+
+        }, 200);
+
+    }
+
+    FilterButtonClicked() {
+        this.isFiltersVisible = !this.isFiltersVisible;
+    }
+
+    ChangeDate() {
+
+        if (this.SelectedDateOperator) {
+            //var TommorowDate = DateTool.AddDays((new Date()), 1);
+            var TommorowDate = new Date();
+            TommorowDate.setHours(23, 59, 59, 59);
+            var TodayDate = new Date();
+            TodayDate.setUTCHours(0, 0, 0, 0);
+            var YesterdayDate = DateTool.AddDays((new Date()), -1);
+            YesterdayDate.setUTCHours(0, 0, 0, 0);
+            var LastSevenDaysDate = DateTool.AddDays((new Date()), -7)
+            LastSevenDaysDate.setUTCHours(0, 0, 0, 0);
+            var LastThirtyDaysDate = DateTool.AddDays((new Date()), -30);
+            LastThirtyDaysDate.setUTCHours(0, 0, 0, 0);
+            var LastThreeMonthDate = DateTool.AddDays((new Date()), -90);
+            LastThreeMonthDate.setUTCHours(0, 0, 0, 0);
+            var CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 1);
+            CurrentYearFromDate.setUTCHours(0, 0, 0, 0);
+            var CurrentYearToDate = DateTool.AddDays((new Date()), 1);
+            CurrentYearToDate.setUTCHours(0, 0, 0, 0);
+            var LastYearFromDate = DateTool.AddDays((new Date()), -365);
+            LastYearFromDate.setUTCHours(0, 0, 0, 0);
+            var LastYearToDate = DateTool.AddDays((new Date()), 1);
+            LastYearToDate.setUTCHours(0, 0, 0, 0);
+
+            this.UIProperties.SetEnabled("FromDate", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("ToDate", this.ObjectTableName, false);
+
+            switch (this.SelectedDateOperator.EnglishName) {
+                case "Today":
+                    {
+                        this.FromDate = TodayDate;
+                        this.ToDate = TommorowDate;
+                        break;
+                    }
+                case "Yesterday":
+                    {
+                        this.FromDate = YesterdayDate;
+                        this.ToDate = TodayDate;
+                        break;
+                    }
+                case "Last 7 days":
+                    {
+                        this.FromDate = LastSevenDaysDate;
+                        this.ToDate = TommorowDate;
+                        break;
+                    }
+                case "Last month":
+                    {
+                        this.FromDate = LastThirtyDaysDate;
+                        this.ToDate = TommorowDate;
+                        break;
+                    }
+                case "Last 3 months":
+                    {
+                        this.FromDate = LastThreeMonthDate;
+                        this.ToDate = TommorowDate;
+                        break;
+                    }
+                case "Current year":
+                    {
+                        this.FromDate = CurrentYearFromDate;
+                        this.ToDate = CurrentYearToDate;
+                        break;
+                    }
+                case "Last year":
+                    {
+                        this.FromDate = LastYearFromDate;
+                        this.ToDate = LastYearToDate;
+                        break;
+                    }
+                case "Custom":
+                    {
+                        this.FromDate = null;
+                        this.ToDate = null;
+                        this.UIProperties.SetEnabled("FromDate", this.ObjectTableName, true);
+                        this.UIProperties.SetEnabled("ToDate", this.ObjectTableName, true);
+                        this.CD.detectChanges();
+                        break;
+                    }
+            }
+        } else {
+            this.FromDate = null;
+            this.ToDate = null;
+        }
+        this.ReloadScreen();
+        this.BankReloadScreen();
+    }
+
+    //Back
+    AutoRecoBackButtonClicked() {
+        this.IsAutoReconcile = false;
+
+        this.ReloadScreen();
+        this.BankReloadScreen();
+    }
+    autoRecoCount: number;
+    GetAutoRecoBackMSG(): string {
+        this.autoRecoCount = this.TransactionSelectedLines.Length;
+        var msg = TextCodeTranslator.Translate("Accounting.O.BackFromAutoRecoMSG");
+        msg = msg.replace("#number", this.autoRecoCount.toString());
+        return msg;
+    }
+
+    //operators
+    private selectedOperator: any;
+    get SelectedOperator() { return this.selectedOperator; }
+    set SelectedOperator(value: any) {
+        if (this.selectedOperator != value) {
+            this.selectedOperator = value;
+
+            this.OpenAmountTextChanged(this.openAmount);
+            this.FiltersChanged();
+        }
+    }
+
+
+    openAmount: number;
+    get OpenAmount() { return this.openAmount; }
+    set OpenAmount(value: number) {
+        if (this.openAmount != value) {
+            this.openAmount = value;
+
+            this.isFiltersSelected = (!AppTool.IsNullOrEmpty(this.OpenAmount) || !AppTool.IsNullOrEmpty(this.FromDate));
+            this.FiltersChanged();
+        }
+    }
+
+    private selecteddateOperator: any;
+    get SelectedDateOperator() { return this.selecteddateOperator; }
+    set SelectedDateOperator(value: any) {
+        if (this.selecteddateOperator != value) {
+            this.selecteddateOperator = value;
+
+            this.ChangeDate();
+            this.FiltersChanged();
+        }
+    }
+
+    fromDate: Date;
+    get FromDate() { return this.fromDate; }
+    set FromDate(value: Date) {
+        if (this.fromDate != value) {
+            this.fromDate = value;
+
+            //Filters Selection
+            this.isFiltersSelected = (!AppTool.IsNullOrEmpty(this.OpenAmount) || !AppTool.IsNullOrEmpty(this.FromDate));
+
+            //Date Filter
+            if (!AppTool.IsNullOrEmpty(this.ToDate) && !AppTool.IsNullOrEmpty(this.FromDate)) {
+                this.dateFilter = new FilterItem("CreateDate", new Date(this.FromDate.getFullYear(), this.FromDate.getMonth(), this.FromDate.getDate(), 0, 0, 0), new Date(this.ToDate.setHours(23, 59, 59, 59)), null, "Between", false, false, false, "Date", false);
+                this.ReloadScreen();
+                this.BankReloadScreen();
+            } else {
+                this.dateFilter = null;
+                this.ReloadScreen();
+                this.BankReloadScreen();
+            }
+        }
+    }
+
+    toDate: Date;
+    get ToDate() { return this.toDate; }
+    set ToDate(value: Date) {
+        if (this.toDate != value) {
+            this.toDate = value;
+
+            //Filters Selection
+            this.isFiltersSelected = (!AppTool.IsNullOrEmpty(this.OpenAmount) || !AppTool.IsNullOrEmpty(this.FromDate));
+
+            //Date Filter
+            if (!AppTool.IsNullOrEmpty(this.ToDate) && !AppTool.IsNullOrEmpty(this.FromDate)) {
+                this.dateFilter = new FilterItem("CreateDate", new Date(this.FromDate.getFullYear(), this.FromDate.getMonth(), this.FromDate.getDate(), 0, 0, 0), new Date(this.ToDate.setHours(23, 59, 59, 59)), null, "Between", false, false, false, "Date", false);
+                this.ReloadScreen();
+                this.BankReloadScreen();
+            } else {
+                this.dateFilter = null;
+                this.ReloadScreen();
+                this.BankReloadScreen();
+            }
+        }
+    }
+
+    FiltersChanged() {
+        var t = setTimeout(() => {
+            if (this.IsAutoReconcile) {
+                this.AutoReco();
+            }
+        }, 700);
+    }
+
+    //#endregion
+
+    CreateReconciliation() {
+        var newEntity: ExternalReconciliationPM = new ExternalReconciliationPM();
+
+        newEntity.Id = "new";
+        newEntity.GLAccountId = this.BankAccountPM.GLAccountId;
+        newEntity.Tenant = this.BankAccountPM.Tenant;
+        newEntity.CreateDate = new Date();
+        newEntity.CreatedByUserId = SessionLocator.LoggedUserId;
+
+        newEntity.ExternalReconciliationLines = [];
+        var lineNumber = 1;
+
+        //insert glaccount transaction lines
+        for (var i = 0; i < this.TransactionSelectedLines.Length; i++) {
+            var selectedTransaction = this.TransactionSelectedLines.Collection[i];
+            var newLine: ExternalReconciliationLinePM = new ExternalReconciliationLinePM(newEntity);
+
+            newLine.ChangeSetOp = "1";
+            newLine.ReconciliationId = newEntity.Id;
+            newLine.Tenant = newEntity.Tenant;
+            newLine.Line = lineNumber;
+            newLine.GroupNumber = selectedTransaction.GroupHash ? selectedTransaction.GroupHash : 1;
+            newLine.LedgerTransactionId = selectedTransaction.Id;
+            newLine.ExternalPageLineId = null;
+            newEntity.AddExternalReconciliationLine(newLine);
+
+            lineNumber++;
+        }
+
+        //insert bank transaction lines
+        for (var i = 0; i < this.BankSelectedLines.Length; i++) {
+            var selectedTransaction = this.BankSelectedLines.Collection[i];
+            var newLine: ExternalReconciliationLinePM = new ExternalReconciliationLinePM(newEntity);
+
+            newLine.ChangeSetOp = "1";
+            newLine.ReconciliationId = newEntity.Id;
+            newLine.Tenant = newEntity.Tenant;
+            newLine.Line = lineNumber;
+            newLine.GroupNumber = selectedTransaction.GroupHash ? selectedTransaction.GroupHash : 1;
+            newLine.ExternalPageLineId = selectedTransaction.Id;
+            newLine.LedgerTransactionId = null;
+            newEntity.AddExternalReconciliationLine(newLine);
+
+            lineNumber++;
+        }
+
+        return newEntity;
+    }
+    SubmitChanges(entity) {
+
+        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.externalReconciliationPMService.insert(entity).subscribe(myResult => {
+            SessionLocator.CurrentSession.StopBusyIndicator();
+
+            var mm: ServiceResponse = myResult;
+            var entity = mm.Result;
+            if (!mm.HasError) {
+
+                this.ExternalRecoPM = entity;
+
+
+
+                this.ShowSuccessAlert();
+            }
+
+            else {
+                this.ValidationErrorsList = mm.ErrorsArray;
+                SessionLocator.CurrentSession.StopBusyIndicator();
+            }
+        });
+    }
+
+    OpenSource(id: string, type: string) {
+
+        // Type:    SourceTypeCode
+        // Id:      SourceId
+        // Display: SourceNumber
+
+        var tableName = "Journal";
+
+        switch (type) {
+
+            // 1-Journal
+            case '1': {
+                tableName = "Journal";
+                break;
+            }
+
+            // 2-ARInvoice
+            case '2': {
+                tableName = "ARInvoice";
+                break;
+            }
+
+            // 3-ARPayment
+            case '3': {
+                tableName = "ARPayment";
+
+                break;
+            }
+
+            // 4-APInvoice
+            case '4': {
+                tableName = "APInvoice";
+
+                break;
+            }
+
+            // 5-APPayment
+            case '5': {
+                tableName = "APPayment";
+
+                break;
+            }
+
+            // 6-Cheque Deposit
+            case '6': {
+                tableName = "BankDeposit";
+
+                break;
+            }
+
+            // 7-Cash Deposit
+            case '7': {
+                tableName = "BankDeposit";
+
+                break;
+            }
+
+            // 8-Revaluation
+            case '8': {
+                tableName = "Revaluation";
+
+                break;
+            }
+
+            // 9-PaymentCheque
+            case '9': {
+                tableName = "PaymentCheque";
+
+                break;
+            }
+
+        }
+
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({
+                    EntityId: id,
+                    ObjectTableName: tableName,
+                    BackButtonLabel: 'GLAccount'
+                });
+            });
+
+    }
+    OpenJournal(id) {
+        if (!AppTool.IsNullOrEmpty(id)) {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'Journal' });
+                    cmpRef.instance.BackCompleted.subscribe(bk => {
+                    });
+                });
+        }
+    }
+    OpenReco() {
+        if (!AppTool.IsNullOrEmpty(this.ExternalRecoPM.Id)) {
+            this.showAlert = false;
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run({ EntityId: this.ExternalRecoPM.Id, ObjectTableName: 'ExternalReconciliation' });
+                    cmpRef.instance.BackCompleted.subscribe(bk => {
+                        SessionLocator.CurrentSession.CloseCurrentWindow();
+                    });
+                });
+
+        }
+    }
+
+    showAlert: boolean = false;
+    ShowSuccessAlert() {
+        if (this.IsAutoReconcile)
+        {
+            this.IsAutoReconcile = false;
+            this.showAlert = true;
+            this.timerToken = setTimeout(() => {
+                this.showAlert = false;
+            }, 7000); // 7 sec
+            this.AutoRecoBackButtonClicked();
+        }
+        else
+        {
+            this.showAlert = true;
+            this.timerToken = setTimeout(() => {
+                this.showAlert = false;
+            }, 5000); // 5 sec
+            this.ReloadScreen();
+            this.BankReloadScreen();
+        }
+        
+
+    }
+    ShowEmptyAutoReco() {
+        var messageWindow = new MessageWindow();
+        messageWindow.Width = 400;
+        messageWindow.Height = 150;
+        messageWindow.RTL = this.isRTL;
+      //messageWindow.Title = "No Reconcile";
+      messageWindow.Show(TextCodeTranslator.Translate("Accounting.O.Noautorecofoundbymethodchangemethod"));
+    }
+    CloseAlert() {
+        this.showAlert = false;
+    }
+    GetAutoRecoMSG() {
+        var msg = TextCodeTranslator.Translate("Accounting.O.AreconcileOfXTransactionCreated");
+        return msg.replace("#Number", (this.ExternalRecoPM.ExternalReconciliationLines.length/2).toString());
+    }
+
+    openAmountCurrency: string = "";
+    originalAmountCurrency: string = "";
+
+    getTotalText(gridName: string) {
+        var number = 0;
+        if (gridName == 'glaccount') {
+            number = this.TransactionSelectedLines.Length;
+        }
+        if (gridName == 'bank') {
+            number = this.BankSelectedLines.Length;
+        }
+        var text = this.text_SumOfXRowsSelected;
+        text = text.replace('%Number', number.toString());
+        return text;
+
+    }
+
+    private FullAccountingSetting: FullAccountingSettingPM = new FullAccountingSettingPM();
+    GetDefaultValues() {
+        this.entityListService.getSingle(SessionLocator.Tenant + "", "FullAccountingSetting").then((res: any) => {
+            res.subscribe(myResponse => {
+                if (myResponse != null) {
+                    var res = myResponse.Result;
+                    this.FullAccountingSetting = res;
+                    this.GetAutoRecoMethod();
+                }
+            })
+        });
+    }
+    AutoRecoMethod: any;
+    GetAutoRecoMethod() {
+        if (this.FullAccountingSetting.ExternalReconciliationDefault) {
+            this.entityListService.getSingle(this.FullAccountingSetting.ExternalReconciliationDefault + "", "AutomaticExternalRconcilMthod").then((res: any) => {
+                res.subscribe(myResponse => {
+                    if (myResponse != null) {
+                        var res = myResponse.Result;
+                        this.AutoRecoMethod = res;
+                        if (this.AutoRecoMethod) {
+                            switch (this.AutoRecoMethod.Code) {
+                                case '1': // 1- Amount
+                                    {
+                                        this.AmountCheckBoxChecked = true;
+                                        this.ReferenceCheckBoxChecked = false;
+                                        this.ReferenceDateCheckBoxChecked = false;
+                                        break;
+                                    }
+                                case '2': // 2- Reference
+                                    {
+                                        this.AmountCheckBoxChecked = true;
+                                        this.ReferenceCheckBoxChecked = true;
+                                        this.ReferenceDateCheckBoxChecked = false;
+                                        break;
+                                    }
+                                case '3': // 3- Reference Date + Reference
+                                    {
+                                        this.AmountCheckBoxChecked = true;
+                                        this.ReferenceCheckBoxChecked = true;
+                                        this.ReferenceDateCheckBoxChecked = true;
+                                        break;
+                                    }
+                                case '4': // 4- Amount + Reference + Reference Date
+                                    {
+                                        this.AmountCheckBoxChecked = true;
+                                        this.ReferenceCheckBoxChecked = true;
+                                        this.ReferenceDateCheckBoxChecked = true;
+                                        break;
+                                    }
+
+                            }
+                        }
+
+                    }
+                })
+            });
+        }
+    }
+
+    ResetFilters() {
+
+        // Date
+        this.SelectedDateOperator = null;
+        this.FromDate = null;
+        this.ToDate = null;
+
+        // Amount
+        this.OpenAmount = null;
+        this.SelectedOperator = null;
+    }
+
+    reapeatCount: number = 1;
+
+    //#region TEST PURPOSE
+    IsGenerateButtonVisible: boolean = false;
+    IsGeneratePasswordVisible: boolean = false;
+    GenerateTestLines(txt: string) {
+        SessionLocator.CurrentSession.StartBusyIndicator("Generate test lines... " + "(" + this.reapeatCount + "/" + 100 + ")");
+        this._ExternalReconciliationExtendedListService.getGenerateTestRecordsForExternalReco(this.BankAccountPM.Id, this.BankAccountPM.GLAccountId, txt).subscribe(myResult => {
+
+            var mm: ServiceResponse = myResult;
+            var result = mm.Result;
+            if (!mm.HasError) {
+
+                if (!AppTool.IsNullOrEmpty(result)) {
+
+                    if (this.reapeatCount == 100) {
+                        var msg = new MessageWindow();
+                        SessionLocator.CurrentSession.StopBusyIndicator();
+
+                        msg.Show("Test lines generated successfully :) ");
+                        this.ReloadScreen();
+                        this.BankReloadScreen();
+                    }
+                    else {
+                        this.reapeatCount++;
+                        this.GenerateTestLines(txt);
+                    }
+
+
+
+                }
+            }
+            else {
+                this.ValidationErrorsList = mm.ErrorsArray;
+                SessionLocator.CurrentSession.StopBusyIndicator();
+            }
+        });
+    }
+
+    labelCount = 0; 
+    LabelClicked() {
+        var feature = FeatureLocator.IsFeatureGrantedByCode("ExtRecoGenerateTestRecords");        
+        if (feature)
+        {
+            this.labelCount++;
+            if (this.labelCount == 5) {
+                this.IsGeneratePasswordVisible = true;
+            }
+        }
+    }
+    GeneratePWD: string;
+    PasswordOkButtonClicked() {
+        if (this.GeneratePWD == "extrecopwd") {
+            this.IsGeneratePasswordVisible = false;
+            this.IsGenerateButtonVisible = true;
+        } else
+        {
+            this.GeneratePWD = "";
+        }
+    }
+    //#endregion
+
+    getScreenHeight() {
+        if (self.innerHeight) {
+            return self.innerHeight;
+        }
+
+        if (document.documentElement && document.documentElement.clientHeight) {
+            return document.documentElement.clientHeight;
+        }
+
+        if (document.body) {
+            return document.body.clientHeight;
+        }
+    }
+    getScreenWidth() {
+        if (self.innerWidth) {
+            return self.innerWidth;
+        }
+
+        if (document.documentElement && document.documentElement.clientWidth) {
+            return document.documentElement.clientWidth;
+        }
+
+        if (document.body) {
+            return document.body.clientWidth;
+        }
+    }
+
+
+}
+
+
+class TransactionLineModel extends BaseComponent {
+    public LedgerTransactionPM: LedgerTransactionPM = null;
+    public ObjectTableName = "LedgerTransaction";
+    public RowIndex: number;
+    public DataContext = this;
+    public isRTL: boolean = false;
+
+    constructor(
+        private ledgerTransaction: LedgerTransactionPM,
+        private parent: ExternalReconcileComponent,
+        private myRowIndex: number
+    ) {
+        super();
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+        this.EntityPM = this.parent.EntityPM;
+        this.LedgerTransactionPM = ledgerTransaction;
+        //this.OriginalAmount = parent.CalculateOriginalAmount(this);
+        //if (!this.AmountToReconcile)
+        //    this.AmountToReconcile = this.ledgerTransaction.OpenAmount;
+        this.RowIndex = myRowIndex;
+
+        //this.OddEven = this.ColorMe();
+
+
+        //#region Set Icons
+        var iconTxt = "";
+        var color = "";
+
+        switch (this.LedgerTransactionPM.SourceTypeCode) {
+
+            // 1-Journal
+            case '1': {
+                iconTxt = "JR";
+                break;
+            }
+
+            // 2-ARInvoice
+            case '2': {
+                iconTxt = "IN";
+                break;
+            }
+
+            // 3-ARPayment
+            case '3': {
+                iconTxt = "PY";
+                break;
+            }
+
+            // 4-APInvoice
+            case '4': {
+                iconTxt = "IN";
+                break;
+            }
+
+            // 5-APPayment
+            case '5': {
+                iconTxt = "PY";
+
+                break;
+            }
+
+            // 6-Cheque Deposit
+            case '6': {
+                iconTxt = "DP";
+
+                break;
+            }
+
+            // 7-Cash Deposit
+            case '7': {
+                iconTxt = "DP";
+
+                break;
+            }
+
+            // 8-Revaluation
+            case '8': {
+                iconTxt = "RV";
+
+                break;
+            }
+
+            // 9-PaymentCheque
+            case '9': {
+                iconTxt = "CH";
+
+                break;
+            }
+        }
+        this.IconCode = iconTxt;
+
+        //#endregion 
+    }
+
+    get GroupHash() { return this.LedgerTransactionPM.GroupHash };
+
+
+    // Properties
+    public IconCode: string;
+
+    //originalAmount: number;
+    //get OriginalAmount() { return this.parent.CalculateOriginalAmount(this); }
+    //set OriginalAmount(value: number) {
+    //    if (this.originalAmount != value) {
+    //        this.originalAmount = this.parent.CalculateOriginalAmount(this);
+    //    }
+    //}
+
+    //get AmountToReconcile() { return this.LedgerTransactionPM.AmountToReconcile; }
+    //set AmountToReconcile(value: number) {
+    //    if (this.LedgerTransactionPM.AmountToReconcile != value) {
+    //        this.LedgerTransactionPM.AmountToReconcile = value;
+
+    //        //WI26522
+    //        if (Math.abs(value) > Math.abs(this.OpenAmount)) {
+    //            this.UIProperties.SetValidity("AmountToReconcile", this.parent.ObjectTableName, false, TextCodeTranslator.Translate("Reconciliations.O.AmountMustBSmaller2OpenAmount"));
+    //            this.parent.IsEntityValid = false;
+    //        } else {
+    //            this.UIProperties.SetValidity("AmountToReconcile", this.parent.ObjectTableName, true, "");
+    //            this.parent.IsEntityValid = true;
+    //        }
+
+    //        this.parent.CalculateTotals();
+    //    }
+
+    //}
+
+    OddEven: boolean;
+
+
+    //#region Other Properties
+    get Id() { return this.LedgerTransactionPM.Id; }
+    get Tenant() { return this.LedgerTransactionPM.Tenant; }
+    get AccountingDate() { return this.LedgerTransactionPM.AccountingDate; }
+    get DocumentDate() { return this.LedgerTransactionPM.DocumentDate; }
+    get JournalNumber() { return this.LedgerTransactionPM.JournalNumber; }
+    get Source() { return this.LedgerTransactionPM.Source; }
+    get SourceType() { return this.LedgerTransactionPM.SourceType; }
+    get SourceId() { return this.LedgerTransactionPM.SourceId; }
+    get DueDate() { return this.LedgerTransactionPM.DueDate; }
+    get LocalAmountCredit() { return this.LedgerTransactionPM.LocalAmountCredit; }
+    get LocalAmountDebit() { return this.LedgerTransactionPM.LocalAmountDebit; }
+    get ForeignAmountCredit() { return this.LedgerTransactionPM.ForeignAmountCredit; }
+    get ForeignAmountDebit() { return this.LedgerTransactionPM.ForeignAmountDebit; }
+    get ForeignAmount() { return this.LedgerTransactionPM.ForeignAmount; }
+    get OpenAmount() { return this.LedgerTransactionPM.OpenAmount; }
+    get OpenAmountCurrencyCode() { return this.LedgerTransactionPM.OpenAmountCurrencyCode; }
+    get OpenAmountCurrencySign() { return this.LedgerTransactionPM.OpenAmountCurrencySign; }
+    get CurrencyId() { return this.LedgerTransactionPM.CurrencyId; }
+    get Reference1() { return this.LedgerTransactionPM.Reference1; }
+    get Reference2() { return this.LedgerTransactionPM.Reference2; }
+    get Reference3() { return this.LedgerTransactionPM.Reference3; }
+    get Notes() { return this.LedgerTransactionPM.Notes; }
+    //get IsPartial() { return this.OpenAmount != this.AmountToReconcile; }
+    get OpenAmountCurrencyId() { return this.LedgerTransactionPM.OpenAmountCurrencyId; }
+    get SourceTypeCode() { return this.LedgerTransactionPM.SourceTypeCode; }
+    get SourceNumber() { return this.LedgerTransactionPM.SourceNumber; }
+
+    //#endregion
+
+
+    //#region Row Coloring
+
+    ColorMe() {
+        //if (AppTool.IsNullOrEmpty(this.parent.lastGroupNumber))
+        //    this.parent.lastGroupNumber = this.GroupHash;
+
+        //if (this.parent.lastGroupNumber == this.GroupHash) {
+        //    return this.parent.lastColorOperation == true;
+        //} else {
+        //    this.parent.lastGroupNumber = this.GroupHash;
+        //    this.parent.lastColorOperation = !this.parent.lastColorOperation;
+        //    return this.parent.lastColorOperation == true;
+        //}
+    }
+    //#endregion 
+
+    CalculatOriginalCurruncy() {
+        //
+        // [i] copied from list template
+        //
+
+        if (!AppTool.IsNullOrEmpty(ReconcileEventManager.GLAccountReconcileMethodCode)) {
+            // this code was copied to reconcile window, if it need change, please chenge it in reconcile window too
+            if (ReconcileEventManager.GLAccountReconcileMethodCode == "0") { // 0-local currency
+
+                // local
+                return SessionLocator.TenantPM.CurrencySign;
+
+            } else if (ReconcileEventManager.GLAccountReconcileMethodCode == "1") { // 1-foreign currency
+
+                // foreign
+                return this.ledgerTransaction.CurrencySign;
+
+            }
+
+        }
+    }
+
+
+}
+
+
+class BankLineModel extends BaseComponent {
+    public PageLinePM: ReconcileExternalPageLinePM = null;
+    public ObjectTableName = "ReconcileExternalPageLine";
+    public RowIndex: number;
+    public DataContext = this;
+    public isRTL: boolean = false;
+
+    constructor(
+        private pageLine: ReconcileExternalPageLinePM,
+        private parent: ExternalReconcileComponent,
+        private myRowIndex: number
+    ) {
+        super();
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+        this.EntityPM = this.parent.EntityPM;
+        this.PageLinePM = pageLine;
+        this.RowIndex = myRowIndex;
+
+    }
+
+    get GroupHash() { return this.pageLine.GroupHash };
+
+    //#region Properties
+    get Id() { return this.PageLinePM.Id; }
+    get Amount() { return this.PageLinePM.Amount; }
+    get Reference() { return this.PageLinePM.Reference; }
+    get ReferenceDate() { return this.PageLinePM.ReferenceDate; }
+    get Notes() { return this.PageLinePM.Notes; }
+    get LineNumber() { return this.PageLinePM.LineNumber; }
+
+    //#endregion
+
+
+}

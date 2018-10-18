@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://tempuri.org/CFIPACKS" elementFormDefault="qualified" targetNamespace="http://tempuri.org/CFIPACKS" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="CFIPACKS">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="CFIPACKS_DATA" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CFIPACKS_DATA">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="FILE_NO" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="LINE_NO" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CONT_NO" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CONT_TYPE_ID" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="SEAL" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="WEIGHT" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FILE_NO" type="xs:string" />
+  <xs:element name="LINE_NO" type="xs:string" />
+  <xs:element name="CONT_NO" type="xs:string" />
+  <xs:element name="CONT_TYPE_ID" type="xs:string" />
+  <xs:element name="SEAL" type="xs:string" />
+  <xs:element name="WEIGHT" type="xs:string" />
+</xs:schema>

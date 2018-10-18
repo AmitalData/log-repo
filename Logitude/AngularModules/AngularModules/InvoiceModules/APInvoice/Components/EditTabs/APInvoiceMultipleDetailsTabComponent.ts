@@ -1,0 +1,716 @@
+﻿import {Component, OnDestroy}  from '@angular/core';
+import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
+import {APInvoicePM} from '../../../../Invoice/EntityPMs/APInvoicePM';
+import {APInvoiceMultipleShipmentPM} from '../../../../Invoice/EntityPMs/APInvoiceMultipleShipmentPM';
+import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
+import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import {AppTool, DateTool, ArrayTool} from '../../../../Infrastructure/Tools';
+import {NumbersPipe} from '../../../../Infrastructure/Pipes/NumbersPipe';
+import {InvoiceTool} from '../../../../Invoice/Tools';
+import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import {InvoiceTotalsClass, SummaryItem} from '../../../../Invoice/Args';
+import {PaymentTermList} from '../../../../Common/EntityLists/PaymentTermList';
+import {PaymentTermListService} from '../../../../Common/Services/StandardLists/PaymentTermListService';
+import {ShipmentList} from '../../../../Shipment/EntityLists/ShipmentList';
+import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
+import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
+import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
+import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
+
+@Component({
+    moduleId: module.id,
+    templateUrl: './APInvoiceMultipleDetailsTabComponent.html',
+})
+
+export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implements OnDestroy {
+    public EntityPM: APInvoicePM = null;
+    public ObjectTableName = "APInvoice";
+    public DataContext = this;
+    public ItemsSource: MultipleShipmentLine[] = [];
+    public LocalCurrencyId: string;
+    public LocalCurrencyCode: string;
+    public IsEditExchangeRateVisible: boolean = false;
+    public isRTL: boolean = false;
+
+    constructor(private entityArgs: EntityArgs) {
+        super();
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
+        this.EntityPM = entityArgs.EntityPM;
+        this.LocalCurrencyId = SessionLocator.LocalCurrencyId;
+        this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
+        this.InitializeServices();
+        this.SetUIProperties();
+        this.BuildScreenData();
+        this.Listen();
+
+        if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "APInvoiceEditExchangeRate")) {
+            this.IsEditExchangeRateVisible = true;
+        }
+    }
+
+    private SaveCompletedEvent: any = null;
+    private LoadCompletedEvent: any = null;
+    private Listen() {
+        if (this.entityArgs.EditComponent != null) {
+
+            this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                if (isSaveSuccess) {
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.SetUIProperties();
+                    this.BuildItemsSource();
+
+                    if (this.editingShipmentRequested) {
+                        this.RunEditShipment();
+                    }
+                }
+
+                this.editingShipmentRequested = false;
+            });
+
+            this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                if (isLoadSuccess) {
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.SetUIProperties();
+                    this.BuildItemsSource();
+                }
+            });
+        }
+    }
+    ngOnDestroy() {
+        AppTool.KillEventEmitter(this.SaveCompletedEvent);
+        AppTool.KillEventEmitter(this.LoadCompletedEvent);
+    }
+
+    private myPaymentTermListService: PaymentTermListService;
+    InitializeServices() {
+        this.myPaymentTermListService = new PaymentTermListService();
+    }
+
+    public IsEditingEnabled: boolean = false;
+    public PaymentTermDisplayInLOV: boolean = true;
+    SetUIProperties() {
+        var isEditingEnabled = InvoiceTool.IsEditingAPInvoiceEnabled(this.EntityPM);
+
+        this.IsEditingEnabled = isEditingEnabled;
+        this.UIProperties.SetEnabled("VendorId", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("InvoiceCurrencyId", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", this.ObjectTableName, false);
+
+        //this.UIProperties.SetEnabled("InvoiceDate", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("InvoiceDate", this.ObjectTableName, isEditingEnabled);
+
+        this.UIProperties.SetEnabled("PaymentTermId", this.ObjectTableName, isEditingEnabled);
+        this.UIProperties.SetEnabled("AmountInInvoiceCurrency", this.ObjectTableName, isEditingEnabled);
+        this.UIProperties.SetEnabled("InvoiceNumber", this.ObjectTableName, isEditingEnabled);
+        this.UIProperties.SetEnabled("VATNumber", this.ObjectTableName, isEditingEnabled);
+        this.SetUIProperties_VatNumber();
+        this.SetUIProperties_DueDate();
+    }
+    SetUIProperties_VatNumber() {
+        var isFieldRequired = false;
+
+        if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP) {
+            if (AppTool.IsNullOrEmpty(this.VATNumber)) {
+                isFieldRequired = true;
+            }
+
+            this.UIProperties.SetRequired("VATNumber", this.ObjectTableName, isFieldRequired);
+        }
+    }
+    SetUIProperties_DueDate() {
+        var AllowManuallyDueDate: boolean = false;
+
+        if (SessionLocator.AccountingSystemPM) {
+            AllowManuallyDueDate = SessionLocator.AccountingSystemPM.AllowManuallyDueDate;
+        }
+
+        if (AllowManuallyDueDate) {
+            this.PaymentTermDisplayInLOV = null;
+        }
+
+        if (!this.IsEditingEnabled) {
+            AllowManuallyDueDate = false;
+        }
+
+        this.UIProperties.SetEnabled("DueDate", this.ObjectTableName, AllowManuallyDueDate);
+    }
+
+    BuildScreenData() {
+        this.BuildItemsSource();
+    }
+
+    public SelectedItem: MultipleShipmentLine;
+    BuildItemsSource() {
+        this.ItemsSource = [];
+
+        var list = this.EntityPM.InvoiceMultipleShipments;
+        list = list.sort(function (a, b) { return a.IndexOrder == b.IndexOrder ? 0 : a.IndexOrder < b.IndexOrder ? -1 : 1; });
+
+        list.forEach(item => {
+            this.ItemsSource.push(new MultipleShipmentLine(item));
+        });
+
+        this.BuildTotalsCollection();
+    }
+
+    // Vendor
+    get VendorDependencyProperty1() { return InvoiceTool.GetVendorPartnerTypes(); }
+
+    get VendorId() { return this.EntityPM.VendorId; }
+    set VendorId(value: string) {
+        if (this.EntityPM.VendorId != value) {
+            this.EntityPM.VendorId = value;
+        }
+    }
+
+    get VendorName() { return this.EntityPM.VendorName; }
+    set VendorName(value: string) {
+        if (this.EntityPM.VendorName != value) {
+            this.EntityPM.VendorName = value;
+        }
+    }
+
+    get InvoiceNumber() { return this.EntityPM.InvoiceNumber; }
+    set InvoiceNumber(value: string) {
+        if (this.EntityPM.InvoiceNumber != value) {
+            this.EntityPM.InvoiceNumber = value;
+        }
+    }
+
+    get VATNumber() { return this.EntityPM.VATNumber; }
+    set VATNumber(value: string) {
+        if (this.EntityPM.VATNumber != value) {
+            this.EntityPM.VATNumber = value;
+            this.SetUIProperties_VatNumber();
+        }
+    }
+
+    get InvoiceCurrencyId() { return this.EntityPM.InvoiceCurrencyId; }
+    set InvoiceCurrencyId(value: string) {
+        if (this.EntityPM.InvoiceCurrencyId != value) {
+            this.EntityPM.InvoiceCurrencyId = value;
+        }
+    }
+
+    get InvoiceCurrencyCode() { return this.EntityPM.InvoiceCurrencyCode; }
+    set InvoiceCurrencyCode(value: string) {
+        if (this.EntityPM.InvoiceCurrencyCode != value) {
+            this.EntityPM.InvoiceCurrencyCode = value;
+        }
+    }
+
+    get InvoiceCurrencyExchangeRate() { return this.EntityPM.InvoiceCurrencyExchangeRate; }
+    set InvoiceCurrencyExchangeRate(value: number) {
+        if (this.EntityPM.InvoiceCurrencyExchangeRate != value) {
+            this.EntityPM.InvoiceCurrencyExchangeRate = AppTool.Round(value, 5);
+            this.ComputeAllAmounts();
+        }
+    }
+
+    get ExchangeRateDate() { return this.EntityPM.ExchangeRateDate; }
+    set ExchangeRateDate(value: Date) {
+        if (this.EntityPM.ExchangeRateDate != value) {
+            this.EntityPM.ExchangeRateDate = value;
+        }
+    }
+
+    get RelativeRateDate() { return DateTool.GetRelativeRateDate(this.InvoiceDate, this.ExchangeRateDate, "old") }
+
+    get ProfitCurrencyId() { return this.EntityPM.ProfitCurrencyId; }
+    set ProfitCurrencyId(value: string) {
+        if (this.EntityPM.ProfitCurrencyId != value) {
+            this.EntityPM.ProfitCurrencyId = value;
+        }
+    }
+
+    get ProfitCurrencyExchangeRate() { return this.EntityPM.ProfitCurrencyExchangeRate; }
+    set ProfitCurrencyExchangeRate(value: number) {
+        if (this.EntityPM.ProfitCurrencyExchangeRate != value) {
+            this.EntityPM.ProfitCurrencyExchangeRate = AppTool.Round(value, 5);
+            this.ComputeAllAmounts();
+        }
+    }
+
+    get PaymentTermId() { return this.EntityPM.PaymentTermId; }
+    set PaymentTermId(value: string) {
+        if (this.EntityPM.PaymentTermId != value) {
+            this.EntityPM.PaymentTermId = value;
+            InvoiceTool.ComputeAPInvoiceDueDate(this.EntityPM);
+
+            if (AppTool.IsNullOrEmpty(value)) {
+                this.PaymentTermName = null;
+            }
+
+            else {
+                this.myPaymentTermListService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
+                        var list: PaymentTermList = myResponse.Result;
+
+                        if (list != null) {
+                            this.PaymentTermName = list.EnglishName;
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+    get PaymentTermName() { return this.EntityPM.PaymentTermName; }
+    set PaymentTermName(value: string) {
+        if (this.EntityPM.PaymentTermName != value) {
+            this.EntityPM.PaymentTermName = value;
+        }
+    }
+
+    get InvoiceDate() { return this.EntityPM.InvoiceDate; }
+    set InvoiceDate(value: Date) {
+        if (this.EntityPM.InvoiceDate != value) {
+            this.EntityPM.InvoiceDate = value;
+            InvoiceTool.ComputeAPInvoiceDueDate(this.EntityPM);
+        }
+    }
+
+    get DueDate() { return this.EntityPM.DueDate; }
+    set DueDate(value: Date) {
+        if (this.EntityPM.DueDate != value) {
+            this.EntityPM.DueDate = value;
+            InvoiceTool.ComputeAPInvoicePaymentTerm(this.EntityPM);
+        }
+    }
+
+    get AmountInInvoiceCurrency() { return this.EntityPM.AmountInInvoiceCurrency; }
+    set AmountInInvoiceCurrency(value: number) {
+        if (this.EntityPM.AmountInInvoiceCurrency != value) {
+            this.EntityPM.AmountInInvoiceCurrency = AppTool.Round(value, 2);
+            this.EntityPM.InvoiceExpectedAmount = AppTool.Round(value, 2);
+            this.ComputeAllAmounts();
+        }
+    }
+
+    // Totals
+    get IsCurrencyFilterVisible() {
+        var myResult = false;
+
+        if (!AppTool.IsNullOrEmpty(this.InvoiceCurrencyId)) {
+            if (this.LocalCurrencyId != this.InvoiceCurrencyId) {
+                myResult = true;
+            }
+        }
+
+        return myResult;
+    }
+
+    private isTotalInLocalCurrency: boolean = false;
+    get IsTotalInLocalCurrency() { return this.isTotalInLocalCurrency; }
+    set IsTotalInLocalCurrency(value: boolean) {
+        if (this.isTotalInLocalCurrency != value) {
+            this.isTotalInLocalCurrency = value;
+            this.BuildTotalsControl();
+        }
+    }
+
+    public TotalsList: InvoiceTotalsClass[] = [];
+    public SummaryItems: SummaryItem[] = [];
+    ComputeAllAmounts() {
+        this.AmountInLocalCurrency = AppTool.Round(this.AmountInInvoiceCurrency * this.InvoiceCurrencyExchangeRate, 2);
+
+        if (this.ProfitCurrencyId == this.InvoiceCurrencyId) {
+            this.AmountInProfitCurrency = this.AmountInInvoiceCurrency;
+        }
+
+        else {
+            if (AppTool.IsNullOrZero(this.ProfitCurrencyExchangeRate)) {
+                this.AmountInProfitCurrency = 0;
+            }
+
+            else {
+                this.AmountInProfitCurrency = AppTool.Round(this.AmountInLocalCurrency / this.ProfitCurrencyExchangeRate,2);
+            }
+        }
+
+        this.AmountDue = this.AmountInInvoiceCurrency == null ? 0 : this.AmountInInvoiceCurrency;
+        this.AmountDueInLocalCurrency = this.AmountInLocalCurrency == null ? 0 : this.AmountInLocalCurrency;
+        this.AmountDueInProfitCurrency = this.AmountInProfitCurrency == null ? 0 : this.AmountInProfitCurrency;
+    }
+    ComputeTotals() {
+        this.BuildTotalsCollection(true);
+    }
+    BuildTotalsCollection(isComputingTotals: boolean = false) {
+        var totalsList: InvoiceTotalsClass[] = [];
+        var myDataList = this.EntityPM.InvoiceMultipleShipments;
+
+        var allLinesList: InvoiceTotalsClass[] = [];
+        myDataList.forEach(item => {
+            var vatsList: string[] = item.TotalVatsList;
+            if (vatsList.length > 0) {
+                vatsList.forEach(myString => {
+                    if (!AppTool.IsNullOrEmpty(myString)) {
+                        var lineArray: string[] = myString.split(':');
+
+                        var myRecord: InvoiceTotalsClass = new InvoiceTotalsClass();
+                        myRecord.VatTypeId = lineArray[0];
+                        myRecord.VatTypePercentage = this.ConvertToDouble(lineArray[1]);
+                        myRecord.LocalCurrencyAmount = this.ConvertToDouble(lineArray[2]);
+                        myRecord.InvoiceCurrencyAmount = this.ConvertToDouble(lineArray[3]);
+                        myRecord.ProfitCurrencyAmount = this.ConvertToDouble(lineArray[4]);
+                        myRecord.VatTypeCell = lineArray[5];
+                        allLinesList.push(myRecord);
+                    }
+                });
+            }
+        });
+
+        var dataGroupList: InvoiceTotalsClass[] = [];
+        allLinesList.filter(f => f.VatTypeId != null).forEach(item => {
+            var dataGroupItem = dataGroupList.filter(d => d.VatTypeCell == item.VatTypeCell)[0];
+            if (dataGroupItem == null) {
+                dataGroupItem = new InvoiceTotalsClass();
+                dataGroupItem.RowLabel = item.VatTypeCell;
+                dataGroupItem.VatTypeCell = item.VatTypeCell;
+                dataGroupItem.LocalCurrencyAmount = 0;
+                dataGroupItem.InvoiceCurrencyAmount = 0;
+                dataGroupList.push(dataGroupItem);
+            }
+
+            if (item.VatTypePercentage != null) {
+                if (item.LocalCurrencyAmount != null) {
+                    dataGroupItem.LocalCurrencyAmount = dataGroupItem.LocalCurrencyAmount + AppTool.Round((item.VatTypePercentage * item.LocalCurrencyAmount / 100), 2);
+                }
+
+                if (item.InvoiceCurrencyAmount != null) {
+                    dataGroupItem.InvoiceCurrencyAmount = dataGroupItem.InvoiceCurrencyAmount + AppTool.Round((item.VatTypePercentage * item.InvoiceCurrencyAmount / 100), 2);
+                }
+            }
+        });
+
+        var subTotalItem = new InvoiceTotalsClass();
+        var allTotalItem = new InvoiceTotalsClass();
+        subTotalItem.RowLabel = TextCodeTranslator.Translate("APInvoice.S.Details.Subtotal");
+        allTotalItem.RowLabel = TextCodeTranslator.Translate("APInvoice.F.AmountInInvoiceCurrency");
+       
+        if (dataGroupList.length > 0) {
+            subTotalItem.LocalCurrencyAmount = ArrayTool.Sum(myDataList, "SubTotalInLocalCurrency");
+            subTotalItem.InvoiceCurrencyAmount = ArrayTool.Sum(myDataList, "SubTotalInInvoiceCurrency");
+            totalsList.push(subTotalItem);
+
+            dataGroupList.forEach(item => {
+                totalsList.push(item);                
+            });
+
+            allTotalItem.LocalCurrencyAmount = subTotalItem.LocalCurrencyAmount + AppTool.Round(ArrayTool.Sum(dataGroupList, "LocalCurrencyAmount"), 2);
+            allTotalItem.InvoiceCurrencyAmount = subTotalItem.InvoiceCurrencyAmount + AppTool.Round(ArrayTool.Sum(dataGroupList, "InvoiceCurrencyAmount"), 2);
+            totalsList.push(allTotalItem);
+        }
+
+        if (isComputingTotals) {
+            this.SubTotalInLocalCurrency = AppTool.Round(subTotalItem.LocalCurrencyAmount, 2);
+            this.SubTotalInInvoiceCurrency = AppTool.Round(subTotalItem.InvoiceCurrencyAmount, 2);
+        }
+
+        this.TotalsList = totalsList;
+        this.BuildTotalsControl();
+    }
+    BuildTotalsControl() {
+
+        this.BuildSummary();
+
+        //this.SummaryItems = [];
+        //var pipe = new NumbersPipe();
+        //var selectedCurrencyCode = this.IsTotalInLocalCurrency ? "(" + this.LocalCurrencyCode + ")" : "(" + this.InvoiceCurrencyCode + ")";
+
+        //if (this.TotalsList.length == 0) {
+        //    var myTotalItem = new SummaryItem();
+        //    myTotalItem.Label = TextCodeTranslator.Translate("APInvoice.F.AmountInInvoiceCurrency");
+        //    myTotalItem.Label += " " + selectedCurrencyCode;
+        //    myTotalItem.Value = this.IsTotalInLocalCurrency ? pipe.transform(0, "N2") : pipe.transform(0, "N2");
+        //    this.SummaryItems.push(myTotalItem);
+        //}
+
+        //else {
+        //    for (var i = 0; i < this.TotalsList.length; i++) {
+        //        var item: InvoiceTotalsClass = this.TotalsList[i];
+
+        //        var mySummaryItem = new SummaryItem();
+        //        mySummaryItem.Label = item.RowLabel;
+        //        mySummaryItem.Value = this.IsTotalInLocalCurrency ? pipe.transform(item.LocalCurrencyAmount, "N2") : pipe.transform(item.InvoiceCurrencyAmount, "N2");
+        //        this.SummaryItems.push(mySummaryItem);
+
+        //        if (i + 2 < this.TotalsList.length) {
+        //            var myOperatorItem = new SummaryItem();
+        //            myOperatorItem.Value = "+";
+        //            this.SummaryItems.push(myOperatorItem);
+        //        }
+
+        //        else if (i + 1 < this.TotalsList.length) {
+        //            var myOperatorItem = new SummaryItem();
+        //            myOperatorItem.Value = "=";
+        //            this.SummaryItems.push(myOperatorItem);
+        //        }
+
+        //        else if (i + 1 == this.TotalsList.length) {
+        //            mySummaryItem.Label += " " + selectedCurrencyCode;
+        //        }
+        //    }
+        //}
+    }
+    BuildSummary() {
+        this.SummaryItems = [];
+        var pipe = new NumbersPipe();
+        var selectedCurrencyCode = this.IsTotalInLocalCurrency ? "(" + this.LocalCurrencyCode + ")" : "(" + this.InvoiceCurrencyCode + ")";
+
+        if (this.EntityPM.TotalVATs.length > 0) {
+            var mySummaryItem_Sub = new SummaryItem();
+            mySummaryItem_Sub.Label = TextCodeTranslator.Translate("APInvoice.S.Details.Subtotal");
+            mySummaryItem_Sub.Value = this.IsTotalInLocalCurrency ? pipe.transform(this.EntityPM.SubTotalInLocalCurrency, "N2") : pipe.transform(this.EntityPM.SubTotalInInvoiceCurrency, "N2");
+            this.SummaryItems.push(mySummaryItem_Sub);
+
+            this.EntityPM.TotalVATs.forEach(item => {
+
+                var myOperatorItem = new SummaryItem();
+                myOperatorItem.Value = "+";
+                this.SummaryItems.push(myOperatorItem);
+
+                var mySummaryItem = new SummaryItem();
+                mySummaryItem.Label = item.VatTypeCell;
+                mySummaryItem.Value = this.IsTotalInLocalCurrency ? pipe.transform(item.LocalVATAmount, "N2") : pipe.transform(item.InvoiceCurrencyVATAmount, "N2");
+                this.SummaryItems.push(mySummaryItem);
+            });
+
+            var myOperatorItem = new SummaryItem();
+            myOperatorItem.Value = "=";
+            this.SummaryItems.push(myOperatorItem);
+        }
+
+        var mySummaryItem_All = new SummaryItem();
+        mySummaryItem_All.Label = TextCodeTranslator.Translate("APInvoice.F.AmountInInvoiceCurrency") + " " + selectedCurrencyCode;
+        mySummaryItem_All.Value = this.IsTotalInLocalCurrency ? pipe.transform(this.EntityPM.AmountInLocalCurrency_Summary, "N2") : pipe.transform(this.EntityPM.AmountInInvoiceCurrency_Summary, "N2");
+        this.SummaryItems.push(mySummaryItem_All);
+    }
+
+    ConvertToDouble(myString: string) {
+        var myResult: number = 0;
+
+        if (!AppTool.IsNullOrEmpty(myString)) {
+            myResult = +myString;
+        }
+
+        return myResult;
+    }
+
+    get SubTotalInLocalCurrency() { return this.EntityPM.SubTotalInLocalCurrency; }
+    set SubTotalInLocalCurrency(value: number) {
+        if (this.EntityPM.SubTotalInLocalCurrency != value) {
+
+            if (AppTool.IsNullOrEmpty(value)) {
+                value = 0;
+            }
+
+            this.EntityPM.SubTotalInLocalCurrency = AppTool.Round(value, 2);
+        }
+    }
+
+    get SubTotalInInvoiceCurrency() { return this.EntityPM.SubTotalInInvoiceCurrency; }
+    set SubTotalInInvoiceCurrency(value: number) {
+        if (this.EntityPM.SubTotalInInvoiceCurrency != value) {
+            this.EntityPM.SubTotalInInvoiceCurrency = AppTool.Round(value, 2);
+
+            if (AppTool.IsNullOrEmpty(value)) {
+                value = 0;
+            }
+        }
+    }
+
+    get AmountInLocalCurrency() { return this.EntityPM.AmountInLocalCurrency; }
+    set AmountInLocalCurrency(value: number) {
+        if (this.EntityPM.AmountInLocalCurrency != value) {
+            this.EntityPM.AmountInLocalCurrency = AppTool.Round(value, 2);
+        }
+    }
+
+    get AmountInProfitCurrency() { return this.EntityPM.AmountInProfitCurrency; }
+    set AmountInProfitCurrency(value: number) {
+        if (this.EntityPM.AmountInProfitCurrency != value) {
+            this.EntityPM.AmountInProfitCurrency = AppTool.Round(value, 2);
+        }
+    }
+
+    get AmountDue() { return this.EntityPM.AmountDue; }
+    set AmountDue(value: number) {
+        var setValue: number = AppTool.Round(value, 2);
+        if (setValue == null) {
+            setValue = 0;
+        }
+
+        if (this.EntityPM.AmountDue != setValue) {
+            this.EntityPM.AmountDue = setValue;
+        }
+    }
+
+    get AmountDueInLocalCurrency() { return this.EntityPM.AmountDueInLocalCurrency; }
+    set AmountDueInLocalCurrency(value: number) {
+        var setValue: number = AppTool.Round(value, 2);
+        if (setValue == null) {
+            setValue = 0;
+        }
+
+        if (this.EntityPM.AmountDueInLocalCurrency != setValue) {
+            this.EntityPM.AmountDueInLocalCurrency = setValue;
+        }
+    }
+
+    get AmountDueInProfitCurrency() { return this.EntityPM.AmountDueInProfitCurrency; }
+    set AmountDueInProfitCurrency(value: number) {
+        var setValue: number = AppTool.Round(value, 2);
+        if (setValue == null) {
+            setValue = 0;
+        }
+
+        if (this.EntityPM.AmountDueInProfitCurrency != setValue) {
+            this.EntityPM.AmountDueInProfitCurrency = setValue;
+        }
+    }
+
+    private editingShipmentId: string = null;
+    private editingShipmentRequested: boolean = false;
+    AddShipment(item: ShipmentList) {
+if(item!=null){
+        if (this.EntityPM.InvoiceMultipleShipments.filter(f => f.ShipmentId == item.Id).length == 0) {
+            var itemPM = new APInvoiceMultipleShipmentPM(null);
+            itemPM.ShipmentId = item.Id;
+            itemPM.APInvoiceId = this.EntityPM.Id;
+            itemPM.Tenant = this.EntityPM.Tenant;
+            itemPM.House = item.House;
+            itemPM.Master = item.Master;
+            itemPM.LongMaster = item.LongMaster;
+            itemPM.ShipmentNumber = item.ShipmentNumber;
+            itemPM.ShipmentLevelCode = item.ShipmentLevelCode;
+            itemPM.PartnerType = item.ShipmentLevelCode == "C" ? "Agent:" : "Customer:";
+            itemPM.PartnerName = item.ShipmentLevelCode == "C" ? item.AgentName : item.CustomerName;
+            itemPM.MainCarriageCarrierName = item.MainCarriageCarrierName;
+            itemPM.ExpectedAmount = 0;
+            itemPM.OpenAmount = 0;
+            itemPM.TotalAmount = 0;
+            itemPM.TotalVATAmount = 0;
+            itemPM.AccountedAmount = 0;
+            itemPM.SubTotalInLocalCurrency = 0;
+            itemPM.SubTotalInInvoiceCurrency = 0;
+
+            var myIndexOrder = 0;
+            if (this.EntityPM.InvoiceMultipleShipments.length > 0) {
+                myIndexOrder = ArrayTool.Max(this.EntityPM.InvoiceMultipleShipments, "IndexOrder");
+                myIndexOrder += 1;
+            }
+
+            itemPM.IndexOrder = myIndexOrder;
+            itemPM.TotalVatsList = new Array<string>();
+
+            if (this.EntityPM.InvoiceCurrencyId == this.EntityPM.ProfitCurrencyId) {
+                itemPM.OpenAmount = item.OpenPayablesInProfitCurrency;
+                itemPM.ExpectedAmount = AppTool.Round(item.OpenPayablesInProfitCurrency + item.AccountedPayablesInProfitCurrency, 2);
+            }
+
+            else {
+                if (AppTool.IsNullOrZero(this.InvoiceCurrencyExchangeRate)) {
+                    itemPM.OpenAmount = 0;
+                    itemPM.ExpectedAmount = 0;
+                }
+
+                else {
+                    itemPM.OpenAmount = AppTool.Round(item.OpenPayablesInLocalCurrency / this.InvoiceCurrencyExchangeRate, 2);
+                    itemPM.ExpectedAmount = AppTool.Round((item.OpenPayablesInLocalCurrency + item.AccountedPayablesInLocalCurrency) / this.InvoiceCurrencyExchangeRate, 2);
+                }
+            }
+
+            this.EntityPM.AddAPInvoiceMultipleShipmentPM(itemPM);
+            this.BuildItemsSource();
+            this.ComputeTotals();
+        }
+}
+    }
+    EditShipmentLine(item: MultipleShipmentLine) {
+        if (!this.editingShipmentRequested) {
+            this.editingShipmentId = item.ShipmentId;
+            this.editingShipmentRequested = true;
+            this.SaveChanges();
+        }
+    }
+    RunEditShipment() {
+        if (this.editingShipmentId) {
+            var entityPM = this.EntityPM.InvoiceMultipleShipments.filter(f => f.ShipmentId == this.editingShipmentId)[0];
+            if (entityPM) {
+                var logWindow = new LogitudeWindow();
+                logWindow.Width = 960;
+                logWindow.Height = 600;
+                logWindow.Title = "Edit Shipment Lines";
+                logWindow.WindowArgs = { APInvoicePM: this.EntityPM, EntityShipmentPM: entityPM, IsEditingEnabled: this.IsEditingEnabled };
+
+                logWindow.WindowClosed.subscribe(s => {
+                    if (s) {
+                        if (SessionLocator.CurrentSession.CurrentEditComponent) {
+                            SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        }
+                    }
+                });
+
+                logWindow.Show('./InvoiceModules/APInvoice/Components/EditTabs/EditMultipleShipmentComponent');
+            }
+        }
+    }
+    DeleteShipmentLine(item: MultipleShipmentLine) {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Show("Delete this shipment line?");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+
+                this.EntityPM.RemoveAPInvoiceMultipleShipmentPM(item.EntityPM);
+
+                if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+                    this.BuildItemsSource();
+                }
+
+                else {
+                    this.SaveChanges();
+                }
+            }
+        });
+    }
+    ViewShipmentClicked(item: MultipleShipmentLine) {
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({ EntityId: item.ShipmentId, ObjectTableName: 'Shipment', BackButtonLabel: "A/P Invoice: " + this.EntityPM.InvoiceNumber });
+            });
+    }
+    SaveChanges() {
+        if (SessionLocator.CurrentSession.CurrentEditComponent) {
+            SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+        }
+    }
+}
+
+export class MultipleShipmentLine {
+    public EntityPM: APInvoiceMultipleShipmentPM;
+    constructor(item: APInvoiceMultipleShipmentPM) {
+        this.EntityPM = item;
+    }
+
+    get IndexOrder() { return this.EntityPM.IndexOrder; }
+    get APInvoiceId() { return this.EntityPM.APInvoiceId; }
+    get ShipmentId() { return this.EntityPM.ShipmentId; }
+    get House() { return this.EntityPM.House; }
+    get Master() { return this.EntityPM.Master; }
+    get LongMaster() { return this.EntityPM.LongMaster; }
+    get ShipmentNumber() { return this.EntityPM.ShipmentNumber; }
+    get PartnerType() { return this.EntityPM.PartnerType; }
+    get PartnerName() { return this.EntityPM.PartnerName; }
+    get MainCarriageCarrierName() { return this.EntityPM.MainCarriageCarrierName; }
+    get ExpectedAmount() { return this.EntityPM.ExpectedAmount; }
+    get AccountedAmount() { return this.EntityPM.AccountedAmount; }
+    get OpenAmount() { return this.EntityPM.OpenAmount; }
+    get TotalAmount() { return this.EntityPM.TotalAmount; }
+    get TotalVATAmount() { return this.EntityPM.TotalVATAmount; }
+    get SubTotalInLocalCurrency() { return this.EntityPM.SubTotalInLocalCurrency; }
+    get SubTotalInInvoiceCurrency() { return this.EntityPM.SubTotalInInvoiceCurrency; }
+}

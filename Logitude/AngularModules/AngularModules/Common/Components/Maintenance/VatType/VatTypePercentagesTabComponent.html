@@ -1,0 +1,89 @@
+﻿
+<div class="TabHolder">
+    <table *ngIf="IsResourcesReady">
+        <tr class="TabTitleRow">
+            <td>{{'VatType.TH.Percentages' | TextCodeTranslationPipe}}</td>
+        </tr>
+
+        <tr>
+            <td>
+                <div class="MediaFill">
+                    <div *ngIf="IsMultiPercentage" class="NoDataText">This is Multi-percentages VAT</div>
+
+                    <table *ngIf="!IsMultiPercentage">
+                        <tr style="height: 1px;">
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <div></div>
+                                        </td>
+
+                                        <td style="width:1px;">
+                                            <button class="Button" (click)="AddPercentage()">Add Percentage</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <tr style="height: 5px;">
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div class="MediaFill">
+                                    <div class="SimpleGridView">
+                                        <div class="SimpleGridViewHeader">
+                                            <table>
+                                                <tr>
+                                                    <td style="width: 100px; min-width: 100px; max-width: 100px;">From Date</td>
+                                                    <td style="width: 100px; min-width: 100px; max-width: 100px;">Percentage</td>
+                                                    <td style="width: 25px; min-width:25px; max-width: 25px;"></td>
+                                                    <td class="LastChild">
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+
+                                        <div class="SimpleGridViewBody">
+                                            <table>
+                                                <tr class="SimpleGridViewRow RowHover" *ngFor="let item of ItemsSource" (mousedown)="SelectedItem = item" [class.RowSelected]="item === SelectedItem">
+                                                    <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
+                                                        <div>{{item.FromDate | DateTimeToDatePipe}}</div>
+                                                    </td>
+
+                                                    <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
+                                                        <span class="Value">{{item.Percentage |  NumbersPipe:'N2'}}</span>
+                                                    </td>
+
+                                                    <td style="width: 25px; min-width:25px; max-width: 25px;">
+                                                        <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditPercentage(item)"></IconButton>
+                                                    </td>
+
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td colspan="4">
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>

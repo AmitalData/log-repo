@@ -1,0 +1,1 @@
+alter table shipments add   [SecurityKey]varchar(40)  NULL

@@ -1,0 +1,55 @@
+﻿
+<style>
+    .ListCellImage {
+        vertical-align: middle;
+        display: block;
+        margin: auto;
+    }
+
+    .TemplateTrimming {
+        height: 100%;
+        width: 100%;
+        position: relative;
+    }
+
+    .TemplateTrimmingChild {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+</style>
+
+<table *ngIf="Entity">
+    <tr>
+        <td style="height: 100%;">
+
+            <div *ngIf="FieldName == 'TransportModeId'" class="MediaFillRelative">
+                <img class="CenterCenter" [attr.src]="'./Images/Icons/' + FieldValue + '.png'" [title]="Entity['TransportModeName']" />
+            </div>
+
+            <div *ngIf="FieldName == 'DirectionId'" class="MediaFillRelative">
+                <img class="CenterCenter" [attr.src]="'./Images/Directions/' + FieldValue + '.png'" [title]="Entity['DirectionName']" />
+            </div>
+
+            <div *ngIf="ObjectTableName == 'WarehouseEntry' && FieldName == 'ActualEntryDate'">
+                <span style="font-weight: bold;" [ngStyle]="{color: BackgroudColor}"> {{FieldValue | DateTimeToDatePipe}} {{WarehouseDateType}}</span>
+            </div>
+
+
+            <!--<div *ngIf="ObjectTableName == 'WarehouseRelease' && FieldName == 'ActualReleaseDate'">
+                <span style="font-weight: bold;" [ngStyle]="{color: BackgroudColor}">{{FieldValue | DateTimeToDatePipe}} {{WarehouseDateType}}</span>
+            </div>-->
+
+            <div *ngIf="ObjectTableName == 'WarehouseRelease' && FieldName == 'ReleaseDate'">
+                <span style="font-weight: bold;" [ngStyle]="{color: BackgroudColor}">{{FieldValue | DateTimeToDatePipe}} {{WarehouseDateType}}</span>
+            </div>
+
+        </td>
+    </tr>
+</table>

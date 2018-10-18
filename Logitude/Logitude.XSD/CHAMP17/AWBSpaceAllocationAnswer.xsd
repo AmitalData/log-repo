@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:GCCSCargoImp="http://www.champ.aero/GCCS/CargoXML"
+           targetNamespace="http://www.champ.aero/GCCS/CargoXML" version="2.0">
+
+    <xs:include schemaLocation="common_waybill.xsd"/>
+
+    <xs:complexType name="AWBSpaceAllocationAnswer">
+        <xs:sequence>
+            <xs:element name="StandardMessageIdentification" type="GCCSCargoImp:StandardMessageIdentification" minOccurs="1"/>
+            <xs:element name="ConsignmentDetail" type="GCCSCargoImp:ConsignmentDetail_FFA" minOccurs="1"/>
+            <xs:element name="FlightDetails" type="GCCSCargoImp:FlightDetails_FFA" minOccurs="1" maxOccurs="999"/>
+            <xs:element name="SpecialServiceRequest" type="GCCSCargoImp:SpecialServiceRequest_FFA" minOccurs="0"/>
+            <xs:element name="OtherServiceInformation" type="GCCSCargoImp:OtherServiceInformation_FFA" minOccurs="0" />
+            <xs:element name="BookingReference" type="GCCSCargoImp:BookingReference_FFA" minOccurs="1" />
+            <xs:element name="ShipmentReferenceInformation" type="GCCSCargoImp:ShipmentReferenceInformation"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- consignment detail -->
+
+	<xs:complexType name="ConsignmentDetail_FFA">
+        <xs:sequence>
+            <xs:element name="AWBIdentification" type="GCCSCargoImp:AWBIdentification"/>
+            <xs:element name="AWBOriginAndDestination" type="GCCSCargoImp:AWBOriginAndDestination" minOccurs="1"/>
+            <xs:element name="QuantityDetail" type="GCCSCargoImp:QuantityDetail_FFA" minOccurs="1"/>
+            <xs:element name="TotalConsignmentPieces" type="GCCSCargoImp:TotalConsignmentPieces" minOccurs="0"/>
+	        <xs:element name="NatureOfGoods" type="GCCSCargoImp:ManifestDescriptionOfGoods" minOccurs="1"/>
+		    <xs:element name="SpecialHandlingRequirements" type="GCCSCargoImp:SpecialHandlingDetails" minOccurs="0"/>						
+        </xs:sequence>
+    </xs:complexType>
+
+   <xs:complexType name="QuantityDetail_FFA">
+        <xs:attribute name="ShipmentDescriptionCode" type="GCCSCargoImp:ShipmentDescriptionCode" use="required"/>
+        <xs:attribute name="NumberOfPieces" type="GCCSCargoImp:NumberOfPieces" use="required"/>
+        <xs:attribute name="WeightCode" type="GCCSCargoImp:WeightCode" use="required"/>
+        <xs:attribute name="Weight" type="GCCSCargoImp:Weight" use="required"/>
+    </xs:complexType>
+
+    <!-- flight details -->
+
+	<xs:complexType name="FlightDetails_FFA">
+        <xs:sequence>
+            <xs:element name="FlightIdentification" type="GCCSCargoImp:FlightIdentification_FFA" minOccurs="1"/>
+            <xs:element name="AirportsOfDepartureAndArrival" type="GCCSCargoImp:AWBOriginAndDestination" minOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute name="SpaceAllocationCode" type="GCCSCargoImp:SpaceAllocationCode" use="required"/>	
+    </xs:complexType>
+
+    <xs:complexType name="FlightIdentification_FFA">
+        <xs:complexContent>
+            <xs:extension base="GCCSCargoImp:FlightIdentification">
+                <xs:attribute name="DayOfScheduledDeparture" type="GCCSCargoImp:DayOfMonth" use="required"/>
+                <xs:attribute name="MonthOfScheduledDeparture" type="GCCSCargoImp:Month" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- Special Service Request -->
+
+	<xs:complexType name="SpecialServiceRequest_FFA">
+        <xs:sequence>
+            <xs:element maxOccurs="2" name="SpecialServiceRequestEntry" type="GCCSCargoImp:SpecialServiceRequestEntry"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Other Service Information -->
+
+	<xs:complexType name="OtherServiceInformation_FFA">
+        <xs:sequence>
+            <xs:element name="OSIDetailsFirstLine" type="GCCSCargoImp:OtherServiceInformationEntry"/>
+            <xs:element minOccurs="0" name="OSIDetailsSecondLine" type="GCCSCargoImp:OtherServiceInformationEntry"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Booking Reference -->
+
+    <xs:complexType name="BookingReference_FFA">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="RequestingOfficeMessageAddress" type="GCCSCargoImp:OfficeMessageAddress"/>
+            <xs:element minOccurs="0" name="RequestingParticipantIdentification" type="GCCSCargoImp:AWBParticipantIdentification"/>
+        </xs:sequence>
+        <xs:attribute name="RequestingOfficeFileReference" type="GCCSCargoImp:FileReference" use="optional"/>
+    </xs:complexType>
+    
+	<!-- Product Information  -->
+    
+	<xs:complexType name="ProductInformation_FFA">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="RateInformation" type="GCCSCargoImp:RateInformation_FFA"/>
+        </xs:sequence>
+        <xs:attribute name="ServiceCode" type="GCCSCargoImp:ServiceCode" use="required"/>
+    </xs:complexType>
+
+	<xs:complexType name="RateInformation_FFA">
+        <xs:choice>
+            <xs:element minOccurs="0" name="RateInformationDetails" type="GCCSCargoImp:CommodityItemNumberDetails"/>
+        </xs:choice>
+        <xs:attribute name="RateClassCode" type="GCCSCargoImp:RateClassCode" use="required"/>
+    </xs:complexType>
+
+</xs:schema>

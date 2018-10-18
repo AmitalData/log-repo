@@ -1,0 +1,103 @@
+﻿
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table *ngIf="IsResourcesReady">
+                <tr>
+                    <td>
+                        <div class="MediaFill">
+                            <LogTextBox [ObjectFieldName]="'Notes'" [Text]="Notes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true" [HideColumns]="true"></LogTextBox>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr style="height: 5px;">
+                    <td></td>
+                </tr>
+
+                <tr style="height: 18px;">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width: 70px;" class="Label">Create by:</td>
+
+                                <td [style.width.px]="CreateByUserWidth" style="font-size: 12px; padding-left: 5px; color: #282E30;" [style.max-width.px]="CreateByUserWidth" class="TextTrimming">
+                                    {{CreateByUser}}
+                                </td>
+
+                                <td [style.width.px]="CreateDateStringWidth" style="font-size: 10px; padding-left: 5px; color: #1B90CB;">
+                                    {{CreateDateString}}
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr style="height: 18px;">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width: 70px;" class="Label">Modified by:</td>
+
+                                <td [style.width.px]="UpdateByUserWidth" style="font-size: 12px; padding-left: 5px; color: #282E30;" [style.max-width.px]="UpdateByUserWidth" class="TextTrimming">
+                                    {{UpdateByUser}}
+                                </td>
+
+                                <td [style.width.px]="UpdateDateStringWidth" style="font-size: 10px; padding-left: 5px; color: #1B90CB;">
+                                    {{UpdateDateString}}
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td *ngIf="IsNewEntity" style="width: 16px;">
+                        <CheckBox [IsChecked]="PostToFollowers" (Checked)="PostToFollowers = $event"></CheckBox>
+                    </td>
+
+                    <td *ngIf="IsNewEntity" style="width: 1px; font-size: 11px; color: #6E7172; padding-left: 3px;">
+                        Post to my followers
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

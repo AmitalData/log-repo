@@ -1,0 +1,3 @@
+--execute the data view scripts in shipment model 
+--1-[ShipmentDirectionTransmodeViewScript]
+--2-[ShipmentCountryDashboardViewScript]

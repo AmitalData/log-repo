@@ -1,0 +1,198 @@
+﻿
+<table>
+
+    <!-- Validation -->
+    <tr style="height:1px;" *ngIf="ValidationErrorsList && ValidationErrorsList.length > 0">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <!-- Directions -->
+    <tr style="height: 1px;">
+        <td>
+            <table>
+                <tr style="height: 1px;">
+                    <td style="font-size: 13px; color: #6E7172;">{{'Shipment.F.DirectionId' | TextCodeTranslationPipe}}:</td>
+                </tr>
+
+                <tr style="height: 10px;">
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr style="height: 1px;">
+                    <td style="padding-left: 10px;">
+                        <div class="RadioButton">
+                            <input id="DirectionRadio2" type="radio" name="DirectionsRadio" [checked]="DirectionId == 'I'" (click)="DirectionId = 'I'" />
+                            <label for="DirectionRadio2" style="text-indent: 40px; font-size: 12px" [ngStyle]="{color: DirectionId == 'I' ? '#287828':'#282E30'}">
+                                <img class="LeftCenter" style="margin-left: 20px;" src="./Images/Directions/I.png" />
+                                Import
+                            </label>
+                        </div>
+
+                        <div class="RadioButton" style="margin-top: 5px;">
+                            <input id="DirectionRadio1" type="radio" name="DirectionsRadio" [checked]="DirectionId == 'E'" (click)="DirectionId = 'E'" />
+                            <label for="DirectionRadio1" style="text-indent: 40px; font-size: 12px" [ngStyle]="{color: DirectionId == 'E' ? '#287828':'#282E30'}">
+                                <img class="LeftCenter" style="margin-left: 20px;" src="./Images/Directions/E.png" />
+                                Export
+                            </label>
+                        </div>
+
+                        <div class="RadioButton" style="margin-top: 5px;">
+                            <input id="DirectionRadio3" type="radio" name="DirectionsRadio" [checked]="DirectionId == 'D'" (click)="DirectionId = 'D'" />
+                            <label for="DirectionRadio3" style="text-indent: 40px; font-size: 12px" [ngStyle]="{color: DirectionId == 'D' ? '#287828':'#282E30'}">
+                                <img class="LeftCenter" style="margin-left: 20px;" src="./Images/Directions/D.png" />
+                                Domestic
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 20px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <!-- Prefix|Master -->
+    <tr style="height: 1px;">
+        <td>
+            <table>
+                <tr style="height: 1px;">
+                    <td style="width: 32px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 60px;">
+                        <LogLabel [ObjectFieldName]="'AirlinePrefix'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td style="width: 3px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 150px;">
+                        <LogLabel [ObjectFieldName]="'Master'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr style="height: 32px;">
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'AirlinePrefix'" [Text]="AirlinePrefix" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" (LostFocus)="OnPrefixLostFocus($event)"></LogTextBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'Master'" [Text]="Master" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 15px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+    
+    <!-- Airline -->
+    <tr style="height: 1px;">
+        <td>
+            <table>
+                <tr style="height: 1px;">
+                    <td style="width: 32px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 249px;">
+                        <LogLabel [ObjectFieldName]="'MainCarriageCarrierId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Airline'"></LogLabel>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr style="height: 32px;">
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td>
+                        <LogLov [ObjectFieldName]="'MainCarriageCarrierId'"
+                                [SelectedValue]="MainCarriageCarrierId"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'Carrier'"
+                                [DependencyFilter1Value]="'AL'"
+                                >
+                        </LogLov>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr style="height: 1px;">
+                    <td style="width: 32px;">
+                        <div></div>
+                    </td>
+
+                    <td colspan="2" style="font-style: italic; font-size: 11px; color: #6E7172;">Please note that the FSR will be sent to the chosen airline</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="SendButtonClicked()">Send</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

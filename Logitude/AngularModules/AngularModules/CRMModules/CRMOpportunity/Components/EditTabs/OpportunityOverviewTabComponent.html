@@ -1,0 +1,1019 @@
+﻿
+<style type="text/css">
+    .SectionTitle {
+        height: 20px;
+        line-height: 20px;
+        font-size: 14px;
+        color: #1B90CB;
+        user-select: text;
+        -webkit-user-select: text;
+    }
+
+    .DeleteButton {
+        display: none;
+    }
+
+
+    .ListBoxItem:hover .DeleteButton {
+        display: block;
+    }
+
+    .ListBoxEditItem:hover .DeleteButton {
+        cursor: pointer;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(221, 232, 245, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(221, 232, 245, 1) ));
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+        display: block;
+    }
+
+    .ListBoxEditItem:hover {
+        cursor: pointer;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(221, 232, 245, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(221, 232, 245, 1) ));
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+    }
+
+        .ListBoxEditItem:hover .DeleteButtonDisabled {
+            cursor: pointer;
+            background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(221, 232, 245, 1) 100%);
+            background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+            background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(221, 232, 245, 1) ));
+            background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+            display: block;
+        }
+
+    .ListBoxItem:hover .DeleteButtonDisabled {
+        display: block;
+    }
+
+    .ToggleButton.ToggleButtonMenu .DeleteButton RightCenter:hover {
+        cursor: pointer;
+    }
+
+    .IconButton img {
+        position: absolute;
+        top: 15px;
+        left: 1px;
+        bottom: 0;
+        right: 0;
+        margin: auto;
+    }
+
+    #deleteimgHoverd:hover {
+        background-image: url(../../../../../Images/RedX2.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    #deleteimgHoverd {
+        background-image: url( ../../../../../Images/Tab.X.Gray.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .ItemBox {
+        height: 40px;
+        border: 1px solid #DADADA;
+        border-radius: 4px;
+        -moz-border-radius: 4px;
+        -webkit-border-radius: 4px;
+        margin-bottom: 3px;
+    }
+
+    .CompleteButton {
+        display: none;
+    }
+
+    .ItemBox:hover .CompleteButton {
+        display: block;
+    }
+
+    .ItemBox:hover .CompleteButtonDisabled {
+        display: block;
+    }
+</style>
+
+<div class="TabHolder">
+    <div class="MediaFillRelative">
+        <ScrollViewer [IsTowSides]="true">
+            <div class="MediaFillRelative" style="min-width: 1450px;">
+                <table>
+                    <tr>
+                        <td>
+                            <div class="MediaFill">
+                                <table>
+
+                                    <tr class="FormFieldRow">
+                                        <td>
+                                            <table>
+
+                                                <tr class="TabTitleRow">
+                                                    <td style="vertical-align:top">
+                                                        <table>
+                                                            <tr>
+                                                                <td>{{'Opportunity.TH.Overview' | TextCodeTranslationPipe}}</td>
+
+                                                                <td style="width:160px">
+                                                                    <EntityFollowComponent style="margin-top:10px" [EntityId]="EntityId" [ObjectTableName]="'Opportunity'"></EntityFollowComponent>
+
+                                                                </td>
+
+                                                                <td style="width: 5px;">
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <table>
+                                                            <tr>
+                                                                <td style="width:320px;min-width:320px">
+                                                                    <table>
+                                                                        <tr class="FormFieldRow">
+                                                                            <td style="width: 120px;">
+                                                                                <LogLabel [ObjectFieldName]="'StageId'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"></LogLabel>
+                                                                            </td>
+                                                                            <td style="width:180px">
+                                                                                <LogLov [ObjectFieldName]="'StageId'"
+                                                                                        [ObjectTableName]="ObjectTableName"
+                                                                                        [DataContext]="DataContext"
+                                                                                        [LookUpTableName]="'Stage'"
+                                                                                        [SelectedValue]="StageId"
+                                                                                        [HideColumns]="true"
+                                                                                        [ShowInActive]="false"
+                                                                                        [DependencyFilter1Value]="true">
+                                                                                </LogLov>
+                                                                            </td>
+                                                                            <td></td>
+                                                                        </tr>
+                                                                        <tr class="FormFieldRow">
+                                                                            <td style="width: 120px;">
+                                                                                <LogLabel [ObjectFieldName]="'Probability'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"></LogLabel>
+                                                                            </td>
+                                                                            <td style="width:180px">
+                                                                                <LogTextBox [ObjectFieldName]="'Probability'" [ObjectTableName]="ObjectTableName" [Text]="Probability" [InputType]="'Number'" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+
+                                                                            </td>
+                                                                            <td></td>
+
+                                                                        </tr>
+                                                                        <tr class="FormFieldRow">
+                                                                            <td style="width: 120px;">
+                                                                                <LogLabel [ObjectFieldName]="'StageDueDate'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"></LogLabel>
+                                                                            </td>
+                                                                            <td style="width:180px">
+                                                                                <LogDatePicker [ObjectFieldName]="'StageDueDate'" [SelectedDateValue]="StageDueDate" [ObjectTableName]="ObjectTableName"
+                                                                                               [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                                            </td>
+
+                                                                            <td style="width: 35px;padding-left:3px">
+                                                                                <button class="Button" (click)="AddTaskClicked()">
+                                                                                    <img style="left:5px;" src="./Images/Buttons/Add.over.png" />
+                                                                                    <img style="left:5px;" src="./Images/Buttons/Task.png" />
+                                                                                </button>
+                                                                            </td>
+
+                                                                        </tr>
+                                                                    </table>
+
+
+                                                                </td>
+                                                                <td style="min-width:5px;width:5px"></td>
+
+                                                                <td style="width:320px;min-width:320px">
+                                                                    <table>
+                                                                        <tr class="FormFieldRow">
+                                                                            <td style="width: 120px;">
+                                                                                <LogLabel [ObjectFieldName]="'NumberOfShipments'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"></LogLabel>
+                                                                            </td>
+                                                                            <td style="width:180px">
+                                                                                <LogTextBox [ObjectFieldName]="'NumberOfShipments'" [InputType]="'integer'" [ObjectTableName]="ObjectTableName" [Text]="NumberOfShipments" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+
+                                                                            </td>
+                                                                            <td></td>
+
+                                                                        </tr>
+
+                                                                        <tr class="FormFieldRow">
+                                                                            <td style="width: 120px;">
+                                                                                <LogLabel [ObjectFieldName]="'RatingCode'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"></LogLabel>
+                                                                            </td>
+                                                                            <td style="width:180px">
+                                                                                <LogLov [ObjectFieldName]="'RatingCode'"
+                                                                                        [ObjectTableName]="ObjectTableName"
+                                                                                        [DataContext]="DataContext"
+                                                                                        [LookUpTableName]="'Rating'"
+                                                                                        [SelectedValue]="RatingCode"
+                                                                                        [HideColumns]="true">
+                                                                                </LogLov>
+                                                                            </td>
+
+                                                                        </tr>
+                                                                        <tr class="FormFieldRow">
+                                                                            <td colspan="2"></td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+
+                                                                <td style="min-width:5px;width:5px"></td>
+                                                                <td style="min-width:150px;width:250px">
+                                                                    <table>
+                                                                        <tr style="height:1px">
+                                                                            <td>
+                                                                                <LogLabel [ObjectFieldName]="'Notes'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"></LogLabel>
+
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <div class="MediaFill">
+                                                                                    <LogTextBox *ngIf="IsEditingEnabledWithoutCancel" [ObjectFieldName]="'Notes'" [ObjectTableName]="ObjectTableName" [IsMultiline]="true" [InputType]="'ntext'" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+
+                                                                                    <textarea *ngIf="!IsEditingEnabledWithoutCancel"
+                                                                                              [(ngModel)]="Notes"
+                                                                                              [readonly]="true"
+                                                                                              style="background: #E6E7E8 !important; padding: 2px; padding-left: 4px;">
+                                                                                    </textarea>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+
+                                                                </td>
+                                                                <td style="min-width:5px;width:5px"></td>
+
+                                                                <td style="width:250px;min-width:150px" *ngIf="IsClosed">
+                                                                    <table>
+
+                                                                        <tr style="height:1px">
+                                                                            <td>
+                                                                                <label>Closing reason:</label>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <div style="height:100%;width:100%">
+
+                                                                                    <LogTextBox [ngStyle]="{background: ClosingBackground}" [ObjectFieldName]="'ClosingDescription'" [ObjectTableName]="ObjectTableName" [IsMultiline]="true" [InputType]="'ntext'" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                                                </div>
+
+                                                                            </td>
+                                                                        </tr>
+
+                                                                    </table>
+                                                                </td>
+
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+                                    <tr style="height:5px;">
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div class="MediaFill">
+                                                <table>
+                                                    <tr>
+                                                        <td style="width:320px;">
+                                                            <div class="MediaFill">
+                                                                <table>
+                                                                    <tr style="max-height:200px;">
+                                                                        <td>
+                                                                            <table>
+                                                                                <tr class="SectionHeader">
+                                                                                    <td>
+                                                                                        <table>
+                                                                                            <tr>
+                                                                                                <td style="width:10px"></td>
+                                                                                                <td style="width:50px">Quotes</td>
+                                                                                                <td></td>
+                                                                                                <td style="width:40px">
+                                                                                                    <button class="Button" [disabled]="!IsAddRemoveEnabled" (click)="NewQuote()">Add</button>
+                                                                                                </td>
+                                                                                                <td style="width:3px"></td>
+                                                                                                <td style="width:40px">
+                                                                                                    <button class="Button" [disabled]="!IsAddRemoveEnabled" (click)="ConnectQuotesMethod()">Connect</button>
+                                                                                                </td>
+                                                                                                <td style="width:3px"></td>
+                                                                                            </tr>
+                                                                                        </table>
+
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr style="height:7px"></tr>
+                                                                                <tr style="overflow-y:auto">
+                                                                                    <td>
+                                                                                        <div class="ScrollViewer">
+                                                                                            <div class="ScrollContent">
+                                                                                                <ul>
+                                                                                                    <li class="RecentEntityItem" *ngFor="let item of QuotesObslist" (click)="EditQuote(item)">
+                                                                                                        <table>
+                                                                                                            <tr>
+
+
+                                                                                                                <td style="width:5px;min-width:5px; overflow: hidden;" rowspan="2" [ngStyle]="{background: item.RatingCode | StringToColorPipe:'QuoteRatingCode'}">
+                                                                                                                    <div>
+
+                                                                                                                    </div>
+                                                                                                                </td>
+                                                                                                                <td style="width: 5px;" rowspan="2">
+                                                                                                                    <div></div>
+                                                                                                                </td>
+
+                                                                                                                <td rowspan="2">
+                                                                                                                    <div style="height:50%;width:100px">{{item.Subject}}</div>
+                                                                                                                    <div style="padding-left:1px">
+                                                                                                                        <img style="height:16px;width:16px" src="{{item.FromCountryCode | CountryFlagPipe}}" /> >
+                                                                                                                        <img style="height:16px;width:16px" src="{{item.ToCountryCode | CountryFlagPipe}}" />
+                                                                                                                    </div>
+                                                                                                                </td>
+
+                                                                                                                <td rowspan="2">
+                                                                                                                    <div style="height:50%"></div>
+                                                                                                                    <div style="float:left;padding-left:30%  ">{{item.OpenDate |  DateTimePipe:'SD'}}</div>
+                                                                                                                </td>
+
+                                                                                                                <td style="width:7px; height: 100%;" rowspan="2">
+                                                                                                                    <div style="width:1px; height: calc(100% - 5px); background: #DADADA; margin:auto;"></div>
+                                                                                                                </td>
+
+                                                                                                                <td style="width:35px;" rowspan="2">
+                                                                                                                    <table>
+                                                                                                                        <tr>
+                                                                                                                            <td>
+                                                                                                                                <div title="{{item.DirectionName}}" style="height: 100%;width:100%; position:relative;">
+                                                                                                                                    <img style="height:16px;width:16px" class="CenterCenter" src="./Images/Directions/{{item.DirectionId}}.png" />
+                                                                                                                                </div>
+
+
+
+                                                                                                                            </td>
+                                                                                                                        </tr>
+
+                                                                                                                        <tr>
+                                                                                                                            <td>
+                                                                                                                                <div title="{{item.TransportModeName}}" style="position:relative;height:100%">
+                                                                                                                                    <img style="height:16px;width:16px" class="CenterCenter" src="./Images/Icons/{{item.TransportModeId}}.png" />
+                                                                                                                                </div>
+
+
+                                                                                                                            </td>
+                                                                                                                        </tr>
+                                                                                                                    </table>
+
+
+                                                                                                                </td>
+
+
+
+
+                                                                                                                <td style="width: 10px;">
+                                                                                                                    <div></div>
+                                                                                                                </td>
+                                                                                                            </tr>
+
+
+                                                                                                        </table>
+                                                                                                    </li>
+                                                                                                </ul>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr style="height:10px">
+                                                                                    <td></td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr style="height:10px">
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr style="max-height:200px;">
+                                                                        <td>
+                                                                            <table>
+                                                                                <tr style="height:28px">
+                                                                                    <td>
+                                                                                        <table>
+                                                                                            <tr class="SectionHeader" style="height:25px">
+                                                                                                <td>
+                                                                                                    <table>
+                                                                                                        <tr>
+                                                                                                            <td>
+                                                                                                                <label style="width:120px">Additional Services</label>
+
+                                                                                                            </td>
+                                                                                                            <td></td>
+
+                                                                                                            <td style="width:90px">
+                                                                                                                <div class="dropdown" style="float:right;">
+
+                                                                                                                    <div tabindex="1" class="ToggleButton" style="margin: auto; width: 90px !important; float:right;padding-right:5px">
+                                                                                                                        <label>Add/Remove</label>
+                                                                                                                        <img src="./Images/ToggleIcon.png" />
+                                                                                                                        <div style="float:right;z-index:3;right:-80px;top:-252px" [attr.id]="SearchTextAdditionalServiceModeDropButtonId" class="ToggleButtonMenu">
+                                                                                                                            <table>
+                                                                                                                                <tr>
+                                                                                                                                    <td>
+                                                                                                                                        <input type="text" [attr.id]="SearchTextAdditionalServiceId" placeholder="Search" (focus)="ClearPlaceHolderAdditionalService();" (blur)="FillPlaceHolderAdditionalService();" [(ngModel)]="SearchTextAdditionalService" style="background: url(Images/Search.png) no-repeat scroll;background-position: right center;padding-right:30px;margin: 7px;width:90%;">
+                                                                                                                                        <img *ngIf="SearchTextAdditionalService" class="DeleteButton RightCenter" style="right:4px;position: relative;display:inline-block;margin-left: -25px;top: 7px;" src="Images/RedX.png" (click)="OnDeleteValueAddtionalService()" />
+
+                                                                                                                                    </td>
+
+                                                                                                                                    <td style="width:5px"></td>
+                                                                                                                                </tr>
+                                                                                                                            </table>
+
+                                                                                                                            <div style="overflow-x: hidden;overflow-y: auto;height: 208px;">
+                                                                                                                                <div style="float:left;width: 100%;margin-top:5px;margin-left:5px">
+                                                                                                                                    <table style="width:100%">
+
+                                                                                                                                        <tr style="width:100%;margin-top:5px;margin-left:5px;height:22px;min-height:22px" *ngFor="let item of ToggleButtonList; let i = index">
+                                                                                                                                            <td style="width:22px">
+                                                                                                                                                <div style="width:22px">
+
+                                                                                                                                                    <!--<input type="checkbox" [disabled]="!item.IsCheckBoxEnabled" [(ngModel)]="item.IsChecked" (click)="ProductsToggleButtonClicked(item,i)" (focus)="setToggleButtonMenuTemp();" (blur)="setToggleButtonMenu();" />-->
+                                                                                                                                                    <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event"></CheckBox>
+
+                                                                                                                                                </div>
+                                                                                                                                            </td>
+                                                                                                                                            <td style="width:5px"></td>
+                                                                                                                                            <td style="width:100%">
+
+
+                                                                                                                                                <div style="margin-left:5px;margin-top:0px">
+                                                                                                                                                    <label style="font-size:small" (focus)="setToggleButtonMenuTemp();" (blur)="setToggleButtonMenu();" *ngIf="!item.IsChecked">{{item.Name}}</label>
+                                                                                                                                                    <label style="font-size:small;color:lightgray" (focus)="setToggleButtonMenuTemp();" (blur)="setToggleButtonMenu();" *ngIf="item.IsChecked">{{item.Name}}</label>
+                                                                                                                                                </div>
+                                                                                                                                            </td>
+                                                                                                                                            <td style="width:100%">
+                                                                                                                                                <div style="width:100%"></div>
+                                                                                                                                            </td>
+                                                                                                                                        </tr>
+
+                                                                                                                                    </table>
+
+                                                                                                                                </div>
+
+
+                                                                                                                            </div>
+
+                                                                                                                        </div>
+                                                                                                                    </div>
+                                                                                                                </div>
+
+                                                                                                            </td>
+                                                                                                            <td style="width:5px"></td>
+
+                                                                                                        </tr>
+                                                                                                    </table>
+
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr style="height:3px">
+                                                                                                <td></td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr style="overflow-y:auto">
+                                                                                    <td style="width:320px;">
+                                                                                        <div class="ScrollViewer">
+                                                                                            <div class="ScrollContent">
+                                                                                                <table>
+                                                                                                    <tr style="height:1px">
+                                                                                                        <td>
+                                                                                                            <table>
+                                                                                                                <tr style="height:1px">
+                                                                                                                    <td colspan="3">
+                                                                                                                        <table>
+
+                                                                                                                            <tr>
+                                                                                                                                <td colspan="3" style="max-height:200px;overflow-y:auto;overflow-x:hidden">
+                                                                                                                                    <table>
+                                                                                                                                        <tr class="FormFieldRow" *ngFor="let Item of Services" style="margin-top:3px;height:1px;vertical-align:top;max-height:200px;overflow-y:auto">
+                                                                                                                                            <td colspan="3">
+                                                                                                                                                <table>
+                                                                                                                                                    <tr>
+                                                                                                                                                        <td colspan="3" style="height:3px"></td>
+                                                                                                                                                    </tr>
+                                                                                                                                                    <tr>
+                                                                                                                                                        <td style="width:1px;min-width:1px"></td>
+                                                                                                                                                        <td style="height:20px;vertical-align:top;border:solid;border-color:lightgray;border-width:1px;border-radius:25px;   border-radius: 25px; -moz-border-radius: 25px;-webkit-border-radius: 25px;padding: 2px;" class="ListBoxItem">
+                                                                                                                                                            <table>
+                                                                                                                                                                <tr>
+                                                                                                                                                                    <td style="width:70%">
+                                                                                                                                                                        <div style="margin-left:10px;margin-top:1px">
+                                                                                                                                                                            <label style="font-size:smaller;color:black">{{Item.AdditionalServiceName}}</label>
+                                                                                                                                                                        </div>
+                                                                                                                                                                    </td>
+
+                                                                                                                                                                    <td style="width:2px"></td>
+                                                                                                                                                                    <td></td>
+
+                                                                                                                                                                    <td style="width:auto"></td>
+
+                                                                                                                                                                    <td style="width:1px"></td>
+
+                                                                                                                                                                    <td style="width: auto;">
+
+
+                                                                                                                                                                        <div class="DeleteButton" style="width:20px;float:right">
+                                                                                                                                                                            <IconButton [Name]="'Delete'" [IsSmall]="true" style="display: block; float: right;padding-right:1px" (click)="DeleteItemServiceObsList(Item)"></IconButton>
+                                                                                                                                                                        </div>
+                                                                                                                                                                        <div class="DeleteButton" style="width:20px;float:right">
+                                                                                                                                                                            <IconButton [Name]="'Edit'" [IsSmall]="true" style="display: block; float: right;padding-right:1px" (click)="EditItemServiceObsList(Item)"></IconButton>
+                                                                                                                                                                        </div>
+                                                                                                                                                                        <div style="width:2px"></div>
+                                                                                                                                                                        <img src="./_Resources/Images/Icons/Notes/Gray.png" *ngIf="ExistingItemNotes(Item)" style="float:right;padding-top:2px" />
+                                                                                                                                                                        <img src="./_Resources/Images/Icons/Notes/Orange.png" *ngIf="!ExistingItemNotes(Item)" style="float:right;padding-top:2px" />
+
+                                                                                                                                                                    </td>
+                                                                                                                                                                </tr>
+                                                                                                                                                            </table>
+                                                                                                                                                        </td>
+                                                                                                                                                        <td style="width:1px;min-width:1px"></td>
+                                                                                                                                                    </tr>
+                                                                                                                                                </table>
+                                                                                                                                            </td>
+
+
+
+                                                                                                                                        </tr>
+
+                                                                                                                                    </table>
+                                                                                                                                </td>
+                                                                                                                            </tr>
+
+                                                                                                                            <tr style="height:50px" *ngIf="NoServicesVisibility">
+                                                                                                                                <td colspan="3" style="vertical-align:middle;text-align:center;color:gray">
+                                                                                                                                    No Services
+                                                                                                                                </td>
+                                                                                                                            </tr>
+                                                                                                                        </table>
+                                                                                                                    </td>
+                                                                                                                </tr>
+
+                                                                                                            </table>
+
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                    <tr>
+                                                                                                        <td></td>
+                                                                                                    </tr>
+                                                                                                </table>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr style="height:15px">
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr style="max-height:200px;">
+                                                                        <td>
+                                                                            <table>
+                                                                                <tr style="height:20px">
+                                                                                    <td>
+                                                                                        <table>
+                                                                                            <tr class="SectionHeader">
+                                                                                                <td>
+                                                                                                    <table>
+                                                                                                        <tr>
+                                                                                                            <td>
+                                                                                                                <label style="width:120px">Competitors</label>
+
+                                                                                                            </td>
+                                                                                                            <td></td>
+
+                                                                                                            <td style="width:90px">
+                                                                                                                <div class="dropdown" style="float:right;">
+
+                                                                                                                    <div tabindex="1" class="ToggleButton" style="margin: auto; width: 90px !important; float:right;padding-right:5px">
+                                                                                                                        <label>Add/Remove</label>
+                                                                                                                        <img src="./Images/ToggleIcon.png" />
+                                                                                                                        <div style="float:right;z-index:3;right:-80px;top:-252px" [attr.id]="SearchTextCompetitorsDropButtonId" class="ToggleButtonMenu">
+                                                                                                                            <table>
+                                                                                                                                <tr>
+                                                                                                                                    <td style="width:150px">
+                                                                                                                                        <input type="text" [attr.id]="SearchTextCompetitorsId" placeholder="Search" (focus)="ClearPlaceHolderCompetitor();" (blur)="FillPlaceHoldeCompetitor();" [(ngModel)]="SearchTextCompetitor" style="background: url(Images/Search.png) no-repeat scroll;background-position: right center;padding-right:30px;margin: 7px;width:150px;">
+                                                                                                                                        <img *ngIf="SearchTextCompetitor" class="DeleteButton RightCenter" style="right:4px;position: relative;display:inline-block;margin-left: -25px;top: 7px;" src="Images/RedX.png" (click)="OnDeleteValueCompetitor()" />
+
+                                                                                                                                    </td>
+
+                                                                                                                                    <td style="width:5px"></td>
+                                                                                                                                </tr>
+                                                                                                                            </table>
+
+                                                                                                                            <div style="overflow-x: hidden;overflow-y: auto;height: 208px;">
+                                                                                                                                <div style="float:left;width: 100%;margin-top:5px;margin-left:5px">
+                                                                                                                                    <table style="width:100%">
+
+                                                                                                                                        <tr style="width:100%;margin-top:5px;margin-left:5px;height:22px;min-height:22px" *ngFor="let item of CompetitorToggleButtonList; let i = index">
+                                                                                                                                            <td style="width:22px">
+                                                                                                                                                <div style="width:22px">
+
+                                                                                                                                                    <!--<input type="checkbox" [disabled]="!item.IsCheckBoxEnabled" [(ngModel)]="item.IsChecked" (click)="ProductsToggleButtonClicked(item,i)" (focus)="setToggleButtonMenuTemp();" (blur)="setToggleButtonMenu();" />-->
+                                                                                                                                                    <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event"></CheckBox>
+
+                                                                                                                                                </div>
+                                                                                                                                            </td>
+                                                                                                                                            <td style="width:5px"></td>
+                                                                                                                                            <td style="width:100%">
+
+
+                                                                                                                                                <div style="margin-left:5px;margin-top:0px">
+                                                                                                                                                    <label style="font-size:small" (focus)="setToggleButtonMenuTemp();" (blur)="setToggleButtonMenu();" *ngIf="!item.IsChecked">{{item.Name}}</label>
+                                                                                                                                                    <label style="font-size:small;color:lightgray" (focus)="setToggleButtonMenuTemp();" (blur)="setToggleButtonMenu();" *ngIf="item.IsChecked">{{item.Name}}</label>
+                                                                                                                                                </div>
+                                                                                                                                            </td>
+                                                                                                                                            <td style="width:100%">
+                                                                                                                                                <div style="width:100%"></div>
+                                                                                                                                            </td>
+                                                                                                                                        </tr>
+
+                                                                                                                                    </table>
+
+                                                                                                                                </div>
+
+
+                                                                                                                            </div>
+
+                                                                                                                        </div>
+                                                                                                                    </div>
+                                                                                                                </div>
+
+                                                                                                            </td>
+                                                                                                            <td style="width:5px"></td>
+
+                                                                                                        </tr>
+                                                                                                    </table>
+
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+
+
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr style="overflow-y:auto">
+                                                                                    <td style="width:320px;min-width:320px">
+                                                                                        <table>
+                                                                                            <tr style="height:1px">
+                                                                                                <td>
+                                                                                                    <div class="ScrollViewer">
+                                                                                                        <div class="ScrollContent">
+                                                                                                            <table>
+                                                                                                                <tr>
+                                                                                                                    <td colspan="3">
+                                                                                                                        <table>
+                                                                                                                            <tr class="FormFieldRow" *ngFor="let Item of Competitors" style="margin-top:3px;vertical-align:top;height:1px" (click)="EditCompetitor(Item)">
+                                                                                                                                <td colspan="3">
+                                                                                                                                    <table>
+                                                                                                                                        <tr>
+                                                                                                                                            <td colspan="3" style="height:3px"></td>
+                                                                                                                                        </tr>
+                                                                                                                                        <tr>
+                                                                                                                                            <td style="width:1px;min-width:1px"></td>
+                                                                                                                                            <td style="height:20px;vertical-align:top;border:solid;border-color:lightgray;border-width:1px;padding: 2px;" class="ListBoxEditItem">
+                                                                                                                                                <table>
+                                                                                                                                                    <tr>
+                                                                                                                                                        <td style="width:70%">
+                                                                                                                                                            <div style="margin-left:10px;margin-top:1px">
+                                                                                                                                                                <label style="font-size:smaller;color:black">{{Item.Name}}</label>
+                                                                                                                                                            </div>
+                                                                                                                                                        </td>
+                                                                                                                                                        <td>
+                                                                                                                                                            <div></div>
+                                                                                                                                                        </td>
+
+                                                                                                                                                        <td style="width:1px"></td>
+
+                                                                                                                                                        <td style="width: auto;">
+
+                                                                                                                                                            <div class="DeleteButton" style="width:20px;float:right">
+                                                                                                                                                                <IconButton [Name]="'Delete'" [IsSmall]="true" style="display: block; float: right;padding-right:5px" (click)="DeleteItemCompetitorList(Item)"></IconButton>
+                                                                                                                                                            </div>
+                                                                                                                                                        </td>
+                                                                                                                                                        <td></td>
+
+                                                                                                                                                    </tr>
+                                                                                                                                                </table>
+                                                                                                                                            </td>
+                                                                                                                                            <td style="width:1px;min-width:1px"></td>
+                                                                                                                                        </tr>
+                                                                                                                                    </table>
+                                                                                                                                </td>
+
+
+
+                                                                                                                            </tr>
+
+                                                                                                                            <tr style="height:50px" *ngIf="NoCompetitorVisibility">
+                                                                                                                                <td colspan="3" style="vertical-align:middle;text-align:center;color:gray">
+                                                                                                                                    No Competitors
+                                                                                                                                </td>
+                                                                                                                            </tr>
+                                                                                                                            <tr>
+                                                                                                                                <td colspan="3"></td>
+                                                                                                                            </tr>
+                                                                                                                        </table>
+                                                                                                                    </td>
+                                                                                                                </tr>
+                                                                                                                <tr>
+                                                                                                                    <td colspan="3"></td>
+                                                                                                                </tr>
+                                                                                                            </table>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+
+                                                                                    </td>
+                                                                                    <td></td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+
+                                                        </td>
+
+                                                        <td style="width:15px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td style="width:700px;">
+                                                            <div class="MediaFill">
+                                                                <SectionBox>
+                                                                    <SectionHead>
+                                                                        <table>
+                                                                            <tr>
+                                                                                <td style="width:1px;">
+                                                                                    {{ActivitiesContent}}
+                                                                                </td>
+
+                                                                                <td style="float:right;padding:3px;">
+                                                                                    <table>
+                                                                                        <tr style="height:22px;vertical-align:middle;">
+                                                                                            <td>
+                                                                                                <table>
+                                                                                                    <tr>
+                                                                                                        <td style="width: 35px;">
+                                                                                                            <button class="Button" (click)="AddActivity('CL')">
+                                                                                                                <img style="left:5px;" src="./Images/Buttons/Add.over.png" />
+                                                                                                                <img style="left:5px;" src="./Images/Buttons/Call.png" />
+                                                                                                            </button>
+                                                                                                        </td>
+
+                                                                                                        <td style="width: 5px;">
+                                                                                                            <div></div>
+                                                                                                        </td>
+
+                                                                                                        <td style="width: 35px;">
+                                                                                                            <button class="Button" (click)="AddActivity('TS')">
+                                                                                                                <img style="left:5px;" src="./Images/Buttons/Add.over.png" />
+                                                                                                                <img style="left:5px;" src="./Images/Buttons/Task.png" />
+                                                                                                            </button>
+                                                                                                        </td>
+
+                                                                                                        <td style="width: 5px;">
+                                                                                                            <div></div>
+                                                                                                        </td>
+
+                                                                                                        <td style="width: 35px;">
+                                                                                                            <button class="Button" (click)="AddActivity('AP')">
+                                                                                                                <img style="left:5px;" src="./Images/Buttons/Add.over.png" />
+                                                                                                                <img style="left:5px;" src="./Images/Buttons/Appointment.png" />
+                                                                                                            </button>
+                                                                                                        </td>
+
+                                                                                                        <td style="width: 5px;">
+                                                                                                            <div></div>
+                                                                                                        </td>
+
+                                                                                                        <td style="width: 35px;">
+                                                                                                            <button class="Button" (click)="AddEmail()">
+                                                                                                                <img style="left:5px;" src="./Images/Buttons/Add.over.png" />
+                                                                                                                <img style="left:5px;" src="./Images/Buttons/Email.png" />
+                                                                                                            </button>
+                                                                                                        </td>
+
+                                                                                                        <td>
+                                                                                                            <div></div>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </table>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </td>
+                                                                                <td style="width:5px;">
+                                                                                    <div></div>
+                                                                                </td>
+                                                                                <td style="width:1px;">
+                                                                                    <Hyperlink (click)="ViewAllData()" [Text]="'All Activities'" [IsEnabled]="ViewAllActivitiesIsEnabled"></Hyperlink>
+                                                                                </td>
+
+                                                                                <td style="width:5px;">
+                                                                                    <div></div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </SectionHead>
+
+                                                                    <SectionBody>
+                                                                        <table>
+
+                                                                            <tr style="height:5px;">
+                                                                                <td>
+                                                                                    <div></div>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <div class="MediaFill">
+                                                                                        <ScrollViewer>
+                                                                                            <ul>
+                                                                                                <li class="ItemBox" style="position: relative;height:65px;" *ngFor="let item of ActivitiesList" [ngStyle]="{background: item.Background}">
+                                                                                                    <table (mousedown)="ViewEntity(item)">
+                                                                                                        <tr style="height:2px;">
+                                                                                                            <td>
+                                                                                                                <div></div>
+                                                                                                            </td>
+                                                                                                        </tr>
+
+                                                                                                        <tr>
+                                                                                                            <td style="width:5px;min-width:5px;max-width:5px;">
+                                                                                                                <div></div>
+                                                                                                            </td>
+                                                                                                            <td style="width:35px; min-width:35px;max-width:35px;vertical-align:top;">
+                                                                                                                <img class="CenterCenter" [title]="item.ActivityTypeName" style="width:35px;height:35px;" [attr.src]="item.ImageSrc" />
+                                                                                                            </td>
+                                                                                                            <td style="width:5px;min-width:5px;max-width:5px;">
+                                                                                                                <div></div>
+                                                                                                            </td>
+                                                                                                            <td>
+                                                                                                                <table>
+                                                                                                                    <tr style="height:15px;">
+                                                                                                                        <td>
+                                                                                                                            <div style="width:100%;font-size:14px;color:black;text-align:left;" class="TextTrimming">{{item.Subject}}</div>
+                                                                                                                        </td>
+                                                                                                                    </tr>
+                                                                                                                    <tr>
+                                                                                                                        <td>
+                                                                                                                            <table>
+                                                                                                                                <tr>
+                                                                                                                                    <td style="width:65px;min-width:65px;margin:0;padding:0; ">
+                                                                                                                                        <div style="width:65px;color:#6E7172;font-size:10px;">Owner</div>
+                                                                                                                                        <div style="width:65px;color:#6E7172;font-size:10px;">{{item.Action}}</div>
+                                                                                                                                    </td>
+
+                                                                                                                                    <td style="width:3px;"></td>
+
+                                                                                                                                    <td style="width:100px;min-width:100px; ">
+                                                                                                                                        <div style="color:#282E30;font-size:10px;text-align:left;" class="TextTrimming">{{item.Owner}}</div>
+                                                                                                                                        <div style="color:#1B90CB;font-size:10px;text-align:left;" class="TextTrimming">{{item.ActionBy}}</div>
+                                                                                                                                    </td>
+
+                                                                                                                                    <td style="width:3px;"></td>
+
+                                                                                                                                    <td style="width:55px;min-width:55px; ">
+                                                                                                                                        <div style="width:55px;color:#6E7172;font-size:10px;" class="TextTrimming">
+                                                                                                                                            <span style="margin-left: 5px; font-size: 10px; color: #282E30;">{{item.DateLable}}</span>
+                                                                                                                                        </div>
+                                                                                                                                        <div style="width:55px;font-size: 11px; color: #6E7172;" class="TextTrimming">
+                                                                                                                                            <span style="margin-left: 5px; font-size: 10px; color: #6E7172;">{{item.ActionDate| DateTimeToDatePipe}}</span>
+                                                                                                                                        </div>
+                                                                                                                                    </td>
+
+                                                                                                                                    <td style="width:290px;min-width:290px;">
+                                                                                                                                        <div style="width:290px;color:#6E7172;font-size:10px;" class="TextTrimming">
+                                                                                                                                            <span style="margin-left: 5px; font-size: 11px; color: #282E30;" class="TextTrimming">{{item.DateValue}}</span>
+                                                                                                                                        </div>
+                                                                                                                                        <div style="font-size: 11px; color: #6E7172;" class="TextTrimming">
+                                                                                                                                            &nbsp;
+                                                                                                                                        </div>
+                                                                                                                                    </td>
+
+                                                                                                                                    <td style="width:3px;">
+                                                                                                                                        <div></div>
+                                                                                                                                    </td>
+
+
+                                                                                                                                    <td style="width:120px;min-width:120px; float:right;">
+                                                                                                                                        <div style="height:22px;font-size:11px;color:#282E30;font-weight:bold;vertical-align:central;text-align:center" class="TextTrimming">{{item.SortingBy}}</div>
+                                                                                                                                        <div style="height:22px;font-size:11px;color:#282E30;font-weight:bold;vertical-align:central;text-align:center" class="TextTrimming">{{item.SortingDate| DateTimeToDatePipe}}</div>
+                                                                                                                                    </td>
+
+                                                                                                                                    <td style="width:5px;">
+                                                                                                                                        <div></div>
+                                                                                                                                    </td>
+                                                                                                                                </tr>
+                                                                                                                            </table>
+                                                                                                                        </td>
+                                                                                                                    </tr>
+                                                                                                                    <tr style="height:2px;">
+                                                                                                                        <td>
+                                                                                                                            <div></div>
+                                                                                                                        </td>
+                                                                                                                    </tr>
+                                                                                                                </table>
+                                                                                                            </td>
+                                                                                                        </tr>
+
+                                                                                                        <tr style="height:2px;">
+                                                                                                            <td>
+                                                                                                                <div></div>
+                                                                                                            </td>
+                                                                                                        </tr>
+
+                                                                                                    </table>
+
+                                                                                                    <div style="position: absolute; right: 130px;top:10px;">
+                                                                                                        <div *ngIf="item.CompleteButtonVisibility" class="CompleteButton">
+                                                                                                            <button style="width:75px;height:22px;" class="Button" (click)="item.CompleteClicked()">Complete</button>
+                                                                                                        </div>
+                                                                                                        <div *ngIf="item.ReopenButtonVisibility" class="CompleteButton">
+                                                                                                            <button style="width:75px;height:22px;" class="Button" (click)="item.ReopenClicked()">Incomplete</button>
+                                                                                                        </div>
+                                                                                                        <div class="CompleteButton" *ngIf="item.CompleteToggleButtonVisibility" style="position: absolute; top: 3px; right: 3px;">
+                                                                                                            <MettingSummary [Text]="item.MeetingSummary" [IsChecked]="item.PostToFollowers" [IsToRight]="true" [EntityId]="item.EntityId" (Updated)="Updated($event)"></MettingSummary>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </ScrollViewer>
+
+                                                                                        <div *ngIf="ActivitiesList == null || ActivitiesList.length == 0" class="NoDataText" style="top:5px;">No Activities</div>
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                        </table>
+                                                                    </SectionBody>
+                                                                </SectionBox>
+                                                            </div>
+                                                        </td>
+
+                                                        <td style="width:15px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td style="min-width:300px;">
+                                                            <div class="MediaFill">
+                                                                <SocialComponent [QueryName]="'Entity'" [SubQueryName]="'All'" [EntityId]="EntityId" [ObjectTableName]="'Opportunity'" [IsEntityMode]="true" [InsideEntity]="true" [ScreenCode]="'Opportunity'" [EntityDescription]="EntityDescription" [RegardingEntity]="RegardingEntity"></SocialComponent>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </ScrollViewer>
+    </div>
+</div>

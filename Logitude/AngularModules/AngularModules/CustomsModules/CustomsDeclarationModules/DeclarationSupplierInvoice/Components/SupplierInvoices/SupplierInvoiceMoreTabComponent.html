@@ -1,0 +1,192 @@
+﻿<style>
+    .disabled{
+        pointer-events: none;
+        opacity: 0.7;
+    }
+    .subTitle {
+        color: #4b90cb;
+        font-size: 15px;
+        padding-left: 5px;
+    }
+
+    .FormFieldRow {
+        height: auto !important;
+    }
+
+    .DisbleBox {
+        display: inline-block;
+        border: 1px solid #ffd800;
+        border-radius: 5px;
+        background: #faf5c0;
+        padding: 2px 10px;
+        margin: 5px;
+        color: gray;
+        font-family: sans-serif;
+    }
+
+    .noselect {
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none; /* Chrome/Safari/Opera */
+        -khtml-user-select: none; /* Konqueror */
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+        user-select: none; /* Non-prefixed version, currently
+                                  not supported by any browser */
+    }
+
+
+    /* Filters Overide styles */
+
+    .FiltersMenu li {
+        float: right !important;
+        border-width: 1px 1px 1px 0px !important;
+    }
+
+        .FiltersMenu li:first-child {
+            border-radius: 0px 3px 3px 0px !important;
+        }
+
+        .FiltersMenu li:last-child {
+            border-radius: 3px 0px 0px 3px !important;
+            border-left: 1px solid #6A8299 !important;
+        }
+
+        .FiltersMenu li:active:not(.SelectedFilter) {
+            /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#c4c6c6+0,dbdbdb+19,bcbec0+79,a2a4a5+100 */
+            background: #c4c6c6; /* Old browsers */
+            background: -moz-linear-gradient(top, #c4c6c6 0%, #dbdbdb 19%, #bcbec0 79%, #a2a4a5 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(top, #c4c6c6 0%,#dbdbdb 19%,#bcbec0 79%,#a2a4a5 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(to bottom, #c4c6c6 0%,#dbdbdb 19%,#bcbec0 79%,#a2a4a5 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c4c6c6', endColorstr='#a2a4a5',GradientType=0 ); /* IE6-9 */
+        }
+
+
+
+    /* Others */
+    .hidden {
+        opacity: 0;
+        visibility: collapse;
+    }
+</style>
+
+<table>
+
+    <!-- Title -->
+    <tr style="height: 28px;">
+        <td colspan="6" class="subTitle">{{'Customs.Declaration.O.MoreData' | TextCodeTranslationPipe}}</td>
+    </tr>
+
+    <!-- Fields -->
+    <tr style="height: 40px;" >
+
+        <!-- ActualPayedCurrencyTypeCode -->
+        <td style="width: 150px;padding-right: 5px;">
+            <LogLabel [ObjectFieldName]="'ActualPayedCurrencyTypeCode'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+        <td style="width: 115px;" [class.disabled]="IsDisplayOnly">
+            <LogLov [ObjectFieldName]="'ActualPayedCurrencyTypeCode'"
+                    [ObjectTableName]="ObjectTableName"
+                    [DataContext]="DataContext"
+                    [LookUpTableName]="'Customs.CurrencyType'"
+                    [HideColumns]="true">
+            </LogLov>
+        </td>
+
+        <td style="width: 50px;"></td>
+
+        <!-- ActualPayedAmount -->
+        <td style="width: 100px;">
+            <LogLabel [ObjectFieldName]="'ActualPayedAmount'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+        <td style="width: 115px;" [class.disabled]="IsDisplayOnly">
+            <LogTextBox [ObjectFieldName]="'ActualPayedAmount'" [ObjectTableName]="ObjectTableName" [AddCommasToNumbers]="true"
+                        [InputType]="'decimal'" [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+        </td>
+        <td></td>
+    </tr>
+
+    <!-- Title/Modifications -->
+    <tr style="height: 28px;">
+        <td colspan="5" class="subTitle">{{'Customs.Declaration.O.Modifications' | TextCodeTranslationPipe}}</td>
+        <td><IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddModificationButton()" [IsEnabled]="!IsDisplayOnly"></IconButton></td>
+    </tr>
+
+    <!-- Modification Grid -->
+    <tr>
+        <td colspan="6" style="height: 100%;">
+            <div class="CellContent">
+                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [Disabled]="IsDisplayOnly" [ItemSource]="ModificationsList" (RowEnded)="OnRowEnded($event)" (Ondblclick)="OnFocus()">
+
+                    <!-- TypeCode -->
+                    <log-column [header]="'Customs.SupplierInvoiceModification.F.TypeCode' | TextCodeTranslationPipe" [width]="'200'" [Alignment]="'right'" [binding]="'TypeCode'">
+                        <log-cell-template template="let item" #logcelltemplate>
+                            <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                <span>{{item.TypeName}}</span>
+                            </div>
+                            <div *ngIf="logcelltemplate.IsEditMode">
+                                <LogLov [ObjectFieldName]="'TypeCode'"
+                                        [ObjectTableName]="'Customs.SupplierInvoiceModification'"
+                                        [DataContext]="item"
+                                        [HideColumns]="true"
+                                        [LookUpTableName]="'Customs.ModificationAndDiscountType'"
+                                        (SelectedItemChanged)="item.SetLocalName($event, 'TypeName')"
+                                        [QueryFilterItems]="TypeCodeFilterItems"
+                                        [FocusOnMe]="true">
+                                </LogLov>
+
+                            </div>
+                        </log-cell-template>
+                    </log-column>
+
+                    <!-- CurrencyTypeCode -->
+                    <log-column [header]="'Customs.SupplierInvoiceModification.F.CurrencyTypeCode' | TextCodeTranslationPipe" [width]="'200'" [Alignment]="'right'" [binding]="'CurrencyTypeCode'">
+                        <log-cell-template template="let item" #logcelltemplate>
+                            <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                <span>{{item.CurrencyTypeName}}</span>
+                            </div>
+                            <div *ngIf="logcelltemplate.IsEditMode">
+                                <LogLov [ObjectFieldName]="'CurrencyTypeCode'"
+                                        [ObjectTableName]="'Customs.SupplierInvoiceModification'"
+                                        [DataContext]="item"
+                                        [HideColumns]="true"
+                                        [LookUpTableName]="'Customs.CurrencyType'"
+                                        (SelectedItemChanged)="item.SetLocalName($event, 'CurrencyTypeName')"
+                                        [FocusOnMe]="true">
+                                </LogLov>
+
+                            </div>
+                        </log-cell-template>
+                    </log-column>
+
+                    <!-- Amount -->
+                    <log-column [header]="'Customs.SupplierInvoiceModification.F.Amount' | TextCodeTranslationPipe" [width]="'120'" [Alignment]="'right'" [binding]="'Amount'">
+                        <log-cell-template template="let item" #logcelltemplate>
+                            <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                <span>{{item.Amount | NumbersPipe:'n2'}}</span>
+                            </div>
+                            <div *ngIf="logcelltemplate.IsEditMode">
+                                <!--<input type="text"  style="width:120px"  [(ngModel)]="item.TextValue"     (blur)="item.onBlur()"  [id]="InputId"  (paste)="item.OnPaste($event)"  (keydown)="item.OnKeyDown($event)" />-->
+                                <LogTextBox [ObjectFieldName]="'Amount'" [InputType]="'double'" [DataContext]="item"  (LostFocus)="item.OnAmountLostFocus()" 
+                                            [ObjectTableName]="'Customs.SupplierInvoiceModification'" [HideColumns]="true" [FocusOnMe]="true" [AllowPercentage]="true" (OriginalText)="item.AmountOriginalText($event)"></LogTextBox>
+                            </div>
+                        </log-cell-template>
+                    </log-column>
+
+                    <!-- Buttons -->
+                    <log-column [width]="'40'" [Alignment]="'right'">
+                        <log-cell-template template="let item" [IgnoreMods]="true">
+                            <span class="CellSeparator" style="float: right;"></span>
+                            <IconButton [IsEnabled]="!IsDisplayOnly" [Name]="'Delete'" [IsSmall]="true" (click)="RemoveModification(item)"
+                                        style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
+                        </log-cell-template>
+                    </log-column>
+
+                </logitude-edit-grid>
+            </div>
+
+        </td>
+    </tr>
+
+</table>

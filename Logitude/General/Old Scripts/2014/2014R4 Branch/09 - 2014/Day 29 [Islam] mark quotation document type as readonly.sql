@@ -1,0 +1,1 @@
+update DocumentTypes set IsReadOnly = 1 where code=  'QUOTE'

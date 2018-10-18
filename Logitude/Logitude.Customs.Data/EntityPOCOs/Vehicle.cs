@@ -1,0 +1,167 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Customs.Data.EntityPOCOs
+{
+   
+    public class Vehicle
+    {
+	 string dbms;
+
+        [Key]
+        [Column("Id")]
+	    public string Id { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+        [Column("RichbitFileNumber")]
+	    public string RichbitFileNumber { get; set; }
+        [Column("VehicleChassisNumber")]
+	    public string VehicleChassisNumber { get; set; }
+        [ForeignKey("VehiclePoolType")]
+        [Column("VehiclePoolTypeCode")]
+	    public string VehiclePoolTypeCode { get; set; }
+	      
+        public virtual VehiclePoolType VehiclePoolType { get; set; }
+        [ForeignKey("VehiclePriceListType")]
+        [Column("VehiclePriceListTypeCode")]
+	    public string VehiclePriceListTypeCode { get; set; }
+	      
+        public virtual VehiclePriceListType VehiclePriceListType { get; set; }
+        [ForeignKey("VehicleManufacturer")]
+        [Column("VehicleManufacturerCode")]
+	    public string VehicleManufacturerCode { get; set; }
+	      
+        public virtual VehicleManufacturer VehicleManufacturer { get; set; }
+        [Column("ModelCode")]
+	    public string ModelCode { get; set; }
+        [Column("IsABS")]
+	    public bool IsABS { get; set; }
+        [Column("AirBagsNumber")]
+	    public int? AirBagsNumber { get; set; }
+        [ForeignKey("ConverterType")]
+        [Column("ConverterTypeCode")]
+	    public string ConverterTypeCode { get; set; }
+	      
+        public virtual ConverterType ConverterType { get; set; }
+        [Column("IsArmoredVehicle")]
+	    public bool IsArmoredVehicle { get; set; }
+        [Column("IsLoweringVehicleForInvalid")]
+	    public bool IsLoweringVehicleForInvalid { get; set; }
+        [Column("GreenIndex")]
+	    public decimal? GreenIndex { get; set; }
+        [Column("GreenIndexGroup")]
+	    public int? GreenIndexGroup { get; set; }
+        [Column("IsStabilityControl")]
+	    public bool IsStabilityControl { get; set; }
+        [Column("IsraelEnterDate")]
+	    public DateTime? IsraelEnterDate { get; set; }
+        [Column("EngineCapacity")]
+	    public int? EngineCapacity { get; set; }
+        [Column("VehiclePowerKW")]
+	    public decimal? VehiclePowerKW { get; set; }
+        [ForeignKey("VehicleTecnologyType")]
+        [Column("VehicleTecnologyTypeCode")]
+	    public string VehicleTecnologyTypeCode { get; set; }
+	      
+        public virtual VehicleTecnologyType VehicleTecnologyType { get; set; }
+        [ForeignKey("FuelType")]
+        [Column("FuelTypeCode")]
+	    public string FuelTypeCode { get; set; }
+	      
+        public virtual FuelType FuelType { get; set; }
+        [Column("VehicleWindowNumber")]
+	    public string VehicleWindowNumber { get; set; }
+        [ForeignKey("CustomsCountry")]
+        [Column("ManufactureCountryCode")]
+	    public string ManufactureCountryCode { get; set; }
+	      
+        public virtual CustomsCountry CustomsCountry { get; set; }
+        [Column("MedalNumber")]
+	    public string MedalNumber { get; set; }
+        [Column("CommercialNickname")]
+	    public string CommercialNickname { get; set; }
+        [Column("ModelDescription")]
+	    public string ModelDescription { get; set; }
+        [Column("NumberOfSeats")]
+	    public int? NumberOfSeats { get; set; }
+        [Column("TotalVehicleWeight")]
+	    public int? TotalVehicleWeight { get; set; }
+        [Column("SelfVehicleWeight")]
+	    public int? SelfVehicleWeight { get; set; }
+        [Column("NumberOfWheels")]
+	    public int? NumberOfWheels { get; set; }
+        [Column("VehicleManufactureDate")]
+	    public DateTime? VehicleManufactureDate { get; set; }
+        [ForeignKey("VehicleType")]
+        [Column("VehicleTypeCode")]
+	    public string VehicleTypeCode { get; set; }
+	      
+        public virtual VehicleType VehicleType { get; set; }
+        [Column("TransmissionDateWithoutTax")]
+	    public DateTime? TransmissionDateWithoutTax { get; set; }
+        [ForeignKey("Client")]
+        [Column("ImporterIdentityId")]
+	    public string ImporterIdentityId { get; set; }
+	      
+        public virtual Client Client { get; set; }
+        [Column("DateOnRoadAbroad")]
+	    public DateTime? DateOnRoadAbroad { get; set; }
+        [Column("VehicleSafetyAccessoryPoints")]
+	    public decimal? VehicleSafetyAccessoryPoints { get; set; }
+        [ForeignKey("VehicleStatus")]
+        [Column("StatusCode")]
+	    public string StatusCode { get; set; }
+	      
+        public virtual VehicleStatus VehicleStatus { get; set; }
+        [Column("SearchFields")]
+	    public string SearchFields { get; set; }
+        [Column("ConcurrencyGUID")]
+	    public string ConcurrencyGUID { get; set; }
+        [ForeignKey("Declaration")]
+        [Column("DeclarationId")]
+	    public string DeclarationId { get; set; }
+	      
+        public virtual Declaration Declaration { get; set; }
+        [Column("IsThreeWheeledForReduction")]
+	    public bool IsThreeWheeledForReduction { get; set; }
+        [Column("TaxiMedalOwner")]
+	    public string TaxiMedalOwner { get; set; }
+        [Column("ImporterPassportNumber")]
+	    public string ImporterPassportNumber { get; set; }
+        [ForeignKey("PassportCountry")]
+        [Column("ImporterPassCountryCode")]
+	    public string ImporterPassCountryCode { get; set; }
+	      
+        public virtual CustomsCountry PassportCountry { get; set; }
+        [ForeignKey("PassportType")]
+        [Column("ImporterPassportTypeCode")]
+	    public string ImporterPassportTypeCode { get; set; }
+	      
+        public virtual PassportType PassportType { get; set; }
+        [Column("IsCBS")]
+	    public bool IsCBS { get; set; }
+        [Column("IsSlipperClutch")]
+	    public bool IsSlipperClutch { get; set; }
+        [Column("IsSteeringDamper")]
+	    public bool IsSteeringDamper { get; set; }
+        [Column("IsTCS")]
+	    public bool IsTCS { get; set; }
+        [Column("IsTPS")]
+	    public bool IsTPS { get; set; }
+        [Column("VehicleCategory")]
+	    public string VehicleCategory { get; set; }
+        [Column("VehicleMaxPowerKW")]
+	    public decimal? VehicleMaxPowerKW { get; set; }
+    }
+}
+	 

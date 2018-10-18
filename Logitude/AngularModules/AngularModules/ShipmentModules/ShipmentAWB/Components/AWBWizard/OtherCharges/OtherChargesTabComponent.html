@@ -1,0 +1,353 @@
+﻿
+<style>
+    .SummaryValue {
+        font-size: 14px;
+        color: #282E30;
+        text-align: center;
+    }
+
+    .SummaryLabel {
+        font-size: 10px;
+        color: #6E7172;
+        text-align: center;
+    }
+</style>
+
+<table>
+    <tr>
+        <td>
+            <div class="MediaFill">
+                <div class="MarginAbsolute10">
+                    <table>
+                        <tr style="height: 1px;" *ngIf="IsFillDataWarningVisible">
+                            <td>
+                                <div class="OrangeInfo">
+                                    It is highly recommended to fill the packages, payables and receivables in the shipment edit before entering the AWB wizard
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr style="height: 28px;">
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td style="width: 160px; vertical-align: middle;">
+                                            <CheckBox [IsChecked]="AsAgreedOtherCharges" (Checked)="AsAgreedOtherCharges = $event" [IsEnabled]="IsEditingEnabled" [Text]="'As Agreed Other Charges'"></CheckBox>
+                                        </td>
+
+                                        <td style="width: 35px; vertical-align: middle;">
+                                            <div style="width:1px; height:22px; background: #DADADA; margin:auto;"></div>
+                                        </td>
+
+                                        <td style="width: 1px;" class="Label">{{'Shipment.F.OtherPrepaidCollectId' | TextCodeTranslationPipe}}:</td>
+
+                                        <td style="width: 10px;">
+                                            <div></div>
+                                        </td>
+
+                                        <td style="width: 70px; vertical-align: middle;">
+                                            <div class="RadioButton">
+                                                <input id="PrepaidRadio" type="radio" name="PCRadio" [checked]="IsPrepaidSelected" (click)="SetIsPrepaidSelected(true)" [disabled]="!IsEditingEnabled" />
+                                                <label for="PrepaidRadio">Prepaid</label>
+                                            </div>
+                                        </td>
+
+                                        <td style="width: 65px; vertical-align: middle;">
+                                            <div class="RadioButton">
+                                                <input id="CollectRadio" type="radio" name="PCRadio" [checked]="!IsPrepaidSelected" (click)="SetIsPrepaidSelected(false)" [disabled]="!IsEditingEnabled" />
+                                                <label for="CollectRadio">Collect</label>
+                                            </div>
+                                        </td>
+
+                                        <td style="width: 70px; vertical-align: middle;">
+                                            <button id="{{'ApplyToAll' | IdGeneratorPipe}}" class="Button" (click)="ApplyToAllClicked()" [disabled]="!IsEditingEnabled">Apply to All</button>
+                                        </td>
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+
+                                        <td style="width: 70px; vertical-align: middle;">
+                                            <button id="{{'AddCharge' | IdGeneratorPipe}}" class="Button" (click)="Add()" [disabled]="!IsEditingEnabled">Add Charge</button>
+                                        </td>
+
+                                        <td style="width: 5px;">
+                                            <div></div>
+                                        </td>
+
+                                        <td style="width: 70px; vertical-align: middle;">
+                                            <div id="{{'ManageDefaults' | IdGeneratorPipe}}" class="hyperlink" (click)="ManageDefaultsClicked()" [class.HyperlinkDisabled]="!IsEditingEnabled">Manage defaults</div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+
+                                <div class="SimpleGridView">
+                                    <div class="SimpleGridViewHeader">
+                                        <table>
+                                            <tr>
+                                                <td style="width: 25px; min-width: 25px; max-width: 25px;">
+                                                    <div></div>
+                                                </td>
+                                                <td style="width: 40px;">{{'Shipment.S.AWB.Type' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 90px;">{{'ShipmentAWBPrintOnly.F.IATACodeId' | TextCodeTranslationPipe}}</td>
+                                                <td>Name</td>
+                                                <td style="width: 50px;">UOM</td>
+                                                <td style="width: 100px;">{{'ShipmentAWBPrintOnly.F.Quantity' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 100px;">{{'ShipmentAWBPrintOnly.F.UnitPrice' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 100px;">{{'ShipmentAWBPrintOnly.F.Amount' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 100px;">{{'ShipmentAWBPrintOnly.F.PrepaidCollectId.Short' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 100px;">{{'ShipmentAWBPrintOnly.F.DueTypeCode.Short' | TextCodeTranslationPipe}}</td>
+                                                <td class="LastChild" style="width: 50px;">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="SimpleGridViewBody">
+                                        <table>
+                                            <tr class="SimpleGridViewRow RowHover RowSelected" *ngFor="let item of ItemsSource" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem">
+
+                                                <!-- AWBPrint -->
+                                                <td class="GridViewCell" style="width: 25px; position: relative">
+                                                    <div>
+                                                        <img src="./Images/Info.png" class="CenterCenter" [attr.title]="item.NotMatchedToolTip" *ngIf="item.IsAWBPrintIconVisible" />
+                                                        <CheckBox [IsChecked]="item.AWBPrint" (Checked)="item.AWBPrint = $event" *ngIf="item.IsAWBPrintCheckBoxVisible" [IsEnabled]="item.IsAWBPrintCheckBoxEnabled"></CheckBox>
+                                                    </div>
+                                                </td>
+
+                                                <!-- Type Image -->
+                                                <td class="CellDisabled" style="width: 40px; position: relative">
+                                                    <img [attr.src]="item.TypeImageSource" class="CenterCenter" style="width: 16px; height: 16px;" />
+                                                </td>
+
+                                                <!-- IATACodeId -->
+                                                <td class="CellStretched" style="width: 90px;">
+                                                    <LogLov [ObjectFieldName]="'IATACodeId'"
+                                                            [SelectedValue]="item.IATACodeId"
+                                                            [ObjectTableName]="item.ObjectTableName"
+                                                            [DataContext]="item.DataContext"
+                                                            [LookUpTableName]="'IATACode'"
+                                                            [DependencyFilter1Value]="TenantZeroAirlineId"
+                                                            [HideColumns]="true">
+                                                    </LogLov>
+                                                </td>
+
+                                                <td class="CellDisabled">
+                                                    <div style="width: 160px;">{{item.Name}}</div>
+                                                </td>
+
+                                                <td class="CellDisabled" style="width: 50px;">
+                                                    {{item.MeasurementCode}}
+                                                </td>
+
+                                                <td class="CellStretched" style="width: 100px;">
+                                                    <LogTextBox [ObjectFieldName]="'Quantity'" [Text]="item.Quantity" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
+                                                </td>
+
+                                                <td class="CellStretched" style="width: 100px;">
+                                                    <LogTextBox [ObjectFieldName]="'UnitPrice'" [Text]="item.UnitPrice" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
+                                                </td>
+
+                                                <td class="CellDisabled" style="width: 100px; text-align: right;">
+                                                    <div [ngStyle]="{color: item.AmountColor}">{{item.Amount | NumbersPipe:'N2'}} {{item.CurrencyCode}}</div>
+                                                </td>
+
+                                                <td class="CellStretched" style="width: 100px;">
+                                                    <LogLov [ObjectFieldName]="'PrepaidCollectId'"
+                                                            [SelectedValue]="item.PrepaidCollectId"
+                                                            [ObjectTableName]="item.ObjectTableName"
+                                                            [DataContext]="item.DataContext"
+                                                            [LookUpTableName]="'PrepaidCollect'"
+                                                            [DependencyFilter1Value]="true"
+                                                            [HideColumns]="true">
+                                                    </LogLov>
+                                                </td>
+
+                                                <td class="CellStretched" style="width: 100px;">
+                                                    <LogLov [ObjectFieldName]="'DueTypeCode'"
+                                                            [SelectedValue]="item.DueTypeCode"
+                                                            [ObjectTableName]="item.ObjectTableName"
+                                                            [DataContext]="item.DataContext"
+                                                            [LookUpTableName]="'DueType'"
+                                                            [HideColumns]="true">
+                                                    </LogLov>
+                                                </td>
+
+                                                <td class="CellTools" style="width: 50px;">
+                                                    <span class="CellSeparator"></span>
+                                                    <IconButton [ExternalId]="item.Name"  [Name]="'Edit'" [IsSmall]="true" (click)="Edit(item)" [Left]="3"></IconButton>
+                                                    <IconButton [ExternalId]="item.Name"  [Name]="'Delete'" [IsSmall]="true" (click)="Delete(item)" [Left]="3" [IsEnabled]="item.IsEditingItemEnabled"></IconButton>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td colspan="5">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="CenterCenter" style="width: 350px; height: 30px;" *ngIf="IsGeneratingVisible">
+                                    <div id="{{'GenerateAutoDisplayCharge' | IdGeneratorPipe}}" class="hyperlink" style="text-align:center" [class.HyperlinkDisabled]="!IsEditingEnabled" (click)="GenerateClicked()">Generate auto display charges</div>
+                                    <div class="NoDataTextStyle">Or click Add Charge Button to add new charges</div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="TabSummaryArea">
+        <td>
+            <table>
+                <tr style="height: 5px;">
+                    <td colspan="3">
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="width: 10px;">
+                        <div></div>
+                    </td>
+
+                    <td>
+                        <table class="TopTableCells">
+                            <tr>
+                                <td>
+                                    <table>
+                                        <tr style="height: 20px">
+                                            <td colspan="6" style="font-size: 13px; color: #1B90CB; vertical-align: middle;">Prepaid</td>
+                                        </tr>
+
+                                        <tr style="height: 10px;">
+                                            <td colspan="6">
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <div class="SummaryValue">{{AWBFreightAmountPrepaid | NumbersPipe:'N2'}}</div>
+                                                <div class="SummaryLabel">Weight</div>
+                                                <div class="SummaryLabel">Charge</div>
+                                            </td>
+
+                                            <td>
+                                                <div class="SummaryValue">{{ValuationAmount_P | NumbersPipe:'N2'}}</div>
+                                                <div class="SummaryLabel">Valuation</div>
+                                                <div class="SummaryLabel">Charge</div>
+                                            </td>
+
+                                            <td>
+                                                <div class="SummaryValue">{{TaxAmount_P | NumbersPipe:'N2'}}</div>
+                                                <div class="SummaryLabel">Tax</div>
+                                                <div class="SummaryLabel"></div>
+                                            </td>
+
+                                            <td>
+                                                <div class="SummaryValue">{{AgentAmount_P | NumbersPipe:'N2'}}</div>
+                                                <div class="SummaryLabel">Other charges</div>
+                                                <div class="SummaryLabel">due agent</div>
+                                            </td>
+
+                                            <td>
+                                                <div class="SummaryValue">{{CarrierAmount_P | NumbersPipe:'N2'}}</div>
+                                                <div class="SummaryLabel">Other charges</div>
+                                                <div class="SummaryLabel">due carrier</div>
+                                            </td>
+
+                                            <td>
+                                                <div class="SummaryValue">{{Total_P | NumbersPipe:'N2'}}</div>
+                                                <div class="SummaryLabel">Total</div>
+                                                <div class="SummaryLabel"></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+
+                                <td style="width: 20px;">
+                                    <div style="width:1px; height: 85px; background: #DADADA; margin:auto; margin-top: 5px;"></div>
+                                </td>
+
+                                <td>
+                                    <table>
+                                        <tr style="height: 20px">
+                                            <td colspan="6" style="font-size: 13px; color: #1B90CB; vertical-align: middle;">Collect</td>
+                                        </tr>
+
+                                        <tr style="height: 10px;">
+                                            <td colspan="6">
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <div class="SummaryValue">{{AWBFreightAmountCollect | NumbersPipe:'N2'}}</div>
+                                                <div class="SummaryLabel">Weight</div>
+                                                <div class="SummaryLabel">Charge</div>
+                                            </td>
+
+                                            <td>
+                                                <div class="SummaryValue">{{ValuationAmount_C | NumbersPipe:'N2'}}</div>
+                                                <div class="SummaryLabel">Valuation</div>
+                                                <div class="SummaryLabel">Charge</div>
+                                            </td>
+
+                                            <td>
+                                                <div class="SummaryValue">{{TaxAmount_C | NumbersPipe:'N2'}}</div>
+                                                <div class="SummaryLabel">Tax</div>
+                                                <div class="SummaryLabel"></div>
+                                            </td>
+
+                                            <td>
+                                                <div class="SummaryValue">{{AgentAmount_C | NumbersPipe:'N2'}}</div>
+                                                <div class="SummaryLabel">Other charges</div>
+                                                <div class="SummaryLabel">due agent</div>
+                                            </td>
+
+                                            <td>
+                                                <div class="SummaryValue">{{CarrierAmount_C | NumbersPipe:'N2'}}</div>
+                                                <div class="SummaryLabel">Other charges</div>
+                                                <div class="SummaryLabel">due carrier</div>
+                                            </td>
+
+                                            <td>
+                                                <div class="SummaryValue">{{Total_C | NumbersPipe:'N2'}}</div>
+                                                <div class="SummaryLabel">Total</div>
+                                                <div class="SummaryLabel"></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td style="width: 10px;">
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr style="height: 5px;">
+                    <td colspan="3">
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+
+

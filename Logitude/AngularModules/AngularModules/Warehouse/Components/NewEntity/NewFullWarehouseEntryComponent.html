@@ -1,0 +1,992 @@
+﻿
+<style type="text/css">
+    .NotesBox p {
+        font-size: 11px;
+        color: #6E7172;
+        white-space: normal;
+        word-wrap: break-word;
+        text-wrap: normal;
+        text-overflow: ellipsis;
+    }
+
+    .NotesBox {
+        background: #FFFADC;
+        border: 1px solid #AAAAAA;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        padding: 5px;
+        line-height: 12px;
+        text-align: left;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        margin-right: 36px;
+    }
+
+    .SectionTitle > span {
+        font-size: 14px;
+        user-select: text;
+        -webkit-user-select: auto;
+    }
+
+    .SectionTitle td {
+        font-size: 14px;
+        user-select: text;
+    }
+
+    .SectionTitle {
+        height: 20px;
+        line-height: 20px;
+        font-size: 14px;
+        color: #1B90CB;
+        user-select: text;
+        -webkit-user-select: text;
+    }
+
+    .SetCustomer:hover .SetCustomerIcon {
+        background: url('./Images/Menu/Person.png') center center;
+        background-size: contain;
+    }
+
+    .SetCustomer:hover .SetCustomerText {
+        color: #0075AF;
+    }
+
+    .SetCustomerIcon {
+        display: inline-block;
+        background: url('./Images/Menu/Person.Gray.png') center center;
+        background-size: contain;
+    }
+
+    .SetCustomerText {
+        color: #BABABA;
+    }
+
+    .SetCustomer {
+        cursor: pointer;
+    }
+
+    .AppLeftMenuBackground .RadioButton {
+        margin-left: 5px;
+        margin-top: 5px;
+    }
+
+    .GreenAddButtonDisabled {
+        pointer-events: none;
+    }
+
+    .GreenAddButton:hover {
+        background: url('./Images/Buttons/AddGreenSolid.png') center center;
+        background-size: contain;
+    }
+
+    .GreenAddButton {
+        width: 12px;
+        height: 12px;
+        background: url('./Images/Buttons/AddGreenBrush.png') center center;
+        background-size: contain;
+        cursor: pointer;
+    }
+</style>
+
+<table *ngIf="IsLoadPage">
+    <tr>
+        <td>
+            <div class="FillParent CurvedArea">
+                <table>
+                    <tr>
+                        <td style="width: 155px; vertical-align: top" class="AppLeftMenuBackground">
+
+                            <!-- Origin Mood -->
+                            <table>
+                                <tr style="height: 1px">
+                                    <td>
+                                        <!-- Directions -->
+                                        <div style="margin: 10px;">
+                                            <div style="font-size: 13px; color: #6E7172;">{{'WarehouseEntry.F.DirectionId' | TextCodeTranslationPipe}}:</div>
+                                            <div style="margin-top: -2px;">
+                                                <div class="RadioButton" *ngFor="let item of DirectionsList">
+                                                    <input [attr.id]="'DirectionRadio_' + SessionIndex + item.Code" [attr.name]="'DirectionsRadio' + SessionIndex" type="radio" [checked]="DirectionId == item.Code" (click)="DirectionId = item.Code" />
+                                                    <label [attr.for]="'DirectionRadio_' + SessionIndex + item.Code" style="text-indent: 40px; font-size: 12px" [ngStyle]="{color: DirectionId == item.Code ? '#287828':'#282E30'}">
+                                                        <img class="LeftCenter" style="margin-left: 20px;" [attr.src]="'./Images/Directions/' + item.Code + '.png'" />
+                                                        {{item.Name}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Transport Modes -->
+                                        <div style="margin: 10px;">
+                                            <div style="font-size: 13px; color: #6E7172">{{'WarehouseEntry.F.TransportModeId' | TextCodeTranslationPipe}}:</div>
+                                            <div style="margin-top: -2px;">
+                                                <div class="RadioButton" *ngFor="let item of TransportModesList">
+                                                    <input [attr.id]="'TransportModeRadio_' + SessionIndex + item.Code" [attr.name]="'TransportModesRadio' + SessionIndex" type="radio" [checked]="TransportModeId == item.Code" (click)="TransportModeId = item.Code" [disabled]="!IsTransportModesListEnabled"/>
+                                                    <label [attr.for]="'TransportModeRadio_' + SessionIndex + item.Code" style="text-indent: 40px; font-size: 12px" [ngStyle]="{color: TransportModeId == item.Code ? '#287828':'#282E30'}">
+                                                        <img class="LeftCenter" style="margin-left: 20px;" [attr.src]="'./Images/Icons/' + item.Code + '.png'" />
+                                                        {{item.Name}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Shipment Types -->
+                                        <div style="margin: 10px;" *ngIf="DirectionId && (TransportModeId == 'O' || TransportModeId == 'I')">
+                                            <div style="font-size: 13px; color: #6E7172;">Entry Type:</div>
+                                            <div style="margin-top: -2px;">
+                                                <div class="RadioButton" *ngFor="let item of ShipmentTypesList">
+                                                    <input [attr.id]="'ShipmentTypeRadio_' + SessionIndex + item.Code" [attr.name]="'ShipmentTypesRadio' + SessionIndex" type="radio" [checked]="ShipmentTypeId == item.Code" (click)="ShipmentTypeId = item.Code" />
+                                                    <label [attr.for]="'ShipmentTypeRadio_' + SessionIndex + item.Code" style="text-indent: 45px; font-size: 12px" [ngStyle]="{color: ShipmentTypeId == item.Code ? '#287828':'#282E30'}">
+                                                        <img class="LeftCenter" style="margin-left: 20px;" [attr.src]="item.SRC" />
+                                                        {{item.Name}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+
+
+                        </td>
+                        
+                        <td>
+                            <table>
+
+                                <tr style="height:1px;" *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
+                                    <td style="padding: 3px;">
+                                        <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+                                    </td>
+                                </tr>
+                                
+                                   <tr>
+                                    <td>
+                                        <div class="ScrollViewer" style="padding: 10px; padding-top: 5px; top: 3px; right: 3px; bottom: 3px;">
+                                            <div class="ScrollContent" [ngStyle]="{opacity: ScreenOpacity}">
+                                              
+                                                <!--CustomerId-->
+
+
+                                                <!--<div *ngIf="!IsInlandDomestic">
+                                                    <div class="SectionTitle">
+                                                        <table>
+                                                            <tr>
+                                                                <td>{{'WarehouseEntry.F.CustomerId' | TextCodeTranslationPipe}}</td>
+
+
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+
+                                                    <table class="FixedTable">
+                                                        <tr>
+                                                            <td style="width: 360px">
+                                                                <table>
+                                                                    <tr class="FormFieldRow">
+                                                                        <td [style.width.px]="LabelColumnWidth">
+                                                                            <LogLabel [ObjectFieldName]="'CustomerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Name'"></LogLabel>
+                                                                        </td>
+
+                                                                        <td [style.width.px]="ControlColumnWidth">
+                                                                            <LogLov [ObjectFieldName]="'CustomerId'"
+                                                                                    [SelectedValue]="CustomerId"
+                                                                                    [ObjectTableName]="ObjectTableName"
+                                                                                    [DataContext]="DataContext"
+                                                                                    [LookUpTableName]="'Card'"
+                                                                                    [DisplayMemberPath]="'EnglishName'"
+                                                                                    [DependencyFilter1Value]="CardDependencyProperty1"
+                                                                                    [DependencyFilter1IsList]="CardDependencyProperty1IsList">
+                                                                            </LogLov>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="MediaFill">
+                                                                                <div class="LeftCenter" style="width: 12px; height: 12px;">
+                                                                                    <div class="GreenAddButton" [class.GreenAddButtonDisabled]="!IsScreenEnabled" (mousedown)="AddPartnerClicked('Customer')"></div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr *ngIf="CustomerId" class="FormFieldRow">
+                                                                        <td [style.width.px]="LabelColumnWidth">
+                                                                            <LogLabel [Text]="'Address'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+                                                                        <td colspan="2">
+
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td [style.width.px]="ControlColumnWidth - 18">
+                                                                                        <LogLov [ObjectFieldName]="'CustomerAddressId'"
+                                                                                                [SelectedValue]="CustomerAddressId"
+                                                                                                [ObjectTableName]="ObjectTableName"
+                                                                                                [DataContext]="DataContext"
+                                                                                                [LookUpTableName]="'Address'"
+                                                                                                [DependencyFilter1Value]="CustomerId"
+                                                                                                [HideLastColumn]="true"
+                                                                                                [HideMaintenanceIcon]="true">
+                                                                                        </LogLov>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <div style="margin-left: 2px;">
+                                                                                            <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditAddressClicked('Customer')" [disabled]="!CustomerAddressId || !IsScreenEnabled"></IconButton>
+                                                                                            <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddAddressClicked('Customer')" [disabled]="!IsScreenEnabled"></IconButton>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+
+                                                                    </tr>
+
+                                                                    <tr *ngIf="CustomerId" class="FormFieldRow" style="height: 80px;">
+                                                                        <td [style.width.px]="LabelColumnWidth">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td [style.width.px]="ControlColumnWidth">
+                                                                            <AddressTemplate [Address]="CustomerAddressList" [Right]="36"></AddressTemplate>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+
+
+                                                                    </tr>
+
+                                                                    <tr *ngIf="CustomerId" class="FormFieldRow">
+
+
+                                                                        <td [style.width.px]="LabelColumnWidth">
+                                                                            <LogLabel [ObjectFieldName]="'CustomerRef1'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+                                                                        <td [style.width.px]="ControlColumnWidth">
+                                                                            <LogTextBox [ObjectFieldName]="'CustomerRef1'" [Text]="CustomerRef1" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+                                                                        <td >
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                    </tr>
+
+
+                                                                    <tr *ngIf="CustomerId" class="FormFieldRow">
+
+                                                                        <td [style.width.px]="LabelColumnWidth">
+                                                                            <LogLabel [ObjectFieldName]="'CustomerRef2'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+                                                                        <td [style.width.px]="ControlColumnWidth">
+                                                                            <LogTextBox [ObjectFieldName]="'CustomerRef2'" [Text]="CustomerRef2" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                    </tr>
+
+                                                                </table>
+                                                            </td>
+
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td style="width: 330px;">
+                                                                <table>
+                                                                    <tr class="FormFieldRow">
+                                                                        <td style="width:9px"></td>
+                                                                        <td style="width: 1px;">
+                                                                            <table>
+                                                                                <tr class="FormFieldRow">
+                                                                                    <td>
+                                                                                        <RadioButton [IsEnabled]="IsScreenEnabled" [Name]="'MyCustomerRadio'" [IsChecked]="IsShipperMyCustomer == true" (Checked)="IsShipperMyCustomer = true" [Text]="'Shipper'"></RadioButton>
+                                                                                    </td>
+                                                                                    <td style="width:10px"><div style="width:10px"></div></td>
+                                                                                    <td>
+                                                                                        <RadioButton [IsEnabled]="IsScreenEnabled" [Name]="'MyCustomerRadio'" [IsChecked]="IsShipperMyCustomer == false" (Checked)="IsShipperMyCustomer = false" [Text]="'Consignee'"></RadioButton>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+
+
+                                                                        </td>
+                                                                        <td></td>
+                                                                    </tr>
+
+                                                                  <tr>
+                                                                      <td colspan="3"></td>
+                                                                  </tr>
+
+
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+
+                                                    <div style="height:1px; width: 100%; background: #999999; opacity:0.3; margin-top: 5px; margin-bottom: 5px;"></div>
+                                                </div>-->
+
+
+
+                                                <!--Shipper-->
+
+                                                <div>
+                                                    <div class="SectionTitle">
+                                                        <table>
+                                                            <tr>
+                                                                <td>{{'WarehouseEntry.F.ShipperId' | TextCodeTranslationPipe}}</td>
+
+                                                                <td style="width: 1px;">
+                                                                    <div *ngIf="IsShipperMyCustomer">
+                                                                        <span style="display:inline-block; color:#0075AF; font-size:11px;">My Customer</span>
+                                                                        <span style="display:inline-block; width: 14px; height: 14px; background: url('./Images/Menu/Person.png') center center; background-size: contain;"></span>
+                                                                    </div>
+
+                                                                    <div *ngIf="!IsShipperMyCustomer">
+                                                                        <div *ngIf="!IsScreenEnabled || !ShipperId">
+                                                                            <span style="display:inline-block; font-size: 11px; color: #BABABA;">Set as My Customer</span>
+                                                                            <span style="display:inline-block; width: 14px; height: 14px; background: url('./Images/Menu/Person.Gray.png') center center; background-size: contain;"></span>
+                                                                        </div>
+
+                                                                        <div *ngIf="IsScreenEnabled && ShipperId" class="SetCustomer" (mousedown)="SetCustomer('S')">
+                                                                            <span class="SetCustomerText" style="font-size: 11px;">Set as My Customer</span>
+                                                                            <span class="SetCustomerIcon" style="width: 14px; height: 14px;"></span>
+                                                                        </div>
+                                                                    </div>
+
+                                                              
+                                                                </td>
+                                                                <td  style="width: 14px;">
+                                                                    <HelpIcon *ngIf="!IsShipperMyCustomer" [Header]="'Set as My Customer'" [Text]="CustomerHelpText" [IconSize]="14"></HelpIcon>
+                                                                </td>
+
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+
+                                                    <table class="FixedTable">
+                                                        <tr>
+                                                            <td style="width: 360px">
+                                                                <table>
+                                                                    <tr class="FormFieldRow">
+                                                                        <td [style.width.px]="LabelColumnWidth">
+                                                                            <LogLabel [ObjectFieldName]="'ShipperId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Name'"></LogLabel>
+                                                                        </td>
+
+                                                                        <td [style.width.px]="ControlColumnWidth">
+                                                                            <LogLov [ObjectFieldName]="'ShipperId'"
+                                                                                    [SelectedValue]="ShipperId"
+                                                                                    [ObjectTableName]="ObjectTableName"
+                                                                                    [DataContext]="DataContext"
+                                                                                    [LookUpTableName]="'Card'"
+                                                                                    [DisplayMemberPath]="'EnglishName'">
+                                                                            </LogLov>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="MediaFill">
+                                                                                <div class="LeftCenter" style="width: 12px; height: 12px;">
+                                                                                    <div class="GreenAddButton" [class.GreenAddButtonDisabled]="!IsScreenEnabled" (mousedown)="AddPartnerClicked('Shipper')"></div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr *ngIf="ShipperId && IsInlandDomestic" class="FormFieldRow">
+                                                                        <td [style.width.px]="LabelColumnWidth">
+                                                                            <LogLabel [Text]="'Address'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+                                                                        <td colspan="2">
+
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td [style.width.px]="ControlColumnWidth - 18">
+                                                                                        <LogLov [ObjectFieldName]="'FromAddressId'"
+                                                                                                [SelectedValue]="FromAddressId"
+                                                                                                [ObjectTableName]="ObjectTableName"
+                                                                                                [DataContext]="DataContext"
+                                                                                                [LookUpTableName]="'Address'"
+                                                                                                [DependencyFilter1Value]="ShipperId">
+                                                                                        </LogLov>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <div style="margin-left: 2px;">
+                                                                                            <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditAddressClicked('Shipper')" [disabled]="!FromAddressId || !IsScreenEnabled"></IconButton>
+                                                                                            <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddAddressClicked('Shipper')" [disabled]="!IsScreenEnabled"></IconButton>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+
+                                                                    </tr>
+                                                                   
+                                                                     <tr *ngIf="ShipperId && IsInlandDomestic" class="FormFieldRow" style="height: 80px;">
+                                                                        <td [style.width.px]="LabelColumnWidth">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td [style.width.px]="ControlColumnWidth">
+                                                                            <AddressTemplate [Address]="ShipperAddressList" [Right]="36"></AddressTemplate>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+
+
+                                                                    </tr>
+
+                                                                </table>
+                                                            </td>
+
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td style="width: 330px;"></td>
+                                                        </tr>
+                                                    </table>
+
+                                                    <div style="height:1px; width: 100%; background: #999999; opacity:0.3; margin-top: 5px; margin-bottom: 5px;"></div>
+                                                </div>
+
+
+
+                                                <!-- Consignee -->
+                                               
+                                                <div>
+                                                    <div class="SectionTitle">
+                                                        <table>
+                                                            <tr>
+                                                                <td>{{'WarehouseEntry.F.ConsigneeId' | TextCodeTranslationPipe}}</td>
+
+                                                                <td style="width: 1px;">
+
+                                                                    <div *ngIf="!IsShipperMyCustomer">
+                                                                        <span style="display:inline-block; color:#0075AF; font-size:11px;">My Customer</span>
+                                                                        <span style="display:inline-block; width: 14px; height: 14px; background: url('./Images/Menu/Person.png') center center; background-size: contain;"></span>
+                                                                    </div>
+
+
+                                                                    <div *ngIf="IsShipperMyCustomer ">
+                                                                        <div *ngIf="!IsScreenEnabled || !ConsigneeId">
+                                                                            <span style="display:inline-block; font-size: 11px; color: #BABABA;">Set as My Customer</span>
+                                                                            <span style="display:inline-block; width: 14px; height: 14px; background: url('./Images/Menu/Person.Gray.png') center center; background-size: contain;"></span>
+                                                                        </div>
+
+                                                                        <div *ngIf="IsScreenEnabled && ConsigneeId" class="SetCustomer" (mousedown)="SetCustomer('C')">
+                                                                            <span class="SetCustomerText" style="font-size: 11px;">Set as My Customer</span>
+                                                                            <span class="SetCustomerIcon" style="width: 14px; height: 14px;"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td  style="width: 14px;">
+                                                                    <HelpIcon *ngIf="IsShipperMyCustomer" [Header]="'Set as My Customer'" [Text]="CustomerHelpText" [IconSize]="14"></HelpIcon>
+                                                                </td>
+
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+
+                                                    <table class="FixedTable">
+                                                        <tr>
+                                                            <td style="width: 360px">
+                                                                <table>
+                                                                    <tr class="FormFieldRow">
+                                                                        <td [style.width.px]="LabelColumnWidth">
+                                                                            <LogLabel [ObjectFieldName]="'ConsigneeId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Name'"></LogLabel>
+                                                                        </td>
+
+                                                                        <td [style.width.px]="ControlColumnWidth">
+                                                                            <LogLov [ObjectFieldName]="'ConsigneeId'"
+                                                                                    [SelectedValue]="ConsigneeId"
+                                                                                    [ObjectTableName]="ObjectTableName"
+                                                                                    [DataContext]="DataContext"
+                                                                                    [LookUpTableName]="'Card'"
+                                                                                    [DisplayMemberPath]="'EnglishName'">
+                                                                            </LogLov>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="MediaFill">
+                                                                                <div class="LeftCenter" style="width: 12px; height: 12px;">
+                                                                                    <div class="GreenAddButton" [class.GreenAddButtonDisabled]="!IsScreenEnabled" (mousedown)="AddPartnerClicked('Consignee')"></div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr *ngIf="ConsigneeId && IsInlandDomestic" class="FormFieldRow">
+                                                                        <td [style.width.px]="LabelColumnWidth">
+                                                                            <LogLabel [Text]="'Address'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+                                                                        <td colspan="2">
+
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td [style.width.px]="ControlColumnWidth - 18">
+                                                                                        <LogLov [ObjectFieldName]="'ToAddressId'"
+                                                                                                [SelectedValue]="ToAddressId"
+                                                                                                [ObjectTableName]="ObjectTableName"
+                                                                                                [DataContext]="DataContext"
+                                                                                                [LookUpTableName]="'Address'"
+                                                                                                [DependencyFilter1Value]="ConsigneeId">
+                                                                                        </LogLov>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <div style="margin-left: 2px;">
+                                                                                            <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditAddressClicked('Consignee')" [disabled]="!ToAddressId || !IsScreenEnabled"></IconButton>
+                                                                                            <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddAddressClicked('Consignee')" [disabled]="!IsScreenEnabled"></IconButton>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+
+                                                                    </tr>
+                                                                    <tr *ngIf="ConsigneeId && IsInlandDomestic" class="FormFieldRow" style="height: 80px;">
+                                                                        <td [style.width.px]="LabelColumnWidth">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td [style.width.px]="ControlColumnWidth">
+                                                                            <AddressTemplate [Address]="ConsigneeAddressList" [Right]="36"></AddressTemplate>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+
+
+                                                                    </tr>
+
+                                                                </table>
+                                                            </td>
+
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td style="width: 330px;">
+                                                            
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+
+                                                    <div style="height:1px; width: 100%; background: #999999; opacity:0.3; margin-top: 5px; margin-bottom: 5px;"></div>
+                                                </div>
+
+
+
+
+                                                <!-- Manufacturer  -->
+
+                                                <div>
+                                                    <div class="SectionTitle">Manufacturer</div>
+
+                                                    <table class="FixedTable">
+                                                        <tr>
+                                                            <td style="width: 360px">
+                                                                <table>
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td [style.width.px]="LabelColumnWidth">
+                                                                            <LogLabel [ObjectFieldName]="'Manufacturer'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+                                                                        <td [style.width.px]="ControlColumnWidth">
+                                                                            <LogTextBox [ObjectFieldName]="'Manufacturer'" [Text]="Manufacturer" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+                                                                        <td></td>
+                                                                    </tr>
+
+
+                                                        
+                                                                </table>
+                                                            </td>
+
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td style="width: 330px;"></td>
+                                                        </tr>
+                                                    </table>
+
+                                                    <div style="height:1px; width: 100%; background: #999999; opacity:0.3; margin-top: 5px; margin-bottom: 5px;"></div>
+                                                </div>
+
+
+                                                <!-- Main Carriage -->
+                                                <div *ngIf="!IsInlandDomestic">
+                                                    <div class="SectionTitle">Routings</div>
+
+                                                    <table class="FixedTable">
+                                                        <tr>
+                                                            <td style="width: 360px">
+                                                                <table>
+                                                                    <tr class="FormFieldRow">
+                                                                        <td [style.width.px]="LabelColumnWidth">
+                                                                            <LogLabel [ObjectFieldName]="'FromPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="FromPortText"></LogLabel>
+                                                                        </td>
+                                                                        <td [style.width.px]="ControlColumnWidth">
+                                                                            <LogLov [ObjectFieldName]="'FromPortId'"
+                                                                                    [SelectedValue]="FromPortId"
+                                                                                    [ObjectTableName]="ObjectTableName"
+                                                                                    [DataContext]="DataContext"
+                                                                                    [LookUpTableName]="'Port'"
+                                                                                    [DependencyFilter1Value]="TransportModeId">
+                                                                            </LogLov>
+                                                                        </td>
+                                                                        <td></td>
+                                                                    </tr>
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td [style.width.px]="LabelColumnWidth">
+                                                                            <LogLabel [ObjectFieldName]="'ToPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="ToPortText"></LogLabel>
+                                                                        </td>
+                                                                        <td [style.width.px]="ControlColumnWidth">
+                                                                            <LogLov [ObjectFieldName]="'ToPortId'"
+                                                                                    [SelectedValue]="ToPortId"
+                                                                                    [ObjectTableName]="ObjectTableName"
+                                                                                    [DataContext]="DataContext"
+                                                                                    [LookUpTableName]="'Port'"
+                                                                                    [DependencyFilter1Value]="TransportModeId">
+                                                                            </LogLov>
+                                                                        </td>
+                                                                        <td></td>
+                                                                    </tr>
+
+
+                                                                </table>
+                                                            </td>
+
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td style="width: 330px;">
+                                                                <table>
+                                                                    <tr class="FormFieldRow">
+                                                                        <td [style.width.px]="LabelColumnWidth">
+                                                                            <LogLabel [ObjectFieldName]="'TruckerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+                                                                        <td [style.width.px]="ControlColumnWidth">
+                                                                            <LogLov [ObjectFieldName]="'TruckerId'"
+                                                                                    [SelectedValue]="TruckerId"
+                                                                                    [ObjectTableName]="ObjectTableName"
+                                                                                    [DataContext]="DataContext"
+                                                                                    [LookUpTableName]="'Carrier'"
+                                                                                    [DependencyFilter1Value]="CarrierDependencyProperty1">
+                                                                            </LogLov>
+
+
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td [style.width.px]="LabelColumnWidth">
+                                                                            <LogLabel [ObjectFieldName]="'TruckerReference'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" ></LogLabel>
+                                                                        </td>
+                                                                        <td [style.width.px]="ControlColumnWidth">
+                                                                            <LogTextBox [ObjectFieldName]="'TruckerReference'" [Text]="TruckerReference" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                  
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+
+                                                    <div style="height:1px; width: 100%; background: #999999; opacity:0.3; margin-top: 5px; margin-bottom: 5px;"></div>
+                                                </div>
+
+
+                                                <!--General -->
+                                                <div>
+                                                    <div class="SectionTitle">General</div>
+
+                                                    <table class="FixedTable">
+                                                        <tr>
+                                                            <td style="width: 360px">
+                                                                <table>
+                                                                    <tr class="FormFieldRow">
+                                                                        <td [style.width.px]="LabelColumnWidth">
+                                                                            <LogLabel [ObjectFieldName]="'WarehouseId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+                                                                        <td [style.width.px]="ControlColumnWidth">
+                                                                            <LogLov [ObjectFieldName]="'WarehouseId'"
+                                                                                    [SelectedValue]="WarehouseId"
+                                                                                    [ObjectTableName]="ObjectTableName"
+                                                                                    [DataContext]="DataContext"
+                                                                                    [LookUpTableName]="'Warehouse'">
+                                                                            </LogLov>
+                                                                        </td>
+                                                                        <td></td>
+                                                                    </tr>
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td [style.width.px]="LabelColumnWidth">
+                                                                            <LogLabel [ObjectFieldName]="'EntryReference'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+                                                                        <td [style.width.px]="ControlColumnWidth">
+                                                                            <LogTextBox [ObjectFieldName]="'EntryReference'" [Text]="EntryReference" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+                                                                        <td></td>
+                                                                    </tr>
+
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td [style.width.px]="LabelColumnWidth">
+                                                                            <LogLabel [ObjectFieldName]="'ExpectedEntryDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Expected Date'"></LogLabel>
+                                                                        </td>
+
+                                                                        <td [style.width.px]="ControlColumnWidth">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td style="width:87px">
+
+                                                                                        <LogDatePicker [HideColumns]="true" [HideLastColumn]="true" [ObjectFieldName]="'ExpectedEntryDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                                                                                    </td>
+                                                                                    <td style="width:10px"><div style="width:10px"></div></td>
+                                                                                    <td style="width:87px">
+
+                                                                                        <LogDatePicker [HideColumns]="true" [HideLastColumn]="true" [ObjectFieldName]="'ExpectedEntryDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+
+                                                                                    </td>
+                                                                                    <td></td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                        <td></td>
+
+
+                                                                    </tr>
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td [style.width.px]="LabelColumnWidth">
+                                                                            <LogLabel [ObjectFieldName]="'ActualEntryDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Actual Date'"></LogLabel>
+                                                                        </td>
+
+                                                                        <td [style.width.px]="ControlColumnWidth">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td style="width:87px">
+
+                                                                                        <LogDatePicker [HideColumns]="true" [HideLastColumn]="true" [ObjectFieldName]="'ActualEntryDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                                                                                    </td>
+                                                                                    <td style="width:10px"><div style="width:10px"></div></td>
+                                                                                    <td style="width:87px">
+
+                                                                                        <LogDatePicker [HideColumns]="true" [HideLastColumn]="true" [ObjectFieldName]="'ActualEntryDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+
+                                                                                    </td>
+                                                                                    <td></td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                        <td></td>
+
+
+                                                                    </tr>
+
+                                                                 
+
+
+
+                                                                    <tr style="height:3px"><td style="height:3px" colspan="3"><div style="height:3px"></div></td></tr>
+                                                                    <tr class="FormFieldRow">
+                                                                        <td style="vertical-align:top" [style.width.px]="LabelColumnWidth">
+                                                                            <LogLabel [ObjectFieldName]="'SpecialInstruction'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+                                                                        <td [style.width.px]="ControlColumnWidth">
+                                                                            <LogTextBox [IsMultiline]="true" [ObjectFieldName]="'SpecialInstruction'" [Text]="SpecialInstruction" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+                                                                        <td></td>
+                                                                    </tr>
+
+                                                                </table>
+                                                            </td>
+
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td style="width: 330px;">
+                                                                <table >
+                                                                    <tr class="FormFieldRow">
+                                                                        <td [style.width.px]="LabelColumnWidth">
+                                                                            <LogLabel [ObjectFieldName]="'ReceivedBy'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+                                                                        <td [style.width.px]="ControlColumnWidth">
+                                                                            <LogTextBox [ObjectFieldName]="'ReceivedBy'" [Text]="ReceivedBy" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+                                                              
+                                                                    </tr>
+
+                                                                    <!--<tr class="FormFieldRow">
+                                                                        <td [style.width.px]="LabelColumnWidth">
+                                                                            <LogLabel [ObjectFieldName]="'MasterNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+                                                                        <td [style.width.px]="ControlColumnWidth">
+                                                                            <LogTextBox [ObjectFieldName]="'MasterNumber'" [Text]="MasterNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+                                                             
+                                                                    </tr>
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td [style.width.px]="LabelColumnWidth">
+                                                                            <LogLabel [ObjectFieldName]="'HouseNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+                                                                        <td [style.width.px]="ControlColumnWidth">
+                                                                            <LogTextBox [ObjectFieldName]="'HouseNumber'" [Text]="HouseNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+                                                                 
+                                                                    </tr>-->
+                                                                    <tr style="height:5px"><td style="height:5px" colspan="2"><div style="height:5px"></div></td></tr>
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td style="vertical-align:top" [style.width.px]="LabelColumnWidth">
+                                                                            <LogLabel [ObjectFieldName]="'Notes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+                                                                        <td [style.width.px]="ControlColumnWidth">
+                                                                            <LogTextBox [IsMultiline]="true" [ObjectFieldName]="'Notes'" [Text]="Notes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+                                                                   
+                                                                    </tr>
+
+                                                                    <tr style="height:100%">
+                                                                       <td colspan="2"><div></div></td>
+                                                                    </tr>
+
+
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+
+                                                    <div style="height:1px; width: 100%; background: #999999; opacity:0.3; margin-top: 5px; margin-bottom: 5px;"></div>
+                                                </div>
+
+
+                                                <!-- Packages Details -->
+                                                <div>
+                                                    <div class="SectionTitle">Packages</div>
+
+                                                    <table style="height: 20px;">
+                                                        <tr>
+                                                            <td style="width: 360px; vertical-align: middle;">
+                                                                <div class="FillParent" style="text-indent: 40px;">
+                                                                    <span style="font-family: Arial; font-size: 11px; color: Gray; font-style:italic;">Please</span>
+                                                                    <Hyperlink [IsEnabled]="IsScreenEnabled" (click)="FillMorePackagesDetails('P')">Fill Packages Details</Hyperlink>
+                                                                </div>
+                                                            </td>
+                                                            <td></td>
+                                                        </tr>
+
+                                                    </table>
+                                                    <table class="FixedTable">
+                                                        <tr>
+                                                            <td style="width: 360px;">
+
+                                                            
+                                                                <table>
+
+                                                                    <tr style="height:10px;">
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <!--<tr class="FormFieldRow">
+                                                                        <td style="width:145px">
+                                                                            <LogLabel [ObjectFieldName]="'TotalGrossWeight'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="GrossWeightLabel"></LogLabel>
+                                                                        </td>
+                                                                        <td [style.width.px]="ControlColumnWidth">
+                                                                            <LogTextBox [ObjectFieldName]="'TotalGrossWeight'" [Text]="TotalGrossWeight" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+                                                                        <td></td>
+                                                                    </tr>
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td style="width:145px">
+                                                                            <LogLabel [ObjectFieldName]="'TotalVolume'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="VolumeLabel"></LogLabel>
+                                                                        </td>
+                                                                        <td [style.width.px]="ControlColumnWidth">
+                                                                            <LogTextBox [ObjectFieldName]="'TotalVolume'" [Text]="TotalVolume" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+                                                                        <td></td>
+                                                                    </tr>
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td style="width:145px">
+                                                                            <LogLabel [ObjectFieldName]="'TotalPieces'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="QuantityLabel"></LogLabel>
+                                                                        </td>
+                                                                        <td [style.width.px]="ControlColumnWidth">
+                                                                            <LogTextBox [ObjectFieldName]="'TotalPieces'" [Text]="TotalPieces" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+                                                                        <td></td>
+                                                                    </tr>-->
+                                                                </table>
+
+                                                      
+
+                                                            </td>
+
+                                                        
+                                                        </tr>
+                                                    </table>
+
+                                                    <div style="height:1px; width: 100%; background: #999999; opacity:0.3; margin-top: 5px; margin-bottom: 5px;"></div>
+                                                </div>
+
+
+
+                                             </div>
+                                            
+                                        
+                                        </div>
+                                        </td>
+                                    </tr>
+
+
+                                </table>
+                            </td>
+
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!IsScreenEnabled">Create</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+

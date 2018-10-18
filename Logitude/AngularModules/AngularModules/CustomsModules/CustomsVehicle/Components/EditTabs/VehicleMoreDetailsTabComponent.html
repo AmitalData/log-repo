@@ -1,0 +1,462 @@
+﻿<style>
+    .FormFieldRow {
+        height: 32px;
+    }
+    .col2Label{
+        width: 150px;
+        padding-right:15px;
+    }
+</style>
+<div style="padding:10px;">
+    <table>
+
+        <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+            <td colspan="4">
+                <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                <table style="table-layout: fixed;" *ngIf="EntityPM">
+                    <tr class="FormFieldRow">
+                        <!-- IsABS -->
+                        <td style="width: 150px;padding-right:5px;">
+                            <LogLabel [ObjectFieldName]="'IsABS'" [ObjectTableName]="'Customs.Vehicle'"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 200px;">
+
+                            <CheckBox (Checked)="IsABS = $event" [IsChecked]="IsABS"></CheckBox>
+
+                        </td>
+
+
+                        <!-- AirBagsNumber -->
+                        <td class="col2Label">
+                            <LogLabel [ObjectFieldName]="'AirBagsNumber'" [ObjectTableName]="'Customs.Vehicle'"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 200px;">
+                            <LogTextBox [ObjectFieldName]="'AirBagsNumber'"
+                                        [ObjectTableName]="'Customs.Vehicle'"
+                                        [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                        </td>
+
+                        <td><div></div></td>
+
+                    </tr>
+
+
+                    <tr class="FormFieldRow">
+                        <!-- ConverterTypeCode -->
+                        <td style="width: 150px;padding-right:5px;">
+                            <LogLabel [ObjectFieldName]="'ConverterTypeCode'" [ObjectTableName]="'Customs.Vehicle'"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 200px;">
+                            <LogLov [ObjectFieldName]="'ConverterTypeCode'"
+                                    [ObjectTableName]="'Customs.Vehicle'"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'Customs.ConverterType'"
+                                    [HideColumns]="true">
+                            </LogLov>
+                        </td>
+
+
+                        <!-- GreenIndex -->
+                        <td class="col2Label">
+                            <LogLabel [ObjectFieldName]="'GreenIndex'" [ObjectTableName]="'Customs.Vehicle'"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 200px;">
+                            <LogTextBox [ObjectFieldName]="'GreenIndex'"
+                                        [ObjectTableName]="'Customs.Vehicle'"
+                                        [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                        </td>
+
+                        <td><div></div></td>
+
+                    </tr>
+
+                    <tr class="FormFieldRow">
+                        <!-- GreenIndexGroup -->
+                        <td style="width: 150px;padding-right:5px;">
+                            <LogLabel [ObjectFieldName]="'GreenIndexGroup'" [ObjectTableName]="'Customs.Vehicle'"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 200px;">
+
+
+
+                            <LogTextBox [ObjectFieldName]="'GreenIndexGroup'"
+                                        [ObjectTableName]="'Customs.Vehicle'"
+                                        [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                        </td>
+
+
+                        <!-- IsStabilityControl -->
+                        <td class="col2Label">
+                            <LogLabel [ObjectFieldName]="'IsStabilityControl'" [ObjectTableName]="'Customs.Vehicle'"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 200px;">
+                            <CheckBox (Checked)="IsStabilityControl = $event" [IsChecked]="IsStabilityControl"></CheckBox>
+                        </td>
+
+                        <td><div></div></td>
+
+                    </tr>
+
+
+                    <tr class="FormFieldRow">
+                        <!-- VehicleTecnologyTypeCode -->
+                        <td style="width: 150px;padding-right:5px;">
+                            <LogLabel [ObjectFieldName]="'VehicleTecnologyTypeCode'" [ObjectTableName]="'Customs.Vehicle'"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 200px;">
+
+
+                            <LogLov tabindex="1" [ObjectFieldName]="'VehicleTecnologyTypeCode'"
+                                    [ObjectTableName]="'Customs.Vehicle'"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'Customs.VehicleTecnologyType'"
+                                    [HideColumns]="true">
+                            </LogLov>
+
+                        </td>
+
+
+                        <!-- VehicleSafetyAccessoryPoints -->
+                        <td class="col2Label">
+                            <LogLabel [ObjectFieldName]="'VehicleSafetyAccessoryPoints'" [ObjectTableName]="'Customs.Vehicle'"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 200px;">
+                            <LogTextBox [ObjectFieldName]="'VehicleSafetyAccessoryPoints'"
+                                        [InputType]="'ntext'"
+                                        [ObjectTableName]="'Customs.Vehicle'"
+                                        [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                        </td>
+
+                        <td><div></div></td>
+
+                    </tr>
+
+                    <tr class="FormFieldRow">
+                        <!-- VehiclePriceListTypeCode -->
+                        <td style="width: 150px;padding-right:5px;">
+                            <LogLabel [ObjectFieldName]="'VehiclePriceListTypeCode'" [ObjectTableName]="'Customs.Vehicle'"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 200px;">
+
+
+
+                            <LogLov tabindex="1" [ObjectFieldName]="'VehiclePriceListTypeCode'"
+                                    [ObjectTableName]="'Customs.Vehicle'"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'Customs.VehiclePriceListType'"
+                                    [HideColumns]="true">
+                            </LogLov>
+
+                        </td>
+
+
+                        <!-- IsArmoredVehicle -->
+                        <td class="col2Label">
+                            <LogLabel [ObjectFieldName]="'IsArmoredVehicle'" [ObjectTableName]="'Customs.Vehicle'"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 200px;">
+                            <CheckBox (Checked)="IsArmoredVehicle= $event" [IsChecked]="IsArmoredVehicle"></CheckBox>
+                        </td>
+
+                        <td><div></div></td>
+
+                    </tr>
+
+
+                    <tr class="FormFieldRow">
+                        <!-- IsLoweringVehicleForInvalid -->
+                        <td style="width: 150px;padding-right:5px;">
+                            <LogLabel [ObjectFieldName]="'IsLoweringVehicleForInvalid'" [ObjectTableName]="'Customs.Vehicle'"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 200px;">
+
+
+                            <CheckBox (Checked)="IsLoweringVehicleForInvalid= $event" [IsChecked]="IsLoweringVehicleForInvalid"></CheckBox>
+
+                        </td>
+
+
+                        <!-- SelfVehicleWeight -->
+                        <td class="col2Label">
+                            <LogLabel [ObjectFieldName]="'SelfVehicleWeight'" [ObjectTableName]="'Customs.Vehicle'"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 200px;">
+                            <LogTextBox [ObjectFieldName]="'SelfVehicleWeight'"
+                                        [InputType]="'unsinteger'"
+                                        [ObjectTableName]="'Customs.Vehicle'"
+                                        [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+
+
+                        </td>
+
+                        <td><div></div></td>
+
+                    </tr>
+
+
+
+                    <tr class="FormFieldRow">
+                        <!-- VehiclePowerKW -->
+                        <td style="width: 150px;padding-right:5px;">
+                            <LogLabel [ObjectFieldName]="'VehiclePowerKW'" [ObjectTableName]="'Customs.Vehicle'"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 200px;">
+
+
+                             <LogTextBox #VehiclePowerKWTextBox [ObjectFieldName]="'VehiclePowerKW'"
+                                        [InputType]="'decimal'"
+                                        [ObjectTableName]="'Customs.Vehicle'"
+                                        [DataContext]="DataContext" [HideColumns]="true"
+                                        (LostFocus)="OnVehiclePowerKWLostFocus(VehiclePowerKWTextBox)" [DebounceTime]="1" (KeyUp)="VehiclePowerKWKeyUp($event,VehiclePowerKWTextBox)">
+
+                            </LogTextBox>
+
+                        </td>
+
+
+                        <!-- MedalNumber -->
+                        <td class="col2Label">
+                            <LogLabel [ObjectFieldName]="'MedalNumber'" [ObjectTableName]="'Customs.Vehicle'"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 200px;">
+
+
+                            <LogTextBox [ObjectFieldName]="'MedalNumber'"
+                                        [InputType]="'unsinteger'"
+                                        [ObjectTableName]="'Customs.Vehicle'"
+                                        [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+
+                        </td>
+
+                        <td><div></div></td>
+
+                    </tr>
+
+                    <tr class="FormFieldRow">
+                        <!-- NumberOfSeats -->
+                        <td style="width: 150px;padding-right:5px;">
+                            <LogLabel [ObjectFieldName]="'NumberOfSeats'" [ObjectTableName]="'Customs.Vehicle'"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 200px;">
+
+
+                            <LogTextBox [ObjectFieldName]="'NumberOfSeats'"
+                                        [InputType]="'unsinteger'"
+                                        [ObjectTableName]="'Customs.Vehicle'"
+                                        [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+
+                        </td>
+
+
+                        <!-- DateOnRoadAbroad -->
+                        <td class="col2Label">
+                            <LogLabel [ObjectFieldName]="'DateOnRoadAbroad'" [ObjectTableName]="'Customs.Vehicle'"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 200px;">
+
+                            <LogDatePicker [ObjectFieldName]="'DateOnRoadAbroad'"
+                                           [ObjectTableName]="ObjectTableName"
+                                           [InputType]="'date'" [DataContext]="DataContext"
+                                           [HideColumns]="true"></LogDatePicker>
+
+                        </td>
+
+                        <td><div></div></td>
+
+                    </tr>
+
+
+
+                    <tr class="FormFieldRow">
+                        <!-- IsraelEnterDate -->
+                        <td style="width: 150px;padding-right:5px;">
+                            <LogLabel [ObjectFieldName]="'IsraelEnterDate'" [ObjectTableName]="'Customs.Vehicle'"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 200px;">
+
+                            <LogDatePicker [ObjectFieldName]="'IsraelEnterDate'"
+                                           [ObjectTableName]="ObjectTableName"
+                                           [InputType]="'date'" [DataContext]="DataContext"
+                                           [HideColumns]="true"></LogDatePicker>
+
+
+                        </td>
+
+
+                        <!-- TransmissionDateWithoutTax -->
+                        <td class="col2Label">
+                            <LogLabel [ObjectFieldName]="'TransmissionDateWithoutTax'" [ObjectTableName]="'Customs.Vehicle'"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 200px;">
+
+                            <LogDatePicker [ObjectFieldName]="'TransmissionDateWithoutTax'"
+                                           [ObjectTableName]="ObjectTableName"
+                                           [InputType]="'date'" [DataContext]="DataContext"
+                                           [HideColumns]="true"></LogDatePicker>
+
+                        </td>
+
+                        <td><div></div></td>
+
+                    </tr>
+
+                    <tr class="FormFieldRow">
+                        <!-- IsThreeWheeledForReduction -->
+                        <td style="width: 150px;padding-right:5px;">
+                            <LogLabel [ObjectFieldName]="'IsThreeWheeledForReduction'" [ObjectTableName]="'Customs.Vehicle'"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 200px;">
+
+                            <CheckBox (Checked)="IsThreeWheeledForReduction = $event" [IsChecked]="IsThreeWheeledForReduction"></CheckBox>
+
+                        </td>
+
+                        <!-- IsCBS -->
+                        <td class="col2Label">
+                            <LogLabel [ObjectFieldName]="'IsCBS'" [ObjectTableName]="'Customs.Vehicle'"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 200px;">
+                            <CheckBox (Checked)="IsCBS = $event" [IsChecked]="IsCBS"></CheckBox>
+                        </td>
+
+                        <td><div></div></td>
+
+                    </tr>
+
+                    <tr class="FormFieldRow">
+                        <!-- IsSlipperClutch -->
+                        <td style="width: 150px;padding-right:5px;">
+                            <LogLabel [ObjectFieldName]="'IsSlipperClutch'" [ObjectTableName]="'Customs.Vehicle'"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 200px;">
+
+                            <CheckBox (Checked)="IsSlipperClutch = $event" [IsChecked]="IsSlipperClutch"></CheckBox>
+
+                        </td>
+
+                        <!-- IsSteeringDamper -->
+                        <td class="col2Label">
+                            <LogLabel [ObjectFieldName]="'IsSteeringDamper'" [ObjectTableName]="'Customs.Vehicle'"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 200px;">
+                            <CheckBox (Checked)="IsSteeringDamper = $event" [IsChecked]="IsSteeringDamper"></CheckBox>
+                        </td>
+
+                        <td><div></div></td>
+
+                    </tr>
+
+                    <tr class="FormFieldRow">
+                        <!-- IsTCS -->
+                        <td style="width: 150px;padding-right:5px;">
+                            <LogLabel [ObjectFieldName]="'IsTCS'" [ObjectTableName]="'Customs.Vehicle'"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 200px;">
+
+                            <CheckBox (Checked)="IsTCS = $event" [IsChecked]="IsTCS"></CheckBox>
+
+                        </td>
+
+                        <!-- IsTPS -->
+                        <td class="col2Label">
+                            <LogLabel [ObjectFieldName]="'IsTPS'" [ObjectTableName]="'Customs.Vehicle'"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 200px;">
+                            <CheckBox (Checked)="IsTPS = $event" [IsChecked]="IsTPS"></CheckBox>
+                        </td>
+
+                        <td><div></div></td>
+
+                    </tr>
+
+                    <tr class="FormFieldRow">
+                        <!-- VehicleCategory -->
+                        <td style="width: 150px;padding-right:5px;">
+                            <LogLabel [ObjectFieldName]="'VehicleCategory'" [ObjectTableName]="'Customs.Vehicle'"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 200px;">
+
+
+
+                            <LogTextBox [ObjectFieldName]="'VehicleCategory'"
+                                        [ObjectTableName]="'Customs.Vehicle'"
+                                        [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+
+                        </td>
+
+
+                        <!-- VehicleMaxPowerKW -->
+                        <td class="col2Label">
+                            <LogLabel [ObjectFieldName]="'VehicleMaxPowerKW'" [ObjectTableName]="'Customs.Vehicle'"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 200px;">
+
+
+                            <LogTextBox #VehicleMaxPowerKWTextBox [ObjectFieldName]="'VehicleMaxPowerKW'"
+                                        [InputType]="'decimal'"
+                                        [ObjectTableName]="'Customs.Vehicle'"
+                                        [DataContext]="DataContext" [HideColumns]="true"
+                                        (LostFocus)="OnVehicleMaxPowerKWLostFocus(VehicleMaxPowerKWTextBox)" [DebounceTime]="1" (KeyUp)="VehicleMaxPowerKWKeyUp($event,VehicleMaxPowerKWTextBox)">
+                            </LogTextBox>
+
+                        </td>
+
+                        <td><div></div></td>
+
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <!--<tr style="height: 40px;">
+            <td colspan="4" style="vertical-align: bottom;">
+                <button style="width: 57px; float: left; margin-left: 10px;" class="Button" (click)="CancelButtonClicked()">
+                    {{'Customs.General.B.Cancel' |TextCodeTranslationPipe}}
+                </button>
+
+                <custom-send-options style="float: left; margin-left: 10px;"
+                                     #MyCustomSendOptionsComponent
+                                     (SendButtonClicked)="SendButtonClicked()">
+                </custom-send-options>
+            </td>
+        </tr>-->
+
+    </table>
+</div>

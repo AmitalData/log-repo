@@ -1,0 +1,142 @@
+﻿
+<table *ngIf="EntityPMLoaded">
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table class="FixedTable">
+                <tr>
+                    <td style="width:330px;">
+                        <table>
+                            <tr class="FormFieldRow">
+                                <td style="width:100px;" class="Label">Default Name: </td>
+                                <td style="width:230px; font-size:12px; color:#282E30;">{{EditedFieldItem.DefaultText}}</td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td class="Label">Data Type: </td>
+                                <td style="font-size:12px; color:#282E30;">{{EditedFieldItem.DataTypeText}}</td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td class="Label">Max Length: </td>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td style="width:100px;">
+                                                <input type="text" [(ngModel)]="MaxLength" [disabled]="!IsMaxLengthEnabled" />
+                                            </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td class="Label">Is Requiered: </td>
+                                <td>
+                                    <CheckBox [IsEnabled]="IsRequieredEnabled" [IsChecked]="IsRequiered" (Checked)="IsRequiered = $event"></CheckBox>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow" [hidden]="!IsControlFieldsVisible">
+                                <td class="Label">Control Field1: </td>
+                                <ComboBox [IsDisabled]="ContolFieldsList1.length == 0" [ItemsSource]="ContolFieldsList1" [Binding]="'FieldName'" [SelectedItem]="SelectedControlFieldItem1" (SelectedItemChanged)="SelectedControlFieldItem1 = $event"></ComboBox>
+                            </tr>
+
+                            <tr class="FormFieldRow" [hidden]="!IsControlFieldsVisible">
+                                <td class="Label">Control Field2: </td>
+                                <ComboBox [IsDisabled]="ContolFieldsList2.length == 0" [ItemsSource]="ContolFieldsList2" [Binding]="'FieldName'" [SelectedItem]="SelectedControlFieldItem2" (SelectedItemChanged)="SelectedControlFieldItem2 = $event"></ComboBox>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td style="width:10px;">
+                        <div></div>
+                    </td>
+
+                    <td>
+                        <table>
+                            <tr class="FormFieldRow">
+                                <td style="width:100px;" class="Label">Full Label: </td>
+                                <td>
+                                    <input type="text" [(ngModel)]="FullLabelText" [disabled]="!IsFullLabelEnabled" />
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td class="Label">Short Label: </td>
+                                <td>
+                                    <input type="text" [(ngModel)]="ShortLabelText" [disabled]="!IsShortLabelEnabled" />
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td class="Label">List Header Label: </td>
+                                <td>
+                                    <input type="text" [(ngModel)]="ListHeaderLabelText" [disabled]="!IsListHeaderLabelEnabled" />
+                                </td>
+                            </tr>
+
+                            <tr style="height:3px;">
+                                <td><div></div></td>
+                            </tr>
+
+                            <tr style="height:96px;">
+                                <td style="vertical-align:top;" class="Label">Help Text: </td>
+                                <td style="height: 96px; vertical-align: top;">
+                                    <div style="height: 100%; width: 100%;">
+                                        <textarea [(ngModel)]="HelpTextText" [disabled]="!IsHelpTextEnabled"></textarea>
+                                    </div>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

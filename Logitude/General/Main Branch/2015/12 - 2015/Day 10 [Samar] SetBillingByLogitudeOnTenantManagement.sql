@@ -1,0 +1,1 @@
+update TenantManagements set BillingByLogitude = 1 where DistributorCode is null

@@ -1,0 +1,359 @@
+
+<style type="text/css">
+    .SquareIcon {
+        width: 10px;
+        height: 10px;
+        line-height: 10px;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+    }
+</style>
+
+<table>
+    <!-- SearchBar -->
+    <tr style="height: 1px;">
+        <td>
+            <table>
+                <tr>
+                    <td style="width: 21px; vertical-align:middle;">
+                        <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
+                    </td>
+
+                    <td style="width: 15px; vertical-align:middle;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 45px; vertical-align:middle; font-size:11px; color : #6E7172;">{{'Accounting.General.O.Search' | TextCodeTranslationPipe}}:</td>
+
+                    <td style="width: 300px;">
+                        <SearchBox [Watermark]="'Accounting.General.O.DepositNoChequeNo' | TextCodeTranslationPipe" [ObjectTableName]="'BankDeposit'" [IsQuickSearch]="true" (ItemClicked)="EditBankDeposit($event)"></SearchBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 8px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <td style="width:265px;">
+                        <table>
+                            <tr class="SectionHeader">
+                                <td>
+                                    <label [style.float]="isRTL ? 'right' : 'left'" style="margin-right: 10px;">{{'Accounting.General.O.BanksQuery' | TextCodeTranslationPipe}}</label>
+                                </td>
+
+                            </tr>
+
+                            <tr style="height:5px;">
+                                <td></td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <div class="ScrollViewer">
+                                        <div class="ScrollContent">
+
+                                            <!-- Deposits -->
+                                            <div class="QueriesSection" style="color: #58B8FF;">
+                                                <div>{{'Accounting.General.O.Deposits' | TextCodeTranslationPipe}}</div>
+                                                <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
+                                                    <button class="Button" (click)="RunNewDepositWizard()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
+                                                </div>
+                                                <div>
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width:190px;">
+                                                                            <p class="QueryLink" *ngIf="TodayDepositsVisibility" (click)="ViewDepositQuery('TodayDeposits')"> {{'BankDeposit.Q.Today' | TextCodeTranslationPipe}} </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="width:190px;">
+                                                                            <p class="QueryLink" *ngIf="cashDepositsVisibility" (click)="ViewDepositQuery('cashDeposits')"> {{'BankDeposit.Q.cash' | TextCodeTranslationPipe}} </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="width:190px;">
+                                                                            <p class="QueryLink" *ngIf="chequeDepositVisibility" (click)="ViewDepositQuery('chequeDeposit')"> {{'BankDeposit.Q.chequeDeposit' | TextCodeTranslationPipe}} </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="width:190px;">
+                                                                            <p class="QueryLink" *ngIf="AllBankDepositsVisibility" (click)="ViewDepositQuery('AllBankDeposits')"> {{'Accounting.General.Q.AllDeposits' | TextCodeTranslationPipe}} </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                  
+                                                                </table>
+
+
+                                                            </td>
+                                                        </tr>
+
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                            <div style="height: 30px;"></div>
+
+                                            <!-- CashBooks -->
+                                            <div class="QueriesSection" style="color: #58B8FF;">
+                                                <div>{{'Accounting.General.O.Cashbooks' | TextCodeTranslationPipe}}</div>
+                                                <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
+                                                    <button class="Button" (click)="RunNewCashBookWizard()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
+                                                </div>
+                                                <div>
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width:190px;">
+                                                                            <p class="QueryLink" (click)="ViewCashbookQuery('CashbookCash')"> {{'Accounting.General.O.Cash' | TextCodeTranslationPipe}} </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="width:190px;">
+                                                                            <p class="QueryLink" (click)="ViewCashbookQuery('CashbookCheque')"> {{'Accounting.General.O.Cheque' | TextCodeTranslationPipe}} </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="width:190px;">
+                                                                            <p class="QueryLink" (click)="ViewCashbookQuery('CashBooks')"> {{'Accounting.General.O.AllCashbook' | TextCodeTranslationPipe}} </p>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                </table>
+
+
+                                                            </td>
+                                                        </tr>
+
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                            <div style="height: 30px;"></div>
+
+                                            <!-- BankAccount -->
+                                            <div class="QueriesSection" style="color: #58B8FF;">
+                                                <div>{{'Accounting.General.O.BankAccounts' | TextCodeTranslationPipe}}</div>
+                                                <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
+                                                    <button class="Button" (click)="RunNewBankAccountWizard()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
+                                                </div>
+                                                <div>
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width:190px;">
+                                                                            <p class="QueryLink" (click)="ViewBankAccountQuery('AllBankAccounts')"> {{'Accounting.General.O.AllBankAccounts' | TextCodeTranslationPipe}} ({{_BankAccountSummary.AllBankAccountsCount}})</p>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                </table>
+
+
+                                                            </td>
+                                                        </tr>
+
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div style="height: 30px;"></div>
+                                            <!-- PaymentCheque -->
+                                            <div class="QueriesSection" style="color: #58B8FF;">
+                                                <div>{{'Accounting.General.O.PaymentCheques' | TextCodeTranslationPipe}}</div>
+                                                <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
+                                                    <button class="Button" (click)="NewPaymentCheque()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
+                                                </div>
+                                                <div>
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width:190px;">
+                                                                            <p class="QueryLink" (click)="ViewPaymentChequesQuery('AllPaymentCheques')"> {{'Accounting.General.O.AllPaymentCheques' | TextCodeTranslationPipe}} ({{paymentChequeSummary.AllPaymenChequesCount}})</p>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                </table>
+
+
+                                                            </td>
+                                                        </tr>
+
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </td>
+
+                    <td style="width:15px;">
+                        <div></div>
+                    </td>
+
+                    <td>
+                        <table>
+
+                            <!-- Recent -->
+                            <tr [style.height.px]="ScreenHeight < 900 ? '250' : '350'" style="padding-bottom: 15px;">
+                                <td colspan="2">
+                                    <table>
+                                        <tr class="SectionHeader">
+                                            <td>
+                                                <label [style.float]="isRTL ? 'right' : 'left'" style="margin-right: 10px;">{{ RecentBankDepositCount }} {{'Accounting.General.O.RecentDeposits' | TextCodeTranslationPipe}}</label>
+                                            </td>
+                                        </tr>
+
+                                        <tr style="height:5px;">
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <div class="ScrollViewer">
+                                                    <div class="ScrollContent">
+                                                        <ul>
+                                                            <li class="RecentEntityItem" *ngFor="let item of RecentBankDepositsList" (click)="EditBankDeposit(item)">
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width: 5px;">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td style="width:80px; position: relative;" rowspan="2">
+                                                                            <div [style.left]="isRTL ? 'initial' : '3px'" [style.right]="isRTL ? '3px' : 'initial'" style="position: absolute; top: 3px; width: 20px; height: 20px;" title="{{item.LastActivityTypeName}}">
+                                                                                <div *ngIf="item.LastActivityTypeName == 'New'" style="width: 20px; height: 20px; background: url('Images/RecentEntity/Added.png') center center no-repeat; background-size: contain;"></div>
+                                                                                <div *ngIf="item.LastActivityTypeName == 'View'" style="width: 20px; height: 20px; background: url('Images/RecentEntity/Viewed.png') center center no-repeat; background-size: contain;"></div>
+                                                                                <div *ngIf="item.LastActivityTypeName == 'Update'" style="width: 20px; height: 20px; background: url('Images/RecentEntity/Edited.png') center center no-repeat; background-size: contain;"></div>
+                                                                            </div>
+
+                                                                            <div [style.left]="isRTL ? 'initial' : '3px'" [style.right]="isRTL ? '3px' : 'initial'" style="position: absolute; bottom: 1px; color: #282E30;">{{item.LastActivityDate | DateTimeToDatePipe}}</div>
+                                                                        </td>
+
+                                                                        <td style="width:300px; font-size: 14px;color: #0f8ce6;">{{item.IsCashDeposit ? txt_cash : txt_chequeDeposit}}</td>
+
+
+                                                                        <td style="width: 50px;">
+                                                                            <div style="color: #6b6b6b;">{{'Accounting.General.O.User' | TextCodeTranslationPipe}}: </div>
+                                                                        </td>
+
+
+                                                                        <td>
+                                                                            <div>{{item.LastActivityByUserName}}</div>
+                                                                        </td>
+
+                                                                        <td style="width: 3px;">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td style="width: 5px;">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <div style="font-size: 12px;color: #0f8ce6;">{{item.LocalDepositAmount | NumbersPipe:'N2'}} {{item.DepositCurrencyCode}}</div>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <div style="color: #6b6b6b;">{{'Accounting.General.O.Date' | TextCodeTranslationPipe}}: </div>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <div>{{item.DepositDate | DateTimeToDatePipe}}</div>
+                                                                        </td>
+
+                                                                        <td style="width: 3px;">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr style="height:5px;">
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <!-- Chart -->
+                            <tr >
+                                <td style="width: 100%;">
+                                    <table style="table-layout: fixed;">
+                                        <tr class="SectionHeader">
+                                            <td colspan="2">
+                                                <label [style.float]="isRTL ? 'right' : 'left'" style="margin-right: 10px;">{{'Accounting.General.O.CashbookStatus' | TextCodeTranslationPipe}} ({{tenantCurrencyCode}})</label>
+                                            </td>
+                                        </tr>
+
+                                        <tr style="height:5px; width: 650px;">
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <tr [style.height]="getScreenHeight() < 900 ?  '208px' : '350px'">
+                                            <td colspan="2" style="max-width: 650px; overflow-x: auto;">
+                                                <div style="width: 100%;overflow: auto;position:absolute;top:0;bottom:0;">
+                                                    <div [id]="chartId" style="position:absolute;top:0;bottom:0; width: 650px;direction: ltr;" (click)="BarClicking()"></div>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr style="height:5px;">
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

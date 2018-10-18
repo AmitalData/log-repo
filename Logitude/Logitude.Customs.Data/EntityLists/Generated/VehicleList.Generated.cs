@@ -1,0 +1,150 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization; 
+
+namespace Logitude.Customs.Data.EntityLists
+{
+   [DataContract]
+   public partial class VehicleList
+   {
+   
+       [Key]
+       [DataMember]
+       public string Id  { get; set; }
+       [DataMember]
+       public int Tenant  { get; set; }
+       [DataMember]
+       public string RichbitFileNumber  { get; set; }
+       [DataMember]
+       public string VehicleChassisNumber  { get; set; }
+       [DataMember]
+       public string VehiclePoolTypeCode  { get; set; }
+       [DataMember]
+       public string VehiclePriceListTypeCode  { get; set; }
+       [DataMember]
+       public string VehicleManufacturerCode  { get; set; }
+       [DataMember]
+       public string ModelCode  { get; set; }
+       [DataMember]
+       public bool IsABS  { get; set; }
+       [DataMember]
+       public int? AirBagsNumber  { get; set; }
+       [DataMember]
+       public string ConverterTypeCode  { get; set; }
+       [DataMember]
+       public bool IsArmoredVehicle  { get; set; }
+       [DataMember]
+       public bool IsLoweringVehicleForInvalid  { get; set; }
+       [DataMember]
+       public decimal? GreenIndex  { get; set; }
+       [DataMember]
+       public int? GreenIndexGroup  { get; set; }
+       [DataMember]
+       public bool IsStabilityControl  { get; set; }
+       [DataMember]
+       public DateTime? IsraelEnterDate  { get; set; }
+       [DataMember]
+       public int? EngineCapacity  { get; set; }
+       [DataMember]
+       public decimal? VehiclePowerKW  { get; set; }
+       [DataMember]
+       public string VehicleTecnologyTypeCode  { get; set; }
+       [DataMember]
+       public string FuelTypeCode  { get; set; }
+       [DataMember]
+       public string VehicleWindowNumber  { get; set; }
+       [DataMember]
+       public string ManufactureCountryCode  { get; set; }
+       [DataMember]
+       public string MedalNumber  { get; set; }
+       [DataMember]
+       public string CommercialNickname  { get; set; }
+       [DataMember]
+       public string ModelDescription  { get; set; }
+       [DataMember]
+       public int? NumberOfSeats  { get; set; }
+       [DataMember]
+       public int? TotalVehicleWeight  { get; set; }
+       [DataMember]
+       public int? SelfVehicleWeight  { get; set; }
+       [DataMember]
+       public int? NumberOfWheels  { get; set; }
+       [DataMember]
+       public DateTime? VehicleManufactureDate  { get; set; }
+       [DataMember]
+       public string VehicleTypeCode  { get; set; }
+       [DataMember]
+       public DateTime? TransmissionDateWithoutTax  { get; set; }
+       [DataMember]
+       public string ImporterIdentityId  { get; set; }
+       [DataMember]
+       public DateTime? DateOnRoadAbroad  { get; set; }
+       [DataMember]
+       public decimal? VehicleSafetyAccessoryPoints  { get; set; }
+       [DataMember]
+       public string StatusCode  { get; set; }
+       [DataMember]
+       public string ImporterName  { get; set; }
+       [DataMember]
+       public string VehiclePoolTypeName  { get; set; }
+       [DataMember]
+       public string VehicleManufacturerName  { get; set; }
+       [DataMember]
+       public string VehiclePriceListTypeName  { get; set; }
+       [DataMember]
+       public string ConverterTypeName  { get; set; }
+       [DataMember]
+       public string VehicleTecnologyTypeName  { get; set; }
+       [DataMember]
+       public string ManufactureCountryName  { get; set; }
+       [DataMember]
+       public string VehicleTypeName  { get; set; }
+       [DataMember]
+       public string StatusName  { get; set; }
+       [DataMember]
+       public string SearchFields  { get; set; }
+       [DataMember]
+       public string FuelTypeName  { get; set; }
+       [DataMember]
+       public bool InvalidChassisNumber  { get; set; }
+       [DataMember]
+       public string DeclarationId  { get; set; }
+       [DataMember]
+       public string CustomFileNumber  { get; set; }
+       [DataMember]
+       public bool IsThreeWheeledForReduction  { get; set; }
+       [DataMember]
+       public string TaxiMedalOwner  { get; set; }
+       [DataMember]
+       public string ImporterPassportNumber  { get; set; }
+       [DataMember]
+       public string ImporterPassCountryCode  { get; set; }
+       [DataMember]
+       public string ImporterPassCountryName  { get; set; }
+       [DataMember]
+       public string ImporterPassportTypeCode  { get; set; }
+       [DataMember]
+       public string ImporterPassportTypeName  { get; set; }
+       [DataMember]
+       public bool IsCBS  { get; set; }
+       [DataMember]
+       public bool IsSlipperClutch  { get; set; }
+       [DataMember]
+       public bool IsSteeringDamper  { get; set; }
+       [DataMember]
+       public bool IsTCS  { get; set; }
+       [DataMember]
+       public bool IsTPS  { get; set; }
+       [DataMember]
+       public string VehicleCategory  { get; set; }
+       [DataMember]
+       public decimal? VehicleMaxPowerKW  { get; set; }
+   }
+
+}
+	 

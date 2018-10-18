@@ -1,0 +1,200 @@
+﻿
+<table>
+    <tr style="height: 1px;">
+        <td>
+            <table>
+                <tr>
+                    <td style="width: 21px; vertical-align:middle;">
+                        <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
+                    </td>
+
+                    <td style="width:5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 85px;">
+                        <button class="Button" (click)="NewTaskClicked()">Add New Task</button>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>                   
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 5px;">
+        <td></td>
+    </tr>
+
+    <!-- Tasks -->
+    <tr style="height:500px;">
+        <td>
+            <div class="MediaFill">
+                <div class="SimpleGridView">
+                    <div class="SimpleGridViewHeader">
+                        <table>
+                            <tr>
+                                <td style="width: 200px; min-width: 200px; max-width: 200px;">Task Name</td>
+                                <td style="width: 140px; min-width: 140px; max-width: 140px;">Create Date</td>
+                                <td style="width: 95px; min-width: 95px; max-width: 95px;">Next Run Time</td>
+                                <td style="width: 95px; min-width: 95px; max-width: 95px;">Last Run Time</td>
+                                <td style="width: 95px; min-width: 95px; max-width: 95px;">Last Run Result</td>
+                                <td style="width: 95px; min-width: 95px; max-width: 95px;">Start Date</td>
+                                <td style="width: 140px; min-width: 140px; max-width: 140px;">Service Class Name</td>
+                                <td style="width: 90px; min-width: 90px; max-width: 90px;">Is Active</td>
+                                <td style="width: 30px; min-width: 30px; max-width: 30px;">
+                                    <div></div>
+                                </td>
+
+                                <td class="LastChild">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="SimpleGridViewBody">
+                        <table>
+                            <tr class="SimpleGridViewRow  RowHover RowSelected" *ngFor="let item of ItemsSource" (click)="Selecting(item)" [class.RowSelected]="item === SelectedRow">
+                                <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px;">
+                                    {{item.Name}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 140px; min-width: 140px; max-width: 140px;">
+                                    {{item.CreateDate}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 95px; min-width: 95px; max-width: 95px;">
+                                    {{item.NextRunTime}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 95px; min-width: 95px; max-width: 95px;">
+                                    {{item.LastRunTime}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 95px; min-width: 95px; max-width: 95px;">
+                                    {{item.LastRunResult}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 95px; min-width: 95px; max-width: 95px;">
+                                    {{item.StartDate}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 140px; min-width: 140px; max-width: 140px;">
+                                    {{item.ServiceClassName}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px;">
+                                    <img class="LeftCenter" src="./Images/GreenTick.png" *ngIf="!item.InActive" />
+                                </td>
+
+                                <td class="GridViewCell" style="width:30px; min-width:30px; max-width:30px;">
+                                    <div class="MediaFill">
+                                        <div class="MediaFillRelative">
+
+                                            <div class="LeftCenter" style="height: 20px; left: 1px;">
+                                                <span class="CellSeparator"></span>
+                                            </div>
+
+                                            <div class="CenterCenter" style="width: 18px; height: 18px;">
+                                                <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditClicked(item)"></IconButton>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="9">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 20px;">
+        <td></td>
+    </tr>
+
+    <!-- History -->
+    <tr style="height:220px;">
+        <td>
+            <table *ngIf="IsHistoryGridVsisible">
+                <tr>
+                    <td>
+                        <div class="MediaFill">
+                            <div class="SimpleGridView">
+                                <div class="SimpleGridViewHeader">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 200px; min-width: 200px; max-width: 200px;">Start Date Time</td>
+                                            <td style="width: 200px; min-width: 200px; max-width: 200px;">End Date Time</td>
+                                            <td style="width: 90px; min-width: 90px; max-width: 90px;">Run Result</td>
+                                            <td class="LastChild">
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div class="SimpleGridViewBody">
+                                    <table>
+                                        <tr class="SimpleGridViewRow" *ngFor="let item of HistoryItemsSource">
+                                            <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px;">
+                                                {{item.StartDateTime}}
+                                            </td>
+
+                                            <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px;">
+                                                {{item.EndDateTime}}
+                                            </td>
+
+                                            <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px;">
+                                                {{item.RunResult}}
+                                            </td>
+                                            
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="4">
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CloseButtonClicked()">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

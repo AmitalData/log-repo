@@ -1,0 +1,168 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Customs.Def.Validators;
+  
+namespace Logitude.Customs.Def.EntityPMs
+{
+   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class CollateralsRequestFileCondPM : EntityPM
+   {
+   	  private string customsCollateralId ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomsCollateralId  
+	   {
+	    
+	     get
+		{
+		   return customsCollateralId;
+		 }
+		 set
+		 {
+		   if(customsCollateralId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsCollateralId",OldValue=customsCollateralId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customsCollateralId=value;
+		   }
+			
+		 }
+	   }
+	  private int tenant ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+	  private string conditionCode ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ConditionCode  
+	   {
+	    
+	     get
+		{
+		   return conditionCode;
+		 }
+		 set
+		 {
+		   if(conditionCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ConditionCode",OldValue=conditionCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   conditionCode=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? requestedAmount ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? RequestedAmount  
+	   {
+	    
+	     get
+		{
+		   return requestedAmount;
+		 }
+		 set
+		 {
+		   if(requestedAmount != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RequestedAmount",OldValue=requestedAmount,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   requestedAmount=value;
+		   }
+			
+		 }
+	   }
+	  private string conditionName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ConditionName  
+	   {
+	    
+	     get
+		{
+		   return conditionName;
+		 }
+		 set
+		 {
+		   if(conditionName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ConditionName",OldValue=conditionName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   conditionName=value;
+		   }
+			
+		 }
+	   }
+	  private int lineNumber ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int LineNumber  
+	   {
+	    
+	     get
+		{
+		   return lineNumber;
+		 }
+		 set
+		 {
+		   if(lineNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LineNumber",OldValue=lineNumber,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   lineNumber=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

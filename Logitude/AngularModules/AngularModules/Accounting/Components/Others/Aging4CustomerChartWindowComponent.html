@@ -1,0 +1,41 @@
+﻿<table>
+    <!-- Validation Box-->
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td colspan="2">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <!--<tr>
+        <td>
+            Yep! Graph Not Implemented
+        </td>
+    </tr>-->
+
+    <tr>
+        <td colspan="3" class="CellStretch">
+            <div *ngIf="noCard" title="This GL Account is not connected to Customer/Vendor" style="font-style: italic; color: #686868; width: 100%; text-align: center; padding-top: 100px;">No Data</div>
+            <br>
+            <div id="GLAccountAgingChartChart2" style="height:90%;width:90%"></div>
+        </td>
+    </tr>
+
+    <!-- Buttons -->
+    <tr style="height: 32px;">
+        <td colspan="2">
+            <table style="height: 28px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 65px; padding-right: 10px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Close</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>
+

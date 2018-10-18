@@ -1,0 +1,34 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
+using Simplog.Server.Infrastructure;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.Data; 
+using Logitude.Infrastructure.Data.EntityMapping;
+
+namespace Logitude.Infrastructure.Data
+{
+
+    public interface IInfrastructureContext : IContext
+    {
+   
+       	 IDbSet<BatchTaskExecution> BatchTaskExecutions { get; }
+		 IDbSet<BatchTaskExecutionStatus> BatchTaskExecutionStatus { get; }
+		 IDbSet<BusinessProcessQueue> BusinessProcessQueues { get; }
+		 IDbSet<BusinessRole> BusinessRoles { get; }
+		 IDbSet<LBPTeamMember> LBPTeamMembers { get; }
+		 IDbSet<SharedLogisticsSetting> SharedLogisticsSettings { get; }
+		 IDbSet<Team> Teams { get; }
+		 IDbSet<TeamMemberBusinessRole> TeamMemberBusinessRoles { get; }
+	 
+         void SetAsModified(object entity);
+         void DetectChanges();
+         int SaveChanges();
+
+    }
+}

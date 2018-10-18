@@ -1,0 +1,37 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+
+namespace WebFreight.Web.DataProviders
+{
+    public class FlightBookingDataProvider : BaseDataProvider
+    {
+        [Key]
+        public int Id { get; set; }
+        public string FlightNumberFilter { get; set; }
+        public DateTime? FlightDateFilter { get; set; }
+        public string LoggedUserName { get; set; }
+        public string FlightTime { get; set; }
+        public string Routing { get; set; }
+        public int? TotalPieces { get; set; }
+        public double? TotalGrossWeight { get; set; }
+        public double? TotalVolume { get; set; }
+        public int? TotalAWBs{ get; set; }
+
+        public List<FlightBookingRecord> FlightBookingRecordList { get; set; }
+    }
+
+    public class FlightBookingRecord
+    {
+        [Key]
+        public int Id { get; set; }
+        public string AWBNumber { get; set; }
+        public string ShipperName { get; set; }
+        public int? Pieces { get; set; }        
+        public double? GrossWeight { get; set; }
+        public double? Volume { get; set; }
+        public string DescriptionOfGoods { get; set; }
+        public string Dimensions { get; set; }
+    }
+}

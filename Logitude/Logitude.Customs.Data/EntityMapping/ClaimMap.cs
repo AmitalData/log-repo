@@ -1,0 +1,86 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data;
+ 
+namespace Logitude.Customs.Data.EntityMapping
+{
+ 
+    public class ClaimMap : EntityTypeConfiguration<Claim>
+    {
+	    string dbms;
+        public ClaimMap()
+        { 
+			  this.ToTable("Claims", "Customs");
+		
+		    this.HasKey(t => new { t.Id });
+	 
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
+
+            this.Property(t => t.ImporterClaimTypeCode).HasColumnName("ImporterClaimTypeCode").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.SoldierPersonalNumber).HasColumnName("SoldierPersonalNumber").HasMaxLength(9).IsUnicode(false);
+
+            this.Property(t => t.SubmitDate).HasColumnName("SubmitDate");
+
+            this.Property(t => t.ClientId).HasColumnName("ClientId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.PassportCountryTypeCode).HasColumnName("PassportCountryTypeCode").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.PassportNumber).HasColumnName("PassportNumber").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.PassportTypeCode).HasColumnName("PassportTypeCode").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.CustomsAddressCode).HasColumnName("CustomsAddressCode").HasMaxLength(9).IsUnicode(false);
+
+            this.Property(t => t.ContactPhoneAddressCode).HasColumnName("ContactPhoneAddressCode").HasMaxLength(9).IsUnicode(false);
+
+            this.Property(t => t.ClaimSubmiterNumber).HasColumnName("ClaimSubmiterNumber").HasMaxLength(9).IsUnicode(false);
+
+            this.Property(t => t.ClaimSubmiterTypeCode).HasColumnName("ClaimSubmiterTypeCode").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.HebrewCorporationName).HasColumnName("HebrewCorporationName").HasMaxLength(55).IsUnicode(true);
+
+            this.Property(t => t.AddressCode).HasColumnName("AddressCode").HasMaxLength(9).IsUnicode(false);
+
+            this.Property(t => t.BeneficiaryExternalID).HasColumnName("BeneficiaryExternalID").HasMaxLength(9).IsUnicode(false);
+
+            this.Property(t => t.BeneficiaryActivityTypeCode).HasColumnName("BeneficiaryActivityTypeCode").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.AccountCountryCode).HasColumnName("AccountCountryCode").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.BankTypeCode).HasColumnName("BankTypeCode").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.AccountBranchCode).HasColumnName("AccountBranchCode").HasMaxLength(6).IsUnicode(false);
+
+            this.Property(t => t.AccountNumber).HasColumnName("AccountNumber").HasMaxLength(100).IsUnicode(false);
+
+            this.Property(t => t.AccountCurrencyTypeCode).HasColumnName("AccountCurrencyTypeCode").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.ForeignBank).HasColumnName("ForeignBank").HasMaxLength(9).IsUnicode(false);
+
+            this.Property(t => t.ForeignBranch).HasColumnName("ForeignBranch").HasMaxLength(9).IsUnicode(false);
+
+            this.Property(t => t.ForeignAccountNumber).HasColumnName("ForeignAccountNumber").HasMaxLength(11).IsUnicode(false);
+
+            this.Property(t => t.ImporterAffidavit).HasColumnName("ImporterAffidavit").HasMaxLength(500).IsUnicode(true);
+
+            this.Property(t => t.RawMaterialsDescription).HasColumnName("RawMaterialsDescription").HasMaxLength(500).IsUnicode(true);
+
+            this.Property(t => t.CustomsFiles).HasColumnName("CustomsFiles").HasMaxLength(30).IsUnicode(false);
+
+            this.Property(t => t.SearchFields).HasColumnName("SearchFields").HasMaxLength(2000).IsUnicode(true);
+        }
+    }
+}
+	 

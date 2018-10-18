@@ -1,0 +1,1 @@
+update ObjectTables set CacheOnClient=0 where Name='ARPaymentMethod'

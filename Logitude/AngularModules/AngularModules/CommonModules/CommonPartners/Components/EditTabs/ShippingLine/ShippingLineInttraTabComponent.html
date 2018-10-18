@@ -1,0 +1,51 @@
+﻿<div class="TabHolder">
+    <table>
+        <tr class="TabTitleRow">
+            <td>{{'ShippingLine.TH.INTTRA' | TextCodeTranslationPipe}}</td>
+        </tr>
+
+        <tr>
+            <td>
+                <table>
+                    <tr class="FormFieldRow">
+                        <td style="width: 140px;">
+                            <LogLabel [ObjectFieldName]="'IsINTTRARegistered'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td style="width: 250px;">
+                            <LogCheckBox [ObjectFieldName]="'IsINTTRARegistered'" [Checked]="IsINTTRARegistered" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <tr class="FormFieldRow">
+                        <td colspan="3">
+                            <LogLabel [ObjectFieldName]="'INTTRARegistrationNotes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+                    </tr>
+
+                    <tr class="FormFieldRow" style="height: 100px;">
+                        <td colspan="2">
+                            <div class="MediaFill">
+                                <LogTextBox [ObjectFieldName]="'INTTRARegistrationNotes'" [Text]="INTTRARegistrationNotes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="3">
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>

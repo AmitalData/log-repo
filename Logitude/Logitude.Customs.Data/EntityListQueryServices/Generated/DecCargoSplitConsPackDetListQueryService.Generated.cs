@@ -1,0 +1,173 @@
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Server.Infrastructure.Helpers;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
+
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.EntityLists;
+
+namespace Logitude.Customs.Data.EntityListQueryServices
+{ 
+
+    public partial class DecCargoSplitConsPackDetListQueryService
+    {
+         private ICustomContext context;
+        public DecCargoSplitConsPackDetListQueryService(ICustomContext context)
+        {
+            this.context = context;
+        }
+
+        public List<DecCargoSplitConsPackDetList> GetList(QueryOperations queryOperations, int tenant)
+        {
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+
+            IQueryable<DecCargoSplitConsPackDet> iQueryable = (from a in context.DecCargoSplitConsPackDets
+                                              
+                   where a.Tenant == tenant select a);
+            			iQueryable = ApplyCustomFilters(queryOperations, iQueryable,tenant);
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+
+            iQueryable = filter.GetFilteredQuery<DecCargoSplitConsPackDet>(nonListQueryOperation, iQueryable);
+
+            int skippedPorts = queryOperations.PageIndex;
+
+            IQueryable<DecCargoSplitConsPackDetList> query2 = GetIqueryableList(iQueryable);
+           
+            query2 = filter.GetFilteredQuery<DecCargoSplitConsPackDetList>(listQueryOperation, query2);
+
+            if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
+            {
+                PropertyInfo propInfo = typeof(DecCargoSplitConsPackDetList).GetProperty(queryOperations.SortByColumnName);
+                List<ObjectField> DecCargoSplitConsPackDetObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.DecCargoSplitConsPackDet",tenant).ToList();
+
+                ObjectField objectField = (from a in DecCargoSplitConsPackDetObjectFields
+                                           where a.FieldName == queryOperations.SortByColumnName
+                                           select a).FirstOrDefault();
+
+                if (objectField != null)
+                {
+				 if (objectField.IsCustom)
+                    {
+                        query2 = sortClass.GetSorterQuery<DecCargoSplitConsPackDetList, string>(queryOperations, query2);
+                    }
+                    else
+                    {
+                     switch (objectField.DataTypeCode.ToLower())
+                     {
+                         case "ntext":
+                        case "text":
+                            {
+                                query2 = sortClass.GetSorterQuery<DecCargoSplitConsPackDetList, string>(queryOperations, query2);
+                                break;
+                            }
+						case "sigdouble":
+						case "double":
+                            {
+                                query2 = sortClass.GetSorterQuery<DecCargoSplitConsPackDetList, double>(queryOperations, query2);
+                                break;
+                            }
+						case "date":
+                        case "datetime":
+                            {
+                                query2 = sortClass.GetSorterQuery<DecCargoSplitConsPackDetList, DateTime>(queryOperations, query2);
+                                break;
+                            }
+						case "unsinteger":
+                        case "integer":
+                            {
+                                query2 = sortClass.GetSorterQuery<DecCargoSplitConsPackDetList, int>(queryOperations, query2);
+                                break;
+                            }
+                        case "boolean":
+                            {
+                                query2 = sortClass.GetSorterQuery<DecCargoSplitConsPackDetList, bool>(queryOperations, query2);
+                                break;
+                            }
+						case "unsdecimal":
+						case "decimal":
+                            {
+                                query2 = sortClass.GetSorterQuery<DecCargoSplitConsPackDetList, decimal>(queryOperations, query2);
+                                break;
+                            }
+                        default:
+                            {
+                                query2 = query2.OrderBy(d => d.PackageLine);
+                                break;
+                            }
+                    }
+				 }
+                }
+            }
+		    else
+            {
+                query2 = query2.OrderBy(d => d.PackageLine);
+            }
+			if(!queryOperations.GetAll)
+			{
+             query2 = query2.Skip(skippedPorts);
+             query2 = query2.Take(queryOperations.PageSize);
+			}
+            return query2.ToList();
+
+    
+        }
+
+         public List<DecCargoSplitConsPackDetList> GetList(int tenant)
+         {
+             return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
+         }
+
+        public DecCargoSplitConsPackDetList GetSingle(string declarationcargosplitid, int? deccargosplitconslineno, int deccargosplitconsitemline, int packageline)
+        {
+            IQueryable<DecCargoSplitConsPackDet> DecCargoSplitConsPackDetQuery = (from a in context.DecCargoSplitConsPackDets
+                                                       where a.DeclarationCargoSplitId == declarationcargosplitid && a.DecCargoSplitConsLineNo == deccargosplitconslineno && a.DecCargoSplitConsItemLine == deccargosplitconsitemline && a.PackageLine == packageline
+                                                       select a);
+
+             
+            IQueryable<DecCargoSplitConsPackDetList> DecCargoSplitConsPackDetListQuery = GetIqueryableList( DecCargoSplitConsPackDetQuery);
+            DecCargoSplitConsPackDetList DecCargoSplitConsPackDetList = DecCargoSplitConsPackDetListQuery.FirstOrDefault();
+            return DecCargoSplitConsPackDetList;
+           
+        }
+
+        public int GetListCount(QueryOperations queryOperations, int tenant)
+        {
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+
+            IQueryable<DecCargoSplitConsPackDet> iQueryable = (from a in context.DecCargoSplitConsPackDets 
+                   where a.Tenant == tenant select a);
+
+			  			iQueryable = ApplyCustomFilters(queryOperations, iQueryable,tenant);
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+            
+			iQueryable = filter.GetFilteredQuery<DecCargoSplitConsPackDet>(nonListQueryOperation, iQueryable);
+
+            IQueryable<DecCargoSplitConsPackDetList> query2 = GetIqueryableList(iQueryable);
+
+            query2 = filter.GetFilteredQuery<DecCargoSplitConsPackDetList>(listQueryOperation, query2);
+            int count = query2.Count();
+            return count;
+        }
+
+      
+    }
+}
+	 

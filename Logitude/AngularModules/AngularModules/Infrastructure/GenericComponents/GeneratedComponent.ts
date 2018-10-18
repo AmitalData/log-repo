@@ -1,0 +1,153 @@
+﻿import {Component, AfterContentInit, Output, EventEmitter, ChangeDetectorRef, OnDestroy}  from '@angular/core';
+import {EntityArgs} from '../DataContracts/EntityArgs';
+import {BaseComponent} from '../Components/LogitudeComponents/BaseComponent';
+import {UIProperty, UIProperties}  from '../Components/LogitudeComponents/UIProperties'
+import {ObjectFieldPM} from '../EntityPMs/ObjectFieldPM';
+import {SessionInfo} from '../Utilities/SessionInfo';
+import {AppTool} from '../Tools';
+declare var window: any;
+
+@Component({
+    moduleId: module.id,
+    templateUrl: './GeneratedComponent.html',
+})
+
+export class GeneratedComponent extends BaseComponent implements AfterContentInit, OnDestroy {
+    public EntityPM: any;
+    public EntityArgs: EntityArgs;
+    public ObjectTableId: string;
+    public ObjectTableName: string;
+    public ScreenCode: string;
+    public ScreenColumns: ScreenColumn[];
+    public LabelWidth: number = 160;
+    public IsNewEntityCall: boolean;
+    public ShowNoFieldsText: boolean = false;
+    ShowTitle: boolean = false;
+    @Output() LoadCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
+    constructor(private cd: ChangeDetectorRef) {
+        super();
+    }
+
+    public Run(entityPM: any, objectTableName: string, screenCode: string, isNewEntityCall: boolean = false, showTitle: boolean = false) {
+        this.EntityPM = entityPM;
+        this.ScreenCode = screenCode ? screenCode.replace("Customs.", "") : screenCode;
+        this.ObjectTableName = objectTableName;
+        this.ObjectTableId = window.ObjectTables.filter((x: any) => x.Name === this.ObjectTableName)[0].Id;
+        this.IsNewEntityCall = isNewEntityCall;
+        this.ShowTitle = showTitle;
+        this.BuildScreen();
+        this.Listen();
+    }
+
+    private SaveCompletedEvent: any = null;
+    private LoadCompletedEvent: any = null;
+    private Listen() {
+        if (this.EntityArgs) {
+            if (this.EntityArgs.EditComponent) {
+
+                this.SaveCompletedEvent = this.EntityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        this.EntityPM = this.EntityArgs.EditComponent.EntityPM;
+                        this.BuildScreen();                        
+                    }
+                });
+
+                this.LoadCompletedEvent = this.EntityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                    if (isLoadSuccess) {
+                        this.EntityPM = this.EntityArgs.EditComponent.EntityPM;
+                        this.BuildScreen();
+                    }
+                });
+            }
+        }
+    }
+    ngOnDestroy() {
+        AppTool.KillEventEmitter(this.SaveCompletedEvent);
+        AppTool.KillEventEmitter(this.LoadCompletedEvent);
+    }
+
+    private isViewEnited: boolean = false;
+    ngAfterContentInit() {
+        this.isViewEnited = true;
+        this.BuildScreen(true);       
+    }
+
+    private BuildScreen(fireEmit: boolean = false) {
+        if (this.EntityPM != null) {
+            if (this.isViewEnited == true) {
+
+                var myScreenColumns: ScreenColumn[] = [];
+                var myScreen = window.Screens.filter((x: any) => x.ObjectTableId === this.ObjectTableId && x.Code.toLowerCase() == this.ScreenCode.toLowerCase())[0];
+                
+                if (myScreen != null) {
+
+                    var myScreenFields = window.ScreenFields.filter((x: any) => x.ScreenId === myScreen.Id && x.Tenant === SessionInfo.LoggedUserTenant);
+
+                    if (myScreenFields.length == 0) {
+                        myScreenFields = window.ScreenFields.filter((x: any) => x.ScreenId === myScreen.Id);
+                    }
+
+                    if (myScreenFields.length == 0) {
+                        this.ShowNoFieldsText = true;
+                    }
+
+                    else {
+                        var myObjectFields = window.ObjectFields.filter((x: any) => x.ObjectTableId === this.ObjectTableId);
+
+                        for (var c = 0; c < myScreen.NumberOfColumns; c++) {
+                            var myScreenColumn = new ScreenColumn(c);
+
+                            for (var r = 0; r < myScreen.NumberOfRows; r++) {
+                                var myScreenField = myScreenFields.filter((f: any) => f.Column == c && f.Row == r)[0];
+                                if (myScreenField != null) {
+                                    var myObjectField = myObjectFields.filter((f: any) => f.Id == myScreenField.ObjectFieldId)[0];
+                                    if (myObjectField != null) {
+
+                                        if (this.ObjectTableName == "CommunicationLog") {
+                                            this.EntityPM.UIProperties.SetEnabled(myObjectField.FieldName, this.ObjectTableName, false);
+                                            this.EntityPM.UIProperties.SetRequired(myObjectField.FieldName, this.ObjectTableName, false);
+                                        }
+
+                                        myScreenColumn.ObjectFields.push(myObjectField);
+                                    }
+                                }
+                            }
+
+                            myScreenColumns.push(myScreenColumn);
+                        }
+                    }
+                }
+
+                this.ScreenColumns = myScreenColumns;
+
+                if (fireEmit) {
+                    this.LoadCompleted.emit(true);
+                }
+            }
+        }
+    }
+
+    private isScreenEnabled: boolean = true;
+    SetEnabled(isEnabled: boolean) {
+        this.isScreenEnabled = isEnabled;
+
+        if (this.EntityPM) {
+            if (this.ScreenColumns) {
+                this.ScreenColumns.forEach(item => {
+                    item.ObjectFields.forEach(field => {
+                        this.EntityPM.UIProperties.SetEnabled(field.FieldName, this.ObjectTableName, isEnabled);
+                    });
+                });
+            }
+        }
+    }
+}
+
+export class ScreenColumn {
+    public Index: number;
+    public ObjectFields: ObjectFieldPM[];
+    constructor(index: number) {
+        this.Index = index;
+        this.ObjectFields = [];
+    }
+}

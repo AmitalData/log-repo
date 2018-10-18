@@ -1,0 +1,133 @@
+﻿
+<style>
+    .MessageText {
+        white-space: normal;
+        word-wrap: break-word;
+    }
+</style>
+
+<div class="TabHolder">
+    <table>
+        <tr class="TabTitleRow">
+            <td>
+                <table>
+                    <tr>
+                        <td>{{'User.TH.Roles' | TextCodeTranslationPipe}}</td>
+
+                        <td style="width: 1px;" *ngIf="IsExportButtonVisible">
+                            <table>
+                                <tr>
+                                    <td style="width: 180px; min-width: 180px;">
+                                        <button class="Button" (click)="ExportFeaturesToFileButtonClicked()">Export Role-Features to csv file</button>
+                                    </td>
+
+                                    <td style="width: 5px; min-width: 5px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width: 130px; min-width: 130px;">
+                                        <button class="Button" (click)="ImportFeaturesToFileuttonClicked()">Import Role-Features</button>
+                                    </td>
+
+                                    <td>
+                                        <input accept=".csv,.CSV" [attr.id]="ImportFeaturesFileHtmlId" type="file" (change)="ImportFeaturesFile($event)" style="display:none" class="upload" />
+                                    </td>
+
+                                    <td style="width: 5px; min-width: 5px;">
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td style="width: 1px;" *ngIf="IsNewRoleButtonVisible">
+                            <button class="Button" (click)="NewRoleButtonClicked()">New Custom Role</button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <div class="MediaFill">
+                    <div class="SimpleGridView">
+                        <div class="SimpleGridViewHeader">
+                            <table>
+                                <tr>
+                                    <td style="width: 190px; min-width: 190px; max-width: 190px;">Name</td>
+                                    <td style="width: 50px; min-width: 50px; max-width: 50px; text-align: center;">Active</td>
+                                    <td style="width: 600px; min-width:600px; max-width: 600px;">Permissions</td>
+                                    <td style="width: 150px; min-width:150px; max-width: 150px;"></td>
+                                    <td class="LastChild">
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="SimpleGridViewBody">
+                            <table>
+                                <tr class="SimpleGridViewRow" *ngFor="let item of ObsList">
+                                    <td class="GridViewCell" style="width: 190px; min-width: 190px; max-width: 190px;">
+                                        {{item.Name}}
+                                    </td>
+
+                                    <td class="GridViewCell" style="width: 50px; min-width: 50px; max-width: 50px;">
+                                        <div class="MediaFill">
+                                            <div class="MediaFillRelative">
+                                                <div class="CenterCenter" style="width: 16px;">
+                                                    <CheckBox [IsChecked]="item.IsActive" (Checked)="item.IsActive = $event" [IsEnabled]="IsEditingEnabled"></CheckBox>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td class="GridViewCell" style="width: 600px; min-width: 600px; max-width: 600px;">
+                                        <div class="MessageText" style="font-size: 11px; color: #6E7172;">
+                                            {{item.Description}}
+                                        </div>
+                                    </td>
+
+                                    <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px; position: relative;">
+                                        <table>
+                                            <tr>
+                                                <td style="width:21px; max-width:21px;">
+                                                    <div>
+                                                        <IconButton *ngIf="item.IsActive" [Name]="'Edit'" (click)="EditRoleButtonClicked(item)" [disabled]="!IsEditingEnabled"></IconButton>
+                                                    </div>                                                    
+                                                </td>
+
+                                                <td style="width:3px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width:95px;" *ngIf="item.IsCustomRole">
+                                                    <button *ngIf="item.IsActive" class="Button" (click)="EditRolePropertiesClicked(item)" [disabled]="!IsEditingEnabled">Edit Custom Role</button>
+                                                </td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="5">
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>

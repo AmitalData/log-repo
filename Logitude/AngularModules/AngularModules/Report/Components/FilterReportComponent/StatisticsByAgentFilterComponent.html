@@ -1,0 +1,120 @@
+﻿
+<table>
+    <tr style="height:1px;" *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr style="height:22px">
+                    <td style="color:#1B90CB;font-size:14px;">Filter By:</td>
+                </tr>
+
+                <tr style="height:28px;">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:10px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:50px;">Agent:</td>
+                                <td style="width:200px;">
+                                    <LogLov [ObjectFieldName]="'AgentId'"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Card'"
+                                            [DisplayMemberPath]="'EnglishName'"
+                                            [DependencyFilter1IsList]="'true'"
+                                            [ShowInActive]="IncludeClosed"
+                                            [HideAddLink]="'true'"
+                                            [DependencyFilter1Value]="'AG'">
+                                    </LogLov>
+                                </td>
+
+                                <td style="width:100px">
+                                    <div class="RadioButton" style="width:100px">
+                                        <input type="radio" [attr.id]="IsCreateDateId" [attr.name]="DateRadio" (click)="IsCreateDateClicked()" [checked]="IsCreateDate == true" style="width:15px" />
+                                        <label [attr.for]="IsCreateDateId" style="font-size: 12px">
+                                            Create Date
+                                        </label>
+                                    </div>
+                                </td>
+
+                                <td style="width:5px;"></td>
+                                <td style="width:120px">
+                                    <div class="RadioButton" style="width:80px">
+                                        <input type="radio" [attr.id]="IsOperationalDateId" [attr.name]="DateRadio" (click)="IsOperationalDateClicked()" [checked]="IsOperationalDate==true" style="width:15px" />
+                                        <label [attr.for]="IsOperationalDateId" style="font-size: 12px">
+                                            Operational Date
+                                        </label>
+                                    </div>
+                                </td>
+
+                                <td style="width:15px"></td>
+                                <td style="width:70px">From Date:</td>
+                                <td style="width:130px">
+                                    <LogDatePicker [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'FromDate'" [DataContext]="DataContext"></LogDatePicker>
+                                </td>
+
+                                <td style="width:15px"></td>
+                                <td style="width:60px">To Date:</td>
+                                <td style="width:130px">
+                                    <LogDatePicker [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'ToDate'" [DataContext]="DataContext"></LogDatePicker>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr style="height:28px;">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:10px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:22px">
+                                    <LogCheckBox [NoObjectField]="true" [ObjectFieldName]="'IncludeClosed'" [DataContext]="DataContext"></LogCheckBox>                                    
+                                </td>
+                                <td style="width:200px;">Include Operationally Closed</td>
+
+                                <td style="width:20px"><div></div></td>
+                                <td style="width:65px">Display In:</td>
+                                <td style="width:100px;">
+                                    <ul class="FiltersMenu">
+                                        <li (click)="SelectedCurrency=ProfitCurrencyCode" [class.SelectedFilter]="SelectedCurrency === ProfitCurrencyCode" style="width:33px;">
+                                            {{ProfitCurrencyCode}}
+                                        </li>
+                                        <li (click)="SelectedCurrency=LocalCurrencyCode" [class.SelectedFilter]="SelectedCurrency === LocalCurrencyCode" style="width:33px;">
+                                            {{LocalCurrencyCode}}
+                                        </li>
+                                    </ul>
+                                </td>
+
+                                <td style="width:20px"><div></div></td>
+                                <td style="width:90px;">
+                                    <button (click)="RunReport(true)" class="GreenButton" style="width:90px;height:22px;">Run Report</button>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+</table>
+
+

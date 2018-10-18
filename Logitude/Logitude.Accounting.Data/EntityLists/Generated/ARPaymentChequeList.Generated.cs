@@ -1,0 +1,60 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization; 
+
+namespace Logitude.Accounting.Data.EntityLists
+{
+   [DataContract]
+   public partial class ARPaymentChequeList
+   {
+   
+       [Key]
+       [DataMember]
+       public string Id  { get; set; }
+       [DataMember]
+       public int Tenant  { get; set; }
+       [DataMember]
+       public string SearchFields  { get; set; }
+       [DataMember]
+       public string PaymentId  { get; set; }
+       [DataMember]
+       public string PaymentNumber  { get; set; }
+       [DataMember]
+       public int LineNumber  { get; set; }
+       [DataMember]
+       public string ChequeNumber  { get; set; }
+       [DataMember]
+       public DateTime ValueDate  { get; set; }
+       [DataMember]
+       public string CurrencyId  { get; set; }
+       [DataMember]
+       public string CurrencyCode  { get; set; }
+       [DataMember]
+       public string CurrencyName  { get; set; }
+       [DataMember]
+       public decimal LocalAmount  { get; set; }
+       [DataMember]
+       public decimal ForeignAmount  { get; set; }
+       [DataMember]
+       public string BankId  { get; set; }
+       [DataMember]
+       public string BankNumber  { get; set; }
+       [DataMember]
+       public string BankName  { get; set; }
+       [DataMember]
+       public string BankBranch  { get; set; }
+       [DataMember]
+       public string BankAccount  { get; set; }
+       [DataMember]
+       public string StatusCode  { get; set; }
+       [DataMember]
+       public decimal? ExchangeRate  { get; set; }
+   }
+
+}
+	 

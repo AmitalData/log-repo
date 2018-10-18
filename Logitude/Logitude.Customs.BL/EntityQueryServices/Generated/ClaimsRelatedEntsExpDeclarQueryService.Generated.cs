@@ -1,0 +1,69 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.Customs.BL.EntityDataMappings;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Data.EntityKeys;
+using Logitude.Customs.Data;
+using Simplog.Server.Infrastructure;
+namespace Logitude.Customs.BL.EntityQueryServices
+{ 
+   public partial class ClaimsRelatedEntsExpDeclarQueryService: EntityQueryService<ClaimsRelatedEntsExpDeclar,ClaimsRelatedEntsExpDeclarKeys,ClaimsRelatedEntsExpDeclarPM,ClaimsRelatedEntityPM,ClaimsRelatedEntityKeys>
+   {
+   
+        ClaimsRelatedEntsExpDeclarRepository repository;
+		ICustomContext  context;
+        public ClaimsRelatedEntsExpDeclarQueryService(int tenant)
+        {
+		    context = CustomContext.GetContext(tenant);
+            MainContext = context;
+            repository = new ClaimsRelatedEntsExpDeclarRepository(context);
+            Repository = repository;
+            mapping = new ClaimsRelatedEntsExpDeclarDataMapping();
+        }
+
+        public ClaimsRelatedEntsExpDeclarQueryService(ClaimsRelatedEntsExpDeclarRepository repository)
+        {
+            this.repository = repository;
+            Repository = repository;
+            mapping = new ClaimsRelatedEntsExpDeclarDataMapping();
+        }
+
+        public ClaimsRelatedEntsExpDeclarQueryService(ICustomContext context)
+        {
+            this.repository = new ClaimsRelatedEntsExpDeclarRepository(context);
+            this.context = context;
+
+            MainContext = context;
+            Repository = repository;
+            mapping = new ClaimsRelatedEntsExpDeclarDataMapping();
+        }
+		 
+		public  ClaimsRelatedEntsExpDeclarPM GetSingle(string claimid, int counterkey, string exportdeclarationnumber,bool getComposition, bool getFromCache)
+        {
+             EntityKeys = new ClaimsRelatedEntsExpDeclarKeys(){ ClaimId = claimid, CounterKey = counterkey, ExportDeclarationNumber = exportdeclarationnumber };
+
+			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
+        }
+
+       
+	    protected override EntityKeyFields GetKeys(ClaimsRelatedEntsExpDeclar entityPOCO)
+        {
+            ClaimsRelatedEntsExpDeclarKeys entityKeys = new ClaimsRelatedEntsExpDeclarKeys() { ClaimId = entityPOCO.ClaimId, CounterKey = entityPOCO.CounterKey, ExportDeclarationNumber = entityPOCO.ExportDeclarationNumber,  };
+            return entityKeys;
+        }
+     
+	 
+   }
+   
+}
+	 

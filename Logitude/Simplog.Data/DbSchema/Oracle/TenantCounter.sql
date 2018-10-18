@@ -1,0 +1,12 @@
+--CREATE OR REPLACE PROCEDURE GetNextGlobalTenantId(
+--    v_pLastNumber OUT NUMBER )
+--AS
+--  v_Current NUMBER(10,0);
+--BEGIN
+--   BEGIN
+--    SELECT LastNumber INTO v_Current FROM GlobalTenantCounters WHERE Id = 1;
+--    v_Current := v_Current + 1 ;
+--    UPDATE GlobalTenantCounters SET LastNumber = LastNumber + 1 WHERE Id = 1;
+--  END;
+--  v_pLastNumber := v_Current ;
+--END;

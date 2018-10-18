@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://tempuri.org/LOGIENTRY" elementFormDefault="qualified" targetNamespace="http://tempuri.org/LOGIENTRY" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="LOGIENTRY">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="LogitudeEntry" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LogitudeEntry">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="logitude_file" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="tenant" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="quantity" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="reshimon_num" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="freight_rate" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="insurance_type" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="insurance_percent" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="insurance_amount" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="agent_fee" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="country" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="freight_currency" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="insurance_amount_currency" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="SupplierInvoice" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="agent_fee_currency" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="CustomsDocuments" />
+      </xs:sequence>
+      <xs:attribute name="id" type="xs:string" use="required" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="logitude_file" type="xs:string" />
+  <xs:element name="tenant" type="xs:string" />
+  <xs:element name="quantity" type="xs:string" />
+  <xs:element name="reshimon_num" type="xs:string" />
+  <xs:element name="freight_rate" type="xs:string" />
+  <xs:element name="insurance_type" type="xs:string" />
+  <xs:element name="insurance_percent" type="xs:string" />
+  <xs:element name="insurance_amount" type="xs:string" />
+  <xs:element name="agent_fee" type="xs:string" />
+  <xs:element name="country">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="country-name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="country-id" />
+      </xs:sequence>
+      <xs:attribute name="id" type="xs:string" use="required" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="country-name" type="xs:string" />
+  <xs:element name="country-id" type="xs:string" />
+  <xs:element name="freight_currency">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="freight_currency-name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="freight_currency-id" />
+      </xs:sequence>
+      <xs:attribute name="id" type="xs:string" use="required" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="freight_currency-name" type="xs:string" />
+  <xs:element name="freight_currency-id" type="xs:string" />
+  <xs:element name="insurance_amount_currency">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="insurance_amount_currency-name" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="insurance_amount_currency-id" />
+      </xs:sequence>
+      <xs:attribute name="id" type="xs:string" use="required" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="insurance_amount_currency-name" type="xs:string" />
+  <xs:element name="insurance_amount_currency-id" type="xs:string" />
+  <xs:element name="SupplierInvoice">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="InvoiceNumber" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="AccountTypeCode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="IssueDate" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="VendorId" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="InvoiceCurrencyTypeCode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="InvoiceAmount" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="IncotermCode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="IssueCountryCode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="IsPreference" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="PreferenceDocumentTypeCode" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="LogitudeSupplierAccount" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="EXPENSES" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InvoiceNumber" type="xs:string" />
+  <xs:element name="AccountTypeCode" type="xs:string" />
+  <xs:element name="IssueDate" type="xs:string" />
+  <xs:element name="VendorId" type="xs:string" />
+  <xs:element name="InvoiceCurrencyTypeCode" type="xs:string" />
+  <xs:element name="InvoiceAmount" type="xs:string" />
+  <xs:element name="IncotermCode" type="xs:string" />
+  <xs:element name="IssueCountryCode" type="xs:string" />
+  <xs:element name="IsPreference" type="xs:string" />
+  <xs:element name="PreferenceDocumentTypeCode" type="xs:string" />
+  <xs:element name="LogitudeSupplierAccount">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="ItemNo" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="PratMehes" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="AccountQuantity" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Unit" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="StatisticQuantity" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="StatisticQuantityUnit" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="RateGroup" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Document" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="OriginCcountryId" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="SupplierAccountLine" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="SupplierItemLine" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ItemNo" type="xs:string" />
+  <xs:element name="PratMehes" type="xs:string" />
+  <xs:element name="AccountQuantity" type="xs:string" />
+  <xs:element name="Unit" type="xs:string" />
+  <xs:element name="StatisticQuantity" type="xs:string" />
+  <xs:element name="StatisticQuantityUnit" type="xs:string" />
+  <xs:element name="RateGroup" type="xs:string" />
+  <xs:element name="Document" type="xs:string" />
+  <xs:element name="OriginCcountryId" type="xs:string" />
+  <xs:element name="SupplierAccountLine" type="xs:string" />
+  <xs:element name="SupplierItemLine" type="xs:string" />
+  <xs:element name="EXPENSES">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="TypeCode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Amount" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CurrencyTypeCode" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TypeCode" type="xs:string" />
+  <xs:element name="Amount" type="xs:string" />
+  <xs:element name="CurrencyTypeCode" type="xs:string" />
+  <xs:element name="agent_fee_currency" type="xs:string" />
+  <xs:element name="CustomsDocuments">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="Entname" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ExternalAttachmentId" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="DocumentTypeCode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Blocked" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="FromDeclartion" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="COM_ID" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="SerialNum" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Entname" type="xs:string" />
+  <xs:element name="ExternalAttachmentId" type="xs:string" />
+  <xs:element name="DocumentTypeCode" type="xs:string" />
+  <xs:element name="Blocked" type="xs:string" />
+  <xs:element name="FromDeclartion" type="xs:string" />
+  <xs:element name="COM_ID" type="xs:string" />
+  <xs:element name="SerialNum" type="xs:string" />
+</xs:schema>

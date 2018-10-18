@@ -1,0 +1,156 @@
+﻿<style>   
+     .disconnectButton 
+    {
+         visibility:hidden;
+    }
+     .CellContent:hover .disconnectButton{visibility:visible;}
+</style>
+
+
+
+
+<table >
+    <tr style="height:20px"></tr>
+    <tr >
+    <td style="width:20px"></td>
+    <td>
+        <table>
+        <tr class="TabTitleRow">
+    <td>{{'GLAccounts.O.ConnectedGLAccounts' | TextCodeTranslationPipe}}</td>
+</tr>
+<tr class="SectionHeader" style="height:27px">
+    <td>
+        <table>
+            <tr class="TabTitleRow">
+                <td style="width:10px"></td>
+                <td style="width:100px">
+                    <label>{{'GLAccounts.O.SplittedByCurrency' | TextCodeTranslationPipe}}</label>
+                </td>
+                <td><div></div></td>
+                <td style="text-align:center;width:50px">
+                    <span style="font-size:12px; padding-right:5px;padding-top:5px" class="hyperlink" (click)="Add()">{{'GLAccounts.O.Add' | TextCodeTranslationPipe}}</span>
+
+                </td>
+                <td style="width:10px"></td>
+            </tr>
+        </table>
+    </td>
+</tr>
+
+<tr>
+    <td style="height: 40%;width:400px">
+        <div class="CellContent" style="bottom: 75px;">
+            <logitude-edit-grid GridHeight="100%" [ItemSource]="ConnectedGLAccounts">
+
+
+                <!-- CurrencyCode -->
+                <log-column [header]="'GLAccount.F.CurrencyCode' | TextCodeTranslationPipe" [width]="'140'" [Alignment]="'center'" [binding]="'CurrencyCode'">
+                    <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:center">
+                            <span>{{item.CurrencyCode}}</span> <span></span>
+                        </div>
+
+                    </log-cell-template>
+                </log-column>
+
+
+                <log-column [header]="'GLAccount.F.DisplayNumber' | TextCodeTranslationPipe" [width]="'140'" [Alignment]="'center'" [binding]="'CustomerGLAccountNumber'">
+                    <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                        <div *ngIf="logcelltemplate.IsDisplayMode" style="text-align:center">
+                          
+                            <span class="hyperlink" (click)="item.ConnectedGLAccountClicked(item)">{{item.DisplayNumber}}</span>
+                        </div>
+
+                    </log-cell-template>
+                </log-column>
+
+
+
+                <log-column [width]="'75'" [header]="'GLAccount.F.Inactive' | TextCodeTranslationPipe"  [Alignment]="'center'" [Editable]="true" [visibility]="'visibile'">
+                    <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                        <div style="width: 30px;   height:20px;padding-top:3px;align-self:center;padding-right:30px; padding-left:30px  ">
+                            <LogCheckBox [ObjectFieldName]="'Inactive'" [Checked]="item.Inactive" [ObjectTableName]="ObjectTableName" [DataContext]="item" (ValueChanged)="item.InactiveChecked($event)"></LogCheckBox>
+                        </div>
+
+
+
+                    </log-cell-template>
+                </log-column>
+
+
+            </logitude-edit-grid>
+        </div>
+    </td>
+    <td><div></div></td>
+</tr>
+
+<tr class="SectionHeader" style="height:27px">
+    <td>
+        <table>
+            <tr class="TabTitleRow">
+                <td style="width:10px"></td>
+                <td style="width:80px">
+                    <label>{{'GLAccounts.O.Children' | TextCodeTranslationPipe}}</label>
+                </td>
+                <td><div></div></td>
+
+                <td style="text-align:center;width:50px">
+                    <span class="hyperlink" style="font-size:12px;padding-top:5px" (click)="Choose()">{{'GLAccounts.O.Choose' | TextCodeTranslationPipe}}</span>
+
+                </td>
+                <td style="width:10px"></td>
+            </tr>
+        </table>
+    </td>
+</tr>
+
+<tr>
+    <td style="height: 50%;width:400px">
+        <div class="CellContent" style="bottom: 75px;">
+            <logitude-edit-grid GridWidth="50%" GridHeight="100%" [ItemSource]="ChildrenGLAccounts"    (MouseOverChanged)="SetMouseHoverRow($event, true)"
+                                                    (MouseleaveChanged)="SetMouseHoverRow($event, false)">
+
+
+                <!-- CurrencyCode -->
+                <log-column [header]="'GLAccount.F.DisplayNumber' | TextCodeTranslationPipe" [width]="'140'" [Alignment]="'center'" [binding]="'DisplayNumber'">
+                    <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:center">
+                            <span class="hyperlink" (click)="item.GLAccountHyperlinkClicked(item)">{{item.DisplayNumber}}</span>
+
+                        </div>
+
+                    </log-cell-template>
+                </log-column>
+
+
+                <log-column [header]="'GLAccount.F.LocalName' | TextCodeTranslationPipe" [width]="'140'" [Alignment]="'center'" [binding]="'LocalName'">
+                    <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                        <div *ngIf="logcelltemplate.IsDisplayMode" style="text-align:center">
+                            <span>{{item.LocalName }}</span>
+                        </div>
+
+                    </log-cell-template>
+                </log-column>
+
+
+
+                <log-column [header]="''" [width]="'95'" [Editable]="true" [visibility]="'visibile'">
+                    <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                        <div *ngIf="item.IsRowHover" style="height:20px;padding-top:3px; padding-right:5px;padding-left:5px" class="disconnectButton">
+                            <button class="Button" (click)="item.DisconnectClicked(item)">{{'Accounting.General.O.Disconnect' |TextCodeTranslationPipe}}</button>
+
+                        </div>
+
+
+
+                    </log-cell-template>
+                </log-column>
+
+
+            </logitude-edit-grid>
+        </div>
+    </td>
+    <td><div></div></td>
+</tr></table></td></tr>
+    
+</table>

@@ -1,0 +1,288 @@
+﻿
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr style="height: 1px;" *ngIf="DataContext.IsBlockingUnifreightCustomer">
+        <td>
+            <div class="OrangeInfo" style="margin: 5px;">
+                <label class="Value">Customer connected to uni-freight, updates allowed from Unifreight only</label>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 1px;">
+        <td>
+            <table>
+                <tr>
+                    <td style="width: 430px;">
+                        <table>
+
+                            <tr class="FormFieldRow" *ngIf="DataContext.AddressTypeId == 'P'">
+                                <td style="width: 110px">
+                                    <div></div>
+                                </td>
+
+                                <td>
+                                    <span class="hyperlink" [class.HyperlinkDisabled]="!DataContext.IsEditingEnabled" (click)="DataContext.CopyMainAddressClicked(false)">Copy from main address</span>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td style="width: 110px">
+                                    <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'Description'" [Text]="DataContext.Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td style="width: 110px">
+                                    <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'Name'" [Text]="DataContext.Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td style="width: 110px">
+                                    <LogLabel [ObjectFieldName]="'Address1'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'Address1'" [Text]="DataContext.Address1" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td style="width: 110px">
+                                    <LogLabel [ObjectFieldName]="'Address2'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'Address2'" [Text]="DataContext.Address2" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td style="width: 110px">
+                                    <LogLabel [ObjectFieldName]="'ZipCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td style="width: 230px;">
+                                                <LogTextBox [ObjectFieldName]="'ZipCode'" [Text]="DataContext.ZipCode" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td style="width: 110px">
+                                    <LogLabel [ObjectFieldName]="'City'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td style="width: 194px;">
+                                                <LogTextBox [ObjectFieldName]="'City'" [Text]="DataContext.City" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                            </td>
+
+                                            <td style="width: 5px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td>
+                                                <span class="hyperlink" [class.HyperlinkDisabled]="!DataContext.IsEditingEnabled" (click)="DataContext.SelectCityCommand()">Select</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td style="width: 110px">
+                                    <LogLabel [ObjectFieldName]="'CountryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td style="width: 230px;">
+                                                <LogLov [ObjectFieldName]="'CountryId'"
+                                                        [SelectedValue]="DataContext.CountryId"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'Country'"
+                                                        (SelectedItemChanged)="DataContext.Country = $event">
+                                                </LogLov>
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td style="width: 110px">
+                                    <LogLabel [ObjectFieldName]="'StateId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td style="width: 230px;">
+                                                <LogLov [ObjectFieldName]="'StateId'"
+                                                        [SelectedValue]="DataContext.StateId"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'State'"
+                                                        (SelectedItemChanged)="DataContext.State = $event"
+                                                        [DependencyFilter1Value]="DataContext.CountryId">
+                                                </LogLov>
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow" *ngIf="DataContext.IsInActiveVisible">
+                                <td style="width: 110px">
+                                    <LogLabel [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogCheckBox [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="2">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 300px;">
+                        <table>
+                            <tr>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <tr style="height: 1px;">
+                                <td>
+                                    <table>
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 70px">
+                                                <LogLabel [ObjectFieldName]="'PhoneNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td>
+                                                <LogTextBox [ObjectFieldName]="'PhoneNumber'" [Text]="DataContext.PhoneNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'FaxNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td>
+                                                <LogTextBox [ObjectFieldName]="'FaxNumber'" [Text]="DataContext.FaxNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'ATTN'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td>
+                                                <LogTextBox [ObjectFieldName]="'ATTN'" [Text]="DataContext.ATTN" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="FormFieldRow" *ngIf="DataContext.IsInActiveVisible">
+                                            <td>
+                                                <div></div>
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td *ngIf="DataContext.AddressTypeId != 'M'" style="width: 16px;">
+                        <CheckBox [IsChecked]="DataContext.IsLocalLanguage" (Checked)="DataContext.IsLocalLanguage = $event" [IsEnabled]="DataContext.IsEditingEnabled"></CheckBox>
+                    </td>
+
+                    <td *ngIf="DataContext.AddressTypeId != 'M'" style="width: 1px; font-size: 11px; color: #6E7172; padding-left: 3px;">Is Local Language</td>
+
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!DataContext.IsEditingEnabled">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

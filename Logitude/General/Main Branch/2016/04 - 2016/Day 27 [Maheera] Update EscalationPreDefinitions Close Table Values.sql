@@ -1,0 +1,1 @@
+delete from EscalationPreDefinitions where code ='CE' or code ='GE'

@@ -1,0 +1,77 @@
+﻿
+
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <td style="width: 400px;">
+                        <table>
+
+                            <tr class="FormFieldRow">
+                                <td style="width:130px;">
+                                    <LogLabel [ObjectFieldName]="'PackageCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td style="width:230px;">
+                                    <LogLov [ObjectFieldName]="'PackageCode'"
+                                            [SelectedValue]="DataContext.PackageCode"
+                                            [ObjectTableName]="DataContext.ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [DependencyFilter1Value]="'AD'"
+                                            [LookUpTableName]="'Package'">
+                                    </LogLov>
+                                </td>
+                            </tr>
+                                                        
+                            <tr>
+                                <td colspan="2">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td style="width: 15px;">
+                        <div></div>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+

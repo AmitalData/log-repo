@@ -1,0 +1,54 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization; 
+
+namespace Logitude.Customs.Data.EntityLists
+{
+   [DataContract]
+   public partial class PaymentOrderMethodList
+   {
+   
+       [Key]
+       [DataMember]
+       public string PaymentOrderId  { get; set; }
+       [DataMember]
+       public int Tenant  { get; set; }
+
+       [Key]
+       [DataMember]
+       public int Line  { get; set; }
+       [DataMember]
+       public string TypeCode  { get; set; }
+       [DataMember]
+       public decimal? Amount  { get; set; }
+       [DataMember]
+       public string BankCode  { get; set; }
+       [DataMember]
+       public string BranchCode  { get; set; }
+       [DataMember]
+       public string AccountNumber  { get; set; }
+       [DataMember]
+       public string PaymentMethodStatusCode  { get; set; }
+       [DataMember]
+       public string InternalBankId  { get; set; }
+       [DataMember]
+       public string TypeName  { get; set; }
+       [DataMember]
+       public string BankName  { get; set; }
+       [DataMember]
+       public string PaymentMethodStatusName  { get; set; }
+       [DataMember]
+       public string CustomerActivityTypeCode  { get; set; }
+       [DataMember]
+       public string CustomerActivityTypeName  { get; set; }
+       [DataMember]
+       public string CustomsBranchId  { get; set; }
+   }
+
+}
+	 

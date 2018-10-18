@@ -1,0 +1,60 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization; 
+
+namespace Logitude.Customs.Data.EntityLists
+{
+   [DataContract]
+   public partial class CustomsDocumentPointerList
+   {
+   
+       [Key]
+       [DataMember]
+       public string Id  { get; set; }
+       [DataMember]
+       public int Tenant  { get; set; }
+       [DataMember]
+       public string ParentEntityCode  { get; set; }
+       [DataMember]
+       public string ParentEntityId  { get; set; }
+       [DataMember]
+       public string Child1EntityCode  { get; set; }
+       [DataMember]
+       public string Child1EntityId  { get; set; }
+       [DataMember]
+       public string Child2EntityCode  { get; set; }
+       [DataMember]
+       public string Child2EntityId  { get; set; }
+       [DataMember]
+       public string Child3EntityCode  { get; set; }
+       [DataMember]
+       public string Child3EntityId  { get; set; }
+       [DataMember]
+       public string CustomsDocId  { get; set; }
+       [DataMember]
+       public string DocumentStatusCode  { get; set; }
+       [DataMember]
+       public string DocumentRemarks  { get; set; }
+       [DataMember]
+       public string DocumentStatusName  { get; set; }
+       [DataMember]
+       public string Extension  { get; set; }
+       [DataMember]
+       public int? FileSize  { get; set; }
+       [DataMember]
+       public string Name  { get; set; }
+       [DataMember]
+       public string CustomsDocumentsTicketId  { get; set; }
+       [DataMember]
+       public string CustomsRequestsSheetId  { get; set; }
+       [DataMember]
+       public string DocumentTypeCode  { get; set; }
+   }
+
+}
+	 

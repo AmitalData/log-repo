@@ -1,0 +1,6 @@
+delete from QueryColumns where QueryId = (select Id from Queries where Code = 'Open By Stage')
+delete from QueryColumns where QueryId = (select Id from Queries where Code = 'All Opportunities')
+delete from QueryColumns where QueryId = (select Id from Queries where Code = 'All Closed Opportunities')
+delete from QueryColumns where QueryId = (select Id from Queries where Code = 'My Closed Opportunities')
+delete from QueryColumns where QueryId = (select Id from Queries where Code = 'All Open Opportunities')
+delete from QueryColumns where QueryId = (select Id from Queries where Code = 'My Open Opportunities')

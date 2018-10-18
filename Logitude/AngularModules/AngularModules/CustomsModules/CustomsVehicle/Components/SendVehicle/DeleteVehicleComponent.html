@@ -1,0 +1,12 @@
+﻿
+<table>
+    <tr>
+        <td style="width:110px;  vertical-align: bottom;padding-left:5px">
+            <!--[ButtonText]="'Customs.Vehicle.B.DeleteVehicle' | TextCodeTranslationPipe"-->
+            <custom-send-options #MyCustomDeleteOptionsComponent
+                               [ButtonText]="'Customs.Vehicle.B.DeleteVehicle' | TextCodeTranslationPipe"
+                                 (SendButtonClicked)="OnCustomSendOptionsButtonClick($event)"
+                                 ></custom-send-options>
+        </td>
+    </tr>
+</table>

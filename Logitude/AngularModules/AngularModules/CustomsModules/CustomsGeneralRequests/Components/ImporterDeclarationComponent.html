@@ -1,0 +1,453 @@
+﻿<!-- ImporterDeclarationComponent view  -->
+
+<div>
+    <custom-message-wrapper [CustomSendOptionsButtonCanForcePersonalSign]="false">
+
+        <!-- Request -->
+        <div class="class-request-content">
+            <table style="width: 560px;height: 46px;padding-top: 10px;">
+                <!-- Request Fields -->
+                <tr style="height: 46px;">
+                    <td>
+                        <table>
+                            <!--Importer-->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <table>
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 80px;">
+                                                <LogLabel [ObjectFieldName]="'ImporterCode'" [DataContext]="DataContext" [TextCode]="'Customs.ImporterDeclarationQuery.O.ImporterNumber'"> </LogLabel>
+                                            </td>
+                                            <td style="width: 110px;">
+                                                <SearchBox [ObjectTableName]="'Customs.Client'"
+                                                           [IsQuickSearch]="true"
+                                                           [DropDownWidth]="143"
+                                                           [DisplayText]="ImporterCode"
+                                                           [DisplayMember]="'Code'"
+                                                           [ItemHeight]="33"
+                                                           [HideIcons]="true"
+                                                           [Watermark]="''"
+                                                           (TextChanged)="ImporterTextChanged('Importer', $event)"
+                                                           (ItemClicked)="ImporterClicked('Importer',$event)"></SearchBox>
+                                            </td>
+                                            <td style="width: 120px; min-width: 120px; max-width: 130px; text-align: right; padding-right: 5px;">
+                                                <div style="color: #646464; font-size: 11px;">{{ImporterName}}</div>
+                                            </td>
+
+                                            <td><div></div></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <!--Radio Buttons-->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td style="width:120px">
+                                                <div class="RadioButton">
+                                                    <input id="ByDeclarationExpireRadio" type="radio" name="DeclarationExpireRadio" [checked]="IsByExpireDate" (click)="SetIsByExpireDate(true)" />
+                                                    <label for="ByDeclarationExpireRadio">{{'Customs.ImporterDeclarationQuery.O.SearchByDeclarationExpire' | TextCodeTranslationPipe}}</label>
+                                                </div>
+                                            </td>
+
+                                            <td style="width:120px">
+                                                <div class="RadioButton">
+                                                    <input id="ByDeclarationSupplierRadio" type="radio" name="DeclarationSupplierRadio" [checked]="IsByType" (click)="SetIsByType(true)" />
+                                                    <label for="ByDeclarationSupplierRadio">{{'Customs.ImporterDeclarationQuery.O.SearchByDeclarationsupplier' | TextCodeTranslationPipe}}</label>
+                                                </div>
+                                            </td>
+
+                                            <td> <div></div> </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <!--ByDeclarationExpireRadio-->
+                            <tr class="FormFieldRow" *ngIf="IsByExpireDate" style="height: 30px;">
+                                <td>
+                                    <table style="width: 250px; padding-top: 10px;">
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 100px;">
+                                                <LogLabel [ObjectFieldName]="'DeclarationExpire'"
+                                                          [DataContext]="DataContext"
+                                                          [TextCode]="'Customs.ImporterDeclarationQuery.O.DeclarationExpire'">
+                                                </LogLabel>
+                                            </td>
+                                            <td style="width: 110px;">
+                                                <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'DeclarationExpire'" [ObjectTableName]="ObjectTableName"
+                                                               [InputType]="'date'" [DataContext]="DataContext"
+                                                               [HideColumns]="true"></LogDatePicker>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <!--ByTypeRadio-->
+                            <tr class="FormFieldRow" *ngIf="IsByType">
+                                <td>
+                                    <table style="width: 500px; padding-top: 10px;">
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 130px;">
+                                                <LogLabel [ObjectFieldName]="'DeclarationConect'" [DataContext]="DataContext" [TextCode]="'Customs.ImporterDeclarationQuery.O.DeclarationConect'"></LogLabel>
+                                            </td>
+                                            <td style="width: 150px;">
+                                                <ComboBox [ItemsSource]="DeclarationConectFilterList" [Binding]="'Name'" [SelectedItem]="SelectedDeclarationConectFilter" (SelectedItemChanged)="SelectedDeclarationConectFilter = $event"></ComboBox>
+                                            </td>
+
+                                            <td style="width: 25px;"><div></div></td>
+
+                                            <!-- Number (Code) -->
+                                            <td style="width: 90px;">
+                                                <LogLabel [ObjectFieldName]="'Code'"
+                                                          [DataContext]="DataContext"
+                                                          [TextCode]="'Customs.ImporterDeclarationQuery.O.Number'">
+                                                </LogLabel>
+                                            </td>
+                                            <td style="width: 150px;" *ngIf="CodeVisibility">
+                                                <LogTextBox [ObjectFieldName]="'Code'" [Text]="Code" [InputType]="'number'" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                            </td>
+                                            <td style="width: 150px;" *ngIf="!CodeVisibility">
+                                                <LogLov [ObjectFieldName]="'Code'"
+                                                        [ObjectTableName]="'Customs.CustomsVendor'"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'Customs.CustomsVendor'"
+                                                        [HideLastColumn]="true"
+                                                        [HideColumns]="true">
+                                                </LogLov>
+                                            </td>
+
+                                            <td><div></div></td>
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
+                                            <!-- Date From -->
+                                            <td style="width: 130px;">
+                                                <LogLabel [ObjectFieldName]="'FromDate'" [DataContext]="DataContext" [TextCode]="'Customs.CustomsExchangeRate.F.DateFrom'"></LogLabel>
+                                            </td>
+                                            <td style="width: 150px;">
+                                                <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName"
+                                                               [InputType]="'date'" [DataContext]="DataContext"
+                                                               [HideColumns]="true"></LogDatePicker>
+                                            </td>
+
+                                            <td style="width: 25px;"><div></div></td>
+
+                                            <!-- Date To -->
+                                            <td style="width: 90px;">
+                                                <LogLabel [ObjectFieldName]="'ToDate'" [DataContext]="DataContext" [TextCode]="'Customs.CustomsExchangeRate.F.DateTo'"></LogLabel>
+                                            </td>
+                                            <td style="width: 150px;">
+                                                <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName"
+                                                               [InputType]="'date'" [DataContext]="DataContext"
+                                                               [HideColumns]="true"></LogDatePicker>
+                                            </td>
+
+                                            <td><div></div></td>
+                                        </tr>
+
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr><td><div></div></td></tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr> <td><div></div></td> </tr>
+            </table>
+        </div>
+
+        <!-- Response -->
+        <div class="class-response-content" style="width: 800px;height: 510px;">
+            <div class="ScrollViewer">
+                <div class="ScrollContent">
+                    <table style="width: 800px;height: 510px;padding-top: 10px;">
+
+                        <!--Period Declaration-->
+                        <tr style="width: 100%; text-align:right">
+                            <td style="width: 200px;height:25px; font-size: 12px; color: #1B90CB;">
+                                {{'Customs.ImporterDeclarationQuery.O.PeriodDeclaration'| TextCodeTranslationPipe}}
+                            </td>
+                        </tr>
+                        <tr class="FormFieldRow" style="height:1px">
+                            <td colspan="5" style="width: 100% ; height : 30%">
+                                <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
+                                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="PeriodDeclarationList">
+
+                                        <!-- PeriodDeclarationID -->
+                                        <log-column [width]="'90'" [Alignment]="'right'"
+                                                    [header]="'Customs.ImporterDeclarationQuery.O.PeriodDeclarationID' | TextCodeTranslationPipe"
+                                                    [binding]="'PeriodDeclarationID'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="RightCenter">
+                                                    <span>{{item.PeriodDeclarationID}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- VendorID -->
+                                        <log-column [width]="'90'" [Alignment]="'right'"
+                                                    [header]="'Customs.ImporterDeclarationQuery.O.VendorID' | TextCodeTranslationPipe"
+                                                    [binding]="'VendorID'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="RightCenter">
+                                                    <span>{{item.VendorID}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- Vendor -->
+                                        <log-column [width]="'130'" [Alignment]="'right'"
+                                                    [header]="'Customs.ImporterDeclarationQuery.O.VendorName' | TextCodeTranslationPipe"
+                                                    [binding]="'VendorName'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="RightCenter">
+                                                    <span>{{item.VendorName }}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- Create Date -->
+                                        <log-column [width]="'90'" [Alignment]="'right'"
+                                                    [header]="'Customs.ImporterDeclarationQuery.O.CreateDate' | TextCodeTranslationPipe"
+                                                    [binding]="'CreateDate'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div style="width:100%;height:100%;">
+                                                    <div class="RightCenter">
+                                                        <span>{{item.CreateDate }}</span>
+                                                    </div>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- Validity From -->
+                                        <log-column [width]="'90'" [Alignment]="'right'"
+                                                    [header]="'Customs.ImporterDeclarationQuery.O.ValidityFrom' | TextCodeTranslationPipe"
+                                                    [binding]="'ValidityFrom'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div style="width:100%;height:100%;">
+                                                    <div class="RightCenter">
+                                                        <span>{{item.ValidityFrom }}</span>
+                                                    </div>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- Expiration Date -->
+                                        <log-column [width]="'90'" [Alignment]="'right'"
+                                                    [header]="'Customs.ImporterDeclarationQuery.O.ExpirationDate' | TextCodeTranslationPipe"
+                                                    [binding]="'ExpirationDate'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div style="width:100%;height:100%;">
+                                                    <div class="RightCenter">
+                                                        <span>{{item.ExpirationDate }}</span>
+                                                    </div>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- StatusName -->
+                                        <log-column [width]="'90'" [Alignment]="'right'"
+                                                    [header]="'Customs.ImporterDeclarationQuery.O.StatusName' | TextCodeTranslationPipe"
+                                                    [binding]="'StatusName'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div style="width:100%;height:100%;">
+                                                    <div class="RightCenter">
+                                                        <span>{{item.StatusName }}</span>
+                                                    </div>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- DocumentID -->
+                                        <log-column [width]="'90'" [Alignment]="'right'"
+                                                    [header]="'Customs.ImporterDeclarationQuery.O.DocumentID' | TextCodeTranslationPipe"
+                                                    [binding]="'DocumentID'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div style="width:100%;height:100%;">
+                                                    <div class="RightCenter">
+                                                        <span>{{item.DocumentID }}</span>
+                                                    </div>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                    </logitude-edit-grid>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!--Loi Declaration-->
+                        <tr style="width: 100%">
+                            <td style="width: 200px;height:25px; font-size: 12px; color: #1B90CB;">
+                                {{'Customs.ImporterDeclarationQuery.O.LoiDeclaration'| TextCodeTranslationPipe}}
+                            </td>
+                        </tr>
+                        <tr class="FormFieldRow" style="height:1px">
+                            <td colspan="5" style="width: 100% ; height : 30%">
+                                <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
+                                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="LoiDeclarationList">
+
+                                        <!-- Declaration ID -->
+                                        <log-column [width]="'110'" [Alignment]="'right'"
+                                                    [header]="'Customs.ImporterDeclarationQuery.O.DeclarationID' | TextCodeTranslationPipe"
+                                                    [binding]="'DeclarationID'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="RightCenter">
+                                                    <span>{{item.DeclarationID}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- Loi Declaration ID -->
+                                        <log-column [width]="'90'" [Alignment]="'right'"
+                                                    [header]="'Customs.ImporterDeclarationQuery.O.PeriodDeclarationID' | TextCodeTranslationPipe"
+                                                    [binding]="'LoiDeclarationID'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="RightCenter">
+                                                    <span>{{item.LoiDeclarationID}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- Vendor -->
+                                        <log-column [width]="'100'" [Alignment]="'right'"
+                                                    [header]="'Customs.ImporterDeclarationQuery.O.VendorName' | TextCodeTranslationPipe"
+                                                    [binding]="'VendorName'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="RightCenter">
+                                                    <span>{{item.VendorName }}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- Create Date -->
+                                        <log-column [width]="'100'" [Alignment]="'right'"
+                                                    [header]="'Customs.ImporterDeclarationQuery.O.CreateDate' | TextCodeTranslationPipe"
+                                                    [binding]="'CreateDate'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div style="width:100%;height:100%;">
+                                                    <div class="RightCenter">
+                                                        <span>{{item.CreateDate }}</span>
+                                                    </div>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- DocumentID -->
+                                        <log-column [width]="'100'" [Alignment]="'right'"
+                                                    [header]="'Customs.ImporterDeclarationQuery.O.DocumentID' | TextCodeTranslationPipe"
+                                                    [binding]="'DocumentID'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div style="width:100%;height:100%;">
+                                                    <div class="RightCenter">
+                                                        <span>{{item.DocumentID }}</span>
+                                                    </div>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                    </logitude-edit-grid>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!--Security Declaration-->
+                        <tr style="width: 100%">
+                            <td style="width: 200px;height:25px; font-size: 12px; color: #1B90CB;">
+                                {{'Customs.ImporterDeclarationQuery.O.SecurityDeclaration'| TextCodeTranslationPipe}}
+                            </td>
+                        </tr>
+                        <tr class="FormFieldRow" style="height:1px">
+                            <td colspan="5" style="width: 100% ; height : 30%">
+                                <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
+                                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="SecurityDeclarationList">
+
+                                        <!-- Security Declaration Name -->
+                                        <log-column [width]="'100'" [Alignment]="'right'"
+                                                    [header]="'Customs.ImporterDeclarationQuery.O.SecurityDeclarationName' | TextCodeTranslationPipe"
+                                                    [binding]="'SecurityDeclarationName'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="RightCenter">
+                                                    <span>{{item.SecurityDeclarationName}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- Security Importer Declaration Id -->
+                                        <log-column [width]="'90'" [Alignment]="'right'"
+                                                    [header]="'Customs.ImporterDeclarationQuery.O.PeriodDeclarationID' | TextCodeTranslationPipe"
+                                                    [binding]="'SecurityImporterDeclarationId'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="RightCenter">
+                                                    <span>{{item.SecurityImporterDeclarationId}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- Declaration Date -->
+                                        <log-column [width]="'100'" [Alignment]="'right'"
+                                                    [header]="'Customs.ImporterDeclarationQuery.O.DeclarationDate' | TextCodeTranslationPipe"
+                                                    [binding]="'DeclarationDate'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="RightCenter">
+                                                    <span>{{item.DeclarationDate }}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- Expiration Date -->
+                                        <log-column [width]="'100'" [Alignment]="'right'"
+                                                    [header]="'Customs.ImporterDeclarationQuery.O.ExpirationDate' | TextCodeTranslationPipe"
+                                                    [binding]="'ExpirationDate'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div style="width:100%;height:100%;">
+                                                    <div class="RightCenter">
+                                                        <span>{{item.ExpirationDate }}</span>
+                                                    </div>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- StatusName -->
+                                        <log-column [width]="'100'" [Alignment]="'right'"
+                                                    [header]="'Customs.ImporterDeclarationQuery.O.StatusName' | TextCodeTranslationPipe"
+                                                    [binding]="'StatusName'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div style="width:100%;height:100%;">
+                                                    <div class="RightCenter">
+                                                        <span>{{item.StatusName }}</span>
+                                                    </div>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- DocumentID -->
+                                        <log-column [width]="'100'" [Alignment]="'right'"
+                                                    [header]="'Customs.ImporterDeclarationQuery.O.DocumentID' | TextCodeTranslationPipe"
+                                                    [binding]="'DocumentID'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div style="width:100%;height:100%;">
+                                                    <div class="RightCenter">
+                                                        <span>{{item.DocumentID }}</span>
+                                                    </div>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                    </logitude-edit-grid>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr> <td><div></div></td> </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+</custom-message-wrapper>
+</div>

@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://tempuri.org/CustomFileCreditResponse" elementFormDefault="qualified" targetNamespace="http://tempuri.org/CustomFileCreditResponse" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="CUSTOMCREDIT_UL">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="CustomFileCredit" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CustomFileCredit">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="LogitudeFile" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CreditStatus" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ErrorMessage" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="BankCode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="PaymentDate" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="HasException" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Succeeded" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ExceptionMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LogitudeFile" type="xs:string" />
+  <xs:element name="CreditStatus" type="xs:string" />
+  <xs:element name="ErrorMessage" type="xs:string" />
+  <xs:element name="BankCode" type="xs:string" />
+  <xs:element name="PaymentDate" type="xs:string" />
+  <xs:element name="PaymentTime" type="xs:string" />
+  <xs:element name="HasException" type="xs:string" />
+  <xs:element name="Succeeded" type="xs:string" />
+  <xs:element name="ExceptionMessage" type="xs:string" />
+</xs:schema>

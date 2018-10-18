@@ -1,0 +1,119 @@
+﻿
+<table>
+    <tr>
+        <td>
+            <fieldset [disabled]="!IsControlEnabled">
+                <div class="TableHolder">
+                    <table style="width: 450px; height: 350px;padding-top: 10px;">
+                        <!-- Claims Related Entities Reasons -->
+                        <tr style="height: 100%; width: 100%; top:0px">
+                            <td>
+                                <div>
+                                    <table>
+                                        <tr style="height: 30px">
+                                            <td class="TabTitleRow" style="width:150px">
+                                                {{'Customs.Claim.O.ClaimsRelatedEntitiesExplanations'| TextCodeTranslationPipe}}
+                                            </td>
+
+                                            <td> <div></div> </td>
+                                            <td style="height: 20px;padding: 5px;padding-bottom: 0px;">
+                                                <div>
+                                                    <IconButton [IsSmall]="true"
+                                                                [Name]="'Add'"
+                                                                (click)="AddNewEntityReasonExplanationCommand()"
+                                                                style="float:left;"></IconButton>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr style="height: 300px; overflow: auto;">
+                                            <td colspan="5">
+                                                <div class="CellContent">
+                                                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [FooterTop]="FooterMethods"
+                                                                        [ItemSource]="ClaimsRelatedEntsReasonsExpslist" [IsReadOnly]="!IsControlEnabled">
+
+                                                        <!-- ClaimExplanationTypeCode -->
+                                                        <log-column [header]="'Customs.ClaimsRelatedEntsReasonsExp.F.ClaimExplanationTypeCode' | TextCodeTranslationPipe"
+                                                                    [width]="'150'" [Alignment]="'right'" [binding]="'ClaimExplanationTypeCode'">
+                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                    <span>{{item.ClaimExplanationTypeName}}</span>
+                                                                </div>
+                                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                                    <LogLov [ObjectFieldName]="'ClaimExplanationTypeCode'"
+                                                                            [ObjectTableName]="ObjectTableName"
+                                                                            [DataContext]="item"
+                                                                            [LookUpTableName]="'Customs.ClaimExplanationCode'"
+                                                                            (SelectedItemChanged)="item.SetLocalName($event,'ClaimExplanationTypeName')"
+                                                                            [HideColumns]="true"
+                                                                            [FocusOnMe]="true"
+                                                                            [SelectedValue]="item.ClaimExplanationTypeCode">
+                                                                    </LogLov>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </log-column>
+
+                                                        <!-- ExplanationNote -->
+                                                        <log-column [header]="'Customs.ClaimsRelatedEntsReasonsExp.F.ExplanationNote' | TextCodeTranslationPipe"
+                                                                    [width]="'250'" [Alignment]="'right'" [binding]="'ExplanationNote'">
+                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                    <span>{{item.ExplanationNote}}</span>
+                                                                </div>
+                                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                                    <LogTextBox [ObjectFieldName]="'ExplanationNote'" [DataContext]="item"
+                                                                                [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
+                                                                                [Text]="item.ExplanationNote" [HideColumns]="true"></LogTextBox>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </log-column>
+
+                                                        <!-- Delete Button-->
+                                                        <log-column [width]="'40'" [Alignment]="'right'">
+                                                            <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
+                                                                <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteReasonExplanationCommand(item)"
+                                                                            [IsEnabled]="!IsDisplayOnly"
+                                                                            style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
+                                                            </log-cell-template>
+                                                        </log-column>
+
+                                                    </logitude-edit-grid>
+                                                </div>
+                                            </td>
+
+                                            <td> <div></div> </td>
+                                        </tr>
+
+                                        <tr><td><div></div></td></tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+            </fieldset>
+        </td>
+    </tr>
+
+    <tr style="height: 40px;">
+        <td colspan="2">
+            <table>
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+                    <td style="width: 57px;vertical-align: bottom;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel' |TextCodeTranslationPipe}}</button>
+                    </td>
+                    <td style="width: 67px;vertical-align: bottom; padding-right: 10px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Save' |TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+
+
+    </tr>
+
+</table>

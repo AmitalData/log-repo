@@ -1,0 +1,432 @@
+﻿
+<div style="overflow-x:auto;height:100%;width:100%">
+    <table style="min-width:1075px">
+
+        <tr style="height: 1px;">
+            <td>
+                <table>
+                    <tr>
+                        <td style="width: 21px; vertical-align:middle;">
+                            <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
+                        </td>
+
+                        <td style="width: 15px; vertical-align:middle;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 45px; vertical-align:middle; font-size:11px; color : #6E7172;">Search:</td>
+
+                        <td style="width: 300px;">
+                            <QuickSearchTextBox [ObjectTableName]="'Opportunity'" [DropDownWidth]="600" [ItemHeight]="35" (DataLoaded)="QuickSearchItems = $event">
+                                <ul>
+                                    <li class="LogitudeQuickSearchItem" style="height:35px;" *ngFor="let item of QuickSearchItems" (mousedown)="EditOpportunity(item)">
+                                        <table>
+                                            <tr>
+                                                <td style="width:5px">
+                                                    <div></div>
+                                                </td>
+                                                <td style="width:200px;min-width:200px;max-width:200px;color:#282E30; font-size:10px; " class="TextTrimming">{{item.Subject}}</td>
+                                                <td style="width:10px">
+                                                    <div></div>
+                                                </td>
+                                                <td style="width:200px;min-width:200px;max-width:200px;color:#1B90CB;font-size:12px; " class="TextTrimming">{{item.CustomerName}}</td>
+                                                <td style="width:3px">
+                                                    <div></div>
+                                                </td>
+                                                <td style="width:90px;min-width:90px;max-width:90px;font-size:11px; ">
+                                                    <label [ngStyle]="{color: item.StageName | StringToColorPipe:'OpportunityStage'}">{{item.StageName}}</label>
+                                                </td>
+                                                <td style="width:3px">
+                                                    <div></div>
+                                                </td>
+                                                <td style="width:200px;min-width:200px;max-width:200px;color:#282E30;font-size:10px;" class="TextTrimming">{{item.OwnerName}}</td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </li>
+                                </ul>
+                            </QuickSearchTextBox>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+
+                        <td style="width:150px;">
+                            <ComboBox [ItemsSource]="RecordsTypesFilterList" [Binding]="'Name'" [SelectedItem]="SelectedRecordsTypeFilter" (SelectedItemChanged)="SelectedRecordsTypeFilter = $event"></ComboBox>
+                        </td>
+
+                        <td style="width:2px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 1px;">
+
+                            <!-- Salesmen -->
+                            <table *ngIf="RecordsTypeFilterCode == 'S'">
+                                <tr>
+                                    <td style="width:150px; min-width: 150px;">
+                                        <ComboBox [ItemsSource]="BusinessUnitFilterList" [Binding]="'Name'" [SelectedItem]="SelectedBusinessUnitFilter" (SelectedItemChanged)="SelectedBusinessUnitFilter = $event"></ComboBox>
+                                    </td>
+
+                                    <td style="width:2px; min-width: 2px;">
+                                        <div></div>
+                                    </td>
+
+
+                                    <td style="width: 200px; min-width: 200px;">
+                                        <ComboBox *ngIf="IsBusinessUnitUsers" [ItemsSource]="BusinessUnitUsersFilterList" [Binding]="'Name'" [SelectedItem]="SelectedUserFilter" (SelectedItemChanged)="SelectedUserFilter = $event"></ComboBox>
+                                        <LogLov *ngIf="!IsBusinessUnitUsers"
+                                                [ObjectTableName]="'CRM_UsersFilter'"
+                                                [ObjectFieldName]="'ListOfValuesUserId'"
+                                                [SelectedValue]="ListOfValuesUserId"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'User'"
+                                                [HideColumns]="true"
+                                                [NoObjectField]="true">
+                                        </LogLov>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Creator -->
+                            <table *ngIf="RecordsTypeFilterCode == 'C'">
+                                <tr>
+                                    <td style="width:150px; min-width: 150px;">
+                                        <ComboBox [ItemsSource]="CreatedByTypesFilterList" [Binding]="'Name'" [SelectedItem]="SelectedCreatedByTypeFilter" (SelectedItemChanged)="SelectedCreatedByTypeFilter = $event"></ComboBox>
+                                    </td>
+
+                                    <td style="width:2px; min-width: 2px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width: 200px; min-width: 200px;">
+                                        <LogLov [ObjectTableName]="'CRM_UsersFilter'"
+                                                [ObjectFieldName]="'ListOfValuesUserId'"
+                                                [SelectedValue]="ListOfValuesUserId"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'User'"
+                                                [HideColumns]="true"
+                                                [NoObjectField]="true">
+                                        </LogLov>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr style="height: 5px;">
+            <td>
+                <div></div>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <table>
+                    <tr>
+                        <td style="width:250px;">
+                            <div class="MediaFill">
+                                <SectionBox [Scrolling]="true">
+                                    <SectionHead>Opportunities Queries</SectionHead>
+                                    <SectionBody>
+                                        <div class="QueriesSection" *ngIf="OpenQueriesVisibility">
+                                            <div>Open Opportunities</div>
+                                            <div style="height:22px; width: 57px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px; right:2px;">
+                                                <button class="Button" (click)="RunOpportunityWizard()">New</button>
+                                            </div>
+                                            <div>
+                                                <p class="QueryLink" (click)="ViewOpportunityQuery('Open:My')" *ngIf="MyOpenQueryVisibility">My Open Opportunities ({{MyOpenCount}})</p>
+                                                <p class="QueryLink" (click)="ViewOpportunityQuery('Open:All')" *ngIf="AllOpenQueryVisibility">All Open Opportunities ({{AllOpenCount}})</p>
+                                                <p class="QueryLink" (click)="ViewOpportunityQuery('OpenByStage')" *ngIf="StageOpenQueryVisibility">Opportunities by Stage ({{OpenByStageCount}})</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="QueriesSection" *ngIf="ClosedQueriesVisibility">
+                                            <div>Closed Opportunities</div>
+                                            <div>
+                                                <p class="QueryLink" (click)="ViewOpportunityQuery('Closed:My')" *ngIf="MyClosedQueryVisibility">My Closed Opportunities</p>
+                                                <p class="QueryLink" (click)="ViewOpportunityQuery('Closed:All')" *ngIf="AllClosedQueryVisibility">All Closed Opportunities</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="QueriesSection" *ngIf="OtherQueriesVisibility">
+                                            <div>Others</div>
+                                            <div>
+                                                <p class="QueryLink" (click)="ViewOpportunityQuery('All')" *ngIf="AllQueryVisibility">All Opportunities</p>
+                                                <p class="QueryLink" (click)="ViewOpportunityQuery('Cancelled')" *ngIf="CancelledQueryVisibility">Cancelled Opportunities</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="QueriesSection" *ngIf="MyViewsQueryVisibility">
+                                            <div>My Views</div>
+                                            <div style="height:80px;">
+                                                <UsersQueryList [ReloadUserQueries]="ReloadUserQueries" [ObjectTableName]="'Opportunity'" [BackButtonTitle]="'CRM'" (BackCompletedEvent)="onUserQueriesBackComplete($event)"></UsersQueryList>
+                                            </div>
+                                        </div>
+                                    </SectionBody>
+                                </SectionBox>
+                            </div>
+                        </td>
+
+                        <td style="width:10px;">
+                            <div></div>
+                        </td>
+
+                        <td>
+                            <div class="MediaFill">
+                                <table>
+
+                                    <!-- Recent Opportunities -->
+                                    <tr>
+                                        <td>
+                                            <div class="MediaFill">
+                                                <SectionBox [Scrolling]="true">
+                                                    <SectionHead>{{RecentOpportunitiesCount}} Recent Opportunities</SectionHead>
+                                                    <SectionBody>
+                                                        <ul>
+                                                            <li class="RecentEntityItem" *ngFor="let item of RecentOpportuntiesList" (click)="EditOpportunity(item)">
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width:5px;min-width:5px; overflow: hidden;" rowspan="2" [ngStyle]="{background: item.RatingCode | StringToColorPipe:'QuoteRatingCode'}">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td style="width: 5px;min-width:5px" rowspan="2">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td style="width:80px;min-width:80px;max-width:80px; position: relative;" rowspan="2">
+                                                                            <div style="position: absolute; left: 3px; top: 3px; width: 20px; height: 20px;" title="{{item.LastActivityTypeName}}">
+                                                                                <div *ngIf="item.LastActivityTypeName == 'New'" style="width: 20px; height: 20px; background: url('Images/RecentEntity/Added.png') center center no-repeat; background-size: contain;"></div>
+                                                                                <div *ngIf="item.LastActivityTypeName == 'View'" style="width: 20px; height: 20px; background: url('Images/RecentEntity/Viewed.png') center center no-repeat; background-size: contain;"></div>
+                                                                                <div *ngIf="item.LastActivityTypeName == 'Update'" style="width: 20px; height: 20px; background: url('Images/RecentEntity/Edited.png') center center no-repeat; background-size: contain;"></div>
+                                                                            </div>
+
+                                                                            <div style="position: absolute; left: 3px; bottom: 1px; color: #282E30;">{{item.LastActivityDate | DateTimeToDatePipe}}</div>
+
+
+                                                                        </td>
+
+                                                                        <td style="width: 5px;min-width:5px;max-width:5px" rowspan="2">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td style="width:120px;min-width:120px;max-width:120px; position: relative;" rowspan="2">
+                                                                            <div style="width:auto;height:50%;color:black">{{item.Subject}}</div>
+                                                                            <div style="width:120px; max-width:120px; color:#1B90CB" title="Customer" class="TextTrimming">{{item.CustomerName}}</div>
+                                                                        </td>
+
+                                                                        <td style="width: 5px;" rowspan="2">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td style="width:120px;min-width:120px;max-width:120px; height: 100%;" rowspan="2">
+                                                                            <div style="width:100%;height:50%"> </div>
+                                                                            <div style="width:120px;height:50%;color:black">{{item.OwnerName}}</div>
+
+                                                                        </td>
+
+                                                                        <td style="width: 5px;" rowspan="2">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td style="width:240px; height: 100%;max-width:240px" rowspan="2">
+                                                                            <div style="width:100%;height:50%;color:black">{{item.ValueField | NumbersPipe:'N2'}} </div>
+                                                                            <div style="width:240px;min-width:240px;height:50%" *ngIf="item.EstimatedClosingDate != 0 && item.EstimatedClosingDate != null">
+                                                                                Closing Date:
+                                                                                <label style="color:black">{{item.EstimatedClosingDate |  DateTimePipe:'DTTA' }}</label>
+                                                                            </div>
+                                                                            <div *ngIf="item.EstimatedClosingDate == null" style="height:50%;width:100%"></div>
+
+                                                                        </td>
+
+                                                                        <td style="width: 5px;min-width:5px" rowspan="2">
+                                                                            <div></div>
+                                                                        </td>
+
+
+                                                                        <td style="width:240px;min-width:240px;max-width:240px; height: 100%;" rowspan="2">
+
+
+                                                                            <div style="font-size:10px;height:50%;width:100%">
+                                                                                <label [ngStyle]="{color: item.StageName | StringToColorPipe:'OpportunityStage'}" style="width:60%">{{item.StageName}}</label>
+                                                                                <label *ngIf="item.LastStageDate != null">({{item.LastStageDate | StageAgePipe:'1'}})</label>
+                                                                            </div>
+                                                                            <div style="width:240px;min-width:240px;height:50%" *ngIf="item.NumberOfShipments != null">
+                                                                                {{'Opportunity.F.NumberOfShipments'| TextCodeTranslationPipe}}
+                                                                                <label style="color:black">{{item.NumberOfShipments | NumbersPipe:'N2'}}</label>
+                                                                            </div>
+                                                                            <div *ngIf="item.NumberOfShipments == null" style="height:50%;width:100%"></div>
+                                                                        </td>
+
+
+
+                                                                        <td rowspan="2">
+                                                                            <div></div>
+                                                                        </td>
+
+
+                                                                    </tr>
+
+                                                                </table>
+                                                            </li>
+                                                        </ul>
+
+                                                        <div *ngIf="NoRecentVisibility" class="NoDataText" style="top:5px;">No Recent Opportunities</div>
+                                                    </SectionBody>
+                                                </SectionBox>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr style="height: 10px;">
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div class="MediaFill">
+                                                <table>
+                                                    <tr>
+
+                                                        <!-- Top Opportunities -->
+                                                        <td>
+                                                            <div class="MediaFill">
+                                                                <SectionBox [Scrolling]="true">
+                                                                    <SectionHead>
+                                                                        <table>
+                                                                            <tr>
+                                                                                <td style="color: #45494A; font-size: 14px;">
+                                                                                    Top Opportunities
+                                                                                </td>
+
+                                                                                <td>
+                                                                                    <div></div>
+                                                                                </td>
+
+                                                                                <td class="Label" style="width:20px;">By:</td>
+
+                                                                                <td style="width:5px;">
+                                                                                    <div></div>
+                                                                                </td>
+
+                                                                                <td style="width:130px;">
+                                                                                    <ComboBox [ItemsSource]="TopOpportunitiesFilterList" [Binding]="'Name'" [SelectedItem]="SelectedTopOpportunitiesFilter" (SelectedItemChanged)="SelectedTopOpportunitiesFilter = $event"></ComboBox>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </SectionHead>
+
+                                                                    <SectionBody>
+                                                                        <ul>
+                                                                            <li class="RecentEntityItem" *ngFor="let item of TopOpportunitiesList" (click)="EditOpportunity(item.entityList)">
+                                                                                <table>
+                                                                                    <tr>
+                                                                                        <td style="width:5px;min-width:5px; overflow:hidden;" rowspan="2" [ngStyle]="{background: item.RatingCode | StringToColorPipe:'QuoteRatingCode'}">
+                                                                                            <div></div>
+                                                                                        </td>
+
+                                                                                        <td style="width:5px;min-width:5px;" rowspan="2">
+                                                                                            <div></div>
+                                                                                        </td>
+
+
+                                                                                        <td style="width:120px;min-width:120px;max-width:120px; position: relative;" rowspan="2">
+                                                                                            <div style="width:auto;height:50%;color:black">{{item.Topic}}</div>
+                                                                                            <div style="width:120px; max-width:120px; color:#1B90CB" title="Customer" class="TextTrimming">{{item.CustomerName}}</div>
+                                                                                        </td>
+
+                                                                                        <td style="width:5px;min-width:5px;" rowspan="2">
+                                                                                            <div></div>
+                                                                                        </td>
+
+                                                                                        <td style="width:120px;min-width:120px;max-width:120px; position: relative;" rowspan="2">
+                                                                                            <div style="width:auto;height:50%;"></div>
+                                                                                            <div style="width:120px; max-width:120px; color:black" title="Owner" class="TextTrimming">{{item.OwnerName}}</div>
+                                                                                        </td>
+                                                                                        <td rowspan="2">
+                                                                                            <div></div>
+                                                                                        </td>
+                                                                                        <td style="width:150px;min-width:150px;max-width:120px; height: 100%;" rowspan="2">
+
+
+                                                                                            <div style="font-size:10px;height:50%;width:100%">
+                                                                                                <label [ngStyle]="{color: item.StageName | StringToColorPipe:'OpportunityStage'}" style="width:60%">{{item.StageName}}</label>
+                                                                                                <label *ngIf="item.StageAge != null">({{item.StageAge | StageAgePipe:'1'}})</label>
+                                                                                            </div>
+                                                                                            <div style="width:150px;min-width:150px;height:50%" *ngIf="item.FilterValue != 0 && item.FilterValue != 'null'">
+                                                                                                <label style="color:black">{{item.FilterValue}}</label>
+                                                                                            </div>
+                                                                                            <div *ngIf="item.FilterValue == 'null'" style="height:50%;width:100%"></div>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </li>
+                                                                        </ul>
+
+                                                                        <div *ngIf="NoTopVisibility" class="NoDataText" style="top:5px;">No Top Opportunities</div>
+                                                                    </SectionBody>
+                                                                </SectionBox>
+                                                            </div>
+                                                        </td>
+
+                                                        <td style="width: 10px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <!-- Funnel -->
+                                                        <td>
+                                                            <div class="MediaFill">
+                                                                <SectionBox>
+                                                                    <SectionHead>
+                                                                        <table>
+                                                                            <tr>
+                                                                                <td style="color: #45494A; font-size: 14px;">
+                                                                                    Sales Funnel
+                                                                                </td>
+
+                                                                                <td></td>
+
+                                                                                <td class="Label" style="width:20px;">By:</td>
+
+                                                                                <td style="width:5px;">
+                                                                                    <div></div>
+                                                                                </td>
+
+                                                                                <td style="width:130px;">
+                                                                                    <ComboBox [ItemsSource]="FunneFilterList" [Binding]="'Name'" [SelectedItem]="SelectedFunnelFilter" (SelectedItemChanged)="SelectedFunnelFilter = $event"></ComboBox>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </SectionHead>
+                                                                    <SectionBody>
+                                                                        <div class="MediaFill" style="border:solid;border-color:lightgrey;border-width:1px;">
+                                                                            <div [attr.id]="SalesFunnelId" style="width:100%;height:100%" class="CellContent" (click)="FunnelClick()"></div>
+                                                                        </div>
+                                                                    </SectionBody>
+                                                                </SectionBox>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>

@@ -1,0 +1,1 @@
+alter table shipments add FNAReason varchar(40) null

@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+
+<!--
+please use <Update> tag inside <Updates> tag to add any updates you want to execute,
+in the updates you might add {updatetenantzero,customs,tenants,crm,social,accounting,warehouse} to be updated
+Please use <BuildZipFiles> tag inside <ZipFiles> tag to add the build zip files,
+in the zip files you can add {buildzipfilesgeneral,buildzipfilescustoms} to be built.
+Please use <script> tag inside <Scripts> tag to add a script to execute.
+if you want to execute a script before the update just assign the attribute order to "before" else assign it to "after"
+-->
+  
+<Root>
+  
+<Updates>
+ <Update>
+    updatetenantzero
+  </Update>
+ 
+  <Update>
+    customs
+  </Update>
+  <!-- 
+ <Update>
+    tenants
+  </Update>-->
+</Updates>
+  
+<ZipFiles>
+   <BuildZipFiles>
+      buildzipfilesgeneral
+   </BuildZipFiles>
+   <BuildZipFiles>
+     buildzipfilescustoms
+   </BuildZipFiles>
+</ZipFiles>
+  
+<Scripts>
+  <!--<script order="before">
+    update customs.Declarations set IsChanged=1 where Id='1-192'
+  </script>
+  
+  <script order="after">
+    update customs.Declarations set IsChanged=0 where Id='1-192'
+  </script>
+
+  <globalscript order="before">
+    update GlobalTenants set Version=-5 where id=5
+  </globalscript>
+  
+  <globalscript order="after">
+    update GlobalTenants set Version=-6 where id=6
+  </globalscript>-->
+</Scripts>
+  
+  <!--<Features>
+    <RoleFeatures>
+      f:\Role features_10-2-2017.csv
+    </RoleFeatures>
+
+    <PackageFeatures>
+      f:\package features_10-2-2017.csv
+    </PackageFeatures>
+    
+  </Features>-->
+</Root>

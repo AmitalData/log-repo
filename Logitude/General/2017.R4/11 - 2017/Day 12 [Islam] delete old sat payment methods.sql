@@ -1,0 +1,1 @@
+﻿delete  from SATPaymentMethods where Code = '07' or Code = '09' or Code = '10' or Code = '11' or Code = '16' or Code = '98'

@@ -1,0 +1,256 @@
+<style>
+    
+    .NoRows{
+        text-align: center;
+        color: #a0a0a0;
+        font-size: 15px;
+        font-style: italic;
+        font-family: verdana;
+        vertical-align: middle;
+        position: relative;
+        height: 100px;
+    }
+    .tab-footer {
+        background: #f7f7f7;
+        height: 85px;
+        border-radius: 7px;
+        border-bottom-left-radius: unset;
+        margin-right: -1px;
+        padding: 7px 10px;
+        -webkit-box-shadow: 0px -3px 4px -1px rgba(0,0,0,0.31);
+        -moz-box-shadow: 0px -3px 4px -1px rgba(0,0,0,0.31);
+        box-shadow: 0px -3px 4px -1px rgba(0,0,0,0.31);
+    }
+
+    .SimpleGridHeaderRow td, .CellStretched {
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    
+
+    .Disabled {
+        background: #d80070;
+        opacity: 0.5;
+    }
+
+    .footer-title {
+        color: #1692ef;
+        font-size: 15px;
+    }
+
+    .footer-cell {
+        float: left;
+        padding: 5px;
+        margin: 0px 10px;
+        width: 150px;
+        text-align: center;
+        overflow: auto;
+    }
+
+    .footer-summery::before, .footer-summery::after {
+        clear: both;
+    }
+
+    .footer-summery {
+        padding-left: 150px;
+    }
+
+    .border-left {
+        border-left: 1px solid #dadada;
+    }
+
+    .SimpleGridHeaderRow td, .CellStretched {
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .red {
+        color: #d60000 !important;
+    }
+    .CellStretched{
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        padding: 0px 5px !important;
+    }
+    .SimpleGridViewRow:hover{
+        background: #efefef !important;
+    }
+</style>
+
+
+<table>
+    <tr>
+        <td>
+            <div class="TableHolder">
+                <table>
+                    <!-- Header -->
+                    <tr class="TabTitleRow">
+                        <td>
+                            {{'Accounting.General.O.Details' | TextCodeTranslationPipe}}
+                            <div style="width: 60px; float: right;">
+                                <!--<button class="Button" (click)="ReconcileButtonClicked()">Reconicle</button>-->
+                            </div>
+                        </td>
+
+                    </tr>
+
+                    <!-- Fields -->
+                    <!--<tr style="height: 50px;">
+                        <td style="">
+                            <table>
+                                <tr class="FormFieldRow">
+
+                                    <td style="width: 330px;">
+                                        <table>
+                                             LocalName 
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 100px;">
+                                                    <LogLabel [ObjectFieldName]="'LocalName'" [ObjectTableName]="ObjectTableName"
+                                                                [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 230px;padding-right: 36px;">
+                                                    <LogTextBox [ObjectFieldName]="'LocalName'" [InputType]="'ntext'" [DataContext]="DataContext"
+                                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                        </table>
+                                    </td>
+
+                                    <td style="width: 20px;"><div></div></td>
+
+                                    <td style="width: 300px;">
+                                        <table>
+                                            <tr><td><div></div></td></tr>
+                                        </table>
+                                    </td>
+
+                                    <td><div></div></td>
+                                </tr>
+                                </table>
+                            </td>
+                        </tr>-->
+
+                    <tr style="height: 20px;"><td><div></div></td></tr>
+
+                    <!-- Toolbar -->
+                    <tr style="height: 20px;">
+                        <td style="padding: 4px;">
+                            <!--<div style="float: right; padding: 4px; width: 250px;">
+                                <SearchTextBox [ObjectTableName]="ObjectTableName" [PlaceHolder]="'Cheque Number / Bank Account'" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
+                            </div>-->
+                            <div style="width: 30px; float: right;">
+                                <!--<IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>-->
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Lines -->
+                    <tr>
+                        <td style="height: 100%; padding-bottom: 75px;">
+                            <div class="SimpleGridView">
+                                <div class="SimpleGridViewHeader">
+                                    <table>
+                                        <tr class="SimpleGridHeaderRow">
+                                            <td style="width: 100px; max-width: 100px;padding-right:5px;padding-left:5px">{{'LedgerTransaction.F.CreateDate' | TextCodeTranslationPipe}}</td>
+                                            <td style="width: 90px; max-width: 90px;padding-right:5px;padding-left:5px">{{'LedgerTransaction.F.JournalNumber' | TextCodeTranslationPipe}}</td>
+                                            <td style="width: 100px; max-width: 100px;padding-right:5px;padding-left:5px">{{'LedgerTransaction.F.DueDate' | TextCodeTranslationPipe}}</td>
+                                            <td style="width: 110px; max-width: 110px;padding-right:5px;padding-left:5px">{{AmountText}}</td>
+                                            <td style="width: 110px; max-width: 110px;padding-right:5px;padding-left:5px">{{'Accounting.General.O.ReconciliationAmount' | TextCodeTranslationPipe}}</td>
+                                            <td style="width: 75px; max-width: 75px;padding-right:5px;padding-left:5px">{{'LedgerTransaction.F.Reference1' | TextCodeTranslationPipe}}</td>
+                                            <td style="width: 75px; max-width: 75px;padding-right:5px;padding-left:5px">{{'LedgerTransaction.F.Reference2' | TextCodeTranslationPipe}}</td>
+                                            <td style="width: 75px; max-width: 75px;padding-right:5px;padding-left:5px">{{'LedgerTransaction.F.Reference3' | TextCodeTranslationPipe}}</td>
+                                            <td style="border-right: 1px solid #D1D3D4;;padding-right:5px;padding-left:5px">{{'LedgerTransaction.F.Notes' | TextCodeTranslationPipe}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div class="SimpleGridViewBody">
+                                    <table *ngIf="EntityPM">
+                                        <tr *ngIf="NoRows"><td class="CenterCenter NoRows">No Cheques in the Cashbook</td></tr>
+
+                                        <tr class="SimpleGridViewRow" *ngFor="let item of ItemSource; let i=index;" [class.bg]="item.OddEven">
+
+                                            <td class="CellStretched" style="width: 100px; max-width: 100px">
+                                                {{item.Line.CreateDate | DateTimeToDatePipe }}
+                                            </td>
+
+                                            <td class="CellStretched" style="width: 90px; max-width: 90px">
+                                                <a href="javascript:;" (click)="OpenJournal(item.Line.JournalId)">{{item.Line.JournalNumber}}</a>
+                                            </td>
+
+                                            <td class="CellStretched" style="width: 100px; max-width: 100px">
+                                                {{item.Line.DueDate | DateTimeToDatePipe }}
+                                            </td>
+
+                                            <td class="CellStretched" style="width: 110px; max-width: 110px;text-align: right; color:#00a192;" [class.red]="item.Line.ForeignAmountDebit > 0">
+                                                {{item.TransactionAmount| NumbersPipe:'N2' }} 
+                                            </td>
+
+                                            <td class="CellStretched" style="width: 110px; max-width: 110px; text-align: right; color:#00a192;" [class.red]="item.Line.ReconciliationAmount<0">
+                                                {{item.Line.ReconciliationAmount | NumbersPipe:'N2' }}  {{item.Line.CurrencySign}}
+                                            </td>
+
+                                            <td class="CellStretched" style="width: 75px; max-width: 75px">
+                                                {{item.Line.Reference1}}
+                                            </td>
+                                            <td class="CellStretched" style="width: 75px; max-width: 75px">
+                                                {{item.Line.Reference2}}
+                                            </td>
+                                            <td class="CellStretched" style="width: 75px; max-width: 75px">
+                                                {{item.Line.Reference3}}
+                                            </td>
+
+                                            <td class="CellStretched">
+                                                {{item.Line.Notes}}
+                                            </td>
+
+                                            
+                                            <td><div></div></td>
+
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="5">
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr><td><div></div></td></tr>
+
+
+
+                </table>
+            </div>
+        </td>
+    </tr>
+
+</table>
+
+<!-- Footer -->
+<!--<div style="position: absolute; left: 0px; bottom: 0px; right: 0px;">
+    <div class="tab-footer">
+        <div class="footer-title">
+            Totals
+        </div>
+        <div class="footer-summery">
+            <div class="footer-cell" style="text-align: right;">
+                <div style="font-size: 15px; font-weight: bold; color:#00a192;" [class.red]="TotalSum<=0">{{TotalSum | NumbersPipe:'N2'}}</div>
+                <div style="font-size: 13px; color: #6f6f6f;">Amount</div>
+            </div>
+        </div>
+
+    </div>
+</div>-->
+
+
+

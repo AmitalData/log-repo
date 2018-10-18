@@ -1,0 +1,212 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Customs.Def.Validators;
+  
+namespace Logitude.Customs.Def.EntityPMs
+{
+   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class DeclarationTaxPM : EntityPM
+   {
+   	  private string declarationId ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DeclarationId  
+	   {
+	    
+	     get
+		{
+		   return declarationId;
+		 }
+		 set
+		 {
+		   if(declarationId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeclarationId",OldValue=declarationId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   declarationId=value;
+		   }
+			
+		 }
+	   }
+	  private string taxTypeCode ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TaxTypeCode  
+	   {
+	    
+	     get
+		{
+		   return taxTypeCode;
+		 }
+		 set
+		 {
+		   if(taxTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TaxTypeCode",OldValue=taxTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   taxTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? totalAmount ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? TotalAmount  
+	   {
+	    
+	     get
+		{
+		   return totalAmount;
+		 }
+		 set
+		 {
+		   if(totalAmount != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TotalAmount",OldValue=totalAmount,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   totalAmount=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? deferredTaxAmount ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? DeferredTaxAmount  
+	   {
+	    
+	     get
+		{
+		   return deferredTaxAmount;
+		 }
+		 set
+		 {
+		   if(deferredTaxAmount != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeferredTaxAmount",OldValue=deferredTaxAmount,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   deferredTaxAmount=value;
+		   }
+			
+		 }
+	   }
+	  private int tenant ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+	  private string taxTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TaxTypeName  
+	   {
+	    
+	     get
+		{
+		   return taxTypeName;
+		 }
+		 set
+		 {
+		   if(taxTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TaxTypeName",OldValue=taxTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   taxTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? taxBaseAmount ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? TaxBaseAmount  
+	   {
+	    
+	     get
+		{
+		   return taxBaseAmount;
+		 }
+		 set
+		 {
+		   if(taxBaseAmount != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TaxBaseAmount",OldValue=taxBaseAmount,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   taxBaseAmount=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? taxToPay ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? TaxToPay  
+	   {
+	    
+	     get
+		{
+		   return taxToPay;
+		 }
+		 set
+		 {
+		   if(taxToPay != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TaxToPay",OldValue=taxToPay,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   taxToPay=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

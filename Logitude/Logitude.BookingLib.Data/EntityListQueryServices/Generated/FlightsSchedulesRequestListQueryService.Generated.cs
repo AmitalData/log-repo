@@ -1,0 +1,175 @@
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Server.Infrastructure.Helpers;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
+
+using Logitude.BookingLib.Data.EntityPOCOs;
+using Logitude.BookingLib.Data.EntityLists;
+
+namespace Logitude.BookingLib.Data.EntityListQueryServices
+{ 
+
+    public partial class FlightsSchedulesRequestListQueryService
+    {
+         private IBookingContext context;
+        public FlightsSchedulesRequestListQueryService(IBookingContext context)
+        {
+            this.context = context;
+        }
+
+        public List<FlightsSchedulesRequestList> GetList(QueryOperations queryOperations, int tenant)
+        {
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+
+            IQueryable<FlightsSchedulesRequest> iQueryable = (from a in context.FlightsSchedulesRequests
+                                              
+                   where a.Tenant == tenant select a);
+            			iQueryable = ApplyBusinessUnitFilters(queryOperations, iQueryable,tenant);
+						iQueryable = ApplyCustomFilters(queryOperations, iQueryable,tenant);
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+
+            iQueryable = filter.GetFilteredQuery<FlightsSchedulesRequest>(nonListQueryOperation, iQueryable);
+
+            int skippedPorts = queryOperations.PageIndex;
+
+            IQueryable<FlightsSchedulesRequestList> query2 = GetIqueryableList(iQueryable);
+           
+            query2 = filter.GetFilteredQuery<FlightsSchedulesRequestList>(listQueryOperation, query2);
+
+            if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
+            {
+                PropertyInfo propInfo = typeof(FlightsSchedulesRequestList).GetProperty(queryOperations.SortByColumnName);
+                List<ObjectField> FlightsSchedulesRequestObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("FlightsSchedulesRequest",tenant).ToList();
+
+                ObjectField objectField = (from a in FlightsSchedulesRequestObjectFields
+                                           where a.FieldName == queryOperations.SortByColumnName
+                                           select a).FirstOrDefault();
+
+                if (objectField != null)
+                {
+				 if (objectField.IsCustom)
+                    {
+                        query2 = sortClass.GetSorterQuery<FlightsSchedulesRequestList, string>(queryOperations, query2);
+                    }
+                    else
+                    {
+                     switch (objectField.DataTypeCode.ToLower())
+                     {
+                         case "ntext":
+                        case "text":
+                            {
+                                query2 = sortClass.GetSorterQuery<FlightsSchedulesRequestList, string>(queryOperations, query2);
+                                break;
+                            }
+						case "sigdouble":
+						case "double":
+                            {
+                                query2 = sortClass.GetSorterQuery<FlightsSchedulesRequestList, double>(queryOperations, query2);
+                                break;
+                            }
+						case "date":
+                        case "datetime":
+                            {
+                                query2 = sortClass.GetSorterQuery<FlightsSchedulesRequestList, DateTime>(queryOperations, query2);
+                                break;
+                            }
+						case "unsinteger":
+                        case "integer":
+                            {
+                                query2 = sortClass.GetSorterQuery<FlightsSchedulesRequestList, int>(queryOperations, query2);
+                                break;
+                            }
+                        case "boolean":
+                            {
+                                query2 = sortClass.GetSorterQuery<FlightsSchedulesRequestList, bool>(queryOperations, query2);
+                                break;
+                            }
+						case "unsdecimal":
+						case "decimal":
+                            {
+                                query2 = sortClass.GetSorterQuery<FlightsSchedulesRequestList, decimal>(queryOperations, query2);
+                                break;
+                            }
+                        default:
+                            {
+                                query2 = query2.OrderBy(d => d.Id);
+                                break;
+                            }
+                    }
+				 }
+                }
+            }
+		    else
+            {
+                query2 = query2.OrderBy(d => d.Id);
+            }
+			if(!queryOperations.GetAll)
+			{
+             query2 = query2.Skip(skippedPorts);
+             query2 = query2.Take(queryOperations.PageSize);
+			}
+            return query2.ToList();
+
+    
+        }
+
+         public List<FlightsSchedulesRequestList> GetList(int tenant)
+         {
+             return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
+         }
+
+        public FlightsSchedulesRequestList GetSingle(string id)
+        {
+            IQueryable<FlightsSchedulesRequest> FlightsSchedulesRequestQuery = (from a in context.FlightsSchedulesRequests
+                                                       where a.Id == id
+                                                       select a);
+
+             
+            IQueryable<FlightsSchedulesRequestList> FlightsSchedulesRequestListQuery = GetIqueryableList( FlightsSchedulesRequestQuery);
+            FlightsSchedulesRequestList FlightsSchedulesRequestList = FlightsSchedulesRequestListQuery.FirstOrDefault();
+            return FlightsSchedulesRequestList;
+           
+        }
+
+        public int GetListCount(QueryOperations queryOperations, int tenant)
+        {
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+
+            IQueryable<FlightsSchedulesRequest> iQueryable = (from a in context.FlightsSchedulesRequests 
+                   where a.Tenant == tenant select a);
+
+			  			iQueryable = ApplyBusinessUnitFilters(queryOperations, iQueryable,tenant);
+						iQueryable = ApplyCustomFilters(queryOperations, iQueryable,tenant);
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+            
+			iQueryable = filter.GetFilteredQuery<FlightsSchedulesRequest>(nonListQueryOperation, iQueryable);
+
+            IQueryable<FlightsSchedulesRequestList> query2 = GetIqueryableList(iQueryable);
+
+            query2 = filter.GetFilteredQuery<FlightsSchedulesRequestList>(listQueryOperation, query2);
+            int count = query2.Count();
+            return count;
+        }
+
+      
+    }
+}
+	 

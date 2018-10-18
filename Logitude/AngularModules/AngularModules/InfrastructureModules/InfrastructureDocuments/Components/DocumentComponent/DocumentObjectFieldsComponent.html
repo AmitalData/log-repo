@@ -1,0 +1,479 @@
+﻿<style>
+    .iwanttohover:hover {
+        background: #DDE6F0;
+    }
+
+  
+</style>
+
+
+         <table>
+
+                    <tr style="height:100%;vertical-align:top">
+
+
+                        <td style="Vertical-align:top">
+                            <div style="Vertical-align:top">
+
+
+                                <div class="TabControl" style="position: absolute; top:0px; height: calc(100% - 0px)">
+                                    <div class="TabControlHead">
+                                        <ul style="margin-left: 10px;">
+
+
+                                            <li *ngIf="IsShowTabObjectField" [class.Selected]="SelectedTabCode == 'DAF'" (click)="SelectedTabCode = 'DAF'">
+                                                <div class="InnerChild">
+                                                    <span style="color:black;width:100px">{{'General.O.DataFields' | TextCodeTranslationPipe}}</span>
+
+                                                </div>
+                                            </li>
+
+                                            <li *ngIf="!HideSystemDataTab" [class.Selected]="SelectedTabCode == 'SAF'" (click)="SelectedTabCode = 'SAF'">
+                                                <div class="InnerChild">
+                                                    <span style="color:black;width:100px">{{'General.O.SystemData' | TextCodeTranslationPipe}}</span>
+
+
+                                                </div>
+                                            </li>
+
+
+
+                                        </ul>
+
+
+
+
+                                    </div>
+
+
+
+                            
+                                    <div class="TabControlBody">
+                                        <!--   Tab 1-->
+                                        <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'DAF'">
+                                           
+                                            <div class="LocationDirective" LocationDirective Code="OVE">
+
+
+                                                <div style="height:30px;">
+                                                    <table>
+                                                        <tr class="TabTitleRow">
+
+
+                                                            <td style="height:20px">
+                                                                <div  style="width:10px;text-align:left;float: left"></div>
+
+                                                                    <div style="margin-left:10px;margin-right:10px;text-align:left" class="SearchBox">
+                                                                        <input [disabled]="!IsTextSearchEnabled" type="text" placeholder="Search" (focus)="OnFucos();" (blur)="OnLostFucos();" [formControl]="SearchTextValue" />
+                                                                        
+
+                                                                    </div>
+
+
+
+</td>
+                                                        </tr>
+                                                    </table>
+
+                                                </div>
+                                                <div style="height:5px"></div>
+
+                                                    <div style="margin:5px;overflow-y:auto;overflow-x:no-display;max-height:415px" class="BodyBackground">
+
+                                                        <table style="vertical-align:top;top:0px;">
+
+
+
+                                                            <tr style="text-align:left;vertical-align:top" *ngFor="let item of DataSource">
+                                                                <td style="min-height:30px;">
+                                                                    <table>
+
+                                                                        <tr>
+                                                                            <td *ngIf="item &&  item.HasTree" style="width:20px">
+                                                                                <div style="width:20px">
+                                                                                    <span *ngIf="item && !item.IsViewTree" style="width:20px"><img (click)="item.LoadItems()" style="margin-right:5px;margin-top:0px;border:0px;background-color:transparent;height:12px;width:12px" src="./Images/treeIcon.png" /></span>
+                                                                                    <span *ngIf="item && item.IsViewTree" style="width:20px"><img (click)="item.LoadItems()" style="margin-right:5px;margin-top:0px;border:0px;background-color:transparent;height:12px;width:12px" src="./Images/treeIcon2.png" /></span>
+                                                                                </div>
+                                                                            </td>
+
+                                                                            <td *ngIf="item &&  !item.HasTree" style="width:20px">
+                                                                                <div style="width:20px"></div>
+
+                                                                            </td>
+
+
+                                                                            <td (click)="ObjectDataSourceChangeSelected(item)" class="iwanttohover" colspan="2" [style.background]="item.DivSelectBackgroud" *ngIf="item" style="width:100px;height:24px"><p style="display:inline-block;">{{item.TranslatedText}}</p></td>
+
+
+                                                                        </tr>
+
+                                                                        <tr>
+
+                                                                            <td style="width:20px"></td>
+
+
+
+                                                                            <td colspan="2">
+                                                                                <table *ngIf="item && item.IsViewTree">
+                                                                                    <tr style="text-align:left;vertical-align:top;" *ngFor="let item of item.Items">
+
+                                                                                        <td style="min-height:30px;">
+                                                                                            <table>
+
+                                                                                                <tr>
+                                                                                                    <td *ngIf="item && item.HasTree" style="width:20px">
+                                                                                                        <div style="width:20px">
+                                                                                                            <span *ngIf="item && !item.IsViewTree" style="width:20px"><img (click)="item.LoadItems()" style="margin-right:5px;margin-top:0px;border:0px;background-color:transparent;height:12px;width:12px" src="./Images/treeIcon.png" /></span>
+                                                                                                            <span *ngIf="item && item.IsViewTree" style="width:20px"><img (click)="item.LoadItems()" style="margin-right:5px;margin-top:0px;border:0px;background-color:transparent;height:12px;width:12px" src="./Images/treeIcon2.png" /></span>
+                                                                                                        </div>
+                                                                                                    </td>
+
+                                                                                                    <td *ngIf="item && !item.HasTree" style="width:20px">
+                                                                                                        <div style="width:20px"></div>
+
+                                                                                                    </td>
+
+
+                                                                                                    <td (click)="ObjectDataSourceChangeSelected(item)" colspan="2" class="iwanttohover" [style.background]="item.DivSelectBackgroud" style="width:100px;height:24px"><p style="display:inline-block;">{{item.TranslatedText}}</p></td>
+
+
+                                                                                                </tr>
+
+
+
+                                                                                                <tr>
+
+                                                                                                    <td style="width:20px"></td>
+
+
+
+                                                                                                    <td colspan="2">
+                                                                                                        <table *ngIf="item && item.IsViewTree">
+                                                                                                            <tr style="text-align:left;vertical-align:top;" *ngFor="let item of item.Items">
+
+                                                                                                                <td style="min-height:30px;">
+                                                                                                                    <table>
+
+                                                                                                                        <tr>
+                                                                                                                            <td *ngIf="item && item.HasTree" style="width:20px">
+                                                                                                                                <div style="width:20px">
+                                                                                                                                    <span *ngIf="item && !item.IsViewTree" style="width:20px"><img (click)="item.LoadItems()" style="margin-right:5px;margin-top:0px;border:0px;background-color:transparent;height:12px;width:12px" src="./Images/treeIcon.png" /></span>
+                                                                                                                                    <span *ngIf="item && item.IsViewTree" style="width:20px"><img (click)="item.LoadItems()" style="margin-right:5px;margin-top:0px;border:0px;background-color:transparent;height:12px;width:12px" src="./Images/treeIcon2.png" /></span>
+                                                                                                                                </div>
+                                                                                                                            </td>
+
+                                                                                                                            <td *ngIf="item && !item.HasTree" style="width:20px">
+                                                                                                                                <div style="width:20px"></div>
+
+                                                                                                                            </td>
+
+
+                                                                                                                            <td (click)="ObjectDataSourceChangeSelected(item)" colspan="2" class="iwanttohover" [style.background]="item.DivSelectBackgroud" style="width:100px;height:24px"><p style="display:inline-block;height:24px">{{item.TranslatedText}}</p></td>
+
+
+                                                                                                                        </tr>
+
+                                                                                                                        <tr>
+
+                                                                                                                            <td style="width:20px;"></td>
+
+                                                                                                                            <td colspan="2">
+                                                                                                                                <table *ngIf="item && item.IsViewTree">
+                                                                                                                                    <tr style="text-align:left;vertical-align:top;" *ngFor="let item1 of item.Items">
+                                                                                                                                        <td style="width:30px">
+                                                                                                                                            <div style="width:30px"></div>
+
+                                                                                                                                        </td>
+
+                                                                                                                                        <td (click)="ObjectDataSourceChangeSelected(item1)" colspan="3" class="iwanttohover" [style.background]="item1.DivSelectBackgroud" *ngIf="item1" style="width:5px"><p style="display:inline-block;height:24px">{{item1.TranslatedText}}</p></td>
+
+                                                                                                                                    </tr>
+
+                                                                                                                                </table>
+                                                                                                                            </td>
+
+
+                                                                                                                        </tr>
+
+
+                                                                                                                    </table>
+                                                                                                                </td>
+
+
+
+                                                                                                            </tr>
+
+                                                                                                        </table>
+                                                                                                    </td>
+
+
+                                                                                                </tr>
+
+
+
+
+
+                                                                                            </table>
+                                                                                        </td>
+
+
+
+                                                                                    </tr>
+
+                                                                                </table>
+                                                                            </td>
+
+
+                                                                        </tr>
+
+
+                                                                    </table>
+                                                                </td>
+
+
+                                                            </tr>
+
+
+                                                            <tr>
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+
+
+
+                                                        </table>
+
+
+
+
+
+
+                                                    </div>
+
+                                                </div>
+
+                                        </div>
+
+
+                      
+                                        <!--   Tab 2-->
+                                <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'SAF'">
+                                    <div class="LocationDirective" LocationDirective Code="SAF">
+
+                       
+                                            <div style="margin:5px;overflow-y:auto;overflow-x:no-display;max-height:480px" class="BodyBackground">
+
+                                                <table style="vertical-align:top;top:0px;">
+
+
+
+                                                    <tr  style="text-align:left;vertical-align:top" *ngFor="let item of SystemDataSource">
+                                                        <td style="min-height:30px;">
+                                                            <table>
+
+                                                                <tr>
+                                                                    <td *ngIf="item && item.HasTree" style="width:20px">
+                                                                        <div style="width:20px">
+                                                                            <span *ngIf="item && !item.IsViewTree" style="width:20px"><img (click)="item.LoadItems()" style="margin-right:5px;margin-top:0px;border:0px;background-color:transparent;height:12px;width:12px" src="./Images/treeIcon.png" /></span>
+                                                                            <span *ngIf="item && item.IsViewTree" style="width:20px"><img (click)="item.LoadItems()" style="margin-right:5px;margin-top:0px;border:0px;background-color:transparent;height:12px;width:12px" src="./Images/treeIcon2.png" /></span>
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <td *ngIf="item && !item.HasTree" style="width:20px">
+                                                                        <div style="width:20px"></div>
+
+                                                                    </td>
+
+                                                              
+                                                                    <td (click)="SystemDataSourceChangeSelected(item)"  class="iwanttohover" colspan="2" [style.background]="item.DivSelectBackgroud" *ngIf="item" style="width:100px;height:24px"><p style="display:inline-block;">{{item.TranslatedText}}</p></td>
+                                  
+
+                                                                </tr>
+
+                                                                <tr>
+
+                                                                    <td style="width:20px"></td>
+                                                                  
+
+
+                                                                    <td colspan="2">
+                                                                        <table *ngIf="item && item.IsViewTree">
+                                                                            <tr  style="text-align:left;vertical-align:top;" *ngFor="let item of item.Items">
+
+                                                                                <td style="min-height:30px;">
+                                                                                    <table>
+
+                                                                                        <tr  >
+                                                                                            <td *ngIf="item && item.HasTree" style="width:20px">
+                                                                                                <div style="width:20px">
+                                                                                                    <span *ngIf="item &&  !item.IsViewTree" style="width:20px"><img (click)="item.LoadItems()" style="margin-right:5px;margin-top:0px;border:0px;background-color:transparent;height:12px;width:12px" src="./Images/treeIcon.png" /></span>
+                                                                                                    <span *ngIf="item && item.IsViewTree" style="width:20px"><img (click)="item.LoadItems()" style="margin-right:5px;margin-top:0px;border:0px;background-color:transparent;height:12px;width:12px" src="./Images/treeIcon2.png" /></span>
+                                                                                                </div>
+                                                                                            </td>
+
+                                                                                            <td *ngIf="item && !item.HasTree" style="width:20px">
+                                                                                                <div style="width:20px"></div>
+
+                                                                                            </td>
+
+
+                                                                                            <td (click)="SystemDataSourceChangeSelected(item)" colspan="2" class="iwanttohover" [style.background]="item.DivSelectBackgroud" style="width:100px;height:24px"><p style="display:inline-block;">{{item.TranslatedText}}</p></td>
+                                                                                           
+
+                                                                                        </tr>
+
+                                                                                        <tr>
+
+                                                                                            <td style="width:20px"></td>
+
+
+
+                                                                                            <td colspan="2">
+                                                                                                <table *ngIf="item && item.IsViewTree">
+                                                                                                    <tr style="text-align:left;vertical-align:top;" *ngFor="let item of item.Items">
+
+                                                                                                        <td style="min-height:30px;">
+                                                                                                            <table>
+
+                                                                                                                <tr>
+                                                                                                                    <td *ngIf="item && item.HasTree" style="width:20px">
+                                                                                                                        <div style="width:20px">
+                                                                                                                            <span *ngIf="item && !item.IsViewTree" style="width:20px"><img (click)="item.LoadItems()" style="margin-right:5px;margin-top:0px;border:0px;background-color:transparent;height:12px;width:12px" src="./Images/treeIcon.png" /></span>
+                                                                                                                            <span *ngIf="item && item.IsViewTree" style="width:20px"><img (click)="item.LoadItems()" style="margin-right:5px;margin-top:0px;border:0px;background-color:transparent;height:12px;width:12px" src="./Images/treeIcon2.png" /></span>
+                                                                                                                        </div>
+                                                                                                                    </td>
+
+                                                                                                                    <td *ngIf="item && !item.HasTree" style="width:20px">
+                                                                                                                        <div style="width:20px"></div>
+
+                                                                                                                    </td>
+
+
+                                                                                                                    <td (click)="SystemDataSourceChangeSelected(item)" colspan="2" class="iwanttohover" [style.background]="item.DivSelectBackgroud" style="width:100px;height:24px"><p style="display:inline-block;">{{item.TranslatedText}}</p></td>
+
+
+                                                                                                                </tr>
+
+                                                                                                                <tr>
+
+                                                                                                                    <td style="width:20px;"></td>
+
+                                                                                                                    <td colspan="2">
+                                                                                                                        <table *ngIf="item && item.IsViewTree">
+                                                                                                                            <tr style="text-align:left;vertical-align:top;" *ngFor="let item1 of item.Items">
+                                                                                                                                <td style="width:30px">
+                                                                                                                                    <div style="width:30px"></div>
+
+                                                                                                                                </td>
+
+                                                                                                                                <td (click)="SystemDataSourceChangeSelected(item1)" colspan="3" class="iwanttohover" [style.background]="item1.DivSelectBackgroud" *ngIf="item1" style="width:5px"><p style="display:inline-block">{{item1.TranslatedText}}</p></td>
+
+                                                                                                                            </tr>
+
+                                                                                                                        </table>
+                                                                                                                    </td>
+
+
+                                                                                                                </tr>
+
+
+                                                                                                            </table>
+                                                                                                        </td>
+
+
+
+                                                                                                    </tr>
+
+                                                                                                </table>
+                                                                                            </td>
+
+
+                                                                                        </tr>
+
+
+                                                                                    </table>
+                                                                                </td>
+
+
+
+                                                                            </tr>
+
+                                                                        </table>
+                                                                    </td>
+
+                                                                
+                                                                </tr>
+
+
+                                                            </table>
+                                                        </td>
+
+
+                                                    </tr>
+
+
+                                                    <tr>
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+
+
+                                                </table>
+
+
+
+
+
+
+                                            </div>
+
+                                    </div>
+                                </div>
+
+               
+                            </div>
+                            </div>
+
+
+
+
+
+                            </div>
+                        </td>
+
+
+
+
+                    </tr>
+
+                    <tr style="height: 32px;">
+                        <td style="vertical-align: bottom">
+                            <table style="height: 22px;">
+                                <tr>
+                                    <td>
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width: 57px;">
+                                        <div>
+                                            <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
+                                        </div>
+                                    </td>
+
+                                    <td style="width: 5px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width: 57px;">
+                                        <button class="RedButton" (click)="SaveButtonClicked()">OK</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                </table>
+

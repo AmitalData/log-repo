@@ -1,0 +1,210 @@
+﻿using Logitude.Accounting.BL.APIDataContract.ApiV1;
+using Logitude.Accounting.Def.EntityPMs;
+using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Logitude.Accounting.BL.EntityQueryServices;
+
+namespace Logitude.Accounting.BL.APIDataContract.ApiV1
+{
+   public partial class JournalQueryService
+    {
+
+
+        public Journal JournalDataMappingAndValidatin(JournalPM MyEntity, int Tenant, string ComputingPartnerName = "")
+        {
+            try
+            {
+                var temp = new Journal();
+                //if (!string.IsNullOrEmpty(MyEntity.Id))
+                //{
+                //    temp = query.GetSinglePM(MyEntity.Id, Tenant);
+                //}
+
+                //if (temp == null)
+                //{
+                //    throw new ApplicationException("GLAccount with Id " + MyEntity.Id + " doesn't exist");
+                //}
+                if (string.IsNullOrEmpty(temp.Id))
+                {
+                    temp.Id = MyEntity.Id;
+                }
+                temp.Tenant = MyEntity.Tenant;
+
+
+
+               
+           
+
+                temp.JournalNumber = MyEntity.JournalNumber;
+                temp.CreateDate = MyEntity.CreateDate;
+                temp.AccountingDate = MyEntity.AccountingDate;
+                temp.ExternalNo = MyEntity.ExternalNo;
+                temp.UpdateDate = MyEntity.UpdateDate;
+                temp.ApproveDate = MyEntity.ApproveDate;
+                temp.AccountingEntityReference = MyEntity.AccountingEntityReference;
+                temp.VoidDate = MyEntity.VoidDate;
+                UserQueryService UpdatedByUserUserService = new UserQueryService(Tenant);
+                if (MyEntity.UpdatedByUserId != null)
+                {
+                    var myCreatedByUserPM = UpdatedByUserUserService.GetUserById(MyEntity.CreatedByUserId, Tenant);
+                    if (myCreatedByUserPM != null)
+                    {
+                        temp.CreatedByUser = new User();
+                        temp.CreatedByUser.EnglishName = myCreatedByUserPM.EnglishName;
+                        temp.CreatedByUser.LocalName = myCreatedByUserPM.LocalName;
+                        temp.CreatedByUser.PartnerCode = myCreatedByUserPM.PartnerCode;
+                        temp.CreatedByUser.ExternalCode = myCreatedByUserPM.ExternalCode;
+                     
+
+
+
+
+                    }
+
+                }
+
+
+                temp.ExternalSystem = MyEntity.ExternalSystem;
+                temp.QueueId = MyEntity.QueueId;
+                temp.IsVoided = MyEntity.IsVoided;
+                UserQueryService VoidedByUserUserService = new UserQueryService(Tenant);
+                if (MyEntity.VoidedByUserId != null)
+                {
+                    var myVoidedByUserPM = VoidedByUserUserService.GetUserById(MyEntity.VoidedByUserId, Tenant);
+                    if (myVoidedByUserPM != null)
+                    {
+                        temp.VoidedByUser = new User();
+                        temp.VoidedByUser.EnglishName = myVoidedByUserPM.EnglishName;
+                        temp.VoidedByUser.LocalName = myVoidedByUserPM.LocalName;
+                        temp.VoidedByUser.PartnerCode = myVoidedByUserPM.PartnerCode;
+                        temp.VoidedByUser.ExternalCode = myVoidedByUserPM.ExternalCode;
+                    }
+
+                }
+
+
+                Logitude.Accounting.BL.EntityQueryServices.JournalQueryService OriginalJournalJournalService = new Logitude.Accounting.BL.EntityQueryServices.JournalQueryService(Tenant);
+                if (MyEntity.OriginalJournalId != null)
+                {
+                    var myOriginalJournalPM = OriginalJournalJournalService.GetSinglePM(MyEntity.OriginalJournalId, Tenant);
+                    if (myOriginalJournalPM != null)
+                    {
+                        temp.OriginalJournal = new Journal();
+                        temp.OriginalJournal.JournalNumber = myOriginalJournalPM.JournalNumber;
+                    }
+
+                }
+
+
+                UserQueryService ApprovedByUserUserService = new UserQueryService(Tenant);
+                if (MyEntity.ApprovedByUserId != null)
+                {
+                    var myApprovedByUserPM = ApprovedByUserUserService.GetUserById(MyEntity.ApprovedByUserId, Tenant);
+                    if (myApprovedByUserPM != null)
+                    {
+                        temp.ApprovedByUser = new User();
+                        temp.ApprovedByUser.EnglishName = myApprovedByUserPM.EnglishName;
+                        temp.ApprovedByUser.LocalName = myApprovedByUserPM.LocalName;
+                        temp.ApprovedByUser.PartnerCode = myApprovedByUserPM.PartnerCode;
+                        temp.ApprovedByUser.ExternalCode = myApprovedByUserPM.ExternalCode;
+                    }
+
+                }
+
+
+              
+                //if (MyEntity.VoidedByJournalId != null)
+                //{
+                //    var myVoidedByJournalIdPM = OriginalJournalJournalService.GetSinglePM(MyEntity.VoidedByJournalId, Tenant);
+                //    if (myVoidedByJournalIdPM != null)
+                //    {
+                //        temp.VoidedByJournal = new Journal();
+                //        temp.VoidedByJournal.JournalNumber = myVoidedByJournalIdPM.JournalNumber;
+                //    }
+
+                //}
+
+
+
+                //if (MyEntity.CreatedByUserId != null)
+                //{
+                //    var myCreatedByUserPM = ApprovedByUserUserService.GetUserById(MyEntity.CreatedByUserId, Tenant);
+                //    if (myCreatedByUserPM != null)
+                //    {
+                //        temp.CreatedByUser = new User();
+                //        temp.CreatedByUser.EnglishName = myApprovedByUserPM.EnglishName;
+                //        temp.CreatedByUser.LocalName = myApprovedByUserPM.LocalName;
+                //        temp.CreatedByUser.PartnerCode = myApprovedByUserPM.PartnerCode;
+                //        temp.CreatedByUser.ExternalCode = myApprovedByUserPM.ExternalCode;
+                //    }
+
+                //}
+
+
+                EntityQueryServices.JournalTypeQueryService TypeCodeJournalTypeService = new EntityQueryServices.JournalTypeQueryService(Tenant);
+                if (MyEntity.TypeCode != null)
+                {
+                    var myTypeCodePM = TypeCodeJournalTypeService.GetSinglePM(MyEntity.TypeCode, Tenant);
+                    if (myTypeCodePM != null)
+                    {
+                        temp.JournalType = new JournalType();
+                        temp.JournalType.Code = myTypeCodePM.JournalTypeID;
+                        temp.JournalType.EnglishName = myTypeCodePM.EnglishName;
+                        temp.JournalType.LocalName = myTypeCodePM.LocalName;
+                      
+                    }
+
+                }
+
+
+                EntityQueryServices.JournalStatusTypeQueryService StatusCodeJournalStatusTypeService = new EntityQueryServices.JournalStatusTypeQueryService(Tenant);
+                if (MyEntity.StatusCode != null)
+                {
+                    var myStatusCodePM = StatusCodeJournalStatusTypeService.GetSinglePM(MyEntity.StatusCode, Tenant);
+                    if (myStatusCodePM != null)
+                    {
+                        temp.JournalStatusType = new JournalStatusType();
+                        temp.JournalStatusType.Code = myStatusCodePM.JournalStatusID;
+                        temp.JournalStatusType.EnglishName = myStatusCodePM.EnglishName;
+                        temp.JournalStatusType.LocalName = myStatusCodePM.LocalName;
+                    }
+
+                }
+
+
+                EntityQueryServices.AccountingEntityQueryService AccountingEntityCodeAccountingEntityService = new EntityQueryServices.AccountingEntityQueryService(Tenant);
+                if (MyEntity.AccountingEntityCode != null)
+                {
+                    var myAccountingEntityCodePM = AccountingEntityCodeAccountingEntityService.GetSinglePM(MyEntity.AccountingEntityCode, Tenant);
+                    if (myAccountingEntityCodePM != null)
+                    {
+                        temp.AccountingEntity = new AccountingEntity();
+                        temp.AccountingEntity.Code = myAccountingEntityCodePM.Code;
+                        temp.AccountingEntity.EnglishName = myAccountingEntityCodePM.EnglishName;
+                        temp.AccountingEntity.LocalName = myAccountingEntityCodePM.LocalName;
+
+
+                    }
+
+                }
+
+
+                temp.AccountingEntityId = MyEntity.AccountingEntityId;
+
+
+
+                return temp;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+    }
+}

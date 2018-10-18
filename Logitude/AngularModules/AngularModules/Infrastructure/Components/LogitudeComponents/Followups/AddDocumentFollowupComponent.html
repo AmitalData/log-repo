@@ -1,0 +1,162 @@
+﻿
+
+
+<style type="text/css">
+    .NumericButton:hover {
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(221, 232, 245, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(221, 232, 245, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+    }
+
+    .NumericButton {
+        width: 15px;
+        height: 10px;
+        border: 1px solid #6A8299;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        position: relative;
+    }
+     .FormFieldRow{
+        height: 30px;
+    }
+</style>
+
+
+
+
+
+
+<table *ngIf="IsStardLoadPage">
+
+
+    <tr style="height:100%;vertical-align:top">
+        <td style="width:5px"></td>
+
+        <td style="height:100% ;position: relative;vertical-align:top">
+            <table>
+
+                <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+                    <td>
+                        <ValidationSummary [SingleLine]="true" [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+                    </td>
+                </tr>
+
+                <tr style="height:5px">
+                    <td></td>
+                </tr>
+
+
+                <tr style="height:25px">
+
+                    <td style="width: 70px;">
+                        <!--<LogLabel [ObjectFieldName]="'Date'" [ObjectTableName]="'FollowUp'" [DataContext]="CurrentFollowUp"></LogLabel>-->
+                        <div style="color:#6E7172">Date   </div>
+                    </td>
+                </tr>
+
+
+                <tr style="height:20px">
+
+                    <td>
+                        <table>
+                            <tr>
+                                <td>
+                                    <LogDatePicker [ObjectFieldName]="'Date'" [SelectedDateValue]="CurrentFollowUp.Date" [ObjectTableName]="'FollowUp'" [DataContext]="CurrentFollowUp" [HideColumns]="true"></LogDatePicker>
+                                </td>
+
+                                <td style="width: 15px;">
+                                    <div class="NumericButton" (mousedown)="NumericButtonClicked(true)">
+                                        <img class="CenterCenter" style="height: 3px; width: 5px;" src="./Images/Buttons/Up.png" />
+                                    </div>
+                                    <div class="NumericButton" (mousedown)="NumericButtonClicked(false)">
+                                        <img class="CenterCenter" style="height: 3px; width: 5px;" src="./Images/Buttons/Down.png" />
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr style="height:5px"><td></td></tr>
+
+
+
+                <tr style="height:25px">
+                    <td style="width: 70px;">
+                        <div style="color:#6E7172">Owner   </div>
+                        <!--<LogLabel [ObjectFieldName]="'OwnerUserId'" [ObjectTableName]="'FollowUp'" [DataContext]="CurrentFollowUp"></LogLabel>-->
+                    </td>
+                </tr>
+
+                <tr class="FormFieldRow" style="height:20px">
+                    <td>
+                        <LogLov [ObjectFieldName]="'OwnerUserId'"
+                                [SelectedValue]="CurrentFollowUp.OwnerUserId"
+                                [ObjectTableName]="'FollowUp'"
+                                [DataContext]="CurrentFollowUp"
+                                [LookUpTableName]="'User'"
+                                [HideColumns]="true">
+                        </LogLov>
+                    </td>
+
+                </tr>
+
+                <tr style="height:5px"><td></td></tr>
+
+                <tr style="height:25px">
+                    <td style="width: 70px;">
+                        <!--<LogLabel [ObjectFieldName]="'Notes'" [ObjectTableName]="'FollowUp'" [DataContext]="CurrentFollowUp"></LogLabel>-->
+                        <div style="color:#6E7172">Note   </div>
+                    </td>
+                </tr>
+
+                <tr style="height:80px">
+                    <td>
+                        <div class="MediaFill">
+                            <LogTextBox [ObjectFieldName]="'Notes'" [Text]="CurrentFollowUp.Notes" [ObjectTableName]="'FollowUp'" [DataContext]="CurrentFollowUp" [IsMultiline]="true" [HideColumns]="true"></LogTextBox>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr><td><div></div></td></tr>
+
+            </table>
+        </td>
+
+        <td style="width:5px"></td>
+
+
+    </tr>
+
+    <tr style="height: 32px;">
+        <td colspan="3" style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <div>
+                            <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
+                        </div>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="SaveButtonClicked()">OK</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

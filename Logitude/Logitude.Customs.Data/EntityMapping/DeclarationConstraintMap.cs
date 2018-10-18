@@ -1,0 +1,52 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data;
+ 
+namespace Logitude.Customs.Data.EntityMapping
+{
+ 
+    public class DeclarationConstraintMap : EntityTypeConfiguration<DeclarationConstraint>
+    {
+	    string dbms;
+        public DeclarationConstraintMap()
+        { 
+			  this.ToTable("DeclarationConstraints", "Customs");
+		
+		    this.HasKey(t => new { t.DeclarationID, t.ConstraintNumber });
+	 
+            this.Property(t => t.DeclarationID).HasColumnName("DeclarationID").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Tenant).HasColumnName("Tenant");
+
+            this.Property(t => t.ConstraintNumber).HasColumnName("ConstraintNumber").HasMaxLength(9).IsUnicode(false);
+
+            this.Property(t => t.ConstraintTypeCode).HasColumnName("ConstraintTypeCode").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.ConstraintStatusCode).HasColumnName("ConstraintStatusCode").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.AgentExplanation).HasColumnName("AgentExplanation").HasMaxLength(512).IsUnicode(true);
+
+            this.Property(t => t.ApprovalNote).HasColumnName("ApprovalNote").HasMaxLength(512).IsUnicode(true);
+
+            this.Property(t => t.ApprovalAuthorityDate).HasColumnName("ApprovalAuthorityDate");
+
+            this.Property(t => t.ApprovalUserName).HasColumnName("ApprovalUserName").HasMaxLength(256).IsUnicode(true);
+
+            this.Property(t => t.ApprovalDecision).HasColumnName("ApprovalDecision").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.CustomsCollateralId).HasColumnName("CustomsCollateralId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.AgentObjection).HasColumnName("AgentObjection").HasMaxLength(512).IsUnicode(true);
+        }
+    }
+}
+	 

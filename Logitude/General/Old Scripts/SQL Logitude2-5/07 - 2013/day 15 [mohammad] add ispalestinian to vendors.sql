@@ -1,0 +1,1 @@
+alter table customs.vendors add IsPalestinian bit not null default 0

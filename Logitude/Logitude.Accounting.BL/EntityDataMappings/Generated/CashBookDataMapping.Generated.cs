@@ -1,0 +1,347 @@
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Def.EntityPMs; 
+using Logitude.Accounting.Data;
+
+namespace Logitude.Accounting.BL.EntityDataMappings
+{
+   
+   public partial class CashBookDataMapping: IMapping<CashBookPM, CashBook>,IMappingEncodeBase64NVARCHARFields<CashBookPM>
+   {
+          public enum POCOPropertyNames
+          { 
+		     None,  
+	         Id, 
+	         Tenant, 
+	         CreateDate, 
+	         CreatedByUserId, 
+	         UpdateDate, 
+	         UpdatedByUserId, 
+	         SearchFields, 
+	         EnglishName, 
+	         LocalName, 
+	         Inactive, 
+	         CurrencyId, 
+	         CashBookTypeCode, 
+	         TotalAmount, 
+	         AccountId, 
+	         BranchId,
+	      }
+
+
+	      public enum PMPropertyNames
+          { 
+		     None,  
+	         Id, 
+	         Tenant, 
+	         CreateDate, 
+	         CreatedByUserId, 
+	         UpdateDate, 
+	         UpdatedByUserId, 
+	         SearchFields, 
+	         CreatedByUserName, 
+	         UpdatedByUserName, 
+	         EnglishName, 
+	         LocalName, 
+	         Inactive, 
+	         CurrencyId, 
+	         CurrencyCode, 
+	         CurrencyName, 
+	         CashBookTypeCode, 
+	         CashBookTypeName, 
+	         TotalAmount, 
+	         AccountId, 
+	         AccountNumber, 
+	         AccountName, 
+	         BranchId, 
+	         CurrencySign, 
+	         BranchName,
+	      }
+
+		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
+        List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
+    
+	    public void PMToPOCO(CashBookPM entityPM, CashBook entityPOCO)
+        {
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateDate))
+            {
+				entityPOCO.CreateDate = entityPM.CreateDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreatedByUserId))
+            {
+				entityPOCO.CreatedByUserId = entityPM.CreatedByUserId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdateDate))
+            {
+				entityPOCO.UpdateDate = entityPM.UpdateDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdatedByUserId))
+            {
+				entityPOCO.UpdatedByUserId = entityPM.UpdatedByUserId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
+            {
+				entityPOCO.SearchFields = entityPM.SearchFields;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EnglishName))
+            {
+				entityPOCO.EnglishName = entityPM.EnglishName;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LocalName))
+            {
+				entityPOCO.LocalName = entityPM.LocalName;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Inactive))
+            {
+				entityPOCO.Inactive = entityPM.Inactive;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CurrencyId))
+            {
+				entityPOCO.CurrencyId = entityPM.CurrencyId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CashBookTypeCode))
+            {
+				entityPOCO.CashBookTypeCode = entityPM.CashBookTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TotalAmount))
+            {
+				entityPOCO.TotalAmount = entityPM.TotalAmount;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AccountId))
+            {
+				entityPOCO.AccountId = entityPM.AccountId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BranchId))
+            {
+				entityPOCO.BranchId = entityPM.BranchId;
+			}
+			
+				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
+		  }
+
+		public void POCOToPM(CashBookPM entityPM, CashBook entityPOCO)
+        {
+			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
+            {
+					entityPM.Id = entityPOCO.Id;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
+            {
+					entityPM.Tenant = entityPOCO.Tenant;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CreateDate))
+            {
+					entityPM.CreateDate = entityPOCO.CreateDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CreatedByUserId))
+            {
+					entityPM.CreatedByUserId = entityPOCO.CreatedByUserId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.UpdateDate))
+            {
+					entityPM.UpdateDate = entityPOCO.UpdateDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.UpdatedByUserId))
+            {
+					entityPM.UpdatedByUserId = entityPOCO.UpdatedByUserId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SearchFields))
+            {
+					entityPM.SearchFields = entityPOCO.SearchFields;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EnglishName))
+            {
+					entityPM.EnglishName = entityPOCO.EnglishName;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LocalName))
+            {
+					entityPM.LocalName = entityPOCO.LocalName;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Inactive))
+            {
+					entityPM.Inactive = entityPOCO.Inactive;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CurrencyId))
+            {
+					entityPM.CurrencyId = entityPOCO.CurrencyId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CashBookTypeCode))
+            {
+					entityPM.CashBookTypeCode = entityPOCO.CashBookTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TotalAmount))
+            {
+					entityPM.TotalAmount = entityPOCO.TotalAmount;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AccountId))
+            {
+					entityPM.AccountId = entityPOCO.AccountId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.BranchId))
+            {
+					entityPM.BranchId = entityPOCO.BranchId;
+            }
+
+		}
+
+		public void PMToOldPM(CashBookPM entityPM, CashBookPM oldEntityPM)
+        {
+		     oldEntityPM.ChangedProperties.Clear();
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+                oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateDate))
+            {
+                oldEntityPM.CreateDate = entityPM.CreateDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreatedByUserId))
+            {
+                oldEntityPM.CreatedByUserId = entityPM.CreatedByUserId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdateDate))
+            {
+                oldEntityPM.UpdateDate = entityPM.UpdateDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdatedByUserId))
+            {
+                oldEntityPM.UpdatedByUserId = entityPM.UpdatedByUserId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
+            {
+                oldEntityPM.SearchFields = entityPM.SearchFields;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EnglishName))
+            {
+                oldEntityPM.EnglishName = entityPM.EnglishName;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LocalName))
+            {
+                oldEntityPM.LocalName = entityPM.LocalName;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Inactive))
+            {
+                oldEntityPM.Inactive = entityPM.Inactive;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CurrencyId))
+            {
+                oldEntityPM.CurrencyId = entityPM.CurrencyId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CashBookTypeCode))
+            {
+                oldEntityPM.CashBookTypeCode = entityPM.CashBookTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TotalAmount))
+            {
+                oldEntityPM.TotalAmount = entityPM.TotalAmount;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AccountId))
+            {
+                oldEntityPM.AccountId = entityPM.AccountId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BranchId))
+            {
+                oldEntityPM.BranchId = entityPM.BranchId;
+            }
+			
+		}
+
+	    public void EncodeBase64NVARCHARFields(CashBookPM entityPM)
+        {
+            if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
+            {
+                return;
+
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.SearchFields)) //T4 find type == nText 
+            {
+                entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.LocalName)) //T4 find type == nText 
+            {
+                entityPM.LocalName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.LocalName));
+            }
+            entityPM.EncodeBase64NVARCHARFieldsBy=null;
+		}
+
+
+	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
+        {
+            CustomMappedPOCOProperties.Add(pocoPropertyName);
+        }
+
+        public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
+        {
+            CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+		
+		private void BuildSearchFieldsGenerated(CashBookPM entityPM, CashBook entityPOCO, bool isNewEntity)
+        {
+            string mySearchFields = "";
+			
+           
+            entityPM.SearchFields += mySearchFields;
+            entityPOCO.SearchFields += mySearchFields;
+        }
+			  
+   }
+}
+	 

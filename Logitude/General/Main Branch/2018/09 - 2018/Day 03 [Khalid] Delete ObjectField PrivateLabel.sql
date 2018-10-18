@@ -1,0 +1,1 @@
+delete from ObjectFields where  FieldName='Id' and ObjectTableId=(Select Id from ObjectTables where Name='TenantManagmentPrivateLabels')

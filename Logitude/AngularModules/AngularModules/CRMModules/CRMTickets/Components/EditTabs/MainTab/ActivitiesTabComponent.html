@@ -1,0 +1,130 @@
+﻿<style type="text/css">
+    .ItemBox {
+        height: 40px;
+        border: 1px solid #DADADA;
+        border-radius: 4px;
+        -moz-border-radius: 4px;
+        -webkit-border-radius: 4px;
+        margin-bottom: 3px;
+    }
+
+    .CompleteButton {
+        display: none;
+    }
+
+    .ItemBox:hover .CompleteButton {
+        display: block;
+    }
+
+    .ItemBox:hover .CompleteButtonDisabled {
+        display: block;
+    }
+</style>
+
+<table>
+    <tr style="height:5px;">
+        <td colspan="3">
+            <div></div>
+        </td>
+    </tr>
+    <tr>
+        <td style="width:5px;"><div></div></td>
+        <td>
+            <div class="MediaFill">
+                <ScrollViewer>
+                    <ul>
+                        <li class="ItemBox" style="position: relative;height:65px;" *ngFor="let item of ActivitiesList" [ngStyle]="{background: item.Background}">
+                            <table (mousedown)="item.ViewEntity(item)">
+                                <tr style="height:2px;"><td><div></div></td></tr>
+
+                                <tr>
+                                    <td style="width:5px;min-width:5px;max-width:5px;"><div></div></td>
+                                    <td style="width:35px; min-width:35px;max-width:35px;vertical-align:top;">
+                                        <img class="CenterCenter" [title]="item.ActivityTypeName" style="width:35px;height:35px;" [attr.src]="item.ImageSrc" />
+                                    </td>
+                                    <td style="width:5px;min-width:5px;max-width:5px;"><div></div></td>
+                                    <td>
+                                        <table>
+                                            <tr style="height:15px;">
+                                                <td style="min-width:270px;width:270px;">
+                                                    <div style="width:270px;font-size:14px;color:black;text-align:left;" class="TextTrimming">{{item.Subject}}</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width:65px;min-width:65px;margin:0;padding:0; ">
+                                                                <div style="width:65px;color:#6E7172;font-size:10px;">Owner</div>
+                                                                <div style="width:65px;color:#6E7172;font-size:10px;">{{item.Action}}</div>
+                                                            </td>
+
+                                                            <td style="width:3px;"></td>
+
+                                                            <td style="width:100px;min-width:100px; ">
+                                                                <div style="color:#282E30;font-size:10px;text-align:left;" class="TextTrimming">{{item.Owner}}</div>
+                                                                <div style="color:#1B90CB;font-size:10px;text-align:left;" class="TextTrimming">{{item.ActionBy}}</div>
+                                                            </td>
+
+                                                            <td style="width:3px;"></td>
+
+                                                            <td style="width:55px;min-width:55px; ">
+                                                                <div style="width:55px;color:#6E7172;font-size:10px;" class="TextTrimming">
+                                                                    <span style="margin-left: 5px; font-size: 10px; color: #282E30;">{{item.DateLable}}</span>
+                                                                </div>
+                                                                <div style="width:55px;font-size: 11px; color: #6E7172;" class="TextTrimming">
+                                                                    <span style="margin-left: 5px; font-size: 10px; color: #6E7172;">{{item.ActionDate| DateTimeToDatePipe}}</span>
+                                                                </div>
+                                                            </td>
+
+                                                            <td style="width:290px;min-width:290px;">
+                                                                <div style="width:290px;color:#6E7172;font-size:10px;" class="TextTrimming">
+                                                                    <span style="margin-left: 5px; font-size: 11px; color: #282E30;" class="TextTrimming">{{item.DateValue}}</span>
+                                                                </div>
+                                                                <div style="font-size: 11px; color: #6E7172;" class="TextTrimming">
+                                                                    &nbsp;
+                                                                </div>
+                                                            </td>
+
+                                                            <td style="width:5px;"><div></div></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:2px;"><td><div></div></td></tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                                <tr style="height:2px;"><td><div></div></td></tr>
+
+                            </table>
+
+                            <div style="position: absolute; right: 10px;top:10px;">
+                                <div *ngIf="item.CompleteButtonVisibility" class="CompleteButton">
+                                    <button style="width:75px;height:22px;" class="Button" (click)="item.CompleteClicked()">Complete</button>
+                                </div>
+                                <div *ngIf="item.ReopenButtonVisibility" class="CompleteButton">
+                                    <button style="width:75px;height:22px;" class="Button" (click)="item.ReopenClicked()">Incomplete</button>
+                                </div>
+                                <div class="CompleteButton" *ngIf="item.CompleteToggleButtonVisibility" style="position: absolute; top: 3px; right: 3px;">
+                                    <MettingSummary [Text]="item.MeetingSummary" [IsChecked]="item.PostToFollowers" [EntityId]="item.EntityId" (Updated)="Updated($event)"></MettingSummary>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </ScrollViewer>
+
+                <div *ngIf="ActivitiesList == null || ActivitiesList.length == 0" class="NoDataText" style="top:5px;">No Activities</div>
+
+            </div>
+        </td>
+        <td style="width:5px;"><div></div></td>
+    </tr>
+
+    <tr style="height:5px;">
+        <td colspan="3">
+            <div></div>
+        </td>
+    </tr>
+</table>

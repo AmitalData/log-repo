@@ -1,0 +1,24 @@
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Logitude.BL.InfrastructureModel.EntityLists
+{
+    public class ScreenFieldList
+    {
+        [Key]
+        public string Id { get; set; }
+
+
+        public int Tenant { get; set; }
+
+        public int Column { get; set; }
+        public int Row { get; set; }
+
+        public string ScreenId { get; set; }
+
+        public string ObjectFieldId { get; set; }
+
+        public string ObjectTableName { get; set; }
+
+        public string ComponentPath { get; set; }
+    }
+}

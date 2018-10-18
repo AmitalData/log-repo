@@ -1,0 +1,88 @@
+﻿
+<table>
+    <tr style="height:1px;" *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+
+                <!-- MainCarriageFromPortId -->
+                <tr class="FormFieldRow">
+                    <td style="width: 110px;">
+                        <LogLabel [ObjectFieldName]="'MainCarriageFromPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="FromTextCodeLabel"></LogLabel>
+                    </td>
+
+                    <td style="width: 230px;">
+                        <LogLov [ObjectFieldName]="'MainCarriageFromPortId'"
+                                [SelectedValue]="MainCarriageFromPortId"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'Port'"
+                                [DependencyFilter1Value]="TransportModeId">
+                        </LogLov>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- MainCarriageToPortId -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'MainCarriageToPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="ToTextCodeLabel"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogLov [ObjectFieldName]="'MainCarriageToPortId'"
+                                [SelectedValue]="MainCarriageToPortId"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'Port'"
+                                [DependencyFilter1Value]="TransportModeId">
+                        </LogLov>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="3">
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button  id="{{ 'CancelBtn' | IdGeneratorPipe}}" class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button  id="{{ 'OkBtn' | IdGeneratorPipe}}"  class="RedButton" (click)="OkButtonClicked()" [disabled]="!IsEditingEnabled">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

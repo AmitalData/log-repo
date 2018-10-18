@@ -1,0 +1,759 @@
+﻿
+<style type="text/css">
+    .SearchBox input::-webkit-input-placeholder {
+        font-family: Arial;
+        font-size: 11px;
+        color: #8F9293;
+        font-style: italic;
+    }
+
+    #SearchBoxPartnersHeader {
+        background: grey; /* For browsers that do not support gradients */
+        background: -webkit-linear-gradient(#dcdcdc, #bababa);
+        background: -o-linear-gradient(#dcdcdc, #bababa); /* For Opera 11.1 to 12.0 */
+        background: -moz-linear-gradient(#dcdcdc, #bababa); /* For Firefox 3.6 to 15 */
+        background: linear-gradient(#dcdcdc, #bababa); /* Standard syntax (must be last) */
+        height: 20px;
+        font-weight: bold;
+    }
+
+    .SearchBox input:-moz-placeholder {
+        font-family: Arial;
+        font-size: 11px;
+        color: #8F9293;
+        font-style: italic;
+    }
+
+    .SearchBox input::-moz-placeholder {
+        font-family: Arial;
+        font-size: 11px;
+        color: #8F9293;
+        font-style: italic;
+    }
+
+    .SearchBox input:-ms-input-placeholder {
+        font-family: Arial;
+        font-size: 11px;
+        color: #8F9293;
+        font-style: italic;
+    }
+
+    .SearchBox input:focus::-webkit-input-placeholder {
+        color: transparent;
+    }
+
+    .SearchBox input:focus:-moz-placeholder {
+        color: transparent;
+    }
+
+    .SearchBox input:focus::-moz-placeholder {
+        color: transparent;
+    }
+
+    .SearchBox input:focus:-ms-input-placeholder {
+        color: transparent;
+    }
+
+    .SearchBox .DeleteIcon {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        cursor: pointer;
+    }
+
+    .SearchBox .SearchIcon {
+        position: absolute;
+        top: 1px;
+        bottom: 0;
+        margin: auto;
+    }
+
+    .SearchBox {
+        height: 22px;
+        width: 100%;
+        position: relative;
+    }
+
+    .QuickSearchDropDown .ListBoxItem:hover {
+        background: #f4f9ff; /* Old browsers */
+        background: -moz-linear-gradient(top, #f4f9ff 0%, #bcdff2 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #f4f9ff 0%,#bcdff2 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #f4f9ff 0%,#bcdff2 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4f9ff', endColorstr='#bcdff2',GradientType=0 ); /* IE6-9 */
+    }
+
+    .QuickSearchDropDown .ListBoxItem {
+        width: 100%;
+        border-bottom: 1px solid #AAAAAA;
+        text-align: left;
+        padding-left: 2px;
+        padding-right: 2px;
+        cursor: pointer;
+    }
+
+    .QuickSearchDropDown {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 22px;
+        bottom: 0;
+        min-height: 75px;
+        background: white;
+        border: 1px solid #b2b2b2;
+        box-shadow: 0px 4px 2px 0 #e8e8e8;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        z-index: 1;
+        overflow: hidden;
+        padding-top: 0px;
+    }
+
+    .QuickSearchHeader {
+        height: 25px;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(235, 235, 235, 1) 0%,rgba(233, 233, 233, 1) 48.14%,rgba(226, 226, 226, 1) 67.05%,rgba(214, 214, 214, 1) 80.81%,rgba(197, 197, 197, 1) 92.01%,rgba(179, 179, 179, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(235, 235, 235, 1) 0%, rgba(233, 233, 233, 1) 48.14%, rgba(226, 226, 226, 1) 67.05%, rgba(214, 214, 214, 1) 80.81%, rgba(197, 197, 197, 1) 92.01%, rgba(179, 179, 179, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(235, 235, 235, 1) ),color-stop(0.4814,rgba(233, 233, 233, 1) ),color-stop(0.6705,rgba(226, 226, 226, 1) ),color-stop(0.8081,rgba(214, 214, 214, 1) ),color-stop(0.9201,rgba(197, 197, 197, 1) ),color-stop(1,rgba(179, 179, 179, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(235, 235, 235, 1) 0%, rgba(233, 233, 233, 1) 48.14%, rgba(226, 226, 226, 1) 67.05%, rgba(214, 214, 214, 1) 80.81%, rgba(197, 197, 197, 1) 92.01%, rgba(179, 179, 179, 1) 100%);
+        background: linear-gradient(180deg, rgba(235, 235, 235, 1) 0%, rgba(233, 233, 233, 1) 48.14%, rgba(226, 226, 226, 1) 67.05%, rgba(214, 214, 214, 1) 80.81%, rgba(197, 197, 197, 1) 92.01%, rgba(179, 179, 179, 1) 100%);
+    }
+
+    .ErrorPopUp {
+        background-image: url('Images/ValidationTooltip.png');
+        background-repeat: no-repeat;
+        background-size: 180px 100px;
+        position: absolute;
+        height: 91px;
+        width: 180px;
+        color: white;
+        z-index: 100;
+        word-break: break-all;
+        word-wrap: break-word;
+        overflow: hidden;
+        white-space: normal;
+    }
+
+    .ErrorPopUpMessage {
+        color: white;
+        white-space: normal;
+        word-break: break-word;
+        word-wrap: break-word;
+        font-size: 11px;
+        width: 165px;
+        height: 110px;
+        margin: 10px 10px 10px 10px;
+        overflow: hidden;
+    }
+
+    .FlipImgHoriz {
+        -moz-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+        filter: FlipH;
+        -ms-filter: "FlipH";
+    }
+
+    .RedBox, .RedBox:hover, .RedBox:focus {
+        border: 1px solid #dc3b3b !important;
+    }
+
+    .HighlightedSearchBoxItem {
+        background: #f4f9ff; /* Old browsers */
+        background: -moz-linear-gradient(top, #f4f9ff 0%, #bcdff2 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #f4f9ff 0%,#bcdff2 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #f4f9ff 0%,#bcdff2 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4f9ff', endColorstr='#bcdff2',GradientType=0 ); /* IE6-9 */
+    }
+
+    .SelectedSearchBoxItem {
+        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f4f9ff+0,86caef+6,86caef+6,f4f9ff+7,86caef+100 */
+        background: #f4f9ff; /* Old browsers */
+        background: -moz-linear-gradient(top, #f4f9ff 0%, #86caef 6%, #86caef 6%, #f4f9ff 7%, #86caef 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #f4f9ff 0%,#86caef 6%,#86caef 6%,#f4f9ff 7%,#86caef 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #f4f9ff 0%,#86caef 6%,#86caef 6%,#f4f9ff 7%,#86caef 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4f9ff', endColorstr='#86caef',GradientType=0 ); /* IE6-9 */
+    }
+</style>
+
+<div [id]="ErrorPopUpId"
+     FixedPosition
+     [ElementId]="ErrorPopUpId"
+     [RelativeElementId]="SearchBoxDivId"
+     [TopDisplacement]="-95"
+     [LeftDisplacement]="30"
+     [ComponentType]="'popup'"
+     [PopupWidth]="250"
+     [class.FlipImgHoriz]="LayoutDirection == 'rtl'"
+     [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'"
+     [style.text-indent]="LayoutDirection=='rtl' ? '8px' : ''"
+     class="ErrorPopUp"
+     *ngIf="IsControlFocused && ErrorMessage">
+
+    <div class="ErrorPopUpMessage" [class.FlipImgHoriz]="LayoutDirection == 'rtl'">
+        {{ ErrorMessage }}
+    </div>
+
+
+</div>
+
+<div class="SearchBox" [style.height.px]="HideBox ? 0 : 22" [id]="SearchBoxDivId">
+
+
+
+    <input *ngIf="!HideBox" 
+           type="text" 
+           id="{{NewId}}"
+           placeholder="{{Watermark}}" 
+           [class.RedBox]="ErrorMessage" 
+           [(ngModel)]="SearchText" 
+           (focus)="OnFucos();" 
+           (blur)="OnLostFucos();" 
+           (keydown)="OnSearchIputKeyDown($event)" 
+           [disabled]="IsDisabled" />
+
+    
+    <img class="SearchIcon" src="./Images/Search.png" *ngIf="IsSearchIconVisible && !HideIcons && !HideBox" [ngStyle]="LayoutDirection == 'rtl' ? {'left': '4px'} : {'right': '4px'}" />
+    <img class="DeleteIcon" src="./Images/RedX2.png" *ngIf="IsDeleteIconVisible && !HideIcons && !HideBox" (click)="DeleteClicked()" [ngStyle]="LayoutDirection == 'rtl' ? {'left': '4px'} : {'right': '4px'}" />
+
+    <div class="QuickSearchDropDown" [ngStyle]="{top: HideBox ? '0px' : '22px'}" *ngIf="IsQuickSearchOpened" [style.height.px]="DropDownHeight" [style.width.px]="DropDownWidth">
+        <table>
+            <tr *ngIf="Header" class="QuickSearchHeader">
+                <td style="color: #282E30; font-size: 13px; padding-left: 10px;">
+                    {{Header}}
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="MediaFill" [ngStyle]="{'background': Background}">
+
+                        <ul class="MediaFillRelative">
+                            <!--<li *ngIf="ObjectTableName == 'Customer'" id="SearchBoxPartnersHeader"><label style="font-size:small;padding-left:10px;color:#282E30">Similar {{ObjectTableName}}s in the system </label></li>-->
+
+                            <li class="ListBoxItem"
+                                [style.height.px]="ItemHeight"
+                                [style.min-height.px]="ItemHeight"
+                                [style.line-heigh.px]="ItemHeight"
+                                *ngFor="let item of QuickSearchItems"
+                                [class.HighlightedSearchBoxItem]="HighlightedItem == item"
+                                (mousedown)="ItemSelected(item)">
+
+                                <!-- Shipment -->
+                                <table *ngIf="ObjectTableName == 'Shipment'">
+                                    <tr>
+                                        <td style="width: 20px;min-width:20px;max-width:20px;">
+                                            <div title="{{item.DirectionName}}" style="width: 20px;min-width:20px;max-width:20px; height: 20px; position:relative;">
+                                                <img class="CenterCenter" [attr.src]="'./Images/Directions/' + item.DirectionId + '.png'" />
+                                            </div>
+                                        </td>
+
+                                        <td style="width: 3px;">
+                                            <div></div>
+                                        </td>
+
+                                        <td style="width: 20px;min-width:20px;max-width:20px;">
+                                            <div title="{{item.TransportModeName}}" style="width: 20px;min-width:20px;max-width:20px; height: 20px; position:relative;">
+                                                <img class="CenterCenter" [attr.src]="'./Images/Icons/' + item.TransportModeId + '.png'" />
+                                            </div>
+                                        </td>
+
+                                        <td style="width: 3px;">
+                                            <div></div>
+                                        </td>
+
+                                        <td class="TextTrimming" style="width: 70px; min-width: 70px; max-width: 70px; font-size: 10px; color: #6E7172;">{{item.ShipmentNumber}}</td>
+
+                                        <td class="TextTrimming" style="width: 175px; min-width:175px; max-width:175px;" title="Customer">
+                                            <span style="font-size: 10px; color: #1B90CB;" class="TextTrimming">{{item.CustomerName}}</span>
+                                        </td>
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <!-- Booking -->
+                                <table *ngIf="ObjectTableName == 'Booking'">
+                                    <tr>
+                                        <td style="width:20px;">
+                                            <div title="{{item.DirectionName}}" style="width: 20px; height: 20px; position:relative;">
+                                                <img class="CenterCenter" [attr.src]="'./Images/Directions/' + item.DirectionCode + '.png'" />
+                                            </div>
+                                        </td>
+
+                                        <td style="width: 3px;">
+                                            <div></div>
+                                        </td>
+
+                                        <td style="width:20px;">
+                                            <div title="{{item.TransportModeName}}" style="width: 100%; height: 100%; position:relative;">
+                                                <img class="CenterCenter" [attr.src]="'./Images/Icons/' + item.TransportModeCode + '.png'" />
+                                            </div>
+                                        </td>
+
+                                        <td style="width: 3px;">
+                                            <div></div>
+                                        </td>
+
+                                        <td style="width: 70px; font-size: 10px; color: #6E7172;">{{item.BookingNumber}}</td>
+
+                                        <td style="width: 70px; font-size: 10px; color: #1B90CB;">{{item.Master}}</td>
+
+                                        <td style="width: 105px; max-width:105px;" class="TextTrimming">
+                                            <span style="font-size: 10px; color: #1B90CB;">{{item.MainCarriageCarrierName}}</span>
+                                        </td>
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <!-- User -->
+                                <table *ngIf="ObjectTableName == 'User'">
+                                    <tr>
+                                        <td style="width:5px">
+                                            <div style="width:5px"></div>
+                                        </td>
+                                        <td style="width: 70px; max-width:70px;" class="TextTrimming">
+                                            <span style="font-size: 10px; color: #1B90CB;">{{item.EnglishName}}</span>
+                                        </td>
+                                        <td>
+                                            <div></div>
+                                        </td>
+
+                                        <td style="width: 140px; max-width:140px;" class="TextTrimming">
+                                            <span style="font-size: 10px; color:gray;">{{item.Email}}</span>
+                                        </td>
+                                        <td style="width:5px">
+                                            <div style="width:5px"></div>
+                                        </td>
+
+                                    </tr>
+                                </table>
+                                
+                                <!-- Ticket -->
+                                <table *ngIf="ObjectTableName == 'Ticket'">
+                                    <tr>
+
+                                        <td style="width: 50px; font-size: 10px; color: #282E30;" class="TextTrimming">
+                                            <span style="font-size: 10px; color: #1B90CB;">{{item.TicketNumber}}</span>
+                                        </td>
+
+                                        <td style="width: 180px; font-size: 10px; color: #282E30;" class="TextTrimming">
+                                            <span style="font-size: 12px; color: #1B90CB;">{{item.Subject}}</span>
+                                        </td>
+
+                                        <td style="width: 1px; font-size: 11px; color: #282E30;" class="TextTrimming">
+                                            <span style="font-size: 10px; color: #1B90CB;">{{item.CompanyName}}</span>
+                                        </td>
+
+                                        <td style="width: 100px; font-size: 10px; color: #282E30;" class="TextTrimming">
+                                            <span style="font-size: 10px; color: #1B90CB;">{{item.ContactName}}</span>
+                                        </td>
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+
+                                    </tr>
+                                </table>
+
+                                <!-- Quote -->
+                                <table *ngIf="ObjectTableName == 'Quote'">
+                                    <tr>
+                                        <td class="TextTrimming">
+                                            <span style="font-size: 11px; color: #1B90CB;" title="Customer">{{item.CustomerName}}</span>
+                                        </td>
+
+                                        <td style="width: 5px;">
+                                            <div></div>
+                                        </td>
+
+                                        <td style="width: 110px; font-size: 10px; color: #282E30;">{{item.QuoteNumber}}</td>
+
+                                        <td style="width: 5px;">
+                                            <div></div>
+                                        </td>
+
+                                        <td style="width:150px; font-size: 10px;" [ngStyle]="{color: item.StageName | StringToColorPipe}">{{item.StageName}}</td>
+
+                                        <td style="width:7px; height: 100%;" rowspan="2">
+                                            <div style="width:1px; height: calc(100% - 5px); background: #DADADA; margin:auto;"></div>
+                                        </td>
+
+                                        <td style="width:20px; height: 100%;">
+                                            <div title="{{item.DirectionName}}" style="width: 100%; height: 100%; position:relative;">
+                                                <img class="CenterCenter" style="top: 2px;" [attr.src]="'./Images/Directions/' + item.DirectionId + '.png'" />
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="TextTrimming">
+                                            <span style="font-size: 10px; color: #282E30;" title="Salesman">{{item.Salesman}}</span>
+                                        </td>
+
+                                        <td style="width: 5px;">
+                                            <div></div>
+                                        </td>
+
+                                        <td style="width: 110px;">
+                                            <div></div>
+                                        </td>
+
+                                        <td style="width: 5px;">
+                                            <div></div>
+                                        </td>
+
+                                        <td style="width: 150px; font-size: 10px; color: #282E30;">{{item.Subject}}</td>
+
+                                        <td style="width:20px; height: 100%;">
+                                            <div title="{{item.TransportModeName}}" style="width: 100%; height: 100%; position:relative;">
+                                                <img class="CenterCenter" style="top: -2px;" [attr.src]="'./Images/Icons/' + item.TransportModeId + '.png'" />
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr style="height:3px;">
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <!-- GLAccount -->
+                                <table *ngIf="ObjectTableName == 'CardGLAccount' || ObjectTableName == 'CustomerGLAccount'|| ObjectTableName == 'VendorGLAccount'">
+                                    <tr [style.text-align]="isRTL ? 'right' : 'left'">
+
+                                        <td style="width: 80px; min-width: 80px; max-width: 80px; padding-left: 5px;padding-right: 5px" class="TextTrimming">
+                                            <span style="font-size: 10px; color: #919191; " [style.text-align]="isRTL ? 'right' : 'left'" >{{item.DisplayNumber}}</span>
+                                        </td>
+
+                                        <td style="width: 150px; max-width: 150px; min-width: 150px;" class="TextTrimming">
+                                            <span style="font-size: 12px; color: #1B90CB; " [style.text-align]="isRTL ? 'right' : 'left'" >{{item.LocalName}}</span>
+                                        </td>
+
+                                        <td style="width: 65px; max-width: 65px; min-width: 65px; padding-right: 5px;padding-left: 5px" class="TextTrimming">
+                                            <span style="font-size: 10px; color: #919191; " [style.text-align]="isRTL ? 'right' : 'left'" >{{item.ChartOfAccountsName}}</span>
+                                        </td>
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+
+                                    </tr>
+                                </table>
+
+                                <!-- Journal -->
+                                <table *ngIf="ObjectTableName == 'Journal'">
+                                    <tr>
+                                        <td style="width: 180px; padding-left: 8px" class="TextTrimming">
+                                            <span style="font-size: 12px; color: #1B90CB;">No. {{item.JournalNumber}}</span>
+                                        </td>
+
+                                        <td style="width: 100px; padding-right: 5px;" class="TextTrimming">
+                                            <span style="font-size: 10px; color: #636363; text-align: right;">{{item.StatusName}}</span>
+                                        </td>
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+
+                                    </tr>
+                                </table>
+
+                                <!-- CashBook -->
+                                <table *ngIf="ObjectTableName == 'CashBook'">
+                                    <tr>
+                                        <td style="width: 180px; padding-left: 8px" class="TextTrimming">
+                                            <span style="font-size: 12px; color: #1B90CB;"> {{item.LocalName}}</span>
+                                        </td>
+
+                                        <td style="width: 60px; padding-right: 5px;" class="TextTrimming">
+                                            <span style="font-size: 10px; color: #636363; text-align: right;">{{item.CurrencyCode}}</span>
+                                        </td>
+
+                                        <td style="width: 80px; padding-right: 5px;" class="TextTrimming">
+                                            <span style="font-size: 10px; color: #636363; text-align: right;">{{item.CashBookTypeName}}</span>
+                                        </td>
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+
+                                    </tr>
+                                </table>
+
+                                <!-- BankDeposit -->
+                                <table *ngIf="ObjectTableName == 'BankDeposit'">
+                                    <tr>
+                                        <td style="width: 120px;min-width: 120px; max-width: 120px;  padding-left: 8px; " class="TextTrimming">
+                                            <span style="font-size: 12px; color: #1B90CB;"> {{item.IsCashDeposit ? "Cash Deposit" : "Cheque Deposit"}}</span>
+                                        </td>
+
+                                        <td style="width: 95px;min-width: 95px; max-width: 95px;  padding-right: 5px;" class="TextTrimming">
+                                            <span style="font-size: 10px; color: #636363; text-align: left;">{{item.LocalDepositAmount | NumbersPipe:'N2'}} {{item.DepositCurrencyCode}}</span>
+                                        </td>
+
+                                        <td style="width: 80px; padding-right: 5px;" class="TextTrimming">
+                                            <span style="font-size: 10px; color: #636363; text-align: right;">{{item.DepositDate | DateTimeToDatePipe}}</span>
+                                        </td>
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+
+                                    </tr>
+                                </table>
+
+                                <!-- Card -->
+                                <table *ngIf="ObjectTableName == 'Customer' || ObjectTableName == 'Warehouse' ||  ObjectTableName == 'ShippingAgent' || ObjectTableName == 'CustomAgent' || ObjectTableName == 'Vendor' || ObjectTableName == 'Agent' || ObjectTableName == 'Trucker' ">
+                                    <tr>
+
+                                        <td style="width: 70%; min-width: 80px; max-width: 80px; padding-left: 5px" class="TextTrimming">
+
+                                            <span style="font-size: 10px; color: #282E30; text-align: left;">{{item.EnglishName}}</span>
+                                        </td>
+
+                                        <td style="width: 80px; min-width: 80px; max-width: 80px; padding-left: 5px" class="TextTrimming">
+
+
+                                            <span [ngStyle]="{color: item['CustomerStatusName'] | StringToColorPipe}" style="font-size:10px;text-align:left">{{item.CustomerStatusName}}</span>
+
+                                        </td>
+
+
+
+                                    </tr>
+
+                                    <tr>
+                                        <td style="width: 70%; min-width: 80px; max-width: 80px; padding-left: 5px" class="TextTrimming">
+                                            <span style="font-size: 10px; color: #282E30; text-align: left;">{{item.SalesmanUserEnglishName}}</span>
+
+                                        </td>
+
+
+                                        <td style="width: 80px; min-width: 80px; max-width: 80px; padding-left: 5px" class="TextTrimming">
+                                            <span style="font-size: 10px; color: #919191; text-align: left;">{{item.VatNumber}}</span>
+
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <!-- Contact -->
+                                <table *ngIf="ObjectTableName == 'Contact'">
+                                    <tr>
+                                        <td style="width:3px">
+                                            <div style="width:5px"></div>
+                                        </td>
+                                        <td style="width: 100px; max-width:100px;" class="TextTrimming">
+                                            <div style="width: 100px;font-size: 10px; color: #1B90CB;">{{item.EnglishName}}</div>
+                                        </td>
+                                        <td style="width:3px">
+                                            <div style="width:5px"></div>
+                                        </td>
+                                        <td style="width: 120px; max-width:120px;" class="TextTrimming">
+                                            <div style="width: 120px;font-size: 10px; color:#282E30;">{{item.Email}}</div>
+                                        </td>
+                                        <td style="width:3px">
+                                            <div style="width:5px"></div>
+                                        </td>
+                                        <td><div></div></td>
+                                        <td style="width:120px">
+                                            <div style="width: 120px;font-size: 10px; color:#282E30;">{{item.Birthday | DateTimeToDatePipe}}</div>
+                                        </td>
+                                        <td style="width:3px">
+                                            <div style="width:5px"></div>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <!-- AgentSharedManifest -->
+                                <table *ngIf="ObjectTableName == 'AgentSharedManifest'">
+                                    <tr>
+                                        <td style="width:20px;">
+                                            <div title="'Export'" style="width: 20px; height: 20px; position:relative;">
+                                                <img class="CenterCenter" [attr.src]="'./Images/Directions/' + item.DirectionId + '.png'" />
+                                            </div>
+                                        </td>
+
+                                        <td style="width: 3px;">
+                                            <div></div>
+                                        </td>
+
+                                        <td style="width:20px;">
+                                            <div title="{{item.TransportModeName}}" style="width: 100%; height: 100%; position:relative;">
+                                                <img class="CenterCenter" [attr.src]="'./Images/Icons/' + item.TransportModeId + '.png'" />
+                                            </div>
+                                        </td>
+
+                                        <td style="width: 3px;">
+                                            <div></div>
+                                        </td>
+
+                                        <td class="TextTrimming" style="width: 70px; min-width: 70px; max-width: 70px; font-size: 10px; color: #6E7172;">{{item.AgentReference}}</td>
+
+                                        <td class="TextTrimming" style="width: 175px; min-width:175px; max-width:175px;" title="Agen">
+                                            <span style="font-size: 10px; color: #1B90CB;">{{item.AgentName}}</span>
+                                        </td>
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <!-- Activity -->
+                                <table *ngIf="ObjectTableName == 'Activity'">
+                                    <tr>
+                                        <td style="width:3px"><div></div></td>
+                                        <td style="width:25px;min-width:25px;max-width:25px;" rowspan="2">
+                                            <img *ngIf="item.ActivityTypePathCode == 'CL'" class="CenterCenter" [title]="item.ActivityTypeName" style="top: 2px;" width="18" height="20" src="./Images/Buttons/CL.png" />
+                                            <img *ngIf="item.ActivityTypePathCode == 'VM'" class="CenterCenter" [title]="item.ActivityTypeName" style="top: 2px;" width="18" height="20" src="./Images/Buttons/VM.png" />
+                                            <img *ngIf="item.ActivityTypePathCode == 'TS'" class="CenterCenter" [title]="item.ActivityTypeName" style="top: 2px;" width="18" height="20" src="./Images/Buttons/TS.png" />
+                                            <img *ngIf="item.ActivityTypePathCode == 'AP'" class="CenterCenter" [title]="item.ActivityTypeName" style="top: 2px;" width="18" height="20" src="./Images/Buttons/AP.png" />
+                                            <img *ngIf="item.ActivityTypePathCode == 'EO'" class="CenterCenter" [title]="item.ActivityTypeName" style="top: 2px;" width="18" height="20" src="./Images/Buttons/EO.png" />
+                                            <img *ngIf="item.ActivityTypePathCode == 'EI'" class="CenterCenter" [title]="item.ActivityTypeName" style="top: 2px;" width="18" height="20" src="./Images/Buttons/EI.png" />
+                                        </td>
+                                        <td style="width:3px"><div></div></td>
+                                        <td style="width:200px;min-width:200px;max-width:200px;color:#282E30; " class="TextTrimming">{{item.Subject}}</td>
+                                        <td style="width:10px"><div></div></td>
+                                        <td style="width:100px;min-width:100px;max-width:100px;">
+                                            <div [ngStyle]="{color: item.DueDate | DateTimeToColorPipe: 'A'}">
+                                                {{item.DueDate | DateTimePipe:'D'}}
+                                            </div>
+                                        </td>
+                                        <td style="width:3px"><div></div></td>
+                                        <td style="width:200px;min-width:200px;max-width:200px;color:#1B90CB;" class="TextTrimming">{{item.CustomerName}}</td>
+                                        <td><div></div></td>
+
+                                    </tr>
+                                </table>
+
+                                <!-- Importer Details -->
+                                <table *ngIf="IsImporterDetails">
+                                    <tr>
+
+                                        <td style="padding-right: 5px;text-align: right;" class="TextTrimming">
+
+                                            <span style="font-size: 10px; color: #4e4e4e; text-align: right;">{{item.PassportNumber}}</span>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr>
+                                        <td style="padding-right: 5px;text-align: right;" class="TextTrimming">
+                                            <span style="font-size: 9px; color: #1982b7; text-align: right;">{{item.FullName}}</span>
+
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <!-- Opportunity -->
+                                <table *ngIf="ObjectTableName == 'Opportunity'">
+                                    <tr>
+                                        <td style="width:5px"><div></div></td>
+                                        <td style="width:200px;min-width:200px;max-width:200px;color:#282E30; font-size:10px; " class="TextTrimming">{{item.Subject}}</td>
+                                        <td style="width:10px"><div></div></td>
+                                        <td style="width:200px;min-width:200px;max-width:200px;color:#1B90CB;font-size:12px; " class="TextTrimming">{{item.CustomerName}}</td>
+                                        <td style="width:3px"><div></div></td>
+                                        <td style="width:90px;min-width:90px;max-width:90px;font-size:11px; ">
+                                            <label [ngStyle]="{color: item.StageName | StringToColorPipe:'OpportunityStage'}">{{item.StageName}}</label>
+                                        </td>
+                                        <td style="width:3px"><div></div></td>
+                                        <td style="width:200px;min-width:200px;max-width:200px;color:#282E30;font-size:10px;" class="TextTrimming">{{item.OwnerName}}</td>
+                                        <td><div></div></td>
+                                    </tr>
+                                </table>
+
+                                <!-- Customs.Client -->
+                                <table *ngIf="ObjectTableName == 'Customs.Client'">
+                                    <tr>
+
+                                        <td style="padding-right: 5px;text-align: right;" class="TextTrimming">
+
+                                            <span style="font-size: 10px; color: #4e4e4e; text-align: right;">{{item.Code}}</span>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr>
+                                        <td style="padding-right: 5px;text-align: right;" class="TextTrimming">
+                                            <span style="font-size: 9px; color: #1982b7; text-align: right;">{{item.FullName}}</span>
+
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <!--  Customs.CustomsItems -->
+                                <table *ngIf="ObjectTableName == 'Customs.CustomsItems'">
+                                    <tr>
+
+                                        <!--<td style="width: 50px; padding-right: 5px;text-align: right;" class="TextTrimming">
+                                            <span style="font-size: 8px; color: #4e4e4e; text-align: right;">{{item.ID}}</span>
+                                        </td>-->
+
+                                        <td style="padding-right: 5px;text-align: right;" class="TextTrimming">
+                                            <span style="font-size: 10px; color: #1982b7; text-align: right;">{{item.FullClassification}}</span>
+                                        </td>
+
+                                    </tr>
+                                </table>
+
+                                <!--  Customs.CouriersVat -->
+                                <table *ngIf="ObjectTableName == 'Customs.CouriersVat'">
+                                    <tr>
+
+                                        <td style="width: 50px; max-width: 50px; padding-right: 5px;text-align: right;" class="TextTrimming">
+                                            <span style="font-size: 8px; color: #4e4e4e; text-align: right;">{{item.VatNumber}}</span>
+                                        </td>
+
+                                        <td style="padding-right: 5px;text-align: right;" class="TextTrimming">
+                                            <span style="font-size: 10px; color: #1982b7; text-align: right;">{{item.LocalName}}</span>
+                                        </td>
+
+                                    </tr>
+                                </table>
+
+                                <!--  Customs.CustomsAirline -->
+                                <table *ngIf="ObjectTableName == 'Customs.CustomsAirline'">
+                                    <tr>
+
+                                        <td style="width: 50px; max-width: 50px; padding-right: 5px;text-align: right;" class="TextTrimming">
+                                            <span style="font-size: 8px; color: #4e4e4e; text-align: right;">{{item.AirlinePrefix}}</span>
+                                        </td>
+
+                                        <td style="width: 50px; max-width: 50px; padding-right: 5px;text-align: right;" class="TextTrimming">
+                                            <span style="font-size: 8px; color: #4e4e4e; text-align: right;">{{item.AirlineCode}}</span>
+                                        </td>
+
+                                        <td style="padding-right: 5px;text-align: right;" class="TextTrimming">
+                                            <span style="font-size: 10px; color: #1982b7; text-align: right;">{{item.LocalName}}</span>
+                                        </td>
+
+                                    </tr>
+                                </table>
+
+                            </li>
+                        </ul>
+
+                        <img *ngIf="IsQuickSearchLoading" class="CenterCenter" style="height:20px; width:20px;" src="./Images/LoginScreen/indicator.gif" />
+                        <div *ngIf="IsQuickSearchNoResult" class="NoDataText" style="top: 27px;">{{'General.O.NoData' | TextCodeTranslationPipe}}</div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr *ngIf="ShowViewAll" style="height: 20px;">
+                <td>
+                    <div style="height: 20px; width: 100%; background: white; text-align:right; padding-right: 5px;">
+                        <span class="hyperlink" (mousedown)="OnViewAllClicked()">{{'General.O.ViewAll' | TextCodeTranslationPipe}}</span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

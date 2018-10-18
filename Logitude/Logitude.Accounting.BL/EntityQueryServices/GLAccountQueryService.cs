@@ -1,0 +1,567 @@
+﻿using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Accounting.Data.EntityKeys;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.Repositories;
+using Logitude.Server.Tools;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Logitude.Accounting.Data;
+using Logitude.Accounting.BL.EntityDataMappings;
+using Simplog.Server.Infrastructure;
+
+namespace Logitude.Accounting.BL.EntityQueryServices
+{
+    public partial class GLAccountQueryService : EntityQueryService<GLAccount, GLAccountKeys, GLAccountPM, object, GLAccountKeys>, IGLAccountQueryService
+    {
+
+        public override void GetComposition(EntityKeyFields entityKeys, GLAccountPM entityPM)
+        {
+            IAccountingContext context = MainContext as AccountingContext;
+            GLAccountKeys gLAccountKeys = entityKeys as GLAccountKeys;
+
+            GLAccountWithholdingTaxQueryService gLAccountWithholdingTaxQueryService = new GLAccountWithholdingTaxQueryService(context);
+
+
+            entityPM.GLAccountWithholdingTaxes = gLAccountWithholdingTaxQueryService.GetMulti(gLAccountKeys, true);
+
+            if (entityPM.GLAccountWithholdingTaxes.Count > 0)
+            {
+                entityPM.TaxWithholdingLastLine = gLAccountWithholdingTaxQueryService.GetMaxLineNumber(entityPM.Id, entityPM.Tenant);
+            }
+
+        }
+        public IQueryable<string> GetQGLAccIdByCollectorId(int tenant, string CollectorId, string AccountTypeCode)
+        {
+             var q= (
+                 from a in this.repository.GetQAllByAccountTypeCode(tenant, AccountTypeCode)
+                 join card in  (this.context as AccountingContext).Cards.Where( r=>r.Tenant== tenant)
+                 on a.Id equals card.GLAccountId
+                 join cust in  (this.context as AccountingContext).Customers
+                 .Where(r => r.CollectorId == CollectorId && r.Tenant == tenant)
+                 on card.Id equals cust.Id
+                 select a.Id);
+            return q;
+        }
+        public bool CheckIfDisplayNumberExists(string displayNo, string internalNumber, int tenant)
+        {
+            return this.repository.CheckIfDisplayNumberExists(displayNo, internalNumber, tenant);
+        }
+
+
+        public IQueryable<GLAccountAndMoreDTO> GetQAllRevenueExpenseCardsByIsControlAccount(int tenant, bool isControlAccount)
+        {
+            var pocoGLAccountAndMores = this.repository.GetQAllRevenueExpenseCardsByIsControlAccount(tenant, isControlAccount);//.ToList();
+            //(this.mapping as GLAccountDataMapping).SuppressGetCardByGLAccountId = true;
+            //var pms = pocos.Select(r => this.GetEntityPM(r)).ToList();
+            //return pms;
+            return pocoGLAccountAndMores;
+        }
+        public List<GLAccountAndMoreDTO> GetAllRevenueExpenseCards(int tenant)
+        {
+            var pocoGLAccountAndMores = this.repository.GetQAllRevenueExpenseCards(tenant).ToList();
+            return pocoGLAccountAndMores;
+            //var pms = pocos.Select(r => this.GetEntityPM(r)).ToList();
+            //return pms;
+        }
+
+        public List<int> GetTenantByNextDueDate(DateTime today, List<string> accountTypeCodeList)
+        {
+            return this.repository.GetTenantByNextDueDate(today, accountTypeCodeList);
+        }
+
+        public IQueryable<GLAccountAndMoreDTO> GetQByAccountTypeCodeList(int tenant, List<string> accountTypeCodeList)
+        {
+            return this.repository.GetQByAccountTypeCodeList(tenant, accountTypeCodeList);
+        }
+        public IQueryable<string> GetListByNextDueDate(int tenant, DateTime today, List<string> accountTypeCodeList)
+        {
+            return this.repository.GetListByNextDueDate(tenant, today, accountTypeCodeList);
+        }
+
+        public List<GLAccountPM> GetByAcountTypeCategories(int tenant, string AccountType,
+            string Category1, string Category2, string Category3, string Category4, string Category5)
+        {
+            var listPoco =this.repository.GetByAcountTypeCategories(tenant, AccountType,
+            Category1, Category2, Category3, Category4, Category5).ToList();
+            var pmList = listPoco.Select( poco=>  this.GetEntityPM(poco)).ToList();
+            return pmList;
+        }
+
+   
+
+        public bool CheckIfInternalNumberExists(string internalNumber, string id, int tenant)
+        {
+            return this.repository.CheckIfInternalNumberExists(internalNumber, id, tenant);
+        }
+        public HashSet<string> GetAllIdAccounts(int tenant, string GLAccountId,
+            bool IncludeRelatedCurrenciesAccount, bool IncludeChildAccounts)
+        {
+            var allIdAccounts = new List<string>() { GLAccountId };
+            if (IncludeRelatedCurrenciesAccount)
+            {
+                var myGLAccountCurrencyRepository = new GLAccountCurrencyRepository(this.context);
+                var relatedCurrenciesAccountByCustomerGLAccount = myGLAccountCurrencyRepository.GetRelatedCurrenciesAccountByCustomerGLAccount(tenant, GLAccountId)
+                    .Select(ca => ca.GLAccountId).ToList();
+                allIdAccounts.AddRange(relatedCurrenciesAccountByCustomerGLAccount);
+            }
+            if (IncludeChildAccounts)
+            {
+                //var myGLAccountRepository = new GLAccountRepository(_AccountingContext);
+                var ChildAccounts = repository.GetChildAccounts(GLAccountId, tenant)
+                .Select(ca => ca.Id).ToList();
+                allIdAccounts.AddRange(ChildAccounts);
+            }
+
+            return new HashSet<string>(allIdAccounts);
+        }
+        public IQueryable<string> GetQAllIdAccounts(int tenant, string GLAccountId,
+           bool IncludeRelatedCurrenciesAccount, bool IncludeChildAccounts)
+        {
+            //var allIdAccounts = new List<string>() { GLAccountId };
+            IQueryable<string> allIdAccounts = repository.GetQId(new List<string>() { GLAccountId }, tenant);
+            if (IncludeRelatedCurrenciesAccount)
+            {
+                var myGLAccountCurrencyRepository = new GLAccountCurrencyRepository(this.context);
+                var relatedCurrenciesAccountByCustomerGLAccount = myGLAccountCurrencyRepository.GetRelatedCurrenciesAccountByCustomerGLAccount(tenant, GLAccountId)
+                    .Select(ca => ca.GLAccountId).AsQueryable<string>();// ToList();
+                ////i decided to add this due unittest :Run_IncludeRelatedCurrenciesAccount_AllCurrencies
+                allIdAccounts =
+                ////i decided to add this due unittest :Run_IncludeRelatedCurrenciesAccount_AllCurrencies
+                    allIdAccounts.Union(relatedCurrenciesAccountByCustomerGLAccount);
+            }
+            if (IncludeChildAccounts)
+            {
+                //var myGLAccountRepository = new GLAccountRepository(_AccountingContext);
+                var ChildAccounts = repository.GetChildAccounts(GLAccountId, tenant)
+                .Select(ca => ca.Id).AsQueryable<string>();// ToList();
+
+                //allIdAccounts.AddRange(ChildAccounts);
+
+                allIdAccounts = allIdAccounts.Union(ChildAccounts);
+
+            }
+
+            return allIdAccounts;
+        }
+        public HashSet<string> GetAllIdAccountsCat(int tenant, string GLAccountId, string cat1, string cat2, string cat3, string cat4, string cat5,
+    bool IncludeChildAccounts)
+        {
+            var allIdAccounts = new List<string>() { GLAccountId };
+            if (!String.IsNullOrWhiteSpace(cat1) || !String.IsNullOrWhiteSpace(cat2) || !String.IsNullOrWhiteSpace(cat3) || !String.IsNullOrWhiteSpace(cat4) || !String.IsNullOrWhiteSpace(cat5))
+            {
+                var catAccounts = repository.GetQAccIdByAcountIdCategories(tenant, GLAccountId, cat1, cat2, cat3, cat4, cat5)
+                    .ToList();
+            }
+            if (IncludeChildAccounts)
+            {
+                var ChildAccounts = repository.GetChildAccounts(GLAccountId, tenant)
+                .Select(ca => ca.Id).ToList();
+                allIdAccounts.AddRange(ChildAccounts);
+            }
+
+            return new HashSet<string>(allIdAccounts);
+        }
+
+        public List<GLAccountAndMoreDTO> GetCurrentBalanceByType(int tenant)
+        {
+            var fullPM=FullAccountingSettingQueryService.Get(tenant);
+            //fullPM.
+            
+            var qAllCards = this.repository.GetQAllCards(tenant);
+
+            var qGruop = (from acc in qAllCards
+                        where acc.IsControlAccount == false
+                        group acc by 1 into g
+                        select new
+                        {
+                            TypeName = "All Rest",
+                            BalanceInLocalCurrency = g.Sum(r => r.BalanceInLocalCurrency)
+                        }
+                ).Union(
+
+                (from acc in qAllCards
+                 where acc.Id == fullPM.AirExportJobControlAccountId
+                 select new
+                 {
+                     TypeName = "Air Export Job",
+                     BalanceInLocalCurrency = acc.BalanceInLocalCurrency
+                 })
+
+                 ).Union(
+                 (from acc in qAllCards
+                  where acc.Id == fullPM.AirImportJobControlAccountId
+                  select new
+                  {
+                      TypeName = "Air Import Job",
+                      BalanceInLocalCurrency = acc.BalanceInLocalCurrency
+                  })
+
+                 ).Union(
+                 (from acc in qAllCards
+                  where acc.Id == fullPM.CustomerControlAccountId
+                  select new
+                  {
+                      TypeName = "Customer",
+                      BalanceInLocalCurrency = acc.BalanceInLocalCurrency
+                  })
+
+                 ).Union(
+                 (from acc in qAllCards
+                  where acc.Id == fullPM.FileControlAccountId
+                  select new
+                  {
+                      TypeName = "File",
+                      BalanceInLocalCurrency = acc.BalanceInLocalCurrency
+                  })
+
+                 ).Union(
+                 (from acc in qAllCards
+                  where acc.Id == fullPM.OceanExportJobControlAccountId
+                  select new
+                  {
+                      TypeName = "Ocean Export Job",
+                      BalanceInLocalCurrency = acc.BalanceInLocalCurrency
+                  })
+
+                 
+                 ).Union(
+                 (from acc in qAllCards
+                  where acc.Id == fullPM.OceanImportJobControlAccountId
+                  select new
+                  {
+                      TypeName = "Ocean Import Job",
+                      BalanceInLocalCurrency = acc.BalanceInLocalCurrency
+                  })
+
+                 ).Union(
+                 (from acc in qAllCards
+                  where acc.Id == fullPM.VendorControlAccountName
+                  select new
+                  {
+                      TypeName = "Vendor",
+                      BalanceInLocalCurrency = acc.BalanceInLocalCurrency
+                  })
+
+                 )
+                 ;
+            var list = qGruop.ToList();
+            var dic = new List<GLAccountAndMoreDTO>();
+            list.ForEach(r =>
+              {
+                  dic.Add(new GLAccountAndMoreDTO()
+                  {
+                      AccountTypeName = r.TypeName,
+                      BalanceInLocalCurrency = r.BalanceInLocalCurrency.GetValueOrDefault()
+                  });
+              }
+            );
+            return dic;
+        }
+
+        //public bool CheckIfClientAndCurrencyExist(string clientId, string currencyId, string internalNumber, int tenant)
+        //{
+        //    if (String.IsNullOrEmpty(clientId))
+        //    {
+        //        return false;
+        //    }
+        //    else
+        //    {
+        //        return this.repository.CheckIfClientAndCurrencyExist(clientId, currencyId, internalNumber, tenant);
+        //    }
+        //}
+
+        //public bool CheckIfVendorAndCurrencyExist(string vendorId, string currencyId, string internalNumber, int tenant)
+        //{
+        //    if (String.IsNullOrEmpty(vendorId))
+        //    {
+        //        return false;
+        //    }
+        //    else
+        //    {
+        //        return this.repository.CheckIfVendorAndCurrencyExist(vendorId, currencyId, internalNumber, tenant);
+        //    }
+        //}
+        public GLAccountPM GetSinglePM(string gLAccountId, int tenant)
+        {
+            GLAccount gLAccountPOCO = null;
+            gLAccountPOCO = repository.GetGLAccountByIdTenant(gLAccountId, tenant);
+            GLAccountPM pm = this.GetEntityPM(gLAccountPOCO);
+            return pm;
+        }
+
+        public GLAccountPM GetSinglePMByInternalNumber(string internalNumber, int tenant)
+        {
+            GLAccount gLAccountPOCO = null;
+            gLAccountPOCO = repository.GetGLAccountByInternalNoAndTenant(internalNumber, tenant);
+            GLAccountPM pm = this.GetEntityPM(gLAccountPOCO);
+            return pm;
+        }
+        public GLAccountPM GetSinglePMByDisplayNumber(string displayNo, int tenant)
+        {
+            GLAccount gLAccountPOCO = null;
+            gLAccountPOCO = repository.GetGLAccountByDisplayNoAndTenant(displayNo, tenant);
+            GLAccountPM pm = this.GetEntityPM(gLAccountPOCO);
+            return pm;
+        }
+
+        public List<GLAccountPM> GetByRevaluationEnabled_OtherParams(bool? revaluationEnabled, string chartOfAccountsTypeCode, string chartOfAccountsId, string accountTypeCode, string gLAccountId, string accountingCurrencyId, int tenant)
+        {
+            List<GLAccount> gLAccountPOCOs = null;
+            gLAccountPOCOs = repository.GetByRevaluationEnabled_OtherParams(revaluationEnabled, chartOfAccountsTypeCode, chartOfAccountsId, accountTypeCode, gLAccountId, accountingCurrencyId, tenant);
+            List<GLAccountPM> pms = gLAccountPOCOs.Select(poco => this.GetEntityPM(poco)).ToList();
+            return pms;
+        }
+
+        public List<GLAccountPM> GetChildAccounts(string GLAccountId, int tenant)
+        {
+            var pms = this.repository.GetChildAccounts(GLAccountId, tenant);
+            return pms.Select( rec=> this.GetEntityPM(rec)).ToList();
+            
+        }
+        internal List<GLAccountPM>  GetChildAccountsByChartOfAccountIdList(List<string> chartOfAccountIdList, int tenant)
+        {
+            var pms = this.repository.GetChildAccountsByChartOfAccountIdList(chartOfAccountIdList, tenant);
+            return pms.Select(rec => this.GetEntityPM(rec)).ToList();
+        }
+        public List<GLAccountPM> GetByGLAccountsIdList(List<String> GLAccountsIdList, int tenant)
+        {
+            var pms = this.repository.GetByGLAccountsIdList(GLAccountsIdList, tenant);
+            return pms.Select(rec => this.GetEntityPM(rec)).ToList();
+        }
+
+        internal IQueryable<GLAccount> GetQAllControlAccount(int tenant)
+        {
+            return this.repository.GetQAllControlAccount(tenant);
+            
+        }
+        public List<GLAccountCurrencyBalance> GetCurrencyBalances(GLAccountPM gLAccountPM, DateTime revaluationDate, int tenant)
+        {
+
+            List<GLAccountCurrencyBalance> rvList = new List<GLAccountCurrencyBalance>();
+            if (gLAccountPM != null)
+            {
+                DateTime monthLastDate = GetDate(revaluationDate);
+
+                GLAccountTotalByMonthQueryService gLAccountTotalByMonthsQueryServices = new GLAccountTotalByMonthQueryService(tenant);
+                DateTime monthUpTo = gLAccountTotalByMonthsQueryServices.GLAccountMonthTotalsUpToDate(gLAccountPM.Id, monthLastDate, tenant);
+                DateTime noMonthsComputed = DateTime.MinValue; // no months computed 
+                LedgerTransactionQueryService ledgerTransactionQueryService = new LedgerTransactionQueryService(context);
+
+                List<CurrencySum> allSum;
+                if (monthUpTo != noMonthsComputed)
+                {
+                    List<CurrencySum> monthsSum = gLAccountTotalByMonthsQueryServices.GetSumByMonth(gLAccountPM.Id, monthUpTo.Year, monthUpTo.Month, tenant);
+                    if (monthLastDate == revaluationDate && (monthUpTo.Year == revaluationDate.Year && monthUpTo.Month == revaluationDate.Month)) // rev date is last day of month AND we have all the sums computed already 
+                    {
+                        allSum = monthsSum;
+                    }
+                    else // here we need to compute the remaining period
+                    //      from the 1th of the next month after monthUpTo    to the revaluationDate
+                    // then add it to the monthsSum
+                    {
+                        DateTime fromD = new DateTime(monthUpTo.Year, monthUpTo.Month, 1);
+                        fromD = fromD.AddMonths(1);
+                        List<CurrencySum> remainingSum = ledgerTransactionQueryService.GetLedgerTransactionTotalLocalAmountFromTo(gLAccountPM.Id, fromD, revaluationDate, tenant);
+                        allSum = MergeLists(monthsSum, remainingSum);
+                    }
+                }
+                else // here we need to compute all the period up to the rev date
+                {
+                    allSum = ledgerTransactionQueryService.GetLedgerTransactionTotalLocalAmountFromTo(gLAccountPM.Id, DateTime.MinValue, revaluationDate, tenant);
+                }
+
+                foreach (CurrencySum item in allSum)
+                {
+                    GLAccountCurrencyBalance balance = new GLAccountCurrencyBalance
+                    {
+                        AccountId = item.AccountId,
+                        CurrencyId = item.CurrencyId,
+                        ForeignAmount = (decimal)item.ForeignAmountDebit - (decimal)item.ForeignAmountCredit,
+                        LocalAmount = (decimal)item.LocalAmountDebit - (decimal)item.LocalAmountCredit,
+                    };
+                    rvList.Add(balance);
+                }
+            }
+            return rvList;
+        }
+
+        private static DateTime GetDate(DateTime revaluationDate)
+        {
+            DateTime monthLastDate;
+            DateTime nextDay = revaluationDate.AddDays(1d);
+            if (nextDay.Month == revaluationDate.Month) // revaluationDate is not the last day of its month
+            {
+                DateTime fromDate = new DateTime(revaluationDate.Year, revaluationDate.Month, 1); // 1st of the same month
+                monthLastDate = fromDate.AddDays(-1d); // the last day of the previous month
+            }
+            else
+            {
+                monthLastDate = revaluationDate; // the same
+            }
+            return monthLastDate;
+        }
+
+
+        private static List<CurrencySum> MergeLists(List<CurrencySum> left, List<CurrencySum> right)
+        {
+            List<CurrencySum> rvList;
+            if (left == null || left.Count == 0)
+            {
+                rvList = right;
+            }
+            else if (right == null || right.Count == 0)
+            {
+                rvList = left;
+            }
+
+            else
+            {
+                rvList = new List<CurrencySum>();
+                foreach (CurrencySum item in left)
+                {
+                    CurrencySum rightItem = right.Where(d => d.AccountId == item.AccountId && d.CurrencyId == item.CurrencyId).FirstOrDefault();
+                    if (!(rightItem == null || String.IsNullOrEmpty(rightItem.AccountId)))
+                    {
+                        item.ForeignAmountCredit += rightItem.ForeignAmountCredit;
+                        item.ForeignAmountDebit += rightItem.ForeignAmountDebit;
+                        item.LocalAmountCredit += rightItem.LocalAmountCredit;
+                        item.LocalAmountDebit += rightItem.LocalAmountDebit;
+                        right.Remove(rightItem);
+                    }
+                    rvList.Add(item);
+                }
+                foreach (CurrencySum item in right) // all that remains in the right (and has not been also in the left)
+                {
+                    rvList.Add(item);
+                }
+            }
+
+            return rvList;
+       }
+
+
+        public List<GLAccountPM> GetByInternalNumber(string internalNumber, int tenant)
+        {
+            List<GLAccount> pocos = this.repository.GetByInternalNumber(internalNumber, tenant);
+            return pocos.Select(rec => this.GetEntityPM(rec)).ToList();
+        }
+
+        public List<GLAccountPM> GetByDisplayNumber(string displayNumber, int tenant)
+        {
+            List<GLAccount> pocos = this.repository.GetByDisplayNumber(displayNumber, tenant);
+            return pocos.Select(rec => this.GetEntityPM(rec)).ToList();
+        }
+
+        public IQueryable<GLAccountPM> GetSplittedByCurrencyGLAccounts(string accountId, int tenant)
+        {
+          
+            IQueryable<GLAccountPM> Accounts = from a in context.GLAccounts
+                                               join
+                  c in context.GLAccountCurrencies on a.Id equals c.GLAccountId
+                                               where c.MainGLAccountId == accountId && a.Tenant == tenant
+                                               select new GLAccountPM()
+                                               {
+                                                   Id = a.Id,
+                                                   CurrencyId = c.CurrencyId,
+                                                   DisplayNumber = c.GLAccount != null ? c.GLAccount.DisplayNumber : null,
+                                                   Inactive= a.Inactive,
+                                                   CurrencyCode = c.Currency != null? c.Currency.Code: null,
+                                                   ChartOfAccountsId = c.GLAccount != null? c.GLAccount.ChartOfAccountsId: null,
+                                                   ChartOfAccountsTypeCode = c.GLAccount != null? c.GLAccount.ChartOfAccountsTypeCode : null,
+                                                   LocalName = c.GLAccount != null? c.GLAccount.LocalName : null,
+                                                   ReconcileMethodCode = c.GLAccount != null? c.GLAccount.ReconcileMethodCode : null,
+                                                   RevenueExpenseType = c.GLAccount != null? c.GLAccount.RevenueExpenseType : null,
+                                                   Tenant = tenant,
+#if GLAccMoreData
+                                                   //BalanceInLocalCurrency = c.GLAccount != null? c.GLAccount.BalanceInLocalCurrency:null,
+                                                   LocalBalanceInDue = c.GLAccount != null ? c.GLAccount.LocalBalanceInDue : null,
+                                                   NextDueDate = c.GLAccount != null ? c.GLAccount.NextDueDate : null,
+#endif
+                                                   AccountTypeCode = c.GLAccount.AccountTypeCode,
+                                                   AutomaticReconcileId = c.GLAccount.AutomaticReconcileId,
+                                                   ControlAccountId = c.GLAccount.ControlAccountId,
+                                                   CustomerGLAccountId = c.GLAccount.CustomerGLAccountId,
+                                                   InternalNumber= c.GLAccount.InternalNumber
+                                                   
+                                               };
+            return Accounts;
+        }
+
+        public IQueryable<GLAccountPM> GetChildrenGLAccounts(string accountId, int tenant)
+        {
+     
+            IQueryable<GLAccountPM> Accounts = from a in context.GLAccounts
+                                               where a.ParentAccountId == accountId && a.Tenant == tenant
+                                               select new GLAccountPM()
+                                               {
+                                                   Id = a.Id,
+                                                   Tenant = a.Tenant,
+                                                   InternalNumber = a.InternalNumber,
+                                                   AccountTypeCode = a.AccountTypeCode,
+                                                   DisplayNumber = a.DisplayNumber,
+                                                   EnglishName = a.EnglishName,
+                                                   LocalName = a.LocalName,
+                                                   SearchFields = a.SearchFields,
+                                                   IsMultiCurrency = a.IsMultiCurrency,
+                                                   CurrencyId = a.CurrencyId,
+                                                   RevenueExpenseType = a.RevenueExpenseType,
+                                                   IsControlAccount = a.IsControlAccount,
+                                                   ChartOfAccountsId = a.ChartOfAccountsId,
+                                                   Inactive = a.Inactive,
+                                                   ReconcileMethodCode = a.ReconcileMethodCode,
+                                                   ChartOfAccountsTypeCode = a.ChartOfAccountsTypeCode,
+                                                   AccountTypeName = a.GLAccountType != null ? a.GLAccountType.EnglishName : null,
+                                                   RevenueExpenseName = a.RevenueExpense != null ? a.RevenueExpense.EnglishName : null,
+                                                   ReconcileMethodName = a.ReconcileMethod != null ? a.ReconcileMethod.EnglishName : null,
+                                                   CurrencyName = a.Currency != null ? a.Currency.EnglishName : null,
+                                                   ChartOfAccountsTypeName = a.ChartOfAccountsType != null ? a.ChartOfAccountsType.EnglishName : null,
+                                                 
+                                                   CurrencySign = a.IsMultiCurrency == true ? "" : a.Currency != null ? a.Currency.Sign : null,
+                                                   ControlAccountName = a.ControlAccount != null ? a.ControlAccount.EnglishName : null,
+                                                   ControlAccountId = a.ControlAccountId,
+                                                   ControlAccountNumber = a.ControlAccount != null ? a.ControlAccount.DisplayNumber : null,
+                                                   ChartOfAccountsName = a.ChartOfAccount != null ? a.ChartOfAccount.LocalName : null,
+                                                
+                                                   AutomaticReconcileId = a.AutomaticReconcileId,
+                                                
+                                                   PreviousEnglishName = a.PreviousEnglishName,
+                                                   PreviousEnglishNameChangeDate = a.PreviousEnglishNameChangeDate,
+                                                   PreviousLocalName = a.PreviousLocalName,
+                                                   PreviousLocalNameChangeDate = a.PreviousLocalNameChangeDate,
+                                                   PreviousNumber = a.PreviousNumber,
+                                                   PreviousNumberChangeDate = a.PreviousNumberChangeDate,
+                                                   PreviousChartOfAccountsId = a.PreviousChartOfAccountsId,
+                                                   PreviousChartOfAccountsChangeDate = a.PreviousChartOfAccountsChangeDate,
+                                                   
+                                                   CustomerGLAccountId = a.CustomerGLAccountId,
+                                                 
+                                                   RevaluationEnabled = a.RevaluationEnabled,
+                                                
+                                                   ParentAccountId = a.ParentAccountId,
+                                                   IsVATExempt = a.IsVATExempt,
+                                                
+
+                                               };
+            return Accounts;
+        }
+    }
+    public class GLAccountCurrencyBalance
+    {
+        public decimal? ForeignAmount { get; set; }
+        public decimal? LocalAmount { get; set; }
+        public string CurrencyId { get; set; }
+        public string AccountId { get; set; }
+        //public string LocalName { get; set; }
+    }
+
+    public interface IGLAccountQueryService
+    {
+        List<GLAccountPM> GetByGLAccountsIdList(List<String> GLAccountsIdList, int tenant);
+    }
+    
+
+}
+
+
+

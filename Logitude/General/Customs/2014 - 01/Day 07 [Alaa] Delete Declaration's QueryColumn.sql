@@ -1,0 +1,1 @@
+delete from QueryColumns where ObjectFieldId = (  select id from ObjectFields where FieldName='ErrosXml' and ObjectTableId = ( select id from ObjectTables where name ='Customs.Declaration'))

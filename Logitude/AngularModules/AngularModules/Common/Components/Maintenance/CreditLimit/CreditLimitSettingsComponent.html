@@ -1,0 +1,118 @@
+﻿
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table *ngIf="IsResourcesReady">
+                <tr style="height: 1px;">
+                    <td style="width: 20px;">
+                        <LogCheckBox [ObjectFieldName]="'IsCreditLimitEnabled'" [Checked]="IsCreditLimitEnabled" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                    </td>
+
+                    <td class="Value" style="font-size: 13px;">Enable Credit Limit Management</td>
+                </tr>
+
+                <tr style="height: 1px;">
+                    <td></td>
+                    <td class="Label" style="font-size: 11px; font-family: Arial; font-style: italic;">Activating will enable entering the credit limit for customers and managing limitations when exceeding</td>
+                </tr>
+
+                <tr style="height: 10px;">
+                    <td colspan="2">
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2">
+                        <div class="MediaFill GroupBox">
+                            <table>
+                                <tr style="height: 25px;">
+                                    <td class="BlueTitle">Areas</td>
+                                    <td class="Value" style="width: 80px; text-align: center;">Warning</td>
+                                    <td class="Value" style="width: 80px; text-align: center;">Block</td>
+                                </tr>
+
+                                <!-- Invoice Creation -->
+                                <tr style="height: 25px;">
+                                    <td class="Value">Invoice Creation</td>
+
+                                    <td>
+                                        <div style="width: 16px; margin: auto;">
+                                            <LogCheckBox [ObjectFieldName]="'InvoiceCreationWarning'" [Checked]="InvoiceCreationWarning" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div style="width: 16px; margin: auto;">
+                                            <LogCheckBox [ObjectFieldName]="'InvoiceCreationBlock'" [Checked]="InvoiceCreationBlock" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- Shipment Creation -->
+                                <tr style="height: 25px;">
+                                    <td class="Value">Shipment Creation</td>
+
+                                    <td>
+                                        <div style="width: 16px; margin: auto;">
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div style="width: 16px; margin: auto;">
+                                            <LogCheckBox [ObjectFieldName]="'ShipmentCreationBlock'" [Checked]="ShipmentCreationBlock" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div></div>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

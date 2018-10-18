@@ -1,0 +1,145 @@
+﻿
+
+
+
+
+
+<table style="height:100%;vertical-align:top">
+
+
+
+
+    <tr style="height:10px"><td colspan="2"><div></div></td></tr>
+
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td colspan="3">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:5px;">
+        <td colspan="3">
+            <div style="height:5px"></div>
+        </td>
+    </tr>
+
+
+
+
+
+    <!--Fields Grid-->
+
+
+    <tr style="height:100%;vertical-align:top;">
+
+
+        <td style="width:260px;">
+            <table style="vertical-align:top;">
+                <tr style="vertical-align:top;height:30px">
+                    <td style="width:5px"><div></div></td>
+                    <td style="width:110px;">  <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="'DocumentTypeCustomField'" [DataContext]="EntityPM"></LogLabel></td>
+                    <td style="width:150px;"><LogTextBox  [HideColumns]="true" style="width:150px" [ObjectFieldName]="'Name'" [ObjectTableName]="'DocumentTypeCustomField'" [DataContext]="EntityPM"></LogTextBox></td>
+                 
+                </tr>
+
+
+                 <tr style="vertical-align:top;height:30px">
+            <td style="width:5px"><div></div></td>
+            <td style="width:110px;">  <LogLabel [ObjectFieldName]="'FieldDataTypeCode'" [ObjectTableName]="'DocumentTypeCustomField'" [DataContext]="EntityPM"></LogLabel></td>
+
+               <td  style="width:150px;">
+                <table>
+
+                    <tr>
+                        <td style="width:150px"><ComboBox style="width:150px;" (SelectedItemChanged)="ComboBoxFieldDataTypeCodeValueChanged($event)" [ItemsSource]="FieldDataTypeLists" [SelectedItem]="SelectedFieldDataTypeCode"  [Binding]="'Name'"></ComboBox></td>
+                    </tr>
+                </table>
+            </td>
+
+        </tr>
+
+
+                <tr style="vertical-align:top;height:30px">
+                    <td style="width:5px"><div></div></td>
+                    <td style="width:110px;">  <LogLabel [ObjectFieldName]="'DefaultValue'" [ObjectTableName]="'DocumentTypeCustomField'" [DataContext]="EntityPM"></LogLabel></td>
+                    <td style="width:150px;">
+
+                     <LogTextBox *ngIf="!MultiLine" [IsMultiline]="false" [HideColumns]="true" style="width:150px" [ObjectFieldName]="'DefaultValue'" [ObjectTableName]="'DocumentTypeCustomField'" [DataContext]="EntityPM"></LogTextBox>
+                     <LogTextBox *ngIf="MultiLine"  [IsMultiline]="true" [HideColumns]="true" style="width:150px" [ObjectFieldName]="'DefaultValue'" [ObjectTableName]="'DocumentTypeCustomField'" [DataContext]="EntityPM"></LogTextBox>
+                    </td>
+
+                </tr>
+
+                <tr style="vertical-align:top;height:30px">
+                    <td style="width:5px"><div></div></td>
+                    <td style="width:110px;"><LogLabel [ObjectFieldName]="'InActive'" [ObjectTableName]="'DocumentTypeCustomField'" [DataContext]="EntityPM"></LogLabel></td>
+                    <td style="text-align:left;width:150px"><LogCheckBox [ObjectFieldName]="'InActive'" [ObjectTableName]="'DocumentTypeCustomField'" [DataContext]="EntityPM"></LogCheckBox></td>
+
+                </tr>
+
+           
+
+                <tr style="vertical-align:top;height:30px">
+                    <td style="width:5px"><div></div></td>
+                    <td style="width:110px;"><LogLabel [ObjectFieldName]="'IsRequired'" [ObjectTableName]="'DocumentTypeCustomField'" [DataContext]="EntityPM"></LogLabel></td>
+                    <td style="text-align:left;width:150px"><LogCheckBox [ObjectFieldName]="'IsRequired'" [ObjectTableName]="'DocumentTypeCustomField'" [DataContext]="EntityPM"></LogCheckBox></td>
+
+                </tr>
+
+
+          
+
+          
+                <tr *ngIf="ShowMultiLineCheckBox" style="vertical-align:top;height:30px">
+                    <td style="width:5px"><div></div></td>
+                    <td style="width:110px;"><LogLabel [ObjectFieldName]="'MultiLine'" [ObjectTableName]="'DocumentTypeCustomField'" [DataContext]="EntityPM"></LogLabel></td>
+                    <td style="text-align:left;width:100px;"><LogCheckBox (ValueChanged)="MultiLineChange()" [ObjectFieldName]="'MultiLine'" [ObjectTableName]="'DocumentTypeCustomField'" [DataContext]="EntityPM"></LogCheckBox></td>
+                 
+                </tr>
+
+
+                <tr><td colspan="3"></td></tr>
+
+            </table>
+
+        </td>
+
+
+
+     <td><div></div></td>
+
+    </tr>
+
+
+
+
+
+    <tr style="height: 32px;">
+        <td colspan="2" style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <div>
+                            <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                        </div>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="SaveButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>
+

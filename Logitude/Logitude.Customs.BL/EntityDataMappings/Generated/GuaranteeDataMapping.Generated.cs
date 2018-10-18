@@ -1,0 +1,408 @@
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs; 
+using Logitude.Customs.Data;
+
+namespace Logitude.Customs.BL.EntityDataMappings
+{
+   
+   public partial class GuaranteeDataMapping: IMapping<GuaranteePM, Guarantee>,IMappingEncodeBase64NVARCHARFields<GuaranteePM>
+   {
+          public enum POCOPropertyNames
+          { 
+		     None,  
+	         Id, 
+	         Tenant, 
+	         TapagID, 
+	         GuaranteeRequestStatusCode, 
+	         GuaranteeRequestNumber, 
+	         NumeralRequest, 
+	         MsgID, 
+	         ClientActivityCode, 
+	         CustomEntityTypeCode, 
+	         CustomEntityNumber, 
+	         RequestValidityDate, 
+	         GuaranteeValidityDate, 
+	         BrandNumber, 
+	         LawyerNumber, 
+	         BirthDate, 
+	         VehicleChassisNumber, 
+	         EngineNumber, 
+	         UpdateDate, 
+	         GuaranteeExternalNumber,
+	      }
+
+
+	      public enum PMPropertyNames
+          { 
+		     None,  
+	         Id, 
+	         Tenant, 
+	         TapagID, 
+	         GuaranteeRequestStatusCode, 
+	         GuaranteeRequestNumber, 
+	         NumeralRequest, 
+	         MsgID, 
+	         ClientActivityCode, 
+	         CustomEntityTypeCode, 
+	         CustomEntityNumber, 
+	         RequestValidityDate, 
+	         GuaranteeValidityDate, 
+	         BrandNumber, 
+	         LawyerNumber, 
+	         BirthDate, 
+	         VehicleChassisNumber, 
+	         EngineNumber, 
+	         UpdateDate, 
+	         GuaranteeExternalNumber, 
+	         CustomEntityTypeName, 
+	         GuaranteeRequestStatusName, 
+	         TapagNumber, 
+	         LeadingFileNumber, 
+	         TapagTypeCode, 
+	         TapagTypeName, 
+	         CustomerId, 
+	         CustomerName, 
+	         ImporterId, 
+	         ImporterName, 
+	         CustomsBranchCode, 
+	         CustomsBranchName, 
+	         ProfessionUnitTypeCode, 
+	         ProfessionUnitTypeName, 
+	         SpecializationTypeCode, 
+	         SpecializationTypeName, 
+	         CreateDate, 
+	         FollowDate, 
+	         ValidityDate, 
+	         IsClosed, 
+	         ClientActivityTypeName,
+	      }
+
+		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
+        List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
+    
+	    public void PMToPOCO(GuaranteePM entityPM, Guarantee entityPOCO)
+        {
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TapagID))
+            {
+				entityPOCO.TapagID = entityPM.TapagID;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GuaranteeRequestStatusCode))
+            {
+				entityPOCO.GuaranteeRequestStatusCode = entityPM.GuaranteeRequestStatusCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GuaranteeRequestNumber))
+            {
+				entityPOCO.GuaranteeRequestNumber = entityPM.GuaranteeRequestNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NumeralRequest))
+            {
+				entityPOCO.NumeralRequest = entityPM.NumeralRequest;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MsgID))
+            {
+				entityPOCO.MsgID = entityPM.MsgID;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClientActivityCode))
+            {
+				entityPOCO.ClientActivityCode = entityPM.ClientActivityCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomEntityTypeCode))
+            {
+				entityPOCO.CustomEntityTypeCode = entityPM.CustomEntityTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomEntityNumber))
+            {
+				entityPOCO.CustomEntityNumber = entityPM.CustomEntityNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RequestValidityDate))
+            {
+				entityPOCO.RequestValidityDate = entityPM.RequestValidityDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GuaranteeValidityDate))
+            {
+				entityPOCO.GuaranteeValidityDate = entityPM.GuaranteeValidityDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BrandNumber))
+            {
+				entityPOCO.BrandNumber = entityPM.BrandNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LawyerNumber))
+            {
+				entityPOCO.LawyerNumber = entityPM.LawyerNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BirthDate))
+            {
+				entityPOCO.BirthDate = entityPM.BirthDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VehicleChassisNumber))
+            {
+				entityPOCO.VehicleChassisNumber = entityPM.VehicleChassisNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EngineNumber))
+            {
+				entityPOCO.EngineNumber = entityPM.EngineNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdateDate))
+            {
+				entityPOCO.UpdateDate = entityPM.UpdateDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GuaranteeExternalNumber))
+            {
+				entityPOCO.GuaranteeExternalNumber = entityPM.GuaranteeExternalNumber;
+			}
+			}
+
+		public void POCOToPM(GuaranteePM entityPM, Guarantee entityPOCO)
+        {
+			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
+            {
+					entityPM.Id = entityPOCO.Id;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
+            {
+					entityPM.Tenant = entityPOCO.Tenant;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TapagID))
+            {
+					entityPM.TapagID = entityPOCO.TapagID;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.GuaranteeRequestStatusCode))
+            {
+					entityPM.GuaranteeRequestStatusCode = entityPOCO.GuaranteeRequestStatusCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.GuaranteeRequestNumber))
+            {
+					entityPM.GuaranteeRequestNumber = entityPOCO.GuaranteeRequestNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.NumeralRequest))
+            {
+					entityPM.NumeralRequest = entityPOCO.NumeralRequest;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MsgID))
+            {
+					entityPM.MsgID = entityPOCO.MsgID;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ClientActivityCode))
+            {
+					entityPM.ClientActivityCode = entityPOCO.ClientActivityCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomEntityTypeCode))
+            {
+					entityPM.CustomEntityTypeCode = entityPOCO.CustomEntityTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomEntityNumber))
+            {
+					entityPM.CustomEntityNumber = entityPOCO.CustomEntityNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.RequestValidityDate))
+            {
+					entityPM.RequestValidityDate = entityPOCO.RequestValidityDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.GuaranteeValidityDate))
+            {
+					entityPM.GuaranteeValidityDate = entityPOCO.GuaranteeValidityDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.BrandNumber))
+            {
+					entityPM.BrandNumber = entityPOCO.BrandNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LawyerNumber))
+            {
+					entityPM.LawyerNumber = entityPOCO.LawyerNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.BirthDate))
+            {
+					entityPM.BirthDate = entityPOCO.BirthDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.VehicleChassisNumber))
+            {
+					entityPM.VehicleChassisNumber = entityPOCO.VehicleChassisNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EngineNumber))
+            {
+					entityPM.EngineNumber = entityPOCO.EngineNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.UpdateDate))
+            {
+					entityPM.UpdateDate = entityPOCO.UpdateDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.GuaranteeExternalNumber))
+            {
+					entityPM.GuaranteeExternalNumber = entityPOCO.GuaranteeExternalNumber;
+            }
+
+		}
+
+		public void PMToOldPM(GuaranteePM entityPM, GuaranteePM oldEntityPM)
+        {
+		     oldEntityPM.ChangedProperties.Clear();
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+                oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TapagID))
+            {
+                oldEntityPM.TapagID = entityPM.TapagID;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GuaranteeRequestStatusCode))
+            {
+                oldEntityPM.GuaranteeRequestStatusCode = entityPM.GuaranteeRequestStatusCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GuaranteeRequestNumber))
+            {
+                oldEntityPM.GuaranteeRequestNumber = entityPM.GuaranteeRequestNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NumeralRequest))
+            {
+                oldEntityPM.NumeralRequest = entityPM.NumeralRequest;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MsgID))
+            {
+                oldEntityPM.MsgID = entityPM.MsgID;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClientActivityCode))
+            {
+                oldEntityPM.ClientActivityCode = entityPM.ClientActivityCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomEntityTypeCode))
+            {
+                oldEntityPM.CustomEntityTypeCode = entityPM.CustomEntityTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomEntityNumber))
+            {
+                oldEntityPM.CustomEntityNumber = entityPM.CustomEntityNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RequestValidityDate))
+            {
+                oldEntityPM.RequestValidityDate = entityPM.RequestValidityDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GuaranteeValidityDate))
+            {
+                oldEntityPM.GuaranteeValidityDate = entityPM.GuaranteeValidityDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BrandNumber))
+            {
+                oldEntityPM.BrandNumber = entityPM.BrandNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LawyerNumber))
+            {
+                oldEntityPM.LawyerNumber = entityPM.LawyerNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BirthDate))
+            {
+                oldEntityPM.BirthDate = entityPM.BirthDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VehicleChassisNumber))
+            {
+                oldEntityPM.VehicleChassisNumber = entityPM.VehicleChassisNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EngineNumber))
+            {
+                oldEntityPM.EngineNumber = entityPM.EngineNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdateDate))
+            {
+                oldEntityPM.UpdateDate = entityPM.UpdateDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GuaranteeExternalNumber))
+            {
+                oldEntityPM.GuaranteeExternalNumber = entityPM.GuaranteeExternalNumber;
+            }
+			
+		}
+
+	    public void EncodeBase64NVARCHARFields(GuaranteePM entityPM)
+        {
+            if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
+            {
+                return;
+
+            }
+            entityPM.EncodeBase64NVARCHARFieldsBy=null;
+		}
+
+
+	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
+        {
+            CustomMappedPOCOProperties.Add(pocoPropertyName);
+        }
+
+        public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
+        {
+            CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+			  
+   }
+}
+	 

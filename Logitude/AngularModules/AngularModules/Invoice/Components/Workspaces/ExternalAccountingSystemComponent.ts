@@ -1,0 +1,214 @@
+﻿import {Component} from '@angular/core';
+import {AppTool} from '../../../Infrastructure/Tools';
+import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
+import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
+import {AccountingSettingPM} from '../../../Common/EntityPMs/AccountingSettingPM';
+import {AccountingSettingPMService} from '../../../Common/Services/StandardPMs/AccountingSettingPMService';
+import {GlobalDomainService} from '../../../Common/Services/GlobalDomainService';
+import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
+import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
+import {ObjectsUpdater} from '../../../Infrastructure/Locators/ObjectsUpdater';
+
+@Component({
+    selector: 'AccountingTransferComponent',
+    moduleId: module.id,
+    templateUrl: './ExternalAccountingSystemComponent.html',
+})
+
+export class ExternalAccountingSystemComponent extends BaseComponent {
+    public EntityPM: AccountingSettingPM;
+    public DataContext = this;
+    public ObjectTableName: string = "AccountingSetting";
+    public ValidationErrorsList: string[];
+    public IsResourcesReady: boolean = false;
+    constructor(entityResourceService: EntityResourceService) {
+        super();
+
+        entityResourceService.getEntityResourceByTableName("AccountingSetting").subscribe(res => {
+            this.InitializeServices();
+            this.LoadData();
+        });
+    }
+
+    private entityPMService: AccountingSettingPMService;
+    private myGlobalDomainService: GlobalDomainService;
+    InitializeServices() {
+        this.entityPMService = new AccountingSettingPMService();
+        this.myGlobalDomainService = new GlobalDomainService();
+    }
+
+    LoadData() {
+        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+
+        this.entityPMService.get(SessionLocator.Tenant).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.EntityPM = myResponse.Result;
+            }
+
+            this.IsResourcesReady = true;
+            this.SetUIProperties();
+            this.SetQuickBookProperties();
+            SessionLocator.CurrentSession.StopBusyIndicator();
+        });
+    }
+
+    SetUIProperties() {
+
+    }
+
+    public get AccountingSystemCode() { return this.EntityPM.AccountingSystemCode; }
+    public set AccountingSystemCode(value: string) {
+        if (this.EntityPM.AccountingSystemCode != value) {
+            this.EntityPM.AccountingSystemCode = value;
+        }
+    }
+
+    public isQBO: boolean = false;
+    public isLogedInQBO: boolean = false;
+    SetQuickBookProperties() {
+        if (this.EntityPM.QBOAccessToken != null) {
+            this.isLogedInQBO = true;
+        }
+
+        else {
+            this.isLogedInQBO = false;
+        }
+    }
+
+    private IsQuickBooksWindowOpened: boolean = false;
+    DissConnectQBO() {        
+        this.EntityPM.QBOrealMeID = null;
+        this.EntityPM.QBOAccessToken = null;
+        this.EntityPM.QBOAccessTokenSecret = null;
+
+        SessionLocator.CurrentSession.StartBusyIndicator("Disconnecting..");
+
+        this.entityPMService.update(this.EntityPM).subscribe((myResponse1: ServiceResponse) => {
+            if (myResponse1.HasError) {
+                this.ValidationErrorsList = myResponse1.ErrorsArray;
+                SessionLocator.CurrentSession.StopBusyIndicator();
+            }
+
+            else {
+                ObjectsUpdater.UpdateAccountingSettingPM(this.EntityPM);
+
+                this.myGlobalDomainService.GetAccountingSystem(this.AccountingSystemCode).subscribe((myResponse2: ServiceResponse) => {
+                    if (!myResponse2.HasError) {
+                        SessionLocator.AccountingSystemPM = myResponse2.Result;
+                    }
+                });
+
+                this.SetQuickBookProperties();
+                SessionLocator.CurrentSession.StopBusyIndicator();
+            }
+        });
+    }
+    ViewXMLClicked() {
+        var link = AppTool.GetLogitudeURL() + "Quickbooksonline.aspx?connect=true&tenant=" + SessionLocator.Tenant;
+        window.open(link, '_blank', "location = 1, status = 1, scrollbars = 1, width = 400, height = 400");
+        this.IsQuickBooksWindowOpened = true;
+    }
+    SelectedItemChanged(AccountingSystem) {
+        if (AccountingSystem.Code == "QBO") {
+            this.isQBO = true;
+        }
+
+        else {
+            this.isQBO = false;
+        }
+    }
+    RunConnectQuickBooks() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 960;
+        logWindow.Height = 570;
+        logWindow.Title = "";
+        logWindow.Show('./Invoice/Components/Workspaces/QuickBooksLogin');
+        logWindow.WindowClosed.subscribe(s => {
+
+            if (s) {
+                //this.LoadAllScreenData();
+            }
+        });
+    }
+
+    OkButtonClicked() {
+        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+
+        if (this.AccountingSystemCode != "QBO") {
+            if (this.EntityPM.QBOrealMeID) {
+                this.EntityPM.QBOrealMeID = null;
+            }
+
+            if (this.EntityPM.QBOAccessToken) {
+                this.EntityPM.QBOAccessToken = null;
+            }
+
+            if (this.EntityPM.QBOAccessTokenSecret) {
+                this.EntityPM.QBOAccessTokenSecret = null;
+            }
+        }
+
+        if (this.IsQuickBooksWindowOpened && this.AccountingSystemCode == "QBO") {
+            this.entityPMService.get(SessionLocator.Tenant).subscribe((myResponse: ServiceResponse) => {
+                if (myResponse.HasError) {
+                    this.ValidationErrorsList = myResponse.ErrorsArray;
+                    SessionLocator.CurrentSession.StopBusyIndicator();
+                }
+
+                else {
+                    var loadedEntity: AccountingSettingPM = myResponse.Result;
+
+                    if (this.EntityPM.QBOrealMeID != loadedEntity.QBOrealMeID) {
+                        this.EntityPM.QBOrealMeID = loadedEntity.QBOrealMeID;
+                    }
+
+                    if (this.EntityPM.QBOAccessToken != loadedEntity.QBOAccessToken) {
+                        this.EntityPM.QBOAccessToken = loadedEntity.QBOAccessToken;
+                    }
+
+                    if (this.EntityPM.QBOAccessTokenSecret != loadedEntity.QBOAccessTokenSecret) {
+                        this.EntityPM.QBOAccessTokenSecret = loadedEntity.QBOAccessTokenSecret;
+                    }
+
+                    this.SaveChanges();
+                }
+            });
+        }
+
+        else {
+            this.SaveChanges();
+        }
+    }
+
+    SaveChanges() {
+        if (!this.EntityPM.IsDirty) {
+            SessionLocator.CurrentSession.CloseCurrentWindow();
+        }
+
+        else {
+            this.entityPMService.update(this.EntityPM).subscribe((myResponse1: ServiceResponse) => {
+                if (myResponse1.HasError) {
+                    this.ValidationErrorsList = myResponse1.ErrorsArray;
+                    SessionLocator.CurrentSession.StopBusyIndicator();
+                }
+
+                else {
+                    ObjectsUpdater.UpdateAccountingSettingPM(this.EntityPM);
+
+                    this.myGlobalDomainService.GetAccountingSystem(this.AccountingSystemCode).subscribe((myResponse2: ServiceResponse) => {
+                        if (!myResponse2.HasError) {
+                            SessionLocator.AccountingSystemPM = myResponse2.Result;
+                        }
+                    });
+
+                    SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                }
+            });
+        }
+    }
+
+    CancelButtonClicked() {
+        SessionLocator.CurrentSession.CloseCurrentWindow();
+    }
+}

@@ -1,0 +1,5 @@
+
+c:\Logitude2-3\JustWebFreight\WebFreight.Web\ChampCargoXML>xsd CargoXML.xsd /classes /namespace:ChampCargoXML
+
+C:\LogitudeWorld\main\JustWebFreight\WebFreight.Web\MacoXSD
+xsd MACO.xsd /classes /namespace:MacoXSD

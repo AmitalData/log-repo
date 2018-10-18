@@ -1,0 +1,250 @@
+﻿
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr style="height: 10px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div class="ScrollViewer">
+                <div class="ScrollContent">
+                    <table>
+
+                        <tr>
+                            <td>
+                                <table>
+
+                                    <!-- Subject -->
+                                    <tr class="FormFieldRow">
+                                        <td style="width: 110px;">
+                                            <LogLabel [ObjectFieldName]="'Subject'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td>
+                                            <LogTextBox [ObjectFieldName]="'Subject'" [Text]="Subject" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Description -->
+                                    <tr style="height: 1px;">
+                                        <td style="vertical-align:top;">
+                                            <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td>
+                                            <table>
+                                                <tr style="height: 100px;">
+                                                    <td style="height: 100px; vertical-align: top;">
+                                                        <div style="height: 100%; width: 100%;">
+                                                            <LogTextBox [ObjectFieldName]="'Description'" [Text]="Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Owner -->
+                                    <tr class="FormFieldRow">
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'OwnerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td>
+                                            <LogLov [ObjectFieldName]="'OwnerId'"
+                                                    [SelectedValue]="OwnerId"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"
+                                                    [LookUpTableName]="'User'"
+                                                    [HideAddLink]="true"
+                                                    (SelectedItemChanged)="Owner = $event">
+                                            </LogLov>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Start Date -->
+                                    <tr class="FormFieldRow">
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'StartDateTime'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td>
+                                            <table>
+                                                <tr>
+                                                    <td style="width:250px;">
+                                                        <table>
+                                                            <tr>
+                                                                <td>
+                                                                    <LogDatePicker [ObjectFieldName]="'StartDateTime'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                                </td>
+
+                                                                <td style="width: 2px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td>
+                                                                    <LogDatePicker [ObjectFieldName]="'StartDateTime'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideLastColumn]="true" [InputType]="'time'"></LogDatePicker>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+
+                                                    <td style="width:100px;">
+                                                        <LogLabel [ObjectFieldName]="'PriorityCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                    </td>
+
+                                                    <td style="width:250px;">
+                                                        <LogLov [ObjectFieldName]="'PriorityCode'"
+                                                                [SelectedValue]="PriorityCode"
+                                                                [ObjectTableName]="ObjectTableName"
+                                                                [DataContext]="DataContext"
+                                                                [LookUpTableName]="'ActivityPriority'">
+                                                        </LogLov>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Due Date -->
+                                    <tr class="FormFieldRow">
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'DueDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td>
+                                            <table>
+                                                <tr>
+                                                    <td style="width:250px;">
+                                                        <table>
+                                                            <tr>
+                                                                <td>
+                                                                    <LogDatePicker [ObjectFieldName]="'DueDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                                </td>
+
+                                                                <td style="width: 2px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td>
+                                                                    <LogDatePicker [ObjectFieldName]="'DueDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideLastColumn]="true" [InputType]="'time'"></LogDatePicker>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+
+                                                    <td colspan="3">
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Customer -->
+                                    <tr class="FormFieldRow">
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'CustomerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td>
+                                            <table>
+                                                <tr>
+                                                    <td style="width:250px;">
+                                                        <LogLov [ObjectFieldName]="'CustomerId'"
+                                                                [SelectedValue]="CustomerId"
+                                                                [ObjectTableName]="ObjectTableName"
+                                                                [DataContext]="DataContext"
+                                                                [LookUpTableName]="'Card'"
+                                                                [HideLastColumn]="true"
+                                                                [HideAddLink]="true">
+                                                        </LogLov>
+                                                    </td>
+
+                                                    <td>
+                                                        <div *ngIf="IsAddCustomerVisible">
+                                                            <IconButton (click)="AddCustomerClicked()" [Name]="'Add'" [IsSmall]="true" [Left]="5"></IconButton>
+                                                        </div>                                                        
+                                                    </td>
+
+                                                    <td colspan="2">
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td><div></div></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <tr style="height:10px;">
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>
+
+                        <!--Additional Fields-->
+                        <tr style="height: 1px;">
+                            <td>
+                                <div style="font-size: 14px; color: #1B90CB;">Additional Fields</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="FillParent">
+                                    <div class="LocationDirective" #Child></div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><div></div></td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

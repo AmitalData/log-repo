@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+<xs:schema
+    attributeFormDefault="unqualified"
+	elementFormDefault="qualified"
+    xmlns:GCCSCargoImp="http://www.champ.aero/GCCS/CargoXML"
+	targetNamespace="http://www.champ.aero/GCCS/CargoXML"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    version="2.0"
+>
+	<xs:include schemaLocation="common.xsd"/>
+    
+	<xs:complexType name="AirlineFlightManifest">
+        <xs:sequence>
+            <xs:element name="StandardMessageIdentification" type="GCCSCargoImp:StandardMessageIdentification"/>
+            <xs:element name="FlightIDAndPointOfLoading" type="GCCSCargoImp:FlightIDAndPointOfLoading"/>
+            <!-- maxOccurs hack to satisfy Windows -->
+            <xs:element maxOccurs="999" name="AirlineFlightManifestBody" type="GCCSCargoImp:AirlineFlightManifestBody"/>
+        </xs:sequence>
+    </xs:complexType>
+	    
+    <xs:complexType name="FlightIDAndPointOfLoading">
+        <xs:sequence>
+            <xs:element name="FlightIdentification" type="GCCSCargoImp:FFMFlightIdentification"/>
+            <xs:element minOccurs="0" name="AircraftIdentification" type="GCCSCargoImp:AircraftIdentification"/>
+        </xs:sequence>
+        <xs:attribute name="MessageSequenceNumber" type="GCCSCargoImp:MessageSequenceNumber" use="required"/>
+        <xs:attribute name="LastMessagePart" type="GCCSCargoImp:LastMessagePart" use="required"/>
+        <xs:attribute name="AirportCodeOfLoading" type="GCCSCargoImp:AirportCode" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="OnwardRoutingDetail">
+        <xs:attribute name="AirportCityCodeOfNextDestination" type="GCCSCargoImp:AirportCode" use="required"/>
+        <xs:attribute name="CarrierCode" type="GCCSCargoImp:CarrierCode" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="OnwardBookingDetail">
+        <xs:attribute name="FlightNumber" type="GCCSCargoImp:FlightNumber" use="required"/>
+        <xs:attribute name="DayOfScheduledDeparture" type="GCCSCargoImp:DayOfMonth" use="required"/>
+        <xs:attribute name="MonthOfScheduledDeparture" type="GCCSCargoImp:Month" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="OnwardDetail">
+        <xs:sequence>
+            <xs:element name="OnwardRoutingDetail" type="GCCSCargoImp:OnwardRoutingDetail"/>
+            <xs:element minOccurs="0" name="OnwardBookingDetail" type="GCCSCargoImp:OnwardBookingDetail"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="MovementInformation">
+        <xs:sequence>
+            <xs:element maxOccurs="3" minOccurs="0" name="OnwardDetail" type="GCCSCargoImp:OnwardDetail"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ConsignmentOnwardMovementInformation">
+        <xs:complexContent>
+            <xs:extension base="GCCSCargoImp:MovementInformation">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="MovementPriority" type="GCCSCargoImp:MovementPriority"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="CustomsInformationDetail">
+        <xs:attribute name="CustomsReference" type="GCCSCargoImp:CustomsReference" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="CustomsOriginDetail">
+        <xs:attribute name="CustomsOriginCode" type="GCCSCargoImp:CustomsOriginCode" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="SpecialCustomsInformation">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="CustomsInformationDetail" type="GCCSCargoImp:CustomsInformationDetail"/>
+            <xs:element minOccurs="0" name="CustomsOriginDetail" type="GCCSCargoImp:CustomsOriginDetail"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ULDRemarks">
+        <xs:attribute name="ULDRemarksEntry" type="GCCSCargoImp:ULDRemarksEntry"/>
+    </xs:complexType>
+    <xs:complexType name="ULDDescription">
+        <xs:sequence>
+            <xs:element name="ULDIdentification" type="GCCSCargoImp:ULDIdentification"/>
+            <xs:element minOccurs="0" name="ULDPositionInformation" type="GCCSCargoImp:ULDPositionInformation"/>
+            <xs:element minOccurs="0" name="ULDRemarks" type="GCCSCargoImp:ULDRemarks"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ULDUtilisationDetail">
+        <xs:attribute name="ULDVolumeAvailableCode" type="GCCSCargoImp:ULDVolumeAvailableCode" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="ULDMovementInformation">
+        <xs:complexContent>
+            <xs:extension base="GCCSCargoImp:MovementInformation">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="ULDUtilisationDetail" type="GCCSCargoImp:ULDUtilisationDetail"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="LoadedCargo">
+        <xs:sequence>
+            <xs:element name="ConsignmentDetail" type="GCCSCargoImp:FFMConsignmentDetail"/>
+            <!-- maxOccurs hack to satisfy Windows -->
+            <xs:element maxOccurs="999" minOccurs="0" name="DimensionsInformation" type="GCCSCargoImp:DimensionsInformation"/>
+            <xs:element minOccurs="0" name="ConsignmentOnwardMovementInformation" type="GCCSCargoImp:ConsignmentOnwardMovementInformation"/>
+            <xs:element minOccurs="0" name="OtherServiceInformation" type="GCCSCargoImp:FFMOtherServiceInformation"/>
+            <xs:element minOccurs="0" name="SpecialCustomsInformation" type="GCCSCargoImp:SpecialCustomsInformation"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ULDLoadedCargo">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="ULDDescription" type="GCCSCargoImp:ULDDescription"/>
+            <xs:element minOccurs="0" name="ULDMovementInformation" type="GCCSCargoImp:ULDMovementInformation"/>
+            <!-- maxOccurs hack to satisfy Windows -->
+            <xs:element maxOccurs="999" name="LoadedCargo" type="GCCSCargoImp:LoadedCargo"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="AirlineFlightManifestBody">
+        <xs:sequence>
+            <xs:element name="PointOfUnloading" type="GCCSCargoImp:PointOfUnloading"/>
+            <!-- maxOccurs hack to satisfy Windows -->
+            <xs:element maxOccurs="999" minOccurs="0" name="BulkLoadedCargo" type="GCCSCargoImp:LoadedCargo"/>
+            <!-- maxOccurs hack to satisfy Windows -->
+            <xs:element maxOccurs="999" minOccurs="0" name="ULDLoadedCargo" type="GCCSCargoImp:ULDLoadedCargo"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

@@ -1,0 +1,79 @@
+﻿
+<style type="text/css">
+    .ReportsSectionHead {
+        height: 20px;
+        line-height: 20px;
+        font-size: 14px;
+        color: #1B90CB;
+    }
+
+    .ReportsSection:not(:first-child) {
+        margin-top: 10px;
+    }
+</style>
+
+<table>
+    <tr style="height: 1px;">
+        <td>
+            <table>
+                <tr>
+                    <td style="width: 45px; vertical-align:middle; font-size:11px; color : #6E7172;">Search:</td>
+
+                    <td style="width: 300px;">
+                        <SearchBox (TextChanged)="SearchTextChanged($event)"></SearchBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 5px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div class="MediaFill">
+                <ScrollViewer>
+                    <div class="ReportsSection" *ngFor="let item of ItemsSource">
+                        <div class="ReportsSectionHead">{{item.Name}}</div>
+                        <div class="ReportsSectionBody">
+                            <table>
+                                <tr>
+                                    <td style="width: 1px;">
+                                        <div *ngFor="let Report of item.ItemsSource">
+                                            <HyperlinkQuery (click)="ViewReportClicked(item.GroupList, Report)">{{showLocal ? (Report.LocalName?Report.LocalName:Report.Name) : Report.Name}}</HyperlinkQuery>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </ScrollViewer>
+            </div>
+        </td>
+    </tr>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+

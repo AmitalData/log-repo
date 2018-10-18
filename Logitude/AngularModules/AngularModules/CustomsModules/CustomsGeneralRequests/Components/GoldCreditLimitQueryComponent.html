@@ -1,0 +1,281 @@
+﻿<!-- CreditLimitQueryComponent view  -->
+<div>
+
+    <custom-message-wrapper [CustomSendOptionsButtonCanForcePersonalSign]="false">
+
+        <!-- Request -->
+        <div class="class-request-content">
+            <table style="width: 550px;height: 46px;padding-top: 10px;">
+
+                <!-- Request Fields -->
+                <tr class="FormFieldRow" style="vertical-align: top">
+                    <td>
+                        <table style="width: 550px; padding-top: 10px;">
+                            <!-- Agent Code(Vat) -->
+                            <tr class="FormFieldRow" style="height:1px">
+                                <td style="width: 120px;">
+                                    <LogLabel [ObjectFieldName]="'AgentExternalID'" [DataContext]="DataContext" [TextCode]="'Customs.CreditQuery.O.AgentVat'"></LogLabel>
+                                </td>
+                                <td style="width: 120px;">
+                                    <LogTextBox [ObjectFieldName]="'AgentExternalID'" [Text]="AgentExternalID" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                </td>
+
+                                <td><div></div></td>
+                            </tr>
+
+                            <!-- Agent Number -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 120px;">
+                                    <LogLabel [ObjectFieldName]="'AgentID'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.ApplicantAgentNumber'"></LogLabel>
+                                </td>
+                                <td style="width: 120px;">
+                                    <LogTextBox [ObjectFieldName]="'AgentID'" [Text]="AgentID" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                </td>
+
+                                <td><div></div></td>
+                            </tr>
+
+                            <!--Importer-->
+                            <tr class="FormFieldRow">
+                                <td style="width: 100px;">
+                                    <LogLabel [ObjectFieldName]="'ExtertnalID'" [DataContext]="DataContext" [TextCode]="'Customs.CreditQuery.O.ImporterVat'"></LogLabel>
+                                </td>
+                                <td style="width: 120px;">
+                                    <SearchBox [ObjectTableName]="'Customs.Client'"
+                                               [IsQuickSearch]="true"
+                                               [DropDownWidth]="143"
+                                               [DisplayText]="ImporterCode"
+                                               [DisplayMember]="'Code'"
+                                               [ItemHeight]="33"
+                                               [HideIcons]="true"
+                                               [Watermark]="''"
+                                               (TextChanged)="ImporterTextChanged($event)"
+                                               (ItemClicked)="ImporterClicked($event)"></SearchBox>
+                                </td>
+                                <td colspan="2" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right; padding-right: 5px;">
+                                    <div style="color: #646464; font-size: 11px;">{{ImporterName}}</div>
+                                </td>
+
+                                <td><div></div></td>
+                            </tr>
+
+                            <!-- Date (From\To) -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 120px;">
+                                    <LogLabel [ObjectFieldName]="'StartDate'"
+                                              [DataContext]="DataContext"
+                                              [TextCode]="'Customs.General.O.FaultQueryDates'">
+                                    </LogLabel>
+                                </td>
+                                <td style="width:120px;">
+                                    <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'StartDate'" [ObjectTableName]="ObjectTableName"
+                                                   [InputType]="'date'" [DataContext]="DataContext"
+                                                   [HideColumns]="true"></LogDatePicker>
+                                </td>
+
+                                <td style="width:10px;"><div></div></td>
+
+                                <td style="width: 120px;">
+                                    <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'EndDate'" [ObjectTableName]="ObjectTableName"
+                                                   [InputType]="'date'" [DataContext]="DataContext"
+                                                   [HideColumns]="true"></LogDatePicker>
+                                </td>
+
+                                <td><div></div></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><div></div></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Response -->
+        <div class="class-response-content" style="width: 820px;height: 320px;">
+            <table style="width: 820px;height: 320px;padding-top: 10px;">
+
+                <!--Balance Details List-->
+                <tr style="height: 46px;">
+                    <td>
+                        <fieldset [disabled]="true">
+                            <table>
+                                <tr class="FormFieldRow">
+                                    <td style="width: 90px;">
+                                        <LogLabel [ObjectFieldName]="'CreationDate'" [DataContext]="DataContext" [TextCode]="'Customs.CreditGoldQuery.O.CreationDate'"> </LogLabel>
+                                    </td>
+                                    <td style="width: 100px;">
+                                        <LogTextBox [ObjectFieldName]="'CreationDate'" [Text]="CreationDate" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                    </td>
+
+                                    <td style="width: 65px;">
+                                        <LogLabel [ObjectFieldName]="'RTGSDeposits'" [DataContext]="DataContext" [TextCode]="'Customs.CreditGoldQuery.O.RTGSDeposits'"> </LogLabel>
+                                    </td>
+                                    <td style="width: 100px;">
+                                        <LogTextBox [ObjectFieldName]="'RTGSDeposits'" [Text]="RTGSDeposits" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                    </td>
+
+                                    <td style="width: 65px;">
+                                        <LogLabel [ObjectFieldName]="'RTGSUsed'" [DataContext]="DataContext" [TextCode]="'Customs.CreditGoldQuery.O.RTGSUsed'"> </LogLabel>
+                                    </td>
+                                    <td style="width: 100px;">
+                                        <LogTextBox [ObjectFieldName]="'RTGSUsed'" [Text]="RTGSUsed" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                    </td>
+
+                                    <td style="width: 85px;">
+                                        <LogLabel [ObjectFieldName]="'RTGSCurrentBalance'" [DataContext]="DataContext" [TextCode]="'Customs.CreditGoldQuery.O.RTGSCurrentBalance'"> </LogLabel>
+                                    </td>
+                                    <td style="width: 100px;">
+                                        <LogTextBox [ObjectFieldName]="'RTGSCurrentBalance'" [Text]="RTGSCurrentBalance" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                    </td>
+
+                                    <td style="width: 75px;">
+                                        <LogLabel [ObjectFieldName]="'ActiveInd'" [DataContext]="DataContext" [TextCode]="'Customs.CreditGoldQuery.O.ActiveInd'"> </LogLabel>
+                                    </td>
+                                    <td style="width: 100px;">
+                                        <LogTextBox [ObjectFieldName]="'ActiveInd'" [Text]="ActiveInd" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                    </td>
+                                </tr>
+
+                                <tr><td><div></div></td></tr>
+                            </table>
+                        </fieldset>
+                    </td>
+                </tr>
+
+                <!--Transactions List-->
+                <tr style="width: 100%">
+                    <td colspan="2" style="width: 200px;height:25px; font-size: 12px; color: #1B90CB;">
+                        {{'Customs.CreditGoldQuery.O.TransactionResult'| TextCodeTranslationPipe}}
+                    </td>
+                </tr>
+                <tr class="FormFieldRow" style="height:1px">
+                    <td colspan="10" style="width: 100% ; height : 30%">
+                        <div div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
+                            <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="TransactionsResultList">
+
+                                <!-- TransactionType -->
+                                <log-column [width]="'80'" [Alignment]="'right'"
+                                            [header]="'Customs.CreditGoldQuery.O.TransactionType' | TextCodeTranslationPipe"
+                                            [binding]="'TransactionType'">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div class="RightCenter">
+                                            <span>{{item.TransactionType }}</span>
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
+                                <!-- PaymentID -->
+                                <log-column [width]="'80'" [Alignment]="'right'"
+                                            [header]="'Customs.CreditGoldQuery.O.PaymentID' | TextCodeTranslationPipe"
+                                            [binding]="'PaymentID'">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div class="RightCenter">
+                                            <span>{{item.PaymentID}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
+                                <!-- PaymentStatus -->
+                                <log-column [width]="'80'" [Alignment]="'right'"
+                                            [header]="'Customs.CreditGoldQuery.O.PaymentStatus' | TextCodeTranslationPipe"
+                                            [binding]="'PaymentStatus'">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div class="RightCenter">
+                                            <span>{{item.PaymentStatus}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
+                                <!-- PaymentDate -->
+                                <log-column [width]="'80'" [Alignment]="'right'"
+                                            [header]="'Customs.CreditGoldQuery.O.PaymentDate' | TextCodeTranslationPipe"
+                                            [binding]="'PaymentDate'">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div class="RightCenter">
+                                            <span>{{item.PaymentDate}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
+                                <!-- EntityType -->
+                                <log-column [width]="'80'" [Alignment]="'right'"
+                                            [header]="'Customs.CreditGoldQuery.O.EntityType' | TextCodeTranslationPipe"
+                                            [binding]="'EntityType'">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div class="RightCenter">
+                                            <span>{{item.EntityType}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
+                                <!-- EntityID -->
+                                <log-column [width]="'80'" [Alignment]="'right'"
+                                            [header]="'Customs.CreditGoldQuery.O.EntityID' | TextCodeTranslationPipe"
+                                            [binding]="'EntityID'">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div class="RightCenter">
+                                            <span>{{item.EntityID}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
+                                <!-- TransactionAmount -->
+                                <log-column [width]="'70'" [Alignment]="'right'"
+                                            [header]="'Customs.CreditGoldQuery.O.TransactionAmount' | TextCodeTranslationPipe"
+                                            [binding]="'TransactionAmount'">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div class="RightCenter">
+                                            <span>{{item.TransactionAmount}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
+                                <!-- RTGSBalance -->
+                                <log-column [width]="'70'" [Alignment]="'right'"
+                                            [header]="'Customs.CreditGoldQuery.O.RTGSBalance' | TextCodeTranslationPipe"
+                                            [binding]="'RTGSBalance'">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div class="RightCenter">
+                                            <span>{{item.RTGSBalance}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
+                                <!-- RTGSRefund -->
+                                <log-column [width]="'70'" [Alignment]="'right'"
+                                            [header]="'Customs.CreditGoldQuery.O.RTGSRefund' | TextCodeTranslationPipe"
+                                            [binding]="'RTGSRefund'">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div class="RightCenter">
+                                            <span>{{item.RTGSRefund}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
+                                <!-- UpdateUser -->
+                                <log-column [width]="'90'" [Alignment]="'right'"
+                                            [header]="'Customs.CreditGoldQuery.O.UpdateUser' | TextCodeTranslationPipe"
+                                            [binding]="'UpdateUser'">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div class="RightCenter">
+                                            <span>{{item.UpdateUser}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
+                            </logitude-edit-grid>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><div></div></td>
+                </tr>
+            </table>
+        </div>
+
+    </custom-message-wrapper>
+</div>

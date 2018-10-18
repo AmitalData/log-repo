@@ -1,0 +1,227 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.Helpers;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Logitude.SystemLogs.POCOs;
+using WebFreight.Web.Security;
+using Logitude.SystemLogs.Repositories;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.Repositories;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using WebFreight.Web.WebServices;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Server.Tools.Counters;
+using System.Transactions;
+using Simplog.Server.Infrastructure;
+using System.Net;
+using Logitude.SystemLogs;
+using Simplog.Server.Infrastructure.Helpers;
+namespace WebFreight.Web.Helpers
+{
+    public class ActivityLog
+    {
+        public static void AddAcitivityLog(object entityId,string objectTableId,int tenant,string activityTypeCode,string userId)
+        {
+            try
+            {
+                if (entityId != null)
+                {
+                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())//new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions() { IsolationLevel = IsolationLevel.Snapshot }))
+                    {
+                        EntityLastActivityRepository entityLastActivityRepository = new EntityLastActivityRepository(tenant);
+                        EntityLastActivity activity = new EntityLastActivity()
+                        {
+                            ActivityDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                            Id = IdCounter.GetNumber("EntityLastActivity", tenant),
+                            ActivityTypeCode = activityTypeCode,
+                            EntityId = entityId.ToString(),
+                            ObjectTableId = objectTableId,
+                            Tenant = tenant,
+                            UserId = userId,
+                        };
+                        entityLastActivityRepository.Add(activity);
+                        entityLastActivityRepository.SubmitChanges();
+
+
+                        scope.Complete();
+                    }
+                }
+            }
+            catch { }
+        }
+
+        public static void SendTotangoContactActivity(string email, string module, string activity, int tenant, bool isSharedLogisticsContact, string cardId, string via)
+        {
+            try
+            {
+                Contact loggedContact = null;
+                User loggedUser = null;
+                ICommonDataContext commonDataContext;
+                using (TransactionScope scope = TransactionFactory.GetNewTransaction())//TransactionFactory.GetNewTransaction())
+                {
+                    commonDataContext = CommonDataContext.GetContext(0);
+                    loggedContact = commonDataContext.Contacts.Where(c => c.Email == email && c.Tenant == 0).FirstOrDefault();
+                    if (loggedContact != null)
+                    {
+                        loggedUser = commonDataContext.Users.Where(c => c.Id == loggedContact.Id && c.Tenant == 0).FirstOrDefault();
+                    }
+                    scope.Complete();
+                }
+                commonDataContext = CommonDataContext.GetContext(tenant);
+                if (loggedContact == null)
+                {
+
+                    loggedContact = commonDataContext.Contacts.Where(c => c.Email == email && c.Tenant == tenant).FirstOrDefault();
+                    loggedUser = commonDataContext.Users.Where(c => c.Id == loggedContact.Id && c.Tenant == tenant).FirstOrDefault();
+                }
+                TenantRepository rep = new TenantRepository(commonDataContext);
+                TenantQuery tenantQuery = new TenantQuery(rep);
+                TenantPM currentTenant = tenantQuery.GetSinglePM(tenant);
+                TotangoService service = new TotangoService();
+                string orgDisplayName = currentTenant.Company + (currentTenant.CountryName != null ? ("-" + currentTenant.CountryName.Trim()) : "");
+                string organizationId = tenant.ToString();
+                if (tenant == 65 || tenant == 153)
+                {
+                    orgDisplayName = loggedUser.Notes;
+                    organizationId = loggedUser.Id;
+                }
+
+                if (isSharedLogisticsContact)
+                {
+                    Card card = commonDataContext.Cards.Where(d => d.Id == cardId & d.Tenant == tenant).FirstOrDefault();
+                    ActivityLog.AddContactActivityWithTotango(organizationId, orgDisplayName, "External Contact", module, activity, loggedContact.Id, tenant, true, cardId, card.PartnerTypeId,via);
+                }
+                else
+                {
+                    ActivityLog.AddContactActivityWithTotango(organizationId, orgDisplayName, loggedContact.EnglishName, module, activity, loggedContact.Id, tenant, false, null, null,via);
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+
+        public static void AddContactActivityWithTotango(string organizationId, string orgDisplayName, string userName, string module, string activity, string contactId, int tenant, bool isSharedLogisticsContact, string cardId, string partnerTypeId, string via)
+        {
+            if (LogitudeSettings.DeploymentStage != "Dev" && !LogitudeSettings.IsCostomsDeploy)
+            {
+                try
+                {
+                    UserQuery userQuery = new UserQuery(tenant);
+                    UserPM user = userQuery.GetSingleUserPM(contactId, tenant, false);
+                    if (user != null && !user.IsCustomerCare)
+                    {
+                        orgDisplayName = !string.IsNullOrEmpty(orgDisplayName) ? orgDisplayName.Replace('&', '-') : "No Company";
+                        activity = !string.IsNullOrEmpty(activity) ? activity.Replace('&', '-') : "No Activity";
+
+                        string totangoService = LogitudeSettings.TotangoServiceId;//ConfigurationManager.ConnectionStrings["TotangoServiceId"].ConnectionString;//"SP-11460-01";//
+
+                        if (!string.IsNullOrEmpty(totangoService))
+                        {
+                            if (!String.IsNullOrEmpty(orgDisplayName))
+                            {
+                                if (orgDisplayName.Length > 125)
+                                {
+                                    orgDisplayName = orgDisplayName.Take(125).ToString();
+                                }
+                            }
+
+                            //test serviceId :SP-11460-01 test
+                            //production ServiceId: SP-1146-01
+                            //string serivceId = "SP-11460-01";
+
+                            //if (!String.IsNullOrEmpty(totangoService))
+                            //{
+                            //    serivceId = totangoService;
+                            //}
+                            //http://sdr.totango.com/pixel.gif/?sdr_s=SP-XXXX-XX&sdr_o=ORGANIZATION&sdr_u=USERNAME&sdr_a=ACTIVITY&sdr_m=MODULE&sdr_odn=ORG_DISPLAY_NAME
+
+                            WebClient wc = new WebClient();
+                            string sRequest = "http://sdr.totango.com/pixel.gif/?sdr_s=" + totangoService + "&sdr_o=" + organizationId + "&sdr_u=" + userName + "&sdr_a=" + activity + "&sdr_m=" + module + "&sdr_odn=" + orgDisplayName;
+
+                            string ipstring = LogitudeSettings.CustomerCareIP;//System.Configuration.ConfigurationManager.AppSettings.Get("CustomerCareIP");
+                            string[] authenticatedIPs = ipstring.Split(',');
+                            string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
+                            if (string.IsNullOrEmpty(currentIP))
+                            {
+                                currentIP = HttpContext.Current.Request.UserHostAddress;
+                            }
+                            if (!authenticatedIPs.Contains(currentIP))
+                            {
+                                wc.DownloadString(new Uri(sRequest));
+                            }
+                        }
+                }
+
+                     
+                    
+            }
+            catch (Exception ex)
+            {
+                    string ip = "";
+                    if (HttpContext.Current != null && HttpContext.Current.Request != null)
+                    {
+                        string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
+                        if (string.IsNullOrEmpty(currentIP))
+                        {
+                            currentIP = HttpContext.Current.Request.UserHostAddress;
+                        }
+                        ip = currentIP;
+                    }
+                    ExceptionHandler.HandleException(ex, DateTime.Now, 0, HttpContext.Current != null ? HttpContext.Current.User.Identity.Name : "", HttpContext.Current != null ? HttpContext.Current.User.Identity.Name : "", "SendUserActivity", ip);
+                }
+            }
+
+            AddContactActivityLog(cardId, partnerTypeId, contactId, module, activity, tenant, isSharedLogisticsContact,via);
+
+
+            }
+
+
+        public static void AddContactActivityLog(string cardId, string partnerTypeId, string contactId, string module, string activity, int tenant, bool isSharedLogisticsContact , string via)
+        {
+            try
+            {
+                ContactActivityLogRepository contactActivityLogRepository = new ContactActivityLogRepository();
+                ContactActivityLog log = new ContactActivityLog()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    ContactId = contactId,
+                    Module = module,
+                    Activity = activity,
+                    LogDateTime = TenantServerConfigration.GetCurrentDateTime(tenant),
+                    GMTLogDateTime = DateTime.Now,
+                    Tenant = tenant,
+                    IsSharedLogisticsContact = isSharedLogisticsContact,
+                    CardId = cardId,
+                    PartnerTypeId = partnerTypeId,
+                    Via = via,
+                };
+
+                contactActivityLogRepository.Add(log);
+                contactActivityLogRepository.SubmitChanges();
+            }
+            catch (Exception ex)
+            {
+                string ip = "";
+                if (HttpContext.Current != null && HttpContext.Current.Request != null)
+                {
+                    string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
+                    if (string.IsNullOrEmpty(currentIP))
+                    {
+                        currentIP = HttpContext.Current.Request.UserHostAddress;
+                    }
+                    ip = currentIP;
+                }
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, HttpContext.Current != null ? HttpContext.Current.User.Identity.Name : "", HttpContext.Current != null ? HttpContext.Current.User.Identity.Name : "", "SendUserActivity", ip);
+            }
+        }  
+
+    }
+}

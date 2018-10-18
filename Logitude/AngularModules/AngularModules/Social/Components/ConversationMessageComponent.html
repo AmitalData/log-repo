@@ -1,0 +1,410 @@
+﻿<style>
+    
+    .HyperlinkOther:hover:not(:disabled), .HyperlinkQueryButtonControl:focus:not(:disabled) {
+        color: #1E8DC4;
+        text-decoration: underline;
+    }
+
+    .HyperlinkOther {
+        height: 21px !important;
+        width: auto !important;
+        line-height: 21px !important;
+        background: none !important;
+        border: none !important;
+        padding: 0 !important;
+        font-size: 12px;
+        cursor: pointer;
+        white-space: nowrap;
+    }
+
+
+        .Hyperlink:hover:not(:disabled), .HyperlinkQueryButtonControl:focus:not(:disabled) {
+        color: #1E8DC4;
+        text-decoration: underline;
+    }
+
+    .Hyperlink {
+        height: 21px !important;
+        width: auto !important;
+        line-height: 21px !important;
+        background: none !important;
+        border: none !important;
+        padding: 0 !important;
+        color: #1E4AC4;
+        font-size: 12px;
+        cursor: pointer;
+        white-space: nowrap;
+    }
+
+        .MessageScrollViewer {
+        height: 100%;
+        width: 100%;
+        max-height: 100%;
+        max-width: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+        position: relative;
+    }
+    .SocailMultiLinesText {
+        width: 100%;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        overflow-x: hidden;
+        overflow-y: auto;
+        font-size: 13px;
+        color: #282E30;
+    }
+  .InputDiv {
+
+        width: 100%;
+        vertical-align:top;
+        border: 1px solid #AAAAAA;
+        outline: none;
+        font-size: 11px;
+        color: #45494A;
+        background: white;
+        /*text-indent: 5px;*/
+        /*border-top-left-radius: 3px;
+        border-top-right-radius: 3px;*/
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        -moz-box-shadow: inset 0 0 3px #AAAAAA;
+        -webkit-box-shadow: inset 0 0 3px #AAAAAA;
+        box-shadow: inset 0 0 3px #AAAAAA;
+    }
+
+        .InputDiv:hover {
+            border: 1px solid #3BB3E2;
+        }
+
+    .InputDivDisabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+</style>
+
+
+<div style="height:100%;width:100%">
+    <table>
+        <tr *ngIf="Area !=  'Inbox'"  style="height:20px">
+            <td>
+                <table>
+                    <tr>
+                        <td style="width:10px"></td>
+                        <td><div (click)="BackButtonClicked()" style="text-align:left" class="Hyperlink">< Back</div></td>
+                    </tr>
+                </table>
+            </td>
+
+        </tr>
+
+        <tr [style.height]="Area ==  'Inbox' ? '107px':'50px'" >
+
+            <td>
+                <div [style.height]="Area ==  'Inbox' ? '107px':'50px'">
+                    <table>
+                        <tr *ngIf="Area ==  'Inbox'" style="height:15px"><td ></td></tr>
+
+                        <tr style="height:22px">
+
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td style="width:10px"></td>
+                                        <td >
+                                            <div *ngIf="ConversationHeader" style="text-align:left;height:23px">
+
+                                                <table>
+                                                    <tr>
+                                                        <td style="vertical-align:top">
+                                                            <img *ngIf="ConversationHeader.DisplayEntityInformation && ConversationHeader.ObjectTableName!='Opportunity' && ConversationHeader.EntityImageSource" style="background-color:transparent;margin-top:-5px;height:20px;width:20px" [attr.src]="ConversationHeader.EntityImageSource" />
+
+                                                            <img *ngIf="ConversationHeader.DisplayEntityInformation && ConversationHeader.ObjectTableName=='Opportunity' && ConversationHeader.EntityImageSource" style="background-color:transparent;margin-top:-5px;height:25px;width:29px" [attr.src]="ConversationHeader.EntityImageSource" />
+
+                                                            <span *ngIf="ConversationHeader.DisplayEntityInformation" (click)="ConversationHeader.ViewEntityButtonClick(ConversationHeader)" class="Hyperlink">{{ConversationHeader.EntityDescription}}</span>
+                                                            <span *ngIf="ConversationHeader.DisplayEntityInformation"> — </span>
+                                                            <span [style.color]="ConversationHeader.ForegroundMessageParticipants" style="font-size:12px">{{ConversationHeader.MessageParticipants}}</span>
+                                                            <span *ngIf="ConversationHeader.MessageOthers" (click)="ConversationHeader.ViewMessageOthers(ConversationHeader)" class="HyperlinkOther" style="font-size:12px">{{ConversationHeader.MessageOthers}}</span>
+
+
+                                                        </td>
+                                                    </tr>
+                                                </table>
+
+                                            </div>
+
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                          
+                        </tr>
+                        <tr><td><div></div></td></tr>
+                        <tr style="height:15px">
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td style="width:10px"></td>
+                                        <td>
+                                            <div *ngIf="ConversationHeader" style="text-align:right">
+                                                <table>
+                                                    <tr>
+                                                        <td><div></div></td>
+                                                        <td style="width:120px"><span style="width:120px" class="Hyperlink" (click)="MarkAsReadButtonClick()">{{ConversationHeader.MarkAsReadLable}} </span></td>
+                                                        <td style="width:5px"><div style="border-left:1px solid lightgray;width:1px;height:15px;margin-left:5px"></div></td>
+                                                        <td style="width:120px"><span style="width:120px" class="Hyperlink" (click)="DeleteConversationButtonClick()"> Delete Conversation </span></td>
+                                                        <td style="width:5px" *ngIf="ConversationHeader.WaitingForResponse"><div style="border-left:1px solid lightgray;width:1px;height:15px;margin-left:5px"></div></td>
+                                                        <td style="width:3px"><div style="width:3px;"></div></td>
+                                                        <td *ngIf="ConversationHeader.VisibilityIsWaitingForResponse" style="width:20px"><div style="width:20px;"><img style="width:20px;height:15px;margin-top:0px" src="./Images/Social/WaitingForResponse.png" /></div></td>
+                                                        <td *ngIf="ConversationHeader.WaitingForResponse && !ConversationHeader.VisibilityIsWaitingForResponse " style="width:20px"><div style="width:20px;"><img style="width:20px;height:15px;margin-top:3px" src="./Images/Social/NotWaitingForResponse.png" /></div></td>
+                                                        <td *ngIf="ConversationHeader.WaitingForResponse" style="width:2px"><div style="width:2px;"></div></td>
+                                                        <td *ngIf="ConversationHeader.WaitingForResponse" style="width:120px"><span style="width:120px" class="Hyperlink" (click)="WaitingForResponse()"> Waiting for response </span></td>
+
+                                                    </tr>
+                                                </table>
+
+
+                                            </div>
+
+                                        </td>
+                                        <td style="width:10px"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                           
+                        </tr>
+               
+                        <tr *ngIf="Area ==  'Inbox'" style="height:5px"><td></td></tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+
+    
+        <tr style="height:10px;background-color:#D3E4EA">
+
+            <td>
+                <div></div>
+            </td>
+        </tr>
+
+        <tr style="background-color:#D3E4EA">
+            <td>
+                <div class="MediaFill">
+                    <div [attr.id]="MessageListsId"  class="MessageScrollViewer">
+                        <table>
+                            <tr style="height:100%;">
+
+                                <td *ngIf="!IsNoData" style="vertical-align:top;">
+
+                                    <div *ngFor="let item of ConversationHeaderMessageLists">
+                                        <div style="min-height:70px; ">
+                                            <table>
+                                                <tr style="height:15px">
+                                                   <td>
+                                                       <table>
+                                                           <tr>
+                                                               <td>
+                                                                   <table>
+                                                                       <tr>
+                                                                           <td style="width:50%;vertical-align:central"><div style="height:1px;border-bottom:1px solid lightgray"></div></td>
+                                                                           <td style="width:auto"><div style="text-align:center;margin-left:5px;margin-right:5px"> {{item.Key}} </div></td>
+                                                                           <td style="width:50%;vertical-align:central"><div style="height:1px;border-bottom:1px solid lightgray"></div></td>
+                                                                       </tr>
+                                                                   </table>
+                                                               </td>
+                                                               
+                                                           </tr>
+                                                       </table>
+                                                   </td>
+                                      
+                                                    
+                                                </tr>
+
+                                                <tr style="height:16px"><td></td></tr>
+
+                                                <tr>
+                                                    <td>
+                                                        
+                                                        <div *ngFor="let message of item.ConversationHeaderMessageViewModelLists">
+
+                                                            <div style="min-height:40px;">
+
+                                                                <table style="table-layout: fixed; width: 100%">
+                                                                 
+                                                                    <!--<tr style="height:20px"><td></td></tr>-->
+                                                                    <tr style="height:45px">
+                                                                        <td>
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td style="width:8px;"></td>
+                                                                                    <td style="width:45px;vertical-align:top;">
+                                                                                        <div *ngIf="message.UserImageDetailId" style="height:35px;width:35px;margin: auto;vertical-align:top">
+                                                                                            <ImageComponent style="vertical-align:top" [DisplayOnly]="true" [HideBorder]="true" [ImageId]="message.UserImageDetailId"> </ImageComponent>
+                                                                                        </div>
+                                                                                        <div [style.background-color]="message.UserImagebackground" *ngIf="!message.UserImageDetailId" style="height:35px;width:35px;border-color:#6B8499;border-radius:2px;vertical-align:central;text-align:center">
+                                                                                            <div style="height:4px"></div>
+                                                                                            <div style="font-size:22px;text-align:center;color:white">{{message.UserNameImage}}</div>
+                                                                                            <div style="height:4px"></div>
+                                                                                        </div>
+
+                                                                                    </td>
+                                                                                    <td style="width:10px;"></td>
+                                                                                    <td>
+
+                                                                                        <table style="table-layout: fixed; width: 100%">
+
+                                                                                            <tr style="height:16px;vertical-align:top">
+                                                                                                <td>
+                                                                                                    <table>
+                                                                                                        <tr>
+                                                                                                            <td style="vertical-align:top;height:16px;">
+
+                                                                                                                <span style="font-size:12px">{{message.CreatedByUserName}}</span>
+
+                                                                                                            </td>
+                                                                                                            <td style="width:20px"><span style="color:#838889;font-size:12px;text-align:right">{{message.CreateDate | DateTimeToMSDYDatePipe}}</span></td>
+                                                                                                            <td style="width:20px;"><div style="width:20px"></div></td>
+
+                                                                                                        </tr>
+                                                                                                    </table>
+                                                                                                </td>
+                                                                                                
+                                                                                            </tr>
+
+                                                                                            <tr>
+                                                                                                <td>
+                                                                                                    <table style="table-layout: fixed; width: 100%">
+                                                                                                        <tr>
+                                                                                                            <td *ngIf="message.IsShowArrowReceiveMessage" style="width:18px"><div style="width:18px;"><img style="width:17px;cursor:pointer;height:12px;margin-top:-3px" src="./Images/Social/ArrowReceiveMessage.png" /></div></td>
+                                                                                                            <td>
+                                                                                                                <div class="SocailMultiLinesText">{{message.MessageBody}}</div>
+
+
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                    </table>
+                                                                                                </td>
+
+
+
+                                                                                               
+                                                                                            </tr>
+                                                                                            <tr style="height:5px"><td></td></tr>
+                                                                                        </table>
+
+
+
+                                                                                    </td>
+
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+
+
+                                                                        
+                                                                    </tr>
+
+                                                                </table>
+                                                     
+
+                                                            </div>
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr style="height:5px"><td></td></tr>
+                                            </table>
+
+
+                                        </div>
+                                    </div>
+
+
+                                </td>
+
+
+                                <td style="vertical-align:top;" *ngIf="IsNoData">
+                                    <div class="NoDataTextStyle" style="text-align:center;vertical-align:top;font-size:14px;margin-left:-5px;margin-top:10PX;color:gray">No Recent Message</div>
+                                </td>
+
+
+                            </tr>
+                            <tr>
+
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </td>
+        </tr>
+
+        <tr style="height:95px;border-top:1px solid lightgray">
+
+            <td style="width:100%;">
+                <table>
+                   <tr style="height:7px"><td style="height:7px"><div style="height:7px"></div></td></tr>
+
+                    <tr style="height:60px">
+                        <td>
+                            <table>
+                                <tr>
+
+                                    <td style="width:7px"><div style="width:7px"></div></td>
+                                    <td>
+                                        <div class="InputDiv" style="max-height:unset;height:60px">
+                                            <textarea wrap="hard"
+                                                      [(ngModel)]="MessageBody"
+                                                      style="box-shadow:none;border:1px solid transparent;text-indent:10px" ondrop="return false"></textarea>
+
+                                        </div>
+                                    </td>
+                                    <td style="width:7px"><div style="width:7px"></div></td>
+                                </tr>
+                            </table>
+                        </td>
+                        
+
+                    </tr>
+                    <tr style="height:7px"><td style="height:7px"><div style="height:7px"></div></td></tr>
+                    <tr>
+                        <td style="vertical-align: central">
+                            <table style="height: 22px;">
+                                <tr>
+                                    <td style="width:7px"><div style="width:7px"></div></td>
+                                    <td>
+                                       
+                                            <div *ngIf="ShowCheckBoxWaitingForResponse" class="CheckBox">
+                                                <input [(ngModel)]="IsWaitingForResponse" class="LeftCenter" style="text-align:center" [attr.id]="WaitingForResponseKey" type="checkbox" />
+                                                <label style="color:black;margin-top:-3px;font-size:12px" class="LeftCenter" [attr.for]="WaitingForResponseKey">waiting for response</label>
+                                            </div>
+
+                                    </td>
+
+                                    <td style="width: 57px;"></td>
+
+                                    <td style="width: 7px;"></td>
+
+                                    <td style="width: 57px;">
+
+                                        <button (click)="ReplyButtonClick()" class="Button" style="float:right;width:70px;">Reply</button>
+                                    </td>
+                                    <td style="width: 7px;"></td>
+
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr style="height:7px"><td style="height:7px"><div style="height:7px"></div></td></tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+<BusyIndicator [Text]="BusyIndicatorText" [IsBusy]="ShowBusyIndicator"></BusyIndicator>

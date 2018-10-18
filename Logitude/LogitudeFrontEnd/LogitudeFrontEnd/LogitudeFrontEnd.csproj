@@ -1,0 +1,764 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <ProjectGuid>{F62203A9-EE8D-4AD0-BAB4-B6D34009CAD3}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <OutputPath>bin</OutputPath>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <TypeScriptToolsVersion>1.7</TypeScriptToolsVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="app\app.component.html" />
+    <Content Include="app\ApplicationControls\IconButton.html" />
+    <Content Include="app\infrastructure\edit-control\EditView.html" />
+    <Content Include="app\infrastructure\logitude-components\header-screen-value\header-screen-value.component.html" />
+    <Content Include="app\root.component.html" />
+    <Content Include="app\infrastructure\login\login.html" />
+    <Content Include="app\infrastructure\main-menu\main-menu.component.html" />
+    <Content Include="app\shipment\new-package-modal\new-package-modal.html" />
+    <Content Include="app\shipment\new-shipment-modal\new-shipment-modal.html" />
+    <Content Include="app\shipment\shipment-tabs\General\general.component.html" />
+    <Content Include="app\shipment\shipments-list\shipments-list.component.html" />
+    <Content Include="app\shipment\short-title\shipment-short-title.html" />
+    <Content Include="auto-generators\entity-list-generator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>entity-list-generator.cs</LastGenOutput>
+    </Content>
+    <Content Include="auto-generators\entity-list-service-generator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>entity-list-service-generator.cs</LastGenOutput>
+    </Content>
+    <Content Include="auto-generators\entity-pm-generator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>entity-pm-generator.cs</LastGenOutput>
+    </Content>
+    <Content Include="auto-generators\entity-pm-service-generator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>entity-pm-service-generator.cs</LastGenOutput>
+    </Content>
+    <Content Include="auto-generators\general-classes-generator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>general-classes-generator.cs</LastGenOutput>
+    </Content>
+    <Content Include="Content\angular-material\angular-material.css" />
+    <Content Include="Content\angular-material\angular-material.min.css" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\ui-bootstrap-csp.css" />
+    <Content Include="ElasticDemoModel\ElasticDemoGen.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ElasticDemoGen.cs</LastGenOutput>
+    </Content>
+    <Content Include="ElasticDemoModel\ElasticDemoModel.xml" />
+    <Content Include="ElasticDemoModel\ReadMe-ElasticObject.cs.txt" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="images\Airline.png" />
+    <Content Include="images\Buttons\Add.over.png" />
+    <Content Include="images\Buttons\Add.png" />
+    <Content Include="images\Buttons\Delete.over.png" />
+    <Content Include="images\Buttons\Delete.png" />
+    <Content Include="images\Buttons\Edit.over.png" />
+    <Content Include="images\Buttons\Edit.png" />
+    <Content Include="images\Buttons\Refresh.png" />
+    <Content Include="images\Buttons\Settings.png" />
+    <Content Include="images\Columns.png" />
+    <Content Include="images\Directions\E.png" />
+    <Content Include="images\Directions\I.png" />
+    <Content Include="images\Filter.png" />
+    <Content Include="images\FiltersClose.png" />
+    <Content Include="images\FiltersOpen.png" />
+    <Content Include="images\Flags\AD.png" />
+    <Content Include="images\Flags\AE.png" />
+    <Content Include="images\Flags\AF.png" />
+    <Content Include="images\Flags\AF_G.png" />
+    <Content Include="images\Flags\AG.png" />
+    <Content Include="images\Flags\AI.png" />
+    <Content Include="images\Flags\AL.png" />
+    <Content Include="images\Flags\AM.png" />
+    <Content Include="images\Flags\AN.png" />
+    <Content Include="images\Flags\AN_G.png" />
+    <Content Include="images\Flags\AO.png" />
+    <Content Include="images\Flags\AQ.png" />
+    <Content Include="images\Flags\AR.png" />
+    <Content Include="images\Flags\AS.png" />
+    <Content Include="images\Flags\AS_G.png" />
+    <Content Include="images\Flags\AT.png" />
+    <Content Include="images\Flags\AU.png" />
+    <Content Include="images\Flags\AW.png" />
+    <Content Include="images\Flags\AX.png" />
+    <Content Include="images\Flags\AZ.png" />
+    <Content Include="images\Flags\BA.png" />
+    <Content Include="images\Flags\BB.png" />
+    <Content Include="images\Flags\BD.png" />
+    <Content Include="images\Flags\BE.png" />
+    <Content Include="images\Flags\BF.png" />
+    <Content Include="images\Flags\BG.png" />
+    <Content Include="images\Flags\BH.png" />
+    <Content Include="images\Flags\BI.png" />
+    <Content Include="images\Flags\BJ.png" />
+    <Content Include="images\Flags\BL.png" />
+    <Content Include="images\Flags\BM.png" />
+    <Content Include="images\Flags\BN.png" />
+    <Content Include="images\Flags\BO.png" />
+    <Content Include="images\Flags\BQ.png" />
+    <Content Include="images\Flags\BR.png" />
+    <Content Include="images\Flags\BS.png" />
+    <Content Include="images\Flags\BT.png" />
+    <Content Include="images\Flags\BV.png" />
+    <Content Include="images\Flags\BW.png" />
+    <Content Include="images\Flags\BY.png" />
+    <Content Include="images\Flags\BZ.png" />
+    <Content Include="images\Flags\CA.png" />
+    <Content Include="images\Flags\CC.png" />
+    <Content Include="images\Flags\CD.png" />
+    <Content Include="images\Flags\CF.png" />
+    <Content Include="images\Flags\CG.png" />
+    <Content Include="images\Flags\CH.png" />
+    <Content Include="images\Flags\CI.png" />
+    <Content Include="images\Flags\CK.png" />
+    <Content Include="images\Flags\CL.png" />
+    <Content Include="images\Flags\CM.png" />
+    <Content Include="images\Flags\CN.png" />
+    <Content Include="images\Flags\CO.png" />
+    <Content Include="images\Flags\CR.png" />
+    <Content Include="images\Flags\CU.png" />
+    <Content Include="images\Flags\CV.png" />
+    <Content Include="images\Flags\CW.png" />
+    <Content Include="images\Flags\CX.png" />
+    <Content Include="images\Flags\CY.png" />
+    <Content Include="images\Flags\CZ.png" />
+    <Content Include="images\Flags\DE.png" />
+    <Content Include="images\Flags\DH.png" />
+    <Content Include="images\Flags\DJ.png" />
+    <Content Include="images\Flags\DK.png" />
+    <Content Include="images\Flags\DM.png" />
+    <Content Include="images\Flags\DO.png" />
+    <Content Include="images\Flags\DZ.png" />
+    <Content Include="images\Flags\EC.png" />
+    <Content Include="images\Flags\EE.png" />
+    <Content Include="images\Flags\EG.png" />
+    <Content Include="images\Flags\EH.png" />
+    <Content Include="images\Flags\ER.png" />
+    <Content Include="images\Flags\ES.png" />
+    <Content Include="images\Flags\ET.png" />
+    <Content Include="images\Flags\EU_G.png" />
+    <Content Include="images\Flags\FI.png" />
+    <Content Include="images\Flags\FJ.png" />
+    <Content Include="images\Flags\FK.png" />
+    <Content Include="images\Flags\FM.png" />
+    <Content Include="images\Flags\FO.png" />
+    <Content Include="images\Flags\FR.png" />
+    <Content Include="images\Flags\GA.png" />
+    <Content Include="images\Flags\GB.png" />
+    <Content Include="images\Flags\GD.png" />
+    <Content Include="images\Flags\GE.png" />
+    <Content Include="images\Flags\GF.png" />
+    <Content Include="images\Flags\GG.png" />
+    <Content Include="images\Flags\GH.png" />
+    <Content Include="images\Flags\GI.png" />
+    <Content Include="images\Flags\GL.png" />
+    <Content Include="images\Flags\GM.png" />
+    <Content Include="images\Flags\GN.png" />
+    <Content Include="images\Flags\GP.png" />
+    <Content Include="images\Flags\GQ.png" />
+    <Content Include="images\Flags\GR.png" />
+    <Content Include="images\Flags\GS.png" />
+    <Content Include="images\Flags\GT.png" />
+    <Content Include="images\Flags\GU.png" />
+    <Content Include="images\Flags\GW.png" />
+    <Content Include="images\Flags\GY.png" />
+    <Content Include="images\Flags\HK.png" />
+    <Content Include="images\Flags\HM.png" />
+    <Content Include="images\Flags\HN.png" />
+    <Content Include="images\Flags\HR.png" />
+    <Content Include="images\Flags\HT.png" />
+    <Content Include="images\Flags\HU.png" />
+    <Content Include="images\Flags\ID.png" />
+    <Content Include="images\Flags\IE.png" />
+    <Content Include="images\Flags\IL.png" />
+    <Content Include="images\Flags\IM.png" />
+    <Content Include="images\Flags\IN.png" />
+    <Content Include="images\Flags\IO.png" />
+    <Content Include="images\Flags\IQ.png" />
+    <Content Include="images\Flags\IR.png" />
+    <Content Include="images\Flags\IS.png" />
+    <Content Include="images\Flags\IT.png" />
+    <Content Include="images\Flags\JE.png" />
+    <Content Include="images\Flags\JM.png" />
+    <Content Include="images\Flags\JO.png" />
+    <Content Include="images\Flags\JP.png" />
+    <Content Include="images\Flags\KE.png" />
+    <Content Include="images\Flags\KG.png" />
+    <Content Include="images\Flags\KH.png" />
+    <Content Include="images\Flags\KI.png" />
+    <Content Include="images\Flags\KM.png" />
+    <Content Include="images\Flags\KN.png" />
+    <Content Include="images\Flags\KP.png" />
+    <Content Include="images\Flags\KR.png" />
+    <Content Include="images\Flags\KW.png" />
+    <Content Include="images\Flags\KY.png" />
+    <Content Include="images\Flags\KZ.png" />
+    <Content Include="images\Flags\LA.png" />
+    <Content Include="images\Flags\LB.png" />
+    <Content Include="images\Flags\LC.png" />
+    <Content Include="images\Flags\LI.png" />
+    <Content Include="images\Flags\LK.png" />
+    <Content Include="images\Flags\LR.png" />
+    <Content Include="images\Flags\LS.png" />
+    <Content Include="images\Flags\LT.png" />
+    <Content Include="images\Flags\LU.png" />
+    <Content Include="images\Flags\LV.png" />
+    <Content Include="images\Flags\LY.png" />
+    <Content Include="images\Flags\MA.png" />
+    <Content Include="images\Flags\MC.png" />
+    <Content Include="images\Flags\MD.png" />
+    <Content Include="images\Flags\ME.png" />
+    <Content Include="images\Flags\MF.png" />
+    <Content Include="images\Flags\MG.png" />
+    <Content Include="images\Flags\MH.png" />
+    <Content Include="images\Flags\MK.png" />
+    <Content Include="images\Flags\ML.png" />
+    <Content Include="images\Flags\MM.png" />
+    <Content Include="images\Flags\MN.png" />
+    <Content Include="images\Flags\MO.png" />
+    <Content Include="images\Flags\MP.png" />
+    <Content Include="images\Flags\MQ.png" />
+    <Content Include="images\Flags\MR.png" />
+    <Content Include="images\Flags\MS.png" />
+    <Content Include="images\Flags\MT.png" />
+    <Content Include="images\Flags\MU.png" />
+    <Content Include="images\Flags\MV.png" />
+    <Content Include="images\Flags\MW.png" />
+    <Content Include="images\Flags\MX.png" />
+    <Content Include="images\Flags\MY.png" />
+    <Content Include="images\Flags\MZ.png" />
+    <Content Include="images\Flags\NA.png" />
+    <Content Include="images\Flags\NA_G.png" />
+    <Content Include="images\Flags\NC.png" />
+    <Content Include="images\Flags\NE.png" />
+    <Content Include="images\Flags\NF.png" />
+    <Content Include="images\Flags\NG.png" />
+    <Content Include="images\Flags\NI.png" />
+    <Content Include="images\Flags\NL.png" />
+    <Content Include="images\Flags\NO.png" />
+    <Content Include="images\Flags\NP.png" />
+    <Content Include="images\Flags\NR.png" />
+    <Content Include="images\Flags\NU.png" />
+    <Content Include="images\Flags\NZ.png" />
+    <Content Include="images\Flags\OC_G.png" />
+    <Content Include="images\Flags\OM.png" />
+    <Content Include="images\Flags\PA.png" />
+    <Content Include="images\Flags\PE.png" />
+    <Content Include="images\Flags\PF.png" />
+    <Content Include="images\Flags\PG.png" />
+    <Content Include="images\Flags\PH.png" />
+    <Content Include="images\Flags\PK.png" />
+    <Content Include="images\Flags\PL.png" />
+    <Content Include="images\Flags\PM.png" />
+    <Content Include="images\Flags\PN.png" />
+    <Content Include="images\Flags\PR.png" />
+    <Content Include="images\Flags\PS.png" />
+    <Content Include="images\Flags\PT.png" />
+    <Content Include="images\Flags\PW.png" />
+    <Content Include="images\Flags\PY.png" />
+    <Content Include="images\Flags\QA.png" />
+    <Content Include="images\Flags\RE.png" />
+    <Content Include="images\Flags\RO.png" />
+    <Content Include="images\Flags\RS.png" />
+    <Content Include="images\Flags\RU.png" />
+    <Content Include="images\Flags\RW.png" />
+    <Content Include="images\Flags\SA.png" />
+    <Content Include="images\Flags\SA_G.png" />
+    <Content Include="images\Flags\SB.png" />
+    <Content Include="images\Flags\SC.png" />
+    <Content Include="images\Flags\SD.png" />
+    <Content Include="images\Flags\SE.png" />
+    <Content Include="images\Flags\SG.png" />
+    <Content Include="images\Flags\SH.png" />
+    <Content Include="images\Flags\SI.png" />
+    <Content Include="images\Flags\SJ.png" />
+    <Content Include="images\Flags\SK.png" />
+    <Content Include="images\Flags\SL.png" />
+    <Content Include="images\Flags\SM.png" />
+    <Content Include="images\Flags\SN.png" />
+    <Content Include="images\Flags\SO.png" />
+    <Content Include="images\Flags\SR.png" />
+    <Content Include="images\Flags\SS.png" />
+    <Content Include="images\Flags\ST.png" />
+    <Content Include="images\Flags\SV.png" />
+    <Content Include="images\Flags\SX.png" />
+    <Content Include="images\Flags\SY.png" />
+    <Content Include="images\Flags\SZ.png" />
+    <Content Include="images\Flags\TC.png" />
+    <Content Include="images\Flags\TD.png" />
+    <Content Include="images\Flags\TF.png" />
+    <Content Include="images\Flags\TG.png" />
+    <Content Include="images\Flags\TH.png" />
+    <Content Include="images\Flags\TJ.png" />
+    <Content Include="images\Flags\TK.png" />
+    <Content Include="images\Flags\TL.png" />
+    <Content Include="images\Flags\TM.png" />
+    <Content Include="images\Flags\TN.png" />
+    <Content Include="images\Flags\TO.png" />
+    <Content Include="images\Flags\TR.png" />
+    <Content Include="images\Flags\TT.png" />
+    <Content Include="images\Flags\TV.png" />
+    <Content Include="images\Flags\TW.png" />
+    <Content Include="images\Flags\TZ.png" />
+    <Content Include="images\Flags\UA.png" />
+    <Content Include="images\Flags\UG.png" />
+    <Content Include="images\Flags\UM.png" />
+    <Content Include="images\Flags\US.png" />
+    <Content Include="images\Flags\UY.png" />
+    <Content Include="images\Flags\UZ.png" />
+    <Content Include="images\Flags\VA.png" />
+    <Content Include="images\Flags\VC.png" />
+    <Content Include="images\Flags\VE.png" />
+    <Content Include="images\Flags\VG.png" />
+    <Content Include="images\Flags\VI.png" />
+    <Content Include="images\Flags\VN.png" />
+    <Content Include="images\Flags\VU.png" />
+    <Content Include="images\Flags\WF.png" />
+    <Content Include="images\Flags\WS.png" />
+    <Content Include="images\Flags\YE.png" />
+    <Content Include="images\Flags\YT.png" />
+    <Content Include="images\Flags\ZA.png" />
+    <Content Include="images\Flags\ZM.png" />
+    <Content Include="images\Flags\ZW.png" />
+    <Content Include="images\Followup.png" />
+    <Content Include="images\GreenTick.png" />
+    <Content Include="images\Help.png" />
+    <Content Include="images\Icons\A.png" />
+    <Content Include="images\Icons\I.png" />
+    <Content Include="images\Icons\O.png" />
+    <Content Include="images\Icons\StarGray.png" />
+    <Content Include="images\Icons\StarOrange.png" />
+    <Content Include="images\Lamp.png" />
+    <Content Include="images\LoginScreen\champ.png" />
+    <Content Include="images\LoginScreen\header.jpg" />
+    <Content Include="images\LoginScreen\indicator.gif" />
+    <Content Include="images\LoginScreen\Layer.png" />
+    <Content Include="images\LoginScreen\line.png" />
+    <Content Include="images\LoginScreen\map.png" />
+    <Content Include="images\LoginScreen\shadow1.png" />
+    <Content Include="images\LoginScreen\shadow2.png" />
+    <Content Include="images\Menu\Bars.png" />
+    <Content Include="images\Menu\Bars.Selected.png" />
+    <Content Include="images\Menu\Box.png" />
+    <Content Include="images\Menu\Box.Selected.png" />
+    <Content Include="images\Menu\Dollar.png" />
+    <Content Include="images\Menu\Dollar.Selected.png" />
+    <Content Include="images\Menu\Maintenance.png" />
+    <Content Include="images\Menu\Maintenance.Selected.png" />
+    <Content Include="images\Menu\Pen.png" />
+    <Content Include="images\Menu\Pen.Selected.png" />
+    <Content Include="images\Menu\Person.png" />
+    <Content Include="images\Menu\Person.Selected.png" />
+    <Content Include="images\Notes_exists.png" />
+    <Content Include="images\Notes_notexists.png" />
+    <Content Include="images\Nuke.png" />
+    <Content Include="images\Search.png" />
+    <Content Include="images\SelectedMenuArrow.png" />
+    <Content Include="images\ToggleIcon.png" />
+    <Content Include="images\TransportModes\A.png" />
+    <Content Include="images\TransportModes\I.png" />
+    <Content Include="images\TransportModes\O.png" />
+    <Content Include="images\Trucker.png" />
+    <Content Include="images\Vessel.png" />
+    <Content Include="index.html" />
+    <Content Include="styles\app.css" />
+    <Content Include="styles\css\Buttons.css" />
+    <Content Include="styles\css\Dialogs.css" />
+    <Content Include="styles\css\FiltersMenu.css" />
+    <Content Include="styles\css\GeneratedGrid.css" />
+    <Content Include="styles\css\GridView.css" />
+    <Content Include="styles\css\Images.css" />
+    <Content Include="styles\css\Inputs.css" />
+    <Content Include="styles\css\Lists.css" />
+    <Content Include="styles\css\Menus.css" />
+    <Content Include="styles\css\Queries.css" />
+    <Content Include="styles\css\ScrollViewer.css" />
+    <Content Include="styles\css\Sections.css" />
+    <Content Include="styles\css\Standards.css" />
+    <Content Include="styles\css\Tabs.css" />
+    <Content Include="styles\css\ToggleButton.css" />
+    <Content Include="styles\css\Validation.css" />
+    <Content Include="SVG\Colored\Delete.svg" />
+    <Content Include="SVG\Colored\Maintenance.svg" />
+    <Content Include="SVG\Colored\Notes.svg" />
+    <Content Include="SVG\Colored\Operations.svg" />
+    <Content Include="SVG\Colored\Pen.svg" />
+    <Content Include="SVG\Colored\Person.svg" />
+    <Content Include="SVG\Colored\Report.svg" />
+    <Content Include="SVG\Colored\S.svg" />
+    <Content Include="SVG\White\Operations.svg" />
+    <Content Include="Views\OperationsPageView.html" />
+    <Content Include="Views\Shipment\Tabs\CommunicationsTab.html" />
+    <Content Include="Views\Shipment\Tabs\CustomsFileTab.html" />
+    <Content Include="Views\Shipment\Tabs\DocsInTab.html" />
+    <Content Include="Views\Shipment\Tabs\DocsOutTab.html" />
+    <Content Include="Views\Shipment\Tabs\EventsTab.html" />
+    <Content Include="Views\Shipment\Tabs\FreightFilesTab.html" />
+    <Content Include="Views\Shipment\Tabs\MasterTab.html" />
+    <Content Include="Views\Shipment\Tabs\OrderTab.html" />
+    <Content Include="Views\Shipment\Tabs\OverviewTab.html" />
+    <Content Include="Views\Shipment\Tabs\PackagesTab.html" />
+    <Content Include="Views\Shipment\Tabs\PartnersTab.html" />
+    <Content Include="Views\Shipment\Tabs\PayablesTab.html" />
+    <Content Include="Views\Shipment\Tabs\ReceivablesTab.html" />
+    <Content Include="Views\Shipment\Tabs\RoutingsTab.html" />
+    <Content Include="Views\Shipment\Tabs\ShipmentsTab.html" />
+    <Content Include="web.config" />
+    <Content Include="wijmo\angular\angular2\bundles\angular2-polyfills.js" />
+    <Content Include="wijmo\angular\angular2\bundles\angular2.dev.js" />
+    <Content Include="wijmo\angular\angular2\bundles\http.dev.js" />
+    <Content Include="wijmo\angular\angular2\bundles\router.dev.js" />
+    <Content Include="wijmo\angular\es6-shim\es6-shim.js" />
+    <Content Include="wijmo\angular\rxjs\bundles\Rx.js" />
+    <Content Include="wijmo\angular\systemjs\dist\system.src.js" />
+    <Content Include="wijmo\metadata\ControlMetaFactory.js" />
+    <Content Include="wijmo\styles\vendor\wijmo.min.css" />
+    <Content Include="wijmo\styles\vendor\wijmo.theme.cerulean.min.css" />
+    <Content Include="wijmo\styles\vendor\wijmo.theme.cleandark.min.css" />
+    <Content Include="wijmo\styles\vendor\wijmo.theme.cleanlight.min.css" />
+    <Content Include="wijmo\styles\vendor\wijmo.theme.cocoa.min.css" />
+    <Content Include="wijmo\styles\vendor\wijmo.theme.coral.min.css" />
+    <Content Include="wijmo\styles\vendor\wijmo.theme.cyborg.min.css" />
+    <Content Include="wijmo\styles\vendor\wijmo.theme.dark.min.css" />
+    <Content Include="wijmo\styles\vendor\wijmo.theme.darkly.min.css" />
+    <Content Include="wijmo\styles\vendor\wijmo.theme.flatly.min.css" />
+    <Content Include="wijmo\styles\vendor\wijmo.theme.grayscale.min.css" />
+    <Content Include="wijmo\styles\vendor\wijmo.theme.highcontrast.min.css" />
+    <Content Include="wijmo\styles\vendor\wijmo.theme.light.min.css" />
+    <Content Include="wijmo\styles\vendor\wijmo.theme.material.min.css" />
+    <Content Include="wijmo\styles\vendor\wijmo.theme.midnight.min.css" />
+    <Content Include="wijmo\styles\vendor\wijmo.theme.modern.min.css" />
+    <Content Include="wijmo\styles\vendor\wijmo.theme.office.min.css" />
+    <Content Include="wijmo\styles\vendor\wijmo.theme.organic.min.css" />
+    <Content Include="wijmo\styles\vendor\wijmo.theme.superhero.min.css" />
+    <Content Include="wijmo\styles\vendor\wijmo.theme.trust.min.css" />
+    <Content Include="wijmo\styles\vendor\wijmo.theme.zen.min.css" />
+    <Content Include="wijmo\vendor\wijmo.chart.min.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.ar-AE.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.bg.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.ca.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.cs.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.da.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.de.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.el.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.en-CA.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.en-GB.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.en.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.es.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.et.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.eu.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.fi.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.fr-CA.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.fr.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.gl.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.he.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.hi.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.hr.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.hu.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.id.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.it.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.ja.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.kk.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.ko.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.lt.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.lv.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.nl.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.no.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.pl.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.pt.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.ro.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.ru.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.sk.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.sl.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.sr.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.sv.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.th.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.tr.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.uk.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.zh-HK.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.zh-TW.js" />
+    <Content Include="wijmo\vendor\wijmo.culture.zh.js" />
+    <Content Include="wijmo\vendor\wijmo.gauge.min.js" />
+    <Content Include="wijmo\vendor\wijmo.grid.min.js" />
+    <Content Include="wijmo\vendor\wijmo.input.min.js" />
+    <Content Include="wijmo\vendor\wijmo.min.js" />
+    <Content Include="wijmo\wijmo.angular2\wijmo.angular2.all.js" />
+    <Content Include="wijmo\wijmo.angular2\wijmo.angular2.chart.js" />
+    <Content Include="wijmo\wijmo.angular2\wijmo.angular2.core.js" />
+    <Content Include="wijmo\wijmo.angular2\wijmo.angular2.directiveBase.js" />
+    <Content Include="wijmo\wijmo.angular2\wijmo.angular2.gauge.js" />
+    <Content Include="wijmo\wijmo.angular2\wijmo.angular2.grid.js" />
+    <Content Include="wijmo\wijmo.angular2\wijmo.angular2.input.js" />
+    <Content Include="wijmo\wijmo.angular2\wijmo.angular2.MetaFactory.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="package.json" />
+    <Content Include="tsconfig.json" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="auto-generators\Manager.ttinclude" />
+    <Content Include="generated-xml-files\common-data\Incoterm.lxml" />
+    <Content Include="packages.config" />
+    <Content Include="generated-xml-files\shipment\Shipment.lxml" />
+    <Content Include="generated-xml-files\shipment\ShipmentPackage.lxml" />
+    <None Include="web.Debug.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+    <None Include="web.Release.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+    <Content Include="wijmo\wijmo.angular2\wijmo.angular2.all.js.map" />
+    <Content Include="wijmo\wijmo.angular2\wijmo.angular2.chart.js.map" />
+    <Content Include="wijmo\wijmo.angular2\wijmo.angular2.core.js.map" />
+    <Content Include="wijmo\wijmo.angular2\wijmo.angular2.directiveBase.js.map" />
+    <Content Include="wijmo\wijmo.angular2\wijmo.angular2.gauge.js.map" />
+    <Content Include="wijmo\wijmo.angular2\wijmo.angular2.grid.js.map" />
+    <Content Include="wijmo\wijmo.angular2\wijmo.angular2.input.js.map" />
+    <Content Include="wijmo\wijmo.angular2\wijmo.angular2.MetaFactory.js.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="app\app.component.ts" />
+    <TypeScriptCompile Include="app\ApplicationControls\IconButton.ts" />
+    <TypeScriptCompile Include="app\ApplicationControls\SVGPath.ts" />
+    <TypeScriptCompile Include="app\boot.ts" />
+    <TypeScriptCompile Include="app\common-data\entity-lists\generated\IncotermList.generated.ts" />
+    <TypeScriptCompile Include="app\common-data\entity-pms\generated\IncotermPM.generated.ts" />
+    <TypeScriptCompile Include="app\common-data\services\generated\incoterm-list.service.generated.ts" />
+    <TypeScriptCompile Include="app\common-data\services\generated\incoterm-pm.service.generated.ts" />
+    <TypeScriptCompile Include="app\infrastructure\data-contracts\api-query-filters.ts" />
+    <TypeScriptCompile Include="app\infrastructure\data-contracts\entity-args.ts" />
+    <TypeScriptCompile Include="app\infrastructure\data-contracts\service-args.ts" />
+    <TypeScriptCompile Include="app\infrastructure\dynamic-dummy-component\dynamic-dummy.component.ts" />
+    <TypeScriptCompile Include="app\infrastructure\html-header-components\is-accounting-closed-header-template\is-accounting-closed-header-template.component.ts" />
+    <TypeScriptCompile Include="app\infrastructure\html-header-components\is-operational-closed-header-template\is-operational-closed-header-template.component.ts" />
+    <TypeScriptCompile Include="app\infrastructure\html-list-components\is-operational-closed-list-template\is-operational-closed-list-template.component.ts" />
+    <TypeScriptCompile Include="app\infrastructure\logitude-components\Base.Component.ts" />
+    <TypeScriptCompile Include="app\infrastructure\logitude-components\checkbox-input\logitude-checkbox-input.component.ts" />
+    <TypeScriptCompile Include="app\infrastructure\logitude-components\date-input\logitude-date-input.component.ts" />
+    <TypeScriptCompile Include="app\infrastructure\logitude-components\header-screen-value\default-component\default.component.ts" />
+    <TypeScriptCompile Include="app\infrastructure\logitude-components\header-screen-value\generic-component\generic.component.ts" />
+    <TypeScriptCompile Include="app\infrastructure\logitude-components\header-screen-value\header-screen-value.component.ts" />
+    <TypeScriptCompile Include="app\infrastructure\logitude-components\label\logitude-label.component.ts" />
+    <TypeScriptCompile Include="app\infrastructure\logitude-components\lov-input\logitude-lov-input.component.ts" />
+    <TypeScriptCompile Include="app\infrastructure\logitude-components\text-input\logitude-text-input.component.ts" />
+    <TypeScriptCompile Include="app\infrastructure\edit-control\edit-control.component.ts" />
+    <TypeScriptCompile Include="app\infrastructure\logitude-components\tooltip\logitude-tooltip.directive.ts" />
+    <TypeScriptCompile Include="app\infrastructure\logitude-components\UIProperties.ts" />
+    <TypeScriptCompile Include="app\infrastructure\modal-libs\angular2-modal\angular2-modal.ts" />
+    <TypeScriptCompile Include="app\infrastructure\modal-libs\angular2-modal\commonModals\okOnlyModal.ts" />
+    <TypeScriptCompile Include="app\infrastructure\modal-libs\angular2-modal\commonModals\yesNoModal.ts" />
+    <TypeScriptCompile Include="app\infrastructure\modal-libs\angular2-modal\components\bootstrapModalContainer.ts" />
+    <TypeScriptCompile Include="app\infrastructure\modal-libs\angular2-modal\components\modalBackdrop.ts" />
+    <TypeScriptCompile Include="app\infrastructure\modal-libs\angular2-modal\models\ICustomModal.ts" />
+    <TypeScriptCompile Include="app\infrastructure\modal-libs\angular2-modal\models\ModalConfig.ts" />
+    <TypeScriptCompile Include="app\infrastructure\modal-libs\angular2-modal\models\ModalDialogInstance.ts" />
+    <TypeScriptCompile Include="app\infrastructure\modal-libs\angular2-modal\providers\Modal.ts" />
+    <TypeScriptCompile Include="app\infrastructure\pipes\CountryFlagPipe.ts" />
+    <TypeScriptCompile Include="app\infrastructure\pipes\DateTimeToDatePipe.ts" />
+    <TypeScriptCompile Include="app\infrastructure\pipes\DateTimeToTimePipe.ts" />
+    <TypeScriptCompile Include="app\infrastructure\pipes\StringToColorPipe.ts" />
+    <TypeScriptCompile Include="app\infrastructure\services\entity-list.service.ts" />
+    <TypeScriptCompile Include="app\infrastructure\services\entity-pm.service.ts" />
+    <TypeScriptCompile Include="app\infrastructure\utilities\DecimalFormatter.ts" />
+    <TypeScriptCompile Include="app\infrastructure\utilities\LogitudeUtilities.ts" />
+    <TypeScriptCompile Include="app\infrastructure\utilities\TextCodeTranslator.ts" />
+    <TypeScriptCompile Include="app\shipment\EntityPMs\ShipmentPackagePM.ts" />
+    <TypeScriptCompile Include="app\shipment\EntityPMs\ShipmentPM.ts" />
+    <TypeScriptCompile Include="app\infrastructure\utilities\DynamicRouteConfigurator.ts" />
+    <TypeScriptCompile Include="app\shipment\new-package-modal\new-package-modal.component.ts" />
+    <TypeScriptCompile Include="app\shipment\new-shipment-modal\new-shipment-modal.component.ts" />
+    <TypeScriptCompile Include="app\shipment\operations\operations.component.ts" />
+    <TypeScriptCompile Include="app\shipment\services\port.service.ts" />
+    <TypeScriptCompile Include="app\shipment\shipment-tabs\Communications\CommunicationsTab.component.ts" />
+    <TypeScriptCompile Include="app\shipment\shipment-tabs\CustomsFile\CustomsFileTab.component.ts" />
+    <TypeScriptCompile Include="app\shipment\shipment-tabs\DocsIn\DocsInTab.component.ts" />
+    <TypeScriptCompile Include="app\shipment\shipment-tabs\DocsOut\DocsOutTab.component.ts" />
+    <TypeScriptCompile Include="app\shipment\shipment-tabs\Events\EventsTab.component.ts" />
+    <TypeScriptCompile Include="app\shipment\shipment-tabs\FreightFiles\FreightFilesTab.component.ts" />
+    <TypeScriptCompile Include="app\shipment\models\employee-group-list.ts" />
+    <TypeScriptCompile Include="app\shipment\models\employee-group-pm.ts" />
+    <TypeScriptCompile Include="app\shipment\models\query-operations.ts" />
+    <TypeScriptCompile Include="app\shipment\services\test-service\employee-group-list.service.ts" />
+    <TypeScriptCompile Include="app\shipment\services\test-service\employee-group-pm.service.ts" />
+    <TypeScriptCompile Include="app\shipment\shipment-tabs\General\general.component.ts" />
+    <TypeScriptCompile Include="app\shipment\shipment-tabs\General\general.service.ts" />
+    <TypeScriptCompile Include="app\infrastructure\login\login.component.ts" />
+    <TypeScriptCompile Include="app\infrastructure\main-menu\main-menu.component.ts" />
+    <TypeScriptCompile Include="app\shipment\shipment-tabs\Master\MasterTab.component.ts" />
+    <TypeScriptCompile Include="app\shipment\shipment-tabs\Order\OrderTab.component.ts" />
+    <TypeScriptCompile Include="app\shipment\shipment-tabs\Overview\overview.component.ts" />
+    <TypeScriptCompile Include="app\shipment\shipment-tabs\Packages\packages.component.ts" />
+    <TypeScriptCompile Include="app\infrastructure\pipes\textcode-translation\textcode-translation.pipe.ts" />
+    <TypeScriptCompile Include="app\root.component.ts" />
+    <TypeScriptCompile Include="app\shipment\shipment-tabs\Partners\PartnersTab.component.ts" />
+    <TypeScriptCompile Include="app\shipment\shipment-tabs\Payables\PayablesTab.component.ts" />
+    <TypeScriptCompile Include="app\shipment\shipment-tabs\Receivables\ReceivablesTab.component.ts" />
+    <TypeScriptCompile Include="app\shipment\shipment-tabs\Routings\RoutingsTab.component.ts" />
+    <TypeScriptCompile Include="app\shipment\shipment-tabs\Shipments\ShipmentsTab.component.ts" />
+    <TypeScriptCompile Include="app\shipment\shipments-list\shipments-list.component.ts" />
+    <TypeScriptCompile Include="app\shipment\services\shipment-service\shipments.service.ts" />
+    <TypeScriptCompile Include="app\shipment\short-title\shipment-short-title.component.ts" />
+    <TypeScriptCompile Include="wijmo\definition\angular.d.ts" />
+    <TypeScriptCompile Include="wijmo\definition\angular2\typings\angular2\angular2.d.ts" />
+    <TypeScriptCompile Include="wijmo\definition\angular2\typings\angular2\http.d.ts" />
+    <TypeScriptCompile Include="wijmo\definition\angular2\typings\angular2\router.d.ts" />
+    <TypeScriptCompile Include="wijmo\definition\angular2\typings\angular2\testing.d.ts" />
+    <TypeScriptCompile Include="wijmo\definition\angular2\typings\es6-shim\es6-shim.d.ts" />
+    <TypeScriptCompile Include="wijmo\definition\angular2\typings\jasmine\jasmine.d.ts" />
+    <TypeScriptCompile Include="wijmo\definition\globalize.d.ts" />
+    <TypeScriptCompile Include="wijmo\definition\jquery.d.ts" />
+    <TypeScriptCompile Include="wijmo\definition\knockout.d.ts" />
+    <TypeScriptCompile Include="wijmo\definition\wijmo.chart.analytics.d.ts" />
+    <TypeScriptCompile Include="wijmo\definition\wijmo.chart.annotation.d.ts" />
+    <TypeScriptCompile Include="wijmo\definition\wijmo.chart.d.ts" />
+    <TypeScriptCompile Include="wijmo\definition\wijmo.chart.finance.analytics.d.ts" />
+    <TypeScriptCompile Include="wijmo\definition\wijmo.chart.finance.d.ts" />
+    <TypeScriptCompile Include="wijmo\definition\wijmo.chart.interaction.d.ts" />
+    <TypeScriptCompile Include="wijmo\definition\wijmo.d.ts" />
+    <TypeScriptCompile Include="wijmo\definition\wijmo.gauge.d.ts" />
+    <TypeScriptCompile Include="wijmo\definition\wijmo.grid.d.ts" />
+    <TypeScriptCompile Include="wijmo\definition\wijmo.grid.detail.d.ts" />
+    <TypeScriptCompile Include="wijmo\definition\wijmo.grid.filter.d.ts" />
+    <TypeScriptCompile Include="wijmo\definition\wijmo.grid.grouppanel.d.ts" />
+    <TypeScriptCompile Include="wijmo\definition\wijmo.grid.sheet.d.ts" />
+    <TypeScriptCompile Include="wijmo\definition\wijmo.grid.xlsx.d.ts" />
+    <TypeScriptCompile Include="wijmo\definition\wijmo.input.d.ts" />
+    <TypeScriptCompile Include="wijmo\definition\wijmo.odata.d.ts" />
+    <TypeScriptCompile Include="wijmo\definition\wijmo.xlsx.d.ts" />
+    <TypeScriptCompile Include="wijmo\metadata\ControlMetaFactory.d.ts" />
+    <TypeScriptCompile Include="wijmo\wijmo.angular2\wijmo.angular2.all.ts" />
+    <TypeScriptCompile Include="wijmo\wijmo.angular2\wijmo.angular2.chart.ts" />
+    <TypeScriptCompile Include="wijmo\wijmo.angular2\wijmo.angular2.core.ts" />
+    <TypeScriptCompile Include="wijmo\wijmo.angular2\wijmo.angular2.directiveBase.ts" />
+    <TypeScriptCompile Include="wijmo\wijmo.angular2\wijmo.angular2.gauge.ts" />
+    <TypeScriptCompile Include="wijmo\wijmo.angular2\wijmo.angular2.grid.ts" />
+    <TypeScriptCompile Include="wijmo\wijmo.angular2\wijmo.angular2.input.ts" />
+    <TypeScriptCompile Include="wijmo\wijmo.angular2\wijmo.angular2.MetaFactory.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="app\shipment\entity-lists\generated\" />
+    <Folder Include="app\shipment\entity-pms\generated\" />
+    <Folder Include="app\shipment\services\generated\" />
+    <Folder Include="SVG\gray\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="auto-generators\entity-list-generator.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>entity-list-generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="auto-generators\entity-list-service-generator.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>entity-list-service-generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="auto-generators\entity-pm-generator.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>entity-pm-generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="auto-generators\entity-pm-service-generator.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>entity-pm-service-generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="auto-generators\general-classes-generator.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>general-classes-generator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ElasticDemoModel\ElasticDemoGen.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ElasticDemoGen.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="AmazedSaint.Elastic, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AmazedSaint.ElasticObject.1.2.0\lib\net40\AmazedSaint.Elastic.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.XML" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>LogitudeFrontEnd</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\WebApplications\Microsoft.WebApplication.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\WebApplications\Microsoft.WebApplication.targets')" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>60958</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:60958/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <TypeScriptRemoveComments>false</TypeScriptRemoveComments>
+    <TypeScriptSourceMap>true</TypeScriptSourceMap>
+    <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
+    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptModuleKind>CommonJS</TypeScriptModuleKind>
+    <TypeScriptOutFile />
+    <TypeScriptOutDir />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <TypeScriptRemoveComments>true</TypeScriptRemoveComments>
+    <TypeScriptSourceMap>false</TypeScriptSourceMap>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+</Project>

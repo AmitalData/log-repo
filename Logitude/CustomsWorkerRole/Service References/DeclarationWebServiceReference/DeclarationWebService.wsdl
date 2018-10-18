@@ -1,0 +1,908 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="SendDeclaration">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="declarationParamsData" type="s:base64Binary" />
+            <s:element minOccurs="0" maxOccurs="1" name="declarationId" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="tenant" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendDeclarationResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendDeclarationResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendPayment">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="requestParamsData" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendPaymentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendPaymentResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendPaymentWithCheckCustomFileCredit">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="requestParamsData" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendPaymentWithCheckCustomFileCreditResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendPaymentWithCheckCustomFileCreditResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendTransferRequest">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="requestParamsData" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendTransferRequestResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendTransferRequestResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchDeclarationStatusRequest">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="searchDeclarationStatusParams" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchDeclarationStatusRequestResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SearchDeclarationStatusRequestResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendDeclarationConstraint">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="requestParamsData" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendDeclarationConstraintResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendDeclarationConstraintResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendCollateralAnswers">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="requestParamsData" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendCollateralAnswersResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendCollateralAnswersResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendMorningMessageRequest">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="morningMessageRequestParams" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendMorningMessageRequestResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendMorningMessageRequestResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendDeclarationConstraintAgentObjection">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="requestParamsData" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendDeclarationConstraintAgentObjectionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendDeclarationConstraintAgentObjectionResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendCargoQuery">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="requestParamsData" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendCargoQueryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendCargoQueryResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendDeclarationRestore">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="requestParamsData" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendDeclarationRestoreResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendDeclarationRestoreResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendDeclarationFaultProcedural">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="requestParamsData" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendDeclarationFaultProceduralResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendDeclarationFaultProceduralResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendWarehouseBlockBalanceQuery">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="requestParamsData" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendWarehouseBlockBalanceQueryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendWarehouseBlockBalanceQueryResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendCollateralAnswerMsgRequest">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="requestParamsData" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendCollateralAnswerMsgRequestResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendCollateralAnswerMsgRequestResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RefreshConsignmentRequest">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="cargoQueryParams" type="s:base64Binary" />
+            <s:element minOccurs="1" maxOccurs="1" name="tenant" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RefreshConsignmentRequestResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RefreshConsignmentRequestResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendImporterDeclarationRequest">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="importerDeclarationRequestParams" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendImporterDeclarationRequestResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendImporterDeclarationRequestResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendDeclarationPrintRequest">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="requestParamsData" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendDeclarationPrintRequestResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendDeclarationPrintRequestResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendMasterBOLQueryRequest">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="requestParamsData" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendMasterBOLQueryRequestResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendMasterBOLQueryRequestResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendPaymentQuery">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="requestParamsData" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendPaymentQueryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendPaymentQueryResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendGuaranteeFileFilterQuery">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="requestParamsData" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendGuaranteeFileFilterQueryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendGuaranteeFileFilterQueryResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendDeclarationFilter">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="requestParamsData" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendDeclarationFilterResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendDeclarationFilterResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="SendDeclarationSoapIn">
+    <wsdl:part name="parameters" element="tns:SendDeclaration" />
+  </wsdl:message>
+  <wsdl:message name="SendDeclarationSoapOut">
+    <wsdl:part name="parameters" element="tns:SendDeclarationResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendPaymentSoapIn">
+    <wsdl:part name="parameters" element="tns:SendPayment" />
+  </wsdl:message>
+  <wsdl:message name="SendPaymentSoapOut">
+    <wsdl:part name="parameters" element="tns:SendPaymentResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendPaymentWithCheckCustomFileCreditSoapIn">
+    <wsdl:part name="parameters" element="tns:SendPaymentWithCheckCustomFileCredit" />
+  </wsdl:message>
+  <wsdl:message name="SendPaymentWithCheckCustomFileCreditSoapOut">
+    <wsdl:part name="parameters" element="tns:SendPaymentWithCheckCustomFileCreditResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendTransferRequestSoapIn">
+    <wsdl:part name="parameters" element="tns:SendTransferRequest" />
+  </wsdl:message>
+  <wsdl:message name="SendTransferRequestSoapOut">
+    <wsdl:part name="parameters" element="tns:SendTransferRequestResponse" />
+  </wsdl:message>
+  <wsdl:message name="SearchDeclarationStatusRequestSoapIn">
+    <wsdl:part name="parameters" element="tns:SearchDeclarationStatusRequest" />
+  </wsdl:message>
+  <wsdl:message name="SearchDeclarationStatusRequestSoapOut">
+    <wsdl:part name="parameters" element="tns:SearchDeclarationStatusRequestResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendDeclarationConstraintSoapIn">
+    <wsdl:part name="parameters" element="tns:SendDeclarationConstraint" />
+  </wsdl:message>
+  <wsdl:message name="SendDeclarationConstraintSoapOut">
+    <wsdl:part name="parameters" element="tns:SendDeclarationConstraintResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendCollateralAnswersSoapIn">
+    <wsdl:part name="parameters" element="tns:SendCollateralAnswers" />
+  </wsdl:message>
+  <wsdl:message name="SendCollateralAnswersSoapOut">
+    <wsdl:part name="parameters" element="tns:SendCollateralAnswersResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendMorningMessageRequestSoapIn">
+    <wsdl:part name="parameters" element="tns:SendMorningMessageRequest" />
+  </wsdl:message>
+  <wsdl:message name="SendMorningMessageRequestSoapOut">
+    <wsdl:part name="parameters" element="tns:SendMorningMessageRequestResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendDeclarationConstraintAgentObjectionSoapIn">
+    <wsdl:part name="parameters" element="tns:SendDeclarationConstraintAgentObjection" />
+  </wsdl:message>
+  <wsdl:message name="SendDeclarationConstraintAgentObjectionSoapOut">
+    <wsdl:part name="parameters" element="tns:SendDeclarationConstraintAgentObjectionResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendCargoQuerySoapIn">
+    <wsdl:part name="parameters" element="tns:SendCargoQuery" />
+  </wsdl:message>
+  <wsdl:message name="SendCargoQuerySoapOut">
+    <wsdl:part name="parameters" element="tns:SendCargoQueryResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendDeclarationRestoreSoapIn">
+    <wsdl:part name="parameters" element="tns:SendDeclarationRestore" />
+  </wsdl:message>
+  <wsdl:message name="SendDeclarationRestoreSoapOut">
+    <wsdl:part name="parameters" element="tns:SendDeclarationRestoreResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendDeclarationFaultProceduralSoapIn">
+    <wsdl:part name="parameters" element="tns:SendDeclarationFaultProcedural" />
+  </wsdl:message>
+  <wsdl:message name="SendDeclarationFaultProceduralSoapOut">
+    <wsdl:part name="parameters" element="tns:SendDeclarationFaultProceduralResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendWarehouseBlockBalanceQuerySoapIn">
+    <wsdl:part name="parameters" element="tns:SendWarehouseBlockBalanceQuery" />
+  </wsdl:message>
+  <wsdl:message name="SendWarehouseBlockBalanceQuerySoapOut">
+    <wsdl:part name="parameters" element="tns:SendWarehouseBlockBalanceQueryResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendCollateralAnswerMsgRequestSoapIn">
+    <wsdl:part name="parameters" element="tns:SendCollateralAnswerMsgRequest" />
+  </wsdl:message>
+  <wsdl:message name="SendCollateralAnswerMsgRequestSoapOut">
+    <wsdl:part name="parameters" element="tns:SendCollateralAnswerMsgRequestResponse" />
+  </wsdl:message>
+  <wsdl:message name="RefreshConsignmentRequestSoapIn">
+    <wsdl:part name="parameters" element="tns:RefreshConsignmentRequest" />
+  </wsdl:message>
+  <wsdl:message name="RefreshConsignmentRequestSoapOut">
+    <wsdl:part name="parameters" element="tns:RefreshConsignmentRequestResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendImporterDeclarationRequestSoapIn">
+    <wsdl:part name="parameters" element="tns:SendImporterDeclarationRequest" />
+  </wsdl:message>
+  <wsdl:message name="SendImporterDeclarationRequestSoapOut">
+    <wsdl:part name="parameters" element="tns:SendImporterDeclarationRequestResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendDeclarationPrintRequestSoapIn">
+    <wsdl:part name="parameters" element="tns:SendDeclarationPrintRequest" />
+  </wsdl:message>
+  <wsdl:message name="SendDeclarationPrintRequestSoapOut">
+    <wsdl:part name="parameters" element="tns:SendDeclarationPrintRequestResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendMasterBOLQueryRequestSoapIn">
+    <wsdl:part name="parameters" element="tns:SendMasterBOLQueryRequest" />
+  </wsdl:message>
+  <wsdl:message name="SendMasterBOLQueryRequestSoapOut">
+    <wsdl:part name="parameters" element="tns:SendMasterBOLQueryRequestResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendPaymentQuerySoapIn">
+    <wsdl:part name="parameters" element="tns:SendPaymentQuery" />
+  </wsdl:message>
+  <wsdl:message name="SendPaymentQuerySoapOut">
+    <wsdl:part name="parameters" element="tns:SendPaymentQueryResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendGuaranteeFileFilterQuerySoapIn">
+    <wsdl:part name="parameters" element="tns:SendGuaranteeFileFilterQuery" />
+  </wsdl:message>
+  <wsdl:message name="SendGuaranteeFileFilterQuerySoapOut">
+    <wsdl:part name="parameters" element="tns:SendGuaranteeFileFilterQueryResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendDeclarationFilterSoapIn">
+    <wsdl:part name="parameters" element="tns:SendDeclarationFilter" />
+  </wsdl:message>
+  <wsdl:message name="SendDeclarationFilterSoapOut">
+    <wsdl:part name="parameters" element="tns:SendDeclarationFilterResponse" />
+  </wsdl:message>
+  <wsdl:portType name="DeclarationWebServiceSoap">
+    <wsdl:operation name="SendDeclaration">
+      <wsdl:input message="tns:SendDeclarationSoapIn" />
+      <wsdl:output message="tns:SendDeclarationSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendPayment">
+      <wsdl:input message="tns:SendPaymentSoapIn" />
+      <wsdl:output message="tns:SendPaymentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendPaymentWithCheckCustomFileCredit">
+      <wsdl:input message="tns:SendPaymentWithCheckCustomFileCreditSoapIn" />
+      <wsdl:output message="tns:SendPaymentWithCheckCustomFileCreditSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendTransferRequest">
+      <wsdl:input message="tns:SendTransferRequestSoapIn" />
+      <wsdl:output message="tns:SendTransferRequestSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchDeclarationStatusRequest">
+      <wsdl:input message="tns:SearchDeclarationStatusRequestSoapIn" />
+      <wsdl:output message="tns:SearchDeclarationStatusRequestSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendDeclarationConstraint">
+      <wsdl:input message="tns:SendDeclarationConstraintSoapIn" />
+      <wsdl:output message="tns:SendDeclarationConstraintSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendCollateralAnswers">
+      <wsdl:input message="tns:SendCollateralAnswersSoapIn" />
+      <wsdl:output message="tns:SendCollateralAnswersSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendMorningMessageRequest">
+      <wsdl:input message="tns:SendMorningMessageRequestSoapIn" />
+      <wsdl:output message="tns:SendMorningMessageRequestSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendDeclarationConstraintAgentObjection">
+      <wsdl:input message="tns:SendDeclarationConstraintAgentObjectionSoapIn" />
+      <wsdl:output message="tns:SendDeclarationConstraintAgentObjectionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendCargoQuery">
+      <wsdl:input message="tns:SendCargoQuerySoapIn" />
+      <wsdl:output message="tns:SendCargoQuerySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendDeclarationRestore">
+      <wsdl:input message="tns:SendDeclarationRestoreSoapIn" />
+      <wsdl:output message="tns:SendDeclarationRestoreSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendDeclarationFaultProcedural">
+      <wsdl:input message="tns:SendDeclarationFaultProceduralSoapIn" />
+      <wsdl:output message="tns:SendDeclarationFaultProceduralSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendWarehouseBlockBalanceQuery">
+      <wsdl:input message="tns:SendWarehouseBlockBalanceQuerySoapIn" />
+      <wsdl:output message="tns:SendWarehouseBlockBalanceQuerySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendCollateralAnswerMsgRequest">
+      <wsdl:input message="tns:SendCollateralAnswerMsgRequestSoapIn" />
+      <wsdl:output message="tns:SendCollateralAnswerMsgRequestSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RefreshConsignmentRequest">
+      <wsdl:input message="tns:RefreshConsignmentRequestSoapIn" />
+      <wsdl:output message="tns:RefreshConsignmentRequestSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendImporterDeclarationRequest">
+      <wsdl:input message="tns:SendImporterDeclarationRequestSoapIn" />
+      <wsdl:output message="tns:SendImporterDeclarationRequestSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendDeclarationPrintRequest">
+      <wsdl:input message="tns:SendDeclarationPrintRequestSoapIn" />
+      <wsdl:output message="tns:SendDeclarationPrintRequestSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendMasterBOLQueryRequest">
+      <wsdl:input message="tns:SendMasterBOLQueryRequestSoapIn" />
+      <wsdl:output message="tns:SendMasterBOLQueryRequestSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendPaymentQuery">
+      <wsdl:input message="tns:SendPaymentQuerySoapIn" />
+      <wsdl:output message="tns:SendPaymentQuerySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendGuaranteeFileFilterQuery">
+      <wsdl:input message="tns:SendGuaranteeFileFilterQuerySoapIn" />
+      <wsdl:output message="tns:SendGuaranteeFileFilterQuerySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendDeclarationFilter">
+      <wsdl:input message="tns:SendDeclarationFilterSoapIn" />
+      <wsdl:output message="tns:SendDeclarationFilterSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="DeclarationWebServiceSoap" type="tns:DeclarationWebServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SendDeclaration">
+      <soap:operation soapAction="http://tempuri.org/SendDeclaration" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendPayment">
+      <soap:operation soapAction="http://tempuri.org/SendPayment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendPaymentWithCheckCustomFileCredit">
+      <soap:operation soapAction="http://tempuri.org/SendPaymentWithCheckCustomFileCredit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendTransferRequest">
+      <soap:operation soapAction="http://tempuri.org/SendTransferRequest" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchDeclarationStatusRequest">
+      <soap:operation soapAction="http://tempuri.org/SearchDeclarationStatusRequest" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendDeclarationConstraint">
+      <soap:operation soapAction="http://tempuri.org/SendDeclarationConstraint" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendCollateralAnswers">
+      <soap:operation soapAction="http://tempuri.org/SendCollateralAnswers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendMorningMessageRequest">
+      <soap:operation soapAction="http://tempuri.org/SendMorningMessageRequest" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendDeclarationConstraintAgentObjection">
+      <soap:operation soapAction="http://tempuri.org/SendDeclarationConstraintAgentObjection" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendCargoQuery">
+      <soap:operation soapAction="http://tempuri.org/SendCargoQuery" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendDeclarationRestore">
+      <soap:operation soapAction="http://tempuri.org/SendDeclarationRestore" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendDeclarationFaultProcedural">
+      <soap:operation soapAction="http://tempuri.org/SendDeclarationFaultProcedural" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendWarehouseBlockBalanceQuery">
+      <soap:operation soapAction="http://tempuri.org/SendWarehouseBlockBalanceQuery" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendCollateralAnswerMsgRequest">
+      <soap:operation soapAction="http://tempuri.org/SendCollateralAnswerMsgRequest" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RefreshConsignmentRequest">
+      <soap:operation soapAction="http://tempuri.org/RefreshConsignmentRequest" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendImporterDeclarationRequest">
+      <soap:operation soapAction="http://tempuri.org/SendImporterDeclarationRequest" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendDeclarationPrintRequest">
+      <soap:operation soapAction="http://tempuri.org/SendDeclarationPrintRequest" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendMasterBOLQueryRequest">
+      <soap:operation soapAction="http://tempuri.org/SendMasterBOLQueryRequest" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendPaymentQuery">
+      <soap:operation soapAction="http://tempuri.org/SendPaymentQuery" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendGuaranteeFileFilterQuery">
+      <soap:operation soapAction="http://tempuri.org/SendGuaranteeFileFilterQuery" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendDeclarationFilter">
+      <soap:operation soapAction="http://tempuri.org/SendDeclarationFilter" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="DeclarationWebServiceSoap12" type="tns:DeclarationWebServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SendDeclaration">
+      <soap12:operation soapAction="http://tempuri.org/SendDeclaration" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendPayment">
+      <soap12:operation soapAction="http://tempuri.org/SendPayment" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendPaymentWithCheckCustomFileCredit">
+      <soap12:operation soapAction="http://tempuri.org/SendPaymentWithCheckCustomFileCredit" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendTransferRequest">
+      <soap12:operation soapAction="http://tempuri.org/SendTransferRequest" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchDeclarationStatusRequest">
+      <soap12:operation soapAction="http://tempuri.org/SearchDeclarationStatusRequest" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendDeclarationConstraint">
+      <soap12:operation soapAction="http://tempuri.org/SendDeclarationConstraint" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendCollateralAnswers">
+      <soap12:operation soapAction="http://tempuri.org/SendCollateralAnswers" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendMorningMessageRequest">
+      <soap12:operation soapAction="http://tempuri.org/SendMorningMessageRequest" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendDeclarationConstraintAgentObjection">
+      <soap12:operation soapAction="http://tempuri.org/SendDeclarationConstraintAgentObjection" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendCargoQuery">
+      <soap12:operation soapAction="http://tempuri.org/SendCargoQuery" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendDeclarationRestore">
+      <soap12:operation soapAction="http://tempuri.org/SendDeclarationRestore" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendDeclarationFaultProcedural">
+      <soap12:operation soapAction="http://tempuri.org/SendDeclarationFaultProcedural" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendWarehouseBlockBalanceQuery">
+      <soap12:operation soapAction="http://tempuri.org/SendWarehouseBlockBalanceQuery" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendCollateralAnswerMsgRequest">
+      <soap12:operation soapAction="http://tempuri.org/SendCollateralAnswerMsgRequest" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RefreshConsignmentRequest">
+      <soap12:operation soapAction="http://tempuri.org/RefreshConsignmentRequest" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendImporterDeclarationRequest">
+      <soap12:operation soapAction="http://tempuri.org/SendImporterDeclarationRequest" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendDeclarationPrintRequest">
+      <soap12:operation soapAction="http://tempuri.org/SendDeclarationPrintRequest" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendMasterBOLQueryRequest">
+      <soap12:operation soapAction="http://tempuri.org/SendMasterBOLQueryRequest" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendPaymentQuery">
+      <soap12:operation soapAction="http://tempuri.org/SendPaymentQuery" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendGuaranteeFileFilterQuery">
+      <soap12:operation soapAction="http://tempuri.org/SendGuaranteeFileFilterQuery" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendDeclarationFilter">
+      <soap12:operation soapAction="http://tempuri.org/SendDeclarationFilter" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="DeclarationWebService">
+    <wsdl:port name="DeclarationWebServiceSoap" binding="tns:DeclarationWebServiceSoap">
+      <soap:address location="http://localhost:62611/CustomWebServices/DeclarationWebService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="DeclarationWebServiceSoap12" binding="tns:DeclarationWebServiceSoap12">
+      <soap12:address location="http://localhost:62611/CustomWebServices/DeclarationWebService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

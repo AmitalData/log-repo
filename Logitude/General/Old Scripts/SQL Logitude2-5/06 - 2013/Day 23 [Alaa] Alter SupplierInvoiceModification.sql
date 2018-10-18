@@ -1,0 +1,1 @@
+alter table  [Customs].[SupplierInvoiceModifications] alter column tenant int not null

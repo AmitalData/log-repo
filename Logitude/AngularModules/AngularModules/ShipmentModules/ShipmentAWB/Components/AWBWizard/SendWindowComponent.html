@@ -1,0 +1,526 @@
+﻿
+<style type="text/css">
+    .RadioButton label {
+        font-size: 12px;
+        color: #282E30;
+    }
+
+    .RecipientValue {
+        width: 55px;
+        font-size: 11px;
+        color: #6E7172;
+    }
+</style>
+
+<table>
+    <tr *ngIf="ValidationErrorsList && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr *ngIf="ValidationWarningsList && ValidationWarningsList.length > 0" style="height:1px;">
+        <td>
+            <WarningSummary [ItemsSource]="ValidationWarningsList"></WarningSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td>
+                        <div class="FillParent CurvedArea">
+                            <table>
+                                <tr>
+                                    <td style="width: 230px" *ngIf="IsRecipientsVisible">
+                                        <div class="FillParent AppLeftMenuBackground">
+                                            <table>
+                                                <tr>
+                                                    <td style="width: 5px;">
+                                                        <div></div>
+                                                    </td>
+
+                                                    <td>
+                                                        <table>
+                                                            <tr style="height: 5px;">
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr style="height: 25px;">
+                                                                <td>
+                                                                    <div style="font-size: 13px; color: #1B90CB; text-indent: 5px;">Choose Recipient</div>
+                                                                    <div style="font-size: 10px; color: #6E7172; text-indent: 5px;">for test purposes only</div>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr style="height: 5px;">
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td>
+                                                                    <table>
+
+                                                                        <tr style="height: 25px">
+                                                                            <td style="width: 10px;">
+                                                                                <div></div>
+                                                                            </td>
+
+                                                                            <td>
+                                                                                <div class="RadioButton">
+                                                                                    <input id="Radio1" type="radio" name="RecipientRadio" [checked]="CargRecipientIsChecked" (click)="CargRecipientIsChecked=true" />
+                                                                                    <label for="Radio1">Cargo Test System</label>
+                                                                                </div>
+                                                                            </td>
+
+                                                                            <td class="RecipientValue">{{CargRecipient}}</td>
+                                                                        </tr>
+                                                                        <tr style="height: 25px">
+                                                                            <td style="width: 10px;">
+                                                                                <div></div>
+                                                                            </td>
+
+                                                                            <td>
+                                                                                <div class="RadioButton">
+                                                                                    <input id="Radio2" type="radio" name="RecipientRadio" [checked]="XXArRecipientIsChecked" (click)="XXArRecipientIsChecked=true" />
+                                                                                    <label for="Radio2">XX Airline</label>
+                                                                                </div>
+                                                                            </td>
+
+                                                                            <td class="RecipientValue">{{XXArRecipient}}</td>
+                                                                        </tr>
+                                                                        <tr style="height: 25px">
+                                                                            <td style="width: 10px;">
+                                                                                <div></div>
+                                                                            </td>
+
+                                                                            <td>
+                                                                                <div class="RadioButton">
+                                                                                    <input id="Radio3" type="radio" name="RecipientRadio" [checked]="Fra1RecipientIsChecked" (click)="Fra1RecipientIsChecked=true" />
+                                                                                    <label for="Radio3">Lufthansa</label>
+                                                                                </div>
+                                                                            </td>
+
+                                                                            <td class="RecipientValue">{{Fra1Recipient}}</td>
+                                                                        </tr>
+                                                                        <tr style="height: 25px">
+                                                                            <td style="width: 10px;">
+                                                                                <div></div>
+                                                                            </td>
+
+                                                                            <td>
+                                                                                <div class="RadioButton">
+                                                                                    <input id="Radio4" type="radio" name="RecipientRadio" [checked]="Fra2RecipientIsChecked" (click)="Fra2RecipientIsChecked=true" />
+                                                                                    <label for="Radio4">Frankfurt Simulator</label>
+                                                                                </div>
+                                                                            </td>
+
+                                                                            <td class="RecipientValue">{{Fra2Recipient}}</td>
+                                                                        </tr>
+                                                                        <tr style="height: 25px">
+                                                                            <td style="width: 10px;">
+                                                                                <div></div>
+                                                                            </td>
+
+                                                                            <td>
+                                                                                <div class="RadioButton">
+                                                                                    <input id="Radio5" type="radio" name="RecipientRadio" [checked]="RichRecipientIsChecked" (click)="RichRecipientIsChecked=true" />
+                                                                                    <label for="Radio5">Richard Email</label>
+                                                                                </div>
+                                                                            </td>
+
+                                                                            <td class="RecipientValue">{{RichRecipient}}</td>
+                                                                        </tr>
+                                                                        <tr style="height: 25px">
+                                                                            <td style="width: 10px;">
+                                                                                <div></div>
+                                                                            </td>
+
+                                                                            <td>
+                                                                                <div class="RadioButton">
+                                                                                    <input id="Radio6" type="radio" name="RecipientRadio" [checked]="IhabRecipientIsChecked" (click)="IhabRecipientIsChecked=true" />
+                                                                                    <label for="Radio6">Ihab Email</label>
+                                                                                </div>
+                                                                            </td>
+
+                                                                            <td class="RecipientValue">{{IhabRecipient}}</td>
+                                                                        </tr>
+                                                                        <tr style="height: 25px" *ngIf="IsCargonautVisible">
+                                                                            <td style="width: 10px;">
+                                                                                <div></div>
+                                                                            </td>
+
+                                                                            <td>
+                                                                                <div class="RadioButton">
+                                                                                    <input id="Radio7" type="radio" name="RecipientRadio" [checked]="CargonautRecipientIsChecked" (click)="CargonautRecipientIsChecked=true" />
+                                                                                    <label for="Radio7">Cargonaut</label>
+                                                                                </div>
+                                                                            </td>
+
+                                                                            <td class="RecipientValue">{{CargonautRecipient}}</td>
+                                                                        </tr>
+                                                                        <tr style="height: 25px" *ngIf="IsDEXXVisible">
+                                                                            <td style="width: 10px;">
+                                                                                <div></div>
+                                                                            </td>
+
+                                                                            <td>
+                                                                                <div class="RadioButton">
+                                                                                    <input id="Radio8" type="radio" name="RecipientRadio" [checked]="DEXXRecipientIsChecked" (click)="DEXXRecipientIsChecked=true" />
+                                                                                    <label for="Radio8">DEXX</label>
+                                                                                </div>
+                                                                            </td>
+
+                                                                            <td class="RecipientValue">{{DEXXRecipient}}</td>
+                                                                        </tr>
+                                                                        <tr style="height: 25px">
+                                                                            <td style="width: 10px;">
+                                                                                <div></div>
+                                                                            </td>
+
+                                                                            <td>
+                                                                                <div class="RadioButton">
+                                                                                    <input id="Radio9" type="radio" name="RecipientRadio" [checked]="OtheRecipientIsChecked" (click)="OtheRecipientIsChecked=true" />
+                                                                                    <label for="Radio9">Other</label>
+                                                                                </div>
+                                                                            </td>
+
+                                                                            <td class="RecipientValue">{{OtherRecipient}}</td>
+                                                                        </tr>
+                                                                        <tr style="height: 25px">
+                                                                            <td style="width: 10px;">
+                                                                                <div></div>
+                                                                            </td>
+
+                                                                            <td>
+                                                                                <table>
+                                                                                    <tr>
+                                                                                        <td style="width: 20px;">
+                                                                                            <div></div>
+                                                                                        </td>
+
+                                                                                        <td style="width: 100px;">
+                                                                                            <input type="text" [(ngModel)]="SelectedRecipient">
+                                                                                        </td>
+
+                                                                                        <td>
+                                                                                            <div></div>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </td>
+
+                                                                            <td class="RecipientValue">
+                                                                                <div></div>
+                                                                            </td>
+                                                                        </tr>
+
+                                                                        <tr>
+                                                                            <td>
+                                                                                <div></div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+
+                                                    <td style="width: 5px;">
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </td>
+
+                                    <td style="width: 10px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td>
+                                        <table>
+                                            <tr style="height: 10px">
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <table>
+
+                                                        <!-- FWB|FHL -->
+                                                        <tr style="height: 40px">
+                                                            <td>
+                                                                <table>
+                                                                    <tr style="height: 20px">
+                                                                        <td style="font-size: 16px; color: #1B90CB">{{MessageType}} Status</td>
+                                                                    </tr>
+
+                                                                    <tr style="height: 20px">
+                                                                        <td>
+                                                                            <table>
+                                                                                <tr *ngIf="IsMessageValid">
+                                                                                    <td style="width: 15px; position: relative">
+                                                                                        <img class="LeftCenter" src="./Images/GreenTick.png" />
+                                                                                    </td>
+
+                                                                                    <td style="font-size: 12px; color: #009161;">Valid</td>
+                                                                                </tr>
+
+                                                                                <tr *ngIf="IsMessageWarning">
+                                                                                    <td style="width: 15px; position: relative">
+                                                                                        <img class="LeftCenter" src="./Images/WarningIcon.png" />
+                                                                                    </td>
+
+                                                                                    <td style="font-size: 12px; color: #D8770E;">{{MessageWarningText}}</td>
+                                                                                </tr>
+
+                                                                                <tr *ngIf="IsMessageError">
+                                                                                    <td style="width: 15px; position: relative">
+                                                                                        <img class="LeftCenter" src="./Images/RedX.png" />
+                                                                                    </td>
+
+                                                                                    <td style="font-size: 12px; color: #E53030;">{{MessageErrorText}}</td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr style="height: 10px">
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <!-- FHLs -->
+                                                        <tr *ngIf="IsFHLsStatusVisible">
+                                                            <td>
+                                                                <table>
+                                                                    <tr style="height: 20px">
+                                                                        <td style="font-size: 16px; color: #1B90CB">{{FHLsStatusLabel}}</td>
+                                                                    </tr>
+
+                                                                    <tr style="height: 20px;">
+                                                                        <td>
+                                                                            <table>
+                                                                                <tr style="height: 20px" *ngIf="IsFHLsValid">
+                                                                                    <td style="width: 15px; position: relative">
+                                                                                        <img class="LeftCenter" src="./Images/GreenTick.png" />
+                                                                                    </td>
+
+                                                                                    <td style="font-size: 12px; color: #009161;">Valid</td>
+                                                                                </tr>
+
+                                                                                <tr style="height: 20px" *ngIf="IsFHLsWarning">
+                                                                                    <td style="width: 18px; position: relative">
+                                                                                        <img class="LeftTop" src="./Images/WarningIcon.png" />
+                                                                                    </td>
+
+                                                                                    <td style="font-size: 12px; color: #D8770E;">
+                                                                                        <div class="MultiLinesText">
+                                                                                            {{FHLsWarningText}}
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <tr style="height: 20px" *ngIf="IsFHLsError">
+                                                                                    <td style="width: 15px; position: relative">
+                                                                                        <img class="LeftCenter" src="./Images/RedX.png" />
+                                                                                    </td>
+
+                                                                                    <td style="font-size: 12px; color: #E53030;">{{FHLsErrorText}}</td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr style="height: 15px;">
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr style="height: 20px;">
+                                                                        <td>
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td style="font-size: 11px; color: #1B90CB; width: 100px;">House Number</td>
+                                                                                    <td style="font-size: 11px; color: #1B90CB;">Shipper</td>
+                                                                                    <td style="width: 10px;">
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                    <td style="font-size: 11px; color: #1B90CB; width: 50px; text-align: center">Valid</td>
+                                                                                    <td style="width: 10px;">
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                    <td style="font-size: 11px; color: #1B90CB; width: 60px;">Status</td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div class="ScrollViewer">
+                                                                                <div class="ScrollContent">
+                                                                                    <table>
+                                                                                        <tr style="height: 20px;" *ngFor="let item of FHLsValidationList">
+
+                                                                                            <td style="width: 100px;">
+                                                                                                <div class="hyperlink" (click)="item.ViewShipment()">{{item.ShipmentNumber}}</div>
+                                                                                            </td>
+
+                                                                                            <td style="font-size: 12px; color: #282E30;">{{item.Shipper}}</td>
+
+                                                                                            <td style="width: 10px;">
+                                                                                                <div></div>
+                                                                                            </td>
+
+                                                                                            <td style="width: 50px; position: relative">
+                                                                                                <img *ngIf="item.IsFHLValid" class="CenterCenter" src="./Images/GreenTick.png" />
+                                                                                                <img *ngIf="!item.IsFHLValid" class="CenterCenter" src="./Images/RedX.png" />
+                                                                                            </td>
+
+                                                                                            <td style="width: 10px;">
+                                                                                                <div></div>
+                                                                                            </td>
+
+                                                                                            <td style="font-size: 11px; width: 60px;" [ngStyle]="{color: item.StatusName | StringToColorPipe}">{{item.StatusName}}</td>
+                                                                                        </tr>
+
+                                                                                        <tr>
+                                                                                            <td colspan="6">
+                                                                                                <div></div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr *ngIf="!IsFHLsStatusVisible">
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr style="height: 65px;" *ngIf="StockAreaIsVisible">
+                                                            <td>
+                                                                <div class="MediaFill">
+
+                                                                    <table *ngIf="StockResultIsVisible">
+                                                                        <tr style="height: 20px">
+                                                                            <td colspan="2" style="font-size: 16px; color: #1B90CB">Stock Status</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="Label" style="width: 170px;">FWB/FHL sent:</td>
+                                                                            <td class="Value" style="font-size: 11px;">{{SendingCount}}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="Label" style="width: 170px;">Stock before the transmission:</td>
+                                                                            <td class="Value" style="font-size: 11px;">{{StockRemainingBefore}}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="Label" style="width: 170px;">Stock after the transmission:</td>
+                                                                            <td class="Value" style="font-size: 11px;">{{StockRemainingAfter}}</td>
+                                                                        </tr>
+                                                                    </table>
+
+                                                                    <div *ngIf="StockErrorIsVisible">
+                                                                        <div class="Label MultiLinesText">{{StockErrorMessage}}</div>
+                                                                        <a [attr.href]="PurchaseStockUri" target="_blank">Purchase new stock</a>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr style="height: 65px;" *ngIf="DemoAreaIsVisible">
+                                                            <td style="vertical-align: middle;">
+                                                                <div class="MultiLinesText" style="max-height: 65px; color: #6E7172; font-size: 13px; font-style: italic;">
+                                                                    Please note that this message will not be sent to the airline since it is a demo environment. You can still review the built message
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr style="height: 5px;">
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr style="height: 30px;">
+                                                            <td style="text-align: center; vertical-align: middle; font-size: 14px;" [ngStyle]="{color: SendingResultForeground}">
+                                                                {{SendingResultMessage}}
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+
+                                            <tr style="height: 10px">
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+
+                                    <td style="width: 10px;">
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CloseClicked()">{{'Shipment.B.Close' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;" *ngIf="IsSendButtonVisible">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 75px;" *ngIf="IsSendButtonVisible">
+                        <button class="RedButton" (click)="SendClicked()">Send online</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

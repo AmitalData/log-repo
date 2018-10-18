@@ -1,0 +1,67 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Customs.Data.EntityPOCOs
+{
+   
+    public class DeclarationPaymentMethod
+    {
+	 string dbms;
+
+        [Key]
+        [ForeignKey("DeclarationPayment")]
+        [Column("DeclarationId" ,Order = 1)]
+	    public string DeclarationId { get; set; }
+	      
+        public virtual DeclarationPayment DeclarationPayment { get; set; }
+     [Key]
+        [Column("Line" ,Order = 2)]
+	    public int Line { get; set; }
+        [Column("SequenceNumeric")]
+	    public int SequenceNumeric { get; set; }
+        [ForeignKey("CustomerActivityType")]
+        [Column("PayerActivityTypeCode")]
+	    public string PayerActivityTypeCode { get; set; }
+	      
+        public virtual CustomerActivityType CustomerActivityType { get; set; }
+        [ForeignKey("PaymentMethodType")]
+        [Column("MethodTypeCode")]
+	    public string MethodTypeCode { get; set; }
+	      
+        public virtual PaymentMethodType PaymentMethodType { get; set; }
+        [Column("Amount")]
+	    public decimal? Amount { get; set; }
+        [ForeignKey("Bank")]
+        [Column("BankCode")]
+	    public string BankCode { get; set; }
+	      
+        public virtual Bank Bank { get; set; }
+        [Column("BranchCode")]
+	    public string BranchCode { get; set; }
+        [Column("AccountNumber")]
+	    public string AccountNumber { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+        [ForeignKey("CustomBank")]
+        [Column("InternalBankId")]
+	    public string InternalBankId { get; set; }
+	      
+        public virtual CustomBank CustomBank { get; set; }
+        [ForeignKey("CustomsBranch")]
+        [Column("CustomsBranchId")]
+	    public string CustomsBranchId { get; set; }
+	      
+        public virtual CustomsBranch CustomsBranch { get; set; }
+    }
+}
+	 

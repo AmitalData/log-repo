@@ -1,0 +1,459 @@
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs; 
+using Logitude.Customs.Data;
+
+namespace Logitude.Customs.BL.EntityDataMappings
+{
+   
+   public partial class ClaimsRelatedEntityDataMapping: IMapping<ClaimsRelatedEntityPM, ClaimsRelatedEntity>,IMappingEncodeBase64NVARCHARFields<ClaimsRelatedEntityPM>
+   {
+          public enum POCOPropertyNames
+          { 
+		     None,  
+	         ClaimId, 
+	         Tenant, 
+	         EntityCounterKey, 
+	         ClaimEntityTypeCode, 
+	         ClaimEntityNumber, 
+	         ExternalClaimNumber, 
+	         CourtCode, 
+	         ProceedingNumber, 
+	         IsFinancialRefundDemand, 
+	         SeconderyClaimEntityCode, 
+	         SeconderyClaimEntityID, 
+	         ClaimAmount, 
+	         DeclarationVersion, 
+	         CommitteeDecisionNumber, 
+	         AbandonmentDestructionReferenc, 
+	         WarehouseTypeCode, 
+	         ClaimExplanation, 
+	         ContinuousMessagesTypeCode, 
+	         ClaimRequestNumber, 
+	         CustomsExceptions, 
+	         TapagNumber, 
+	         Numeral, 
+	         CustomsBranchCode,
+	      }
+
+
+	      public enum PMPropertyNames
+          { 
+		     None,  
+	         ClaimId, 
+	         Tenant, 
+	         EntityCounterKey, 
+	         ClaimEntityTypeCode, 
+	         ClaimEntityTypeName, 
+	         ClaimEntityNumber, 
+	         ExternalClaimNumber, 
+	         CourtCode, 
+	         CourtName, 
+	         ProceedingNumber, 
+	         IsFinancialRefundDemand, 
+	         SeconderyClaimEntityCode, 
+	         SeconderyClaimEntityName, 
+	         SeconderyClaimEntityID, 
+	         ClaimAmount, 
+	         DeclarationVersion, 
+	         CommitteeDecisionNumber, 
+	         AbandonmentDestructionReferenc, 
+	         WarehouseTypeCode, 
+	         WarehouseTypeName, 
+	         ClaimExplanation, 
+	         ContinuousMessagesTypeCode, 
+	         ContinuousMessagesTypeName, 
+	         ClaimRequestNumber, 
+	         CustomsExceptions, 
+	         TapagNumber, 
+	         Numeral, 
+	         CustomsBranchCode, 
+	         IsSendClaimsRelatedEntity,
+	      }
+
+		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
+        List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
+    
+	    public void PMToPOCO(ClaimsRelatedEntityPM entityPM, ClaimsRelatedEntity entityPOCO)
+        {
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClaimEntityTypeCode))
+            {
+				entityPOCO.ClaimEntityTypeCode = entityPM.ClaimEntityTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClaimEntityNumber))
+            {
+				entityPOCO.ClaimEntityNumber = entityPM.ClaimEntityNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExternalClaimNumber))
+            {
+				entityPOCO.ExternalClaimNumber = entityPM.ExternalClaimNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourtCode))
+            {
+				entityPOCO.CourtCode = entityPM.CourtCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ProceedingNumber))
+            {
+				entityPOCO.ProceedingNumber = entityPM.ProceedingNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsFinancialRefundDemand))
+            {
+				entityPOCO.IsFinancialRefundDemand = entityPM.IsFinancialRefundDemand;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SeconderyClaimEntityCode))
+            {
+				entityPOCO.SeconderyClaimEntityCode = entityPM.SeconderyClaimEntityCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SeconderyClaimEntityID))
+            {
+				entityPOCO.SeconderyClaimEntityID = entityPM.SeconderyClaimEntityID;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClaimAmount))
+            {
+				entityPOCO.ClaimAmount = entityPM.ClaimAmount;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeclarationVersion))
+            {
+				entityPOCO.DeclarationVersion = entityPM.DeclarationVersion;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CommitteeDecisionNumber))
+            {
+				entityPOCO.CommitteeDecisionNumber = entityPM.CommitteeDecisionNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AbandonmentDestructionReferenc))
+            {
+				entityPOCO.AbandonmentDestructionReferenc = entityPM.AbandonmentDestructionReferenc;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WarehouseTypeCode))
+            {
+				entityPOCO.WarehouseTypeCode = entityPM.WarehouseTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClaimExplanation))
+            {
+				entityPOCO.ClaimExplanation = entityPM.ClaimExplanation;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContinuousMessagesTypeCode))
+            {
+				entityPOCO.ContinuousMessagesTypeCode = entityPM.ContinuousMessagesTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClaimRequestNumber))
+            {
+				entityPOCO.ClaimRequestNumber = entityPM.ClaimRequestNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsExceptions))
+            {
+				entityPOCO.CustomsExceptions = entityPM.CustomsExceptions;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TapagNumber))
+            {
+				entityPOCO.TapagNumber = entityPM.TapagNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Numeral))
+            {
+				entityPOCO.Numeral = entityPM.Numeral;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsBranchCode))
+            {
+				entityPOCO.CustomsBranchCode = entityPM.CustomsBranchCode;
+			}
+			}
+
+		public void POCOToPM(ClaimsRelatedEntityPM entityPM, ClaimsRelatedEntity entityPOCO)
+        {
+			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ClaimId))
+            {
+					entityPM.ClaimId = entityPOCO.ClaimId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
+            {
+					entityPM.Tenant = entityPOCO.Tenant;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EntityCounterKey))
+            {
+					entityPM.EntityCounterKey = entityPOCO.EntityCounterKey;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ClaimEntityTypeCode))
+            {
+					entityPM.ClaimEntityTypeCode = entityPOCO.ClaimEntityTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ClaimEntityNumber))
+            {
+					entityPM.ClaimEntityNumber = entityPOCO.ClaimEntityNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExternalClaimNumber))
+            {
+					entityPM.ExternalClaimNumber = entityPOCO.ExternalClaimNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CourtCode))
+            {
+					entityPM.CourtCode = entityPOCO.CourtCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ProceedingNumber))
+            {
+					entityPM.ProceedingNumber = entityPOCO.ProceedingNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsFinancialRefundDemand))
+            {
+					entityPM.IsFinancialRefundDemand = entityPOCO.IsFinancialRefundDemand;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SeconderyClaimEntityCode))
+            {
+					entityPM.SeconderyClaimEntityCode = entityPOCO.SeconderyClaimEntityCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SeconderyClaimEntityID))
+            {
+					entityPM.SeconderyClaimEntityID = entityPOCO.SeconderyClaimEntityID;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ClaimAmount))
+            {
+					entityPM.ClaimAmount = entityPOCO.ClaimAmount;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DeclarationVersion))
+            {
+					entityPM.DeclarationVersion = entityPOCO.DeclarationVersion;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CommitteeDecisionNumber))
+            {
+					entityPM.CommitteeDecisionNumber = entityPOCO.CommitteeDecisionNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AbandonmentDestructionReferenc))
+            {
+					entityPM.AbandonmentDestructionReferenc = entityPOCO.AbandonmentDestructionReferenc;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.WarehouseTypeCode))
+            {
+					entityPM.WarehouseTypeCode = entityPOCO.WarehouseTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ClaimExplanation))
+            {
+					entityPM.ClaimExplanation = entityPOCO.ClaimExplanation;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ContinuousMessagesTypeCode))
+            {
+					entityPM.ContinuousMessagesTypeCode = entityPOCO.ContinuousMessagesTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ClaimRequestNumber))
+            {
+					entityPM.ClaimRequestNumber = entityPOCO.ClaimRequestNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomsExceptions))
+            {
+					entityPM.CustomsExceptions = entityPOCO.CustomsExceptions;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TapagNumber))
+            {
+					entityPM.TapagNumber = entityPOCO.TapagNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Numeral))
+            {
+					entityPM.Numeral = entityPOCO.Numeral;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomsBranchCode))
+            {
+					entityPM.CustomsBranchCode = entityPOCO.CustomsBranchCode;
+            }
+
+		}
+
+		public void PMToOldPM(ClaimsRelatedEntityPM entityPM, ClaimsRelatedEntityPM oldEntityPM)
+        {
+		     oldEntityPM.ChangedProperties.Clear();
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+                oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClaimEntityTypeCode))
+            {
+                oldEntityPM.ClaimEntityTypeCode = entityPM.ClaimEntityTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClaimEntityNumber))
+            {
+                oldEntityPM.ClaimEntityNumber = entityPM.ClaimEntityNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExternalClaimNumber))
+            {
+                oldEntityPM.ExternalClaimNumber = entityPM.ExternalClaimNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourtCode))
+            {
+                oldEntityPM.CourtCode = entityPM.CourtCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ProceedingNumber))
+            {
+                oldEntityPM.ProceedingNumber = entityPM.ProceedingNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsFinancialRefundDemand))
+            {
+                oldEntityPM.IsFinancialRefundDemand = entityPM.IsFinancialRefundDemand;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SeconderyClaimEntityCode))
+            {
+                oldEntityPM.SeconderyClaimEntityCode = entityPM.SeconderyClaimEntityCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SeconderyClaimEntityID))
+            {
+                oldEntityPM.SeconderyClaimEntityID = entityPM.SeconderyClaimEntityID;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClaimAmount))
+            {
+                oldEntityPM.ClaimAmount = entityPM.ClaimAmount;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeclarationVersion))
+            {
+                oldEntityPM.DeclarationVersion = entityPM.DeclarationVersion;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CommitteeDecisionNumber))
+            {
+                oldEntityPM.CommitteeDecisionNumber = entityPM.CommitteeDecisionNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AbandonmentDestructionReferenc))
+            {
+                oldEntityPM.AbandonmentDestructionReferenc = entityPM.AbandonmentDestructionReferenc;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WarehouseTypeCode))
+            {
+                oldEntityPM.WarehouseTypeCode = entityPM.WarehouseTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClaimExplanation))
+            {
+                oldEntityPM.ClaimExplanation = entityPM.ClaimExplanation;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContinuousMessagesTypeCode))
+            {
+                oldEntityPM.ContinuousMessagesTypeCode = entityPM.ContinuousMessagesTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClaimRequestNumber))
+            {
+                oldEntityPM.ClaimRequestNumber = entityPM.ClaimRequestNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsExceptions))
+            {
+                oldEntityPM.CustomsExceptions = entityPM.CustomsExceptions;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TapagNumber))
+            {
+                oldEntityPM.TapagNumber = entityPM.TapagNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Numeral))
+            {
+                oldEntityPM.Numeral = entityPM.Numeral;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsBranchCode))
+            {
+                oldEntityPM.CustomsBranchCode = entityPM.CustomsBranchCode;
+            }
+			
+		}
+
+	    public void EncodeBase64NVARCHARFields(ClaimsRelatedEntityPM entityPM)
+        {
+            if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
+            {
+                return;
+
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.ClaimExplanation)) //T4 find type == nText 
+            {
+                entityPM.ClaimExplanation = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ClaimExplanation));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.CustomsExceptions)) //T4 find type == nText 
+            {
+                entityPM.CustomsExceptions = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CustomsExceptions));
+            }
+            entityPM.EncodeBase64NVARCHARFieldsBy=null;
+		}
+
+
+	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
+        {
+            CustomMappedPOCOProperties.Add(pocoPropertyName);
+        }
+
+        public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
+        {
+            CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+			  
+   }
+}
+	 

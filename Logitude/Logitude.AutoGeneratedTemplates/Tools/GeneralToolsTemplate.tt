@@ -1,0 +1,109 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ Assembly Name="System.Xml.dll" #>
+<#@ Assembly Name="System.Xml.Linq.dll" #>
+ 
+<#@ Assembly Name="Microsoft.CSharp.dll" #>
+<#@ Assembly Name="System.Linq.dll" #> 
+<#@ Assembly name="$(SolutionDir)General\Dlls\AmazedSaint.Elastic.dll" #>
+<#@ Import Namespace="System.Xml" #>
+<#@ Import Namespace="System.Xml.Linq" #>
+<#@ Import Namespace="System.Linq" #>
+<#@ Import Namespace="AmazedSaint.Elastic" #>
+<#@ Import Namespace="AmazedSaint.Elastic.Lib" #>
+<#@ output extension=".cs" #>
+<#@ import Namespace="System.Collections.Generic" #>
+<#@ import Namespace="System.IO" #>
+<#@ import Namespace="System.Windows" #> 
+ <#@ include file="..\AutoGeneratorsMetaData\Manager.ttinclude" #>
+<#  #>
+
+<#
+
+	#>// General Tools<#+
+#>
+
+
+
+<#+
+
+  public string GetDotNetDataType(dynamic field)
+        {
+			
+			string typecode = field.FieldsDataType.ToString().Trim('"') as string;
+			string result = "string";
+            if (typecode == "Boolean")
+            {
+                result = "bool";
+            }
+            if (typecode == "Integer" || typecode == "UnsInteger")
+            {
+                result = "int";
+            }
+
+            if (typecode == "Date" || typecode == "DateTime")
+            {
+                result = "DateTime";
+            }
+
+            if (typecode == "Double" || typecode == "SigDouble")
+            {
+                result = "double";
+            }
+
+			 if (typecode == "Decimal" || typecode == "UnsDecimal")
+            {
+                result = "decimal";
+            }
+			if(typecode == "List")
+            {
+				result = typecode;
+            }
+
+            
+          string isNullable = field.IsNullable as string;
+		  if(isNullable == "true" && result != "string")
+		  {
+			  result = result + "?";
+          }
+
+		  return result;
+
+        }
+
+
+
+public void SaveFileOutput(string outputFileName)
+  {
+      string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
+      string outputFilePath = Path.Combine(templateDirectory, outputFileName);
+	
+
+	   var manager = Manager.Create(Host, GenerationEnvironment);
+	  manager.CreateTestFile(outputFilePath,this.GenerationEnvironment.ToString().Trim('\n'));
+	  this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
+  }
+
+ public  string FirstCharacterToLower(string str)
+{
+    if (String.IsNullOrEmpty(str) || Char.IsLower(str, 0))
+        return str;
+
+    return Char.ToLowerInvariant(str[0]).ToString() + str.Substring(1);
+}
+
+ public  string FirstCharacterToUpper(string str)
+{
+    if (String.IsNullOrEmpty(str) || Char.IsUpper(str, 0))
+        return str;
+
+    return Char.ToUpperInvariant(str[0]).ToString() + str.Substring(1);
+}
+
+//Create an elastic object
+private dynamic GetXmlDocumentFromFile(string file)
+{
+   var path= Host.ResolvePath(file);
+   return XDocument.Load(path).Root.ToElastic();
+}
+
+#>

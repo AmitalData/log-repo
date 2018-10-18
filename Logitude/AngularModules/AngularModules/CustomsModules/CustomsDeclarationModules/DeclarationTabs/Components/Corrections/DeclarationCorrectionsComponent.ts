@@ -1,0 +1,868 @@
+
+
+declare var window: any;
+import {Component, AfterViewInit, ChangeDetectorRef}  from '@angular/core';
+import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs';
+import {AppTool, ArrayTool, DateTool} from '../../../../../Infrastructure/Tools';
+import {FeatureLocator} from '../../../../../Infrastructure/Utilities/FeatureLocator';
+import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
+import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
+import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {ObservableCollection} from '../../../../../Infrastructure/Utilities/ObservableCollection';
+import {ConfirmWindow} from '../../../../../Controls/Windows/ConfirmWindow';
+import {MessageWindow} from '../../../../../Controls/Windows/MessageWindow';
+import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/ServiceResponse';
+import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
+import {DeclarationDisplayOnlyChecks, DisplayOnlyCheckResult} from '../../../../../Customs/Utilities/DeclarationDisplayOnlyChecks';
+
+import {DeclarationPM} from '../../../../../Customs/EntityPMs/DeclarationPM';
+import {ConsignmentPM} from '../../../../../Customs/EntityPMs/ConsignmentPM';
+import {SupplierInvoicePM} from '../../../../../Customs/EntityPMs/SupplierInvoicePM';
+import {DeclarationErrorView} from '../../../../../Customs/EntityPMs/Extended/DeclarationErrorView';
+import {AmendmentView} from '../../../../../Customs/EntityPMs/Extended/AmendmentView';
+import {GeneralDataView} from '../../../../../Customs/EntityPMs/Extended/GeneralDataView';
+import {DeclarationCorrectionView} from '../../../../../Customs/EntityPMs/Extended/DeclarationCorrectionView';
+import {DeclarationConstraintPM} from '../../../../../Customs/EntityPMs/DeclarationConstraintPM';
+import {DeclarationEventManager} from '../../../../../Customs/Utilities/DeclarationEventManager';
+
+import {DeclarationWebService} from '../../../../../Customs/Services/WebServices/DeclarationWebService';
+import {DeclarationPMService} from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
+import {ConstraintApprovalRequestParams} from '../../../../../Customs/DataContract/RequestParams/ConstraintApprovalRequestParams';
+
+// Send Request
+import {INF_MSG_GenericResponseData} from '../../../../../Customs/DataContract/ResponseData/INF_MSG_GenericResponseData';
+import {VendorCommunicationResult} from '../../../../../Customs/DataContract/ResponseData/VendorCommunicationResult';
+import {VendorInsertUpdateDeleteMessageRequestParams, OperationTypes} from '../../../../../Customs/DataContract/RequestParams/VendorInsertUpdateDeleteMessageRequestParams';
+import { CustomMessageProgressComponent } from '../../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
+import {DeclarationMessagesService} from '../../../../../Customs/Services/WebServices/DeclarationMessagesService';
+import {SendRequestVIA} from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
+import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
+
+@Component({
+    moduleId: module.id,
+    templateUrl: '././DeclarationCorrectionsComponent.html',
+})
+
+export class DeclarationCorrectionsComponent extends BaseComponent {
+    public EntityPM: DeclarationPM;
+    public ObjectTableName: string = "Customs.Declaration";
+    public DataContext: any = this;
+    public CurrentEditComponentId: string;
+    public IsDisplayOnly: boolean = false;
+    public DisplayOnlyMessage: string = "";
+    public IsNoAmendmentsMsgVisible: boolean = false;
+    ResponseData: INF_MSG_GenericResponseData;
+
+    //Grids data
+    AdditionalInformationlist: ObservableCollection = new ObservableCollection([]);
+    AmendmentViewsList: ObservableCollection = new ObservableCollection([]);
+
+    //Services
+    private declarationWebService: DeclarationWebService = new DeclarationWebService;
+    private declarationMessagesService: DeclarationMessagesService = new DeclarationMessagesService;
+    private declarationPMService: DeclarationPMService = new DeclarationPMService;
+
+    constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService) {
+        super();
+
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe(response => {
+                this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsCondition").subscribe(response => {
+                    this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe(response => {
+                        this.EntityPM = this.entityArgs.EntityPM;
+                        this.ObjectTableName = this.entityArgs.ObjectTableName;
+                        this.Listen();
+
+                        console.log("Declaration", this.EntityPM);
+
+                        this.ReloadDeclarationCorrection();
+
+                        //this.DisplayOnlyCheck();
+                    });
+                });
+            });
+        });
+
+        ////Disable fields
+        //if (this.IsDisplayOnly) {
+        //    this.SetScreenFieldsEditability();
+        //}
+
+    }
+
+    private Listen() {
+        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+
+            this.CurrentEditComponentId = SessionLocator.CurrentSession.CurrentEditComponent.ComponentId;
+
+            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    }
+                })
+            );
+
+            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                    if (isLoadSuccess) {
+                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        //this.DisplayOnlyCheck();
+                    }
+                })
+            );
+            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+            SessionLocator.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+                if (this.CurrentEditComponentId == SessionLocator.CurrentSession.CurrentEditComponent.ComponentId) {
+                    if (tabCode == "DCCR") {
+                        //this.DisplayOnlyCheck();
+                    }
+                }
+                })
+            );;
+        }
+    }
+    RefreshEntity() {
+        SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.ResetMustRefresh();
+        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+    }
+
+    //#region Get screen DATA
+    SelectedGeneralIndex: number;
+    GeneralData: GeneralDataView[] = [];
+    ReloadDeclarationCorrection() {
+        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+
+        //[1] GetDeclarationCorrections();
+        this.declarationWebService.GetDeclarationCorrection(this.EntityPM.Id).subscribe((myServiceResponse: ServiceResponse) => {
+                console.log("[Response] GetDeclarationConstraints : ", myServiceResponse.Result);
+                var res: DeclarationCorrectionView = myServiceResponse.Result;
+
+                if (!AppTool.IsNullOrEmpty(res)) {
+
+                    this.GeneralData = [];
+                    var amendmentViewsList = [];
+
+                    //sort data
+                    var data = res.GeneralDataViews ? res.GeneralDataViews.sort((a, b) => { return (a.Version < b.Version) ? 1 : -1 }) : null
+
+                    //build version list
+                    this.BuildGeneralData(data); 
+
+                    // select amendment for the first version
+                    var general = this.GeneralData[0];
+                    this.AmendmentViewsList = new ObservableCollection([]);
+                    this.AdditionalInformationlist.InsertCollection(general.AdditionalInformation);
+                    general.AmendmentViews.forEach(el => {
+                        amendmentViewsList.push(el);
+                    });
+
+                    this.AmendmentViewsList.InsertCollection(amendmentViewsList);
+
+                    this.GetResources(this.AmendmentViewsList.Collection);
+
+                } else {
+                    this.IsNoAmendmentsMsgVisible = true;
+                }
+                SessionLocator.CurrentSession.StopBusyIndicator();
+
+            });
+    }
+
+    BuildGeneralData(data: GeneralDataView[]) {
+        if (data) {
+
+            var dateStr = TextCodeTranslator.Translate("Customs.Declaration.O.Date");
+            var timeStr = TextCodeTranslator.Translate("Customs.Declaration.O.Time");
+            var versionStr = TextCodeTranslator.Translate("Customs.Declaration.O.Version");
+
+            this.VersionsList = [];
+
+            data.forEach(el => {
+                this.GeneralData.push(el);
+
+                var myFormats = DateTool.GetDateFormats(el.CorrectionDate);
+                var dateValue = myFormats.ShortDateString;
+                var timeValue = myFormats.ShortTimeString;
+
+                this.VersionsList.push(dateStr + ' ' + dateValue + ' ' + timeStr + ' ' + timeValue + ' ' + versionStr + ' ' + el.Version);
+                this.SelectedVersion = this.VersionsList[0];
+            });
+        } else {
+            console.log("No data to build versions list!!!!", data);
+        }
+    }
+
+    GeneralDataSelectionChanged(selectedIndex: number) {
+        var selectedGeneral = this.GeneralData[selectedIndex]; // new selected version
+
+        this.AmendmentViewsList = new ObservableCollection([]);
+        this.AdditionalInformationlist.InsertCollection(selectedGeneral.AdditionalInformation);
+        selectedGeneral.AmendmentViews.forEach(el => {
+            this.AmendmentViewsList.Insert(el);
+        });
+
+        this.GetResources(this.AmendmentViewsList.Collection);
+    }
+    //#endregion
+
+    //#region Version DDL
+    VersionsList: string[] = [];
+    public SelectedVersion: string = '';
+    FilterItemClicked(itemValue: string) {
+        if (this.SelectedVersion != itemValue) {
+            this.SelectedVersion = itemValue;
+
+            this.GeneralDataSelectionChanged(this.VersionsList.indexOf(this.SelectedVersion));
+        }
+    }
+    //#endregion
+
+    OpenAmendment(amendment) {
+        console.log("open amendment: ", amendment);
+        //selectedLine = amendment;
+
+        this.EditEntity(amendment);
+
+    }
+
+
+    EditEntity(amendmentView: AmendmentView) {
+
+
+        if (AppTool.IsNullOrEmpty(amendmentView)) {
+            console.warn("[!] There is no Amendment View!");
+        } else {
+            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            switch (amendmentView.EntityName.toLowerCase()) {
+
+                case "declaration":
+                case "consignment":
+                    {
+                        var logWindow = new LogitudeWindow();
+                        logWindow.Width = 1000;
+                        logWindow.Height = 700;
+                        logWindow.ShowCloseButton = true;
+                        logWindow.Title = this.GetEditedScreenTitle(amendmentView.EntityName, amendmentView);
+                        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/General/DeclarationGeneralComponent');
+                        logWindow.WindowArgs = {
+                            AmendmentView: amendmentView,
+                            entityArgs: this.entityArgs,
+                            entityPM: this.EntityPM,
+                            IsDisplayOnly: this.IsDisplayOnly,
+                        };
+                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        break;
+                    }
+
+                case "supplierinvoice": {
+
+                    this.declarationWebService
+                        .GetSupplierInvoiceBySequenceNumber(this.EntityPM.Id, +amendmentView.LineNumber, 0, 500)
+                        .subscribe((response: ServiceResponse) => {
+                            console.log("[Response] GetSupplierInvoiceBySequenceNumber: ", response);
+
+
+                            var supplierInvoicePM = response.Result;
+
+
+                            if (!AppTool.IsNullOrEmpty(supplierInvoicePM)) {
+
+                                SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                                var windowArgs: any = {};
+                                windowArgs.EntityPM = supplierInvoicePM;
+                                windowArgs.declarationPM = this.EntityPM;
+                                windowArgs.AmendmentView = amendmentView;
+
+                                var logWindow = new LogitudeWindow();
+                                logWindow.Width = 1030;
+                                logWindow.Height = 600;
+
+                                if (!AppTool.IsNullOrEmpty(supplierInvoicePM.InvoiceNumber) && !AppTool.IsNullOrEmpty(this.EntityPM.DeclarationNumber)) {
+                                    logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice") + " " + supplierInvoicePM.InvoiceNumber + "-" + this.EntityPM.DeclarationNumber;
+
+                                }
+                                else if (AppTool.IsNullOrEmpty(supplierInvoicePM.InvoiceNumber) && !AppTool.IsNullOrEmpty(this.EntityPM.DeclarationNumber)) {
+                                    logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice") + " " + this.EntityPM.DeclarationNumber;
+
+                                }
+                                else if (!AppTool.IsNullOrEmpty(supplierInvoicePM.InvoiceNumber) && AppTool.IsNullOrEmpty(this.EntityPM.DeclarationNumber)) {
+                                    logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice") + " " + supplierInvoicePM.InvoiceNumber;
+
+                                }
+                                else if (AppTool.IsNullOrEmpty(supplierInvoicePM.InvoiceNumber) && AppTool.IsNullOrEmpty(this.EntityPM.DeclarationNumber)) {
+                                    logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice");
+
+                                }
+                                windowArgs.IsDisplayOnly = this.IsDisplayOnly;
+                                logWindow.ShowCloseButton = false;
+                                logWindow.WindowArgs = windowArgs;
+                                logWindow.Title = this.GetEditedScreenTitle(amendmentView.EntityName, amendmentView);
+                                logWindow.WindowClosed.subscribe(($event: any) => {
+
+                                });
+                              logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/AddEditSupplierInvoiceComponent');
+                                SessionLocator.CurrentSession.StopBusyIndicator();
+
+                            }
+                            else {
+                                SessionLocator.CurrentSession.StopBusyIndicator();
+                                var window = new MessageWindow();
+                                window.Show("There is no invoice with such key in this declaration!!");
+                            }
+                        });
+
+                    break;
+                }
+
+                case "supplierinvoiceitem":
+                    {
+                        if (AppTool.IsNullOrEmpty(amendmentView.LineNumber)) {
+                            console.log("No line number", amendmentView);
+                            return;
+                        }
+                        var lines = amendmentView.LineNumber.split(',');
+
+                        var invSequence = +lines[0];
+                        var itemSequence = +lines[1];
+
+                        this.declarationWebService
+                            .GetSupplierInvoiceWithItemBySequenceNumber(this.EntityPM.Id, invSequence, itemSequence, 0, 500)
+                            .subscribe((response: ServiceResponse) => {
+                                console.log("[Response] GetSupplierInvoiceWithItemBySequenceNumber: ", response);
+
+
+                                var supplierInvoicePM = response.Result;
+
+
+                                if (!AppTool.IsNullOrEmpty(supplierInvoicePM)) {
+
+                                    SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                                    var windowArgs: any = {};
+                                    windowArgs.EntityPM = supplierInvoicePM;
+                                    windowArgs.declarationPM = this.EntityPM;
+                                    windowArgs.AmendmentView = amendmentView;
+
+                                    var logWindow = new LogitudeWindow();
+                                    logWindow.Width = 1030;
+                                    logWindow.Height = 600;
+
+                                    if (!AppTool.IsNullOrEmpty(supplierInvoicePM.InvoiceNumber) && !AppTool.IsNullOrEmpty(this.EntityPM.DeclarationNumber)) {
+                                        logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice") + " " + supplierInvoicePM.InvoiceNumber + "-" + this.EntityPM.DeclarationNumber;
+
+                                    }
+                                    else if (AppTool.IsNullOrEmpty(supplierInvoicePM.InvoiceNumber) && !AppTool.IsNullOrEmpty(this.EntityPM.DeclarationNumber)) {
+                                        logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice") + " " + this.EntityPM.DeclarationNumber;
+
+                                    }
+                                    else if (!AppTool.IsNullOrEmpty(supplierInvoicePM.InvoiceNumber) && AppTool.IsNullOrEmpty(this.EntityPM.DeclarationNumber)) {
+                                        logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice") + " " + supplierInvoicePM.InvoiceNumber;
+
+                                    }
+                                    else if (AppTool.IsNullOrEmpty(supplierInvoicePM.InvoiceNumber) && AppTool.IsNullOrEmpty(this.EntityPM.DeclarationNumber)) {
+                                        logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice");
+
+                                    }
+                                    windowArgs.IsDisplayOnly = this.IsDisplayOnly;
+                                    logWindow.ShowCloseButton = false;
+                                    logWindow.WindowArgs = windowArgs;
+                                    logWindow.Title = this.GetEditedScreenTitle(amendmentView.EntityName, amendmentView);
+                                    SessionLocator.CurrentSession.StopBusyIndicator();
+
+                                  logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/AddEditSupplierInvoiceComponent');
+                                    SessionLocator.CurrentSession.StopBusyIndicator();
+
+                                }
+                                else {
+                                    SessionLocator.CurrentSession.StopBusyIndicator();
+                                    var window = new MessageWindow();
+                                    window.Show("There is no invoice with such key in this declaration!!");
+                                }
+                            });
+
+                        break;
+                    }
+
+                case "supplierinvioceitemscertificate":
+                    {
+                        if (AppTool.IsNullOrEmpty(amendmentView.LineNumber)) {
+                            console.log("No line number", amendmentView);
+                            return;
+                        }
+                        var lines = amendmentView.LineNumber.split(',');
+
+                        var invSequence = +lines[0];
+                        var itemSequence = +lines[1];
+
+                        this.declarationWebService
+                            .GetSupplierInvoiceWithItemBySequenceNumber(this.EntityPM.Id, invSequence, itemSequence, 0, 500)
+                            .subscribe((response: ServiceResponse) => {
+                                console.log("[Response] GetSupplierInvoiceWithItemBySequenceNumber: ", response);
+
+
+                                var supplierInvoicePM: SupplierInvoicePM = response.Result;
+
+                                if (!AppTool.IsNullOrEmpty(supplierInvoicePM)) {
+
+                                    SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+
+                                    var invoiceItem = supplierInvoicePM.SupplierInvoiceItems.find(d => d.SequenceNumeric == amendmentView.ParentLine);
+
+                                    if (!AppTool.IsNullOrEmpty(invoiceItem)) {
+
+                                        // open certificate
+                                        var windowArgs: any = {};
+                                        windowArgs.SupplierInvoiceItemPM = invoiceItem;
+                                        windowArgs.AmendmentView = amendmentView;
+                                        windowArgs.IsDisplayOnly = this.IsDisplayOnly;
+                                        windowArgs.InvoiceNumber = supplierInvoicePM.InvoiceNumber;
+                                        windowArgs.SupplierInvoicePM = supplierInvoicePM;
+                                        var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoiceItem");
+
+                                        var logWindow = new LogitudeWindow();
+                                        logWindow.Width = 1000;
+                                        logWindow.Height = 600;
+                                        //if (supplierInvoicePM.ClassificationCode != null) {
+                                        //    logWindow.Title = "אישורים לפרט מכס" + " " + supplierInvoicePM.ClassificationCode;
+                                        //}
+                                        //else {
+                                        //    logWindow.Title = "אישורים לפרט מכס";
+                                        //}
+                                        logWindow.ShowCloseButton = false;
+                                        logWindow.WindowArgs = windowArgs;
+                                        logWindow.Title = this.GetEditedScreenTitle(amendmentView.EntityName, amendmentView);
+                                        SessionLocator.CurrentSession.StopBusyIndicator();
+
+                                      logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/SupplierInvoiceItem/SupplierInvoiceItemCertificatesComponent');
+                                        //end open certificate
+                                    }
+                                    SessionLocator.CurrentSession.StopBusyIndicator();
+
+                                }
+                                else {
+                                    SessionLocator.CurrentSession.StopBusyIndicator();
+                                    var window = new MessageWindow();
+                                    window.Show("There is no invoice with such key in this declaration!!");
+                                }
+                            });
+
+                        break;
+                    }
+
+                default:
+                    {
+                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        var window = new MessageWindow();
+                        window.Show(TextCodeTranslator.Translate("Customs.General.O.WrongEntityName"));
+                        break;
+                    }
+            }
+        }
+    }
+    GetEditedScreenTitle(entityName: string, view: AmendmentView) {
+
+        var title = "";
+        switch (entityName.toLowerCase()) {
+            case "declaration":
+            case "consignment":
+                {
+                    title = TextCodeTranslator.Translate("Customs.Declaration");
+                    break;
+                }
+            case "supplierinvoice":
+                {
+                    var declaration = this.EntityPM;
+                    var supplierInvoicePM = declaration.SupplierInvoices.find(d => d.DeclarationId == declaration.Id && d.SequenceNumeric == view.Line);
+
+                    if (!AppTool.IsNullOrEmpty(supplierInvoicePM.InvoiceNumber) && !AppTool.IsNullOrEmpty(declaration.DeclarationNumber)) {
+                        title = supplierInvoicePM.InvoiceNumber + "-" + declaration.DeclarationNumber + " " + TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice");
+
+                    }
+                    else if ((AppTool.IsNullOrEmpty(supplierInvoicePM.InvoiceNumber) || supplierInvoicePM.InvoiceNumber == "") && !AppTool.IsNullOrEmpty(declaration.DeclarationNumber)) {
+                        title = declaration.DeclarationNumber + " " + TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice");
+
+                    }
+                    if (!AppTool.IsNullOrEmpty(supplierInvoicePM.InvoiceNumber) && (AppTool.IsNullOrEmpty(declaration.DeclarationNumber) || declaration.DeclarationNumber == "")) {
+                        title = supplierInvoicePM.InvoiceNumber + " " + TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice");
+
+                    }
+                    if ((AppTool.IsNullOrEmpty(supplierInvoicePM.InvoiceNumber) || supplierInvoicePM.InvoiceNumber == "") && (AppTool.IsNullOrEmpty(declaration.DeclarationNumber) || declaration.DeclarationNumber == "")) {
+                        title = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice");
+
+                    }
+                    break;
+                }
+            case "supplierinvoiceitem":
+                {
+                    title = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoiceItem");
+                    break;
+                }
+
+            case "supplierinvioceitemscertificate":
+                {
+                    title = TextCodeTranslator.Translate("Customs.Declaration.O.Certificates");
+                    break;
+                }
+        }
+        return title;
+    }
+
+
+    // row selected
+    public SelectedRow: any = null;
+    OnRowSelected(itemComponent: any) {
+        this.SelectedRow = itemComponent;
+    }
+
+    //#region Get resources
+    isResourcesLoaded: boolean = false;
+    arrayLength = 0;
+    GetResources(amendmentArray: any[]) {
+        var tables = [];
+        if (!AppTool.IsNullOrEmpty(amendmentArray)) {
+
+            this.arrayLength = amendmentArray.length;
+            amendmentArray.forEach((el) => {
+                if (!AppTool.IsNullOrEmpty(el.FieldNameTextCode)) {
+
+                    var splittedWords = el.FieldNameTextCode.split('.');
+                    var objectTableName = splittedWords[0] + "." + splittedWords[1];
+
+                    //#region Get resources
+                    if (objectTableName == 'Customs.SupplierInvioceItemsCertificate') {
+                        objectTableName = 'Customs.SupplierInvioceItemCertificat';
+                    }
+                    console.log("Get resources for ===> ", objectTableName);
+                    this.EntityResourceService.getEntityResourceByTableName(objectTableName).subscribe(response => {
+                        if (this.arrayLength != 1) {
+                            this.arrayLength--;
+                        }
+                        else {
+                            //this.LoadConstriantsList(errors);
+                        }
+                    });
+                    //#endregion 
+
+                } else {
+                    this.arrayLength--;
+                    console.log("No FieldNameTextCode", el);
+                }
+            });
+
+        }
+
+    }
+    //#endregion
+
+    //#region XML Errors
+    
+    //EditEntity(amendmentView: DeclarationErrorView) {
+
+
+    //    if (AppTool.IsNullOrEmpty(amendmentView)) {
+    //        console.warn("[!] There is no declaraion error for the constraint!");
+    //    } else {
+    //        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+    //        switch (amendmentView.EntityName.toLowerCase()) {
+
+    //            case "declaration":
+    //            case "consignment":
+    //                {
+    //                        var logWindow = new LogitudeWindow();
+    //                        logWindow.Width = 1000;
+    //                        logWindow.Height = 700;
+    //                        logWindow.ShowCloseButton = true;
+    //                        logWindow.Title = this.GetEditedScreenTitle(amendmentView.EntityName, amendmentView);
+    //                        logWindow.Show('./Customs/Components/Declaration/EditTabs/General/DeclarationGeneralComponent');
+    //                        logWindow.WindowArgs = {
+    //                            DeclarationError: amendmentView,
+    //                            entityArgs: this.entityArgs,
+    //                            entityPM: this.EntityPM,
+    //                            IsDisplayOnly: this.IsDisplayOnly,
+    //                        };
+    //                        SessionLocator.CurrentSession.StopBusyIndicator();
+    //                    break;
+    //                }
+
+    //            case "supplierinvoice": {
+
+    //                this.declarationWebService
+    //                    .GetSupplierInvoiceBySequenceNumber(amendmentView.DeclarationId, +amendmentView.LineNumber, 0, 500)
+    //                    .subscribe((response: ServiceResponse) => {
+    //                        console.log("[Response] GetSupplierInvoiceBySequenceNumber: ", response);
+
+
+    //                        var supplierInvoicePM = response.Result;
+
+
+    //                        if (!AppTool.IsNullOrEmpty(supplierInvoicePM)) {
+
+    //                            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+    //                            var windowArgs: any = {};
+    //                            windowArgs.EntityPM = supplierInvoicePM;
+    //                            windowArgs.declarationPM = this.EntityPM;
+    //                            windowArgs.DeclarationError = amendmentView;
+
+    //                            var logWindow = new LogitudeWindow();
+    //                            logWindow.Width = 1030;
+    //                            logWindow.Height = 600;
+
+    //                            if (!AppTool.IsNullOrEmpty(supplierInvoicePM.InvoiceNumber) && !AppTool.IsNullOrEmpty(this.EntityPM.DeclarationNumber)) {
+    //                                logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice") + " " + supplierInvoicePM.InvoiceNumber + "-" + this.EntityPM.DeclarationNumber;
+
+    //                            }
+    //                            else if (AppTool.IsNullOrEmpty(supplierInvoicePM.InvoiceNumber) && !AppTool.IsNullOrEmpty(this.EntityPM.DeclarationNumber)) {
+    //                                logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice") + " " + this.EntityPM.DeclarationNumber;
+
+    //                            }
+    //                            else if (!AppTool.IsNullOrEmpty(supplierInvoicePM.InvoiceNumber) && AppTool.IsNullOrEmpty(this.EntityPM.DeclarationNumber)) {
+    //                                logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice") + " " + supplierInvoicePM.InvoiceNumber;
+
+    //                            }
+    //                            else if (AppTool.IsNullOrEmpty(supplierInvoicePM.InvoiceNumber) && AppTool.IsNullOrEmpty(this.EntityPM.DeclarationNumber)) {
+    //                                logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice");
+
+    //                            }
+    //                            windowArgs.IsDisplayOnly = this.IsDisplayOnly;
+    //                            logWindow.ShowCloseButton = false;
+    //                            logWindow.WindowArgs = windowArgs;
+    //                            logWindow.Title = this.GetEditedScreenTitle(amendmentView.EntityName, amendmentView);
+    //                            logWindow.WindowClosed.subscribe(($event: any) => {
+
+    //                            });
+    //                            logWindow.Show('./Customs/Components/Declaration/EditTabs/SupplierInvoices/AddEditSupplierInvoiceComponent');
+    //                            SessionLocator.CurrentSession.StopBusyIndicator();
+
+    //                        }
+    //                        else {
+    //                            var window = new MessageWindow();
+    //                            window.Show("There is no invoice with such key in this declaration!!");
+    //                        }
+    //                    });
+
+    //                break;
+    //            }
+
+    //            case "supplierinvoiceitem":
+    //                {
+    //                    if (AppTool.IsNullOrEmpty(amendmentView.LineNumber)) {
+    //                        console.log("No line number", amendmentView);
+    //                        return;
+    //                    }
+    //                    var lines = amendmentView.LineNumber.split(',');
+
+    //                    var invSequence = +lines[0];
+    //                    var itemSequence = +lines[1];
+
+    //                    this.declarationWebService
+    //                        .GetSupplierInvoiceWithItemBySequenceNumber(amendmentView.DeclarationId, invSequence, itemSequence, 0, 500)
+    //                        .subscribe((response: ServiceResponse) => {
+    //                            console.log("[Response] GetSupplierInvoiceWithItemBySequenceNumber: ", response);
+
+
+    //                            var supplierInvoicePM = response.Result;
+
+
+    //                            if (!AppTool.IsNullOrEmpty(supplierInvoicePM)) {
+
+    //                                SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+    //                                var windowArgs: any = {};
+    //                                windowArgs.EntityPM = supplierInvoicePM;
+    //                                windowArgs.declarationPM = this.EntityPM;
+    //                                windowArgs.DeclarationError = amendmentView;
+
+    //                                var logWindow = new LogitudeWindow();
+    //                                logWindow.Width = 1030;
+    //                                logWindow.Height = 600;
+
+    //                                if (!AppTool.IsNullOrEmpty(supplierInvoicePM.InvoiceNumber) && !AppTool.IsNullOrEmpty(this.EntityPM.DeclarationNumber)) {
+    //                                    logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice") + " " + supplierInvoicePM.InvoiceNumber + "-" + this.EntityPM.DeclarationNumber;
+
+    //                                }
+    //                                else if (AppTool.IsNullOrEmpty(supplierInvoicePM.InvoiceNumber) && !AppTool.IsNullOrEmpty(this.EntityPM.DeclarationNumber)) {
+    //                                    logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice") + " " + this.EntityPM.DeclarationNumber;
+
+    //                                }
+    //                                else if (!AppTool.IsNullOrEmpty(supplierInvoicePM.InvoiceNumber) && AppTool.IsNullOrEmpty(this.EntityPM.DeclarationNumber)) {
+    //                                    logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice") + " " + supplierInvoicePM.InvoiceNumber;
+
+    //                                }
+    //                                else if (AppTool.IsNullOrEmpty(supplierInvoicePM.InvoiceNumber) && AppTool.IsNullOrEmpty(this.EntityPM.DeclarationNumber)) {
+    //                                    logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice");
+
+    //                                }
+    //                                windowArgs.IsDisplayOnly = this.IsDisplayOnly;
+    //                                logWindow.ShowCloseButton = false;
+    //                                logWindow.WindowArgs = windowArgs;
+    //                                logWindow.Title = this.GetEditedScreenTitle(amendmentView.EntityName, amendmentView);
+    //                                SessionLocator.CurrentSession.StopBusyIndicator();
+
+    //                                logWindow.Show('./Customs/Components/Declaration/EditTabs/SupplierInvoices/AddEditSupplierInvoiceComponent');
+    //                                SessionLocator.CurrentSession.StopBusyIndicator();
+
+    //                            }
+    //                            else {
+    //                                var window = new MessageWindow();
+    //                                window.Show("There is no invoice with such key in this declaration!!");
+    //                            }
+    //                        });
+
+    //                    break;
+    //                }
+
+    //            case "supplierinvioceitemscertificate":
+    //                {
+    //                    if (AppTool.IsNullOrEmpty(amendmentView.LineNumber)) {
+    //                        console.log("No line number", amendmentView);
+    //                        return;
+    //                    }
+    //                    var lines = amendmentView.LineNumber.split(',');
+
+    //                    var invSequence = +lines[0];
+    //                    var itemSequence = +lines[1];
+
+    //                    this.declarationWebService
+    //                        .GetSupplierInvoiceWithItemBySequenceNumber(amendmentView.DeclarationId, invSequence, itemSequence, 0, 500)
+    //                        .subscribe((response: ServiceResponse) => {
+    //                            console.log("[Response] GetSupplierInvoiceWithItemBySequenceNumber: ", response);
+
+
+    //                            var supplierInvoicePM: SupplierInvoicePM = response.Result;
+
+    //                            if (!AppTool.IsNullOrEmpty(supplierInvoicePM)) {
+
+    //                                SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+
+    //                                var invoiceItem = supplierInvoicePM.SupplierInvoiceItems.find(d => d.SequenceNumeric == amendmentView.ParentLine);
+
+    //                                if (!AppTool.IsNullOrEmpty(invoiceItem)) {
+
+    //                                    // open certificate
+    //                                    var windowArgs: any = {};
+    //                                    windowArgs.SupplierInvoiceItemPM = invoiceItem;
+    //                                    windowArgs.DeclarationError = amendmentView;
+    //                                    windowArgs.IsDisplayOnly = this.IsDisplayOnly;
+    //                                    windowArgs.InvoiceNumber = supplierInvoicePM.InvoiceNumber;
+    //                                    windowArgs.SupplierInvoicePM = supplierInvoicePM;
+    //                                    var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoiceItem");
+
+    //                                    var logWindow = new LogitudeWindow();
+    //                                    logWindow.Width = 1000;
+    //                                    logWindow.Height = 600;
+    //                                    //if (supplierInvoicePM.ClassificationCode != null) {
+    //                                    //    logWindow.Title = "אישורים לפרט מכס" + " " + supplierInvoicePM.ClassificationCode;
+    //                                    //}
+    //                                    //else {
+    //                                    //    logWindow.Title = "אישורים לפרט מכס";
+    //                                    //}
+    //                                    logWindow.ShowCloseButton = false;
+    //                                    logWindow.WindowArgs = windowArgs;
+    //                                    logWindow.Title = this.GetEditedScreenTitle(amendmentView.EntityName, amendmentView);
+    //                                    SessionLocator.CurrentSession.StopBusyIndicator();
+
+    //                                    logWindow.Show('./Customs/Components/Declaration/EditTabs/SupplierInvoices/SupplierInvoiceItem/SupplierInvoiceItemCertificatesComponent');
+    //                                    //end open certificate
+    //                                }
+    //                                SessionLocator.CurrentSession.StopBusyIndicator();
+
+    //                            }
+    //                            else {
+    //                                var window = new MessageWindow();
+    //                                window.Show("There is no invoice with such key in this declaration!!");
+    //                            }
+    //                        });
+
+    //                    break;
+    //                }
+
+    //            default:
+    //                {
+    //                    var window = new MessageWindow();
+    //                    window.Show(TextCodeTranslator.Translate("Customs.General.O.WrongEntityName"));
+    //                    break;
+    //                }
+    //        }
+    //    }
+    //}
+    //ShowXMLErrors(error) {
+    //    //if (!AppTool.IsNullOrEmpty(error.Field)) {
+    //    //    this.UIProperties.SetValidity(error.Field, "Customs.SupplierInvoice", false, error.Description);
+    //    //}
+
+    //    var errors = [];
+    //    if (!AppTool.IsNullOrEmpty(error.Description)) {
+    //        var xmlErrors: any[] = error.Description.split(/,|:/);
+    //        for (var xmlError of xmlErrors) {
+    //            errors.push(xmlError);
+    //        }
+    //        SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+    //        SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
+    //    }
+    //    if (error.EntityName != null) {
+    //        if (error.EntityName.toLowerCase() == "supplierinvoiceitem") {
+    //            //if (OnShowXMLErrors != null) {
+    //            //    OnShowXMLErrors(new OnShowXMLErrorEvenArgs() { SupplierInvoiceItem = InvoiceItemsObslist.Where(d => d.SequenceNumeric == error.Line).FirstOrDefault(), });
+    //            //}
+    //        }
+    //    }
+    //}
+    //GetEditedScreenTitle(entityName: string, amendmentView: DeclarationErrorView) {
+
+    //    var title = "";
+    //    switch (entityName.toLowerCase()) {
+    //        case "declaration":
+    //        case "consignment":
+    //            {
+    //                title = TextCodeTranslator.Translate("Customs.Declaration");
+    //                break;
+    //            }
+    //        case "supplierinvoice":
+    //            {
+    //                var declaration = this.EntityPM;
+    //                var supplierInvoicePM = declaration.SupplierInvoices.find(d => d.DeclarationId == declaration.Id && d.SequenceNumeric == amendmentView.Line);
+
+    //                if (!AppTool.IsNullOrEmpty(supplierInvoicePM.InvoiceNumber) && !AppTool.IsNullOrEmpty(declaration.DeclarationNumber)) {
+    //                    title = supplierInvoicePM.InvoiceNumber + "-" + declaration.DeclarationNumber + " " + TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice");
+
+    //                }
+    //                else if ((AppTool.IsNullOrEmpty(supplierInvoicePM.InvoiceNumber) || supplierInvoicePM.InvoiceNumber == "") && !AppTool.IsNullOrEmpty(declaration.DeclarationNumber)) {
+    //                    title = declaration.DeclarationNumber + " " + TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice");
+
+    //                }
+    //                if (!AppTool.IsNullOrEmpty(supplierInvoicePM.InvoiceNumber) && (AppTool.IsNullOrEmpty(declaration.DeclarationNumber) || declaration.DeclarationNumber == "")) {
+    //                    title = supplierInvoicePM.InvoiceNumber + " " + TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice");
+
+    //                }
+    //                if ((AppTool.IsNullOrEmpty(supplierInvoicePM.InvoiceNumber) || supplierInvoicePM.InvoiceNumber == "") && (AppTool.IsNullOrEmpty(declaration.DeclarationNumber) || declaration.DeclarationNumber == "")) {
+    //                    title = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice");
+
+    //                }
+    //                break;
+    //            }
+    //        case "supplierinvoiceitem":
+    //            {
+    //                title = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoiceItem");
+    //                break;
+    //            }
+
+    //        case "supplierinvioceitemscertificate":
+    //            {
+    //                title = TextCodeTranslator.Translate("Customs.Declaration.O.Certificates");
+    //                break;
+    //            }
+    //    }
+    //    return title;
+    //}
+
+    //#endregion
+
+    GetFieldName(item) {
+        var translation = TextCodeTranslator.Translate(item.FieldNameTextCode);
+        if (AppTool.IsNullOrEmpty(translation)) {
+            return item.Field;
+        }
+        return translation;
+    }
+
+}
+

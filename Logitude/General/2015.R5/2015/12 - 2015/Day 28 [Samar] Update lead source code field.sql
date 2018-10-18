@@ -1,0 +1,1 @@
+update ObjectFields set CanFilter = 0 where FieldName = 'Code' and ObjectTableId = (select Id from ObjectTables where Name = 'LeadSource')

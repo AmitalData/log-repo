@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://tempuri.org/LOGISCHEDULER" elementFormDefault="qualified" targetNamespace="http://tempuri.org/LOGISCHEDULER" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="LOGISCHEDULER">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="LogitudeScheduler" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LogitudeScheduler">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="Request_Code" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Start_Date" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="End_Date" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Param1" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Param2" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="More_Param" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Request_Code" type="xs:string" />
+  <xs:element name="Start_Date" type="xs:string" />
+  <xs:element name="End_Date" type="xs:string" />
+  <xs:element name="Param1" type="xs:string" />
+  <xs:element name="Param2" type="xs:string" />
+  <xs:element name="More_Param" type="xs:string" />
+</xs:schema>

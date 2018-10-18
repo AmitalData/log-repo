@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://tempuri.org/LOGICUSTFILE" elementFormDefault="qualified" targetNamespace="http://tempuri.org/LOGICUSTFILE" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="LOGICUSTFILE">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="LogitudeCustomsFile" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LogitudeCustomsFile">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="CustomFileNo" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="DeclarationOfficeCode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="FileState" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="AgentId" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CustomerId" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="TransportModeId" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CreatedByUserId" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ReferentUserId" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="DepartmentId" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="MAWB" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="DealId" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="HAWB" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ManifestNumber" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="LoadingPortCode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="OriginCountryCode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CargoDescription" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="PackageTypeCode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="PackageMeasureQualifierCode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="PackageQuantity" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="GrossMassMeasure" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="VendorId" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ImporterId" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Tenant" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="GrantDate" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ManifestDate" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ArrivalDateTime" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Mode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="EnglishName" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="HebrewName" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="WarehouseId" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="UnloadportId" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ProcedureCurrentCode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ImporterAddress" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CargoTypeCode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="SecondCargoID" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ThirdCargoID" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="UnloadDate" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="AirlineId" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="EstimatedArrivelDate" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="GatewayPortCode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="OriginPortCode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="IsCourierDeclaration" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CasualSupplierName" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CasualSupplierAddress" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="HAWBDATE" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="COUWTVAL" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CustomFileNo" type="xs:string" />
+  <xs:element name="Id" type="xs:string" />
+  <xs:element name="DeclarationOfficeCode" type="xs:string" />
+  <xs:element name="FileState" type="xs:string" />
+  <xs:element name="AgentId" type="xs:string" />
+  <xs:element name="CustomerId" type="xs:string" />
+  <xs:element name="TransportModeId" type="xs:string" />
+  <xs:element name="CreatedByUserId" type="xs:string" />
+  <xs:element name="ReferentUserId" type="xs:string" />
+  <xs:element name="DepartmentId" type="xs:string" />
+  <xs:element name="MAWB" type="xs:string" />
+  <xs:element name="DealId" type="xs:string" />
+  <xs:element name="HAWB" type="xs:string" />
+  <xs:element name="ManifestNumber" type="xs:string" />
+  <xs:element name="LoadingPortCode" type="xs:string" />
+  <xs:element name="OriginCountryCode" type="xs:string" />
+  <xs:element name="CargoDescription" type="xs:string" />
+  <xs:element name="PackageTypeCode" type="xs:string" />
+  <xs:element name="PackageMeasureQualifierCode" type="xs:string" />
+  <xs:element name="PackageQuantity" type="xs:string" />
+  <xs:element name="GrossMassMeasure" type="xs:string" />
+  <xs:element name="VendorId" type="xs:string" />
+  <xs:element name="ImporterId" type="xs:string" />
+  <xs:element name="Tenant" type="xs:string" />
+  <xs:element name="GrantDate" type="xs:string" />
+  <xs:element name="ManifestDate" type="xs:string" />
+  <xs:element name="ArrivalDateTime" type="xs:string" />
+  <xs:element name="Mode" type="xs:string" />
+  <xs:element name="EnglishName" type="xs:string" />
+  <xs:element name="HebrewName" type="xs:string" />
+  <xs:element name="WarehouseId" type="xs:string" />
+  <xs:element name="UnloadportId" type="xs:string" />
+  <xs:element name="ProcedureCurrentCode" type="xs:string" />
+  <xs:element name="ImporterAddress" type="xs:string" />
+  <xs:element name="CargoTypeCode" type="xs:string" />
+  <xs:element name="SecondCargoID" type="xs:string" />
+  <xs:element name="ThirdCargoID" type="xs:string" />
+  <xs:element name="UnloadDate" type="xs:string" />
+  <xs:element name="AirlineId" type="xs:string" />
+  <xs:element name="EstimatedArrivelDate" type="xs:string" />
+  <xs:element name="GatewayPortCode" type="xs:string" />
+  <xs:element name="OriginPortCode" type="xs:string" />
+  <xs:element name="IsCourierDeclaration" type="xs:string" />
+  <xs:element name="CasualSupplierName" type="xs:string" />
+  <xs:element name="CasualSupplierAddress" type="xs:string" />
+  <xs:element name="HAWBDATE" type="xs:string" />
+  <xs:element name="COUWTVAL" type="xs:string" />
+</xs:schema>

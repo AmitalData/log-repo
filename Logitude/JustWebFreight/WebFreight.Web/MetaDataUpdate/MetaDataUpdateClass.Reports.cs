@@ -1,0 +1,165 @@
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using WebFreight.Web.MetaDataUpdate.AddClasses;
+using WebFreight.Web.MetaDataUpdate.DetailClasses;
+
+namespace WebFreight.Web.MetaDataUpdate
+{
+    public partial class MetaDataUpdateClass
+    {
+        public void LoadDefaultReports()
+        {
+            ReportGroupRepository reportGroupRepository = new ReportGroupRepository(0);
+            Dictionary<string, ReportGroup> TenantReportGroups = reportGroupRepository.GetReportGroups(0).ToDictionary(d => d.Code, a => a);
+
+            ReportGroup statisticsGroup = AddReports.AddReportGroup(new ReportGroupDetails() { Code = "RSTA", EnglishName = "Statistics", LocalName = "Statistics", Tenant = 0, OrderNumber = 0 }, reportGroupRepository, TenantReportGroups);
+            ReportGroup operationalGroup = AddReports.AddReportGroup(new ReportGroupDetails() { Code = "ROPR", EnglishName = "Operational", LocalName = "Operational", Tenant = 0, OrderNumber = 1 }, reportGroupRepository, TenantReportGroups);
+            ReportGroup accountingGroup = AddReports.AddReportGroup(new ReportGroupDetails() { Code = "RACC", EnglishName = "Accounting", LocalName = "Accounting", Tenant = 0, OrderNumber = 3 }, reportGroupRepository, TenantReportGroups);
+            ReportGroup quotesGroup = AddReports.AddReportGroup(new ReportGroupDetails() { Code = "RQUO", EnglishName = "Quotes", LocalName = "Quotes", Tenant = 0, OrderNumber = 2 }, reportGroupRepository, TenantReportGroups);
+            ReportGroup CRMGroup = AddReports.AddReportGroup(new ReportGroupDetails() { Code = "RQCR", EnglishName = "CRM", LocalName = "CRM", Tenant = 0, OrderNumber = 5 }, reportGroupRepository, TenantReportGroups);
+            ReportGroup TFSGroup = AddReports.AddReportGroup(new ReportGroupDetails() { Code = "RTFS", EnglishName = "TFS", LocalName = "TFS", Tenant = 0, OrderNumber = 6 }, reportGroupRepository, TenantReportGroups);
+
+            reportGroupRepository.SubmitChanges();
+
+            FeatureRepository featureRepository = new FeatureRepository(0);
+            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+
+            ReportRepository reportRepository = new ReportRepository(0);
+            Dictionary<string, Report> TenantReports = reportRepository.GetReports(0).ToDictionary(d => d.Code, a => a);
+
+            // Statistics Reports
+            this.LoadReports_Statistics(statisticsGroup, tenantFeatures, reportRepository, TenantReports);
+            this.LoadReports_Operational(operationalGroup, tenantFeatures, reportRepository, TenantReports);
+            this.LoadReports_Accounting(accountingGroup, tenantFeatures, reportRepository, TenantReports);
+            this.LoadReports_Quotes(quotesGroup, tenantFeatures, reportRepository, TenantReports);
+            this.LoadReports_CRM(CRMGroup, tenantFeatures, reportRepository, TenantReports);
+            this.LoadReports_TFS(TFSGroup, tenantFeatures, reportRepository, TenantReports);
+
+            reportRepository.SubmitChanges();
+        }
+
+        private void LoadReports_Statistics(ReportGroup statisticsGroup, List<Feature> tenantFeatures, ReportRepository reportRepository, Dictionary<string, Report> tenantReports)
+        {
+            Feature activityStatusDashboardReportFeature = tenantFeatures.Where(d => d.Code == "ACTIVITYSTATUSDASHBOARD" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature awbReportFeature = tenantFeatures.Where(d => d.Code == "EAWBREPORT" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature bookingReportFeature = tenantFeatures.Where(d => d.Code == "BOOKINGREPORT" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature flightReportFeature = tenantFeatures.Where(d => d.Code == "FLIGHTREPORT" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature iATAStatisticsFeature = tenantFeatures.Where(d => d.Code == "IATASTATISTICS" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature participantsReportFeature = tenantFeatures.Where(d => d.Code == "ACTIVEPARTICIPANTS" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature statisticsByAgentReportFeature = tenantFeatures.Where(d => d.Code == "STATISTICSBYAGENT" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature statisticsByAirlineFeature = tenantFeatures.Where(d => d.Code == "STATISTICSBYAIRLINE" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature statisticsByCustomerFeature = tenantFeatures.Where(d => d.Code == "STATISTICSBYCUSTOMER" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature statisticsByShippingLineFeature = tenantFeatures.Where(d => d.Code == "STATISTICSBYSHIPPINGLINES" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            
+            AddReports.AddReport(new ReportDetails() { Code = "ASDB", Description = "Company Dashboard print", Name = "Company Dashboard print", FilterControlName = "ActivityStatusDashboardFilterControl", Tenant = 0, ReportGroupId = statisticsGroup.Id, FeatureId = activityStatusDashboardReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/ActivityStatusDashboardFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "EWRP", Description = "e-AWBs Report", Name = "e-AWBs Report", FilterControlName = "EAWBFilterControl", Tenant = 0, ReportGroupId = statisticsGroup.Id, FeatureId = awbReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/EAWBFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "EBRP", Description = "e-Booking Report", Name = "e-Booking Report", FilterControlName = "BookingFilterControl", Tenant = 0, ReportGroupId = statisticsGroup.Id, FeatureId = bookingReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/BookingFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "FBRP", Description = "Flight Booking List", Name = "Flight Booking List", FilterControlName = "FlightBookingFilterControl", Tenant = 0, ReportGroupId = statisticsGroup.Id, FeatureId = flightReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/FlightBookingFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "RITS", Description = "IATA Statistics", Name = "IATA Statistics", FilterControlName = "IATAStatisticsFilterControl", Tenant = 0, ReportGroupId = statisticsGroup.Id, FeatureId = iATAStatisticsFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/IATAStatisticsFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "PUAC", Description = "Participants Users Activities", Name = "Participants Users Activities", FilterControlName = "ParticipantsUsersActivitiesFilterControl", Tenant = 0, ReportGroupId = statisticsGroup.Id, FeatureId = participantsReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/ParticipantsUsersActivitiesFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "SBAG", Description = "Statistics by Agent", Name = "Statistics by Agent", FilterControlName = "StatisticsByAgentFilterControl", Tenant = 0, ReportGroupId = statisticsGroup.Id, FeatureId = statisticsByAgentReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/StatisticsByAgentFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "RALS", Description = "Statistics by Airline", Name = "Statistics by Airline", FilterControlName = "CarrierStatisticsFilterControl", Tenant = 0, ReportGroupId = statisticsGroup.Id, FeatureId = statisticsByAirlineFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/CarrierStatisticFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "RCLS", Description = "Statistics by Customer", Name = "Statistics by Customer", FilterControlName = "StatisticsByCustomerFilterControl", Tenant = 0, ReportGroupId = statisticsGroup.Id, FeatureId = statisticsByCustomerFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/StatisticsByCustomerFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "RSLS", Description = "Statistics by Shipping Lines", Name = "Statistics by Shipping Lines", FilterControlName = "CarrierStatisticsFilterControl", Tenant = 0, ReportGroupId = statisticsGroup.Id, FeatureId = statisticsByShippingLineFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/CarrierStatisticFilterComponent" }, reportRepository, tenantReports);
+        }
+        private void LoadReports_Operational(ReportGroup operationalGroup, List<Feature> tenantFeatures, ReportRepository reportRepository, Dictionary<string, Report> tenantReports)
+        {
+            Feature cassReportFeature = tenantFeatures.Where(d => d.Code == "CASSREPORT" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature containerDetailsVoyageReportFeature = tenantFeatures.Where(d => d.Code == "CONTAINERDETAILSBYVOYAGE" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature containerTruckingReportFeature = tenantFeatures.Where(d => d.Code == "CONTAINERTRUCKINGREPORT" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature OceanInsightRequestReportFeature = tenantFeatures.Where(d => d.Code == "OCEANINSIGHTREQUESTSREPORT" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature oceanShipmentReportFeature = tenantFeatures.Where(d => d.Code == "OCEANSHIPMENTREPORT" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature profitByShipmentStatisticsFeature = tenantFeatures.Where(d => d.Code == "PROFITBYSHIPMENTSTATISTICS" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature inventoryReportFeature = tenantFeatures.Where(d => d.Code == "INVENTORYREPORT" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature openShipmentByCustomerReportFeature = tenantFeatures.Where(d => d.Code == "OPENSHIPMENTBYCUSTOMER" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature licenseManagementFeature = tenantFeatures.Where(d => d.Code == "LICENSEMANAGEMENTREPORT" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+
+            AddReports.AddReport(new ReportDetails() { Code = "CASS", Description = "CASS Report", Name = "CASS Report", FilterControlName = "CASSReportFilterControl", Tenant = 0, ReportGroupId = operationalGroup.Id, FeatureId = cassReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/CASSReportFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "CODT", Description = "Container Details by Voyage", Name = "Container Details by Voyage", FilterControlName = "ContainerDetailsVoyageFilterControl", Tenant = 0, ReportGroupId = operationalGroup.Id, FeatureId = containerDetailsVoyageReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/ContainerDetailsVoyageFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "COTR", Description = "Container Trucking", Name = "Container Trucking", FilterControlName = "ContainerTruckingFilterControl", Tenant = 0, ReportGroupId = operationalGroup.Id, FeatureId = containerTruckingReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/ContainerTruckingFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "OIRQ", Description = "Ocean Insight Requests", Name = "Ocean Insight Requests", FilterControlName = "OceanInsightsFilterControl", Tenant = 0, ReportGroupId = operationalGroup.Id, FeatureId = OceanInsightRequestReportFeature.Id, FilterHtmlComponentUrl = null }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "OCRP", Description = "Ocean Shipment Report", Name = "Ocean Shipment Report to Client", FilterControlName = "OceanShipmentReportFilterControl", Tenant = 0, ReportGroupId = operationalGroup.Id, FeatureId = oceanShipmentReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/OceanShipmentReportFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "RPRS", Description = "Profit by Shipment Statistics", Name = "Profit by Shipment Statistics", FilterControlName = "ProfitByShipmentFilterControl", Tenant = 0, ReportGroupId = operationalGroup.Id, FeatureId = profitByShipmentStatisticsFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/ProfitByShipmentFilterConmponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "INVN", Description = "Inventory Report", Name = "Inventory Report", FilterControlName = "InventoryReportFilterControl", Tenant = 0, ReportGroupId = operationalGroup.Id, FeatureId = inventoryReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/InventoryReportFilterConmponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "OSBC", Description = "Open Shipments by Customer", Name = "Open Shipments by Customer", FilterControlName = "OpenShipmentsByCustomerFilterControl", Tenant = 0, ReportGroupId = operationalGroup.Id, FeatureId = openShipmentByCustomerReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/OpenShipmentsByCustomerFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "LICM", Description = "License Management", Name = "License Managements", FilterControlName = "LicenseManagementFilterControl", Tenant = 0, ReportGroupId = operationalGroup.Id, FeatureId = licenseManagementFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/Operational/LicenseManagementFilterComponent" }, reportRepository, tenantReports);
+        }
+        private void LoadReports_Accounting(ReportGroup accountingGroup, List<Feature> tenantFeatures, ReportRepository reportRepository, Dictionary<string, Report> tenantReports)
+        {
+            Feature accountingLedgerFeature = tenantFeatures.Where(d => d.Code == "ACCOUNTINGLEDGER" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature agedAccountsReceivableFeature = tenantFeatures.Where(d => d.Code == "AGEDACCOUNTSRECIEVABLES" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature aPInvoiceIncludeVATFeature = tenantFeatures.Where(d => d.Code == "APINVOICEINCLUDEVAT" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature aRInvoiceIncludeVATFeature = tenantFeatures.Where(d => d.Code == "ARINVOICEINCLUDEVAT" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature aRInvoiceIncludeVATRoutingsFeature = tenantFeatures.Where(d => d.Code == "ARINVOICEINCLUDEVATROUTINGS" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature aRInvoiceBankDepositFeature = tenantFeatures.Where(d => d.Code == "ARINVOICEBANKDEPOSIT" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature shipmentAnalysisReportFeature = tenantFeatures.Where(d => d.Code == "SHIPMENTANALYSIS" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature statementFeature = tenantFeatures.Where(d => d.Code == "STATEMENT" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature statementByInvoiceDateFeature = tenantFeatures.Where(d => d.Code == "STATEMENTBYINVOICEDATE" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature invoicesByPartnerFeature = tenantFeatures.Where(d => d.Code == "INVOICEBYPARTNER" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature feature_ArchivoExportado = tenantFeatures.Where(d => d.Code == "Report.Features.ArchivoExportado" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature feature_AccAgingReport = tenantFeatures.Where(d => d.Code == "Report.Features.AccAgingReport" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature shipmentAnalysisTotalsReportFeature = tenantFeatures.Where(d => d.Code == "SHIPMENTANALYSISTOTALS" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature revenueEexpenseReportFeature = tenantFeatures.Where(d => d.Code == "REVEXP" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature trailBalanceReportFeature = tenantFeatures.Where(d => d.Code == "TRAIL" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+
+            AddReports.AddReport(new ReportDetails() { Code = "RACL", Description = "Accounting Ledger", Name = "Accounting Ledger", FilterControlName = "AccountingLedgerFilterControl", Tenant = 0, ReportGroupId = accountingGroup.Id, FeatureId = accountingLedgerFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/AccountingLedgerFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "RAAR", Description = "AgedAccountsReceivable", Name = "Aging report - Statement summarized", FilterControlName = "AgedAccountsReceivableFilterControl", Tenant = 0, ReportGroupId = accountingGroup.Id, FeatureId = agedAccountsReceivableFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/AgedAccountsReceivableFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "RAPI", Description = "AP Invoice include VAT", Name = "AP Invoice include VAT", FilterControlName = "InvoicesFilterControl", Tenant = 0, ReportGroupId = accountingGroup.Id, FeatureId = aPInvoiceIncludeVATFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/InvoicesFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "RINV", Description = "Invoices", Name = "AR Invoice include VAT", FilterControlName = "InvoicesFilterControl", Tenant = 0, ReportGroupId = accountingGroup.Id, FeatureId = aRInvoiceIncludeVATFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/InvoicesFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "INVR", Description = "Invoices", Name = "AR Invoice include VAT and Routings", FilterControlName = "InvoicesRoutingsFilterControl", Tenant = 0, ReportGroupId = accountingGroup.Id, FeatureId = aRInvoiceIncludeVATRoutingsFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/Accounting/InvoicesRoutingsFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "ARID", Description = "Bank Deposit Report", Name = "Bank Deposit ", FilterControlName = "ARInvoicesDepositReportFilterControl", Tenant = 0, ReportGroupId = accountingGroup.Id, FeatureId = aRInvoiceBankDepositFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/ARInvoicesDepositReportFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "SCHA", Description = "Shipment Charges Analysis", Name = "Shipment Charges Analysis", FilterControlName = "ShipmentChargesAnalysisFilterControl", Tenant = 0, ReportGroupId = accountingGroup.Id, FeatureId = shipmentAnalysisReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/ShipmentChargesAnalysisFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "RSTA", Description = "Statement", Name = "Statement", FilterControlName = "StatementFilterControl", Tenant = 0, ReportGroupId = accountingGroup.Id, FeatureId = statementFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/StatementFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "RSID", Description = "Statement by Invoice Date", Name = "Statement by Invoice Date", FilterControlName = "StatementByInvoiceDateFilterControl", Tenant = 0, ReportGroupId = accountingGroup.Id, FeatureId = statementByInvoiceDateFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/StatementByInvoiceDateFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "RIBP", Description = "InvoicesByPartner", Name = "Unpaid Invoices", FilterControlName = "InvoicesByPartnerFilterControl", Tenant = 0, ReportGroupId = accountingGroup.Id, FeatureId = invoicesByPartnerFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/InvoicesByPartnerFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "AREX", Description = "Archivo Exportado", Name = "Archivo Exportado", FilterControlName = "ArchivoExportadoFilterControl", Tenant = 0, ReportGroupId = accountingGroup.Id, FeatureId = feature_ArchivoExportado.Id, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/Accounting/ArchivoExportadoComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "AGER", Description = "Accounting Aging Report", Name = "Aging Report",LocalName= "דוח גיול לקוחות", FilterControlName = "AgingFilterControl", Tenant = 0, ReportGroupId = accountingGroup.Id, FeatureId = feature_AccAgingReport.Id, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/Accounting/AgingFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "SCHT", Description = "Shipment Charges Analysis include Totals", Name = "Shipment Charges Analysis include Totals", FilterControlName = "ShipmentChargesAnalysisFilterControl", Tenant = 0, ReportGroupId = accountingGroup.Id, FeatureId = shipmentAnalysisTotalsReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/ShipmentChargesAnalysisFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "REXR", Description = "Profit and loss report", Name = "Profit and loss report", LocalName = "דוח רווח והפסד", FilterControlName = "RevenueExpenseFilterComponent", Tenant = 0, ReportGroupId = accountingGroup.Id, FeatureId = revenueEexpenseReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/RevenueExpenseFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "TRBR", Description = "Trail balance report", Name = "Trail balance report", LocalName = "דוח מאזן בוחן", FilterControlName = "TrailBalanceFiltersComponent", Tenant = 0, ReportGroupId = accountingGroup.Id, FeatureId = trailBalanceReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/TrailBalanceFiltersComponent" }, reportRepository, tenantReports);
+
+        }
+        private void LoadReports_Quotes(ReportGroup quotesGroup, List<Feature> tenantFeatures, ReportRepository reportRepository, Dictionary<string, Report> tenantReports)
+        {
+            Feature quotesFeature = tenantFeatures.Where(d => d.Code == "QUOTESSTATISTICS" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature shipmentProfitVSQuoteEstimateFeature = tenantFeatures.Where(d => d.Code == "Report.Features.ShipmentProfitVSQuoteEstimate" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+
+            AddReports.AddReport(new ReportDetails() { Code = "RQUO", Description = "Quotes Statistics", Name = "Quotes Statistics", FilterControlName = "QuotesFilterControl", Tenant = 0, ReportGroupId = quotesGroup.Id, FeatureId = quotesFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/QuotesFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "SPQS", Description = "Shipment Profit vs. Quote Estimate", Name = "Shipment Profit vs. Quote Estimate", FilterControlName = "ShipmentProfitVSQuoteEstimateFilterControl", Tenant = 0, ReportGroupId = quotesGroup.Id, FeatureId = shipmentProfitVSQuoteEstimateFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/CRM/ShipmentProfitVSQuoteEstimateComponent" }, reportRepository, tenantReports);
+        }
+        private void LoadReports_CRM(ReportGroup cRMGroup, List<Feature> tenantFeatures, ReportRepository reportRepository, Dictionary<string, Report> tenantReports)
+        {
+            Feature approvedOpportunitiesReportFeature = tenantFeatures.Where(d => d.Code == "APPROVEDOPPORTUNITIES" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature customerAdditionalServicesReportFeature = tenantFeatures.Where(d => d.Code == "CUSTOMERADDITIONALSERVICES" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature customerPotentialActualReportFeature = tenantFeatures.Where(d => d.Code == "CUSTOMERPOTENTIALACTUAL" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature expectedIncomeReportFeature = tenantFeatures.Where(d => d.Code == "EXPECTEDINCOMEREPORT" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature monthlyConversionReportFeature = tenantFeatures.Where(d => d.Code == "MONTHLYCONVERSION" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature opportunitiesAdditionalServicesReportFeature = tenantFeatures.Where(d => d.Code == "OPPORTUNITIESSERVICES" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature stageChangingReportFeature = tenantFeatures.Where(d => d.Code == "STAGECHANGINGREPORT" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature prarentTenantReportFeature = tenantFeatures.Where(d => d.Code == "PARENTTENANT" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature usersByTenantReportFeature = tenantFeatures.Where(d => d.Code == "USERSBYTENANTREPORT" && d.FeatureTypeCode == "AREA").FirstOrDefault();            
+
+            AddReports.AddReport(new ReportDetails() { Code = "APOP", Description = "Approved Opportunities: Potential vs. Actual", Name = "Approved Opportunities", FilterControlName = "ApprovedOpportunitiesFilterControl", Tenant = 0, ReportGroupId = cRMGroup.Id, FeatureId = approvedOpportunitiesReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/ApprovedOpportunitiesFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "CUAD", Description = "Customer Additional Services", Name = "Customer Additional Services", FilterControlName = "CustomerAdditionalServicesFilterControl", Tenant = 0, ReportGroupId = cRMGroup.Id, FeatureId = customerAdditionalServicesReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/CustomerAdditionalServicesFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "CUPA", Description = "Customer Potential vs. Actual", Name = "Customer Potential vs. Actual", FilterControlName = "CustomerPotentialActualFilterControl", Tenant = 0, ReportGroupId = cRMGroup.Id, FeatureId = customerPotentialActualReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/CustomerPotentialActualFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "EXIN", Description = "Expected Monthly Income Report", Name = "Expected Monthly Income Report", FilterControlName = "ExpectedIncomeFilterControl", Tenant = 0, ReportGroupId = cRMGroup.Id, FeatureId = expectedIncomeReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/ExpectedIncomeFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "MCOR", Description = "Monthly Conversion Report", Name = "Monthly Conversion Report", FilterControlName = "MonthlyConversionFilterControl", Tenant = 0, ReportGroupId = cRMGroup.Id, FeatureId = monthlyConversionReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/MonthlyConversionFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "OPAS", Description = "Opportunities by Additional Services", Name = "Opportunities by Additional Services", FilterControlName = "OpportunitiesAdditionalServicesFilterControl", Tenant = 0, ReportGroupId = cRMGroup.Id, FeatureId = opportunitiesAdditionalServicesReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/OpportunitiesAdditionalServicesFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "OPSC", Description = "Stage Changing Report", Name = "Stage Changing Report", FilterControlName = "StageChangingFilterControl", Tenant = 0, ReportGroupId = cRMGroup.Id, FeatureId = stageChangingReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/StageChangingFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "PTVC", Description = "Parent vs. Child Tenants", Name = "Parent vs. Child Tenants", FilterControlName = "ParentVsChildTenantsFilterControl", Tenant = 0, ReportGroupId = cRMGroup.Id, FeatureId = prarentTenantReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/CRM/ParentVsChildTenantsComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "UPTR", Description = "Users by Tenant Report", Name = "Users by Tenant Report", FilterControlName = "UsersByTenantReportFilterControl", Tenant = 0, ReportGroupId = cRMGroup.Id, FeatureId = usersByTenantReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/CRM/UsersByTenantReportFilterComponent" }, reportRepository, tenantReports);
+        }
+        private void LoadReports_TFS(ReportGroup tfsGroup, List<Feature> tenantFeatures, ReportRepository reportRepository, Dictionary<string, Report> tenantReports)
+        {
+            Feature timeSheetReportFeature_1 = tenantFeatures.Where(d => d.Code == "EMPLOYEETIMESHEETREPORT" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature timeSheetReportFeature_2 = tenantFeatures.Where(d => d.Code == "WORKDAYSPERPROJECTREPORT" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+
+            AddReports.AddReport(new ReportDetails() { Code = "EMTS", Description = "Employees TimeSheet", Name = "Employees TimeSheet", FilterControlName = "EmployeesTimeSheetFilterControl", Tenant = 0, ReportGroupId = tfsGroup.Id, FeatureId = timeSheetReportFeature_1.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/EmployeeTimeSheetFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "WDTS", Description = "Work Days Per Project", Name = "Work Days Per Project", FilterControlName = "WorkDaysPerProjectControl", Tenant = 0, ReportGroupId = tfsGroup.Id, FeatureId = timeSheetReportFeature_2.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/WorkDaysPerProjectFilterComponent" }, reportRepository, tenantReports);
+        }
+    }
+}

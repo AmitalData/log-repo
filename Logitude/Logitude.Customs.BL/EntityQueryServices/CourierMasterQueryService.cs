@@ -1,0 +1,248 @@
+﻿using Logitude.Customs.Def.EntityPMs;
+using Logitude.Customs.Data;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.Repsitories;
+using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Server.Infrastructure.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Logitude.Customs.BL.EntityQueryServices
+{
+    public partial  class CourierMasterQueryService 
+    {
+        public CourierMasterPM GetSingleCourier(string airlineId, string MAWB, string HAWB, int tenant)
+        {
+            CourierMaster poco = repository.GetSingleCourier(airlineId, HAWB, MAWB, tenant);
+            CourierMasterPM entityPM = null;
+            if (poco != null)
+            {
+                entityPM = new CourierMasterPM()
+                {
+                    Id = poco.Id,
+                    AirlineId = poco.AirlineId,
+                    HAWB= poco.HAWB,
+                    MAWB = poco.MAWB,
+                    Tenant = poco.Tenant,
+                };
+            }
+            return entityPM;
+        }
+
+        public IQueryable<DeclarationPM> GetCourierConnectedDeclarations(QueryOperations queryOperations, int tenant)
+        {
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+            string CourierMasterId = null;
+            string CourierSearchField = null;
+            int skippedItems = queryOperations.PageIndex;
+            QueryFilterItem CourierMasterIdFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CourierMasterId").FirstOrDefault();
+            QueryFilterItem CourierSearchFieldFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CourierSearchFields").FirstOrDefault();
+            if (CourierMasterIdFilter != null)
+            {
+                CourierMasterId = CourierMasterIdFilter.FieldValue.ToString();
+            }
+            if (CourierSearchFieldFilter != null)
+            {
+                CourierSearchField = CourierSearchFieldFilter.FieldValue.ToString();
+            }
+            DeclarationRepository declarationRep = new DeclarationRepository(tenant);
+            IQueryable<Declaration> declarations = declarationRep.GetCourierConnectedDeclaratins(CourierMasterId, tenant);
+
+            IQueryable<DeclarationPM> declarationPMs;
+            if (string.IsNullOrWhiteSpace(CourierSearchField))
+            {
+                declarationPMs = (from a in declarations
+                                  select new DeclarationPM()
+                                   {
+                                       DeclarationNumber = a.DeclarationNumber,
+                                       CustomFileNo = a.CustomFileNo,
+                                       Id = a.Id,
+                                       Tenant = a.Tenant,
+                                       DeclarationStatusTypeName = a.DeclarationStatusType != null ? a.DeclarationStatusType.LocalName : null,
+                                       CustomerName = a.CustomerCard != null ? a.CustomerCard.LocalName : null,
+                                       ManifestNumber = a.CourierHAWB,
+                                       CourierHAWB = a.CourierHAWB
+                                   });
+            }
+            else
+            {
+                declarationPMs = (from a in declarations
+                                  where a.CourierSearchFields.Contains(CourierSearchField)
+                                  select new DeclarationPM()
+                                   {
+                                       DeclarationNumber = a.DeclarationNumber,
+                                       CustomFileNo = a.CustomFileNo,
+                                       Id = a.Id,
+                                       Tenant = a.Tenant,
+                                       DeclarationStatusTypeName = a.DeclarationStatusType != null ? a.DeclarationStatusType.LocalName : null,
+                                       CustomerName = a.CustomerCard != null ? a.CustomerCard.LocalName : null,
+                                       ManifestNumber = a.CourierHAWB,
+                                       CourierHAWB = a.CourierHAWB
+                                   });
+            }
+
+
+            return declarationPMs;
+        }
+
+        public void GetStatistic(string courierMasterId, int tenant, out List<KeyValuePair<string, int>> keyValuePairList)
+        {
+            keyValuePairList = new List<KeyValuePair<string, int>>();
+
+            var repositoryCourierDeclarations = new CourierDeclarationRepository(MainContext as ICustomContext);
+            var declarationCourierStatusRepository = new DeclarationCourierStatusRepository(MainContext as ICustomContext);
+            var q =
+                (from cd in repositoryCourierDeclarations.GetAll(tenant).Where(r => r.CourierMasterId == courierMasterId)
+                 join dStatus in declarationCourierStatusRepository.GetAll(tenant)
+                 on cd.DeclarationId equals dStatus.DeclarationId
+                 select dStatus
+             );
+
+            int HOLD = 0;
+            int ALL = 0;
+            int DOC = 0;
+            int DOC_U = 0;
+            int DOC_C = 0;
+            int SVG = 0;
+            int MNF = 0;
+            int MNF_C = 0;
+            int MNF_W = 0;
+            int DEC = 0;
+            int DEC_C = 0;
+            int DEC_W = 0;
+            int PAY = 0;
+            int MNFR = 0;
+            int DECR = 0;
+            int PAY_RL = 0;
+
+            var totQ =
+            (from dStatus in q
+             group dStatus by 1 into g
+             select new
+             {
+                 aLL = g.Count(),
+                 dOC = g.Count(r => r.DocumentStatusCode == "M" || r.DocumentStatusCode == "X"),
+                 DOC_U = g.Count(r => r.DocumentStatusCode == "X"),
+                 DOC_C = g.Count(r => r.DocumentStatusCode == "M"),
+                 sVG = g.Count(r => (r.IsCourierMissingClassification == true)),
+                 MNF = g.Count(r => (r.CourierManifestStatusCode == "M" || r.CourierManifestStatusCode == "X")),
+                 MNF_C = g.Count(r => (r.CourierManifestStatusCode == "M")),
+                 MNF_W = g.Count(r => (r.CourierManifestStatusCode == "X")),
+                 dEC = g.Count(r => (r.CourierDeclarationStatusCode == "M" || r.CourierDeclarationStatusCode == "X")),
+                 dEC_C = g.Count(r => (r.CourierDeclarationStatusCode == "M")),
+                 dEC_W = g.Count(r => (r.CourierDeclarationStatusCode == "X")),
+                 pAY = g.Count(r => (r.CourierPaymentStatusCode == "R")),
+                 PAY_RL = g.Count(r => (r.CourierPaymentStatusCode == "R" && r.HighLowValue=="L")),
+                 MNFR = g.Count(r => (r.CourierManifestStatusCode == "R" )),
+                 DECR = g.Count(r => (r.CourierDeclarationStatusCode == "R" )),
+                 HOLD = g.Count(r => (r.CourierPendingReasonCode != null)),
+
+             });
+
+            var tot =totQ.FirstOrDefault();
+            if (tot != null)
+            {
+                HOLD = tot.HOLD;
+                ALL = tot.aLL;
+                DOC = tot.dOC;
+                DOC_U = tot.DOC_U;
+                DOC_C = tot.DOC_C;
+                SVG = tot.sVG;
+                MNF = tot.MNF;
+                MNF_C = tot.MNF_C;
+                MNF_W = tot.MNF_W;
+                DEC = tot.dEC;
+                DEC_C = tot.dEC_C;
+                DEC_W = tot.dEC_W;
+                PAY = tot.pAY;
+                MNFR = tot.MNFR;
+                DECR = tot.DECR;
+                PAY_RL = tot.PAY_RL;
+            }
+
+            keyValuePairList.Add(new KeyValuePair<string, int>("ALL", ALL));
+            keyValuePairList.Add(new KeyValuePair<string, int>("DOC", DOC));
+            keyValuePairList.Add(new KeyValuePair<string, int>("DOC_U", DOC_U));
+            keyValuePairList.Add(new KeyValuePair<string, int>("DOC_C", DOC_C));
+            keyValuePairList.Add(new KeyValuePair<string, int>("SVG", SVG));
+            keyValuePairList.Add(new KeyValuePair<string, int>("MNF", MNF));
+            keyValuePairList.Add(new KeyValuePair<string, int>("MNF_C", MNF_C));
+            keyValuePairList.Add(new KeyValuePair<string, int>("MNF_W", MNF_W));
+            keyValuePairList.Add(new KeyValuePair<string, int>("DEC", DEC));
+            keyValuePairList.Add(new KeyValuePair<string, int>("DEC_C", DEC_C));
+            keyValuePairList.Add(new KeyValuePair<string, int>("DEC_W", DEC_W));
+            keyValuePairList.Add(new KeyValuePair<string, int>("PAY", PAY));
+            keyValuePairList.Add(new KeyValuePair<string, int>("HOLD", HOLD));
+            keyValuePairList.Add(new KeyValuePair<string, int>("DECR", DECR));
+            keyValuePairList.Add(new KeyValuePair<string, int>("MNFR", MNFR));
+            keyValuePairList.Add(new KeyValuePair<string, int>("PAY_RL", PAY_RL));
+
+        }
+
+        public IQueryable<DeclarationPM> GetNotConnectedDeclaratins(QueryOperations queryOperations, int tenant)
+        {
+            string CourierSearchField = null;
+            QueryFilterItem CourierSearchFieldFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CourierSearchFields").FirstOrDefault();
+            if (CourierSearchFieldFilter != null)
+            {
+                CourierSearchField = CourierSearchFieldFilter.FieldValue.ToString();
+            }
+
+            DeclarationRepository declarationRep = new DeclarationRepository(tenant);
+            IQueryable<Declaration> declarations = declarationRep.GetNotConnectedDeclaratins( tenant);
+
+            IQueryable<DeclarationPM> declarationPMs;
+            if (string.IsNullOrWhiteSpace(CourierSearchField))
+            {
+                declarationPMs = (from a in declarations
+                                  select new DeclarationPM()
+                                  {
+                                      DeclarationNumber = a.DeclarationNumber,
+                                      CustomFileNo = a.CustomFileNo,
+                                      Id = a.Id,
+                                      Tenant = a.Tenant,
+                                      DeclarationStatusTypeName = a.DeclarationStatusType != null ? a.DeclarationStatusType.LocalName : null,
+                                      CustomerName = a.CustomerCard != null ? a.CustomerCard.LocalName : null,
+                                      ManifestNumber = a.CourierHAWB,
+                                      CourierHAWB = a.CourierHAWB,
+                                      SearchFields = a.SearchFields
+                                  });
+            }
+            else
+            {
+                declarationPMs = (from a in declarations
+                                  where a.CourierSearchFields.Contains(CourierSearchField)
+                                  select new DeclarationPM()
+                                    {
+                                        DeclarationNumber = a.DeclarationNumber,
+                                        CustomFileNo = a.CustomFileNo,
+                                        Id = a.Id,
+                                        Tenant = a.Tenant,
+                                        DeclarationStatusTypeName = a.DeclarationStatusType != null ? a.DeclarationStatusType.LocalName : null,
+                                        CustomerName = a.CustomerCard != null ? a.CustomerCard.LocalName : null,
+                                        ManifestNumber = a.CourierHAWB,
+                                        CourierHAWB = a.CourierHAWB,
+                                        SearchFields = a.SearchFields
+                                    });
+            }
+            return declarationPMs;
+        }
+
+        public CourierMasterPM GetSingleByAirlineAWBs(string airlineId, string hawb, string mawb, int tenant)
+        {
+            CourierMasterRepository courierMasterRepository = new CourierMasterRepository(context);
+            CourierMasterPM courierMasterPM = null;
+            var poco = courierMasterRepository.GetCourierMaster(airlineId, hawb, mawb, tenant);
+            if (poco != null)
+            {
+                courierMasterPM = this.GetEntityPM(poco, false, null);
+            }
+            return courierMasterPM;
+        }
+
+    }
+}

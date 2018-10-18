@@ -1,0 +1,72 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools;
+using Simplog.Data.Helpers;
+using Logitude.Server.Tools.Counters;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System.Web;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.Customs.BL.EntityDataMappings;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Data.EntityKeys;
+using Logitude.Customs.Data;
+
+namespace Logitude.Customs.BL.EntityUpdateServices
+{ 
+   public partial class ClaimImporterDeclarsPage3UpdateService:EntityUpdateService<ClaimImporterDeclarsPage3,ClaimImporterDeclarsPage3PM,ClaimPM>
+   {
+   
+        ClaimImporterDeclarsPage3Repository entityRepository;
+        public ClaimImporterDeclarsPage3UpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
+        {
+            ICustomContext  context = mainContext as CustomContext;
+            context = context ??mainContext as ICustomContext ; //Up line is A BUG -and i need it 4 Fakes
+            Mapping = new ClaimImporterDeclarsPage3DataMapping();
+            Repository = new ClaimImporterDeclarsPage3Repository(context);
+        }
+
+       
+        private ICustomContext currentContext;
+        public ClaimImporterDeclarsPage3UpdateService(int tenant)
+        {
+            currentContext = CustomContext.GetContext(tenant);
+        }
+
+        public ClaimImporterDeclarsPage3UpdateService(ICustomContext context)
+        {
+            currentContext = context;
+        }
+
+		
+		protected override EntityKeyFields GetKeys(ClaimImporterDeclarsPage3PM entityPM)
+        {
+            ClaimImporterDeclarsPage3Keys entityKeys = new ClaimImporterDeclarsPage3Keys() { ClaimId = entityPM.ClaimId, LineNo = entityPM.LineNo };
+            return entityKeys;
+        }
+
+		
+	    protected override void FillDefaultValuesOnCreate(ClaimImporterDeclarsPage3PM entityPM)
+        {
+ 
+		}
+		protected override void FillDefaultValuesOnUpdate(ClaimImporterDeclarsPage3PM entityPM)
+		{
+ 
+		}
+		
+		 
+	 
+   }
+   
+}
+	 

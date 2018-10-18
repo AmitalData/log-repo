@@ -1,0 +1,38 @@
+﻿
+<style type="text/css">
+    .LogCellTemplateInnerChild {
+        position: absolute;        
+        bottom: 0;        
+    }
+
+    .LogCellTemplate {
+        height: 27px;
+        max-height: 27px;
+        line-height: 27px;
+        display: block;
+        padding: 0px;
+        position: relative;
+    }
+</style>
+
+<div class="LogCellTemplate" [attr.RowIndex]="this.RowIndex"
+     [attr.index]="Editindex"
+     (focus)="OnClick()"
+     (keyup)="KeyUpEvent($event)"
+     (keydown)="KeyDownEvent($event)"
+     [tabindex]="TabIndex"
+     [id]="OuterDivId"
+     [ngStyle]="{
+     color: FontColor,
+      background: CellColor,
+      'text-align': Alignment
+     }">
+
+    <div class="LogCellTemplateInnerChild TextTrimming"
+         [style.left.px]="LeftIndent"
+         [style.right.px]="RightIndent"
+         [style.top.px]="IsEditMode ? '1' : '0'"
+         >
+        <ng-content></ng-content>
+    </div>
+</div>

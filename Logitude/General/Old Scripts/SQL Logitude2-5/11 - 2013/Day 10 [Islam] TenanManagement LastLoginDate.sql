@@ -1,0 +1,1 @@
+﻿alter table tenantmanagements add LastLoginDateTime datetime  NULL

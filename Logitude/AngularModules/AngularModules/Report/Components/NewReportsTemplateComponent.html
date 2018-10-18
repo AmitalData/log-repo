@@ -1,0 +1,119 @@
+﻿
+
+
+
+<table>
+
+    <tr>
+        <td>
+            <table style="height:100%;width:100%;vertical-align:top">
+
+
+                <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+                    <td>
+                        <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+                    </td>
+                </tr>
+
+                <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:5px;">
+                    <td>
+                        <div style="height:5px"></div>
+                    </td>
+                </tr>
+                <tr style="height:30px">
+
+                    <td>
+                        <table>
+
+                   <tr>
+                       <td style="width:5px;"><div></div></td>
+                       <td style="width:70px">
+                           <RadioButton [Name]="NewReportTypeRadio" [IsChecked]="NewReportTypeRadioChoice == 'Blank'"  (Checked)="NewReportTypeRadioChange('Blank')" [Text]="'Blank'"></RadioButton>
+
+                       </td>
+                    
+                       <td style="width:120px">
+                           <RadioButton [Name]="NewReportTypeRadio" [IsChecked]="NewReportTypeRadioChoice == 'FromFile'"  (Checked)="NewReportTypeRadioChange('FromFile')" [Text]="'From File'"></RadioButton>
+
+                       </td>
+                       <td></td>
+                   </tr>
+                        </table>
+                    </td>
+
+                </tr>
+
+                <tr style="vertical-align:top;height:25px">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:5px;"><div></div></td>
+                                <td style="width:100px;">  <LogLabel [Text]="'Description'" [ObjectFieldName]="'Description'" [ObjectTableName]="'ReportsTemplate'" [DataContext]="ReportsTemplatePM"></LogLabel></td>
+                                <td style="width:230px"><LogTextBox  style="width:230px" [ObjectFieldName]="'Description'" [ObjectTableName]="'ReportsTemplate'" [DataContext]="ReportsTemplatePM"></LogTextBox></td>
+                                <td><div></div></td>
+                            </tr>
+                        </table>
+                    </td>
+                   
+                </tr>
+
+
+                <tr *ngIf="NewReportTypeRadioChoice == 'FromFile'" style="vertical-align:top;margin-top:5px;height:25px">
+                    <td>
+                        <table>
+                            <tr>
+
+                                <td style="width:105px;"><div></div></td>
+                                <td style="width: 195px;">
+                                    <button style="width: 195px;" class="Button" (click)="OpenUpLoadTemplateFile()">Load Template</button>
+                                    <!--accept=".xml,.XML"-->
+                                    <input  [attr.accept]="TemplateType == 'R' ? 'mrt,.MRT' :'.xml,.XML'"   [attr.id]="ReportTemplateFileId" type="file" (change)="UpLoadTemplateFileMethod($event)" style="display:none" class="upload" />
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+                        </table>
+                    </td>
+
+
+                </tr>
+
+
+                <tr>
+                    <td></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;margin-right:5px">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <div>
+                            <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
+                        </div>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="SaveButtonClicked()">OK</button>
+                    </td>
+
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

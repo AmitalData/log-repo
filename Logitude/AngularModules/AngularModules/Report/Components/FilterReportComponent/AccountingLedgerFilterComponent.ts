@@ -1,0 +1,148 @@
+﻿import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {ReportsPreviewComponent} from '../../Components/ReportsPreviewComponent';
+import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
+import {MessageWindow} from '../../../Controls/Windows/MessageWindow'
+import {ReportFliter} from '../../Components/Filters/ReportFliter';
+import {QueryFilterItem} from '../../Components/Filters/QueryFilterItem';
+import {Component, OnInit, Output, ElementRef}  from '@angular/core';
+import {AppTool} from '../../../Infrastructure/Tools';
+import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
+
+@Component({
+    moduleId: module.id,
+    selector: 'AccountingLedgerFilterComponent',
+    templateUrl: './AccountingLedgerFilterComponent.html',
+    inputs: ['ReportsPreview']
+})
+
+export class AccountingLedgerFilterComponent extends BaseComponent implements OnInit {
+    public ReportsPreview: ReportsPreviewComponent;
+    reportFliter: ReportFliter;
+    queryFilterItems: QueryFilterItem[];
+    queryFilterItem: QueryFilterItem;
+    public ValidationErrorsList: string[] = [];
+    public ObjectTableName: string = "Report";
+    public DataContext: AccountingLedgerFilterComponent = this;
+
+    CustomerId: string;
+    FromDate: Date;
+    ToDate: Date;
+
+    public IsCreateDateId: string = "IsCreateDateId";
+    public IsValueDateId: string = "IsValueDateId";
+    public DateRadio: string = "DateRadio_";
+
+    constructor() {
+        super();
+
+        this.IsValueDateId = this.IsValueDateId + SessionLocator.CurrentSession.GetNewId(this.IsValueDateId);
+        this.IsCreateDateId = this.IsCreateDateId + SessionLocator.CurrentSession.GetNewId(this.IsCreateDateId);
+        this.DateRadio = this.DateRadio + SessionLocator.CurrentSession.GetNewId(this.DateRadio);
+    }
+
+    InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
+        this.ReportsPreview = myReportsPreview;
+
+        var month = new Date().getMonth();
+        var Year = new Date().getFullYear();
+        var daysofmonth = this.daysInMonth(new Date());
+
+        this.FromDate = this.SetDate(Year, month - 1, 1);
+        this.ToDate = this.SetDate(Year, month, daysofmonth);
+    }
+
+    ngOnInit() {
+
+    }
+
+    daysInMonth(aDate: Date) {
+        return (new Date(aDate.getFullYear(), aDate.getMonth() + 1, 0)).getDate();
+    }
+
+    SetDate(year: number, month: number, day: number) {
+        var date = new Date();
+        date.setUTCFullYear(year);
+        date.setUTCMonth(month);
+        date.setUTCDate(day);
+        date.setUTCHours(0);
+        date.setUTCMinutes(0);
+        date.setUTCSeconds(0);
+        return date;
+    }
+
+    public IsByCreateDate: boolean = true;
+    public IsValueDate: boolean = false;
+    public IsCreateDate: boolean = true;
+    IsCreateDateClicked() {
+        this.IsByCreateDate = true;
+    }
+    IsValueDateClicked() {
+        this.IsByCreateDate = false;
+    }
+
+    RunReport() {
+        this.ValidationErrorsList = [];
+        if (this.FromDate == null) {
+            this.ValidationErrorsList.push("From Date is required");
+        }
+
+        if (this.ToDate == null) {
+            this.ValidationErrorsList.push("To Date is required");
+        }
+
+        if (this.FromDate > this.ToDate) {
+            this.ValidationErrorsList.push("From Date cannot be greater than To Date");
+        }
+
+        if (this.ValidationErrorsList.length == 0) {
+
+            this.queryFilterItems = new Array<QueryFilterItem>();
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "IsByCreateDate";
+            this.queryFilterItem.FieldValue = this.IsByCreateDate;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "FromDate";
+            this.queryFilterItem.FieldValue = this.FromDate;
+            this.queryFilterItem.FieldDataType = "Date";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "ToDate";
+            this.queryFilterItem.FieldValue = this.ToDate;
+            this.queryFilterItem.FieldDataType = "Date";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "BillToId";
+            this.queryFilterItem.FieldValue = this.CustomerId;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            this.reportFliter = new ReportFliter();
+            this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
+            this.reportFliter.QueryFilterItemLists = this.queryFilterItems;
+            this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
+            this.reportFliter.CustomerId = this.CustomerId;
+            this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
+            this.reportFliter.ReportCode = this.ReportsPreview.Report.Code;
+            this.reportFliter.NumberOfPage = 1;
+            this.reportFliter.ProcessType = "GenerateReport";
+
+            this.ReportsPreview.CleanPartnersObslist();
+
+            if (!AppTool.IsNullOrEmpty(this.CustomerId)) {
+                this.ReportsPreview.AddPartner("Customer", this.CustomerId);
+            }
+
+            this.ReportsPreview.GenerateReport(this.reportFliter, true);
+        }
+    }
+}

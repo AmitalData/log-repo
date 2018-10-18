@@ -1,0 +1,79 @@
+
+
+
+
+
+
+<table>
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td colspan="5">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+        </td>
+    </tr>
+
+
+    <tr style="height:32px">
+        <td style="width:100px">
+            <LogLabel [ObjectFieldName]="'TaxYear'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+
+        <td style="width:100px">
+            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'TaxYear'" [InputType]="'integer'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"></LogTextBox>
+        </td>
+
+        <td></td>
+    </tr>
+
+    <tr style="height:32px">
+        <td style="width:100px">
+            <LogLabel [ObjectFieldName]="'IsAdditionalReportExist'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+        <td style="width:60px">
+            <CheckBox [IsChecked]="IsAdditionalReportExist" (Checked)="IsAdditionalReportExist = $event"></CheckBox>
+
+          
+        </td>
+
+        <td></td>
+    </tr>
+    <tr style="height:32px">
+        <td style="width:100px">
+            <LogLabel [ObjectFieldName]="'Email'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+        <td style="width:100px">
+            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Email'" [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName">
+
+            </LogTextBox>
+        </td>
+
+        <td></td>
+    </tr>
+    <tr></tr>
+    <tr style="height: 32px;">
+        <td colspan="5" style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'Accounting.General.O.Run' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

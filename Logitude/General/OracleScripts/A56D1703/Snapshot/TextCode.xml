@@ -1,0 +1,4470 @@
+<?xml version="1.0"?>
+<ArrayOfTextCodeDTO xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TextCodeDTO>
+    <Code>General.M.ThisEntityhasunsavedchanges</Code>
+    <DefaultText>This %Entity has unsaved changes do you want to save it?</DefaultText>
+    <Id>1-8573</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>ב%Entity זו בוצעו שינויים שלא נשמרו, האם ברצונך לשמור אותם?</LocalDefaultText>
+    <ObjectTableId>1-3</ObjectTableId>
+    <SpellCheckDate>2016-02-02T11:00:16.3560542</SpellCheckDate>
+    <SpellCheckedByUserId>1-1</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>M</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>General.O.QueryColumnsEdit</Code>
+    <DefaultText>Query Columns Edit</DefaultText>
+    <Id>1-8657</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>עריכת עמודות השאילתא</LocalDefaultText>
+    <ObjectTableId>1-3</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.AddressContactState</Code>
+    <DefaultText>Address Contact State</DefaultText>
+    <DefaultTextPlural>Customs.AddressContactStates</DefaultTextPlural>
+    <Id>1-12487</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סטטוס איש קשר</LocalDefaultText>
+    <ObjectTableId>1-268</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>T</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsSetting</Code>
+    <DefaultText>Customs Setting</DefaultText>
+    <DefaultTextPlural>Customs Settings</DefaultTextPlural>
+    <Id>1-12556</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>הגדרות מכס</LocalDefaultText>
+    <ObjectTableId>1-337</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>T</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsTransportMode</Code>
+    <DefaultText>Customs Transport Mode</DefaultText>
+    <DefaultTextPlural>CustomsTransportModes</DefaultTextPlural>
+    <Id>1-12557</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מכס סוג הובלה</LocalDefaultText>
+    <ObjectTableId>1-338</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>T</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsVendor</Code>
+    <DefaultText>Vendor</DefaultText>
+    <DefaultTextPlural>Customs Vendors</DefaultTextPlural>
+    <Id>1-12558</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>ספק מכס</LocalDefaultText>
+    <ObjectTableId>1-339</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>T</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration</Code>
+    <DefaultText>Declaration</DefaultText>
+    <DefaultTextPlural>Declarations</DefaultTextPlural>
+    <Id>1-12562</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>הצהרת יבוא</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>T</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.InterfaceManagement</Code>
+    <DefaultText>Interface Management</DefaultText>
+    <DefaultTextPlural>Interface Managements</DefaultTextPlural>
+    <Id>1-12591</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>ניהול מסרים</LocalDefaultText>
+    <ObjectTableId>1-372</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>T</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Notification</Code>
+    <DefaultText>Notification</DefaultText>
+    <DefaultTextPlural>Notifications</DefaultTextPlural>
+    <Id>1-12605</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>התראות</LocalDefaultText>
+    <ObjectTableId>1-386</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>T</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.NotificationDefinition</Code>
+    <DefaultText>Notification Definition</DefaultText>
+    <DefaultTextPlural>NotificationDefinitions</DefaultTextPlural>
+    <Id>1-12606</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>הגדרת התראות</LocalDefaultText>
+    <ObjectTableId>1-387</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>T</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.NotificationTenantDefinition</Code>
+    <DefaultText>Notification Tenant Definition</DefaultText>
+    <DefaultTextPlural>NotificationTenantDefinitions</DefaultTextPlural>
+    <Id>1-12607</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>הגדרות לקוח להתראה</LocalDefaultText>
+    <ObjectTableId>1-388</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>T</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.SupplierInvoiceItem</Code>
+    <DefaultText>Supplier Invoice Item</DefaultText>
+    <DefaultTextPlural>SupplierInvoiceItems</DefaultTextPlural>
+    <Id>1-12656</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שורת פרט מכס</LocalDefaultText>
+    <ObjectTableId>1-437</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>T</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.AddressContactState.CH.CodeListLable</Code>
+    <DefaultText>Code</DefaultText>
+    <Id>1-12694</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>קוד</LocalDefaultText>
+    <ObjectTableId>1-268</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.AddressContactState.CH.EnglishNameListLable</Code>
+    <DefaultText>English Name</DefaultText>
+    <Id>1-12697</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם אנגלית</LocalDefaultText>
+    <ObjectTableId>1-268</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.AddressContactState.CH.LocalNameListLable</Code>
+    <DefaultText>Local Name</DefaultText>
+    <Id>1-12700</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם עברית</LocalDefaultText>
+    <ObjectTableId>1-268</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Client.F.EnglishFatherName</Code>
+    <DefaultText>English Father Name</DefaultText>
+    <Id>1-12958</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם האב באנגלית בדרכון </LocalDefaultText>
+    <ObjectTableId>1-284</ObjectTableId>
+    <SpellCheckDate>2017-01-10T13:06:47.5208392</SpellCheckDate>
+    <SpellCheckedByUserId>1-1</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Client.CH.EnglishFatherNameListLable</Code>
+    <DefaultText>English Father Name</DefaultText>
+    <Id>1-12960</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם האב באנגלית בדרכון </LocalDefaultText>
+    <ObjectTableId>1-284</ObjectTableId>
+    <SpellCheckDate>2017-01-10T13:06:47.0828141</SpellCheckDate>
+    <SpellCheckedByUserId>1-1</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Client.F.PassportExpirationDate</Code>
+    <DefaultText>Passport Expiration Date</DefaultText>
+    <Id>1-12961</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>תאריך סיום תוקף הדרכון / תעודת מעבר </LocalDefaultText>
+    <ObjectTableId>1-284</ObjectTableId>
+    <SpellCheckDate>2017-01-10T13:08:05.722312</SpellCheckDate>
+    <SpellCheckedByUserId>1-1</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Client.CH.PassportExpirationDateListLable</Code>
+    <DefaultText>Passport Expiration Date</DefaultText>
+    <Id>1-12963</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>תאריך סיום תוקף הדרכון / תעודת מעבר </LocalDefaultText>
+    <ObjectTableId>1-284</ObjectTableId>
+    <SpellCheckDate>2017-01-10T13:08:05.7073112</SpellCheckDate>
+    <SpellCheckedByUserId>1-1</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.ClientAddress.F.EnglishCountryCode</Code>
+    <DefaultText>English Country</DefaultText>
+    <Id>1-13051</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מדינה</LocalDefaultText>
+    <ObjectTableId>1-285</ObjectTableId>
+    <SpellCheckDate>2016-03-08T12:22:37.8901229</SpellCheckDate>
+    <SpellCheckedByUserId>1-1</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.ClientAddress.CH.EnglishCountryCodeListLable</Code>
+    <DefaultText>English Country</DefaultText>
+    <Id>1-13053</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מדינה </LocalDefaultText>
+    <ObjectTableId>1-285</ObjectTableId>
+    <SpellCheckDate>2016-03-08T12:22:37.8231191</SpellCheckDate>
+    <SpellCheckedByUserId>1-1</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.ClientAddress.F.EnglishSubCountryCode</Code>
+    <DefaultText>English Sub Country</DefaultText>
+    <Id>1-13054</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>חלוקת משנה של מדינה</LocalDefaultText>
+    <ObjectTableId>1-285</ObjectTableId>
+    <SpellCheckDate>2016-03-08T12:22:37.9311252</SpellCheckDate>
+    <SpellCheckedByUserId>1-1</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.ClientAddress.CH.EnglishSubCountryCodeListLable</Code>
+    <DefaultText>English Sub Country</DefaultText>
+    <Id>1-13056</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>חלוקת משנה של מדינה</LocalDefaultText>
+    <ObjectTableId>1-285</ObjectTableId>
+    <SpellCheckDate>2016-03-08T12:22:37.8631213</SpellCheckDate>
+    <SpellCheckedByUserId>1-1</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.ClientAddress.F.EnglishCityName</Code>
+    <DefaultText>English City Name</DefaultText>
+    <Id>1-13057</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>יישוב </LocalDefaultText>
+    <ObjectTableId>1-285</ObjectTableId>
+    <SpellCheckDate>2016-03-08T12:22:37.8771221</SpellCheckDate>
+    <SpellCheckedByUserId>1-1</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.ClientAddress.CH.EnglishCityNameListLable</Code>
+    <DefaultText>English City Name</DefaultText>
+    <Id>1-13059</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>יישוב </LocalDefaultText>
+    <ObjectTableId>1-285</ObjectTableId>
+    <SpellCheckDate>2016-03-08T12:22:37.6531093</SpellCheckDate>
+    <SpellCheckedByUserId>1-1</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.ClientAddress.F.EnglishMainAddressLine</Code>
+    <DefaultText>English Main Address Line</DefaultText>
+    <Id>1-13060</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>רחוב ובית או תא דואר </LocalDefaultText>
+    <ObjectTableId>1-285</ObjectTableId>
+    <SpellCheckDate>2016-03-08T12:22:37.9031236</SpellCheckDate>
+    <SpellCheckedByUserId>1-1</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.ClientAddress.CH.EnglishMainAddressLineListLable</Code>
+    <DefaultText>English Main Address Line</DefaultText>
+    <Id>1-13062</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>רחוב ובית או תא דואר</LocalDefaultText>
+    <ObjectTableId>1-285</ObjectTableId>
+    <SpellCheckDate>2016-03-08T12:22:37.8371199</SpellCheckDate>
+    <SpellCheckedByUserId>1-1</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.ClientAddress.F.EnglishPostalCode</Code>
+    <DefaultText>English Postal Code</DefaultText>
+    <Id>1-13063</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מיקוד </LocalDefaultText>
+    <ObjectTableId>1-285</ObjectTableId>
+    <SpellCheckDate>2016-03-08T12:22:37.9171244</SpellCheckDate>
+    <SpellCheckedByUserId>1-1</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.ClientAddress.CH.EnglishPostalCodeListLable</Code>
+    <DefaultText>English Postal Code</DefaultText>
+    <Id>1-13065</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מיקוד </LocalDefaultText>
+    <ObjectTableId>1-285</ObjectTableId>
+    <SpellCheckDate>2016-03-08T12:22:37.8501206</SpellCheckDate>
+    <SpellCheckedByUserId>1-1</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.ClientsAddressCommType.F.Line</Code>
+    <DefaultText>Line</DefaultText>
+    <Id>1-13119</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שורה</LocalDefaultText>
+    <ObjectTableId>1-286</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.ClientsAddressCommType.CH.LineListLable</Code>
+    <DefaultText>Line</DefaultText>
+    <Id>1-13121</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שורה</LocalDefaultText>
+    <ObjectTableId>1-286</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Consignment.F.DeclarationId</Code>
+    <DefaultText>DeclarationId</DefaultText>
+    <Id>1-13235</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>DeclarationId</LocalDefaultText>
+    <ObjectTableId>1-295</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Consignment.F.ConsignmentNumber</Code>
+    <DefaultText>Consignment Number</DefaultText>
+    <Id>1-13238</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מספר משגור</LocalDefaultText>
+    <ObjectTableId>1-295</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Consignment.F.SequenceNumeric</Code>
+    <DefaultText>Sequence Numeric</DefaultText>
+    <Id>1-13241</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מספר מופע</LocalDefaultText>
+    <ObjectTableId>1-295</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Consignment.F.CargoTypeCode</Code>
+    <DefaultText>CargoIdentifire Type</DefaultText>
+    <Id>1-13244</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מזהה מטען</LocalDefaultText>
+    <ObjectTableId>1-295</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Consignment.F.CargoTypeName</Code>
+    <DefaultText>Cargo Type Name</DefaultText>
+    <Id>1-13247</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם מזהה מטען</LocalDefaultText>
+    <ObjectTableId>1-295</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Consignment.F.ManifestDate</Code>
+    <DefaultText>Manifest Date</DefaultText>
+    <Id>1-13250</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>תאריך מזהה מטען </LocalDefaultText>
+    <ObjectTableId>1-295</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Consignment.F.ManifestNumber</Code>
+    <DefaultText>Manifest Number</DefaultText>
+    <Id>1-13253</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מזהה מטען ראשון</LocalDefaultText>
+    <ObjectTableId>1-295</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Consignment.F.SecondCargoID</Code>
+    <DefaultText>Second Cargo ID</DefaultText>
+    <Id>1-13256</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מזהה מטען שני</LocalDefaultText>
+    <ObjectTableId>1-295</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Consignment.F.ThirdCargoID</Code>
+    <DefaultText>Third Cargo ID</DefaultText>
+    <Id>1-13259</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מזהה מטען שלישי</LocalDefaultText>
+    <ObjectTableId>1-295</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Consignment.F.UnloadDate</Code>
+    <DefaultText>Unload Date</DefaultText>
+    <Id>1-13262</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>תאריך גמר פריקה</LocalDefaultText>
+    <ObjectTableId>1-295</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Consignment.F.UnloadPortCode</Code>
+    <DefaultText>Unload Port</DefaultText>
+    <Id>1-13265</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>נמל פריקה</LocalDefaultText>
+    <ObjectTableId>1-295</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Consignment.CH.UnloadPortCodeListLable</Code>
+    <DefaultText>UnloadPortCode</DefaultText>
+    <Id>1-13267</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>אתר פריקה</LocalDefaultText>
+    <ObjectTableId>1-295</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Consignment.F.UnloadPortName</Code>
+    <DefaultText>Unload Port Name</DefaultText>
+    <Id>1-13268</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם נמל פריקה</LocalDefaultText>
+    <ObjectTableId>1-295</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Consignment.F.CargoDescription</Code>
+    <DefaultText>Cargo Description</DefaultText>
+    <Id>1-13271</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>תאור טובין</LocalDefaultText>
+    <ObjectTableId>1-295</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Consignment.F.IsLastReleaseFromWarehous</Code>
+    <DefaultText>Is Last Release From Warehous</DefaultText>
+    <Id>1-13274</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שחרור אחרון</LocalDefaultText>
+    <ObjectTableId>1-295</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Consignment.F.OriginCountryCode</Code>
+    <DefaultText>Origin Country</DefaultText>
+    <Id>1-13280</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>ארץ מוצא</LocalDefaultText>
+    <ObjectTableId>1-295</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Consignment.F.OriginCountryName</Code>
+    <DefaultText>Origin Country Name</DefaultText>
+    <Id>1-13283</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם ארץ מקור</LocalDefaultText>
+    <ObjectTableId>1-295</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Consignment.F.StorageSiteCode</Code>
+    <DefaultText>Storage Site</DefaultText>
+    <Id>1-13286</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>אתר אחסון</LocalDefaultText>
+    <ObjectTableId>1-295</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Consignment.F.StorageSiteName</Code>
+    <DefaultText>Storage Site Name</DefaultText>
+    <Id>1-13289</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם אתר אחסון</LocalDefaultText>
+    <ObjectTableId>1-295</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Consignment.F.ReceiverWarehouseCode</Code>
+    <DefaultText>Receiver Warehouse</DefaultText>
+    <Id>1-13292</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מחסן מקבל</LocalDefaultText>
+    <ObjectTableId>1-295</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Consignment.F.ReceiverWarehouseName</Code>
+    <DefaultText>Receiver Warehouse Name</DefaultText>
+    <Id>1-13295</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם מחסן מקבל</LocalDefaultText>
+    <ObjectTableId>1-295</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Consignment.F.ConsignmentPackages</Code>
+    <DefaultText>ConsignmentPackages</DefaultText>
+    <Id>1-13298</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>אריזות למשגור</LocalDefaultText>
+    <ObjectTableId>1-295</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsCollateral.F.CollateralRequestNumber</Code>
+    <DefaultText>Collateral Request Number</DefaultText>
+    <Id>1-13685</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מספר דרישה</LocalDefaultText>
+    <ObjectTableId>1-319</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsCollateral.CH.CollateralRequestNumberListLable</Code>
+    <DefaultText>Collateral Request Number</DefaultText>
+    <Id>1-13687</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מספר דרישה</LocalDefaultText>
+    <ObjectTableId>1-319</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsCollateral.CH.CustomsHouseTypeCodeListLable</Code>
+    <DefaultText>Customs House</DefaultText>
+    <Id>1-13704</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>קוד תחנת מכס</LocalDefaultText>
+    <ObjectTableId>1-319</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsCollateral.F.CollateralRequestStatusName</Code>
+    <DefaultText>Collateral Request Status </DefaultText>
+    <Id>1-13729</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סטטוס בטוחה</LocalDefaultText>
+    <ObjectTableId>1-319</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsCollateral.CH.CollateralRequestStatusNameListLable</Code>
+    <DefaultText>Collateral Request Status </DefaultText>
+    <Id>1-13731</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סטטוס בטוחה</LocalDefaultText>
+    <ObjectTableId>1-319</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsCollateral.F.RequestedCollateralTypeName</Code>
+    <DefaultText>Requested Collateral Type </DefaultText>
+    <Id>1-13732</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סוג בטוחה נדרש</LocalDefaultText>
+    <ObjectTableId>1-319</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsCollateral.CH.RequestedCollateralTypeNameListLable</Code>
+    <DefaultText>Requested Collateral Type </DefaultText>
+    <Id>1-13734</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סוג בטוחה נדרש</LocalDefaultText>
+    <ObjectTableId>1-319</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsCollateral.F.CustomsEntityTypeName</Code>
+    <DefaultText>Customs Entity Type </DefaultText>
+    <Id>1-13735</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סוג ישות</LocalDefaultText>
+    <ObjectTableId>1-319</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsCollateral.CH.CustomsEntityTypeNameListLable</Code>
+    <DefaultText>Customs Entity Type </DefaultText>
+    <Id>1-13737</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סוג ישות</LocalDefaultText>
+    <ObjectTableId>1-319</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsCollateral.F.IncludingThirdPartyGuarantee</Code>
+    <DefaultText>Including Third Party Guarantee</DefaultText>
+    <Id>1-13738</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>התחייבות לשיפוי צד ג'</LocalDefaultText>
+    <ObjectTableId>1-319</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsCollateral.CH.IncludingThirdPartyGuaranteeListLable</Code>
+    <DefaultText>Including Third Party Guarantee</DefaultText>
+    <Id>1-13740</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>התחייבות לשיפוי צד ג</LocalDefaultText>
+    <ObjectTableId>1-319</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsCollateral.CH.CustomsHouseTypeNameListLable</Code>
+    <DefaultText>Customs House Type</DefaultText>
+    <Id>1-13747</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם תחנת מכס</LocalDefaultText>
+    <ObjectTableId>1-319</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsDocumentsTicket.F.Remarks</Code>
+    <DefaultText>Remarks</DefaultText>
+    <Id>1-13986</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>הערות המכס </LocalDefaultText>
+    <ObjectTableId>1-327</ObjectTableId>
+    <SpellCheckDate>2016-02-23T10:44:16.0455335</SpellCheckDate>
+    <SpellCheckedByUserId>1-1</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsDocumentsTicket.CH.RemarksListLable</Code>
+    <DefaultText>Remarks</DefaultText>
+    <Id>1-13988</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>הערות המכס </LocalDefaultText>
+    <ObjectTableId>1-327</ObjectTableId>
+    <SpellCheckDate>2016-02-23T13:30:52.3012866</SpellCheckDate>
+    <SpellCheckedByUserId>1-1</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsHouseType.F.TransportModeId</Code>
+    <DefaultText>Transport Mode</DefaultText>
+    <Id>1-14035</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סוג הובלה</LocalDefaultText>
+    <ObjectTableId>1-330</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsHouseType.CH.UnloadPortCodeListLable</Code>
+    <DefaultText>Unload Port Code</DefaultText>
+    <Id>1-14039</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText> אתר פריקה</LocalDefaultText>
+    <ObjectTableId>1-330</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsHouseType.F.TransportModeName</Code>
+    <DefaultText>Transport Mode </DefaultText>
+    <Id>1-14040</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סוג הובלה</LocalDefaultText>
+    <ObjectTableId>1-330</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsHouseType.CH.TransportModeNameListLable</Code>
+    <DefaultText>Transport Mode  Name</DefaultText>
+    <Id>1-14042</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סוג הובלה</LocalDefaultText>
+    <ObjectTableId>1-330</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsHouseType.CH.UnloadPortNameListLable</Code>
+    <DefaultText>Unload Port Name</DefaultText>
+    <Id>1-14045</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText> אתר פריקה</LocalDefaultText>
+    <ObjectTableId>1-330</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsHouseTypeAdditional.F.TransportModeId</Code>
+    <DefaultText>Transport Mode</DefaultText>
+    <Id>1-14051</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סוג הובלה</LocalDefaultText>
+    <ObjectTableId>1-331</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsHouseTypeAdditional.F.TransportModeName</Code>
+    <DefaultText>Transport Mode</DefaultText>
+    <Id>1-14056</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סוג הובלה</LocalDefaultText>
+    <ObjectTableId>1-331</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsHouseTypeAdditional.CH.TransportModeNameListLable</Code>
+    <DefaultText>Transport Mode</DefaultText>
+    <Id>1-14058</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סוג הובלה</LocalDefaultText>
+    <ObjectTableId>1-331</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsHouseTypeAdditional.CH.UnloadPortNameListLable</Code>
+    <DefaultText>Unload Port</DefaultText>
+    <Id>1-14061</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>אתר פריקה</LocalDefaultText>
+    <ObjectTableId>1-331</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsRequestsSheet.F.InterfaceTypeCode</Code>
+    <DefaultText>Interface Management</DefaultText>
+    <Id>1-14127</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>ניהול מסרים</LocalDefaultText>
+    <ObjectTableId>1-334</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsRequestsSheet.CH.InterfaceTypeCodeListLable</Code>
+    <DefaultText>Interface Management</DefaultText>
+    <Id>1-14129</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>ניהול מסרים</LocalDefaultText>
+    <ObjectTableId>1-334</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsRequestsSheet.F.InterfaceTypeName</Code>
+    <DefaultText>Interface Management</DefaultText>
+    <Id>1-14144</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>ניהול מסרים</LocalDefaultText>
+    <ObjectTableId>1-334</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsVendor.F.StatusCode</Code>
+    <DefaultText>Status </DefaultText>
+    <Id>1-14268</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText> קוד סטטוס ספק</LocalDefaultText>
+    <ObjectTableId>1-339</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsVendor.CH.StatusCodeListLable</Code>
+    <DefaultText>Status </DefaultText>
+    <Id>1-14270</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText> קוד סטטוס ספק</LocalDefaultText>
+    <ObjectTableId>1-339</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsVendor.F.TransactionTypeID</Code>
+    <DefaultText>Transaction Type </DefaultText>
+    <Id>1-14271</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סוג תנועה על ספק</LocalDefaultText>
+    <ObjectTableId>1-339</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsVendor.CH.TransactionTypeIDListLable</Code>
+    <DefaultText>Transaction Type </DefaultText>
+    <Id>1-14273</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סוג תנועה על ספק</LocalDefaultText>
+    <ObjectTableId>1-339</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsVendor.F.VendorTypeName</Code>
+    <DefaultText>Vendor Type Name</DefaultText>
+    <Id>1-14276</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סוג ספק</LocalDefaultText>
+    <ObjectTableId>1-339</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsVendor.CH.VendorTypeNameListLable</Code>
+    <DefaultText>Vendor Type Name</DefaultText>
+    <Id>1-14278</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סוג ספק</LocalDefaultText>
+    <ObjectTableId>1-339</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsVendor.F.StatusName</Code>
+    <DefaultText>Status Name</DefaultText>
+    <Id>1-14290</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText> שם סטטוס ספק </LocalDefaultText>
+    <ObjectTableId>1-339</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsVendor.CH.StatusNameListLable</Code>
+    <DefaultText>Status Name</DefaultText>
+    <Id>1-14292</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם סטטוס ספק</LocalDefaultText>
+    <ObjectTableId>1-339</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.CustomFileNo</Code>
+    <DefaultText>Custom File No</DefaultText>
+    <Id>1-14334</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>תיק עמילות</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.CustomFileNoListLable</Code>
+    <DefaultText>Custom File No</DefaultText>
+    <Id>1-14336</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>תיק עמילות</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.CustomerId</Code>
+    <DefaultText>Customer </DefaultText>
+    <Id>1-14337</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>קוד לקוח</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.ImporterId</Code>
+    <DefaultText>Importer</DefaultText>
+    <Id>1-14339</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מספר יבואן</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.ImporterIdListLable</Code>
+    <DefaultText>Importer</DefaultText>
+    <Id>1-14341</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מספר יבואן</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.SearchFields</Code>
+    <DefaultText>Search</DefaultText>
+    <Id>1-14342</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שדות חיפוש</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate>2016-11-02T13:12:32.2680092</SpellCheckDate>
+    <SpellCheckedByUserId>1-1</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.DeclarationNumber</Code>
+    <DefaultText>Declaration Number</DefaultText>
+    <Id>1-14344</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מספר הצהרה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.DeclarationNumberListLable</Code>
+    <DefaultText>Declaration Number</DefaultText>
+    <Id>1-14346</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מספר הצהרה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.CustomerName</Code>
+    <DefaultText>Customer Name</DefaultText>
+    <Id>1-14347</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם לקוח</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.CustomerNameListLable</Code>
+    <DefaultText>Customer Name</DefaultText>
+    <Id>1-14349</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם לקוח</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.VersionId</Code>
+    <DefaultText>Version </DefaultText>
+    <Id>1-14350</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מספר גירסת הצהרה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.ExternalDeclarationNumber</Code>
+    <DefaultText>External Declaration Number</DefaultText>
+    <Id>1-14352</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מזהה רשומת סוכן</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.ExternalDeclarationNumberListLable</Code>
+    <DefaultText>External Declaration Number</DefaultText>
+    <Id>1-14354</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מזהה רשומת סוכן</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.DeclarationOfficeCode</Code>
+    <DefaultText>Declaration Office</DefaultText>
+    <Id>1-14355</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>קוד בית מכס</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.DeclarationOfficeCodeListLable</Code>
+    <DefaultText>Declaration Office</DefaultText>
+    <Id>1-14357</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>קוד תחנת מכס</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.TaxationDateTime</Code>
+    <DefaultText>Taxation Date Time</DefaultText>
+    <Id>1-14358</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>תאריך חישוב מיסים  </LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.TaxationDateTimeListLable</Code>
+    <DefaultText>Taxation Date Time</DefaultText>
+    <Id>1-14360</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>תאריך חישוב מיסים  </LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.AgentId</Code>
+    <DefaultText>Agent </DefaultText>
+    <Id>1-14361</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מספר סוכן</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.ProcedureCurrentCode</Code>
+    <DefaultText>Government Procedure Type</DefaultText>
+    <Id>1-14363</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText> סוג תהליך</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.ProcedureCurrentCodeListLable</Code>
+    <DefaultText>Procedure Current </DefaultText>
+    <Id>1-14365</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>קוד סוג תהליך</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.ProcedureCurrentName</Code>
+    <DefaultText>Government Procedure Type Name</DefaultText>
+    <Id>1-14366</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סוג תהליך</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.ProcedureCurrentNameListLable</Code>
+    <DefaultText>Procedure Current Name</DefaultText>
+    <Id>1-14368</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם סוג תהליך </LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.AutonomyRegionTypeCode</Code>
+    <DefaultText>Autonomy Region Type</DefaultText>
+    <Id>1-14369</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>איזור אוטונומיה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.AutonomyRegionTypeCodeListLable</Code>
+    <DefaultText>Autonomy Region Type </DefaultText>
+    <Id>1-14371</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>קוד איזור אוטונומיה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.AutonomyRegionTypeName</Code>
+    <DefaultText>Autonomy Region Type Name</DefaultText>
+    <Id>1-14372</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם אזור האוטונומיה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.AutonomyRegionTypeNameListLable</Code>
+    <DefaultText>Autonomy Region Type Name</DefaultText>
+    <Id>1-14374</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם איזור אוטונומיה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.ImporterPassCountryCode</Code>
+    <DefaultText>Importer Pass Country</DefaultText>
+    <Id>1-14375</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מדינת דרכון יבואן</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.ImporterPassCountryCodeListLable</Code>
+    <DefaultText>Importer Pass Country </DefaultText>
+    <Id>1-14377</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>קוד מדינת דרכון יבואן</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.ImporterPassCountryName</Code>
+    <DefaultText>Importer Pass Country Name</DefaultText>
+    <Id>1-14378</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם מדינת דרכון יבואן</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.ImporterPassCountryNameListLable</Code>
+    <DefaultText>Importer Pass Country Name</DefaultText>
+    <Id>1-14380</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם מדינת דרכון יבואן</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.TransferImporterId</Code>
+    <DefaultText>Transfer Importer </DefaultText>
+    <Id>1-14381</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מספר יבואן מעביר</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.TransferImporterCountryCode</Code>
+    <DefaultText>Transfer Importer Country</DefaultText>
+    <Id>1-14383</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מדינת דרכון יבואן מעביר</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.TransferImporterCountryCodeListLable</Code>
+    <DefaultText>Transfer Importer Country </DefaultText>
+    <Id>1-14385</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>קוד מדינת דרכון יבואן מעביר</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.TransferImporterCountryName</Code>
+    <DefaultText>Transfer Importer Country Name</DefaultText>
+    <Id>1-14386</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם מדינת דרכון יבואן מעביר</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.TransferImporterCountryNameListLable</Code>
+    <DefaultText>Transfer Importer Country Name</DefaultText>
+    <Id>1-14388</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם מדינת דרכון יבואן מעביר</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.EntitleImporterId</Code>
+    <DefaultText>Entitle Importer </DefaultText>
+    <Id>1-14389</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מספר יבואן זכאי</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.ImporterEntitlementTypeCode</Code>
+    <DefaultText>Importer Entitlement Type</DefaultText>
+    <Id>1-14391</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סוג זכאות יבואן זכאי</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.ImporterEntitlementTypeCodeListLable</Code>
+    <DefaultText>Importer Entitlement Type </DefaultText>
+    <Id>1-14393</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סוג זכאות יבואן זכאי</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.ImporterEntitlementTypeName</Code>
+    <DefaultText>Importer Entitlement Type Name</DefaultText>
+    <Id>1-14394</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם מדינת יבואן מעביר</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.ImporterEntitlementTypeNameListLable</Code>
+    <DefaultText>Importer Entitlement Type Name</DefaultText>
+    <Id>1-14396</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם סוג זכאות יבואן</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.EntitleImporterCountryCode</Code>
+    <DefaultText>Entitle Importer Country</DefaultText>
+    <Id>1-14397</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מדינת דרכון יבואן זכאי</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.EntitleImporterCountryCodeListLable</Code>
+    <DefaultText>Entitle Importer Country </DefaultText>
+    <Id>1-14399</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>קוד מדינת יבואן זכאי</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.EntitleImporterCountryName</Code>
+    <DefaultText>Entitle Importer Country Name</DefaultText>
+    <Id>1-14400</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם מדינת יבואן זכאי</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.EntitleImporterCountryNameListLable</Code>
+    <DefaultText>Entitle Importer Country Name</DefaultText>
+    <Id>1-14402</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם מדינת יבואן זכאי</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.DeclarationDocumentId</Code>
+    <DefaultText>Declaration Document </DefaultText>
+    <Id>1-14403</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מספר הצהרה קשורה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.DeclarationDocumentTypeCode</Code>
+    <DefaultText>Declaration Document Type</DefaultText>
+    <Id>1-14405</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סוג הצהרה קשורה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.DeclarationDocumentTypeCodeListLable</Code>
+    <DefaultText>Declaration Document Type </DefaultText>
+    <Id>1-14407</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סוג הצהרה קשורה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.DeclarationDocumentTypeName</Code>
+    <DefaultText>Declaration Document Type Name</DefaultText>
+    <Id>1-14408</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם סוג מסמך ההצהרה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.CreatedByUserId</Code>
+    <DefaultText>Created By User </DefaultText>
+    <Id>1-14410</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>נפתח על ידי </LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.IsChanged</Code>
+    <DefaultText>Is Changed</DefaultText>
+    <Id>1-14412</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>בוצע שינוי</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.IsChangedListLable</Code>
+    <DefaultText>Is Changed</DefaultText>
+    <Id>1-14414</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>בוצע שינוי</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.PaymentDate</Code>
+    <DefaultText>Payment Date</DefaultText>
+    <Id>1-14415</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>תאריך תשלום</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.PaymentDateListLable</Code>
+    <DefaultText>Payment Date</DefaultText>
+    <Id>1-14417</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>תאריך תשלום</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.HatraDate</Code>
+    <DefaultText>Hatra Date</DefaultText>
+    <Id>1-14418</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>תאריך התרה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.HatraDateListLable</Code>
+    <DefaultText>Hatra Date</DefaultText>
+    <Id>1-14420</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>תאריך התרה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.DeclarationStatusTypeCode</Code>
+    <DefaultText>Declaration Status Type </DefaultText>
+    <Id>1-14421</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סטטוס הצהרה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.DeclarationStatusTypeCodeListLable</Code>
+    <DefaultText>Declaration Status Type</DefaultText>
+    <Id>1-14423</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>קוד סטטוס הצהרה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.LoadingFactor</Code>
+    <DefaultText>Loading Factor</DefaultText>
+    <Id>1-14424</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מקדם העמסה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.LoadingFactorListLable</Code>
+    <DefaultText>Loading Factor</DefaultText>
+    <Id>1-14426</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מקדם העמסה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.DealValue</Code>
+    <DefaultText>Deal Value</DefaultText>
+    <Id>1-14427</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סה"כ ערך עסקה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.DealValueListLable</Code>
+    <DefaultText>Deal Value</DefaultText>
+    <Id>1-14429</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סה"כ ערך עסקה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.CIFValue</Code>
+    <DefaultText>CIF Value</DefaultText>
+    <Id>1-14430</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סה"כ ערך סיף</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.CIFValueListLable</Code>
+    <DefaultText>CIF Value</DefaultText>
+    <Id>1-14432</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סה"כ ערך סיף</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.TotalTax</Code>
+    <DefaultText>Total Tax</DefaultText>
+    <Id>1-14433</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סה"כ מיסים</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.TotalTaxListLable</Code>
+    <DefaultText>Total Tax</DefaultText>
+    <Id>1-14435</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סה"כ מיסים</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.DeclarationNumberandVersionId</Code>
+    <DefaultText>Declaration Number</DefaultText>
+    <Id>1-14436</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מספר הצהרה </LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.FileState</Code>
+    <DefaultText>File State</DefaultText>
+    <Id>1-14444</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מצב תיק</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.FileStateListLable</Code>
+    <DefaultText>File State</DefaultText>
+    <Id>1-14446</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סוג תיק</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.TransportModeId</Code>
+    <DefaultText>Transport Mode </DefaultText>
+    <Id>1-14447</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סוג הובלה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.ErrosXml</Code>
+    <DefaultText>Erros Xml</DefaultText>
+    <Id>1-14449</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שגיאות להצהרה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.DeclarationOfficeName</Code>
+    <DefaultText>Declaration Office Name</DefaultText>
+    <Id>1-14451</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם בית מכס</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.DeclarationOfficeNameListLable</Code>
+    <DefaultText>Declaration Office Name</DefaultText>
+    <Id>1-14453</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם תחנת מכס</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.ImporterName</Code>
+    <DefaultText>Importer Name</DefaultText>
+    <Id>1-14454</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם יבואן</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.ImporterNameListLable</Code>
+    <DefaultText>Importer Name</DefaultText>
+    <Id>1-14456</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם יבואן</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.DepartmentId</Code>
+    <DefaultText>Department </DefaultText>
+    <Id>1-14457</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>חוליה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.DepartmentName</Code>
+    <DefaultText>Department Name</DefaultText>
+    <Id>1-14459</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>חוליה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.DepartmentNameListLable</Code>
+    <DefaultText>Department Name</DefaultText>
+    <Id>1-14461</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם חוליה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.ReferentUserId</Code>
+    <DefaultText>Referent User </DefaultText>
+    <Id>1-14462</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>רפרנט</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.DeclarationStatusTypeName</Code>
+    <DefaultText>Declaration Status Type Name</DefaultText>
+    <Id>1-14464</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סטטוס הצהרה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.DeclarationStatusTypeNameListLable</Code>
+    <DefaultText>Declaration Status Type Name</DefaultText>
+    <Id>1-14466</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText> שם  סטטוס הצהרה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.StorageSiteCode</Code>
+    <DefaultText>Storage Site</DefaultText>
+    <Id>1-14467</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>אתר אחסון</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.StorageSiteCodeListLable</Code>
+    <DefaultText>Storage Site</DefaultText>
+    <Id>1-14469</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>קוד אתר אחסון</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.PlatformFee</Code>
+    <DefaultText>PlatformFee</DefaultText>
+    <Id>1-14470</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>אגרת נמל</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.PlatformFeeListLable</Code>
+    <DefaultText>PlatformFee</DefaultText>
+    <Id>1-14472</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>אגרת נמל</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.CustomerCodeListLable</Code>
+    <DefaultText>Customer Code</DefaultText>
+    <Id>1-14477</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>קוד לקוח</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.CreateDateTime</Code>
+    <DefaultText>Create Date Time</DefaultText>
+    <Id>1-14478</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>תאריך פתיחה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.CreateDateTimeListLable</Code>
+    <DefaultText>Create Date Time</DefaultText>
+    <Id>1-14480</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>תאריך פתיחה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.UpdateDateTime</Code>
+    <DefaultText>Update Date Time</DefaultText>
+    <Id>1-14481</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>תאריך שעת עדכון</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.UpdateDateTimeListLable</Code>
+    <DefaultText>Update Date Time</DefaultText>
+    <Id>1-14483</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>תאריך ושעת עדכון</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.IsCancelled</Code>
+    <DefaultText>Is Cancelled</DefaultText>
+    <Id>1-14484</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>תיק מבוטל</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.IsCancelledListLable</Code>
+    <DefaultText>Is Cancelled</DefaultText>
+    <Id>1-14486</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>תיק מבוטל</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.EntitleImporterName</Code>
+    <DefaultText>Entitle Importer Name</DefaultText>
+    <Id>1-14487</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מספר יבואן זכאי</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.EntitleImporterNameListLable</Code>
+    <DefaultText>Entitle Importer Name</DefaultText>
+    <Id>1-14489</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם יבואן זכאי</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.TransportModeName</Code>
+    <DefaultText>Transport Mode Name</DefaultText>
+    <Id>1-14490</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סוג הובלה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.TransportModeNameListLable</Code>
+    <DefaultText>Transport Mode Name</DefaultText>
+    <Id>1-14492</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם סוג הובלה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.TransferImporterName</Code>
+    <DefaultText>Transfer Importer Name</DefaultText>
+    <Id>1-14493</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם יבואן מעביר</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate>2016-11-21T15:53:42.5876772</SpellCheckDate>
+    <SpellCheckedByUserId>1-1</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.DealValueWithoutFactor</Code>
+    <DefaultText>Deal Value Without Factor</DefaultText>
+    <Id>1-14495</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>ערך טובין בש”ח</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.DealValueWithoutFactorListLable</Code>
+    <DefaultText>Deal Value Without Factor</DefaultText>
+    <Id>1-14497</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>ערך טובין בש”ח</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.ImporterCode</Code>
+    <DefaultText>Importer</DefaultText>
+    <Id>1-14498</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מספר יבואן</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.TransferImporterCode</Code>
+    <DefaultText>Transfer Importer</DefaultText>
+    <Id>1-14500</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מספר יבואן מעביר</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.EntitleImporterCode</Code>
+    <DefaultText>Entitle Importer</DefaultText>
+    <Id>1-14502</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מספר יבואן זכאי</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.EntitleImporterCodeListLable</Code>
+    <DefaultText>Entitle Importer</DefaultText>
+    <Id>1-14504</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מספר יבואן זכאי</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.ImporterTypeCode</Code>
+    <DefaultText>Importer Type</DefaultText>
+    <Id>1-14518</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>קוד סוג יבואן</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.ImporterTypeCodeListLable</Code>
+    <DefaultText>Importer Type Code</DefaultText>
+    <Id>1-14520</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>קוד סוג יבואן</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.TransferImporterTypeCode</Code>
+    <DefaultText>Transfer Importer Type</DefaultText>
+    <Id>1-14521</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>קוד סוג יבואן מעביר</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.TransferImporterTypeCodeListLable</Code>
+    <DefaultText>Transfer Importer Type Code</DefaultText>
+    <Id>1-14523</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>קוד סוג יבואן מעביר</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.EntitleImporterTypeCode</Code>
+    <DefaultText>Entitle Importer Type</DefaultText>
+    <Id>1-14524</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>קוד סוג יבואן זכאי</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.EntitleImporterTypeCodeListLable</Code>
+    <DefaultText>Entitle Importer Type Code</DefaultText>
+    <Id>1-14526</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>קוד סוג יבואן זכאי</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.ImporterTypeName</Code>
+    <DefaultText>Importer Type</DefaultText>
+    <Id>1-14527</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם סוג יבואן</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.F.EntitleImporterTypeName</Code>
+    <DefaultText>Entitle Importer Type</DefaultText>
+    <Id>1-14533</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם סוג יבואן זכאי</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.EntitleImporterTypeNameListLable</Code>
+    <DefaultText>Entitle Importer Type Name</DefaultText>
+    <Id>1-14535</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם סוג יבואן זכאי</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.DeficitConnFileParagraphType.F.ParagraphTypeCode</Code>
+    <DefaultText>ParagraphType</DefaultText>
+    <Id>1-14760</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>קוד סעיף</LocalDefaultText>
+    <ObjectTableId>1-351</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.DeficitConnFileParagraphType.CH.ParagraphTypeCodeListLable</Code>
+    <DefaultText>ParagraphType</DefaultText>
+    <Id>1-14762</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>קוד סעיף</LocalDefaultText>
+    <ObjectTableId>1-351</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.DeficitConnFileParagraphType.F.ParagraphTypeName</Code>
+    <DefaultText>Paragraph Type</DefaultText>
+    <Id>1-14766</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם סעיף</LocalDefaultText>
+    <ObjectTableId>1-351</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Deficit.F.NotificationTypeCode</Code>
+    <DefaultText>Notification Type</DefaultText>
+    <Id>1-14768</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>קוד סוג הודעה</LocalDefaultText>
+    <ObjectTableId>1-352</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Deficit.CH.NotificationTypeCodeListLable</Code>
+    <DefaultText>Notification Type</DefaultText>
+    <Id>1-14770</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>קוד סוג הודעה</LocalDefaultText>
+    <ObjectTableId>1-352</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Deficit.F.NotificationTypeName</Code>
+    <DefaultText>Notification Type</DefaultText>
+    <Id>1-14771</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם סוג הודעה</LocalDefaultText>
+    <ObjectTableId>1-352</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Deficit.CH.NotificationTypeNameListLable</Code>
+    <DefaultText>Notification Type</DefaultText>
+    <Id>1-14773</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText> שם סוג הודעה</LocalDefaultText>
+    <ObjectTableId>1-352</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Notification.F.DeclarationOfficeCode</Code>
+    <DefaultText>Declaration Office Code</DefaultText>
+    <Id>1-15529</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>תחנת מכס</LocalDefaultText>
+    <ObjectTableId>1-386</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Notification.CH.DeclarationOfficeCodeListLable</Code>
+    <DefaultText>Declaration Office Code</DefaultText>
+    <Id>1-15531</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>תחנת מכס</LocalDefaultText>
+    <ObjectTableId>1-386</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Notification.F.Reference1Number</Code>
+    <DefaultText>Reference1 </DefaultText>
+    <Id>1-15565</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>תיק עמילות</LocalDefaultText>
+    <ObjectTableId>1-386</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Notification.F.Reference2Number</Code>
+    <DefaultText>Reference2 </DefaultText>
+    <Id>1-15567</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>אסמכתא</LocalDefaultText>
+    <ObjectTableId>1-386</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.NotificationDefinition.F.AssigneeNotificationTypeName</Code>
+    <DefaultText>Assignee Notification Type</DefaultText>
+    <Id>1-15599</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>קוד התראה</LocalDefaultText>
+    <ObjectTableId>1-387</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.NotificationDefinition.CH.AssigneeNotificationTypeNameListLable</Code>
+    <DefaultText>Assignee Notification Type</DefaultText>
+    <Id>1-15601</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>קוד התראה</LocalDefaultText>
+    <ObjectTableId>1-387</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.PaymentOrder.F.PaymentOrderTypeCode</Code>
+    <DefaultText>Payment Order </DefaultText>
+    <Id>1-15767</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>קוד סוג הוראת תשלום</LocalDefaultText>
+    <ObjectTableId>1-399</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.PaymentOrder.CH.PaymentOrderTypeCodeListLable</Code>
+    <DefaultText>Payment Order Type</DefaultText>
+    <Id>1-15769</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>קוד סוג הוראת תשלום</LocalDefaultText>
+    <ObjectTableId>1-399</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.PaymentOrder.F.PaymentProcessCode</Code>
+    <DefaultText>Payment Process </DefaultText>
+    <Id>1-15770</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>קוד תהליך היוצר</LocalDefaultText>
+    <ObjectTableId>1-399</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.PaymentOrder.CH.PaymentProcessCodeListLable</Code>
+    <DefaultText>Payment Process </DefaultText>
+    <Id>1-15772</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>קוד תהליך היוצר</LocalDefaultText>
+    <ObjectTableId>1-399</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.PaymentOrder.F.PaymentStatusCode</Code>
+    <DefaultText>Status </DefaultText>
+    <Id>1-15773</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סטאטוס הוראה</LocalDefaultText>
+    <ObjectTableId>1-399</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.PaymentOrder.CH.PaymentStatusCodeListLable</Code>
+    <DefaultText>Status </DefaultText>
+    <Id>1-15775</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>קוד סטאטוס הוראה</LocalDefaultText>
+    <ObjectTableId>1-399</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.PaymentOrder.CH.PaymentStatusNameListLable</Code>
+    <DefaultText>Status Name</DefaultText>
+    <Id>1-15804</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סטטוס הוראה</LocalDefaultText>
+    <ObjectTableId>1-399</ObjectTableId>
+    <SpellCheckDate>2016-07-05T14:48:01.2856899</SpellCheckDate>
+    <SpellCheckedByUserId>1-8</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.PaymentOrderLine.F.ParagraphTypeCode</Code>
+    <DefaultText>Paragraph Type</DefaultText>
+    <Id>1-15868</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם סעיף</LocalDefaultText>
+    <ObjectTableId>1-401</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.PaymentOrderLine.F.ParagraphTypeName</Code>
+    <DefaultText>Paragraph Type Name</DefaultText>
+    <Id>1-15874</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם סעיף</LocalDefaultText>
+    <ObjectTableId>1-401</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.PhysicalCheck.F.CheckSiteCode</Code>
+    <DefaultText>Check Site</DefaultText>
+    <Id>1-16020</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>קוד אתר בדיקה</LocalDefaultText>
+    <ObjectTableId>1-409</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.PhysicalCheck.CH.CheckSiteCodeListLable</Code>
+    <DefaultText>Check Site </DefaultText>
+    <Id>1-16022</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>קוד אתר בדיקה</LocalDefaultText>
+    <ObjectTableId>1-409</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.PhysicalCheck.F.CheckSiteName</Code>
+    <DefaultText>Check Site Name</DefaultText>
+    <Id>1-16023</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם אתר בדיקה</LocalDefaultText>
+    <ObjectTableId>1-409</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.PhysicalCheck.CH.CheckSiteNameListLable</Code>
+    <DefaultText>Check Site Name</DefaultText>
+    <Id>1-16025</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText> שם אתר בדיקה</LocalDefaultText>
+    <ObjectTableId>1-409</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.PhysicalCheck.CH.CargoIdentifierKey1ListLable</Code>
+    <DefaultText>Cargo Identifier Key1</DefaultText>
+    <Id>1-16051</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מזהה מטען 1 - tessst</LocalDefaultText>
+    <ObjectTableId>1-409</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.PhysicalCheck.F.IsClosed</Code>
+    <DefaultText>Is Closed</DefaultText>
+    <Id>1-16064</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סגור</LocalDefaultText>
+    <ObjectTableId>1-409</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.PhysicalCheck.CH.IsClosedListLable</Code>
+    <DefaultText>Is Closed</DefaultText>
+    <Id>1-16066</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סגור</LocalDefaultText>
+    <ObjectTableId>1-409</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.PhysicalCheck.F.StatusMessageCode</Code>
+    <DefaultText>Status Message</DefaultText>
+    <Id>1-16069</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סטטוס קוד הודעה</LocalDefaultText>
+    <ObjectTableId>1-409</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.PhysicalCheck.CH.StatusMessageCodeListLable</Code>
+    <DefaultText>Status Message </DefaultText>
+    <Id>1-16071</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>קוד סוג הודעה</LocalDefaultText>
+    <ObjectTableId>1-409</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.PhysicalCheck.F.StatusMessageName</Code>
+    <DefaultText>Status Message Name</DefaultText>
+    <Id>1-16104</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם סטטוס הודעה</LocalDefaultText>
+    <ObjectTableId>1-409</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.PhysicalCheck.CH.StatusMessageNameListLable</Code>
+    <DefaultText>Status Message Name</DefaultText>
+    <Id>1-16106</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם סוג הודעה</LocalDefaultText>
+    <ObjectTableId>1-409</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.ProceduralFault.CH.ProceduralFaultNumberListLable</Code>
+    <DefaultText>Procedural Fault Number</DefaultText>
+    <Id>1-16168</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מספר ליקוי</LocalDefaultText>
+    <ObjectTableId>1-414</ObjectTableId>
+    <SpellCheckDate>2016-08-30T09:11:33.2606035</SpellCheckDate>
+    <SpellCheckedByUserId>1-8</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.ProceduralFault.F.CreateDate</Code>
+    <DefaultText>Create Date</DefaultText>
+    <Id>1-16172</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>תאריך ליקוי</LocalDefaultText>
+    <ObjectTableId>1-414</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.ProceduralFault.CH.CreateDateListLable</Code>
+    <DefaultText>Create Date</DefaultText>
+    <Id>1-16174</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>תאריך פתיחה ליקוי</LocalDefaultText>
+    <ObjectTableId>1-414</ObjectTableId>
+    <SpellCheckDate>2016-07-05T14:47:09.8877501</SpellCheckDate>
+    <SpellCheckedByUserId>1-8</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.SupplierInvoiceItem.F.PreferenceDocumentNumber</Code>
+    <DefaultText>Preference Document Number</DefaultText>
+    <Id>1-16777</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מספר מסמך העדפה</LocalDefaultText>
+    <ObjectTableId>1-437</ObjectTableId>
+    <SpellCheckDate>2016-03-07T10:44:31.7947996</SpellCheckDate>
+    <SpellCheckedByUserId>1-1</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.SupplierInvoiceItem.CH.PreferenceDocumentNumberListLable</Code>
+    <DefaultText>Preference Document Number</DefaultText>
+    <Id>1-16779</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מספר מסמך העדפה</LocalDefaultText>
+    <ObjectTableId>1-437</ObjectTableId>
+    <SpellCheckDate>2016-03-07T08:44:03.4233604</SpellCheckDate>
+    <SpellCheckedByUserId>1-1</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.SupplierInvoiceItemsConDeclar.F.ItemSequence</Code>
+    <DefaultText>Item Sequence</DefaultText>
+    <Id>1-16801</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שורת פרט מכס</LocalDefaultText>
+    <ObjectTableId>1-438</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.SupplierInvoiceItemsConDeclar.CH.ItemSequenceListLable</Code>
+    <DefaultText>Item Sequence</DefaultText>
+    <Id>1-16803</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שורת פרט מכס</LocalDefaultText>
+    <ObjectTableId>1-438</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.SupplierInvoiceItemsConDeclar.F.DeclarationTypeCode</Code>
+    <DefaultText>Declaration Type</DefaultText>
+    <Id>1-16804</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סוג הצהרה</LocalDefaultText>
+    <ObjectTableId>1-438</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.SupplierInvoiceItemsConDeclar.CH.DeclarationTypeCodeListLable</Code>
+    <DefaultText>Declaration Type </DefaultText>
+    <Id>1-16806</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סוג הצהרה</LocalDefaultText>
+    <ObjectTableId>1-438</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.SupplierInvoiceItemsConDeclar.F.InvoiceNumber</Code>
+    <DefaultText>Invoice Number</DefaultText>
+    <Id>1-16807</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שורת חשבון ספק</LocalDefaultText>
+    <ObjectTableId>1-438</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.SupplierInvoiceItemsConDeclar.CH.InvoiceNumberListLable</Code>
+    <DefaultText>Invoice Number</DefaultText>
+    <Id>1-16809</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שורת חשבון ספק</LocalDefaultText>
+    <ObjectTableId>1-438</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.SupplierInvoiceItemsConDeclar.F.DeclarationTypeName</Code>
+    <DefaultText>Declaration Type Name</DefaultText>
+    <Id>1-16813</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סוג הצהרה</LocalDefaultText>
+    <ObjectTableId>1-438</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.SupplierInvoiceItemsConDeclar.CH.DeclarationTypeNameListLable</Code>
+    <DefaultText>Declaration Type Name</DefaultText>
+    <Id>1-16815</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סוג הצהרה</LocalDefaultText>
+    <ObjectTableId>1-438</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.SupplierInvoiceItemVehicle.F.SequenceNumeric</Code>
+    <DefaultText>Sequence Numeric</DefaultText>
+    <Id>1-17013</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מספר רץ </LocalDefaultText>
+    <ObjectTableId>1-446</ObjectTableId>
+    <SpellCheckDate>2016-03-01T14:06:16.4013595</SpellCheckDate>
+    <SpellCheckedByUserId>1-1</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Vehicle.F.StatusCode</Code>
+    <DefaultText>Status </DefaultText>
+    <Id>1-17323</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סטטוס ריכבית</LocalDefaultText>
+    <ObjectTableId>1-457</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Vehicle.CH.StatusCodeListLable</Code>
+    <DefaultText>Status </DefaultText>
+    <Id>1-17325</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סטטוס ריכבית</LocalDefaultText>
+    <ObjectTableId>1-457</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Vehicle.F.StatusName</Code>
+    <DefaultText>Status Name</DefaultText>
+    <Id>1-17358</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סטטוס ריכבית</LocalDefaultText>
+    <ObjectTableId>1-457</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Vehicle.CH.StatusNameListLable</Code>
+    <DefaultText>Status</DefaultText>
+    <Id>1-17360</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סטטוס ריכבית</LocalDefaultText>
+    <ObjectTableId>1-457</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.B.SendDeclaration</Code>
+    <DefaultText>Send Declaration</DefaultText>
+    <Id>1-17879</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שלח הצהרה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>B</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.General.O.EditMetaData</Code>
+    <DefaultText>Edit Meta Data</DefaultText>
+    <Id>1-17904</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>עריכת מטה דאטה</LocalDefaultText>
+    <ObjectTableId>1-3</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.FaultQuery.O.ProceduralFaultID</Code>
+    <DefaultText>Fault Id</DefaultText>
+    <Id>1-18079</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מספר ליקוי</LocalDefaultText>
+    <ObjectTableId>1-3</ObjectTableId>
+    <SpellCheckDate>2016-08-30T09:15:06.638808</SpellCheckDate>
+    <SpellCheckedByUserId>1-8</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.General.O.MasterBOLQuery</Code>
+    <DefaultText>Master BOL Query</DefaultText>
+    <Id>1-18162</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שאילתא לשטרי מטען אויר</LocalDefaultText>
+    <ObjectTableId>1-3</ObjectTableId>
+    <SpellCheckDate>2016-03-15T14:26:12.3668468</SpellCheckDate>
+    <SpellCheckedByUserId>1-1</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.General.O.MasavPaymentsToAgentQueryMessage</Code>
+    <DefaultText>Masav Payments To Agent Query Message</DefaultText>
+    <Id>1-18207</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>בקשת דו"ח מס"ב</LocalDefaultText>
+    <ObjectTableId>1-3</ObjectTableId>
+    <SpellCheckDate>2016-02-28T09:09:22.0878444</SpellCheckDate>
+    <SpellCheckedByUserId>1-1</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.General.O.MasavPaymentsToAgentQuery</Code>
+    <DefaultText>Masav Payments To Agent Query</DefaultText>
+    <Id>1-18208</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שאילתא לבקשת דו"ח קופה</LocalDefaultText>
+    <ObjectTableId>1-3</ObjectTableId>
+    <SpellCheckDate>2016-02-28T09:09:21.853831</SpellCheckDate>
+    <SpellCheckedByUserId>1-1</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.General.O.MasavPaymentsToAgentQueryResults</Code>
+    <DefaultText>Deficit File Filter Results</DefaultText>
+    <Id>1-18209</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>תוצאות שאילתא לבקשת דו"ח מס"ב</LocalDefaultText>
+    <ObjectTableId>1-3</ObjectTableId>
+    <SpellCheckDate>2016-02-28T09:09:22.1028453</SpellCheckDate>
+    <SpellCheckedByUserId>1-1</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>General.MH.Notifications</Code>
+    <DefaultText>Notifications</DefaultText>
+    <Id>1-18379</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מרכז התראות</LocalDefaultText>
+    <ObjectTableId>1-3</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>MH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>General.MH.ProceduralFaults</Code>
+    <DefaultText>Procedural Faults</DefaultText>
+    <Id>1-18380</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>ליקויים</LocalDefaultText>
+    <ObjectTableId>1-3</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>MH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.PhysicalCheck.F.ChooseDateMessage</Code>
+    <DefaultText>New Limit Date Is Chosen Successfully</DefaultText>
+    <Id>1-18397</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>תאריך בדיקה חדש נבחר בהצלחה</LocalDefaultText>
+    <ObjectTableId>1-409</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.PhysicalCheck.O.QueueTypeRequierd</Code>
+    <DefaultText>Please Select a queue type to request check times</DefaultText>
+    <Id>1-18400</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>לא ניתן לבצע שינוי מועד בדיקה ללא סוג תור</LocalDefaultText>
+    <ObjectTableId>1-409</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.PhysicalCheck.O.WaitingResponse</Code>
+    <DefaultText>Waiting Response...</DefaultText>
+    <Id>1-18403</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>ממתין לתגובה</LocalDefaultText>
+    <ObjectTableId>1-409</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Vendor.O.New</Code>
+    <DefaultText>Create Supplier</DefaultText>
+    <Id>1-18408</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>הקמת ספק</LocalDefaultText>
+    <ObjectTableId>1-339</ObjectTableId>
+    <SpellCheckDate>2016-02-16T13:35:27.2015806</SpellCheckDate>
+    <SpellCheckedByUserId>1-1</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Vendor.O.NewVendor</Code>
+    <DefaultText>New Vendor</DefaultText>
+    <Id>1-18411</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>הקמת ספק</LocalDefaultText>
+    <ObjectTableId>1-339</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Vendor.O.NewClient</Code>
+    <DefaultText>New Client</DefaultText>
+    <Id>1-18427</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שליפת יבואן</LocalDefaultText>
+    <ObjectTableId>1-339</ObjectTableId>
+    <SpellCheckDate>2017-03-07T12:41:20.1976335</SpellCheckDate>
+    <SpellCheckedByUserId>1-8</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.DeletePackage</Code>
+    <DefaultText>Delete this Package?</DefaultText>
+    <Id>1-18438</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מחק את החבילה הזו?</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.DeleteConsignment</Code>
+    <DefaultText>Delete this Consignment?</DefaultText>
+    <Id>1-18439</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מחק את המשלוח הזה?</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.EditInvoiceItem</Code>
+    <DefaultText>Edit Invoice Item</DefaultText>
+    <Id>1-18444</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>עריכת פרט מכס</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.Declarations</Code>
+    <DefaultText>Declarations</DefaultText>
+    <Id>1-18445</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>הצהרות</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.Items</Code>
+    <DefaultText>Items</DefaultText>
+    <Id>1-18446</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>פרטי חשבון ספק</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.Details</Code>
+    <DefaultText>Details</DefaultText>
+    <Id>1-18447</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>פרטים</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.Modifications</Code>
+    <DefaultText>Modifications</DefaultText>
+    <Id>1-18448</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שינויים</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.NewInvoice</Code>
+    <DefaultText>New Invoice</DefaultText>
+    <Id>1-18449</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>חשבון ספק חדש</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate>2016-02-04T08:25:55.4679563</SpellCheckDate>
+    <SpellCheckedByUserId>1-1</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.DeleteInvoice</Code>
+    <DefaultText>Delete this Invoice?</DefaultText>
+    <Id>1-18451</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>האם למחוק את החשבון ושורות פרטי המכס</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.Certificates</Code>
+    <DefaultText>Certificates</DefaultText>
+    <Id>1-18453</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>אישורים</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.Amount</Code>
+    <DefaultText>Amount</DefaultText>
+    <Id>1-18456</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סכום</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.AddCustomsDocument</Code>
+    <DefaultText>Add Customs Document</DefaultText>
+    <Id>1-18458</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>הוסף מסמך המכס</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.DeclarationStatusRequest</Code>
+    <DefaultText>Declaration Status Request</DefaultText>
+    <Id>1-18464</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>בקשת סטטוס הצהרה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.Description</Code>
+    <DefaultText>Description</DefaultText>
+    <Id>1-18472</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>תיאור</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.Line</Code>
+    <DefaultText>Line</DefaultText>
+    <Id>1-18475</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שורה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.Link</Code>
+    <DefaultText>Link</DefaultText>
+    <Id>1-18477</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>קשר</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.ConstraintIndication</Code>
+    <DefaultText>Constraint Indication</DefaultText>
+    <Id>1-18478</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>הוריה אילוץ</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.ConstraintData</Code>
+    <DefaultText>Constraint Data</DefaultText>
+    <Id>1-18479</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>נתונים אילוץ</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.EditDocumentMetaData</Code>
+    <DefaultText>Edit Document MetaData</DefaultText>
+    <Id>1-18480</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>עריכת מסמך</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.DisconnectedDocument</Code>
+    <DefaultText>Disconnected  Document</DefaultText>
+    <Id>1-18482</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מסמך מנותק</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.DocumentPreview</Code>
+    <DefaultText>Document Preview</DefaultText>
+    <Id>1-18483</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>תצוגה מקדימה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.DocumentMetaData</Code>
+    <DefaultText>Document MetaData</DefaultText>
+    <Id>1-18484</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>נתוני מטה דאטה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.DocumentAndCustomDocumentType</Code>
+    <DefaultText>Document and custom Document must be the same type!</DefaultText>
+    <Id>1-18487</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סוגי המסמך של הצרופה והדרישה צריכים להיות זהים </LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.MetaDataEdit</Code>
+    <DefaultText>You must edit the metadata for the document first!</DefaultText>
+    <Id>1-18488</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>יש להזין נתוני מטה דאטה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.DeclarationTaxesLines</Code>
+    <DefaultText>Declaration Taxes Lines</DefaultText>
+    <Id>1-18490</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מיסים ברמת הצהרה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.ItemTaxes</Code>
+    <DefaultText>Item Taxes</DefaultText>
+    <Id>1-18491</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מיסים ברמת פרט מכס</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.ListVersion</Code>
+    <DefaultText>List Version</DefaultText>
+    <Id>1-18500</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סוג שגיאה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.Difference</Code>
+    <DefaultText>Difference</DefaultText>
+    <Id>1-18501</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>הפרש</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.ExistingType</Code>
+    <DefaultText>Sorry you can't choose an existing type</DefaultText>
+    <Id>1-18503</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>לא ניתן לבחור בסוג קיים</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.FillAgentExplanation</Code>
+    <DefaultText>Fill agent explanation field first.</DefaultText>
+    <Id>1-18504</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>יש להזין נימוק לאישור האילוץ</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.CantAddToConnected</Code>
+    <DefaultText>Document cannot be added to a connected Pointer!</DefaultText>
+    <Id>1-18509</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>לכרטיסיה זו כבר צורף מסמך</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.CorrectDigit</Code>
+    <DefaultText>Check digit is incorrect ,the correct digit is </DefaultText>
+    <Id>1-18514</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText> ספרת הביקורת שגויה , הספרה הנכונה היא </LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.AmountsNotCompatableToIncoterm</Code>
+    <DefaultText>Freight/Insurance are not compitable to Incoterms ,Continue?</DefaultText>
+    <Id>1-18515</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText> אין התאמה לתנאי המכר , האם להמשיך ? </LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.DifferentTotals</Code>
+    <DefaultText>Tax to pay is different than File taxes , screen is display only</DefaultText>
+    <Id>1-18516</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>המס לתשלום שונה מהמיסים לתיק , המסך לתצוגה בלבד</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.PaidDeclaration</Code>
+    <DefaultText>Declaration was already paid , screen is display only</DefaultText>
+    <Id>1-18517</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>הצהרה כבר שולמה , המסך לתצוגה בלבד</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.ChangedDeclaration</Code>
+    <DefaultText>Declaration data was changed , please send again before trying to pay</DefaultText>
+    <Id>1-18520</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>בוצעו שינויים בהצהרה , יש לשדר שוב לפני הגשת תשלום</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.NewDeclaration</Code>
+    <DefaultText>New Declaration</DefaultText>
+    <Id>1-18521</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>הצהרה חדשה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.CustomFileIsAlreadyEntered</Code>
+    <DefaultText>Custom file is already entered, can’t create new declaration</DefaultText>
+    <Id>1-18522</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>הוזן תיק עמילות , לא ניתן לפתוח הצהרה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.ClientIsMandatory</Code>
+    <DefaultText>Client is mandatory</DefaultText>
+    <Id>1-18523</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>יש להזין לקוח</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.Match</Code>
+    <DefaultText>Transport Mode not match to DeclarationOfficeCode</DefaultText>
+    <Id>1-18524</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סוג ההובלה לא תואם לתחנת המכס</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.DeclarationOfficeCodeMandatory</Code>
+    <DefaultText>DeclarationOfficeCode is mandatory</DefaultText>
+    <Id>1-18525</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>יש להזין בית מכס</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.Didntfindcustomfile</Code>
+    <DefaultText>Didn't find custom file</DefaultText>
+    <Id>1-18527</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>לא נמצא תיק עמילות</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.DeclarationTaxChanged</Code>
+    <DefaultText>Changes were made in declaration , Taxes are not up to date</DefaultText>
+    <Id>1-18528</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>בוצעו שינויים בהצהרה , מסך מיסים אינו עדכני</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.MetaDataReady</Code>
+    <DefaultText>Metadata is ready</DefaultText>
+    <Id>1-18530</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>נתוני מטה-דאטה מוכנים</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.MetaDataNotReady</Code>
+    <DefaultText>Metadata is not ready</DefaultText>
+    <Id>1-18531</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>נתוני מטה-דאטה אינם מוכנים</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.SendPaymentOrder</Code>
+    <DefaultText>Send Payment Order</DefaultText>
+    <Id>1-18538</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>הגש תשלום</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.CustomsDocumentRemarks</Code>
+    <DefaultText>Remarks</DefaultText>
+    <Id>1-18573</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>הערות מכס </LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate>2016-02-28T09:13:31.2580961</SpellCheckDate>
+    <SpellCheckedByUserId>1-1</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomBank.O.Exist</Code>
+    <DefaultText>Sorry you can't choose an existing client</DefaultText>
+    <Id>1-18599</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>לא ניתן לבחור בלקוח קיים</LocalDefaultText>
+    <ObjectTableId>1-306</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Client.O.EditClient</Code>
+    <DefaultText>Edit Client</DefaultText>
+    <Id>1-18605</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>פרטי יבואן </LocalDefaultText>
+    <ObjectTableId>1-284</ObjectTableId>
+    <SpellCheckDate>2017-01-10T09:26:38.2813139</SpellCheckDate>
+    <SpellCheckedByUserId>1-1</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.General.O.InterfaceManagement</Code>
+    <DefaultText>Interface Managements</DefaultText>
+    <Id>1-18620</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>ניהול מסרים</LocalDefaultText>
+    <ObjectTableId>1-372</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>TH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.General.O.AlreadyExist</Code>
+    <DefaultText>Interface Management Already Exist</DefaultText>
+    <Id>1-18621</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מסר כבר קיים</LocalDefaultText>
+    <ObjectTableId>1-372</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.General.O.NewInterfaceManagement</Code>
+    <DefaultText>New Interface Management</DefaultText>
+    <Id>1-18623</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>הגדרת מסר חדש</LocalDefaultText>
+    <ObjectTableId>1-372</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.General.O.EditInterfaceManagement</Code>
+    <DefaultText>Edit Interface Management</DefaultText>
+    <Id>1-18624</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>עריכת מסר</LocalDefaultText>
+    <ObjectTableId>1-372</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Notification.O.Open</Code>
+    <DefaultText>Open</DefaultText>
+    <Id>1-18630</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>פתוחות</LocalDefaultText>
+    <ObjectTableId>1-386</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Notification.O.Closed</Code>
+    <DefaultText>Closed</DefaultText>
+    <Id>1-18631</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סגורות</LocalDefaultText>
+    <ObjectTableId>1-386</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Notification.O.DueUntil</Code>
+    <DefaultText>Due Until:</DefaultText>
+    <Id>1-18633</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>תאריך יעד:</LocalDefaultText>
+    <ObjectTableId>1-386</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Notification.O.Office</Code>
+    <DefaultText>Office</DefaultText>
+    <Id>1-18639</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>תחנת מכס</LocalDefaultText>
+    <ObjectTableId>1-386</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Notification.O.OpenNotification</Code>
+    <DefaultText>Open Notifications</DefaultText>
+    <Id>1-18659</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>התראות פתוחות</LocalDefaultText>
+    <ObjectTableId>1-386</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsCollateral.O.AgentObjection</Code>
+    <DefaultText>Agent Objection</DefaultText>
+    <Id>1-18693</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שלח ערעור</LocalDefaultText>
+    <ObjectTableId>1-319</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.DeleteCollateralAnswer</Code>
+    <DefaultText>Delete this answer?</DefaultText>
+    <Id>1-18703</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>הפרטים שהזנת יימחקו, האם להמשיך? </LocalDefaultText>
+    <ObjectTableId>1-319</ObjectTableId>
+    <SpellCheckDate>2016-02-22T07:52:37.6327007</SpellCheckDate>
+    <SpellCheckedByUserId>1-1</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.PhysicalCheck.TH.RequestSheets</Code>
+    <DefaultText>Request Sheets</DefaultText>
+    <Id>1-18716</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>גיליון בקשות</LocalDefaultText>
+    <ObjectTableId>1-409</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>TH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.TH.General</Code>
+    <DefaultText>General</DefaultText>
+    <Id>1-18717</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>כללי</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>TH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.TH.Events</Code>
+    <DefaultText>Events</DefaultText>
+    <Id>1-18718</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>אירועים</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>TH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.TH.Invoices</Code>
+    <DefaultText>Supplier Invoices</DefaultText>
+    <Id>1-18719</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>חשבונות ספק</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>TH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.TH.Taxes</Code>
+    <DefaultText>Taxes</DefaultText>
+    <Id>1-18720</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מסים</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>TH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.TH.Payments</Code>
+    <DefaultText>Declaration Payment</DefaultText>
+    <Id>1-18721</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>הגשת תשלום</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>TH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.TH.Documents</Code>
+    <DefaultText>Documents</DefaultText>
+    <Id>1-18722</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מסמכים</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>TH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.TH.More</Code>
+    <DefaultText>More</DefaultText>
+    <Id>1-18723</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>נוספים</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>TH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.TH.Communications</Code>
+    <DefaultText>Communications</DefaultText>
+    <Id>1-18724</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>תקשורות</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>TH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.TH.DocsIn</Code>
+    <DefaultText>Docs In</DefaultText>
+    <Id>1-18725</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מסמכים מקושרים</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>TH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.TH.CustomDocuments</Code>
+    <DefaultText>Customs Documents</DefaultText>
+    <Id>1-18726</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>צרופות מכס</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>TH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.TH.CustomsAnswers</Code>
+    <DefaultText>Customs Reply</DefaultText>
+    <Id>1-18727</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>תשובה לתיק</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>TH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.TH.PhysicalCheck</Code>
+    <DefaultText>Physical Checks</DefaultText>
+    <Id>1-18728</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>בדיקה פיזית</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>TH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.TH.PaymentOrder</Code>
+    <DefaultText>Payment Orders</DefaultText>
+    <Id>1-18729</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>הוראות תשלום</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>TH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.TH.RequestSheet</Code>
+    <DefaultText>Request Sheets</DefaultText>
+    <Id>1-18730</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>גיליון בקשות</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>TH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.TH.Notification</Code>
+    <DefaultText>Notifications</DefaultText>
+    <Id>1-18733</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>הודעות לסוכן</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>TH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Vendor.TH.RequestSheet</Code>
+    <DefaultText>Request Sheet</DefaultText>
+    <Id>1-18738</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>גיליון בקשות</LocalDefaultText>
+    <ObjectTableId>1-339</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>TH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Client.TH.RequestSheets</Code>
+    <DefaultText>Request Sheets</DefaultText>
+    <Id>1-18742</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>גיליון בקשות</LocalDefaultText>
+    <ObjectTableId>1-284</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>TH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsSetting.Q.CustomsSettingQuery</Code>
+    <DefaultText>Customs Settings</DefaultText>
+    <Id>1-18753</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>הגדרות מכס</LocalDefaultText>
+    <ObjectTableId>1-337</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>Q</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.NotificationDefinition.Q.NotificationDefinitionQuery</Code>
+    <DefaultText>Notification Definition</DefaultText>
+    <Id>1-18756</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>הגדרת התראות</LocalDefaultText>
+    <ObjectTableId>1-387</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>Q</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.ProceduralFault.Q.ProceduralFaults</Code>
+    <DefaultText>Procedural Faults</DefaultText>
+    <Id>1-18757</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText> ליקויים</LocalDefaultText>
+    <ObjectTableId>1-414</ObjectTableId>
+    <SpellCheckDate>2016-08-30T09:16:38.7910788</SpellCheckDate>
+    <SpellCheckedByUserId>1-8</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>Q</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.UnloadingSiteType.Q.UnloadingSiteTypeQuery</Code>
+    <DefaultText>Unloading Site Type</DefaultText>
+    <Id>1-18834</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>סוג אתר פריקה</LocalDefaultText>
+    <ObjectTableId>1-455</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>Q</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.PaymentOrder.TH.RequestSheets</Code>
+    <DefaultText>Request Sheets</DefaultText>
+    <Id>1-18875</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>גיליון בקשות</LocalDefaultText>
+    <ObjectTableId>1-399</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>TH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsDocuments.MetaDataDifference</Code>
+    <DefaultText>There is a difference between the meta data, do you wish to continue?</DefaultText>
+    <Id>1-18881</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>קיים הבדלים בין נתוני המסמכים , האם לקשר בכל מקרה ?</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsDocuments.DisconnectConfirm</Code>
+    <DefaultText>a document is connected to this ticket , delete anyway ?</DefaultText>
+    <Id>1-18882</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>קיים מסמך מקושר , למחוק ?</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsDocuments.NotReady</Code>
+    <DefaultText>Not Ready</DefaultText>
+    <Id>1-18883</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>לא מוכן</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.CustomsDocuments.Ready</Code>
+    <DefaultText>Ready</DefaultText>
+    <Id>1-18884</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>מוכן</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate xsi:nil="true" />
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Claim.F.ClientId</Code>
+    <DefaultText>Client Id</DefaultText>
+    <Id>1-20211</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>יבואן</LocalDefaultText>
+    <ObjectTableId>1-495</ObjectTableId>
+    <SpellCheckDate>2016-05-16T11:30:51.0658639</SpellCheckDate>
+    <SpellCheckedByUserId>1-1</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Claim.CH.ClientIdListLable</Code>
+    <DefaultText>Client</DefaultText>
+    <Id>1-20213</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>יבואן </LocalDefaultText>
+    <ObjectTableId>1-495</ObjectTableId>
+    <SpellCheckDate>2016-05-16T07:29:57.8771887</SpellCheckDate>
+    <SpellCheckedByUserId>1-1</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Claim.F.CustomsAddressCode</Code>
+    <DefaultText>Customs Address Code</DefaultText>
+    <Id>1-20229</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>כתובת יבואן</LocalDefaultText>
+    <ObjectTableId>1-495</ObjectTableId>
+    <SpellCheckDate>2016-07-19T09:25:32.2734825</SpellCheckDate>
+    <SpellCheckedByUserId>1-8</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Claim.CH.CustomsAddressCodeListLable</Code>
+    <DefaultText>Customs Address</DefaultText>
+    <Id>1-20231</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>כתובת יבואן</LocalDefaultText>
+    <ObjectTableId>1-495</ObjectTableId>
+    <SpellCheckDate>2016-07-19T08:58:44.0574979</SpellCheckDate>
+    <SpellCheckedByUserId>1-8</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Claim.F.ContactPhoneAddressCode</Code>
+    <DefaultText>Contact Phone Address</DefaultText>
+    <Id>1-20232</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>כתובת איש קשר יבואן</LocalDefaultText>
+    <ObjectTableId>1-495</ObjectTableId>
+    <SpellCheckDate>2016-07-19T09:24:38.4634048</SpellCheckDate>
+    <SpellCheckedByUserId>1-8</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>F</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Claim.CH.ContactPhoneAddressCodeListLable</Code>
+    <DefaultText>Contact Phone Address</DefaultText>
+    <Id>1-20234</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>כתובת איש קשר יבואן</LocalDefaultText>
+    <ObjectTableId>1-495</ObjectTableId>
+    <SpellCheckDate>2016-07-19T08:59:24.7428249</SpellCheckDate>
+    <SpellCheckedByUserId>1-8</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.B.DeclarationsStatusRequest</Code>
+    <DefaultText>Declarations Status Request</DefaultText>
+    <Id>1-20100</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>בדיקת סטטוס הצהרה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate>2016-02-02T10:55:55.5971396</SpellCheckDate>
+    <SpellCheckedByUserId>1-1</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>B</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.B.DeclarationRestore</Code>
+    <DefaultText>Declaration Restore</DefaultText>
+    <Id>1-20101</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שחזור נתוני הצהרה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate>2016-02-02T10:57:06.2441804</SpellCheckDate>
+    <SpellCheckedByUserId>1-1</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>B</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.B.Copy</Code>
+    <DefaultText>Copy</DefaultText>
+    <Id>1-20103</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>העתקת הצהרה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate>2016-02-03T08:55:37.6350931</SpellCheckDate>
+    <SpellCheckedByUserId>1-1</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>B</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.Date</Code>
+    <DefaultText>Date</DefaultText>
+    <Id>1-20115</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>תאריך</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate>2016-02-03T11:02:29.4564644</SpellCheckDate>
+    <SpellCheckedByUserId>1-1</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.CH.TransferImporterNameListLable</Code>
+    <DefaultText>Transfer Importer Name</DefaultText>
+    <Id>1-22281</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>שם יבואן מעביר</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate>2016-11-21T15:53:42.2746592</SpellCheckDate>
+    <SpellCheckedByUserId>1-1</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>CH</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.CopyNow</Code>
+    <DefaultText>Copy Now</DefaultText>
+    <Id>1-22092</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>עדכן כמות יחידות</LocalDefaultText>
+    <ObjectTableId>1-319</ObjectTableId>
+    <SpellCheckDate>2016-07-06T11:40:52.9022604</SpellCheckDate>
+    <SpellCheckedByUserId>1-8</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.VehiclesModifications</Code>
+    <DefaultText>Vehicles Modifications</DefaultText>
+    <Id>1-22269</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>התאמות ברמת שילדה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate>2017-02-28T14:18:50.2181441</SpellCheckDate>
+    <SpellCheckedByUserId>1-8</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.WithResponse</Code>
+    <DefaultText>With response</DefaultText>
+    <Id>1-22238</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>עם מענה</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate>2016-08-18T07:48:01.9664601</SpellCheckDate>
+    <SpellCheckedByUserId>1-8</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.Create</Code>
+    <DefaultText>Create</DefaultText>
+    <Id>1-22246</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>צור חדש</LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate>2016-08-21T14:33:08.9191302</SpellCheckDate>
+    <SpellCheckedByUserId>1-8</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+  <TextCodeDTO>
+    <Code>Customs.Declaration.O.Move</Code>
+    <DefaultText>Move</DefaultText>
+    <Id>1-22247</Id>
+    <InActive>false</InActive>
+    <IsSpellChecked>true</IsSpellChecked>
+    <LocalDefaultText>העבר </LocalDefaultText>
+    <ObjectTableId>1-343</ObjectTableId>
+    <SpellCheckDate>2016-08-21T14:33:44.0431392</SpellCheckDate>
+    <SpellCheckedByUserId>1-8</SpellCheckedByUserId>
+    <Tenant>0</Tenant>
+    <TextCodeTypeCode>O</TextCodeTypeCode>
+  </TextCodeDTO>
+</ArrayOfTextCodeDTO>

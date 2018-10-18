@@ -1,0 +1,285 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Customs.Def.Validators;
+  
+namespace Logitude.Customs.Def.EntityPMs
+{
+   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class DecCargoSplitConsPackDetPM : EntityPM
+   {
+   	  private string declarationCargoSplitId ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DeclarationCargoSplitId  
+	   {
+	    
+	     get
+		{
+		   return declarationCargoSplitId;
+		 }
+		 set
+		 {
+		   if(declarationCargoSplitId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeclarationCargoSplitId",OldValue=declarationCargoSplitId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   declarationCargoSplitId=value;
+		   }
+			
+		 }
+	   }
+	  private int tenant ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+	  private int? decCargoSplitConsLineNo ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? DecCargoSplitConsLineNo  
+	   {
+	    
+	     get
+		{
+		   return decCargoSplitConsLineNo;
+		 }
+		 set
+		 {
+		   if(decCargoSplitConsLineNo != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DecCargoSplitConsLineNo",OldValue=decCargoSplitConsLineNo,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   decCargoSplitConsLineNo=value;
+		   }
+			
+		 }
+	   }
+	  private int decCargoSplitConsItemLine ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int DecCargoSplitConsItemLine  
+	   {
+	    
+	     get
+		{
+		   return decCargoSplitConsItemLine;
+		 }
+		 set
+		 {
+		   if(decCargoSplitConsItemLine != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DecCargoSplitConsItemLine",OldValue=decCargoSplitConsItemLine,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   decCargoSplitConsItemLine=value;
+		   }
+			
+		 }
+	   }
+	  private int packageLine ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int PackageLine  
+	   {
+	    
+	     get
+		{
+		   return packageLine;
+		 }
+		 set
+		 {
+		   if(packageLine != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageLine",OldValue=packageLine,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   packageLine=value;
+		   }
+			
+		 }
+	   }
+	  private int? packageQuantity ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? PackageQuantity  
+	   {
+	    
+	     get
+		{
+		   return packageQuantity;
+		 }
+		 set
+		 {
+		   if(packageQuantity != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageQuantity",OldValue=packageQuantity,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   packageQuantity=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? grossMassMeasure ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? GrossMassMeasure  
+	   {
+	    
+	     get
+		{
+		   return grossMassMeasure;
+		 }
+		 set
+		 {
+		   if(grossMassMeasure != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GrossMassMeasure",OldValue=grossMassMeasure,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   grossMassMeasure=value;
+		   }
+			
+		 }
+	   }
+	  private string packageTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PackageTypeCode  
+	   {
+	    
+	     get
+		{
+		   return packageTypeCode;
+		 }
+		 set
+		 {
+		   if(packageTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageTypeCode",OldValue=packageTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   packageTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string packageTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PackageTypeName  
+	   {
+	    
+	     get
+		{
+		   return packageTypeName;
+		 }
+		 set
+		 {
+		   if(packageTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageTypeName",OldValue=packageTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   packageTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private string marksNumbers ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string MarksNumbers  
+	   {
+	    
+	     get
+		{
+		   return marksNumbers;
+		 }
+		 set
+		 {
+		   if(marksNumbers != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MarksNumbers",OldValue=marksNumbers,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   marksNumbers=value;
+		   }
+			
+		 }
+	   }
+	  private string manifestNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ManifestNumber  
+	   {
+	    
+	     get
+		{
+		   return manifestNumber;
+		 }
+		 set
+		 {
+		   if(manifestNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ManifestNumber",OldValue=manifestNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   manifestNumber=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

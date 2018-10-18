@@ -1,0 +1,238 @@
+﻿
+<style>
+    .CurvedArea2 {
+        background: white;
+        border-radius: 8px;
+        -moz-border-radius: 8px;
+        -webkit-border-radius: 8px;
+        border: 0.5px solid #C8C8C8;
+        box-shadow: 0px 0px 1px 1px #D1D1D1;
+        -moz-box-shadow: 0px 0px 1px 1px #D1D1D1;
+        -webkit-box-shadow: 0px 0px 1px 1px #D1D1D1;
+    }
+
+
+    .AppLeftMenuBackground2 {
+        background: -moz-linear-gradient(0% 50% 0deg,rgba(247, 247, 247, 1) 0%,rgba(245, 245, 245, 1) 52.38%,rgba(238, 238, 238, 1) 72.96%,rgba(226, 226, 226, 1) 87.88%,rgba(209, 209, 209, 1) 100%);
+        background: -webkit-linear-gradient(0deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 52.38%, rgba(238, 238, 238, 1) 72.96%, rgba(226, 226, 226, 1) 87.88%, rgba(209, 209, 209, 1) 100%);
+        background: -webkit-gradient(linear,0% 50%,100% 50%,color-stop(0,rgba(247, 247, 247, 1) ),color-stop(0.5238,rgba(245, 245, 245, 1) ),color-stop(0.7296,rgba(238, 238, 238, 1) ),color-stop(0.8788,rgba(226, 226, 226, 1) ),color-stop(1,rgba(209, 209, 209, 1) ));
+        background: -o-linear-gradient(0deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 52.38%, rgba(238, 238, 238, 1) 72.96%, rgba(226, 226, 226, 1) 87.88%, rgba(209, 209, 209, 1) 100%);
+        background: linear-gradient(90deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 52.38%, rgba(238, 238, 238, 1) 72.96%, rgba(226, 226, 226, 1) 87.88%, rgba(209, 209, 209, 1) 100%);
+        border-radius: 8px 0 0 8px;
+        -moz-border-radius: 8px 0 0 8px;
+        -webkit-border-radius: 8px 0 0 8px;
+    }
+
+
+
+
+
+
+    .EmailBoxMultiLinesText {
+        width: 100%;
+        max-height: 50px;
+        white-space: normal;
+        word-wrap: break-word;
+        overflow-x: hidden;
+        overflow-y: auto;
+        font-size: 11px;
+        min-height: 24px;
+    }
+</style>
+
+
+
+
+
+
+
+
+
+<table style="top:0; bottom:0; left:0; right:0; margin:auto; background: white;">
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+    
+      <tr style="height: 5px;">
+        <td></td>
+    </tr>
+
+
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <td>
+                        <div class="FillParent CurvedArea2">
+                            <table>
+                                <tr>
+                                    
+
+                                    <td>
+                                        <div class="FillParent">
+
+                                            <div class="FillParent" style="margin-left:5px;margin-right:5px">
+                                                <table>
+                                                    <tr style="height:10px">
+                                                        <td colspan="3">
+                                                            <div>
+
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr class="TabTitleRow">
+                                                        <td style="width:5px; vertical-align:middle; font-size:11px; "><div style="width:5px"></div></td>
+                                                        <td style="width: 45px; vertical-align:middle; font-size:11px; color : #6E7172;">
+
+                                                            <div style="margin-top:2px">
+
+                                                                Search:
+
+                                                            </div>
+
+
+                                                        </td>
+                                                        <td style="width:200px; vertical-align: middle;">
+                                                            <SearchTextBox [ObjectTableName]="ObjectTableName" [PlaceHolder]="'Search'" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)"></SearchTextBox>
+                                                        </td>
+
+                                                        <td><div></div></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td colspan="4">
+                                                            <div class="FillParent">
+                                                                <div class="ScrollViewer">
+                                                                    <div class="ScrollContent">
+                                                                        <table>
+                                                                            <tr>
+                                                                                <td style="height: 100%;">
+                                                                                    <div style="height: 100%; width: 100%; position: relative;">
+
+
+                                                                                        <logitude-grid [QueryChangeEvent]="onQueryChangeEvent" [rows]="items" [dataSource]="DataSource" [SearchFieldchangeevent]="SearchFieldchangeevent"
+                                                                                                       [columns]="columns" [autoLoad]="true" [IsCustomTemplate]="true">
+                                                                                        </logitude-grid>
+
+                                                                                    </div>
+
+
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="height:5px">
+                                                        <td colspan="4">
+                                                            <div style="height:5px">
+
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <!--<tr style="height:0px;max-height:190px">
+                                                        <td colspan="4" style="height:auto">
+                                                            <div style="min-height:0px;max-height:190px">
+                                                                <table style="height:auto;width:100%;">
+
+                                                                    <tr *ngIf="IsShowMessageCount" style="height:15px;">
+
+                                                                        <td style="width:5px"><div></div></td>
+                                                                        <td style="width:30px;text-align:left"></td>
+
+                                                                        <td colspan="2">
+                                                                            <span *ngIf="IsShowMessageCountTo" style="width:300px;background-color:red;color:white;margin-left:5px;">
+                                                                                <span style="margin-left:5px;margin-right:5px;">(To) Address count more than 10</span>
+
+                                                                            </span>
+                                                                           
+                                                                        </td>
+                                                                        <td style="width:10px"><div></div></td>
+
+
+                                                                    </tr>
+                                                                    <tr style="height:5px;"><td colspan="5"></td>   </tr>
+
+
+                                                                    <tr>
+
+                                                                        <td style="width:5px"><div></div></td>
+                                                                        <td style="width:30px;text-align:left">To</td>
+                                                                        <td style="width:5px"><div></div></td>
+                                                                        <td>
+
+                                                                            <div class="EmailBoxMultiLinesText" style="border:1px solid #ccc9c9;border-radius:3px;">
+                                                                                <div style="display:inline-block;vertical-align:top;width:auto;height:18px;border:1px solid gray;border-radius:0px;margin-left:5px;margin-top:2px;margin-bottom:2px" *ngFor="let item of ToEmailLists">
+                                                                                    <div style="margin-left:1px;display:inline-block;vertical-align:middle;margin-top:-4px;">
+
+                                                                                        <span style="margin-left:2px">{{item}}</span>
+
+                                                                                        <span><img (click)="DeleteEmail('To' , item)" src="./Images/RedX3.png" style="width: 13px; display:inline-block;height: 14px;margin-left:2px;margin-right:3px;margin-bottom:3px;" /> </span>
+
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            </div>
+
+
+
+
+
+                                                                        </td>
+
+                                                                        <td style="width:10px"><div></div></td>
+                                                                    </tr>
+
+                                                                    <tr style="height:5px;"><td colspan="5"></td>   </tr>
+
+
+                                                                </table>
+                                                            </div>
+                                                        </td>
+                                                    </tr>-->
+
+                                                </table>
+                                            </div>
+
+
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="SaveButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

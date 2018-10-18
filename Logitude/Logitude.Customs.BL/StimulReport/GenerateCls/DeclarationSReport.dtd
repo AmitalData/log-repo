@@ -1,0 +1,396 @@
+<!ELEMENT DeclarationSReport (mehes_file*)>
+<!ELEMENT mehes_file (file_number?, customs_file_num?, draw_num?, reshimon_num?, draft_date?, autonomy?, storage_request?, custom_agent?, open_date?, follow_up_date?, file_close?, open_close?, change?, transfer_importer_id?, reshimon_date?, warning_date?, incoterms_id?, index_value?, changing_value?, region_value?, transport_value?, insurance_value?, service_value?, expense_value?, closure_value?, fee_carrier?, fee_platform?, currency_rate?, price_index?, goods_value?, cif_value?, accepted_price?, total_tax?, transport_value_fc?, insurance_percent?, insurance_amount_fc?, pay_date?, pay_time?, mehes_draft_status?, company_name?, user_print?, passport_no?, passp_ctry?, importer_sts?, family_name?, first_name?, city_symbol?, street?, house?, entrance?, apartment_no?, zip_code?, trans_import_name?, customs_branch*, currency*, department*, owner_right*, reshimon_type*, tsrufot*, add_toll*, tax*, secur_declar*, cust_items*, acc_supplier*, mishgor*, incoterms*, importer*, message_details*, tax_details*, customer*, print_user*, transp_currency*, insurance_currency*, print_103?, transport_fc_value*, rihbit*, trans_import_id?, volume?, volume_kg?, container_list?)>
+<!ATTLIST mehes_file id CDATA #REQUIRED>
+<!ATTLIST mehes_file status CDATA #REQUIRED>
+<!ELEMENT file_number (#PCDATA)>
+<!ELEMENT customs_file_num (#PCDATA)>
+<!ELEMENT draw_num (#PCDATA)>
+<!ELEMENT reshimon_num (#PCDATA)>
+<!ELEMENT draft_date (#PCDATA)>
+<!ELEMENT autonomy (#PCDATA)>
+<!ELEMENT storage_request (#PCDATA)>
+<!ELEMENT custom_agent (#PCDATA)>
+<!ELEMENT open_date (#PCDATA)>
+<!ELEMENT follow_up_date (#PCDATA)>
+<!ELEMENT file_close (#PCDATA)>
+<!ELEMENT open_close (#PCDATA)>
+<!ELEMENT change (#PCDATA)>
+<!ELEMENT transfer_importer_id (#PCDATA)>
+<!ELEMENT reshimon_date (#PCDATA)>
+<!ELEMENT warning_date (#PCDATA)>
+<!ELEMENT incoterms_id (#PCDATA)>
+<!ELEMENT index_value (#PCDATA)>
+<!ELEMENT changing_value (#PCDATA)>
+<!ELEMENT region_value (#PCDATA)>
+<!ELEMENT transport_value (#PCDATA)>
+<!ELEMENT insurance_value (#PCDATA)>
+<!ELEMENT service_value (#PCDATA)>
+<!ELEMENT expense_value (#PCDATA)>
+<!ELEMENT closure_value (#PCDATA)>
+<!ELEMENT fee_carrier (#PCDATA)>
+<!ELEMENT fee_platform (#PCDATA)>
+<!ELEMENT currency_rate (#PCDATA)>
+<!ELEMENT price_index (#PCDATA)>
+<!ELEMENT goods_value (#PCDATA)>
+<!ELEMENT cif_value (#PCDATA)>
+<!ELEMENT accepted_price (#PCDATA)>
+<!ELEMENT total_tax (#PCDATA)>
+<!ELEMENT transport_value_fc (#PCDATA)>
+<!ELEMENT insurance_percent (#PCDATA)>
+<!ELEMENT insurance_amount_fc (#PCDATA)>
+<!ELEMENT pay_date (#PCDATA)>
+<!ELEMENT pay_time (#PCDATA)>
+<!ELEMENT mehes_draft_status (#PCDATA)>
+<!ELEMENT company_name (#PCDATA)>
+<!ELEMENT user_print (#PCDATA)>
+<!ELEMENT passport_no (#PCDATA)>
+<!ELEMENT passp_ctry (#PCDATA)>
+<!ELEMENT importer_sts (#PCDATA)>
+<!ELEMENT family_name (#PCDATA)>
+<!ELEMENT first_name (#PCDATA)>
+<!ELEMENT city_symbol (#PCDATA)>
+<!ELEMENT street (#PCDATA)>
+<!ELEMENT house (#PCDATA)>
+<!ELEMENT entrance (#PCDATA)>
+<!ELEMENT apartment_no (#PCDATA)>
+<!ELEMENT zip_code (#PCDATA)>
+<!ELEMENT trans_import_name (#PCDATA)>
+<!ELEMENT customs_branch (customs_branch-id?, customs_branch-name?, customs_branch-partner_id?)>
+<!ELEMENT customs_branch-id (#PCDATA)>
+<!ELEMENT customs_branch-name (#PCDATA)>
+<!ELEMENT customs_branch-partner_id (#PCDATA)>
+<!ELEMENT currency (currency-id?, currency-name?, currency-partner_id?)>
+<!ELEMENT currency-id (#PCDATA)>
+<!ELEMENT currency-name (#PCDATA)>
+<!ELEMENT currency-partner_id (#PCDATA)>
+<!ELEMENT department (department-id?, department-name?, department-partner_id?)>
+<!ELEMENT department-id (#PCDATA)>
+<!ELEMENT department-name (#PCDATA)>
+<!ELEMENT department-partner_id (#PCDATA)>
+<!ELEMENT owner_right (owner_right-id?, owner_right-name?, owner_right-partner_id?)>
+<!ELEMENT owner_right-id (#PCDATA)>
+<!ELEMENT owner_right-name (#PCDATA)>
+<!ELEMENT owner_right-partner_id (#PCDATA)>
+<!ELEMENT reshimon_type (reshimon_type-id?, reshimon_type-name?, resfimon_type-partner_id?)>
+<!ELEMENT reshimon_type-id (#PCDATA)>
+<!ELEMENT reshimon_type-name (#PCDATA)>
+<!ELEMENT resfimon_type-partner_id (#PCDATA)>
+<!ELEMENT tsrufot (tsrufot-line?, tsrufot-quantity?, tsrufot-number?, tsrufot-tsruf_type*)>
+<!ATTLIST tsrufot multi_line CDATA #FIXED "yes">
+<!ELEMENT tsrufot-line (#PCDATA)>
+<!ELEMENT tsrufot-quantity (#PCDATA)>
+<!ELEMENT tsrufot-number (#PCDATA)>
+<!ELEMENT tsrufot-tsruf_type (tsrufot-tsruf_type-id?, tsrufot-tsruf_type-name?, tsrufot-tsruf_type-partner_id?)>
+<!ELEMENT tsrufot-tsruf_type-id (#PCDATA)>
+<!ELEMENT tsrufot-tsruf_type-name (#PCDATA)>
+<!ELEMENT tsrufot-tsruf_type-partner_id (#PCDATA)>
+<!ELEMENT add_toll (add_toll-amount?, add_toll-tax_type*)>
+<!ATTLIST add_toll multi_line CDATA #FIXED "yes">
+<!ELEMENT add_toll-amount (#PCDATA)>
+<!ELEMENT add_toll-tax_type (add_toll-tax_type-id?, add_toll-tax_type-name?, add_toll-tax_type-partner_id?)>
+<!ELEMENT add_toll-tax_type-id (#PCDATA)>
+<!ELEMENT add_toll-tax_type-name (#PCDATA)>
+<!ELEMENT add_toll-tax_type-partner_id (#PCDATA)>
+<!ELEMENT tax (tax-line?, tax-prat_mehes?, tax-goods_num?, tax-tax_basis?, tax-tax_amount?, tax-postponed_tax?, tax-tax_to_pay?, tax-calc_code?, tax-rate?, tax-defined_tax?, tax-add_tax_rate?, tax-add_defined_tax?, tax-add_import?, tax-taxtype*)>
+<!ATTLIST tax multi_line CDATA #FIXED "yes">
+<!ELEMENT tax-line (#PCDATA)>
+<!ELEMENT tax-prat_mehes (#PCDATA)>
+<!ELEMENT tax-goods_num (#PCDATA)>
+<!ELEMENT tax-tax_basis (#PCDATA)>
+<!ELEMENT tax-tax_amount (#PCDATA)>
+<!ELEMENT tax-postponed_tax (#PCDATA)>
+<!ELEMENT tax-tax_to_pay (#PCDATA)>
+<!ELEMENT tax-calc_code (#PCDATA)>
+<!ELEMENT tax-rate (#PCDATA)>
+<!ELEMENT tax-defined_tax (#PCDATA)>
+<!ELEMENT tax-add_tax_rate (#PCDATA)>
+<!ELEMENT tax-add_defined_tax (#PCDATA)>
+<!ELEMENT tax-add_import (#PCDATA)>
+<!ELEMENT tax-taxtype (tax-taxtype-id?, tax-taxtype-name?, tax-taxtype-partner_id?)>
+<!ELEMENT tax-taxtype-id (#PCDATA)>
+<!ELEMENT tax-taxtype-name (#PCDATA)>
+<!ELEMENT tax-taxtype-partner_id (#PCDATA)>
+<!ELEMENT secur_declar (secur_declar-quest_code?, secur_declar-answer?, secur_declar-quest_name?)>
+<!ATTLIST secur_declar multi_line CDATA #FIXED "yes">
+<!ELEMENT secur_declar-quest_code (#PCDATA)>
+<!ELEMENT secur_declar-answer (#PCDATA)>
+<!ELEMENT secur_declar-quest_name (#PCDATA)>
+<!ELEMENT cust_items (cust_items-line?, cust_items-prat_mehes?, cust_items-supplier_account?, cust_items-essential_item?, cust_items-bitha_tax_item?, cust_items-value_fc?, cust_items-raise_percent?, cust_items-raise_value?, cust_items-value_nis?, cust_items-quantity?, cust_items-extra_qnty?, cust_items-wholesale_price?, cust_items-import_addition?, cust_items-license_no?, cust_items-standard_num?, cust_items-agnt_pay_cust?, cust_items-gnt_pay_tax?, cust_items-agnt_pay_bitha?, cust_items-nidhe_mehes_pcnt?, cust_items-nidhe_mas_pcnt?, cust_items-abs_amount?, cust_items-airbags_amount?, cust_items-air_cond_amount?, cust_items-exp_reshim_num?, cust_items-exp_prat?, cust_items-guarantee_num?, cust_items-guarantee_type?, cust_items-goods_desc?, cust_items-currency_code?, cust_items-prat_mehes_can?, cust_items-autonomy_book?, cust_items-private_imp_curr?, cust_items-origin_country?, cust_items-purch_country?, cust_items-tsvira?, cust_items-katalog_num?, cust_items-tariff*, cust_items-discount*, cust_items-vehicle*, cust_items-exemption*, cust_items-guarant_pc*, cust_items-item_apprv*)>
+<!ATTLIST cust_items multi_line CDATA #FIXED "yes">
+<!ELEMENT cust_items-line (#PCDATA)>
+<!ELEMENT cust_items-prat_mehes (#PCDATA)>
+<!ELEMENT cust_items-supplier_account (#PCDATA)>
+<!ELEMENT cust_items-essential_item (#PCDATA)>
+<!ELEMENT cust_items-bitha_tax_item (#PCDATA)>
+<!ELEMENT cust_items-value_fc (#PCDATA)>
+<!ELEMENT cust_items-raise_percent (#PCDATA)>
+<!ELEMENT cust_items-raise_value (#PCDATA)>
+<!ELEMENT cust_items-value_nis (#PCDATA)>
+<!ELEMENT cust_items-quantity (#PCDATA)>
+<!ELEMENT cust_items-extra_qnty (#PCDATA)>
+<!ELEMENT cust_items-wholesale_price (#PCDATA)>
+<!ELEMENT cust_items-import_addition (#PCDATA)>
+<!ELEMENT cust_items-license_no (#PCDATA)>
+<!ELEMENT cust_items-standard_num (#PCDATA)>
+<!ELEMENT cust_items-agnt_pay_cust (#PCDATA)>
+<!ELEMENT cust_items-gnt_pay_tax (#PCDATA)>
+<!ELEMENT cust_items-agnt_pay_bitha (#PCDATA)>
+<!ELEMENT cust_items-nidhe_mehes_pcnt (#PCDATA)>
+<!ELEMENT cust_items-nidhe_mas_pcnt (#PCDATA)>
+<!ELEMENT cust_items-abs_amount (#PCDATA)>
+<!ELEMENT cust_items-airbags_amount (#PCDATA)>
+<!ELEMENT cust_items-air_cond_amount (#PCDATA)>
+<!ELEMENT cust_items-exp_reshim_num (#PCDATA)>
+<!ELEMENT cust_items-exp_prat (#PCDATA)>
+<!ELEMENT cust_items-guarantee_num (#PCDATA)>
+<!ELEMENT cust_items-guarantee_type (#PCDATA)>
+<!ELEMENT cust_items-goods_desc (#PCDATA)>
+<!ELEMENT cust_items-currency_code (#PCDATA)>
+<!ELEMENT cust_items-prat_mehes_can (#PCDATA)>
+<!ELEMENT cust_items-autonomy_book (#PCDATA)>
+<!ELEMENT cust_items-private_imp_curr (#PCDATA)>
+<!ELEMENT cust_items-origin_country (#PCDATA)>
+<!ELEMENT cust_items-purch_country (#PCDATA)>
+<!ELEMENT cust_items-tsvira (#PCDATA)>
+<!ELEMENT cust_items-katalog_num (#PCDATA)>
+<!ELEMENT cust_items-tariff (cust_items-tariff-id?, cust_items-tariff-name?, cust_items-tariff-partner_id?)>
+<!ELEMENT cust_items-tariff-id (#PCDATA)>
+<!ELEMENT cust_items-tariff-name (#PCDATA)>
+<!ELEMENT cust_items-tariff-partner_id (#PCDATA)>
+<!ELEMENT cust_items-discount (cust_items-discount-id?, cust_items-discount-name?, cust_items-discount-partner_id?)>
+<!ELEMENT cust_items-discount-id (#PCDATA)>
+<!ELEMENT cust_items-discount-name (#PCDATA)>
+<!ELEMENT cust_items-discount-partner_id (#PCDATA)>
+<!ELEMENT cust_items-vehicle (cust_items-vehicle-id?, cust_items-vehicle-name?, cust_items-vehicle-partner_id?)>
+<!ELEMENT cust_items-vehicle-id (#PCDATA)>
+<!ELEMENT cust_items-vehicle-name (#PCDATA)>
+<!ELEMENT cust_items-vehicle-partner_id (#PCDATA)>
+<!ELEMENT cust_items-exemption (cust_items-exemption-id?, cust_items-exemption-name?, cust_items-exemption-partner_id?)>
+<!ELEMENT cust_items-exemption-id (#PCDATA)>
+<!ELEMENT cust_items-exemption-name (#PCDATA)>
+<!ELEMENT cust_items-exemption-partner_id (#PCDATA)>
+<!ELEMENT cust_items-guarant_pc (cust_items-guarant_pc-id?, cust_items-guarant_pc-name?, cust_items-guarant_pc-partner_id?)>
+<!ELEMENT cust_items-guarant_pc-id (#PCDATA)>
+<!ELEMENT cust_items-guarant_pc-name (#PCDATA)>
+<!ELEMENT cust_items-guarant_pc-partner_id (#PCDATA)>
+<!ELEMENT cust_items-item_apprv (cust_items-item_apprv-line?, cust_items-item_apprv-approv_num?, cust_items-item_apprv-appr*, cust_items-item_apprv-apptp*)>
+<!ELEMENT cust_items-item_apprv-line (#PCDATA)>
+<!ELEMENT cust_items-item_apprv-approv_num (#PCDATA)>
+<!ELEMENT cust_items-item_apprv-appr (cust_items-item_apprv-appr-id?, cust_items-item_apprv-appr-name?)>
+<!ELEMENT cust_items-item_apprv-appr-id (#PCDATA)>
+<!ELEMENT cust_items-item_apprv-appr-name (#PCDATA)>
+<!ELEMENT cust_items-item_apprv-apptp (cust_items-item_apprv-apptp-id?, cust_items-item_apprv-apptp-name?)>
+<!ELEMENT cust_items-item_apprv-apptp-id (#PCDATA)>
+<!ELEMENT cust_items-item_apprv-apptp-name (#PCDATA)>
+<!ELEMENT acc_supplier (acc_supplier-line?, acc_supplier-main_account?, acc_supplier-sup_account?, acc_supplier-value?, acc_supplier-commission?, acc_supplier-declar_num?, acc_supplier-spec_decl*, acc_supplier-supplier*, acc_supplier-incoterm*, acc_supplier-country*, acc_supplier-currency*, acc_supplier-acc_type*, acc_supplier-sup_items*, acc_supplier-changing_value?)>
+<!ATTLIST acc_supplier multi_line CDATA #FIXED "yes">
+<!ELEMENT acc_supplier-line (#PCDATA)>
+<!ELEMENT acc_supplier-main_account (#PCDATA)>
+<!ELEMENT acc_supplier-sup_account (#PCDATA)>
+<!ELEMENT acc_supplier-value (#PCDATA)>
+<!ELEMENT acc_supplier-commission (#PCDATA)>
+<!ELEMENT acc_supplier-declar_num (#PCDATA)>
+<!ELEMENT acc_supplier-spec_decl (acc_supplier-spec_decl-code?, acc_supplier-spec_decl-answer?, acc_supplier-spec_decl-code_name?)>
+<!ATTLIST acc_supplier-spec_decl multi_line CDATA #FIXED "yes">
+<!ELEMENT acc_supplier-spec_decl-code (#PCDATA)>
+<!ELEMENT acc_supplier-spec_decl-answer (#PCDATA)>
+<!ELEMENT acc_supplier-spec_decl-code_name (#PCDATA)>
+<!ELEMENT acc_supplier-supplier (acc_supplier-supplier-id?, acc_supplier-supplier-name?, acc_supplier-supplier-partner_id?)>
+<!ELEMENT acc_supplier-supplier-id (#PCDATA)>
+<!ELEMENT acc_supplier-supplier-name (#PCDATA)>
+<!ELEMENT acc_supplier-supplier-partner_id (#PCDATA)>
+<!ELEMENT acc_supplier-incoterm (acc_supplier-incoterm-id?, acc_supplier-incoterm-name?, acc_supplier-incoterm-partner_id?)>
+<!ELEMENT acc_supplier-incoterm-id (#PCDATA)>
+<!ELEMENT acc_supplier-incoterm-name (#PCDATA)>
+<!ELEMENT acc_supplier-incoterm-partner_id (#PCDATA)>
+<!ELEMENT acc_supplier-country (acc_supplier-country-id?, acc_supplier-country-name?, acc_supplier-country-partner_id?)>
+<!ELEMENT acc_supplier-country-id (#PCDATA)>
+<!ELEMENT acc_supplier-country-name (#PCDATA)>
+<!ELEMENT acc_supplier-country-partner_id (#PCDATA)>
+<!ELEMENT acc_supplier-currency (acc_supplier-currency-id?, acc_supplier-currency-name?, acc_supplier-currency-partner_id?)>
+<!ELEMENT acc_supplier-currency-id (#PCDATA)>
+<!ELEMENT acc_supplier-currency-name (#PCDATA)>
+<!ELEMENT acc_supplier-currency-partner_id (#PCDATA)>
+<!ELEMENT acc_supplier-acc_type (acc_supplier-acc_type-id?, acc_supplier-acc_type-name?, acc_supplier-acc_type-partner_id?)>
+<!ELEMENT acc_supplier-acc_type-id (#PCDATA)>
+<!ELEMENT acc_supplier-acc_type-name (#PCDATA)>
+<!ELEMENT acc_supplier-acc_type-partner_id (#PCDATA)>
+<!ELEMENT acc_supplier-sup_items (acc_supplier-sup_items-file_no?, ACC_LINE_NO.CCUSUPITEMS.AMITAL?, acc_supplier-sup_items-line_no?, acc_supplier-sup_items-prat_mehs?, acc_supplier-sup_items-orig_cnty?, acc_supplier-sup_items-pur_cnty?, acc_supplier-sup_items-fc_val?, acc_supplier-sup_items-licnse_no?, acc_supplier-sup_items-stndrt_no?, acc_supplier-sup_items-nidh_mhs?, acc_supplier-sup_items-nidh_mas?, acc_supplier-sup_items-quantity?, acc_supplier-sup_items-orig_val?, acc_supplier-sup_items-tariff?, acc_supplier-sup_items-item_no?, acc_supplier-sup_items-no_tsvira?, acc_supplier-sup_items-item_desc?, acc_supplier-sup_items_app*)>
+<!ELEMENT acc_supplier-sup_items-file_no (#PCDATA)>
+<!ELEMENT ACC_LINE_NO.CCUSUPITEMS.AMITAL (#PCDATA)>
+<!ELEMENT acc_supplier-sup_items-line_no (#PCDATA)>
+<!ELEMENT acc_supplier-sup_items-prat_mehs (#PCDATA)>
+<!ELEMENT acc_supplier-sup_items-orig_cnty (#PCDATA)>
+<!ELEMENT acc_supplier-sup_items-pur_cnty (#PCDATA)>
+<!ELEMENT acc_supplier-sup_items-fc_val (#PCDATA)>
+<!ELEMENT acc_supplier-sup_items-licnse_no (#PCDATA)>
+<!ELEMENT acc_supplier-sup_items-stndrt_no (#PCDATA)>
+<!ELEMENT acc_supplier-sup_items-nidh_mhs (#PCDATA)>
+<!ELEMENT acc_supplier-sup_items-nidh_mas (#PCDATA)>
+<!ELEMENT acc_supplier-sup_items-quantity (#PCDATA)>
+<!ELEMENT acc_supplier-sup_items-orig_val (#PCDATA)>
+<!ELEMENT acc_supplier-sup_items-tariff (#PCDATA)>
+<!ELEMENT acc_supplier-sup_items-item_no (#PCDATA)>
+<!ELEMENT acc_supplier-sup_items-no_tsvira (#PCDATA)>
+<!ELEMENT acc_supplier-sup_items-item_desc (#PCDATA)>
+<!ELEMENT acc_supplier-sup_items_app (acc_supplier-sup_items_app-file_no?, acc_supplier-sup_items_app-line_no?, acc_supplier-sup_items_app-approv_code?, acc_supplier-sup_items_app-approv_code_name?, acc_supplier-sup_items_app-approv_type?, acc_supplier-sup_items_app-approv_type_name?, acc_supplier-sup_items_app-approv_no?)>
+<!ELEMENT acc_supplier-sup_items_app-file_no (#PCDATA)>
+<!ELEMENT acc_supplier-sup_items_app-line_no (#PCDATA)>
+<!ELEMENT acc_supplier-sup_items_app-approv_code (#PCDATA)>
+<!ELEMENT acc_supplier-sup_items_app-approv_code_name (#PCDATA)>
+<!ELEMENT acc_supplier-sup_items_app-approv_type (#PCDATA)>
+<!ELEMENT acc_supplier-sup_items_app-approv_type_name (#PCDATA)>
+<!ELEMENT acc_supplier-sup_items_app-approv_no (#PCDATA)>
+<!ELEMENT acc_supplier-changing_value (#PCDATA)>
+<!ELEMENT mishgor (mishgor-line?, mishgor-number?, mishgor-manifest?, mishgor-ident_num?, mishgor-hawb?, mishgor-hawb_date?, mishgor-carnet_num?, mishgor-desc_of_goods1?, mishgor-unload_date?, mishgor-quantity?, mishgor-weight?, mishgor-seal_qty?, mishgor-pack_det?, mishgor-add_quantity?, mishgor-desc_of_goods2?, mishgor-desc_of_goods3?, mishgor-carrier_id?, mishgor-transp_type*, mishgor-ident_type*, mishgor-bonded*, mishgor-storage_type*, mishgor-bonded_rec*, mishgor-export_land*, mishgor-load_port*, mishgor-unload_port*, mishgor-pack_type*, mishgor-mishgor_type*, mishgor-sign_num*, mishgor-partiality*, mishgor-sign_num_list?)>
+<!ATTLIST mishgor multi_line CDATA #FIXED "yes">
+<!ELEMENT mishgor-line (#PCDATA)>
+<!ELEMENT mishgor-number (#PCDATA)>
+<!ELEMENT mishgor-manifest (#PCDATA)>
+<!ELEMENT mishgor-ident_num (#PCDATA)>
+<!ELEMENT mishgor-hawb (#PCDATA)>
+<!ELEMENT mishgor-hawb_date (#PCDATA)>
+<!ELEMENT mishgor-carnet_num (#PCDATA)>
+<!ELEMENT mishgor-desc_of_goods1 (#PCDATA)>
+<!ELEMENT mishgor-unload_date (#PCDATA)>
+<!ELEMENT mishgor-quantity (#PCDATA)>
+<!ELEMENT mishgor-weight (#PCDATA)>
+<!ELEMENT mishgor-seal_qty (#PCDATA)>
+<!ELEMENT mishgor-pack_det (#PCDATA)>
+<!ELEMENT mishgor-add_quantity (#PCDATA)>
+<!ELEMENT mishgor-desc_of_goods2 (#PCDATA)>
+<!ELEMENT mishgor-desc_of_goods3 (#PCDATA)>
+<!ELEMENT mishgor-carrier_id (#PCDATA)>
+<!ELEMENT mishgor-transp_type (mishgor-transp_type-id?, mishgor-transp_type-name?, mishgor-transp_type-partner_id?)>
+<!ELEMENT mishgor-transp_type-id (#PCDATA)>
+<!ELEMENT mishgor-transp_type-name (#PCDATA)>
+<!ELEMENT mishgor-transp_type-partner_id (#PCDATA)>
+<!ELEMENT mishgor-ident_type (mishgor-ident_type-id?, mishgor-ident_type-name?, mishgor-ident_type-partner_id?)>
+<!ELEMENT mishgor-ident_type-id (#PCDATA)>
+<!ELEMENT mishgor-ident_type-name (#PCDATA)>
+<!ELEMENT mishgor-ident_type-partner_id (#PCDATA)>
+<!ELEMENT mishgor-bonded (mishgor-bonded-warehouse_id?, mishgor-bonded-name?, mishgor-bonded-partner_id?)>
+<!ELEMENT mishgor-bonded-warehouse_id (#PCDATA)>
+<!ELEMENT mishgor-bonded-name (#PCDATA)>
+<!ELEMENT mishgor-bonded-partner_id (#PCDATA)>
+<!ELEMENT mishgor-storage_type (mishgor-storage_type-id?, mishgor-storage_type-name?, mishgor-storage_type-partner_id?)>
+<!ELEMENT mishgor-storage_type-id (#PCDATA)>
+<!ELEMENT mishgor-storage_type-name (#PCDATA)>
+<!ELEMENT mishgor-storage_type-partner_id (#PCDATA)>
+<!ELEMENT mishgor-bonded_rec (mishgor-bonded_rec-id?, mishgor-bonded_rec-name?, mishgor-bonded_rec-partner_id?)>
+<!ELEMENT mishgor-bonded_rec-id (#PCDATA)>
+<!ELEMENT mishgor-bonded_rec-name (#PCDATA)>
+<!ELEMENT mishgor-bonded_rec-partner_id (#PCDATA)>
+<!ELEMENT mishgor-export_land (mishgor-export_land-id?, mishgor-export_land-name?, mishgor-export_land-partner_id?)>
+<!ELEMENT mishgor-export_land-id (#PCDATA)>
+<!ELEMENT mishgor-export_land-name (#PCDATA)>
+<!ELEMENT mishgor-export_land-partner_id (#PCDATA)>
+<!ELEMENT mishgor-load_port (mishgor-load_port-id?, mishgor-load_port-name?, mishgor-load_port-partner_id?)>
+<!ELEMENT mishgor-load_port-id (#PCDATA)>
+<!ELEMENT mishgor-load_port-name (#PCDATA)>
+<!ELEMENT mishgor-load_port-partner_id (#PCDATA)>
+<!ELEMENT mishgor-unload_port (mishgor-unload_port-id?, mishgor-unload_port-name?, mishgor-unload_port-partner_id?)>
+<!ELEMENT mishgor-unload_port-id (#PCDATA)>
+<!ELEMENT mishgor-unload_port-name (#PCDATA)>
+<!ELEMENT mishgor-unload_port-partner_id (#PCDATA)>
+<!ELEMENT mishgor-pack_type (mishgor-pack_type-id?, mishgor-pack_type-name?, mishgor-pack_type-partner_id?)>
+<!ELEMENT mishgor-pack_type-id (#PCDATA)>
+<!ELEMENT mishgor-pack_type-name (#PCDATA)>
+<!ELEMENT mishgor-pack_type-partner_id (#PCDATA)>
+<!ELEMENT mishgor-mishgor_type (mishgor-mishgor_type-id?, mishgor-mishgor_type-name?, mishgor-mishgor_type-partner_id?)>
+<!ELEMENT mishgor-mishgor_type-id (#PCDATA)>
+<!ELEMENT mishgor-mishgor_type-name (#PCDATA)>
+<!ELEMENT mishgor-mishgor_type-partner_id (#PCDATA)>
+<!ELEMENT mishgor-sign_num (mishgor-sign_num-line?, mishgor-sign_num-numbers?)>
+<!ELEMENT mishgor-sign_num-line (#PCDATA)>
+<!ELEMENT mishgor-sign_num-numbers (#PCDATA)>
+<!ELEMENT mishgor-partiality (mishgor-partiality-id?, mishgor-partiality-name?, mishgor-partiality-partner_id?)>
+<!ELEMENT mishgor-partiality-id (#PCDATA)>
+<!ELEMENT mishgor-partiality-name (#PCDATA)>
+<!ELEMENT mishgor-partiality-partner_id (#PCDATA)>
+<!ELEMENT mishgor-sign_num_list (#PCDATA)>
+<!ELEMENT incoterms (incoterms-id?, incoterms-name?, incoterms-partner_id?)>
+<!ELEMENT incoterms-id (#PCDATA)>
+<!ELEMENT incoterms-name (#PCDATA)>
+<!ELEMENT incoterms-partner_id (#PCDATA)>
+<!ELEMENT importer (importer-id?, importer-name?)>
+<!ELEMENT importer-id (#PCDATA)>
+<!ELEMENT importer-name (#PCDATA)>
+<!ELEMENT message_details (message_details-segment?, message_details-number?, message_details-code?, message_details-error_message?)>
+<!ELEMENT message_details-segment (#PCDATA)>
+<!ELEMENT message_details-number (#PCDATA)>
+<!ELEMENT message_details-code (#PCDATA)>
+<!ELEMENT message_details-error_message (#PCDATA)>
+<!ELEMENT tax_details (tax_details-line?, tax_details-prat_mehes?, tax_details-goods_num?, tax_details-tax_basis?, tax_details-tax_amount?, tax_details-postponed_tax?, tax_details-tax_to_pay?, tax_details-tax_calc_code?, tax_details-tax_rate?, tax_details-defined_tax?, tax_details-add_tax_rate?, tax_details-add_defined_tax?, tax_details-add_import?, tax_details-taxtype*)>
+<!ATTLIST tax_details multi_line CDATA #FIXED "yes">
+<!ELEMENT tax_details-line (#PCDATA)>
+<!ELEMENT tax_details-prat_mehes (#PCDATA)>
+<!ELEMENT tax_details-goods_num (#PCDATA)>
+<!ELEMENT tax_details-tax_basis (#PCDATA)>
+<!ELEMENT tax_details-tax_amount (#PCDATA)>
+<!ELEMENT tax_details-postponed_tax (#PCDATA)>
+<!ELEMENT tax_details-tax_to_pay (#PCDATA)>
+<!ELEMENT tax_details-tax_calc_code (#PCDATA)>
+<!ELEMENT tax_details-tax_rate (#PCDATA)>
+<!ELEMENT tax_details-defined_tax (#PCDATA)>
+<!ELEMENT tax_details-add_tax_rate (#PCDATA)>
+<!ELEMENT tax_details-add_defined_tax (#PCDATA)>
+<!ELEMENT tax_details-add_import (#PCDATA)>
+<!ELEMENT tax_details-taxtype (tax_details-taxtype-id?, tax_details-taxtype-name?, tax_details-taxtype-partner_id?)>
+<!ELEMENT tax_details-taxtype-id (#PCDATA)>
+<!ELEMENT tax_details-taxtype-name (#PCDATA)>
+<!ELEMENT tax_details-taxtype-partner_id (#PCDATA)>
+<!ELEMENT customer (customer-id?, customer-name?, customer-address?, customer-address2?, customer-zip_code?, customer-city?, customer-contact_person?, customer-telephone?, customer-e_maill?, customer-state?, customer-partner_id?, customer-company_id?, customer-mamps_no?, customer-operational_card?, customer-country*, customer-fax?)>
+<!ELEMENT customer-id (#PCDATA)>
+<!ELEMENT customer-name (#PCDATA)>
+<!ELEMENT customer-address (#PCDATA)>
+<!ELEMENT customer-address2 (#PCDATA)>
+<!ELEMENT customer-zip_code (#PCDATA)>
+<!ELEMENT customer-city (#PCDATA)>
+<!ELEMENT customer-contact_person (#PCDATA)>
+<!ELEMENT customer-telephone (#PCDATA)>
+<!ELEMENT customer-e_maill (#PCDATA)>
+<!ELEMENT customer-state (#PCDATA)>
+<!ELEMENT customer-partner_id (#PCDATA)>
+<!ELEMENT customer-company_id (#PCDATA)>
+<!ELEMENT customer-mamps_no (#PCDATA)>
+<!ELEMENT customer-operational_card (#PCDATA)>
+<!ELEMENT customer-country (customer-country-id?, customer-country-name?, customer-country-partner_id?)>
+<!ELEMENT customer-country-id (#PCDATA)>
+<!ELEMENT customer-country-name (#PCDATA)>
+<!ELEMENT customer-country-partner_id (#PCDATA)>
+<!ELEMENT customer-fax (#PCDATA)>
+<!ELEMENT print_user (print_user-id?, print_user-name?)>
+<!ELEMENT print_user-id (#PCDATA)>
+<!ELEMENT print_user-name (#PCDATA)>
+<!ELEMENT transp_currency (transp_currency-id?, transp_currency-name?, transp_currency-partner_id?)>
+<!ELEMENT transp_currency-id (#PCDATA)>
+<!ELEMENT transp_currency-name (#PCDATA)>
+<!ELEMENT transp_currency-partner_id (#PCDATA)>
+<!ELEMENT insurance_currency (insurance_currency-id?, insurance_currency-name?, insurance_currency-partner_id?)>
+<!ELEMENT insurance_currency-id (#PCDATA)>
+<!ELEMENT insurance_currency-name (#PCDATA)>
+<!ELEMENT insurance_currency-partner_id (#PCDATA)>
+<!ELEMENT print_103 (#PCDATA)>
+<!ELEMENT transport_fc_value (transport_fc_value-line?, transport_fc_value-val_fc?, transport_fc_value-val?, trans_fc_val-currency*)>
+<!ELEMENT transport_fc_value-line (#PCDATA)>
+<!ELEMENT transport_fc_value-val_fc (#PCDATA)>
+<!ELEMENT transport_fc_value-val (#PCDATA)>
+<!ELEMENT trans_fc_val-currency (trans_fc_val-currency-id?, trans_fc_val-currency-name?, trans_fc_val-currency-partner_id?)>
+<!ELEMENT trans_fc_val-currency-id (#PCDATA)>
+<!ELEMENT trans_fc_val-currency-name (#PCDATA)>
+<!ELEMENT trans_fc_val-currency-partner_id (#PCDATA)>
+<!ELEMENT rihbit (rihbit-line_no?, rihbit-abs_deduct?, rihbit-karit_deduct?, rihbit-bakara_deduct?, rihbit-memir_deduct?, rihbit-madad_deduct?, rihbit-prat?, rihbit-sheild_no?, rihbit-rihbit_file?)>
+<!ELEMENT rihbit-line_no (#PCDATA)>
+<!ELEMENT rihbit-abs_deduct (#PCDATA)>
+<!ELEMENT rihbit-karit_deduct (#PCDATA)>
+<!ELEMENT rihbit-bakara_deduct (#PCDATA)>
+<!ELEMENT rihbit-memir_deduct (#PCDATA)>
+<!ELEMENT rihbit-madad_deduct (#PCDATA)>
+<!ELEMENT rihbit-prat (#PCDATA)>
+<!ELEMENT rihbit-sheild_no (#PCDATA)>
+<!ELEMENT rihbit-rihbit_file (#PCDATA)>
+<!ELEMENT trans_import_id (#PCDATA)>
+<!ELEMENT volume (#PCDATA)>
+<!ELEMENT volume_kg (#PCDATA)>
+<!ELEMENT container_list (#PCDATA)>

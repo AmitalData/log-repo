@@ -1,0 +1,54 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.Data;
+ 
+namespace Logitude.Infrastructure.Data.EntityMapping
+{
+ 
+    public class SharedLogisticsSettingMap : EntityTypeConfiguration<SharedLogisticsSetting>
+    {
+	    string dbms;
+        public SharedLogisticsSettingMap()
+        { 
+				this.ToTable("SharedLogisticsSettings");
+		
+		    this.HasKey(t => new { t.Id });
+	 
+            this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
+
+            this.Property(t => t.IsAgentShared).HasColumnName("IsAgentShared");
+
+            this.Property(t => t.IsShipperNotExporterShared).HasColumnName("IsShipperNotExporterShared");
+
+            this.Property(t => t.IsNotify1Shared).HasColumnName("IsNotify1Shared");
+
+            this.Property(t => t.IsNotify2Shared).HasColumnName("IsNotify2Shared");
+
+            this.Property(t => t.IsFreightForwarderShared).HasColumnName("IsFreightForwarderShared");
+
+            this.Property(t => t.IsColoaderShared).HasColumnName("IsColoaderShared");
+
+            this.Property(t => t.IsConsigneeNotImporterShared).HasColumnName("IsConsigneeNotImporterShared");
+
+            this.Property(t => t.IsMainCarrierShared).HasColumnName("IsMainCarrierShared");
+
+            this.Property(t => t.IsPickDelivCarriesShared).HasColumnName("IsPickDelivCarriesShared");
+
+            this.Property(t => t.IsInvoicesMenuEnabled).HasColumnName("IsInvoicesMenuEnabled");
+
+            this.Property(t => t.IsMoneyTabEnabled).HasColumnName("IsMoneyTabEnabled");
+
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
+        }
+    }
+}
+	 

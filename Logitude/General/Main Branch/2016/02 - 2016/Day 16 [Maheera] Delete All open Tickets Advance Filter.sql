@@ -1,0 +1,1 @@
+delete from AdvancedQueryFilters where QueryId=(select id from Queries where code='All Open Tickets')

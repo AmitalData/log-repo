@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+            xmlns:api="http://www.customsware.com/schema/api" 
+            xmlns="http://www.customsware.com/schema/request" 
+            targetNamespace="http://www.customsware.com/schema/request"
+            elementFormDefault="qualified" attributeFormDefault="unqualified"
+            >
+  <xs:import namespace="http://www.customsware.com/schema/api" schemaLocation="CW.xsd"/>
+  
+  <xs:element name="CustomsForceServiceRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="MessageHeader" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="SecurityToken">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="UserName" type="xs:string"/>
+                    <xs:element name="Password" type="xs:string"/>
+                    <xs:element name="Company" type="xs:string"/>
+                    <xs:element name="ApplicationId" type="xs:string"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="SessionInfo">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="LanguageCode" type="xs:string" minOccurs="0"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="MessageBody" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="RequestGlobalData">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="AsyncFlag" type="xs:string" minOccurs="0"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="RequestList">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="RequestItem">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="DataList">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="DataItem">
+                                  <xs:complexType mixed="true">
+                                    <xs:sequence>
+                                      <xs:element ref="api:InputDocument" minOccurs="0"/>                                                                                                               
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

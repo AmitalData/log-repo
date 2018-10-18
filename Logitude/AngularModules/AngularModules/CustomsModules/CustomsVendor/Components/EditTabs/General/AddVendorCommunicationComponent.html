@@ -1,0 +1,69 @@
+﻿<style>
+    .FormFieldRow{
+        height: 32px;
+    }
+</style>
+<table>
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td colspan="4">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2">
+            <table style="table-layout: fixed;" *ngIf="EntityPM">
+                <tr class="FormFieldRow">
+                    <!-- CommunicationTypeCode -->
+                    <td style="width: 150px;">
+                        <LogLabel [ObjectFieldName]="'CommunicationTypeCode'" [ObjectTableName]="'Customs.VendorCommunication'"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width: 210px;">
+                        <LogLov tabindex="1" [ObjectFieldName]="'CommunicationTypeCode'"
+                                [ObjectTableName]="'Customs.VendorCommunication'"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'Customs.CommunicationType'"
+                                [HideColumns]="true">
+                        </LogLov>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr class="FormFieldRow">
+                    <!-- CommunicationAddress -->
+                    <td>
+                        <LogLabel [ObjectFieldName]="'CommunicationAddress'" [ObjectTableName]="'Customs.VendorCommunication'"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'CommunicationAddress'" [ObjectTableName]="'Customs.VendorCommunication'"
+                                    [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                    </td>
+
+                    <td></td>
+
+                </tr>
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 40px;">
+        <td colspan="4" style="vertical-align: bottom;">
+            <button style="width: 57px; float: left; margin-left: 10px;" class="Button" (click)="CancelButtonClicked()">
+                {{'Customs.General.B.Cancel' |TextCodeTranslationPipe}}
+            </button>
+
+            <custom-send-options style="float: left; margin-left: 10px;"
+                                 #MyCustomSendOptionsComponent
+                                 (SendButtonClicked)="SendButtonClicked()">
+            </custom-send-options>
+        </td>
+    </tr>
+
+</table>

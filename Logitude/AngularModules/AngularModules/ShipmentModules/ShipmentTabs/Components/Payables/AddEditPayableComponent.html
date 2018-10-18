@@ -1,0 +1,488 @@
+﻿
+<style type="text/css">
+    .SummarySection {
+        overflow: hidden;
+        border: 1px solid #AAAAAA;
+        border-radius: 8px;
+        -moz-border-radius: 8px;
+        -webkit-border-radius: 8px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-shadow: 0px 0px 2px 2px #DADADA;
+        -moz-box-shadow: 0px 0px 2px 2px #DADADA;
+        -webkit-box-shadow: 0px 0px 2px 2px #DADADA;
+    }
+</style>
+
+
+<table>
+    <tr style="height:1px;" *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr style="height: 1px;" *ngIf="IsOrangeInfoVisible">
+        <td>
+            <div class="OrangeInfo" style="margin: 5px;">
+                {{'Shipment.S.Payables.ConnectedToMaster' | TextCodeTranslationPipe}}
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <ScrollViewer>
+                <table>
+                    <tr style="height: 70px;">
+                        <td>
+                            <table class="FixedTable">
+                                <tr>
+                                    <td>
+                                        <table>
+
+                                            <!-- ChargesTypeId -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 110px;">
+                                                    <LogLabel [ObjectFieldName]="'ChargesTypeId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'ChargesTypeId'"
+                                                            [SelectedValue]="DataContext.ChargesTypeId"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'ChargesType'"
+                                                            [QueryFilterItems]="ChargeTypesQueryFilters">
+                                                    </LogLov>
+                                                </td>
+                                            </tr>
+
+                                            <!-- Quantity || CurrencyId -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel *ngIf="!DataContext.IsByContainerType" [ObjectFieldName]="'Quantity'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                    <LogLabel *ngIf="DataContext.IsByContainerType" [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td>
+                                                    <LogTextBox *ngIf="!DataContext.IsByContainerType" [ObjectFieldName]="'Quantity'" [Text]="DataContext.Quantity" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                    <LogLov *ngIf="DataContext.IsByContainerType"
+                                                            [ObjectFieldName]="'CurrencyId'"
+                                                            [SelectedValue]="DataContext.CurrencyId"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'Currency'">
+                                                    </LogLov>
+                                                </td>
+                                            </tr>
+
+                                            <!-- UnitPrice -->
+                                            <tr class="FormFieldRow" *ngIf="!DataContext.IsByContainerType">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'UnitPrice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <LogTextBox [HideLastColumn]="true" [ObjectFieldName]="'UnitPrice'" [Text]="DataContext.UnitPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                            </td>
+                                                            <td style="width:18px; font-size:14px;">
+                                                                <label *ngIf="DataContext.MeasurementCode == 'PRVL' || DataContext.MeasurementCode =='PRFR'">%</label>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+
+                                            <!-- CurrencyId -->
+                                            <tr class="FormFieldRow" *ngIf="!DataContext.IsByContainerType">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'CurrencyId'"
+                                                            [SelectedValue]="DataContext.CurrencyId"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'Currency'">
+                                                    </LogLov>
+                                                </td>
+                                            </tr>
+
+                                            <!-- Rate -->
+                                            <tr class="FormFieldRow" *ngIf="!DataContext.IsByContainerType">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'Rate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width: 100px;">
+                                                                <LogTextBox [ObjectFieldName]="'Rate'" [Text]="DataContext.Rate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideLastColumn]="true" [DigitsAfterPoint]="5"></LogTextBox>
+                                                            </td>
+
+                                                            <td style="width: 3px;">
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td style="width: 1px;" *ngIf="DataContext.IsEditExchangeRateVisible">
+                                                                <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="DataContext.UpdateCurrencyRateClicked()" [IsEnabled]="DataContext.IsRateEnabled"></IconButton>
+                                                            </td>
+
+                                                            <td style="width: 5px;">
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td>
+                                                                <span *ngIf="DataContext.IsNewEntity" style="font-size:10px; color:#1B90CB;">{{DataContext.RelativeRateDate}}</span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+
+                                            <!-- ExpectedAmount -->
+                                            <tr class="FormFieldRow" *ngIf="!DataContext.IsByContainerType">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'ExpectedAmount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Replace]="'%CurrencyCode'" [ReplaceWith]="DataContext.CurrencyCode"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width: 100px;">
+                                                                <LogTextBox [ObjectFieldName]="'ExpectedAmount'" [Text]="DataContext.ExpectedAmount" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideLastColumn]="true"></LogTextBox>
+                                                            </td>                                                            
+
+                                                            <td style="width: 3px;">
+                                                                <div></div>
+                                                            </td>
+
+                                                            <!-- Minimum From Quote Charge -->
+                                                            <td style="width: 18px;" *ngIf="DataContext.IsMinFromQuoteIconVisible">
+                                                                <img src="./Images/CellIcons/M-icon.png" style="display: block; margin: auto; width: 16px; height: 16px;" [attr.title]="'Shipment.M.Payables.AmountdueQuoteMinimum' | TextCodeTranslationPipe" />
+                                                            </td>
+
+                                                            <!-- Minimum From Tarrif Charge -->
+                                                            <td style="width: 18px;" *ngIf="DataContext.IsMinFromTarrifIconVisible">
+                                                                <img src="./Images/CellIcons/M-icon.png" style="display: block; margin: auto; width: 16px; height: 16px;" [attr.title]="'Shipment.M.Payables.AmountdueTarrifChargeMin' | TextCodeTranslationPipe" />
+                                                            </td>
+
+                                                            <!-- Maximum From Tarrif Charge -->
+                                                            <td style="width: 18px;" *ngIf="DataContext.IsMaxFromTarrifIconVisible">
+                                                                <img src="./Images/CellIcons/M-icon.png" style="display: block; margin: auto; width: 16px; height: 16px;" [attr.title]="'Shipment.M.Payables.AmountdueTarrifChargeMax' | TextCodeTranslationPipe" />
+                                                            </td>
+
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+
+                                            <!-- ExpectedAmountLocal -->
+                                            <tr class="FormFieldRow" *ngIf="!DataContext.IsByContainerType">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'ExpectedAmountLocal'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Replace]="'%LocalCurrencyCode'" [ReplaceWith]="DataContext.LocalCurrencyCode"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width: 100px;">
+                                                                <LogTextBox [ObjectFieldName]="'ExpectedAmountLocal'" [Text]="DataContext.ExpectedAmountLocal" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideLastColumn]="true"></LogTextBox>
+                                                            </td>
+
+                                                            <td style="width: 3px;">
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+
+                                            <!-- ExpectedAmountInProfitCurrency -->
+                                            <tr class="FormFieldRow" *ngIf="!DataContext.IsByContainerType && DataContext.IsProfitAmountVisible">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'ExpectedAmountInProfitCurrency'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Replace]="'%ProfitCurrencyCode'" [ReplaceWith]="DataContext.ProfitCurrencyCode"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width: 100px;">
+                                                                <LogTextBox [ObjectFieldName]="'ExpectedAmountInProfitCurrency'" [Text]="DataContext.ExpectedAmountInProfitCurrency" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideLastColumn]="true"></LogTextBox>
+                                                            </td>
+
+                                                            <td style="width: 3px;">
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td>
+                                                                <span>1</span>
+                                                                <span style="margin-left: 2px;">{{DataContext.ProfitCurrencyCode}}</span>
+                                                                <span style="margin-left: 2px;">=</span>
+                                                                <span style="margin-left: 2px;">{{DataContext.ProfitCurrencyExchangeRate}}</span>
+                                                                <span style="margin-left: 2px;">{{DataContext.LocalCurrencyCode}}</span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td colspan="2">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+
+                                    <td style="width: 50px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td>
+                                        <table>
+
+                                            <!-- MeasurementId -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 110px;">
+                                                    <LogLabel [ObjectFieldName]="'MeasurementId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'MeasurementId'"
+                                                            [SelectedValue]="DataContext.MeasurementId"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'Measurement'"
+                                                            [DependencyFilter1Value]="MeasurementDependencyProperty1"
+                                                            [DependencyFilter2Value]="false">
+                                                    </LogLov>
+                                                </td>
+                                            </tr>
+
+                                            <!-- PrepaidCollectId -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 110px;">
+                                                    <LogLabel [ObjectFieldName]="'PrepaidCollectId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'PrepaidCollectId'"
+                                                            [SelectedValue]="DataContext.PrepaidCollectId"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'PrepaidCollect'"
+                                                            [DependencyFilter1Value]="true">
+                                                    </LogLov>
+                                                </td>
+                                            </tr>
+
+                                            <!-- VendorId -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 110px;">
+                                                    <LogLabel [ObjectFieldName]="'VendorId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'VendorId'"
+                                                            [SelectedValue]="DataContext.VendorId"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'Card'"
+                                                            [DependencyFilter1Value]="'AG,AL,CG,SG,SL,TR,VD,WH'"
+                                                            [DependencyFilter1IsList]="true">
+                                                    </LogLov>
+                                                </td>
+                                            </tr>
+
+                                            <!-- Notes -->
+                                            <tr class="FormFieldRow" style="height: 85px;" *ngIf="!DataContext.IsByContainerType">
+                                                <td style="width: 110px; vertical-align: top; padding-top: 5px;">
+                                                    <LogLabel [ObjectFieldName]="'Notes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="height: 85px; vertical-align: top;">
+                                                    <div style="height: 100%;">
+                                                        <LogTextBox [ObjectFieldName]="'Notes'" [Text]="DataContext.Notes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td colspan="2">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- BYCT -->
+                    <tr>
+                        <td>
+                            <div class="MediaFill" *ngIf="DataContext.IsByContainerType">
+                                <div class="SimpleGridView">
+                                    <div class="SimpleGridViewHeader">
+                                        <table>
+                                            <tr>
+                                                <td style="width: 100px; min-width: 100px; max-width: 100px;">{{'ShipmentPayable.F.UnitPrice' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 100px; min-width: 100px; max-width: 100px;">{{'ShipmentPayable.F.Quantity' | TextCodeTranslationPipe}}</td>
+                                                <td class="LastChild">{{'ShipmentPayable.F.MeasurementId.Short' | TextCodeTranslationPipe}}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+
+                                    <div class="SimpleGridViewBody">
+                                        <table>
+                                            <tr class="SimpleGridViewRow" *ngFor="let item of DataContext.ByContainersItemsSource">
+
+                                                <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px;">
+                                                    <LogTextBox [ObjectFieldName]="'UnitPrice'" [Text]="item.UnitPrice" [ObjectTableName]="ObjectTableName" [DataContext]="item" [HideColumns]="true"></LogTextBox>
+                                                </td>
+
+                                                <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px;">
+                                                    <LogTextBox [ObjectFieldName]="'Quantity'" [Text]="item.Quantity" [ObjectTableName]="ObjectTableName" [DataContext]="item" [HideColumns]="true"></LogTextBox>
+                                                </td>
+
+                                                <td class="CellDisabled">
+                                                    {{item.MeasurementCode}}
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td colspan="3">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr style="height: 5px;" *ngIf="!DataContext.IsByContainerType">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <!-- Summary -->
+                    <tr style="height: 105px;" *ngIf="!DataContext.IsByContainerType">
+                        <td>
+                            <div class="MediaFill">
+                                <div class="MediaFillRelative WindowSummary">
+                                    <div class="MediaFixedPadding5">
+                                        <table>
+                                            <tr style="height: 1px;">
+                                                <td class="SummaryTitle">{{'Shipment.S.Payables.Summary' | TextCodeTranslationPipe}}</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <table class="FixedTable">
+                                                        <tr>
+                                                            <td style="width: 5px;">
+                                                                <div></div>
+                                                            </td>
+
+                                                            <!-- User -->
+                                                            <td>
+                                                                <table>
+                                                                    <tr>
+                                                                        <td class="Label" style="width: 1px;">{{'Shipment.O.Payables.CreatedBy' | TextCodeTranslationPipe}}:</td>
+                                                                        <td class="Value" style="font-size: 11px; padding-left: 5px;">{{DataContext.CreatedByUserName}}</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td class="Label">{{'Shipment.O.Payables.CreateDate' | TextCodeTranslationPipe}}:</td>
+                                                                        <td class="Value" style="font-size: 11px; padding-left: 5px;">{{DataContext.CreateDate | DateTimeToDatePipe}}</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td class="Label">{{'Shipment.O.Payables.UpdatedBy' | TextCodeTranslationPipe}}:</td>
+                                                                        <td class="Value" style="font-size: 11px; padding-left: 5px;">{{DataContext.UpdatedByUserName}}</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td class="Label">{{'Shipment.O.Payables.UpdateDate' | TextCodeTranslationPipe}}:</td>
+                                                                        <td class="Value" style="font-size: 11px; padding-left: 5px;">{{DataContext.UpdateDate | DateTimeToDatePipe}}</td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+
+                                                            <td *ngIf="ShipmentLevelCode && ShipmentLevelCode != 'C'" style="width: 15px;">
+                                                                <div class="VerticalLine"></div>
+                                                            </td>
+
+                                                            <!-- Amounts -->
+                                                            <td *ngIf="ShipmentLevelCode && ShipmentLevelCode != 'C'">
+                                                                <table>
+                                                                    <tr>
+                                                                        <td class="Label" style="width: 1px;">{{'Shipment.S.Payables.Receivable' | TextCodeTranslationPipe}}:</td>
+                                                                        <td class="Value" style="width: 1px; padding-left: 5px; text-align: right; font-size: 14px;">{{DataContext.ReceivableSummary | NumbersPipe:'N3'}}</td>
+                                                                        <td class="Label" style="padding-left: 5px;">({{DataContext.LocalCurrencyCode}})</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td class="Label" style="width: 1px;">{{'Shipment.S.Payables.Payable' | TextCodeTranslationPipe}}:</td>
+                                                                        <td class="Value" style="width: 1px; padding-left: 5px; text-align: right; font-size: 14px;">{{DataContext.PayableSummary | NumbersPipe:'N3'}}</td>
+                                                                        <td class="Label" style="padding-left: 5px;">({{DataContext.LocalCurrencyCode}})</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td class="Label" style="width: 1px;">{{'Shipment.S.Payables.Profit' | TextCodeTranslationPipe}}:</td>
+                                                                        <td class="Value" style="width: 1px; padding-left: 5px; text-align: right; font-size: 14px;" [ngStyle]="{color: DataContext.ProfitSummary | StringToColorPipe:'number'}">{{DataContext.ProfitSummary | NumbersPipe:'N3'}}</td>
+                                                                        <td class="Label" style="padding-left: 5px;">({{DataContext.LocalCurrencyCode}})</td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>                                
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </ScrollViewer>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button id="{{'CancelPayableBtn' | IdGeneratorPipe}}" class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button id="{{'Ok-AddPayableBtn' | IdGeneratorPipe}}" class="RedButton" (click)="OkButtonClicked()" [disabled]="!DataContext.IsEditingEnabled">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

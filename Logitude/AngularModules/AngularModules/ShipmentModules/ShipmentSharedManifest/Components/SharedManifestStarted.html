@@ -1,0 +1,89 @@
+﻿
+<style>
+    .MessageText {
+        white-space: normal;
+        word-wrap: break-word;
+        overflow-x: hidden;
+        overflow-y: auto;
+        line-height: 18px;
+    }
+</style>
+<table>
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="'true'"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr *ngIf="HasError" style="height:10px"><td></td></tr>
+    <tr *ngIf="IsSuccessfullySharedManifest" style="height:5px"><td></td></tr>
+
+    <tr style="height:30px;">
+
+        <td colspan="2" style="vertical-align:top;height:1px">
+          
+                    <table>
+                        <tr>
+                            <td style="width:10px"></td>
+                            <td class="GridViewCell">
+                                <div *ngIf="HasError" >
+                                    
+                                     Checking Required fields for sharing your shipment
+                                    <img  src="./Images/SimplogIcons/ErrorIcon.png" width="20" height="20" />
+                      
+                                </div>
+
+                                <div *ngIf="IsSuccessfullySharedManifest">
+                                   <span style="font-size:13px">  Your Manifest shared successfully </span>
+                                    <img style="margin-top:-8px;margin-left:3px" src="./Images/SimplogIcons/tick.png" width="20" height="20" />
+
+
+                                </div>
+
+                                <div class="MessageText" *ngIf="IsEnableButtonSharedManifest && !IsSuccessfullySharedManifest && !HasError" style="display:block;margin-right:5px;vertical-align:top;font-size:13px;overflow:hidden">Please notice that this is a one-time sharing, changing details afterwards won’t update the agent</div>
+                           
+
+
+                            </td>
+
+                            <td></td>
+                        </tr>
+                    </table>
+
+
+
+
+        </td>
+
+
+    </tr>
+
+    <tr><td></td></tr>
+
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td *ngIf="!IsSuccessfullySharedManifest" style="width: 57px;">
+                        <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button *ngIf="!IsSuccessfullySharedManifest" [disabled]="!IsEnableButtonSharedManifest"  class="RedButton" (click)="SharingManifesButtonClick()">Share</button>
+                        <button *ngIf="IsSuccessfullySharedManifest" class="Button" (click)="CloseButtonClicked()">Close</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

@@ -1,0 +1,81 @@
+﻿
+<style>
+    .MyRow {
+        float:right;
+        text-align:right;
+        height: 40px;
+    }
+</style>
+
+<div class="TableHolder" style="width: 450px; height:270px; padding-top: 15px;padding-left: 10px; direction:rtl; float:right">
+    <div>
+        <table>
+
+            <!-- CourierPendingReasonCode -->
+            <tr class="MyRow">
+                <td style="width: 120px; height:40px; font-weight:bold; font-size:14px;">{{'הסיבה ל- Pending' }}</td>
+                <td style="width: 290px; height:40px">
+                    <LogLov style="height:35px;" [ObjectFieldName]="'CourierPendingReasonCode'"
+                            [ObjectTableName]="ObjectTableName"
+                            [DataContext]="DataContext"
+                            [LookUpTableName]="'Customs.CourierPendingReason'"
+                            [HideColumns]="true"
+                            [FocusOnMe]="true"
+                            [SelectedValue]="CourierPendingReasonCode">
+                    </LogLov>
+                </td>
+                <td></td>
+            </tr>
+
+            <tr style="height:10px;">
+                <td><div></div></td>
+            </tr>
+
+            <!-- PendingRemarks -->
+            <tr style="height: 150px; width: 410px;">
+                <td colspan="2" style="width: 410px;">
+                    <div style="height: 150px; width: 410px; text-align:center; border: 1px solid #AAAAAA; border-radius: 5px;">
+                        <textarea style="height: 150px; width: 410px; box-shadow:none;" [disabled]="false">{{PendingRemarks}}</textarea>
+                    </div>
+                </td>
+                <td></td>
+            </tr>
+
+            <tr style="height:10px"></tr>
+
+            <tr style="height: 22px;">
+                <td colspan="2" style="width: 410px;">
+                    <table style="width: 410px;">
+                        <tr>
+                            <td style="vertical-align: bottom">
+                                <table style="height: 22px;">
+                                    <tr>
+                                        <td>
+                                            <div></div>
+                                        </td>
+
+                                        <td style="width: 57px;">
+                                            <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel' |TextCodeTranslationPipe}}</button>
+                                        </td>
+
+                                        <td style="width: 5px;">
+                                            <div></div>
+                                        </td>
+
+                                        <td style="width: 57px;">
+                                            <button class="Button" (click)="OkButtonClicked()">{{'Customs.General.B.OK' |TextCodeTranslationPipe}}</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td></td>
+            </tr>
+
+            <tr><td></td><td></td></tr>
+        </table>
+
+    </div>
+</div>

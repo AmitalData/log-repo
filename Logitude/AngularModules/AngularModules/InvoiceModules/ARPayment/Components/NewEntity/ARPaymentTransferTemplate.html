@@ -1,0 +1,129 @@
+﻿
+<table>
+    <tr *ngIf="IsNew && (ValidationErrorsList != null && ValidationErrorsList.length > 0)" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+    <tr style="height:22px;">
+        <td>
+            <table>
+                <tr>
+                    <td style="width:100px;">
+                        <LogLabel [ObjectFieldName]="'TransferStatusCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td *ngIf="!IsReadyForTransfer" style="color:#282E30;font-size:12px;width:100px;">
+                        {{TransferStatusName}}
+                    </td>
+                    <td *ngIf="IsReadyForTransfer" style="color:#282E30;font-size:12px;width:100px;height:10px;">
+                        <img class="LeftCenter" src="./Images/GreenTick.png" />
+                    </td>
+                    <td style="width:5px;">
+                        <div></div>
+                    </td>
+                    <td style="width:160px;">
+                        <button *ngIf="SetBlockedButtonVisibility" class="Button" (click)="SetBlockedTransferClicked()" [disabled]="!IsEditingEnabled">Mark as blocked for transfer</button>
+                        <button *ngIf="SetUnBlockedButtonVisibility" class="Button" (click)="SetUnBlockedTransferClicked()" [disabled]="!IsEditingEnabled">Mark as not blocked for transfer</button>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height:15px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div class="SimpleGridView">
+                <div class="SimpleGridViewHeader">
+                    <table>
+                        <tr>
+                            <td style="width: 120px;min-width:120px;max-width:120px;padding:5px;">Description</td>
+                            <td style="width: 250px;min-width:250px;max-width:250px;padding:5px;">Value</td>
+                            <td style="width: 550px;min-width:550px;max-width:550px;padding:5px;">External ID</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="SimpleGridViewBody">
+                    <table>
+                        <tr class="SimpleGridViewRow" *ngFor="let item of ItemsSource">
+                            <td class="CellStretched" style="width: 120px;min-width:120px;max-width:120px;color:#6E7172;">
+                                {{item.DescriptionTitle}}
+                            </td>
+                            <td class="CellStretched" style="width: 250px;min-width:250px;max-width:250px;color:#282E30;">
+                                <div style="width: 250px;min-width:250px;max-width:250px;color:#282E30;" class="TextTrimming">{{item.DescriptionValue}}</div>
+                            </td>
+                            <td class="CellStretched" style="width: 550px;min-width:550px;max-width:550px;">
+                                <table>
+                                    <tr>
+                                        <td class="DisableCell" style="width: 180px;">
+                                            <LogTextBox [ObjectFieldName]="'EditingFieldValue'" [Text]="item.EditingFieldValue" [NoObjectField]="true" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
+                                        </td>
+                                        <td style="width:2px;">
+                                            <div></div>
+                                        </td>
+                                        <td style="width: 50px;">
+                                            <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="item.EditClicked()" [disabled]="!item.IsTransferredEnabled"></IconButton>
+                                        </td>
+                                        <td style="width:2px;">
+                                            <div></div>
+                                        </td>
+                                        <td style="width: 200px;" *ngIf="item.DescriptionHelpVisibility">
+                                            {{item.DescriptionHelp}}
+                                        </td>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <div></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </td>
+    </tr>
+
+    <tr style="height:15px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr *ngIf="IsNew" style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

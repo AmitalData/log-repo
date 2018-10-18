@@ -1,0 +1,290 @@
+﻿
+<div class="TabHolder" style="overflow-x:auto" *ngIf="!CustomerOverViewTabHide">
+    <table>
+        <tr class="TabTitleRow" style="height:50px">
+            <td>
+                <table>
+                    <tr>
+                        <td style="width:0.5%;min-width:10px">
+                            <div style="width:0.5%"></div>
+                        </td>
+                        <td>{{'Customer.TH.Statistics' | TextCodeTranslationPipe}}</td>
+                    </tr>
+                </table>
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                <table>
+                    <tr>
+                        <td style="width:0.5%;min-width:10px">
+                            <div style="width:0.5%"></div>
+                        </td>
+                        <td style="border:solid;border-color:lightgrey;border-width:1px;border-top:none">
+                            <table>
+                                <tr class="SectionHeader">
+                                    <td>
+
+                                        <table>
+                                            <tr>
+                                                <td><label>Activity Status</label></td>
+                                                <td><a style="font-size:x-small;float:right;margin-right:5px;text-decoration:underline" (click)="MoreDetails()">More Details</a></td>
+                                                <td style="width:5px"></td>
+                                            </tr>
+                                        </table>
+
+                                    </td>
+                                </tr>
+
+                                <tr style="height:1px">
+                                    <td class="CellStretch">
+                                        <table>
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width:120px">
+                                                                <ComboBox (SelectedItemChanged)="SelectedDateTypeItem = $event" [ItemsSource]="DateTypeFilterList" [SelectedItem]="SelectedDateTypeItem" [Binding]="'Title'"></ComboBox>
+                                                            </td>
+                                                            <td style="width:3px"></td>
+
+                                                            <td style="width:120px">
+                                                                <ComboBox (SelectedItemChanged)="SelectedTimeRangeItem = $event" [ItemsSource]="TimeRangeFilterList" [SelectedItem]="SelectedTimeRangeItem" [Binding]="'Title'"></ComboBox>
+                                                            </td>
+                                                            <td style="width:3px"></td>
+
+                                                            <td style="width:120px">
+                                                                <LogDatePicker [NoObjectField]="true" [SelectedDateValue]="ActivityToDate" [ObjectTableName]="'Shipment'" [HideColumns]="true" [ObjectFieldName]="'ActivityToDate'" [DataContext]="DataContext"></LogDatePicker>
+                                                            </td>
+
+                                                            <td style="width:3px"></td>
+
+                                                            <td style="width:120px">
+                                                                <LogDatePicker [NoObjectField]="true" [SelectedDateValue]="ActivityFromDate" [ObjectTableName]="'Shipment'" [HideColumns]="true" [ObjectFieldName]="'ActivityFromDate'" [DataContext]="DataContext"></LogDatePicker>
+                                                            </td>
+                                                            <td></td>
+
+                                                            <td style="width:50px">Show:</td>
+                                                            <td style="width:130px">
+                                                                <ComboBox (SelectedItemChanged)="SelectedShowItem = $event" [ItemsSource]="ShowFilterList" [SelectedItem]="SelectedShowItem" [Binding]="'Title'"></ComboBox>
+                                                            </td>
+
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+
+                                            <tr style="height:100%">
+                                                <td>
+                                                    <div [attr.id]="ActivityStatusOverViewDashboardId" class="CellContent"></div>
+                                                    <div *ngIf="NoData" style="text-align:center;vertical-align:central;width:100%;overflow-y:hidden">
+                                                        <label style="font-size:large;text-align:center;vertical-align:central;width:100%;height:100%">No Shipments</label>
+                                                    </div>
+
+                                                </td>
+                                            </tr>
+                                                                                </table>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </td>
+
+
+                        <td style="width:0.5%;min-width:10px">
+                            <div style="width:0.5%"></div>
+                        </td>
+
+                    </tr>
+                </table>
+            </td>
+
+        </tr>
+        <tr style="height:5px">
+            <td style="height:5px"></td>
+        </tr>
+        <tr style="height:50%">
+            <td>
+                <table>
+                    <tr>
+
+
+                        <td style="width:0.5%;min-width:10px">
+                            <div style="width:0.5%"></div>
+                        </td>
+                        <td style="border:solid;border-color:lightgrey;border-width:1px;border-top:none;min-width:530px">
+
+                            <table>
+                                <tr class="SectionHeader">
+                                    <td>
+
+                                        <table>
+                                            <tr>
+                                                <td><label>Actual Vs Potential</label></td>
+
+                                                <td></td>
+
+                                                <td style="width:130px">
+                                                    <ComboBox style="width:130px" [ItemsSource]="CompareComboBoxItems" (SelectedItemChanged)="CompareComboBoxItemsChange($event)" [SelectedItem]="SelectedCompareComboBoxItems" [Binding]="'Name'"></ComboBox>
+                                                </td>
+                                                <td style="width:10px"></td>
+                                            </tr>
+                                        </table>
+
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <table>
+                                            <tr style="height:1px">
+                                                <td></td>
+                                                <td style="width:150px">
+                                                    <div [attr.id]="legenddiv" style="position:relative;height:20px;width:100%;float:right"></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td colspan="2">
+                                                    <div [attr.id]="ActualVsPotentialChart" class="CellContent"></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                    </td>
+
+
+                                </tr>
+                            </table>
+
+                        </td>
+                        <td style="width:0.5%;min-width:10px">
+                            <div style="width:0.5%"></div>
+                        </td>
+
+                        <td style="border:solid;border-color:lightgrey;border-width:1px;border-top:none;min-width:300px;width:500px">
+                            <table>
+                                <tr class="SectionHeader">
+                                    <td>
+                                        <div><label>Money Information</label></div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td style="height:10px"><div style="height:10px"></div></td>
+                                            </tr>
+                                            <tr style="height:1px">
+                                                <td style="vertical-align:top;height:1px">
+                                                    <table>
+                                                        <tr style="height:1px">
+
+                                                            <td style="position:center;text-align:center;height:1px">
+                                                                <span style="position:center"><label style="font-size:large;text-decoration:underline" class="QueryLink" (click)="ShowOpenARInvoices()"> {{OpenARInvoices |  NumbersPipe:'N2'}} </label><label style="color:grey;margin-left:auto">{{CurrencyCodeLocal}}</label></span>
+
+                                                            </td>
+
+                                                        </tr>
+
+                                                        <tr style="height:1px">
+                                                            <td style="vertical-align:top;position:center;text-align:center">
+                                                                <label style="font-size:small;position:center;color:grey;vertical-align:top">Outstanding</label>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+
+                                                </td>
+
+                                                <td style="vertical-align:top;height:1px">
+                                                    <table>
+                                                        <tr style="height:1px">
+                                                            <td style="position:center;text-align:center">
+                                                                <span style="position:center"><label style="font-size:large;text-decoration:underline" class="QueryLink" (click)="ShowInvoicesDue()"> {{InvoicesDue | NumbersPipe:'N2'}} </label><label style="color:grey;margin-left:auto">{{CurrencyCodeLocal}}</label></span>
+
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr style="height:1px">
+                                                            <td style="position:center;text-align:center;vertical-align:top">
+                                                                <label style="font-size:small;position:center;color:grey;vertical-align:top">Overdue</label>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="height:10px">
+                                                    <div style="height:10px"></div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+
+                                                <td style="vertical-align:top;height:1px">
+                                                    <table>
+                                                        <tr style="height:1px">
+                                                            <td style="position:center;text-align:center">
+                                                                <span style="position:center"><label style="font-size:large;text-decoration:underline" class="QueryLink" (click)="ShowOpenReceivables()"> {{OpenReceivables | NumbersPipe:'N2'}} </label><label style="color:grey;margin-left:auto">{{CurrencyCodeLocal}}</label></span>
+
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr style="height:1px">
+                                                            <td style="vertical-align:top;text-align:center;vertical-align:top">
+                                                                <label style="font-size:small;position:center;color:grey">Open Receivables</label>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+
+                                                <td style="vertical-align:top;height:1px">
+                                                    <table>
+                                                        <tr style="height:1px">
+                                                            <td style="position:center;text-align:center;align-items:center;align-content:center;align-self:center">
+
+                                                                <label style="font-size:large;text-decoration:underline" class="QueryLink" (click)="ShowARPayments()"> {{ARPayments | NumbersPipe:'N2'}} </label><label style="color:grey;margin-left:auto">{{CurrencyCodeLocal}}</label>
+
+                                                                <IconButton [Name]="'Add'" [IsSmall]="true" [Top]="'3px'" style="margin-left:4px;margin-top:2px;display:inline-block;vertical-align:central" (click)="NewARPayment()"></IconButton>
+
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr style="height:1px">
+                                                            <td style="position:center;text-align:center;vertical-align:top">
+                                                                <label style="font-size:small;position:center;color:grey">Open A/R Payments</label>
+
+
+                                                            </td>
+
+
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                                <tr></tr>
+
+                            </table>
+
+                        </td>
+                        <td style="width:0.5%;min-width:10px">
+                            <div style="width:0.5%"></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div #MoreDetailsView>
+</div>

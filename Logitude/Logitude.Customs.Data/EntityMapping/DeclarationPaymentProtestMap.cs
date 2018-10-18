@@ -1,0 +1,48 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data;
+ 
+namespace Logitude.Customs.Data.EntityMapping
+{
+ 
+    public class DeclarationPaymentProtestMap : EntityTypeConfiguration<DeclarationPaymentProtest>
+    {
+	    string dbms;
+        public DeclarationPaymentProtestMap()
+        { 
+			  this.ToTable("DeclarationPaymentProtests", "Customs");
+		
+		    this.HasKey(t => new { t.DeclarationId, t.Line });
+	 
+            this.Property(t => t.DeclarationId).HasColumnName("DeclarationId").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Line).HasColumnName("Line").HasDatabaseGeneratedOption(null);
+
+            this.Property(t => t.ProtestTypeCode).HasColumnName("ProtestTypeCode").HasMaxLength(4).IsUnicode(false);
+
+            this.Property(t => t.CustomsAgentExplanation).HasColumnName("CustomsAgentExplanation").HasMaxLength(255).IsUnicode(true);
+
+            this.Property(t => t.InvoiceNumber).HasColumnName("InvoiceNumber").HasMaxLength(35).IsUnicode(false);
+
+            this.Property(t => t.GoodsItemLineNumber).HasColumnName("GoodsItemLineNumber").HasPrecision(16, 5);
+
+            this.Property(t => t.GoodsItemClassification).HasColumnName("GoodsItemClassification").HasMaxLength(13).IsUnicode(false);
+
+            this.Property(t => t.AmountInDispute).HasColumnName("AmountInDispute").HasPrecision(16, 2);
+
+            this.Property(t => t.Tenant).HasColumnName("Tenant");
+
+            this.Property(t => t.InvoiceCounterKey).HasColumnName("InvoiceCounterKey");
+        }
+    }
+}
+	 

@@ -1,0 +1,1 @@
+alter table [Customs].[Declarations] alter column  AgentId varchar(9) null

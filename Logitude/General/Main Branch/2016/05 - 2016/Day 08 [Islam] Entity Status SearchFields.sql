@@ -1,0 +1,1 @@
+update EntityStatus set SearchFields = (Name + ',' + Code) where SearchFields is null

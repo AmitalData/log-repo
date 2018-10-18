@@ -1,0 +1,125 @@
+--CREATE OR REPLACE PROCEDURE usp_GetNextTableNumberValue
+--  --drop procedure [dbo].[usp_GetNextTableNumberValue]
+--  (
+--    v_pLastValue OUT NUMBER,
+--    v_pTenant      IN NUMBER,
+--    v_pCounterId   IN NVARCHAR2,
+--    v_pPrefix      IN NVARCHAR2,
+--    v_pStartNumber IN NUMBER )
+--AS
+--  v_COUNTER NUMBER(10,0);
+--  v_Current NUMBER(10,0);
+--BEGIN
+--  v_COUNTER    := v_pStartNumber ;
+--  IF v_pPrefix IS NOT NULL THEN
+--    DECLARE
+--      v_temp NUMBER(1, 0) := 0;
+--    BEGIN
+--      BEGIN
+--        SELECT 1
+--        INTO v_temp
+--        FROM DUAL
+--        WHERE NOT EXISTS
+--          (SELECT CounterId
+--          FROM CounterStats
+--          WHERE CounterId = v_pCounterId
+--          AND Prefix      = v_pPrefix
+--          AND Tenant      = v_pTenant
+--          );
+--      EXCEPTION
+--      WHEN OTHERS THEN
+--        NULL;
+--      END;
+--      IF v_temp = 1 THEN
+--        BEGIN
+--          v_COUNTER := v_pStartNumber ;
+--          INSERT
+--          INTO CounterStats
+--            (
+--              Tenant,
+--              CounterId,
+--              Prefix,
+--              LastValue
+--            )
+--            VALUES
+--            (
+--              v_pTenant,
+--              v_pCounterId,
+--              v_pPrefix,
+--              v_pStartNumber
+--            );
+--          v_Current := v_pStartNumber ;
+--        END;
+--      ELSE
+--        BEGIN
+--          SELECT LastValue
+--          INTO v_Current
+--          FROM CounterStats
+--          WHERE CounterId = v_pCounterId
+--          AND Prefix      = v_pPrefix
+--          AND Tenant      = v_pTenant;
+--          v_Current      := v_Current + 1 ;
+--          UPDATE CounterStats
+--          SET LastValue   = v_Current
+--          WHERE CounterId = v_pCounterId
+--          AND Prefix      = v_pPrefix
+--          AND Tenant      = v_pTenant;
+--        END;
+--      END IF;
+--    END;
+--  ELSE
+--    DECLARE
+--      v_temp NUMBER(1, 0) := 0;
+--    BEGIN
+--      BEGIN
+--        SELECT 1
+--        INTO v_temp
+--        FROM DUAL
+--        WHERE NOT EXISTS
+--          (SELECT CounterId
+--          FROM CounterStats
+--          WHERE CounterId = v_pCounterId
+--          AND Tenant      = v_pTenant
+--          );
+--      EXCEPTION
+--      WHEN OTHERS THEN
+--        NULL;
+--      END;
+--      IF v_temp = 1 THEN
+--        BEGIN
+--          v_COUNTER := v_pStartNumber ;
+--          INSERT
+--          INTO CounterStats
+--            (
+--              Tenant,
+--              CounterId,
+--              Prefix,
+--              LastValue
+--            )
+--            VALUES
+--            (
+--              v_pTenant,
+--              v_pCounterId,
+--              v_pPrefix,
+--              v_pStartNumber
+--            );
+--          v_Current := v_pStartNumber ;
+--        END;
+--      ELSE
+--        BEGIN
+--          SELECT LastValue
+--          INTO v_Current
+--          FROM CounterStats
+--          WHERE CounterId = v_pCounterId
+--          AND Tenant      = v_pTenant;
+--          v_Current      := v_Current + 1 ;
+--          UPDATE CounterStats
+--          SET LastValue   = v_Current
+--          WHERE CounterId = v_pCounterId
+--          AND Tenant      = v_pTenant;
+--        END;
+--      END IF;
+--    END;
+--  END IF;
+--  v_pLastValue := v_Current ;
+--END;

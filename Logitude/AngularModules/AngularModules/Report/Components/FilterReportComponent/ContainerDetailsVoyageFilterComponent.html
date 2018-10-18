@@ -1,0 +1,119 @@
+﻿
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr style="height:22px">
+                    <td style="color:#1B90CB;font-size:14px;">Filter By:</td>
+                </tr>
+
+                <tr style="height:28px;">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:5px;">
+                                    <div></div>
+                                </td>
+
+                                <!-->Create Date-->
+                                <td style="width:120px;">Create Date</td>
+                                <td style="width:35px;">From: </td>
+                                <td style="width:120px;">
+                                    <LogDatePicker [HideColumns]="true" [NoObjectField]="true" [ObjectFieldName]="'FromDate'" [DataContext]="DataContext"></LogDatePicker>
+                                </td>
+                                <td style="width:10px">
+                                    <div></div>
+                                </td>
+                                <td style="width:25px;">To: </td>
+                                <td style="width:120px;">
+                                    <LogDatePicker [HideColumns]="true" [NoObjectField]="true" [ObjectFieldName]="'ToDate'" [DataContext]="DataContext"></LogDatePicker>
+                                </td>
+
+                                <!--Customer-->
+                                <td style="width:15px">
+                                    <div></div>
+                                </td>
+                                <td style="width:70px">Customer:</td>
+                                <td style="width:200px">
+                                    <LogLov [ObjectFieldName]="'CustomerId'"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Card'"
+                                            [DisplayMemberPath]="'EnglishName'"
+                                            [ShowInActive]="'true'">
+                                    </LogLov>
+                                </td>
+
+                                <!--Voyage Number-->
+                                <td style="width:10px">
+                                    <div></div>
+                                </td>
+                                <td style="width:70px">Voyage #:</td>
+                                <td style="width:150px">
+                                    <LogTextBox [ObjectTableName]="ObjectTableName" [ObjectFieldName]="'VoyageNumber'" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+
+                                <!--Run Button-->
+                                <td style="width:10px">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:90px;">
+                                    <button (click)="RunReport(true)" class="GreenButton" style="width:90px;height:22px;">Run Report</button>
+                                </td>
+
+                                <td><div></div></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr style="height:28px;">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:5px;">
+                                    <div></div>
+                                </td>
+
+                                <!--Sailing Date-->
+                                <td style="width:120px">Actual Sailing Date</td>
+                                <td style="width:35px;">From: </td>
+                                <td style="width:120px;">
+                                    <LogDatePicker [HideColumns]="true" [NoObjectField]="true" [ObjectFieldName]="'FromDateActual'" [DataContext]="DataContext"></LogDatePicker>                                    
+                                </td>
+                                <td style="width:10px">
+                                    <div></div>
+                                </td>
+                                <td style="width:25px;">To: </td>
+                                <td style="width:120px;">
+                                    <LogDatePicker [HideColumns]="true" [NoObjectField]="true" [ObjectFieldName]="'ToDateActual'" [DataContext]="DataContext"></LogDatePicker>                                    
+                                </td>
+
+                                <!--Direction-->
+                                <td style="width:15px">
+                                    <div></div>
+                                </td>
+                                <td style="width:70px">
+                                    <div></div>
+                                </td>
+                                <td style="width:200px">
+                                    <DirectionsFilter (SelectedValueChanged)="MySelectedDirectionFilter = $event"></DirectionsFilter>                                    
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

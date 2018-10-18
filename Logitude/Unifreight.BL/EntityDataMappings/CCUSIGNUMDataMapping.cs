@@ -1,0 +1,51 @@
+﻿
+using System;
+using System.Collections.Generic;
+using Logitude.Server.Tools;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Unifreight.BL.EntityPMs;
+using Unifreight.Data.AmitalModel;
+using Unifreight.BL.EntityPMs.UGenerated;
+using Unifreight.Data.AmitalModel.EntityPOCOs;
+
+namespace Unifreight.BL.EntityDataMappings
+{
+    public class CCUSIGNUMDataMapping : IMapping<CCUSIGNUMPM, CCUSIGNUM>
+    {
+        public void PMToPOCO(CCUSIGNUMPM entityPM, CCUSIGNUM entityPOCO)
+        {
+            entityPOCO.FILENO = entityPM.FILENO;
+            entityPOCO.LINENOMSHGR = entityPM.LINENOMSHGR;
+            entityPOCO.LINENOSIGN = entityPM.LINENOSIGN;
+            entityPOCO.SIGNNUM = entityPM.SIGNNUM;
+        }
+
+        public void POCOToPM(CCUSIGNUMPM entityPM, CCUSIGNUM entityPOCO)
+        {
+            entityPM.FILENO = entityPOCO.FILENO;
+            entityPM.LINENOMSHGR = entityPOCO.LINENOMSHGR;
+            entityPM.LINENOSIGN = entityPOCO.LINENOSIGN;
+            entityPM.SIGNNUM = entityPOCO.SIGNNUM;
+        }
+
+        public void CustomPMToPOCO(CCUSIGNUMPM entityPM, CCUSIGNUM entityPOCO)
+        {
+            //throw new NotImplementedException();
+        }
+
+        public void CustomPOCOToPM(CCUSIGNUMPM entityPM, CCUSIGNUM entityPOCO)
+        {
+            ///throw new NotImplementedException();
+        }
+
+
+        public void PMToOldPM(CCUSIGNUMPM entityPM, CCUSIGNUMPM oldEntityPM)
+        {
+            //    throw new System.NotImplementedException();
+        }
+    }
+}

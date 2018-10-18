@@ -1,0 +1,594 @@
+﻿
+<div>
+    <!-- DeficitFileFilterComponent  view  -->
+    <custom-message-wrapper>
+
+        <!-- DeficitFileFilterComponent  Request  -->
+        <div class="class-request-content">
+            <!---->
+            <table style="width: 570px;padding-top: 10px;">
+                <tr class="FormFieldRow">
+                    <td style="text-align: right; font-size: 12px; color: #1B90CB;">
+                        {{'Customs.General.O.DeficitFileFilterQuery'| TextCodeTranslationPipe}}
+                    </td>
+                </tr>
+
+                <tr class="FormFieldRow">
+                    <td style="width: 200px">
+                        <LogLabel [NoObjectField]="true"
+                                  [ObjectFieldName]="'FileNumber'"
+                                  [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"
+                                  [TextCode]="'Customs.DeficitFileFilterQuery.F.FileNumber'"></LogLabel>
+                    </td>
+
+                    <td style="width: 150px; ">
+                        <!-- DeficitFileFilterComponent  Request.FromDate-->
+                        <LogTextBox [NoObjectField]="true"
+                                    [Text]="FileNumber"
+                                    [ObjectFieldName]="'FileNumber'"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [InputType]="'text'"
+                                    [DataContext]="DataContext"
+                                    [HideColumns]="true"></LogTextBox>
+
+                    </td>
+                    <td style="width:10px"></td>
+                    <td style="width: 200px">
+                        <LogLabel [NoObjectField]="true"
+                                  [ObjectFieldName]="'Numeral'"
+                                  [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"
+                                  [TextCode]="'Customs.DeficitFileFilterQuery.F.Numeral'">
+
+                        </LogLabel>
+                    </td>
+                    <td style="width: 150px; ">
+                        <!-- DeficitFileFilterComponent  Request.ToDate-->
+                        <LogTextBox [NoObjectField]="true"
+                                    [Text]="Numeral"
+                                    [ObjectFieldName]="'Numeral'"
+                                    [ObjectTableName]="ObjectTableName" [InputType]="'text'"
+                                    [DataContext]="DataContext"
+                                    [HideColumns]="true"></LogTextBox>
+                    </td>
+
+                    <td><div></div></td>
+                </tr>
+
+
+                <tr class="FormFieldRow" style="height:1px">
+                    <td colspan="5"><div></div></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="class-response-content"
+             style="width: 784px;height: 615px;">
+            <table style="width: 750px;height: 240px;padding-top: 10px;">
+                <tr class="FormFieldRow">
+                    <td style="    text-align: right; font-size: 12px; color: #1B90CB;">
+                        {{'Customs.DeficitFileFilterQuery.O.DeficitFileFilterGeneralResults'| TextCodeTranslationPipe}}
+                    </td>
+                </tr>
+                <tr style="height:80px;">
+                    <td>
+
+                        <fieldset [disabled]="true">
+                            <table>
+                                <tr class="FormFieldRow">
+                                    <!-- StatusName -->
+                                    <td style="width: 100px;">
+                                        <LogLabel [TextCode]="'Customs.DeficitFileFilterQuery.F.StatusName'"
+                                                  [ObjectFieldName]="'StatusName'"
+                                                  [ObjectTableName]="'Customs.Declaration'"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td style="width: 150px;">
+
+                                        <LogTextBox [ObjectFieldName]="'StatusName'"
+                                                    [Text]="StatusName"
+                                                    [DataContext]="DataContext"
+                                                    [HideColumns]="true"></LogTextBox>
+                                    </td>
+
+                                    <!-- ExternalName -->
+                                    <td style="width: 100px;">
+                                        <LogLabel [TextCode]="'Customs.DeficitFileFilterQuery.F.ExternalName'"
+                                                  [ObjectFieldName]="'ExternalName'"
+                                                  [ObjectTableName]="'Customs.Declaration'"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td style="width: 150px;">
+
+                                        <LogTextBox [ObjectFieldName]="'ExternalName'"
+                                                    [Text]="ExternalName"
+                                                    [DataContext]="DataContext"
+                                                    [HideColumns]="true"></LogTextBox>
+                                    </td>
+
+
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <!-- CustomOfficeName -->
+                                    <td style="width: 100px;">
+                                        <LogLabel [TextCode]="'Customs.DeficitFileFilterQuery.F.CustomOfficeName'"
+                                                  [ObjectFieldName]="'CustomOfficeName'"
+                                                  [ObjectTableName]="'Customs.Declaration'"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td style="width: 150px;">
+
+                                        <LogTextBox [ObjectFieldName]="'CustomOfficeName'"
+                                                    [Text]="CustomOfficeName"
+                                                    [DataContext]="DataContext"
+                                                    [HideColumns]="true"></LogTextBox>
+                                    </td>
+
+
+
+                                    <!-- AgentName -->
+                                    <td style="width: 100px;">
+                                        <LogLabel [TextCode]="'Customs.DeficitFileFilterQuery.F.AgentName'"
+                                                  [ObjectFieldName]="'AgentName'"
+                                                  [ObjectTableName]="'Customs.Declaration'"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td style="width: 150px;">
+
+                                        <LogTextBox [ObjectFieldName]="'AgentName'"
+                                                    [Text]="AgentName"
+                                                    [DataContext]="DataContext"
+                                                    [HideColumns]="true"></LogTextBox>
+                                    </td>
+
+
+                                </tr>
+
+
+                            </table>
+
+                        </fieldset>
+                    </td>
+                </tr>
+
+                <!--Open Files-->
+                <tr class="FormFieldRow">
+                    <td style="    text-align: right; font-size: 12px; color: #1B90CB;">
+                        {{'Customs.DeficitFileFilterQuery.O.DeficitFileFilterOpenFileResults'| TextCodeTranslationPipe}}
+                    </td>
+                </tr>
+
+                <tr >
+                    <!--background-color :aquamarine;-->
+                    <td style="width: 100% ; height : 100%">
+                        <div style="height:90px;width:810px;">
+                            <div class="GeneratedGridContainer"
+                                 style="width: 100% ; height : 100% ;height:90%;">
+
+                                <logitude-edit-grid GridWidth="100%" GridHeight="100%"
+                                                    [ItemSource]="OpenFilesList">
+
+                                    <!-- DisplayFileNumber -->
+                                    <log-column [header]="'Customs.DeficitFileFilterQuery.F.DisplayFileNumber' | TextCodeTranslationPipe"
+                                                [width]="'125'" [Alignment]="'right'"
+                                                [binding]="'DisplayFileNumber'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming RightCenter">
+                                                <span>{{item.DisplayFileNumber}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+
+                                    <!-- EntityTypeName -->
+                                    <log-column [header]="'Customs.DeficitFileFilterQuery.F.EntityTypeName' | TextCodeTranslationPipe"
+                                                [width]="'90'" [Alignment]="'right'"
+                                                [binding]="'EntityTypeName'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming RightCenter">
+                                                <span>{{item.EntityTypeName}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+
+
+                                    <!-- DeficitEntityID -->
+                                    <log-column [header]="'Customs.DeficitFileFilterQuery.F.DeficitEntityID' | TextCodeTranslationPipe"
+                                                [width]="'130'" [Alignment]="'right'"
+                                                [binding]="'DeficitEntityID'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming RightCenter">
+                                                <span>{{item.DeficitEntityID}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+
+
+                                    <!-- ProductionDate -->
+                                    <log-column [header]="'Customs.DeficitFileFilterQuery.F.ProductionDate' | TextCodeTranslationPipe"
+                                                [width]="'90'" [Alignment]="'right'"
+                                                [binding]="'ProductionDate'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming RightCenter">
+                                                <span>{{item.ProductionDate}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+
+                                    <!-- UnpaidBalance -->
+                                    <log-column [header]="'Customs.DeficitFileFilterQuery.F.UnpaidBalance' | TextCodeTranslationPipe"
+                                                [width]="'90'" [Alignment]="'right'"
+                                                [binding]="'UnpaidBalance'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming RightCenter">
+                                                <span>{{item.UnpaidBalance}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+
+                                    <!-- EstimatedBalance -->
+                                    <log-column [header]="'Customs.DeficitFileFilterQuery.F.EstimatedBalance' | TextCodeTranslationPipe"
+                                                [width]="'90'" [Alignment]="'right'"
+                                                [binding]="'EstimatedBalance'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming RightCenter">
+                                                <span>{{item.EstimatedBalance}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <!-- StatusName -->
+                                    <log-column [header]="'Customs.DeficitFileFilterQuery.F.StatusName' | TextCodeTranslationPipe"
+                                                [width]="'130'" [Alignment]="'right'"
+                                                [binding]="'StatusName'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming RightCenter">
+                                                <span>{{item.StatusName}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                </logitude-edit-grid>
+
+                            </div>
+
+
+                        </div>
+                    </td>
+                </tr>
+
+
+
+
+                <!--Close Files-->
+                <tr class="FormFieldRow">
+                    <td style="    text-align: right; font-size: 12px; color: #1B90CB;">
+                        {{'Customs.DeficitFileFilterQuery.O.DeficitFileFilterCloseFileResults'| TextCodeTranslationPipe}}
+                    </td>
+                </tr>
+
+
+                <tr style="height:80px">
+                    <!--background-color :aquamarine;-->
+                    <td style="width: 100% ; height : 100%">
+                        <div style="height:80px">
+                            <div class="GeneratedGridContainer"
+                                 style="width: 100% ; height : 100% ;height:90%;">
+
+                                <logitude-edit-grid GridWidth="100%" GridHeight="100%"
+                                                    [ItemSource]="CloseFileList">
+
+                                    <!-- DisplayFileNumber -->
+                                    <log-column [header]="'Customs.DeficitFileFilterQuery.F.DisplayFileNumber' | TextCodeTranslationPipe"
+                                                [width]="'125'" [Alignment]="'right'"
+                                                [binding]="'DisplayFileNumber'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming RightCenter">
+                                                <span>{{item.DisplayFileNumber}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+
+                                    <!-- EntityTypeName -->
+                                    <log-column [header]="'Customs.DeficitFileFilterQuery.F.EntityTypeName' | TextCodeTranslationPipe"
+                                                [width]="'90'" [Alignment]="'right'"
+                                                [binding]="'EntityTypeName'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming RightCenter">
+                                                <span>{{item.EntityTypeName}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+
+
+                                    <!-- DeficitEntityID -->
+                                    <log-column [header]="'Customs.DeficitFileFilterQuery.F.DeficitEntityID' | TextCodeTranslationPipe"
+                                                [width]="'130'" [Alignment]="'right'"
+                                                [binding]="'DeficitEntityID'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming RightCenter">
+                                                <span>{{item.DeficitEntityID}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+
+
+                                    <!-- TotalComponentAmount -->
+                                    <log-column [header]="'Customs.DeficitFileFilterQuery.F.TotalComponentAmount' | TextCodeTranslationPipe"
+                                                [width]="'90'" [Alignment]="'right'"
+                                                [binding]="'TotalComponentAmount'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming RightCenter">
+                                                <span>{{item.TotalComponentAmount}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+
+                                    <!-- TotalRefundAmount -->
+                                    <log-column [header]="'Customs.DeficitFileFilterQuery.F.TotalRefundAmount' | TextCodeTranslationPipe"
+                                                [width]="'90'" [Alignment]="'right'"
+                                                [binding]="'TotalRefundAmount'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming RightCenter">
+                                                <span>{{item.TotalRefundAmount}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+
+                                    <!-- CloseDate -->
+                                    <log-column [header]="'Customs.DeficitFileFilterQuery.F.CloseDate' | TextCodeTranslationPipe"
+                                                [width]="'90'" [Alignment]="'right'"
+                                                [binding]="'CloseDate'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming RightCenter">
+                                                <span>{{item.CloseDate}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <!-- SecondaryStatus -->
+                                    <log-column [header]="'Customs.DeficitFileFilterQuery.F.SecondaryStatus' | TextCodeTranslationPipe"
+                                                [width]="'130'" [Alignment]="'right'"
+                                                [binding]="'SecondaryStatus'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming RightCenter">
+                                                <span>{{item.SecondaryStatus}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                </logitude-edit-grid>
+
+                            </div>
+
+
+                        </div>
+                    </td>
+                </tr>
+
+
+
+                <!--Payments List-->
+                <tr class="FormFieldRow">
+                    <td style="    text-align: right; font-size: 12px; color: #1B90CB;">
+                        {{'Customs.DeficitFileFilterQuery.O.DeficitFileFilterPaymentResults'| TextCodeTranslationPipe}}
+                    </td>
+                </tr>
+
+
+
+
+
+                <tr >
+                    <!--background-color :aquamarine;-->
+                    <td style="width: 100% ; height : 100%">
+                        <div style="height:100px">
+                            <div class="GeneratedGridContainer"
+                                 style="width: 100% ; height : 100% ;height:90%;">
+
+                                <logitude-edit-grid GridWidth="100%" GridHeight="100%"
+                                                    [FooterTop]="FooterMethods"
+                                                    [ItemSource]="PaymentOrderList">
+
+                                    <!-- PaymentID -->
+                                    <log-column [header]="'Customs.DeficitFileFilterQuery.F.PaymentID' | TextCodeTranslationPipe"
+                                                [width]="'90'" [Alignment]="'right'"
+                                                [binding]="'PaymentID'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming RightCenter">
+                                                <span>{{item.PaymentID}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+
+                                    <!-- PaymentProcessName -->
+                                    <log-column [header]="'Customs.DeficitFileFilterQuery.F.PaymentProcess' | TextCodeTranslationPipe"
+                                                [width]="'100'" [Alignment]="'right'"
+                                                [binding]="'PaymentProcessName'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming RightCenter">
+                                                <span>{{item.PaymentProcessName}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+
+
+                                    <!-- AmountSum -->
+                                    <log-column [header]="'Customs.DeficitFileFilterQuery.F.AmountSum' | TextCodeTranslationPipe"
+                                                [width]="'90'" [Alignment]="'right'"
+                                                [binding]="'AmountSum'">
+                                        <log-footer>
+                                            <log-footer-template template="let item">
+                                                <div class="TextTrimming LeftCenter" style="font-size: 12px; font-weight: bold; color:#25446C;">{{AmountSumTotal | NumbersPipe:'N2'}}</div>
+                                            </log-footer-template>
+                                        </log-footer>
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming LeftCenter">
+                                                <span>{{item.AmountSum}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+
+
+
+
+                                    <!-- ExternalName -->
+                                    <log-column [header]="'Customs.DeficitFileFilterQuery.F.ExternalName' | TextCodeTranslationPipe"
+                                                [width]="'110'" [Alignment]="'right'"
+                                                [binding]="'ExternalName'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming RightCenter">
+                                                <span>{{item.ExternalName}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+
+                                    <!-- CreateDate -->
+                                    <log-column [header]="'Customs.DeficitFileFilterQuery.F.CreateDate' | TextCodeTranslationPipe"
+                                                [width]="'90'" [Alignment]="'right'"
+                                                [binding]="'CreateDate'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming RightCenter">
+                                                <span>{{item.CreateDate}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+
+                                    <!-- ValidityDateTo -->
+                                    <log-column [header]="'Customs.DeficitFileFilterQuery.F.ValidityDateTo' | TextCodeTranslationPipe"
+                                                [width]="'90'" [Alignment]="'right'"
+                                                [binding]="'ValidityDateTo'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming RightCenter">
+                                                <span>{{item.ValidityDateTo}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <!-- PaymentOrderPayDate -->
+                                    <log-column [header]="'Customs.DeficitFileFilterQuery.F.PaymentOrderPayDate' | TextCodeTranslationPipe"
+                                                [width]="'90'" [Alignment]="'right'"
+                                                [binding]="'PaymentOrderPayDate'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming RightCenter">
+                                                <span>{{item.PaymentOrderPayDate}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <!-- PaymentOrderStatusName -->
+                                    <log-column [header]="'Customs.DeficitFileFilterQuery.F.StatusName' | TextCodeTranslationPipe"
+                                                [width]="'90'" [Alignment]="'right'"
+                                                [binding]="'PaymentOrderStatusName'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming RightCenter">
+                                                <span>{{item.PaymentOrderStatusName}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                </logitude-edit-grid>
+
+                            </div>
+
+
+                        </div>
+                    </td>
+                </tr>
+
+
+                
+
+                <!--Require Documents-->
+                <tr class="FormFieldRow">
+                    <td style="    text-align: right; font-size: 12px; color: #1B90CB;">
+                        {{'Customs.DeficitFileFilterQuery.O.DeficitFileFilterDocumentsResults'| TextCodeTranslationPipe}}
+                    </td>
+                </tr>
+
+
+
+
+                <tr >
+                    <!--background-color :aquamarine;-->
+                    <td style="width: 100% ; height : 100%">
+                        <div style="height:90px">
+                            <div class="GeneratedGridContainer"
+                                 style="width: 100% ; height : 100% ;height:90%;">
+
+                                <logitude-edit-grid GridWidth="100%" GridHeight="100%"
+                                                    [ItemSource]="RequireDocumentsList">
+
+                                    <!-- DocumentTypeName -->
+                                    <log-column [header]="'Customs.DeficitFileFilterQuery.F.DocumentTypeName' | TextCodeTranslationPipe"
+                                                [width]="'120'" [Alignment]="'right'"
+                                                [binding]="'DocumentTypeName'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming RightCenter">
+                                                <span>{{item.DocumentTypeName}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+
+                                   
+
+                                    <!-- DisplayFileNumber -->
+                                    <log-column [header]="'Customs.DeficitFileFilterQuery.F.DisplayFileNumber' | TextCodeTranslationPipe"
+                                                [width]="'150'" [Alignment]="'right'"
+                                                [binding]="'DisplayFileNumber'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming RightCenter">
+                                                <span>{{item.DisplayFileNumber}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <!-- DocumentID -->
+                                    <log-column [header]="'Customs.DeficitFileFilterQuery.F.DocumentID' | TextCodeTranslationPipe"
+                                                [width]="'120'" [Alignment]="'right'"
+                                                [binding]="'DocumentID'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming RightCenter">
+                                                <span>{{item.DocumentID}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+
+                                
+
+
+
+                                </logitude-edit-grid>
+
+                            </div>
+
+
+                        </div>
+                    </td>
+                </tr>
+
+
+            </table>
+
+        </div>
+
+    </custom-message-wrapper>
+</div>

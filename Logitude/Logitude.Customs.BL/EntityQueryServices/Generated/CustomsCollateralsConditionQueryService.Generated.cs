@@ -1,0 +1,69 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.Customs.BL.EntityDataMappings;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Data.EntityKeys;
+using Logitude.Customs.Data;
+using Simplog.Server.Infrastructure;
+namespace Logitude.Customs.BL.EntityQueryServices
+{ 
+   public partial class CustomsCollateralsConditionQueryService: EntityQueryService<CustomsCollateralsCondition,CustomsCollateralsConditionKeys,CustomsCollateralsConditionPM,CustomsCollateralPM,CustomsCollateralKeys>
+   {
+   
+        CustomsCollateralsConditionRepository repository;
+		ICustomContext  context;
+        public CustomsCollateralsConditionQueryService(int tenant)
+        {
+		    context = CustomContext.GetContext(tenant);
+            MainContext = context;
+            repository = new CustomsCollateralsConditionRepository(context);
+            Repository = repository;
+            mapping = new CustomsCollateralsConditionDataMapping();
+        }
+
+        public CustomsCollateralsConditionQueryService(CustomsCollateralsConditionRepository repository)
+        {
+            this.repository = repository;
+            Repository = repository;
+            mapping = new CustomsCollateralsConditionDataMapping();
+        }
+
+        public CustomsCollateralsConditionQueryService(ICustomContext context)
+        {
+            this.repository = new CustomsCollateralsConditionRepository(context);
+            this.context = context;
+
+            MainContext = context;
+            Repository = repository;
+            mapping = new CustomsCollateralsConditionDataMapping();
+        }
+		 
+		public  CustomsCollateralsConditionPM GetSingle(string customscollateralid, string conditioncode,bool getComposition, bool getFromCache)
+        {
+             EntityKeys = new CustomsCollateralsConditionKeys(){ CustomsCollateralId = customscollateralid, ConditionCode = conditioncode };
+
+			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
+        }
+
+       
+	    protected override EntityKeyFields GetKeys(CustomsCollateralsCondition entityPOCO)
+        {
+            CustomsCollateralsConditionKeys entityKeys = new CustomsCollateralsConditionKeys() { CustomsCollateralId = entityPOCO.CustomsCollateralId, ConditionCode = entityPOCO.ConditionCode,  };
+            return entityKeys;
+        }
+     
+	 
+   }
+   
+}
+	 

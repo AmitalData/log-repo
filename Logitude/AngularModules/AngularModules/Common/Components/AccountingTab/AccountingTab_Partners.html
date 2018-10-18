@@ -1,0 +1,79 @@
+﻿
+<table>
+
+    <tr class="FormFieldRow">
+        <td style="width: 145px;" class="Label">
+            <LogLabel [ObjectFieldName]="'ReceivablesAccountingCard'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        </td>
+
+        <td style="width: 200px;">
+            <LogTextBox [ObjectFieldName]="'ReceivablesAccountingCard'" [Text]="ReceivablesAccountingCard" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+        </td>
+
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr class="FormFieldRow">
+        <td style="width: 145px;" class="Label">
+            <LogLabel [ObjectFieldName]="'PayablesAccountingCard'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        </td>
+
+        <td style="width: 200px;">
+            <LogTextBox [ObjectFieldName]="'PayablesAccountingCard'" [Text]="PayablesAccountingCard" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+        </td>
+
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <!--<tr class="FormFieldRow">
+        <td>
+            <LogLabel [ObjectFieldName]="'ExternalId2'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        </td>
+
+        <td>
+            <LogTextBox [ObjectFieldName]="'ExternalId2'" [Text]="ExternalId2" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+        </td>
+
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr class="FormFieldRow" *ngIf="IsExternalByProductsVisible">
+        <td>
+            <LogLabel [ObjectFieldName]="'ExternalAccountingBusinessArea'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        </td>
+
+        <td>
+            <LogTextBox [ObjectFieldName]="'ExternalAccountingBusinessArea'" [Text]="ExternalAccountingBusinessArea" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+        </td>
+
+        <td>
+            <div></div>
+        </td>
+    </tr>-->
+
+    <tr class="FormFieldRow" *ngIf="IsExternalByProductsVisible">
+        <td>
+            <div></div>
+        </td>
+
+        <td style="padding-right: 36px;">
+            <button class="Button" (click)="ExternalByProductsClicked()">Advanced</button>
+        </td>
+
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="3">
+            <div></div>
+        </td>
+    </tr>
+</table>

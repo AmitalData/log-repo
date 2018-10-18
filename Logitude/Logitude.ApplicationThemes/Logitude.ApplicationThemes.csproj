@@ -1,0 +1,203 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{DF9F222A-46E2-4A84-AC97-191CBBBCF346}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Logitude.ApplicationThemes</RootNamespace>
+    <AssemblyName>Logitude.ApplicationThemes</AssemblyName>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>true</SilverlightApplication>
+    <SupportedCultures>
+    </SupportedCultures>
+    <XapOutputs>true</XapOutputs>
+    <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
+    <XapFilename>logitude.applicationthemes.xap</XapFilename>
+    <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
+    <SilverlightAppEntry>Logitude.ApplicationThemes.App</SilverlightAppEntry>
+    <TestPageFileName>Logitude.ApplicationThemesTestPage.html</TestPageFileName>
+    <CreateTestPage>true</CreateTestPage>
+    <ValidateXaml>true</ValidateXaml>
+    <EnableOutOfBrowser>false</EnableOutOfBrowser>
+    <OutOfBrowserSettingsFile>Properties\OutOfBrowserSettings.xml</OutOfBrowserSettingsFile>
+    <UsePlatformExtensions>false</UsePlatformExtensions>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <LinkedServerProject>
+    </LinkedServerProject>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <!-- This property group is only here to support building this project using the 
+       MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
+       to set the TargetFrameworkVersion to v3.5 -->
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="GalaSoft.MvvmLight.Extras.SL4">
+      <HintPath>..\General\Dlls\Client References\GalaSoft.MvvmLight.Extras.SL4.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.SL4">
+      <HintPath>..\General\Dlls\Client References\GalaSoft.MvvmLight.SL4.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Composite">
+      <HintPath>..\General\Dlls\Client References\Microsoft.Practices.Composite.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Composite.Presentation">
+      <HintPath>..\General\Dlls\Client References\Microsoft.Practices.Composite.Presentation.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Composite.UnityExtensions">
+      <HintPath>..\General\Dlls\Client References\Microsoft.Practices.Composite.UnityExtensions.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\General\Dlls\Client References\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Silverlight">
+      <HintPath>..\General\Dlls\Client References\Microsoft.Practices.Unity.Silverlight.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="mscorlib" />
+    <Reference Include="System.Windows" />
+    <Reference Include="system" />
+    <Reference Include="System.Core">
+      <HintPath>$(TargetFrameworkDirectory)System.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Interactivity, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\General\Dlls\Client References\System.Windows.Interactivity.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Windows.Browser" />
+    <Reference Include="Telerik.Windows.Controls">
+      <HintPath>..\General\Dlls\Client References\Telerik-2014-Q2\Telerik.Windows.Controls.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Data">
+      <HintPath>..\General\Dlls\Client References\Telerik-2014-Q2\Telerik.Windows.Controls.Data.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.FixedDocumentViewers">
+      <HintPath>..\General\Dlls\Client References\Telerik-2014-Q2\Telerik.Windows.Controls.FixedDocumentViewers.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.GridView">
+      <HintPath>..\General\Dlls\Client References\Telerik-2014-Q2\Telerik.Windows.Controls.GridView.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Input">
+      <HintPath>..\General\Dlls\Client References\Telerik-2014-Q2\Telerik.Windows.Controls.Input.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Navigation">
+      <HintPath>..\General\Dlls\Client References\Telerik-2014-Q2\Telerik.Windows.Controls.Navigation.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.RichTextBoxUI">
+      <HintPath>..\General\Dlls\Client References\Telerik-2014-Q2\Telerik.Windows.Controls.RichTextBoxUI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Data">
+      <HintPath>..\General\Dlls\Client References\Telerik-2014-Q2\Telerik.Windows.Data.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Converters\PathConverters\MenuPathConverter.cs" />
+    <Compile Include="Converters\VisibilOnTrueConverter.cs" />
+    <Compile Include="ModuleDefinitions\Module.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\AppManifest.xml" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="images\AppImages\sendmail.png" />
+    <Resource Include="images\AppImages\DownArrow.png" />
+    <Resource Include="images\AppImages\close.png" />
+    <Resource Include="images\AppImages\Exception_mark_red.png" />
+    <Resource Include="images\AppImages\message.png" />
+    <Resource Include="images\AppImages\downloads.png" />
+    <Resource Include="images\AppImages\ApplicationLogo\CRMLogo.png" />
+    <Resource Include="images\AppImages\ApplicationLogo\LogitudeLogo.jpg" />
+    <Resource Include="images\AppImages\ApplicationLogo\UnifreightLogo.jpg" />
+    <Resource Include="images\AppImages\change-password-icon.png" />
+    <Resource Include="images\AppImages\ApplicationLogo\LogBox.png" />
+    <Resource Include="images\AppImages\ApplicationLogo\Angular\AngularLogo.png" />
+    <Resource Include="images\AppImages\Align-right-icon.png" />
+    <Resource Include="images\AppImages\Align-left-icon.png" />
+    <Content Include="images\AppImages\close.ico" />
+    <Resource Include="images\AppImages\flow.png" />
+    <Resource Include="images\AppImages\header.jpg" />
+    <Resource Include="images\AppImages\lamp.png" />
+    <Resource Include="images\AppImages\Layer.png" />
+    <Resource Include="images\AppImages\lightbulb.png" />
+    <Resource Include="images\AppImages\line.png" />
+    <Resource Include="images\AppImages\map.png" />
+    <Resource Include="images\AppImages\no_connection.png" />
+    <Resource Include="images\AppImages\ser-password-icon.png" />
+    <Resource Include="images\AppImages\shadow1.png" />
+    <Resource Include="images\AppImages\shadow2.png" />
+    <Resource Include="images\AppImages\Two_headed_arrow_Hor.png" />
+    <Resource Include="images\AppImages\Two_headed_arrow_Ver.png" />
+    <Resource Include="images\AppImages\Undo.png" />
+    <Resource Include="images\AppImages\unflow.png" />
+    <Resource Include="images\PagerIcons\first.png" />
+    <Resource Include="images\PagerIcons\last.png" />
+    <Resource Include="images\PagerIcons\next.png" />
+    <Resource Include="images\PagerIcons\previous.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

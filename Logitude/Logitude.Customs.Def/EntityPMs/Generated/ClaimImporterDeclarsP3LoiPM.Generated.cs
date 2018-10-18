@@ -1,0 +1,145 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Customs.Def.Validators;
+  
+namespace Logitude.Customs.Def.EntityPMs
+{
+   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class ClaimImporterDeclarsP3LoiPM : EntityPM
+   {
+   	  private string claimId ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ClaimId  
+	   {
+	    
+	     get
+		{
+		   return claimId;
+		 }
+		 set
+		 {
+		   if(claimId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ClaimId",OldValue=claimId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   claimId=value;
+		   }
+			
+		 }
+	   }
+	  private int tenant ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+	  private int counterKey ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int CounterKey  
+	   {
+	    
+	     get
+		{
+		   return counterKey;
+		 }
+		 set
+		 {
+		   if(counterKey != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CounterKey",OldValue=counterKey,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   counterKey=value;
+		   }
+			
+		 }
+	   }
+	  private int lineNo ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int LineNo  
+	   {
+	    
+	     get
+		{
+		   return lineNo;
+		 }
+		 set
+		 {
+		   if(lineNo != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LineNo",OldValue=lineNo,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   lineNo=value;
+		   }
+			
+		 }
+	   }
+	  private string declarationNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DeclarationNumber  
+	   {
+	    
+	     get
+		{
+		   return declarationNumber;
+		 }
+		 set
+		 {
+		   if(declarationNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeclarationNumber",OldValue=declarationNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   declarationNumber=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

@@ -1,0 +1,1 @@
+﻿alter table CardContacts add LastAccess datetime null

@@ -1,0 +1,83 @@
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Server.Infrastructure;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Simplog.Data.InfrastructureModel.Repositories
+{
+    public class QueueMessageRepository:IRepository<QueueMessage>
+    {
+
+        IWebFreightContext webFreightContext;
+        public QueueMessageRepository(IWebFreightContext context)
+        {
+            webFreightContext = context;
+
+        }
+        public QueueMessageRepository()
+        {
+            webFreightContext = new WebFreightContext();
+        }
+        public QueueMessageRepository(int tenant)
+        {
+            webFreightContext = WebFreightContext.GetContext(tenant);
+        }
+        public IQueryable<QueueMessage> GetQueueMessages()
+        {
+            return context.QueueMessages;
+        }
+
+        public QueueMessage GetSingleQueueMessage(long id)
+        {
+            return (from a in context.QueueMessages
+                    where a.Id == id
+                    select a).FirstOrDefault();
+        }
+
+        public void Add(QueueMessage entity)
+        {
+            context.QueueMessages.Add(entity);
+        }
+
+        public void Remove(QueueMessage entity)
+        {
+            context.QueueMessages.Attach(entity);
+            context.QueueMessages.Remove(entity);
+        }
+
+        public void Update(QueueMessage entity)
+        {
+            context.QueueMessages.Attach(entity);
+            context.SetAsModified(entity);
+        }
+
+        public List<QueueMessage> All()
+        {
+            return context.QueueMessages.ToList();
+        }
+
+        public IWebFreightContext context
+        {
+            get { return webFreightContext; }
+        }
+
+        public void SubmitChanges()
+        {
+            context.SaveChanges();
+        }
+
+
+        public List<QueueMessage> GetMulti(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public QueueMessage GetSingle(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
+        {
+            throw new System.NotImplementedException();
+        }
+    }
+}

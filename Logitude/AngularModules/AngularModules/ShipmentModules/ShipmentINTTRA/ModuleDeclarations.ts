@@ -1,0 +1,30 @@
+﻿import {WizardComponent} from './Components/Wizard/WizardComponent';
+import {SimulatorComponent} from './Components/Wizard/SimulatorComponent';
+import {INTTRASettingsComponent} from './Components/Maintenance/INTTRASettingsComponent';
+import {INTTRACommunicationSettingsComponent} from './Components/Maintenance/INTTRACommunicationSettingsComponent';
+
+export const Components =
+    [
+        WizardComponent,
+        SimulatorComponent,
+        INTTRASettingsComponent,
+        INTTRACommunicationSettingsComponent,
+    ];
+
+
+export class ModuleDeclarations {
+    public static Get(name: string) {
+
+        var myResult: any = null;
+
+        switch (name) {
+            case "WizardComponent": { myResult = WizardComponent; break; }
+            case "SimulatorComponent": { myResult = SimulatorComponent; break; }
+            case "INTTRASettingsComponent": { myResult = INTTRASettingsComponent; break; }
+            case "INTTRACommunicationSettingsComponent": { myResult = INTTRACommunicationSettingsComponent; break; }
+
+        }
+
+        return myResult;
+    }
+}

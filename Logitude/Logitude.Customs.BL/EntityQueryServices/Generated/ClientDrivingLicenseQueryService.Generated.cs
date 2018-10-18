@@ -1,0 +1,69 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.Customs.BL.EntityDataMappings;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Data.EntityKeys;
+using Logitude.Customs.Data;
+using Simplog.Server.Infrastructure;
+namespace Logitude.Customs.BL.EntityQueryServices
+{ 
+   public partial class ClientDrivingLicenseQueryService: EntityQueryService<ClientDrivingLicense,ClientDrivingLicenseKeys,ClientDrivingLicensePM,ClientPM,ClientKeys>
+   {
+   
+        ClientDrivingLicenseRepository repository;
+		ICustomContext  context;
+        public ClientDrivingLicenseQueryService(int tenant)
+        {
+		    context = CustomContext.GetContext(tenant);
+            MainContext = context;
+            repository = new ClientDrivingLicenseRepository(context);
+            Repository = repository;
+            mapping = new ClientDrivingLicenseDataMapping();
+        }
+
+        public ClientDrivingLicenseQueryService(ClientDrivingLicenseRepository repository)
+        {
+            this.repository = repository;
+            Repository = repository;
+            mapping = new ClientDrivingLicenseDataMapping();
+        }
+
+        public ClientDrivingLicenseQueryService(ICustomContext context)
+        {
+            this.repository = new ClientDrivingLicenseRepository(context);
+            this.context = context;
+
+            MainContext = context;
+            Repository = repository;
+            mapping = new ClientDrivingLicenseDataMapping();
+        }
+		 
+		public  ClientDrivingLicensePM GetSingle(string clientid, int line,bool getComposition, bool getFromCache)
+        {
+             EntityKeys = new ClientDrivingLicenseKeys(){ ClientId = clientid, Line = line };
+
+			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
+        }
+
+       
+	    protected override EntityKeyFields GetKeys(ClientDrivingLicense entityPOCO)
+        {
+            ClientDrivingLicenseKeys entityKeys = new ClientDrivingLicenseKeys() { ClientId = entityPOCO.ClientId, Line = entityPOCO.Line,  };
+            return entityKeys;
+        }
+     
+	 
+   }
+   
+}
+	 

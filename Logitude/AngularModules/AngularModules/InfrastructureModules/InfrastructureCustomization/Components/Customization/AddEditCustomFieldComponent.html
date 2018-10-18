@@ -1,0 +1,244 @@
+﻿<style>
+    .Disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+</style>
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table>
+                <tr style="height: 10px;">
+                    <td style="height: 10px;">
+                        <div></div>
+                    </td>
+                    <td style="height: 10px;">
+                        <div></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:112px;">
+                        <table>
+                            <tr style="height: 30px;">
+                                <td style="height: 22px;">
+                                    <label style="padding-left:10px;color: rgb(110, 113, 114);">
+                                        Field Label
+                                    </label>
+                                </td>
+                            </tr>
+
+                            <tr style="height: 30px;">
+                                <td style="height: 22px;">
+                                    <label style="padding-left:10px;color: rgb(110, 113, 114);">
+                                        Code
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr style="height: 30px;">
+                                <td style="height: 22px;">
+                                    <label style="padding-left:10px;color: rgb(110, 113, 114);">
+                                        Data Type
+                                    </label>
+                                </td>
+                            </tr>
+                            
+                            <tr style="height: 30px;">
+                                <td style="height: 22px;">
+                                    <label style="padding-left:10px;color: rgb(110, 113, 114);">
+                                        Help Text
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr style="height: 30px;" *ngIf="objectField.DataTypeCode == 'LookUp'">
+                                <td style="height: 22px;">
+                                    <label style="padding-left:10px;color: rgb(110, 113, 114);">
+                                        Lookup Table
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr style="height: 30px;" *ngIf="objectField.DataTypeCode == 'Text' || objectField.DataTypeCode == 'nText'">
+                                <td style="height: 22px;">
+                                    <label style="padding-left:10px;color: rgb(110, 113, 114);">
+                                        Min Length
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr style="height: 30px;" *ngIf="objectField.DataTypeCode == 'Text' || objectField.DataTypeCode == 'nText'">
+                                <td style="height: 22px;">
+                                    <label style="padding-left:10px;color: rgb(110, 113, 114);">
+                                        Max Length
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr style="height: 30px;" *ngIf="objectField.DataTypeCode == 'Text' || objectField.DataTypeCode == 'nText'">
+                                <td style="height: 22px;">
+                                    <label style="padding-left:10px;color: rgb(110, 113, 114);">
+                                        Is Multiline
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr style="height: 30px;" *ngIf="ControlField1Visibile">
+                                <td style="height: 22px;">
+                                    <label style="padding-left:10px;color: rgb(110, 113, 114);">
+                                        Control Field1
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr style="height: 30px;" *ngIf="ControlField1Visibile">
+                                <td style="height: 22px;">
+                                    <label style="padding-left:10px;color: rgb(110, 113, 114);">
+                                        Control Field2
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr style="height: 30px;" *ngIf="PickListVisibile">
+                                <td style="height: 22px;">
+                                    <label style="padding-left:10px;color: rgb(110, 113, 114);">
+                                        Pick List
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="width:6px;">
+                        <div></div>
+                    </td>
+                    <td>
+                        <table style="width:364px;">
+                            <tr style="height: 30px;">
+                                <td style="height: 22px;">
+                                    <LogTextBox [ObjectFieldName]="'FieldLable'" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                            </tr>
+
+                            <tr style="height: 30px;">
+                                <td style="height: 22px;">
+                                    <div style="position:absolute;width: 364px;top: 0;bottom: 0;left: 0;right: 0;" [class.Disabled]="IsNew == false">
+                                        <LogTextBox [ObjectFieldName]="'Code'" [DataContext]="DataContext"  [Text]="Code"></LogTextBox>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr style="height: 30px;">
+                                <td style="height: 22px;">
+                                    <div style="position:absolute;width: 326px;top: 0;bottom: 0;left: 0;right: 0;" [class.Disabled]="IsNew == false">
+                                        <ComboBox [ItemsSource]="DataTypeCollection" (SelectedItemChanged)="DataTypeSelectionMethod($event)" [SelectedItem]="CustomFieldDataType" [Binding]="'Code'"></ComboBox>
+                                    </div>
+                                </td>
+                            </tr>
+                          
+                            <tr style="height: 30px;">
+                                <td style="height: 22px;">
+                                    <LogTextBox [ObjectFieldName]="'HelpText'" [DataContext]="DataContext"></LogTextBox>
+                                    <!--<LogLov [RunToggleMode]="true"
+                                            [ObjectFieldName]="'ForwarderPartnerId'"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'HybridPartner'">
+                                    </LogLov>-->
+                                </td>
+                            </tr>
+                            <tr style="height: 30px;" *ngIf="objectField.DataTypeCode == 'LookUp'">
+                                <td style="height: 22px;">
+                                    <div style="position:absolute;width: 326px;top: 0;bottom: 0;left: 0;right: 0;">
+                                        <ComboBox [ItemsSource]="LookUpTables" (SelectedItemChanged)="LookUpTablesSelectionMethod($event)" [SelectedItem]="LookUpTable" [Binding]="'Name'"></ComboBox>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr style="height: 30px;" *ngIf="objectField.DataTypeCode == 'Text' || objectField.DataTypeCode == 'nText'">
+                                <td style="height: 22px;">
+                                    <LogTextBox [ObjectFieldName]="'MinLength'" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                            </tr>
+                            <tr style="height: 30px;" *ngIf="objectField.DataTypeCode == 'Text' || objectField.DataTypeCode == 'nText'">
+                                <td style="height: 22px;">
+                                    <LogTextBox [ObjectFieldName]="'MaxLength'" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                            </tr>
+                            <tr style="height: 30px;" *ngIf="objectField.DataTypeCode == 'Text' || objectField.DataTypeCode == 'nText'">
+                                <td style="height: 22px;">
+                                    <LogCheckBox (ValueChanged)="onIsMultilineChange($event)" [ObjectFieldName]="'IsMultiline'" [DataContext]="DataContext"></LogCheckBox>
+                                </td>
+                            </tr>
+                            <tr style="height: 30px;" *ngIf="ControlField1Visibile">
+                                <td style="height: 22px;">
+                                    <div style="position:absolute;width: 326px;top: 0;bottom: 0;left: 0;right: 0;">
+                                        <ComboBox (SelectedItemChanged)="ContolFieldsList2SelectionMethod($event)" [ItemsSource]="ContolFieldsList1" [SelectedItem]="ControlField1" [Binding]="'FieldName'"></ComboBox>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr style="height: 30px;" *ngIf="ControlField2Visibile">
+                                <td style="height: 22px;">
+                                    <div style="position:absolute;width: 326px;top: 0;bottom: 0;left: 0;right: 0;">
+                                        <ComboBox (SelectedItemChanged)="ContolFieldsList2SelectionMethod($event)" [ItemsSource]="ContolFieldsList2" [SelectedItem]="ControlField2" [Binding]="'FieldName'"></ComboBox>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr style="height: 30px;" *ngIf="PickListVisibile">
+                                <td style="height: 22px;">
+                                    <table>
+                                        <tr>
+                                            <td style="width:200px;"> 
+                                                <div style="position:absolute;width: 204px;top: 0;bottom: 0;left: 0;right: 0;">
+                                                    <ComboBox (SelectedItemChanged)="PickListSelectionMethod($event)" [ItemsSource]="CustomPickListsList" [SelectedItem]="PickListItem"></ComboBox>
+                                                </div>
+                                            </td>
+                                            <td style="width:65px;">
+                                                <button class="Button" (click)="EditPickListButtonClicked()" style="width:57px;float: right;margin-left:3px;margin-top:-7px;">Edit</button>
+                                            </td>
+                                            <td style="width:65px;">
+                                                <button class="Button" (click)="AddPickListButtonClicked()" style="width:57px;float: right;margin-left:3px;margin-top:-7px;">Add</button>
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                </tr>
+                <tr style="height:1px;">
+                    <td>
+                        <div></div>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                    <td>
+                        <div>
+                            <button class="RedButton" (click)="SaveChanges()" style="width:57px;float: right;margin-left: 7px;margin-right: 7px;">OK</button>
+                            <button class="Button" (click)="CancelButtonClicked()" style="width:57px;float: right;">Cancel</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

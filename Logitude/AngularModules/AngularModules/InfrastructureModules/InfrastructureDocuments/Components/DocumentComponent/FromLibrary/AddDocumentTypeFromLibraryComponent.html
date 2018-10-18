@@ -1,0 +1,189 @@
+﻿<table *ngIf="IsLoadTextCode">
+    <tr>
+        <td>
+            <div></div>
+        </td>
+
+    </tr>
+
+
+
+    <tr style="height:100%;vertical-align:top">
+
+        <td>
+
+            <table>
+                <!--<tr style="height:10px;">
+                    <td>
+                        <span style="color:gray;font-size:11px">Here you can add new documents for printing from Logitude's documents list</span>
+                    </td>
+                </tr>-->
+               
+                <tr style="height:20px;">
+              
+                    <td style="height:20px">
+                        <span style="width:200px;color:gray;float: left;font-size:11px">Here you can add new documents for printing from Logitude's documents list</span>
+
+
+                        <SearchTextBox style="float: right;margin-right:0px;width:150px" [ObjectTableName]="'Shipment'" [PlaceHolder]="'Search'" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)"></SearchTextBox>
+
+                    </td>
+
+                </tr>
+
+
+
+
+                <tr style="height:15px">
+                    <td></td>
+                </tr>
+                <!--GridView-->
+
+
+                <tr>
+                    <td class="CellStretch">
+                        <div class="SimpleGridView">
+                            <div class="SimpleGridViewHeader">
+                                <table>
+                                    <tr>
+                                        <!--{{'DocumentTypeTemplate.O.Language' | TextCodeTranslationPipe}}-->
+                                        <td style="width: 160px; min-width: 160px;"> {{'DocumentTypeTemplate.O.DocumentType' | TextCodeTranslationPipe}}  </td>
+                                        <td style="width: 32px; min-width: 32px;"></td>
+                                        <td style="width: 220px; min-width: 220px;">Template</td>
+                                        <td style="width: 144px; min-width: 144px;">Language </td>
+                                        <td style="width: 144px; min-width: 144px;">{{'DocumentTypeTemplate.O.Country' | TextCodeTranslationPipe}}</td>
+                                        <td style="width: 144px; min-width: 144px;">{{'DocumentTypeTemplate.O.LastUpdate' | TextCodeTranslationPipe}}</td>
+                                        <td style="width: 125px; min-width: 125px;"></td>
+                                        <!--<td>
+                                            <div></div>
+                                        </td>-->
+                                    </tr>
+                                </table>
+                            </div>
+                <div class="SimpleGridViewBody" style="vertical-align:top;text-align:center;margin-top:5px;height:50px;" *ngIf="IsShowMessageNoDocument"><span style="font-size:15px;color:gray;margin-top:10px">You have all the Document Types</span></div>
+                <div *ngIf="!IsShowMessageNoDocument" class="SimpleGridViewBody">
+                    <table>
+                        <tr style="height: 1px;">
+                            <td>
+                                <table>
+                                    <tr class="SimpleGridViewRow RowHover" *ngFor="let item of DocumentTypeTemplateLists">
+                                        <td>
+                                            <table>
+                                                <tr (click)="OnSelectedDocumentTypeTemplateLists(item)" [class.RowSelected]="item === DocumentTypeTemplateViewModelSelected">
+                                                    <!--(mouseleave)="OnmMouseleave(item)" (mouseover)="OnmMouseOver(item)-->
+
+                                                    <td class="GridViewCell" style="width: 160px; min-width: 160px; max-width: 160px; position: relative;">
+
+                                                     {{item.DocumentTypeName}}
+                                                    </td>
+                                                    <td class="CellStretched" style="width: 32px; min-width: 32px; max-width: 32px; position: relative;">
+
+                                                            <img  class="CenterCenter" *ngIf="item.TemplateType =='M'" style="width:23px;height:27px;" src="./Images/DoumentIcon/SendIcon.png" />
+
+                                                            <img  class="CenterCenter" *ngIf="item.TemplateType =='P'" style="width:25px;height:25px" src="./Images/DoumentIcon/Print.png" />
+
+                                                    </td>
+
+
+
+                                                    <td class="GridViewCell" style="width: 220px; min-width: 220px; max-width: 220px; position: relative;">
+                                                        <div>{{item.Description}}</div>
+                                                    </td>
+
+
+
+                                                    <td class="GridViewCell" style="width: 144px; min-width: 144px; max-width: 144px; position: relative;">
+
+                                                       {{item.Language}}
+                                                    </td>
+
+
+                                                    <td class="GridViewCell" style="width: 144px; min-width: 144px; max-width: 144px; position: relative;">
+
+
+                                                       {{item.CountryName}}
+
+
+                                                    </td>
+
+
+                                                    <td class="GridViewCell" style="width:144px; min-width: 144px; max-width: 144px; position: relative;">
+                                                      
+                                                        <div style="display:inline-block">
+                                                            <span>{{item.LastUpdateDate | DateTimeToDatePipe}}</span>
+                                                            <span style="margin-left:5px">{{item.LastUpdateDate | DateTimeToTimePipe}}</span>
+
+                                                        </div>
+
+                                                    </td>
+                                                    <td class="CellStretched" style="width: 125px; min-width: 125px; max-width: 130px; position: relative;">
+                                                        <div style="text-align:right;display:inline;width:125px;vertical-align:middle">
+                                                            <span><button class="Button" style="width:55px;height:22px;display:inline;" (click)="PreviewFromLibraryButtonClicked(item)">Preview</button></span>
+                                                            <span><button [disabled]="!item.IsEnabledAddDocumentTemplate" class="GreenButton" style="width:55px;height:22px;display:inline;" (click)="AddFromLibraryButtonClicked(item)">Add</button></span>
+
+                                                        
+                                                        </div>
+                                                    </td>
+                                                    <!--<td>
+                                                        <div></div>
+                                                    </td>-->
+                                                </tr>
+                                                <tr><td colspan="10"></td></tr>
+                                            </table>
+
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                </div>
+</td>
+       </tr>
+
+
+       <!--EndGridView-->
+
+
+</table>
+
+        </td>
+
+
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <div>
+                       
+                        </div>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td d style="width: 57px;">
+                        <button class="Button" (click)="CloseButtonClicked()">Close</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

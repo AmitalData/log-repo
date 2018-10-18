@@ -1,0 +1,13 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio 11.0>xsd.exe C:\LogitudeWorld\main\Logitude.AmitalMessaging\Customs\CustomFile\LOGICUSTFILE.xsd /c
+C:\Program Files (x86)\Microsoft Visual Studio 11.0>xsd.exe C:\LogitudeWorld\Amital\Logitude.AmitalMessaging\Customs\CustomFile\LOGICUSTFILE.xsd /c
+C:\LogitudeWorld\Amital\Logitude2-5.sln
+Microsoft (R) Xml Schemas/DataTypes support utility
+[Microsoft (R) .NET Framework, Version 4.0.30319.17929]
+Copyright (C) Microsoft Corporation. All rights reserved.
+Writing file 'C:\Program Files (x86)\Microsoft Visual Studio 11.0\LOGICUSTFILE.cs'.
+
+
+C:\Program Files (x86)\Microsoft Visual Studio 11.0>
+xsd.exe C:\LogitudeWorld\main\Logitude.AmitalMessaging\Infrastructure\GenericResponse.xsd /c
+xsd.exe C:\LogitudeWorld\Amital\Logitude.AmitalMessaging\Customs\CustomFile\CFIPACKS.xsd /c
+xsd.exe C:\LW\Customs\Logitude.AmitalMessaging\Customs\CustomFile\ReleaseFile\LOGIBONDREL.xsd /c

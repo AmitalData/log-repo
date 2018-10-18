@@ -1,0 +1,200 @@
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Def.EntityPMs; 
+using Logitude.Accounting.Data;
+
+namespace Logitude.Accounting.BL.EntityDataMappings
+{
+   
+   public partial class GLAccountTotalByMonthDataMapping: IMapping<GLAccountTotalByMonthPM, GLAccountTotalByMonth>,IMappingEncodeBase64NVARCHARFields<GLAccountTotalByMonthPM>
+   {
+          public enum POCOPropertyNames
+          { 
+		     None,  
+	         Tenant, 
+	         AccountId, 
+	         DateTypeCode, 
+	         Year, 
+	         Month, 
+	         CurrencyId, 
+	         LocalAmountDebit, 
+	         LocalAmountCredit, 
+	         ForeignAmountDebit, 
+	         ForeignAmountCredit,
+	      }
+
+
+	      public enum PMPropertyNames
+          { 
+		     None,  
+	         Tenant, 
+	         AccountId, 
+	         DateTypeCode, 
+	         Year, 
+	         Month, 
+	         CurrencyId, 
+	         LocalAmountDebit, 
+	         LocalAmountCredit, 
+	         ForeignAmountDebit, 
+	         ForeignAmountCredit, 
+	         CurrencyName, 
+	         AccountName, 
+	         LocalBalance, 
+	         CurrencySign, 
+	         CardId, 
+	         AccountTypeCode,
+	      }
+
+		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
+        List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
+    
+	    public void PMToPOCO(GLAccountTotalByMonthPM entityPM, GLAccountTotalByMonth entityPOCO)
+        {
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LocalAmountDebit))
+            {
+				entityPOCO.LocalAmountDebit = entityPM.LocalAmountDebit;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LocalAmountCredit))
+            {
+				entityPOCO.LocalAmountCredit = entityPM.LocalAmountCredit;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForeignAmountDebit))
+            {
+				entityPOCO.ForeignAmountDebit = entityPM.ForeignAmountDebit;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForeignAmountCredit))
+            {
+				entityPOCO.ForeignAmountCredit = entityPM.ForeignAmountCredit;
+			}
+			}
+
+		public void POCOToPM(GLAccountTotalByMonthPM entityPM, GLAccountTotalByMonth entityPOCO)
+        {
+			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
+            {
+					entityPM.Tenant = entityPOCO.Tenant;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AccountId))
+            {
+					entityPM.AccountId = entityPOCO.AccountId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DateTypeCode))
+            {
+					entityPM.DateTypeCode = entityPOCO.DateTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Year))
+            {
+					entityPM.Year = entityPOCO.Year;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Month))
+            {
+					entityPM.Month = entityPOCO.Month;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CurrencyId))
+            {
+					entityPM.CurrencyId = entityPOCO.CurrencyId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LocalAmountDebit))
+            {
+					entityPM.LocalAmountDebit = entityPOCO.LocalAmountDebit;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LocalAmountCredit))
+            {
+					entityPM.LocalAmountCredit = entityPOCO.LocalAmountCredit;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ForeignAmountDebit))
+            {
+					entityPM.ForeignAmountDebit = entityPOCO.ForeignAmountDebit;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ForeignAmountCredit))
+            {
+					entityPM.ForeignAmountCredit = entityPOCO.ForeignAmountCredit;
+            }
+
+		}
+
+		public void PMToOldPM(GLAccountTotalByMonthPM entityPM, GLAccountTotalByMonthPM oldEntityPM)
+        {
+		     oldEntityPM.ChangedProperties.Clear();
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+                oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LocalAmountDebit))
+            {
+                oldEntityPM.LocalAmountDebit = entityPM.LocalAmountDebit;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LocalAmountCredit))
+            {
+                oldEntityPM.LocalAmountCredit = entityPM.LocalAmountCredit;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForeignAmountDebit))
+            {
+                oldEntityPM.ForeignAmountDebit = entityPM.ForeignAmountDebit;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForeignAmountCredit))
+            {
+                oldEntityPM.ForeignAmountCredit = entityPM.ForeignAmountCredit;
+            }
+			
+		}
+
+	    public void EncodeBase64NVARCHARFields(GLAccountTotalByMonthPM entityPM)
+        {
+            if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
+            {
+                return;
+
+            }
+            entityPM.EncodeBase64NVARCHARFieldsBy=null;
+		}
+
+
+	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
+        {
+            CustomMappedPOCOProperties.Add(pocoPropertyName);
+        }
+
+        public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
+        {
+            CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+			  
+   }
+}
+	 

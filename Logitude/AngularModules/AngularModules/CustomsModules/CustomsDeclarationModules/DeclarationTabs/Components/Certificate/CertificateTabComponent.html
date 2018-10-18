@@ -1,0 +1,515 @@
+﻿
+<style>
+    .GrayBox {
+        height: 70px;
+        margin: 0 auto;
+        background: #f9f9f9;
+        border: 2px solid #e0e0e0;
+        vertical-align: middle;
+        margin-top: 15px;
+        padding: 10px;
+          border-radius: 5px;
+    }
+        .GrayBox:hover {
+        }
+
+    .CertTicketWrapper {
+        direction: ltr; /* abdullah: To force the scrollbar to be on the right */
+        padding: 10px 20px; 
+        vertical-align: top;
+        overflow: auto;
+        height: 100%;
+    }
+
+    .CertTicket{
+        padding: 5px;
+        direction: rtl; /* change it back :) */
+        height: 150px;
+        width: 200px;
+        border-radius: 8px;
+        border: 2px solid #cecece;
+        cursor: pointer;
+        margin-bottom: 25px;
+
+    }
+    
+        .CertTicket:active:not(.Selected){
+            -webkit-box-shadow: inset 0px 0px 11px 0px rgba(50, 50, 50, 0.10);
+            -moz-box-shadow:    inset 0px 0px 11px 0px rgba(50, 50, 50, 0.10);
+            box-shadow:         inset 0px 0px 11px 0px rgba(50, 50, 50, 0.10); 
+            border: 2px solid #cecece;
+
+        }
+        .CertTicket:hover{
+            background: #fafafa;
+        }
+
+        .Selected{
+            border: 1px solid #14c1f5 ;
+            box-shadow: 0px 0px 6px 0px #00C4FF;
+            -webkit-box-shadow: 0px 0px 6px 0px #00C4FF;
+            -moz-box-shadow: 0px 0px 6px 0px #00C4FF;
+            -o-box-shadow: 0px 0px 6px 0px #00C4FF;
+        }
+
+    .PDFIcon{
+        width:25px; 
+        cursor: pointer;
+    }
+    .PDFIcon:hover {
+        opacity: 0.7;
+    }
+
+     .NoRows{
+        width: 100%;
+        height: 100%;
+        background: #fafafa;
+        border: 1px dashed #ebebeb;
+        color: #cfcfcf;
+        font-size: 14px;
+        text-align: center;
+        vertical-align: middle;
+        padding-top: 300px;
+    }
+    /* Basics */
+
+    .subTitle {
+        color: #4b90cb;
+        font-size: 18px;
+        padding-left: 5px;
+    }
+
+    .FormFieldRow {
+        height: auto !important;
+    }
+
+    .DisbleBox {
+        display: inline-block;
+        border: 1px solid #ffd800;
+        border-radius: 5px;
+        background: #faf5c0;
+        padding: 2px 10px;
+        margin: 5px;
+        color: gray;
+        font-family: sans-serif;
+    }
+
+    .noselect {
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none; /* Chrome/Safari/Opera */
+        -khtml-user-select: none; /* Konqueror */
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+        user-select: none; /* Non-prefixed version, currently
+                                  not supported by any browser */
+    }
+
+
+    /* Filters Overide styles */
+
+    .FiltersMenu li {
+        float: right !important;
+        border-width: 1px 1px 1px 0px !important;
+    }
+
+        .FiltersMenu li:first-child {
+            border-radius: 0px 3px 3px 0px !important;
+        }
+
+        .FiltersMenu li:last-child {
+            border-radius: 3px 0px 0px 3px !important;
+            border-left: 1px solid #6A8299 !important;
+        }
+
+        .FiltersMenu li:active:not(.SelectedFilter) {
+            /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#c4c6c6+0,dbdbdb+19,bcbec0+79,a2a4a5+100 */
+            background: #c4c6c6; /* Old browsers */
+            background: -moz-linear-gradient(top, #c4c6c6 0%, #dbdbdb 19%, #bcbec0 79%, #a2a4a5 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(top, #c4c6c6 0%,#dbdbdb 19%,#bcbec0 79%,#a2a4a5 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(to bottom, #c4c6c6 0%,#dbdbdb 19%,#bcbec0 79%,#a2a4a5 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c4c6c6', endColorstr='#a2a4a5',GradientType=0 ); /* IE6-9 */
+        }
+
+    /* Others */
+    .hidden {
+        opacity: 0;
+        visibility: collapse;
+    }
+    .TempDiv {
+        text-align: center;
+        font-size: 20px;
+        color: #c7c7c7;
+        width: 100%;
+        height: 100%;
+        vertical-align: middle;
+        padding-top: 250px;
+        background: #f5f5f5;
+    }
+       .DisbleBox{
+         display: inline-block;
+        border: 1px solid #ffd800;
+        border-radius: 5px;
+        background: #faf5c0;
+        padding: 2px 10px;
+        margin: 5px;
+        color: gray;
+        font-family: sans-serif;
+     }
+
+  
+
+    .LogitudeCheckBox input {    
+        opacity: 0;
+        display: none;
+        position: absolute;
+    }
+    .LogitudeCheckBox {
+        position: relative;
+        display: block;
+        height: 16px;
+    }
+</style>
+<table>
+ 
+    <tr>
+        <td>
+            <div class="TableHolder">
+
+                <table>
+                   
+                    <!-- Header -->
+                    <tr style="height: 115px;">
+                        <td colspan="2" style="vertical-align: top;">
+                            <div >
+                            <table>
+                                <tr>
+                                    <td class="subTitle" style="width:150px">
+                                        {{'Customs.Declaration.O.CertificateMultiEntry' | TextCodeTranslationPipe}}
+                                    </td>
+                                    <td *ngIf="ThereIsNoInvoices" >
+                                        <div style="width: 100%;text-align:center">
+                                            <div class="DisbleBox">
+                                                {{NoInvoicesMessage}}
+
+
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div style="width:100%;text-align:center" *ngIf="IsDisplayOnly">
+                                            <div class="DisbleBox">
+                                                {{DisplayOnlyMessage}}
+                                                <span style="padding: 0px 16px;">-</span>
+                                                <span class="hyperlink" (click)="RefreshEntity()" style="font-size:12px;">רענן</span>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="!IsDisplayOnly && ShowStorageStatusMessage" style="width: 100%;text-align:center">
+                                            <div class="DisbleBox">
+                                                {{DisplayOnlyMessage}}
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td style="width:70px"></td>
+                                </tr>
+                            </table>
+                          </div>
+                            <div class="GrayBox">
+                                <table>
+                                    <tr>
+                                        <!-- DemandState Filters -->
+                                        <td style="width: 70px;">
+                                            {{'Customs.Declaration.O.DemandState' | TextCodeTranslationPipe}}
+                                        </td>
+                                        <td style="width: 240px;">
+                                            <ul class="FiltersMenu">
+                                                <li id="All" (click)="DemandStateFilterItemClicked('All')" style="width: 80px; height: 22px;"
+                                                    [class.SelectedFilter]="DemandStateFilterSelectedValue === 'All'" class="noselect">
+                                                    {{'Customs.General.O.All' | TextCodeTranslationPipe}}
+                                                </li>
+                                                <li id="withResponse" (click)="DemandStateFilterItemClicked('withResponse')" style="width: 80px; height: 22px;"
+                                                    [class.SelectedFilter]="DemandStateFilterSelectedValue === 'withResponse'" class="noselect">
+                                                    {{'Customs.Declaration.O.WithResponse' | TextCodeTranslationPipe}}
+                                                </li>
+                                                <li id="withoutResponse" (click)="DemandStateFilterItemClicked('withoutResponse')" style="width: 80px; height: 22px;"
+                                                    [class.SelectedFilter]="DemandStateFilterSelectedValue === 'withoutResponse'" class="noselect">
+                                                    {{'Customs.Declaration.O.WithoutResponse' | TextCodeTranslationPipe}}
+                                                </li>
+                                            </ul>
+                                        </td>
+
+                                       <td style="width: 20px;"></td>
+
+                                        <!-- LevelSelection Filters-->
+                                        <td style="width: 30px;">
+                                            {{'Customs.Declaration.O.Level' | TextCodeTranslationPipe}}
+                                        </td>
+                                        <td style="width: 160px;">
+                                            <ul class="FiltersMenu">
+                                                <li id="LevelSelectionDeclarationConect" (click)="LevelSelectionFilterItemClicked('DeclarationConect')" style="width: 80px; height: 22px;"
+                                                    [class.SelectedFilter]="LevelSelectionFilterSelectedValue === 'DeclarationConect'" class="noselect">
+                                                    {{'Customs.ImporterDeclarationQuery.O.DeclarationConect.Declaration' | TextCodeTranslationPipe}}
+                                                </li>
+                                                <li id="Invoice" (click)="LevelSelectionFilterItemClicked('Invoice')" style="width: 80px; height: 22px;"
+                                                    [class.SelectedFilter]="LevelSelectionFilterSelectedValue === 'Invoice'" class="noselect">
+                                                    {{'Customs.Declaration.O.Invoice' | TextCodeTranslationPipe}}
+                                                </li>
+                                            </ul>
+                                        </td>
+                                        <td style="width:5px"></td>
+                                        <td style="width: 160px;">
+                                            <ComboBox *ngIf="LevelSelectionFilterSelectedValue=='Invoice'" style="width:150px;" [ItemsSource]="InvoicesNumbersList"
+                                                      (SelectedItemChanged)="InvoicesSelectionChanged($event)" [Binding]="'InvoiceNumber'"></ComboBox>
+                                        </td>
+                                        <td></td>
+                                        <td style="width: 30px;">
+                                            <IconButton [Name]="'Refresh'" (click)="RefreshEntity()"></IconButton>
+                                        </td>
+                                    </tr>
+                                    <tr style="height:5px"></tr>
+                                    <tr >
+                                        <td colspan="2">
+                                            <table>
+                                                <tr>
+                                                    <td style="width: 70px;">סוג אישור</td>
+
+                                                    <td style="width:75px;left:79px">
+                                                        <LogLov [ObjectFieldName]="'ConfirmationTypeCode'"
+                                                                [ObjectTableName]="ObjectTableName"
+                                                                [DataContext]="DataContext"
+                                                                [LookUpTableName]="'Customs.ConfirmationType'"
+                                                                (SelectedItemChanged)="ConfirmationType = $event"
+                                                                [HideColumns]="true"
+                                                                [SelectedValue]="ConfirmationTypeCode"
+                                                                 [QueryFilterItems]= "ConfirmationTypesFilterItems">
+                                                            
+                                                        </LogLov>
+                                                    </td>
+
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr style="border: 1px solid #cecece; border-radius:4px; text-align:center">
+                        <!-- Tickets list -->
+                        <td style="width: 250px; vertical-align: top;">
+                            <div class="CertTicketWrapper">
+                               
+                                <div class="CertTicket" [class.Selected]="activeItem == item" *ngFor="let item of CertificateTicketsList" (click)="item.CertificateItemClicked(item)">
+                                    <table>
+
+                                        <tr  style="color: #0195fd;text-align:right;height:30px">
+                                            <td style="vertical-align:top;width:35px"> נדרש</td>
+                                        
+                                            <td style="word-break:keep-all;white-space:normal;vertical-align:top; width:127px">
+                                                <div class="" style="word-break:keep-all;white-space:normal;">
+                                                    {{item.Title}}
+                                                </div>
+                                            </td>
+                                            <td style="vertical-align:top">
+                                            <img class="PDFIcon" src="./Images/SimplogIcons/File-pdf-48.png"
+                                                                         />
+                                            </td>
+
+                                        </tr>
+
+                                        <!-- Title -->
+                                        <!--<tr style="color: #0195fd;text-align:right">-->
+                                           
+                                            <!--<td colspan="2" style="word-break:keep-all;white-space:normal;vertical-align:top">
+                                                <div class="" style="word-break:keep-all;white-space:normal;">
+                                                    {{item.Title}}
+                                                </div>
+                                            </td>-->
+                                                   
+                                            <!--<td  style="vertical-align:top">
+                                                <IconButton [Name]="'Edit'" [IsEnabled]="!item.IsDisplayOnly" [IsSmall]="false" (click)="item.EditTicket(item)"></IconButton>
+                                            </td>-->
+                                               
+                                        <!--</tr>-->
+
+                                        <!--<tr style="height: 15px;"><td></td></tr>-->
+
+                                        <!-- Filters-->
+                                        <tr style="height: 25px;">
+                                            <td colspan="2" >
+                                                <ul class="FiltersMenu">
+                                                    <li id="All" style="width: 50px; height: 22px;"
+                                                        [class.SelectedFilter]="item.FilterSelectedValue == '2'" (click)="item.EditTicket(item)" class="noselect">
+                                                       {{'Customs.Declaration.O.Digital' | TextCodeTranslationPipe}}
+                                                    </li>
+                                                    <li id="Errors" style="width: 50px; height: 22px;"
+                                                        [class.SelectedFilter]="item.FilterSelectedValue == '1'" (click)="item.EditTicket(item)" class="noselect">
+                                                       {{'Customs.Declaration.O.Manual' | TextCodeTranslationPipe}}
+                                                    </li>
+                                                    <li id="Constraints" style="width: 50px; height: 22px;"
+                                                        [class.SelectedFilter]="item.FilterSelectedValue == '4'" (click)="item.EditTicket(item)" class="noselect">
+                                                     {{'Customs.Declaration.O.Exempt' |TextCodeTranslationPipe }}
+                                                    </li>
+                                                </ul>
+                                            </td>
+                                            <!--<td>
+                                                <img class="PDFIcon" src="./Images/SimplogIcons/File-pdf-48.png"
+                                                     />
+                                            </td>-->
+
+                                            <td style="vertical-align:top">
+                                                <IconButton [Name]="'Edit'" [IsEnabled]="!item.IsDisplayOnly" [IsSmall]="false" (click)="item.EditTicket(item)"></IconButton>
+                                            </td>
+                                            <td></td>
+                                        </tr>
+
+                                        <tr style="height: 10px;"><td></td><td></td><td></td></tr>
+
+
+                                        <tr *ngIf="item.ConfirmationVisibility">
+                                            <td colspan="3">
+                                                <table>
+
+                                                    <tr style="height: 16px;">
+
+                                                        <td style="width:70px;color:#6E7172;"> {{'Customs.Declaration.O.CertificateNumber' | TextCodeTranslationPipe}}</td>
+                                                        <td colspan="2" style="float:right">
+                                                            <div class="TextTrimming" style="width: 80px;float:right;text-align:right">
+                                                                {{item.CertificateNumber}}
+                                                            </div>
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr style="height: 5px;"><td></td><td></td><td></td></tr>
+                                                    <tr style="height: 16px; right:0px">
+
+                                                        <td style="width:70px;color:#6E7172;vertical-align:top" > {{'Customs.SupplierInvioceItemCertificat.F.ResConfirmationTypeCode' | TextCodeTranslationPipe}}:</td>
+                                                        
+                                                        <td colspan="2">
+                                                            <div  style="width: 115px;vertical-align:top">
+                                                                <div style="word-wrap:break-word;width:115px;word-break:break-all;white-space:normal;text-align:right">
+                                                                    {{item.ResConfirmationTypeName}}
+                                                                </div>
+                                                               
+                                                            </div>
+                                                        </td>
+
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                      
+                                        <tr style="height: 16px;right:0px" *ngIf="item.ExepmtVisibility">
+
+                                            <td colspan="3">
+                                                <table>
+
+
+
+                                                    <tr style="height: 16px;">
+
+                                                        <td style="width:70px;color:#6E7172;" class="TextTrimming"> {{'Customs.SupplierInvioceItemCertificat.F.CertificateExemptionTypeName' | TextCodeTranslationPipe}}:</td>
+
+                                                        <td colspan="2">
+                                                            <div class="TextTrimming" style="width: 105px;">
+                                                                {{item.CertificateExemptionTypeName}}
+                                                            </div>
+                                                        </td>
+
+                                                    </tr>
+                                                  <!--  <tr style="height: 16px;"><td></td><td></td><td></td></tr>-->
+                                                  
+                                                </table>
+                                            </td>
+                                           
+
+                                        </tr>
+
+                                        <tr></tr>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </td>
+
+                        <!-- Ticket Details -->
+                        <td style="border-right: 1px solid #cecece;border-radius:4px; vertical-align: top;" >
+                            <table>
+                                <tr style="height:25px">
+                                    <td>
+                                        <table>
+                                            <tr style="height:35px">
+                                                <td style="width:5px"></td>
+                                                <td style="height:25px;width:35px; ">
+                                                    <div *ngIf="IsCheckBoxVisible" >
+                                                        <div class="Button" style="width: 29px;height:25px;">
+                                                            <!--<span style="width:5px"></span>-->
+                                                            <!--<div class="LogitudeCheckBox" >
+                <input [attr.id]="ControlId" type="checkbox"  [checked]="IsChecked" (click)="OnClick()" />
+
+            </div>-->
+                                                            <CheckBox style="right:3px; top:1.5px" [IsChecked]="IsSelected"  [IsEnabled]="!IsDisplayOnly"  (Checked)="IsSelected = $event "></CheckBox>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td style="width:5px"></td>
+                                                <td style="width:75px;">
+                                                    <button *ngIf="IsVisible" (click)="CreateMethod()"  [disabled]="IsDisplayOnly"  class="Button" style="width:70px; height:25px;padding-right:5px">{{'Customs.Declaration.O.Create' | TextCodeTranslationPipe}}</button>
+                                                </td>
+                                               <!-- <td style="width:5px"></td>-->
+                                                <td style="width:75px;">
+                                                    <button *ngIf="IsVisible" (click)="MoveMethod()"  [disabled]="IsDisplayOnly"  class="Button" style="width:70px; height:25px;padding-right:5px">{{'Customs.Declaration.O.Move' | TextCodeTranslationPipe}}</button>
+                                                </td>
+                                             <!--   <td style="width:5px"></td>-->
+                                                <td style="width:90px">
+                                                    <div *ngIf="IsVisible"  style="width: 100%;text-align:center;  height:30px;">
+                                                        <div class="DisbleBox">
+
+                                                            {{SelectedItemsCountText}}
+
+
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    
+                                </tr>
+                               <!-- <tr style="height:5px"> </tr>-->
+                                <tr style="padding:5px">
+                                    <td >
+                                        <div class="CellContent">
+                                            <div class="GeneratedGridContainer" style="padding:5px;vertical-align:top;top:0;position:absolute">
+                                                <logitude-grid GridWidth="100%" GridHeight="100%"
+                                                               [ObjectTable]="ObjectTableName"
+                                                               [dataSource]="DataSource"
+                                                               (AfterViewInitCompleted)="ViewInitCompleted($event)"
+                                                               (rowSelectedEvent)="OnRowSelected($event)"
+                                                               [MenuHeaderchangeevent]="MenuHeaderchangeevent"
+                                                               [columns]="columns"
+                                                               [SelectedRow]="SelectedRow"
+                                                               [IsCustomTemplate]="true"
+                                                               [IsGradiantSelectedColor]="false"
+                                                               (CheckBoxChecked)="onCheckBoxChecked($event)"
+                                                               [IsAllRecordsChecked]="IsSelected"
+                                                               [IsCheckBoxEnabled]="!IsDisplayOnly">
+                                                </logitude-grid>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                           
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </td>
+    </tr>
+</table>

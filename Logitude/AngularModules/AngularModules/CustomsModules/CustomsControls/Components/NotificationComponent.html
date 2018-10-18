@@ -1,0 +1,360 @@
+﻿
+<style>
+      .GrayBox {
+        height: 90px;
+        margin: 0 auto;
+        background: #f9f9f9;
+        border: 2px solid #e0e0e0;
+        vertical-align: middle;
+        margin-top: 15px;
+        padding: 10px;
+    }
+
+       .subTitle{
+        color: #1b90cb;
+        font-size: 18px;
+    }
+    .ToggleButton {
+        border:none !important;
+
+    }
+    .ActionButton{
+        display: block;
+    outline: none;
+    text-align: center;
+    font-size: 11px;
+    color: #45494A;
+    width: 100%;
+    height: 22px;
+    /*border: 1px solid #6A8299;*/
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    text-shadow: 1px 1px white;
+    position: relative;
+    cursor: pointer;
+     height: 22px;
+    padding: 0 5px;
+    }
+    .ActionButton:hover:not(:disabled) {
+    background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(221, 232, 245, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(221, 232, 245, 1) ));
+    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+}
+    .ActionButton:focus:not(:disabled) {
+    border: 1px solid #3BB3E2;
+    -webkit-box-shadow: 0px 0px 6px 0px #3BB3E2;
+    -moz-box-shadow: 0px 0px 6px 0px #3BB3E2;
+    box-shadow: 0px 0px 6px 0px #3BB3E2;
+}
+
+    .ActionButton {
+    background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
+    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+}
+
+      .DisbleBox {
+        display: inline-block;
+        border: 1px solid #ffd800;
+        border-radius: 5px;
+        background: #faf5c0;
+        padding: 2px 10px;
+        margin: 5px;
+        color: gray;
+        font-family: sans-serif;
+    }
+</style>
+
+
+<div  class="TabHolder">
+<table *ngIf="IsVisible" >
+    <tr class="subTitle" style="height:22px">
+        <td>
+            <table>
+                <tr>
+                    <td class="subTitle" style="width:100px">
+                        {{'General.MH.Notifications' | TextCodeTranslationPipe}}
+                    </td>
+
+                    <td >
+                        <ul class="PagesMenu" style="margin:0 auto; width:350px">
+                            <li id="open" *ngIf="IsDeclarationTab" (click)="OpenClosedFilterItemClicked('all')" style="width: 100px; height: 25px;" [ngStyle]="LayoutDirection == 'rtl' ? {'margin-left': '10px','margin-right': '0px'} : {'margin-right': '10px','margin-left': '0px'}"
+                                [class.SelectedPageMenu]="OpenClosedFilterSelectedValue === 'all'" class="noselect">
+                                {{'Customs.General.O.All' | TextCodeTranslationPipe}}
+
+                            </li>
+                            <li id="closed"  style="width: 100px; height: 25px;" (click)="OpenClosedFilterItemClicked('closed')" [ngStyle]="LayoutDirection == 'rtl' ? {'margin-left': '10px','margin-right': '0px'} : {'margin-right': '10px','margin-left': '0px'}"
+                               [class.SelectedPageMenu] ="OpenClosedFilterSelectedValue === 'closed'" class="noselect">
+                                {{'Customs.Notification.O.Closed' | TextCodeTranslationPipe}}
+
+                            </li>
+                            <li id="open"  style="width: 100px; height: 25px;" (click)="OpenClosedFilterItemClicked('open')" [ngStyle]="LayoutDirection == 'rtl' ? {'margin-left': '10px','margin-right': '0px'} : {'margin-right': '10px','margin-left': '0px'}"
+                                [class.SelectedPageMenu]="OpenClosedFilterSelectedValue === 'open'" class="noselect">
+                                {{'Customs.Notification.O.Open' | TextCodeTranslationPipe}}
+                                <span> {{openCount}} </span>
+                            </li>
+                            
+                           
+
+                           
+                        </ul>
+                    </td>
+                    <td  style="width:100px"></td>
+                </tr>
+            </table>
+        </td>
+       
+
+        
+    </tr>
+    <tr style="vertical-align:top;height:100px;padding:10px">
+        <td>
+            <div class="GrayBox">
+                <table>
+                    <tr >
+                        <!-- NotificationType Filters -->
+                        <td style="width: 70px;">
+                            {{'Customs.Notification.F.AssigneToNotificationTypeCode' | TextCodeTranslationPipe}}
+                        </td>
+                        <td style="width: 230px;" >
+                            <ul class="FiltersMenu">
+                                <li id="Info" (click)="NotificationTypeilterItemClicked('Info')" style="width: 80px; height: 22px;"
+                                    [class.SelectedFilter]="NotificationTypeFilterSelectedValue === 'Info'" class="noselect">
+                                    {{'Customs.AssigneeNotificationType.O.Info' | TextCodeTranslationPipe}}
+                                      <span> {{infoCount}} </span> 
+                                
+                                   </li>
+                                <li id="Action" (click)="NotificationTypeilterItemClicked('Action')" style="width: 80px; height: 22px;"
+                                    [class.SelectedFilter]="NotificationTypeFilterSelectedValue === 'Action'" class="noselect">
+                                    {{'Customs.AssigneeNotificationType.O.Action' | TextCodeTranslationPipe}}
+                                     <span> {{actionCount}} </span> 
+                                 </li>
+                              
+                                <li id="All" (click)="NotificationTypeilterItemClicked('All')" style="width: 70px; height: 22px;"
+                                    [class.SelectedFilter]="NotificationTypeFilterSelectedValue === 'All'" class="noselect">
+                                    {{'Customs.General.O.All' | TextCodeTranslationPipe}}
+                                    <span> {{allCount}} </span> 
+                                </li>
+                             </ul>
+                        </td>
+
+                        <td style="width: 20px;"></td>
+
+                        <!-- LevelSelection Filters-->
+                        <td style="width:70px;">
+                            {{'Customs.Notification.F.AssigneToName' | TextCodeTranslationPipe}}
+                        </td>
+                        <td style="width: 240px;">
+                            <ul class="FiltersMenu">
+                                <li id="Office" (click)="AssigneeFilterItemClicked('Office')" style="width: 80px; height: 22px;"
+                                    [class.SelectedFilter]="AssigneeFilterSelectedValue === 'Office'" class="noselect">
+                                    {{'Customs.Notification.O.Office' | TextCodeTranslationPipe}}
+                                </li>
+                                <li id="Department" (click)="AssigneeFilterItemClicked('Department')" style="width: 80px; height: 22px;"
+                                    [class.SelectedFilter]="AssigneeFilterSelectedValue === 'Department'" class="noselect">
+                                    {{'Customs.Notification.O.Department' | TextCodeTranslationPipe}}
+                                </li>
+                              
+                                <li id="Assignee" (click)="AssigneeFilterItemClicked('Assignee')" style="width: 80px; height: 22px;"
+                                    [class.SelectedFilter]="AssigneeFilterSelectedValue === 'Assignee'" class="noselect">
+                                    {{'Customs.Notification.O.Assignee' | TextCodeTranslationPipe}}
+                                </li>
+                            </ul>
+                        </td>
+                        <td style="width:5px"></td>
+                        <td style="width: 160px;">
+                            <LogLov *ngIf="AssigneeFilterSelectedValue=='Assignee'"
+                                    [ObjectFieldName]="'AssigneToId'"
+                                    [ObjectTableName]="'Customs.Notification'"
+                                    [DataContext]="DataContext"
+                                    [DisplayMemberPath]="'LocalName'"
+                                    [DisplayFieldsFromList]="'Email,LocalName,EnglishName'"
+                                    [LookUpTableName]="'User'"
+                                    (SelectedItemChanged)="Assignee = $event"
+                                    [HideColumns]="true"
+                                    >
+                            </LogLov>
+
+                            <LogLov *ngIf="AssigneeFilterSelectedValue=='Department'"
+                                    [ObjectFieldName]="'DepartmentId'"
+                                    [ObjectTableName]="'Customs.Notification'"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'Department'"
+                                    [HideColumns]="true">
+                            </LogLov>
+                        </td>
+                        <td></td>
+                       
+                    </tr>
+
+                    <tr style="height:20px"></tr>
+                    <tr>       
+                        <td colspan="6">
+                            <table>
+                                <tr>
+                                    <td style="width:70px">
+                                        {{'Customs.Notification.O.DueUntil' | TextCodeTranslationPipe}}
+                                    </td>
+
+                                    <td style="width:130px;float:right ">
+                                        <ComboBox  [ItemsSource]="DueDatesList" [Binding]="'dueDate'" [SelectedItem]="selectedDate"
+                                                  (SelectedItemChanged)="DueDateSelectionChanged($event)" >
+                                        </ComboBox>
+                                    </td>
+
+                                    <!--<td style="width:40px"></td>-->
+                                    <td style="width:70px;left:50px ">
+                                        {{'Customs.Notification.F.DeclarationOfficeCode' | TextCodeTranslationPipe}}
+                                    </td>
+
+                                    <td style="width:200px;left:45px ">
+                                        <LogLov [ObjectFieldName]="'DeclarationOfficeCode'"
+                                                [ObjectTableName]="'Customs.Notification'"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Customs.CustomsHouseType'"
+                                                [HideColumns]="true">
+                                        </LogLov>
+
+                                    </td>
+
+                                </tr>
+                            </table>
+                        </td>  
+                        <td style="width:20px"></td>            
+                                   
+                    </tr>
+
+
+                </table>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height:50px">
+        <td>
+            <table>
+                <tr>
+
+                  
+                    <td style="height:26px;width:53px; ">
+                        <div style="border:1px solid #6A8299;width:47px;border-radius: 3px;max-height: 26px;">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div class="ActionButton" style="width: 35px;height:23px; ">
+                                            <CheckBox [IsChecked]="IsSelected" (Checked)="IsSelected = $event "></CheckBox>
+
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="ToggleButton" tabindex="-1" style="width: 20px;height:23px;left:10px ">
+
+
+                                            <img src="./Images/ToggleIcon.png" style="float:left;" />
+                                            <div class="ToggleButtonMenu" style="width: 70px;top:26px;text-align:right">
+                                                <button  style="text-align:right" (click)="OnAllBtnClicked()">{{'Customs.Notification.O.All' | TextCodeTranslationPipe}}</button>
+                                                <button style="text-align:right;" (click)="OnReadBtnClicked()">{{'Customs.Notification.O.Read' | TextCodeTranslationPipe}}</button>
+                                                <button style="text-align:right" (click)="OnUnReadBtnClicked()">{{'Customs.Notification.O.UnRead' | TextCodeTranslationPipe}}</button>
+                                                <button style="text-align:right" (click)="OnNoneBtnClicked()">{{'Customs.Notification.O.None' | TextCodeTranslationPipe}}</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        
+                            
+                          
+                    </td>
+                    <td style="width:5px"></td>
+                    <td *ngIf="IsReadButtonVisible" style="width:75px;">
+                        <button  (click)="MarkAsReadMethod()" [disabled]="IsDisplayOnly" class="Button" style="height:25px;padding-right:5px;border:1px solid #6A8299">{{'Customs.Notification.O.MarkAsRead' | TextCodeTranslationPipe}}</button>
+                    </td>
+                     <td style="width:5px"></td>
+                    <td *ngIf="IsUnReadButtonVisible" style="width:75px;">
+                        <button  (click)="MarkAsUnreadMethod()" [disabled]="IsDisplayOnly" class="Button" style="height:25px;padding-right:5px;border:1px solid #6A8299">{{'Customs.Notification.O.MarkAsUnread' | TextCodeTranslationPipe}}</button>
+                    </td>
+                    <td style="width:5px"></td>
+                    <td *ngIf="IsCloseButtonVisible" style="width:75px;">
+                        <button  (click)="MarkAsClosedMethod()" [disabled]="IsDisplayOnly" class="Button" style="height:25px;padding-right:5px;border:1px solid #6A8299">{{'Customs.Notification.O.MarkAsClosed' | TextCodeTranslationPipe}}</button>
+                    </td>
+                    <td style="width:5px"></td>
+                    <td *ngIf="IsReopenButtonVisible" style="width:75px;">
+                        <button (click)="ReopenMethod()" [disabled]="IsDisplayOnly" class="Button" style="height:25px;padding-right:5px;border:1px solid #6A8299">{{'Customs.Notification.O.Reopen' | TextCodeTranslationPipe}}</button>
+                    </td>
+                       <td style="width:5px"></td>
+                    <td *ngIf="IsSelectedTextVisible" style="width:90px">
+                        <div style="width: 100%;text-align:center;  height:30px;">
+                            <div class="DisbleBox">
+
+                                {{SelectedItemsCountText}}
+
+
+                            </div>
+                        </div>
+                    </td>
+                    <td><div></div></td>
+                    <td style="width: 30px;">
+                        <IconButton [Name]="'Refresh'" (click)="RefreshEntity()"></IconButton>
+                    </td>
+                    <td style="width:5px"></td>
+                    <td style="width:200px">
+                        <SearchTextBox  (SearchTextChangeEvent)="Search($event)" [ObjectTableName]="'Customs.Notification'"
+                                                       [PlaceHolder]="'תיק עמילות / אסמכתא / לקוח / תיאור'"></SearchTextBox>
+                        <!--<SearchBox [SearchText]="searchText" (SearchTextChangeEvent)="Search($event)"
+                                   [Watermark]="'תיק עמילות / אמסכתא / לקוח / תיאור'"></SearchBox>-->
+                    </td>
+                </tr>
+               
+            </table>
+        </td>
+        
+    </tr>
+    <tr>
+
+        <td>
+
+            <div class="GeneratedGridContainer"  style="padding:5px;vertical-align:top;top:0;position:absolute">
+                <logitude-grid GridWidth="100%" GridHeight="100%"
+                               [ObjectTable]="ObjectTableName"
+                               [dataSource]="DataSource"
+                               (AfterViewInitCompleted)="ViewInitCompleted($event)"
+                               (rowSelectedEvent)="OnRowSelected($event)"
+                               [MenuHeaderchangeevent]="MenuHeaderchangeevent"
+                               [columns]="columns"
+                               [SelectedRow]="SelectedRow"
+                               [IsCustomTemplate]="false"
+                               [RowBackGroundColor]="'#E2E2E2'"
+                               [ChangeColorByPropName]="'IsSeenByAssignee'"
+                               [ChangeColorByPropValue]="true"
+                               [IgnoreRowHoverVisibilityQueryName]="true"
+                               [EnableRowHoverVisibility]="true"
+                               [HoverTemplateIndex]="8"
+                               [rowHeight]="40" 
+                               [PassAdditionalDataToTemplates]="true" 
+                               [RowHoverColor]="'#C8C8FA'"
+                               [ShowHLineOverRow]="ShowHLineOverRow"
+                               [EnableRowToolTip]="true"
+                               [ToolTipWidth]="250"
+                               [ToolTipHeight]="100"
+                              (CheckBoxChecked)="onCheckBoxChecked($event)"
+                               [ToolTipBinding]="'Description'"
+                               [IsAllRecordsChecked]="IsSelected"  
+                                 (DataLoaded)="OnDataLoaded($event)"
+                               [CustomBackFromEdit] = "CustomBackFromEditevent">
+                            
+                    <!--[CheckBoxFilterChanged]="CheckBoxFilterChanged"-->
+                </logitude-grid>
+                <!--[ShowHLineOverRow]="ShowHLineOverRow"-->
+            </div>
+        </td>
+
+    </tr>
+</table>
+</div>

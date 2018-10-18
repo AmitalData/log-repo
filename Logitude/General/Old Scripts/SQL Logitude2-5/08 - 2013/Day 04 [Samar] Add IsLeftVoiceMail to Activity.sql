@@ -1,0 +1,1 @@
+alter table activities add [IsLeftVoiceMail] bit not null default 0

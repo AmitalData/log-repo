@@ -1,0 +1,1 @@
+update globalcontacts set email=REPLACE ( email , 'system@' , 'system@tenant' )

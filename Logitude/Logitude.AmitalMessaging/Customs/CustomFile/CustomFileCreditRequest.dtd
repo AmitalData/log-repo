@@ -1,0 +1,6 @@
+﻿<!ELEMENT CustomFileCredit (CustomsFile*)>
+<!ELEMENT CustomsFile (FileNo?, Mode?, TotalTax?, UpdatedByUser?)>
+<!ELEMENT FileNo (#PCDATA)>
+<!ELEMENT Mode (#PCDATA)>
+<!ELEMENT TotalTax (#PCDATA)>
+<!ELEMENT UpdatedByUser (#PCDATA)>

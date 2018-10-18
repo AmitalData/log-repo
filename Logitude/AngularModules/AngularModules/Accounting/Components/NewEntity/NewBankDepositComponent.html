@@ -1,0 +1,137 @@
+﻿    <table>
+        <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+            <td colspan="4">
+                <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+            </td>
+        </tr>
+
+        <tr>
+            <td style="width: 400px">
+                <table>
+                    <tr class="FormFieldRow">
+                        <td>
+                            <table>
+
+                                <tr style="height: 10px;"><td><div></div></td></tr>
+
+                                <!-- AccountingDate -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'AccountingDate'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogDatePicker [ObjectFieldName]="'AccountingDate'" [ObjectTableName]="ObjectTableName"
+                                                       [DataContext]="DataContext" [HideColumns]="true" (LostFocus)="AccountingDateLostFocus()"
+                                                       [SelectedDateValue]="AccountingDate"></LogDatePicker>
+                                    </td>
+                                    <td><div></div></td>
+                                </tr>
+
+                                <!-- CashBookId -->
+                                <tr class="FormFieldRow">
+                                    <td style="width: 120px">
+                                        <LogLabel [ObjectFieldName]="'CashBookId'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td style="width: 180px">
+                                        <LogLov [ObjectFieldName]="'CashBookId'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                (SelectedItemChanged)="CashBook = $event"
+                                                [DisplayMemberPath]="'EnglishName'"
+                                                [LookUpTableName]="'CashBook'"
+                                                [HideColumns]="true">
+                                        </LogLov>
+                                    </td>
+                                    <td style="width: 50px;">
+                                        <div *ngIf="cashbook" style="color: #054B78; font-weight: bold;padding-left: 10px;padding-right: 10px;">{{'Accounting.General.O.Totals' | TextCodeTranslationPipe}}: {{CashBookTotal | NumbersPipe:'N2'}}</div>
+                                    </td>
+                                    <td><div></div></td>
+                                </tr>
+
+                                <!-- DepositBankAccountId -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'DepositBankAccountId'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'DepositBankAccountId'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [DisplayMemberPath]="'AccountNumber'"
+                                                (SelectedItemChanged)="DepositBankAccount = $event"
+                                                [LookUpTableName]="'BankAccount'"
+                                                [HideColumns]="true">
+                                        </LogLov>
+                                    </td>
+                                    <td><div></div></td>
+                                </tr>
+                                <tr><td><div></div></td></tr>
+                            </table>
+
+                        </td>
+                    </tr>
+                </table>
+            </td>
+
+            <td style="width: 80px;"><div></div></td>
+
+            <td>
+                <table>
+                    <tr class="FormFieldRow">
+                        <td>
+                            <table>
+
+                                <!-- InActive -->
+                                <!--<tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'Inactive'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <CheckBox [IsChecked]="Inactive" (Checked)="Inactive = $event"></CheckBox>
+                                    </td>
+                                    <td><div></div></td>
+                                </tr>-->
+
+                                <tr><td><div></div></td></tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+
+
+            </td>
+        </tr>
+
+        <tr style="height: 32px;">
+            <td colspan="4" style="vertical-align: bottom">
+                <table style="height: 22px;">
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+
+                        <td style="width: 57px;">
+                            <button class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                        </td>
+
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 57px;">
+                            <button class="RedButton" (click)="OkButtonClicked()">{{'Accounting.General.B.OK' | TextCodeTranslationPipe}}</button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+    </table>

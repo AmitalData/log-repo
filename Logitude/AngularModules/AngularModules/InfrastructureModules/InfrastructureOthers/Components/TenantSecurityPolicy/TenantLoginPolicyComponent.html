@@ -1,0 +1,320 @@
+
+ 
+<table>
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+
+    <tr *ngIf="IsResourcesReady">
+
+        <td style="width: 300px;">
+            <div class="MediaFill">
+                <table>
+
+
+                    <tr class="FormFieldRow">
+                        <td style="width:200px; ">
+                            <LogLabel [ObjectFieldName]="'LoginPolicyCode'" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM"></LogLabel>
+                        </td>
+
+                        <td style="width:230px; "> 
+                            <LogLov [ObjectFieldName]="'LoginPolicyCode'"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="EntityPM"
+                                    [SelectedValue]="EntityPM.LoginPolicyCode"
+                                    [LookUpTableName]="'LoginPolicy'"
+                                    [HideColumns]="true">
+                            </LogLov>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                 
+
+                    <tr class="FormFieldRow" *ngIf="EntityPM.LoginPolicyCode === 'TFAUTH'">
+                        <td style="width:200px; ">
+                            <LogLabel [NoObjectField]="true" [Text]="'Enabled For'" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM"></LogLabel>
+                        </td>
+
+                        <td style="width:230px; ">
+                            <ComboBox [ItemsSource]="EnabledForTypesList" [Binding]="'Name'" [SelectedItem]="SelectedEnabledFor" (SelectedItemChanged)="SelectedEnabledFor = $event"></ComboBox>
+                        </td>
+
+                        <td style="width:30px;" *ngIf="EntityPM.IsEnabledForSpecificUsers === true">
+                            <Hyperlink style="margin-left:5px;" (click)="DefineUsers()" [FontSize]="12" [Text]="'define'"></Hyperlink>
+                        </td>
+                        <td *ngIf="EntityPM.IsEnabledForSpecificUsers === true">
+                            <div style="margin-left:5px;color: #1E8DC4">( {{EnabledForUsersCount}} selected )</div>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <tr  class="FormFieldRow" *ngIf="EntityPM.IsEnabledForSpecificUsers === true && EntityPM.LoginPolicyCode === 'TFAUTH'">
+                        <td colspan="2">
+
+                            <div style="margin-left:10px;background-color:#FFF9BA; border:1px solid #FEAC10;  border-radius:3px; -webkit-border-radius:3px; width:calc(100%-2px);">
+                                <table>
+                                    <tr style="height:2px"><td colspan="2"></td>  </tr>
+                                    <tr>
+                                        <td style="width:10px;vertical-align:top"><span></span></td><td style="vertical-align:top;">
+                                            <p style="margin-left:5px;margin-right:5px;">Please notice that this option is not recommended as a permanent setting</p>
+                                            <p style="margin-left:5px">We recommend using it for testing only</p>
+                                        </td> 
+                                    </tr>
+                                    <tr style="height:2px"><td colspan="2"></td>  </tr>
+                                </table>
+                            </div>
+                           
+                        </td>
+                    </tr>
+
+                    <tr class="FormFieldRow" *ngIf="EntityPM.LoginPolicyCode === 'TFAUTH'">
+                        <td style="width:200px; ">
+                            <LogLabel [ObjectFieldName]="'ExcludeInternalIPs'" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM"></LogLabel>
+                        </td>
+
+                        <td style="width:230px; ">
+                            <LogCheckBox [ObjectFieldName]="'ExcludeInternalIPs'" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM"></LogCheckBox>
+                        </td>
+                      
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                   
+
+                    <tr class="FormFieldRow" *ngIf="EntityPM.ExcludeInternalIPs === true && EntityPM.LoginPolicyCode === 'TFAUTH'">
+                        <td style="width:120px;vertical-align:top;">
+                            <!--<LogLabel [ObjectFieldName]="'TwoFactorInternalIPs'" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM"></LogLabel>-->
+                        </td>
+
+                        <td style="width:230px;">
+                            <!--<LogTextBox [NoObjectField]="true" [InputType]="'text'" [ObjectFieldName]="'IPField'" [DataContext]="DataContext"
+                                        [HideColumns]="true" Placeholder='0.0.0.0'></LogTextBox>-->
+
+                            <input [(ngModel)]="IPField"
+                             placeholder="0.0.0.0" class="InputDiv"/>
+                            
+                        </td>
+                        <td style="width:30px;">
+                            <IconButton [Name]="'Add'" [Left]="5" (click)="AddInternalIP()"></IconButton>
+                        </td>
+
+                        <td>
+                            <div>
+
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr style="height:150px;" *ngIf="EntityPM.ExcludeInternalIPs === true && EntityPM.LoginPolicyCode === 'TFAUTH'">
+                        <td style="width:120px;vertical-align:top;">
+                            <LogLabel [ObjectFieldName]="'TwoFactorInternalIPs'" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM"></LogLabel>
+                        </td>
+
+                        <td style="width:230px;">
+                            <div class="MediaFill" style="border: 1px solid #D1D1D1; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;height:150px;">
+                                <div class="ScrollViewer" style="top:5px; left: 5px; right: 5px; bottom: 5px;">
+                                    <ul class="ScrollContent" *ngIf="EntityPM.TwoFactorInternalIPs != null">
+                                        <li class="EventItemBox" *ngFor="let item of EntityPM.TwoFactorInternalIPs.split(',')" [ngStyle]="{background: item.Background}">
+                                            <table *ngIf="item != ''">
+                                                <tr>
+                                                    <td style="width: 300px;">
+                                                        <div class="MediaFill">
+                                                            {{item}}
+                                                        </div>
+                                                    </td>
+
+                                                    <td style="width: 5px;">
+                                                        <div></div>
+                                                    </td>
+
+                                                    <!--<td style="width: 18px; vertical-align: bottom;">
+                                                        <div style="width: 18px; height: 18px;">
+                                                            <IconButton [Name]="'Edit'" [IsSmall]="true" ></IconButton>
+                                                        </div>
+                                                       
+                                                    </td>
+
+                                                    <td style="width: 5px;">
+                                                        <div></div>
+                                                    </td>-->
+
+                                                    <td style="width: 18px; vertical-align: bottom;">
+                                                        <div style="width: 18px; height: 18px; margin-top: 3px;">
+                                                            <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="RemoveIP(item)"></IconButton>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+                        <!--<td style="width:30px;vertical-align:top;">
+                            <IconButton [Name]="'Add'" [Left]="5" (click)="AddExternalIP()"></IconButton>
+                        </td>-->
+
+                      
+
+                        <td>
+                            <div>
+
+                            </div>
+                        </td>
+                    </tr>
+
+   
+
+                    <tr class="FormFieldRow" *ngIf="EntityPM.LoginPolicyCode === 'COMPIP'">
+                        <td style="width:120px;vertical-align:top;">
+                          
+                        </td>
+
+                        <td style="width:230px;">
+                        
+                            <input [(ngModel)]="AllowedIPField"
+                                   placeholder="0.0.0.0" class="InputDiv" />
+
+                        </td>
+                        <td style="width:30px;">
+                            <IconButton [Name]="'Add'" [Left]="5" (click)="AddAllowedIP()"></IconButton>
+                        </td>
+
+                        <td>
+                            <div>
+
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr style="height:150px;" *ngIf="EntityPM.LoginPolicyCode === 'COMPIP'">
+                        <td style="width:120px;vertical-align:top;">
+                            <LogLabel [ObjectFieldName]="'AllowedIPs'" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM"></LogLabel>
+                        </td>
+
+                        <td style="width:230px;">
+                            <div class="MediaFill" style="border: 1px solid #D1D1D1; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;height:150px;">
+                                <div class="ScrollViewer" style="top:5px; left: 5px; right: 5px; bottom: 5px;">
+                                    <ul class="ScrollContent" *ngIf="EntityPM.AllowedIPs != null">
+                                        <li class="EventItemBox" *ngFor="let item of EntityPM.AllowedIPs.split(',')" [ngStyle]="{background: item.Background}">
+                                            <table *ngIf="item != ''">
+                                                <tr>
+                                                    <td style="width: 300px;">
+                                                        <div class="MediaFill">
+                                                            {{item}}
+                                                        </div>
+                                                    </td>
+
+                                                    <td style="width: 5px;">
+                                                        <div></div>
+                                                    </td>
+ 
+
+                                                    <td style="width: 18px; vertical-align: bottom;">
+                                                        <div style="width: 18px; height: 18px; margin-top: 3px;">
+                                                            <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="RemoveAllowedIP(item)"></IconButton>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+                      
+
+                        <td>
+                            <div>
+
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr style="height:10px;">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+             
+
+
+                    <tr class="FormFieldRow">
+                        <td style="width:200px; ">
+                            <LogLabel [ObjectFieldName]="'KeepUserLoggedIn'" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM"></LogLabel>
+                        </td>
+
+                        <td style="width:230px; ">
+                            <LogCheckBox [ObjectFieldName]="'KeepUserLoggedIn'" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM"></LogCheckBox>
+                        </td>
+                         <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <tr class="FormFieldRow">
+                        <td style="width:200px; ">
+                            <LogLabel [ObjectFieldName]="'SessionTimeout'" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM"></LogLabel>
+                        </td>
+
+                        <td style="width:230px; ">
+                            <LogTextBox [InputType]="'Integer'" [ObjectFieldName]="'SessionTimeout'" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+
+                        </td>
+                        <td>
+
+                            <div><span style="float:left;margin-left:5px"> Hours</span></div>
+                        </td>
+                    </tr>
+                   
+
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>
+
+
+

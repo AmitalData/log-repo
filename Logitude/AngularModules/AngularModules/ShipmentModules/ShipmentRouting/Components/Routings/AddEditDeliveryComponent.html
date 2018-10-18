@@ -1,0 +1,113 @@
+﻿
+<table>
+    <tr style="height:1px;" *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="CellStretch">
+            <div class="Stretch CurvedEditArea">
+                <table *ngIf="IsResourcesReady">
+                    <tr>
+                        <td class="CellStretch" style="width: 100px;">
+                            <div class="Stretch AppLeftMenuBackground">
+                                <table>
+                                    <tr style="height:5px;">
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td style="vertical-align: top;">
+                                            <ul>
+                                                <li id="{{ item.TextCode | IdGeneratorPipe}}" class="DefaultMenuItem" *ngFor="let item of TabsItemsSource" (click)="SelectedTabCode = item.Code" [class.SelectedMenuItem]="item.Code === SelectedTabCode" [class.DisabledTabItem]="item.IsDisabled == true">
+                                                    <div>{{item.TextCode | TextCodeTranslationPipe}}</div>
+                                                    <img class="RightCenter" *ngIf="item == SelectedTab" src="./Images/SelectedMenuArrow.png" style="margin-right: -1px;" />
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="MediaFill">
+
+                                <!-- Main -->
+                                <div class="MediaStretch" [hidden]="SelectedTabCode != 'MAIN'">
+                                    <div LocationDirective Code="MAIN"></div>
+                                </div>
+
+                                <!-- Packages -->
+                                <div class="MediaStretch" [hidden]="SelectedTabCode != 'PACG'">
+                                    <div LocationDirective Code="PACG"></div>
+                                </div>
+
+                                <!-- Docs Out -->
+                                <div class="MediaStretch" [hidden]="SelectedTabCode != 'DCSO'">
+                                    <div LocationDirective Code="DCSO"></div>
+                                </div>
+
+                                <!-- Docs In -->
+                                <div class="MediaStretch" [hidden]="SelectedTabCode != 'DCSI'">
+                                    <div LocationDirective Code="DCSI"></div>
+                                </div>
+
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td *ngIf="IsShowNewWarehouseReleaseButton" style="width: 140px;">
+                        <button style="width:140px;float:right;" class="Button" (click)="NewWarehouseReleaseButtonClicked()">New Cross Dock Release</button>
+                    </td>
+
+
+                    <td *ngIf="IsShowNewWarehouseReleaseButton" style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button id="{{ 'CloseBtn' | IdGeneratorPipe}}" class="Button" (click)="CloseClicked()">Close</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <!--<td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                    </td>-->
+
+                    <!-- Save -->
+                    <td style="width: 57px;">
+                        <button id="{{ 'SaveBtn' | IdGeneratorPipe}}"   *ngIf="!EntityPM.IsDirty" class="Button">
+                            <img class="LeftCenter" style="margin-left: 2px;" src="./Images/Buttons/Save.png" />
+                            <span style="line-height: 19px; margin-left: 17px;">Save</span>
+                        </button>
+
+                        <button id="{{ 'SaveBtn' | IdGeneratorPipe}}"  *ngIf="EntityPM.IsDirty" class="EntityChangesButton" (click)="OkButtonClicked()" >
+                            <img class="LeftCenter" style="margin-left: 2px;" src="./Images/Buttons/Save.Red.png" />
+                            <span style="line-height: 19px; margin-left: 17px;">Save</span>
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

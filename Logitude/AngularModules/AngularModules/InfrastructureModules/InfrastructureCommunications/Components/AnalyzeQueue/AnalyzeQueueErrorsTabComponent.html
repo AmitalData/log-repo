@@ -1,0 +1,62 @@
+﻿<style type="text/css">
+    .TextArea {
+        padding: 2px;
+        padding-left:5px;
+        font-size: 16px;
+        color: Black;
+        background: #EBEBEB;
+        overflow: auto;
+        outline: none;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+    }
+</style>
+
+<div class="TabHolder">
+    <table>
+        <tr style="height:400px;">
+            <td style="width:200px;vertical-align:top;">
+                Error Message
+            </td>
+            <td style="width:1400px;">
+                <div class="MediaFill">
+                    <textarea class="TextArea"
+                              [(ngModel)]="ErrorMessage"
+                              [readonly]="true"></textarea>
+                </div>
+            </td>
+            <td>
+                <div></div>
+            </td>
+        </tr>
+
+        <tr style="height:10px;">
+            <td>
+                <div></div>
+            </td>
+        </tr>
+
+        <tr style="height:400px;">
+            <td style="width:200px; vertical-align:top;">
+                StackTrace
+            </td>
+            <td style="width:1400px;">
+                <div class="MediaFill">
+                    <textarea class="TextArea"
+                              [(ngModel)]="StackTrace"
+                              [readonly]="true"></textarea>
+                </div>
+            </td>
+            <td>
+                <div></div>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <div></div>
+            </td>
+        </tr>
+    </table>
+</div>

@@ -1,0 +1,407 @@
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs; 
+using Logitude.Customs.Data;
+
+namespace Logitude.Customs.BL.EntityDataMappings
+{
+   
+   public partial class CustomsVendorDataMapping: IMapping<CustomsVendorPM, CustomsVendor>,IMappingEncodeBase64NVARCHARFields<CustomsVendorPM>
+   {
+          public enum POCOPropertyNames
+          { 
+		     None,  
+	         Id, 
+	         Tenant, 
+	         SearchFields, 
+	         VendorNumber, 
+	         VendorTypeCode, 
+	         VendorName, 
+	         CountryCode, 
+	         SubCountryCode, 
+	         CityName, 
+	         MainAddressLine, 
+	         PostalCode, 
+	         DunsNumber, 
+	         VATNumber, 
+	         StatusCode, 
+	         TransactionTypeID, 
+	         IsPalestinian, 
+	         InActive, 
+	         ExternalId, 
+	         ConcurrencyGUID,
+	      }
+
+
+	      public enum PMPropertyNames
+          { 
+		     None,  
+	         Id, 
+	         Tenant, 
+	         SearchFields, 
+	         VendorNumber, 
+	         VendorTypeCode, 
+	         VendorName, 
+	         CountryCode, 
+	         SubCountryCode, 
+	         SubCountryName, 
+	         CityName, 
+	         MainAddressLine, 
+	         PostalCode, 
+	         DunsNumber, 
+	         VATNumber, 
+	         StatusCode, 
+	         TransactionTypeID, 
+	         IsPalestinian, 
+	         VendorTypeName, 
+	         CountryName, 
+	         InActive, 
+	         ExternalId, 
+	         StatusName, 
+	         ConcurrencyGUID, 
+	         NewConcurrencyGUID,
+	      }
+
+		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
+        List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
+    
+	    public void PMToPOCO(CustomsVendorPM entityPM, CustomsVendor entityPOCO)
+        {
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
+            {
+				entityPOCO.SearchFields = entityPM.SearchFields;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VendorNumber))
+            {
+				entityPOCO.VendorNumber = entityPM.VendorNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VendorTypeCode))
+            {
+				entityPOCO.VendorTypeCode = entityPM.VendorTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VendorName))
+            {
+				entityPOCO.VendorName = entityPM.VendorName;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CountryCode))
+            {
+				entityPOCO.CountryCode = entityPM.CountryCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SubCountryCode))
+            {
+				entityPOCO.SubCountryCode = entityPM.SubCountryCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CityName))
+            {
+				entityPOCO.CityName = entityPM.CityName;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MainAddressLine))
+            {
+				entityPOCO.MainAddressLine = entityPM.MainAddressLine;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PostalCode))
+            {
+				entityPOCO.PostalCode = entityPM.PostalCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DunsNumber))
+            {
+				entityPOCO.DunsNumber = entityPM.DunsNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VATNumber))
+            {
+				entityPOCO.VATNumber = entityPM.VATNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatusCode))
+            {
+				entityPOCO.StatusCode = entityPM.StatusCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TransactionTypeID))
+            {
+				entityPOCO.TransactionTypeID = entityPM.TransactionTypeID;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsPalestinian))
+            {
+				entityPOCO.IsPalestinian = entityPM.IsPalestinian;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InActive))
+            {
+				entityPOCO.InActive = entityPM.InActive;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExternalId))
+            {
+				entityPOCO.ExternalId = entityPM.ExternalId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConcurrencyGUID))
+            {
+				entityPOCO.ConcurrencyGUID = entityPM.ConcurrencyGUID;
+			}
+			
+				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
+		  }
+
+		public void POCOToPM(CustomsVendorPM entityPM, CustomsVendor entityPOCO)
+        {
+			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
+            {
+					entityPM.Id = entityPOCO.Id;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
+            {
+					entityPM.Tenant = entityPOCO.Tenant;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SearchFields))
+            {
+					entityPM.SearchFields = entityPOCO.SearchFields;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.VendorNumber))
+            {
+					entityPM.VendorNumber = entityPOCO.VendorNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.VendorTypeCode))
+            {
+					entityPM.VendorTypeCode = entityPOCO.VendorTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.VendorName))
+            {
+					entityPM.VendorName = entityPOCO.VendorName;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CountryCode))
+            {
+					entityPM.CountryCode = entityPOCO.CountryCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SubCountryCode))
+            {
+					entityPM.SubCountryCode = entityPOCO.SubCountryCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CityName))
+            {
+					entityPM.CityName = entityPOCO.CityName;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MainAddressLine))
+            {
+					entityPM.MainAddressLine = entityPOCO.MainAddressLine;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PostalCode))
+            {
+					entityPM.PostalCode = entityPOCO.PostalCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DunsNumber))
+            {
+					entityPM.DunsNumber = entityPOCO.DunsNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.VATNumber))
+            {
+					entityPM.VATNumber = entityPOCO.VATNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.StatusCode))
+            {
+					entityPM.StatusCode = entityPOCO.StatusCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TransactionTypeID))
+            {
+					entityPM.TransactionTypeID = entityPOCO.TransactionTypeID;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsPalestinian))
+            {
+					entityPM.IsPalestinian = entityPOCO.IsPalestinian;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.InActive))
+            {
+					entityPM.InActive = entityPOCO.InActive;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExternalId))
+            {
+					entityPM.ExternalId = entityPOCO.ExternalId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ConcurrencyGUID))
+            {
+					entityPM.ConcurrencyGUID = entityPOCO.ConcurrencyGUID;
+            }
+
+		}
+
+		public void PMToOldPM(CustomsVendorPM entityPM, CustomsVendorPM oldEntityPM)
+        {
+		     oldEntityPM.ChangedProperties.Clear();
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+                oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
+            {
+                oldEntityPM.SearchFields = entityPM.SearchFields;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VendorNumber))
+            {
+                oldEntityPM.VendorNumber = entityPM.VendorNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VendorTypeCode))
+            {
+                oldEntityPM.VendorTypeCode = entityPM.VendorTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VendorName))
+            {
+                oldEntityPM.VendorName = entityPM.VendorName;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CountryCode))
+            {
+                oldEntityPM.CountryCode = entityPM.CountryCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SubCountryCode))
+            {
+                oldEntityPM.SubCountryCode = entityPM.SubCountryCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CityName))
+            {
+                oldEntityPM.CityName = entityPM.CityName;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MainAddressLine))
+            {
+                oldEntityPM.MainAddressLine = entityPM.MainAddressLine;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PostalCode))
+            {
+                oldEntityPM.PostalCode = entityPM.PostalCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DunsNumber))
+            {
+                oldEntityPM.DunsNumber = entityPM.DunsNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VATNumber))
+            {
+                oldEntityPM.VATNumber = entityPM.VATNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatusCode))
+            {
+                oldEntityPM.StatusCode = entityPM.StatusCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TransactionTypeID))
+            {
+                oldEntityPM.TransactionTypeID = entityPM.TransactionTypeID;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsPalestinian))
+            {
+                oldEntityPM.IsPalestinian = entityPM.IsPalestinian;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InActive))
+            {
+                oldEntityPM.InActive = entityPM.InActive;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExternalId))
+            {
+                oldEntityPM.ExternalId = entityPM.ExternalId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConcurrencyGUID))
+            {
+                oldEntityPM.ConcurrencyGUID = entityPM.ConcurrencyGUID;
+            }
+			
+		}
+
+	    public void EncodeBase64NVARCHARFields(CustomsVendorPM entityPM)
+        {
+            if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
+            {
+                return;
+
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.SearchFields)) //T4 find type == nText 
+            {
+                entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
+            }
+            entityPM.EncodeBase64NVARCHARFieldsBy=null;
+		}
+
+
+	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
+        {
+            CustomMappedPOCOProperties.Add(pocoPropertyName);
+        }
+
+        public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
+        {
+            CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+		
+		private void BuildSearchFieldsGenerated(CustomsVendorPM entityPM, CustomsVendor entityPOCO, bool isNewEntity)
+        {
+            string mySearchFields = "";
+			
+           
+            entityPM.SearchFields += mySearchFields;
+            entityPOCO.SearchFields += mySearchFields;
+        }
+			  
+   }
+}
+	 

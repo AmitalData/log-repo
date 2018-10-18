@@ -1,0 +1,1 @@
+update Shipments set CustomsTransmissionsStatusCode = 'NSEN'

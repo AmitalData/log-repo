@@ -1,0 +1,31 @@
+﻿<style>
+    .red {
+        color: red !important;
+    }
+    .green{
+        color: #00a24d !important;
+    }
+</style>
+<div>
+
+    <div class="TextTrimming" *ngIf="fieldName == 'SelectCheckBox'" style="padding: 4px;">
+        <CheckBox (Checked)="BankCheckBoxClicked($event)" [IsChecked]="rowData['IsChecked']"></CheckBox>
+    </div>
+
+    <div class="TextTrimming" *ngIf="fieldName == 'ReferenceDate'" [style.text-align]="isRTL ? 'right' : 'left'">{{ rowData[fieldName] | DateTimePipe:'SD' }}</div>
+    <div class="TextTrimming" *ngIf="fieldName == 'Notes'" [style.text-align]="isRTL ? 'right' : 'left'">{{ rowData[fieldName] }}</div>
+
+    <!-- Amount -->
+    <div class="TextTrimming" *ngIf="fieldName == 'Amount'" style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;" [class.red]='rowData["Amount"]<0'>
+        {{ rowData["Amount"] | NumbersPipe:'N2' }}
+    </div>
+
+    <!-- Reference -->
+    <div class="TextTrimming" *ngIf="fieldName == 'Reference'" style="padding: 0px 2px;" [style.text-align]="isRTL ? 'right' : 'left'">
+        {{ rowData["Reference"]}}
+    </div>
+
+    <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'GroupHash'">{{ rowData[fieldName] }}</div>
+
+
+</div>

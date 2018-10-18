@@ -1,0 +1,277 @@
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs; 
+using Logitude.Customs.Data;
+
+namespace Logitude.Customs.BL.EntityDataMappings
+{
+   
+   public partial class DeclarationConstraintDataMapping: IMapping<DeclarationConstraintPM, DeclarationConstraint>,IMappingEncodeBase64NVARCHARFields<DeclarationConstraintPM>
+   {
+          public enum POCOPropertyNames
+          { 
+		     None,  
+	         DeclarationID, 
+	         Tenant, 
+	         ConstraintNumber, 
+	         ConstraintTypeCode, 
+	         ConstraintStatusCode, 
+	         AgentExplanation, 
+	         ApprovalNote, 
+	         ApprovalAuthorityDate, 
+	         ApprovalUserName, 
+	         ApprovalDecision, 
+	         CustomsCollateralId, 
+	         AgentObjection,
+	      }
+
+
+	      public enum PMPropertyNames
+          { 
+		     None,  
+	         DeclarationID, 
+	         Tenant, 
+	         ConstraintNumber, 
+	         ConstraintTypeCode, 
+	         ConstraintStatusCode, 
+	         AgentExplanation, 
+	         ApprovalNote, 
+	         ApprovalAuthorityDate, 
+	         ApprovalUserName, 
+	         ApprovalDecision, 
+	         ConstraintTypeName, 
+	         ConstraintStatusName, 
+	         CustomsCollateralId, 
+	         ApprovalDecisionName, 
+	         AgentObjection,
+	      }
+
+		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
+        List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
+    
+	    public void PMToPOCO(DeclarationConstraintPM entityPM, DeclarationConstraint entityPOCO)
+        {
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConstraintTypeCode))
+            {
+				entityPOCO.ConstraintTypeCode = entityPM.ConstraintTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConstraintStatusCode))
+            {
+				entityPOCO.ConstraintStatusCode = entityPM.ConstraintStatusCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AgentExplanation))
+            {
+				entityPOCO.AgentExplanation = entityPM.AgentExplanation;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ApprovalNote))
+            {
+				entityPOCO.ApprovalNote = entityPM.ApprovalNote;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ApprovalAuthorityDate))
+            {
+				entityPOCO.ApprovalAuthorityDate = entityPM.ApprovalAuthorityDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ApprovalUserName))
+            {
+				entityPOCO.ApprovalUserName = entityPM.ApprovalUserName;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ApprovalDecision))
+            {
+				entityPOCO.ApprovalDecision = entityPM.ApprovalDecision;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsCollateralId))
+            {
+				entityPOCO.CustomsCollateralId = entityPM.CustomsCollateralId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AgentObjection))
+            {
+				entityPOCO.AgentObjection = entityPM.AgentObjection;
+			}
+			}
+
+		public void POCOToPM(DeclarationConstraintPM entityPM, DeclarationConstraint entityPOCO)
+        {
+			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DeclarationID))
+            {
+					entityPM.DeclarationID = entityPOCO.DeclarationID;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
+            {
+					entityPM.Tenant = entityPOCO.Tenant;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ConstraintNumber))
+            {
+					entityPM.ConstraintNumber = entityPOCO.ConstraintNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ConstraintTypeCode))
+            {
+					entityPM.ConstraintTypeCode = entityPOCO.ConstraintTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ConstraintStatusCode))
+            {
+					entityPM.ConstraintStatusCode = entityPOCO.ConstraintStatusCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AgentExplanation))
+            {
+					entityPM.AgentExplanation = entityPOCO.AgentExplanation;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ApprovalNote))
+            {
+					entityPM.ApprovalNote = entityPOCO.ApprovalNote;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ApprovalAuthorityDate))
+            {
+					entityPM.ApprovalAuthorityDate = entityPOCO.ApprovalAuthorityDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ApprovalUserName))
+            {
+					entityPM.ApprovalUserName = entityPOCO.ApprovalUserName;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ApprovalDecision))
+            {
+					entityPM.ApprovalDecision = entityPOCO.ApprovalDecision;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomsCollateralId))
+            {
+					entityPM.CustomsCollateralId = entityPOCO.CustomsCollateralId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AgentObjection))
+            {
+					entityPM.AgentObjection = entityPOCO.AgentObjection;
+            }
+
+		}
+
+		public void PMToOldPM(DeclarationConstraintPM entityPM, DeclarationConstraintPM oldEntityPM)
+        {
+		     oldEntityPM.ChangedProperties.Clear();
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+                oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConstraintTypeCode))
+            {
+                oldEntityPM.ConstraintTypeCode = entityPM.ConstraintTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConstraintStatusCode))
+            {
+                oldEntityPM.ConstraintStatusCode = entityPM.ConstraintStatusCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AgentExplanation))
+            {
+                oldEntityPM.AgentExplanation = entityPM.AgentExplanation;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ApprovalNote))
+            {
+                oldEntityPM.ApprovalNote = entityPM.ApprovalNote;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ApprovalAuthorityDate))
+            {
+                oldEntityPM.ApprovalAuthorityDate = entityPM.ApprovalAuthorityDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ApprovalUserName))
+            {
+                oldEntityPM.ApprovalUserName = entityPM.ApprovalUserName;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ApprovalDecision))
+            {
+                oldEntityPM.ApprovalDecision = entityPM.ApprovalDecision;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsCollateralId))
+            {
+                oldEntityPM.CustomsCollateralId = entityPM.CustomsCollateralId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AgentObjection))
+            {
+                oldEntityPM.AgentObjection = entityPM.AgentObjection;
+            }
+			
+		}
+
+	    public void EncodeBase64NVARCHARFields(DeclarationConstraintPM entityPM)
+        {
+            if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
+            {
+                return;
+
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.AgentExplanation)) //T4 find type == nText 
+            {
+                entityPM.AgentExplanation = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.AgentExplanation));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.ApprovalNote)) //T4 find type == nText 
+            {
+                entityPM.ApprovalNote = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ApprovalNote));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.ApprovalUserName)) //T4 find type == nText 
+            {
+                entityPM.ApprovalUserName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ApprovalUserName));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.AgentObjection)) //T4 find type == nText 
+            {
+                entityPM.AgentObjection = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.AgentObjection));
+            }
+            entityPM.EncodeBase64NVARCHARFieldsBy=null;
+		}
+
+
+	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
+        {
+            CustomMappedPOCOProperties.Add(pocoPropertyName);
+        }
+
+        public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
+        {
+            CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+			  
+   }
+}
+	 

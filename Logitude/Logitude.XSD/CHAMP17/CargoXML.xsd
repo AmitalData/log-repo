@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema 
+    attributeFormDefault="unqualified"
+    elementFormDefault="qualified"
+    xmlns:GCCSCargoImp="http://www.champ.aero/GCCS/CargoXML"
+    targetNamespace="http://www.champ.aero/GCCS/CargoXML"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    version="3.0"
+>
+
+	  <xs:include schemaLocation="common.xsd"/>
+    <xs:include schemaLocation="AirlineFlightManifest.xsd"/>
+    <xs:include schemaLocation="AirWaybillData.xsd"/>
+    <xs:include schemaLocation="ConsolidationList.xsd"/>
+    <xs:include schemaLocation="CustomsStatusNotification.xsd"/>
+    <xs:include schemaLocation="StatusDetails.xsd"/>
+	  <xs:include schemaLocation="AirWaybillDataRequest.xsd"/>
+	  <xs:include schemaLocation="StatusRequest.xsd"/>
+	  <xs:include schemaLocation="FreightBookedList.xsd"/>
+    <xs:include schemaLocation="ErrorMessage.xsd"/>
+	  <xs:include schemaLocation="MessageAcknowledgement.xsd"/>
+    <xs:include schemaLocation="ScheduleAndAvailabilityInformationRequest.xsd"/>
+    <xs:include schemaLocation="ScheduleAndAvailabilityInformationAnswer.xsd"/>    
+    <xs:include schemaLocation="AWBSpaceAllocationRequest.xsd"/>
+    <xs:include schemaLocation="AWBSpaceAllocationAnswer.xsd"/>
+  
+    <xs:element name="Envelope" type="GCCSCargoImp:Envelope"/>
+ 
+    <xs:complexType name="Envelope">
+        <xs:choice>
+            <xs:element name="AirlineFlightManifest" type="GCCSCargoImp:AirlineFlightManifest"/>
+            <xs:element name="AirWaybillData" type="GCCSCargoImp:AirWaybillData"/>
+            <xs:element name="ConsolidationList" type="GCCSCargoImp:ConsolidationList"/>
+            <xs:element name="CustomsStatusNotification" type="GCCSCargoImp:CustomsStatusNotification"/>
+            <xs:element name="StatusDetails" type="GCCSCargoImp:StatusAnswer"/>
+            <xs:element name="AirWaybillDataRequest" type="GCCSCargoImp:AirWaybillDataRequest"/>
+            <xs:element name="StatusRequest" type="GCCSCargoImp:StatusRequest"/>
+            <xs:element name="FreightBookedList" type="GCCSCargoImp:FreightBookedList"/>   
+			      <xs:element name="ErrorMessage" type="GCCSCargoImp:ErrorMessage"/>
+            <xs:element name="MessageAcknowledgement" type="GCCSCargoImp:MessageAcknowledgement"/>
+            <xs:element name="ScheduleAndAvailabilityInformationRequest" type="GCCSCargoImp:ScheduleAndAvailabilityInformationRequest"/>
+            <xs:element name="ScheduleAndAvailabilityInformationAnswer" type="GCCSCargoImp:ScheduleAndAvailabilityInformationAnswer"/>          
+            <xs:element name="AWBSpaceAllocationRequest" type="GCCSCargoImp:AWBSpaceAllocationRequest"/>
+            <xs:element name="AWBSpaceAllocationAnswer" type="GCCSCargoImp:AWBSpaceAllocationAnswer"/>          
+        </xs:choice>
+        <xs:attribute name="Sender" type="GCCSCargoImp:Sender" use="required"/>
+        <xs:attribute name="Recipient" type="GCCSCargoImp:Recipient" use="required"/>
+    </xs:complexType>
+</xs:schema>

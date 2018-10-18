@@ -1,0 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace WebFreight.Web.Helpers
+{
+    public class SharedLogisticLoggedData
+    {
+        public string CardName { get; set; }
+        public string TenantCompany { get; set; }
+        public string ContactName { get; set; }
+        public string LocalCurrencyCode { get; set; }
+        public string ProfitCurrencyCode { get; set; }
+        public string TenantDateTimeFormat { get; set; }
+    }
+}

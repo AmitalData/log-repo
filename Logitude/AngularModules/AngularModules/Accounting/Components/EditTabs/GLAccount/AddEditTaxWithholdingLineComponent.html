@@ -1,0 +1,110 @@
+﻿
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td colspan="4">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td style="width: 400px">
+            <table>
+                <tr class="FormFieldRow">
+                    <td>
+                        <table>
+                            <!-- Code -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 110px;">
+                                    <LogLabel [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td style="width: 200px;">
+                                    <LogDatePicker [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName"
+                                                   [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                        </td>
+                                <td><div></div></td>
+                            </tr>
+
+                            <!-- EnglishName -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogDatePicker [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName"
+                                                   [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                       </td>
+                                <td><div></div></td>
+                            </tr>
+
+                            <!-- LocalName -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'Percentage'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'Percentage'" [InputType]="'double'" [DataContext]="DataContext"
+                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+
+                            <!-- Inactive -->
+                            <tr class="FormFieldRow" *ngIf="!IsNew">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'Inactive'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogCheckBox [ObjectFieldName]="'Inactive'"  [Checked]="Inactive" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" (ValueChanged)="InactiveChecked($event)"></LogCheckBox>
+
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+
+
+                            <tr><td><div></div></td></tr>
+                        </table>
+
+                    </td>
+                </tr>
+            </table>
+        </td>
+
+        <td><div></div></td>
+
+
+    </tr>
+
+    <tr style="height: 32px;">
+        <td colspan="4" style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'Accounting.General.B.OK' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>
+

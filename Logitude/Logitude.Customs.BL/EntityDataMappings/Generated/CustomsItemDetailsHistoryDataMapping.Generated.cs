@@ -1,0 +1,170 @@
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs; 
+using Logitude.Customs.Data;
+
+namespace Logitude.Customs.BL.EntityDataMappings
+{
+   
+   public partial class CustomsItemDetailsHistoryDataMapping: IMapping<CustomsItemDetailsHistoryPM, CustomsItemDetailsHistory>,IMappingEncodeBase64NVARCHARFields<CustomsItemDetailsHistoryPM>
+   {
+          public enum POCOPropertyNames
+          { 
+		     None,  
+	         CustomsItemID, 
+	         ID, 
+	         Title, 
+	         StartDate, 
+	         EndDate, 
+	         EntityStatusID,
+	      }
+
+
+	      public enum PMPropertyNames
+          { 
+		     None,  
+	         CustomsItemID, 
+	         ID, 
+	         Title, 
+	         StartDate, 
+	         EndDate, 
+	         EntityStatusID,
+	      }
+
+		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
+        List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
+    
+	    public void PMToPOCO(CustomsItemDetailsHistoryPM entityPM, CustomsItemDetailsHistory entityPOCO)
+        {
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsItemID))
+            {
+				entityPOCO.CustomsItemID = entityPM.CustomsItemID;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Title))
+            {
+				entityPOCO.Title = entityPM.Title;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StartDate))
+            {
+				entityPOCO.StartDate = entityPM.StartDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EndDate))
+            {
+				entityPOCO.EndDate = entityPM.EndDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntityStatusID))
+            {
+				entityPOCO.EntityStatusID = entityPM.EntityStatusID;
+			}
+			}
+
+		public void POCOToPM(CustomsItemDetailsHistoryPM entityPM, CustomsItemDetailsHistory entityPOCO)
+        {
+			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomsItemID))
+            {
+					entityPM.CustomsItemID = entityPOCO.CustomsItemID;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ID))
+            {
+					entityPM.ID = entityPOCO.ID;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Title))
+            {
+					entityPM.Title = entityPOCO.Title;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.StartDate))
+            {
+					entityPM.StartDate = entityPOCO.StartDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EndDate))
+            {
+					entityPM.EndDate = entityPOCO.EndDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EntityStatusID))
+            {
+					entityPM.EntityStatusID = entityPOCO.EntityStatusID;
+            }
+
+		}
+
+		public void PMToOldPM(CustomsItemDetailsHistoryPM entityPM, CustomsItemDetailsHistoryPM oldEntityPM)
+        {
+		     oldEntityPM.ChangedProperties.Clear();
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsItemID))
+            {
+                oldEntityPM.CustomsItemID = entityPM.CustomsItemID;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Title))
+            {
+                oldEntityPM.Title = entityPM.Title;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StartDate))
+            {
+                oldEntityPM.StartDate = entityPM.StartDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EndDate))
+            {
+                oldEntityPM.EndDate = entityPM.EndDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntityStatusID))
+            {
+                oldEntityPM.EntityStatusID = entityPM.EntityStatusID;
+            }
+			
+		}
+
+	    public void EncodeBase64NVARCHARFields(CustomsItemDetailsHistoryPM entityPM)
+        {
+            if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
+            {
+                return;
+
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.Title)) //T4 find type == nText 
+            {
+                entityPM.Title = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Title));
+            }
+            entityPM.EncodeBase64NVARCHARFieldsBy=null;
+		}
+
+
+	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
+        {
+            CustomMappedPOCOProperties.Add(pocoPropertyName);
+        }
+
+        public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
+        {
+            CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+			  
+   }
+}
+	 

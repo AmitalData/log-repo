@@ -1,0 +1,193 @@
+﻿<style type="text/css">
+    .SystemDefaultsBox {
+        width: 100%;
+        height: 100%;
+        border: 1px solid #BABABA;
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+    }
+
+    .SystemDefaultsBoxHeader {
+        height: 20px;
+        font-size: 12px;
+        color: #1B90CB;
+        text-indent: 5px;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(245, 245, 245, 1) 0%,rgba(243, 243, 243, 1) 50.24%,rgba(236, 236, 236, 1) 69.98%,rgba(224, 224, 224, 1) 84.35%,rgba(207, 207, 207, 1) 96.04%,rgba(199, 199, 199, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(245, 245, 245, 1) ),color-stop(0.5024,rgba(243, 243, 243, 1) ),color-stop(0.6998,rgba(236, 236, 236, 1) ),color-stop(0.8435,rgba(224, 224, 224, 1) ),color-stop(0.9604,rgba(207, 207, 207, 1) ),color-stop(1,rgba(199, 199, 199, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
+        -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#F5F5F5', endColorstr='#C7C7C7' ,GradientType=0)";
+        background: linear-gradient(180deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
+    }
+    .acc-table td{
+        height: 25px;
+    }
+    .subTitle{
+        color: #1b90cb;
+        font-size: 16px;
+    }
+    .CellStretched{
+        padding: 0px 5px !important;
+    }
+    .sm{
+        width: auto;
+        height: 18px;
+        padding: 0px 6px;
+        font-size: 10px;
+    }
+    .promptBox{
+        text-align: center;
+        padding: 10px;
+        background: #fff4cd;
+        width: 500px;
+        height: 85px;
+        color: #545454;
+        border-radius: 5px;
+    }
+</style>
+
+    <table>
+
+        <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+            <td>
+                <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <div class="ScrollViewer">
+                    <div class="ScrollContent"> 
+                        <div class="TableHolder" style="padding-top: 5px;">
+                            <table>
+
+                                <tr style="height: 30px;"><td><div></div></td></tr>
+
+                                <!-- Year + Browse -->
+                                <tr class="FormFieldRow">
+                                    <td style="width: 60px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                                        {{'AccountingPeriod.F.Year' | TextCodeTranslationPipe}}
+                                    </td>
+
+                                    <td style="width: 100px;">
+                                        <LogTextBox [ObjectFieldName]="'Year'" [ObjectTableName]="ObjectTableName" [IsNewEntityCall]="true" 
+                                                    [InputType]="'integer'" [DataContext]="DataContext"  [Text]="Year"
+                                                    [NoObjectField]="true" (KeyUp)="OnKeyUp($event)"></LogTextBox>  <!--[FocusOnMe]="true"--> 
+
+                                    </td>
+                                    <td style="width: 30px;">
+                                        <div></div>                                    
+                                    </td>
+                                    <td style="width: 80px;">
+                                        <button class="Button" (click)="BrowseButtonClicked()">{{'Accounting.General.B.Browse' | TextCodeTranslationPipe}}</button>
+                                    </td>
+                                    <td><div></div></td>
+                                </tr>
+
+                                <tr style="height: 30px;"><td><div></div></td></tr>
+
+                               
+
+                                <!-- table -->
+                                <tr>
+                                    <td [class.CellStretch]="!ShowPrompt" colspan="5">
+                                        <div class="SimpleGridView">
+                                            <div class="SimpleGridViewHeader">
+                                                <table>
+                                                    <tr class="SimpleGridHeaderRow">
+                                                        <td style="padding-right: 5px; padding-left: 5px; width: 75px; max-width: 75px">{{'AccountingPeriod.F.Year' | TextCodeTranslationPipe}}</td>
+                                                        <td style="padding-right: 5px; padding-left: 5px; width: 100px; max-width: 100px"> {{'AccountingPeriod.F.PeriodTypeCode' | TextCodeTranslationPipe}}</td>
+                                                        <td style="padding-right: 5px; padding-left: 5px; width: 100px; max-width: 100px"> {{'AccountingPeriod.F.ClosedMonth' | TextCodeTranslationPipe}}</td>
+                                                        <td style="padding-right: 5px; padding-left: 5px; width: 100px; max-width: 100px"> {{'AccountingPeriod.F.OpenMonth' | TextCodeTranslationPipe}}</td>
+                                                        <td style="padding-right: 5px; padding-left: 5px; width: 50px; max-width: 50px">{{'Accounting.General.B.Edit' | TextCodeTranslationPipe}}</td>
+                                                        <td style="padding-right: 5px; padding-left: 5px;" >{{'AccountingPeriod.TH.Events' | TextCodeTranslationPipe}}</td>
+
+                                                    </tr>
+                                                </table>
+                                            </div>
+
+                                            <div class="SimpleGridViewBody">
+                                                <table>
+                                                    <tr class="SimpleGridViewRow" *ngFor="let period of PeriodsList; let i=index;">
+                                                        <td class="GridViewCell" style="width: 75px;">
+                                                            {{period.Year }}
+                                                        </td>
+                                                        <td class="GridViewCell" style="width: 100px;">
+                                                            {{period.PeriodTypeName }}
+                                                        </td>
+                                                        <td class="GridViewCell" style="width: 100px;">
+                                                            {{period.ClosedMonth}}
+                                                        </td>
+                                                        <td class="GridViewCell" style="width: 100px;">
+                                                            {{period.OpenMonth}}
+                                                        </td>
+                                                        <td class="GridViewCell" style="width: 50px;"  
+                                                            [style.text-align]="isRTL ? 'right' : 'left'"
+                                                             [style.padding-left]="isRTL ? '25px' : 'initial'"
+                                                            [style.padding-right]="isRTL ? 'initial' : '25px'">
+                                                            <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditPeriod(period)"></IconButton>
+                                                        </td>
+                                                        <td class="GridViewCell"  [style.text-align]="isRTL ? 'right' : 'left'">
+                                                            <button class="Button sm" (click)="ViewPeriodEvents(period.Id)">{{'Accounting.General.B.View' | TextCodeTranslationPipe}}</button>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td colspan="5">
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr *ngIf="ShowPrompt">
+                                    <td colspan="5">
+                                        <div class="promptBox CenterCenter" style="text-align: center;">
+                                            {{noPeriodMsg}}
+                                            <button class="Button CenterCenter" style="width: 100px;margin-top: 20px;" (click)="CreateRecord()">{{'Accounting.O.Create' | TextCodeTranslationPipe}}</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <tr><td><div></div></td></tr>
+  
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+
+        <tr style="height: 32px;">
+            <td style="vertical-align: bottom">
+                <table style="height: 22px;">
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+
+                        <!--<td style="width: 57px;">
+                            <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                        </td>
+
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>-->
+
+                        <td style="width: 57px;">
+                            <button class="Button" (click)="OkButtonClicked()">{{'Accounting.General.B.OK' |TextCodeTranslationPipe }}</button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+    </table>
+
+
+

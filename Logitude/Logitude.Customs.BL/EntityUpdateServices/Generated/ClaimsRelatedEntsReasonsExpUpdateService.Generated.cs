@@ -1,0 +1,74 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools;
+using Simplog.Data.Helpers;
+using Logitude.Server.Tools.Counters;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System.Web;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.Customs.BL.EntityDataMappings;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Data.EntityKeys;
+using Logitude.Customs.Data;
+
+namespace Logitude.Customs.BL.EntityUpdateServices
+{ 
+   public partial class ClaimsRelatedEntsReasonsExpUpdateService:EntityUpdateService<ClaimsRelatedEntsReasonsExp,ClaimsRelatedEntsReasonsExpPM,ClaimsRelatedEntitiesReasonPM>
+   {
+   
+        ClaimsRelatedEntsReasonsExpRepository entityRepository;
+        public ClaimsRelatedEntsReasonsExpUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
+        {
+            ICustomContext  context = mainContext as CustomContext;
+            context = context ??mainContext as ICustomContext ; //Up line is A BUG -and i need it 4 Fakes
+            Mapping = new ClaimsRelatedEntsReasonsExpDataMapping();
+            Repository = new ClaimsRelatedEntsReasonsExpRepository(context);
+        }
+
+       
+        private ICustomContext currentContext;
+        public ClaimsRelatedEntsReasonsExpUpdateService(int tenant)
+        {
+            currentContext = CustomContext.GetContext(tenant);
+        }
+
+        public ClaimsRelatedEntsReasonsExpUpdateService(ICustomContext context)
+        {
+            currentContext = context;
+        }
+
+		
+		protected override EntityKeyFields GetKeys(ClaimsRelatedEntsReasonsExpPM entityPM)
+        {
+            ClaimsRelatedEntsReasonsExpKeys entityKeys = new ClaimsRelatedEntsReasonsExpKeys() { ClaimId = entityPM.ClaimId, CounterKey = entityPM.CounterKey, ReasonLineNo = entityPM.ReasonLineNo, LineNo = entityPM.LineNo };
+            return entityKeys;
+        }
+
+		
+		protected override void FillDefaultValuesOnCreate(ClaimsRelatedEntsReasonsExpPM entityPM)
+        {     
+  
+		
+	    }
+
+		protected override void FillDefaultValuesOnUpdate(ClaimsRelatedEntsReasonsExpPM entityPM)
+        {       
+           
+        }
+		  
+		 
+	 
+   }
+   
+}
+	 

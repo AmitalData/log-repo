@@ -1,0 +1,746 @@
+<style>
+    .tab-footer {
+        background: #f7f7f7;
+        height: 85px;
+        border-radius: 7px;
+        border-bottom-left-radius: unset;
+        margin-right: -1px;
+        padding: 7px 10px;
+        -webkit-box-shadow: 0px -3px 4px -1px rgba(0,0,0,0.31);
+        -moz-box-shadow: 0px -3px 4px -1px rgba(0,0,0,0.31);
+        box-shadow: 0px -3px 4px -1px rgba(0,0,0,0.31);
+    }
+
+    .SimpleGridHeaderRow td, .CellStretched {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        padding: 0px 5px;
+    }
+
+    .bg{
+        background: #f6f6f6;
+    }
+
+    .Disabled {
+        background: red;
+        opacity: 0.5;
+    }
+
+    .footer-title {
+        color: #1692ef;
+        font-size: 15px;
+    }
+
+    .footer-cell {
+        float: left;
+        padding: 5px;
+        margin: 0px 10px;
+        width: 150px;
+        text-align: center;
+        overflow: auto;
+    }
+
+    .footer-summery::before, .footer-summery::after {
+        clear: both;
+    }
+
+    .footer-summery {
+        padding-left: 150px;
+    }
+
+    .border-left {
+        border-left: 1px solid #dadada;
+    }
+
+    .SimpleGridHeaderRow td, .CellStretched {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        padding: 0px 5px;
+    }
+
+    .red {
+        color: #d60000 !important;
+    }
+    .CellStretched{
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        padding: 0px 5px !important;
+    }
+    .SimpleGridViewRow:hover{
+        background: white !important;
+    }
+
+    .NoRows{
+        text-align: center;
+        /* padding-top: 60px; */
+        color: #9e9e9e;
+        font-style: italic;
+        font-family: verdana;
+        background: #fbfbfb;
+        vertical-align: middle;
+        position: relative;
+        height: 100px;
+    }
+
+    .SaveAlert{
+        position: absolute;
+        top: 20px;
+        left: 0px;
+        right: 0px;
+        z-index: 10;
+
+        width: 350px;
+        
+        color: #717171;
+        text-align: center;
+        background: #fff5ce;
+        border: 1px solid #ffd598;
+        border-radius: 6px;
+        padding: 5px;
+        margin: auto;
+        white-space: normal;
+
+        -webkit-box-shadow: 3px 3px 2px 0px rgba(50, 50, 50, 0.14);
+        -moz-box-shadow:    3px 3px 2px 0px rgba(50, 50, 50, 0.14);
+        box-shadow:         3px 3px 2px 0px rgba(50, 50, 50, 0.14);
+
+    }
+    .alert-close{
+        float: right;
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        color: #a78757;
+    }
+
+    .alert-animation{
+        animation: animationFrames ease 1s;
+        animation-iteration-count: 1;
+        transform-origin: 50% 50%;
+        animation-fill-mode:forwards; /*when the spec is finished*/
+        -webkit-animation: animationFrames ease 1s;
+        -webkit-animation-iteration-count: 1;
+        -webkit-transform-origin: 50% 50%;
+        -webkit-animation-fill-mode:forwards; /*Chrome 16+, Safari 4+*/ 
+        -moz-animation: animationFrames ease 1s;
+        -moz-animation-iteration-count: 1;
+        -moz-transform-origin: 50% 50%;
+        -moz-animation-fill-mode:forwards; /*FF 5+*/
+        -o-animation: animationFrames ease 1s;
+        -o-animation-iteration-count: 1;
+        -o-transform-origin: 50% 50%;
+        -o-animation-fill-mode:forwards; /*Not implemented yet*/
+        -ms-animation: animationFrames ease 1s;
+        -ms-animation-iteration-count: 1;
+        -ms-transform-origin: 50% 50%;
+        -ms-animation-fill-mode:forwards; /*IE 10+*/
+    }
+
+    @keyframes animationFrames{
+      0% {
+        opacity:0;
+        transform:  translate(0px,-25px)  ;
+      }
+      100% {
+        opacity:1;
+        transform:  translate(0px,0px)  ;
+      }
+    }
+
+    @-moz-keyframes animationFrames{
+      0% {
+        opacity:0;
+        -moz-transform:  translate(0px,-25px)  ;
+      }
+      100% {
+        opacity:1;
+        -moz-transform:  translate(0px,0px)  ;
+      }
+    }
+
+    @-webkit-keyframes animationFrames {
+      0% {
+        opacity:0;
+        -webkit-transform:  translate(0px,-25px)  ;
+      }
+      100% {
+        opacity:1;
+        -webkit-transform:  translate(0px,0px)  ;
+      }
+    }
+
+    @-o-keyframes animationFrames {
+      0% {
+        opacity:0;
+        -o-transform:  translate(0px,-25px)  ;
+      }
+      100% {
+        opacity:1;
+        -o-transform:  translate(0px,0px)  ;
+      }
+    }
+
+    @-ms-keyframes animationFrames {
+      0% {
+        opacity:0;
+        -ms-transform:  translate(0px,-25px)  ;
+      }
+      100% {
+        opacity:1;
+        -ms-transform:  translate(0px,0px)  ;
+      }
+    }
+
+</style>
+
+<!-- Alert -->
+<!--<div *ngIf="showAlert" class="alert-animation SaveAlert">
+    <div class="alert-close" (click)="CloseAlert()">×</div>
+    Journal <a *ngIf="EntityPM.JournalId" href="#" (click)="OpenJournal(EntityPM.JournalId)">{{EntityPM.JournalNumber}}</a> was created successfully
+</div>-->
+
+<table>
+    <tr>
+        <td>
+            <div class="TableHolder">
+                <table>
+                    <!-- Header -->
+                    <tr class="TabTitleRow">
+                        <td colspan="3">
+                            {{IsLinesSelection ? txt_NewDeposit : txt_DepositDetails }} 
+                            <div style="width: 60px; float: right;">
+                                <!--<button class="Button" (click)="ReconcileButtonClicked()">Reconicle</button>-->
+                            </div>
+                        </td>
+
+                    </tr>
+
+                    <!-- Cash Deposit Fields -->
+                    <tr *ngIf="this.EntityPM.IsCashDeposit" style="height: 100px;">
+                        <td style="">
+                            <table>
+                                <tr class="FormFieldRow">
+
+                                    <td style="width: 300px;">
+                                        <table>
+
+                                            <!-- DepositDate -->
+                                            <!--<tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'DepositDate'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'DepositDate'" [ObjectTableName]="ObjectTableName"
+                                                                   [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>-->
+
+                                            <!-- DepositBankAccountId -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'DepositBankAccountId'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'DepositBankAccountId'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [DisplayMemberPath]="'AccountNumber'"
+                                                            [LookUpTableName]="'BankAccount'"
+                                                            [HideColumns]="true">
+                                                    </LogLov>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                            <!-- CashBookId -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'CashBookId'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'CashBookId'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [DisplayMemberPath]="'EnglishName'"
+                                                            [LookUpTableName]="'CashBook'"
+                                                            [HideColumns]="true">
+                                                    </LogLov>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                            <!-- Total Cashbook amount -->
+                                            <tr *ngIf="IsLinesSelection" class="FormFieldRow">
+                                                <td style="width: 150px;">
+                                                    <LogLabel [Text]="'Accounting.General.O.CashbookTotal' | TextCodeTranslationPipe"
+                                                              [NoObjectField]="true" 
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 220px;">
+                                                    <LogTextBox [ObjectFieldName]="'_CashbookTotal'" 
+                                                                [Text]="_CashbookTotal"
+                                                                [InputType]="'number'" 
+                                                                [DataContext]="DataContext" 
+                                                                [NoObjectField]="true" 
+                                                                [ObjectTableName]="ObjectTableName" 
+                                                                [HideColumns]="true"></LogTextBox>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                            <!-- Amount To Deposit -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 150px;">
+                                                    <LogLabel [ObjectFieldName]="'LocalDepositAmount'" [ObjectTableName]="ObjectTableName"
+                                                              [Text]="'Accounting.General.O.DepositAmount' | TextCodeTranslationPipe"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 180px;">
+                                                    <LogTextBox [ObjectFieldName]="'ForeignAmount'" [InputType]="'number'" [DataContext]="DataContext"
+                                                                [Text]="ForeignAmount"
+                                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                            <tr><td><div></div></td></tr>
+
+                                        </table>
+                                    </td>
+
+                                    <td><div></div></td>
+
+                                </tr>
+                                <tr><td><div></div></td></tr>
+
+                            </table>
+                        </td>
+                    </tr>
+
+
+                    <!-- Cheque Fields -->
+                    <tr *ngIf="IsLinesSelection && !this.EntityPM.IsCashDeposit" style="height: 100px;">
+                        <td colspan="3" style="">
+                            <table>
+                                <tr class="FormFieldRow">
+
+                                    <td style="width: 300px;">
+                                        <table>
+                                            <!-- DepositNumber -->
+                                            <!--<tr class="FormFieldRow">
+                                                <td style="width: 115px;">
+                                                    <LogLabel [ObjectFieldName]="'DepositNumber'" [ObjectTableName]="ObjectTableName"
+                                                                [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 180px;">
+                                                    <LogTextBox [ObjectFieldName]="'DepositNumber'" [InputType]="'number'" [DataContext]="DataContext"
+                                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>-->
+
+                                            <!-- DepositDate -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'DepositDate'" [ObjectTableName]="ObjectTableName"
+                                                                [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'DepositDate'" [ObjectTableName]="ObjectTableName"
+                                                                   [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                            <!-- CashBookId -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'CashBookId'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'CashBookId'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [DisplayMemberPath]="'EnglishName'"
+                                                            [LookUpTableName]="'CashBook'"
+                                                            [HideColumns]="true">
+                                                    </LogLov>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                            <tr><td><div></div></td></tr>
+
+                                        </table>
+                                    </td>
+
+                                    <td style="width: 50px;"><div></div></td>
+
+                                    <td style="width: 350px;">
+                                        <table>
+                                            <!-- DepositCurrencyId -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'DepositCurrencyId'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'DepositCurrencyId'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'Currency'"
+                                                            [HideColumns]="true">
+                                                    </LogLov>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                            <!-- DepositBankAccountId -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'DepositBankAccountId'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'DepositBankAccountId'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [DisplayMemberPath]="'LocalName'"
+                                                            [LookUpTableName]="'BankAccount'"
+                                                            [HideColumns]="true">
+                                                    </LogLov>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+
+                                            <tr><td><div></div></td></tr>
+
+                                        </table>
+                                    </td>
+
+                                    <td style="width: 50px;"><div></div></td>
+
+                                    <td style="width: 350px;">
+                                        <table>
+
+                                            <!-- LocalDepositAmount -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 150px;">
+                                                    <LogLabel [ObjectFieldName]="'LocalDepositAmount'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 180px;">
+                                                    <LogTextBox [ObjectFieldName]="'LocalDepositAmount'" [InputType]="'number'" 
+                                                                [DataContext]="DataContext" [Text]="LocalDepositAmount"
+                                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                            <!-- ForeignAmount -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 150px;">
+                                                    <LogLabel [ObjectFieldName]="'ForeignAmount'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 180px;">
+                                                    <LogTextBox [ObjectFieldName]="'ForeignAmount'" [InputType]="'number'" 
+                                                                [DigitsAfterPoint]="2"
+                                                                [DataContext]="DataContext" [Text]="ForeignAmount" 
+                                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                            <tr><td><div></div></td></tr>
+
+                                        </table>
+                                    </td>
+
+                                    <td><div></div></td>
+
+                                </tr>
+                                <tr><td><div></div></td></tr>
+
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr style="height: 20px;"><td><div></div></td></tr>
+
+                    <!-- Filters -->
+                    <tr *ngIf="IsLinesSelection && !this.EntityPM.IsCashDeposit" style="height: 20px;">
+                        <td style="width: 30px; padding: 5px;">
+                            <div *ngIf="!NoCashBookRows" style="width: 29px;">
+                                <div class="Button More"><CheckBox (Checked)="SelectAll($event)" [IsChecked]="IsAllSelected" style="width: 29px;"></CheckBox></div>
+                            </div>
+                        </td>
+                        <td style="width: 350px; padding: 5px;">
+                            <div style="padding-left: 15px; width: 350px;">
+                            
+                                <ul class="FiltersMenu">
+                                    <li id="cashcheques" (click)="FilterItemClicked('cash')"  style="width: 105px; height: 22px;"
+                                        [class.SelectedFilter]="FilterSelectedValue === 'cash'">
+                                        {{'Accounting.General.O.CashCheques' | TextCodeTranslationPipe}} ({{CashCount}})
+                                    </li>
+                                    <li id="postdatedcheques" (click)="FilterItemClicked('postdated')"  style="width: 135px; height: 22px;"
+                                        [class.SelectedFilter]="FilterSelectedValue === 'postdated'">
+                                        {{'Accounting.General.O.postdatedCheques' | TextCodeTranslationPipe}} ({{PostdatesCount}})
+                                    </li>
+                                </ul>
+                            
+                            </div>
+                            <!--<div style="float: right; padding: 4px; width: 250px;">
+                                <SearchTextBox [ObjectTableName]="ObjectTableName" [PlaceHolder]="'Cheque No. / Bank Account'" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
+                            </div>-->
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <!-- CashBook Lines -->
+                    <tr *ngIf="IsLinesSelection && !this.EntityPM.IsCashDeposit">
+                        <td colspan="3" style="height: 100%; padding-bottom: 75px;">
+                            <div class="SimpleGridView">
+                                <div class="SimpleGridViewHeader">
+                                    <table>
+                                        <tr class="SimpleGridHeaderRow">
+                                            <td style="width: 40px; max-width: 40px"></td>
+                                            <td style="width: 90px; max-width: 90px">{{'BankDepositLine.F.ChequeNumber' | TextCodeTranslationPipe}}</td>
+                                            <td style="width: 100px; max-width: 100px">{{'BankDepositLine.F.DueDate' | TextCodeTranslationPipe}}</td>
+                                            <td style="width: 110px; max-width: 110px">{{'BankDepositLine.F.LocalAmount' | TextCodeTranslationPipe}} ({{tenantCurrencyCode}})</td>
+                                            <td style="width: 75px; max-width: 75px">{{'BankDepositLine.F.Currency' | TextCodeTranslationPipe}}</td>
+                                            <td style="width: 110px; max-width: 110px">{{'BankDepositLine.F.ForeignAmount' | TextCodeTranslationPipe}}</td>
+                                            <td style="width: 110px; max-width: 110px">{{'BankDepositLine.F.AccountNumber' | TextCodeTranslationPipe}}</td>
+                                            <td style="width: 75px; max-width: 75px">{{'BankDepositLine.F.Bank' | TextCodeTranslationPipe}}</td>
+                                            <td style="width: 75px; max-width: 75px">{{'BankDepositLine.F.Branch' | TextCodeTranslationPipe}}</td>
+                                            <td style="width: 110px; max-width: 110px">{{'BankDepositLine.F.ARPaymentNumber' | TextCodeTranslationPipe}}</td>
+                                            <td style="width: 100px; max-width: 100px">{{'ARPaymentCheque.F.StatusCode' | TextCodeTranslationPipe}}</td>
+                                            <td></td>
+                                            <!--<td class="LastChild">
+                                <div></div>
+                            </td>-->
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div class="SimpleGridViewBody">
+                                    <table *ngIf="CashBookLines">
+                                        <tr *ngIf="NoCashBookRows"><td class="CenterCenter NoRows">{{'Accounting.General.O.noChequestodeposit' | TextCodeTranslationPipe}}</td></tr>
+                                        <tr class="SimpleGridViewRow bg" *ngFor="let item of CashBookLines; let i=index;">
+
+                                            <td class="CellStretched" style="width: 40px; max-width: 40px">
+                                                <CheckBox [IsChecked]="IsAllSelected" (Checked)="LineSelection(item , $event)"></CheckBox>
+                                            </td>
+
+                                            <td class="CellStretched" style="width: 90px; max-width: 90px">
+                                                {{item.ChequeNumber }}
+                                            </td>
+
+                                            <td class="CellStretched" style="width: 100px; max-width: 100px">
+                                                {{item.DueDate | DateTimeToDatePipe }}
+                                            </td>
+
+                                            <td class="CellStretched" style="width: 110px; max-width: 110px; text-align: right;">
+                                                {{item.LocalAmount | NumbersPipe:'N2' }}
+                                            </td>
+
+                                            <td class="CellStretched" style="width: 75px; max-width: 75px">
+                                                {{item.Currency}}
+                                            </td>
+
+                                            <td class="CellStretched" style="width: 110px; max-width: 110px; text-align: right;">
+                                                {{item.ForeignAmount | NumbersPipe:'N2' }}
+                                            </td>
+
+                                            <td class="CellStretched" style="width: 110px; max-width: 110px">
+                                                {{item.AccountNumber}}
+                                            </td>
+
+                                            <td class="CellStretched" style="width: 75px; max-width: 75px">
+                                                {{item.Bank}}
+                                            </td>
+
+                                            <td class="CellStretched" style="width: 75px; max-width: 75px">
+                                                {{item.Branch}}
+                                            </td>
+
+                                            <td class="CellStretched" style="width: 110px; max-width: 110px">
+                                                <a href="javascript:;" (click)="OpenARPayment(item.ARPaymentId)">{{item.ARPaymentNumber}}</a>
+                                            </td>
+
+                                            <td class="CellStretched" style="width: 100px; max-width: 100px">
+                                                {{item.ARPChequeStatusName}}
+                                            </td>
+
+                                            <td><div></div></td>
+
+                                        </tr>
+                                        <tr>
+                                            <td colspan="5">
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- BankDeposit Lines  -->
+                    <tr *ngIf="!IsLinesSelection && !this.EntityPM.IsCashDeposit">
+                        <td>
+                            <div>
+                                <div style="padding: 4px; width: 250px;"  [style.float]="isRTL ? 'left' : 'right'" >
+                                    <SearchTextBox [ObjectTableName]="ObjectTableName" [PlaceHolder]="'Accounting.General.O.ChequeNoBankAccount' | TextCodeTranslationPipe" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr *ngIf="!IsLinesSelection && !this.EntityPM.IsCashDeposit">
+                        <td style="height: 100%; padding-bottom: 75px;">
+                            <div class="SimpleGridView">
+                                <div class="SimpleGridViewHeader">
+                                    <table>
+                                        <tr class="SimpleGridHeaderRow">
+                                            <td style="width: 90px; max-width: 90px">{{'BankDepositLine.F.ChequeNumber' | TextCodeTranslationPipe}}</td>
+                                            <td style="width: 100px; max-width: 100px">{{'BankDepositLine.F.DueDate' | TextCodeTranslationPipe}}</td>
+                                            <td style="width: 110px; max-width: 110px">{{'BankDepositLine.F.LocalAmount' | TextCodeTranslationPipe}} ({{tenantCurrencyCode}})</td>
+                                            <td style="width: 75px; max-width: 75px">{{'BankDepositLine.F.Currency' | TextCodeTranslationPipe}}</td>
+                                            <td style="width: 110px; max-width: 110px">{{'BankDepositLine.F.ForeignAmount' | TextCodeTranslationPipe}}</td>
+                                            <td style="width: 110px; max-width: 110px">{{'BankDepositLine.F.AccountNumber' | TextCodeTranslationPipe}}</td>
+                                            <td style="width: 75px; max-width: 75px">{{'BankDepositLine.F.Bank' | TextCodeTranslationPipe}}</td>
+                                            <td style="width: 75px; max-width: 75px">{{'BankDepositLine.F.Branch' | TextCodeTranslationPipe}}</td>
+                                            <td style="width: 110px; max-width: 110px">{{'BankDepositLine.F.ARPaymentNumber' | TextCodeTranslationPipe}}</td>
+                                            <td style="width: 200px; max-width: 200px">{{'ARPaymentCheque.F.StatusCode' | TextCodeTranslationPipe}}</td>
+                                            <td style="width: 50px; max-width: 50px"></td>
+                                            <td></td>
+                                            <!--<td class="LastChild">
+                                <div></div>
+                            </td>-->
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div class="SimpleGridViewBody">
+                                    <table *ngIf="BankDepositLines">
+                                        <tr class="SimpleGridViewRow bg" *ngFor="let item of BankDepositLines; let i=index;">
+
+                                            <td class="CellStretched" style="width: 90px; max-width: 90px">
+                                                {{item.ChequeNumber }}
+                                            </td>
+
+                                            <td class="CellStretched" style="width: 100px; max-width: 100px">
+                                                {{item.DueDate | DateTimeToDatePipe }}
+                                            </td>
+
+                                            <td class="CellStretched" style="width: 110px; max-width: 110px; text-align: right;">
+                                                {{item.LocalAmount | NumbersPipe:'N2' }}
+                                            </td>
+
+                                            <td class="CellStretched" style="width: 75px; max-width: 75px">
+                                                {{item.Currency}}
+                                            </td>
+
+                                            <td class="CellStretched" style="width: 110px; max-width: 110px; text-align: right;">
+                                                {{item.ForeignAmount | NumbersPipe:'N2' }}
+                                            </td>
+
+                                            <td class="CellStretched" style="width: 110px; max-width: 110px">
+                                                {{item.AccountNumber}}
+                                            </td>
+
+                                            <td class="CellStretched" style="width: 75px; max-width: 75px">
+                                                {{item.Bank}}
+                                            </td>
+
+                                            <td class="CellStretched" style="width: 75px; max-width: 75px">
+                                                {{item.Branch}}
+                                            </td>
+
+                                            <td class="CellStretched" style="width: 110px; max-width: 110px">
+                                                <a href="javascript:;" (click)="OpenARPayment(item.ARPaymentId)">{{item.ARPaymentNumber}}</a>
+                                            </td>
+
+                                            <td class="CellStretched" style="width: 200px; max-width: 200px">
+                                                {{item.ChequeStatusName}}
+                                            </td>
+
+                                            <td class="CellStretched" style="width: 50px; max-width: 50px" title="Return Cheque">
+                                                <IconButton [style.text-align]="isRTL ? 'right' : 'left'" [IsEnabled]="!item.IsOutOfDeposit" [Name]="'return'" [IsSmall]="true" (click)="ReturnChequeButtonClicked(item)"></IconButton>
+                                            </td>
+
+                                            <td><div></div></td>
+
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="5">
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+
+                    <tr><td><div></div></td></tr>
+
+
+
+                </table>
+            </div>
+        </td>
+    </tr>
+
+</table>
+
+<!-- Footer -->
+<div style="position: absolute; left: 0px; bottom: 0px; right: 0px;">
+    <div class="tab-footer">
+        <div class="footer-title" *ngIf="!this.EntityPM.IsCashDeposit">
+            {{'Accounting.General.O.Totals' | TextCodeTranslationPipe}}
+        </div>
+        <div class="footer-summery">
+
+            <div *ngIf="IsLinesSelection && !this.EntityPM.IsCashDeposit" [style.float]="isRTL ? 'right' : 'left'" class="footer-cell" style="text-align: right;">
+                <div style="font-size: 15px; font-weight: bold; color:#25446C;">{{CashBookTotal | NumbersPipe:'N2'}}</div>
+                <div style="font-size: 13px; color: #6f6f6f;">{{'Accounting.General.O.Totals' | TextCodeTranslationPipe}}</div>
+            </div>
+            <div *ngIf="!this.EntityPM.IsCashDeposit" class="footer-cell" [style.float]="isRTL ? 'right' : 'left'" [class.border-left]="IsLinesSelection && isRTL" style="text-align: left;">
+                <div style="font-size: 15px; font-weight: bold; color:#25446C;">{{SelectedTotal | NumbersPipe:'N2'}}</div>
+                <!--<div style="font-size: 13px; color: #6f6f6f;">{{IsLinesSelection ? "Selected" : "Total"}}</div>-->
+                <div *ngIf="IsLinesSelection" style="font-size: 13px; color: #6f6f6f;">{{'Accounting.General.O.Selected' | TextCodeTranslationPipe}}</div>
+                <div *ngIf="!IsLinesSelection" style="font-size: 13px; color: #6f6f6f;">{{'Accounting.General.O.Totals' | TextCodeTranslationPipe}}</div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+

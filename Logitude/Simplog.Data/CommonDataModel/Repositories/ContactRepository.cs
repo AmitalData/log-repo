@@ -1,0 +1,545 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Server.Infrastructure.Helpers;
+using Simplog.Server.Infrastructure;
+using Simplog.Data.Helpers;
+using System.Text.RegularExpressions;
+
+namespace Simplog.Data.CommonDataModel.Repositories
+{
+    public class ContactRepository:IRepository<Contact>, Simplog.Data.CommonDataModel.Repositories.IContactRepository
+    {
+        ICommonDataContext commonDataContext;
+
+        public ContactRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
+        public ContactRepository(ICommonDataContext context)
+        {
+            commonDataContext = context;
+        }
+        public ContactRepository(int tenant)
+        {
+            commonDataContext = CommonDataContext.GetContext(tenant);
+        }
+
+        public IQueryable<Contact> GetContactsByEmail(string email)
+        {
+            return from a in context.Contacts
+                   where a.Email == email.ToLower()
+                   select a;
+        }
+
+        public IQueryable<Contact> GetActiveContacts(int tenant)
+        {
+            return (from record in context.Contacts where record.Tenant == tenant && record.UserType=="R" && !record.InActive select record);
+        }
+
+        public IQueryable<Contact> GetContacts(int tenant)
+        {
+            return (from record in context.Contacts where record.Tenant == tenant && record.UserType == "R" select record);
+        }
+
+        public IQueryable<Contact> GetAllContacts(int tenant)
+        {
+            return (from record in context.Contacts where record.Tenant == tenant && record.UserType == "R"  select record);
+        }
+
+        public IQueryable<Contact> GetAllContactsThatHaveSignature()
+        {
+            return (from record in context.Contacts where record.Signature !=null && record.UserType == "R" select record);
+        }
+
+        public IQueryable<Contact> GetContacts(List<string> allContactsId, int tenant)
+        {
+            IQueryable<Contact> myResult = null;
+
+            if (allContactsId.Count > 0)
+            {
+                myResult = context.Contacts.Where(d => allContactsId.Contains(d.Id));
+            }
+
+            return myResult;
+        }
+
+        public Contact GetSingleContactForUpdate(string id, int tenant)
+        {
+            Contact entity = (from record in context.Contacts where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
+            return entity;
+        }
+
+        public Contact GetSingleContactByExternalId(string externalId, int tenant)
+        {
+
+
+            Contact entity = (from a in context.Contacts
+                              where a.Tenant == tenant && a.ExternalId == externalId
+                              select a).FirstOrDefault();
+
+            return entity;
+
+        }
+
+        public Contact GetSingleContactByExternalIdOrEmail(string externalId, string email, int tenant)
+        {
+
+
+            Contact entity = (from a in context.Contacts
+                              where a.Tenant == tenant && (a.ExternalId == externalId || a.Email == email.ToLower())
+                              select a).FirstOrDefault();
+
+            return entity;
+
+        }
+
+        public Contact GetSingleContact(string id, int tenant)
+        {
+
+
+            Contact entity = (from a in context.Contacts
+                              where a.Tenant == tenant && a.Id == id
+                              select a).FirstOrDefault();
+
+            if (entity == null)
+            {
+                entity = (from a in context.Contacts
+                          where a.Tenant == 0 && a.Id == id
+                          select a).FirstOrDefault();
+            }
+
+            return entity;
+
+        }
+
+        public  Contact GetSingleContactByIdAndTenant(string id, int tenant, bool getFromCache)
+        {
+            if (!string.IsNullOrEmpty(id))
+            {
+                string entityName = "Contact" + id + tenant;
+                Contact entity;
+                if (getFromCache)
+                {
+                    if (HttpContext.Current != null)
+                    {
+                        if (CacheManager.CacheWrapper.Get(entityName) == null)
+                        {
+                            
+                            entity = (from a in context.Contacts
+                                            where a.Tenant == tenant && a.Id == id
+                                            select a).FirstOrDefault();
+
+
+                            if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
+                            {
+                                CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                            }
+                        }
+                        else
+                        {
+                            entity = (Contact)CacheManager.CacheWrapper.Get(entityName);
+                            // HttpContext.Current.Cache.Insert(EntityNameValue, Entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                        }
+                    }
+                    else
+                    {
+                      
+                        entity = (from record in context.Contacts where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
+                    }
+                }
+                else
+                {
+                    
+                    entity = (from record in context.Contacts where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
+                }
+                return entity;
+            }
+            return null;
+
+        }
+
+        public static Contact GetSingleContact(string id, int tenant, bool getFromCache)
+        {
+            if (!string.IsNullOrEmpty(id))
+            {
+                string entityName = "Contact" + id + tenant;
+                Contact entity;
+                if (getFromCache)
+                {
+                    if (HttpContext.Current != null)
+                    {
+                        if (CacheManager.CacheWrapper.Get(entityName) == null)
+                        {
+                            ICommonDataContext context = CommonDataContext.GetContext(tenant);
+                            entity = (from a in context.Contacts
+                                      where a.Tenant == tenant && a.Id == id
+                                      select a).FirstOrDefault();
+
+
+                            if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
+                            {
+                                CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                            }
+                        }
+                        else
+                        {
+                            entity = (Contact)CacheManager.CacheWrapper.Get(entityName);
+                            // HttpContext.Current.Cache.Insert(EntityNameValue, Entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                        }
+                    }
+                    else
+                    {
+                        ICommonDataContext context = CommonDataContext.GetContext(tenant);
+                        entity = (from record in context.Contacts where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
+                    }
+                }
+                else
+                {
+                    ICommonDataContext context = CommonDataContext.GetContext(tenant);
+                    entity = (from record in context.Contacts where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
+                }
+                return entity;
+            }
+            return null;
+
+        }
+
+        public Contact GetSingleContactByEmailAndTenant(string email, int tenant)
+        {
+            UserRepository usersRepository = new UserRepository(tenant);
+            Contact contact = (from a in context.Contacts
+                               where a.Email == email.ToLower() && (a.Tenant == tenant || a.Tenant == 0)
+                               select a).FirstOrDefault();
+
+          
+            return contact;
+        }
+
+        public Contact GetSingleContactByEmailSpecificTenant(string email, int tenant)
+        {
+            UserRepository usersRepository = new UserRepository(tenant);
+            Contact contact = (from a in context.Contacts
+                               where a.Email == email.ToLower() && (a.Tenant == tenant)
+                               select a).FirstOrDefault();
+
+
+            return contact;
+        }
+
+        //public Contact GetSingleContactByEmailForSecurity(string email, int tenant)
+        //{
+        //    UserRepository usersRepository = new UserRepository(tenant);
+        //    Contact contact = (from a in context.Contacts
+        //                       where a.Email == email && a.Tenant == tenant
+        //                       select a).FirstOrDefault();
+
+        //    if (contact == null)
+        //    {
+        //        contact = (from a in context.Contacts
+        //                   where a.Email == email && a.Tenant == 0
+        //                   select a).FirstOrDefault();
+        //    }
+
+        //    return contact;
+        //}
+
+        public Contact GetSingleContactByEmail(string email, int tenant, bool getFromCache = false)
+        {
+            if (!string.IsNullOrEmpty(email))
+            {
+                email = email.ToLower();
+                string entityName = "Contact" + email + tenant;
+                Contact entity;
+                if (getFromCache)
+                {
+                    if (HttpContext.Current != null)
+                    {
+                        if (CacheManager.CacheWrapper.Get(entityName) == null)
+                        {
+                            ICommonDataContext context = CommonDataContext.GetContext(tenant);
+                            entity = (from a in context.Contacts
+                                      where a.Tenant == tenant && a.Email == email
+                                      select a).FirstOrDefault();
+
+
+                            if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
+                            {
+                                CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                            }
+
+                            else
+                            {
+
+                                if (entity == null)
+                                {
+                                    entity = (from a in context.Contacts
+                                              where a.Email == email && a.Tenant == 0
+                                              select a).FirstOrDefault();
+                                }
+                            }
+                            //}
+
+                            //entity = (Contact)CacheManager.CacheWrapper.Get(entityName);
+
+
+                        }
+                        else
+                        {
+                            entity = (Contact)CacheManager.CacheWrapper.Get(entityName);
+
+                        }
+                    }
+                    else
+                    {
+                        ICommonDataContext context = CommonDataContext.GetContext(tenant);
+                        entity = (from record in context.Contacts where record.Email == email && record.Tenant == tenant select record).FirstOrDefault();
+
+                        if (entity == null)
+                        {
+                            entity = (from a in context.Contacts
+                                      where a.Email == email && a.Tenant == 0
+                                      select a).FirstOrDefault();
+                        }
+                    }
+
+
+                   
+                }
+                else
+                {
+                    ICommonDataContext context = CommonDataContext.GetContext(tenant);
+                    entity = (from record in context.Contacts where record.Email == email.ToLower() && record.Tenant == tenant select record).FirstOrDefault();
+
+                    if (entity == null)
+                    {
+                        entity = (from a in context.Contacts
+                                  where a.Email == email.ToLower() && a.Tenant == 0
+                                  select a).FirstOrDefault();
+                    }
+                }
+
+                return entity;
+            }
+            else
+                return null;
+        }
+     
+        public bool IsContactByEmailExists(string email, int tenant)
+        {
+            bool result = false;
+            if (!string.IsNullOrEmpty(email))
+            {
+                result = context.Contacts.Where(d => d.Tenant == tenant && d.Email == email.ToLower()).Any();
+            }
+
+            return result;
+        }
+
+        public List<Contact> GetContactsByEmailAndTenant(string email)
+        {
+            
+            List<Contact> users = (from a in context.Contacts
+                              where a.Email == email.ToLower()
+                              select a).ToList();
+            return users;
+           
+        }
+
+        public bool CheckEmailAvailabilityForTenant(string email,int tenant)
+        {
+            if (!string.IsNullOrEmpty(email))
+            {
+                bool exists = (from a in context.Contacts
+                               where (a.Email == email.ToLower() && a.Tenant == tenant)
+                               select a).Any();
+                return exists;
+            }
+            return false;
+
+        }
+
+        public bool CheckEmailAvailabilityForTenant0(string email)
+        {
+            if (!string.IsNullOrEmpty(email))
+            {
+                bool exists = (from a in context.Contacts
+                               where (a.Email == email.ToLower() && a.Tenant == 0)
+                               select a).Any();
+                return exists;
+            }
+            return false;
+
+        }
+
+        public IQueryable<CardContact> GetCardContactsForTenant(int tenant)
+        {
+            return from a in context.CardContacts
+                   where a.Tenant == tenant
+                   select a;
+        }
+
+        public void Add(Contact entity)
+        {
+            context.Contacts.Add(entity);
+        }
+
+        public void Remove(Contact entity)
+        {
+            try
+            {
+                context.Contacts.Attach(entity);
+            }
+            catch { }
+            context.Contacts.Remove(entity);
+        }
+
+        public void Update(Contact entity)
+        {
+            try
+            {
+                context.Contacts.Attach(entity);
+            }
+            catch { }
+            context.SetAsModified(entity);
+        }
+
+        public List<Contact> All()
+        {
+            return context.Contacts.ToList();
+        }
+
+        public ICommonDataContext context
+        {
+            get { return commonDataContext; }
+        }
+
+        public void SubmitChanges()
+        {
+            context.SaveChanges();
+        }
+
+        public List<Contact> GetMulti(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Contact GetSingle(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetEmailContactByIdAndTenant(int tenant, string id)
+        {
+            string Email = "";
+            Contact contact = (from a in context.Contacts
+                               where a.Tenant == tenant && a.Id == id
+                               select a).FirstOrDefault();
+            if(contact!=null)
+            {
+                Email = contact.Email;
+            }
+
+            return Email;
+        }         
+
+        public List<EmailTypeClass> GetContactsListByEmailAndTenant(List<EmailTypeClass> emails, int tenant)
+        {
+            List<EmailTypeClass> contacts = new List<EmailTypeClass>();
+
+            if (emails.Count > 0)
+            {
+                //List<string> conemails = emails.Select(e => e.Email).Distinct().ToList(); // remove duplicate emails 
+                List<string> conemails = new List<string>();
+
+                foreach (string email in emails.Select(e => e.Email))
+                {
+                    conemails.Add(Regex.Replace(email.ToLower(),@"\s+", ""));
+                }
+
+                contacts = (from a in context.Contacts
+                            where a.Tenant == tenant && conemails.Contains(a.Email)
+                            select new EmailTypeClass
+                            {
+                                Id = a.Id,
+                                Email = a.Email,
+
+                            }).Distinct().ToList();
+
+                foreach (EmailTypeClass item in contacts)
+                {
+                    item.Type = emails.Where(e => e.Email == item.Email.ToLower()).Select(e => e.Type).FirstOrDefault();
+                }
+            }
+
+            return contacts;
+        }
+
+        public Contact GetContactByUserTypeAndTenant(string userType , int tenant)
+        {
+            Contact entity = (from a in context.Contacts
+                              where a.Tenant == tenant && a.UserType == userType && a.Email.Contains("system")
+                              select a).FirstOrDefault();
+            return entity;
+        }
+
+        public IQueryable<Contact> GetContactListsForShipmentFollow(List<string> trackedIds, int tenant)
+        {
+            IQueryable<Contact> contactlist = (from a in context.Contacts
+                                               where trackedIds.Contains(a.Id)
+                                               select a);
+            return contactlist;
+        }
+
+        public string GetConactIdByemail(string email, int tenant)
+        {
+            return  (from a in context.Contacts
+                              where a.Email == email.ToLower() && a.Tenant == tenant
+                              select a.Id).FirstOrDefault();
+        }
+
+        public string GetConactNameByemail(string email, int tenant)
+        {
+            return (from a in context.Contacts
+                    where a.Email == email.ToLower() && a.Tenant == tenant
+                    select a.EnglishName).FirstOrDefault();
+        }
+
+        public string GetConactEmail(string id)
+        {
+            return (from x in context.Contacts where x.Id == id select x.Email).FirstOrDefault();
+
+    }
+
+
+        public string GetContactNameById(string id, int tenant)
+        {
+           
+            string contactName = (from a in context.Contacts
+                              where a.Tenant == tenant && a.Id == id
+                              select a.EnglishName).FirstOrDefault();
+
+            if (string.IsNullOrEmpty(contactName))
+            {
+                contactName = (from a in context.Contacts
+                          where a.Tenant == 0 && a.Id == id
+                          select a.EnglishName).FirstOrDefault();
+            }
+
+            return contactName;
+
+        }
+
+
+        public IQueryable<Contact> GetContactListsByListids(List<string> contactIds, int tenant)
+        {
+            IQueryable<Contact> contactlist = (from a in context.Contacts
+                                               where contactIds.Contains(a.Id) 
+                                               select a);
+            return contactlist;
+        }
+    }
+}

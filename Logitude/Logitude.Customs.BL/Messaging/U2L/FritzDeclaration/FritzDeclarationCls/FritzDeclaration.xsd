@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+   <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+         <!-- XML Schema Generated from XML Document on Wed Jun 15 2016 13:03:10 GMT+0300 (Jerusalem Daylight Time) -->
+         <!-- with XmlGrid.net Free Online Service http://xmlgrid.net -->
+         <xs:element name="DeclarationFritz">
+               <xs:complexType>
+                     <xs:sequence>
+                           <xs:element name="CustomFileNo" type="xs:int"></xs:element>
+                           <xs:element name="Customer">
+                                 <xs:complexType>
+                                       <xs:sequence>
+                                             <xs:element name="CustomerNumber" type="xs:int"></xs:element>
+                                             <xs:element name="CustomerName" type="xs:string"></xs:element>
+                                       </xs:sequence>
+                                 </xs:complexType>
+                           </xs:element>
+                           <xs:element name="CustomerVatNo" type="xs:int"></xs:element>
+                           <xs:element name="DeclarationNumber" type="xs:int"></xs:element>
+                           <xs:element name="VersionId" type="xs:double"></xs:element>
+                           <xs:element name="DeclarationOfficeCode" type="xs:int"></xs:element>
+                           <xs:element name="TaxationDateTime" type="xs:dateTime"></xs:element>
+                           <xs:element name="AgentId" type="xs:int"></xs:element>
+                           <xs:element name="ProcedureCurrentCode" type="xs:int"></xs:element>
+                           <xs:element name="ProcedureCurrentName" type="xs:string"></xs:element>
+                           <xs:element name="AutonomyRegionTypeCode"></xs:element>
+                           <xs:element name="PaymentDate"></xs:element>
+                           <xs:element name="HatraDate"></xs:element>
+                           <xs:element name="DeclarationStatusTypeCode" type="xs:int"></xs:element>
+                           <xs:element name="LoadingFactor" type="xs:double"></xs:element>
+                           <xs:element name="DealValue" type="xs:double"></xs:element>
+                           <xs:element name="CIFValue" type="xs:double"></xs:element>
+                           <xs:element name="DealValueWithoutFactor" type="xs:double"></xs:element>
+                           <xs:element name="TotalTax" type="xs:int"></xs:element>
+                           <xs:element name="PaymentOrderNumber"></xs:element>
+                           <xs:element name="PaymentStatusCode"></xs:element>
+                           <xs:element name="Consignment">
+                                 <xs:complexType>
+                                       <xs:sequence>
+                                             <xs:element name="SequenceNumeric" type="xs:int"></xs:element>
+                                             <xs:element name="CargoTypeCode" type="xs:int"></xs:element>
+                                             <xs:element name="ManifestDate" type="xs:dateTime"></xs:element>
+                                             <xs:element name="ManifestNumber" type="xs:int"></xs:element>
+                                             <xs:element name="SecondCargoID" type="xs:string"></xs:element>
+                                             <xs:element name="ThirdCargoID"></xs:element>
+                                             <xs:element name="UnloadDate" type="xs:dateTime"></xs:element>
+                                             <xs:element name="UnloadPortCode" type="xs:string"></xs:element>
+                                             <xs:element name="CargoDescription" type="xs:string"></xs:element>
+                                             <xs:element name="IsLastReleaseFromWarehous" type="xs:string"></xs:element>
+                                             <xs:element name="LoadingPortCode" type="xs:string"></xs:element>
+                                             <xs:element name="OriginCountryCode" type="xs:string"></xs:element>
+                                             <xs:element name="StorageSiteCode" type="xs:string"></xs:element>
+                                             <xs:element name="ReceiverWarehouseCode"></xs:element>
+                                             <xs:element name="ConsignmentPackage">
+                                                   <xs:complexType>
+                                                         <xs:sequence>
+                                                               <xs:element name="SequenceNumeric" type="xs:int"></xs:element>
+                                                               <xs:element name="PackageMeasureQualifierCode" type="xs:int"></xs:element>
+                                                               <xs:element name="PackageMeasureQualifierName" type="xs:string"></xs:element>
+                                                               <xs:element name="PackageQuantity" type="xs:int"></xs:element>
+                                                               <xs:element name="GrossMassMeasure" type="xs:int"></xs:element>
+                                                               <xs:element name="PackageTypeCode" type="xs:string"></xs:element>
+                                                               <xs:element name="PackageTypeName" type="xs:string"></xs:element>
+                                                         </xs:sequence>
+                                                   </xs:complexType>
+                                             </xs:element>
+                                       </xs:sequence>
+                                 </xs:complexType>
+                           </xs:element>
+                           <xs:element name="SupplierInvoice">
+                                 <xs:complexType>
+                                       <xs:sequence>
+                                             <xs:element name="SequenceNumeric" type="xs:int"></xs:element>
+                                             <xs:element name="InvoiceNumber" type="xs:int"></xs:element>
+                                             <xs:element name="IssueDate" type="xs:dateTime"></xs:element>
+                                             <xs:element name="AccountTypeCode" type="xs:int"></xs:element>
+                                             <xs:element name="IsPreference" type="xs:string"></xs:element>
+                                             <xs:element name="PreferenceDocumentTypeCode"></xs:element>
+                                             <xs:element name="InvoiceCurrencyTypeCode" type="xs:string"></xs:element>
+                                             <xs:element name="InvoiceAmount" type="xs:int"></xs:element>
+                                             <xs:element name="VendorNumber" type="xs:int"></xs:element>
+                                             <xs:element name="IncotermCode" type="xs:string"></xs:element>
+                                             <xs:element name="IssueCountryCode" type="xs:string"></xs:element>
+                                             <xs:element name="TotalFreightInFreightCurrency" type="xs:int"></xs:element>
+                                             <xs:element name="FreightCurrencyTypeCode" type="xs:string"></xs:element>
+                                             <xs:element name="TotalFreightInNIS" type="xs:double"></xs:element>
+                                             <xs:element name="ExchangeRate" type="xs:int"></xs:element>
+                                             <xs:element name="SupplierInvoiceItem">
+                                                   <xs:complexType>
+                                                         <xs:sequence>
+                                                               <xs:element name="SequenceNumeric" type="xs:int"></xs:element>
+                                                               <xs:element name="OriginCountryCode" type="xs:string"></xs:element>
+                                                               <xs:element name="ClassificationCode" type="xs:int"></xs:element>
+                                                               <xs:element name="ItemPrice" type="xs:int"></xs:element>
+                                                               <xs:element name="TradeAgreemenCode"></xs:element>
+                                                               <xs:element name="StatisticQuantity"></xs:element>
+                                                               <xs:element name="StatisticQuantityType"></xs:element>
+                                                               <xs:element name="InvoiceQuantity" type="xs:int"></xs:element>
+                                                               <xs:element name="InvoiceQuantityType" type="xs:string"></xs:element>
+                                                               <xs:element name="SupplierInvoiceItemTax">
+                                                                     <xs:complexType>
+                                                                           <xs:sequence>
+                                                                                 <xs:element name="TaxTypeCode" type="xs:int"></xs:element>
+                                                                                 <xs:element name="TaxRate" type="xs:int"></xs:element>
+                                                                                 <xs:element name="TaxBaseAmount" type="xs:int"></xs:element>
+                                                                                 <xs:element name="TaxAmount" type="xs:int"></xs:element>
+                                                                                 <xs:element name="DeferedTaxAmount" type="xs:int"></xs:element>
+                                                                                 <xs:element name="DefinedPerUnitMeasure" type="xs:int"></xs:element>
+                                                                                 <xs:element name="AlternateDefinedPerUnitMeasure"></xs:element>
+                                                                                 <xs:element name="DefinedPerUnitQuantity"></xs:element>
+                                                                                 <xs:element name="AlternateDefinedPerUnitQuant"></xs:element>
+                                                                                 <xs:element name="AlternateRate" type="xs:int"></xs:element>
+                                                                                 <xs:element name="AlternateMeasurementUnitCode"></xs:element>
+                                                                                 <xs:element name="MeasurementUnitCode"></xs:element>
+                                                                           </xs:sequence>
+                                                                     </xs:complexType>
+                                                               </xs:element>
+                                                               <xs:element name="SupplierInvioceItemCertificate">
+                                                                     <xs:complexType>
+                                                                           <xs:sequence>
+                                                                                 <xs:element name="ReqConfirmationTypeCode" type="xs:int"></xs:element>
+                                                                                 <xs:element name="CertificateExemptionTypeCode" type="xs:int"></xs:element>
+                                                                                 <xs:element name="AttachmentTypeCode" type="xs:int"></xs:element>
+                                                                                 <xs:element name="ResponseConfirmationTypeCode"></xs:element>
+                                                                                 <xs:element name="CertificateNumber"></xs:element>
+                                                                                 <xs:element name="SequenceNumeric" type="xs:int"></xs:element>
+                                                                           </xs:sequence>
+                                                                     </xs:complexType>
+                                                               </xs:element>
+                                                               <xs:element name="SupplierInvioceItemProcessType">
+                                                                     <xs:complexType>
+                                                                           <xs:sequence>
+                                                                                 <xs:element name="ProcessTypeCode"></xs:element>
+                                                                           </xs:sequence>
+                                                                     </xs:complexType>
+                                                               </xs:element>
+                                                         </xs:sequence>
+                                                   </xs:complexType>
+                                             </xs:element>
+                                             <xs:element name="SupplierInvoiceModification">
+                                                   <xs:complexType>
+                                                         <xs:sequence>
+                                                               <xs:element name="TypeCode" type="xs:string"></xs:element>
+                                                               <xs:element name="CurrencyTypeCode" type="xs:string"></xs:element>
+                                                               <xs:element name="Amount" type="xs:int"></xs:element>
+                                                         </xs:sequence>
+                                                   </xs:complexType>
+                                             </xs:element>
+                                             <xs:element name="InsruanceCurrencyTypeCode" type="xs:string"></xs:element>
+                                             <xs:element name="InsuranceAmount" type="xs:double"></xs:element>
+                                             <xs:element name="InsruancePercentage" type="xs:double"></xs:element>
+                                       </xs:sequence>
+                                 </xs:complexType>
+                           </xs:element>
+                           <xs:element name="DeclarationTax">
+                                 <xs:complexType>
+                                       <xs:sequence>
+                                             <xs:element name="TaxTypeCode" type="xs:int"></xs:element>
+                                             <xs:element name="TotalAmount" type="xs:int"></xs:element>
+                                             <xs:element name="DeferredTaxAmount" type="xs:int"></xs:element>
+                                             <xs:element name="TaxBaseAmount" type="xs:int"></xs:element>
+                                             <xs:element name="TaxToPay" type="xs:int"></xs:element>
+                                       </xs:sequence>
+                                 </xs:complexType>
+                           </xs:element>
+                     </xs:sequence>
+               </xs:complexType>
+         </xs:element>
+   </xs:schema>

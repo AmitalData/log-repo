@@ -1,0 +1,54 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Customs.Data.EntityPOCOs
+{
+   
+    public class VehicleOwner
+    {
+	 string dbms;
+
+           [Column("Tenant")]
+	    public int Tenant { get; set; }
+     [Key]
+        [ForeignKey("Vehicle")]
+        [Column("VehicleId" ,Order = 1)]
+	    public string VehicleId { get; set; }
+	      
+        public virtual Vehicle Vehicle { get; set; }
+     [Key]
+        [Column("LineNumber" ,Order = 2)]
+	    public int LineNumber { get; set; }
+        [Column("ClientId")]
+	    public string ClientId { get; set; }
+        [Column("LastNameOrCorporationName")]
+	    public string LastNameOrCorporationName { get; set; }
+        [Column("FirstName")]
+	    public string FirstName { get; set; }
+        [Column("IsMain")]
+	    public bool IsMain { get; set; }
+        [Column("PassportNumber")]
+	    public string PassportNumber { get; set; }
+        [ForeignKey("CustomsCountry")]
+        [Column("PassCountryCode")]
+	    public string PassCountryCode { get; set; }
+	      
+        public virtual CustomsCountry CustomsCountry { get; set; }
+        [ForeignKey("PassportType")]
+        [Column("ImporterPassportTypeCode")]
+	    public string ImporterPassportTypeCode { get; set; }
+	      
+        public virtual PassportType PassportType { get; set; }
+    }
+}
+	 

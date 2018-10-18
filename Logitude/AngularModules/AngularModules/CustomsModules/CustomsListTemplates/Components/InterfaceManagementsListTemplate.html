@@ -1,0 +1,42 @@
+﻿<style>
+
+</style>
+<div>
+    
+    <div class="TextTrimming RightCenter"
+         *ngIf="fieldName == 'Code'">
+        <span>{{_InterfaceManagementList.Code }}</span>
+    </div>
+    <div class="TextTrimming RightCenter"
+         *ngIf="fieldName == 'Description'">
+        <span>{{_InterfaceManagementList.Description}}</span>
+    </div>
+    <div class="TextTrimming RightCenter"
+         *ngIf="fieldName == 'InOut'">
+        <span>{{_InterfaceManagementList.InOut}}</span>
+    </div>
+
+    <div class="TextTrimming RightCenter"
+         *ngIf="fieldName == 'SendOptionsCode'">
+
+        <span>{{SendOptionName}}</span> 
+
+    </div>
+    <div class="TextTrimming RightCenter"
+         *ngIf="fieldName == 'DefaultPriority'">
+        <span>{{_InterfaceManagementList.DefaultPriority}}</span>
+    </div>
+    <div class="TextTrimming RightCenter"
+         *ngIf="fieldName == 'HasDefinition'">
+        <img *ngIf="_InterfaceManagementList['HasDefinition']" title="Has Definition" src="./Images/CheckBoxIcon.png" />
+    </div>
+
+    <div class="TextTrimming RightCenter"
+         *ngIf="fieldName == 'SignatureTypeName'">
+        <span>{{_InterfaceManagementList.SignatureTypeName}}</span>
+    </div>
+    
+
+ 
+
+</div>

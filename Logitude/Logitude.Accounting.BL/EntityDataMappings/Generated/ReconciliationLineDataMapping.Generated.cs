@@ -1,0 +1,222 @@
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Def.EntityPMs; 
+using Logitude.Accounting.Data;
+
+namespace Logitude.Accounting.BL.EntityDataMappings
+{
+   
+   public partial class ReconciliationLineDataMapping: IMapping<ReconciliationLinePM, ReconciliationLine>,IMappingEncodeBase64NVARCHARFields<ReconciliationLinePM>
+   {
+          public enum POCOPropertyNames
+          { 
+		     None,  
+	         ReconciliationId, 
+	         Line, 
+	         Tenant, 
+	         CurrencyId, 
+	         TransactionId, 
+	         ReconciliationAmount, 
+	         IsPartial, 
+	         GroupNumber, 
+	         IsAdjustTransaction,
+	      }
+
+
+	      public enum PMPropertyNames
+          { 
+		     None,  
+	         ReconciliationId, 
+	         Line, 
+	         Tenant, 
+	         CurrencyId, 
+	         CurrencyCode, 
+	         CurrencyName, 
+	         TransactionId, 
+	         ReconciliationAmount, 
+	         IsPartial, 
+	         GroupNumber, 
+	         IsAdjustTransaction, 
+	         ColorField, 
+	         CreateDate, 
+	         DueDate, 
+	         ForeignAmountDebit, 
+	         ForeignAmountCredit, 
+	         Reference1, 
+	         Reference2, 
+	         Reference3, 
+	         Notes, 
+	         JournalId, 
+	         JournalNumber, 
+	         CurrencySign, 
+	         OpenAmountCurrencySign,
+	      }
+
+		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
+        List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
+    
+	    public void PMToPOCO(ReconciliationLinePM entityPM, ReconciliationLine entityPOCO)
+        {
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CurrencyId))
+            {
+				entityPOCO.CurrencyId = entityPM.CurrencyId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TransactionId))
+            {
+				entityPOCO.TransactionId = entityPM.TransactionId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReconciliationAmount))
+            {
+				entityPOCO.ReconciliationAmount = entityPM.ReconciliationAmount;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsPartial))
+            {
+				entityPOCO.IsPartial = entityPM.IsPartial;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GroupNumber))
+            {
+				entityPOCO.GroupNumber = entityPM.GroupNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsAdjustTransaction))
+            {
+				entityPOCO.IsAdjustTransaction = entityPM.IsAdjustTransaction;
+			}
+			}
+
+		public void POCOToPM(ReconciliationLinePM entityPM, ReconciliationLine entityPOCO)
+        {
+			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ReconciliationId))
+            {
+					entityPM.ReconciliationId = entityPOCO.ReconciliationId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Line))
+            {
+					entityPM.Line = entityPOCO.Line;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
+            {
+					entityPM.Tenant = entityPOCO.Tenant;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CurrencyId))
+            {
+					entityPM.CurrencyId = entityPOCO.CurrencyId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TransactionId))
+            {
+					entityPM.TransactionId = entityPOCO.TransactionId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ReconciliationAmount))
+            {
+					entityPM.ReconciliationAmount = entityPOCO.ReconciliationAmount;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsPartial))
+            {
+					entityPM.IsPartial = entityPOCO.IsPartial;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.GroupNumber))
+            {
+					entityPM.GroupNumber = entityPOCO.GroupNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsAdjustTransaction))
+            {
+					entityPM.IsAdjustTransaction = entityPOCO.IsAdjustTransaction;
+            }
+
+		}
+
+		public void PMToOldPM(ReconciliationLinePM entityPM, ReconciliationLinePM oldEntityPM)
+        {
+		     oldEntityPM.ChangedProperties.Clear();
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+                oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CurrencyId))
+            {
+                oldEntityPM.CurrencyId = entityPM.CurrencyId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TransactionId))
+            {
+                oldEntityPM.TransactionId = entityPM.TransactionId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReconciliationAmount))
+            {
+                oldEntityPM.ReconciliationAmount = entityPM.ReconciliationAmount;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsPartial))
+            {
+                oldEntityPM.IsPartial = entityPM.IsPartial;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GroupNumber))
+            {
+                oldEntityPM.GroupNumber = entityPM.GroupNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsAdjustTransaction))
+            {
+                oldEntityPM.IsAdjustTransaction = entityPM.IsAdjustTransaction;
+            }
+			
+		}
+
+	    public void EncodeBase64NVARCHARFields(ReconciliationLinePM entityPM)
+        {
+            if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
+            {
+                return;
+
+            }
+            entityPM.EncodeBase64NVARCHARFieldsBy=null;
+		}
+
+
+	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
+        {
+            CustomMappedPOCOProperties.Add(pocoPropertyName);
+        }
+
+        public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
+        {
+            CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+			  
+   }
+}
+	 

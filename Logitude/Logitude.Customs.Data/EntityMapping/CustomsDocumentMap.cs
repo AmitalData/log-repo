@@ -1,0 +1,50 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data;
+ 
+namespace Logitude.Customs.Data.EntityMapping
+{
+ 
+    public class CustomsDocumentMap : EntityTypeConfiguration<CustomsDocument>
+    {
+	    string dbms;
+        public CustomsDocumentMap()
+        { 
+			  this.ToTable("CustomsDocuments", "Customs");
+		
+		    this.HasKey(t => new { t.DocumentsFilingId });
+	 
+            this.Property(t => t.Tenant).HasColumnName("Tenant");
+
+            this.Property(t => t.DocumentsFilingId).HasColumnName("DocumentsFilingId").HasMaxLength(40).IsUnicode(false);
+
+            this.Property(t => t.CustomsDocId).HasColumnName("CustomsDocId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.DocumentStatusCode).HasColumnName("DocumentStatusCode").HasMaxLength(1).IsUnicode(false);
+
+            this.Property(t => t.DocumentRemarks).HasColumnName("DocumentRemarks").HasMaxLength(512).IsUnicode(false);
+
+            this.Property(t => t.DocumentTypeCode).HasColumnName("DocumentTypeCode").HasMaxLength(7).IsUnicode(false);
+
+            this.Property(t => t.IsMetaDataReady).HasColumnName("IsMetaDataReady");
+
+            this.Property(t => t.CustomRecievedDate).HasColumnName("CustomRecievedDate");
+
+            this.Property(t => t.DocumentVersion).HasColumnName("DocumentVersion");
+
+            this.Property(t => t.ExternalAttachmentId).HasColumnName("ExternalAttachmentId").HasMaxLength(35).IsUnicode(false);
+
+            this.Property(t => t.IsPartOfDeclaration).HasColumnName("IsPartOfDeclaration");
+        }
+    }
+}
+	 

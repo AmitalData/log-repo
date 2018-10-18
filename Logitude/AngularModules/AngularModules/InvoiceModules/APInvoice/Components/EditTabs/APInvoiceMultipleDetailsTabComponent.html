@@ -1,0 +1,362 @@
+﻿
+<table>
+    <tr>
+        <td>
+            <div class="TableHolder">
+                <table>
+                    <tr class="TabTitleRow">
+                        <td>{{'APInvoice.TH.Details' | TextCodeTranslationPipe}}</td>
+                    </tr>
+
+                    <tr style="height: 128px">
+                        <td>
+                            <table>
+                                <tr>
+                                    <td style="width: 375px;">
+                                        <table>
+
+                                            <!-- VendorId -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 135px;">
+                                                    <LogLabel [ObjectFieldName]="'VendorId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'VendorId'"
+                                                            [SelectedValue]="VendorId"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'Card'"
+                                                            [DependencyFilter1Value]="VendorDependencyProperty1"
+                                                            [DependencyFilter1IsList]="true">
+                                                    </LogLov>
+                                                </td>
+                                            </tr>
+
+                                            <!-- PaymentTermId -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'PaymentTermId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'PaymentTermId'"
+                                                            [SelectedValue]="PaymentTermId"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'PaymentTerm'"
+                                                            [DependencyFilter1Value]="PaymentTermDisplayInLOV">
+                                                    </LogLov>
+                                                </td>
+                                            </tr>
+
+                                            <!-- DueDate -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'DueDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'DueDate'" [SelectedDateValue]="DueDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                                                </td>
+                                            </tr>
+
+                                            <!-- AmountInInvoiceCurrency -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'AmountInInvoiceCurrency'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogTextBox [ObjectFieldName]="'AmountInInvoiceCurrency'" [Text]="AmountInInvoiceCurrency" [InputType]="'sigdouble'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                </td>
+                                            </tr>
+
+                                        </table>
+                                    </td>
+
+                                    <td style="width: 70px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width: 375px;">
+                                        <table>
+                                            <!-- InvoiceCurrencyId -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 135px;">
+                                                    <LogLabel [ObjectFieldName]="'InvoiceCurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <LogLov [ObjectFieldName]="'InvoiceCurrencyId'"
+                                                                        [SelectedValue]="InvoiceCurrencyId"
+                                                                        [ObjectTableName]="ObjectTableName"
+                                                                        [DataContext]="DataContext"
+                                                                        [LookUpTableName]="'Currency'"
+                                                                        [HideColumns]="true">
+                                                                </LogLov>
+                                                            </td>
+
+                                                            <td style="width: 20px;">
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td style="width: 35px;" class="Label">{{'APInvoice.S.Details.Rate' | TextCodeTranslationPipe}}:</td>
+
+                                                            <td style="width: 65px;">
+                                                                <LogTextBox [ObjectFieldName]="'InvoiceCurrencyExchangeRate'" [DigitsAfterPoint]="5" [Text]="InvoiceCurrencyExchangeRate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                            </td>
+
+                                                            <td style="width: 36px;">
+                                                                <div [style.float]="isRTL ? 'left' : 'right'" style="display: block;" *ngIf="IsEditExchangeRateVisible">
+                                                                    <IconButton [Name]="'Edit'" [IsSmall]="true" [IsEnabled]="false"></IconButton>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+
+                                            <!-- InvoiceNumber -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'InvoiceNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogTextBox [ObjectFieldName]="'InvoiceNumber'" [InputType]="'text'" [Text]="InvoiceNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                </td>
+                                            </tr>
+
+                                            <!-- VATNumber -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'VATNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogTextBox [ObjectFieldName]="'VATNumber'" [Text]="VATNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                </td>
+                                            </tr>
+
+                                            <!-- InvoiceDate -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'InvoiceDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'InvoiceDate'" [SelectedDateValue]="InvoiceDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                                                </td>
+                                            </tr>
+
+                                        </table>
+                                    </td>
+
+                                    <td [style.right]="isRTL ? 'initial' : '0'" [style.left]="isRTL ? '0' : 'initial'">
+                                        <table>
+                                            <tr style="height:2px;">
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 5px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td [style.text-align]="isRTL ? 'right' : 'left'" style="font-size:10px; color:#1B90CB;">
+                                                    {{RelativeRateDate}}
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+
+                                </tr>
+
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr style="height: 15px;">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <tr style="height: 22px;">
+                        <td>
+                            <table>
+                                <tr>
+                                    <td style="width: 1px;" class="Label">Add shipments:</td>
+
+                                    <td style="width: 5px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width: 300px;">
+                                        <SearchBox [ObjectTableName]="'Shipment'" [IsQuickSearch]="true" [IsDisabled]="!IsEditingEnabled" (ItemClicked)="AddShipment($event)"></SearchBox>
+                                    </td>
+
+                                    <td style="width: 5px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td>
+                                        <div *ngIf="EntityPM.InvoiceMultipleShipments.length == 0">
+                                            <span><img style="width: 19px; height: 15px;" src="./Images/Icons/ArrowLeft.png" /></span>
+                                            <span class="Label">you can add shipments from here</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr style="height: 5px;">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="MediaFill">
+                                <div class="SimpleGridView">
+                                    <div class="SimpleGridViewHeader">
+                                        <table>
+                                            <tr>
+                                                <td style="width: 130px; min-width: 130px; max-width: 130px;">Master</td>
+                                                <td style="width: 170px; min-width: 170px; max-width: 170px;">House</td>
+                                                <td style="width: 100px; min-width: 100px; max-width: 100px;">Shipment No.</td>
+                                                <td style="width: 240px; min-width: 240px; max-width: 240px;">Customer/Agent</td>
+                                                <td style="width: 120px; min-width: 120px; max-width: 120px;">Expected Amount</td>
+                                                <td style="width: 120px; min-width: 120px; max-width: 120px;">Open Amount</td>
+                                                <td style="width: 120px; min-width: 120px; max-width: 120px;">Total</td>
+                                                <td style="width: 120px; min-width: 120px; max-width: 120px;">Total VAT</td>
+                                                <td class="LastChild" style="min-width: 50px;">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+
+                                    <div class="SimpleGridViewBody">
+                                        <table>
+                                            <tr class="SimpleGridViewRow RowHover RowSelected" *ngFor="let item of ItemsSource" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem">
+
+                                                <td class="GridViewCell" style="width: 130px; min-width: 130px; max-width: 130px;">
+                                                    {{item.LongMaster}}
+                                                </td>
+
+                                                <td class="GridViewCell" style="width: 170px; min-width: 170px; max-width: 170px;">
+                                                    {{item.House}}
+                                                </td>
+
+                                                <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
+                                                    <Hyperlink (click)="ViewShipmentClicked(item)">{{item.ShipmentNumber}}</Hyperlink>
+                                                </td>
+
+                                                <td class="GridViewCell" style="width: 240px; min-width: 240px; max-width: 240px;">
+                                                    {{item.PartnerName}}
+                                                </td>
+
+                                                <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right;">
+                                                    {{item.ExpectedAmount | NumbersPipe:'N2'}}
+                                                </td>
+
+                                                <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right;">
+                                                    {{item.OpenAmount | NumbersPipe:'N2'}}
+                                                </td>
+
+                                                <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right;">
+                                                    {{item.SubTotalInInvoiceCurrency | NumbersPipe:'N2'}}
+                                                </td>
+
+                                                <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right;">
+                                                    {{item.TotalVATAmount | NumbersPipe:'N2'}}
+                                                </td>
+
+                                                <td style="min-width: 50px;">
+                                                    <div class="LeftCenter" style="height: 20px;">
+                                                        <span class="CellSeparator"></span>
+                                                        <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditShipmentLine(item)" [IsEnabled]="IsEditingEnabled"></IconButton>
+                                                        <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteShipmentLine(item)" [IsEnabled]="IsEditingEnabled"></IconButton>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td colspan="9">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 1px;">
+        <td>
+            <TabSummary [Height]="90">
+                <table>
+                    <tr>
+                        <td>
+                            <table>
+                                <tr style="height: 1px;">
+                                    <td class="TabSummaryTitle">
+                                        {{'APInvoice.S.Details.Totals' | TextCodeTranslationPipe}}
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td *ngFor="let item of SummaryItems" style="text-indent: 10px; width: 1px;">
+                                                    <div class="TabSummaryValue">{{item.Value}}</div>
+                                                    <div class="TabSummaryLabel">{{item.Label}}</div>
+                                                </td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td style="width: 66px; vertical-align: top;" *ngIf="IsCurrencyFilterVisible">
+                            <ul class="FiltersMenu">
+                                <li (click)="IsTotalInLocalCurrency = true" [class.SelectedFilter]="IsTotalInLocalCurrency" style="width:33px;">
+                                    {{LocalCurrencyCode}}
+                                </li>
+                                <li (click)="IsTotalInLocalCurrency = false" [class.SelectedFilter]="!IsTotalInLocalCurrency" style="width:33px;">
+                                    {{InvoiceCurrencyCode}}
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+            </TabSummary>
+        </td>
+    </tr>
+</table>

@@ -1,0 +1,45 @@
+﻿<style>
+    .red {
+        color: red !important;
+    }
+    .green{
+        color: #00a24d !important;
+    }
+</style>
+<div>
+
+    <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'" *ngIf="fieldName == 'CreateDate'">{{ rowData[fieldName] | DateTimePipe:'SD' }}</div>
+    <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'" *ngIf="fieldName == 'FromDate'">{{ rowData[fieldName] | DateTimePipe:'SD' }}</div>
+    <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'" *ngIf="fieldName == 'ToDate'">{{ rowData[fieldName] | DateTimePipe:'SD' }}</div>
+
+    <!-- StartBalance -->
+    <div class="TextTrimming" *ngIf="fieldName == 'StartBalance'" style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;" [class.red]='rowData["StartBalance"]<0'>
+        {{ rowData["StartBalance"] | NumbersPipe:'N2' }}
+    </div>
+
+    <!-- CloseBalance -->
+    <div class="TextTrimming" *ngIf="fieldName == 'CloseBalance'" style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;" [class.red]='rowData["CloseBalance"]<0'>
+        {{ rowData["CloseBalance"] | NumbersPipe:'N2' }}
+    </div>
+
+    <!-- StatusName -->
+    <div class="TextTrimming" *ngIf="fieldName == 'StatusName'" style="padding: 0px 2px;" [style.text-align]="isRTL ? 'right' : 'left'" [class.green]='rowData["StatusCode"] == "2"' [class.red]='rowData["StatusCode"] == "3"'>
+        {{ rowData["StatusName"]}}
+    </div>
+
+    <!-- StatusName -->
+    <div class="TextTrimming" *ngIf="fieldName == 'StatusLocalName'" style="padding: 0px 2px;" [style.text-align]="isRTL ? 'right' : 'left'" [class.green]='rowData["StatusCode"] == "2"' [class.red]='rowData["StatusCode"] == "3"'>
+        {{ rowData["StatusLocalName"] }}
+    </div>
+
+    <!-- EntryTypeEnglishName -->
+    <div class="TextTrimming" *ngIf="fieldName == 'EntryTypeEnglishName'" style="padding: 0px 2px;" [style.text-align]="isRTL ? 'right' : 'left'">
+        {{ rowData["EntryTypeEnglishName"]}}
+    </div>
+     
+    <!-- EntryTypeLocalName -->
+    <div class="TextTrimming" *ngIf="fieldName == 'EntryTypeLocalName'" style="padding: 0px 2px;" [style.text-align]="isRTL ? 'right' : 'left'">
+        {{ rowData["EntryTypeLocalName"] }}
+    </div>
+
+</div>

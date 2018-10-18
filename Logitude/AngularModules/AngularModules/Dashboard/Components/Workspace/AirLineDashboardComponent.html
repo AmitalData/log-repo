@@ -1,0 +1,449 @@
+﻿<style>
+    a {
+        color: black;
+        text-decoration: none;
+        cursor: auto;
+    }
+
+    a:hover{
+                color: black;
+    }
+
+        .SquareIcon {
+        width: 10px;
+        height: 10px;
+        line-height: 10px;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+    }
+
+    .SectionHeader td, .SectionHeader label{
+        font-size:13px
+    }
+
+    .selected {
+        background: #87CEEB;
+        cursor: none;
+    }
+
+    .amcharts-pie-slice {
+  cursor: pointer;
+}
+
+
+    .disabled {
+        pointer-events: none;
+        cursor: auto;
+    }
+
+    .Enabled {
+        pointer-events: auto;
+        cursor: pointer;
+    }
+
+        .Enabled:hover {
+            text-decoration: underline;
+        }
+
+
+
+    .notSelected {
+    }
+
+        .notSelected:hover {
+            background-color: #F0F8FF;
+            cursor: pointer;
+        }
+</style>
+
+<div style="width:100%;height:100%">
+    <table>
+        <tr style="height:10px;width:100%;">
+            <td></td>
+        </tr>
+
+        <tr>
+            <td>
+                <table>
+                    <tr>
+
+                        <td>
+                            <table>
+                                <tr class="SectionHeader" style="height:27px">
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <label>Activity Status by Transmission Log</label>
+                                                </td>
+
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr style="height:5px">
+                                    <td></td>
+                                </tr>
+                                <tr style="height:20px">
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width:80px">
+                                                                <label>{{'General.O.DashBoard.TimeRange' | TextCodeTranslationPipe}}:</label>
+                                                            </td>
+                                                            <td style="width:250px">
+                                                                <ComboBox style="width:250px" (SelectedItemChanged)="FilterSelectedChangeActivity($event)" [ItemsSource]="FilterList" [SelectedItem]="SelectedItemActivity" [Binding]="'Title'"></ComboBox>
+                                                            </td>
+                                                            <td></td>
+                                                        </tr>
+                                                    </table>
+
+                                                </td>
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td style="width:50px">
+                                                                <label>{{'General.O.DashBoard.Show' | TextCodeTranslationPipe}}:</label>
+
+                                                            </td>
+
+                                                            <td style="width:130px">
+                                                                <ComboBox style="width:130px" [ItemsSource]="FilterListActivity" (SelectedItemChanged)="FilterSelectedChangeShow($event)" [SelectedItem]="SelectedItemActivityShow" [Binding]="'Title'"></ComboBox>
+
+                                                            </td>
+
+                                                        </tr>
+                                                    </table>
+
+                                                </td>
+
+                                            </tr>
+                                        </table>
+
+
+
+
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td class="CellStretch">
+                                        <table>
+                                            <tr style="height:1px">
+                                                <td>
+                                                    <div [attr.id]="ActivitiesStatusDashboardId" class="CellContent" (click)="ActivityStatusClick()"></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr *ngIf="NoActivityStatus">
+                                                <td style="vertical-align:top">
+                                                    <div style="text-align:center;vertical-align:central;margin-top:10px;width:100%;overflow-y:hidden">
+                                                        <label style="font-size:small;color:gray;text-align:center;vertical-align:central;width:100%;height:100%">No Data</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>                                       
+                                    </td>
+                                </tr>
+                                <tr style="height:10px">
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td style="width:10px;max-width:10px;min-width:10px"></td>
+                        <td style="width:300px;height:50%">
+                            <table>
+                                <tr class="SectionHeader" style="height:27px">
+                                    <td>
+                                        <label>Daily Spotlight</label>
+                                    </td>
+                                </tr>
+                                <tr style="height:10px">
+                                    <td></td>
+                                </tr>
+
+                                <tr style="height:1px">
+
+                                    <td>
+                                        <table>
+                                            <tr>
+
+                                                <td>
+                                                    <table>
+                                                        <tr style="height:25px">
+                                                            <td style="width:80px"></td>
+                                                            <td style="width:10px"></td>
+
+                                                            <td style="vertical-align:top;text-align:center;background-color:#dbf1fe;border-top-left-radius:5px;border-top-right-radius:5px;width:60px"><a style="font-size:x-small;">Today</a></td>
+                                                            <td style="width:10px;min-width:3px"></td>
+                                                            <td style="vertical-align:top;text-align:center;background-color:#dddddd;border-top-left-radius:5px;border-top-right-radius:5px;width:60px"><a style="font-size:x-small">Yesterday</a></td>
+                                                            <td style="width:10px;min-width:3px"></td>
+                                                            <td style="vertical-align:top;text-align:center;background-color:#dddddd;border-top-left-radius:5px;border-top-right-radius:5px;width:60px"><a style="font-size:x-small">Last Week</a></td>
+                                                            <td></td>
+                                                        </tr>
+
+
+
+
+                                                        <tr style="height:50px;border-bottom:dashed 0.05px #BDBDBD ; ">
+
+                                                            <td style="vertical-align:middle;text-align:left"><label style="font-size:small">Participation</label> </td>
+                                                            <td style="width:10px;min-width:3px"></td>
+
+                                                            <td style="vertical-align:middle;text-align:center;background-color:#dbf1fe"><button style="font-size:large;color:cornflowerblue;background-color:transparent" [class.Enabled]="!Participations_Today_Status" class="Enabled" [disabled]="Participations_Today_Status" (click)="DailySpotLightClick('PART_TD')">{{dailySpotLightClass.Participations_Today}}</button></td>
+                                                            <td style="width:10px;min-width:3px"></td>
+
+                                                            <td style="vertical-align:middle;text-align:center;background-color:#dddddd"><button style="font-size:large;background-color:transparent" [class.Enabled]="!Participations_Yesterday_Status" [disabled]="Participations_Yesterday_Status" (click)="DailySpotLightClick('PART_YS')">{{dailySpotLightClass.Participations_Yesterday}}</button></td>
+                                                            <td style="width:10px;min-width:3px"></td>
+
+                                                            <td style="vertical-align:middle;text-align:center;background-color:#dddddd"><button style="font-size:large;background-color:transparent" [class.Enabled]="!Participations_LastWeek_Status" [disabled]="Participations_LastWeek_Status" (click)="DailySpotLightClick('PART_LW')">{{dailySpotLightClass.Participations_LastWeek}}</button></td>
+
+
+                                                        </tr>
+
+
+                                                        <tr style="height:50px;border-bottom:dashed 0.05px #BDBDBD;">
+                                                            <td style="vertical-align:middle;text-align:left"><label style="font-size:small;width:50px">New Participants</label> </td>
+                                                            <td style="width:10px;min-width:3px"></td>
+
+                                                            <td style="vertical-align:middle;text-align:center;background-color:#dbf1fe"><button style="font-size:large;color:cornflowerblue;background-color:transparent" [class.Enabled]="!NewParticipants_Today_Status" [disabled]="NewParticipants_Today_Status" (click)="DailySpotLightClick('NEWP_TD')">{{dailySpotLightClass.NewParticipants_Today}}</button></td>
+                                                            <td style="width:10px;min-width:3px"></td>
+
+                                                            <td style="vertical-align:middle;text-align:center;background-color:#dddddd"><button style="font-size:large;background-color:transparent" [class.Enabled]="!NewParticipants_Yesterday_Status" [disabled]="NewParticipants_Yesterday_Status" (click)="DailySpotLightClick('NEWP_YS')">{{dailySpotLightClass.NewParticipants_Yesterday}}</button></td>
+                                                            <td style="width:10px;min-width:3px"></td>
+
+                                                            <td style="vertical-align:middle;text-align:center;background-color:#dddddd"><button style="font-size:large;background-color:transparent" [class.Enabled]="!NewParticipants_LastWeek_Status" [disabled]="NewParticipants_LastWeek_Status" (click)="DailySpotLightClick('NEWP_LW')">{{dailySpotLightClass.NewParticipants_LastWeek}}</button></td>
+
+                                                        </tr>
+
+
+
+                                                        <tr style="height:50px;border-bottom:dashed 0.05px #BDBDBD;">
+
+                                                            <td style="vertical-align:middle;text-align:left;width:50px"><label style="font-size:small;">FWB</label> </td>
+                                                            <td style="width:10px;min-width:3px"></td>
+
+                                                            <td style="vertical-align:middle;text-align:center;background-color:#dbf1fe"><button style="font-size:large;color:cornflowerblue;background-color:transparent" [class.Enabled]="!FWB_Today_Status" [disabled]="FWB_Today_Status" (click)="DailySpotLightClick('FWB_TD')">{{dailySpotLightClass.FWB_Today}}</button></td>
+                                                            <td style="width:10px;min-width:3px"></td>
+                                                            <td style="vertical-align:middle;text-align:center;background-color:#dddddd"><button style="font-size:large;background-color:transparent" [class.Enabled]="!FWB_Yesterday_Status" [disabled]="FWB_Yesterday_Status" (click)="DailySpotLightClick('FWB_YS')">{{dailySpotLightClass.FWB_Yesterday}}</button></td>
+                                                            <td style="width:10px;min-width:3px"></td>
+                                                            <td style="vertical-align:middle;text-align:center;background-color:#dddddd"><button style="font-size:large;background-color:transparent" [class.Enabled]="!FWB_LastWeek_Status" [disabled]="FWB_LastWeek_Status" (click)="DailySpotLightClick('FWB_LW')">{{dailySpotLightClass.FWB_LastWeek}}</button></td>
+
+                                                        </tr>
+                                                        <tr style="height:50px;border-bottom:dashed 0.05px #BDBDBD;">
+                                                            <td style="vertical-align:middle;text-align:left"><label style="font-size:small;">FHL</label> </td>
+                                                            <td style="width:10px;min-width:3px"></td>
+
+                                                            <td style="vertical-align:middle;text-align:center;background-color:#dbf1fe;border-bottom-left-radius:5px;border-bottom-right-radius:5px;color:cornflowerblue"><button style="font-size:large;color:cornflowerblue;background-color:transparent" [class.Enabled]="!FHL_Today_Status" [disabled]="FHL_Today_Status" (click)="DailySpotLightClick('CS_TD')">{{dailySpotLightClass.FHL_Today}}</button></td>
+                                                            <td style="width:10px;min-width:3px"></td>
+                                                            <td style="vertical-align:middle;text-align:center ;background-color:#dddddd;border-bottom-left-radius:5px;border-bottom-right-radius:5px"><button style="font-size:large;background-color:transparent" [class.Enabled]="!FHL_Yesterday_Status" [disabled]="FHL_Yesterday_Status" (click)="DailySpotLightClick('FHL_YS')">{{dailySpotLightClass.FHL_Yesterday}}</button></td>
+                                                            <td style="width:10px;min-width:3px"></td>
+
+                                                            <td style="vertical-align:middle;text-align:center;background-color:#dddddd;border-bottom-left-radius:5px;border-bottom-right-radius:5px"><button style="font-size:large;background-color:transparent" [class.Enabled]="!FHL_LastWeek_Status" [disabled]="FHL_LastWeek_Status" (click)="DailySpotLightClick('FHL_LW')">{{dailySpotLightClass.FHL_LastWeek}}</button></td>
+
+                                                        </tr>
+                                                        <tr style="height:50px;border-bottom:dashed 0.05px #BDBDBD;">
+                                                            <td style="vertical-align:middle;text-align:left"><label style="font-size:small;">FFR</label> </td>
+                                                            <td style="width:10px;min-width:3px"></td>
+
+                                                            <td style="vertical-align:middle;text-align:center;background-color:#dbf1fe;border-bottom-left-radius:5px;border-bottom-right-radius:5px;color:cornflowerblue"><button style="font-size:large;color:cornflowerblue;background-color:transparent" [class.Enabled]="!FFR_Today_Status" [disabled]="FFR_Today_Status" (click)="DailySpotLightClick('FFR_TD')">{{dailySpotLightClass.FFR_Today}}</button></td>
+                                                            <td style="width:10px;min-width:3px"></td>
+                                                            <td style="vertical-align:middle;text-align:center ;background-color:#dddddd;border-bottom-left-radius:5px;border-bottom-right-radius:5px"><button style="font-size:large;background-color:transparent" [class.Enabled]="!FFR_Yesterday_Status" [disabled]="FFR_Yesterday_Status" (click)="DailySpotLightClick('FFR_YS')">{{dailySpotLightClass.FFR_Yesterday}}</button></td>
+                                                            <td style="width:10px;min-width:3px"></td>
+
+                                                            <td style="vertical-align:middle;text-align:center;background-color:#dddddd;border-bottom-left-radius:5px;border-bottom-right-radius:5px"><button style="font-size:large;background-color:transparent" [class.Enabled]="!FFR_LastWeek_Status" [disabled]="FFR_LastWeek_Status" (click)="DailySpotLightClick('FFR_LW')">{{dailySpotLightClass.FFR_LastWeek}}</button></td>
+
+                                                        </tr>
+
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+
+                                </tr>
+
+                                <tr><td><div></div></td></tr>
+
+                            </table>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <table>
+                                <tr class="SectionHeader" style="height:27px">
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <label>Top 5 Participants by Airline Statistics</label>
+                                                </td>
+
+                                                <td><div></div></td>
+
+                                              
+
+                                                <td style="width: 50px; vertical-align:middle;">
+                                                    <div class="SquareIcon" style="background: #487E9F; display:inline-block;"></div>
+                                                    <span style="font-size: 11px; color: #282E30; text-indent: 15px;">FWB</span>
+                                                </td>
+
+                                                <td style="width: 50px; vertical-align:middle;">
+                                                    <div class="SquareIcon" style="background: #DA7B38; display:inline-block;"></div>
+                                                    <span style="font-size: 11px; color: #282E30; text-indent: 15px;">FHL</span>
+                                                </td>
+                                              
+                                                <td style="width: 50px; vertical-align:middle;">
+                                                    <div class="SquareIcon" style="background: #21782E; display:inline-block;"></div>
+                                                    <span style="font-size: 11px; color: #282E30; text-indent: 15px;">FFR</span>
+                                                </td>
+
+                                                <td style="width:5px;"><div></div></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr style="height:5px">
+                                    <td></td>
+                                </tr>
+                                <tr style="height:20px">
+                                    <td>
+
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width:80px">
+                                                                <label>Time Range :</label>
+                                                            </td>
+                                                            <td style="width:250px">
+                                                                <ComboBox style="width:260px" (SelectedItemChanged)="FilterSelectedChange($event)" [ItemsSource]="FilterList" [SelectedItem]="SelectedItem" [Binding]="'Title'"></ComboBox>
+                                                            </td>
+                                                            <td></td>
+                                                        </tr>
+                                                    </table>
+
+                                                </td>
+
+
+                                            </tr>
+                                        </table>
+
+
+
+
+                                    </td>
+
+                                </tr>
+                                <tr style="height:15px">
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td class="CellStretch">
+
+                                        <table>
+                                            <tr style="height:1px">
+                                                <td>
+                                                    <div [attr.id]="TopParticipantsDashboard" style="height:90%;width:100%" class="CellContent" (click)="TopParticipantClicking()"></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr *ngIf="!TopParticipantsDashboardIdExistance">
+                                                <td style="vertical-align:top">
+                                                    <div style="text-align:center;vertical-align:central;margin-top:10px;width:100%;overflow-y:hidden">
+                                                        <label style="font-size:small;color:gray;text-align:center;vertical-align:central;width:100%;height:100%">No Data</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                    </td>
+
+
+                                </tr>
+                            </table>
+
+                        </td>
+                        <td style="width:10px;max-width:10px;min-width:10px"></td>
+
+                        <td style="width:300px">
+
+                            <table>
+                                <tr class="SectionHeader" style="height:27px">
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <label>Bookings in Progress (last 30 days)</label>
+                                                </td>
+                                              <td></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+
+                                </tr>
+                                <tr style="height:10px">
+                                    <td></td>
+                                </tr>
+                                <tr>
+
+
+                                    <td>
+                                        <table>
+                                            <tr style="height:1px">
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <div [attr.id]="BookingInProgressDashboardId" style="height:100%;width:100%" class="CellContent" (click)="BookingClicking()"></div>
+                                                            </td>
+                                                            <td style="width:120px;min-width:120px;overflow-y:auto">
+                                                                <div class="MediaFill">
+                                                                    <ScrollViewer [Small]="true">
+                                                                        <table>
+                                                                            <tr style="height:1px">
+                                                                                <td><div [attr.id]="BookingInProgressDashboardLegendId" style="position:relative;width:100%;float:left"></div></td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </ScrollViewer>
+                                                                </div>
+
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>                                             
+                                            </tr>
+                                            <tr *ngIf="NoBookingInProgress">
+                                                <td style="vertical-align:top">
+                                                    <div style="text-align:center;vertical-align:central;margin-top:10px;width:100%;overflow-y:hidden">
+                                                        <label style="font-size:small;color:gray;text-align:center;vertical-align:central;width:100%;height:100%">No Bookings</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </td>
+
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+
+    </table>
+</div>
+

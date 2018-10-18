@@ -1,0 +1,521 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Customs.Def.Validators;
+  
+namespace Logitude.Customs.Def.EntityPMs
+{
+   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class CustomBankPM : EntityPM
+   {
+   	  private string id ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Id  
+	   {
+	    
+	     get
+		{
+		   return id;
+		 }
+		 set
+		 {
+		   if(id != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   id=value;
+		   }
+			
+		 }
+	   }
+	  private int tenant ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+	  private string internalCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string InternalCode  
+	   {
+	    
+	     get
+		{
+		   return internalCode;
+		 }
+		 set
+		 {
+		   if(internalCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InternalCode",OldValue=internalCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   internalCode=value;
+		   }
+			
+		 }
+	   }
+	  private string bankCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string BankCode  
+	   {
+	    
+	     get
+		{
+		   return bankCode;
+		 }
+		 set
+		 {
+		   if(bankCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BankCode",OldValue=bankCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   bankCode=value;
+		   }
+			
+		 }
+	   }
+	  private string branchCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string BranchCode  
+	   {
+	    
+	     get
+		{
+		   return branchCode;
+		 }
+		 set
+		 {
+		   if(branchCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BranchCode",OldValue=branchCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   branchCode=value;
+		   }
+			
+		 }
+	   }
+	  private string accountNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AccountNumber  
+	   {
+	    
+	     get
+		{
+		   return accountNumber;
+		 }
+		 set
+		 {
+		   if(accountNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AccountNumber",OldValue=accountNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   accountNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string localName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LocalName  
+	   {
+	    
+	     get
+		{
+		   return localName;
+		 }
+		 set
+		 {
+		   if(localName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LocalName",OldValue=localName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   localName=value;
+		   }
+			
+		 }
+	   }
+	  private string englishName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string EnglishName  
+	   {
+	    
+	     get
+		{
+		   return englishName;
+		 }
+		 set
+		 {
+		   if(englishName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EnglishName",OldValue=englishName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   englishName=value;
+		   }
+			
+		 }
+	   }
+	  private bool inActive ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool InActive  
+	   {
+	    
+	     get
+		{
+		   return inActive;
+		 }
+		 set
+		 {
+		   if(inActive != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InActive",OldValue=inActive,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   inActive=value;
+		   }
+			
+		 }
+	   }
+	  private string payerTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PayerTypeCode  
+	   {
+	    
+	     get
+		{
+		   return payerTypeCode;
+		 }
+		 set
+		 {
+		   if(payerTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PayerTypeCode",OldValue=payerTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   payerTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string bankAddress ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string BankAddress  
+	   {
+	    
+	     get
+		{
+		   return bankAddress;
+		 }
+		 set
+		 {
+		   if(bankAddress != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BankAddress",OldValue=bankAddress,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   bankAddress=value;
+		   }
+			
+		 }
+	   }
+	  private string payerTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PayerTypeName  
+	   {
+	    
+	     get
+		{
+		   return payerTypeName;
+		 }
+		 set
+		 {
+		   if(payerTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PayerTypeName",OldValue=payerTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   payerTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private bool clientBank ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool ClientBank  
+	   {
+	    
+	     get
+		{
+		   return clientBank;
+		 }
+		 set
+		 {
+		   if(clientBank != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ClientBank",OldValue=clientBank,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   clientBank=value;
+		   }
+			
+		 }
+	   }
+	  private string cardId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CardId  
+	   {
+	    
+	     get
+		{
+		   return cardId;
+		 }
+		 set
+		 {
+		   if(cardId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CardId",OldValue=cardId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   cardId=value;
+		   }
+			
+		 }
+	   }
+
+	   private List<CustomBanksCardPM> customBanksCards;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("CustomBankCustomBanksCards", "Id","CustomBankId")]
+	   [DataMember]
+	   public virtual List<CustomBanksCardPM> CustomBanksCards  
+	   {
+	        get
+             {
+                 if (customBanksCards == null)
+                 {
+                     customBanksCards = new List<CustomBanksCardPM>();
+                 }
+                 return customBanksCards;
+              }
+             set { customBanksCards = value; }
+	    }
+		   
+	   private List<CustomBanksCardPM>  deletedCustomBanksCards;
+	   public virtual List<CustomBanksCardPM> DeletedCustomBanksCards  
+	   {
+	        get
+             {
+                 if ( deletedCustomBanksCards == null)
+                 {
+                      deletedCustomBanksCards = new List<CustomBanksCardPM>();
+                 }
+                 return  deletedCustomBanksCards;
+              }
+             set {  deletedCustomBanksCards = value; }
+	    }
+	  	  private string searchFields ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SearchFields  
+	   {
+	    
+	     get
+		{
+		   return searchFields;
+		 }
+		 set
+		 {
+		   if(searchFields != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchFields",OldValue=searchFields,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   searchFields=value;
+		   }
+			
+		 }
+	   }
+	  private string bankName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string BankName  
+	   {
+	    
+	     get
+		{
+		   return bankName;
+		 }
+		 set
+		 {
+		   if(bankName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BankName",OldValue=bankName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   bankName=value;
+		   }
+			
+		 }
+	   }
+	  private string branchName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string BranchName  
+	   {
+	    
+	     get
+		{
+		   return branchName;
+		 }
+		 set
+		 {
+		   if(branchName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BranchName",OldValue=branchName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   branchName=value;
+		   }
+			
+		 }
+	   }
+	  private bool invalidInternalCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool InvalidInternalCode  
+	   {
+	    
+	     get
+		{
+		   return invalidInternalCode;
+		 }
+		 set
+		 {
+		   if(invalidInternalCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InvalidInternalCode",OldValue=invalidInternalCode,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   invalidInternalCode=value;
+		   }
+			
+		 }
+	   }
+	  private string customsBranchId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomsBranchId  
+	   {
+	    
+	     get
+		{
+		   return customsBranchId;
+		 }
+		 set
+		 {
+		   if(customsBranchId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsBranchId",OldValue=customsBranchId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customsBranchId=value;
+		   }
+			
+		 }
+	   }
+	  private string name ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Name  
+	   {
+	    
+	     get
+		{
+		   return name;
+		 }
+		 set
+		 {
+		   if(name != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Name",OldValue=name,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   name=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

@@ -1,0 +1,138 @@
+﻿
+<table style="padding:10px">
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr style="height:1px">
+        <td style="border:solid 1px silver">
+        <table style="margin:10px">
+            <tr style="height:25px">
+                <td class="Label" style="font-size:small;width:110px">Default Name: </td>
+                <td style="width:200px">
+                    <LogTextBox [NoObjectField]="true" [ObjectFieldName]="'DefaultText'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                </td>
+                <td></td>
+            </tr>
+            <tr style="height:25px">
+                <td class="Label" style="font-size:small">Singular Name: </td>
+                <td><LogTextBox [NoObjectField]="true" [ObjectFieldName]="'Singular'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox></td>
+                <td></td>
+            </tr>
+            <tr style="height:25px">
+                <td class="Label" style="font-size:small">Plural Name: </td>
+                <td><LogTextBox [NoObjectField]="true" [ObjectFieldName]="'Plural'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox></td>
+                <td></td>
+            </tr>
+
+        </table>
+        </td>
+    </tr>
+
+    <tr style="height:20px">
+    <td></td>
+    </tr>
+
+    <tr style="height:1px">
+        <td>
+            <table>
+                <tr>
+                    <td style="width:200px"></td>
+                    <td style="width:200px">
+                        <SearchBox [UseTimer]="true" [Watermark]="'Search'" (TextChanged)="SearchText = $event"></SearchBox>
+                    </td>
+                    <td style="width:5px"></td>
+                    <td style="width:100px">
+                        Count: {{CountText}}
+                    </td>
+
+                   <td>
+                   </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <td style="width:198px;border:solid 1px silver">
+                        <div class="MediaFillAbsolute">
+                            <ul>
+                                <li class="DefaultMenuItem" *ngFor="let item of ListBoxItemSource" (click)="SelectionChanged(item)" [class.SelectedMenuItem]="item === SelectedItem" [class.DisabledTabItem]="item.IsDisabled == true">
+                                    <div class="TextTrimming">{{item.Name}}</div>
+                                </li>
+                            </ul>
+                        </div>
+
+
+</td>
+                    <td style="width:2px"></td>
+                    <td>
+                        <div class="MediaFill">
+                            <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="TabsList" (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
+                                <!-- Code -->
+                                <log-column [width]="'250'" [header]="'Code'" [Alignment]="'left'">
+                                    <log-cell-template template="let item" #logcelltemplate  [Alignment]="'left'">
+                                        <div style="width: 100%; text-align: left;" class="TextTrimming" >
+                                            {{item.Code}}
+                                            </div>                                       
+</log-cell-template>
+                                </log-column>
+
+                                <!-- Default Text -->
+                                <log-column [width]="'150'" [header]="'Default Name'" [Alignment]="'left'">
+                                    <log-cell-template template="let item" #logcelltemplate [Alignment]="'left'">
+                                        <div  style="width: 100%; text-align: left;" class="TextTrimming">
+                                            {{item.DefaultText}}
+                                        </div>                                       
+                                    </log-cell-template>
+                                </log-column>
+
+                                <!-- Translated Text -->
+                                <log-column [width]="'150'" [header]="'Display Label'" [Alignment]="'left'">
+                                    <log-cell-template template="let item" #logcelltemplate [Alignment]="'left'">
+                                        <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: left;" class="TextTrimming">
+                                            {{item.TranslatedText}}
+                                        </div>
+                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                            <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'TranslatedText'" [NoObjectField]="true" [Text]="item.TranslatedText" [DataContext]="item"  [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+                            </logitude-edit-grid>
+                        </div>
+
+
+
+                    </td>
+                </tr>
+            </table>
+
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td><div></div></td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width:5px;"><div></div></td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

@@ -1,0 +1,1 @@
+delete from ObjectTableTabs where code = 'CLEV' and ObjectTableId= (select id  from ObjectTables where name = 'customer')

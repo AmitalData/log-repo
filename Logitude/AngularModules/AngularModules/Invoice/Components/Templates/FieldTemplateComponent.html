@@ -1,0 +1,538 @@
+﻿
+<table *ngIf="Entity">
+    <tr>
+        <td>
+            <div class="MediaFill">
+
+                <!-- ARInvoice -->
+                <table *ngIf="ObjectTableName == 'ARInvoice'">
+                    <tr>
+                        <td>
+                            <div class="MediaFill">
+
+                                <div *ngIf="FieldName == 'SATTransferStatusName'"  [attr.title]="Entity.SATTransferStatusName">{{FieldValue}}</div>
+
+                                <!-- StatusName -->
+                                <div *ngIf="FieldName == 'StatusName'" class="TemplateTrimming">
+                                    <div *ngIf="!IsHeaderScreenTemplate" class="TemplateTrimmingChild" [ngStyle]="{color: FieldValue | StringToColorPipe}">{{FieldValue}}</div>
+
+                                    <div *ngIf="IsHeaderScreenTemplate">
+                                        <table>
+                                            <tr>
+                                                <td style="width: 1px;" [ngStyle]="{color: Entity[FieldName] | StringToColorPipe}">{{Entity[FieldName]}}</td>
+
+                                                <td style="width: 1px; padding-left: 2px;" *ngIf="Entity[FieldName] == 'Paid'">
+                                                    <img style="vertical-align:middle;" src="./Images/Icons/IsClosed.png" />
+                                                </td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <!-- DueDate -->
+                                <div *ngIf="FieldName == 'DueDate'" [ngStyle]="{color: Entity[FieldName] | InvoiceDueDateForegroundPipe:Entity.IsClosed}">
+                                    <span>{{Entity[FieldName] | DateTimeToDatePipe}}</span>
+                                </div>
+
+                                <!-- ExpectedPaymentDate -->
+                                <div *ngIf="FieldName == 'ExpectedPaymentDate'" [ngStyle]="{color: Entity[FieldName] | InvoiceDueDateForegroundPipe:Entity.IsClosed}">
+                                    <span>{{Entity[FieldName] | DateTimeToDatePipe}}</span>
+                                </div>
+
+                                <!-- AmountInLocalCurrency -->
+                                <div *ngIf="FieldName == 'AmountInLocalCurrency'">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width: 1px;padding-right:5px;">
+                                                <span>{{Entity[FieldName] | NumbersPipe:'N2'}}</span>
+                                                <span *ngIf="Entity[FieldName] || Entity[FieldName] == 0">({{Entity.LocalCurrencyCode}})</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <!-- AmountInInvoiceCurrency -->
+                                <div *ngIf="FieldName == 'AmountInInvoiceCurrency'">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width: 1px;padding-right:5px;">
+                                                <span>{{Entity[FieldName] | NumbersPipe:'N2'}}</span>
+                                                <span *ngIf="Entity[FieldName] || Entity[FieldName] == 0">({{Entity.InvoiceCurrencyCode}})</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <!-- AmountDue -->
+                                <div *ngIf="FieldName == 'AmountDue'">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 1px;padding-right:5px;">
+                                                <span [ngStyle]="{color: Entity.DueDate | InvoiceDueDateForegroundPipe:Entity.IsClosed}">{{Entity[FieldName] | NumbersPipe:'N2'}}</span>
+                                                <span *ngIf="Entity[FieldName] || Entity[FieldName] == 0">({{Entity.InvoiceCurrencyCode}})</span>
+                                            </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <!-- AmountDueInLocalCurrency -->
+                                <div *ngIf="FieldName == 'AmountDueInLocalCurrency'">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width: 1px;padding-right:5px;">
+                                                <span [ngStyle]="{color: Entity.DueDate | InvoiceDueDateForegroundPipe:Entity.IsClosed}">{{Entity[FieldName] | NumbersPipe:'N2'}}</span>
+                                                <span *ngIf="Entity[FieldName] || Entity[FieldName] == 0">({{Entity.LocalCurrencyCode}})</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <!-- AmountDueInProfitCurrency -->
+                                <div *ngIf="FieldName == 'AmountDueInProfitCurrency'">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width: 1px;padding-right:5px;">
+                                                <span [ngStyle]="{color: Entity.DueDate | InvoiceDueDateForegroundPipe:Entity.IsClosed}">{{Entity[FieldName] | NumbersPipe:'N2'}}</span>
+                                                <span *ngIf="Entity[FieldName] || Entity[FieldName] == 0">({{Entity.ProfitCurrencyCode}})</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <!-- InvoiceCurrencyExchangeRate -->
+                                <div *ngIf="FieldName == 'InvoiceCurrencyExchangeRate'" style="text-align: right">{{Entity[FieldName] | NumbersPipe:'N5'}}</div>
+
+                                <div class="TextTrimming" *ngIf="FieldName == 'TransferError'" style="font-size:11px;color:#E53030;">{{FieldValue}}</div>
+                                <div class="TextTrimming" *ngIf="FieldName == 'TransmissionError'" style="font-size:11px;color:#E53030;">{{FieldValue}}</div>
+                                <div *ngIf="FieldName == 'InternalNotes'" class="TextTrimming" [attr.title]="Entity.Notes">{{FieldValue}}</div>
+                                <div *ngIf="FieldName == 'PrintNotes'" class="TextTrimming" [attr.title]="Entity.Notes">{{FieldValue}}</div>
+
+                                <div *ngIf="FieldName == 'Sent'" class="MediaFillRelative">
+                                    <img style="width:18px;height:15px;" *ngIf="FieldValue" class="CenterCenter" src="./Images/SimplogIcons/MessageSend.png" [title]="'Sent'" />
+                                </div>
+
+                                <div *ngIf="FieldName == 'IsPrinted'" class="MediaFillRelative">
+                                    <img style="width:18px;height:15px;" *ngIf="FieldValue" class="CenterCenter" src="./Images/blue_printer.png" [title]="'Printed'" />
+                                </div>
+
+                                <div *ngIf="FieldName == 'ReadyForTransfer'">
+                                    <img style="width:10.5px;height:10px;" *ngIf="!FieldValue" src="./Images/RedX2.png" class="CenterCenter" />
+                                    <img style="width:10.5px;height:10px;" *ngIf="FieldValue" src="./Images/CheckBoxIcon.png" class="CenterCenter" />
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <!-- APInvoice -->
+                <table *ngIf="ObjectTableName == 'APInvoice'">
+                    <tr>
+                        <td>
+                            <div class="MediaFill">
+
+                                <!-- StatusName -->
+                                <div *ngIf="FieldName == 'StatusName'" class="TemplateTrimming">
+                                    <div *ngIf="!IsHeaderScreenTemplate" class="TemplateTrimmingChild" [ngStyle]="{color: FieldValue | StringToColorPipe}">{{FieldValue}}</div>
+
+                                    <div *ngIf="IsHeaderScreenTemplate">
+                                        <table>
+                                            <tr>
+                                                <td style="width: 1px;" [ngStyle]="{color: Entity[FieldName] | StringToColorPipe}">{{Entity[FieldName]}}</td>
+
+                                                <td style="width: 1px; padding-left: 2px;" *ngIf="Entity[FieldName] == 'Paid'">
+                                                    <img style="vertical-align:middle;" src="./Images/Icons/IsClosed.png" />
+                                                </td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <!-- DueDate -->
+                                <div *ngIf="FieldName == 'DueDate'" [ngStyle]="{color: Entity[FieldName] | InvoiceDueDateForegroundPipe:Entity.IsClosed}">
+                                    <span>{{Entity[FieldName] | DateTimeToDatePipe}}</span>
+                                </div>
+
+                                <!-- AmountInLocalCurrency -->
+                                <div *ngIf="FieldName == 'AmountInLocalCurrency'">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width: 1px;padding-right:5px;">
+                                                <span>{{Entity[FieldName] | NumbersPipe:'N2'}}</span>
+                                                <span *ngIf="Entity[FieldName] || Entity[FieldName] == 0">({{Entity.LocalCurrencyCode}})</span>
+                                            </td>
+
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <!-- AmountInInvoiceCurrency -->
+                                <div *ngIf="FieldName == 'AmountInInvoiceCurrency'">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width: 1px;padding-right:5px;">
+                                                <span>{{Entity[FieldName] | NumbersPipe:'N2'}}</span>
+                                                <span *ngIf="Entity[FieldName] || Entity[FieldName] == 0">({{Entity.InvoiceCurrencyCode}})</span>
+                                            </td>
+
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <!-- AmountInProfitCurrency -->
+                                <div *ngIf="FieldName == 'AmountInProfitCurrency'">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width: 1px;padding-right:5px;">
+                                                <span>{{Entity[FieldName] | NumbersPipe:'N2'}}</span>
+                                                <span *ngIf="Entity[FieldName] || Entity[FieldName] == 0">({{Entity.ProfitCurrencyCode}})</span>
+                                            </td>
+
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <!-- AmountDue -->
+                                <div *ngIf="FieldName == 'AmountDue'">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 1px;padding-right:5px;">
+                                                <span [ngStyle]="{color: Entity.DueDate | InvoiceDueDateForegroundPipe:Entity.IsClosed}">{{Entity[FieldName] | NumbersPipe:'N2'}}</span>
+                                                <span *ngIf="Entity[FieldName] || Entity[FieldName] == 0">({{Entity.InvoiceCurrencyCode}})</span>
+                                            </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <!-- AmountDueInLocalCurrency -->
+                                <div *ngIf="FieldName == 'AmountDueInLocalCurrency'">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width: 1px;padding-right:5px;">
+                                                <span [ngStyle]="{color: Entity.DueDate | InvoiceDueDateForegroundPipe:Entity.IsClosed}">{{Entity[FieldName] | NumbersPipe:'N2'}}</span>
+                                                <span *ngIf="Entity[FieldName] || Entity[FieldName] == 0">({{Entity.LocalCurrencyCode}})</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <!-- AmountDueInProfitCurrency -->
+                                <div *ngIf="FieldName == 'AmountDueInProfitCurrency'">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width: 1px;padding-right:5px;">
+                                                <span [ngStyle]="{color: Entity.DueDate | InvoiceDueDateForegroundPipe:Entity.IsClosed}">{{Entity[FieldName] | NumbersPipe:'N2'}}</span>
+                                                <span *ngIf="Entity[FieldName] || Entity[FieldName] == 0">({{Entity.ProfitCurrencyCode}})</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div class="TextTrimming" *ngIf="FieldName == 'TransferError'" style="font-size:11px;color:#E53030;">{{FieldValue}}</div>
+
+                                <div *ngIf="FieldName == 'ReadyForTransfer'">
+                                    <img style="width:10.5px;height:10px;" *ngIf="!FieldValue" src="./Images/RedX2.png" class="CenterCenter" />
+                                    <img style="width:10.5px;height:10px;" *ngIf="FieldValue" src="./Images/CheckBoxIcon.png" class="CenterCenter" />
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <!-- ARPayment -->
+                <table *ngIf="ObjectTableName == 'ARPayment'">
+                    <tr>
+                        <td>
+                            <div class="MediaFill">
+                                <div *ngIf="FieldName == 'SATTransferStatusName'" [attr.title]="Entity.SATTransferStatusName">{{FieldValue}}</div>
+                                <!-- AmountInPaymentCurrency -->
+                                <div *ngIf="FieldName == 'AmountInPaymentCurrency'">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width: 1px;padding-right:5px;">
+                                                <span>{{Entity[FieldName] | NumbersPipe:'N2'}}</span>
+                                                <span>({{Entity.PaymentCurrencyCode}})</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <!-- OpenAmount -->
+                                <div *ngIf="FieldName == 'OpenAmount'">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 1px;padding-right:5px;">
+                                                <span>{{Entity[FieldName] | NumbersPipe:'N2'}}</span>
+                                                <span>({{Entity.PaymentCurrencyCode}})</span>
+                                            </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div class="TextTrimming" *ngIf="FieldName == 'TransferError'" style="font-size:11px;color:#E53030;">{{FieldValue}}</div>
+                                <div class="TextTrimming" *ngIf="FieldName == 'TransmissionError'" style="font-size:11px;color:#E53030;">{{FieldValue}}</div>
+                                
+                                <div *ngIf="FieldName == 'ReadyForTransfer'">
+                                    <img style="width:10.5px;height:10px;" *ngIf="!FieldValue" src="./Images/RedX2.png" class="CenterCenter" />
+                                    <img style="width:10.5px;height:10px;" *ngIf="FieldValue" src="./Images/CheckBoxIcon.png" class="CenterCenter" />
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <!-- APPayment -->
+                <table *ngIf="ObjectTableName == 'APPayment'">
+                    <tr>
+                        <td>
+                            <div class="MediaFill">
+
+                                <!-- AmountInLocalCurrency -->
+                                <div *ngIf="FieldName == 'AmountInLocalCurrency'">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width: 1px;padding-right:5px;">
+                                                <span>{{Entity[FieldName] | NumbersPipe:'N2'}}</span>
+                                                <span>({{Entity.LocalCurrencyCode}})</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <!-- AmountInPaymentCurrency -->
+                                <div *ngIf="FieldName == 'AmountInPaymentCurrency'">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width: 1px;padding-right:5px;">
+                                                <span>{{Entity[FieldName] | NumbersPipe:'N2'}}</span>
+                                                <span>({{Entity.PaymentCurrencyCode}})</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <!-- OpenAmount -->
+                                <div *ngIf="FieldName == 'OpenAmount'">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 1px;padding-right:5px;">
+                                                <span>{{Entity[FieldName] | NumbersPipe:'N2'}}</span>
+                                                <span>({{Entity.PaymentCurrencyCode}})</span>
+                                            </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <!-- Draft AR Invoice Spot Light-->
+                <div *ngIf="IsSpotLightTemplate && ObjectTableName == 'ARInvoice' && Entity['StatusCode'] == 'DR'" style="position:absolute;top:0;bottom:0;left:0;right:0; background-color:#E8F7FF; border-color:#6A8299; border-width:1px; border-style: Solid;">
+                    <div style="height:100%;width:100%;" class="TabHolder">
+                        <table>
+                            <tr>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td style="width:80px;">Shipment #:</td>
+
+                                            <td style="width:120px;">
+                                                <span class="hyperlink" (click)="ViewEntityClicked('SHI')">{{Entity['MainEntityReference']}}</span>
+                                            </td>
+
+                                            <td style="width:10px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width:110px;">Shipment Status:</td>
+
+                                            <td style="width:120px;">{{MainEntityStatus}}</td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <span style="font-size:14px;" class="hyperlink" (click)="ViewEntityClicked('INV')">Full Details</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <BusyIndicator [Width]="180" [Height]="100" [Text]="'Loading...'" [IsBusy]="ShowBusyIndicator"></BusyIndicator>
+                </div>
+
+                <!-- Unpaid AR Invoice Spot Light-->
+                <div *ngIf="IsSpotLightTemplate && ObjectTableName == 'ARInvoice' && IsUnpaidInvoice" style="position:absolute;top:0;bottom:0;left:0;right:0; background-color:#E8F7FF; border-color:#6A8299; border-width:1px; border-style: Solid;">
+                    <div style="height:100%;width:100%;" class="TabHolder">
+                        <div>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td style="width:145px;">Expected Payment Date:</td>
+
+                                                <td style="width:120px;">
+                                                    <LogDatePicker [ObjectFieldName]="'ExpectedPaymentDate'" [SelectedDateValue]="ExpectedPaymentDate" [ObjectTableName]="'ARInvoice'" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                </td>
+
+                                                <td style="width:10px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width:50px;">Notes:</td>
+
+                                                <td style="width:120px; height: 70px; vertical-align: top;">
+                                                    <div style="height: 100%; width: 100%;">
+                                                        <LogTextBox [ObjectFieldName]="'InternalNotes'" [Text]="InternalNotes" [ObjectTableName]="'ARInvoice'" [DataContext]="DataContext" [IsMultiline]="true" [HideColumns]="true"></LogTextBox>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                                <tr style="height:32px;">
+                                    <td [style.text-align]="isRTL ? 'right' : 'left'" style="font-size:11px;">
+                                        <table>
+                                            <tr>
+                                                <td style="width:50px;">
+                                                    <button class="Button" (click)="SaveInvoiceChanges()" style="height:26px;">
+                                                        <img class="LeftCenter" style="margin-left: 2px;" src="./Images/Buttons/Save.png" />
+                                                        <span style="line-height: 19px; margin-left: 17px;">Save</span>
+                                                    </button>
+                                                </td>
+
+                                                <td style="width:5px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width:80px;">
+                                                    <button class="Button" (click)="NewPaymentClicked()" style="height:26px;">
+                                                        <span style="line-height: 19px;">New Payment</span>
+                                                    </button>
+                                                </td>
+
+                                                <td style="width:10px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width:80px;">Shipment #:</td>
+
+                                                <td style="width:120px;">
+                                                    <span class="hyperlink" (click)="ViewEntityClicked('SHI')">{{Entity['MainEntityReference']}}</span>
+                                                </td>
+
+                                                <td style="width:10px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width:110px;">Shipment Status:</td>
+
+                                                <td style="width:120px;">{{MainEntityStatus}}</td>
+
+                                                <td style="width:5px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td>
+                                                    <span style="font-size:14px;" class="hyperlink" (click)="ViewEntityClicked('INV')">Full Details</span>
+                                                </td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div style="margin:5px;">
+                            <BusyIndicator [Width]="180" [Height]="100" [ImageWidth]="45" [ImageHeight]="45" [Text]="BusyIndicatorMessage" [IsBusy]="ShowBusyIndicator"></BusyIndicator>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>

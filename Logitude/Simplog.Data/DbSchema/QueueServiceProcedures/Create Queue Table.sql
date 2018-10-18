@@ -1,0 +1,24 @@
+--CREATE TABLE [dbo].[QueueMessages](
+--    [Id] [int]  NOT NULL,
+--	[QueueDefinitionCode] [nvarchar](255) NOT NULL,
+--    [CreateDateTime] [datetime] NOT NULL,
+--	[Status] [int] NOT NULL,
+--    [MessageBody] [varchar](1000) NOT NULL,
+--	[NextRunDateTime]  [datetime] NOT NULL,
+--	[ProcessingDateTime] [datetime]  NULL,
+--	[CompleteDateTime]  [datetime]  NULL,
+--	[RetryNumber] [int] NOT NULL,
+--) ON [PRIMARY]
+--GO
+--CREATE UNIQUE CLUSTERED INDEX [PK_QueueMessages] ON [dbo].[QueueMessages]
+--(
+--    [Id] ASC
+--)
+--GO
+--CREATE NONCLUSTERED INDEX [IX_QueueMessages] ON [dbo].[QueueMessages]
+--(
+--    [CreateDateTime] ASC,
+--    [Status] ASC
+--)
+--INCLUDE ( [QueueDefinitionCode])
+--GO

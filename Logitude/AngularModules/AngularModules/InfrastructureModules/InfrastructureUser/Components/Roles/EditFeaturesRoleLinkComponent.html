@@ -1,0 +1,80 @@
+﻿
+<table>
+    <tr>
+        <td>
+            <div class="MediaFill">
+                <div class="SimpleGridView">
+                    <div class="SimpleGridViewHeader">
+                        <table>
+                            <tr>
+                                <td style="width: 250px; min-width: 250px; max-width: 250px;">Name</td>
+                                <td style="width: 50px; min-width: 50px; max-width: 50px; text-align: center; padding:0;">Active</td>
+                                <td class="LastChild">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="SimpleGridViewBody">
+                        <table>
+                            <tr class="SimpleGridViewRow" *ngFor="let item of ItemsSource">
+                                <td class="GridViewCell" style="width: 250px; min-width: 250px; max-width: 250px;">
+                                    {{item.Name}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 50px; min-width: 50px; max-width: 50px;">
+                                    <div class="MediaFill">
+                                        <div class="MediaFillRelative">
+                                            <div class="CenterCenter" style="width: 16px; height: 16px;">
+                                                <AccessLevelButton [Feature]="item.Feature" [AccessLevelCode]="item.AccessLevelCode" (AccessLevelChanged)="item.AccessLevelCode = $event" [IsEnabled]="item.IsEditingEnabled"></AccessLevelButton>
+                                            </div>
+
+                                            <div class="RightCenter" style="width: 14px; height: 14px; right: 2px;" *ngIf="item.IsCustomRoleFeature">
+                                                <img src="./_Resources/Images/Icons/Buttons/Pincel.Orange.png" style="vertical-align: middle; display: block;" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="3">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

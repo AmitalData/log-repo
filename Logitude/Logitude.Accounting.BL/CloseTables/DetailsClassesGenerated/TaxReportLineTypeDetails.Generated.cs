@@ -1,0 +1,117 @@
+
+   
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.CloseTablesClasses;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Def.EntityPMs; 
+using Logitude.Accounting.Data;
+
+namespace Logitude.Accounting.BL
+{
+   public class TaxReportLineTypeDetails : TaxReportLineType, ICloseTable<TaxReportLineType, TaxReportLineTypeDetails>
+   {
+       public List<TaxReportLineTypeDetails> GetAll()
+       {
+		    var all = new List<TaxReportLineTypeDetails>();  
+            all.Add(new TaxReportLineTypeDetails()
+            {    
+                Code = "S", 
+                Name = "עסקאות-עסקה רגילה", 
+                SearchFields = "S,עסקאות-עסקה רגילה", 
+			});
+			 
+            all.Add(new TaxReportLineTypeDetails()
+            {    
+                Code = "L", 
+                Name = "עסקאות-ללקוח לא מזוהה", 
+                SearchFields = "L,עסקאות-ללקוח לא מזוהה", 
+			});
+			 
+            all.Add(new TaxReportLineTypeDetails()
+            {    
+                Code = "M", 
+                Name = "עסקאות-חשבונית עצמית", 
+                SearchFields = "M,עסקאות-חשבונית עצמית", 
+			});
+			 
+            all.Add(new TaxReportLineTypeDetails()
+            {    
+                Code = "Y", 
+                Name = "עסקאות- יצוא", 
+                SearchFields = "Y,עסקאות- יצוא", 
+			});
+			 
+            all.Add(new TaxReportLineTypeDetails()
+            {    
+                Code = "I", 
+                Name = "עסקאות- לקוח רש\"פ", 
+                SearchFields = "I,עסקאות- לקוח רש\"פ", 
+			});
+			 
+            all.Add(new TaxReportLineTypeDetails()
+            {    
+                Code = "T", 
+                Name = "תשומות- רגילה מספק ישראלי", 
+                SearchFields = "T,תשומות- רגילה מספק ישראלי", 
+			});
+			 
+            all.Add(new TaxReportLineTypeDetails()
+            {    
+                Code = "C", 
+                Name = "תשומות- חשבונית עצמית", 
+                SearchFields = "C,תשומות- חשבונית עצמית", 
+			});
+			 
+            all.Add(new TaxReportLineTypeDetails()
+            {    
+                Code = "K", 
+                Name = "תשומות- קופה קטנה", 
+                SearchFields = "K,תשומות- קופה קטנה", 
+			});
+			 
+            all.Add(new TaxReportLineTypeDetails()
+            {    
+                Code = "R", 
+                Name = "תשומות-רשימון יבוא", 
+                SearchFields = "K,תשומות-רשימון יבוא", 
+			});
+			 
+            all.Add(new TaxReportLineTypeDetails()
+            {    
+                Code = "P", 
+                Name = "תשומות- ספק מהרש\"פ", 
+                SearchFields = "P,תשומות- ספק מהרש\"פ", 
+			});
+			 
+            all.Add(new TaxReportLineTypeDetails()
+            {    
+                Code = "H", 
+                Name = "תשומות- מסמך אחר עפ\"י החוק", 
+                SearchFields = "H,תשומות- מסמך אחר עפ\"י החוק", 
+			});
+			
+            return all;
+       }
+
+	    public void MapPoco(TaxReportLineType newPoco)
+        {   
+		    newPoco.Code = this.Code;  
+		    newPoco.Name = this.Name;  
+			newPoco.SearchFields = GetSearchFields(this);    
+        }
+
+		public string GetSearchFields(TaxReportLineType rec)
+        {   
+           return String.Concat(rec.Code,",",rec.Name,",");
+        }
+   }
+}
+

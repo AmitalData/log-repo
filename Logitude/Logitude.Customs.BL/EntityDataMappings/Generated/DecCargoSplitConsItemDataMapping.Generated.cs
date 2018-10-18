@@ -1,0 +1,185 @@
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs; 
+using Logitude.Customs.Data;
+
+namespace Logitude.Customs.BL.EntityDataMappings
+{
+   
+   public partial class DecCargoSplitConsItemDataMapping: IMapping<DecCargoSplitConsItemPM, DecCargoSplitConsItem>,IMappingEncodeBase64NVARCHARFields<DecCargoSplitConsItemPM>
+   {
+          public enum POCOPropertyNames
+          { 
+		     None,  
+	         DeclarationCargoSplitId, 
+	         Tenant, 
+	         DecCargoSplitConsLineNo, 
+	         ItemLine, 
+	         GrossMassMeasure, 
+	         CargoDescription, 
+	         RequestReasonCode, 
+	         ParentCargoConsinmentItem,
+	      }
+
+
+	      public enum PMPropertyNames
+          { 
+		     None,  
+	         DeclarationCargoSplitId, 
+	         Tenant, 
+	         DecCargoSplitConsLineNo, 
+	         ItemLine, 
+	         GrossMassMeasure, 
+	         CargoDescription, 
+	         RequestReasonCode, 
+	         RequestReasonName, 
+	         ParentCargoConsinmentItem,
+	      }
+
+		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
+        List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
+    
+	    public void PMToPOCO(DecCargoSplitConsItemPM entityPM, DecCargoSplitConsItem entityPOCO)
+        {
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GrossMassMeasure))
+            {
+				entityPOCO.GrossMassMeasure = entityPM.GrossMassMeasure;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CargoDescription))
+            {
+				entityPOCO.CargoDescription = entityPM.CargoDescription;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RequestReasonCode))
+            {
+				entityPOCO.RequestReasonCode = entityPM.RequestReasonCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ParentCargoConsinmentItem))
+            {
+				entityPOCO.ParentCargoConsinmentItem = entityPM.ParentCargoConsinmentItem;
+			}
+			}
+
+		public void POCOToPM(DecCargoSplitConsItemPM entityPM, DecCargoSplitConsItem entityPOCO)
+        {
+			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DeclarationCargoSplitId))
+            {
+					entityPM.DeclarationCargoSplitId = entityPOCO.DeclarationCargoSplitId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
+            {
+					entityPM.Tenant = entityPOCO.Tenant;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DecCargoSplitConsLineNo))
+            {
+					entityPM.DecCargoSplitConsLineNo = entityPOCO.DecCargoSplitConsLineNo;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ItemLine))
+            {
+					entityPM.ItemLine = entityPOCO.ItemLine;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.GrossMassMeasure))
+            {
+					entityPM.GrossMassMeasure = entityPOCO.GrossMassMeasure;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CargoDescription))
+            {
+					entityPM.CargoDescription = entityPOCO.CargoDescription;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.RequestReasonCode))
+            {
+					entityPM.RequestReasonCode = entityPOCO.RequestReasonCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ParentCargoConsinmentItem))
+            {
+					entityPM.ParentCargoConsinmentItem = entityPOCO.ParentCargoConsinmentItem;
+            }
+
+		}
+
+		public void PMToOldPM(DecCargoSplitConsItemPM entityPM, DecCargoSplitConsItemPM oldEntityPM)
+        {
+		     oldEntityPM.ChangedProperties.Clear();
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+                oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GrossMassMeasure))
+            {
+                oldEntityPM.GrossMassMeasure = entityPM.GrossMassMeasure;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CargoDescription))
+            {
+                oldEntityPM.CargoDescription = entityPM.CargoDescription;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RequestReasonCode))
+            {
+                oldEntityPM.RequestReasonCode = entityPM.RequestReasonCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ParentCargoConsinmentItem))
+            {
+                oldEntityPM.ParentCargoConsinmentItem = entityPM.ParentCargoConsinmentItem;
+            }
+			
+		}
+
+	    public void EncodeBase64NVARCHARFields(DecCargoSplitConsItemPM entityPM)
+        {
+            if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
+            {
+                return;
+
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.CargoDescription)) //T4 find type == nText 
+            {
+                entityPM.CargoDescription = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CargoDescription));
+            }
+            entityPM.EncodeBase64NVARCHARFieldsBy=null;
+		}
+
+
+	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
+        {
+            CustomMappedPOCOProperties.Add(pocoPropertyName);
+        }
+
+        public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
+        {
+            CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+			  
+   }
+}
+	 

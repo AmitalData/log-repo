@@ -1,0 +1,83 @@
+﻿
+<table>
+    <tr style="height: 1px;">
+        <td>
+            <span class="Label">Unassigned Amount:</span>
+            <span class="Value" style="margin-left:  5px;">{{ItemsCount}}</span>
+        </td>
+    </tr>
+
+    <tr style="height: 5px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="CellStretch">
+            <div class="CellContent">
+                <div class="SimpleGridView">
+                    <div class="SimpleGridViewHeader">
+                        <table>
+                            <tr>
+                                <td>Airline</td>
+                                <td style="width: 100px; min-width: 100px; max-width: 100px;">From</td>
+                                <td style="width: 100px; min-width: 100px; max-width: 100px;">To</td>
+                                <td style="width: 100px; min-width: 100px; max-width: 100px;">Total</td>
+                                <td style="width: 80px; min-width: 80px; max-width: 80px; text-align: center;">Assign</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="SimpleGridViewBody">
+                        <table>
+                            <tr class="SimpleGridViewRow RowHover RowSelected" *ngFor="let item of ItemsSource" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem">
+                                <td class="GridViewCell">
+                                    <div>{{item.AirlineName}}</div>
+                                </td>
+
+                                <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
+                                    <div class="Value">{{item.From | PaddingPipe:'L':8:'0'}}</div>
+                                </td>
+
+                                <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
+                                    <div class="Value">{{item.To | PaddingPipe:'L':8:'0'}}</div>
+                                </td>
+
+                                <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
+                                    <div class="Value">{{item.Total}}</div>
+                                </td>
+
+                                <td class="GridViewCell" style="width: 80px; min-width: 80px; max-width: 80px;">
+                                    <button class="Button" (click)="AssignClicked(item)">Assign</button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="5">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="CloseClicked()">Close</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

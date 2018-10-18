@@ -1,0 +1,36 @@
+﻿
+
+        import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
+        export class FieldDataTypePM {
+
+            public UIProperties: UIProperties;
+            constructor() {
+                this.UIProperties = new UIProperties;
+                this.IsDirty = false;
+            }
+
+
+            private code: string;
+            public get Code() { return this.code; }
+            public set Code(newValue: string) { this.code = newValue; this.MarkAsDirty(); }
+
+
+            private name: string;
+            public get Name() { return this.name; }
+            public set Name(newValue: string) { this.name = newValue; this.MarkAsDirty(); }
+
+
+            private searchFields: string;
+            public get SearchFields() { return this.searchFields; }
+            public set SearchFields(newValue: string) { this.searchFields = newValue; this.MarkAsDirty(); }
+
+
+
+            public OldEntityPM: FieldDataTypePM;
+
+            public IsDirty: boolean;
+            MarkAsDirty() {
+                this.IsDirty = true;
+
+            }
+        }

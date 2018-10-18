@@ -1,0 +1,1 @@
+alter table ObjectFields add NumberOfDigits int not null default 0

@@ -1,0 +1,55 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Customs.Data.EntityPOCOs
+{
+   
+    public class CustomsDocument
+    {
+	 string dbms;
+
+           [Column("Tenant")]
+	    public int Tenant { get; set; }
+     [Key]
+        [ForeignKey("DocumentsFiling")]
+        [Column("DocumentsFilingId")]
+	    public string DocumentsFilingId { get; set; }
+	      
+        public virtual DocumentsFiling DocumentsFiling { get; set; }
+        [Column("CustomsDocId")]
+	    public string CustomsDocId { get; set; }
+        [ForeignKey("CustomsDocumentStatusType")]
+        [Column("DocumentStatusCode")]
+	    public string DocumentStatusCode { get; set; }
+	      
+        public virtual CustomsDocumentStatusType CustomsDocumentStatusType { get; set; }
+        [Column("DocumentRemarks")]
+	    public string DocumentRemarks { get; set; }
+        [ForeignKey("CustomDocumentType")]
+        [Column("DocumentTypeCode")]
+	    public string DocumentTypeCode { get; set; }
+	      
+        public virtual CustomDocumentType CustomDocumentType { get; set; }
+        [Column("IsMetaDataReady")]
+	    public bool IsMetaDataReady { get; set; }
+        [Column("CustomRecievedDate")]
+	    public DateTime? CustomRecievedDate { get; set; }
+        [Column("DocumentVersion")]
+	    public int DocumentVersion { get; set; }
+        [Column("ExternalAttachmentId")]
+	    public string ExternalAttachmentId { get; set; }
+        [Column("IsPartOfDeclaration")]
+	    public bool IsPartOfDeclaration { get; set; }
+    }
+}
+	 

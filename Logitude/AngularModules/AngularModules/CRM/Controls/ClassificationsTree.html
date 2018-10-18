@@ -1,0 +1,65 @@
+﻿
+<style>
+    .TreeItem:hover td:not(.icon) {
+        background-color: #FEFAB8;
+        border-top: 1px solid #FFC92B;
+        border-bottom: 1px solid #FFC92B;
+    }
+
+    .TreeItem:hover .FirstTreeItemCell {
+        border-left: 1px solid #FFC92B;
+    }
+
+    .TreeItem:hover .LastTreeItemCell {
+        border-right: 1px solid #FFC92B;
+    }
+
+    .TreeItem td:not(.icon) {
+        border: 1px solid transparent;
+        border-top: 1px solid transparent;
+        border-bottom: 1px solid transparent;
+    }
+
+    .TreeItem .FirstTreeItemCell {
+        border-left: 1px solid transparent;
+    }
+
+    .TreeItem .LastTreeItemCell {
+        border-right: 1px solid transparent;
+    }
+
+    .TreeItem {
+        height: 25px;
+        padding-right: 5px;
+        margin: 5px;
+    }
+</style>
+
+<div *ngFor="let item of Items">
+    <div class="TreeItem">
+        <table>
+            <tr>
+                <td class="icon" *ngIf="item.IsExpanded" [style.width.px]="item.Level * 20">
+                    <img (click)="item.IsExpanded = !item.IsExpanded" *ngIf="item.HasItems" style="float:right; width:20px;height:20px;cursor:pointer;" src="./Images/Buttons/expand.png" />
+                </td>
+                <td class="icon" *ngIf="!item.IsExpanded" [style.width.px]="item.Level * 20">
+                    <img (click)="item.IsExpanded = !item.IsExpanded" *ngIf="item.HasItems" style="float:right; width:20px;height:20px;cursor:pointer;" src="./Images/Buttons/collapse.png" />
+                </td>
+
+                <td style="width:15px;" class="FirstTreeItemCell">
+                    <div>
+                        <img [title]="'Add new Classification'" (click)="item.AddNewClassificationChild()" style="float:left; width:15px;height:15px;cursor:pointer" src="./Images/Buttons/AddGreenSolid.png" />
+                    </div>
+                </td>
+
+                <td class="LastTreeItemCell">
+                    <span [ngStyle]="{color: item.NameColor}" style="cursor:pointer;padding-left:5px;" (click)="item.EditClassificationChild(item.Id)">{{item.Name}}</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div *ngIf="item.IsExpanded">
+        <ClassificationsTree [Item]="item"></ClassificationsTree>
+    </div>
+</div>

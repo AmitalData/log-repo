@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="windows-1255"?>
+<xs:schema xmlns="http://tempuri.org/gfusts" elementFormDefault="qualified" targetNamespace="http://tempuri.org/gfusts" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+ <xs:element name="GFUSTS">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="follow_up_status" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="follow_up_status">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element ref="primary_number" />
+    <xs:element ref="status_line" />
+    <xs:element ref="status_id" />
+    <xs:element ref="status_date" />
+    <xs:element ref="status_time" />
+    <xs:element ref="follow_up_date" />
+    <xs:element ref="send_notice" />
+    <xs:element ref="expected_status" />
+    <xs:element ref="expected_status_date" />
+    <xs:element ref="expected_follow_up_date" />
+    <xs:element ref="done_id" />
+    <xs:element ref="flag_id" />
+    <xs:element ref="flag_exp" />
+    <xs:element ref="sort_by" />
+    <xs:element ref="status_partner_id" />
+    <xs:element ref="status_partner_name" />
+    <xs:element ref="xml_status" />
+    <xs:element ref="status_name" />
+    <xs:element ref="entname" />
+    <xs:element ref="primary_num_tex_part" />
+    <xs:element ref="exp_status_part_id" />
+    <xs:element ref="exp_foll_up_time" />
+    <xs:element ref="primary_number_partner_id" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="reference" />
+    <xs:element ref="comments" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="reference_list" />
+    <xs:element ref="user_type" />
+    <xs:element ref="source" />
+    <xs:element ref="status_save" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="foll_up_details" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="status_place" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="comments_buyer" />
+   </xs:sequence>
+   <xs:attribute name="id" type="xs:string" use="required" />
+   <xs:attribute name="status" type="xs:string" use="required" />
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="primary_number">
+  <xs:complexType>
+   <xs:simpleContent>
+    <xs:extension base="xs:string">
+     <xs:attribute fixed="yes" name="primary" type="xs:string" />
+    </xs:extension>
+   </xs:simpleContent>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="status_line">
+  <xs:complexType>
+   <xs:simpleContent>
+    <xs:extension base="xs:string">
+     <xs:attribute fixed="yes" name="primary" type="xs:string" />
+    </xs:extension>
+   </xs:simpleContent>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="status_id" type="xs:string" />
+ <xs:element name="status_date" type="xs:string" />
+ <xs:element name="status_time" type="xs:string" />
+ <xs:element name="follow_up_date" type="xs:string" />
+ <xs:element name="send_notice" type="xs:string" />
+ <xs:element name="expected_status" type="xs:string" />
+ <xs:element name="expected_status_date" type="xs:string" />
+ <xs:element name="expected_follow_up_date" type="xs:string" />
+ <xs:element name="done_id" type="xs:string" />
+ <xs:element name="flag_id" type="xs:string" />
+ <xs:element name="flag_exp" type="xs:string" />
+ <xs:element name="sort_by" type="xs:string" />
+ <xs:element name="status_partner_id" type="xs:string" />
+ <xs:element name="status_partner_name" type="xs:string" />
+ <xs:element name="xml_status" type="xs:string" />
+ <xs:element name="status_name" type="xs:string" />
+ <xs:element name="entname" type="xs:string" />
+ <xs:element name="primary_num_tex_part" type="xs:string" />
+ <xs:element name="exp_status_part_id" type="xs:string" />
+ <xs:element name="exp_foll_up_time" type="xs:string" />
+ <xs:element name="primary_number_partner_id" type="xs:string" />
+ <xs:element name="reference">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element ref="reference-activ" />
+    <xs:element ref="reference-exp" />
+    <xs:element ref="reference-xml" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="reference-activ" type="xs:string" />
+ <xs:element name="reference-exp" type="xs:string" />
+ <xs:element name="reference-xml" type="xs:string" />
+ <xs:element name="comments">
+  <xs:complexType>
+   <xs:simpleContent>
+    <xs:extension base="xs:string">
+     <xs:attribute fixed="yes" name="multi_line" type="xs:string" />
+    </xs:extension>
+   </xs:simpleContent>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="reference_list">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element ref="reference_list-type" />
+    <xs:element ref="reference_list-id" />
+   </xs:sequence>
+   <xs:attribute fixed="yes" name="multi_line" type="xs:string" />
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="reference_list-type" type="xs:string" />
+ <xs:element name="reference_list-id" type="xs:string" />
+ <xs:element name="user_type" type="xs:string" />
+ <xs:element name="source" type="xs:string" />
+ <xs:element name="status_save" type="xs:string" />
+ <xs:element name="foll_up_details">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element minOccurs="0" maxOccurs="1" ref="foll_up_details-log_date" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="foll_up_details-log_time" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="foll_up_details-user" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="foll_up_details-log_date" type="xs:string" />
+ <xs:element name="foll_up_details-log_time" type="xs:string" />
+ <xs:element name="foll_up_details-user">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element minOccurs="0" maxOccurs="1" ref="foll_up_details-id" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="foll_up_details-partner_id" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="foll_up_details-name" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="foll_up_details-id" type="xs:string" />
+ <xs:element name="foll_up_details-partner_id" type="xs:string" />
+ <xs:element name="foll_up_details-name" type="xs:string" />
+ <xs:element name="status_place" type="xs:string" />
+ <xs:element name="comments_buyer" type="xs:string" />
+</xs:schema>

@@ -1,0 +1,37 @@
+<xs:schema
+    attributeFormDefault="unqualified"
+	elementFormDefault="qualified"
+    xmlns:GCCSCargoImp="http://www.champ.aero/GCCS/CargoXML"
+	targetNamespace="http://www.champ.aero/GCCS/CargoXML"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    version="2.0"
+>
+	<xs:include schemaLocation="common.xsd"/>
+
+    <xs:complexType name="StatusRequest">
+        <xs:sequence>
+            <xs:element name="StandardMessageIdentification" type="GCCSCargoImp:StandardMessageIdentification"/>
+            <xs:element name="MasterAWBConsignmentDetail" type="GCCSCargoImp:FSR_AWBConsignmentDetails"/>
+            <xs:element maxOccurs="20" name="FlightDetails" type="GCCSCargoImp:FSRFlightIdentification"/>
+            <xs:element name="OtherServiceInformation" type="GCCSCargoImp:FSAOtherServiceInformation"/>
+        </xs:sequence>
+    </xs:complexType>
+	<xs:complexType name="FSR_AWBConsignmentDetails">
+	   <xs:complexContent>
+	 	  <xs:extension base="GCCSCargoImp:ConsignmentDetail">
+             <xs:sequence>
+                <xs:element name="NatureOfGoods" type="GCCSCargoImp:ManifestDescriptionOfGoods"/>
+             </xs:sequence>
+          </xs:extension>
+	   </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="FSRFlightIdentification">
+        <xs:complexContent>
+            <xs:extension base="GCCSCargoImp:AWBFlightIdentification">
+                <xs:attribute name="MonthOfScheduledDeparture" type="GCCSCargoImp:Month" use="optional"/>
+                <xs:attribute name="AirportCodeOfDeparture" type="GCCSCargoImp:AirportCode" use="required"/>
+                <xs:attribute name="AirportCodeOfArrival" type="GCCSCargoImp:AirportCode" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>

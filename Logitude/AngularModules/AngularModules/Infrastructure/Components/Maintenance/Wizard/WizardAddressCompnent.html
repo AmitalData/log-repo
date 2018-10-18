@@ -1,0 +1,269 @@
+﻿
+<table>
+    <tr style="height: 1px;">
+        <td style="font-size:11px; font-family:Arial; color:gray;">
+            {{'Tenant.AddressIdHelpText' | TextCodeTranslationPipe}}
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+
+                <!-- Name -->
+                <tr class="FormFieldRow">
+                    <td style="width: 110px;">
+                        <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td style="width: 450px;">
+                        <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- Address1 -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'Address1'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'Address1'" [Text]="Address1" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- Address2 -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'Address2'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'Address2'" [Text]="Address2" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- City -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'City'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width: 250px">
+                                    <LogTextBox [ObjectFieldName]="'City'" [Text]="City" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 50px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:160px">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- Country|Phone -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'CountryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width: 250px">
+                                    <LogLov [ObjectFieldName]="'CountryId'"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [SelectedValue]="CountryId"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Country'"
+                                            [HideMaintenanceIcon]="true"
+                                            [HideAdd]="true"
+                                            [HideEdit]="true"
+                                            [HideAddLink]="true">
+                                    </LogLov>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 50px;">
+                                    <LogLabel [ObjectFieldName]="'PhoneNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td style="width:160px">
+                                    <LogTextBox [ObjectFieldName]="'PhoneNumber'" [Text]="PhoneNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- State|Fax -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'StateId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width: 250px">
+                                    <LogLov [ObjectFieldName]="'StateId'"
+                                            [SelectedValue]="StateId"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'State'"
+                                            [DependencyFilter1Value]="CountryId"
+                                            [HideMaintenanceIcon]="true"
+                                            [HideAdd]="true"
+                                            [HideEdit]="true"                                            
+                                            [HideAddLink]="true">
+                                    </LogLov>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 50px;">
+                                    <LogLabel [ObjectFieldName]="'FaxNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td style="width:160px">
+                                    <LogTextBox [ObjectFieldName]="'FaxNumber'" [Text]="FaxNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- ZipCode -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'ZipCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width: 250px">
+                                    <LogTextBox [ObjectFieldName]="'ZipCode'" [Text]="ZipCode" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 50px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:160px">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- TimeZoneOffset -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'TimeZoneOffset'" [ObjectTableName]="'Tenant'" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width: 250px">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 150px;">
+                                                <ComboBox [IsDisabled]="!IsEditingEnabled" [ItemsSource]="TimeZonesList" [SelectedItem]="SelectedTimeZone" (SelectedItemChanged)="SelectedTimeZone = $event" [Binding]="'TimeZoneName'"></ComboBox>
+                                            </td>
+
+                                            <td style="width: 3px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width: 14px;">
+                                                <HelpIcon [Header]="'Tenant.F.TimeZoneOffset' | TextCodeTranslationPipe" [Text]="'Tenant.TimeZoneOffsetHelpText' | TextCodeTranslationPipe" [IconSize]="14"></HelpIcon>
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 50px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:160px">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="3">
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+

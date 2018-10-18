@@ -1,0 +1,278 @@
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs; 
+using Logitude.Customs.Data;
+
+namespace Logitude.Customs.BL.EntityDataMappings
+{
+   
+   public partial class CustomsDocumentsTicketDataMapping: IMapping<CustomsDocumentsTicketPM, CustomsDocumentsTicket>,IMappingEncodeBase64NVARCHARFields<CustomsDocumentsTicketPM>
+   {
+          public enum POCOPropertyNames
+          { 
+		     None,  
+	         Id, 
+	         DocumentsFilingId, 
+	         Tenant, 
+	         DocumentTypeCode, 
+	         RequestedCustomsDocId, 
+	         Remarks, 
+	         UploadApproved, 
+	         VerificationStatusTypeCode, 
+	         VerificationRemarks, 
+	         UserRemarks, 
+	         IsSendMandatory,
+	      }
+
+
+	      public enum PMPropertyNames
+          { 
+		     None,  
+	         Id, 
+	         DocumentsFilingId, 
+	         Tenant, 
+	         DocumentTypeCode, 
+	         DocumentTypeName, 
+	         RequestedCustomsDocId, 
+	         IsMetaDataReady, 
+	         DocumentStatusCode, 
+	         DocumentRemarks, 
+	         DocumentStatusName, 
+	         Extension, 
+	         FileSize, 
+	         Name, 
+	         CustomsDocId, 
+	         Remarks, 
+	         UploadApproved, 
+	         VerificationStatusTypeCode, 
+	         VerificationRemarks, 
+	         UserRemarks, 
+	         ExternalAttachmentId, 
+	         ConnectedInvoicesSequences, 
+	         ConnectedInvoiceItemsSequences, 
+	         ConnectedCREsSequences, 
+	         IsDigitallySigned, 
+	         SignersList, 
+	         IsSendMandatory,
+	      }
+
+		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
+        List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
+    
+	    public void PMToPOCO(CustomsDocumentsTicketPM entityPM, CustomsDocumentsTicket entityPOCO)
+        {
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DocumentsFilingId))
+            {
+				entityPOCO.DocumentsFilingId = entityPM.DocumentsFilingId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DocumentTypeCode))
+            {
+				entityPOCO.DocumentTypeCode = entityPM.DocumentTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RequestedCustomsDocId))
+            {
+				entityPOCO.RequestedCustomsDocId = entityPM.RequestedCustomsDocId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Remarks))
+            {
+				entityPOCO.Remarks = entityPM.Remarks;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UploadApproved))
+            {
+				entityPOCO.UploadApproved = entityPM.UploadApproved;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VerificationStatusTypeCode))
+            {
+				entityPOCO.VerificationStatusTypeCode = entityPM.VerificationStatusTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VerificationRemarks))
+            {
+				entityPOCO.VerificationRemarks = entityPM.VerificationRemarks;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UserRemarks))
+            {
+				entityPOCO.UserRemarks = entityPM.UserRemarks;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsSendMandatory))
+            {
+				entityPOCO.IsSendMandatory = entityPM.IsSendMandatory;
+			}
+			}
+
+		public void POCOToPM(CustomsDocumentsTicketPM entityPM, CustomsDocumentsTicket entityPOCO)
+        {
+			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
+            {
+					entityPM.Id = entityPOCO.Id;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DocumentsFilingId))
+            {
+					entityPM.DocumentsFilingId = entityPOCO.DocumentsFilingId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
+            {
+					entityPM.Tenant = entityPOCO.Tenant;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DocumentTypeCode))
+            {
+					entityPM.DocumentTypeCode = entityPOCO.DocumentTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.RequestedCustomsDocId))
+            {
+					entityPM.RequestedCustomsDocId = entityPOCO.RequestedCustomsDocId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Remarks))
+            {
+					entityPM.Remarks = entityPOCO.Remarks;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.UploadApproved))
+            {
+					entityPM.UploadApproved = entityPOCO.UploadApproved;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.VerificationStatusTypeCode))
+            {
+					entityPM.VerificationStatusTypeCode = entityPOCO.VerificationStatusTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.VerificationRemarks))
+            {
+					entityPM.VerificationRemarks = entityPOCO.VerificationRemarks;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.UserRemarks))
+            {
+					entityPM.UserRemarks = entityPOCO.UserRemarks;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsSendMandatory))
+            {
+					entityPM.IsSendMandatory = entityPOCO.IsSendMandatory;
+            }
+
+		}
+
+		public void PMToOldPM(CustomsDocumentsTicketPM entityPM, CustomsDocumentsTicketPM oldEntityPM)
+        {
+		     oldEntityPM.ChangedProperties.Clear();
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DocumentsFilingId))
+            {
+                oldEntityPM.DocumentsFilingId = entityPM.DocumentsFilingId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+                oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DocumentTypeCode))
+            {
+                oldEntityPM.DocumentTypeCode = entityPM.DocumentTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RequestedCustomsDocId))
+            {
+                oldEntityPM.RequestedCustomsDocId = entityPM.RequestedCustomsDocId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Remarks))
+            {
+                oldEntityPM.Remarks = entityPM.Remarks;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UploadApproved))
+            {
+                oldEntityPM.UploadApproved = entityPM.UploadApproved;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VerificationStatusTypeCode))
+            {
+                oldEntityPM.VerificationStatusTypeCode = entityPM.VerificationStatusTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VerificationRemarks))
+            {
+                oldEntityPM.VerificationRemarks = entityPM.VerificationRemarks;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UserRemarks))
+            {
+                oldEntityPM.UserRemarks = entityPM.UserRemarks;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsSendMandatory))
+            {
+                oldEntityPM.IsSendMandatory = entityPM.IsSendMandatory;
+            }
+			
+		}
+
+	    public void EncodeBase64NVARCHARFields(CustomsDocumentsTicketPM entityPM)
+        {
+            if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
+            {
+                return;
+
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.Remarks)) //T4 find type == nText 
+            {
+                entityPM.Remarks = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Remarks));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.VerificationRemarks)) //T4 find type == nText 
+            {
+                entityPM.VerificationRemarks = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.VerificationRemarks));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.UserRemarks)) //T4 find type == nText 
+            {
+                entityPM.UserRemarks = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.UserRemarks));
+            }
+            entityPM.EncodeBase64NVARCHARFieldsBy=null;
+		}
+
+
+	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
+        {
+            CustomMappedPOCOProperties.Add(pocoPropertyName);
+        }
+
+        public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
+        {
+            CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+			  
+   }
+}
+	 

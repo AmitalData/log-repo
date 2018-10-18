@@ -1,0 +1,1 @@
+﻿delete from ScreenFields where ObjectFieldId in (select id from ObjectFields where (FieldName = 'PaymentMethodCode') and ObjectTableId in (select Id from ObjectTables where name='customer'))

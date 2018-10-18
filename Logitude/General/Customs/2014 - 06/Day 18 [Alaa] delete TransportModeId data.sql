@@ -1,0 +1,1 @@
+update [Customs].[Declarations] set TransportModeId = null

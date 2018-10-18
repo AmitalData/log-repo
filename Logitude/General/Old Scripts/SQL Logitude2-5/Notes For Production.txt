@@ -1,0 +1,16 @@
+﻿******
+Before Update
+******
+Add new document types to Tenant 0 : 
+	- PALN : P & L / Invoice
+	- Packign list : just upload template and make it docs out 
+				   : Add custom fields : PackDate, Remarks
+	- AWB PP : 740PP 
+	- HWB PP : 714PP 
+
+Reports : 
+	- Upload all new reports 
+	-
+
+	- Run azure connect 
+

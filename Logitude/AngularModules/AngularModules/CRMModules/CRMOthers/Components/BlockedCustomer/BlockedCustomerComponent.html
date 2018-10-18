@@ -1,0 +1,157 @@
+﻿<table>
+    <tr style="height:22px;">
+        <td>
+            <div class="OrangeInfo" style="padding-left:5px;color:black;">
+                Limited display of the customer since you don't have full read permission
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr style="height:22px;">
+                    <td style="width:150px;">
+                        <LogLabel [Text]="'Code'" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:280px;">
+                        <div style="font-size:12px;color:#282E30;">{{Code}}</div>
+                    </td>
+                    <td colspan="2"></td>
+                </tr>
+                <tr style="height:22px;">
+                    <td style="width:150px;">
+                        <LogLabel [Text]="'Name'" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:280px;">
+                        <div style="font-size:12px;color:#1B90CB;">{{Name}}</div>
+                    </td>
+                    <td colspan="2"></td>
+                </tr>
+                <tr style="height:22px;">
+                    <td style="width:150px;">
+                        <LogLabel [Text]="'Start working date'" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:280px;">
+                        <div style="font-size:12px;color:#282E30;">{{StartWorkingDate | DateTimeToDatePipe }}</div>
+                    </td>
+                    <td style="width:70px;">
+                        <LogLabel [Text]="'Vat#'" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="color:#282E30;font-size:12px;text-align:left">{{VAT}}</td>
+                </tr>
+                <tr style="height:22px;">
+                    <td style="width:150px;">
+                        <LogLabel [Text]="'Last shipment date'" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:280px;">
+                        <div style="font-size:12px;color:#282E30;">{{LastShipmentDate | DateTimeToDatePipe }}</div>
+                    </td>
+                    <td >
+                        <LogLabel [Text]="'Status'" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                      
+                    <td>
+                        <span style="font-size:12px;text-align:left" [ngStyle]="{color: StatusCode | StringToColorPipe:'CustomerStatusCode'}">{{Status}}</span>
+                    </td>
+                </tr>
+                <tr style="height:22px;">
+                    <td style="width:150px;">
+                        <LogLabel [Text]="'Last interaction date'" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:280px;">
+                        <div style="font-size:12px;color:#282E30;">{{LastInteractionDate | DateTimeToDatePipe }}</div>
+                    </td>
+                    <td>
+                        <LogLabel [Text]="'Salesman'" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="color:#282E30;font-size:12px;text-align:left">{{Salesman}}</td>
+                </tr>
+                <tr><td><div></div></td></tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height:10px;"><td><div></div></td></tr>
+
+    <!-- Products -->
+    <tr>
+        <td>
+            <table>
+                <tr class="SectionHeader">
+                    <td>
+                        <table>
+                            <tr>
+
+                                <td>
+                                    <label>Products</label>
+                                </td>
+
+                                <td>
+                                    <div>
+
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr style="height:5px;">
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="ScrollViewer">
+                            <div class="ScrollContent">
+                                <ul>
+                                    <li class="RecentEntityItem" style="position: relative;" *ngFor="let item of ProductsObslist">
+                                        <table>
+                                            <tr>
+                                                <td style="width:10px;"><div></div></td>
+                                                <td style="position: relative;">
+                                                    <div style="font-size:12px;color:#282E30;text-align:left;line-height:12px;vertical-align:central;" class="TextTrimming">{{item.Name}}</div>
+                                                </td>
+                                                <td style="width:120px;">
+                                                    <div style="font-size:10px;color:#6E7172;text-align:left;line-height:12px;">Last shipment date:</div>
+                                                    <div style="color:#282E30;font-size:11px;text-align:left;line-height:12px;">{{item.LastShipmentDate}}</div>
+                                                </td>
+
+                                                <td style="width:15px;"><div></div></td>
+                                            </tr>
+                                        </table>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div *ngIf="ProductsObslist == null || ProductsObslist.length == 0" class="NoDataText" style="top:5px;">No Products</div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+ 
+    <tr style="height:10px;"><td><div></div></td></tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CloseButtonClicked()">Close</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

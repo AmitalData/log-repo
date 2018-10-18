@@ -1,0 +1,41 @@
+
+if exists(select 1 from sys.views where name='CardGLAccountDataView' and type='v')
+drop VIEW [dbo].[CardGLAccountDataView] 
+go
+
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE VIEW [dbo].[CardGLAccountDataView]
+
+AS
+
+SELECT     dbo.Cards.EnglishName AS CardEnglishName, dbo.Cards.GLAccountId AS CardGLAccountId, dbo.GLAccounts.EnglishName AS GLAccountEnglishName, 
+                      dbo.Cards.SalesmanUserId, SalesMan.EnglishName AS SalesManEnglishName, dbo.Cards.CollectorId, Collectors.EnglishName AS CollectorEnglishName, 
+                      dbo.GLAccounts.Id, dbo.GLAccounts.Tenant, dbo.GLAccounts.InternalNumber, dbo.GLAccounts.AccountTypeCode, dbo.GLAccounts.DisplayNumber, 
+                      dbo.GLAccounts.LocalName AS GLAccountLocalName, dbo.GLAccounts.SearchFields, dbo.GLAccounts.IsMultiCurrency, dbo.GLAccounts.CurrencyId, 
+                      dbo.GLAccounts.RevenueExpenseType, dbo.GLAccounts.IsControlAccount, dbo.GLAccounts.ChartOfAccountsId, dbo.GLAccounts.Inactive, 
+                      dbo.GLAccounts.ChartOfAccountsTypeCode, dbo.GLAccounts.ReconcileMethodCode, dbo.GLAccounts.ControlAccountId, dbo.GLAccounts.AutomaticReconcileId, 
+                      dbo.GLAccounts.PreviousEnglishName, dbo.GLAccounts.PreviousEnglishNameChangeDate, dbo.GLAccounts.PreviousLocalName, 
+                      dbo.GLAccounts.PreviousLocalNameChangeDate, dbo.GLAccounts.PreviousNumber, dbo.GLAccounts.PreviousNumberChangeDate, 
+                      dbo.GLAccounts.PreviousChartOfAccountsId, dbo.GLAccounts.PreviousChartOfAccountsChangeDate, 
+                      dbo.GLAccounts.RevaluationEnabled, dbo.GLAccounts.ParentAccountId, dbo.GLAccounts.Category2Id, dbo.GLAccounts.Category3Id, dbo.GLAccounts.Category4Id, 
+                      dbo.GLAccounts.Category5Id, dbo.GLAccounts.Category1Id, dbo.GLAccounts.IsVATExempt, dbo.GLAccounts.CustomerGLAccountId, dbo.Cards.VatNumber,
+					  
+                      dbo.Cards.LocalName AS CardLocalName, SalesMan.LocalName AS SalesManLocalName, Collectors.LocalName AS CollectorLocalName, dbo.Cards.VatTypeId, 
+                      dbo.Cards.CountryId, dbo.Cards.CountryCode, dbo.Cards.CityName, dbo.Cards.CountryName, dbo.Cards.PaymentTermId, 
+                      dbo.ChartOfAccounts.LocalName AS ChartOfAccountsLocalName, dbo.ChartOfAccounts.EnglishName AS ChartOfAccountsEnglishName, 
+                      dbo.ChartOfAccounts.Code AS ChartOfAccountsCode
+					  --,dbo.GLAccounts.BalanceInLocalCurrency,  dbo.GLAccounts.NextDueDate, dbo.GLAccounts.LocalBalanceInDue,
+FROM         dbo.Cards LEFT OUTER JOIN
+                      dbo.Contacts AS Collectors ON dbo.Cards.CollectorId = Collectors.Id LEFT OUTER JOIN
+                      dbo.Contacts AS SalesMan ON dbo.Cards.SalesmanUserId = SalesMan.Id RIGHT OUTER JOIN
+                      dbo.GLAccounts ON dbo.Cards.GLAccountId = dbo.GLAccounts.Id LEFT OUTER JOIN
+                      dbo.ChartOfAccounts ON dbo.GLAccounts.ChartOfAccountsId = dbo.ChartOfAccounts.Id
+
+GO
+
+

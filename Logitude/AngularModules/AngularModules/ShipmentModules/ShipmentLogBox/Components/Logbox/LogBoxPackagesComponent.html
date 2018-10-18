@@ -1,0 +1,177 @@
+﻿
+<style>
+    .emptyticket {
+        border: 1px solid #8C8C8C;
+        border-radius: 10px;
+        width: 168px;
+        height: 164px;
+        background: white;
+        margin: 5px;
+        margin-left: 15px;
+        float: left;
+    }
+
+        .emptyticket:hover {
+            background: #8C8C8C;
+            cursor: pointer;
+        }
+
+    .infoColor {
+        background: -moz-linear-gradient(50.55% 126.37% 91.55deg,rgba(255, 255, 255, 1) 0%,rgba(242, 242, 242, 1) 51.84%,rgba(212, 212, 212, 1) 100%);
+        background: -webkit-linear-gradient(91.55deg, rgba(255, 255, 255, 1) 0%, rgba(242, 242, 242, 1) 51.84%, rgba(212, 212, 212, 1) 100%);
+        background: -webkit-gradient(linear,50.55% 126.37%,49.7% 8.42%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(0.5184,rgba(242, 242, 242, 1) ),color-stop(1,rgba(212, 212, 212, 1) ));
+        background: -o-linear-gradient(91.55deg, rgba(255, 255, 255, 1) 0%, rgba(242, 242, 242, 1) 51.84%, rgba(212, 212, 212, 1) 100%);
+        background: -ms-linear-gradient(91.55deg, rgba(255, 255, 255, 1) 0%, rgba(242, 242, 242, 1) 51.84%, rgba(212, 212, 212, 1) 100%);
+        background: linear-gradient(-1.55deg, rgba(255, 255, 255, 1) 0%, rgba(242, 242, 242, 1) 51.84%, rgba(212, 212, 212, 1) 100%);
+        border-style: Solid;
+        border-color: #BCBEC0;
+        border-color: rgba(188, 190, 192, 1);
+        border-width: 1px;
+        border-radius: 0px 0px 10px 10px;
+    }
+
+    .SearchResult {
+        border: 1px solid #FFD700;
+    }
+
+    .emptyticket .infoColor .ActionButtons {
+        visibility: hidden;
+    }
+
+    .emptyticket:hover .infoColor .ActionButtons {
+        visibility: visible;
+    }
+
+    .emptyticket .MyIconButton {
+        visibility: hidden;
+    }
+
+    .emptyticket:hover .MyIconButton {
+        visibility: visible;
+    }
+    .BodyBackground {
+        background: #DFECF7;
+    }
+    .WarningSummary {
+        height: 100%;
+        width: 100%;
+        border: 1px solid Orange;
+        border-radius: 5px;
+        background: #FFFBDA;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        overflow: hidden;
+    }
+    .Disable {
+       opacity:0.5;
+       pointer-events:none;
+    }
+    .MySimpleGridViewFooter td {
+    color: #1B90CB;
+    font-size: 11px;
+    padding-right: 4px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    border-right: 1px solid #D1D3D4;
+    height:21px;
+}
+
+ .MySimpleGridViewFooter {
+    height: 24px;
+    min-height: 24px;
+    min-width: 100%;
+    position: absolute;
+    border: 1px solid #DADADA;
+    border-radius: 3px 3px 0 0;
+    -moz-border-radius: 3px 3px 0 0;
+    -webkit-border-radius: 3px 3px 0 0;
+    background: -moz-linear-gradient(50% 0% -90deg,rgba(247, 247, 247, 1) 0%,rgba(245, 245, 245, 1) 52.38%,rgba(238, 238, 238, 1) 72.96%,rgba(226, 226, 226, 1) 87.88%,rgba(209, 209, 209, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 52.38%, rgba(238, 238, 238, 1) 72.96%, rgba(226, 226, 226, 1) 87.88%, rgba(209, 209, 209, 1) 100%);
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(247, 247, 247, 1) ),color-stop(0.5238,rgba(245, 245, 245, 1) ),color-stop(0.7296,rgba(238, 238, 238, 1) ),color-stop(0.8788,rgba(226, 226, 226, 1) ),color-stop(1,rgba(209, 209, 209, 1) ));
+    background: -o-linear-gradient(-90deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 52.38%, rgba(238, 238, 238, 1) 72.96%, rgba(226, 226, 226, 1) 87.88%, rgba(209, 209, 209, 1) 100%);
+    background: linear-gradient(180deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 52.38%, rgba(238, 238, 238, 1) 72.96%, rgba(226, 226, 226, 1) 87.88%, rgba(209, 209, 209, 1) 100%);
+}
+</style>
+<table>
+    <tr>
+        <td>
+            <div class="SimpleGridView" style="border-bottom: 1px solid #DDDDDD;border-right: 1px solid #DDDDDD;border-left: 1px solid #DDDDDD;border-radius:5px;">
+                <div class="SimpleGridViewHeader">
+                    <table>
+                        <tr class="SimpleGridHeaderRow">
+                            <td style="width: 25px; max-width: 25px;padding-right: 4px;"></td>
+                            <td style="width: 130px; max-width: 130px;padding-right: 4px;">Container Type</td>
+                            <td style="width: 80px; max-width: 80px;padding-right: 4px;">Pieces</td>
+                            <td style="width: 140px; max-width: 140px;padding-right: 4px;">Container #</td>
+                            <td style="width: 80px; max-width: 80px;padding-right: 4px;">Seal</td>
+                            <td style="width: 90px; max-width: 90px;padding-right: 4px;">Volume</td>
+                            <td style="width: 90px; max-width: 90px;padding-right: 4px;">Gross Weight</td>
+                            <td></td>
+                            <!--<td class="LastChild">
+                        <div></div>
+                    </td>-->
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="SimpleGridViewBody" style="bottom:25px;">
+                    <table> 
+                        <tr class="SimpleGridViewRow bg" *ngFor="let item of ShipmentPM.ShipmentPackages; let i=index;">
+                            
+                            <td class="CellStretched  TextTrimming" style="width: 25px; max-width: 25px;padding-left: 4px;">
+                               <img src="./Images/CellIcons/Container.png" class="CenterCenter" />
+                            </td>
+                            <td class="CellStretched  TextTrimming" style="width: 130px; max-width: 130px;padding-left: 4px;">
+                                {{item.PackageTypeName }}
+                            </td>
+
+                            <td class="CellStretched  TextTrimming" style="width: 80px; max-width: 80px;padding-left: 4px;">
+                                {{item.Quantity}}
+                            </td>
+
+                            <td class="CellStretched  TextTrimming" style="width: 140px; max-width: 140px;padding-left: 4px;">
+                                {{item.ContainerNumber}}
+                            </td>
+
+                            <td class="CellStretched  TextTrimming" style="width: 80px; max-width: 80px;padding-left: 4px;">
+                                {{item.ShipperSeal}}
+                            </td>
+
+                            <td class="CellStretched  TextTrimming" style="width: 90px; max-width: 90px; padding-left: 4px;">
+                                {{item.Volume  | NumbersPipe:'N3'}}
+                            </td> 
+                            <td class="CellStretched  TextTrimming" style="width: 90px; max-width: 90px; padding-left: 4px;">
+                                {{item.Weight  | NumbersPipe:'N3'}}
+                            </td> 
+                            <td><div></div></td>
+
+                        </tr> 
+                        <tr *ngIf="ShipmentPM.ShipmentPackages && ShipmentPM.ShipmentPackages.length == 0">
+                            <td colspan="5" style="height:60px;text-align:center;">
+                                <span style="font-size:13px;">No {{Title}} Data yet</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">
+                                <div></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </td>
+    </tr>
+    <tr style="height:3px;">
+        <td> 
+        </td>
+    </tr>
+    <tr style="height:1px;">
+        <td>
+            <div style="float:right;margin-left:10px;">
+                <button class="Button" (click)="CloseButtonClicked()" style="float: right;margin-left: 7px;margin-right: 7px;">Close</button>
+            </div> 
+        </td>
+    </tr>
+</table>

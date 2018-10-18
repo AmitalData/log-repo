@@ -1,0 +1,160 @@
+Severity: High
+Object: automaticreconciles
+Title: AddNotNullConstraintColumn
+Deployment cannot update the column "INACTIVE" on table automaticreconciles because it does not allow NULL values. If you run the deployment script, deployment will fail. We recommend you edit the script before running it.
+----------------------------------------------------
+Severity: High
+Object: chartofaccounts
+Title: AddNotNullConstraintColumn
+Deployment cannot update the column localname on table chartofaccounts because it does not allow NULL values. If you run the deployment script, deployment will fail. We recommend you edit the script before running it.
+----------------------------------------------------
+Severity: High
+Object: chartofaccountstypes
+Title: AddNotNullConstraintColumn
+Deployment cannot update the column "INACTIVE" on table chartofaccountstypes because it does not allow NULL values. If you run the deployment script, deployment will fail. We recommend you edit the script before running it.
+----------------------------------------------------
+Severity: High
+Object: glaccounts
+Title: AddNotNullConstraintColumn
+Deployment cannot update the column localname on table glaccounts because it does not allow NULL values. If you run the deployment script, deployment will fail. We recommend you edit the script before running it.
+----------------------------------------------------
+Severity: High
+Object: glaccounttypes
+Title: AddNotNullConstraintColumn
+Deployment cannot update the column "INACTIVE" on table glaccounttypes because it does not allow NULL values. If you run the deployment script, deployment will fail. We recommend you edit the script before running it.
+----------------------------------------------------
+Severity: High
+Object: journalactiontypes
+Title: AddNotNullConstraintColumn
+Deployment cannot update the column "INACTIVE" on table journalactiontypes because it does not allow NULL values. If you run the deployment script, deployment will fail. We recommend you edit the script before running it.
+----------------------------------------------------
+Severity: High
+Object: journallines
+Title: AddNotNullConstraintColumn
+Deployment cannot update the column foreignamount on table journallines because it does not allow NULL values. If you run the deployment script, deployment will fail. We recommend you edit the script before running it.
+----------------------------------------------------
+Severity: High
+Object: journallines
+Title: AddNotNullConstraintColumn
+Deployment cannot update the column duedate on table journallines because it does not allow NULL values. If you run the deployment script, deployment will fail. We recommend you edit the script before running it.
+----------------------------------------------------
+Severity: High
+Object: journallines
+Title: AddNotNullConstraintColumn
+Deployment cannot update the column localamount on table journallines because it does not allow NULL values. If you run the deployment script, deployment will fail. We recommend you edit the script before running it.
+----------------------------------------------------
+Severity: High
+Object: journalstatustypes
+Title: AddNotNullConstraintColumn
+Deployment cannot update the column "INACTIVE" on table journalstatustypes because it does not allow NULL values. If you run the deployment script, deployment will fail. We recommend you edit the script before running it.
+----------------------------------------------------
+Severity: High
+Object: journaltypes
+Title: AddNotNullConstraintColumn
+Deployment cannot update the column "INACTIVE" on table journaltypes because it does not allow NULL values. If you run the deployment script, deployment will fail. We recommend you edit the script before running it.
+----------------------------------------------------
+Severity: High
+Object: periodtypes
+Title: AddNotNullConstraintColumn
+Deployment cannot update the column "INACTIVE" on table periodtypes because it does not allow NULL values. If you run the deployment script, deployment will fail. We recommend you edit the script before running it.
+----------------------------------------------------
+Severity: High
+Object: reconcilemethods
+Title: AddNotNullConstraintColumn
+Deployment cannot update the column "INACTIVE" on table reconcilemethods because it does not allow NULL values. If you run the deployment script, deployment will fail. We recommend you edit the script before running it.
+----------------------------------------------------
+Severity: High
+Object: revenueexpensetypes
+Title: AddNotNullConstraintColumn
+Deployment cannot update the column "INACTIVE" on table revenueexpensetypes because it does not allow NULL values. If you run the deployment script, deployment will fail. We recommend you edit the script before running it.
+----------------------------------------------------
+Severity: High
+Object: flightsschedulesrequests
+Title: DropColumn
+The column(s) answerreasonfornoreplay on table flightsschedulesrequests will be dropped. Any data in the columns will be lost.
+----------------------------------------------------
+Severity: High
+Object: glaccounts
+Title: DropColumn
+The column(s) clientid, vendorid on table glaccounts will be dropped. Any data in the columns will be lost.
+----------------------------------------------------
+Severity: High
+Object: objecttables
+Title: DropColumn
+The column(s) shorttitlecontrolpath on table objecttables will be dropped. Any data in the columns will be lost.
+----------------------------------------------------
+Severity: High
+Object: quotecharges
+Title: DropColumn
+The column(s) saleisexchangeratefixed on table quotecharges will be dropped. Any data in the columns will be lost.
+----------------------------------------------------
+Severity: High
+Object: shipments
+Title: DropColumn
+The column(s) otherparticipantinfoid1, otherparticipantinfoid2, otherparticipantinfoid3 on table shipments will be dropped. Any data in the columns will be lost.
+----------------------------------------------------
+Severity: High
+Object: ticketescalations
+Title: DropColumn
+The column(s) isdone, donedate on table ticketescalations will be dropped. Any data in the columns will be lost.
+----------------------------------------------------
+Severity: High
+Object: glaccountbalancesbyyear
+Title: DropTable
+The table glaccountbalancesbyyear will be dropped. Any data in the table will be lost.
+----------------------------------------------------
+Severity: High
+Object: glaccounttotalsbymonth
+Title: DropTable
+The table glaccounttotalsbymonth will be dropped. Any data in the table will be lost.
+----------------------------------------------------
+Severity: Medium
+Object: eventtypecategories
+Title: RebuildTable
+The table eventtypecategories will be rebuilt. To rebuild a table, the table is dropped and then recreated. A temporary table is used to store data when the table is dropped. Note that rebuilding a table can cause the deployment script to run slowly.
+----------------------------------------------------
+Severity: Medium
+Object: eventtypes
+Title: RebuildTable
+The table eventtypes will be rebuilt. To rebuild a table, the table is dropped and then recreated. A temporary table is used to store data when the table is dropped. Note that rebuilding a table can cause the deployment script to run slowly.
+----------------------------------------------------
+Severity: Medium
+Object: industries
+Title: RebuildTable
+The table industries will be rebuilt. To rebuild a table, the table is dropped and then recreated. A temporary table is used to store data when the table is dropped. Note that rebuilding a table can cause the deployment script to run slowly.
+----------------------------------------------------
+Severity: Medium
+Object: passwordpolicies
+Title: RebuildTable
+The table passwordpolicies will be rebuilt. To rebuild a table, the table is dropped and then recreated. A temporary table is used to store data when the table is dropped. Note that rebuilding a table can cause the deployment script to run slowly.
+----------------------------------------------------
+Severity: Medium
+Object: quoteclosingreasons
+Title: RebuildTable
+The table quoteclosingreasons will be rebuilt. To rebuild a table, the table is dropped and then recreated. A temporary table is used to store data when the table is dropped. Note that rebuilding a table can cause the deployment script to run slowly.
+----------------------------------------------------
+Severity: Medium
+Object: quotes
+Title: RebuildTable
+The table quotes will be rebuilt. To rebuild a table, the table is dropped and then recreated. A temporary table is used to store data when the table is dropped. Note that rebuilding a table can cause the deployment script to run slowly.
+----------------------------------------------------
+Severity: Medium
+Object: eventtypecategories
+Title: PossibleDataTruncation
+Make sure the data in column code can fit in a NVARCHAR2(4).
+----------------------------------------------------
+Severity: Medium
+Object: eventtypes
+Title: PossibleDataTruncation
+Make sure the data in column eventtypecategorycode can fit in a NVARCHAR2(4).
+----------------------------------------------------
+Severity: Medium
+Object: quoteclosingreasons
+Title: PossibleDataTruncation
+Make sure the data in column code can fit in a VARCHAR2(2 CHAR).
+----------------------------------------------------
+Severity: Medium
+Object: quotes
+Title: PossibleDataTruncation
+Make sure the data in column quoteclosingreasoncode can fit in a VARCHAR2(2 CHAR).
+----------------------------------------------------

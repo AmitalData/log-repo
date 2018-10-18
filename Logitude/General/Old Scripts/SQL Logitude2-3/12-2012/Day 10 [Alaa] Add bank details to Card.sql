@@ -1,0 +1,5 @@
+alter table Cards add  BankName varchar(40) 
+alter table Cards add BankAddress varchar(100)
+alter table Cards add Swift varchar(20)
+alter table Cards add AccountNumber varchar(15)
+alter table Cards add IBANNumber varchar(20)

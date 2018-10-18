@@ -1,0 +1,60 @@
+﻿<table style="height:75px;width:100%;">
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+    <tr>
+        <td><div style="color:#1B90CB;font-size:15px;">Filter By:</div></td>
+    </tr>
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <td style="width:80px;"><div style="width:80px;">Employee:</div></td>
+                    <td style="width:120px;">
+                        <LogLov [NoObjectField]="true"
+                                [ObjectFieldName]="'EmployeeUserId'"
+                                [DataContext]="DataContext"
+                                [SelectedValue]="EmployeeUserId"
+                                [LookUpTableName]="'User'"
+                                [HideColumns]="true" [HideAdd]="true" [HideAddLink]="true" [HideEdit]="true">
+                        </LogLov>
+                    </td>
+                    <td style="width:20px;"><div style="width:20px"></div></td>
+                    <td style="width:200px;">
+                        <table>
+                            <tr>
+                                <td style="width:70px;"><div style="width:70px">From Date:</div></td>
+                                <td style="width:120px;">
+                                    <div style="width:120px;">
+                                        <LogDatePicker [ObjectFieldName]="'FromDate'" [DataContext]="DataContext" [NoObjectField]="true" [HideColumns]="true"></LogDatePicker>
+                                     </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="width:50px"><div style="width:50px"></div></td>
+                    <td style="width:200px;">
+                        <table>
+                            <tr>
+                                <td style="width:55px;"><div style="width:55px;"> To Date: </div></td>
+                                <td style="width:120px;">
+                                    <div style="width:120px;">
+                                        <LogDatePicker [ObjectFieldName]="'ToDate'" [DataContext]="DataContext" [NoObjectField]="true" [HideColumns]="true"></LogDatePicker>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="width:90px;text-align:left">
+                        <button (click)="RunReport()" class="GreenButton" style="width:90px;height:22px;border:1px solid green;border-radius:3px;">
+                            <div style="color:black;  text-align:center;vertical-align:central;font-size:12px;">Run Report</div>
+                        </button>
+                    </td>
+                    <td><div></div></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

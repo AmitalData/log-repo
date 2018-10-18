@@ -1,0 +1,117 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
+
+namespace Logitude.BL.ShipmentsModel.EntityLists
+{
+    public class ShipmentJoinPackageList
+    {
+        [Key]
+        public string Id { get; set; }
+        public string DirectionId { get; set; }
+        public DateTime CreateDateTime { get; set; }
+        public string ShipmentNumber { get; set; }
+        public DateTime? MainCarriageETD { get; set; } //ETD
+        public string CustomerId { get; set; }
+        public string CustomerName { get; set; }
+        public string MainCarriageFromPortName { get; set; } //POL
+        public string MainCarriageFinalDestinationPortName { get; set; } //POD
+        public string ShipperName { get; set; }
+        public string MainCarriageCarrierName { get; set; }
+        public string ContainerNumber { get; set; } //all the containers numbers + types
+        public string ShipmentTypeId { get; set; }
+        public string ShipmentTypeName { get; set; }
+        public DateTime? MainCarriageFinalDestinationETA { get; set; } //ETA
+        public string MasterNumber { get; set; }
+        public string Vessel_Voyage { get; set; } //main carriage carrier number
+        public string StatusName { get; set; }
+        public string AgentReference1 { get; set; }
+        public string AgentReference2 { get; set; }
+        public string ContainerCode { get; set; }
+        public string ShipmentId { get; set; }
+        public string TransportModeId { get; set; }
+        public string MainCarriageCarrierPrefix { get; set; }
+        public string AgentId { get; set; }
+        public string AgentName { get; set; }
+        public string ShipmentLevelCode { get; set; }
+        public string VesselId { get; set; }
+        public string CustomerReference1 { get; set; }
+        public string CustomerReference2 { get; set; }
+        public bool IsCancelled { get; set; }
+        public string DescriptionofGoods { get; set; }
+
+        public string Field1 { get; set; }
+        public string Field2 { get; set; }
+        public string Field3 { get; set; }
+        public string Field4 { get; set; }
+        public string Field5 { get; set; }
+        public string Field6 { get; set; }
+        public string Field7 { get; set; }
+        public string Field8 { get; set; }
+        public string Field9 { get; set; }
+        public string Field10 { get; set; }
+        public string Field11 { get; set; }
+        public string Field12 { get; set; }
+        public string Field13 { get; set; }
+        public string Field14 { get; set; }
+        public string Field15 { get; set; }
+        public string Field16 { get; set; }
+        public string Field17 { get; set; }
+        public string Field18 { get; set; }
+        public string Field19 { get; set; }
+        public string Field20 { get; set; }
+
+        public string House { get; set; }
+        public string ConsigneeName { get; set; }
+        public string ShipmentPackageReference1 { get; set; }
+        public string ShipmentPackageReference2 { get; set; }
+        public string ShipmentPackageReference3 { get; set; }
+        public string ShipmentPackageReference4 { get; set; }
+        public string ContainerTypeName { get; set; }
+        public string OnCarriageToPortId { get; set; }
+        public string OnCarriageTo { get; set; }
+        public string OnCarriageToPortCode { get; set; }
+        public DateTime? ATD { get; set; }
+        public DateTime? ATA { get; set; }
+        public DateTime? OnCarriageATD { get; set; }
+        public DateTime? OnCarriageATA { get; set; }
+        public string ContainerNotes { get; set; }
+
+        public string Transshipment3ToPortId { get; set; }
+        public string Transshipment3ToPortName { get; set; }
+        public string Transshipment2ToPortId { get; set; }
+        public string Transshipment2ToPortName { get; set; }
+        public string Transshipment1ToPortId { get; set; }
+        public string Transshipment1ToPortName { get; set; }
+        public string MainCarriageToPortId { get; set; }
+        public string MainCarriageToPortName { get; set; }
+        public double? PackagesGrossWeight { get; set; }
+        public bool? ContainerFollowUp { get; set; }
+        public bool? SplitOnCarriage { get; set; }
+        public DateTime? PackageOnCarriageATD { get; set; }
+        public DateTime? PackageOnCarriageATA { get; set; }
+        public string PackageDliveryId { get; set; }
+
+        public string Transshipment3FromPortId { get; set; }
+        public string Transshipment2FromPortId { get; set; }
+        public string Transshipment1FromPortId { get; set; }
+        public string MainCarriageFromPortId { get; set; }
+
+        public DateTime? Transshipment3ETA { get; set; }
+        public DateTime? Transshipment2ETA { get; set; }
+        public DateTime? Transshipment1ETA { get; set; }
+        public DateTime? MainCarriageETA { get; set; }
+
+        public DateTime? Transshipment3ATA { get; set; }
+        public DateTime? Transshipment2ATA { get; set; }
+        public DateTime? Transshipment1ATA { get; set; }
+        public DateTime? MainCarriageATA { get; set; }
+
+        public string Transshipment3VesselId { get; set; }
+        public string Transshipment2VesselId { get; set; }
+        public string Transshipment1VesselId { get; set; }
+        public string MainCarriageVesselId { get; set; }
+    }
+}

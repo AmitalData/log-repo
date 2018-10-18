@@ -1,0 +1,1 @@
+alter table contacts add DontShowLocalLabels bit not null default 0

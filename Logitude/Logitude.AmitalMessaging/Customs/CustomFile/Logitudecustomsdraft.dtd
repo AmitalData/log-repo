@@ -1,0 +1,14 @@
+﻿<!ELEMENT LOGICUSTDRAFT (Logitudecustomsdraft*)>
+<!ELEMENT Logitudecustomsdraft (CustomFileNo?, DeclarationNumber?, CIFValue?, TotalTax?, PaymentDate?, DeclarationStatusCode?, Taxes*, Payments*)>
+<!ELEMENT CustomFileNo (#PCDATA)>
+<!ELEMENT DeclarationNumber (#PCDATA)>
+<!ELEMENT CIFValue (#PCDATA)>
+<!ELEMENT TotalTax (#PCDATA)>
+<!ELEMENT PaymentDate (#PCDATA)>
+<!ELEMENT DeclarationStatusCode (#PCDATA)>
+<!ELEMENT Taxes (TaxTypeCode?, TotalAmount?)>
+<!ELEMENT TaxTypeCode (#PCDATA)>
+<!ELEMENT TotalAmount (#PCDATA)>
+<!ELEMENT Payments (PayeeType?, Amount?)>
+<!ELEMENT PayeeType (#PCDATA)>
+<!ELEMENT Amount (#PCDATA)>

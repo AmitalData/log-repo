@@ -1,0 +1,104 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Customs.Data.EntityPOCOs
+{
+   
+    public class Notification
+    {
+	 string dbms;
+
+        [Key]
+        [Column("Id")]
+	    public string Id { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+        [ForeignKey("NotificationDefinition")]
+        [Column("NotificationDefinitionCode")]
+	    public string NotificationDefinitionCode { get; set; }
+	      
+        public virtual NotificationDefinition NotificationDefinition { get; set; }
+        [Column("CreateDate")]
+	    public DateTime? CreateDate { get; set; }
+        [ForeignKey("AssigneTo")]
+        [Column("AssigneToId")]
+	    public string AssigneToId { get; set; }
+	      
+        public virtual User AssigneTo { get; set; }
+        [ForeignKey("AssigneeNotificationType")]
+        [Column("AssigneToNotificationTypeCode")]
+	    public string AssigneToNotificationTypeCode { get; set; }
+	      
+        public virtual AssigneeNotificationType AssigneeNotificationType { get; set; }
+        [ForeignKey("CustomsHouseType")]
+        [Column("DeclarationOfficeCode")]
+	    public string DeclarationOfficeCode { get; set; }
+	      
+        public virtual CustomsHouseType CustomsHouseType { get; set; }
+        [Column("EntityId")]
+	    public string EntityId { get; set; }
+        [ForeignKey("ObjectTable")]
+        [Column("ObjectTableId")]
+	    public string ObjectTableId { get; set; }
+	      
+        public virtual ObjectTable ObjectTable { get; set; }
+        [Column("IsClosedBCustomOffice")]
+	    public bool IsClosedBCustomOffice { get; set; }
+        [Column("IsClosedByAssignee")]
+	    public bool IsClosedByAssignee { get; set; }
+        [Column("DueDate")]
+	    public DateTime? DueDate { get; set; }
+        [Column("IsSeenByAssignee")]
+	    public bool IsSeenByAssignee { get; set; }
+        [Column("ResponseNotes")]
+	    public string ResponseNotes { get; set; }
+        [ForeignKey("CustomsRequestsSheet")]
+        [Column("CreatedByRequestID")]
+	    public string CreatedByRequestID { get; set; }
+	      
+        public virtual CustomsRequestsSheet CustomsRequestsSheet { get; set; }
+        [Column("SearchFields")]
+	    public string SearchFields { get; set; }
+        [Column("IsHandledByCustomOffice")]
+	    public bool IsHandledByCustomOffice { get; set; }
+        [Column("Reference1Number")]
+	    public string Reference1Number { get; set; }
+        [Column("Reference2Number")]
+	    public string Reference2Number { get; set; }
+        [ForeignKey("Department")]
+        [Column("DepartmentId")]
+	    public string DepartmentId { get; set; }
+	      
+        public virtual Department Department { get; set; }
+        [ForeignKey("ClosedByCustomOfficeUser")]
+        [Column("ClosedByCustomOfficeUserId")]
+	    public string ClosedByCustomOfficeUserId { get; set; }
+	      
+        public virtual User ClosedByCustomOfficeUser { get; set; }
+        [Column("Description")]
+	    public string Description { get; set; }
+        [ForeignKey("User")]
+        [Column("ClosedByAssignee")]
+	    public string ClosedByAssignee { get; set; }
+	      
+        public virtual User User { get; set; }
+        [Column("BadjCount")]
+	    public bool BadjCount { get; set; }
+        [ForeignKey("Customer")]
+        [Column("CustomerId")]
+	    public string CustomerId { get; set; }
+	      
+        public virtual Customer Customer { get; set; }
+    }
+}
+	 

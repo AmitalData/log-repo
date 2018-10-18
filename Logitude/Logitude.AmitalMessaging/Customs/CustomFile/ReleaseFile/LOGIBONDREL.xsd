@@ -1,0 +1,305 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://tempuri.org/LOGIBONDREL" elementFormDefault="qualified" targetNamespace="http://tempuri.org/LOGIBONDREL" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="LOGIBONDREL">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="LogitudeReleaseFile" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LogitudeReleaseFile">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="CustomFileNo" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="DeclarationOfficeCode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="FileState" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="AgentId" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CustomerId" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="TransportModeId" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CreatedByUserId" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ReferentUserId" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="DepartmentId" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="MAWB" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="DealId" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="HAWB" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ManifestNumber" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="LoadingPortCode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="OriginCountryCode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CargoDescription" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="PackageTypeCode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="PackageMeasureQualifierCode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="PackageQuantity" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="GrossMassMeasure" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="VendorId" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ImporterId" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Tenant" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="GrantDate" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ManifestDate" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ArrivalDateTime" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Mode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="EnglishName" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="HebrewName" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ISLASTRELEASEFROMWAREHOUS" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="EntryFile" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="OriginCountryId" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="WarehouseId" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="TransferImporterId" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ImporterEntitlementTypeCode" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="INVOICE" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="PACKAGES" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="agent_fee" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="agent_fee_currency" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="CustomsDocuments" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="TaxationDateTime" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CustomFileNo" type="xs:string" />
+  <xs:element name="Id" type="xs:string" />
+  <xs:element name="DeclarationOfficeCode" type="xs:string" />
+  <xs:element name="FileState" type="xs:string" />
+  <xs:element name="AgentId" type="xs:string" />
+  <xs:element name="CustomerId" type="xs:string" />
+  <xs:element name="TransportModeId" type="xs:string" />
+  <xs:element name="CreatedByUserId" type="xs:string" />
+  <xs:element name="ReferentUserId" type="xs:string" />
+  <xs:element name="DepartmentId" type="xs:string" />
+  <xs:element name="MAWB" type="xs:string" />
+  <xs:element name="DealId" type="xs:string" />
+  <xs:element name="HAWB" type="xs:string" />
+  <xs:element name="ManifestNumber" type="xs:string" />
+  <xs:element name="LoadingPortCode" type="xs:string" />
+  <xs:element name="OriginCountryCode" type="xs:string" />
+  <xs:element name="CargoDescription" type="xs:string" />
+  <xs:element name="PackageTypeCode" type="xs:string" />
+  <xs:element name="PackageMeasureQualifierCode" type="xs:string" />
+  <xs:element name="PackageQuantity" type="xs:string" />
+  <xs:element name="GrossMassMeasure" type="xs:string" />
+  <xs:element name="VendorId" type="xs:string" />
+  <xs:element name="ImporterId" type="xs:string" />
+  <xs:element name="Tenant" type="xs:string" />
+  <xs:element name="GrantDate" type="xs:string" />
+  <xs:element name="ManifestDate" type="xs:string" />
+  <xs:element name="ArrivalDateTime" type="xs:string" />
+  <xs:element name="Mode" type="xs:string" />
+  <xs:element name="EnglishName" type="xs:string" />
+  <xs:element name="HebrewName" type="xs:string" />
+  <xs:element name="ISLASTRELEASEFROMWAREHOUS" type="xs:string" />
+  <xs:element name="EntryFile" type="xs:string" />
+  <xs:element name="OriginCountryId" type="xs:string" />
+  <xs:element name="WarehouseId" type="xs:string" />
+  <xs:element name="TransferImporterId" type="xs:string" />
+  <xs:element name="ImporterEntitlementTypeCode" type="xs:string" />
+  <xs:element name="INVOICE">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="INVOICELINENO" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ACCOUNTTYPE" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="INVOICENUMBER" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="VENDORNUMBER" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CURRENCYCODE" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="INVOICEAMOUNT" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ISSUEDATE" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ISSUECOUNTRYCODE" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="TRANSP_VALUE" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="TRANSP_VALUE_CURR" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="INSURANCE_AMNT" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="INSURANCE_PERCENT" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="INSURANCE_VALUE" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="INSURANCE_CURR" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="INCOTERM_ID" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="INVOICEITEMS" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="TRANSP_VALUE_LIST" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="IS_PREFERENCE" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="TRADE_AGREEMENT" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="EXPENSES" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="INVOICELINENO" type="xs:string" />
+  <xs:element name="ACCOUNTTYPE" type="xs:string" />
+  <xs:element name="INVOICENUMBER" type="xs:string" />
+  <xs:element name="VENDORNUMBER" type="xs:string" />
+  <xs:element name="CURRENCYCODE" type="xs:string" />
+  <xs:element name="INVOICEAMOUNT" type="xs:string" />
+  <xs:element name="ISSUEDATE" type="xs:string" />
+  <xs:element name="ISSUECOUNTRYCODE" type="xs:string" />
+  <xs:element name="TRANSP_VALUE" type="xs:string" />
+  <xs:element name="TRANSP_VALUE_CURR" type="xs:string" />
+  <xs:element name="INSURANCE_AMNT" type="xs:string" />
+  <xs:element name="INSURANCE_PERCENT" type="xs:string" />
+  <xs:element name="INSURANCE_VALUE" type="xs:string" />
+  <xs:element name="INSURANCE_CURR" type="xs:string" />
+  <xs:element name="INCOTERM_ID" type="xs:string" />
+  <xs:element name="INVOICEITEMS">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="ITEMLINENO" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CLASSIFICATIONCODE" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="TRADEAGREEMENTCODE" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="QUANTITY" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="UNIT" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="QUANTITY_STS" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="QUANTITY_TYPE" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ITEMPRICE" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ITEMORIGINCOUNTRY" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ITEMCODE" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ACTUALINVOICELINES" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CURRENCY" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ITEM_COUNTERKEY" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="PREFERENCEDOCUMENTNUMBER" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="CERTIFICATES" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="POINTERS" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="CARS" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ITEMLINENO" type="xs:string" />
+  <xs:element name="CLASSIFICATIONCODE" type="xs:string" />
+  <xs:element name="TRADEAGREEMENTCODE" type="xs:string" />
+  <xs:element name="QUANTITY" type="xs:string" />
+  <xs:element name="UNIT" type="xs:string" />
+  <xs:element name="QUANTITY_STS" type="xs:string" />
+  <xs:element name="QUANTITY_TYPE" type="xs:string" />
+  <xs:element name="ITEMPRICE" type="xs:string" />
+  <xs:element name="ITEMORIGINCOUNTRY" type="xs:string" />
+  <xs:element name="ITEMCODE" type="xs:string" />
+  <xs:element name="ACTUALINVOICELINES" type="xs:string" />
+  <xs:element name="CURRENCY" type="xs:string" />
+  <xs:element name="ITEM_COUNTERKEY" type="xs:string" />
+  <xs:element name="PREFERENCEDOCUMENTNUMBER" type="xs:string" />
+  <xs:element name="CERTIFICATES">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="SerialNo" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Ordinal" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ItemLine" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="LineNo" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="RESPONSECONFIRMATIONTYPECODE" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CERTIFICATENUMBER" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CERTIFICATEEXEMPTIONTYPE" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ATTACHMENTTYPECODE" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="REQUESTCONFIRMATIONTYPECODE" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CUSTOMSATTACHMENTID" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SerialNo" type="xs:string" />
+  <xs:element name="Ordinal" type="xs:string" />
+  <xs:element name="ItemLine" type="xs:string" />
+  <xs:element name="LineNo" type="xs:string" />
+  <xs:element name="RESPONSECONFIRMATIONTYPECODE" type="xs:string" />
+  <xs:element name="CERTIFICATENUMBER" type="xs:string" />
+  <xs:element name="CERTIFICATEEXEMPTIONTYPE" type="xs:string" />
+  <xs:element name="ATTACHMENTTYPECODE" type="xs:string" />
+  <xs:element name="REQUESTCONFIRMATIONTYPECODE" type="xs:string" />
+  <xs:element name="CUSTOMSATTACHMENTID" type="xs:string" />
+  <xs:element name="POINTERS">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="SERIAL_NO" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ORD" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ITEM_LINE" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="LINE_NO" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="DECLARATIONID" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="COUNTERKEY" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="LINENUMBER" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="STATISTICQUANTITY" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="QTY_UNIT" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SERIAL_NO" type="xs:string" />
+  <xs:element name="ORD" type="xs:string" />
+  <xs:element name="ITEM_LINE" type="xs:string" />
+  <xs:element name="LINE_NO" type="xs:string" />
+  <xs:element name="DECLARATIONID" type="xs:string" />
+  <xs:element name="COUNTERKEY" type="xs:string" />
+  <xs:element name="LINENUMBER" type="xs:string" />
+  <xs:element name="STATISTICQUANTITY" type="xs:string" />
+  <xs:element name="QTY_UNIT" type="xs:string" />
+  <xs:element name="CARS">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="SITEM_LINE" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="COUNTER" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="MODEL" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CHASSIS" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ENGINE" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="WINDOW" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="FOB" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="VEHICLE_FILE" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="EXEMPT_TYPE" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SITEM_LINE" type="xs:string" />
+  <xs:element name="COUNTER" type="xs:string" />
+  <xs:element name="MODEL" type="xs:string" />
+  <xs:element name="CHASSIS" type="xs:string" />
+  <xs:element name="ENGINE" type="xs:string" />
+  <xs:element name="WINDOW" type="xs:string" />
+  <xs:element name="FOB" type="xs:string" />
+  <xs:element name="VEHICLE_FILE" type="xs:string" />
+  <xs:element name="EXEMPT_TYPE" type="xs:string" />
+  <xs:element name="TRANSP_VALUE_LIST">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="TRANSP_VALUE_L" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="TRANSP_VALUE_CURR_L" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TRANSP_VALUE_L" type="xs:string" />
+  <xs:element name="TRANSP_VALUE_CURR_L" type="xs:string" />
+  <xs:element name="IS_PREFERENCE" type="xs:string" />
+  <xs:element name="TRADE_AGREEMENT" type="xs:string" />
+  <xs:element name="EXPENSES">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="TypeCode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Amount" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CurrencyTypeCode" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TypeCode" type="xs:string" />
+  <xs:element name="Amount" type="xs:string" />
+  <xs:element name="CurrencyTypeCode" type="xs:string" />
+  <xs:element name="PACKAGES">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="PackTypeId" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="PackQuantity" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="PackWeight" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="SignNum" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PackTypeId" type="xs:string" />
+  <xs:element name="PackQuantity" type="xs:string" />
+  <xs:element name="PackWeight" type="xs:string" />
+  <xs:element name="SignNum" type="xs:string" />
+  <xs:element name="agent_fee" type="xs:string" />
+  <xs:element name="agent_fee_currency" type="xs:string" />
+  <xs:element name="CustomsDocuments">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="Entname" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="DocumentTypeCode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Blocked" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="FromDeclartion" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="COM_ID" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="SerialNum" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Entname" type="xs:string" />
+  <xs:element name="DocumentTypeCode" type="xs:string" />
+  <xs:element name="Blocked" type="xs:string" />
+  <xs:element name="FromDeclartion" type="xs:string" />
+  <xs:element name="COM_ID" type="xs:string" />
+  <xs:element name="SerialNum" type="xs:string" />
+  <xs:element name="TaxationDateTime" type="xs:string" />
+</xs:schema>

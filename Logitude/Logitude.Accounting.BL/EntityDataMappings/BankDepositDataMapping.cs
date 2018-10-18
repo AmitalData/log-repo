@@ -1,0 +1,179 @@
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools; 
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Def.EntityPMs; 
+using Logitude.Accounting.Data;
+using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.CommonDataModel.EntityQueries;
+
+namespace Logitude.Accounting.BL.EntityDataMappings
+{
+   
+   public partial class BankDepositDataMapping: IMapping<BankDepositPM, BankDeposit>
+   {
+
+        public void CustomPMToPOCO(BankDepositPM entityPM, BankDeposit entityPOCO)
+        {
+            AddPOCOPropertyName(POCOPropertyNames.Id);
+            AddPOCOPropertyName(POCOPropertyNames.Tenant);
+            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
+            {
+                entityPOCO.Id = entityPM.Id;
+                entityPOCO.Tenant = entityPM.Tenant;
+            }
+
+            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.SearchFields);
+            BuildSearchFields(entityPM, entityPOCO, entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert);
+            entityPOCO.SearchFields = entityPM.SearchFields;
+        }
+
+        public void CustomPOCOToPM(BankDepositPM entityPM, BankDeposit entityPOCO)
+        {
+            CustomMappedPOCOProperties.Add(POCOPropertyNames.DepositBankAccountId);
+            CustomMappedPOCOProperties.Add(POCOPropertyNames.CashBookId);
+
+
+            if (entityPOCO.DepositBankAccountId != null)
+            {
+                BankAccountQueryService bankAccountQueryService = new BankAccountQueryService(entityPOCO.Tenant);
+                BankAccountPM bankAccount = bankAccountQueryService.GetSingle(entityPOCO.DepositBankAccountId, true, false);
+                if (bankAccount != null)
+                {
+                    entityPM.DeferredGLAccountId = bankAccount.DeferredGLAccountId;
+                    entityPM.CashGLAccountId = bankAccount.GLAccountId;
+                    entityPM.BankAccountNumber = bankAccount.AccountNumber;
+                }
+
+            }
+
+
+            // Get Cashbook
+            if (entityPOCO.CashBookId != null)
+            {
+                CashBookQueryService cashBookQueryService = new CashBookQueryService(entityPOCO.Tenant);
+                CashBookPM cashBook = cashBookQueryService.GetSingle(entityPOCO.CashBookId, true, false);
+                if (cashBook != null)
+                {
+                    entityPM.CashBookGLAccountId = cashBook.AccountId;
+                    entityPM.CashBookName = cashBook.LocalName;
+                    entityPM.IsCashDeposit = cashBook.CashBookTypeCode == "1";
+                }
+
+            }
+
+
+            // Get Journal
+            JournalQueryService journalQueryService = new JournalQueryService(entityPOCO.Tenant);
+            JournalPM journal = journalQueryService.GetByAccountingEntityId(entityPOCO.Id, entityPOCO.Tenant);
+            if (journal != null)
+            {
+                entityPM.JournalId = journal.Id;
+                entityPM.JournalNumber = journal.JournalNumber;
+
+            }
+
+            // Get Currency
+            if (entityPOCO.DepositCurrencyId != null)
+            {
+                CurrencyQuery currencyQuery = new CurrencyQuery(entityPOCO.Tenant);
+                CurrencyPM currency = currencyQuery.GetSinglePM(entityPOCO.DepositCurrencyId, entityPOCO.Tenant);
+                if (currency != null)
+                {
+                    entityPM.DepositCurrencyCode = currency.Code;
+                }
+
+            }
+
+            // Get user
+            if (entityPOCO.CreatedByUserId != null)
+            {
+                ContactQuery query = new ContactQuery(entityPOCO.Tenant);
+                ContactPM contact = query.GetSinglePM(entityPOCO.CreatedByUserId, entityPOCO.Tenant);
+                if (contact != null)
+                {
+                    entityPM.CreatedByUserName = contact.LocalName;
+                }
+            }
+
+        }
+
+
+        private static void BuildSearchFields(BankDepositPM entityPM, BankDeposit poco, bool isNewEntity)
+        {
+            string result = "";
+
+
+            if (!string.IsNullOrEmpty(entityPM.DepositNumber.ToString()))
+            {
+                if (!(result.Split(',').Contains(entityPM.DepositNumber.ToString())))
+                {
+                    result = string.IsNullOrEmpty(result) ? entityPM.DepositNumber.ToString() : result + "," + entityPM.DepositNumber.ToString();
+                }
+            }
+
+            // Get cheqeu Numbers from lines
+            foreach(BankDepositLinePM line in entityPM.BankDepositLines)
+            {
+                if (line.ARPaymentChequeId != null)
+                {
+                    ARPaymentChequeQueryService aRPaymentChequeQueryService = new ARPaymentChequeQueryService(entityPM.Tenant);
+                    ARPaymentChequePM arPaymentCheque = aRPaymentChequeQueryService.GetSingle(line.ARPaymentChequeId, true, false);
+                    if (arPaymentCheque != null)
+                    {
+                        result += "," + arPaymentCheque.ChequeNumber;
+                    }
+
+                }
+            }
+
+            
+
+            //foreach (JournalLinePM item in entityPM.BankDepositLines)
+            //{
+            //    if (!string.IsNullOrEmpty(item.Reference1))
+            //    {
+
+            //        if (!(result.Split(',').Contains(item.Reference1)))
+            //        {
+            //            result = string.IsNullOrEmpty(result) ? item.Reference1 : result + "," + item.Reference1;
+            //        }
+
+            //    }
+
+            //    if (!string.IsNullOrEmpty(item.Reference2))
+            //    {
+            //        if (!(result.Split(',').Contains(item.Reference2)))
+            //        {
+            //            result = string.IsNullOrEmpty(result) ? item.Reference2 : result + "," + item.Reference2;
+            //        }
+            //    }
+
+            //    if (!string.IsNullOrEmpty(item.Reference3))
+            //    {
+            //        if (!(result.Split(',').Contains(item.Reference3)))
+            //        {
+            //            result = string.IsNullOrEmpty(result) ? item.Reference3 : result + "," + item.Reference3;
+            //        }
+            //    }
+            //}
+
+            entityPM.SearchFields = result;
+            poco.SearchFields = result;
+
+        }
+
+
+   }
+
+
+}
+   

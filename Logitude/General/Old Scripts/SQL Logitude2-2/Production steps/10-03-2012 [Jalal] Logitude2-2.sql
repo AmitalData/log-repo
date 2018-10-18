@@ -1,0 +1,22 @@
+﻿-- -------------------------------------------------
+-- *) in GlobalDBs : isupgrading = true
+-- *) Run all scripts
+-- *) Run features+roles constraints
+-- *) recreate shipment data view
+-- *) copy isactive from tenants to GlobalTenants : 
+		--select 111,isactive,222,id from tenants
+		--update GlobalTenants set isactive = 1 where id = 0
+-- *) delete script :
+		-- delete from querycolumns
+		--delete from AdvancedQueryFilters
+		--delete from Queries
+		--delete from screenfields
+		--delete from MenuButtons
+		--delete from RoleFeatures
+		--delete from menustables
+		--delete from Features
+-- *) update tenant 0 and other tenants 
+-- *) import package features
+-- *) in GlobalDBs : isupgrading = false
+-- *) configure azure connect - champ
+-- -------------------------------------------------

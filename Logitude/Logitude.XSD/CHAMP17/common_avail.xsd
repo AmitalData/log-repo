@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+<xs:schema attributeFormDefault="unqualified"
+           elementFormDefault="qualified"
+           xmlns:GCCSCargoImp="http://www.champ.aero/GCCS/CargoXML"
+           targetNamespace="http://www.champ.aero/GCCS/CargoXML"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           version="2.0"
+>
+    <xs:include schemaLocation="common.xsd"/>
+
+    <xs:complexType name="ScheduleAndAvailabilityInformationRequestDetails">
+        <xs:sequence>       
+            <xs:element name="RequestedRouting" type="GCCSCargoImp:RequestedRouting" minOccurs="1"/>
+            <xs:element name="Date" type="GCCSCargoImp:Date" minOccurs="1"/>
+            <xs:element name="Flight" type="GCCSCargoImp:Flight" minOccurs="0"/>
+            <xs:element name="EarliestDepartureTime" type="GCCSCargoImp:EarliestDepartureTime" minOccurs="0"/>
+            <xs:element name="LatestArrivalDateTime" type="GCCSCargoImp:LatestArrivalDateTime" minOccurs="0"/>
+            <xs:element name="ConnectionRestriction" type="GCCSCargoImp:ConnectionRestriction" minOccurs="0"/>
+            <xs:element name="AircraftPossibilityCode" type="GCCSCargoImp:AircraftPossibilityCode" minOccurs="0"/>
+   		  <xs:element name="ServiceCode" type="GCCSCargoImp:ServiceCode" minOccurs="0"/>
+   	      <xs:element name="Weight" type="GCCSCargoImp:WeightInfo" minOccurs="0"/>
+            <xs:element name="Volume" type="GCCSCargoImp:VolumeInfo" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RequestedRouting">
+        <xs:attribute name="AirportCityCodeOfDeparture" type="GCCSCargoImp:AirportCode" use="required"/>
+        <xs:attribute name="AirportCityCodeOfArrival" type="GCCSCargoImp:AirportCode" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="Date">
+        <xs:attribute name="DayOfMonth" type="GCCSCargoImp:DayOfMonth" use="required"/>
+        <xs:attribute name="Month" type="GCCSCargoImp:Month" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="VolumeInfo">
+        <xs:attribute name="VolumeCode" type="GCCSCargoImp:VolumeCode" use="required"/>
+        <xs:attribute name="VolumeAmount" type="GCCSCargoImp:VolumeAmount" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="FVAFlightDetails">
+        <xs:sequence>
+            <xs:element name="Flight" type="GCCSCargoImp:Flight" minOccurs="1"/>
+            <xs:element name="RequestedRouting" type="GCCSCargoImp:RequestedRouting" minOccurs="1"/>
+            <xs:element name="Schedule" type="GCCSCargoImp:Schedule" minOccurs="1"/>
+            <xs:element name="AircraftTypeCode" type="GCCSCargoImp:AircraftTypeCode" minOccurs="1"/>
+            <xs:element name="NumberOfStops" type="GCCSCargoImp:NumberOfStops" minOccurs="1"/>
+            <xs:element name="ScheduleSupplementaryInformation" type="GCCSCargoImp:ScheduleSupplementaryInformation" minOccurs="0"/>
+         </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="EarliestDepartureTime">
+        <xs:attribute name="Time" type="GCCSCargoImp:Time" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="LatestArrivalDateTime">
+       <xs:attribute name="DayOfMonth" type="GCCSCargoImp:DayOfMonth" use="required"/>
+       <xs:attribute name="Month" type="GCCSCargoImp:Month" use="optional"/>
+       <xs:attribute name="Time" type="GCCSCargoImp:Time" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="ConnectionRestriction">
+        <xs:attribute name="Indicator" type="GCCSCargoImp:ConnectionRestrictionIndicator" use="required"/>
+        <xs:attribute name="AirportCityCode" type="GCCSCargoImp:AirportCode" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="WeightInfo">
+        <xs:attribute name="WeightCode" type="GCCSCargoImp:WeightCode" use="required"/>
+        <xs:attribute name="WeightAmount" type="GCCSCargoImp:Weight" use="required"/>
+    </xs:complexType>
+
+   <xs:complexType name="Flight">
+        <xs:attribute name="CarrierCode" type="GCCSCargoImp:CarrierCode" use="required"/>
+        <xs:attribute name="FlightNumber" type="GCCSCargoImp:FlightNumber" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="ScheduleInformationAnswerHeader">
+        <xs:sequence>
+            <xs:element name="DaysOfOperation" type="GCCSCargoImp:DayOfTheWeek" maxOccurs="7"/>
+            <xs:element name="StartDate" type="GCCSCargoImp:StartDate"/>
+            <xs:element name="ExpiryDate" type="GCCSCargoImp:ExpiryDate"/>
+         </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="StartDate">
+        <xs:attribute name="DayOfMonth" type="GCCSCargoImp:DayOfMonth" use="required"/>
+        <xs:attribute name="Month" type="GCCSCargoImp:Month" use="required"/>
+        <xs:attribute name="Year" type="GCCSCargoImp:Year" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="ExpiryDate">
+       <xs:attribute name="DayOfMonth" type="GCCSCargoImp:DayOfMonth" use="required"/>
+       <xs:attribute name="Month" type="GCCSCargoImp:Month" use="required"/>
+       <xs:attribute name="Year" type="GCCSCargoImp:Year" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="ScheduleAndAvailabilityInformationAnswerDetails">
+        <xs:sequence>
+          <xs:element name="Date" type="GCCSCargoImp:Date"/>
+          <xs:element name="FlightDetails" type="GCCSCargoImp:FVAFlightDetails" maxOccurs="99"/>           
+         </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Schedule">
+        <xs:attribute name="TimeOfScheduledDeparture" type="GCCSCargoImp:Time" use="required"/>
+        <xs:attribute name="DepartureDayChangeIndicator" type="GCCSCargoImp:DayChangeIndicator" use="optional"/>
+        <xs:attribute name="TimeOfScheduledArrival" type="GCCSCargoImp:Time" use="required"/>
+        <xs:attribute name="ArrivalDayChangeIndicator" type="GCCSCargoImp:DayChangeIndicator" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="ScheduleSupplementaryInformation">
+          <xs:sequence>
+              <xs:element name="OtherServiceInformation" type="GCCSCargoImp:OtherServiceInformationEntry" minOccurs="1" maxOccurs="3"/>     
+          </xs:sequence>
+
+    </xs:complexType>
+
+    <xs:complexType name="AvailabilitySupplementaryDetails">
+          <xs:sequence>
+              <xs:element name="Weight" type="GCCSCargoImp:WeightInfo" minOccurs="1"/>  
+              <xs:element name="Volume" type="GCCSCargoImp:VolumeInfo" minOccurs="0"/>
+              <xs:element name="LatestCheckInTime" type="GCCSCargoImp:Time" minOccurs="0"/>
+			  <xs:element name="ServiceCode" type="GCCSCargoImp:ServiceCode" minOccurs="0"/>    
+          </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

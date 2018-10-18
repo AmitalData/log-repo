@@ -1,0 +1,94 @@
+﻿<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+    <tr>
+
+        <td>
+            <div class="MediaFill">
+                <div class="SimpleGridView">
+                    <div class="SimpleGridViewHeader">
+                        <table>
+                            <tr>
+                                <td style="width: 30px; min-width: 30px;max-width:30px"></td>
+                                <td style="width: 200px; min-width: 200px;max-width:200px">Name</td>
+                                <td style="width: 200px; min-width: 200px;max-width:200px">Card Code</td>
+                                <td style="width: 200px; min-width: 200px;max-width:200px">VAT #</td>
+                                <td class="LastChild"></td>
+
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="SimpleGridViewBody" style="overflow-y:auto" *ngIf="DataLoaded" >
+                        <table>
+                            <tr class="SimpleGridViewRow RowHover RowSelected" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem"  *ngFor="let item of viewModel.CardObsList">
+                                <td class="GridViewCell" style="width:30px; min-width: 30px;max-width:30px">
+                                    <div><CheckBox  (Checked)="item.IsSelected = $event" [IsEnabled]="item.IsCustomerCanChecked" [IsChecked]="item.IsSelected"></CheckBox></div>
+                                </td>
+                                <td class="GridViewCell" style="width:200px; min-width: 200px;max-width:200px">
+                                    <div>{{item.EnglishName}}</div>
+                                </td>
+
+                                <td class="GridViewCell" style="width: 200px; min-width: 200px;max-width:200px">
+                                    <span class="Value">{{item.Code}}</span>
+                                </td>
+                                <td class="GridViewCell" style="width: 200px; min-width: 200px;max-width:200px">
+                                    <span class="Value">{{item.VatNumber}}</span>
+                                </td>                               
+                                <td class="LastChild"></td>
+
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </td>
+    </tr>
+
+    <tr style="height:30px">
+        <td>
+            <table *ngIf="DataLoaded"> 
+                <tr>
+                    <td style="width:80px">
+                        <LogLabel [ObjectFieldName]="'HybridStartDate'" [ObjectTableName]="'CustomerTenantAccessCard'" [Text]="'Start Date'" [DataContext]="viewModel.DataContext"></LogLabel>
+                    </td>
+                    <td style="width:110px">
+                        <LogDatePicker [ObjectFieldName]="'HybridStartDate'" [ObjectTableName]="'CustomerTenantAccessCard'" [NoObjectField]="true"
+                                       [DataContext]="viewModel.DataContext" [HideColumns]="true"
+                                       [SelectedDateValue]="viewModel.HybridStartDate"></LogDatePicker>
+                        </td>                  
+                    <td>
+
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Save</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

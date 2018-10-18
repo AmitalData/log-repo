@@ -1,0 +1,1 @@
+delete from MenuButtons where EventCode = 'SendToCustoms' or EventCode = 'SendToArtemusVoyage' or EventCode = 'SendToArtemusBill'

@@ -1,0 +1,358 @@
+﻿
+<style type="text/css">
+    .Box {
+        width: 100%;
+        height: 100%;
+        border: 1px solid #BABABA;
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        overflow: hidden;
+    }
+
+    .BoxHeader {
+        height: 20px;
+        font-size: 12px;
+        color: #1B90CB;
+        text-indent: 5px;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(245, 245, 245, 1) 0%,rgba(243, 243, 243, 1) 50.24%,rgba(236, 236, 236, 1) 69.98%,rgba(224, 224, 224, 1) 84.35%,rgba(207, 207, 207, 1) 96.04%,rgba(199, 199, 199, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(245, 245, 245, 1) ),color-stop(0.5024,rgba(243, 243, 243, 1) ),color-stop(0.6998,rgba(236, 236, 236, 1) ),color-stop(0.8435,rgba(224, 224, 224, 1) ),color-stop(0.9604,rgba(207, 207, 207, 1) ),color-stop(1,rgba(199, 199, 199, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
+        -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#F5F5F5', endColorstr='#C7C7C7' ,GradientType=0)";
+        background: linear-gradient(180deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
+    }
+</style>
+
+<table>
+    <tr>
+        <td>
+            <div class="TabHolder">
+                <table>
+                    <tr class="TabTitleRow">
+                        <td>{{'Team.TH.General' | TextCodeTranslationPipe}}</td>
+                    </tr>
+
+                    <tr style="height:1px;">
+                        <td>
+                            <table>
+
+                                <tr class="FormFieldRow">
+                                    <td style="width:120px;">
+                                        <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td style="width:260px;">
+                                        <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'LocalName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'LocalName'" [Text]="LocalName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'ManagerUserId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'ManagerUserId'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [SelectedValue]="ManagerUserId"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'User'"></LogLov>
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'Notify'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td>
+                                        <div class="MediaFill" style="width:225px;">
+                                            <EmailSearchTextBox [EmailsText]="Notify" [Watermark]="'Add Users'" [IsUsersList]="true" (EmailsTextChanged)="Notify = $event"></EmailSearchTextBox>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <td style="vertical-align:top;">
+                                        <LogLabel [ObjectFieldName]="'Notes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td colspan="2">
+                                        <table>
+                                            <tr>
+                                                <td style="width:260px;height:85px;">
+                                                    <div class="MediaFill">
+                                                        <LogTextBox [ObjectFieldName]="'Notes'" [Text]="Notes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td>
+                                        <LogCheckBox [ObjectFieldName]="'InActive'" [Checked]="InActive" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="3">
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr style="height:10px;">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="width:100%;">
+                            <div class="Box">
+                                <table>
+                                    <tr class="BoxHeader">
+                                        <td style="color:#45494A;font-size:14px;float:left;width:65px;">Members</td>
+                                        <td style="width: 20px; padding: 3px;float:right;">
+                                            <IconButton [Width]="18" [Height]="16" [Name]="'Add'" (click)="NewMemberLine()"></IconButton>
+                                        </td>
+                                        <td style="width:5px;">
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <table>
+                                                <tr style="height:22px;">
+                                                    <td>
+                                                        <div style="margin-top:3px;margin-bottom:3px;margin-left:3px;height:22px;border:solid;border-width:1px;border-radius:3px;border-color:#D1D1D1;vertical-align:central;">
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="width:10px;">
+                                                                        <div></div>
+                                                                    </td>
+                                                                    <td style="width:120px;text-align:left;"> Type</td>
+                                                                    <td style="width:210px;text-align:left;"> Member</td>
+                                                                    <td style="text-align:left;"> Business Roles </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="SimpleGridView">
+                                                            <div style="top:2px;" class="SimpleGridViewBody">
+                                                                <table>
+                                                                    <tr *ngFor="let item of MembersLines" style="min-height:35px">
+                                                                        <td>
+                                                                            <div style="margin-bottom:3px;margin-left:3px;min-height:35px;border:solid;border-width:1px;border-radius:3px;border-color:#D1D1D1;vertical-align:middle;text-align:center;">
+                                                                                <table>
+                                                                                    <tr style="height:5px;">
+                                                                                        <td>
+                                                                                            <div></div>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td style="width:10px;min-width:10px;max-width:10px;">
+                                                                                            <div></div>
+                                                                                        </td>
+                                                                                        <td class="GridViewCell" style="width:120px;min-width:120px;max-width:120px;vertical-align:middle;text-align:left;">
+                                                                                            <div class="MediaFill">
+                                                                                                <ComboBox [ItemsSource]="item.MembersTypes"
+                                                                                                          [SelectedItem]="item.SelectedFilter"
+                                                                                                          (SelectedItemChanged)="item.SelectedFilter = $event"
+                                                                                                          [Binding]="'Name'"></ComboBox>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                        <td style="width:5px;min-width:5px;max-width:5px;">
+                                                                                            <div></div>
+                                                                                        </td>
+                                                                                        <td *ngIf="item.SelectedFilter != null && item.SelectedFilter.Code == '1'" class="GridViewCell" style="width:210px;min-width:210px;max-width:210px;vertical-align:middle;">
+                                                                                            <div class="MediaFill" style="text-align:left;">
+                                                                                                <LogLov [ObjectFieldName]="'MemberUserId'"
+                                                                                                        [ObjectTableName]="item.ObjectTableName"
+                                                                                                        [SelectedValue]="item.MemberUserId"
+                                                                                                        [DataContext]="item.DataContext"
+                                                                                                        [LookUpTableName]="'User'"></LogLov>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                        <td *ngIf="item.SelectedFilter != null && item.SelectedFilter.Code == '2'" class="GridViewCell" style="width:210px;min-width:210px;max-width:210px;vertical-align:middle;">
+                                                                                            <div class="MediaFill">
+                                                                                                <LogLov [ObjectFieldName]="'MemberTeamId'"
+                                                                                                        [ObjectTableName]="item.ObjectTableName"
+                                                                                                        [SelectedValue]="item.MemberTeamId"
+                                                                                                        [DataContext]="item.DataContext"
+                                                                                                        [LookUpTableName]="'Team'" [QueryFilterItems]="TeamsFilterItems"></LogLov>
+                                                                                            </div> 
+                                                                                        </td>
+                                                                                        <td *ngIf="item.SelectedFilter != null" style="width:110px;min-width:110px;max-width:110px;vertical-align:middle;" class="GridViewCell">
+                                                                                            <div>
+                                                                                                <ToggleButton [Title]="'Add/Remove'" [DropDownWidth]="260" [DropDownHeight]="350">
+                                                                                                    <table>
+                                                                                                        <tr style="height: 5px">
+                                                                                                            <td>
+                                                                                                                <div></div>
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                        <tr style="height: 32px;vertical-align:central;">
+                                                                                                            <td>
+                                                                                                                <table>
+                                                                                                                    <tr>
+                                                                                                                        <td style="width:10px">
+                                                                                                                            <div></div>
+                                                                                                                        </td>
+                                                                                                                        <td style="vertical-align:middle;">
+                                                                                                                            <SearchBox (TextChanged)="SearchText = $event"></SearchBox>
+                                                                                                                        </td>
+                                                                                                                        <!--<td style="width:20px;float:right;vertical-align:middle;">
+                                                                                                                            <IconButton [Top]="5" [Name]="'Add'" [IsSmall]="true" [attr.title]="'Add Business Role'" (click)="item.AddBusinessRole()"></IconButton>
+                                                                                                                        </td>-->
+                                                                                                                        <td style="width:5px">
+                                                                                                                            <div></div>
+                                                                                                                        </td>
+                                                                                                                    </tr>
+                                                                                                                </table>
+                                                                                                            </td>
+                                                                                                        </tr>
+
+                                                                                                        <tr>
+                                                                                                            <td>
+                                                                                                                <div class="MediaFill">
+                                                                                                                    <ScrollViewer>
+                                                                                                                        <table>
+                                                                                                                            <tr style="height:22px;" *ngFor="let role of item.BusinessRolesToggleList; let i = index">
+                                                                                                                                <td>
+                                                                                                                                    <table>
+                                                                                                                                        <tr>
+                                                                                                                                            <td style="width:5px">
+                                                                                                                                                <div></div>
+                                                                                                                                            </td>
+
+                                                                                                                                            <td style="width:22px;">
+                                                                                                                                                <div style="width:22px;">             
+                                                                                                                                                    <LogCheckBox [ObjectFieldName]="'IsChecked'" [NoObjectField]="true" [Checked]="role.IsChecked" [DataContext]="role.DataContext"></LogCheckBox>
+                                                                                                                                                </div>
+                                                                                                                                            </td>
+                                                                                                                                            <td style="vertical-align:central;">
+                                                                                                                                                <table>
+                                                                                                                                                    <tr>
+                                                                                                                                                        <td style="width:5px">
+                                                                                                                                                            <div></div>
+                                                                                                                                                        </td>
+                                                                                                                                                        <td style="float:left;">
+                                                                                                                                                            <div style="margin-left:5px;margin-top:0px">
+                                                                                                                                                                <label style="font-size:small" *ngIf="!role.IsChecked">{{role.Name}}</label>
+                                                                                                                                                                <label style="font-size:small;color:lightgray" *ngIf="role.IsChecked">{{role.Name}}</label>
+                                                                                                                                                            </div>
+                                                                                                                                                        </td>
+                                                                                                                                                        <td style="width:5px">
+                                                                                                                                                            <div></div>
+                                                                                                                                                        </td>
+                                                                                                                                                    </tr>
+                                                                                                                                                </table>
+                                                                                                                                            </td>
+                                                                                                                                        </tr>
+                                                                                                                                    </table>
+                                                                                                                                </td>
+                                                                                                                            </tr>
+                                                                                                                            <tr>
+                                                                                                                                <td></td>
+                                                                                                                            </tr>
+                                                                                                                        </table>
+                                                                                                                    </ScrollViewer>
+                                                                                                                </div>
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                    </table>
+                                                                                                </ToggleButton>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                        <td *ngIf="item.SelectedFilter != null"  class="GridViewCell">
+                                                                                            <div style="display:inline-block;vertical-align:top;width:auto;height:18px;border:1px solid gray;border-radius:0px;margin-left:5px;margin-top:2px;margin-bottom:2px; float:left; text-align:left;" *ngFor="let role of item.BusinessRolesList">
+                                                                                                <div style="margin-left:1px;display:inline-block;vertical-align:middle;margin-top:-4px;">
+                                                                                                    <span style="margin-left:2px">{{role.RoleName}}</span>
+                                                                                                    <span>
+                                                                                                        <img (click)="item.DeleteBuseinssRole(role)" src="./Images/RedX3.png" style="width: 13px; display:inline-block;height: 14px;margin-left:2px;margin-right:3px;margin-bottom:3px;" />
+                                                                                                    </span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                        <td *ngIf="item.SelectedFilter == null">
+                                                                                            <div></div>
+                                                                                        </td>
+                                                                                        <td class="GridViewCell" style="width:25px;min-width:25px;max-width:25px;padding:3px;vertical-align:middle;float:right;">
+                                                                                            <IconButton [Width]="18" [Height]="16" [Name]="'Delete'" (click)="DeleteTeamMemberLine(item)"></IconButton>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td colspan="3">
+                                                                                            <div></div>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr style="height:10px;">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>

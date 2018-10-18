@@ -1,0 +1,29 @@
+﻿export class SendHtmlDocumentFilter {
+    InternalDocumentId: string;
+    ExternalDocumentId: string;
+    Tenant: Number;
+    ToEmail: string;
+    Subject: string
+    Cc: string;
+    Bcc: string
+    UserId: string;
+    ObjectTableId: string;
+    Attachments: string
+    EntityReference: string
+    HtmlString: string;
+    HtmlPlainString: string;
+    ExportQuotationsToIntegratedSystem: boolean;
+    DocumentTypeCode: string;
+    EntityId: string;
+    CustomerId: string;
+    EventTypeCode: string;
+    IsCRM: boolean;
+    ReplyTo: string;
+    From: string;
+    ObjectTableName: string;
+    constructor() {
+
+    }
+
+
+}

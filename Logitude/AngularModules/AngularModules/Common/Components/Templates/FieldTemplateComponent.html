@@ -1,0 +1,155 @@
+﻿
+
+<table *ngIf="Entity">
+    <tr>
+        <td>
+            <div class="MediaFill">
+
+                <div *ngIf="ObjectTableName == 'Customer' && FieldName == 'RankCode'">
+                    <span><img style="width: 20px; height: 20px; vertical-align: middle; margin:0; margin-left: -0px;" [attr.src]="RankSource1" [attr.title]="Entity['RankName']" /></span>
+                    <span><img style="width: 20px; height: 20px; vertical-align: middle; margin:0; margin-left: -3px;" [attr.src]="RankSource2" [attr.title]="Entity['RankName']" /></span>
+                    <span><img style="width: 20px; height: 20px; vertical-align: middle; margin:0; margin-left: -3px;" [attr.src]="RankSource3" [attr.title]="Entity['RankName']" /></span>
+                </div>
+
+                <table *ngIf="ObjectTableName == 'Customer' && FieldName == 'CityWithCountry' && IsHeaderScreenTemplate">
+                    <tr>
+                        <td>
+                            <div class="MediaFill TextTrimming">
+                                {{FieldValue}}
+                            </div>
+                        </td>
+
+                        <td style="width: 5px">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 1px;">
+                            <GoogleMapsButton [AddressString]="Entity['GoogleAddressString']"></GoogleMapsButton>
+                        </td>
+                    </tr>
+                </table>
+
+                <div *ngIf="ObjectTableName == 'Customer' && FieldName == 'SharedLogisticsInvitationStatusName'">
+                    <span [ngStyle]="{color: SharedLogisticsInvitationStatusColor}">{{FieldValue}}</span>
+                </div>
+
+                <div *ngIf="ObjectTableName == 'CustomerTenantAccess' && FieldName == 'StatusName'">
+                    <span [style.color]="Entity['StatusName'] | LogBoxStatusForegroundPipe">{{FieldValue}}</span>
+                </div>
+
+                <div *ngIf="ObjectTableName == 'Customer' && FieldName == 'LastLoginDate'">
+                    <span>{{FieldValue | DateTimeToDatePipe}}</span>
+                </div>
+
+                <div *ngIf="ObjectTableName == 'AgentSharedManifest' && FieldName == 'CreateDate'">
+                    <span>{{FieldValue | DateTimeToDatePipe}} {{FieldValue | DateTimeToTimePipe}} </span>
+                </div>
+
+                <div *ngIf="ObjectTableName == 'AgentSharedManifest' && FieldName == 'UpdateDate'">
+                    <span>{{FieldValue | DateTimeToDatePipe}} {{FieldValue | DateTimeToTimePipe}} </span>
+                </div>
+
+                <div *ngIf="ObjectTableName == 'AgentSharedManifest' && FieldName == 'TransportModeId'" class="MediaFillRelative">
+                    <img class="CenterCenter" [attr.src]="'./Images/Icons/' + FieldValue + '.png'" [title]="Entity['TransportModeName']" />
+                </div>
+
+                <div *ngIf="ObjectTableName == 'AgentSharedManifest' && FieldName == 'DirectionId'" class="MediaFillRelative">
+                    <img class="CenterCenter" [attr.src]="'./Images/Directions/' + FieldValue + '.png'" [title]="'Export'" />
+                </div>
+
+                <div *ngIf="ObjectTableName == 'AgentSharedManifest' && FieldName == 'StatusName'">
+                    <span style="font-weight: bold;" [ngStyle]="{color: AgentSharedManifestStatusColor}">{{FieldValue}}</span>
+                </div>
+
+                <div *ngIf="ObjectTableName == 'Customer' && FieldName == 'LastShipmentDate'">
+                    <span style="font-weight: bold;" [ngStyle]="{color: LastShipmentDateColor}">{{LastShipmentDateValue}}</span>
+                </div>
+
+                <div *ngIf="ObjectTableName == 'Customer' && FieldName == 'StartWorkingDate'">
+                    <span>{{StartWorkingDateValue}}</span>
+                </div>
+
+                <div *ngIf="ObjectTableName == 'Customer' && FieldName == 'CustomerStatusCode'">
+                    <span [ngStyle]="{color: Entity['CustomerStatusCode'] | StringToColorPipe:'InActive'}">{{FieldValue}}</span>
+                </div>
+
+                <div *ngIf="ObjectTableName == 'Customer' && FieldName == 'CustomerStatusName'">
+                    <span [ngStyle]="{color: Entity['CustomerStatusCode'] | StringToColorPipe:'CustomerStatusCode'}">{{FieldValue}}</span>
+                </div>
+
+                <div *ngIf="ObjectTableName == 'CommunicationLog' && (FieldName == 'CreateDate' || FieldName == 'CreateDateUTC')" style="position: absolute; top:0; bottom:0; left:0; right:0; margin:auto;">
+                    <div class="TextTrimming">
+                        {{FieldValue | DateTimePipe:'DTL12NW'}}
+                    </div>
+                </div>
+
+                <div *ngIf="ObjectTableName == 'Vessel' && FieldName == 'CountryCode'" class="MediaFillRelative">
+                    <div *ngIf="FieldValue">
+                        <img style="width: 24px; height: 24px;" [attr.src]="FieldValue | CountryFlagPipe" [title]="Entity['CountryName']" />
+                    </div>
+                </div>
+
+                <div *ngIf="FieldName == 'InOut'">
+                    <img *ngIf="FieldValue == 'O' || FieldValue == 'Out'" style="vertical-align:middle; margin: auto;margin-top:-2px" [attr.src]="'./Images/Icons/ArrowRight.png'" [title]="'Out'" />
+
+                    <img *ngIf="FieldValue == 'I' || FieldValue == 'In' " style="vertical-align:middle; margin: auto;margin-top:-2px" [attr.src]="'./Images/Icons/ArrowLeft.png'" [title]="'In'" />
+                </div>
+
+                <div *ngIf="FieldName == 'EnglishName'" class="TextTrimming">
+
+                    <table>
+                        <tr style="width:200px">
+                            <td style="max-width:0px">
+                                <div class="TextTrimming">
+                                    {{FieldValue}}
+                                </div>
+                            </td>
+                            <td style="min-width:10px;width:10px;max-width:50px">
+                                <img *ngIf="isPotentialCustomer" style="vertical-align:middle;float:left; margin: auto;margin-top:-2px" [attr.src]="'./Images/PotentialCustomer.png'" [title]="Entity[CustomerStatusName]" />
+
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+
+                <div *ngIf="ObjectTableName == 'DocumentsFiling' && FieldName == 'Extension'">
+                    <img style="width:22px;height:25px;margin-left:5px;cursor:pointer;" *ngIf="FieldValue" src="{{FieldValue | AttatchmentIconPipe}}" />
+                </div>
+                <div *ngIf="ObjectTableName == 'DocumentsFiling' && FieldName == 'IsDigitallySigned'">
+                    <img *ngIf="Entity['IsDigitallySigned']" src="./Images/DigitallySigned.png" />
+                    <img *ngIf="!Entity['IsDigitallySigned']" src="./Images/DigitallySignedG.png" />
+                </div>
+
+                <div class="TemplateTrimming" *ngIf="ObjectTableName == 'CommunicationLog' && FieldName == 'EmailDeliveryError' && FieldValue" [title]="Entity['EmailDeliveryError']">
+                    <div class="TemplateTrimmingChild">{{FieldValue}}</div>
+                </div>
+
+                <div class="TemplateTrimming" *ngIf="ObjectTableName == 'CommunicationLog' && FieldName == 'CommunicationStatusTypeName'">
+                    <table>
+                        <tr>
+                            <td style="width:80px;">
+                                <div class="TemplateTrimmingChild" style="text-align:left;">{{FieldValue}}</div>
+                            </td>
+                            <td style="width:2px;">
+                                <div></div>
+                            </td>
+                            <td *ngIf="Entity['EmailDeliveryError'] != null && Entity['CommunicationStatusTypeCode'] = 'D'" style="width:25px;">
+                                <HelpIcon [IconSize]='25' [Header]="'Email Delivery Error'" [Text]="Entity['EmailDeliveryError']" [IconPath]="'./Images/Warning_icon_24.png'"></HelpIcon>
+                            </td>
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div *ngIf="IsSpotLightTemplate == true" style="position:absolute;top:0;bottom:0;left:0;right:0;">
+                    <div style="height:100%;width:100%;">
+
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>

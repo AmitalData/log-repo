@@ -1,0 +1,839 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D5834B27-2C00-4AB3-9AA3-4266314B5ABA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CommunicationWorkerRole</RootNamespace>
+    <AssemblyName>CommunicationWorkerRole</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <RoleType>Worker</RoleType>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'All Projects|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\All Projects\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|AnyCPU'">
+    <OutputPath>bin\None\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Devart.Data, Version=5.0.895.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\General\Dlls\Devart\Devart.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Linq, Version=4.4.441.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\General\Dlls\Devart\Devart.Data.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle, Version=8.2.103.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\General\Dlls\Devart\Devart.Data.Oracle.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle.Entity, Version=8.2.103.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\General\Dlls\Devart\Devart.Data.Oracle.Entity.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle.Entity.Migrations">
+      <HintPath>..\General\Dlls\Devart\Devart.Data.Oracle.Entity.Migrations.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle.Entity.Spatials">
+      <HintPath>..\General\Dlls\Devart\Devart.Data.Oracle.Entity.Spatials.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle.Linq, Version=4.4.441.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\General\Dlls\Devart\Devart.Data.Oracle.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle.Web, Version=8.2.103.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\General\Dlls\Devart\Devart.Data.Oracle.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="DevDefined.OAuth, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a3261f5b4697e67d, processorArchitecture=MSIL">
+      <HintPath>..\..\..\WorkerRoleSimulation\packages\IppDotNetSdkForQuickBooksApiV3.2.9.1\lib\DevDefined.OAuth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Dropbox.Api">
+      <HintPath>..\packages\Dropbox.Api.4.2.4\lib\net45\Dropbox.Api.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\General\Dlls\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\General\Dlls\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\General\Dlls\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Intuit.Ipp.Core, Version=2.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\WorkerRoleSimulation\packages\IppDotNetSdkForQuickBooksApiV3.2.9.1\lib\Intuit.Ipp.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Intuit.Ipp.Data, Version=2.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\WorkerRoleSimulation\packages\IppDotNetSdkForQuickBooksApiV3.2.9.1\lib\Intuit.Ipp.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Intuit.Ipp.DataService, Version=2.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\WorkerRoleSimulation\packages\IppDotNetSdkForQuickBooksApiV3.2.9.1\lib\Intuit.Ipp.DataService.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Intuit.Ipp.Diagnostics, Version=2.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\WorkerRoleSimulation\packages\IppDotNetSdkForQuickBooksApiV3.2.9.1\lib\Intuit.Ipp.Diagnostics.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Intuit.Ipp.Exception, Version=2.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\WorkerRoleSimulation\packages\IppDotNetSdkForQuickBooksApiV3.2.9.1\lib\Intuit.Ipp.Exception.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Intuit.Ipp.LinqExtender, Version=2.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\WorkerRoleSimulation\packages\IppDotNetSdkForQuickBooksApiV3.2.9.1\lib\Intuit.Ipp.LinqExtender.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Intuit.Ipp.QueryFilter, Version=2.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\WorkerRoleSimulation\packages\IppDotNetSdkForQuickBooksApiV3.2.9.1\lib\Intuit.Ipp.QueryFilter.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Intuit.Ipp.Retry, Version=2.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\WorkerRoleSimulation\packages\IppDotNetSdkForQuickBooksApiV3.2.9.1\lib\Intuit.Ipp.Retry.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Intuit.Ipp.Security, Version=2.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\WorkerRoleSimulation\packages\IppDotNetSdkForQuickBooksApiV3.2.9.1\lib\Intuit.Ipp.Security.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Intuit.Ipp.Utility, Version=2.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\WorkerRoleSimulation\packages\IppDotNetSdkForQuickBooksApiV3.2.9.1\lib\Intuit.Ipp.Utility.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="JWT, Version=1.3.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\JWT.1.3.4\lib\3.5\JWT.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Logitude.SystemLogs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Logitude.SystemLogs\bin\Debug\Logitude.SystemLogs.dll</HintPath>
+    </Reference>
+    <Reference Include="Logitude.XSD, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\JustWebFreight\WebFreight.Web\bin\Logitude.XSD.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.2.2\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb, Version=2.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.2.2\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Azure.NotificationHubs, Version=2.16.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.NotificationHubs.1.0.7\lib\net45-full\Microsoft.Azure.NotificationHubs.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.Edm, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Data.Edm.5.7.0\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Data.OData.5.7.0\lib\net40\Microsoft.Data.OData.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.Services.Client, Version=5.8.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Services.Client.5.8.2\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.2.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.2.1.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.2.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=1.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\General\Dlls\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ServiceBus, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAzure.ServiceBus.3.4.4\lib\net45-full\Microsoft.ServiceBus.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ServiceModel.DomainServices.WindowsAzure, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\General\Dlls\Microsoft.ServiceModel.DomainServices.WindowsAzure.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Diagnostics, Version=2.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\Microsoft.WindowsAzure.Diagnostics.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.ServiceRuntime, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\Microsoft.WindowsAzure.ServiceRuntime.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=8.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAzure.Storage.8.0.1\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="nsoftware.IPWorksSSH, Version=16.0.6588.0, Culture=neutral, PublicKeyToken=cdc168f89cffe9cf, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\General\Dlls\SFTP\nsoftware.IPWorksSSH.dll</HintPath>
+    </Reference>
+    <Reference Include="nsoftware.IPWorksSSH.System">
+      <HintPath>..\General\Dlls\SFTP\nsoftware.IPWorksSSH.System.dll</HintPath>
+    </Reference>
+    <Reference Include="nsoftware.IPWorksSSL.System, Version=10.0.0.0, Culture=neutral, PublicKeyToken=cdc168f89cffe9cf, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\General\Dlls\nsoftware.IPWorksSSL.System.dll</HintPath>
+    </Reference>
+    <Reference Include="nsoftware.IPWorksSSLWeb, Version=9.0.5157.0, Culture=neutral, PublicKeyToken=cdc168f89cffe9cf, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\General\Dlls\nsoftware.IPWorksSSLWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Profact.TimbraCFDI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\General\Dlls\Profact 3.3\Profact.TimbraCFDI.dll</HintPath>
+    </Reference>
+    <Reference Include="SendGrid.SmtpApi">
+      <HintPath>..\packages\SendGrid.SmtpApi.1.3.3\lib\SendGrid.SmtpApi.dll</HintPath>
+    </Reference>
+    <Reference Include="Simplog.Data.Global, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\JustWebFreight\WebFreight.Web\bin\Simplog.Data.Global.dll</HintPath>
+    </Reference>
+    <Reference Include="Simplog.Server.Infrastructure, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Simplog.Server.Infrastructure\bin\Debug\Simplog.Server.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Stimulsoft.Base, Version=2018.1.6.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\General\Dlls\StimulSoft new\Stimulsoft.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Stimulsoft.Controls, Version=2012.1.1300.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\General\Dlls\Stimulsoft.Controls.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Stimulsoft.Report, Version=2018.1.6.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\General\Dlls\StimulSoft new\Stimulsoft.Report.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.Services.Client" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.DomainServices.Hosting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\JustWebFreight\WebFreight.Web\bin\System.ServiceModel.DomainServices.Hosting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ServiceModel.DomainServices.Hosting.OData, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\JustWebFreight\WebFreight.Web\bin\System.ServiceModel.DomainServices.Hosting.OData.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\JustWebFreight\WebFreight.Web\bin\System.ServiceModel.DomainServices.Server.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Spatial, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\System.Spatial.5.7.0\lib\net40\System.Spatial.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="Microsoft.CSharp">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Twilio, Version=5.6.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Twilio.5.6.5\lib\net35\Twilio.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="UnifreightIIG.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\General\Dlls\UnifreightIIG.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureEventSource.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WindowsAzureTelemetryEvents, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureTelemetryEvents.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Accounting\AccountingJournalApproveWR.cs" />
+    <Compile Include="Accounting\ARPaymentChequeRedemptionWorkerRole.cs" />
+    <Compile Include="Accounting\RevaluationWorkerRole.cs" />
+    <Compile Include="AddFileToDropBoxWR.cs" />
+    <Compile Include="AddDropBoxFileToAnalyzeQueueWR.cs" />
+    <Compile Include="AddChampMessageToAnalyzeQueueWR.cs" />
+    <Compile Include="AgentSharedDocumentAnalyzeWR.cs" />
+    <Compile Include="AgentSharedDocumentWR.cs" />
+    <Compile Include="AgentsSharedLogisticsWorkerRole.cs" />
+    <Compile Include="AirlineStatisticsWorkerRole.cs" />
+    <Compile Include="ArtemusAnalyzerWorkerRole.cs" />
+    <Compile Include="AutoSignUpMailWorkerRole.cs" />
+    <Compile Include="AutoSignUpWorkerRole.cs" />
+    <Compile Include="BatchTaskExecutionWR.cs" />
+    <Compile Include="ChampMessageInWR.cs" />
+    <Compile Include="CheckandUpdateWorkerRole.cs" />
+    <Compile Include="CommunicationLogWorkerRole.cs" />
+    <Compile Include="ContactUnseenEntityWorkerRole.cs" />
+    <Compile Include="CustomerActualDataWorkerRole.cs" />
+    <Compile Include="DocumentFilingBackupBatchQueueWR.cs" />
+    <Compile Include="DocumentFilingBackupQueueBuilderWR.cs" />
+    <Compile Include="DocumentFilingBackupWR.cs" />
+    <Compile Include="DocumentsFilingBackupHelper.cs" />
+    <Compile Include="IBatchServiceLogger.cs" />
+    <Compile Include="FTPCommunicationWorkerRole.cs" />
+    <Compile Include="FTPToAnalyzeQueueWorkerRole.cs" />
+    <Compile Include="INTTRAAnalyzerWorkerRole.cs" />
+    <Compile Include="LogBoxMailgunAnalyzerWorkerRole.cs" />
+    <Compile Include="MobileSMSWorkerRole.cs" />
+    <Compile Include="PrivateLabelDenialWorkerRole.cs" />
+    <Compile Include="PrivateLabelApprovalWorkerRole.cs" />
+    <Compile Include="ForwarderShipmentWorkerRole.cs" />
+    <Compile Include="CustomerTenantAccessRequestWorkerRole.cs" />
+    <Compile Include="CustomerTenantAccessWorkerRole.cs" />
+    <Compile Include="DataBackupWR.cs" />
+    <Compile Include="DelayAutomationWorkerRole.cs" />
+    <Compile Include="EmailingHelper.cs" />
+    <Compile Include="EmailsWorkerRole.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EntityChangeWorkerRole.cs" />
+    <Compile Include="ExactOnlineWorkerRole.cs" />
+    <Compile Include="ExportImportTextCodesWR.cs" />
+    <Compile Include="ForwarderShipmentDocumentsWorkerRole.cs" />
+    <Compile Include="General.cs" />
+    <Compile Include="GeneralWorkerRole.cs" />
+    <Compile Include="GLSHKMessageAnalyzeWR.cs" />
+    <Compile Include="GLSHKMessageInWR.cs" />
+    <Compile Include="HttpClient.cs" />
+    <Compile Include="HttpData.cs" />
+    <Compile Include="HypredDataWorkerRole.cs" />
+    <Compile Include="ImporterShipmentDocumentsBatchWorkerRole.cs" />
+    <Compile Include="ImporterShipmentDocumentsWorkerRole.cs" />
+    <Compile Include="ImporterShipmentsBatchWorkerRole.cs" />
+    <Compile Include="ImporterShipmentsDocumentsQueueBuilderWorkerRole.cs" />
+    <Compile Include="ImporterShipmentsDocumentsScheduleWorkerRole.cs" />
+    <Compile Include="ImporterShipmentsQueueBuilderWorkerRole.cs" />
+    <Compile Include="ImporterShipmentsScheduleWorkerRole.cs" />
+    <Compile Include="ImporterShipmentsWorkerRole.cs" />
+    <Compile Include="InboundEmailWorkerRole.cs" />
+    <Compile Include="LeadsWrokerRole.cs" />
+    <Compile Include="MailgunPageAnalyzerWorkerRole.cs" />
+    <Compile Include="MessageAnalyzeWR.cs" />
+    <Compile Include="MessagesTransmissionLogWorkerRole.cs" />
+    <Compile Include="MobileNotificationWorkerRole.cs" />
+    <Compile Include="QuckbooksOnlineWorkerRole.cs" />
+    <Compile Include="QuickBooksWorkerRole.cs" />
+    <Compile Include="QuoteAutomaticallyClosing.cs" />
+    <Compile Include="ReportExecutionLogWorkerRole.cs" />
+    <Compile Include="ResharedAgentDocumentWR.cs" />
+    <Compile Include="SATInterfaceWorkerRole.cs" />
+    <Compile Include="SchedularWorkerRole.cs" />
+    <Compile Include="SendGridNotifierWorkerRole.cs" />
+    <Compile Include="SendGridPageAnalyzerWorkerRole.cs" />
+    <Compile Include="SendToCustomsWorkerRole.cs" />
+    <Compile Include="Service References\ChampProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\ChampRequestAnswerServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\ExternalTasksQueueWcfService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\ShipmentWcfServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\WarmServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="EntityExternalUpdateWorkerRole.cs" />
+    <Compile Include="Service References\wsReference33\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\wsReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="SignUpWorkerRole.cs" />
+    <Compile Include="SocialWorkerRole.cs" />
+    <Compile Include="Tasks\DeleteOldAuthenticationTokensTask.cs" />
+    <Compile Include="Tasks\DeleteOldErrorLogsQueueMessagesTask.cs" />
+    <Compile Include="Tasks\DeleteDoneQueueMessagesTask.cs" />
+    <Compile Include="Tasks\DeleteOldFilingInboxes.cs" />
+    <Compile Include="Tasks\DeleteQueueMessagesDetailsTask.cs" />
+    <Compile Include="Tasks\ITaskManager.cs" />
+    <Compile Include="Tasks\PayableARPaymentChequeTask.cs" />
+    <Compile Include="Tasks\TaskManagerBase.cs" />
+    <Compile Include="TaxWorkerRole.cs" />
+    <Compile Include="TenantStatisticsMessageWorkerRole.cs" />
+    <Compile Include="TenantStatisticsWorkerRole.cs" />
+    <Compile Include="TestEmailProvidersWR.cs" />
+    <Compile Include="TMClockAnalyzerWorkerRole.cs" />
+    <Compile Include="TFSPageAnalyzerWorkerRole.cs" />
+    <Compile Include="ThreadedRoleEntryPoint.cs" />
+    <Compile Include="TicketWorkerRole.cs" />
+    <Compile Include="ExternalTasksWorkerRole.cs" />
+    <Compile Include="WarmWorkerRole.cs" />
+    <Compile Include="WorkerEntryPoint.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ChampProxy\service.wsdl" />
+    <None Include="Service References\ChampProxy\service.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ChampProxy\service1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ChampRequestAnswerServiceReference\ChampRequestAnswerWebService.wsdl" />
+    <None Include="Service References\ExternalTasksQueueWcfService\CommunicationWorkerRole.ExternalTasksQueueWcfService.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ExternalTasksQueueWcfService\ExternalTasksQueueWcfService.wsdl" />
+    <None Include="Service References\ExternalTasksQueueWcfService\ExternalTasksQueueWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ExternalTasksQueueWcfService\ExternalTasksQueueWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ExternalTasksQueueWcfService\ExternalTasksQueueWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ExternalTasksQueueWcfService\ExternalTasksQueueWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShipmentWcfServiceReference\CommunicationWorkerRole.ShipmentWcfServiceReference.GetShipmentListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ShipmentWcfServiceReference\CommunicationWorkerRole.ShipmentWcfServiceReference.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ShipmentWcfServiceReference\CommunicationWorkerRole.ShipmentWcfServiceReference.ShipmentList.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ShipmentWcfServiceReference\ShipmentWcfService.wsdl" />
+    <None Include="Service References\ShipmentWcfServiceReference\ShipmentWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShipmentWcfServiceReference\ShipmentWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShipmentWcfServiceReference\ShipmentWcfService10.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShipmentWcfServiceReference\ShipmentWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShipmentWcfServiceReference\ShipmentWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShipmentWcfServiceReference\ShipmentWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShipmentWcfServiceReference\ShipmentWcfService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShipmentWcfServiceReference\ShipmentWcfService6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShipmentWcfServiceReference\ShipmentWcfService7.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShipmentWcfServiceReference\ShipmentWcfService8.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ShipmentWcfServiceReference\ShipmentWcfService9.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WarmServiceReference\WarmWebService.wsdl" />
+    <None Include="Service References\wsReference33\CommunicationWorkerRole.wsReference33.ArrayOfAnyType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\wsReference33\CommunicationWorkerRole.wsReference33.AsignaTimbresEmisorResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\wsReference33\CommunicationWorkerRole.wsReference33.CancelaCFDIAckResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\wsReference33\CommunicationWorkerRole.wsReference33.CancelaCFDIResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\wsReference33\CommunicationWorkerRole.wsReference33.CancelaRetencionResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\wsReference33\CommunicationWorkerRole.wsReference33.ObtieneCFDIResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\wsReference33\CommunicationWorkerRole.wsReference33.ObtieneRetencionResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\wsReference33\CommunicationWorkerRole.wsReference33.ObtieneTimbresDisponiblesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\wsReference33\CommunicationWorkerRole.wsReference33.RegistraEmisorResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\wsReference33\CommunicationWorkerRole.wsReference33.TimbraCFDIResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\wsReference33\CommunicationWorkerRole.wsReference33.TimbraRetencionResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\wsReference33\Timbrado.wsdl" />
+    <None Include="Service References\wsReference\CommunicationWorkerRole.wsReference.ArrayOfAnyType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\wsReference\CommunicationWorkerRole.wsReference.AsignaTimbresEmisorResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\wsReference\CommunicationWorkerRole.wsReference.CancelaCFDIAckResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\wsReference\CommunicationWorkerRole.wsReference.CancelaCFDIResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\wsReference\CommunicationWorkerRole.wsReference.CancelaRetencionResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\wsReference\CommunicationWorkerRole.wsReference.ObtieneCFDIResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\wsReference\CommunicationWorkerRole.wsReference.ObtieneRetencionResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\wsReference\CommunicationWorkerRole.wsReference.ObtieneTimbresDisponiblesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\wsReference\CommunicationWorkerRole.wsReference.RegistraEmisorResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\wsReference\CommunicationWorkerRole.wsReference.TimbraCFDIResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\wsReference\CommunicationWorkerRole.wsReference.TimbraRetencionResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\wsReference\Timbrado.wsdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JustWebFreight\WebFreight.Web\WebFreight.Web.csproj">
+      <Project>{8408e4e5-b4b7-46bc-8300-1ae163b36e2d}</Project>
+      <Name>WebFreight.Web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Accounting.BL\Logitude.Accounting.BL.csproj">
+      <Project>{00e5d96d-dd45-47e8-aaa3-fdbfd8add61a}</Project>
+      <Name>Logitude.Accounting.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">
+      <Project>{a3799525-14a2-42fc-a2de-69ed3fd1c5d1}</Project>
+      <Name>Logitude.Accounting.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
+      <Project>{a663e7ef-b858-4bb6-bc33-e473f51b8e56}</Project>
+      <Name>Logitude.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.BookingLib.Data\Logitude.BookingLib.Data.csproj">
+      <Project>{147a706d-221a-4fd1-8f27-c12e4ab276cf}</Project>
+      <Name>Logitude.BookingLib.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.CRM.BL\Logitude.CRM.BL.csproj">
+      <Project>{40502295-5a7f-4a20-91d2-768ca7cd35ec}</Project>
+      <Name>Logitude.CRM.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.CRM.Data\Logitude.CRM.Data.csproj">
+      <Project>{4733f914-0e16-4412-84df-d98232dd43e9}</Project>
+      <Name>Logitude.CRM.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Customs.BL\Logitude.Customs.BL.csproj">
+      <Project>{d2951c0f-8a2b-4ee2-933a-8b6b4134f766}</Project>
+      <Name>Logitude.Customs.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Customs.Data\Logitude.Customs.Data.csproj">
+      <Project>{643f92c9-7cf1-4429-b79e-1e354b758abf}</Project>
+      <Name>Logitude.Customs.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Infrastructure.BL\Logitude.Infrastructure.BL.csproj">
+      <Project>{BD959AB6-4476-48B3-AA4D-CFD7ED120E55}</Project>
+      <Name>Logitude.Infrastructure.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Infrastructure.Data\Logitude.Infrastructure.Data.csproj">
+      <Project>{b02e4d92-9226-4f3f-990f-66c7f66e9316}</Project>
+      <Name>Logitude.Infrastructure.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
+      <Project>{9b477a08-8ee2-4457-88fe-17e8a6ec4d00}</Project>
+      <Name>Logitude.Server.Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Social.BL\Logitude.Social.BL.csproj">
+      <Project>{13ce8afb-6ada-4e96-b76c-67279095a018}</Project>
+      <Name>Logitude.Social.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Social.Data\Logitude.Social.Data.csproj">
+      <Project>{a00ae10e-2560-4e06-99fa-859ea7488ec3}</Project>
+      <Name>Logitude.Social.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
+      <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
+      <Name>Simplog.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\ChampProxy\" />
+    <WCFMetadataStorage Include="Service References\ChampRequestAnswerServiceReference\" />
+    <WCFMetadataStorage Include="Service References\ExternalTasksQueueWcfService\" />
+    <WCFMetadataStorage Include="Service References\ShipmentWcfServiceReference\" />
+    <WCFMetadataStorage Include="Service References\WarmServiceReference\" />
+    <WCFMetadataStorage Include="Service References\wsReference33\" />
+    <WCFMetadataStorage Include="Service References\wsReference\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ChampProxy\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ChampProxy\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ChampProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ChampRequestAnswerServiceReference\ChampRequestAnswerWebService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ChampRequestAnswerServiceReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ChampRequestAnswerServiceReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ChampRequestAnswerServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WarmServiceReference\WarmWebService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WarmServiceReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WarmServiceReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WarmServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\communicationworkerrole.dll.licenses" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ExternalTasksQueueWcfService\ExternalTasksQueueWcfService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ExternalTasksQueueWcfService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ExternalTasksQueueWcfService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ExternalTasksQueueWcfService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ShipmentWcfServiceReference\ShipmentWcfService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ShipmentWcfServiceReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ShipmentWcfServiceReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ShipmentWcfServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\wsReference\Timbrado.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\wsReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\wsReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\wsReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\wsReference33\Timbrado.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\wsReference33\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\wsReference33\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\wsReference33\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

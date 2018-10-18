@@ -1,0 +1,66 @@
+﻿<div class="TabHolder">
+    <table>
+        <tr class="TabTitleRow">
+            <td>{{'BusinessUnit.TH.General' | TextCodeTranslationPipe}}</td>
+        </tr>
+        <tr>
+            <td>
+                <table>
+                    <!-- Name -->
+                    <tr class="FormFieldRow">
+                        <td style="width: 110px;">
+                            <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td style="width: 230px;">
+                            <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <!-- ParentId-->
+                    <tr class="FormFieldRow">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'ParentId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogLov [ObjectFieldName]="'ParentId'"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [SelectedValue]="ParentId"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'BusinessUnit'">
+                            </LogLov>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <!-- InActive-->
+                    <tr class="FormFieldRow">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>                        
+                        </td>
+                        <td>
+                            <LogCheckBox [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <tr><td><div></div></td></tr>
+
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+   

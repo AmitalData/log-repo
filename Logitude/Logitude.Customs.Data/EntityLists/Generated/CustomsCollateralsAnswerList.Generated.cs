@@ -1,0 +1,66 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization; 
+
+namespace Logitude.Customs.Data.EntityLists
+{
+   [DataContract]
+   public partial class CustomsCollateralsAnswerList
+   {
+   
+       [Key]
+       [DataMember]
+       public string CustomsCollateralId  { get; set; }
+
+       [Key]
+       [DataMember]
+       public int LineNumber  { get; set; }
+       [DataMember]
+       public int Tenant  { get; set; }
+       [DataMember]
+       public string AnswerEntityTypeCode  { get; set; }
+       [DataMember]
+       public decimal? AllocatedAmount  { get; set; }
+       [DataMember]
+       public string Remarks  { get; set; }
+       [DataMember]
+       public string CustomsTapgFile  { get; set; }
+       [DataMember]
+       public string CustomsNumeral  { get; set; }
+       [DataMember]
+       public string AnswerForCollateralStatusCode  { get; set; }
+       [DataMember]
+       public string Errors  { get; set; }
+       [DataMember]
+       public string AnswerEntityTypeName  { get; set; }
+       [DataMember]
+       public string AnswerForCollateralStatusName  { get; set; }
+       [DataMember]
+       public string TapagId  { get; set; }
+       [DataMember]
+       public bool NewFileRequest  { get; set; }
+       [DataMember]
+       public string RequestFileTypeCode  { get; set; }
+       [DataMember]
+       public decimal? RequestFileAmount  { get; set; }
+       [DataMember]
+       public bool IsClosed  { get; set; }
+       [DataMember]
+       public string RequestedTapagNumeral  { get; set; }
+       [DataMember]
+       public string RequestedTapagFile  { get; set; }
+       [DataMember]
+       public string PaymentOrderId  { get; set; }
+       [DataMember]
+       public string PaymentOrderNumber  { get; set; }
+       [DataMember]
+       public string PaymentOrderStatus  { get; set; }
+   }
+
+}
+	 

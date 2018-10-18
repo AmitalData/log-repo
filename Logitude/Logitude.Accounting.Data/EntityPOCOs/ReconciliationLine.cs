@@ -1,0 +1,52 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Accounting.Data.EntityPOCOs
+{
+   
+    public class ReconciliationLine
+    {
+	 string dbms;
+
+        [Key]
+        [ForeignKey("Reconciliation")]
+        [Column("ReconciliationId" ,Order = 1)]
+	    public string ReconciliationId { get; set; }
+	      
+        public virtual Reconciliation Reconciliation { get; set; }
+     [Key]
+        [Column("Line" ,Order = 2)]
+	    public int Line { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+        [ForeignKey("Currency")]
+        [Column("CurrencyId")]
+	    public string CurrencyId { get; set; }
+	      
+        public virtual Currency Currency { get; set; }
+        [ForeignKey("LedgerTransaction")]
+        [Column("TransactionId")]
+	    public string TransactionId { get; set; }
+	      
+        public virtual LedgerTransaction LedgerTransaction { get; set; }
+        [Column("ReconciliationAmount")]
+	    public decimal ReconciliationAmount { get; set; }
+        [Column("IsPartial")]
+	    public bool IsPartial { get; set; }
+        [Column("GroupNumber")]
+	    public int GroupNumber { get; set; }
+        [Column("IsAdjustTransaction")]
+	    public bool IsAdjustTransaction { get; set; }
+    }
+}
+	 

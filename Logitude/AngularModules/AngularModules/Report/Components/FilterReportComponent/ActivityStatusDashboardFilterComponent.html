@@ -1,0 +1,156 @@
+﻿
+
+
+<style>
+    .greenButton {
+        outline: none;
+        text-align: right;
+        font-size: 11px;
+        color: #45494A;
+        width: 100%;
+        height: 22px;
+        line-height: 21px;
+        border: 1px solid #EDC093;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        position: relative;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+               background: -moz-linear-gradient(20% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgb(0, 255, 33) 70%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgb(106, 190, 163) 70%);
+        background: -webkit-gradient(linear,20% 0%,50% 70%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(237, 192, 147, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 20%, rgb(106, 190, 163) 70%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgb(106, 190, 163) 70%);
+        -moz-box-shadow: 0px 0px 6px 0px green;
+        -moz-box-shadow: 0px 0px 6px 0px green;
+        text-shadow: 1px 1px white;
+    }
+
+        .greenButton:hover {
+            background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgb(0, 255, 33) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgb(106, 190, 163) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(237, 192, 147, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgb(106, 190, 163) 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgb(106, 190, 163) 100%);
+        }
+
+         .greenButton:active {
+            -webkit-box-shadow: 0px 0px 5px 1px rgba(0,148,118,1);
+-moz-box-shadow: 0px 0px 5px 1px rgba(0,148,118,1);
+box-shadow: 0px 0px 5px 1px rgba(0,148,118,1);
+
+        }
+
+
+
+
+</style>
+
+
+
+
+
+
+
+
+
+<div style="width:100%;height:80px;">
+    <div style="position:absolute;top:0;bottom:0;left:0;right:0;overflow-x:auto;overflow-y:hidden;height:80px">
+        <div class="ScrollContent">
+            <table style="height:60px;width:500px;overflow:scroll;">
+
+                    <tr style="height:25px">
+                        <td>
+                            <table>
+                                <tr>
+                                    <td style="width:5px;"><div style="width:5px;"></div></td>
+                                    <td><div style="color:#1B90CB;font-size:14px;">Filter By:</div></td>
+                                </tr>                               
+                            </table>
+                        </td>
+                       
+                    </tr>
+
+
+
+                    <tr style="height:30px">
+                        <td>
+                            <table>
+                                <tr>
+                                    <td style="width:5px;"><div style="width:5px;"></div></td>
+                                    <td style="width:80px;"><div style="width:80px;">Time Range:</div></td>
+
+                                    <td style="width:280px; ">
+                                        <ComboBox style="width:280px;float:left;margin-left:20px;" (SelectedItemChanged)="onSelectedItemChanged($event)" [ItemsSource]="TimeRangeComboList" [SelectedItem]="SelectedItem" [Binding]="'lastTitle'"></ComboBox>
+
+
+                                    </td>
+                                    <td style="width:40px"><div style="width:40px"></div></td>
+
+                                    <td style="width:40px;"><div style="width:40px;">Show:</div></td>
+                                    <td style="width:120px;">
+                                        <div style="float:left">
+                                            <ComboBox style="width:130px;float:left;" (SelectedItemChanged)="onSelectedItemShowChanged($event)" [ItemsSource]="showComboList" [SelectedItem]="SelectedItemShow" [Binding]="'Name'"></ComboBox>
+                                        </div>
+                                    </td>
+                                    <td style="width:20px;"><div style="width:15px;"></div></td>
+                                    <td style="width:100px;"><div style="width:100px;">Transport Mode:</div></td>
+
+                                    <td style="width:120px">
+                                        <div style="width:120px">
+                                            <TransportsFilter (SelectedValueChanged)="MySelectedTransportFilter = $event"></TransportsFilter>
+
+                                        </div>
+                                    </td>
+                                    <td style="width:20px;"><div style="width:15px;"></div></td>
+                                    <td style="width:60px;"><div style="width:60px;">Direction:</div></td>
+
+                                    <td style="width:180px">
+                                        <div style="width:180px">
+
+                                            <DirectionsFilter (SelectedValueChanged)="MySelectedDirectionFilter = $event"></DirectionsFilter>
+
+                                        </div>
+
+                                    </td>
+
+
+                                    <td style="width:20px"></td>
+
+                                    <td style="width:90px;">
+                                        <button (click)="RunReport()" class="greenButton" style="width:90px;height:22px;border:1px solid green;border-radius:3px;">
+                                            <div style="color:black;  text-align:center;vertical-align:central;font-size:12px;">Run Report</div>
+                                        </button>
+
+                                    </td>
+
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </td>
+                      
+
+                    </tr>
+
+                    <tr><td></td></tr>
+
+                </table>
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+

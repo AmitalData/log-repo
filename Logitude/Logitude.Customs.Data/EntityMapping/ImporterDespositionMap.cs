@@ -1,0 +1,48 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data;
+ 
+namespace Logitude.Customs.Data.EntityMapping
+{
+ 
+    public class ImporterDespositionMap : EntityTypeConfiguration<ImporterDesposition>
+    {
+	    string dbms;
+        public ImporterDespositionMap()
+        { 
+			  this.ToTable("ImporterDespositions", "Customs");
+		
+		    this.HasKey(t => new { t.Id });
+	 
+            this.Property(t => t.DepositionNumber).HasColumnName("DepositionNumber").HasMaxLength(20).IsUnicode(false);
+
+            this.Property(t => t.ImporterDepositionStatusCode).HasColumnName("ImporterDepositionStatusCode").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.ImporterlId).HasColumnName("ImporterlId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.VendorID).HasColumnName("VendorID").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.StartDate).HasColumnName("StartDate");
+
+            this.Property(t => t.EndDate).HasColumnName("EndDate");
+
+            this.Property(t => t.NotesToAgent).HasColumnName("NotesToAgent").HasMaxLength(256).IsUnicode(true);
+
+            this.Property(t => t.ErrorMessage).HasColumnName("ErrorMessage").HasMaxLength(512).IsUnicode(false);
+
+            this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
+
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
+        }
+    }
+}
+	 

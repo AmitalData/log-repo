@@ -1,0 +1,590 @@
+﻿
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+     <title></title>
+  
+
+      <style> </style>
+</head>
+<body>
+
+
+    <div data-role="view"   data-show="onCargoViewShow">
+       <header data-role="header">
+             
+
+              <div style="height:45px;display:table;width:100% ">
+
+                  <div style="display:table-cell; width:40px; vertical-align:middle; text-align:left">
+                             <div style="width:5px;"></div>
+                             <div><a  data-align="left"  data-role="backbutton" style="width:auto; height:auto;margin-bottom:4px;"> <img style="width:13px; height:26px;" src="images/back.png" ></a></div>
+                  </div>
+
+                       <div style="display:table-cell; width:240px; vertical-align:middle ;margin-bottom:2px; text-align:center">
+                             <div style="text-align:left;" class="HeaderTitil">Cargo Info</div>
+                      </div>
+
+                      <div style="display:table-cell;width:40px; vertical-align:middle ; text-align:right">
+                             <div><button style="background-color:transparent; width:auto; height:auto;margin-bottom:2px; margin-right:9px;"><img style="width:25px; height:24px;" src="images/setting.png" ></button> </div>
+                           
+                      </div>
+
+       
+             </div>
+           
+      </header>
+
+
+        
+               <!--Area-->
+             <div>
+      
+
+          <div style="width:100% ;background-color: white ; margin-top:9px;">
+                  
+                          <div style ="margin-left :10px; margin-right:10px; ">
+                                   <div style="height: 55px; display:table;width:100% ;" >
+
+                                                       <div style="display:table-cell; vertical-align:middle; text-align:left; width:270px;">
+						                                            <div  style="display:inline-block; width:26px;margin-top:4px;"><img style="height:23px;  width:26px; padding:0px; margin:0px;" data-bind="attr: { src: DirectionSRC }"/></div>
+                                                                    <div  style="display:inline-block; width:26px;margin-top:4px;"><img style="height:23px;  width:26px; padding:0px; margin:0px;" data-bind="attr: { src: TransportSRC }"/></div>
+										                            <div class="ValueTextStyle TemplateItem" style="display:inline-block;  max-width:200px; margin-top:6px;"  data-bind="text: MyReference"></div>
+		                                                    </div>
+
+                                                            <div style="display:table-cell; vertical-align:middle; text-align:right; width:50px;">
+
+                                                                   <div style="display:inline-block; height:30px;"><img id="companyLogo" src="../../HtmlHelpers/images/Icons/Logo.png" style="width:38px; margin-top:5px;background-color:white; height:29px; vertical-align:central;"/></div>
+    
+                                                
+                                                           </div>
+                    
+
+                                        </div>
+                         </div>
+             </div>
+  
+
+            <div style="width:100% ;background-color: white">
+                        <div style ="margin-left :10px; margin-right:10px; background-color: white;">
+                                    <div style="display:table;width:100% ; height: 51px; border-bottom:1px solid #EEF0F1  ;  border-top:1px solid #EEF0F1" >
+                                                                  
+                                                         <div style="display:table-cell; vertical-align:middle; text-align:left; width:135px;">
+                           
+                                                                      <div  style="display:inline-block; width:29px;"><img style="height:28px;  width:29px; padding:0px; margin:0px;" data-bind="attr: { src: FromCountySRC }"/></div>
+                                                                      <div class="HederSHDQD2TextStyle TemplateItem" style="display:inline-block;   margin-top:4px; max-width:98px;"  data-bind="text: FromPortName"></div>
+                                                        </div>
+
+                                                          <div style="display:table-cell; vertical-align:middle; text-align:center; width:35px;">
+                                                                       <div class="LabelTextStyle TemplateItem" style="display:inline-block; height:30px; width:35px;"><img style=" height:23px; width:26px;"   data-bind="attr: { src: TransportSRC }"/></div>
+                                                       </div>
+        
+                                                        <div style="display:table-cell; vertical-align:middle; text-align:right; width:135px;">
+                                                                        <div class="HederSHDQD2TextStyle TemplateItem" style="display:inline-block; max-width:98px; margin-top:4px;" data-bind="text: ToPortName"></div>
+                                                                       <div  style="display:inline-block; width:29px; "><img style="height:28px;  width:29px; padding:0px; margin:0px;" data-bind="attr: { src: ToCountySRC }"/></div>
+                                                                        
+                                                         </div>
+
+
+
+                                    </div>
+                        </div>
+
+           </div>
+  
+   
+
+
+</div>
+ <!-- end to Area-->
+          <div id="totalsArea">
+        <div style="height: 85px; background-color: white ; padding-top:21px; padding-left:10px; padding-right:10px; margin-bottom:3px;">
+         
+           <div style="height: 65px;  display:table; background-color: #FFFCCF ; background-color:#FFFCCE;  width: 100%; border-top: 1px solid #AEB1B8;" >
+    
+            
+
+                             
+                           <div class="C1TextStyle" style="display: table-cell; width: 84px; height: 65px; border-left: 1px solid #AEB1B8 ;  border-right: 1px solid #AEB1B8 ;border-bottom: 1px solid #AEB1B8; margin-top:0px;margin-left:5px ; vertical-align:top;">
+                               <div class="C1TextStyle" style="height:8px;" ></div>
+                               <div class="C1TextStyle" style="margin-left:5px;">Packages</div>
+                               <div class="C1TextStyle" style="height:5px;" ></div>
+                              <div class="Value2boldTextStyle" style="margin-left:5px;" data-bind="text: TotalPieces"></div>
+                           </div>
+                           
+                          <div style="display: table-cell; width: 84px; height: 65px;  border-right: 1px solid #AEB1B8; border-bottom: 1px solid #AEB1B8; margin-top:0px ;margin-left:5px ; vertical-align:top;">
+                                <div class="C1TextStyle" style="height:8px;" ></div>
+                               <div class="C1TextStyle" style="margin-left:5px;"  data-bind="text: GrossLabel"></div>
+                               <div class="C1TextStyle" style="height:5px;"></div>
+                              <div class="Value2boldTextStyle" style="margin-left:5px;"  data-bind="text: TotalGrossWeight"></div>
+                          </div>
+                           
+                          <div style="display: table-cell; width: 84px; height: 65px;  margin-top:0px;margin-left:5px ;border-bottom: 1px solid #AEB1B8; border-right: 1px solid #AEB1B8;vertical-align:top;">
+                                 <div class="C1TextStyle" style="height:8px;" ></div>
+                              <div class="C1TextStyle" style="margin-left:5px;"   data-bind="text: VolumeLabel"></div>
+                               <div class="C1TextStyle" style="height:5px;" ></div>
+                              <div class="Value2boldTextStyle" style="margin-left:5px;" data-bind="text: TotalVolume"></div>
+                              
+                               
+                          </div>
+                          
+               
+            </div>
+
+       </div>
+
+          <!--   <div id="info"  style="display: table ">-->
+                      <!-- <div id="info"  style=" visibility:collapse ">-->
+            
+   <!--data-bind="text: DescriptionOfGoods"-->
+
+         <!--<div id="info" data-bind="style: { display: displayDescriptionOfGoods }">-->
+                <div id="info" class="C1TextStyle"  style=" display:block ;margin-top:5px;margin-left:5px ;">Description of Goods</div>
+
+                <div id="inf" class="Value2boldTextStyle" style=" margin-left:5px ; display:block; " data-bind="text: DescriptionOfGoods" ></div>
+    
+
+
+
+
+
+                <div style="background-color:white ; height:2px; width:100% ">    </div>
+
+            
+   
+</div>
+ 
+               <ul data-role="listview" data-style="inset" data-type="group" style="margin-top:-7px; " >                
+            <li>                                    
+                <ul id="CargoinfoListBox"></ul>                
+            </li>
+        </ul>
+        <div id="endlineCargo" style="height: 10px; width: 100%; background-color:white; color: gray ; margin:12px ; font-family:Arial ; font-size:14px;" >No Packages</div>
+    </div>
+      
+
+    <script type="text/x-kendo-tmpl" id="CargoinfoItemOceanTemplate">
+         <div style="height:auto; width:100%;  background-color:white;padding-bottom:22px;padding-top:-1px:">
+     
+                  <div style="height:34px; width:100%; background-color:\\#FFE989; border-bottom: 1px solid \\#9E9FA1;display:table">
+                   <div class="HederSHDQD2TextStyle TemplateItem" style="display:table-cell;vertical-align:middle;text-indent:10px;">${Type}</div>
+                  </div>
+
+
+
+               <div style="height :auto ; border: 1px solid \\#ACB3B7 ; margin-top:14px; margin-right:10px ; margin-left:10px ; margin-buttom:10px"  >
+        <div style="display:table; height:42px; width:100%; border-bottom :1px solid \\#E0E8EB" >
+                       <div class="SHDQD1TextStyle" style="display:table-cell; width:145px ; vertical-align:middle; text-align:left; background-color:\\#ECF1F4;text-indent:10px;" >Containers</div>
+                       <div  class="HederSHDQD2TextStyle" style="display:table-cell;vertical-align:middle;text-indent:10px;max-width:150px;width:150px;">${Quantity}</div>
+                       </div>
+
+
+        <div style="display:table; height:42px; width:100%; border-bottom :1px solid \\#E0E8EB" >
+                       <div class="SHDQD1TextStyle" style="display:table-cell; width:145px ; vertical-align:middle; text-align:left; background-color:\\#ECF1F4;text-indent:10px;" >Number</div>
+                       <div  class="HederSHDQD2TextStyle" style="display:table-cell;vertical-align:middle;text-indent:10px;max-width:150px;width:150px;">${ContainerNumber}</div>
+                       </div>
+
+
+           <div style="display:table; height:42px; width:100%; border-bottom :1px solid \\#E0E8EB" >
+                       <div class="SHDQD1TextStyle" style="display:table-cell; width:145px ; vertical-align:middle; text-align:left; background-color:\\#ECF1F4;text-indent:10px;" >Seal</div>
+                       <div  class="HederSHDQD2TextStyle" style="display:table-cell;vertical-align:middle;text-indent:10px;max-width:150px;width:150px;">${Seal}</div>
+                       </div>
+
+
+
+        
+             <div style="display:table; height:42px; width:100%; border-bottom :1px solid \\#E0E8EB" >
+                       <div class="SHDQD1TextStyle" style="display:table-cell; width:145px ; vertical-align:middle; text-align:left; background-color:\\#ECF1F4;text-indent:10px;" >${GrossLabel}</div>
+                       <div  class="HederSHDQD2TextStyle" style="display:table-cell;vertical-align:middle;text-indent:10px;max-width:150px;width:150px;">${GrossWeight}</div>
+                       </div>
+
+
+
+
+           
+              <div style="display:table; height:42px; width:100%; border-bottom :1px solid \\#E0E8EB" >
+                       <div class="SHDQD1TextStyle" style="display:table-cell; width:145px ; vertical-align:middle; text-align:left; background-color:\\#ECF1F4;text-indent:10px;" >${VolumeLabel}</div>
+                       <div  class="HederSHDQD2TextStyle" style="display:table-cell;vertical-align:middle;text-indent:10px;max-width:150px;width:150px;">${Volume}</div>
+                       </div>
+
+                     
+
+               </div>
+
+     
+     <div/>
+   </div>
+
+    </script>
+
+
+       <script type="text/x-kendo-tmpl" id="LCLTemplate">
+         <div style="height:auto; width:100%;  background-color:white;padding-bottom:22px; padding-top:-1px:">
+              <div style="height:34px; width:100%; background-color:\\#FFE989; border-bottom: 1px solid \\#9E9FA1;display:table">
+                   <div class="HederSHDQD2TextStyle TemplateItem" style="display:table-cell;vertical-align:middle;text-indent:10px;">${Type}</div>
+                  </div>
+                  <div style="height :auto ; border: 1px solid \\#ACB3B7 ; margin-top:14px; margin-right:10px ; margin-left:10px ; margin-buttom:10px"  >
+
+                
+
+              <div style="display:table; height:42px; width:100%; border-bottom :1px solid \\#E0E8EB" >
+                       <div class="SHDQD1TextStyle" style="display:table-cell; width:145px ; vertical-align:middle; text-align:left; background-color:\\#ECF1F4;text-indent:10px;" >Packages</div>
+                       <div  class="HederSHDQD2TextStyle" style="display:table-cell;vertical-align:middle;text-indent:10px;max-width:150px;width:150px;">${Quantity}</div>
+                       </div>
+
+
+
+
+           
+              <div style="display:table; height:42px; width:100%; border-bottom :1px solid \\#E0E8EB" >
+                       <div class="SHDQD1TextStyle" style="display:table-cell; width:145px ; vertical-align:middle; text-align:left; background-color:\\#ECF1F4;text-indent:10px;" >Number</div>
+                       <div  class="HederSHDQD2TextStyle" style="display:table-cell;vertical-align:middle;text-indent:10px;max-width:150px;width:150px;">${ContainerNumber}</div>
+                       </div>
+
+
+
+
+             <div style="display:table; height:42px; width:100%; border-bottom :1px solid \\#E0E8EB" >
+                       <div class="SHDQD1TextStyle" style="display:table-cell; width:145px ; vertical-align:middle; text-align:left; background-color:\\#ECF1F4;text-indent:10px;" >${GrossLabel}</div>
+                       <div  class="HederSHDQD2TextStyle" style="display:table-cell;vertical-align:middle;text-indent:10px;max-width:150px;width:150px;">${GrossWeight}</div>
+                       </div>
+
+
+
+
+           
+              <div style="display:table; height:42px; width:100%; border-bottom :1px solid \\#E0E8EB" >
+                       <div class="SHDQD1TextStyle" style="display:table-cell; width:145px ; vertical-align:middle; text-align:left; background-color:\\#ECF1F4;text-indent:10px;" >${VolumeLabel}</div>
+                       <div  class="HederSHDQD2TextStyle" style="display:table-cell;vertical-align:middle;text-indent:10px;max-width:150px;width:150px;">${Volume}</div>
+                       </div>
+
+               </div>
+
+     
+     <div/>
+   </div>
+
+    </script>
+    
+     <script type="text/x-kendo-tmpl" id="AirTemplate">
+         <div style="height:auto; width:100%;  background-color:white;padding-bottom:22px ;padding-top:-1px:">
+               <div style="height:34px; width:100%; background-color:\\#FFE989; border-bottom: 1px solid \\#9E9FA1;display:table">
+                   <div class="HederSHDQD2TextStyle TemplateItem" style="display:table-cell;vertical-align:middle;text-indent:10px;">${Type}</div>
+                  </div>
+                  <div style="height :auto ; border: 1px solid \\#ACB3B7 ; margin-top:14px; margin-right:10px ; margin-left:10px ; margin-buttom:10px"  >
+
+                      <div style="display:table; height:42px; width:100%; border-bottom :1px solid \\#E0E8EB" >
+                       <div class="SHDQD1TextStyle" style="display:table-cell; width:145px ; vertical-align:middle; text-align:left; background-color:\\#ECF1F4;text-indent:10px;" >Packages</div>
+                       <div  class="HederSHDQD2TextStyle" style="display:table-cell;vertical-align:middle;text-indent:10px;max-width:150px;width:150px;">${Quantity}</div>
+                       </div>
+
+
+
+                        <div style="display:table; height:42px; width:100%; border-bottom :1px solid \\#E0E8EB" >
+                       <div class="SHDQD1TextStyle" style="display:table-cell; width:145px ; vertical-align:middle; text-align:left; background-color:\\#ECF1F4;text-indent:10px;" >Dimensions</div>
+                       <div  class="HederSHDQD2TextStyle" style="display:table-cell;vertical-align:middle;text-indent:10px;max-width:150px;width:150px;">${Dimensions}</div>
+                       </div>
+
+                       
+
+              <div style="display:table; height:42px; width:100%; border-bottom :1px solid \\#E0E8EB" >
+                       <div class="SHDQD1TextStyle" style="display:table-cell; width:145px ; vertical-align:middle; text-align:left; background-color:\\#ECF1F4;text-indent:10px;" >${GrossLabel}</div>
+                       <div  class="HederSHDQD2TextStyle" style="display:table-cell;vertical-align:middle;text-indent:10px;max-width:150px;width:150px;">${GrossWeight}</div>
+                       </div>
+
+
+
+         
+              <div style="display:table; height:42px; width:100%; border-bottom :1px solid \\#E0E8EB" >
+                       <div class="SHDQD1TextStyle" style="display:table-cell; width:145px ; vertical-align:middle; text-align:left; background-color:\\#ECF1F4;text-indent:10px;" >${VolumeLabel}</div>
+                       <div  class="HederSHDQD2TextStyle" style="display:table-cell;vertical-align:middle;text-indent:10px;max-width:150px;width:150px;">${Volume}</div>
+                       </div>
+
+
+               </div>
+
+     
+     <div/>
+   </div>
+
+    </script>
+
+
+
+     <script type="text/x-kendo-tmpl" id="OrderPackagesTemplate">
+         <div style="height:auto; width:100%;  background-color:white;padding-bottom:22px:padding-top:-2px:">
+             <div style="height:34px; width:100%; background-color:\\#FFE989; border-bottom: 1px solid \\#9E9FA1;display:table">
+                   <div class="HederSHDQD2TextStyle TemplateItem" style="display:table-cell;vertical-align:middle;text-indent:10px;">${PackageTypeName}</div>
+                  </div>
+
+         
+
+
+                  <div style="height :auto ; border: 1px solid \\#ACB3B7 ; margin-top:14px; margin-right:10px ; margin-left:10px ; margin-buttom:10px"  >
+
+
+            
+              <div style="display:table; height:42px; width:100%; border-bottom :1px solid \\#E0E8EB" >
+                       <div class=" SHDQD1TextStyle" style="display:table-cell; width:145px ; vertical-align:middle; text-align:left; background-color:\\#ECF1F4;text-indent:10px;" >${Label}</div>
+                       <div  class="HederSHDQD2TextStyle" style="display:table-cell;vertical-align:middle;text-indent:10px;max-width:150px;width:150px;">${Quantity}</div>
+                       </div>
+               </div>
+
+     
+     <div/>
+           <div style="height :21px ;"></div> 
+   </div>
+
+    </script>
+
+    <script>
+   
+
+
+        function BuildPackagesTabPageViewModel(shipment) {
+
+            var DimensionsHeader = $.trim(shipment.DimensionsUnitCode) != '' ? "Dimensions (L-W-H)" + " (" + shipment.DimensionsUnitCode + ")" : "Dimensions (L-W-H)";
+            var VolumeTitle = $.trim(shipment.VolumeUnitCode) != '' ? "Volume" + " (" + shipment.VolumeUnitCode + ")" : "Volume";
+            var GrossTitle = $.trim(shipment.GrossWeightUnitCode) != '' ? "Weight" + " (" + shipment.GrossWeightUnitCode + ")" : "Weight";
+            //var VolumetricTitle = $.trim(shipment.ChargeableWeightUnitCode) != '' ? "Volumetric Weight" + " (" + shipment.ChargeableWeightUnitCode + ")" : "Volumetric Weight";
+            var ChargeableTitle = shipment.TransportModeId == "A" ? "Chargeable Weight" : "Wt / Msr";
+            if ($.trim(shipment.ChargeableWeightUnitCode) != '') {
+                ChargeableTitle = ChargeableTitle + " (" + shipment.ChargeableWeightUnitCode + ")";
+            }
+ 
+            var PackagesDataSource = [];
+            var listitemtemplate = null;
+            
+            if (shipment.ShipmentPackages.length > 0) {
+
+                if (shipment.TransportModeId == "A") {
+
+                 
+                    $.each(shipment.ShipmentPackages, function (index, item) {
+
+                        var length = $.trim(item.Length) == "" ? "" : item.Length;
+                        var width = $.trim(item.Width) == "" ? "" : item.Width;
+                        var height = $.trim(item.Height) == "" ? "" : item.Height;
+
+                        var itemDimensions = length + "-" + width + "-" + height;
+                        var itemVolume = $.trim(item.Volume) == "" ? 0 : item.Volume;
+                        //var itemVolumetricWeight = $.trim(item.VolumetricWeight) == "" ? 0 : item.VolumetricWeight;
+                        var itemGrossWeight = $.trim(item.Weight) == "" ? 0 : item.Weight;
+                        var itemType = $.trim(item.PackageTypeName) == "" ? "" : item.PackageTypeName;
+                        PackagesDataSource.push({
+                            Type: itemType,
+                            Quantity: item.Quantity,
+                            Dimensions: itemDimensions,
+                            Volume: itemVolume.toFixed(3),
+                            //VolumetricWeight: itemVolumetricWeight.toFixed(3),
+                            GrossWeight: itemGrossWeight.toFixed(3)
+                        });
+
+                    });
+
+
+                    listitemtemplate = kendo.template($("#AirTemplate").html());
+                }
+
+                else {
+
+                    if (IsLCLShipment(shipment)) {
+                     
+                        $.each(shipment.ShipmentPackages, function (index, item) {
+
+                            var itemType = $.trim(item.PackageTypeName) == "" ? "" : item.PackageTypeName;
+                            var itemQuantity = $.trim(item.Quantity) == "" ? 0 : item.Quantity;
+                            var itemContainer = $.trim(item.ContainerNumber) == "" ? "" : item.ContainerNumber;
+                            var itemVolume = $.trim(item.Volume) == "" ? 0 : item.Volume;
+                            //var itemVolumetricWeight = $.trim(item.VolumetricWeight) == "" ? 0 : item.VolumetricWeight;
+                            var itemGrossWeight = $.trim(item.Weight) == "" ? 0 : item.Weight;
+
+                            PackagesDataSource.push({
+                                Type: itemType,
+                                Quantity: itemQuantity,
+                                ContainerNumber: itemContainer,
+                                Volume: itemVolume.toFixed(3),
+                                //VolumetricWeight: itemVolumetricWeight.toFixed(3),
+                                GrossWeight: itemGrossWeight.toFixed(3)
+                            });
+                        });
+
+                        listitemtemplate = kendo.template($("#LCLTemplate").html());
+                    }
+
+                    else {
+
+                       
+                        $.each(shipment.ShipmentPackages, function (index, item) {
+
+                            var itemType = $.trim(item.PackageTypeName) == "" ? "" : item.PackageTypeName;
+                            var itemQuantity = $.trim(item.Quantity) == "" ? 0 : item.Quantity;
+                            var itemContainer = $.trim(item.ContainerNumber) == "" ? "" : item.ContainerNumber;
+                            var itemSeal = $.trim(item.Seal) == "" ? "" : item.Seal;
+                            var itemVolume = $.trim(item.Volume) == "" ? 0 : item.Volume;
+                            //var itemVolumetricWeight = $.trim(item.VolumetricWeight) == "" ? 0 : item.VolumetricWeight;
+                            var itemGrossWeight = $.trim(item.Weight) == "" ? 0 : item.Weight;
+
+                            PackagesDataSource.push({
+                                Type: itemType,
+                                Quantity: itemQuantity,
+                                ContainerNumber: itemContainer,
+                                Seal: itemSeal,
+                                Volume: itemVolume.toFixed(3),
+                                //VolumetricWeight: itemVolumetricWeight.toFixed(3),
+                                GrossWeight: itemGrossWeight.toFixed(3)
+                            });
+
+                            listitemtemplate = kendo.template($("#CargoinfoItemOceanTemplate").html());
+                        });
+                    }
+                }
+            }
+
+            else {
+
+                var Label = null;
+                if (IsLCLShipment(shipment)) {
+                    label = "Packages";
+                    // PackagesGridColumns.push({ title: "Package Type", field: "PackageTypeName" });
+                }
+
+                else {
+                    label = "Containers"
+                    //  PackagesGridColumns.push({ title: "Container Type", field: "PackageTypeName" });
+                }
+
+
+                $.each(shipment.ShipmentOrderPackages, function (index, item) {
+                    PackagesDataSource.push({
+                        Quantity: item.Quantity,
+                        PackageTypeName: item.PackageTypeName,
+                        Label: label,
+                    });
+                });
+
+                listitemtemplate = kendo.template($("#OrderPackagesTemplate").html());
+
+            }
+
+          
+            // Summary
+            this.GrossLabel = GrossTitle;
+            this.VolumeLabel = VolumeTitle;
+            //this.VolumetricLabel = VolumetricTitle;
+            this.ChargeableLabel = ChargeableTitle;
+            this.DescriptionOfGoods = $.trim(shipment.DescriptionOfGoods);
+
+
+            if ($.trim(shipment.DescriptionOfGoods) == "") {
+
+                document.getElementById('info').style.display = "none";
+                document.getElementById('inf').style.display = "none";
+     
+            }
+
+            else {
+                document.getElementById('inf').style.display = "block";
+                document.getElementById('info').style.display = "block";
+             
+               
+            }
+
+
+
+
+            var totalPieces = 0;
+            var totalVolume = 0;
+            var totalGrossWeight = 0;
+            var totalVolumetricWeight = 0;
+            var totalChargeableWeight = 0;
+           
+            if (shipment.ShipmentPackages.length > 0) {
+               
+            
+                totalPieces = IsLCLShipment(shipment) ? ($.trim(shipment.NumberOfPackages) == "" ? 0 : shipment.NumberOfPackages) : ($.trim(shipment.NumberOfContainers) == "" ? 0 : shipment.NumberOfContainers);
+                totalVolume = $.trim(shipment.Volume) == "" ? 0 : shipment.Volume;
+                totalGrossWeight = $.trim(shipment.GrossWeight) == "" ? 0 : shipment.GrossWeight;
+                //totalVolumetricWeight = $.trim(shipment.VolumetricWeight) == "" ? 0 : shipment.VolumetricWeight;
+                totalChargeableWeight = $.trim(shipment.ChargeableWeight) == "" ? 0 : shipment.ChargeableWeight;
+            }
+
+            else {
+              
+                totalPieces = $.trim(shipment.BookingNumberOfPackages) == "" ? 0 : shipment.BookingNumberOfPackages;
+                totalVolume = $.trim(shipment.BookingVolume) == "" ? 0 : shipment.BookingVolume;
+                totalGrossWeight = $.trim(shipment.OrderGrossWeight) == "" ? 0 : shipment.OrderGrossWeight;
+                //totalVolumetricWeight = $.trim(shipment.OrderVolumetricWeight) == "" ? 0 : shipment.OrderVolumetricWeight;
+                totalChargeableWeight = $.trim(shipment.OrderChargeableWeight) == "" ? 0 : shipment.OrderChargeableWeight;
+
+
+           
+               
+                if (shipment.ShipmentOrderPackages.length > 0) {
+
+                    //$("#EstimatePackagesControl").show();
+                }
+
+                else {
+
+                    if (this.TotalPieces > 0 || this.TotalVolume > 0 || this.TotalGrossWeight > 0 || this.TotalVolumetricWeight > 0 || this.TotalChargeableWeight > 0) {
+
+                        //$("#EstimatePackagesControl").show();
+                    }
+                }
+            }
+
+          if (shipment.BookingNumberOfPackages > 0 || shipment.ShipmentPackages.length > 0) {
+                document.getElementById('endlineCargo').style.display = "none";
+            }
+            else {
+                document.getElementById('endlineCargo').style.display = "block";
+            }
+            
+            this.TotalPieces = totalPieces;
+            this.TotalVolume = totalVolume.toFixed(3);
+            this.TotalGrossWeight = totalGrossWeight.toFixed(3);
+            //this.TotalVolumetricWeight = totalVolumetricWeight.toFixed(3);
+            this.TotalChargeableWeight = totalChargeableWeight.toFixed(3);
+
+
+                $("#CargoinfoListBox").kendoMobileListView(
+                {
+                    dataSource: {
+                        data: PackagesDataSource,
+                    },
+
+                    template: listitemtemplate,
+                });
+
+            
+        }
+        
+        function onCargoViewShow(e) {
+          
+           
+
+            var scroller = e.view.scroller;
+            scroller.reset();
+
+            //ko.applyBindings($.CurrentEntityList, document.getElementById("headerDetails"));
+
+    
+            ko.applyBindings(BuildPackagesTabPageViewModel($.CurrentEntityPM), document.getElementById("totalsArea"));
+            ko.applyBindings($.CurrentEntityList);
+            $("#companyLogo").attr('src', $.LogoSource);
+           // $.BuildCargoListBox();
+        }
+
+    
+        //function onCargoViewbeforeShow(e) {
+        //    ko.applyBindings(BuildPackagesTabPageViewModel($.CurrentEntityPM), document.getElementById("totalsArea"));
+
+        //    ko.applyBindings($.CurrentEntityList, document.getElementById("headerDetails"));
+        //}
+
+    </script>
+</body>
+</html>
+

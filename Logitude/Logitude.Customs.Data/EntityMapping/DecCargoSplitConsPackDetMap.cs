@@ -1,0 +1,48 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data;
+ 
+namespace Logitude.Customs.Data.EntityMapping
+{
+ 
+    public class DecCargoSplitConsPackDetMap : EntityTypeConfiguration<DecCargoSplitConsPackDet>
+    {
+	    string dbms;
+        public DecCargoSplitConsPackDetMap()
+        { 
+			  this.ToTable("DecCargoSplitConsPackDets", "Customs");
+		
+		    this.HasKey(t => new { t.DeclarationCargoSplitId, t.DecCargoSplitConsLineNo, t.DecCargoSplitConsItemLine, t.PackageLine });
+	 
+            this.Property(t => t.DeclarationCargoSplitId).HasColumnName("DeclarationCargoSplitId").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Tenant).HasColumnName("Tenant");
+
+            this.Property(t => t.DecCargoSplitConsLineNo).HasColumnName("DecCargoSplitConsLineNo").IsRequired().HasDatabaseGeneratedOption(null);
+
+            this.Property(t => t.DecCargoSplitConsItemLine).HasColumnName("DecCargoSplitConsItemLine").IsRequired().HasDatabaseGeneratedOption(null);
+
+            this.Property(t => t.PackageLine).HasColumnName("PackageLine").IsRequired().HasDatabaseGeneratedOption(null);
+
+            this.Property(t => t.PackageQuantity).HasColumnName("PackageQuantity").IsRequired();
+
+            this.Property(t => t.GrossMassMeasure).HasColumnName("GrossMassMeasure");
+
+            this.Property(t => t.PackageTypeCode).HasColumnName("PackageTypeCode").IsRequired().HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.MarksNumbers).HasColumnName("MarksNumbers").HasMaxLength(255).IsUnicode(false);
+
+            this.Property(t => t.ManifestNumber).HasColumnName("ManifestNumber").HasMaxLength(35).IsUnicode(false);
+        }
+    }
+}
+	 

@@ -1,0 +1,5 @@
+delete from QueryColumns where QueryId in (select id from Queries where code in ('BPQU','BRAQ','BPTM'))
+delete from Queries where code in ('BPQU','BRAQ','BPTM')
+delete from PackageFeatures where FeatureId in (select id from features where code in ('BusinessRole.Q.BRAQ', 'BusinessProcessQueue.Q.BPQU' , 'Team.Q.BPTM'))
+delete from RoleFeatures where FeatureId in (select id from features where code in ('BusinessRole.Q.BRAQ', 'BusinessProcessQueue.Q.BPQU' , 'Team.Q.BPTM'))
+delete from features where code in ('BusinessRole.Q.BRAQ', 'BusinessProcessQueue.Q.BPQU' , 'Team.Q.BPTM')

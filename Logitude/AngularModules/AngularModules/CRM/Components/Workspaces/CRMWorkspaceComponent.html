@@ -1,0 +1,104 @@
+﻿<style>
+    .circle {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        font-size: 11px;
+        color: white;
+        line-height: 20px;
+        text-align: center;
+        background: red;
+    }
+</style>
+
+<table>
+    <tr style="height:1px;">
+        <td>
+            <table>
+                <tr>
+                    <td colspan="2">
+                        <ul class="PagesMenu">
+                            <li [class.SelectedPageMenu]="SelectedItem == 'OVE'" (click)="SelectedItem = 'OVE'">Overview</li>
+                            <li [class.SelectedPageMenu]="SelectedItem == 'CUS'" (click)="SelectedItem = 'CUS'">{{'General.MH.Customers' | TextCodeTranslationPipe}}</li>
+                            <li [class.SelectedPageMenu]="SelectedItem == 'QUT'" (click)="SelectedItem = 'QUT'">{{'General.MH.Quotes' | TextCodeTranslationPipe}}</li>
+                            <li [class.SelectedPageMenu]="SelectedItem == 'ACT'" (click)="SelectedItem = 'ACT'">Activities</li>
+                            <li [class.SelectedPageMenu]="SelectedItem == 'OPP'" (click)="SelectedItem = 'OPP'">Opportunities</li>
+                            <li style="width:100px;" [class.SelectedPageMenu]="SelectedItem == 'CON'" (click)="SelectedItem = 'CON'" *ngIf="IsContactsVisible">
+                                <table>
+                                    <tr>
+                                        <td style="font-size: 14px;">
+                                            {{'General.MH.Contacts' | TextCodeTranslationPipe}}
+                                        </td>
+                                        <td style="width:5px;"><div></div></td>
+                                        <td style="width:20px;height:20px;" *ngIf="UpcomingCountVisibility">
+                                            <div style="width:20px;height:20px;" class="circle">{{UpcomingCount}}</div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </li>
+                            <li [class.SelectedPageMenu]="SelectedItem == 'DAS'" (click)="SelectedItem = 'DAS'">Dashboard</li>
+                        </ul>
+                    </td>
+
+                </tr>
+
+                <tr style="height:22px;" [hidden]="SelectedItem != 'ACT'">
+                    <td>
+                        <div></div>
+                    </td>
+                    <td style="width:200px;">
+                        <table>
+                            <tr>
+                                <td style="width:55px; font-size:11px; color : #6E7172;">
+                                    <div>Filter by:</div>
+                                </td>
+
+                                <td>
+                                    <ActivitiesFilter (SelectedValueChanged)="SelectedActivityFilter = $event"></ActivitiesFilter>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height:15px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div class="MediaFill" [hidden]="SelectedItem != 'OVE'">
+                <div LocationDirective Code="OVE"></div>
+            </div>
+
+            <div class="MediaFill" [hidden]="SelectedItem != 'CUS'">
+                <div LocationDirective Code="CUS"></div>
+            </div>
+
+            <div class="MediaFill" [hidden]="SelectedItem != 'QUT'">
+                <div LocationDirective Code="QUT"></div>
+            </div>
+
+            <div class="MediaFill" [hidden]="SelectedItem != 'ACT'">
+                <div LocationDirective Code="ACT"></div>
+            </div>
+
+            <div class="MediaFill" [hidden]="SelectedItem != 'OPP'">
+                <div LocationDirective Code="OPP"></div>
+            </div>
+
+            <div class="MediaFill" [hidden]="SelectedItem != 'CON'" *ngIf="IsContactsVisible">
+                <div LocationDirective Code="CON"></div>
+            </div>
+
+            <div class="MediaFill" [hidden]="SelectedItem != 'DAS'">
+                <div LocationDirective Code="DAS"></div>
+            </div>
+        </td>
+    </tr>
+</table>

@@ -1,0 +1,293 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body><!--Competitors-->
+    <div data-role="view"  data-show="onCompitiorsViewShow">
+     <header data-role="header">
+           
+        <div style="height:55px;display:table;width:100% ">
+
+                  <div style="display:table-cell; width:auto; vertical-align:middle;margin-top:-15px;">
+                             <a data-role="backbutton" data-align="left" style="margin-left:5px;margin-bottom:10px;width:90px;height:30px;font-size:11px;position:relative;"><span style="position:absolute;top:7px;left:8px;">< Details</span></a>
+                          
+                  </div>
+             </div>
+           
+           
+          </header>
+        
+          <div style="width:100% ;background-color: white ;">
+                        <div style ="margin-left :10px; margin-right:10px; background-color: white;">
+                                    <div style="display:table;width:100% ; height: 55px; border-bottom:1px solid #EEF0F1  ;" >
+                                                                  
+                                                         <div style="display:table-cell; vertical-align:middle; text-align:left; width:300px;">
+                                                                     <div class="HeaderNameCustomer TemplateItem" style="display:inline-block;   margin-top:4px; max-width:200px;"  data-bind="text: EnglishName"></div>
+
+                                                                 <div id="Rank111" style="display:inline-block; width:19px;margin-top:4px;"><img style="width: 18px; height:18px; padding:0px; margin:0px;" <img src="images/Rank.png"/></div>
+                                                                    <div id="Rank222"  style="display:inline-block; width:19px;margin-top:4px;"><img style="width: 18px; height:18px; padding:0px; margin:0px;" <img src="images/Rank.png" /></div>
+										                                  <div id="Rank333"  style="display:inline-block; width:19px;margin-top:4px;"><img style="width: 18px; height:18px; padding:0px; margin:0px;" <img src="images/Rank.png" /></div>
+                                                              
+                                                                    
+                                                        </div>
+
+
+
+
+                                    </div>
+                        </div>
+
+           </div>
+
+          <ul data-role="listview" data-style="inset" data-type="group">                 
+            <li>                                    
+                <ul id="CompetitorsListBox"></ul>                
+            </li>
+
+             </ul>
+
+       
+       
+       <div class="Nofound" id="ComNo" style="height: 20px; width: 100%; background-color: white; ">No Competitors</div>
+        </div>
+     <script type="text/x-kendo-tmpl" id="CompetitorsTemplate">
+
+
+                <div style="height:Auto; display:table;width:100% ;background-color: white; border-bottom: 1px solid \\#B0B7BB;" >
+                     <div style =" margin-left :10px; margin-right:10px; margin-top:5px; vertical-align:middle;"> 
+
+                                                       <div style="display:table-cell; vertical-align:middle; text-align:left; width:200px;">
+                                                                    
+                                                                      
+                                                                      <div class="HederSHDQD2TextStyle TemplateItem" style="display:inline-block; margin-top:2px;  max-width:200px; ">${Name}</div>
+                                                        </div>
+
+                                                          <div style="display:table-cell; vertical-align:middle; text-align:center; width:35px; ">
+                                                               
+                                                       </div>
+        
+                                                        <div style="display:table-cell; vertical-align:middle; text-align:right; width:135px;">
+                                                                       
+                                                                    
+                                                                      
+                                                         </div>
+
+                   </div>
+         <div style="height:5px ; ;width:100% ; background-color: white;" >
+              </div>
+
+
+
+          <div style="height:auto; width:100%;  background-color:white;padding-bottom:22px; padding-top:-1px ; border-bottom :1px solid \\#E0E8EB; display:none;">
+              
+                  <div style="height :auto ; border: 1px solid \\#ACB3B7 ; margin-top:14px; margin-right:10px ; margin-left:10px ; margin-buttom:10px"  >
+
+                
+
+              <div style="display:table; height:42px; width:100%; border-bottom :1px solid \\#E0E8EB" >
+                       <div class="SHDQD1TextStyle" style="display:table-cell; width:145px ; vertical-align:middle; text-align:left; background-color:\\#ECF1F4;text-indent:10px;" >Name</div>
+                       <div  class="HederSHDQD2TextStyle" style="display:table-cell;vertical-align:middle;text-indent:10px;">${Name}</div>
+                       </div>
+
+
+
+
+           
+              <div style="display:table; height:42px; width:100%; border-bottom :1px solid \\#E0E8EB" >
+                       <div class="SHDQD1TextStyle" style="display:table-cell; width:145px ; vertical-align:middle; text-align:left; background-color:\\#ECF1F4;text-indent:10px;" >Website</div>
+                       <div  class="HederSHDQD2TextStyle" style="display:table-cell;vertical-align:middle;text-indent:10px;">${Website}</div>
+                       </div>
+
+
+
+
+             <div style="display:table; height:42px; width:100%; border-bottom :1px solid \\#E0E8EB" >
+                       <div class="SHDQD1TextStyle" style="display:table-cell; width:145px ; vertical-align:middle; text-align:left; background-color:\\#ECF1F4;text-indent:10px;" >Weaknesses</div>
+                       <div  class="HederSHDQD2TextStyle" style="display:table-cell;vertical-align:middle;text-indent:10px;">${Weaknesses}</div>
+                       </div>
+
+
+
+
+           
+              <div style="display:table; height:42px; width:100%; border-bottom :1px solid \\#E0E8EB" >
+                       <div class="SHDQD1TextStyle" style="display:table-cell; width:145px ; vertical-align:middle; text-align:left; background-color:\\#ECF1F4;text-indent:10px;" >Opportunity</div>
+                       <div  class="HederSHDQD2TextStyle" style="display:table-cell;vertical-align:middle;text-indent:10px;">${Opportunity}</div>
+                       </div>
+
+               
+
+          <div style="display:table; height:42px; width:100%; border-bottom :1px solid \\#E0E8EB" >
+                       <div class="SHDQD1TextStyle" style="display:table-cell; width:145px ; vertical-align:middle; text-align:left; background-color:\\#ECF1F4;text-indent:10px;" >Threat</div>
+                       <div  class="HederSHDQD2TextStyle" style="display:table-cell;vertical-align:middle;text-indent:10px;">${Threat}</div>
+                       </div>
+
+              
+         <div style="display:table; height:42px; width:100%; border-bottom :1px solid \\#E0E8EB" >
+                       <div class="SHDQD1TextStyle" style="display:table-cell; width:145px ; vertical-align:middle; text-align:left; background-color:\\#ECF1F4;text-indent:10px;" >Strengths</div>
+                       <div  class="HederSHDQD2TextStyle" style="display:table-cell;vertical-align:middle;text-indent:10px;">${Strengths}</div>
+                       </div>
+
+            
+     <div/>
+   </div>
+         
+
+
+
+
+
+
+         
+        
+ 
+
+         </script>
+       <script>
+
+           var competitorListClass = function () {
+               this.Name = "";
+               this.Website = "";
+               this.Strengths = "";
+               this.Weaknesses = "";
+               this.Opportunity = "";
+               this.Threat = "";
+           }
+
+           jQuery.BuildCompetitorsList = (function (list) {
+
+               var CompetitorsList = [];
+
+               $.CurrentCompetitorsList = CompetitorsList;
+
+
+               $.each(list, function (index, Competitor) {
+
+
+                   var item = new competitorListClass();
+
+                   item.CompetitorsList = Competitor;
+
+                   item.Website = $.trim(Competitor.CompetitorWebsite);
+                   item.Name = $.trim(Competitor.CompetitorName);
+                   item.Strengths = $.trim(Competitor.CompetitorStrengths);
+                   item.Weaknesses = $.trim(Competitor.CompetitorWeaknesses);
+                   item.Opportunity = $.trim(Competitor.CompetitorOpportunity);
+                   item.Threat = $.trim(Competitor.CompetitorThreat);
+                   
+                   CompetitorsList.push(item);
+               });
+
+               return CompetitorsList;
+
+           });
+
+           jQuery.LoadCompetitors = (function () {
+
+               $.Application.showLoading();
+
+                   this.CustomerId = $.CurrentEntityId;
+         
+                   var url = "../api/Competitors?customerId=" + $.CurrentEntityId + "&tenant=" + $.CurrentTenant;
+                   $.ajax({
+                   url: url,
+                   type: 'GET',
+                   contentType: 'application/json',
+                   success: function (result) {
+                      
+
+                       if (result.length > 0) {
+                          
+                           document.getElementById('ComNo').style.display = "none";
+                           
+
+                       }
+                       else {
+                          
+                           document.getElementById('ComNo').style.display = "block";
+                       }
+                       
+                       var dataSource = new kendo.data.DataSource({
+                           data: $.BuildCompetitorsList(result)
+                       });
+                       $("#CompetitorsListBox").kendoMobileListView(
+                       {
+                           dataSource: dataSource,
+                           template: kendo.template($("#CompetitorsTemplate").html()),
+
+                       });
+
+
+                       $.Application.hideLoading();
+                   },
+
+                   error: function (jqXHR, textStatus, errorThrown) {
+                       
+                       $.Application.hideLoading();
+
+                   }
+               });
+
+           });
+           jQuery.LoadRankCompetitior = (function () {
+
+           
+               switch ($.CurrentEntityList.RankCode) {
+
+                   case "1": {
+
+                       document.getElementById('Rank111').style.display = "inline-block";
+                       document.getElementById('Rank222').style.display = "none";
+                       document.getElementById('Rank333').style.display = "none";
+
+                       break;
+                   }
+
+                   case "2": {
+                       document.getElementById('Rank111').style.display = "inline-block";
+                       document.getElementById('Rank222').style.display = "inline-block";
+                       document.getElementById('Rank333').style.display = "none";
+                       break;
+                   }
+
+                   case "3": {
+                       document.getElementById('Rank111').style.display = "inline-block";
+                       document.getElementById('Rank222').style.display = "inline-block";
+                       document.getElementById('Rank333').style.display = "inline-block";
+                       break;
+                   }
+                   default: {
+                       document.getElementById('Rank111').style.display = "none";
+                       document.getElementById('Rank222').style.display = "none";
+                       document.getElementById('Rank333').style.display = "none";
+                   }
+
+               }
+
+           });
+
+
+
+
+
+
+           function onCompitiorsViewShow(e) {
+           
+               
+               var scroller = e.view.scroller;
+               scroller.reset();
+
+               ko.applyBindings($.CurrentEntityList);
+               $.LoadCompetitors();
+               $.LoadRankCompetitior();
+           }
+        
+
+
+
+           </script>
+</body>
+</html>
+
+

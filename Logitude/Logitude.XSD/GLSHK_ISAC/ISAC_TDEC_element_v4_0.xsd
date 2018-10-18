@@ -1,0 +1,1149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2012 sp1 (x64) (http://www.altova.com) by Martin Lau (Global Logistics System (HK) Ltd) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<!--GLSHK ISAC and Trade Declaration XML version 4.0 GLSHK 2014-->
+	<xs:element name="MANIFEST_INFO">
+		<xs:annotation>
+			<xs:documentation>Common Message for ISAC message and Trade Declaration</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Transport_Info" type="TRANSPORT_INFO"/>
+				<xs:element name="Master_Info">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="CONSIGNMENT_INFO"/>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="House_Manifest_Info" type="HOUSE_INFO" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="booTDEC" type="xs:boolean" use="required"/>
+			<xs:attribute name="booCUSEXP" type="xs:boolean" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="TRANSPORT_INFO">
+		<xs:sequence>
+			<xs:element name="Transport_Mode" default="4">
+				<xs:simpleType>
+					<xs:restriction base="xs:NMTOKEN"/>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="TransportID" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="35"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="TransportRefNo">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="12"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Arrival_Departure_Date">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="6"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Origin" type="LOCATION_INFO"/>
+			<xs:element name="Destination" type="LOCATION_INFO"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CONSIGNMENT_INFO">
+		<xs:annotation>
+			<xs:documentation>Master Waybill Information</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Notice_Reference_No" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="8"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Master_Bill_No">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="30"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="AWB_Prefix">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="0"/>
+						<xs:maxLength value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="AWB_Suffix">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="0"/>
+						<xs:maxLength value="8"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Total_Pieces">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="4"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Total_Weight" type="WEIGHT_INFO"/>
+			<xs:element name="Agent_Code">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="0"/>
+						<xs:maxLength value="7"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="User_Defined_Field_Info" type="User_Defined_Field_GROUP" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="User_Defined_Field_GROUP">
+		<xs:annotation>
+			<xs:documentation>User_Defined_Field Information</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="User_Defined_Field_Detail" type="User_Defined_Field_DETAIL" maxOccurs="5"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="User_Defined_Field_DETAIL">
+		<xs:annotation>
+			<xs:documentation>User_Defined_Field Detail</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="User_Defined_Field">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:whiteSpace value="collapse"/>
+						<xs:maxLength value="20"/>
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HOUSE_INFO">
+		<xs:annotation>
+			<xs:documentation>House Waybill Information</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="House_Manifest_Details" maxOccurs="5000">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="HOUSE_INFO_DETAIL"/>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HOUSE_INFO_DETAIL">
+		<xs:annotation>
+			<xs:documentation>House Waybill Detail</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Serial_No" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="4"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="House_Bill_No">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="18" fixed="false"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Pieces">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ShipperLoadCount" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Gross_Weight" type="WEIGHT_INFO"/>
+			<xs:element name="Origin" type="LOCATION_INFO"/>
+			<xs:element name="Destination" type="LOCATION_INFO"/>
+			<xs:element name="Shipper" type="SHIPPING_PARTY_INFO"/>
+			<xs:element name="Consignee" type="SHIPPING_PARTY_INFO"/>
+			<xs:element name="Manifest_Description">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="70" fixed="false"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="SpecialHandlingInfo" type="SPECIAL_HANDLING_GROUP" minOccurs="0"/>
+			<xs:element name="ShippingMarksInfo" type="SHIPPING_MARKS_GROUP" minOccurs="0"/>
+			<xs:element name="Charge_Declarations_Info" type="CHARGE_DECLARATIONS_INFO"/>
+			<xs:element name="LicenseInfo" type="LICENSE_GROUP" minOccurs="0"/>
+			<xs:element name="FreeTextDescriptionOfGoods" type="FREETEXT_DOG_GROUP" minOccurs="0"/>
+			<xs:element name="Remark" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="35"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Type_Of_Package" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Quantity" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:totalDigits value="13"/>
+						<xs:fractionDigits value="2"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Item_Cif_Fob_Value" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:totalDigits value="13"/>
+						<xs:fractionDigits value="2"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Container_No" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="11"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="HsCode" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="8"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="WEIGHT_INFO">
+		<xs:annotation>
+			<xs:documentation>Weight Information</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Code">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="3"/>
+						<xs:whiteSpace value="collapse"/>
+						<xs:minLength value="0"/>
+						<xs:enumeration value="KGM"/>
+						<xs:enumeration value="LBR"/>
+						<xs:enumeration value=""/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Value">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:totalDigits value="7"/>
+						<xs:whiteSpace value="collapse"/>
+						<xs:fractionDigits value="6"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LOCATION_INFO">
+		<xs:annotation>
+			<xs:documentation>Location Information</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Place">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="20"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ISO_Country_Code" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SHIPPING_PARTY_INFO">
+		<xs:annotation>
+			<xs:documentation>Shipper / Consignee Information</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Account_Number" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="14"/>
+						<xs:minLength value="0"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Name">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="35"/>
+						<xs:minLength value="1"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="AddressInfo" type="ADDRESS_GROUP"/>
+			<xs:element name="Place">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="17"/>
+						<xs:minLength value="0"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="State_Province" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="9"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Post_Code" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="9"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ISO_Country_Code">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="2"/>
+						<xs:minLength value="0"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ContactInfo" type="CONTACT_GROUP" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ADDRESS_GROUP">
+		<xs:annotation>
+			<xs:documentation>Address Information</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AddressDetail" type="ADDRESS_DETAIL" maxOccurs="3"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ADDRESS_DETAIL">
+		<xs:annotation>
+			<xs:documentation>Address Detail</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Address">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="35"/>
+						<xs:whiteSpace value="collapse"/>
+						<xs:minLength value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CONTACT_GROUP">
+		<xs:annotation>
+			<xs:documentation>Contact Information</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ContactDetail" type="CONTACT_DETAIL" maxOccurs="5"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CONTACT_DETAIL">
+		<xs:annotation>
+			<xs:documentation>Contact Detail</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Contact_ID">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="3"/>
+						<xs:whiteSpace value="collapse"/>
+						<xs:minLength value="0"/>
+						<xs:enumeration value="TE"/>
+						<xs:enumeration value="TL"/>
+						<xs:enumeration value="FX"/>
+						<xs:enumeration value=""/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Contact_Num">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="25"/>
+						<xs:whiteSpace value="collapse"/>
+						<xs:minLength value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AGENT_INFO">
+		<xs:sequence>
+			<xs:element name="Account_Detail" type="ACCOUNT_INFO"/>
+			<xs:element name="Name">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="35"/>
+						<xs:whiteSpace value="collapse"/>
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Place">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="17"/>
+						<xs:whiteSpace value="collapse"/>
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ACCOUNT_INFO">
+		<xs:sequence>
+			<xs:element name="Account_Number" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="14"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="IATA_Agent_Code">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="7"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="IATA_Agent_CASS_Address" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="4"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Participant_Identifier" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SPECIAL_SERVICE_REQUEST_GROUP">
+		<xs:sequence>
+			<xs:element name="Special_Service_Request_Detail" type="SPECIAL_SERVICE_REQUEST_INFO" minOccurs="0" maxOccurs="3"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SPECIAL_SERVICE_REQUEST_INFO">
+		<xs:sequence>
+			<xs:element name="Special_Service_Request">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="65"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CHARGE_DECLARATIONS_INFO">
+		<xs:sequence>
+			<xs:element name="Currency_Code">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="3"/>
+						<xs:minLength value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Charge_Code" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="2"/>
+						<xs:minLength value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Prepaid_Collect_Declarations" type="DECLARED_PREPAID_COLLECT" minOccurs="0"/>
+			<xs:element name="Declared_Value_Carriage" type="DECLARED_VALUE_INFO" minOccurs="0"/>
+			<xs:element name="Declared_Value_Customs" type="DECLARED_VALUE_INFO" minOccurs="0"/>
+			<xs:element name="Declared_Value_Insurance" type="DECLARED_VALUE_INFO" minOccurs="0"/>
+			<!--			
+			<xs:element name="Prepaid_Collect_Declarations" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>			
+			-->
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DECLARED_PREPAID_COLLECT">
+		<xs:sequence>
+			<xs:choice minOccurs="0">
+				<xs:element name="Weight_Value">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="1"/>
+							<xs:enumeration value="P"/>
+							<xs:enumeration value="C"/>
+							<xs:enumeration value=""/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="Valuation_Value">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="1"/>
+							<xs:enumeration value="P"/>
+							<xs:enumeration value="C"/>
+							<xs:enumeration value=""/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="Other_Charge" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="1"/>
+						<xs:enumeration value="P"/>
+						<xs:enumeration value="C"/>
+						<xs:enumeration value=""/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DECLARED_VALUE_INFO">
+		<xs:sequence>
+			<xs:element name="Value">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:totalDigits value="12"/>
+						<xs:fractionDigits value="11"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ISO_Currency_Code" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="3"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!--Rate Description-->
+	<xs:complexType name="RATE_DESCRIPTION_INFO">
+		<xs:sequence>
+			<xs:element name="AWB_Rate_Line_Number">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="Pieces" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="xs:integer">
+							<xs:totalDigits value="4"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="Rate_Combination_Point" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:minLength value="3"/>
+							<xs:maxLength value="3"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="Gross_Weight" type="WEIGHT_INFO" minOccurs="0"/>
+			<xs:element name="Rate_Class_Code" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="1"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Commodity_Details" type="COMMODITY_ITEM_INFO" minOccurs="0"/>
+			<xs:element name="Chargeable_Weight" type="WEIGHT_INFO" minOccurs="0"/>
+			<xs:element name="Rate_Charge_Details" type="RATE_CHARGE_INFO" minOccurs="0"/>
+			<xs:element name="Total_Details" type="TOTAL_DETAILS_INFO" minOccurs="0"/>
+			<xs:element name="Goods_Description" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="20"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Consolidation" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="20"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Dimensions" type="DIMENSIONS_INFO" minOccurs="0"/>
+			<xs:element name="Volume" type="VOLUME_INFO" minOccurs="0"/>
+			<xs:element name="ULD_Number" type="ULD_INFO" minOccurs="0"/>
+			<xs:element name="Shipper_Load_Count" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Harmonised_Commodity_Code" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="18"/>
+						<xs:whiteSpace value="collapse"/>
+						<xs:minLength value="6"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Country_of_Goods" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="2"/>
+						<xs:minLength value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Service_Code" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:length value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="COMMODITY_ITEM_INFO">
+		<xs:choice>
+			<xs:element name="Commodity_Item_Number">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="7"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ULD_Rate_Class_Type">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:length value="4"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:sequence>
+				<xs:element name="Rate_Class_Code">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:minLength value="1"/>
+							<xs:maxLength value="1"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="Class_Rate_Percentage">
+					<xs:simpleType>
+						<xs:restriction base="xs:integer">
+							<xs:totalDigits value="3"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="RATE_CHARGE_INFO">
+		<xs:choice>
+			<xs:element name="Rate_Or_Charge">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:totalDigits value="8"/>
+						<xs:fractionDigits value="7"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Discount">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:totalDigits value="8"/>
+						<xs:fractionDigits value="7"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="TOTAL_DETAILS_INFO">
+		<xs:choice>
+			<xs:element name="Charge">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:totalDigits value="12"/>
+						<xs:fractionDigits value="11"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Discount">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:totalDigits value="12"/>
+						<xs:fractionDigits value="11"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="DIMENSIONS_INFO">
+		<xs:sequence>
+			<xs:element name="Weight" type="WEIGHT_INFO" minOccurs="0"/>
+			<xs:element name="Measurement_Unit_Code">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="3"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Length">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Width">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Height">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Pieces">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:totalDigits value="4"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VOLUME_INFO">
+		<xs:sequence>
+			<xs:element name="Code">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:whiteSpace value="collapse"/>
+						<xs:minLength value="2"/>
+						<xs:maxLength value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Value">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:whiteSpace value="collapse"/>
+						<xs:totalDigits value="9"/>
+						<xs:fractionDigits value="8"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ULD_INFO">
+		<xs:sequence>
+			<xs:element name="ULD_Type">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="3"/>
+						<xs:whiteSpace value="collapse"/>
+						<xs:minLength value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ULD_Serial_Number">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="5"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ULD_Owner_Code">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="2"/>
+						<xs:whiteSpace value="collapse"/>
+						<xs:minLength value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!--End of Rate Description-->
+	<xs:complexType name="OTHER_CHARGES_INFO">
+		<xs:sequence>
+			<xs:element name="PC_Indicator">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:whiteSpace value="collapse"/>
+						<xs:length value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Other_Charge_Items" maxOccurs="3">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Other_Charge_Code">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:whiteSpace value="collapse"/>
+									<xs:length value="2"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="Entitlement_Code">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:whiteSpace value="collapse"/>
+									<xs:length value="1"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="Charge_Amount">
+							<xs:simpleType>
+								<xs:restriction base="xs:decimal">
+									<xs:totalDigits value="12"/>
+									<xs:whiteSpace value="collapse"/>
+									<xs:fractionDigits value="11"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CHARGE_SUMMARY_INFO">
+		<xs:sequence>
+			<xs:element name="Total_Weight_Charge" type="CHARGE_INFO" minOccurs="0"/>
+			<xs:element name="Valuation_Charge" type="CHARGE_INFO" minOccurs="0"/>
+			<xs:element name="Taxes" type="CHARGE_INFO" minOccurs="0"/>
+			<xs:element name="Total_Other_Charges_Due_Agent" type="CHARGE_INFO" minOccurs="0"/>
+			<xs:element name="Total_Other_Charges_Due_Carrier" type="CHARGE_INFO" minOccurs="0"/>
+			<xs:element name="Charge_Summary_Total" type="CHARGE_INFO"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CHARGE_INFO">
+		<xs:sequence>
+			<xs:element name="Charge_Identifier">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="2"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Charge_Amount">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:totalDigits value="12"/>
+						<xs:whiteSpace value="collapse"/>
+						<xs:fractionDigits value="11"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="SHIPPER_CERTIFICATION_SIGNATURE">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="CARRIER_EXECUTION_INFO">
+		<xs:sequence>
+			<xs:element name="Issue_Date" type="xs:dateTime"/>
+			<xs:element name="Issue_Place">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="17"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Authorisation" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="20"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OTHER_SERVICE_GROUP">
+		<xs:sequence>
+			<xs:element name="Other_Service_Information_Detail" type="OTHER_SERVICE_INFO" minOccurs="0" maxOccurs="3"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OTHER_SERVICE_INFO">
+		<xs:sequence>
+			<xs:element name="Other_Service_Information">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="65"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SENDER_REFERENCE_INFO">
+		<xs:sequence>
+			<xs:element name="Sender_Office_Message_Address" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Airport_City">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:length value="3"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="Office_Function_Designator">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:length value="2"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="Company_Designator">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:length value="2"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Sender_Office_File_Reference" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="15"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Sender_Participant_Identification" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Participant_Identifier">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:maxLength value="3"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="Participant_Code">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:maxLength value="17"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="Airport_City">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:length value="3"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SPECIAL_HANDLING_GROUP">
+		<xs:annotation>
+			<xs:documentation>SPECIALHANDLINGGROUP</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SpecialHandlingDetail" type="SPECIAL_HANDLING_DETAIL" maxOccurs="2"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SPECIAL_HANDLING_DETAIL">
+		<xs:annotation>
+			<xs:documentation>SPECIALHANDLINGDETAIL</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Special_Handling_Code">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="3"/>
+						<xs:whiteSpace value="collapse"/>
+						<xs:minLength value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FREETEXT_DOG_GROUP">
+		<xs:annotation>
+			<xs:documentation>Free Text Description of Goods Information</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DescriptionOfGoodsDetail" type="FREETEXT_DOG_DETAIL" maxOccurs="9"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FREETEXT_DOG_DETAIL">
+		<xs:annotation>
+			<xs:documentation>Free Text Description of Goods Detail</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DescriptionOfGoods">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:whiteSpace value="collapse"/>
+						<xs:maxLength value="65"/>
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SHIPPING_MARKS_GROUP">
+		<xs:annotation>
+			<xs:documentation>SHIPPING_MARKS Information</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ShippingMarksDetail" type="SHIPPING_MARKS_DETAIL" maxOccurs="10"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SHIPPING_MARKS_DETAIL">
+		<xs:annotation>
+			<xs:documentation>SHIPPING_MARKS Detail</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ShippingMark">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:whiteSpace value="collapse"/>
+						<xs:maxLength value="35"/>
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LICENSE_GROUP">
+		<xs:annotation>
+			<xs:documentation>LICENSE Information</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="LicenseDetail" type="LICENSE_DETAIL" maxOccurs="9"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LICENSE_DETAIL">
+		<xs:annotation>
+			<xs:documentation>LICENSE Detail</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ExportOrImport">
+				<xs:annotation>
+					<xs:documentation>811 (Export) / 911 (Import)</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="3"/>
+						<xs:whiteSpace value="collapse"/>
+						<xs:enumeration value="811"/>
+						<xs:enumeration value="911"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="License">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:whiteSpace value="collapse"/>
+						<xs:maxLength value="20"/>
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!--		End 	-->
+	<xs:complexType name="MASTER_INFO">
+		<xs:sequence>
+			<xs:element name="Shipper" type="SHIPPING_PARTY_INFO"/>
+			<xs:element name="Consignee" type="SHIPPING_PARTY_INFO"/>
+			<xs:element name="SSR" type="SPECIAL_SERVICE_REQUEST_INFO" minOccurs="0" maxOccurs="3"/>
+			<xs:element name="Agent" type="AGENT_INFO" minOccurs="0"/>
+			<xs:element name="Also_Notify" type="SHIPPING_PARTY_INFO" minOccurs="0"/>
+			<xs:element name="Charge_Declarations" type="CHARGE_DECLARATIONS_INFO"/>
+			<xs:element name="Rate_Description" type="RATE_DESCRIPTION_INFO" maxOccurs="11"/>
+			<xs:element name="Other_Charges" type="OTHER_CHARGES_INFO" minOccurs="0"/>
+			<xs:element name="Prepaid_Charge_Summary" type="CHARGE_SUMMARY_INFO" minOccurs="0"/>
+			<xs:element name="Collect_Charge_Summary" type="CHARGE_SUMMARY_INFO" minOccurs="0"/>
+			<xs:element name="Shipper_Certification" type="SHIPPER_CERTIFICATION_SIGNATURE" minOccurs="0"/>
+			<xs:element name="Carrier_Execution" type="CARRIER_EXECUTION_INFO"/>
+			<xs:element name="Other_Service_Information" type="OTHER_SERVICE_INFO" minOccurs="0" maxOccurs="3"/>
+			<xs:element name="Sender_Reference" type="SENDER_REFERENCE_INFO"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

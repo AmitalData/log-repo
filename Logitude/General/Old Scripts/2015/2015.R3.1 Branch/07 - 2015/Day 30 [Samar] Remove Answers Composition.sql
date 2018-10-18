@@ -1,0 +1,1 @@
+--delete from ObjectFields where FieldName = 'BookingAnswers'

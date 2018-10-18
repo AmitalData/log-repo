@@ -1,0 +1,14 @@
+﻿import {QuotePM} from './EntityPMs/QuotePM';
+
+export class NewQuoteComponentArgs {
+    public Quote: any = null;
+    public IsCopyFromQuote: boolean = false; 
+    public DefaultCustomerId: string = null;
+    public OpportunityId: string = null;
+}
+
+export class QuoteEventNotesArgs {
+    public EntityPM: any;
+    public NotesHeader: string = "Notes";
+    public ShowClosingReason: boolean = false;
+}

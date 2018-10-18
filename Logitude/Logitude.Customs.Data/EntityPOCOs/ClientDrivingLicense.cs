@@ -1,0 +1,43 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Customs.Data.EntityPOCOs
+{
+   
+    public class ClientDrivingLicense
+    {
+	 string dbms;
+
+        [Key]
+        [ForeignKey("Client")]
+        [Column("ClientId" ,Order = 1)]
+	    public string ClientId { get; set; }
+	      
+        public virtual Client Client { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+     [Key]
+        [Column("Line" ,Order = 2)]
+	    public int Line { get; set; }
+        [Column("DrivingLicenseNumber")]
+	    public string DrivingLicenseNumber { get; set; }
+        [Column("DriverLicenseValidityDate")]
+	    public DateTime? DriverLicenseValidityDate { get; set; }
+        [ForeignKey("CustomsCountry")]
+        [Column("DrivingLicenseCountryID")]
+	    public string DrivingLicenseCountryID { get; set; }
+	      
+        public virtual CustomsCountry CustomsCountry { get; set; }
+    }
+}
+	 

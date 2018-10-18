@@ -1,0 +1,115 @@
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Server.Infrastructure.Helpers;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
+using WebFreight.Web.Security;
+using WebFreight.Web.Helpers;
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.Interfaces;
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
+using System.ServiceModel.DomainServices.Hosting; 
+using System.ServiceModel.DomainServices.Server;
+using System.Web;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Accounting.Data;
+using Logitude.Accounting.BL;
+using Logitude.Accounting.Data.EntityLists;
+using Logitude.Accounting.BL.EntityUpdateServices;
+using Logitude.Accounting.Data.EntityListQueryServices;
+using Logitude.Accounting.BL.EntityQueryServices;
+
+namespace WebFreight.Web.AccountingModel.DomainServices
+{ 
+
+    [EnableClientAccess()]
+    public partial class CashBookTypeDomainService : LogitudeDomainService
+    {
+	    IDomainServiceUpdateClass<CashBookTypePM> service;
+		IAccountingContext MyContext;
+     	public CashBookTypeDomainService()
+		{ 
+		  //service = ContainerAccessor.Container.Resolve(typeof(IDomainServiceUpdateClass<CashBookTypePM>), "AccountingDomainServiceUpdateClass", new ParameterOverride("", 1)) as IDomainServiceUpdateClass<CashBookTypePM>;
+		}
+       
+        public CashBookTypePM GetSingleCashBookTypePM(string code,int tenant)
+        {
+            if (MyContext == null)
+            {
+                  MyContext = AccountingContext.GetContext(tenant);
+            }
+
+            CashBookTypeQueryService cashBookTypeQuery = new CashBookTypeQueryService(MyContext);
+            CashBookTypePM cashBookTypePM = cashBookTypeQuery.GetSingle(code,false,false);
+            return cashBookTypePM;
+           
+        }
+
+         
+		public CashBookTypeList GetSingleCashBookTypeList(string code,int tenant)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+			 if ( MyContext == null)
+            {
+                 MyContext = AccountingContext.GetContext(tenant);
+            }
+
+          
+            CashBookTypeListQueryService listService = new CashBookTypeListQueryService(MyContext);
+            return listService.GetSingle(code);
+        }
+
+		public List<CashBookTypeList> GetCashBookTypeLists(int tenant)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+			 if ( MyContext == null)
+            {
+                  MyContext = AccountingContext.GetContext(tenant);
+            }
+            CashBookTypeListQueryService listService = new CashBookTypeListQueryService(MyContext);
+            return listService.GetList(tenant);
+        }
+       
+	    public List<CashBookTypeList> GetCashBookTypeFilters(byte[] xmlFilters, int tenant)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+			
+if ( MyContext == null)
+            {
+                  MyContext = AccountingContext.GetContext(tenant);
+            };
+            CashBookTypeListQueryService listService = new CashBookTypeListQueryService(MyContext);
+            QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
+            return listService.GetList(queryOperations, tenant);
+           
+        }
+
+	    public int GetCashBookTypeFiltersCount(byte[] xmlFilters, int tenant)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+			if ( MyContext == null)
+            {
+                  MyContext = AccountingContext.GetContext(tenant);
+            };
+            CashBookTypeListQueryService queryService = new CashBookTypeListQueryService(MyContext);
+            QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
+            return queryService.GetListCount(queryOperations);
+
+        }
+				
+      
+    }
+}
+	 

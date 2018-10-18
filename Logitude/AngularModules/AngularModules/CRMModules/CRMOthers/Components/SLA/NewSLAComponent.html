@@ -1,0 +1,455 @@
+﻿
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr style="height:95px;">
+        <td>
+            <table>
+                <tr>
+                    <td>
+                        <table>
+                            <tr style="height:35px">
+                                <td style="width:80px;vertical-align:top">
+                                    <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td style="width:200px;height:35px;vertical-align:top">
+                                    <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                            </tr>
+
+                            <tr style="height:20px;">
+                                <td style="width:50px;">
+                                    <LogLabel [ObjectFieldName]="'Inactive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogCheckBox [ObjectFieldName]="'Inactive'" [Checked]="Inactive" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" (ValueChanged)="Inactive = $event"></LogCheckBox>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                    <td>
+                        <table>
+                            <tr style="height:80px;">
+                                <td style="width:80px;vertical-align:top">
+                                    <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td style="height:80px;width:300px;">
+                                    <div class="FillParent">
+                                        <LogTextBox [ObjectFieldName]="'Description'" [Text]="Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height:10px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <ScrollViewer>
+                <table>
+                    <tr style="height:200px;">
+                        <td>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div style="height:100%;width:100%;margin-top:5px;  border-right:2px solid #E4E3E1;border-left:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-radius:6px;vertical-align:top">
+                                            <table style="border :none;vertical-align:top;">
+                                                <tr style="height:25px">
+                                                    <td>
+                                                        <div style="background-color:#EDEDED;height:25px;border-top:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-top-Right-radius:6px; border-top-left-radius:6px;color:black">
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="width:300px;text-align:left;">
+                                                                        <p style="font-size:14px;margin-left:5px;margin-top:1px;color:#1B90CB;"> Defining SLA Policies </p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>
+                                                        <div class="SimpleGridView" style="min-height:165px;vertical-align:top;">
+                                                            <div style="vertical-align:middle;height:22px;margin-top:5px;">
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width: 70px;min-width:70px; max-width: 70px;text-align:left;font-size:12px;color:#6E7172;padding-left:5px;">Severity</td>
+                                                                        <td style="width: 180px;min-width:180px; max-width: 180px;text-align:center;font-size:12px;color:#6E7172;padding-left:5px;">First Response</td>
+                                                                        <td style="width: 90px;min-width:90px; max-width: 90px;text-align:center;font-size:12px;color:#6E7172;margin-right:5px;">Esclate</td>
+                                                                        <td style="width: 180px;min-width:180px; max-width: 180px;text-align:center;font-size:12px;color:#6E7172;padding-left:5px;">Resolve Within</td>
+                                                                        <td style="width: 90px;min-width:90px; max-width: 90px;text-align:center;font-size:12px;color:#6E7172;margin-right:5px;">Esclate</td>
+                                                                        <td style="width:160px;min-width:160px; max-width: 160px;text-align:left;font-size:12px;color:#6E7172;padding-left:5px;">Operational Hours</td>
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                            <div class="SimpleGridViewBody" style="margin-top:5px;">
+                                                                <table class="FixedTable">
+                                                                    <tr class="SimpleGridViewRow" style="border:hidden;" *ngFor="let item of SLALinesList">
+
+                                                                        <td class="GridViewCell" style="width: 70px;min-width:70px; max-width: 70px">
+                                                                            {{item.SeverityName}}
+                                                                        </td>
+                                                                        <td style="width: 180px;min-width:180px; max-width: 180px">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <LogTextBox [HideColumns]="true" [ObjectFieldName]="'FirstResponseTime'" [Text]="item.FirstResponseTime" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext"></LogTextBox>
+                                                                                    </td>
+                                                                                    <td style="width:5px;">
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <LogLov [ObjectFieldName]="'FirstResponseTimeUnit'"
+                                                                                                [SelectedValue]="item.FirstResponseTimeUnit"
+                                                                                                [ObjectTableName]="item.ObjectTableName"
+                                                                                                [DataContext]="item.DataContext"
+                                                                                                [LookUpTableName]="'TimeUnit'"
+                                                                                                [HideColumns]="true">
+                                                                                        </LogLov>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+
+                                                                        <td class="GridViewCell" style="width: 90px;min-width:90px; max-width: 90px; text-align:center;vertical-align:middle">
+                                                                            <div style="display:inline-block; vertical-align: middle;">
+                                                                                <LogCheckBox [ObjectFieldName]="'FirstResponseEscalate'" [Checked]="item.FirstResponseEscalate"  [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext"></LogCheckBox>
+                                                                            </div>
+                                                                        </td>
+
+
+                                                                        <td style="width: 180px;min-width:180px; max-width: 180px">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <LogTextBox [HideColumns]="true" [ObjectFieldName]="'ResolveWithinTime'" [Text]="item.ResolveWithinTime" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext"></LogTextBox>
+                                                                                    </td>
+                                                                                    <td style="width:5px;">
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <LogLov [ObjectFieldName]="'ResolveWithinTimeUnit'"
+                                                                                                [SelectedValue]="item.ResolveWithinTimeUnit"
+                                                                                                [ObjectTableName]="item.ObjectTableName"
+                                                                                                [DataContext]="item.DataContext"
+                                                                                                [LookUpTableName]="'TimeUnit'"
+                                                                                                [HideColumns]="true">
+                                                                                        </LogLov>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+
+                                                                        <td style="width: 90px;min-width:90px; max-width: 90px;text-align:center;vertical-align:middle;">
+                                                                            <div style="display:inline-block; vertical-align: middle;">
+                                                                                <LogCheckBox [ObjectFieldName]="'ResolveWithinEscalate'"  [Checked]="item.ResolveWithinEscalate" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext"></LogCheckBox>
+                                                                            </div>
+                                                                        </td>
+
+                                                                        <td style="width: 160px;min-width:160px; max-width: 160px">
+                                                                            <LogLov [ObjectFieldName]="'BusinessHoursId'"
+                                                                                    [SelectedValue]="item.BusinessHoursId"
+                                                                                    [ObjectTableName]="item.ObjectTableName"
+                                                                                    [DataContext]="item.DataContext"
+                                                                                    [LookUpTableName]="'BusinessHour'"
+                                                                                    [HideColumns]="true">
+                                                                            </LogLov>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr style="height:10px;">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <tr style="height:220px;">
+                        <td>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div style="height:100%;width:100%;margin-top:5px;  border-right:2px solid #E4E3E1;border-left:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-radius:6px;vertical-align:top">
+                                            <table style="border :none;vertical-align:top;">
+                                                <tr style="height:25px">
+                                                    <td>
+                                                        <div style="background-color:#EDEDED;height:25px;border-top:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-top-Right-radius:6px; border-top-left-radius:6px;color:black">
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="width:300px;text-align:left;">
+                                                                        <p style="font-size:14px;margin-left:5px;margin-top:1px;color:#1B90CB;"> First Response Escalation \ Alerts </p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
+                                                                    <td style="width: 32px; padding-left: 5px;">
+                                                                        <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddFirstResponseEscalation()" [disabled]="!AddFirstResponseEscalationEnabled"></IconButton>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>
+                                                        <table>
+                                                            <tr style="height:25px;">
+                                                                <td>
+                                                                    <span style="padding-left:10px;padding-right:2px;vertical-align:central;"> Defining Escalation\Alert will result in e-mail sending in the case of SLA policy violation </span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="SimpleGridView" style="min-height:165px;vertical-align:top;">
+                                                                        <div class="SimpleGridViewHeaderDark">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td style="width: 190px;min-width:190px; max-width: 190px">Time Indicator</td>
+                                                                                    <td style="width: 190px;min-width:190px; max-width: 190px">Time</td>
+                                                                                    <td style="width: 190px;min-width:190px; max-width: 190px">Pre-definition</td>
+                                                                                    <td style="width: 190px;min-width:190px; max-width: 190px">Users</td>
+                                                                                    <td class="LastChild" style="width: 50px;min-width:50px; max-width: 50px">
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </div>
+                                                                        <div class="SimpleGridViewBody">
+                                                                            <table>
+                                                                                <tr class="SimpleGridViewRow" *ngFor="let item of FirstResponseEscalationDataList" (click)="SelectedFirstResponse = item" [class.RowSelected]="item === SelectedFirstResponse">
+                                                                                    <td class="GridViewCell" style="width: 190px;min-width:190px; max-width: 190px">
+                                                                                        <div style="text-align:left;">
+                                                                                            {{item.TimeIndicator}}
+                                                                                        </div>
+                                                                                    </td>
+                                                                                    <td class="GridViewCell" style="width: 190px;min-width:190px; max-width: 190px">
+                                                                                        <table>
+                                                                                            <tr>
+                                                                                                <td style="text-align:left;">{{item.EscalationTime}}</td>
+                                                                                                <td style="width:5px;">
+                                                                                                    <div></div>
+                                                                                                </td>
+                                                                                                <td style="text-align:left;">{{item.TimeUnitName}}</td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </td>
+                                                                                    <td class="GridViewCell" style="width: 190px;min-width:190px; max-width: 190px">
+                                                                                        <div class="TextTrimming" style="text-align:left;">{{item.PreDefinitions}}</div>
+                                                                                    </td>
+                                                                                    <td class="GridViewCell" style="width: 190px;min-width:190px; max-width: 190px">
+                                                                                        <div class="TextTrimming" style="text-align:left;">{{item.Users}}</div>
+                                                                                    </td>
+                                                                                    <td style="width: 50px;min-width:50px; max-width: 50px">
+                                                                                        <div style="vertical-align:middle;display:inline-block;">
+                                                                                            <span class="CellSeparator"></span>
+                                                                                            <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditEscalation(item)"></IconButton>
+                                                                                            <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteEscalation(item)"></IconButton>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr style="height:10px;">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <tr style="height:220px;">
+                        <td>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div style="height:100%;width:100%;margin-top:5px;  border-right:2px solid #E4E3E1;border-left:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-radius:6px;vertical-align:top">
+                                            <table style="border :none;vertical-align:top;">
+                                                <tr style="height:25px">
+                                                    <td>
+                                                        <div style="background-color:#EDEDED;height:25px;border-top:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-top-Right-radius:6px; border-top-left-radius:6px;color:black">
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="width:300px;text-align:left;">
+                                                                        <p style="font-size:14px;margin-left:5px;margin-top:1px;color:#1B90CB;"> Resolve Within Escalation \ Alerts </p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
+                                                                    <td style="width: 32px; padding-left: 5px;">
+                                                                        <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddResolveWithinEscalation()" [disabled]="!AddResolveWithinEscalationEnabled"></IconButton>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>
+                                                        <table>
+                                                            <tr style="height:25px;">
+                                                                <td>
+                                                                    <span style="padding-left:10px;padding-right:2px;vertical-align:central;"> Defining Escalation\Alert will result in e-mail sending in the case of SLA policy violation </span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="SimpleGridView" style="min-height:165px;vertical-align:top;">
+                                                                        <div class="SimpleGridViewHeaderDark">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td style="width: 190px;min-width:190px; max-width: 190px">Time Indicator</td>
+                                                                                    <td style="width: 190px;min-width:190px; max-width: 190px">Time</td>
+                                                                                    <td style="width: 190px;min-width:190px; max-width: 190px">Pre-definition</td>
+                                                                                    <td style="width: 190px;min-width:190px; max-width: 190px">Users</td>
+                                                                                    <td class="LastChild" style="width: 50px;min-width:50px; max-width: 50px">
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </div>
+                                                                        <div class="SimpleGridViewBody">
+                                                                            <table>
+                                                                                <tr class="SimpleGridViewRow" *ngFor="let item of ResolveEscalationDataList" (click)="SelectedResolveEscalation = item" [class.RowSelected]="item === SelectedResolveEscalation">
+                                                                                    <td class="GridViewCell" style="width: 190px;min-width:190px; max-width: 190px">
+                                                                                        <div style="text-align:left;">
+                                                                                            {{item.TimeIndicator}}
+                                                                                        </div>
+                                                                                    </td>
+                                                                                    <td class="GridViewCell" style="width: 190px;min-width:190px; max-width: 190px">
+                                                                                        <table>
+                                                                                            <tr>
+                                                                                                <td style="text-align:left;">{{item.EscalationTime}}</td>
+                                                                                                <td style="width:5px;">
+                                                                                                    <div></div>
+                                                                                                </td>
+                                                                                                <td style="text-align:left;">{{item.TimeUnitName}}</td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </td>
+                                                                                    <td class="GridViewCell" style="width: 190px;min-width:190px; max-width: 190px">
+                                                                                        <div class="TextTrimming" style="text-align:left;">{{item.PreDefinitions}}</div>
+                                                                                    </td>
+                                                                                    <td class="GridViewCell" style="width: 190px;min-width:190px; max-width: 190px">
+                                                                                        <div class="TextTrimming" style="text-align:left;">{{item.Users}}</div>
+                                                                                    </td>
+                                                                                    <td style="width: 50px;min-width:50px; max-width: 50px">
+                                                                                        <div style="vertical-align:middle;display:inline-block;">
+                                                                                            <span class="CellSeparator"></span>
+                                                                                            <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditEscalation(item)"></IconButton>
+                                                                                            <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteEscalation(item)"></IconButton>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </ScrollViewer>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom" colspan="4">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

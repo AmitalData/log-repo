@@ -1,0 +1,168 @@
+﻿
+.DefaultMenuItem:not(.SelectedMenuItem):hover {
+    height: 24px;
+    line-height: 24px;
+    width: calc(100% - 2px);
+    border: 1px solid #BDBEC0;
+    cursor: pointer;
+    position: relative;
+    background: -moz-linear-gradient(50% 17.31% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    background: -webkit-gradient(linear,50% 17.31%,50% 105.85%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
+    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+}
+
+.DefaultMenuItem {
+    height: 24px;
+    line-height: 24px;
+    width: calc(100% - 2px);
+    border: 1px solid transparent;
+    color: #464A4B;
+    font-size: 12px;
+    cursor: default;
+    text-align: left;
+    text-indent: 10px;
+    position: relative;
+}
+
+.SelectedMenuItem {
+    height: 26px;
+    line-height: 26px;
+    width: 100%;
+    text-indent: 11px;
+    border: 0px solid transparent;
+    color: white;
+    background: -moz-linear-gradient(50% 100% 90deg,rgba(28, 131, 185, 1) 0%,rgba(32, 133, 187, 1) 13.69%,rgba(45, 141, 191, 1) 28.14%,rgba(66, 153, 198, 1) 42.94%,rgba(96, 170, 209, 1) 57.99%,rgba(134, 192, 222, 1) 73.22%,rgba(180, 219, 239, 1) 88.4%,rgba(220, 242, 253, 1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(28, 131, 185, 1) 0%, rgba(32, 133, 187, 1) 13.69%, rgba(45, 141, 191, 1) 28.14%, rgba(66, 153, 198, 1) 42.94%, rgba(96, 170, 209, 1) 57.99%, rgba(134, 192, 222, 1) 73.22%, rgba(180, 219, 239, 1) 88.4%, rgba(220, 242, 253, 1) 100%);
+    background: -webkit-gradient(linear,50% 100%,50% 0%,color-stop(0,rgba(28, 131, 185, 1) ),color-stop(0.1369,rgba(32, 133, 187, 1) ),color-stop(0.2814,rgba(45, 141, 191, 1) ),color-stop(0.4294,rgba(66, 153, 198, 1) ),color-stop(0.5799,rgba(96, 170, 209, 1) ),color-stop(0.7322,rgba(134, 192, 222, 1) ),color-stop(0.884,rgba(180, 219, 239, 1) ),color-stop(1,rgba(220, 242, 253, 1) ));
+    background: -o-linear-gradient(90deg, rgba(28, 131, 185, 1) 0%, rgba(32, 133, 187, 1) 13.69%, rgba(45, 141, 191, 1) 28.14%, rgba(66, 153, 198, 1) 42.94%, rgba(96, 170, 209, 1) 57.99%, rgba(134, 192, 222, 1) 73.22%, rgba(180, 219, 239, 1) 88.4%, rgba(220, 242, 253, 1) 100%);
+    background: linear-gradient(0deg, rgba(28, 131, 185, 1) 0%, rgba(32, 133, 187, 1) 13.69%, rgba(45, 141, 191, 1) 28.14%, rgba(66, 153, 198, 1) 42.94%, rgba(96, 170, 209, 1) 57.99%, rgba(134, 192, 222, 1) 73.22%, rgba(180, 219, 239, 1) 88.4%, rgba(220, 242, 253, 1) 100%);
+    position: relative;
+}
+
+.MainMenuTD {
+    width: 142px;
+    min-width: 142px;
+    max-width: 142px;
+}
+
+.TabsTD {
+    width: 122px;
+    min-width: 122px;
+    max-width: 122px;
+}
+
+.MainMenuTD, .TabsTD {
+    background: -moz-linear-gradient(0% 50% 0deg,rgba(247, 247, 247, 1) 0%,rgba(245, 245, 245, 1) 52.38%,rgba(238, 238, 238, 1) 72.96%,rgba(226, 226, 226, 1) 87.88%,rgba(209, 209, 209, 1) 100%);
+    background: -webkit-linear-gradient(0deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 52.38%, rgba(238, 238, 238, 1) 72.96%, rgba(226, 226, 226, 1) 87.88%, rgba(209, 209, 209, 1) 100%);
+    background: -webkit-gradient(linear,0% 50%,100% 50%,color-stop(0,rgba(247, 247, 247, 1) ),color-stop(0.5238,rgba(245, 245, 245, 1) ),color-stop(0.7296,rgba(238, 238, 238, 1) ),color-stop(0.8788,rgba(226, 226, 226, 1) ),color-stop(1,rgba(209, 209, 209, 1) ));
+    background: -o-linear-gradient(0deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 52.38%, rgba(238, 238, 238, 1) 72.96%, rgba(226, 226, 226, 1) 87.88%, rgba(209, 209, 209, 1) 100%);
+    background: linear-gradient(90deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 52.38%, rgba(238, 238, 238, 1) 72.96%, rgba(226, 226, 226, 1) 87.88%, rgba(209, 209, 209, 1) 100%);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/*.MenuArea {
+    width: 142px;
+    min-width: 142px;
+    background: -moz-linear-gradient(0% 50% 0deg,rgba(247, 247, 247, 1) 0%,rgba(245, 245, 245, 1) 52.38%,rgba(238, 238, 238, 1) 72.96%,rgba(226, 226, 226, 1) 87.88%,rgba(209, 209, 209, 1) 100%);
+    background: -webkit-linear-gradient(0deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 52.38%, rgba(238, 238, 238, 1) 72.96%, rgba(226, 226, 226, 1) 87.88%, rgba(209, 209, 209, 1) 100%);
+    background: -webkit-gradient(linear,0% 50%,100% 50%,color-stop(0,rgba(247, 247, 247, 1) ),color-stop(0.5238,rgba(245, 245, 245, 1) ),color-stop(0.7296,rgba(238, 238, 238, 1) ),color-stop(0.8788,rgba(226, 226, 226, 1) ),color-stop(1,rgba(209, 209, 209, 1) ));
+    background: -o-linear-gradient(0deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 52.38%, rgba(238, 238, 238, 1) 72.96%, rgba(226, 226, 226, 1) 87.88%, rgba(209, 209, 209, 1) 100%);
+    background: linear-gradient(90deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 52.38%, rgba(238, 238, 238, 1) 72.96%, rgba(226, 226, 226, 1) 87.88%, rgba(209, 209, 209, 1) 100%);
+}*/
+
+/*.MenuItem:not(.SelectedMenuItem):hover .ImageLeftCenter {
+    margin-left: 14px;
+}
+
+.MenuItem .ImageLeftCenter {
+    margin-left: 15px;
+}*/
+
+/*.MenuItem:not(.SelectedMenuItem):hover {
+    width: 140px;
+    height: 24px;
+    line-height: 26px;
+    text-indent: 9px;
+    cursor: pointer;
+    border: 1px solid #BDBEC0;
+    background: -moz-linear-gradient(50% 17.31% -90deg,rgba(255, 255, 255, 1) 0%,rgba(187, 206, 226, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(187, 206, 226, 1) 100%);
+    background: -webkit-gradient(linear,50% 17.31%,50% 105.85%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(187, 206, 226, 1) ));
+    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(187, 206, 226, 1) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(187, 206, 226, 1) 100%);
+}*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+    CRM : Maintenance : Accounting Top Menu (PagesMenu)
+*/
+.PagesMenu li:not(.SelectedPageMenu):hover {
+    background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
+    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    cursor: pointer;
+    color: #1B90CB;
+}
+
+.PagesMenu li {
+    float: left;
+    height: 21px;
+    line-height: 21px;
+    margin-right: 10px;
+    padding: 0px 5px;
+    border: 1px solid #DADADA;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background: -moz-linear-gradient(50% 164.29% 90deg,rgba(188, 190, 192, 1) 0%,rgba(230, 231, 232, 1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(188, 190, 192, 1) 0%, rgba(230, 231, 232, 1) 100%);
+    background: -webkit-gradient(linear,50% 164.29%,50% 6.67%,color-stop(0,rgba(188, 190, 192, 1) ),color-stop(1,rgba(230, 231, 232, 1) ));
+    background: -o-linear-gradient(90deg, rgba(188, 190, 192, 1) 0%, rgba(230, 231, 232, 1) 100%);
+    background: linear-gradient(0deg, rgba(188, 190, 192, 1) 0%, rgba(230, 231, 232, 1) 100%);
+    font-size: 14px;
+    color: #6E7172;
+    cursor: default;
+}
+
+.PagesMenu .SelectedPageMenu {
+    background: -moz-linear-gradient(50% 100% 90deg,rgba(24, 130, 184, 1) 0%,rgba(28, 132, 186, 1) 13.58%,rgba(41, 140, 190, 1) 27.91%,rgba(62, 152, 198, 1) 42.6%,rgba(92, 169, 209, 1) 57.53%,rgba(130, 191, 223, 1) 72.64%,rgba(176, 218, 239, 1) 87.7%,rgba(219, 243, 255, 1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(24, 130, 184, 1) 0%, rgba(28, 132, 186, 1) 13.58%, rgba(41, 140, 190, 1) 27.91%, rgba(62, 152, 198, 1) 42.6%, rgba(92, 169, 209, 1) 57.53%, rgba(130, 191, 223, 1) 72.64%, rgba(176, 218, 239, 1) 87.7%, rgba(219, 243, 255, 1) 100%);
+    background: -webkit-gradient(linear,50% 100%,50% 0%,color-stop(0,rgba(24, 130, 184, 1) ),color-stop(0.1358,rgba(28, 132, 186, 1) ),color-stop(0.2791,rgba(41, 140, 190, 1) ),color-stop(0.426,rgba(62, 152, 198, 1) ),color-stop(0.5753,rgba(92, 169, 209, 1) ),color-stop(0.7264,rgba(130, 191, 223, 1) ),color-stop(0.877,rgba(176, 218, 239, 1) ),color-stop(1,rgba(219, 243, 255, 1) ));
+    background: -o-linear-gradient(90deg, rgba(24, 130, 184, 1) 0%, rgba(28, 132, 186, 1) 13.58%, rgba(41, 140, 190, 1) 27.91%, rgba(62, 152, 198, 1) 42.6%, rgba(92, 169, 209, 1) 57.53%, rgba(130, 191, 223, 1) 72.64%, rgba(176, 218, 239, 1) 87.7%, rgba(219, 243, 255, 1) 100%);
+    background: linear-gradient(0deg, rgba(24, 130, 184, 1) 0%, rgba(28, 132, 186, 1) 13.58%, rgba(41, 140, 190, 1) 27.91%, rgba(62, 152, 198, 1) 42.6%, rgba(92, 169, 209, 1) 57.53%, rgba(130, 191, 223, 1) 72.64%, rgba(176, 218, 239, 1) 87.7%, rgba(219, 243, 255, 1) 100%);
+    line-height: 21px;
+    color: #FFFFFF;
+    color: rgb(255, 255, 255);
+}
+
+.PagesMenu {
+    height: 23px;
+    width: 100%;
+}

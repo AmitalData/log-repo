@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body><!--Responsibility-->
+     <div data-role="view"  data-show="onResponsibilityViewShow">
+     <header data-role="header">
+           
+           <div style="height:55px;display:table;width:100% ">
+
+                  <div style="display:table-cell; width:auto; vertical-align:middle;margin-top:-15px;">
+                             <a data-role="backbutton" data-align="left" style="margin-left:5px;margin-bottom:10px;width:90px;height:30px;font-size:11px;position:relative;"><span style="position:absolute;top:7px;left:8px;">< Details</span></a>
+                          
+                  </div>
+             </div>
+           
+          </header>
+           
+          <div style="width:100% ;background-color: white ;">
+                        <div style ="margin-left :10px; margin-right:10px; background-color: white;">
+                                    <div style="display:table;width:100% ; height: 55px; border-bottom:1px solid #EEF0F1  ;" >
+                                                                  
+                                                         <div style="display:table-cell; vertical-align:middle; text-align:left; width:320px;">
+                                                                     <div class="HeaderNameCustomer TemplateItem" style="display:inline-block;   margin-top:4px; max-width:270px;"  data-bind="text: EnglishName"></div>
+
+                                                                 <div id="Rank1111" style="display:inline-block; width:19px;margin-top:4px;"><img style="width: 18px; height:18px; padding:0px; margin:0px;" <img src="images/Rank.png"/></div>
+                                                                    <div id="Rank2222"  style="display:inline-block; width:19px;margin-top:4px;"><img style="width: 18px; height:18px; padding:0px; margin:0px;" <img src="images/Rank.png" /></div>
+										                                  <div id="Rank3333"  style="display:inline-block; width:19px;margin-top:4px;"><img style="width: 18px; height:18px; padding:0px; margin:0px;" <img src="images/Rank.png" /></div>
+                                                              
+                                                                    
+                                                        </div>
+
+
+
+
+                                    </div>
+                        </div>
+
+           </div>
+
+               <div style="height:200px; background-color: white ; margin-top:10px;padding-left:10px; padding-right:10px; " >
+            <div style="height:166px; background-color:white;  border:1px solid #B0B7BB ;">
+                    
+                  <div style="display:table; height:41px; width:100%;border-bottom :1px solid #E0E8EB" >
+                      <div class="SHDQD1TextStyle " style="display:table-cell; width:145px; vertical-align:middle; text-align:left;background-color:#ECF1F4;text-indent:10px;">Account Manager</div>
+                       <div class="HederSHDQD2TextStyle TemplateItem" style="display:table-cell;background-color:white; vertical-align:middle;width:200px; text-indent:10px;" data-bind=" text: AccountManagerUserEnglishName"></div>
+                    </div>
+   
+        <div style="display:table; height:41px; width:100%;border-bottom :1px solid #E0E8EB" >
+                     <div class="SHDQD1TextStyle "  style="display:table-cell; width:145px; vertical-align:middle; text-align:left;background-color:#ECF1F4;text-indent:10px;" >Classifier</div>
+              <div class="ValueTextStyle TemplateItem" style="display:table-cell;vertical-align:middle;width:200px;background-color:white; text-indent:10px;" data-bind=" text: ClassifierName"></div>
+                       </div>
+
+    <div style="display:table; height:41px; width:100%;border-bottom :1px solid #E0E8EB" >
+                <div class="SHDQD1TextStyle "  style="display:table-cell; width:145px; vertical-align:middle; text-align:left;background-color:#ECF1F4;text-indent:10px;" >Collector</div>
+                    <div class="HederSHDQD2TextStyle TemplateItem" style="display:table-cell;vertical-align:middle;background-color:white; width:200px; text-indent:10px;" data-bind=" text: CollectorName"></div>
+                       </div>
+           
+                <div style="display:table; height:41px; width:100%;" >
+                <div class="SHDQD1TextStyle "  style="display:table-cell; width:145px; vertical-align:middle; text-align:left;background-color:#ECF1F4;text-indent:10px;" >Salesman</div>
+              <div class="ValueTextStyle TemplateItem" style="display:table-cell;vertical-align:middle;background-color:white;width:200px; text-indent:10px;" data-bind=" text: SalesmanUserEnglishName"></div>
+                       </div>
+               
+                
+                </div>
+</div>
+
+        </div>
+    
+       <script>
+
+
+
+
+           jQuery.LoadRankResponsibility = (function () {
+
+              
+               switch ($.CurrentEntityList.RankCode) {
+
+                   case "1": {
+
+                       document.getElementById('Rank1111').style.display = "inline-block";
+                       document.getElementById('Rank2222').style.display = "none";
+                       document.getElementById('Rank3333').style.display = "none";
+
+                       break;
+                   }
+
+                   case "2": {
+                       document.getElementById('Rank1111').style.display = "inline-block";
+                       document.getElementById('Rank2222').style.display = "inline-block";
+                       document.getElementById('Rank3333').style.display = "none";
+                       break;
+                   }
+
+                   case "3": {
+                       document.getElementById('Rank1111').style.display = "inline-block";
+                       document.getElementById('Rank2222').style.display = "inline-block";
+                       document.getElementById('Rank3333').style.display = "inline-block";
+                       break;
+                   }
+                   default: {
+                       document.getElementById('Rank1111').style.display = "none";
+                       document.getElementById('Rank2222').style.display = "none";
+                       document.getElementById('Rank3333').style.display = "none";
+                   }
+
+               }
+
+           });
+
+           function onResponsibilityViewShow(e) {
+
+               var scroller = e.view.scroller;
+               scroller.reset();
+
+               ko.applyBindings($.CurrentEntityList);
+
+            
+               $.LoadRankResponsibility();
+           }
+              </script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:GCCSCargoImp="http://www.champ.aero/GCCS/CargoXML"
+           targetNamespace="http://www.champ.aero/GCCS/CargoXML" version="2.0">
+    <xs:include schemaLocation="common.xsd"/>
+    <xs:include schemaLocation="common_waybill.xsd"/>
+    <xs:complexType name="ConsolidationList">
+        <xs:sequence>
+            <xs:element name="StandardMessageIdentification"
+                        type="GCCSCargoImp:StandardMessageIdentification"/>
+            <xs:element name="MasterAWBConsignmentDetail"
+                        type="GCCSCargoImp:AWBConsignmentDetails"/>
+            <xs:element name="HouseWaybillSummaryDetails"
+                        type="GCCSCargoImp:HouseWaybillSummaryDetails"
+                        maxOccurs="99"/>
+            <xs:element minOccurs="0" name="Shipper"
+                        type="GCCSCargoImp:Contact"/>
+            <xs:element minOccurs="0" name="Consignee"
+                        type="GCCSCargoImp:Contact"/>
+            <xs:element minOccurs="0" name="ChargeDeclarations"
+                        type="GCCSCargoImp:FHLChargeDeclarations"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="FHLHarmonisedCommodityCode">
+        <xs:sequence>
+            <xs:element maxOccurs="9" name="HarmonisedCommodityCode"
+                        type="GCCSCargoImp:HarmonisedCommodityCodeEntry"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="HouseWaybillTotals">
+        <xs:attribute name="NumberOfPieces" type="GCCSCargoImp:NumberOfPieces" use="required"/>
+        <xs:attribute name="WeightCode" type="GCCSCargoImp:WeightCode" use="required"/>
+        <xs:attribute name="Weight" type="GCCSCargoImp:Weight" use="required"/>
+        <xs:attribute name="SLAC" type="GCCSCargoImp:SLAC"/>
+    </xs:complexType>
+    <xs:complexType name="HouseWaybillSummaryDetails">
+        <xs:sequence>
+            <xs:element name="HouseWaybillOriginAndDestination" type="GCCSCargoImp:AWBOriginAndDestination"/>
+            <xs:element name="HouseWaybillTotals" type="GCCSCargoImp:HouseWaybillTotals"/>
+            <xs:element minOccurs="0" name="SpecialHandlingRequirements" type="GCCSCargoImp:SpecialHandlingDetails"/>
+            <xs:element minOccurs="0" name="FreeTextDescriptionOfGoods" type="GCCSCargoImp:FreeTextDescriptionOfGoods" maxOccurs="1"/>
+			<xs:element minOccurs="0" name="HarmonisedTariffScheduleInformation" type="GCCSCargoImp:FHLHarmonisedCommodityCode" maxOccurs="9"/>
+            <xs:element minOccurs="0" name="OtherCustomsInformation" type="GCCSCargoImp:OtherCustomsInformation" maxOccurs="99"/>
+        </xs:sequence>
+        <xs:attribute name="HWBSerialNumber" type="GCCSCargoImp:HWBSerialNumber" use="required"/>
+        <xs:attribute name="NatureOfGoods" type="GCCSCargoImp:ManifestDescriptionOfGoods" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="FreeTextDescriptionOfGoods">
+        <xs:sequence>
+            <xs:element maxOccurs="9" name="FreeText" type="GCCSCargoImp:FreeText"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="FHLChargeDeclarations">
+        <xs:complexContent>
+            <xs:extension base="GCCSCargoImp:ChargeDeclarations">
+                <xs:sequence>
+                    <xs:element name="PrepaidOrCollectChargeDeclarations"
+                                type="GCCSCargoImp:PrepaidOrCollectChargeDeclarations"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>

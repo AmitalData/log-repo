@@ -1,0 +1,67 @@
+﻿
+<table style="height:60px;">
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr style="height:30px;">
+        <td style="color:#1B90CB;font-size:14px;"> Filter By: </td>
+    </tr>
+
+    <tr style="height:30px">
+        <td>
+            <table>
+                <tr>
+                    <td style="width:10px;">
+                        <div></div>
+                    </td>
+
+                    <!--Participant-->
+                    <td style="width:70px;">Participant:</td>
+                    <td style="width:200px;">
+                        <LogLov [ObjectFieldName]="'ParticipantId'"
+                                [ObjectTableName]="'LogitudeMessagesTransmissionLog'"
+                                [DataContext]="DataContext"
+                                [DependencyFilter1Value]="'PT'"
+                                [LookUpTableName]="'Card'"
+                                [ShowInActive]="true"
+                                [HideMaintenanceIcon]="true"  [HideAddLink]="true" [HideAdd]="true">
+                        </LogLov>
+                    </td>
+
+                    <!--Dates-->
+                    <td style="width:90px;">Activity Period:</td>
+                    <td style="width:20px;"><div></div></td>
+                    <td style="width:40px;">From: </td>
+                    <td style="width:150px;">
+                        <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'FromDate'" [DataContext]="DataContext"></LogDatePicker>
+                    </td>
+                    <td style="width:10px;"><div></div></td>
+                    <td style="width:30px;">To:  </td>
+                    <td style="width:150px;">
+                        <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'ToDate'" [DataContext]="DataContext"></LogDatePicker>
+                    </td>
+
+                    <td style="width:40px">
+                        <div></div>
+                    </td>
+
+                    <td style="width:80px;">
+                        <button class="GreenButton" (click)="RunReport(true)">Run Report</button>
+                    </td>
+
+                    <td></td>
+                </tr>
+            </table>
+        </td>
+
+
+    </tr>
+
+    <tr>
+        <td></td>
+    </tr>
+
+</table>

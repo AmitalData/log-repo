@@ -1,0 +1,52 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization; 
+
+namespace Logitude.Customs.Data.EntityLists
+{
+   [DataContract]
+   public partial class SupplierInvoiceItemsConDeclarList
+   {
+   
+       [Key]
+       [DataMember]
+       public string DeclarationId  { get; set; }
+
+       [Key]
+       [DataMember]
+       public int InvoiceCounterKey  { get; set; }
+
+       [Key]
+       [DataMember]
+       public int InvoiceItemLineNumber  { get; set; }
+
+       [Key]
+       [DataMember]
+       public int LineNumber  { get; set; }
+       [DataMember]
+       public int Tenant  { get; set; }
+       [DataMember]
+       public string DeclarationNumber  { get; set; }
+       [DataMember]
+       public int? ItemSequence  { get; set; }
+       [DataMember]
+       public string DeclarationTypeCode  { get; set; }
+       [DataMember]
+       public int? InvoiceNumber  { get; set; }
+       [DataMember]
+       public decimal? Quantity  { get; set; }
+       [DataMember]
+       public string DeclarationTypeName  { get; set; }
+       [DataMember]
+       public string QuantityTypeCode  { get; set; }
+       [DataMember]
+       public string QuantityTypeName  { get; set; }
+   }
+
+}
+	 

@@ -1,0 +1,341 @@
+<style>
+    .subTitle {
+        color: #1b90cb;
+        font-size: 16px;
+    }
+</style>
+<table *ngIf="visible">
+
+ 
+  <tr>
+    <td>
+      <div class="TableHolder">
+        <table>
+          <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+            <td colspan="4">
+              <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+            </td>
+          </tr>
+          <tr class="TabTitleRow">
+            <td>{{ 'GLAccount.TH.Tax' | TextCodeTranslationPipe}} </td>
+          </tr>
+
+          <tr style="height: 15px;"><td><div style="width: 15px;"></div></td></tr>
+
+
+          <tr>
+            <td>
+              <table>
+                <tr style="height:35px">
+                  <td style="width: 360px;">
+                    <table>
+                      <!-- DeductionFileTypeId -->
+                      <tr class="FormFieldRow">
+                        <td style="width: 180px;">
+                          <LogLabel [ObjectFieldName]="'DeductionTypeId'" [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td style="width: 180px;">
+                          <LogLov [ObjectFieldName]="'DeductionTypeId'"
+                                  [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"
+                                  [LookUpTableName]="'AccountingCompanyType'"
+                                  (SelectedItemChanged)="DeductionType = $event"
+                                  [HideColumns]="true">
+                          </LogLov>
+                        </td>
+                        <td style="width: 40px;"><div></div></td>
+                      </tr>
+                    </table>
+                  </td>
+                  <td style="width: 40px;"><div></div></td>
+                  <td style="width: 360px;">
+                    <table>
+                      <!-- ConsolidationVat -->
+                      <tr class="FormFieldRow">
+                        <td>
+                          <table>
+                            <tr>
+
+                              <td style="width: 180px;">
+                                <LogLabel [ObjectFieldName]="'ConsolidationVat'" [ObjectTableName]="ObjectTableName"
+                                          [DataContext]="DataContext"></LogLabel>
+                              </td>
+                              <td width="180px;">
+                                <LogTextBox [ObjectFieldName]="'ConsolidationVat'" [InputType]="'text'" [DataContext]="DataContext" [Text]="ConsolidationVat"
+                                            [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                              </td>
+                              <td style="width: 40px;"><div></div></td>
+                            </tr>
+                          </table>
+                        </td>
+
+
+                      </tr>
+                    </table>
+
+
+                  </td>
+                  <td style="width: 40px;"><div></div></td>
+                  <td style="width: 360px;">
+                    <table>
+                      <!-- DeductionFileTypeId -->
+                      <tr class="FormFieldRow">
+                        <td style="width: 360px;">
+                          <table>
+                            <tr>
+
+                              <td style="width: 180px;">
+                                <LogLabel [ObjectFieldName]="'DeductionFileTypeId'" [ObjectTableName]="ObjectTableName"
+                                          [DataContext]="DataContext"></LogLabel>
+                              </td>
+                              <td width="180px;">
+                                <LogLov [ObjectFieldName]="'DeductionFileTypeId'"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext"
+                                        [LookUpTableName]="'WithholdingTaxDeductionType'"
+                                        (SelectedItemChanged)="DeductionFileType = $event"
+                                        [HideColumns]="true">
+                                </LogLov>
+                              </td>
+                              <td style="width: 40px;"><div></div></td>
+                            </tr>
+                          </table>
+                        </td>
+
+
+                      </tr>
+
+                    </table>
+
+                  </td>
+
+                  <td><div></div></td>
+
+                </tr>
+
+                <tr style="height:35px">
+                  <td style="width: 360px;">
+                    <table>
+                      <!-- Occupation -->
+                      <tr class="FormFieldRow">
+                        <td style="width: 180px;">
+                          <LogLabel [ObjectFieldName]="'Occupation'" [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td style="width: 180px;">
+                          <LogTextBox [ObjectFieldName]="'Occupation'" [InputType]="'ntext'" [DataContext]="DataContext"
+                                      [ObjectTableName]="ObjectTableName" [Text]="Occupation" [HideColumns]="true"></LogTextBox>
+                        </td>
+                        <td style="width: 40px;"><div></div></td>
+                      </tr>
+                    </table>
+
+
+                  </td>
+                  <td style="width: 40px;"><div></div></td>
+                  <td style="width: 360px;">
+                    <table>
+
+                      <!-- AssessingOfficeCode -->
+                      <tr class="FormFieldRow">
+                        <td width="180px;">
+                          <LogLabel [ObjectFieldName]="'AssessingOfficeCode'" [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td width="180px;">
+                          <LogLov [ObjectFieldName]="'AssessingOfficeCode'"
+                                  [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"
+                                  [LookUpTableName]="'TaxWithholdingAssessOffice'"
+                                  (SelectedItemChanged)="AssessingOffice = $event"
+                                  [HideColumns]="true">
+                          </LogLov>
+                        </td>
+                        <td style="width: 40px;"> <div></div></td>
+                      </tr>
+                    </table>
+
+
+                  </td>
+                  <td style="width: 40px;"><div></div></td>
+                  <td style="width: 360px;">
+                    <table>
+                      <!-- DeductionFileNumber -->
+                      <tr class="FormFieldRow">
+                        <td width="180px;">
+                          <LogLabel [ObjectFieldName]="'DeductionFileNumber'" [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td width="180px;">
+                          <LogTextBox [ObjectFieldName]="'DeductionFileNumber'" [InputType]="'text'" [DataContext]="DataContext" [Text]="DeductionFileNumber"
+                                      [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                        </td>
+                        <td style="width: 40px;"><div></div></td>
+                      </tr>
+
+                    </table>
+
+
+                  </td>
+
+                  <td><div></div></td>
+                </tr>
+
+
+
+                <tr><td><div></div></td></tr>
+              </table>
+
+            </td>
+          </tr>
+
+
+
+          <tr style="height:80%">
+            <td colspan="6">
+              <table>
+                <tr style="height:32px" class="TabTitleRow">
+                  <td colspan="3"> {{'Accounting.O.TaxDeduction'| TextCodeTranslationPipe}} </td>
+
+                </tr>
+                <tr>
+                  <td style="width:25px; height: 20px;padding: 5px;padding-bottom: 3px;">
+                    <div><IconButton [IsSmall]="true" [Name]="'Add'" (click)="Add()"></IconButton></div>
+                  </td>
+                  <td></td>
+                  <td style="width:180px">
+                    <ul class="FiltersMenu">
+                      <li id="All" (click)="FilterItemClicked('All')" style="width: 60px; height: 22px;"
+                          [class.SelectedFilter]="FilterSelectedValue === 'All'" class="noselect">
+                        {{'Accounting.General.O.All'| TextCodeTranslationPipe}}
+                      </li>
+                      <li id="Active" (click)="FilterItemClicked('Active')" style="width: 60px; height: 22px;"
+                          [class.SelectedFilter]="FilterSelectedValue === 'Active'" class="noselect">
+                        {{'GLAccounts.Q.Active' | TextCodeTranslationPipe}}
+                      </li>
+                      <li id="Inactive" (click)="FilterItemClicked('Inactive')" style="width: 60px; height: 22px;"
+                          [class.SelectedFilter]="FilterSelectedValue === 'Inactive'" class="noselect">
+                        {{'GLAccounts.Q.Inactive' |TextCodeTranslationPipe}}
+                      </li>
+
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="3">
+                    <div class="CellContent" style="">
+                      <logitude-edit-grid GridWidth="100%"
+                                          GridHeight="100%"
+                                          [ItemSource]="Lines">
+
+                        <log-column [header]="'GLAccountWithholdingTax.F.LineNumber' | TextCodeTranslationPipe" [width]="'50'" [Editable]="false" [Alignment]="'right'">
+
+                          <log-cell-template template="let item" #logcelltemplate>
+                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right">
+                              <span>{{item.Sequence}}</span>
+                            </div>
+
+                          </log-cell-template>
+                        </log-column>
+
+
+                        <log-column [header]="'GLAccountWithholdingTax.F.FromDate' | TextCodeTranslationPipe" [width]="'110'" [Editable]="false" [Alignment]="'center'">
+
+                          <log-cell-template template="let item" #logcelltemplate>
+                            <div *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right">
+                              <span>{{item.FromDate | DateTimeToDatePipe}}</span>
+                            </div>
+                            <div *ngIf="logcelltemplate.IsEditMode">
+                              <LogDatePicker [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName"
+                                             [DataContext]="item" [HideColumns]="true" [FocusOnMe]="'true'"></LogDatePicker>
+
+
+                            </div>
+                          </log-cell-template>
+                        </log-column>
+
+
+
+
+                        <log-column [header]="'GLAccountWithholdingTax.F.ToDate' | TextCodeTranslationPipe" [width]="'110'" [Editable]="false" [Alignment]="'center'">
+
+                          <log-cell-template template="let item" #logcelltemplate>
+                            <div *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right">
+                              <span>{{item.ToDate |DateTimeToDatePipe}}</span>
+                            </div>
+                            <div *ngIf="logcelltemplate.IsEditMode">
+                              <LogDatePicker [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName"
+                                             [DataContext]="item" [HideColumns]="true" [FocusOnMe]="'true'"></LogDatePicker>
+
+
+                            </div>
+                          </log-cell-template>
+                        </log-column>
+
+                        <log-column [header]="'GLAccountWithholdingTax.F.Percentage' | TextCodeTranslationPipe" [width]="'110'" [Editable]="false" [Alignment]="'center'">
+
+                          <log-cell-template template="let item" #logcelltemplate>
+                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right">
+                              <span>{{item.Percentage}}</span>
+                            </div>
+                            <div *ngIf="logcelltemplate.IsEditMode">
+                              <LogTextBox [ObjectFieldName]="'Percentage'" [DataContext]="item" [FocusOnMe]="true" [InputType]="'double'"
+                                          [Text]="item.Percentage" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+
+
+                            </div>
+                          </log-cell-template>
+                        </log-column>
+
+                        <log-column [Alignment]="'center'" [width]="'80'" [header]="'GLAccountWithholdingTax.F.Inactive' | TextCodeTranslationPipe" [Editable]="false" [visibility]="'visibile'">
+                          <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+
+
+
+                            <div style="width: 30px;  height:20px;padding-top:3px;align-self:center;">
+                              <span style="padding-left:30px; padding-right:30px"><img *ngIf="item.Inactive" src="./Images/CheckBoxIcon.png" /></span>
+                            </div>
+
+
+
+                          </log-cell-template>
+                        </log-column>
+
+                        <log-column [width]="'30'" [Editable]="true" [Alignment]="'right'" [visibility]="'visibile'" [IgnoreColumn]="true">
+                          <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate [RIndex]="item.rowIndex" [TabIndex]="-1">
+                            <div style="width: 20px; float: right; height:20px;padding-top:3px">
+                              <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="item.EditItem(item)">
+
+
+
+                              </IconButton>
+
+
+
+                            </div>
+                          </log-cell-template>
+                        </log-column>
+                      </logitude-edit-grid>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+
+            </td>
+
+
+          </tr>
+
+        </table>
+      </div>
+    </td>
+  </tr>
+
+
+
+</table>

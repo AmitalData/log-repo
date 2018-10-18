@@ -1,0 +1,74 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Customs.Data.EntityPOCOs
+{
+   
+    public class SupplierInvioceItemCertificat
+    {
+	 string dbms;
+
+        [Key]
+        [ForeignKey("SupplierInvoiceItem")]
+        [Column("DeclarationId" ,Order = 1)]
+	    public string DeclarationId { get; set; }
+	      
+        public virtual SupplierInvoiceItem SupplierInvoiceItem { get; set; }
+     [Key]
+        [ForeignKey("SupplierInvoiceItem")]
+        [Column("InvoiceCounterKey" ,Order = 2)]
+	    public int InvoiceCounterKey { get; set; }
+     [Key]
+        [ForeignKey("SupplierInvoiceItem")]
+        [Column("LineNumber" ,Order = 3)]
+	    public int LineNumber { get; set; }
+     [Key]
+        [Column("ItemCertificateCounterKey" ,Order = 4)]
+	    public int ItemCertificateCounterKey { get; set; }
+        [Column("CertificateNumber")]
+	    public string CertificateNumber { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+        [ForeignKey("RequestConfirmationType")]
+        [Column("ReqConfirmationTypeCode")]
+	    public string ReqConfirmationTypeCode { get; set; }
+	      
+        public virtual ConfirmationType RequestConfirmationType { get; set; }
+        [ForeignKey("CertificateExemptionType")]
+        [Column("CertificateExemptionTypeCode")]
+	    public string CertificateExemptionTypeCode { get; set; }
+	      
+        public virtual CertificateExemptionType CertificateExemptionType { get; set; }
+        [ForeignKey("AttachmentType")]
+        [Column("AttachmentTypeCode")]
+	    public string AttachmentTypeCode { get; set; }
+	      
+        public virtual AttachmentType AttachmentType { get; set; }
+        [ForeignKey("ResponseConfirmationType")]
+        [Column("ResConfirmationTypeCode")]
+	    public string ResConfirmationTypeCode { get; set; }
+	      
+        public virtual ConfirmationType ResponseConfirmationType { get; set; }
+        [Column("CustomsAttachmentID")]
+	    public string CustomsAttachmentID { get; set; }
+        [Column("SequenceNumeric")]
+	    public int SequenceNumeric { get; set; }
+        [Column("ExternalCertificatCode")]
+	    public string ExternalCertificatCode { get; set; }
+        [Column("ExternalRequestTypeCode")]
+	    public string ExternalRequestTypeCode { get; set; }
+        [Column("ApprovalRequestNumber")]
+	    public string ApprovalRequestNumber { get; set; }
+    }
+}
+	 

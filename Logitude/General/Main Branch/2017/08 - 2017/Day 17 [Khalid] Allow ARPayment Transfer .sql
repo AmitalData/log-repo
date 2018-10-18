@@ -1,0 +1,1 @@
+update AccountingSystems set AllowARPaymentsTransfer='1' where Code='QBO' OR Code ='QBOG'

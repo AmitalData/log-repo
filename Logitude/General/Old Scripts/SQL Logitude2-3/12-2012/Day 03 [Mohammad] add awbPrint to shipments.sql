@@ -1,0 +1,1 @@
+alter table shipments add AWBPrint bit not null default 0

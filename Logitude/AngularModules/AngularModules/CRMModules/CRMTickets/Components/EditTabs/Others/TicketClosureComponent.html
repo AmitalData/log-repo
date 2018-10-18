@@ -1,0 +1,127 @@
+﻿<table>
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td colspan="3">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table class="FixedTable">
+                <!-- TicketTypeId -->
+                <tr class="FormFieldRow">
+                    <td style="width:153px;">
+                        <LogLabel [ObjectFieldName]="'TicketTypeId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td style="width:230px;">
+                        <LogLov [ObjectFieldName]="'TicketTypeId'"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [SelectedValue]="TicketTypeId"
+                                [LookUpTableName]="'TicketType'" [HideColumns]="true"> 
+                        </LogLov>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- Main Classification-->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'MainClassificationId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogLov [ObjectFieldName]="'MainClassificationId'"
+                                [SelectedValue]="MainClassificationId"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'TicketClassification'"
+                                [DependencyFilter1Value]="FirstClassificationId" [HideColumns]="true">
+                        </LogLov>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- Secondery Classification-->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'SecondaryClassificationId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogLov [ObjectFieldName]="'SecondaryClassificationId'"
+                                [SelectedValue]="SecondaryClassificationId"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'TicketClassification'"
+                                [DependencyFilter1Value]="SecondClassificationId" [HideColumns]="true">
+                        </LogLov>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- Ticket Closure-->
+                <tr class="FormFieldRow">
+                    <td style="vertical-align:top;">
+                        <LogLabel [ObjectFieldName]="'ClosureDescription'" [ObjectTableName]="ObjectTableName" [Text]="'Closure Description'" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td colspan="2">
+                        <table>
+                            <tr>
+                                <td style="height:65px;">
+                                    <div style="height:65px;width:288px;">
+                                        <LogTextBox [HideColumns]="true" [ObjectFieldName]="'ClosureDescription'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                    </div>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="3">
+                        <div></div>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom" colspan="4">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

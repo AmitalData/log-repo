@@ -1,0 +1,110 @@
+﻿
+.GridView thead th:last-child, .GridView tbody td:last-child, .GridView tfoot td:last-child {
+    width: 100%;
+}
+
+/*the div in cells to margin from right: try absolute: right & left */
+.GridView th, .GridView td, .GridView td div {
+    text-align: left;
+    text-indent: 5px;
+    /*height: 24px;*/
+    line-height: 24px;
+    vertical-align:middle;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.GridView thead th:not(.LastChild):hover {
+    cursor: default;
+    background: -moz-linear-gradient(50% 17.31% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    background: -webkit-gradient(linear,50% 17.31%,50% 105.85%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
+    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+}
+
+.GridView thead th:not(:last-child) {
+    border-right: 1px solid #D1D3D4;
+}
+
+.GridView tfoot td:not(:last-child) {
+    border-right: 1px solid #D1D3D4;
+}
+
+.GridView tbody td:not(:last-child) {
+    border-right: 1px solid transparent;
+}
+
+.GridView thead tr, .GridView tfoot tr {
+    height: 24px;
+    font-size: 11px;
+    /*line-height: 26px;*/
+    color: #1B90CB;
+    border: 1px solid #DADADA;
+    background: -moz-linear-gradient(50% 0% -90deg,rgba(247, 247, 247, 1) 0%,rgba(245, 245, 245, 1) 52.38%,rgba(238, 238, 238, 1) 72.96%,rgba(226, 226, 226, 1) 87.88%,rgba(209, 209, 209, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 52.38%, rgba(238, 238, 238, 1) 72.96%, rgba(226, 226, 226, 1) 87.88%, rgba(209, 209, 209, 1) 100%);
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(247, 247, 247, 1) ),color-stop(0.5238,rgba(245, 245, 245, 1) ),color-stop(0.7296,rgba(238, 238, 238, 1) ),color-stop(0.8788,rgba(226, 226, 226, 1) ),color-stop(1,rgba(209, 209, 209, 1) ));
+    background: -o-linear-gradient(-90deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 52.38%, rgba(238, 238, 238, 1) 72.96%, rgba(226, 226, 226, 1) 87.88%, rgba(209, 209, 209, 1) 100%);
+    background: linear-gradient(180deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 52.38%, rgba(238, 238, 238, 1) 72.96%, rgba(226, 226, 226, 1) 87.88%, rgba(209, 209, 209, 1) 100%);
+}
+
+.GridView thead {
+    height: 26px;
+    border-radius: 3px 3px 0 0;
+    -moz-border-radius: 3px 3px 0 0;
+    -webkit-border-radius: 3px 3px 0 0;
+    overflow: hidden;
+}
+
+.GridView tfoot {
+    bottom: 0;
+    height: 26px;    
+    border-radius: 0 0 3px 3px;
+    -moz-border-radius: 0 0 3px 3px;
+    -webkit-border-radius: 0 0 3px 3px;
+    overflow: hidden;
+}
+
+.GridView tbody tr:not(:last-child) {
+    height: 26px;
+    font-size: 12px;
+    line-height: 26px;
+    color: #282E30;
+    background: rgba(230, 231, 232, 0.3);
+    border-bottom: 1px solid #E6E7E8;
+}
+
+.GridView tbody {
+    top: 28px;
+    /*bottom: 28px; when no tfoot */ 
+    bottom: 0;
+    /*height: calc(100% - 28px);*/
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.GridView table {
+    /*table-layout: fixed;*/
+}
+
+.GridView thead, .GridView tbody, .GridView tfoot {
+    min-width: 100%;
+    position: absolute;
+}
+
+.GridView {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.CellSeparator {
+    width: 1px;
+    height: 20px;
+    background: #DADADA;
+    display: block;
+    float: left;
+}

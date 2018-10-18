@@ -1,0 +1,69 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.Customs.BL.EntityDataMappings;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Data.EntityKeys;
+using Logitude.Customs.Data;
+using Simplog.Server.Infrastructure;
+namespace Logitude.Customs.BL.EntityQueryServices
+{ 
+   public partial class AuthorizedSignerPermitQueryService: EntityQueryService<AuthorizedSignerPermit,AuthorizedSignerPermitKeys,AuthorizedSignerPermitPM,object,AuthorizedSignerPermitKeys>
+   {
+   
+        AuthorizedSignerPermitRepository repository;
+		ICustomContext  context;
+        public AuthorizedSignerPermitQueryService(int tenant)
+        {
+		    context = CustomContext.GetContext(tenant);
+            MainContext = context;
+            repository = new AuthorizedSignerPermitRepository(context);
+            Repository = repository;
+            mapping = new AuthorizedSignerPermitDataMapping();
+        }
+
+        public AuthorizedSignerPermitQueryService(AuthorizedSignerPermitRepository repository)
+        {
+            this.repository = repository;
+            Repository = repository;
+            mapping = new AuthorizedSignerPermitDataMapping();
+        }
+
+        public AuthorizedSignerPermitQueryService(ICustomContext context)
+        {
+            this.repository = new AuthorizedSignerPermitRepository(context);
+            this.context = context;
+
+            MainContext = context;
+            Repository = repository;
+            mapping = new AuthorizedSignerPermitDataMapping();
+        }
+		 
+		public  AuthorizedSignerPermitPM GetSingle(string code,bool getComposition, bool getFromCache)
+        {
+             EntityKeys = new AuthorizedSignerPermitKeys(){ Code = code };
+
+			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
+        }
+
+       
+	    protected override EntityKeyFields GetKeys(AuthorizedSignerPermit entityPOCO)
+        {
+            AuthorizedSignerPermitKeys entityKeys = new AuthorizedSignerPermitKeys() { Code = entityPOCO.Code,  };
+            return entityKeys;
+        }
+     
+	 
+   }
+   
+}
+	 

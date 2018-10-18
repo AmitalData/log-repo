@@ -1,0 +1,223 @@
+﻿
+<div class="TabHolder">
+    <table>
+        <tr class="TabTitleRow">
+            <td>{{'VatType.TH.General' | TextCodeTranslationPipe}}</td>
+        </tr>
+
+        <tr>
+            <td style="width: 340px;">
+                <table>
+
+                    <!-- Code -->
+                    <tr class="FormFieldRow">
+                        <td style="width: 120px;">
+                            <LogLabel [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogTextBox [ObjectFieldName]="'Code'" [Text]="Code" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                        </td>
+                    </tr>
+
+                    <!-- EnglishName -->
+                    <tr class="FormFieldRow">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'EnglishName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogTextBox [ObjectFieldName]="'EnglishName'" [Text]="EnglishName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                        </td>
+                    </tr>
+
+                    <!-- LocalName -->
+                    <tr class="FormFieldRow">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'LocalName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogTextBox [ObjectFieldName]="'LocalName'" [Text]="LocalName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                        </td>
+                    </tr>
+
+                    <!-- Percentage -->
+                    <tr class="FormFieldRow" *ngIf="IsNewEntity && !IsMultiPercentage">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'NewEntityPercentage'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogTextBox [ObjectFieldName]="'NewEntityPercentage'" [Text]="NewEntityPercentage" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                        </td>
+                    </tr>
+
+                    <!-- Percentage Date -->
+                    <tr class="FormFieldRow" *ngIf="IsNewEntity && !IsMultiPercentage">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'NewEntityPercentageDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogDatePicker [ObjectFieldName]="'NewEntityPercentageDate'" [SelectedDateValue]="NewEntityPercentageDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                        </td>
+                    </tr>
+
+                    <!-- InActive -->
+                    <tr class="FormFieldRow" *ngIf="!IsNewEntity">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogCheckBox [ObjectFieldName]="'InActive'" [Checked]="InActive" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                        </td>
+                    </tr>
+
+                    <!-- Description -->
+                    <tr style="height: 15px;">
+                        <td colspan="2">
+                            <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+                    </tr>
+                    <tr style="height: 85px;">
+                        <td colspan="2">
+                            <div class="MediaFill">
+                                <LogTextBox [ObjectFieldName]="'Description'" [Text]="Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr style="height: 10px;">
+                        <td colspan="2">
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <!-- LocalDescription -->
+                    <tr style="height: 1px;">
+                        <td colspan="2">
+                            <LogLabel [ObjectFieldName]="'LocalDescription'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+                    </tr>
+                    <tr style="height: 85px;">
+                        <td colspan="2">
+                            <div class="MediaFill">
+                                <LogTextBox [ObjectFieldName]="'LocalDescription'" [Text]="LocalDescription" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2">
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+
+            <td style="width: 10px;">
+                <div></div>
+            </td>
+
+            <td>
+                <div class="MediaFill">
+                    <table *ngIf="IsPercentagesAreaVisible">
+                        <tr style="height: 1px;">
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td style="width: 100px; font-size: 13px; color: #1B90CB;">
+                                            Percentage
+                                        </td>
+
+                                        <td style="width: 1px;" *ngIf="IsNewEntity">
+                                            <RadioButton [Name]="'MultiPercentageRadio'" [IsChecked]="IsMultiPercentage == false" (Checked)="IsMultiPercentage = false" [Text]="'Single'"></RadioButton>
+                                        </td>
+
+                                        <td style="width: 10px;" *ngIf="IsNewEntity">
+                                            <div></div>
+                                        </td>
+
+                                        <td style="width: 1px;" *ngIf="IsNewEntity">
+                                            <RadioButton [Name]="'MultiPercentageRadio'" [IsChecked]="IsMultiPercentage == true" (Checked)="IsMultiPercentage = true" [Text]="'Multi-percentage'"></RadioButton>
+                                        </td>
+
+                                        <td style="width: 1px;" class="Value" *ngIf="!IsNewEntity">Multi-percentage</td>
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <tr style="height: 5px;">
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div class="MediaFill" [hidden]="!IsMultiPercentage">
+                                    <div class="SimpleGridView">
+                                        <div class="SimpleGridViewHeader">
+                                            <table>
+                                                <tr>
+                                                    <td style="width: 25px; min-width: 25px; max-width: 25px;"></td>
+                                                    <td style="width: 150px; min-width: 150px; max-width: 150px;">Name</td>
+                                                    <td style="width: 100px; min-width: 100px; max-width: 100px;">Percentage</td>
+                                                    <td class="LastChild">
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+
+                                        <div class="SimpleGridViewBody">
+                                            <table>
+                                                <tr class="SimpleGridViewRow" *ngFor="let item of ItemsSource">
+
+                                                    <td class="GridViewCell" style="width: 25px; min-width: 25px; max-width: 25px;">
+                                                        <div class="MediaFill">
+                                                            <div class="MediaFillRelative">
+                                                                <div class="CenterCenter" style="width: 16px;">
+                                                                    <CheckBox [IsEnabled]="IsNewEntity" [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event"></CheckBox>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+
+                                                    <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px;">
+                                                        {{item.Name}}
+                                                    </td>
+
+                                                    <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
+                                                        {{item.PercentageText}}
+                                                    </td>
+
+                                                    <td class="LastChild">
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td colspan="3">
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>

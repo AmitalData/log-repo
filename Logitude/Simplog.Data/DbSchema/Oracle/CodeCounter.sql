@@ -1,0 +1,99 @@
+--create or replace PROCEDURE   Usp_Getnexttablecodevalue    (    v_pLastNumber OUT NUMBER,    v_pTableName IN VARCHAR2,    v_pTenant    IN NUMBER )
+--AS
+--  v_COUNTER NUMBER(10);
+--  v_Current NUMBER(10);
+--  v_temp    NUMBER(1) := 0;
+--BEGIN
+--  v_COUNTER := 1000 ;
+--  NULL;
+
+--  BEGIN
+--    SELECT 1
+--    INTO v_temp
+--    FROM DUAL
+--    WHERE NOT EXISTS
+--      (SELECT TableName
+--      FROM COUNTERLASTNUMBERS
+--      WHERE TableName = v_pTableName
+--      AND Tenant      = v_pTenant
+--      );
+--  EXCEPTION
+--  WHEN OTHERS THEN
+--    NULL;
+--  END;
+--  IF v_temp = 1 THEN
+--    BEGIN
+--      IF ( v_pTableName = 'Tenant' ) THEN
+--        BEGIN
+--          v_COUNTER := 0 ;
+--          INSERT
+--          INTO COUNTERLASTNUMBERS
+--            (
+--              TableName,
+--              Tenant,
+--              LastNumber
+--            )
+--            VALUES
+--            (
+--              v_pTableName,
+--              v_pTenant,
+--              v_COUNTER
+--            );
+--          v_Current := 0 ;
+--        END;
+--      ELSE
+--        BEGIN
+--          v_COUNTER        := 1000 ;
+--          IF ( v_pTableName = 'Agent' ) THEN
+--            BEGIN
+--              v_COUNTER := 10000 ;
+--            END;
+--          END IF;
+--          IF ( v_pTableName = 'CustomAgent' ) THEN
+--            BEGIN
+--              v_COUNTER := 20000 ;
+--            END;
+--          END IF;
+--          IF ( v_pTableName = 'ShippingAgent' ) THEN
+--            BEGIN
+--              v_COUNTER := 30000 ;
+--            END;
+--          END IF;
+--          IF ( v_pTableName = 'Customer' ) THEN
+--            BEGIN
+--              v_COUNTER := 70000 ;
+--            END;
+--          END IF;
+--          INSERT
+--          INTO COUNTERLASTNUMBERS
+--            (
+--              TableName,
+--              Tenant,
+--              LastNumber
+--            )
+--            VALUES
+--            (
+--              v_pTableName,
+--              v_pTenant,
+--              v_COUNTER
+--            );
+--          v_Current := v_COUNTER ;
+--        END;
+--      END IF;
+--    END;
+--  ELSE
+--    BEGIN
+--      SELECT LastNumber
+--      INTO v_Current
+--      FROM COUNTERLASTNUMBERS
+--      WHERE TableName = v_pTableName
+--      AND Tenant      = v_pTenant;
+--      v_Current      := v_Current + 1 ;
+--      UPDATE COUNTERLASTNUMBERS
+--      SET LastNumber  = v_Current
+--      WHERE TableName = v_pTableName
+--      AND Tenant      = v_pTenant;
+--    END;
+--  END IF;
+--  v_pLastNumber := v_Current ;
+--END;

@@ -1,0 +1,566 @@
+﻿
+<style type="text/css">
+    .FollowupItem:hover {
+        cursor: default;
+        border: 1px solid #3BB3E2;
+        background: -moz-linear-gradient(50% 106.14% 90deg,rgba(133, 203, 237, 1) 0%,rgba(150, 211, 240, 1) 22.59%,rgba(196, 231, 248, 1) 67.37%,rgba(232, 247, 255, 1) 100%);
+        background: -webkit-linear-gradient(90deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 100%);
+        background: linear-gradient(0deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 100%);
+        transition: 0.3s;
+    }
+
+    .FollowupItem {
+        height: 40px;
+        margin-bottom: 5px;
+        border: 1px solid #D1D1D1;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+    }
+
+    .FollowupTooltip {
+        position: fixed;
+        background-image: url('./_Resources/Images/Icons/Tooltips/CellTooltip.png');
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    .FollowupTooltipTextArea {
+        padding: 2px;
+        padding-left: 4px;
+        text-indent: 0px;
+        font-size: 10px;
+        color: #45494A;
+        border: none !important;
+        box-shadow: none !important;
+        -moz-box-shadow: none !important;
+        -webkit-box-shadow: none !important;
+        background: transparent !important;
+    }
+</style>
+
+<div class="TabHolder" *ngIf="IsVisibile">
+    <table>
+        <tr class="TabTitleRow">
+            <td>{{'Shipment.TH.Overview' | TextCodeTranslationPipe}}</td>
+        </tr>
+
+        <tr>
+            <td>
+                <table>
+                    <tr>
+                        <td>
+                            <table>
+                                <tr>
+                                    <!-- CargoInformation -->
+                                    <td>
+                                        <table class="Section">
+                                            <tr class="SectionHeader">
+                                                <td>
+                                                    <label>{{'Shipment.O.Overview.CargoInformation' | TextCodeTranslationPipe}}</label>
+                                                </td>
+                                            </tr>
+
+                                            <tr style="height:5px;">
+                                                <td></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <table>
+                                                        <tr>
+
+                                                            <!-- Shipment Data -->
+                                                            <td style="width: 255px;">
+                                                                <table>
+                                                                    <tr style="height: 25px;">
+                                                                        <td style="font-size: 14px; color: #1B90CB;">{{'Shipment.O.Overview.Shipment' | TextCodeTranslationPipe}}</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td class="CellStretch">
+
+                                                                            <!-- LCL -->
+                                                                            <table *ngIf="IsLCLEntity">
+                                                                                <tr style="height: 60px;">
+                                                                                    <td style="text-align: center;">
+                                                                                        <div class="Value" style="text-align: center; font-size: 20px;">{{GrossWeight | NumbersPipe:'N3'}}</div>
+                                                                                        <div class="Label" style="text-align: center;">{{'Shipment.O.Overview.GrossWeight' | TextCodeTranslationPipe}} ({{GrossWeightUnitCode}})</div>
+                                                                                    </td>
+                                                                                    <td style="text-align: center;">
+                                                                                        <div class="Value" style="text-align: center; font-size: 20px;">{{Volume | NumbersPipe:'N3'}}</div>
+                                                                                        <div class="Label" style="text-align: center;">{{'Shipment.O.Overview.Volume' | TextCodeTranslationPipe}} ({{VolumeUnitCode}})</div>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <tr style="height: 10px;">
+                                                                                    <td colspan="2">
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <tr style="height: 60px;">
+                                                                                    <td style="text-align: center;">
+                                                                                        <div class="Value" style="text-align: center; font-size: 20px;">{{ChargeableWeight | NumbersPipe:'N3'}}</div>
+                                                                                        <div class="Label" style="text-align: center;">{{'Shipment.O.Overview.ChargeableWeight' | TextCodeTranslationPipe}} ({{ChargeableWeightUnitCode}})</div>
+                                                                                    </td>
+                                                                                    <td style="text-align: center;">
+                                                                                        <div class="Value" style="text-align: center; font-size: 20px;">{{NumberOfPackages | NumbersPipe:'N0'}}</div>
+                                                                                        <div class="Label" style="text-align: center;">{{'ShipmentPackage.F.Quantity' | TextCodeTranslationPipe}}</div>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <tr>
+                                                                                    <td colspan="2">
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+
+                                                                            <!-- FCL -->
+                                                                            <div class="SimpleGridView" *ngIf="IsFCLEntity">
+                                                                                <div class="SimpleGridViewHeader">
+                                                                                    <table>
+                                                                                        <tr>
+                                                                                            <td>{{'Shipment.O.Overview.ContainerType' | TextCodeTranslationPipe}}</td>
+                                                                                            <td style="width: 60px; min-width: 60px; max-width: 60px;">{{'ShipmentPackage.F.Quantity' | TextCodeTranslationPipe}}</td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </div>
+
+                                                                                <div class="SimpleGridViewBody">
+                                                                                    <table>
+                                                                                        <tr class="SimpleGridViewRow" *ngFor="let item of ContainersList">
+                                                                                            <td class="CellDisabled">
+                                                                                                {{item.PackageTypeName}}
+                                                                                            </td>
+
+                                                                                            <td class="CellDisabled" style="width: 60px; min-width: 60px; max-width: 60px; text-align: center;">
+                                                                                                {{item.Quantity}}
+                                                                                            </td>
+                                                                                        </tr>
+
+                                                                                        <tr>
+                                                                                            <td colspan="2">
+                                                                                                <div></div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+
+                                                            <td style="width: 30px; vertical-align:top;">
+                                                                <div style="width:1px; height: 130px; background: #DADADA; margin:auto; margin-top: 10px;"></div>
+                                                            </td>
+
+                                                            <!-- Master Data -->
+                                                            <td>
+                                                                <table>
+                                                                    <tr style="height: 25px;">
+                                                                        <td>
+                                                                            <div style="font-size: 14px; color: #1B90CB;">{{'Shipment.O.Overview.Master' | TextCodeTranslationPipe}}</div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr style="height: 60px;">
+                                                                        <td style="vertical-align:top;">
+                                                                            <table *ngIf="EntityPM.MasterShipmentDataId">
+                                                                                <tr>
+                                                                                    <td style="width: 5px;">
+                                                                                        <div></div>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <table>
+                                                                                            <tr class="FieldRow">
+                                                                                                <td class="Label" [ngStyle]="{width: MasterDataLableWidth}">{{MasterLabel}}:</td>
+                                                                                                <td class="Value">{{LongMaster}}</td>
+                                                                                            </tr>
+                                                                                            <tr class="FieldRow">
+                                                                                                <td class="Label" [ngStyle]="{width: MasterDataLableWidth}">{{CarrierLabel}}:</td>
+                                                                                                <td class="Value">{{MainCarriageCarrierName}}</td>
+                                                                                            </tr>
+                                                                                            <tr class="FieldRow">
+                                                                                                <td class="Label" [ngStyle]="{width: MasterDataLableWidth}">{{CarrierNoLabel}}:</td>
+                                                                                                <td class="Value">{{MainCarriageCarrierNumber}}</td>
+                                                                                            </tr>
+                                                                                            <tr class="FieldRow">
+                                                                                                <td class="Label" [ngStyle]="{width: MasterDataLableWidth}">{{CarrierDateLabel}}:</td>
+                                                                                                <td class="Value">{{MasterDepartureDate | DateTimeToDatePipe}} {{MasterDepartureDate | DateTimeToTimePipe}}</td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td colspan="2">
+                                                                                                    <div></div>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </td>
+
+                                                                                    <td style="width: 5px;">
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+
+                                                                            <span *ngIf="!EntityPM.MasterShipmentDataId" style="font-family: Arial; font-style: italic; color: #6E7172;">{{'Shipment.O.Overview.NotConnectedToAMaster' | TextCodeTranslationPipe}}</span>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+
+                                    <td style="width: 15px;">
+                                        <div></div>
+                                    </td>
+
+                                    <!-- Followups -->
+                                    <td style="width: 330px;">
+                                        <table class="Section">
+                                            <tr class="SectionHeader">
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width: 10px;">
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td style="width: 1px;">
+                                                                <img style="float: left;" [attr.src]="FollowupsIconPath" />
+                                                            </td>
+
+                                                            <td>
+                                                                <label style="margin-left: 5px;">{{'Shipment.O.Overview.FollowUp' | TextCodeTranslationPipe}}</label>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+
+                                            <tr style="height:5px;">
+                                                <td></td>
+                                            </tr>
+
+                                            <tr class="SectionBody">
+                                                <td>
+                                                    <div class="MediaFill">
+                                                        <ScrollViewer>
+                                                            <ul>
+                                                                <li class="FollowupItem"
+                                                                    *ngFor="let item of FollowupsList"
+                                                                    [attr.id]="item.ItemId"
+                                                                    [style.height.px]="item.ListItemHeight"
+                                                                    [style.background-color]="item.Background"
+                                                                    (mouseover)="item.ShowTooltip(true)"
+                                                                    (mouseleave)="item.ShowTooltip(false)">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td style="width: 30px;">
+                                                                                <img style="display: block; margin: auto;" [attr.src]="item.IconPath" />
+                                                                            </td>
+
+                                                                            <td>
+                                                                                <table>
+                                                                                    <tr style="height: 2px;">
+                                                                                        <td>
+                                                                                            <div></div>
+                                                                                        </td>
+                                                                                    </tr>
+
+                                                                                    <tr style="height: 15px;">
+                                                                                        <td>
+                                                                                            <div class="MediaFill TextTrimming" style="font-size: 12px; color: #292E30;">
+                                                                                                {{item.Name}}
+                                                                                            </div>
+                                                                                        </td>
+                                                                                    </tr>
+
+                                                                                    <tr>
+                                                                                        <td style="vertical-align: top;">
+                                                                                            <div class="MediaFill TextTrimming" style="font-size: 10px; color: #6E7172;">
+                                                                                                {{item.Notes}}
+                                                                                            </div>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </td>
+
+                                                                            <td style="width: 80px; font-size: 11px; color: #45494A;">
+                                                                                {{item.Date | DateTimeToDatePipe}}
+                                                                            </td>
+
+                                                                            <td style="width: 5px;">
+                                                                                <div></div>
+                                                                            </td>
+                                                                        </tr>
+
+                                                                    </table>
+
+                                                                    <div [attr.id]="item.ItemTooltipId" class="FollowupTooltip" [style.height.px]="item.TooltipHeight" [style.width.px]="item.TooltipWidth" [hidden]="!item.IsShowTooltip">
+                                                                        <div class="MediaFillRelative">
+                                                                            <div class="MarginAbsolute15" style="left: 12px; top: 13px; right: 30px;">
+                                                                                <table>
+                                                                                    <tr style="height: 25px;">
+                                                                                        <td>
+                                                                                            <table>
+                                                                                                <tr>
+                                                                                                    <td style="width: 1px;">
+                                                                                                        <img style="float: left" [attr.src]="item.IconPath" />
+                                                                                                    </td>
+
+                                                                                                    <td style="width: 5px;">
+                                                                                                        <div></div>
+                                                                                                    </td>
+
+                                                                                                    <td style="font-size: 12px; color: #1B90CB;">{{item.Name}}: Notes</td>
+                                                                                                </tr>
+                                                                                            </table>
+                                                                                        </td>
+                                                                                    </tr>
+
+                                                                                    <tr>
+                                                                                        <td>
+                                                                                            <div class="MediaFill">
+                                                                                                <textarea class="FollowupTooltipTextArea" [readonly]="true">{{item.Notes}}</textarea>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </ScrollViewer>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr style="height: 15px;">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <tr style="height: 180px;">
+                        <td>
+                            <table>
+                                <tr>
+                                    <!-- MoneyInformation -->
+                                    <td>
+                                        <table class="Section">
+                                            <tr class="SectionHeader">
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <label>{{'Shipment.O.Overview.MoneyInformation' | TextCodeTranslationPipe}}</label>
+                                                            </td>
+
+                                                            <td style="width: 70px;" *ngIf="IsCurrencyFilterVisible">
+                                                                <ul class="FiltersMenu">
+                                                                    <li (click)="onSelectCurrency(ProfitCurrencyCode)" [class.SelectedFilter]="SelectedCurrencyCode === ProfitCurrencyCode" style="width:33px;">
+                                                                        {{ProfitCurrencyCode}}
+                                                                    </li>
+                                                                    <li (click)="onSelectCurrency(LocalCurrencyCode)" [class.SelectedFilter]="SelectedCurrencyCode === LocalCurrencyCode" style="width:33px;">
+                                                                        {{LocalCurrencyCode}}
+                                                                    </li>
+                                                                </ul>
+                                                            </td>
+
+                                                            <td style="width: 3px;">
+                                                                <div></div>
+                                                            </td>
+
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+
+                                            <tr style="height:5px;">
+                                                <td></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width:150px; text-align:center; vertical-align: top;">
+                                                                <div class="Value" style="text-align: center; font-size: 20px; margin-top: 5px;">{{ARInvoices | NumbersPipe:'N2'}}</div>
+                                                                <div class="Label" style="text-align: center;">{{'Shipment.O.Overview.ARInvoices' | TextCodeTranslationPipe}} ({{SelectedCurrencyCode}})</div>
+
+                                                                <div class="Value" style="text-align: center; font-size: 20px; margin-top: 15px;">{{OpenReceivables | NumbersPipe:'N2'}}</div>
+                                                                <div class="Label" style="text-align: center;">{{'Shipment.O.Overview.OpenReceivables' | TextCodeTranslationPipe}} ({{SelectedCurrencyCode}})</div>
+                                                                <div style="height: 1px; background: #282E30; width: 80px; margin:auto; margin-top: 10px;"></div>
+                                                                <div style="margin-top: 5px;">
+                                                                    <span class="Value" style="text-align: center; font-size: 20px;">{{TotalAR | NumbersPipe:'N2'}}</span>
+                                                                    <span class="Label" style="text-align: center;">({{SelectedCurrencyCode}})</span>
+                                                                </div>
+                                                            </td>
+
+                                                            <td style="width: 30px;">
+                                                                <div style="width:1px; height:120px; background: #DADADA; margin:auto; margin-top: 15px;"></div>
+                                                            </td>
+
+                                                            <td style="width:150px; text-align:center; vertical-align: top;">
+                                                                <div class="Value" style="text-align: center; font-size: 20px; margin-top: 5px;">{{APInvoices | NumbersPipe:'N2'}}</div>
+                                                                <div class="Label" style="text-align: center;">{{'Shipment.O.Overview.APInvoices' | TextCodeTranslationPipe}} ({{SelectedCurrencyCode}})</div>
+
+                                                                <div class="Value" style="text-align: center; font-size: 20px; margin-top: 15px;">{{OpenPayables | NumbersPipe:'N2'}}</div>
+                                                                <div class="Label" style="text-align: center;">{{'Shipment.O.Overview.OpenPayables' | TextCodeTranslationPipe}} ({{SelectedCurrencyCode}})</div>
+                                                                <div style="height: 1px; background: #282E30; width: 80px; margin:auto; margin-top: 10px;"></div>
+                                                                <div style="margin-top: 5px;">
+                                                                    <span class="Value" style="text-align: center; font-size: 20px;">{{TotalAP | NumbersPipe:'N2'}}</span>
+                                                                    <span class="Label" style="text-align: center;">({{SelectedCurrencyCode}})</span>
+                                                                </div>
+                                                            </td>
+
+                                                            <td style="width: 30px;" *ngIf="IsProfitAreaVisible">
+                                                                <div style="width:1px; height:120px; background: #DADADA; margin:auto; margin-top: 15px;"></div>
+                                                            </td>
+
+                                                            <td style="width:100px; text-align:center; vertical-align: top;" *ngIf="IsProfitAreaVisible">
+                                                                <div style="text-align: center; font-size: 20px; margin-top: 5px;" [ngStyle]="{color: ProfitColor}">{{Profit | NumbersPipe:'N2'}}</div>
+                                                                <div class="Label" style="text-align: center; font-size: 11px; color: #6E7172;">{{'Shipment.O.Overview.Profit' | TextCodeTranslationPipe}} ({{SelectedCurrencyCode}})</div>
+                                                            </td>
+
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+
+                                    <td style="width: 15px;">
+                                        <div></div>
+                                    </td>
+
+                                    <!-- Notes -->
+                                    <td style="width: 330px;">
+                                        <div class="MediaFill">
+                                            <SectionBox>
+                                                <SectionHead>
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width: 16px; position: relative;">
+                                                                <img *ngIf="Notes" class="CenterCenter" src="./Images/Notes_exists.png" />
+                                                                <img *ngIf="!Notes" class="CenterCenter" src="./Images/Notes_notexists.png" />
+                                                            </td>
+
+                                                            <td style="padding-left: 5px;">
+                                                                {{'Shipment.O.Notes' | TextCodeTranslationPipe}}
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </SectionHead>
+
+                                                <SectionBody>
+                                                    <div class="MarginAbsolute5">
+                                                        <div class="NotesYellowBox">
+                                                            <div class="MediaFillAbsolute" style="top: 2px; bottom: 2px;">
+                                                                <ScrollViewer>
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <div class="MediaFill">
+                                                                                    <table>
+                                                                                        <tr style="height: 1px;">
+                                                                                            <td style="line-height: 15px; font-size: 12px; color: #0075AF;">
+                                                                                                {{'Shipment.O.Overview.Shipment' | TextCodeTranslationPipe}}
+                                                                                            </td>
+                                                                                        </tr>
+
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <textarea class="NotesTextArea" [readonly]="true">{{Notes}}</textarea>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+
+                                                                        <tr *ngIf="NotesList && NotesList.length > 0">
+                                                                            <td>
+                                                                                <div class="MediaFill">
+
+                                                                                    <div *ngFor="let item of NotesList" style="height: 65px; position: relative;">
+                                                                                        <div class="MediaFill">
+                                                                                            <table>
+                                                                                                <tr style="height: 5px; min-height: 5px;">
+                                                                                                    <td></td>
+                                                                                                </tr>
+
+                                                                                                <tr style="height:1px;">
+                                                                                                    <td>
+                                                                                                        <div class="MediaFill">
+                                                                                                            <div class="MediaFillAbsolute" style="height:1px; left: 5px; right: 5px;; background: #DADADA;"></div>
+                                                                                                        </div>
+                                                                                                    </td>
+                                                                                                </tr>
+
+                                                                                                <tr style="height: 2px; min-height: 2px;">
+                                                                                                    <td></td>
+                                                                                                </tr>
+
+                                                                                                <tr style="height: 1px;">
+                                                                                                    <td style="line-height: 15px; font-size: 12px; color: #0075AF;">
+                                                                                                        {{item.Header}}
+                                                                                                    </td>
+                                                                                                </tr>
+
+                                                                                                <tr>
+                                                                                                    <td>
+                                                                                                        <textarea class="NotesTextArea" [readonly]="true">{{item.Notes}}</textarea>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            </table>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </ScrollViewer>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </SectionBody>
+                                            </SectionBox>
+                                        </div>
+                                    </td>                                    
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>

@@ -1,0 +1,60 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization; 
+
+namespace Logitude.Customs.Data.EntityLists
+{
+   [DataContract]
+   public partial class CustomsDocumentsTicketList
+   {
+   
+       [Key]
+       [DataMember]
+       public string Id  { get; set; }
+       [DataMember]
+       public string DocumentsFilingId  { get; set; }
+       [DataMember]
+       public int Tenant  { get; set; }
+       [DataMember]
+       public string DocumentTypeCode  { get; set; }
+       [DataMember]
+       public string DocumentTypeName  { get; set; }
+       [DataMember]
+       public string RequestedCustomsDocId  { get; set; }
+       [DataMember]
+       public string DocumentStatusCode  { get; set; }
+       [DataMember]
+       public string DocumentRemarks  { get; set; }
+       [DataMember]
+       public string DocumentStatusName  { get; set; }
+       [DataMember]
+       public string Extension  { get; set; }
+       [DataMember]
+       public double? FileSize  { get; set; }
+       [DataMember]
+       public string Name  { get; set; }
+       [DataMember]
+       public string Remarks  { get; set; }
+       [DataMember]
+       public bool UploadApproved  { get; set; }
+       [DataMember]
+       public string UserRemarks  { get; set; }
+       [DataMember]
+       public string ExternalAttachmentId  { get; set; }
+       [DataMember]
+       public string ConnectedInvoicesSequences  { get; set; }
+       [DataMember]
+       public string ConnectedInvoiceItemsSequences  { get; set; }
+       [DataMember]
+       public string ConnectedCREsSequences  { get; set; }
+       [DataMember]
+       public bool IsSendMandatory  { get; set; }
+   }
+
+}
+	 

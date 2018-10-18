@@ -1,0 +1,109 @@
+﻿
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table class="FixedTable">
+                <tr>
+                    <td style="width: 360px;">
+                        <table>
+
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <label class="Label">Please select two dates to print file</label>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <table>
+                                        <tr class="FormFieldRow">
+                                            <td style="width:100px;">
+                                                <label class="Label">Start Date:</label>
+                                            </td>
+
+                                            <td style="width: 220px;">
+                                                <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'Date1'" [SelectedDateValue]="Date1" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
+                                            <td>
+                                                <label class="Label">End Date:</label>
+                                            </td>
+
+                                            <td>
+                                                <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'Date2'" [SelectedDateValue]="Date2" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
+                                            <td>
+                                                <label class="Label">E-mail:</label>
+                                            </td>
+
+                                            <td>
+                                                <LogTextBox [NoObjectField]="true" [ObjectFieldName]="'Email'" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="3">
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>                            
+                        </table>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="SendButtonClicked()">Send</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

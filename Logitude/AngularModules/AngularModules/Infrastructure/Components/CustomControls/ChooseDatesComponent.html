@@ -1,0 +1,42 @@
+﻿<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td style="width:100%;">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="'true'"></ValidationSummary>
+        </td>
+    </tr>
+    <tr style="height: 12%;">
+        <td>
+            <table>
+                <tr>
+                    <td style="width: 1px; font-size: 14px; color: #1B90CB;">
+                        From
+                    </td>
+                    <td style="width: 1px; font-size: 14px; color: #1B90CB;">
+                        To
+                    </td>
+                </tr>
+            </table>
+        </td> 
+    </tr>
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <td>
+                        <LogCalendar style="float:left;margin-right:15px;" [ToggleOpened]="'true'" [SelectedDate]="SelectedFromDate" (SelectedDateChanged)="OnSelectedFromDateChanged($event)"></LogCalendar>
+                    </td>
+                    <td>
+                        <LogCalendar style="float:left;" [ToggleOpened]="'true'" [SelectedDate]="SelectedToDate" (SelectedDateChanged)="OnSelectedToDateChanged($event)"></LogCalendar>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr style="height:100%;"> 
+        <td style="vertical-align: bottom;">
+            <button class="RedButton" (click)="OKbtnClick()" style="float:right;width:65px;">OK</button>
+            <button class="Button" (click)="CancelButtonClicked()" style="float:right;width:65px;margin-right: 5px;">Cancel</button>  
+        </td>
+    </tr>
+</table>
+

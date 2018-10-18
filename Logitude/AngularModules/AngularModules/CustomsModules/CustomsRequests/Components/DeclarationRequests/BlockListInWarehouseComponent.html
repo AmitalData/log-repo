@@ -1,0 +1,257 @@
+﻿
+<div>
+    <!-- BlockListInWarehouseComponent  view  -->
+    <custom-message-wrapper>
+
+        <!-- BlockListInWarehouseComponent  Request  -->
+        <div class="class-request-content">
+            <!---->
+            <table style="width: 570px;padding-top: 10px;">
+                
+                <tr class="FormFieldRow">
+                    <td style="width: 200px">
+                        <LogLabel [NoObjectField]="true" 
+                                  [ObjectFieldName]="'FromDate'" 
+                                  [ObjectTableName]="ObjectTableName" 
+                                  [DataContext]="DataContext" 
+                                  [Text]="'מתאריך פתיחת גוש'" ></LogLabel>
+                    </td>
+                    
+                    <td style="width: 150px; ">
+                        <!-- BlockListInWarehouseComponent  Request.FromDate-->
+                        <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName"
+                                       [InputType]="'date'" [DataContext]="DataContext"
+                                       [HideColumns]="true"></LogDatePicker>
+
+                    </td>
+                    <td style="width:10px"></td>
+                    <td style="width: 200px">
+                        <LogLabel 
+                                  [NoObjectField]="true" 
+                                  [ObjectFieldName]="'ToDate'" 
+                                  [ObjectTableName]="ObjectTableName" 
+                                  [DataContext]="DataContext" 
+                                  [Text]="'עד תאריך פתיחת גוש'" >
+
+                        </LogLabel>
+                    </td>
+                    <td style="width: 150px; ">
+                        <!-- BlockListInWarehouseComponent  Request.ToDate-->
+                        <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'ToDate'"
+                                       [ObjectTableName]="ObjectTableName" [InputType]="'date'"
+                                       [DataContext]="DataContext"
+                                       [HideColumns]="true"></LogDatePicker>
+                    </td>
+
+                    <td><div></div></td>
+                </tr>
+
+                <tr class="FormFieldRow">
+                    <td style="width: 200px">
+                        <LogLabel [NoObjectField]="true" 
+                                  [ObjectFieldName]="'StorageSiteNumber'" 
+                                  [ObjectTableName]="ObjectTableName" 
+                                  [DataContext]="DataContext" 
+                                  [Text]="'אתר אחסון'"></LogLabel>
+                    </td>
+                    
+                    <td style="width: 150px; ">
+                        <!-- BlockListInWarehouseComponent  Request.StorageSiteNumber-->
+                        <!--[DisplayMemberPath]="'LocalName'"-->
+                        <LogLov [ObjectFieldName]="'StorageSiteNumber'"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [HideColumns]="true"
+                                [HideLastColumn]="true"
+                                [LookUpTableName]="'Customs.SiteLookup'"
+                                >
+                        </LogLov>
+                    </td>
+
+                    <td style="width:10px"></td>
+                    <td style="width: 200px">
+                        <LogLabel [NoObjectField]="true"
+                                  [ObjectFieldName]="'ToDate'"
+                                  [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"
+                                  [Text]="'כולל גושים מאופסים'">
+
+                        </LogLabel>
+                    </td>
+                    <td style="width: 150px; ">
+                        <!-- BlockListInWarehouseComponent  Request.ToDate-->
+                        <select (change)="ResetBlockListChangeSelected($event.target.value)" 
+                                style="width:150px;border:1px solid gray;border-radius:3px">
+
+                            <option *ngFor="let item of ShowResetBlocksList" [value]="item.EnumId">{{item.Name}}</option>
+                        </select>
+                    </td>
+
+                    <td><div></div></td>
+                </tr>
+
+                <tr class="FormFieldRow" style="height:1px">
+                    <td colspan="5"><div></div></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="class-response-content" >
+            <div style="width: 870px;height: 260px;padding-top: 10px;">
+                <table >
+
+                    <tr class="FormFieldRow" style="height:1px">
+                        <!--background-color :aquamarine;-->
+                        <td colspan="5" style="width: 100% ; height : 100%">
+                            <div class="GeneratedGridContainer"
+                                 style="width: 100% ;height:90%;">
+
+                                <logitude-edit-grid GridWidth="100%"
+                                                    GridHeight="100%"
+                                                    (RowDataLoaded)="OnRowLoaded($event)"
+                                                    [ItemSource]="BlockListInWarehouseResultList">
+
+                                    <!-- DeclarationNumber -->
+                                    <log-column [header]="'Customs.BlockListInWarehouse.O.DeclarationNumber' | TextCodeTranslationPipe"
+                                                [width]="'110'" [Alignment]="'right'"
+                                                [binding]="'DeclarationNumber'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming RightCenter">
+                                                <span>{{item.DeclarationNumber}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <!-- WarehouseBlockNumber -->
+                                    <log-column [header]="'Customs.BlockListInWarehouse.O.WarehouseBlockNumber' | TextCodeTranslationPipe"
+                                                [binding]="'WarehouseBlockNumber'"
+                                                [width]="'60'" [Alignment]="'right'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="RightCenter">
+                                                <span>{{item.WarehouseBlockNumber}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+
+                                    <!-- ImporterTitle -->
+                                    <log-column [header]="'Customs.BlockListInWarehouse.O.ImporterTitle' | TextCodeTranslationPipe"
+                                                [binding]="'ImporterTitle'"
+                                                [width]="'100'" [Alignment]="'right'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="RightCenter">
+                                                <span>{{item.ImporterTitle}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <!-- OpeningDate -->
+                                    <log-column [header]="'Customs.BlockListInWarehouse.O.OpeningDate' | TextCodeTranslationPipe"
+                                                [binding]="'OpeningDate'"
+                                                [width]="'85'" [Alignment]="'right'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="RightCenter">
+                                                <span>{{item.OpeningDate}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+
+                                    <!-- OriginalOpeningDate -->
+                                    <log-column [header]="'Customs.BlockListInWarehouse.O.OriginalOpeningDate' | TextCodeTranslationPipe"
+                                                [binding]="'OriginalOpeningDate'"
+                                                [width]="'105'" [Alignment]="'right'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="RightCenter">
+                                                <span>{{item.OriginalOpeningDate}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+
+                                    <!-- PhysicalPackagesQuantityBalance -->
+                                    <log-column [header]="'Customs.BlockListInWarehouse.O.PhysicalPackagesQuantityBalance' | TextCodeTranslationPipe"
+                                                [binding]="'PhysicalPackagesQuantityBalance'"
+                                                [width]="'105'" [Alignment]="'right'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="RightCenter">
+                                                <span>{{item.PhysicalPackagesQuantityBalance}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+
+
+                                    <!-- LogicalPackagesQuantityBalance -->
+                                    <log-column [header]="'Customs.BlockListInWarehouse.O.LogicalPackagesQuantityBalance' | TextCodeTranslationPipe"
+                                                [binding]="'LogicalPackagesQuantityBalance'"
+                                                [width]="'100'" [Alignment]="'right'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="RightCenter">
+                                                <span>{{item.LogicalPackagesQuantityBalance}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <!-- Value -->
+                                    <log-column [header]="'Customs.BlockListInWarehouse.O.Value' | TextCodeTranslationPipe"
+                                                [binding]="'Value'"
+                                                [width]="'95'" [Alignment]="'right'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="RightCenter">
+                                                <span>{{item.Value}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+
+                                    <!-- SpecialActivityTypeName -->
+                                    <log-column [header]="'Customs.BlockListInWarehouse.O.SpecialActivityTypeName' | TextCodeTranslationPipe"
+                                                [binding]="'SpecialActivityTypeName'"
+                                                [width]="'80'" [Alignment]="'right'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="RightCenter">
+                                                <span>{{item.SpecialActivityTypeName}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                </logitude-edit-grid>
+
+                            </div>
+                            <div>
+                                <table>
+                                    <tr class="FormFieldRow">
+                                        <td style="width: 200px">
+                                            <LogLabel [NoObjectField]="true"
+                                                      [ObjectFieldName]="'NumberOfBlocksInList'"
+                                                      [ObjectTableName]="ObjectTableName"
+                                                      [DataContext]="DataContext"
+                                                      [TextCode]="'Customs.BlockListInWarehouse.O.NumberOfBlocksInList'"></LogLabel>
+                                        </td>
+
+                                        <td style="width: 200px; padding-right: 36px;">
+                                            <!-- BlockListInWarehouseComponent  Request.FromDate-->
+
+                                            <LogTextBox [ObjectFieldName]="'NumberOfBlocksInList'"
+                                                        [InputType]="'text'"
+                                                        [DataContext]="DataContext"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [HideColumns]="true"
+                                                        [Text]="NumberOfBlocksInList"></LogTextBox>
+
+                                        </td>
+
+
+                                        <td><div></div></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </custom-message-wrapper>
+</div>

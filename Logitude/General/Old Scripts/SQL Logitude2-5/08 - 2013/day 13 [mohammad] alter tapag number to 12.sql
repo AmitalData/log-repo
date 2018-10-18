@@ -1,0 +1,1 @@
+alter table Customs.Tapags alter column TapagNumber varchar(12) null

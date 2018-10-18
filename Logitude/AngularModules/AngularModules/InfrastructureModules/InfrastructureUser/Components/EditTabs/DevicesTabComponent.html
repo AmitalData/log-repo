@@ -1,0 +1,104 @@
+﻿
+<style>
+    .MessageText {
+        white-space: normal;
+        word-wrap: break-word;
+    }
+
+    .InactiveDevice{
+        opacity:0.5;
+    }
+</style>
+
+<div class="TabHolder">
+    <table>
+        <tr class="TabTitleRow">
+            <td>
+                <table>
+                    <tr>
+                        <td>{{'User.TH.Devices' | TextCodeTranslationPipe}}</td>
+                     </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <div class="MediaFill">
+                    <div class="SimpleGridView">
+                        <div class="SimpleGridViewHeader">
+                            <table>
+                                <tr>
+                                    <td style="width: 190px; min-width: 190px; max-width: 190px;">Device Description</td>
+                                    <td style="width: 190px; min-width: 190px; max-width: 190px;">Create Date</td>
+                                    
+                                    <td style="width: 190px; min-width:190px; max-width: 190px;">Last Login IP</td>
+                                    <td style="width: 190px; min-width:190px; max-width: 190px;">Last Login Date</td>
+                                    <td style="width: 190px; min-width:190px; max-width: 190px;"></td>
+                                    <td class="LastChild">
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="SimpleGridViewBody">
+                            <table>
+                                <tr class="SimpleGridViewRow" *ngFor="let item of ItemsSource" [class.InactiveDevice]="item.InActive">
+                                    <td class="GridViewCell" style="width: 190px; min-width: 190px; max-width: 190px;">
+                                        {{item.DeviceDescription}}
+                                    </td>
+
+                                    <td class="GridViewCell" style="width: 190px; min-width: 190px; max-width: 190px;">
+                                        {{item.CreateDate| DateTimePipe:'DTL12NW'}}
+                                    </td>
+
+                                   
+                                    <td class="GridViewCell" style="width: 190px; min-width: 190px; max-width: 190px;">
+                                        {{item.LastLoginIP}}
+                                    </td>
+
+                                    <td class="GridViewCell" style="width: 190px; min-width: 190px; max-width: 190px;">
+                                        {{item.LastLoginDate| DateTimePipe:'DTL12NW'}}
+                                    </td>
+
+                                    <!--<td class="GridViewCell" style="width: 50px; min-width: 50px; max-width: 50px;">
+                                        <div class="MediaFill">
+                                            <div class="MediaFillRelative">
+                                                <div class="CenterCenter" style="width: 16px;">
+                                                    <CheckBox [IsChecked]="item.IsActive" (Checked)="item.IsActive = $event" [IsEnabled]="IsEditingEnabled"></CheckBox>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>-->
+
+                                  
+
+                                    <td class="GridViewCell" style="width:190px; min-width:190px; max-width:190px;">
+                                        <div class="MediaFill">
+                                            <div class="MediaFillRelative">
+                                                     <button class="Button CenterCenter" style="width:130px;" [disabled]="item.InActive" (click)="DeviceActivation(item, false)">Deactivate</button>
+                                                     <!--<button class="Button CenterCenter" style="width:130px;" *ngIf="item.InActive" (click)="DeviceActivation(item, true)">Activate</button>-->
+                                                    
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="5">
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>

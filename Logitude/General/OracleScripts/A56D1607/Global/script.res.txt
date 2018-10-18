@@ -1,0 +1,25 @@
+table PERFORMANCELOGS altered.
+table ANALYZEQUEUES altered.
+table RG_TEMP_1076803045_105 created.
+table Z1607TENANTMANAGEMENTLICENSE created.
+0 rows inserted.
+committed.
+table TENANTMANAGEMENTLICENSES dropped.
+table RG_TEMP_1076803045_105 altered.
+table TENANTMANAGEMENTLICENSES altered.
+index RG_TEMP_1076803045_115 altered.
+table BATCHSERVICESDEFINITIONMODS created.
+table TENANTADDONS created.
+table RG_TEMP_1076803045_107 created.
+table Z1607MONITORSERVICELASTUPDAT created.
+0 rows inserted.
+committed.
+table MONITORSERVICELASTUPDATES dropped.
+table RG_TEMP_1076803045_107 altered.
+table MONITORSERVICELASTUPDATES altered.
+index RG_TEMP_1076803045_119 altered.
+table LOGITUDELEADS altered.
+table TENANTMANAGEMENTS altered.
+table BATCHSERVICESDEFINITIONS altered.
+table BATCHSERVICESDEFINITIONS altered.
+table ZZZCONTACTPASSWORDS dropped.

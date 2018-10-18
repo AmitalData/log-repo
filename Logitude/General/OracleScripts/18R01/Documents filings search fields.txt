@@ -1,0 +1,1 @@
+update DocumentsFilings set SearchFields =SearchFields || ',' || Code 

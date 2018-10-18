@@ -1,0 +1,515 @@
+﻿
+<table *ngIf="Entity">
+    <tr>
+        <td>
+            <div class="MediaFill">
+
+                <!-- Ticket -->
+                <table *ngIf="ObjectTableName == 'Ticket'">
+                    <tr>
+                        <td>
+                            <div class="MediaFill">
+
+                                <!-- SeverityName -->
+                                <div *ngIf="FieldName == 'SeverityName'">
+                                    <div [ngStyle]="{color: Entity.SeverityCode | StringToColorPipe:'TicketSeverityCode'}">{{Entity[FieldName]}}</div>
+                                </div>
+
+                                <!-- ContactTel -->
+                                <div *ngIf="FieldName == 'ContactTel'">
+                                    {{Entity['ContactName']}} / {{Entity['ContactPhone']}}
+                                </div>
+
+                                <!-- SLAName -->
+                                <div *ngIf="FieldName == 'SLAName'">
+                                    <div style="color:blue;">
+                                        {{Entity['SLAName']}}
+                                    </div>
+                                </div>
+
+                                <!-- NextActivityTypeCode -->
+                                <div *ngIf="FieldName == 'NextActivityTypeCode'">
+                                    <img [title]="Entity.NextActivityTypeName" [attr.src]="ImageSrc" style="width:16px;height:16px" />
+                                    {{Entity['NextActivitySubject']}}
+                                </div>
+
+                                <!-- NextActivityDate -->
+                                <div *ngIf="FieldName == 'NextActivityDate'">
+                                    <div [ngStyle]="{color: Entity.NextActivityDate | StringToColorPipe:'ActivityDueDate'}">{{Entity[FieldName]|DateTimeToDatePipe}}</div>
+                                </div>
+
+                                <!-- LastCompletedActivityTypeCode -->
+                                <div *ngIf="FieldName == 'LastCompletedActivityTypeCode'">
+                                    <img [title]="Entity.LastCompletedActivityTypeCode" [attr.src]="ImageSrc" style="width:16px;height:16px" />
+                                    {{Entity['LastCompletedActivitySubject']}}
+                                </div>
+
+                                <!-- ActivityWatch -->
+                                <div *ngIf="FieldName == 'ActivityWatch'">
+                                    <img style="height:22px; width:30px;" src="../Images/Watch.png" />
+                                </div>
+
+                                <!-- RankCode -->
+                                <div *ngIf="FieldName == 'RankCode'">
+                                    <span><img style="width: 20px; height: 20px; vertical-align: middle; margin:0; margin-left: -0px;" [attr.src]="RankSource1" [attr.title]="Entity['RankName']" /></span>
+                                    <span><img style="width: 20px; height: 20px; vertical-align: middle; margin:0; margin-left: -3px;" [attr.src]="RankSource2" [attr.title]="Entity['RankName']" /></span>
+                                    <span><img style="width: 20px; height: 20px; vertical-align: middle; margin:0; margin-left: -3px;" [attr.src]="RankSource3" [attr.title]="Entity['RankName']" /></span>
+                                </div>
+
+                                <!-- TicketFirstResponseTime -->
+                                <div *ngIf="FieldName == 'TicketFirstResponseTime'">
+                                    <div>
+                                        <span [ngStyle]="{color: Entity.ResponseColor}"> {{Entity[FieldName]|DateTimeToDatePipe}} </span>
+                                        <span style="width:5px;"></span>
+                                        <span [ngStyle]="{color: Entity.ResponseColor}"> {{Entity[FieldName]|DateTimeToTimePipe}} </span>
+                                        <span style="width:5px;"></span>
+                                        <span *ngIf="Entity.IsResponseDue" [ngStyle]="{color: Entity.ResponseColor}"> (Due)</span>
+                                        <span style="width:5px;"></span>
+                                        <span *ngIf="Entity.IsResponseExamination" style="color:red;"> ! </span>
+                                    </div>
+                                </div>
+
+                                <!-- TicketFirstResolveTime -->
+                                <div *ngIf="FieldName == 'TicketFirstResolveTime'">
+                                    <div>
+                                        <span [ngStyle]="{color: Entity.ResolveColor}"> {{Entity[FieldName]|DateTimeToDatePipe}} </span>
+                                        <span style="width:5px;"></span>
+                                        <span [ngStyle]="{color: Entity.ResolveColor}"> {{Entity[FieldName]|DateTimeToTimePipe}} </span>
+                                        <span style="width:5px;"></span>
+                                        <span *ngIf="Entity.IsResolveDue" [ngStyle]="{color: Entity.ResolveColor}"> (Due)</span>
+                                        <span style="width:5px;"></span>
+                                        <span *ngIf="Entity.IsResolveExamination" style="color:red;"> ! </span>
+                                    </div>
+                                </div>
+
+                                <!--CreateDate -->
+                                <div *ngIf="FieldName == 'CreateDate'">
+                                    <div>
+                                        <table>
+                                            <tr>
+                                                <td style="width:80px;">
+                                                    {{Entity[FieldName] | DateTimePipe:'D'}}
+                                                </td>
+                                                <td style="width:5px;">
+                                                    <div></div>
+                                                </td>
+                                                <td>
+                                                    {{Entity[FieldName] | DateTimePipe:'T'}}
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <!--LastActivityDate -->
+                                <div *ngIf="FieldName == 'LastActivityDate'">
+                                    <div>
+                                        <table>
+                                            <tr>
+                                                <td style="width:80px;">
+                                                    {{Entity[FieldName] | DateTimePipe:'D'}}
+                                                </td>
+                                                <td style="width:5px;">
+                                                    <div></div>
+                                                </td>
+                                                <td>
+                                                    {{Entity[FieldName] | DateTimePipe:'T'}}
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <!--OpenDate -->
+                                <div *ngIf="FieldName == 'OpenDate'">
+                                    <div>
+                                        <table>
+                                            <tr>
+                                                <td style="width:80px;">
+                                                    {{Entity[FieldName] | DateTimePipe:'D'}}
+                                                </td>
+                                                <td style="width:5px;">
+                                                    <div></div>
+                                                </td>
+                                                <td>
+                                                    {{Entity[FieldName] | DateTimePipe:'T'}}
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <!--LastCloseDate -->
+                                <div *ngIf="FieldName == 'LastCloseDate'">
+                                    <div>
+                                        <table>
+                                            <tr>
+                                                <td style="width:80px;">
+                                                    {{Entity[FieldName] | DateTimePipe:'D'}}
+                                                </td>
+                                                <td style="width:5px;">
+                                                    <div></div>
+                                                </td>
+                                                <td>
+                                                    {{Entity[FieldName] | DateTimePipe:'T'}}
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <!--FirstCloseDate -->
+                                <div *ngIf="FieldName == 'FirstCloseDate'">
+                                    <div>
+                                        <table>
+                                            <tr>
+                                                <td style="width:80px;">
+                                                    {{Entity[FieldName] | DateTimePipe:'D'}}
+                                                </td>
+                                                <td style="width:5px;">
+                                                    <div></div>
+                                                </td>
+                                                <td>
+                                                    {{Entity[FieldName] | DateTimePipe:'T'}}
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <!--FullResolvedTime -->
+                                <div *ngIf="FieldName == 'FullResolvedTime'">
+                                    <div>
+                                        <table>
+                                            <tr>
+                                                <td style="width:80px;">
+                                                    {{Entity[FieldName] | DateTimePipe:'D'}}
+                                                </td>
+                                                <td style="width:5px;">
+                                                    <div></div>
+                                                </td>
+                                                <td>
+                                                    {{Entity[FieldName] | DateTimePipe:'T'}}
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <!--FirstResolveDate -->
+                                <div *ngIf="FieldName == 'FirstResolveDate'">
+                                    <div>
+                                        <table>
+                                            <tr>
+                                                <td style="width:80px;">
+                                                    {{Entity[FieldName] | DateTimePipe:'D'}}
+                                                </td>
+                                                <td style="width:5px;">
+                                                    <div></div>
+                                                </td>
+                                                <td>
+                                                    {{Entity[FieldName] | DateTimePipe:'T'}}
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <!--FirstResponseTime -->
+                                <div *ngIf="FieldName == 'FirstResponseTime'">
+                                    <div>
+                                        <table>
+                                            <tr>
+                                                <td style="width:80px;">
+                                                    {{Entity[FieldName] | DateTimePipe:'D'}}
+                                                </td>
+                                                <td style="width:5px;">
+                                                    <div></div>
+                                                </td>
+                                                <td>
+                                                    {{Entity[FieldName] | DateTimePipe:'T'}}
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <!--LastCompletedActivityDate -->
+                                <div *ngIf="FieldName == 'LastCompletedActivityDate'">
+                                    <div>
+                                        <table>
+                                            <tr>
+                                                <td style="width:80px;">
+                                                    {{Entity[FieldName] | DateTimePipe:'D'}}
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <!--NextActivityDate -->
+                                <div *ngIf="FieldName == 'NextActivityDate'">
+                                    <div>
+                                        <table>
+                                            <tr>
+                                                <td style="width:80px;">
+                                                    {{Entity[FieldName] | DateTimePipe:'D'}}
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <!--UpdateDate -->
+                                <div *ngIf="FieldName == 'UpdateDate'">
+                                    <div>
+                                        <table>
+                                            <tr>
+                                                <td style="width:80px;">
+                                                    {{Entity[FieldName] | DateTimePipe:'D'}}
+                                                </td>
+                                                <td style="width:5px;">
+                                                    <div></div>
+                                                </td>
+                                                <td>
+                                                    {{Entity[FieldName] | DateTimePipe:'T'}}
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <!-- Opportunity -->
+                <table *ngIf="ObjectTableName == 'Opportunity'">
+                    <tr>
+                        <td>
+                            <div class="MediaFill">
+
+                                <!-- StageName -->
+                                <div *ngIf="FieldName == 'StageName'">
+                                    <label [ngStyle]="{color: Entity[FieldName] | StringToColorPipe:'OpportunityStage'}">{{Entity[FieldName]}}</label>
+                                    <label> ( {{Entity['LastStageDate']  | StageAgePipe:'1'}} )</label>
+                                </div>
+
+                                <div *ngIf="FieldName == 'StageDueDate'">
+                                    <label [ngStyle]="{color: Entity[FieldName] | DateTimeToColorPipe}">{{Entity[FieldName] | DateTimePipe}}</label>
+                                </div>
+
+                                <!-- RatingName -->
+                                <div *ngIf="FieldName == 'RatingName'">
+                                    <label [ngStyle]="{color: Entity[FieldName] | StringToColorPipe:'RatingCodeToImage'}">{{Entity[FieldName]}}</label>
+                                </div>
+
+                                <!-- UpdateDate -->
+                                <div *ngIf="FieldName == 'UpdateDate'">
+                                    <label [ngStyle]="{color: (Entity[FieldName]  | StageAgePipe:'1') | StringToColorPipe:'UpdateDateOpportunity'}">   {{Entity[FieldName]  | StageAgePipe:'1'}}</label>
+                                </div>
+
+                                <!-- ActivityWatch -->
+                                <div *ngIf="FieldName == 'ActivityWatch'">
+                                    <img src="../Images/Watch.png" />
+                                </div>
+
+                                <div *ngIf="FieldName == 'LastCompletedActivityTypeCode'">
+                                    <img *ngIf="Entity[FieldName] == 'CL'" src="./Images/Buttons/CL.png" style="width:16px;height:16px" />
+                                    <img *ngIf="Entity[FieldName] == 'VM'" src="./Images/Buttons/VM.png" style="width:16px;height:16px" />
+                                    <img *ngIf="Entity[FieldName] == 'TS'" src="./Images/Buttons/TS.png" style="width:16px;height:16px" />
+                                    <img *ngIf="Entity[FieldName] == 'AP'" src="./Images/Buttons/AP.png" style="width:16px;height:16px" />
+                                    <img *ngIf="Entity[FieldName] == 'EO'" src="./Images/Buttons/EO.png" style="width:16px;height:16px" />
+                                    <img *ngIf="Entity[FieldName] == 'EI'" src="./Images/Buttons/EI.png" style="width:16px;height:16px" />
+                                    {{Entity['LastActivitySubject']}}
+
+                                </div>
+
+                                <div *ngIf="FieldName == 'Reseller'">
+                                    asd
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <!-- Activity -->
+                <table *ngIf="ObjectTableName == 'Activity'">
+                    <tr>
+                        <td>
+                            <div class="MediaFill">
+
+                                <!-- DueDate -->
+                                <div *ngIf="FieldName == 'DueDate'">
+                                    <div [ngStyle]="{color: Entity.DueDate | DateTimeToColorPipe: 'A'}">
+                                        <table>
+                                            <tr>
+                                                <td style="width:80px;">
+                                                    {{Entity[FieldName] | DateTimePipe:'D'}}
+                                                </td>
+                                                <td style="width:5px;">
+                                                    <div></div>
+                                                </td>
+                                                <td>
+                                                    {{Entity[FieldName] | DateTimePipe:'T'}}
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                    </div>
+                                </div>
+
+                                <!-- StartDateTime -->
+                                <div *ngIf="FieldName == 'StartDateTime'">
+                                    <div>
+                                        <table>
+                                            <tr>
+                                                <td style="width:80px;">
+                                                    {{Entity[FieldName] | DateTimePipe:'D'}}
+                                                </td>
+                                                <td style="width:5px;">
+                                                    <div></div>
+                                                </td>
+                                                <td>
+                                                    {{Entity[FieldName] | DateTimePipe:'T'}}
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <!-- UpdateDate -->
+                                <div *ngIf="FieldName == 'UpdateDate'">
+                                    <div style="font-size:11px;">
+                                        {{Entity[FieldName] | DateTimePipe:'DTTA'}}
+                                    </div>
+                                </div>
+
+                                <!--CreateDate -->
+                                <div *ngIf="FieldName == 'CreateDate'">
+                                    <div>
+                                        <table>
+                                            <tr>
+                                                <td style="width:80px;">
+                                                    {{Entity[FieldName] | DateTimePipe:'D'}}
+                                                </td>
+                                                <td style="width:5px;">
+                                                    <div></div>
+                                                </td>
+                                                <td>
+                                                    {{Entity[FieldName] | DateTimePipe:'T'}}
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <!-- CompleteDate -->
+                                <div *ngIf="FieldName == 'CompleteDate'">
+                                    <div>
+                                        <table>
+                                            <tr>
+                                                <td style="width:80px;">
+                                                    {{Entity[FieldName] | DateTimePipe:'D'}}
+                                                </td>
+                                                <td style="width:5px;">
+                                                    <div></div>
+                                                </td>
+                                                <td>
+                                                    {{Entity[FieldName] | DateTimePipe:'T'}}
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <!-- EndDateTime -->
+                                <div *ngIf="FieldName == 'EndDateTime'">
+                                    <div>
+                                        <table>
+                                            <tr>
+                                                <td style="width:80px;">
+                                                    {{Entity[FieldName] | DateTimePipe:'D'}}
+                                                </td>
+                                                <td style="width:5px;">
+                                                    <div></div>
+                                                </td>
+                                                <td>
+                                                    {{Entity[FieldName] | DateTimePipe:'T'}}
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <!-- ActivityTypeName -->
+                                <div *ngIf="FieldName == 'ActivityTypeName'">
+                                    <div>
+                                        {{Entity[FieldName]}}
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <div *ngIf="ObjectTableName == 'Questionnaire' && FieldName == 'CreateDate'">
+                    <span>{{FieldValue | DateTimeToDatePipe}} {{FieldValue | DateTimeToTimePipe}} </span>
+                </div>
+
+                <div *ngIf="ObjectTableName == 'Questionnaire' && FieldName == 'UpdateDate'">
+                    <span>{{FieldValue | DateTimeToDatePipe}} {{FieldValue | DateTimeToTimePipe}} </span>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>

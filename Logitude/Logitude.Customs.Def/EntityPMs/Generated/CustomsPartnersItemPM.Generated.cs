@@ -1,0 +1,348 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Customs.Def.Validators;
+  
+namespace Logitude.Customs.Def.EntityPMs
+{
+   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class CustomsPartnersItemPM : EntityPM
+   {
+   	  private string id ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Id  
+	   {
+	    
+	     get
+		{
+		   return id;
+		 }
+		 set
+		 {
+		   if(id != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   id=value;
+		   }
+			
+		 }
+	   }
+	  private int tenant ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+	  private string itemCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ItemCode  
+	   {
+	    
+	     get
+		{
+		   return itemCode;
+		 }
+		 set
+		 {
+		   if(itemCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ItemCode",OldValue=itemCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   itemCode=value;
+		   }
+			
+		 }
+	   }
+	  private string classificationCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ClassificationCode  
+	   {
+	    
+	     get
+		{
+		   return classificationCode;
+		 }
+		 set
+		 {
+		   if(classificationCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ClassificationCode",OldValue=classificationCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   classificationCode=value;
+		   }
+			
+		 }
+	   }
+	  private string name ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Name  
+	   {
+	    
+	     get
+		{
+		   return name;
+		 }
+		 set
+		 {
+		   if(name != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Name",OldValue=name,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   name=value;
+		   }
+			
+		 }
+	   }
+	  private string searchFields ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SearchFields  
+	   {
+	    
+	     get
+		{
+		   return searchFields;
+		 }
+		 set
+		 {
+		   if(searchFields != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchFields",OldValue=searchFields,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   searchFields=value;
+		   }
+			
+		 }
+	   }
+	  private string customerId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomerId  
+	   {
+	    
+	     get
+		{
+		   return customerId;
+		 }
+		 set
+		 {
+		   if(customerId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerId",OldValue=customerId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customerId=value;
+		   }
+			
+		 }
+	   }
+	  private string vendorId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string VendorId  
+	   {
+	    
+	     get
+		{
+		   return vendorId;
+		 }
+		 set
+		 {
+		   if(vendorId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VendorId",OldValue=vendorId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   vendorId=value;
+		   }
+			
+		 }
+	   }
+	  private string customerName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomerName  
+	   {
+	    
+	     get
+		{
+		   return customerName;
+		 }
+		 set
+		 {
+		   if(customerName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerName",OldValue=customerName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customerName=value;
+		   }
+			
+		 }
+	   }
+	  private string vendorName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string VendorName  
+	   {
+	    
+	     get
+		{
+		   return vendorName;
+		 }
+		 set
+		 {
+		   if(vendorName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VendorName",OldValue=vendorName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   vendorName=value;
+		   }
+			
+		 }
+	   }
+	  private bool isClassificationCodeValid ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsClassificationCodeValid  
+	   {
+	    
+	     get
+		{
+		   return isClassificationCodeValid;
+		 }
+		 set
+		 {
+		   if(isClassificationCodeValid != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsClassificationCodeValid",OldValue=isClassificationCodeValid,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isClassificationCodeValid=value;
+		   }
+			
+		 }
+	   }
+	  private string originCountryCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string OriginCountryCode  
+	   {
+	    
+	     get
+		{
+		   return originCountryCode;
+		 }
+		 set
+		 {
+		   if(originCountryCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OriginCountryCode",OldValue=originCountryCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   originCountryCode=value;
+		   }
+			
+		 }
+	   }
+	  private string originCountryName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string OriginCountryName  
+	   {
+	    
+	     get
+		{
+		   return originCountryName;
+		 }
+		 set
+		 {
+		   if(originCountryName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OriginCountryName",OldValue=originCountryName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   originCountryName=value;
+		   }
+			
+		 }
+	   }
+	  private string invoiceQuantityType ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string InvoiceQuantityType  
+	   {
+	    
+	     get
+		{
+		   return invoiceQuantityType;
+		 }
+		 set
+		 {
+		   if(invoiceQuantityType != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InvoiceQuantityType",OldValue=invoiceQuantityType,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   invoiceQuantityType=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

@@ -1,0 +1,12 @@
+﻿<div [ngStyle]="customestyle" (click)="onclick()" (keyup)="onclick()" tabindex="{{temp}}">
+    <span><inner-span-component [rowData]="rowData" [fieldName]="fieldName" [format]="format" (spanclickevent)="onclick()"  *ngIf="noComponent && showtext">{{Data}}</inner-span-component></span>
+    <img style="vertical-align: middle;" tabindex=-1 *ngIf="showimg" src="{{src}}" />
+    <!--<LogLov *ngIf="noComponent && showlookup"
+            attr.[ObjectFieldName]="'PackageTypeId'"
+            attr.[ObjectTableName]="'ShipmentPackage'"
+            attr.[DataContext]="rowData"
+            attr.[LookUpTableName]="'PackageType'"
+            attr.[HideColumns]="true">
+    </LogLov>-->
+    <inner-component [width]="'85%'" [Id]="Id" [rowData]="rowData" [fieldName]="fieldName" (blurevent)="handleonblur()" *ngIf="!noComponent && showtext"></inner-component>
+</div>

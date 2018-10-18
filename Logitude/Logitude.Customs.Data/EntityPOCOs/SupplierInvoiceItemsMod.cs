@@ -1,0 +1,54 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Customs.Data.EntityPOCOs
+{
+   
+    public class SupplierInvoiceItemsMod
+    {
+	 string dbms;
+
+        [Key]
+        [ForeignKey("SupplierInvoiceItem")]
+        [Column("DeclarationId" ,Order = 1)]
+	    public string DeclarationId { get; set; }
+	      
+        public virtual SupplierInvoiceItem SupplierInvoiceItem { get; set; }
+     [Key]
+        [ForeignKey("SupplierInvoiceItem")]
+        [Column("InvoiceCounterKey" ,Order = 2)]
+	    public int InvoiceCounterKey { get; set; }
+     [Key]
+        [ForeignKey("SupplierInvoiceItem")]
+        [Column("LineNumber" ,Order = 3)]
+	    public int LineNumber { get; set; }
+        [ForeignKey("ModificationAndDiscountType")]
+        [Column("TypeCode")]
+	    public string TypeCode { get; set; }
+	      
+        public virtual ModificationAndDiscountType ModificationAndDiscountType { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+        [ForeignKey("CurrencyType")]
+        [Column("CurrencyTypeCode")]
+	    public string CurrencyTypeCode { get; set; }
+	      
+        public virtual CurrencyType CurrencyType { get; set; }
+        [Column("Amount")]
+	    public decimal? Amount { get; set; }
+     [Key]
+        [Column("ModificationCounterKey" ,Order = 4)]
+	    public int ModificationCounterKey { get; set; }
+    }
+}
+	 

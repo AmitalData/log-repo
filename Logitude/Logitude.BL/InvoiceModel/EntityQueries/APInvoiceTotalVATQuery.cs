@@ -1,0 +1,76 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.Repositories;
+using Logitude.BL.InvoiceModel.EntityLists;
+using Logitude.BL.InvoiceModel.EntityPMs;
+using Simplog.Server.Infrastructure.Helpers;
+
+namespace Logitude.BL.InvoiceModel.EntityQueries
+{
+    public class APInvoiceTotalVATQuery
+    {
+        APInvoiceTotalVATRepository repository;
+        public APInvoiceTotalVATQuery()
+        {
+            repository = new APInvoiceTotalVATRepository(); 
+        }
+
+
+        public APInvoiceTotalVATQuery(int tenant)
+        {
+            repository = new APInvoiceTotalVATRepository(tenant);
+        }
+
+        public APInvoiceTotalVATQuery(APInvoiceTotalVATRepository apInvoiceTotalVATRepository)
+        {
+            repository = apInvoiceTotalVATRepository;
+        }
+
+        public IQueryable<APInvoiceTotalVATPM> GetTotalVATs(string invoiceId, int tenant)
+        {
+            return from a in repository.context.APInvoiceTotalVATs.Include("VatType")
+                   where a.Tenant == tenant && a.APInvoiceId == invoiceId
+                   select new APInvoiceTotalVATPM()
+                   {
+                       Id = a.Id,
+                       Tenant = a.Tenant,
+                       APInvoiceId = a.APInvoiceId,
+                       ExternalVATCard = a.ExternalVATCard,
+                       ExternalTAXItemId = a.ExternalTAXItemId,
+                       InvoiceCurrencyVatableAmount = a.InvoiceCurrencyVatableAmount,
+                       InvoiceCurrencyVATAmount = a.InvoiceCurrencyVATAmount,
+                       LocalVatableAmount = a.LocalVatableAmount,
+                       LocalVATAmount = a.LocalVATAmount,
+                       ProfitCurrencyVATAmount = a.ProfitCurrencyVATAmount,
+                       ProfitVatableAmount = a.ProfitVatableAmount,
+                       VatTypeId = a.VatTypeId,
+                       VatPercent = a.VatPercent,
+                       VatTypeName = a.VatType == null ? null : a.VatType.EnglishName,
+                       VatTypeCell = a.VatType == null ? null : (a.VatType.EnglishName + " (" + a.VatPercent + "%)"),                       
+                   };
+        }
+
+        public IQueryable<APInvoiceTotalVATList> GetIQueryableEntityList(IQueryable<APInvoiceTotalVAT> iQueryable)
+        {
+            IQueryable<APInvoiceTotalVATList> result = from entity in iQueryable
+                                                       select new APInvoiceTotalVATList()
+                                                       {
+                                                           Id = entity.Id,
+                                                           InvoiceCurrencyVatableAmount = entity.InvoiceCurrencyVatableAmount,
+                                                           InvoiceCurrencyVATAmount = entity.InvoiceCurrencyVATAmount,
+                                                           LocalVatableAmount = entity.LocalVatableAmount,
+                                                           LocalVATAmount = entity.LocalVATAmount,
+                                                           Tenant = entity.Tenant,
+                                                           APInvoiceId = entity.APInvoiceId,
+                                                           VatTypeId = entity.VatTypeId,
+                                                           VatPercent = entity.VatPercent,
+
+                                                       };
+            return result;
+        }
+
+    }
+}

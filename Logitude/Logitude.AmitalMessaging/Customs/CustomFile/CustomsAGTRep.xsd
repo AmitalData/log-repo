@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://tempuri.org/CustomsAGTRep" elementFormDefault="qualified" targetNamespace="http://tempuri.org/CustomsAGTRep" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="CustomsAGT">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="CustomsAGTRep" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CustomsAGTRep">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="MasavSentDate" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CustomsFile" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="DeclarationNum" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="AgentMasavPayment" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MasavSentDate" type="xs:string" />
+  <xs:element name="CustomsFile" type="xs:string" />
+  <xs:element name="DeclarationNum" type="xs:string" />
+  <xs:element name="AgentMasavPayment">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="PaymentID" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="PaymentMethodAmount" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="PaymentType" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Bank" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Branch" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="AccountNumber" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="PaymentProcess" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="AccountingCustomsFile" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="AGTEntity" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PaymentID" type="xs:string" />
+  <xs:element name="PaymentMethodAmount" type="xs:string" />
+  <xs:element name="PaymentType" type="xs:string" />
+  <xs:element name="Bank" type="xs:string" />
+  <xs:element name="Branch" type="xs:string" />
+  <xs:element name="AccountNumber" type="xs:string" />
+  <xs:element name="PaymentProcess" type="xs:string" />
+  <xs:element name="AccountingCustomsFile" type="xs:string" />
+  <xs:element name="AGTEntity">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="Primary" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Entname" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Primary" type="xs:string" />
+  <xs:element name="Entname" type="xs:string" />
+</xs:schema>

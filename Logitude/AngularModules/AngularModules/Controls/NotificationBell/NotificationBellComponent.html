@@ -1,0 +1,106 @@
+﻿
+
+<style>
+        .closeButton {
+        visibility: hidden;
+    }
+
+    .ListItem:hover .closeButton {
+        visibility: visible;
+    }
+
+    .ListItem {
+        cursor: pointer;
+    }
+    .tri {
+        width:0px;
+        height:0px;
+        border-right: 8px solid transparent;
+        border-bottom:8px solid #E1E1E3;
+        border-left : 8px solid transparent;
+      
+
+    }
+</style>
+
+<div  >
+    <table>
+        <tr>
+            <td style="width:260px"></td>
+            <td >
+                <div class="tri"></div></td>
+        </tr>
+    </table>
+
+</div>
+<div style="background:#E1E1E3; height:450px; width:330px" *ngIf="IsVisibile">
+
+    <table>
+        <tr style="height:40px;  border-bottom: 2px solid #D3D3D3 ;top:5px">
+            <td style="font-size:18px;color:#838889;  float:right; top:10px">
+                התראות אחרונות
+            </td>
+
+            <td style="color:#1B90CB;  float:left; left:5px;  top:10px; width:136px ">
+               <span style="font-size:16px"> {{'Customs.Notification.O.OpenNotification' | TextCodeTranslationPipe}}  </span>
+                <span  style="font-size:16px; float:right; top:0px">{{count}}</span>
+
+            </td>
+        </tr>
+   
+        <tr style="height:100% ;padding:20px; ">
+
+          <td colspan="2" style="">
+              <div >
+                  <div class="ScrollViewer" >
+                      <div class="ScrollContent">
+                          <ul  style="border : 10px solid #E1E1E3">
+                              <li  class="ListItem" style="border-bottom: 1px solid #D3D3D3" *ngFor="let item of ItemsSource" (click)="SelectedLine(item)"
+                                   [style.background-color]="item.Background"   [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'">
+                                  <div>
+                                      <table>
+                                          <tr style="height:30px">
+                                              <td style="width:20px">
+                                              <img *ngIf="item.IconeVisibility" src="./Images/Action.png" style="height:15px;width:15px;vertical-align:central; " />
+                                                  <img *ngIf="item.BlueIconeVisibility" src="./Images/BlueIcon.png" style="height:15px;width:15px;vertical-align:central; " />
+
+                                                       </td>
+                                              <td style="float:right; top:5px; right:20px; "> {{item.NotificationDefinitionName}}</td>
+                                              <td  style="left:8px"> 
+                                              <span [style.background-color]="item.datecolor" [style.font-weight]="item.IsSeenFontWeight" [style.color]="item.fontcolor"> {{item.DueDate | DateTimeToDatePipe}}</span>
+                                              </td>
+                                          </tr>
+                                          <tr >
+                                              <td style="width:20px"></td>
+                                              <td colspan="2" style="float:right;text-align:right; right:20px; font-weight:bold; color:#838889;font-size:12px;word-wrap:break-word;word-break:keep-all;white-space:pre-wrap" >{{item.Description}}</td>
+                                          </tr>
+                                          <tr >
+                                              <td style="width:20px"></td>
+                                              <td colspan="2" style="float:right; top:5px;bottom:5px; right:20px; color:#838889;font-size:12px;">{{item.Reference1NumberWithCustomer}}</td>
+                                          </tr>
+                                          <tr style="height:28px">
+                                              <td style="width:20px; "></td>
+                                              <td style="float:right; top:10px; right:20px;color:#838889; font-size:12px">{{item.CreateDate | DateTimePipe:'DT' }}</td>
+                                        <td>
+                                            <div class="closeButton">
+                                                <button class="Button" style="width:40px; float:left;left:5px" (click)="item.ClosedByAssigneeClicked()">{{'Customs.General.B.Close' |TextCodeTranslationPipe }}</button>
+                                            </div>
+                                        </td>
+                                            </tr>
+                                      </table>
+                                 </div>
+                              </li>
+
+
+                          </ul>
+                      </div>
+                      </div>
+                  </div>
+</td>
+
+
+        </tr>
+
+    </table>
+
+</div>

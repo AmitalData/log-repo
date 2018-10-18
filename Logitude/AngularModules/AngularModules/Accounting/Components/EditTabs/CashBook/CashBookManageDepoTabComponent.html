@@ -1,0 +1,224 @@
+<style>
+    .tab-footer {
+        background: #f7f7f7;
+        height: 85px;
+        border-radius: 7px;
+        border-bottom-left-radius: unset;
+        margin-right: -1px;
+        padding: 7px 10px;
+        -webkit-box-shadow: 0px -3px 4px -1px rgba(0,0,0,0.31);
+        -moz-box-shadow: 0px -3px 4px -1px rgba(0,0,0,0.31);
+        box-shadow: 0px -3px 4px -1px rgba(0,0,0,0.31);
+    }
+
+    .SimpleGridHeaderRow td, .CellStretched {
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .bg {
+        background: #f6f6f6;
+        cursor: pointer;
+    }
+
+    .Disabled {
+        background: red;
+        opacity: 0.5;
+    }
+
+    .footer-title {
+        color: #1692ef;
+        font-size: 15px;
+    }
+
+    .footer-cell {
+        float: left;
+        padding: 5px;
+        margin: 0px 10px;
+        width: 150px;
+        text-align: center;
+        overflow: auto;
+    }
+
+    .footer-summery::before, .footer-summery::after {
+        clear: both;
+    }
+
+    .footer-summery {
+        padding-left: 150px;
+    }
+
+    .border-left {
+        border-left: 1px solid #dadada;
+    }
+
+    .SimpleGridHeaderRow td, .CellStretched {
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .red {
+        color: #d60000 !important;
+    }
+
+    .CellStretched {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        padding: 0px 5px !important;
+    }
+
+    .SimpleGridViewRow:hover {
+        background: white !important;
+    }
+</style>
+
+<table>
+    <tr>
+        <td>
+            <div class="TableHolder">
+                <table>
+                    <!-- Header -->
+                    <tr class="TabTitleRow"><td> {{'CashBook.TH.ManageDepo' | TextCodeTranslationPipe}} </td></tr>
+
+                    <!-- Filters -->
+                    <tr style="height: 70px;">
+                        <td style="">
+                            <table>
+                                <tr class="FormFieldRow">
+
+                                    <td style="width: 300px;">
+                                        <table>
+                                            <!-- Date -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 150px;"  [style.text-align]="isRTL ? 'right' : 'left'" >{{'Accounting.General.O.CreateDatefrom' | TextCodeTranslationPipe}} </td>
+
+                                                <td style="width: 180px;">
+                                                    <LogDatePicker [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName"
+                                                                   [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                </td>
+
+                                                <td style="width: 50px;"><div></div></td>
+
+                                                <td style="width: 50px;" [style.text-align]="isRTL ? 'right' : 'left'" >{{'Accounting.General.O.To' | TextCodeTranslationPipe}}</td>
+
+                                                <td style="width: 180px;">
+                                                    <LogDatePicker [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName"
+                                                                   [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                        </table>
+                                    </td>
+
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr style="height: 5px;"><td><div></div></td></tr>
+                                        
+                    <!-- Lines -->
+                    <tr style="height: 20px;">
+                        <td>
+                            <div style="padding: 4px; width: 250px;"  [style.float]="isRTL ? 'left' : 'right'">
+                                <SearchTextBox [ObjectTableName]="ObjectTableName"  [PlaceHolder]="'Accounting.General.O.Search' | TextCodeTranslationPipe"  (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="height: 100%; padding-bottom: 75px;">
+                            <div class="SimpleGridView">
+                                <div class="SimpleGridViewHeader">
+                                    <table>
+                                        <tr class="SimpleGridHeaderRow">
+                                            <td style="padding-right: 5px; padding-left: 5px;width: 90px; max-width: 90px">{{'BankDeposit.F.DepositNumber' | TextCodeTranslationPipe}}</td>
+                                            <td style="padding-right: 5px; padding-left: 5px;width: 120px; max-width: 120px">{{'BankDeposit.F.DepositDate' | TextCodeTranslationPipe}}</td>
+                                            <td style="padding-right: 5px; padding-left: 5px;width: 150px; max-width: 150px">{{'BankDeposit.F.DepositBankAccountId' | TextCodeTranslationPipe}}</td>
+                                            <td style="padding-right: 5px; padding-left: 5px;width: 120px; max-width: 120px">{{'Accounting.General.O.Amount' | TextCodeTranslationPipe}} ({{tenantCurrency}})</td>
+                                            <td style="padding-right: 5px; padding-left: 5px;width: 75px; max-width: 75px">{{'BankDeposit.F.DepositCurrencyCode' | TextCodeTranslationPipe}}</td>
+                                            <td style="padding-right: 5px; padding-left: 5px;width: 110px; max-width: 110px">{{'BankDeposit.F.ForeignAmount' | TextCodeTranslationPipe}}</td>
+                                            <td style="padding-right: 5px; padding-left: 5px;width: 110px; max-width: 110px">{{'Accounting.General.O.IsCancelled' | TextCodeTranslationPipe}}</td>
+                                            <td></td>
+                                            <!--<td class="LastChild">
+        <div></div>
+    </td>-->
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div class="SimpleGridViewBody">
+                                    <table>
+                                        <tr class="SimpleGridViewRow bg" *ngFor="let item of ItemsSource; let i=index;" (click)="RowClicked(item)" title="Created {{item.CreateDate | DateTimeToDatePipe}}">
+                                            <td class="CellStretched" style="width: 90px; max-width: 90px">
+                                                {{item.DepositNumber }}
+                                            </td>
+
+                                            <td class="CellStretched" style="width: 120px; max-width: 120px">
+                                                {{item.DepositDate | DateTimeToDatePipe }}
+                                            </td>
+
+                                            <td class="CellStretched" style="width: 150px; max-width: 150px;">
+                                                {{item.BankAccountNumber  }}
+                                            </td>
+
+                                            <td class="CellStretched" style="width: 120px; max-width: 120px;text-align: right;">
+                                                {{item.LocalDepositAmount | NumbersPipe:'N2'}}
+                                            </td>
+
+                                            <td class="CellStretched" style="width: 75px; max-width: 75px; ">
+                                                {{item.DepositCurrencyCode}}
+                                            </td>
+
+                                            <td class="CellStretched" style="width: 120px; max-width: 120px;text-align: right;">
+                                                {{item.ForeignAmount | NumbersPipe:'N2'}}
+                                            </td>
+
+                                            <td class="CellStretched" style="width: 120px; max-width: 120px;">
+                                                <img *ngIf="item.IsCanceled" src="./Images/CheckBoxIcon.png" class="CenterCenter" />
+                                            </td>
+
+                                            <td><div></div></td>
+
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="5">
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+
+
+                </table>
+            </div>
+        </td>
+    </tr>
+
+</table>
+
+<!-- Footer -->
+<div style="position: absolute; left: 0px; bottom: 0px; right: 0px;">
+    <div class="tab-footer">
+        <div class="footer-title">
+            {{'Accounting.General.O.Totals' | TextCodeTranslationPipe}}
+        </div>
+        <div class="footer-summery">
+            <div class="footer-cell"  [style.float]="isRTL ? 'right' : 'left'" style="text-align: right;" >
+                <div style="font-size: 15px; font-weight: bold; color:#00a24d;" [class.red]="TotalSum<=0">{{TotalSum | NumbersPipe:'N2'}}</div>
+                <div style="font-size: 13px; color: #6f6f6f;">{{'Accounting.General.O.Amount' | TextCodeTranslationPipe}} ({{EntityPM.CurrencyCode}})</div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+

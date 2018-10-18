@@ -1,0 +1,14 @@
+﻿
+
+
+<div   *ngIf="rowData && fieldName && fieldName != 'TaxationDateTime'"  style="text-align: right; color: #747474;" >
+
+    {{ rowData[fieldName]   }}
+
+</div>
+
+<div  *ngIf="fieldName == 'TaxationDateTime'" style="text-align: right; color: #747474;">
+
+    {{ rowData.TaxationDateTime | DateTimePipe:'DT' }}
+
+</div>

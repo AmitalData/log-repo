@@ -1,0 +1,1 @@
+﻿alter table Contacts add Code varchar(20)  null 

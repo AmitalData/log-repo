@@ -1,0 +1,142 @@
+﻿
+<style>
+    .emptyticket {
+        border: 1px solid #8C8C8C;
+        border-radius: 10px;
+        width: 168px;
+        height: 164px;
+        background: white;
+        margin: 5px;
+        margin-left: 15px;
+        float: left;
+    }
+
+        .emptyticket:hover {
+            background: #8C8C8C;
+            cursor: pointer;
+        }
+
+    .infoColor {
+        background: -moz-linear-gradient(50.55% 126.37% 91.55deg,rgba(255, 255, 255, 1) 0%,rgba(242, 242, 242, 1) 51.84%,rgba(212, 212, 212, 1) 100%);
+        background: -webkit-linear-gradient(91.55deg, rgba(255, 255, 255, 1) 0%, rgba(242, 242, 242, 1) 51.84%, rgba(212, 212, 212, 1) 100%);
+        background: -webkit-gradient(linear,50.55% 126.37%,49.7% 8.42%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(0.5184,rgba(242, 242, 242, 1) ),color-stop(1,rgba(212, 212, 212, 1) ));
+        background: -o-linear-gradient(91.55deg, rgba(255, 255, 255, 1) 0%, rgba(242, 242, 242, 1) 51.84%, rgba(212, 212, 212, 1) 100%);
+        background: -ms-linear-gradient(91.55deg, rgba(255, 255, 255, 1) 0%, rgba(242, 242, 242, 1) 51.84%, rgba(212, 212, 212, 1) 100%);
+        background: linear-gradient(-1.55deg, rgba(255, 255, 255, 1) 0%, rgba(242, 242, 242, 1) 51.84%, rgba(212, 212, 212, 1) 100%);
+        border-style: Solid;
+        border-color: #BCBEC0;
+        border-color: rgba(188, 190, 192, 1);
+        border-width: 1px;
+        border-radius: 0px 0px 10px 10px;
+    }
+
+    .SearchResult {
+        border: 1px solid #FFD700;
+    }
+
+    .emptyticket .infoColor .ActionButtons {
+        visibility: hidden;
+    }
+
+    .emptyticket:hover .infoColor .ActionButtons {
+        visibility: visible;
+    }
+
+    .emptyticket .MyIconButton {
+        visibility: hidden;
+    }
+
+    .emptyticket:hover .MyIconButton {
+        visibility: visible;
+    }
+    .BodyBackground {
+        background: #DFECF7;
+    }
+    .WarningSummary {
+        height: 100%;
+        width: 100%;
+        border: 1px solid Orange;
+        border-radius: 5px;
+        background: #FFFBDA;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        overflow: hidden;
+    }
+    .Disable {
+       opacity:0.5;
+       pointer-events:none;
+    }
+</style>
+<table>
+    <tr>
+        <td>
+            <div class="SimpleGridView">
+                <div class="SimpleGridViewHeader">
+                    <table>
+                        <tr class="SimpleGridHeaderRow">
+                            <td style="width: 100px; max-width: 100px;padding-right: 4px;">מס' חשבון ספק</td>
+                            <td style="width: 100px; max-width: 100px;padding-right: 4px;">תנאי מכר</td>
+                            <td style="width: 100px; max-width: 100px;padding-right: 4px;">סכום חשבון</td>
+                            <td style="width: 100px; max-width: 100px;padding-right: 4px;">מטבע</td>
+                            <td style="width: 100px; max-width: 100px;padding-right: 4px;">ארץ חשבון</td>
+                            <td style="width: 100px; max-width: 100px;padding-right: 4px;">ספק</td>
+                            <td style="width: 100px; max-width: 100px;padding-right: 4px;">נתוני הובלה</td>
+                            <td></td>
+                            <!--<td class="LastChild">
+                        <div></div>
+                    </td>-->
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="SimpleGridViewBody">
+                    <table>
+                        <tr class="SimpleGridViewRow bg" *ngFor="let item of AdditionalData.GoodsValueDetails; let i=index;">
+
+                            <td class="CellStretched TextTrimming" style="width: 100px; max-width: 100px;padding-right: 4px;">
+                                {{item.SupAccount | CustomNumbersPipe:0}}
+                            </td>
+
+                            <td class="CellStretched TextTrimming" style="width: 100px; max-width: 100px;padding-right: 4px;">
+                                {{item.IncotermId}}
+                            </td>
+
+                            <td class="CellStretched TextTrimming" style="width: 100px; max-width: 100px;padding-right: 4px;">
+                                {{item.Value | CustomNumbersPipe:0}}
+                            </td>
+
+                            <td class="CellStretched TextTrimming" style="width: 100px; max-width: 100px;padding-right: 4px;">
+                                {{item.CurrencyName}}
+                            </td>
+
+                            <td class="CellStretched TextTrimming" style="width: 100px; max-width: 100px;padding-right: 4px;">
+                                {{item.CountryName}}
+                            </td>
+                            <td class="CellStretched TextTrimming" style="width: 100px; max-width: 100px;padding-right: 4px;">
+                                {{item.SupplierName}}
+                            </td>
+                            <td class="CellStretched TextTrimming" style="width: 100px; max-width: 100px;padding-right: 4px;">
+                                {{item.SupplierFreight | CustomNumbersPipe:0}}
+                            </td>
+                            <td><div></div></td>
+
+                        </tr>
+                        <tr>
+                            <td colspan="5">
+                                <div></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </td>
+    </tr>
+    <tr style="height:1px;">
+        <td>
+            <div style="float:left;margin-left:10px;">
+                <button class="Button" (click)="CloseButtonClicked()" style="float: right;margin-left: 7px;margin-right: 7px;">סגור</button>
+            </div> 
+        </td>
+    </tr>
+</table>

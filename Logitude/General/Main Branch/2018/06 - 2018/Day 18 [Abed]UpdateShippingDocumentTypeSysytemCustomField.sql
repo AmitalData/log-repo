@@ -1,0 +1,1 @@
+update DocumentTypes set PrintingFieldsScreenCode = 'ShippingDeclarationAdditionalScreen' , IsSystemAdditionalPrintingFields =1 where Code ='716SD'

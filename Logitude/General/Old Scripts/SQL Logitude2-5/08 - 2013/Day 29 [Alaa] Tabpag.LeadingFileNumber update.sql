@@ -1,0 +1,1 @@
+alter table [Customs].[tapags] alter column LeadingFileNumber varchar(15) null

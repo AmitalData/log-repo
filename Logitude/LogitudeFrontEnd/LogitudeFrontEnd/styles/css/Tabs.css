@@ -1,0 +1,82 @@
+﻿.HeaderScreen {
+    height: 100%;
+    width: calc(100% - 2px);
+    background: #F7F7F7;
+    border: 1px solid #DADADA;
+    border-bottom-width: 0px;
+    border-radius: 8px 8px 0px 0px;
+    -moz-border-radius: 8px 8px 0px 0px;
+    -webkit-border-radius: 8px 8px 0px 0px;
+}
+
+.HeaderScreenCell:last-child {
+    border-right: 0px;
+}
+
+.HeaderScreenCell {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-right: 1px solid #DADADA;
+    vertical-align: middle;
+}
+
+.HeaderScreenLable {
+    font-size: 12px;
+    line-height: 22px;
+    color: #6E7172;
+    color: rgb(110, 113, 114);
+}
+
+.HeaderScreenValue {
+    font-size: 12px;
+    line-height: 22px;
+    color: #282E30;
+    color: rgb(40, 46, 48);
+}
+
+.TabSummaryArea > td > table {
+    border-left-width: 0px;
+    border-bottom-width: 0px;
+    border-right-width: 0px;
+    border-radius: 10px 10px 8px 0px;
+    -moz-border-radius: 10px 10px 8px 0px;
+    -webkit-border-radius: 10px 10px 8px 0px;
+    box-shadow: 0px -1px 5px #D1D1D1;
+    overflow: hidden;
+}
+
+.TabSummaryArea {
+    height: 105px;
+}
+
+.TabTitleRow, .TabTitleRow td {
+    vertical-align: middle;
+    height: 30px;
+    font-size: 16px;
+    color: #1B90CB;
+}
+
+.Notes {
+    /*position:absolute;*/
+    /*margin:5px;*/
+    /*top:5px;
+    bottom:5px;
+    left:5px;
+    right:5px;*/
+    /*margin:auto;*/
+    /*margin-top: 10px;*/
+    background: #FFFADC;
+    border: 1px Solid #FFFFFF;
+    border-color: #FFFFFF;
+    border-radius: 2px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    /*height: 100%;
+    min-height: 118px;*/
+    -webkit-box-shadow: 0px 0px 5px 3px #C8C8C8;
+    -moz-box-shadow: 0px 0px 5px 3px #C8C8C8;
+    box-shadow: 0px 0px 5px 3px #C8C8C8;
+}

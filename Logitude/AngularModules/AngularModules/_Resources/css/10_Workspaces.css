@@ -1,0 +1,99 @@
+﻿
+.SectionHeader label {
+    margin-left: 10px;
+}
+
+.SectionHeader td, .SectionHeader label {
+    color: #45494A;
+    font-size: 14px;
+    text-align: left;
+}
+
+.SectionHeader > td:first-child {
+    border-radius: 4px 4px 0px 0px;
+    -moz-border-radius: 4px 4px 0px 0px;
+    -webkit-border-radius: 4px 4px 0px 0px;
+    background: -moz-linear-gradient(50% 0% -90deg,rgba(235, 235, 235, 1) 0%,rgba(233, 233, 233, 1) 48.14%,rgba(226, 226, 226, 1) 67.05%,rgba(214, 214, 214, 1) 80.81%,rgba(197, 197, 197, 1) 92.01%,rgba(179, 179, 179, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(235, 235, 235, 1) 0%, rgba(233, 233, 233, 1) 48.14%, rgba(226, 226, 226, 1) 67.05%, rgba(214, 214, 214, 1) 80.81%, rgba(197, 197, 197, 1) 92.01%, rgba(179, 179, 179, 1) 100%);
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(235, 235, 235, 1) ),color-stop(0.4814,rgba(233, 233, 233, 1) ),color-stop(0.6705,rgba(226, 226, 226, 1) ),color-stop(0.8081,rgba(214, 214, 214, 1) ),color-stop(0.9201,rgba(197, 197, 197, 1) ),color-stop(1,rgba(179, 179, 179, 1) ));
+    background: -o-linear-gradient(-90deg, rgba(235, 235, 235, 1) 0%, rgba(233, 233, 233, 1) 48.14%, rgba(226, 226, 226, 1) 67.05%, rgba(214, 214, 214, 1) 80.81%, rgba(197, 197, 197, 1) 92.01%, rgba(179, 179, 179, 1) 100%);
+    background: linear-gradient(180deg, rgba(235, 235, 235, 1) 0%, rgba(233, 233, 233, 1) 48.14%, rgba(226, 226, 226, 1) 67.05%, rgba(214, 214, 214, 1) 80.81%, rgba(197, 197, 197, 1) 92.01%, rgba(179, 179, 179, 1) 100%);
+}
+
+.SectionHeader {
+    height: 27px;
+}
+
+.QueriesSection .Button {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: auto;
+    min-width: 45px;
+}
+
+.QueryLink:hover, .RedQueryLink:hover{
+    cursor: pointer;
+    color: #1B90CB;
+}
+
+.QueryLink {
+    cursor: pointer;
+    font-size: 12px;
+    color: #282E30;
+    height: 21px;
+    line-height: 21px;
+    width: 1px;
+    white-space: nowrap;
+    padding-left: 10px;
+}
+
+.RedQueryLink {
+    cursor: pointer;
+    font-size: 12px;
+    color: red;
+    height: 20px;
+    line-height: 20px;
+    width: 1px;
+    padding-left: 10px;
+    white-space: nowrap;
+}
+
+.QueriesSection div:nth-child(1) {
+    font-size: 14px;
+    color: #1B90CB;
+}
+
+.QueriesSection {
+    position: relative;
+    padding-bottom: 10px;
+}
+
+/* Recent */
+.RecentEntityItem:hover {
+    cursor: pointer;
+    background: rgba(232, 247, 255, 1);
+    border: 1px solid #3BB3E2;
+    background: -moz-linear-gradient(50% 106.14% 90deg,rgba(133, 203, 237, 1) 0%,rgba(150, 211, 240, 1) 22.59%,rgba(196, 231, 248, 1) 67.37%,rgba(232, 247, 255, 1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 100%);
+    background: -webkit-gradient(linear,50% 106.14%,50% -10.13%,color-stop(0,rgba(133, 203, 237, 1) ),color-stop(0.2259,rgba(150, 211, 240, 1) ),color-stop(0.6737,rgba(196, 231, 248, 1) ),color-stop(1,rgba(232, 247, 255, 1) ));
+    background: -o-linear-gradient(90deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 100%);
+    background: linear-gradient(0deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 100%);
+    transition: 0.3s;
+}
+
+.RecentEntityItem td, .RecentEntityItem span, .RecentEntityItem div {
+    font-size: 10px;
+    color: #6E7172;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.RecentEntityItem {
+    height: 40px;
+    border: 1px solid #DADADA;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    margin-bottom: 3px;
+}

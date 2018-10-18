@@ -1,0 +1,485 @@
+﻿
+<style>
+    .greenButton {
+        outline: none;
+        text-align: right;
+        font-size: 11px;
+        color: #45494A;
+        width: 100%;
+        height: 22px;
+        line-height: 21px;
+        border: 1px solid #EDC093;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        position: relative;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgb(0, 255, 33) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgb(106, 190, 163) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(237, 192, 147, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgb(106, 190, 163) 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgb(106, 190, 163) 100%);
+        -moz-box-shadow: 0px 0px 6px 0px green;
+        text-shadow: 1px 1px white;
+    }
+
+    .greenButton:hover {
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgb(0, 255, 33) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgb(106, 190, 163) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(237, 192, 147, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgb(106, 190, 163) 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgb(106, 190, 163) 100%);
+    }
+
+    .greenButton:active {
+        -webkit-box-shadow: 0px 0px 5px 1px rgba(0,148,118,1);
+        -moz-box-shadow: 0px 0px 5px 1px rgba(0,148,118,1);
+        box-shadow: 0px 0px 5px 1px rgba(0,148,118,1);
+    }
+
+    .ColumnGroup{
+        width:139px;
+        min-width:139px;
+        max-width:139px;
+        text-align:center;
+        color: #45494A;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(247, 247, 247, 1) 0%,rgba(245, 245, 245, 1) 52.38%,rgba(238, 238, 238, 1) 72.96%,rgba(226, 226, 226, 1) 87.88%,rgba(209, 209, 209, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 52.38%, rgba(238, 238, 238, 1) 72.96%, rgba(226, 226, 226, 1) 87.88%, rgba(209, 209, 209, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(247, 247, 247, 1) ),color-stop(0.5238,rgba(245, 245, 245, 1) ),color-stop(0.7296,rgba(238, 238, 238, 1) ),color-stop(0.8788,rgba(226, 226, 226, 1) ),color-stop(1,rgba(209, 209, 209, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 52.38%, rgba(238, 238, 238, 1) 72.96%, rgba(226, 226, 226, 1) 87.88%, rgba(209, 209, 209, 1) 100%);
+        background: linear-gradient(180deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 52.38%, rgba(238, 238, 238, 1) 72.96%, rgba(226, 226, 226, 1) 87.88%, rgba(209, 209, 209, 1) 100%);
+    }
+</style>
+
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr style="height:80px;">
+        <td>
+            <table>
+                <tr style="height:25px">
+                    <td style="color:#1B90CB;font-size:14px;">Filter By:</td>
+                </tr>
+
+                <tr style="height:5px;">
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr style="height:28px;">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:10px;">
+                                    <div></div>
+                                </td>
+
+                                <td>
+                                    <table>
+                                        <tr>
+
+                                            <!-- Time Range -->
+                                            <td style="width:70px" class="Label">Time Range: </td>
+                                            <td style="width:160px;">
+                                                <ComboBox [ItemsSource]="TimeRangeComboList" [Binding]="'Name'" [SelectedItem]="SelectedTimeRangeFilter" (SelectedItemChanged)="SelectedTimeRangeFilter = $event"></ComboBox>
+                                            </td>
+
+                                            <td style="width:15px;">
+                                                <div></div>
+                                            </td>
+
+                                            <!-- Product Types -->
+                                            <td style="width:85px" class="Label">Product Types: </td>
+                                            <td style="width:180px;">
+                                                <table>
+                                                    <tr>
+                                                        <td style="width:163px;">
+                                                            <ComboBoxWithInCheckBox [WithinImage]="'true'" [ItemsSource]="ProductTypeComboList" [SelectedItem]="SelectedProdustTypeFilter" (EditedItemSource)="EditedItemSource($event)" (SelectedItemChanged)="SelectedProdustTypeFilter = $event" [Binding]="'Name'"></ComboBoxWithInCheckBox>
+                                                        </td>
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+
+                                            <td style="width:25px;">
+                                                <div></div>
+                                            </td>
+
+                                            <!-- Busniess Units -->
+                                            <td style="width:85px" class="Label">Busniess Unit: </td>
+                                            <td style="width:160px;">
+                                                <ComboBox [ItemsSource]="BusinessUnitFilterList" [Binding]="'Name'" [SelectedItem]="SelectedBusinessUnitFilter" (SelectedItemChanged)="SelectedBusinessUnitFilter = $event"></ComboBox>
+                                            </td>
+                                            <td style="width:2px;">
+                                                <div></div>
+                                            </td>
+                                            <td style="width:180px;" *ngIf="SelectedBusinessUnitFilter">
+                                                <ComboBox *ngIf="SelectedBusinessUnitFilter.Code != 'A'" [IsDisabled]="SelectedBusinessUnitFilter.Code == 'M' || SelectedBusinessUnitFilter.Code == 'A'" [ItemsSource]="UsersFilterList" [Binding]="'Name'" [SelectedItem]="SelectedUserFilter" (SelectedItemChanged)="SelectedUserFilter = $event"></ComboBox>
+                                                <LogLov *ngIf="SelectedBusinessUnitFilter.Code == 'A'"
+                                                        [ObjectFieldName]="'ListOfValuesUserId'"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'User'"
+                                                        [HideColumns]="true">
+                                                </LogLov>
+                                            </td>
+
+                                            <td style="width:10px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width:90px;">
+                                                <button (click)="RunReport()" class="greenButton" style="height:22px; border:1px solid green; border-radius:3px;">
+                                                    <div style="color:black; text-align:center; vertical-align:central; font-size:12px;">Run Report</div>
+                                                </button>
+
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr style="height:28px;">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:10px;">
+                                    <div></div>
+                                </td>
+
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <!-- View By -->
+                                            <td style="width:70px" class="Label">View by: </td>
+                                            <td style="width:160px;">
+                                                <ComboBox [ItemsSource]="ViewByComboList" [Binding]="'Name'" [SelectedItem]="SelectedViewByFilter" (SelectedItemChanged)="SelectedViewByFilter = $event"></ComboBox>
+                                            </td>
+
+                                            <td style="width:15px;">
+                                                <div></div>
+                                            </td>
+
+                                            <!-- Country -->
+                                            <td style="width:85px" class="Label">Country: </td>
+                                            <td style="width:180px; margin-right:-18px;">
+                                                <LogLov [ObjectFieldName]="'CountryId'"
+                                                        [SelectedValue]="CountryId"
+                                                        [ObjectTableName]="'Customer'"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'Country'"
+                                                        [HideAddLink]="true"
+                                                        [HideLastColumn]="true">
+                                                </LogLov>
+                                            </td>
+
+                                            <td style="width:25px;">
+                                                <div></div>
+                                            </td>
+
+                                            <!-- Product -->
+                                            <td style="width:85px" class="Label">Product: </td>
+                                            <td style="width:160px;">
+                                                <ComboBox [ItemsSource]="ProductFilterList" [Binding]="'Name'" [SelectedItem]="SelectedProductFilter" (SelectedItemChanged)="SelectedProductFilter = $event"></ComboBox>
+                                            </td>
+
+                                            <td colspan="5">
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height:10px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div class="MediaFill" style="min-width:1024px;overflow-x:auto">
+                <table>
+                    <tr style="height:28px;">
+                        <td>
+                            <table>
+                                <tr>
+                                    <td style="width:700px; min-width:700px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td class="ColumnGroup" *ngIf="AD_IsVisible">Air Domestic</td>
+                                    <td style="width:1px;" *ngIf="AD_IsVisible"><div></div></td>
+
+                                    <td class="ColumnGroup" *ngIf="AR_IsVisible">Air Drop</td>
+                                    <td style="width:1px;" *ngIf="AR_IsVisible"><div></div></td>
+
+                                    <td class="ColumnGroup" *ngIf="AE_IsVisible">Air Export</td>
+                                    <td style="width:1px;" *ngIf="AE_IsVisible"><div></div></td>
+
+                                    <td class="ColumnGroup" *ngIf="AI_IsVisible">Air Import</td>
+                                    <td style="width:1px;" *ngIf="AI_IsVisible"><div></div></td>
+
+                                    <td class="ColumnGroup" *ngIf="CI_IsVisible">Customs Import</td>
+                                    <td style="width:1px;" *ngIf="CI_IsVisible"><div></div></td>
+
+                                    <td class="ColumnGroup" *ngIf="DL_IsVisible">Delivery</td>
+                                    <td style="width:1px;" *ngIf="DL_IsVisible"><div></div></td>
+
+                                    <td class="ColumnGroup" *ngIf="ID_IsVisible">Inland Domestic</td>
+                                    <td style="width:1px;" *ngIf="ID_IsVisible"><div></div></td>
+
+                                    <td class="ColumnGroup" *ngIf="IR_IsVisible">Inland Drop</td>
+                                    <td style="width:1px;" *ngIf="IR_IsVisible"><div></div></td>
+
+                                    <td class="ColumnGroup" *ngIf="IE_IsVisible">Inland Export</td>
+                                    <td style="width:1px;" *ngIf="IE_IsVisible"><div></div></td>
+
+                                    <td class="ColumnGroup" *ngIf="II_IsVisible">Inland Import</td>
+                                    <td style="width:1px;" *ngIf="II_IsVisible"><div></div></td>
+
+                                    <td class="ColumnGroup" *ngIf="IN_IsVisible">Insurance</td>
+                                    <td style="width:1px;" *ngIf="IN_IsVisible"><div></div></td>
+
+                                    <td class="ColumnGroup" *ngIf="OD_IsVisible">Ocean Domestic</td>
+                                    <td style="width:1px;" *ngIf="OD_IsVisible"><div></div></td>
+
+                                    <td class="ColumnGroup" *ngIf="OR_IsVisible">Ocean Drop</td>
+                                    <td style="width:1px;" *ngIf="OR_IsVisible"><div></div></td>
+
+                                    <td class="ColumnGroup" *ngIf="OE_IsVisible">Ocean Export</td>
+                                    <td style="width:1px;" *ngIf="OE_IsVisible"><div></div></td>
+
+                                    <td class="ColumnGroup" *ngIf="OI_IsVisible">Ocean Import</td>
+                                    <td style="width:1px;" *ngIf="OI_IsVisible"><div></div></td>
+
+                                    <td><div></div></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="MediaFill">
+                                <div class="SimpleGridView"  style="overflow-x:hidden">
+                                    <div class="SimpleGridViewHeader">
+                                        <table>
+                                            <tr>
+                                                <td style="width: 300px; min-width:300px; max-width:300px;">Customer Name</td>
+                                                <td style="width: 200px; min-width:200px; max-width:200px;">Primary Contact</td>
+                                                <td style="width: 200px; min-width:200px; max-width:200px;">Salesman</td>
+                                                <td style="width: 70px; min-width:70px; max-width:70px; text-align:center;" *ngIf="AD_IsVisible">Potential</td>
+                                                <td style="width: 70px; min-width:70px; max-width:70px; text-align:center;" *ngIf="AD_IsVisible">Actual</td>
+                                                <td style="width: 70px; min-width:70px; max-width:70px; text-align:center;" *ngIf="AR_IsVisible">Potential</td>
+                                                <td style="width: 70px; min-width:70px; max-width:70px; text-align:center;" *ngIf="AR_IsVisible">Actual</td>
+                                                <td style="width: 70px; min-width:70px; max-width:70px; text-align:center;" *ngIf="AE_IsVisible">Potential</td>
+                                                <td style="width: 70px; min-width:70px; max-width:70px; text-align:center;" *ngIf="AE_IsVisible">Actual</td>
+                                                <td style="width: 70px; min-width:70px; max-width:70px; text-align:center;" *ngIf="AI_IsVisible">Potential</td>
+                                                <td style="width: 70px; min-width:70px; max-width:70px; text-align:center;" *ngIf="AI_IsVisible">Actual</td>
+                                                <td style="width: 70px; min-width:70px; max-width:70px; text-align:center;" *ngIf="CI_IsVisible">Potential</td>
+                                                <td style="width: 70px; min-width:70px; max-width:70px; text-align:center;" *ngIf="CI_IsVisible">Actual</td>
+                                                <td style="width: 70px; min-width:70px; max-width:70px; text-align:center;" *ngIf="DL_IsVisible">Potential</td>
+                                                <td style="width: 70px; min-width:70px; max-width:70px; text-align:center;" *ngIf="DL_IsVisible">Actual</td>
+                                                <td style="width: 70px; min-width:70px; max-width:70px; text-align:center;" *ngIf="ID_IsVisible">Potential</td>
+                                                <td style="width: 70px; min-width:70px; max-width:70px; text-align:center;" *ngIf="ID_IsVisible">Actual</td>
+                                                <td style="width: 70px; min-width:70px; max-width:70px; text-align:center;" *ngIf="IR_IsVisible">Potential</td>
+                                                <td style="width: 70px; min-width:70px; max-width:70px; text-align:center;" *ngIf="IR_IsVisible">Actual</td>
+                                                <td style="width: 70px; min-width:70px; max-width:70px; text-align:center;" *ngIf="IE_IsVisible">Potential</td>
+                                                <td style="width: 70px; min-width:70px; max-width:70px; text-align:center;" *ngIf="IE_IsVisible">Actual</td>
+                                                <td style="width: 70px; min-width:70px; max-width:70px; text-align:center;" *ngIf="II_IsVisible">Potential</td>
+                                                <td style="width: 70px; min-width:70px; max-width:70px; text-align:center;" *ngIf="II_IsVisible">Actual</td>
+                                                <td style="width: 70px; min-width:70px; max-width:70px; text-align:center;" *ngIf="IN_IsVisible">Potential</td>
+                                                <td style="width: 70px; min-width:70px; max-width:70px; text-align:center;" *ngIf="IN_IsVisible">Actual</td>
+                                                <td style="width: 70px; min-width:70px; max-width:70px; text-align:center;" *ngIf="OD_IsVisible">Potential</td>
+                                                <td style="width: 70px; min-width:70px; max-width:70px; text-align:center;" *ngIf="OD_IsVisible">Actual</td>
+                                                <td style="width: 70px; min-width:70px; max-width:70px; text-align:center;" *ngIf="OR_IsVisible">Potential</td>
+                                                <td style="width: 70px; min-width:70px; max-width:70px; text-align:center;" *ngIf="OR_IsVisible">Actual</td>
+                                                <td style="width: 70px; min-width:70px; max-width:70px; text-align:center;" *ngIf="OE_IsVisible">Potential</td>
+                                                <td style="width: 70px; min-width:70px; max-width:70px; text-align:center;" *ngIf="OE_IsVisible">Actual</td>
+                                                <td style="width: 70px; min-width:70px; max-width:70px; text-align:center;" *ngIf="OI_IsVisible">Potential</td>
+                                                <td style="width: 70px; min-width:70px; max-width:70px; text-align:center;" *ngIf="OI_IsVisible">Actual</td>
+                                                <td><div></div></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+
+                                    <div class="SimpleGridViewBody"  style="overflow-x:hidden">
+                                        <table>
+                                            <tr class="SimpleGridViewRow" *ngFor="let item of ItemsSource">
+                                                <td class="GridViewCell" style="width: 300px; min-width:300px; max-width:300px;">
+                                                    <span style="width: 300px; min-width:300px; max-width:300px;" class="hyperlink" (click)="item.ViewCustomerClicked()">{{item.CustomerName}}</span>
+                                                </td>
+
+                                                <td class="GridViewCell TextTrimming" style="width: 200px; min-width:200px; max-width:200px;">
+                                                    {{item.PrimaryContactName}}
+                                                </td>
+
+                                                <td class="CellStretched TextTrimming" style="width: 200px; min-width:200px; max-width:200px;">
+                                                    {{item.Salesman}}
+                                                </td>
+
+                                                <td class="CellStretched" style="width: 70px; min-width:70px; max-width:70px; text-align:right;" *ngIf="AD_IsVisible">                                                    
+                                                    <label class="Value" *ngIf="item.AD_POT != 0">{{item.AD_POT}}</label>
+                                                </td>
+
+                                                <td class="CellStretched" style="width: 70px; min-width:70px; max-width:70px; text-align:right;" *ngIf="AD_IsVisible">
+                                                    <label class="Value" *ngIf="item.AD_ACT != 0">{{item.AD_ACT}}</label>
+                                                </td>
+
+                                                <td class="CellStretched" style="width: 70px; min-width:70px; max-width:70px; text-align:right;" *ngIf="AR_IsVisible">
+                                                    <label class="Value" *ngIf="item.AR_POT != 0">{{item.AR_POT}}</label>
+                                                </td>
+
+                                                <td class="CellStretched" style="width: 70px; min-width:70px; max-width:70px; text-align:right;" *ngIf="AR_IsVisible">
+                                                    <label class="Value" *ngIf="item.AR_ACT != 0">{{item.AR_ACT}}</label>
+                                                </td>
+
+                                                <td class="CellStretched" style="width: 70px; min-width:70px; max-width:70px; text-align:right;" *ngIf="AE_IsVisible">
+                                                    <label class="Value" *ngIf="item.AE_POT != 0">{{item.AE_POT}}</label>
+                                                </td>
+
+                                                <td class="CellStretched" style="width: 70px; min-width:70px; max-width:70px; text-align:right;" *ngIf="AE_IsVisible">
+                                                    <label class="Value" *ngIf="item.AE_ACT != 0">{{item.AE_ACT}}</label>
+                                                </td>
+
+                                                <td class="CellStretched" style="width: 70px; min-width:70px; max-width:70px; text-align:right;" *ngIf="AI_IsVisible">
+                                                    <label class="Value" *ngIf="item.AI_POT != 0">{{item.AI_POT}}</label>
+                                                </td>
+
+                                                <td class="CellStretched" style="width: 70px; min-width:70px; max-width:70px; text-align:right;" *ngIf="AI_IsVisible">
+                                                    <label class="Value" *ngIf="item.AI_ACT != 0">{{item.AI_ACT}}</label>
+                                                </td>
+
+                                                <td class="CellStretched" style="width: 70px; min-width:70px; max-width:70px; text-align:right;" *ngIf="CI_IsVisible">
+                                                    <label class="Value" *ngIf="item.CI_POT != 0">{{item.CI_POT}}</label>
+                                                </td>
+
+                                                <td class="CellStretched" style="width: 70px; min-width:70px; max-width:70px; text-align:right;" *ngIf="CI_IsVisible">
+                                                    <label class="Value" *ngIf="item.CI_ACT != 0">{{item.CI_ACT}}</label>
+                                                </td>
+
+                                                <td class="CellStretched" style="width: 70px; min-width:70px; max-width:70px; text-align:right;" *ngIf="DL_IsVisible">
+                                                    <label class="Value" *ngIf="item.DL_POT != 0">{{item.DL_POT}}</label>
+                                                </td>
+
+                                                <td class="CellStretched" style="width: 70px; min-width:70px; max-width:70px; text-align:right;" *ngIf="DL_IsVisible">
+                                                    <label class="Value" *ngIf="item.DL_ACT != 0">{{item.DL_ACT}}</label>
+                                                </td>
+
+                                                <td class="CellStretched" style="width: 70px; min-width:70px; max-width:70px; text-align:right;" *ngIf="ID_IsVisible">
+                                                    <label class="Value" *ngIf="item.ID_POT != 0">{{item.ID_POT}}</label>
+                                                </td>
+
+                                                <td class="CellStretched" style="width: 70px; min-width:70px; max-width:70px; text-align:right;" *ngIf="ID_IsVisible">
+                                                    <label class="Value" *ngIf="item.ID_ACT != 0">{{item.ID_ACT}}</label>
+                                                </td>
+
+                                                <td class="CellStretched" style="width: 70px; min-width:70px; max-width:70px; text-align:right;" *ngIf="IR_IsVisible">
+                                                    <label class="Value" *ngIf="item.IR_POT != 0">{{item.IR_POT}}</label>
+                                                </td>
+
+                                                <td class="CellStretched" style="width: 70px; min-width:70px; max-width:70px; text-align:right;" *ngIf="IR_IsVisible">
+                                                    <label class="Value" *ngIf="item.IR_ACT != 0">{{item.IR_ACT}}</label>
+                                                </td>
+
+                                                <td class="CellStretched" style="width: 70px; min-width:70px; max-width:70px; text-align:right;" *ngIf="IE_IsVisible">
+                                                    <label class="Value" *ngIf="item.IE_POT != 0">{{item.IE_POT}}</label>
+                                                </td>
+
+                                                <td class="CellStretched" style="width: 70px; min-width:70px; max-width:70px; text-align:right;" *ngIf="IE_IsVisible">
+                                                    <label class="Value" *ngIf="item.IE_ACT != 0">{{item.IE_ACT}}</label>
+                                                </td>
+
+                                                <td class="CellStretched" style="width: 70px; min-width:70px; max-width:70px; text-align:right;" *ngIf="II_IsVisible">
+                                                    <label class="Value" *ngIf="item.II_POT != 0">{{item.II_POT}}</label>
+                                                </td>
+
+                                                <td class="CellStretched" style="width: 70px; min-width:70px; max-width:70px; text-align:right;" *ngIf="II_IsVisible">
+                                                    <label class="Value" *ngIf="item.II_ACT != 0">{{item.II_ACT}}</label>
+                                                </td>
+
+                                                <td class="CellStretched" style="width: 70px; min-width:70px; max-width:70px; text-align:right;" *ngIf="IN_IsVisible">
+                                                    <label class="Value" *ngIf="item.IN_POT != 0">{{item.IN_POT}}</label>
+                                                </td>
+
+                                                <td class="CellStretched" style="width: 70px; min-width:70px; max-width:70px; text-align:right;" *ngIf="IN_IsVisible">
+                                                    <label class="Value" *ngIf="item.IN_ACT != 0">{{item.IN_ACT}}</label>
+                                                </td>
+
+                                                <td class="CellStretched" style="width: 70px; min-width:70px; max-width:70px; text-align:right;" *ngIf="OD_IsVisible">
+                                                    <label class="Value" *ngIf="item.OD_POT != 0">{{item.OD_POT}}</label>
+                                                </td>
+
+                                                <td class="CellStretched" style="width: 70px; min-width:70px; max-width:70px; text-align:right;" *ngIf="OD_IsVisible">
+                                                    <label class="Value" *ngIf="item.OD_ACT != 0">{{item.OD_ACT}}</label>
+                                                </td>
+
+                                                <td class="CellStretched" style="width: 70px; min-width:70px; max-width:70px; text-align:right;" *ngIf="OR_IsVisible">
+                                                    <label class="Value" *ngIf="item.OR_POT != 0">{{item.OR_POT}}</label>
+                                                </td>
+
+                                                <td class="CellStretched" style="width: 70px; min-width:70px; max-width:70px; text-align:right;" *ngIf="OR_IsVisible">
+                                                    <label class="Value" *ngIf="item.OR_ACT != 0">{{item.OR_ACT}}</label>
+                                                </td>
+
+                                                <td class="CellStretched" style="width: 70px; min-width:70px; max-width:70px; text-align:right;" *ngIf="OE_IsVisible">
+                                                    <label class="Value" *ngIf="item.OE_POT != 0">{{item.OE_POT}}</label>
+                                                </td>
+
+                                                <td class="CellStretched" style="width: 70px; min-width:70px; max-width:70px; text-align:right;" *ngIf="OE_IsVisible">
+                                                    <label class="Value" *ngIf="item.OE_ACT != 0">{{item.OE_ACT}}</label>
+                                                </td>
+
+                                                <td class="CellStretched" style="width: 70px; min-width:70px; max-width:70px; text-align:right;" *ngIf="OI_IsVisible">
+                                                    <label class="Value" *ngIf="item.OI_POT != 0">{{item.OI_POT}}</label>
+                                                </td>
+
+                                                <td class="CellStretched" style="width: 70px; min-width:70px; max-width:70px; text-align:right;" *ngIf="OI_IsVisible">
+                                                    <label class="Value" *ngIf="item.OI_ACT != 0">{{item.OI_ACT}}</label>
+                                                </td>
+
+                                                <td >
+                                                    <div></div>
+                                                </td>
+
+                                            </tr>
+
+                                            <!--<tr>
+                                                <td colspan="34">
+                                                    <div></div>
+                                                </td>
+                                            </tr>-->
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>

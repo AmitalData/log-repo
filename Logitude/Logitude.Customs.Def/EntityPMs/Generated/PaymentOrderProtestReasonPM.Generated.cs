@@ -1,0 +1,258 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Customs.Def.Validators;
+  
+namespace Logitude.Customs.Def.EntityPMs
+{
+   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class PaymentOrderProtestReasonPM : EntityPM
+   {
+   	  private string paymentOrderId ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PaymentOrderId  
+	   {
+	    
+	     get
+		{
+		   return paymentOrderId;
+		 }
+		 set
+		 {
+		   if(paymentOrderId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PaymentOrderId",OldValue=paymentOrderId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   paymentOrderId=value;
+		   }
+			
+		 }
+	   }
+	  private int line ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Line  
+	   {
+	    
+	     get
+		{
+		   return line;
+		 }
+		 set
+		 {
+		   if(line != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Line",OldValue=line,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   line=value;
+		   }
+			
+		 }
+	   }
+	  private string protestTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ProtestTypeCode  
+	   {
+	    
+	     get
+		{
+		   return protestTypeCode;
+		 }
+		 set
+		 {
+		   if(protestTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ProtestTypeCode",OldValue=protestTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   protestTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string customsAgentExplanation ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomsAgentExplanation  
+	   {
+	    
+	     get
+		{
+		   return customsAgentExplanation;
+		 }
+		 set
+		 {
+		   if(customsAgentExplanation != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsAgentExplanation",OldValue=customsAgentExplanation,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customsAgentExplanation=value;
+		   }
+			
+		 }
+	   }
+	  private string invoiceNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string InvoiceNumber  
+	   {
+	    
+	     get
+		{
+		   return invoiceNumber;
+		 }
+		 set
+		 {
+		   if(invoiceNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InvoiceNumber",OldValue=invoiceNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   invoiceNumber=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? goodsItemLineNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? GoodsItemLineNumber  
+	   {
+	    
+	     get
+		{
+		   return goodsItemLineNumber;
+		 }
+		 set
+		 {
+		   if(goodsItemLineNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GoodsItemLineNumber",OldValue=goodsItemLineNumber,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   goodsItemLineNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string goodsItemClassification ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string GoodsItemClassification  
+	   {
+	    
+	     get
+		{
+		   return goodsItemClassification;
+		 }
+		 set
+		 {
+		   if(goodsItemClassification != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GoodsItemClassification",OldValue=goodsItemClassification,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   goodsItemClassification=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? amountInDispute ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? AmountInDispute  
+	   {
+	    
+	     get
+		{
+		   return amountInDispute;
+		 }
+		 set
+		 {
+		   if(amountInDispute != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AmountInDispute",OldValue=amountInDispute,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   amountInDispute=value;
+		   }
+			
+		 }
+	   }
+	  private int tenant ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+	  private string protestTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ProtestTypeName  
+	   {
+	    
+	     get
+		{
+		   return protestTypeName;
+		 }
+		 set
+		 {
+		   if(protestTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ProtestTypeName",OldValue=protestTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   protestTypeName=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

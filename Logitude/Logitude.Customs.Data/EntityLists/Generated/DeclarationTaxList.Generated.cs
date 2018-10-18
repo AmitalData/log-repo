@@ -1,0 +1,38 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization; 
+
+namespace Logitude.Customs.Data.EntityLists
+{
+   [DataContract]
+   public partial class DeclarationTaxList
+   {
+   
+       [Key]
+       [DataMember]
+       public string DeclarationId  { get; set; }
+
+       [Key]
+       [DataMember]
+       public string TaxTypeCode  { get; set; }
+       [DataMember]
+       public decimal? TotalAmount  { get; set; }
+       [DataMember]
+       public decimal? DeferredTaxAmount  { get; set; }
+       [DataMember]
+       public int Tenant  { get; set; }
+       [DataMember]
+       public string TaxTypeName  { get; set; }
+       [DataMember]
+       public decimal? TaxBaseAmount  { get; set; }
+       [DataMember]
+       public decimal? TaxToPay  { get; set; }
+   }
+
+}
+	 

@@ -1,0 +1,19 @@
+﻿<div class="container-fluid custom-modal-container">
+    <div class="row custom-modal-header">
+        <div class="col-sm-12">
+            <h1>Add a New Shipment</h1>
+        </div>
+    </div>
+    <div class="row" [ngClass]="{'myclass' : shouldUseMyClass}">
+        <div class="col-xs-12">
+            <div class="jumbotron">
+                <h1>Content Goes Here</h1>
+
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="Button" (click)="CloseSuccess()">Close Success</div>
+        <div class="Button" (click)="CloseFail()">Close Fail</div>
+    </div>
+</div>

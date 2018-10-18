@@ -1,0 +1,188 @@
+﻿
+<table>
+    <tr>
+        <td>
+            <fieldset [disabled]="!IsControlEnabled">
+                <div class="TableHolder">
+                    <table style="width: 550px; height: 400px;padding-top: 10px;">
+
+                        <!--General Fields -->
+                        <tr style="width: 550px; height: 20px;">
+                            <td class="TabTitleRow" style="width: 200px;height:20px;">
+                                {{'Customs.Claim.O.ClaimsRelatedEntityAdditional'| TextCodeTranslationPipe}}
+                            </td>
+                        </tr>
+                        <tr style="width: 550px; height: 70px">
+                            <td style="width: 550px; height: 70px">
+                                <div style="width: 550px; height: 70px;">
+                                    <table style="width: 550px; height: 70px">
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 130px; ">
+                                                <LogLabel [ObjectFieldName]="'SeconderyClaimEntityCode'" [ObjectTableName]="ObjectTableName"
+                                                          [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td style="width: 130px;">
+                                                <LogLov [ObjectFieldName]="'SeconderyClaimEntityCode'"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'Customs.ClaimEntity'"
+                                                        [SelectedValue]="SeconderyClaimEntityCode"
+                                                        [HideColumns]="true">
+                                                </LogLov>
+                                            </td>
+
+                                            <td><div style="width:1px"></div></td>
+
+                                            <td style="width: 135px;">
+                                                <LogLabel [ObjectFieldName]="'SeconderyClaimEntityID'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td style="width: 130px;">
+                                                <LogTextBox [ObjectFieldName]="'SeconderyClaimEntityID'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
+                                                            [DataContext]="DataContext" [AddCommasToNumbers]="false" [Text]="SeconderyClaimEntityID" ></LogTextBox>
+                                            </td>
+
+                                            <td><div></div></td>
+
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 130px; ">
+                                                <LogLabel [ObjectFieldName]="'CourtCode'" [ObjectTableName]="ObjectTableName"
+                                                          [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td style="width: 130px;">
+                                                <LogLov [ObjectFieldName]="'CourtCode'"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'Customs.CourtInstance'"
+                                                        [SelectedValue]="CourtCode"
+                                                        [HideColumns]="true">
+                                                </LogLov>
+                                            </td>
+
+                                            <td><div style="width:1px"></div></td>
+
+                                            <td style="width: 135px;">
+                                                <LogLabel [ObjectFieldName]="'ProceedingNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td style="width: 130px;">
+                                                <LogTextBox [ObjectFieldName]="'ProceedingNumber'" [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext" [HideColumns]="true" [Text]="ProceedingNumber"></LogTextBox>
+                                            </td>
+
+                                            <td><div></div></td>
+
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 13px; ">
+                                                <LogLabel [ObjectFieldName]="'AbandonmentDestructionReference'" [ObjectTableName]="ObjectTableName"
+                                                          [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td style="width: 130px;">
+                                                <LogTextBox [ObjectFieldName]="'AbandonmentDestructionReference'" [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext" [HideColumns]="true" [Text]="AbandonmentDestructionReference"></LogTextBox>
+                                            </td>
+
+                                            <td><div style="width:1px"></div></td>
+
+                                            <td style="width: 135px;">
+                                                <LogLabel [ObjectFieldName]="'WarehouseTypeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td style="width: 130px;">
+                                                <LogLov [ObjectFieldName]="'WarehouseTypeCode'"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'Customs.SiteLookup'"
+                                                        [SelectedValue]="WarehouseTypeCode"
+                                                        [HideColumns]="true">
+                                                </LogLov>
+                                            </td>
+
+                                            <td><div></div></td>
+
+                                        </tr>
+
+                                        <tr>
+                                            <td><div></div></td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+                            </td>
+
+                            <td><div></div></td>
+                        </tr>
+
+                        <tr style="height: 1px;"><td><div style="width: 15px;"></div></td></tr>
+
+                        <!-- Claims Related Entities Amount -->
+                        <tr style="height: 200px; width: 280px; top:0px">
+                            <td style="height: 200px; width: 280px;">
+                                <div style="height: 200px; width: 280px;">
+                                    <table style="height: 200px; width: 280px;">
+                                        <tr style="height: 30px">
+                                            <td class="TabTitleRow" style="width:150px">
+                                                {{'Customs.Claim.O.ClaimsRelatedEntityExpDeclaration'| TextCodeTranslationPipe}}
+                                            </td>
+
+                                            <td> <div></div> </td>
+                                            <td style="height: 20px;padding: 5px;padding-bottom: 0px;">
+                                                <div>
+                                                    <IconButton [IsSmall]="true"
+                                                                [Name]="'Add'"
+                                                                (click)="AddEntityExpDeclarationCommand()"
+                                                                style="float:left;"></IconButton>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr style="height: 170px; overflow: auto;">
+                                            <td colspan="5">
+                                                <div class="CellContent">
+                                                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [FooterTop]="FooterMethods"
+                                                                        [ItemSource]="ClaimsRelatedEntsExpDeclarsList" [IsReadOnly]="!IsControlEnabled">
+
+                                                        <!-- ExportDeclarationNumber -->
+                                                        <log-column [header]="'Customs.ClaimsRelatedEntsExpDeclar.F.ExportDeclarationNumber' | TextCodeTranslationPipe"
+                                                                    [width]="'200'" [Alignment]="'right'" [binding]="'ExportDeclarationNumber'">
+                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                    <span>{{item.ExportDeclarationNumber}}</span>
+                                                                </div>
+                                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                                    <LogTextBox [ObjectFieldName]="'ExportDeclarationNumber'" [DataContext]="item"
+                                                                                [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
+                                                                                [Text]="item.Amount" [HideColumns]="true"></LogTextBox>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </log-column>
+
+                                                        <!-- Delete Button-->
+                                                        <log-column [width]="'50'" [Alignment]="'right'">
+                                                            <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
+                                                                <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteExportDeclarationCommand(item)"
+                                                                            [IsEnabled]="!IsDisplayOnly"
+                                                                            style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
+                                                            </log-cell-template>
+                                                        </log-column>
+
+                                                    </logitude-edit-grid>
+                                                </div>
+                                            </td>
+
+                                            <td> <div></div> </td>
+                                        </tr>
+
+                                        <tr><td><div></div></td></tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+            </fieldset>
+        </td>
+    </tr>
+</table>

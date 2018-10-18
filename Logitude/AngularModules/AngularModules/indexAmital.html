@@ -1,0 +1,245 @@
+﻿<!DOCTYPE html>
+<html>
+<!--manifest="logitude.appcache"-->
+<head>
+    <!--Logitude-->
+    <!--<title id="dynamic-title"></title>-->
+    <meta charset="utf-8" />
+
+    <!-- this for mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+
+    <link id="dynamic-favicon" rel="icon" type="image/png" href="./Images/ApplicationLogo/empty.png" />
+
+    <script>
+
+        document.head || (document.head = document.getElementsByTagName('head')[0]);
+
+        function changeFavicon(src) {
+            var link = document.createElement('link'),
+                oldLink = document.getElementById('dynamic-favicon');
+            link.id = 'dynamic-favicon';
+            link.rel = 'icon';
+            link.href = src;
+            if (oldLink) {
+                document.head.removeChild(oldLink);
+            }
+            document.head.appendChild(link);
+        }
+        function changeTitle(title) {
+            document.title = title;
+        }
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+        function IsAmitalMode(url) {
+            if (!url) url = window.location.href;
+            return url.toLowerCase().includes("amital");
+
+        }
+        function AddJSScript(scriptUrl) {
+
+            var AmitalMode =
+        //getParameterByName("AmitalMode");
+        //IsAmitalMode();
+        true;
+            if (AmitalMode) {
+                return;
+            }
+            var head = document.getElementsByTagName('head')[0];
+            var js = document.createElement("script");
+            js.type = "text/javascript";
+            js.src = scriptUrl;
+            head.appendChild(js);
+        }
+        function AddLinkCSS(href) {
+            var AmitalMode =
+        //getParameterByName("AmitalMode");
+        //IsAmitalMode();
+        true;
+            if (AmitalMode) {
+                return;
+            }
+            var head = document.getElementsByTagName('head')[0];
+            var link = document.createElement("link");
+            link.type = 'text/css';
+            link.rel = 'stylesheet';
+            link.href = href;
+            head.appendChild(link);
+        }
+    </script>
+    <script>
+        setTimeout(() => {
+            AddJSScript("https://www.amcharts.com/lib/3/amcharts.js");
+            AddJSScript("https://www.amcharts.com/lib/3/funnel.js");
+            AddJSScript("https://www.amcharts.com/lib/3/plugins/export/export.min.js");
+            AddJSScript("https://www.amcharts.com/lib/3/pie.js");
+            AddJSScript("https://www.amcharts.com/lib/3/themes/light.js");
+            AddJSScript("https://www.amcharts.com/lib/3/themes/dark.js");
+            AddJSScript("https://www.amcharts.com/lib/3/serial.js");
+
+            AddLinkCSS("https://www.amcharts.com/lib/3/plugins/export/export.css");
+        },1);
+    </script>
+
+
+
+
+
+
+
+
+
+    <script src="_Resources/AOTScripts/chartscript.js"></script>
+    <script src="_Resources/AOTScripts/AttachmentUploaderFunctions.js"></script>
+    <script src="_Resources/AOTScripts/ChangePasswordFunctions.js"></script>
+    <script src="_Resources/AOTScripts/DocumentComponentFunctions.js"></script>
+    <script src="_Resources/AOTScripts/FroalaEditorFunctions.js"></script>
+    <script src="_Resources/AOTScripts/HtmlDocumentPreviewFunctions.js"></script>
+    <script src="_Resources/AOTScripts/LogCellTemplateFunctions.js"></script>
+    <script src="_Resources/AOTScripts/LogGridFunctions.js"></script>
+    <script src="_Resources/AOTScripts/LogitudeComponentsFunctions.js"></script>
+    <script src="_Resources/AOTScripts/LogitudeErrorHandlerFunctions.js"></script>
+    <script src="_Resources/AOTScripts/LogLoveFunctions.js"></script>
+    <script src="_Resources/AOTScripts/logTextBoxFunctions.js"></script>
+    <script src="_Resources/AOTScripts/NewReportTemplateFunctions.js"></script>
+    <script src="_Resources/AOTScripts/StimulsoftViewFunctions.js"></script>
+    <script src="_Resources/AOTScripts/uploadfile.js"></script>
+    <script src="_Resources/AOTScripts/DownLoader.js"></script>
+    <script src="_Resources/AOTScripts/AutomationFunctions.js"></script>
+
+    <script>document.write('<base href="' + document.location + '" />');</script>
+
+    <!-- 1. Load libraries -->
+    <!-- Polyfill(s) for older browsers -->
+
+    <script src="Js/shim.min.js"></script>
+    <script src="Js/zone.js"></script>
+    <script src="Js/Reflect.js"></script>
+    <script src="Js/system.src.js"></script>
+    <script src="Js/jszip.js"></script>
+
+
+    <!-- stimulsoft -->
+    <!--<script src="Stimulsoft/stimulsoft.reports.js" type="text/javascript"></script>-->
+    <!--<script src="Stimulsoft/stimulsoft.viewer.js" type="text/javascript"></script>-->
+    <!--<script src="Stimulsoft/stimulsoft.designer.js" type="text/javascript"></script>-->
+    <!--Froala Refs-->
+    <!-- JQuery/Bootstrap -->
+    <!--<script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>-->
+    <!-- JQuery/Bootstrap -->
+    <script src="Js/jquery-2.0.0.min.js" type="text/javascript"></script>
+
+
+    <!-- Include JS files. -->
+    <script>
+        AddJSScript("Froala/js/froala_editor.min.js");
+
+    </script>
+
+    <!-- Include Code Mirror. -->
+
+
+    <script src="Js/codemirror.min.js" type="text/javascript"></script>
+    <script src="Js/xml.min.js" type="text/javascript"></script>
+    <script src="Js/rx.all.js" type="text/javascript"></script>
+
+
+
+
+    <script>
+        setTimeout(() => {
+            AddJSScript("Froala/js/plugins/align.min.js");
+            AddJSScript("Froala/js/plugins/char_counter.min.js");
+            AddJSScript("Froala/js/plugins/code_beautifier.min.js");
+            AddJSScript("Froala/js/plugins/code_view.min.js");
+            AddJSScript("Froala/js/plugins/colors.min.js");
+            AddJSScript("Froala/js/plugins/emoticons.min.js");
+            AddJSScript("Froala/js/plugins/entities.min.js");
+            AddJSScript("Froala/js/plugins/file.min.js");
+            AddJSScript("Froala/js/plugins/font_family.min.js");
+            AddJSScript("Froala/js/plugins/font_size.min.js");
+            AddJSScript("Froala/js/plugins/fullscreen.min.js");
+            AddJSScript("Froala/js/plugins/image.min.js");
+            AddJSScript("Froala/js/plugins/image_manager.min.js");
+            AddJSScript("Froala/js/plugins/inline_style.min.js");
+            AddJSScript("Froala/js/plugins/line_breaker.min.js");
+            AddJSScript("Froala/js/plugins/link.min.js");
+            AddJSScript("Froala/js/plugins/lists.min.js");
+            AddJSScript("Froala/js/plugins/paragraph_format.min.js");
+            AddJSScript("Froala/js/plugins/paragraph_style.min.js");
+            AddJSScript("Froala/js/plugins/quick_insert.min.js");
+            AddJSScript("Froala/js/plugins/quote.min.js");
+            AddJSScript("Froala/js/plugins/table.min.js");
+            AddJSScript("Froala/js/plugins/save.min.js");
+            AddJSScript("Froala/js/plugins/url.min.js");
+            AddJSScript("Froala/js/plugins/video.min.js");
+        },1);
+    </script>
+    <script type="text/javascript" src="log.config.js"></script>
+    <script>
+        setTimeout(() => {
+            AddLinkCSS("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css");
+
+
+            AddLinkCSS("Froala/css/froala_editor.css");
+            AddLinkCSS("Froala/css/froala_style.css");
+            AddLinkCSS("Froala/css/plugins/code_view.css");
+            AddLinkCSS("Froala/css/plugins/colors.css");
+            AddLinkCSS("Froala/css/plugins/emoticons.css");
+            AddLinkCSS("Froala/css/plugins/image_manager.css");
+            AddLinkCSS("Froala/css/plugins/image.css");
+            AddLinkCSS("Froala/css/plugins/line_breaker.css");
+            AddLinkCSS("Froala/css/plugins/table.css");
+            AddLinkCSS("Froala/css/plugins/char_counter.css");
+            AddLinkCSS("Froala/css/plugins/video.css");
+            AddLinkCSS("Froala/css/plugins/fullscreen.css");
+            AddLinkCSS("Froala/css/plugins/quick_insert.css");
+            AddLinkCSS("Froala/css/plugins/file.css");
+            AddLinkCSS("Froala/css/codemirror.min.css");
+
+        },1);
+    </script>
+
+
+    <link rel="stylesheet" href="_Resources/css/css.css">
+</head>
+
+<body lang="en">
+
+    <script src="systemjs.config.js"></script>
+    <script>
+        System.import('Infrastructure').catch(function (err) { console.error(err); });
+    </script>
+
+    <RootComponent>
+        <table id="LoadingTable">
+            <tr>
+                <td id="Loading">
+                    <img src="./Images/spin.gif" />
+                </td>
+            </tr>
+        </table>
+    </RootComponent>
+
+    <!--<RootComponentAOT>
+        <table id="LoadingTable">
+            <tr>
+                <td id="Loading">
+                    <img src="./Images/spin.gif" />
+                </td>
+            </tr>
+        </table>
+    </RootComponentAOT>
+
+    <script src="dist/build.js"></script>-->
+
+</body>
+</html>

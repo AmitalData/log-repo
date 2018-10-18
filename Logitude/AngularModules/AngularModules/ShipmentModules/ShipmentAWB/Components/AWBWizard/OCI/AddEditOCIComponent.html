@@ -1,0 +1,108 @@
+﻿
+<table>
+    <tr style="height:1px;" *ngIf="ValidationErrorsList && ValidationErrorsList.length > 0">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table class="FixedTable">
+                <tr class="FormFieldRow">
+                    <td style="width: 135px;">
+                        <LogLabel [ObjectFieldName]="'CountryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width: 250px;">
+                        <LogLov [ObjectFieldName]="'CountryId'"
+                                [SelectedValue]="DataContext.CountryId"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'Country'">
+                        </LogLov>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr class="FormFieldRow">
+                    <td style="width: 135px;">
+                        <LogLabel [ObjectFieldName]="'AWBInformationCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width: 250px;">
+                        <LogLov [ObjectFieldName]="'AWBInformationCode'"
+                                [SelectedValue]="DataContext.AWBInformationCode"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'AWBInformation'">
+                        </LogLov>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr class="FormFieldRow">
+                    <td style="width: 135px;">
+                        <LogLabel [ObjectFieldName]="'AWBCustomsInformationCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width: 250px;">
+                        <LogLov [ObjectFieldName]="'AWBCustomsInformationCode'"
+                                [SelectedValue]="DataContext.AWBCustomsInformationCode"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'AWBCustomsInformation'">
+                        </LogLov>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr class="FormFieldRow">
+                    <td style="width: 135px;">
+                        <LogLabel [ObjectFieldName]="'SupplementaryCustomsInfo'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width: 250px;">
+                        <LogTextBox [ObjectFieldName]="'SupplementaryCustomsInfo'" [Text]="DataContext.SupplementaryCustomsInfo" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="3">
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!DataContext.IsEditingEnabled">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+

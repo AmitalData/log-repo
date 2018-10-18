@@ -1,0 +1,46 @@
+﻿
+<table>
+    <tr style="height:1px;">
+        <td>
+            <ul class="PagesMenu">
+                <li [style.float]="isRTL ? 'right':'left'" [class.SelectedPageMenu]="SelectedItem == 'RECEIVABLE'" (click)="SelectedItem = 'RECEIVABLE'">{{'General.O.AccountReceivable' | TextCodeTranslationPipe}}</li>
+
+                <li [style.float]="isRTL ? 'right':'left'" [class.SelectedPageMenu]="SelectedItem == 'PAYABLE'" (click)="SelectedItem = 'PAYABLE'">{{'General.O.AccountPayable' | TextCodeTranslationPipe}}</li>
+
+                <li [style.float]="isRTL ? 'right':'left'" [class.SelectedPageMenu]="SelectedItem == 'TRANSFER'" (click)="SelectedItem = 'TRANSFER'">{{'General.O.AccountingTransfer' | TextCodeTranslationPipe}}</li>
+
+                <li [style.float]="isRTL ? 'right':'left'" [class.SelectedPageMenu]="SelectedItem == 'SETTINGS'" (click)="SelectedItem = 'SETTINGS'">{{'General.O.Settings' | TextCodeTranslationPipe}}</li>
+            </ul>
+        </td>
+    </tr>
+
+    <tr style="height:10px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <ScrollViewer>
+
+                <div class="LocationDirectiveHolder" [hidden]="SelectedItem != 'RECEIVABLE'">
+                    <div class="LocationDirective" LocationDirective Code="RECEIVABLE"></div>
+                </div>
+
+                <div class="LocationDirectiveHolder" [hidden]="SelectedItem != 'PAYABLE'">
+                    <div class="LocationDirective" LocationDirective Code="PAYABLE"></div>
+                </div>
+
+                <div class="LocationDirectiveHolder" [hidden]="SelectedItem != 'TRANSFER'">
+                    <div class="LocationDirective" LocationDirective Code="TRANSFER"></div>
+                </div>
+
+                <div class="LocationDirectiveHolder" [hidden]="SelectedItem != 'SETTINGS'">
+                    <div class="LocationDirective" LocationDirective Code="SETTINGS"></div>
+                </div>
+
+            </ScrollViewer>
+        </td>
+    </tr>
+</table>

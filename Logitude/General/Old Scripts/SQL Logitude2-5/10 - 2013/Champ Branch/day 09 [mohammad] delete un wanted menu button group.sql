@@ -1,0 +1,1 @@
+DELETE FROM dbo.MenuButtonGroups WHERE name='CommunicationLogResendButtonsGroup'

@@ -1,0 +1,309 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CustomsBookModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="CustomsBookModelStoreContainer">
+          <EntitySet Name="CustomsBook_CustomsItem" EntityType="CustomsBookModel.Store.CustomsBook_CustomsItem" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CustomsBook_CustomsItemDetailsHistory" EntityType="CustomsBookModel.Store.CustomsBook_CustomsItemDetailsHistory" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CustomsBook_PropertiesDetailsHistory" EntityType="CustomsBookModel.Store.CustomsBook_PropertiesDetailsHistory" store:Type="Tables" Schema="dbo" />
+        </EntityContainer>
+        <EntityType Name="CustomsBook_CustomsItem">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="CustomsBookTypeID" Type="int" />
+          <Property Name="FullClassification" Type="nvarchar(max)" />
+          <Property Name="CustomsItemCategoryID" Type="int" />
+          <Property Name="Parent_CustomsItemID" Type="int" />
+          <Property Name="CustomsItemHierarchicLocationID" Type="int" />
+          <Property Name="ComputedCheckDigit" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="CustomsBook_CustomsItemDetailsHistory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="CustomsItemID" Type="int" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="EntityStatusID" Type="int" />
+          <Property Name="ChangeRequestTypePriority" Type="int" />
+          <Property Name="Title" Type="nvarchar(max)" />
+          <Property Name="EnglishGoodsDescription" Type="nvarchar(max)" />
+          <Property Name="GoodsDescription" Type="nvarchar(max)" />
+          <Property Name="IsCarItem" Type="tinyint" />
+          <Property Name="IsConditionalExemptionItem" Type="tinyint" />
+          <Property Name="IsCustomsItemDiscount" Type="tinyint" />
+          <Property Name="IsEntitlementDiscount" Type="tinyint" />
+          <Property Name="IsGreenIndex" Type="tinyint" />
+          <Property Name="IsImporterDiscount" Type="tinyint" />
+          <Property Name="IsIndexedLinked" Type="tinyint" />
+          <Property Name="IsNotAutonomiaUpdate" Type="tinyint" />
+          <Property Name="IsRawMaterial" Type="tinyint" />
+          <Property Name="IsWholesalePrice" Type="tinyint" />
+          <Property Name="VatDiscountReason" Type="nvarchar(max)" />
+          <Property Name="MaxSupervisionPeriod" Type="int" />
+          <Property Name="MeasurementUnitID" Type="int" />
+          <Property Name="ConditionalExemptionTypeID" Type="int" />
+          <Property Name="FuelTypeID" Type="int" />
+          <Property Name="CarEngineVolumeID" Type="int" />
+          <Property Name="CarWeightID" Type="int" />
+          <Property Name="VatDiscountRate" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="Discount_CustomsItemGroupTypeID" Type="int" />
+          <Property Name="IsCarDiscount" Type="tinyint" />
+          <Property Name="VehicleTecnologyTypeID" Type="int" />
+        </EntityType>
+        <EntityType Name="CustomsBook_PropertiesDetailsHistory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="CustomsItemID" Type="int" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="EntityStatusID" Type="int" />
+          <Property Name="ChangeRequestTypePriority" Type="int" />
+          <Property Name="IsCarItem" Type="tinyint" />
+          <Property Name="IsConditionalExemptionItem" Type="tinyint" />
+          <Property Name="IsCustomsItemDiscount" Type="tinyint" />
+          <Property Name="IsEntitlementDiscount" Type="tinyint" />
+          <Property Name="IsGreenIndex" Type="tinyint" />
+          <Property Name="IsImporterDiscount" Type="tinyint" />
+          <Property Name="IsIndexedLinked" Type="tinyint" />
+          <Property Name="IsNotAutonomiaUpdate" Type="tinyint" />
+          <Property Name="IsRawMaterial" Type="tinyint" />
+          <Property Name="IsWholesalePrice" Type="tinyint" />
+          <Property Name="VatDiscountReason" Type="nvarchar(max)" />
+          <Property Name="MaxSupervisionPeriod" Type="int" />
+          <Property Name="MeasurementUnitID" Type="int" />
+          <Property Name="ConditionalExemptionTypeID" Type="int" />
+          <Property Name="FuelTypeID" Type="int" />
+          <Property Name="CarEngineVolumeID" Type="int" />
+          <Property Name="CarWeightID" Type="int" />
+          <Property Name="VatDiscountRate" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="Discount_CustomsItemGroupTypeID" Type="int" />
+          <Property Name="IsCarDiscount" Type="tinyint" />
+          <Property Name="VehicleTecnologyTypeID" Type="int" />
+        </EntityType>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CustomsBookModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="CustomsBookEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="CustomsBook_CustomsItem" EntityType="CustomsBookModel.CustomsBook_CustomsItem" />
+          <EntitySet Name="CustomsBook_CustomsItemDetailsHistory" EntityType="CustomsBookModel.CustomsBook_CustomsItemDetailsHistory" />
+          <EntitySet Name="CustomsBook_PropertiesDetailsHistory" EntityType="CustomsBookModel.CustomsBook_PropertiesDetailsHistory" />
+        </EntityContainer>
+        <EntityType Name="CustomsBook_CustomsItem">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="CustomsBookTypeID" Type="Int32" />
+          <Property Name="FullClassification" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="CustomsItemCategoryID" Type="Int32" />
+          <Property Name="Parent_CustomsItemID" Type="Int32" />
+          <Property Name="CustomsItemHierarchicLocationID" Type="Int32" />
+          <Property Name="ComputedCheckDigit" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="CustomsBook_CustomsItemDetailsHistory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="CustomsItemID" Type="Int32" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="EntityStatusID" Type="Int32" />
+          <Property Name="ChangeRequestTypePriority" Type="Int32" />
+          <Property Name="Title" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="EnglishGoodsDescription" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="GoodsDescription" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="IsCarItem" Type="Byte" />
+          <Property Name="IsConditionalExemptionItem" Type="Byte" />
+          <Property Name="IsCustomsItemDiscount" Type="Byte" />
+          <Property Name="IsEntitlementDiscount" Type="Byte" />
+          <Property Name="IsGreenIndex" Type="Byte" />
+          <Property Name="IsImporterDiscount" Type="Byte" />
+          <Property Name="IsIndexedLinked" Type="Byte" />
+          <Property Name="IsNotAutonomiaUpdate" Type="Byte" />
+          <Property Name="IsRawMaterial" Type="Byte" />
+          <Property Name="IsWholesalePrice" Type="Byte" />
+          <Property Name="VatDiscountReason" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="MaxSupervisionPeriod" Type="Int32" />
+          <Property Name="MeasurementUnitID" Type="Int32" />
+          <Property Name="ConditionalExemptionTypeID" Type="Int32" />
+          <Property Name="FuelTypeID" Type="Int32" />
+          <Property Name="CarEngineVolumeID" Type="Int32" />
+          <Property Name="CarWeightID" Type="Int32" />
+          <Property Name="VatDiscountRate" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="Discount_CustomsItemGroupTypeID" Type="Int32" />
+          <Property Name="IsCarDiscount" Type="Byte" />
+          <Property Name="VehicleTecnologyTypeID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="CustomsBook_PropertiesDetailsHistory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="CustomsItemID" Type="Int32" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="EntityStatusID" Type="Int32" />
+          <Property Name="ChangeRequestTypePriority" Type="Int32" />
+          <Property Name="IsCarItem" Type="Byte" />
+          <Property Name="IsConditionalExemptionItem" Type="Byte" />
+          <Property Name="IsCustomsItemDiscount" Type="Byte" />
+          <Property Name="IsEntitlementDiscount" Type="Byte" />
+          <Property Name="IsGreenIndex" Type="Byte" />
+          <Property Name="IsImporterDiscount" Type="Byte" />
+          <Property Name="IsIndexedLinked" Type="Byte" />
+          <Property Name="IsNotAutonomiaUpdate" Type="Byte" />
+          <Property Name="IsRawMaterial" Type="Byte" />
+          <Property Name="IsWholesalePrice" Type="Byte" />
+          <Property Name="VatDiscountReason" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="MaxSupervisionPeriod" Type="Int32" />
+          <Property Name="MeasurementUnitID" Type="Int32" />
+          <Property Name="ConditionalExemptionTypeID" Type="Int32" />
+          <Property Name="FuelTypeID" Type="Int32" />
+          <Property Name="CarEngineVolumeID" Type="Int32" />
+          <Property Name="CarWeightID" Type="Int32" />
+          <Property Name="VatDiscountRate" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="Discount_CustomsItemGroupTypeID" Type="Int32" />
+          <Property Name="IsCarDiscount" Type="Byte" />
+          <Property Name="VehicleTecnologyTypeID" Type="Int32" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CustomsBookModelStoreContainer" CdmEntityContainer="CustomsBookEntities">
+          <EntitySetMapping Name="CustomsBook_CustomsItem">
+            <EntityTypeMapping TypeName="CustomsBookModel.CustomsBook_CustomsItem">
+              <MappingFragment StoreEntitySet="CustomsBook_CustomsItem">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CustomsBookTypeID" ColumnName="CustomsBookTypeID" />
+                <ScalarProperty Name="FullClassification" ColumnName="FullClassification" />
+                <ScalarProperty Name="CustomsItemCategoryID" ColumnName="CustomsItemCategoryID" />
+                <ScalarProperty Name="Parent_CustomsItemID" ColumnName="Parent_CustomsItemID" />
+                <ScalarProperty Name="CustomsItemHierarchicLocationID" ColumnName="CustomsItemHierarchicLocationID" />
+                <ScalarProperty Name="ComputedCheckDigit" ColumnName="ComputedCheckDigit" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomsBook_CustomsItemDetailsHistory">
+            <EntityTypeMapping TypeName="CustomsBookModel.CustomsBook_CustomsItemDetailsHistory">
+              <MappingFragment StoreEntitySet="CustomsBook_CustomsItemDetailsHistory">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CustomsItemID" ColumnName="CustomsItemID" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="EntityStatusID" ColumnName="EntityStatusID" />
+                <ScalarProperty Name="ChangeRequestTypePriority" ColumnName="ChangeRequestTypePriority" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="EnglishGoodsDescription" ColumnName="EnglishGoodsDescription" />
+                <ScalarProperty Name="GoodsDescription" ColumnName="GoodsDescription" />
+                <ScalarProperty Name="IsCarItem" ColumnName="IsCarItem" />
+                <ScalarProperty Name="IsConditionalExemptionItem" ColumnName="IsConditionalExemptionItem" />
+                <ScalarProperty Name="IsCustomsItemDiscount" ColumnName="IsCustomsItemDiscount" />
+                <ScalarProperty Name="IsEntitlementDiscount" ColumnName="IsEntitlementDiscount" />
+                <ScalarProperty Name="IsGreenIndex" ColumnName="IsGreenIndex" />
+                <ScalarProperty Name="IsImporterDiscount" ColumnName="IsImporterDiscount" />
+                <ScalarProperty Name="IsIndexedLinked" ColumnName="IsIndexedLinked" />
+                <ScalarProperty Name="IsNotAutonomiaUpdate" ColumnName="IsNotAutonomiaUpdate" />
+                <ScalarProperty Name="IsRawMaterial" ColumnName="IsRawMaterial" />
+                <ScalarProperty Name="IsWholesalePrice" ColumnName="IsWholesalePrice" />
+                <ScalarProperty Name="VatDiscountReason" ColumnName="VatDiscountReason" />
+                <ScalarProperty Name="MaxSupervisionPeriod" ColumnName="MaxSupervisionPeriod" />
+                <ScalarProperty Name="MeasurementUnitID" ColumnName="MeasurementUnitID" />
+                <ScalarProperty Name="ConditionalExemptionTypeID" ColumnName="ConditionalExemptionTypeID" />
+                <ScalarProperty Name="FuelTypeID" ColumnName="FuelTypeID" />
+                <ScalarProperty Name="CarEngineVolumeID" ColumnName="CarEngineVolumeID" />
+                <ScalarProperty Name="CarWeightID" ColumnName="CarWeightID" />
+                <ScalarProperty Name="VatDiscountRate" ColumnName="VatDiscountRate" />
+                <ScalarProperty Name="Discount_CustomsItemGroupTypeID" ColumnName="Discount_CustomsItemGroupTypeID" />
+                <ScalarProperty Name="IsCarDiscount" ColumnName="IsCarDiscount" />
+                <ScalarProperty Name="VehicleTecnologyTypeID" ColumnName="VehicleTecnologyTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomsBook_PropertiesDetailsHistory">
+            <EntityTypeMapping TypeName="CustomsBookModel.CustomsBook_PropertiesDetailsHistory">
+              <MappingFragment StoreEntitySet="CustomsBook_PropertiesDetailsHistory">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CustomsItemID" ColumnName="CustomsItemID" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="EntityStatusID" ColumnName="EntityStatusID" />
+                <ScalarProperty Name="ChangeRequestTypePriority" ColumnName="ChangeRequestTypePriority" />
+                <ScalarProperty Name="IsCarItem" ColumnName="IsCarItem" />
+                <ScalarProperty Name="IsConditionalExemptionItem" ColumnName="IsConditionalExemptionItem" />
+                <ScalarProperty Name="IsCustomsItemDiscount" ColumnName="IsCustomsItemDiscount" />
+                <ScalarProperty Name="IsEntitlementDiscount" ColumnName="IsEntitlementDiscount" />
+                <ScalarProperty Name="IsGreenIndex" ColumnName="IsGreenIndex" />
+                <ScalarProperty Name="IsImporterDiscount" ColumnName="IsImporterDiscount" />
+                <ScalarProperty Name="IsIndexedLinked" ColumnName="IsIndexedLinked" />
+                <ScalarProperty Name="IsNotAutonomiaUpdate" ColumnName="IsNotAutonomiaUpdate" />
+                <ScalarProperty Name="IsRawMaterial" ColumnName="IsRawMaterial" />
+                <ScalarProperty Name="IsWholesalePrice" ColumnName="IsWholesalePrice" />
+                <ScalarProperty Name="VatDiscountReason" ColumnName="VatDiscountReason" />
+                <ScalarProperty Name="MaxSupervisionPeriod" ColumnName="MaxSupervisionPeriod" />
+                <ScalarProperty Name="MeasurementUnitID" ColumnName="MeasurementUnitID" />
+                <ScalarProperty Name="ConditionalExemptionTypeID" ColumnName="ConditionalExemptionTypeID" />
+                <ScalarProperty Name="FuelTypeID" ColumnName="FuelTypeID" />
+                <ScalarProperty Name="CarEngineVolumeID" ColumnName="CarEngineVolumeID" />
+                <ScalarProperty Name="CarWeightID" ColumnName="CarWeightID" />
+                <ScalarProperty Name="VatDiscountRate" ColumnName="VatDiscountRate" />
+                <ScalarProperty Name="Discount_CustomsItemGroupTypeID" ColumnName="Discount_CustomsItemGroupTypeID" />
+                <ScalarProperty Name="IsCarDiscount" ColumnName="IsCarDiscount" />
+                <ScalarProperty Name="VehicleTecnologyTypeID" ColumnName="VehicleTecnologyTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

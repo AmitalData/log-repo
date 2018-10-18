@@ -1,0 +1,2197 @@
+﻿using Logitude.BL.GlobalModel.EntityPMs;
+using Logitude.BL.GlobalModel.EntityQueries;
+using Logitude.BL.Helpers;
+using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.Helpers;
+using Simplog.Data.InfrastructureModel;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.Repositories;
+using Simplog.Global.Data.GlobalModel;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Server.Infrastructure.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using System.Transactions;
+
+namespace Logitude.XSD.INTTRA.BL
+{
+    public class INTTRADataContext
+    {
+        public int Tenant { get; set; }
+        public string ShipmentId { get; set; }
+        public bool IsValid { get; set; }
+        public bool IsLimited { get; set; }
+        public bool IsGroupageEntity { get; set; }
+        public bool IsCarrierRegisteredToINTTRA { get; set; }
+        public bool IsCarrierRegisteredToBranch { get; set; }
+        public List<string> Errors { get; set; }
+        public ICommonDataContext CommonContext;
+        private ComputingPartnerTranslationHelper computingPartnerHelper;
+        public INTTRADataContext(int teannt, string shipmentId, Simplog.Data.CommonDataModel.EntityPOCOs.Contact loggedContact, ICommonDataContext CommonContext)
+        {
+            this.Tenant = teannt;
+            this.ShipmentId = shipmentId;
+            this.LoggedContact = loggedContact;
+            this.CommonContext = CommonContext;
+            this.computingPartnerHelper = new ComputingPartnerTranslationHelper(Tenant);
+            this.GetObjects();
+            this.GetProperties();
+        }
+
+        // Objects & Validating
+        public Shipment Shipment { get; set; }
+        public ShipmentMasterData MasterData { get; set; }
+        public string INTTRA_Alias { get; set; }
+        public string INTTRA_OutSettingsId { get; set; }
+        private Tenant TenantObject;
+        private Address TenantAddress;
+        private Port FromPort;
+        private Port FinalPort;
+        private Branch Branch;
+        private MoveType MoveType;
+        private string MoveType_Name;
+        private Contact LoggedContact;
+        private Contact BranchContact;
+        private Contact EmergencyContact;
+        private Country FromPortCountry;
+        private Country FinalPortCountry;
+        private Vessel MainVessel;
+        private ShippingLine MainShippingLine;
+        private List<ShipmentPackage> ShipmentPackages = new List<ShipmentPackage>();
+        private List<InsideShipmentPackage> InsidePackages = new List<InsideShipmentPackage>();
+        private IShipmentsContext shipmentContext;
+        public ShipmentRepository shipmentRepository;
+        private ShipmentMasterDataRepository shipmentMasterDataRepository;
+        private void GetObjects()
+        {
+            this.Errors = new List<string>();
+            this.shipmentContext = ShipmentsContext.GetContext(Tenant);
+            this.shipmentRepository = new ShipmentRepository(shipmentContext);
+            this.shipmentMasterDataRepository = new ShipmentMasterDataRepository(shipmentContext);
+            this.Shipment = shipmentRepository.GetSingleShipment(ShipmentId, Tenant);
+            this.MasterData = shipmentMasterDataRepository.GetSingleMasterData(Shipment.MasterShipmentDataId);
+
+            if (!string.IsNullOrEmpty(this.Shipment.INTTRASIStatusCode))
+            {
+                if (this.Shipment.INTTRASIStatusCode != "NSEN" && this.Shipment.INTTRASIStatusCode != "RJIN")
+                {
+                    TenantManagement tenantManagement = null;
+                    List<TenantManagementLicense> Licenses = new List<TenantManagementLicense>();
+                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                    {
+                        IGlobalContext globalContext= GlobalContext.GetContext();
+
+                        TenantManagementRepository tenantManagementRepository = new TenantManagementRepository(globalContext);
+                        tenantManagement = tenantManagementRepository.GetSingleTenantManagement(Tenant);
+
+                        if(tenantManagement != null)
+                        {
+                            if (tenantManagement.IsMultiPackage)
+                            {
+                                Licenses = (from d in globalContext.TenantManagementLicenses where d.Tenant == Tenant select d).ToList();
+                            }
+                        }
+
+                        scope.Complete();
+                    }
+
+                    bool isDevelopment = false;
+                    if (tenantManagement != null)
+                    {
+                        if (tenantManagement.IsMultiPackage)
+                        {
+                            List<string> myGroupedList = (from d in Licenses
+                                                          group d by d.PackageCode into g
+                                                          select g.Key).ToList();
+
+                            if (myGroupedList.Count == 1)
+                            {
+                                if (myGroupedList[0] == "DVMT")
+                                {
+                                    isDevelopment = true;
+                                }
+                            }
+                        }
+
+                        else
+                        {
+                            if (tenantManagement.PackageCode == "DVMT")
+                            {
+                                isDevelopment = true;
+                            }
+                        }
+                    }
+
+                    if (!isDevelopment)
+                    {
+                        this.IsLimited = true;
+                    }
+                }
+            }
+
+            if (!string.IsNullOrEmpty(this.Shipment.ShipmentTypeId))
+            {
+                if (this.Shipment.ShipmentTypeId.ToUpper().Contains("MYG"))
+                {
+                    this.IsGroupageEntity = true;
+                }
+            }
+
+            this.GetObjects_Tenant();
+            this.GetObjects_Branch();
+            this.GetObjects_MoveType();
+            this.GetObjects_INTTRASetting();
+            this.GetObjects_ShipmentFields();
+            this.GetObjects_ShipmentPorts();
+            this.GetObjects_ShipmentCarrier();
+            this.GetObjects_ShipmentPackages();
+            this.GetObjects_Partners();
+
+            this.IsValid = this.Errors.Count == 0 ? true : false;
+        }
+        private void GetObjects_Tenant()
+        {
+            this.TenantObject = (from d in CommonContext.Tenants where d.Id == this.Tenant select d).FirstOrDefault();
+
+            if (this.TenantObject.AddressId == null)
+            {
+                this.Errors.Add("Tenant Address is required");
+            }
+
+            else
+            {
+                this.TenantAddress = (from d in CommonContext.Addresses where d.Id == this.TenantObject.AddressId select d).FirstOrDefault();
+
+                if (this.TenantAddress != null)
+                {
+                    if (string.IsNullOrEmpty(this.TenantAddress.Address1) && string.IsNullOrEmpty(this.TenantAddress.Address2))
+                    {
+                        this.Errors.Add("Tenant Address 1 or Address 2 is required");
+                    }
+                }
+            }
+        }
+        private void GetObjects_Branch()
+        {
+            if (this.Shipment.BranchId == null)
+            {
+                this.Errors.Add("Branch is required");
+            }
+
+            else
+            {
+                this.Branch = (from d in CommonContext.Branches where d.Id == this.Shipment.BranchId select d).FirstOrDefault();
+
+                if (this.Branch.INTTRAId == null)
+                {
+                    this.Errors.Add("Branch INTTRA ID is required");
+                }
+
+                if (this.Branch.INTTRAAlias == null)
+                {
+                    this.Errors.Add("Branch INTTRA Alias is required");
+                }
+
+                if (this.Branch.INTTRAContactId == null)
+                {
+                    this.Errors.Add("Branch INTTRA Contact is required");
+                }
+
+                else
+                {
+                    this.BranchContact = (from d in CommonContext.Contacts where d.Id == this.Branch.INTTRAContactId select d).FirstOrDefault();
+
+                    if (this.BranchContact.Email == null)
+                    {
+                        this.Errors.Add("Branch INTTRA Contact Email is required");
+                    }
+                }
+            }
+        }
+        private void GetObjects_MoveType()
+        {
+            if (!this.IsGroupageEntity)
+            {
+                if (this.Shipment.MoveTypeId == null)
+                {
+                    this.Errors.Add("Move type is required");
+                }
+
+                else
+                {
+                    IWebFreightContext webFreightContext = WebFreightContext.GetContext(this.Tenant);
+
+                    this.MoveType = (from d in webFreightContext.MoveTypes where d.Id == this.Shipment.MoveTypeId select d).FirstOrDefault();
+                    if (this.MoveType != null)
+                    {
+                        this.MoveType_Name = this.MoveType.MoveTypeEnglishName;
+
+                        string myTranslatedCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(this.MoveType.Code, "G-INTTRA", "MoveType");
+                        if (!string.IsNullOrEmpty(myTranslatedCode))
+                        {
+                            this.MoveType_Name = myTranslatedCode;
+                        }
+
+                        switch (this.MoveType_Name.ToLower())
+                        {
+                            case "doortodoor":
+                                {
+                                    if (this.Shipment.PreCarriageFromPortId == null || this.Shipment.PreCarriageToPortId == null)
+                                    {
+                                        this.Errors.Add("Pre Carriage is required");
+                                    }
+
+                                    if (this.Shipment.OnCarriageFromPortId == null || this.Shipment.OnCarriageToPortId == null)
+                                    {
+                                        this.Errors.Add("On Carriage is required");
+                                    }
+
+                                    break;
+                                }
+
+                            case "doortoport":
+                                {
+                                    if (this.Shipment.PreCarriageFromPortId == null || this.Shipment.PreCarriageToPortId == null)
+                                    {
+                                        this.Errors.Add("Pre Carriage is required");
+                                    }
+
+                                    break;
+                                }
+
+                            case "porttodoor":
+                                {
+                                    if (this.Shipment.OnCarriageFromPortId == null || this.Shipment.OnCarriageToPortId == null)
+                                    {
+                                        this.Errors.Add("On Carriage is required");
+                                    }
+
+                                    break;
+                                }
+
+                            case "porttoport":
+                                {
+                                    break;
+                                }
+
+                            default:
+                                {
+                                    this.Errors.Add("Illegal value in move type");
+                                    break;
+                                }
+                        }
+                    }
+                }
+            }
+        }
+        private void GetObjects_INTTRASetting()
+        {
+            INTTRASetting iSetting = (from d in CommonContext.INTTRASettings where d.Tenant == this.Tenant select d).FirstOrDefault();
+            if (iSetting != null)
+            {
+                this.INTTRA_Alias = iSetting.INTTRAAlias;
+                this.INTTRA_OutSettingsId = iSetting.OutSettingsId;
+            }
+
+            if (string.IsNullOrEmpty(this.INTTRA_Alias) || string.IsNullOrEmpty(this.INTTRA_OutSettingsId))
+            {
+                iSetting = (from d in CommonContext.INTTRASettings where d.Tenant == 0 select d).FirstOrDefault();
+
+                if (iSetting != null)
+                {
+                    if (string.IsNullOrEmpty(this.INTTRA_Alias))
+                    {
+                        this.INTTRA_Alias = iSetting.INTTRAAlias;
+                    }
+
+                    if (string.IsNullOrEmpty(this.INTTRA_OutSettingsId))
+                    {
+                        this.INTTRA_OutSettingsId = iSetting.OutSettingsId;
+                    }
+                }
+            }
+
+            if (string.IsNullOrEmpty(this.INTTRA_Alias))
+            {
+                this.Errors.Add("INTTRA Alias is required");
+            }
+
+            if (string.IsNullOrEmpty(this.INTTRA_OutSettingsId))
+            {
+                this.Errors.Add("Out Settings is required");
+            }
+        }
+        private void GetObjects_ShipmentFields()
+        {
+            if (this.Shipment.ShipmentLevelCode == "H")
+            {
+                this.Errors.Add("Can't send house shipments");
+            }
+
+            bool isOceanFCL = false;
+            if (this.Shipment.TransportModeId != null && this.Shipment.ShipmentTypeId != null)
+            {
+                if (this.Shipment.TransportModeId.ToUpper() == "O" && (this.Shipment.ShipmentTypeId.ToUpper() == "FCLD" || this.Shipment.ShipmentTypeId.ToUpper() == "MYGO"))
+                {
+                    isOceanFCL = true;
+                }
+            }
+
+            if (!isOceanFCL)
+            {
+                this.Errors.Add("Only allowed for Ocean FCL shipments");
+            }
+
+
+            if (this.Shipment.ShipperId == null)
+            {
+                this.Errors.Add("Shipper is required");
+            }
+
+            if (this.Shipment.ConsigneeId == null)
+            {
+                this.Errors.Add("Consignee is required");
+            }
+
+            if (this.MasterData.BookingConfirmationNumber == null)
+            {
+                this.Errors.Add("Booking Confirmation Number is required");
+            }
+
+            if (this.Shipment.FreightPrepaidCollectId == null)
+            {
+                this.Errors.Add("Freight Prepaid Collect is required");
+            }
+
+            if (this.MasterData.MainCarriageVesselId == null)
+            {
+                this.Errors.Add("Main Carriage Vessel is required");
+            }
+
+            else
+            {
+                this.MainVessel = (from d in CommonContext.Vessels where d.Id == this.MasterData.MainCarriageVesselId select d).FirstOrDefault();
+            }
+
+            if (this.Shipment.EmergencyContactId != null)
+            {
+                this.EmergencyContact = (from d in CommonContext.Contacts where d.Id == this.Shipment.EmergencyContactId select d).FirstOrDefault();
+
+                if (string.IsNullOrEmpty(this.EmergencyContact.BusinessPhone))
+                {
+                    this.Errors.Add("Emergency Contact Phone is required");
+                }
+            }
+        }
+        private void GetObjects_ShipmentPorts()
+        {
+            if (this.MasterData.MainCarriageFromPortId == null)
+            {
+                this.Errors.Add("From Port is required");
+            }
+
+            else
+            {
+                this.FromPort = (from d in CommonContext.Ports where d.Id == this.MasterData.MainCarriageFromPortId select d).FirstOrDefault();
+                this.FromPortCountry = (from d in CommonContext.Countries where d.Id == this.FromPort.CountryId select d).FirstOrDefault();
+            }
+
+            if (this.MasterData.MainCarriageFinalDestinationPortId == null)
+            {
+                this.Errors.Add("Final Destination Port is required");
+            }
+
+            else
+            {
+                this.FinalPort = (from d in CommonContext.Ports where d.Id == this.MasterData.MainCarriageFinalDestinationPortId select d).FirstOrDefault();
+                this.FinalPortCountry = (from d in CommonContext.Countries where d.Id == this.FinalPort.CountryId select d).FirstOrDefault();
+            }
+        }
+        private void GetObjects_ShipmentCarrier()
+        {
+            if (this.MasterData.MainCarriageCarrierId == null)
+            {
+                this.Errors.Add("Main Carriage Carrier is required");
+            }
+
+            else
+            {
+                this.MainShippingLine = (from d in CommonContext.ShippingLines where d.Id == this.MasterData.MainCarriageCarrierId select d).FirstOrDefault();
+
+                if (this.MainShippingLine != null)
+                {
+                    this.IsCarrierRegisteredToINTTRA = this.MainShippingLine.IsINTTRARegistered;
+
+                    if (this.IsCarrierRegisteredToINTTRA)
+                    {
+                        INTTRABranchRegisteredCarrier BranchRegisteredCarrier = (from a in CommonContext.INTTRABranchRegisteredCarriers
+                                                                                 where a.Tenant == Tenant
+                                                                                 && a.ShippingLineId == this.MasterData.MainCarriageCarrierId
+                                                                                 && a.BranchId == this.Shipment.BranchId
+                                                                                 select a).FirstOrDefault();
+
+                        this.IsCarrierRegisteredToBranch = BranchRegisteredCarrier == null ? false : true;
+                    }
+                }
+            }
+        }
+        private void GetObjects_ShipmentPackages()
+        {
+            this.ShipmentPackages = (from d in shipmentContext.ShipmentPackages
+                                     where d.Tenant == this.Tenant
+                                     && d.ShipmentId == this.ShipmentId
+                                     select d).ToList();
+
+            if (this.ShipmentPackages.Count == 0)
+            {
+                this.Errors.Add("Shipment Containers are required");
+            }
+
+            else if (this.ShipmentPackages.Where(d => string.IsNullOrEmpty(d.ContainerNumber)).Any())
+            {
+                this.Errors.Add("All Containers should have Container Number");
+            }
+
+            else if (this.ShipmentPackages.Where(d => d.Weight == null || d.Weight == 0).Any())
+            {
+                this.Errors.Add("All Containers should have Gross Weight");
+            }
+
+            else
+            {
+                List<string> ShipmentPackagesIds = this.ShipmentPackages.Select(s => s.Id).ToList();
+
+                this.InsidePackages = (from d in shipmentContext.InsideShipmentPackages
+                                       where d.Tenant == this.Tenant
+                                       && ShipmentPackagesIds.Contains(d.ShipmentPackageId)
+                                       select d).ToList();
+
+                bool allContainersHasInsides = true;
+
+                foreach (ShipmentPackage item in this.ShipmentPackages)
+                {
+                    if (item.IsDangerous)
+                    {
+                        if (string.IsNullOrEmpty(item.IMDGCode))
+                        {
+                            string msg = TranslateTextsClass.Translate("ShipmentPackage.F.IMDGCode", this.Tenant) + " is required";
+                            this.Errors.Add(msg);
+                        }
+
+                        if (!string.IsNullOrEmpty(item.FlashPoint))
+                        {
+
+                            bool isFlashPointValid = false;
+
+                            Regex isMatched = new Regex(@"[^0-9\-\.]*");
+                            if (isMatched.IsMatch(item.FlashPoint))
+                            {
+                                string myStringFlashPoint = item.FlashPoint;
+                                myStringFlashPoint = myStringFlashPoint.Replace(".", "");
+                                myStringFlashPoint = myStringFlashPoint.Replace("-", "");
+
+                                if(myStringFlashPoint.Length == 3)
+                                {
+                                    isFlashPointValid = true;
+                                }
+                            }
+
+                            if (!isFlashPointValid)
+                            {
+                                string msg = TranslateTextsClass.Translate("ShipmentPackage.F.FlashPoint", this.Tenant) + " invalid format";
+                                this.Errors.Add(msg);
+                            }
+                        }
+                    }
+
+                    List<InsideShipmentPackage> itemInsidePackages = this.InsidePackages.Where(d => d.ShipmentPackageId == item.Id).ToList();
+                    if (itemInsidePackages.Count == 0)
+                    {
+                        allContainersHasInsides = false;
+                    }
+                }
+
+                if (!allContainersHasInsides)
+                {
+                    this.Errors.Add("All Containers should have inside Packages");
+                }
+
+                else if (this.InsidePackages.Where(d => string.IsNullOrEmpty(d.PackageTypeId)).Any())
+                {
+                    this.Errors.Add("All Inside packages should have Package Type");
+                }
+
+                else if (this.InsidePackages.Where(d => string.IsNullOrEmpty(d.Description)).Any())
+                {
+                    this.Errors.Add("All Inside packages should have Description");
+                }
+            }
+        }
+
+
+        private Address AgentAddress;
+        private Address ShipperAddress;
+        private Address ConsigneeAddress;
+        private Address Notify1Address;
+        private Address Notify2Address;
+        private Address FreightForwarderAddress;        
+        private void GetObjects_Partners()
+        {
+            if (!string.IsNullOrEmpty(this.Shipment.ShipperAddressId))
+            {
+                this.ShipperAddress = (from d in CommonContext.Addresses where d.Id == this.Shipment.ShipperAddressId select d).FirstOrDefault();
+
+                if (this.ShipperAddress != null)
+                {
+                    if (string.IsNullOrEmpty(this.ShipperAddress.Address1) && string.IsNullOrEmpty(this.ShipperAddress.Address2))
+                    {
+                        this.Errors.Add("Shipper Address 1 or Address 2 is required");
+                    }
+                }
+            }
+
+            if (!string.IsNullOrEmpty(this.Shipment.ConsigneeAddressId))
+            {
+                this.ConsigneeAddress = (from d in CommonContext.Addresses where d.Id == this.Shipment.ConsigneeAddressId select d).FirstOrDefault();
+
+                if (this.ConsigneeAddress != null)
+                {
+                    if (string.IsNullOrEmpty(this.ConsigneeAddress.Address1) && string.IsNullOrEmpty(this.ConsigneeAddress.Address2))
+                    {
+                        this.Errors.Add("Consignee Address 1 or Address 2 is required");
+                    }
+                }
+            }
+
+            if (!string.IsNullOrEmpty(this.Shipment.Notify1AddressId))
+            {
+                this.Notify1Address = (from d in CommonContext.Addresses where d.Id == this.Shipment.Notify1AddressId select d).FirstOrDefault();
+
+                if (this.Notify1Address != null)
+                {
+                    if (string.IsNullOrEmpty(this.Notify1Address.Address1) && string.IsNullOrEmpty(this.Notify1Address.Address2))
+                    {
+                        this.Errors.Add("Notify1 Address 1 or Address 2 is required");
+                    }
+                }
+            }
+
+            if (!string.IsNullOrEmpty(this.Shipment.Notify2AddressId))
+            {
+                this.Notify2Address = (from d in CommonContext.Addresses where d.Id == this.Shipment.Notify2AddressId select d).FirstOrDefault();
+
+                if (this.Notify2Address != null)
+                {
+                    if (string.IsNullOrEmpty(this.Notify2Address.Address1) && string.IsNullOrEmpty(this.Notify2Address.Address2))
+                    {
+                        this.Errors.Add("Notify2 Address 1 or Address 2 is required");
+                    }
+                }
+            }
+
+
+            if (!string.IsNullOrEmpty(this.Shipment.FreightForwarderAddressId))
+            {
+                this.FreightForwarderAddress = (from d in CommonContext.Addresses where d.Id == this.Shipment.FreightForwarderAddressId select d).FirstOrDefault();
+
+                if (this.FreightForwarderAddress != null)
+                {
+                    if (string.IsNullOrEmpty(this.FreightForwarderAddress.Address1) && string.IsNullOrEmpty(this.FreightForwarderAddress.Address2))
+                    {
+                        this.Errors.Add("Freight Forwarder Address 1 or Address 2 is required");
+                    }
+                }
+            }
+
+
+            if (this.Shipment.FreightPrepaidCollectId != null)
+            {
+                if (this.Shipment.FreightPrepaidCollectId.ToUpper() == "C")
+                {
+                    if (this.Shipment.AgentId != null)
+                    {
+                        if (!string.IsNullOrEmpty(this.Shipment.AgentAddressId))
+                        {
+                            this.AgentAddress = (from d in CommonContext.Addresses where d.Id == this.Shipment.AgentAddressId select d).FirstOrDefault();
+
+                            if (this.AgentAddress != null)
+                            {
+                                if (string.IsNullOrEmpty(this.AgentAddress.Address1) && string.IsNullOrEmpty(this.AgentAddress.Address2))
+                                {
+                                    this.Errors.Add("Agent Address 1 or Address 2 is required");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public System.DateTime TodayDate { get; set; }
+        public System.DateTime TodayDateTime { get; set; }
+        public string ShipmentNumber { get; set; }
+        public string VolumeUnitCode { get; set; }
+        public string GrossWeightUnitCode { get; set; }
+        public long XMLCreateDate { get; set; }
+        public long XMLCreateDate_Long { get; set; }
+        private void GetProperties()
+        {
+            this.TodayDate = TenantServerConfigration.GetCurrentDateTime(this.Tenant).Date;
+            this.TodayDateTime = TenantServerConfigration.GetCurrentDateTime(this.Tenant);
+            this.XMLCreateDate = this.GetDateShortFormat(this.TodayDateTime);
+            this.XMLCreateDate_Long = this.GetDateLongFormat(this.TodayDateTime);
+
+            this.ShipmentNumber = this.Shipment.ShipmentNumber;
+            this.VolumeUnitCode = this.Shipment.VolumeUnitCode.ToUpper();
+            this.GrossWeightUnitCode = this.Shipment.GrossWeightUnitCode.ToUpper();
+        }
+
+        public string CommunicationLogIdCounter { get; set; }
+        public void Build()
+        {
+            this.CommunicationLogIdCounter = IdCounter.GetNumber("CommunicationLog", Tenant);
+            this.BuildMessageHeader();
+            this.BuildMessageProperties();
+            this.BuildMessageDetails();
+        }
+
+        // Message Header
+        private INTTRA_Out.PartnerInformation Sender;
+        private INTTRA_Out.PartnerInformation Recipient;
+        public List<INTTRA_Out.PartnerInformation> MessageHeaderParties;
+        private void BuildMessageHeader()
+        {
+            this.BuildMessageHeader_Sender();
+            this.BuildMessageHeader_Recipient();
+
+            this.MessageHeaderParties = new List<INTTRA_Out.PartnerInformation>();
+            this.MessageHeaderParties.Add(this.Sender);
+            this.MessageHeaderParties.Add(this.Recipient);
+        }
+        private void BuildMessageHeader_Sender()
+        {
+            this.Sender = new INTTRA_Out.PartnerInformation()
+            {
+                PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.Sender,
+                PartnerName = this.GetStringList(this.TenantObject.Company, 2, 35).ToArray<string>(),
+
+                PartnerIdentifier = new INTTRA_Out.PartnerIdentifier()
+                {
+                    Agency = INTTRA_Out.PartnerIdentifierAgency.AssignedBySender,
+                    Value = this.INTTRA_Alias,
+                },
+            };
+
+            if (this.TenantAddress != null)
+            {
+                this.Sender.AddressInformation = this.GetAddressInformation(this.TenantAddress);
+            }
+
+            if (this.BranchContact != null)
+            {
+                this.Sender.ContactInformation = this.GetContactInformation(this.BranchContact);
+            }
+        }
+        private void BuildMessageHeader_Recipient()
+        {
+            string RecipientINTTRA_Id = "INTTRA";
+
+            this.Recipient = new INTTRA_Out.PartnerInformation()
+            {
+                PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.Recipient,
+
+                PartnerIdentifier = new INTTRA_Out.PartnerIdentifier()
+                {
+                    Agency = INTTRA_Out.PartnerIdentifierAgency.AssignedByRecipient,
+                    Value = RecipientINTTRA_Id,
+                },
+            };
+        }
+
+        // Message Properties
+        private Card Shipper;
+        public INTTRA_Out.HaulageDetails HaulageDetails;
+        public List<INTTRA_Out.ChargeCategory> ChargeCategories;
+        public List<INTTRA_Out.Location> BlLocations;
+        public List<INTTRA_Out.ReferenceInformation> ReferenceInformations;
+        public List<INTTRA_Out.ShipmentComments> Instructions;
+        public INTTRA_Out.TransportationDetails TransportationDetails;
+        public List<INTTRA_Out.PartnerInformation> MessagePropertiesParties;
+        private void BuildMessageProperties()
+        {
+            this.BuildMessageProperties_HaulageDetails();
+            this.BuildMessageProperties_ChargeCategories();
+            this.BuildMessageProperties_BlLocations();
+            this.BuildMessageProperties_ReferenceInformations();
+            this.BuildMessageProperties_Instructions();
+            this.BuildMessageProperties_TransportationDetails();
+            this.BuildMessageProperties_Parties();
+        }
+        private void BuildMessageProperties_HaulageDetails()
+        {
+            if (this.IsGroupageEntity)
+            {
+                this.HaulageDetails = new INTTRA_Out.HaulageDetails
+                {
+                    MovementType = INTTRA_Out.HaulageDetailsMovementType.PortToPort,
+                    ServiceType = INTTRA_Out.HaulageDetailsServiceType.FullLoad,
+                };
+
+            }
+
+            else if (this.MoveType != null)
+            {
+                this.HaulageDetails = new INTTRA_Out.HaulageDetails
+                {
+                    //MovementType = INTTRA.HaulageDetailsMovementType.PortToPort,
+                    ServiceType = INTTRA_Out.HaulageDetailsServiceType.FullLoad,
+                };
+
+                switch (this.MoveType_Name.ToLower())
+                {
+                    case "doortodoor":
+                        {
+                            this.HaulageDetails.MovementType = INTTRA_Out.HaulageDetailsMovementType.DoorToDoor;
+                            break;
+                        }
+
+                    case "doortoport":
+                        {
+                            this.HaulageDetails.MovementType = INTTRA_Out.HaulageDetailsMovementType.DoorToPort;
+                            break;
+                        }
+
+                    case "porttoport":
+                        {
+                            this.HaulageDetails.MovementType = INTTRA_Out.HaulageDetailsMovementType.PortToPort;
+                            break;
+                        }
+
+                    case "porttodoor":
+                        {
+                            this.HaulageDetails.MovementType = INTTRA_Out.HaulageDetailsMovementType.PortToDoor;
+                            break;
+                        }
+                }
+            }
+        }
+        private void BuildMessageProperties_ChargeCategories()
+        {
+            this.ChargeCategories = new List<INTTRA_Out.ChargeCategory>();
+
+            if (this.Shipment.FreightPrepaidCollectId != null)
+            {
+                INTTRA_Out.ChargeCategory item = new INTTRA_Out.ChargeCategory()
+                {
+                    ChargeType = INTTRA_Out.ChargeCategoryChargeType.BasicFreight,
+                    PrepaidorCollectIndicator = this.Shipment.FreightPrepaidCollectId.ToUpper() == "P" ? INTTRA_Out.ChargeCategoryPrepaidorCollectIndicator.Prepaid : INTTRA_Out.ChargeCategoryPrepaidorCollectIndicator.Collect,
+                };
+
+                this.ChargeCategories.Add(item);
+            }
+        }
+        private void BuildMessageProperties_BlLocations()
+        {
+            this.BlLocations = new List<INTTRA_Out.Location>();
+
+            INTTRA_Out.Location item_BillOfLadingRelease = new INTTRA_Out.Location()
+            {
+                LocationType = INTTRA_Out.LocationLocationType.BillOfLadingRelease,
+
+                LocationCode = new INTTRA_Out.LocationCode()
+                {
+                    Agency = "UN",
+                    Value = this.FromPortCountry.Code.ToUpper() + this.FromPort.Code.ToUpper(),
+                },
+
+                LocationName = this.FormatString(this.FromPort.EnglishName, 256),
+
+                LocationCountry = this.FromPortCountry.Code.ToUpper(),
+
+                DateTime = new INTTRA_Out.DateTime()
+                {
+                    DateType = INTTRA_Out.DateTimeDateType.BlReleaseDate,
+                    Value = this.XMLCreateDate_Long,
+                },
+            };
+
+            this.BlLocations.Add(item_BillOfLadingRelease);
+
+
+            if (this.Shipment.FreightPrepaidCollectId != null)
+            {
+                switch (this.Shipment.FreightPrepaidCollectId.ToUpper())
+                {
+                    case "P":
+                        {
+                            INTTRA_Out.Location item_FreightPaymentLocation = new INTTRA_Out.Location()
+                            {
+                                LocationType = INTTRA_Out.LocationLocationType.FreightPaymentLocation,
+
+                                LocationCode = new INTTRA_Out.LocationCode()
+                                {
+                                    Agency = "UN",
+                                    Value = this.FromPortCountry.Code.ToUpper() + this.FromPort.Code.ToUpper(),
+                                },
+
+                                LocationName = this.FormatString(this.FromPort.EnglishName, 256),
+
+                                //LocationCountry = this.FromPortCountry.Code.ToUpper(),
+
+                                //DateTime = new DateTime()
+                                //{
+                                //    DateType = DateTimeDateType.BlReleaseDate,
+                                //    Value = this.XMLCreateDate_Long,
+                                //},
+                            };
+
+                            this.BlLocations.Add(item_FreightPaymentLocation);
+
+                            break;
+                        }
+
+
+                    case "C":
+                        {
+                            INTTRA_Out.Location item_FreightPaymentLocation = new INTTRA_Out.Location()
+                            {
+                                LocationType = INTTRA_Out.LocationLocationType.FreightPaymentLocation,
+
+                                LocationCode = new INTTRA_Out.LocationCode()
+                                {
+                                    Agency = "UN",
+                                    Value = this.FinalPortCountry.Code.ToUpper() + this.FinalPort.Code.ToUpper(),
+                                },
+
+                                LocationName = this.FormatString(this.FinalPort.EnglishName, 256),
+
+                                //LocationCountry = this.FinalPortCountry.Code.ToUpper(),
+
+                                //DateTime = new DateTime()
+                                //{
+                                //    DateType = DateTimeDateType.BlReleaseDate,
+                                //    Value = this.XMLCreateDate_Long,
+                                //},
+                            };
+
+                            this.BlLocations.Add(item_FreightPaymentLocation);
+
+                            break;
+                        }
+                }
+            }
+        }
+        private void BuildMessageProperties_ReferenceInformations()
+        {
+            this.ReferenceInformations = new List<INTTRA_Out.ReferenceInformation>();
+
+            this.ReferenceInformations.Add(new INTTRA_Out.ReferenceInformation()
+            {
+                ReferenceType = INTTRA_Out.ReferenceInformationReferenceType.BookingNumber,
+                Value = this.FormatString(this.MasterData.BookingConfirmationNumber, 99),
+            });
+
+            if (!string.IsNullOrEmpty(this.Shipment.ShipperReference1))
+            {
+                this.ReferenceInformations.Add(new INTTRA_Out.ReferenceInformation()
+                {
+                    ReferenceType = INTTRA_Out.ReferenceInformationReferenceType.InvoiceNumber,
+                    Value = this.FormatString(this.Shipment.ShipperReference1, 99),
+                });
+            }
+
+            if (!string.IsNullOrEmpty(this.Shipment.ShipperReference2))
+            {
+                this.ReferenceInformations.Add(new INTTRA_Out.ReferenceInformation()
+                {
+                    ReferenceType = INTTRA_Out.ReferenceInformationReferenceType.InvoiceNumber,
+                    Value = this.FormatString(this.Shipment.ShipperReference2, 99),
+                });
+            }
+
+            if (!string.IsNullOrEmpty(this.Shipment.ShipmentNumber))
+            {
+                this.ReferenceInformations.Add(new INTTRA_Out.ReferenceInformation()
+                {
+                    ReferenceType = INTTRA_Out.ReferenceInformationReferenceType.FreightForwarderReference,
+                    Value = this.FormatString(this.Shipment.ShipmentNumber, 99),
+                });
+            }
+
+            if (this.MasterData != null)
+            {
+                if (!string.IsNullOrEmpty(this.MasterData.Master))
+                {
+                    this.ReferenceInformations.Add(new INTTRA_Out.ReferenceInformation()
+                    {
+                        ReferenceType = INTTRA_Out.ReferenceInformationReferenceType.BillOfLadingNumber,
+                        Value = this.FormatString(this.MasterData.Master, 99),
+                    });
+                }
+            }
+
+            if (!string.IsNullOrEmpty(this.Shipment.INTTRAContractNumber))
+            {
+                this.ReferenceInformations.Add(new INTTRA_Out.ReferenceInformation()
+                {
+                    ReferenceType = INTTRA_Out.ReferenceInformationReferenceType.ContractNumber,
+                    Value = this.FormatString(this.Shipment.INTTRAContractNumber, 99),
+                });
+            }
+        }
+        private void BuildMessageProperties_Instructions()
+        {
+            this.Instructions = new List<INTTRA_Out.ShipmentComments>();
+
+            if (!string.IsNullOrEmpty(this.Shipment.INTTRAInstructions))
+            {
+                string myString = this.Shipment.INTTRAInstructions;
+
+                List<string> list = this.GetStringList(myString, 99, 35);
+
+                foreach (string item in list)
+                {
+                    INTTRA_Out.ShipmentComments itemComment = new INTTRA_Out.ShipmentComments()
+                    {
+                        CommentType = INTTRA_Out.ShipmentCommentsCommentType.BlClause,
+                        Value = item,
+                    };
+
+                    this.Instructions.Add(itemComment);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(this.Shipment.INTTRAComments))
+            {
+                string myString = this.Shipment.INTTRAComments;
+
+                List<string> list = this.GetStringList(myString, 99, 35);
+
+                foreach (string item in list)
+                {
+                    if (this.Instructions.Count < 99)
+                    {
+                        INTTRA_Out.ShipmentComments itemComment = new INTTRA_Out.ShipmentComments()
+                        {
+                            CommentType = INTTRA_Out.ShipmentCommentsCommentType.General,
+                            Value = item,
+                        };
+
+                        this.Instructions.Add(itemComment);
+                    }
+                }
+            }
+        }
+        private void BuildMessageProperties_TransportationDetails()
+        {
+            this.TransportationDetails = new INTTRA_Out.TransportationDetails()
+            {
+                TransportStage = INTTRA_Out.TransportationDetailsTransportStage.Main,
+                TransportMode = INTTRA_Out.TransportationDetailsTransportMode.Maritime,
+                
+                ConveyanceInformation = new INTTRA_Out.ConveyanceInformation()
+                {
+                    ConveyanceName = this.FormatString(this.MainVessel.EnglishName, 35),
+
+                    //TransportIdentification = new TransportIdentification()
+                    //{
+                    //    TransportIdentificationType = TransportIdentificationTransportIdentificationType.LloydsCode,
+                    //    Value = "AYMAN",
+                    //},                    
+                },
+            };
+
+            if (this.MasterData.MainCarriageCarrierNumber != null)
+            {
+                this.TransportationDetails.ConveyanceInformation.VoyageTripNumber = this.FormatString(this.MasterData.MainCarriageCarrierNumber, 35);
+            }
+
+            if (this.MainShippingLine != null)
+            {
+                if (this.MainShippingLine.SCACCode != null)
+                {
+                    this.TransportationDetails.ConveyanceInformation.CarrierSCAC = this.FormatString(this.MainShippingLine.SCACCode, 35);
+                }
+            }
+
+            List<INTTRA_Out.Location> locations = new List<INTTRA_Out.Location>();
+
+            // From
+            locations.Add(new INTTRA_Out.Location()
+            {
+                LocationType = INTTRA_Out.LocationLocationType.PortOfLoading,
+
+                LocationCode = new INTTRA_Out.LocationCode()
+                {
+                    Agency = "UN",
+                    Value = this.FromPortCountry.Code.ToUpper() + this.FromPort.Code.ToUpper(),
+                },
+
+                LocationName = this.FormatString(this.FromPort.EnglishName, 256),
+
+                LocationCountry = this.FromPortCountry.Code.ToUpper(),
+            });
+
+            // Final
+            locations.Add(new INTTRA_Out.Location()
+            {
+                LocationType = INTTRA_Out.LocationLocationType.PortOfDischarge,
+
+                LocationCode = new INTTRA_Out.LocationCode()
+                {
+                    Agency = "UN",
+                    Value = this.FinalPortCountry.Code.ToUpper() + this.FinalPort.Code.ToUpper(),
+                },
+
+                LocationName = this.FormatString(this.FinalPort.EnglishName, 256),
+
+                LocationCountry = this.FinalPortCountry.Code.ToUpper(),
+            });
+
+            #region PlaceOfReceipt
+            if (this.Shipment.PreCarriageFromPortId != null)
+            {
+                Port PreCarriagePort = (from d in CommonContext.Ports where d.Id == this.Shipment.PreCarriageFromPortId select d).FirstOrDefault();
+                Country PreCarriageCountry = (from d in CommonContext.Countries where d.Id == PreCarriagePort.CountryId select d).FirstOrDefault();
+
+                locations.Add(new INTTRA_Out.Location()
+                {
+                    LocationType = INTTRA_Out.LocationLocationType.PlaceOfReceipt,
+
+                    LocationCode = new INTTRA_Out.LocationCode()
+                    {
+                        Agency = "UN",
+                        Value = PreCarriageCountry.Code.ToUpper() + PreCarriagePort.Code.ToUpper(),
+                    },
+
+                    LocationName = this.FormatString(PreCarriagePort.EnglishName, 256),
+
+                    LocationCountry = PreCarriageCountry.Code.ToUpper(),
+                });
+            }
+
+            //else
+            //{
+            //    locations.Add(new INTTRA_Out.Location()
+            //    {
+            //        LocationType = INTTRA_Out.LocationLocationType.PlaceOfReceipt,
+
+            //        LocationCode = new INTTRA_Out.LocationCode()
+            //        {
+            //            Agency = "UN",
+            //            Value = this.FromPortCountry.Code.ToUpper() + this.FromPort.Code.ToUpper(),
+            //        },
+
+            //        LocationName = this.FormatString(this.FromPort.EnglishName, 256),
+
+            //        LocationCountry = this.FromPortCountry.Code.ToUpper(),
+            //    });
+            //}
+            #endregion
+
+            #region PlaceOfDelivery
+            if (this.Shipment.OnCarriageToPortId != null)
+            {
+                Port OnCarriagePort = (from d in CommonContext.Ports where d.Id == this.Shipment.OnCarriageToPortId select d).FirstOrDefault();
+                Country OnCarriageCountry = (from d in CommonContext.Countries where d.Id == OnCarriagePort.CountryId select d).FirstOrDefault();
+
+                locations.Add(new INTTRA_Out.Location()
+                {
+                    LocationType = INTTRA_Out.LocationLocationType.PlaceOfDelivery,
+
+                    LocationCode = new INTTRA_Out.LocationCode()
+                    {
+                        Agency = "UN",
+                        Value = OnCarriageCountry.Code.ToUpper() + OnCarriagePort.Code.ToUpper(),
+                    },
+
+                    LocationName = this.FormatString(OnCarriagePort.EnglishName, 256),
+
+                    LocationCountry = OnCarriageCountry.Code.ToUpper(),
+                });
+            }
+
+            //else
+            //{
+            //    locations.Add(new INTTRA_Out.Location()
+            //    {
+            //        LocationType = INTTRA_Out.LocationLocationType.PlaceOfDelivery,
+
+            //        LocationCode = new INTTRA_Out.LocationCode()
+            //        {
+            //            Agency = "UN",
+            //            Value = this.FinalPortCountry.Code.ToUpper() + this.FinalPort.Code.ToUpper(),
+            //        },
+
+            //        LocationName = this.FormatString(this.FinalPort.EnglishName, 256),
+
+            //        LocationCountry = this.FinalPortCountry.Code.ToUpper(),
+            //    });
+            //}
+            #endregion
+
+            this.TransportationDetails.Location = locations.ToArray<INTTRA_Out.Location>();
+        }
+        private void BuildMessageProperties_Parties()
+        {
+            this.MessagePropertiesParties = new List<INTTRA_Out.PartnerInformation>();
+
+            #region Requestor
+            if (this.TenantObject != null)
+            {
+                INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
+                {
+                    PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.Requestor,
+                    PartnerName = this.GetStringList(this.TenantObject.Company, 2, 35).ToArray<string>(),
+
+                    PartnerIdentifier = new INTTRA_Out.PartnerIdentifier()
+                    {
+                        Agency = INTTRA_Out.PartnerIdentifierAgency.AssignedBySender,
+                        Value = this.Branch.INTTRAAlias,
+                    },
+                };
+
+                if (this.TenantAddress != null)
+                {
+                    item.AddressInformation = this.GetAddressInformation(this.TenantAddress);
+                }
+
+                if (this.Shipment.INTTRADocumentTypeCode != null)
+                {
+                    INTTRADocumentType myDocumentType = shipmentContext.INTTRADocumentTypes.Where(d => d.Code == this.Shipment.INTTRADocumentTypeCode).FirstOrDefault();
+                    if (myDocumentType != null)
+                    {
+                        List<INTTRA_Out.DocumentationRequirements> list = new List<INTTRA_Out.DocumentationRequirements>();
+
+                        INTTRA_Out.DocumentationRequirements listItem = new INTTRA_Out.DocumentationRequirements()
+                        {
+                            Documents = new INTTRA_Out.Documents()
+                            {
+                                Freighted = this.Shipment.INTTRAIsFreighted ? INTTRA_Out.DocumentsFreighted.True : INTTRA_Out.DocumentsFreighted.False,
+                                //DocumentType = DocumentsDocumentType.
+                            },
+
+                            Quantity = this.Shipment.INTTRADocumentQTY.ToString(),
+                        };
+
+                        switch (myDocumentType.Code)
+                        {
+                            case "BILL":
+                                {
+                                    listItem.Documents.DocumentType = INTTRA_Out.DocumentsDocumentType.SeaWaybill;
+                                    break;
+                                }
+
+                            case "COPY":
+                                {
+                                    listItem.Documents.DocumentType = INTTRA_Out.DocumentsDocumentType.BillOfLadingCopy;
+                                    break;
+                                }
+
+                            case "LADN":
+                                {
+                                    listItem.Documents.DocumentType = INTTRA_Out.DocumentsDocumentType.HouseBillOfLading;
+                                    break;
+                                }
+
+                            case "ORIG":
+                                {
+                                    listItem.Documents.DocumentType = INTTRA_Out.DocumentsDocumentType.BillOfLadingOriginal;
+                                    break;
+                                }
+                        }
+
+                        list.Add(listItem);
+
+                        item.DocumentationRequirements = list.ToArray<INTTRA_Out.DocumentationRequirements>();
+                    }
+                }
+
+                this.MessagePropertiesParties.Add(item);
+            }
+            #endregion
+
+            #region Shipper
+            if (this.Shipment.ShipperId != null)
+            {
+                this.Shipper = (from d in CommonContext.Cards where d.Id == this.Shipment.ShipperId select d).FirstOrDefault();
+
+                if (this.Shipper != null)
+                {
+                    INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
+                    {
+                        PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.Shipper,
+                        PartnerName = this.GetStringList(this.Shipper.EnglishName, 2, 35).ToArray<string>(),
+                    };
+
+                    if (this.ShipperAddress != null)
+                    {
+                        item.AddressInformation = this.GetAddressInformation(this.ShipperAddress);
+                    }
+
+                    this.MessagePropertiesParties.Add(item);
+                }
+            }
+            #endregion
+
+            #region Consignee
+            if (this.Shipment.ConsigneeId != null)
+            {
+                Card myCard = (from d in CommonContext.Cards where d.Id == this.Shipment.ConsigneeId select d).FirstOrDefault();
+                if (myCard != null)
+                {
+                    INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
+                    {
+                        PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.Consignee,
+                        PartnerName = this.GetStringList(myCard.EnglishName, 2, 35).ToArray<string>(),
+                    };
+
+                    if (this.ConsigneeAddress != null)
+                    {
+                        item.AddressInformation = this.GetAddressInformation(this.ConsigneeAddress);
+                    }
+
+                    this.MessagePropertiesParties.Add(item);
+                }
+            }
+            #endregion
+
+            #region Carrier
+            if (this.MasterData.MainCarriageCarrierId != null)
+            {
+                Card myCard = (from d in CommonContext.Cards where d.Id == this.MasterData.MainCarriageCarrierId select d).FirstOrDefault();
+                if (myCard != null)
+                {
+                    INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
+                    {
+                        PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.Carrier,
+                        PartnerName = this.GetStringList(myCard.EnglishName, 2, 35).ToArray<string>(),
+                    };
+
+                    if (this.MainShippingLine != null)
+                    {
+                        if (this.MainShippingLine.SCACCode != null)
+                        {
+                            item.PartnerIdentifier = new INTTRA_Out.PartnerIdentifier()
+                            {
+                                Agency = INTTRA_Out.PartnerIdentifierAgency.AssignedBySender,
+                                Value = this.MainShippingLine.SCACCode,
+                            };
+                        }
+                    }
+
+                    this.MessagePropertiesParties.Add(item);
+                }
+            }
+            #endregion
+
+            #region Notify
+            if (this.Shipment.Notify1Id != null || this.Shipment.Notify2Id != null)
+            {
+                if (this.Shipment.Notify1Id != null)
+                {
+                    Card myCard = (from d in CommonContext.Cards where d.Id == this.Shipment.Notify1Id select d).FirstOrDefault();
+                    if (myCard != null)
+                    {
+                        INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
+                        {
+                            PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.NotifyParty,
+                            PartnerName = this.GetStringList(myCard.EnglishName, 2, 35).ToArray<string>(),
+                        };
+
+                        if (this.Notify1Address != null)
+                        {
+                            item.AddressInformation = this.GetAddressInformation(this.Notify1Address);
+                        }
+
+                        this.MessagePropertiesParties.Add(item);
+                    }
+                }
+
+                if (this.Shipment.Notify2Id != null)
+                {
+                    Card myCard = (from d in CommonContext.Cards where d.Id == this.Shipment.Notify2Id select d).FirstOrDefault();
+                    if (myCard != null)
+                    {
+                        INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
+                        {
+                            PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.NotifyParty1,
+                            PartnerName = this.GetStringList(myCard.EnglishName, 2, 35).ToArray<string>(),
+                        };
+
+                        if (this.Notify2Address != null)
+                        {
+                            item.AddressInformation = this.GetAddressInformation(this.Notify2Address);
+                        }
+
+                        this.MessagePropertiesParties.Add(item);
+                    }
+                }
+            }
+
+            else if (this.Shipment.ConsigneeId != null)
+            {
+                Card myCard = (from d in CommonContext.Cards where d.Id == this.Shipment.ConsigneeId select d).FirstOrDefault();
+                if (myCard != null)
+                {
+                    INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
+                    {
+                        PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.NotifyParty,
+                        PartnerName = this.GetStringList(myCard.EnglishName, 2, 35).ToArray<string>(),
+                    };
+
+                    if (this.ConsigneeAddress != null)
+                    {
+                        item.AddressInformation = this.GetAddressInformation(this.ConsigneeAddress);
+                    }
+
+                    this.MessagePropertiesParties.Add(item);
+                }
+            }
+            #endregion
+
+            #region FreightPayer
+            if (this.Shipment.FreightPrepaidCollectId != null)
+            {
+                if (this.Shipment.FreightPrepaidCollectId.ToUpper() == "P")
+                {
+                    if (this.Shipper != null)
+                    {
+                        INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
+                        {
+                            PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.FreightPayer,
+                            PartnerName = this.GetStringList(this.Shipper.EnglishName, 2, 35).ToArray<string>(),
+                        };
+
+                        if (this.ShipperAddress != null)
+                        {
+                            item.AddressInformation = this.GetAddressInformation(this.ShipperAddress);
+                        }
+
+                        this.MessagePropertiesParties.Add(item);
+                    }
+                }
+
+                else if (this.Shipment.FreightPrepaidCollectId.ToUpper() == "C")
+                {
+                    if (this.Shipment.AgentId != null)
+                    {
+                        Card myCard = (from d in CommonContext.Cards where d.Id == this.Shipment.AgentId select d).FirstOrDefault();
+                        if (myCard != null)
+                        {
+                            INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
+                            {
+                                PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.FreightPayer,
+                                PartnerName = this.GetStringList(myCard.EnglishName, 2, 35).ToArray<string>(),
+                            };
+
+                            if (this.AgentAddress != null)
+                            {
+                                item.AddressInformation = this.GetAddressInformation(this.AgentAddress);
+                            }
+
+                            this.MessagePropertiesParties.Add(item);
+                        }
+                    }
+                }
+            }
+            #endregion
+
+            #region MessageRecipient
+            if (this.LoggedContact != null)
+            {
+                INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
+                {
+                    PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.MessageRecipient,
+
+                    PartnerName = this.GetStringList(LoggedContact.EnglishName, 2, 35).ToArray<string>(),
+
+                    ContactInformation = this.GetContactInformation(this.LoggedContact, INTTRA_Out.ContactNameContactType.SINotification),
+                };
+
+                this.MessagePropertiesParties.Add(item);
+            }
+            #endregion
+
+            #region FreightForwarder
+            if (this.Shipment.FreightForwarderId != null)
+            {
+                Card myCard = (from d in CommonContext.Cards where d.Id == this.Shipment.FreightForwarderId select d).FirstOrDefault();
+                if (myCard != null)
+                {
+                    INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
+                    {
+                        PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.FreightForwarder,
+                        PartnerName = this.GetStringList(myCard.EnglishName, 2, 35).ToArray<string>(),
+                    };
+
+                    if (this.FreightForwarderAddress != null)
+                    {
+                        item.AddressInformation = this.GetAddressInformation(this.FreightForwarderAddress);
+                    }
+
+                    this.MessagePropertiesParties.Add(item);
+                }
+            }
+
+            else if (this.TenantObject != null)
+            {
+                INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
+                {
+                    PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.FreightForwarder,
+                    PartnerName = this.GetStringList(this.TenantObject.Company, 2, 35).ToArray<string>(),
+                };
+
+                if (this.TenantAddress != null)
+                {
+                    item.AddressInformation = this.GetAddressInformation(this.TenantAddress);
+                }
+
+                this.MessagePropertiesParties.Add(item);
+            }
+            #endregion
+        }
+
+        // Message Details
+        private int lineNumber_Goods = 1;
+        public List<INTTRA_Out.GoodsDetails> GoodsDetails;
+        public List<INTTRA_Out.EquipmentDetails> EquipmentDetails;
+        private List<PackageType> AllPackageTypes;
+        private void BuildMessageDetails()
+        {
+            this.AllPackageTypes = new List<PackageType>();
+            List<string> ids1 = this.ShipmentPackages.Where(d => d.PackageTypeId != null).Select(s => s.PackageTypeId).ToList();
+            List<string> ids2 = this.InsidePackages.Where(d => d.PackageTypeId != null).Select(s => s.PackageTypeId).ToList();
+            List<string> ids = ids1.Concat(ids2).ToList();
+
+            if (ids.Count > 0)
+            {
+                this.AllPackageTypes = (from d in CommonContext.PackageTypes
+                                        where d.Tenant == this.Tenant
+                                        && ids.Contains(d.Id)
+                                        select d).ToList();
+            }
+
+
+            this.BuildMessageDetails_EquipmentDetails();
+        }
+        private void BuildMessageDetails_EquipmentDetails()
+        {
+            this.GoodsDetails = new List<INTTRA_Out.GoodsDetails>();
+            this.EquipmentDetails = new List<INTTRA_Out.EquipmentDetails>();
+
+            int lineNumber = 1;
+            foreach (ShipmentPackage item in this.ShipmentPackages)
+            {
+                INTTRA_Out.EquipmentDetails itemDetails = new INTTRA_Out.EquipmentDetails()
+                {
+                    LineNumber = lineNumber.ToString(),
+
+                    EquipmentIdentifier = new INTTRA_Out.EquipmentIdentifier()
+                    {
+                        EquipmentSupplier = INTTRA_Out.EquipmentIdentifierEquipmentSupplier.Carrier,
+                        EquipmentSupplierSpecified = true,
+                        Value = item.ContainerNumber.ToUpper(),
+                    },
+
+                    //EquipmentComments = "",
+                    //EquipmentLocation = "",
+                    //EquipmentReferenceInformation = "",
+                     
+                };
+
+                itemDetails.EquipmentType = new INTTRA_Out.EquipmentType();
+
+                if (item.PackageTypeId != null)
+                {
+                    PackageType myPackageType = this.AllPackageTypes.Where(d => d.Id == item.PackageTypeId).FirstOrDefault();
+                    if (myPackageType != null)
+                    {
+                        itemDetails.EquipmentType.EquipmentTypeCode = myPackageType.Code;
+
+                        string myTranslatedCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(myPackageType.Code, "G-INTTRA", "PackageType"); ;
+                        if (!string.IsNullOrEmpty(myTranslatedCode))
+                        {
+                            itemDetails.EquipmentType.EquipmentTypeCode = myTranslatedCode;
+                        }
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(item.Description))
+                {
+                    itemDetails.EquipmentType.EquipmentDescription = this.FormatString(item.Description, 35);
+                }
+
+                if (item.Volume != null)
+                {
+                    itemDetails.EquipmentGrossVolume = new INTTRA_Out.EquipmentGrossVolume()
+                    {
+                        UOM = INTTRA_Out.EquipmentGrossVolumeUOM.MTQ,
+                        Value = this.GetVolumeInCBM(item.Volume),
+                    };
+                }
+
+                if (item.Weight != null)
+                {
+                    itemDetails.EquipmentGrossWeight = new INTTRA_Out.EquipmentGrossWeight()
+                    {
+                        UOM = INTTRA_Out.EquipmentGrossWeightUOM.KGM,
+                        Value = this.GetWeightInKG(item.Weight),
+                    };
+                }
+
+                if (item.Tare != null)
+                {
+                    itemDetails.EquipmentTareWeight = new INTTRA_Out.EquipmentTareWeight()
+                    {
+                        UOM = INTTRA_Out.EquipmentTareWeightUOM.KGM,
+                        Value = this.GetWeightInKG(item.Tare),
+                    };
+                }
+
+                if (item.ShipperSeal != null || item.CarrierSeal != null)
+                {
+                    List<INTTRA_Out.EquipmentSeal> mySeals = new List<INTTRA_Out.EquipmentSeal>();
+
+                    if (item.ShipperSeal != null)
+                    {
+                        mySeals.Add(new INTTRA_Out.EquipmentSeal()
+                        {
+                            SealingParty = INTTRA_Out.EquipmentSealSealingParty.Shipper,
+                            Value = item.ShipperSeal,
+                        });
+                    }
+
+                    if (item.CarrierSeal != null)
+                    {
+                        mySeals.Add(new INTTRA_Out.EquipmentSeal()
+                        {
+                            SealingParty = INTTRA_Out.EquipmentSealSealingParty.Carrier,
+                            Value = item.CarrierSeal,
+                        });
+                    }
+
+                    itemDetails.EquipmentSeal = mySeals.ToArray<INTTRA_Out.EquipmentSeal>();
+                }
+
+                if (item.Ventilation != null)
+                {
+                    itemDetails.EquipmentAirFlow = new INTTRA_Out.EquipmentAirFlow()
+                    {
+                        UOM = INTTRA_Out.EquipmentAirFlowUOM.CBM,
+                        Value = (float)(decimal)item.Ventilation.Value,
+                    };
+                }
+
+                if (item.NonActiveContainer)
+                {
+                    itemDetails.EquipmentTemperature = new INTTRA_Out.EquipmentTemperature()
+                    {
+                        UOM = INTTRA_Out.EquipmentTemperatureUOM.CEL,
+                        Value = 999,
+                    };
+
+                    if (item.TemperatureUnitCode != "CEL")
+                    {
+                        itemDetails.EquipmentTemperature.UOM = INTTRA_Out.EquipmentTemperatureUOM.FAH;
+                    }
+                }
+
+                else if (item.Temperature != null)
+                {
+                    itemDetails.EquipmentTemperature = new INTTRA_Out.EquipmentTemperature()
+                    {
+                        UOM = INTTRA_Out.EquipmentTemperatureUOM.CEL,
+                        Value = (float)(decimal)item.Temperature.Value,
+                    };
+
+                    if (item.TemperatureUnitCode != "CEL")
+                    {
+                        itemDetails.EquipmentTemperature.UOM = INTTRA_Out.EquipmentTemperatureUOM.FAH;
+                    }
+                }
+
+                this.EquipmentDetails.Add(itemDetails);
+                this.BuildMessageDetails_GoodsDetails(item, itemDetails);
+                lineNumber++;
+            }
+        }
+        private void BuildMessageDetails_GoodsDetails(ShipmentPackage myShipmentPackage, INTTRA_Out.EquipmentDetails itemEquipmentDetails)
+        {
+            List<InsideShipmentPackage> insidePackages = this.InsidePackages.Where(d => d.ShipmentPackageId == myShipmentPackage.Id).ToList();
+
+            if (insidePackages.Count > 0)
+            {
+                foreach (InsideShipmentPackage item in insidePackages)
+                {
+                    string itemQuantity = item.Quantity == null ? "0" : item.Quantity.ToString();
+
+                    INTTRA_Out.GoodsDetails itemGoodsDetails = new INTTRA_Out.GoodsDetails()
+                    {
+                        LineNumber = this.lineNumber_Goods.ToString(),
+                        //LineNumber = itemEquipmentDetails.LineNumber,
+
+                        PackageDetail = new INTTRA_Out.PackageDetail()
+                        {
+                            Level = INTTRA_Out.PackageDetailLevel.Outer,
+
+                            NumberOfPackages = itemQuantity,
+                        },
+
+                        //ProductId="",
+                        //PackageMarks = "",
+                    };
+
+                    if (item.PackageTypeId != null)
+                    {
+                        PackageType myPackageType = this.AllPackageTypes.Where(d => d.Id == item.PackageTypeId).FirstOrDefault();
+                        if (myPackageType != null)
+                        {
+                            itemGoodsDetails.PackageDetail.PackageTypeCode = myPackageType.Code;
+                            itemGoodsDetails.PackageDetail.PackageTypeDescription = this.FormatString(myPackageType.EnglishName, 35);
+
+                            string myTranslatedCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(myPackageType.Code, "G-INTTRA", "PackageType"); ;
+                            if (!string.IsNullOrEmpty(myTranslatedCode))
+                            {
+                                itemGoodsDetails.PackageDetail.PackageTypeCode = myTranslatedCode;
+                            }
+                        }
+                    }
+
+                    if (item.Description != null)
+                    {
+                        List<INTTRA_Out.PackageDetailComments> list = new List<INTTRA_Out.PackageDetailComments>();
+
+                        INTTRA_Out.PackageDetailComments itemDescription = new INTTRA_Out.PackageDetailComments()
+                        {
+                             CommentType = INTTRA_Out.PackageDetailCommentsCommentType.GoodsDescription,
+                             Value = item.Description,
+                        };
+
+                        list.Add(itemDescription);
+
+                        itemGoodsDetails.PackageDetailComments = list.ToArray<INTTRA_Out.PackageDetailComments>();
+                    }
+
+                    if(item.Volume != null)
+                    {
+                        itemGoodsDetails.PackageDetailGrossVolume = new INTTRA_Out.PackageDetailGrossVolume()
+                        {
+                            UOM = INTTRA_Out.PackageDetailGrossVolumeUOM.MTQ,
+                            Value = this.GetVolumeInCBM(item.Volume),
+                        };
+                    }
+
+                    if(item.Weight != null)
+                    {
+                        itemGoodsDetails.PackageDetailGrossWeight = new INTTRA_Out.PackageDetailGrossWeight()
+                        {
+                             UOM = INTTRA_Out.PackageDetailGrossWeightUOM.KGM,
+                            Value = this.GetWeightInKG(item.Weight),
+                        };
+                    }
+
+                    if (myShipmentPackage.IsDangerous)
+                    {
+                        #region
+                        if (myShipmentPackage.IMDGCode != null)
+                        {
+                            List<INTTRA_Out.HazardousGoods> HazardousGoodsList = new List<INTTRA_Out.HazardousGoods>();
+
+                            INTTRA_Out.HazardousGoods HazardousGoodsItem = new INTTRA_Out.HazardousGoods()
+                            {
+                                IMOClassCode = this.FormatString(myShipmentPackage.ClassNumber, 7),                                 
+                            };
+
+                            if (myShipmentPackage.IMDGCode != null)
+                            {
+                                HazardousGoodsItem.IMDGPageNumber = this.FormatString(myShipmentPackage.IMDGCode, 7);
+                            }
+
+                            if (myShipmentPackage.UnNumber != null)
+                            {
+                                HazardousGoodsItem.UNDGNumber = this.FormatString(myShipmentPackage.UnNumber, 4);
+                            }
+
+                            if (myShipmentPackage.EMS != null)
+                            {
+                                HazardousGoodsItem.EMSNumber = this.FormatString(myShipmentPackage.EMS, 6);
+                            }
+
+                            if (myShipmentPackage.FlashPoint != null)
+                            {
+                                float myDecimalFlashPoint = 0;
+
+                                bool isDecimal = float.TryParse(myShipmentPackage.FlashPoint, out myDecimalFlashPoint);
+
+                                if (isDecimal)
+                                {
+                                    HazardousGoodsItem.FlashpointTemperature = new INTTRA_Out.FlashpointTemperature()
+                                    {
+                                        UOM = myShipmentPackage.FlashPointTemperatureUnitCode == "CEL" ? INTTRA_Out.FlashpointTemperatureUOM.CEL : INTTRA_Out.FlashpointTemperatureUOM.FAH,
+                                        Value = myDecimalFlashPoint
+                                    };
+                                }
+                            }
+
+                            if (myShipmentPackage.ProperShippingName != null)
+                            {
+                                INTTRA_Out.HazardousGoodsComments GoodsCommentsItem = new INTTRA_Out.HazardousGoodsComments()
+                                {
+                                     CommentType = INTTRA_Out.HazardousGoodsCommentsCommentType.ProperShippingName,
+                                      Value = myShipmentPackage.ProperShippingName,
+                                };
+
+                                List<INTTRA_Out.HazardousGoodsComments> GoodsCommentsList = new List<INTTRA_Out.HazardousGoodsComments>();
+                                GoodsCommentsList.Add(GoodsCommentsItem);
+
+                                HazardousGoodsItem.HazardousGoodsComments = GoodsCommentsList.ToArray<INTTRA_Out.HazardousGoodsComments>();
+                            }
+
+                            if (this.Shipment.EmergencyContactId != null)
+                            {
+                                if (this.EmergencyContact != null)
+                                {
+                                    List<INTTRA_Out.EmergencyResponseContactContactInformation> listEmergency = new List<INTTRA_Out.EmergencyResponseContactContactInformation>();
+
+                                    INTTRA_Out.EmergencyResponseContactContactInformation itemEmergency = new INTTRA_Out.EmergencyResponseContactContactInformation()
+                                    {
+                                        ContactName = new INTTRA_Out.EmergencyResponseContactContactInformationContactName()
+                                        {
+                                            ContactType = INTTRA_Out.EmergencyResponseContactContactInformationContactNameContactType.Emergency,
+                                            Value = this.EmergencyContact.EnglishName,
+                                        },
+                                    };
+
+                                    string Telephone = null;
+                                    if (!string.IsNullOrEmpty(EmergencyContact.BusinessPhone))
+                                    {
+                                        Telephone = this.EmergencyContact.BusinessPhone;
+                                    }
+
+                                    else if (!string.IsNullOrEmpty(EmergencyContact.Mobile))
+                                    {
+                                        Telephone = this.EmergencyContact.Mobile;
+                                    }
+
+                                    if (!string.IsNullOrEmpty(Telephone))
+                                    {
+                                        itemEmergency.CommunicationValue = new INTTRA_Out.EmergencyResponseContactContactInformationCommunicationValue()
+                                        {
+                                            CommunicationType = INTTRA_Out.EmergencyResponseContactContactInformationCommunicationValueCommunicationType.Telephone,
+                                            Value = Telephone,
+                                        };
+                                    }
+
+                                    listEmergency.Add(itemEmergency);
+                                    HazardousGoodsItem.EmergencyResponseContact = listEmergency.ToArray<INTTRA_Out.EmergencyResponseContactContactInformation>();
+                                }
+                            }
+
+                            HazardousGoodsList.Add(HazardousGoodsItem);
+                            itemGoodsDetails.HazardousGoods = HazardousGoodsList.ToArray<INTTRA_Out.HazardousGoods>();
+                        }
+
+                        #endregion
+                    }
+                    
+                    if (!string.IsNullOrEmpty(myShipmentPackage.Harmonize))
+                    {
+                        INTTRA_Out.ProductId itemProductId = new INTTRA_Out.ProductId()
+                        {
+                            ItemTypeIdCode = INTTRA_Out.ProductIdItemTypeIdCode.HarmonizedSystem,
+                            Value = myShipmentPackage.Harmonize
+                        };
+
+                        List<INTTRA_Out.ProductId> list = new List<INTTRA_Out.ProductId>();
+                        list.Add(itemProductId);
+
+                        itemGoodsDetails.ProductId = list.ToArray<INTTRA_Out.ProductId>();
+                    }
+
+                    if (!string.IsNullOrEmpty(myShipmentPackage.MarksAndNumbers))
+                    {
+                        List<string> list = this.GetStringList(myShipmentPackage.MarksAndNumbers, 10, 35);
+
+                        itemGoodsDetails.PackageMarks = list.ToArray<string>();
+                    }
+
+                    List<INTTRA_Out.SplitGoodsDetails> splitGoodsList = new List<INTTRA_Out.SplitGoodsDetails>();
+                    splitGoodsList.Add(new INTTRA_Out.SplitGoodsDetails()
+                    {
+                        EquipmentIdentifier = myShipmentPackage.ContainerNumber.ToUpper(),
+                        SplitGoodsNumberOfPackages = itemQuantity,
+
+                        //SplitGoodsGrossVolume = new SplitGoodsGrossVolume()
+                        //{
+                        //    UOM = SplitGoodsGrossVolumeUOM.MTQ,
+                        //    Value = this.GetVolumeInCBM(myShipmentPackage.Volume),
+                        //},
+
+                        //SplitGoodsGrossWeight = new SplitGoodsGrossWeight()
+                        //{
+                        //    UOM = SplitGoodsGrossWeightUOM.KGM,
+                        //    Value = this.GetWeightInKG(myShipmentPackage.Weight) + "",
+                        //},
+                    });
+
+                    itemGoodsDetails.SplitGoodsDetails = splitGoodsList.ToArray<INTTRA_Out.SplitGoodsDetails>();
+
+                    this.GoodsDetails.Add(itemGoodsDetails);
+                    this.lineNumber_Goods++;
+                }
+            }
+        }
+
+        // Tools
+        private float GetVolumeInCBM(double? volume)
+        {
+            float myResult = 0;
+
+            if (volume != null)
+            {
+                double? factorOfConvert = 1;
+
+                if (!string.IsNullOrEmpty(this.VolumeUnitCode))
+                {
+                    switch (this.VolumeUnitCode.ToUpper())
+                    {
+                        case "CBM": { factorOfConvert = 1; break; }
+                        case "CBI": { factorOfConvert = 61024; break; }      // 1m³ = 61024in³
+                        case "CBF": { factorOfConvert = 35.315; break; }     // 1m³ = 35.315ft³
+                    }
+                }
+
+                double? myComputedField = MethodHelper.Round(volume / factorOfConvert, 3);
+
+                myResult = (float)myComputedField.Value;
+            }
+
+            return myResult;
+        }
+        private float GetWeightInKG(double? weight)
+        {
+            float myResult = 0;
+
+            if (weight != null)
+            {
+                double? factorOfConvert = 1;
+
+                if (!string.IsNullOrEmpty(this.GrossWeightUnitCode))
+                {
+                    switch (this.GrossWeightUnitCode.ToUpper())
+                    {
+                        case "KG": { factorOfConvert = 1; break; }
+                        case "LB": { factorOfConvert = 0.45359237; break; }     // 1 LB = 0.45359237 KG
+                        case "MT": { factorOfConvert = 1000; break; }           // 1 mt = 1000 KG
+                    }
+                }
+
+                double? myComputedField = MethodHelper.Round(weight * factorOfConvert, 3);
+
+                myResult = (float)myComputedField.Value;
+            }
+
+            return myResult;
+        }
+        private long GetDateShortFormat(System.DateTime? date)
+        {
+            long myResult = 0;
+
+            if (date != null)
+            {
+                string Year = date.Value.Year.ToString().Substring(2, 2);
+                string Month = date.Value.Month.ToString();
+                string Day = date.Value.Day.ToString();
+                string Hour = date.Value.Hour.ToString();
+                string Minute = date.Value.Minute.ToString();
+
+                if (Month.Length == 1)
+                {
+                    Month = "0" + Month;
+                }
+
+                if (Day.Length == 1)
+                {
+                    Day = "0" + Day;
+                }
+
+                if (Hour.Length == 1)
+                {
+                    Hour = "0" + Hour;
+                }
+
+                if (Minute.Length == 1)
+                {
+                    Minute = "0" + Minute;
+                }
+
+                string myString = Year + Month + Day + Hour + Minute;
+
+                myResult = (long)Convert.ToDouble(myString);
+            }
+
+            return myResult;
+        }
+        private long GetDateLongFormat(System.DateTime? date)
+        {
+            long myResult = 0;
+
+            if (date != null)
+            {
+                string Year = date.Value.Year.ToString();
+                string Month = date.Value.Month.ToString();
+                string Day = date.Value.Day.ToString();
+                string Hour = date.Value.Hour.ToString();
+                string Minute = date.Value.Minute.ToString();
+
+                if (Month.Length == 1)
+                {
+                    Month = "0" + Month;
+                }
+
+                if (Day.Length == 1)
+                {
+                    Day = "0" + Day;
+                }
+
+                if (Hour.Length == 1)
+                {
+                    Hour = "0" + Hour;
+                }
+
+                if (Minute.Length == 1)
+                {
+                    Minute = "0" + Minute;
+                }
+
+                string myString = Year + Month + Day + Hour + Minute;
+
+                myResult = (long)Convert.ToDouble(myString);
+            }
+
+            return myResult;
+        }
+
+        private INTTRA_Out.AddressInformation GetAddressInformation(Address myAddress)
+        {
+            INTTRA_Out.AddressInformation myResult = null;
+
+            if (myAddress != null)
+            {
+                myResult = new INTTRA_Out.AddressInformation()
+                {
+                    AddressLine = this.GetStringList(myAddress.Address1, 4, 35).ToArray<string>(),
+                    City = this.FormatString(myAddress.City, 35),                     
+                };
+
+                if (!string.IsNullOrEmpty(myAddress.Address2))
+                {
+                    myResult.Street = this.GetStringList(myAddress.Address2, 2, 35).ToArray<string>();
+                }
+
+                if (!string.IsNullOrEmpty(myAddress.ZipCode))
+                {
+                    myResult.PostalCode = this.FormatString(myAddress.ZipCode, 19);
+                }
+
+                if (myAddress.CountryId != null)
+                {
+                    Country myCountry = (from d in CommonContext.Countries where d.Id == myAddress.CountryId select d).FirstOrDefault();
+                    if (myCountry != null)
+                    {
+                        myResult.CountryCode = myCountry.Code;
+                    }
+                }
+
+                if (myAddress.StateId != null)
+                {
+                    State myState = (from d in CommonContext.States where d.Id == myAddress.StateId select d).FirstOrDefault();
+                    if (myState != null)
+                    {
+                        myResult.StateProvince = this.FormatString(myState.EnglishName, 9);
+                    }
+                }
+            }
+
+            return myResult;
+        }
+        private INTTRA_Out.ContactInformation[] GetContactInformation(Contact myContact, INTTRA_Out.ContactNameContactType iContactType = INTTRA_Out.ContactNameContactType.Informational)
+        {
+            List<INTTRA_Out.ContactInformation> ContactInformationList = new List<INTTRA_Out.ContactInformation>();
+
+            if (myContact != null)
+            {
+                INTTRA_Out.ContactInformation item = new INTTRA_Out.ContactInformation()
+                {
+                    ContactName = new INTTRA_Out.ContactName()
+                    {
+                        ContactType = iContactType,
+                        Value = myContact.EnglishName,
+                    },
+                };
+
+                List<INTTRA_Out.CommunicationValue> CommunicationList = new List<INTTRA_Out.CommunicationValue>();
+
+                CommunicationList.Add(new INTTRA_Out.CommunicationValue()
+                {
+                    CommunicationType = INTTRA_Out.CommunicationValueCommunicationType.Email,
+                    Value = myContact.Email,
+                });
+
+                if (myContact.Fax != null)
+                {
+                    CommunicationList.Add(new INTTRA_Out.CommunicationValue()
+                    {
+                        CommunicationType = INTTRA_Out.CommunicationValueCommunicationType.Fax,
+                        Value = myContact.Fax,
+                    });
+                }
+
+                if (myContact.BusinessPhone != null)
+                {
+                    CommunicationList.Add(new INTTRA_Out.CommunicationValue()
+                    {
+                        CommunicationType = INTTRA_Out.CommunicationValueCommunicationType.Telephone,
+                        Value = myContact.BusinessPhone,
+                    });
+                }
+
+                item.CommunicationValue = CommunicationList.ToArray<INTTRA_Out.CommunicationValue>();
+
+                ContactInformationList.Add(item);
+            }
+
+            return ContactInformationList.ToArray<INTTRA_Out.ContactInformation>();
+        }
+        private List<string> GetStringList(string inputString, int maxOccurs, int length)
+        {
+            List<string> myResult = new List<string>();
+
+            if (!string.IsNullOrEmpty(inputString))
+            {
+                inputString = this.FixSpecialCharacters(inputString);
+
+                if (inputString != null)
+                {
+                    List<string> myResult_PRE = new List<string>();
+
+                    while (inputString.Length > length)
+                    {
+                        if (myResult_PRE.Count < maxOccurs)
+                        {
+                            myResult_PRE.Add(inputString.Substring(0, length));
+                        }
+
+                        inputString = inputString.Remove(0, length);
+                    }
+
+                    if (inputString.Length > 0)
+                    {
+                        if (myResult_PRE.Count < maxOccurs)
+                        {
+                            myResult_PRE.Add(inputString);
+                        }
+                    }
+
+                    foreach (string item in myResult_PRE)
+                    {
+                        myResult.Add(item);
+                    }
+                }
+            }
+
+            return myResult;
+        }
+        private string FormatString(string input)
+        {
+            return this.FormatString(input, INTTRAPattern.Text, null);
+        }
+        private string FormatString(string input, int length)
+        {
+            return this.FormatString(input, INTTRAPattern.Text, length);
+        }
+        private string FormatString(string input, INTTRAPattern pattern)
+        {
+            return this.FormatString(input, pattern, null);
+        }
+        private string FormatString(string input, INTTRAPattern pattern, int? length = null)
+        {
+            string myResult = null;
+
+            if (!string.IsNullOrEmpty(input))
+            {
+                string myFormat = null;
+
+                switch (pattern)
+                {
+                    //case INTTRAPattern.Alpha:
+                    //    {
+                    //        myFormat = @"[^A-Z]*";
+                    //        break;
+                    //    }
+
+                    //case INTTRAPattern.AlphaNumeric:
+                    //    {
+                    //        myFormat = @"[^A-Z0-9]*";
+                    //        break;
+                    //    }
+
+                    case INTTRAPattern.Text:
+                        {
+                            myFormat = @"[^a-zA-Z0-9\-\. ]*";
+                            break;
+                        }
+
+                    default:
+                        {
+                            myFormat = @"[^a-zA-Z0-9\-\. ]*";
+                            break;
+                        }
+                }
+
+                input = input.Trim().ToUpper();
+                myResult = Regex.Replace(input, myFormat, string.Empty, RegexOptions.Compiled);
+
+                if (length != null)
+                {
+                    myResult = (myResult.Length <= length) ? myResult : myResult.Substring(0, length.Value);
+                }
+            }
+
+            return myResult;
+        }
+        private string FixSpecialCharacters(string input)
+        {
+            string myResult = null;
+
+            if (!string.IsNullOrEmpty(input))
+            {
+                input = input.Replace("&", "&amp;");
+                input = input.Replace("<", "&lt;");
+                input = input.Replace(">", "&gt;");
+                input = input.Replace("'", "&apos;");
+                input = input.Replace("\"", "&quot;");
+                myResult = input;
+            }
+
+            return myResult;
+        }
+
+        public enum INTTRAPattern
+        {
+            Text = 0,
+        }
+    }
+}

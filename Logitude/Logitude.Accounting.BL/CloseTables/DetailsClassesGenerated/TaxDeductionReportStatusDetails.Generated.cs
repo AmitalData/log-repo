@@ -1,0 +1,73 @@
+
+   
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.CloseTablesClasses;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Def.EntityPMs; 
+using Logitude.Accounting.Data;
+
+namespace Logitude.Accounting.BL
+{
+   public class TaxDeductionReportStatusDetails : TaxDeductionReportStatus, ICloseTable<TaxDeductionReportStatus, TaxDeductionReportStatusDetails>
+   {
+       public List<TaxDeductionReportStatusDetails> GetAll()
+       {
+		    var all = new List<TaxDeductionReportStatusDetails>();  
+            all.Add(new TaxDeductionReportStatusDetails()
+            {    
+                Code = "1", 
+                EnglishName = "Created", 
+                LocalName = "יצירה", 
+                SearchFields = "1,Created,יצירה", 
+			});
+			 
+            all.Add(new TaxDeductionReportStatusDetails()
+            {    
+                Code = "2", 
+                EnglishName = "In Progress", 
+                LocalName = "בתהליך", 
+                SearchFields = "2, In Progress,בתהליך", 
+			});
+			 
+            all.Add(new TaxDeductionReportStatusDetails()
+            {    
+                Code = "3", 
+                EnglishName = "Completed", 
+                LocalName = "הושלם", 
+                SearchFields = "3,Completed,הושלם", 
+			});
+			 
+            all.Add(new TaxDeductionReportStatusDetails()
+            {    
+                Code = "4", 
+                EnglishName = "Failed", 
+                LocalName = "נכשל", 
+                SearchFields = "4,Failed,נכשל", 
+			});
+			
+            return all;
+       }
+
+	    public void MapPoco(TaxDeductionReportStatus newPoco)
+        {   
+		    newPoco.Code = this.Code;  
+		    newPoco.EnglishName = this.EnglishName;  
+		    newPoco.LocalName = this.LocalName;  
+			newPoco.SearchFields = GetSearchFields(this);    
+        }
+
+		public string GetSearchFields(TaxDeductionReportStatus rec)
+        {   
+           return String.Concat(rec.Code,",",rec.EnglishName,",",rec.LocalName,",");
+        }
+   }
+}
+

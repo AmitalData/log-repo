@@ -1,0 +1,443 @@
+﻿<style type="text/css">
+    .SquareIcon {
+        width: 10px;
+        height: 10px;
+        line-height: 10px;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+    }
+     .SectionHeader td, .SectionHeader label{
+        font-size:13px
+    }
+
+    .QueryLinkq {
+        color:blue;
+        text-decoration:underline;
+    }
+
+     .QueryLinkq:hover{
+  color: #1B90CB;
+          text-decoration:underline;
+        cursor:pointer;
+
+    }
+
+     .SectionHeader td, .SectionHeader label {
+    font-size: 13px;
+}
+
+     .amcharts-pie-slice {
+  cursor: pointer;
+}
+
+
+
+     
+</style>
+
+<div class="TabHolder" style="overflow-x:auto;padding-right:10px">
+    <table *ngIf="!ZoomedChartVisibility" style="min-width:1060px">
+        <tr style="height:40px">
+            <td>
+                <table>
+                    <tr>
+                        <td style="width:20px">
+                            <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
+                        </td>
+                        <td></td>
+                        <td style="width:450px">
+                            <table>
+                                <tr>
+                                    <td style="width:80px">
+                                        Close Date
+                                    </td>
+                                    <td>
+                                        <ComboBox [ItemsSource]="DateFilterList" [Binding]="'Name'" [SelectedItem]="SelectedDateFilter" (SelectedItemChanged)="SelectedDateFilter = $event"></ComboBox>
+                                    </td>
+
+                                    <td style="width:3px"></td>
+
+                                    <td style="width:120px">
+                                        <LogDatePicker [NoObjectField]="true" [SelectedDateValue]="FromDate" [HideColumns]="true" [ObjectFieldName]="'FromDate'" [DataContext]="DataContext"></LogDatePicker>
+                                    </td>
+                                    <td style="width:3px"></td>
+
+                                    <td style="width:120px">
+                                        <LogDatePicker [NoObjectField]="true" [SelectedDateValue]="ToDate" [HideColumns]="true" [ObjectFieldName]="'ToDate'" [DataContext]="DataContext"></LogDatePicker>
+                                    </td>
+                                    <td style="width:3px"></td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td style="width:5px;">
+                            <div></div>
+                        </td>
+                        <td style="width:150px;">
+                            <ComboBox [ItemsSource]="BusinessUnitFilterList" [Binding]="'Name'" [SelectedItem]="SelectedBusinessUnitFilter" (SelectedItemChanged)="SelectedBusinessUnitFilter = $event"></ComboBox>
+                        </td>
+
+                        <td style="width:5px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width:200px;" *ngIf="SelectedBusinessUnitFilter">
+                            <ComboBox *ngIf="SelectedBusinessUnitFilter.Code != 'A'" [IsDisabled]="SelectedBusinessUnitFilter.Code == 'M'" [ItemsSource]="UsersFilterList" [Binding]="'Name'" [SelectedItem]="SelectedUserFilter" (SelectedItemChanged)="SelectedUserFilter = $event"></ComboBox>
+                            <LogLov *ngIf="SelectedBusinessUnitFilter.Code == 'A'"
+                                    [ObjectFieldName]="'ListOfValuesUserId'"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'User'"
+                                    [HideColumns]="true">
+                            </LogLov>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+
+        </tr>
+        <tr style="min-height:50%">
+            <td>
+                <table>
+                    <tr>
+                        <td style="width:32%">
+                            <table>
+                                <tr class="SectionHeader" style="padding-right:10px">
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <label>Opportunities Won / Lost Ratio</label>
+
+                                                </td>
+                                                <td></td>
+                                                <td style="width:100px">
+                                                    <p class="QueryLinkq" *ngIf="!OpportunitiesWonLostRatioIdExistance" [ngStyle]="{'color': 'gray','text-decoration':'none','cursor':'default'}">By Salesman</p>
+                                                    <p class="QueryLinkq" *ngIf="OpportunitiesWonLostRatioIdExistance" (click)="ViewZoomed('OP')" >By Salesman</p>
+                                                 </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+
+                                   
+                                </tr>
+                                <tr style="height:10px"></tr>
+                                <tr>
+
+                                    <td class="CellStretch">
+
+                                        <table>
+                                            <tr style="height:1px">
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <div [attr.id]="OpportunitiesWonLostRatioId" style="height:100%;width:100%" class="CellContent" (click)="OpportunityClicking('A')"></div>
+                                                            </td>
+                                                            <td style="width:150px;min-width:150px;overflow-y:auto">
+                                                                <div class="MediaFill">
+                                                                    <ScrollViewer [Small]="true">
+                                                                        <div [attr.id]="OpportunityByWonLostLegendId" style="position:relative;width:100%;float:left"></div>
+                                                                    </ScrollViewer>
+                                                                </div>
+                                                            </td>
+
+                                                        </tr>
+                                                    </table>
+                                                </td>                                                          
+                                            </tr>
+
+                                            <tr *ngIf="!OpportunitiesWonLostRatioIdExistance">
+                                                <td style="vertical-align:top">
+                                                    <div style="text-align:center;vertical-align:central;margin-top:10px;width:100%;overflow-y:hidden">
+                                                        <label style="font-size:small;color:gray;text-align:center;vertical-align:central;width:100%;height:100%">No Opportunities</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                    </td>
+
+                                </tr>
+                            </table>
+
+                        </td>
+
+                        <td style="width:10px"></td>
+
+                        <td style="width:32%">
+                            <table>
+                                <tr class="SectionHeader" style="padding-right:10px">
+                                    <td>
+                                        <label>Opportunities by type</label>
+                                    </td>
+                                </tr>
+                                <tr style="height:10px"></tr>
+                                <tr>
+
+                                    <td class="CellStretch">
+
+                                        <table>
+                                            <tr style="height:1px">
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <div [attr.id]="OpportunitiesByTypeId" style="height:100%;width:100%" class="CellContent" (click)="OpportunityClicking('B')"></div>
+                                                            </td>
+                                                            <td style="width:150px;min-width:150px;overflow-y:auto">
+                                                                <div class="MediaFill">
+                                                                    <ScrollViewer [Small]="true">
+                                                                        <div [attr.id]="OpportunityByTypeLegendId" style="position:relative;width:100%;float:left"></div>
+                                                                    </ScrollViewer>
+                                                                </div>
+                                                            </td>
+
+                                                        </tr>
+                                                    </table>
+                                                </td>                                                       
+                                            </tr>
+
+                                            <tr *ngIf="!OpportunitiesByTypeIdExistance">
+                                                <td style="vertical-align:top">
+                                                    <div style="text-align:center;vertical-align:central;margin-top:10px;width:100%;overflow-y:hidden">
+                                                        <label style="font-size:small;color:gray;text-align:center;vertical-align:central;width:100%;height:100%">No Opportunities</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                    </td>
+
+                                </tr>
+                            </table>
+
+                        </td>
+
+                        <td style="width:10px"></td>
+
+
+                        <td style="width:32%">
+                            <table>
+                                <tr class="SectionHeader">
+                                    <td>
+                                        <label>Opportunities by Lead Source type</label>
+                                    </td>
+                                </tr>
+                                <tr style="height:10px"></tr>
+                                <tr>
+
+                                    <td class="CellStretch">
+
+                                        <table>
+                                            <tr style="height:1px">
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <div [attr.id]="OpportunitiesbyLeadSourcetypeId" style="height:100%;width:100%" class="CellContent" (click)="OpportunityClicking('C')"></div>
+                                                            </td>
+                                                            <td style="width:150px;min-width:150px;overflow-y:auto">
+                                                                <div class="MediaFill">
+                                                                    <ScrollViewer [Small]="true">
+                                                                        <div [attr.id]="OpportunityByLeadSourceLegendId" style="position:relative;width:100%;float:left"></div>
+                                                                    </ScrollViewer>
+                                                                </div>
+                                                            </td>
+
+                                                        </tr>
+                                                    </table>
+                                                </td>                                                  
+                                            </tr>
+
+                                            <tr *ngIf="!OpportunitiesbyLeadSourcetypeIdExistance">
+                                                <td style="vertical-align:top">
+                                                    <div style="text-align:center;vertical-align:central;margin-top:10px;width:100%;overflow-y:hidden">
+                                                        <label style="font-size:small;color:gray;text-align:center;vertical-align:central;width:100%;height:100%">No Opportunities</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                    </td>
+
+                                </tr>
+                            </table>
+
+                        </td>
+
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr style="min-height:50%">
+            <td>
+                <table>
+                    <tr>
+                        <td>
+
+
+                            <table>
+                                <tr class="SectionHeader">
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td> <label>Completed Activities</label></td>
+                                                <td></td>
+                                                <td style="width:100px">
+                                                    <p class="QueryLinkq" *ngIf="!CompletedActivitiesIdExistance" [ngStyle]="{'color': 'gray','text-decoration':'none','cursor':'default'}">By Salesman</p>
+                                                    <p class="QueryLinkq" *ngIf="CompletedActivitiesIdExistance" (click)="ViewZoomed('AC')">By Salesman</p>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td></td>
+                                    
+                                </tr>
+                                <tr style="height:10px"></tr>
+                                <tr>
+
+                                    <td class="CellStretch">
+
+                                        <table>
+                                            <tr style="height:1px">
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <div [attr.id]="CompletedActivitiesId" style="height:100%;width:100%" class="CellContent" (click)="ActivityClicking()"></div>
+                                                            </td>
+                                                            <td style="width:150px;min-width:150px;overflow-y:auto">
+                                                                <div class="MediaFill">
+                                                                    <ScrollViewer [Small]="true">
+                                                                        <div [attr.id]="ActivityChartLegendId" style="position:relative;width:100%;float:left"></div>
+                                                                    </ScrollViewer>
+                                                                </div>
+                                                            </td>
+
+                                                        </tr>
+                                                    </table>
+                                                </td>                                              
+                                            </tr>
+
+                                            <tr *ngIf="!CompletedActivitiesIdExistance">
+                                                <td style="vertical-align:top">
+                                                    <div style="text-align:center;vertical-align:central;margin-top:10px;width:100%;overflow-y:hidden">
+                                                        <label style="font-size:small;color:gray;text-align:center;vertical-align:central;width:100%;height:100%">No Activities</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                    </td>
+
+                                </tr>
+                            </table>
+
+
+                        </td>
+
+                        <td style="width:10px"></td>
+
+                        <td style="width:50%">
+
+
+                            <table>
+                                <tr class="SectionHeader">
+                                    <td>
+                                        <table>
+                                            <tr>
+
+                                                <td><label>Accepted / Declined Quotes</label></td>
+                                                <td></td>
+                                                <td style="width:100px">
+                                                    <p class="QueryLinkq" *ngIf="!AcceptedDeclinedQuotesExistance" [ngStyle]="{'color': 'gray','text-decoration':'none','cursor':'default'}">By Salesman</p>
+                                                    <p class="QueryLinkq" *ngIf="AcceptedDeclinedQuotesExistance" (click)="ViewZoomed('QT')">By Salesman</p>
+
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                  
+                                </tr>
+                                <tr style="height:10px"></tr>
+                                <tr>
+
+                                    <td class="CellStretch">
+
+                                        <table>
+                                            <tr style="height:1px">
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <div [attr.id]="AcceptedDeclinedQuotes" style="height:100%;width:100%" class="CellContent" (click)="QuoteClicking()"></div>
+                                                            </td>
+                                                            <td style="width:150px;min-width:150px;overflow-y:auto">
+                                                                <div class="MediaFill">
+                                                                    <ScrollViewer [Small]="true">
+                                                                        <div [attr.id]="QuoteLegendId" style="position:relative;width:100%;float:left"></div>
+                                                                    </ScrollViewer>
+                                                                </div>
+                                                            </td>
+
+                                                        </tr>
+                                                    </table>
+                                                </td>                                                
+                                            </tr>
+
+                                            <tr *ngIf="!AcceptedDeclinedQuotesExistance">
+                                                <td style="vertical-align:top">
+                                                    <div style="text-align:center;vertical-align:central;margin-top:10px;width:100%;overflow-y:hidden">
+                                                        <label style="font-size:small;color:gray;text-align:center;vertical-align:central;width:100%;height:100%">No Quotes</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                    </td>
+
+                                </tr>
+                            </table>
+
+
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <table *ngIf="ZoomedChartVisibility">
+      <tr>
+          <td>
+              <table>
+                  <tr style="height:1px">
+                      <td>
+                          <table>
+                              <tr>
+                                  <td style="width:10px"></td>
+                                  <td style="width:55px;vertical-align:top;padding-top:10px">
+                                      <BackButton [Text]="'Back'" (click)="BackButtonClicked()"></BackButton>
+                                  </td>
+                                  <td style="width:10px"></td>
+                                  <td style="vertical-align:top;color:#1B90CB;font-size:15px;padding-top:10px">Top 10</td>
+                                  <td style="width:150px">
+                                      <div [attr.id]="legenddivId" style="position:relative;height:20px;width:100%;float:right"></div>
+                                  </td>
+                              </tr>
+                          </table>
+                      </td>
+                     
+                  </tr>
+
+                  <tr>
+                      <td>
+                          <div [attr.id]="ZoomedChartId" class="CellContent"></div>
+                      </td>
+                  </tr>
+              </table>
+
+          </td>
+      </tr>
+    </table>
+</div>

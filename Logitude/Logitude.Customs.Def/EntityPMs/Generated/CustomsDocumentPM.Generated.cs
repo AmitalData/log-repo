@@ -1,0 +1,751 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Customs.Def.Validators;
+  
+namespace Logitude.Customs.Def.EntityPMs
+{
+   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class CustomsDocumentPM : EntityPM
+   {
+   	  private int tenant ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+	  private string documentsFilingId ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DocumentsFilingId  
+	   {
+	    
+	     get
+		{
+		   return documentsFilingId;
+		 }
+		 set
+		 {
+		   if(documentsFilingId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DocumentsFilingId",OldValue=documentsFilingId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   documentsFilingId=value;
+		   }
+			
+		 }
+	   }
+	  private string customsDocId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomsDocId  
+	   {
+	    
+	     get
+		{
+		   return customsDocId;
+		 }
+		 set
+		 {
+		   if(customsDocId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsDocId",OldValue=customsDocId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customsDocId=value;
+		   }
+			
+		 }
+	   }
+	  private string documentStatusCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DocumentStatusCode  
+	   {
+	    
+	     get
+		{
+		   return documentStatusCode;
+		 }
+		 set
+		 {
+		   if(documentStatusCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DocumentStatusCode",OldValue=documentStatusCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   documentStatusCode=value;
+		   }
+			
+		 }
+	   }
+	  private string documentRemarks ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DocumentRemarks  
+	   {
+	    
+	     get
+		{
+		   return documentRemarks;
+		 }
+		 set
+		 {
+		   if(documentRemarks != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DocumentRemarks",OldValue=documentRemarks,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   documentRemarks=value;
+		   }
+			
+		 }
+	   }
+	  private string documentStatusName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DocumentStatusName  
+	   {
+	    
+	     get
+		{
+		   return documentStatusName;
+		 }
+		 set
+		 {
+		   if(documentStatusName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DocumentStatusName",OldValue=documentStatusName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   documentStatusName=value;
+		   }
+			
+		 }
+	   }
+	  private string extension ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Extension  
+	   {
+	    
+	     get
+		{
+		   return extension;
+		 }
+		 set
+		 {
+		   if(extension != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Extension",OldValue=extension,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   extension=value;
+		   }
+			
+		 }
+	   }
+	  private double? fileSize ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public double? FileSize  
+	   {
+	    
+	     get
+		{
+		   return fileSize;
+		 }
+		 set
+		 {
+		   if(fileSize != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FileSize",OldValue=fileSize,NewValue=value,PropertyType="double?"};
+		    NotifyPropertyChanged(values);
+		   fileSize=value;
+		   }
+			
+		 }
+	   }
+	  private string name ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Name  
+	   {
+	    
+	     get
+		{
+		   return name;
+		 }
+		 set
+		 {
+		   if(name != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Name",OldValue=name,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   name=value;
+		   }
+			
+		 }
+	   }
+	  private string documentTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DocumentTypeCode  
+	   {
+	    
+	     get
+		{
+		   return documentTypeCode;
+		 }
+		 set
+		 {
+		   if(documentTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DocumentTypeCode",OldValue=documentTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   documentTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string documentTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DocumentTypeName  
+	   {
+	    
+	     get
+		{
+		   return documentTypeName;
+		 }
+		 set
+		 {
+		   if(documentTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DocumentTypeName",OldValue=documentTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   documentTypeName=value;
+		   }
+			
+		 }
+	   }
+
+	   private List<CustomsDocumentMetaDataValuePM> customsDocumentMetaDataValues;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("CustomsDocumentCustomsDocumentMetaDataValue", "DocumentsFilingId","CustomsDocumentId")]
+	   [DataMember]
+	   public virtual List<CustomsDocumentMetaDataValuePM> CustomsDocumentMetaDataValues  
+	   {
+	        get
+             {
+                 if (customsDocumentMetaDataValues == null)
+                 {
+                     customsDocumentMetaDataValues = new List<CustomsDocumentMetaDataValuePM>();
+                 }
+                 return customsDocumentMetaDataValues;
+              }
+             set { customsDocumentMetaDataValues = value; }
+	    }
+		   
+	   private List<CustomsDocumentMetaDataValuePM>  deletedCustomsDocumentMetaDataValues;
+	   public virtual List<CustomsDocumentMetaDataValuePM> DeletedCustomsDocumentMetaDataValues  
+	   {
+	        get
+             {
+                 if ( deletedCustomsDocumentMetaDataValues == null)
+                 {
+                      deletedCustomsDocumentMetaDataValues = new List<CustomsDocumentMetaDataValuePM>();
+                 }
+                 return  deletedCustomsDocumentMetaDataValues;
+              }
+             set {  deletedCustomsDocumentMetaDataValues = value; }
+	    }
+	  	  private bool isMetaDataReady ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsMetaDataReady  
+	   {
+	    
+	     get
+		{
+		   return isMetaDataReady;
+		 }
+		 set
+		 {
+		   if(isMetaDataReady != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsMetaDataReady",OldValue=isMetaDataReady,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isMetaDataReady=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? customRecievedDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? CustomRecievedDate  
+	   {
+	    
+	     get
+		{
+		   return customRecievedDate;
+		 }
+		 set
+		 {
+		   if(customRecievedDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomRecievedDate",OldValue=customRecievedDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   customRecievedDate=value;
+		   }
+			
+		 }
+	   }
+	  private int documentVersion ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int DocumentVersion  
+	   {
+	    
+	     get
+		{
+		   return documentVersion;
+		 }
+		 set
+		 {
+		   if(documentVersion != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DocumentVersion",OldValue=documentVersion,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   documentVersion=value;
+		   }
+			
+		 }
+	   }
+	  private string externalAttachmentId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExternalAttachmentId  
+	   {
+	    
+	     get
+		{
+		   return externalAttachmentId;
+		 }
+		 set
+		 {
+		   if(externalAttachmentId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExternalAttachmentId",OldValue=externalAttachmentId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   externalAttachmentId=value;
+		   }
+			
+		 }
+	   }
+	  private bool isPartOfDeclaration ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsPartOfDeclaration  
+	   {
+	    
+	     get
+		{
+		   return isPartOfDeclaration;
+		 }
+		 set
+		 {
+		   if(isPartOfDeclaration != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsPartOfDeclaration",OldValue=isPartOfDeclaration,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isPartOfDeclaration=value;
+		   }
+			
+		 }
+	   }
+	  private string declarationId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DeclarationId  
+	   {
+	    
+	     get
+		{
+		   return declarationId;
+		 }
+		 set
+		 {
+		   if(declarationId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeclarationId",OldValue=declarationId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   declarationId=value;
+		   }
+			
+		 }
+	   }
+	  private string claimId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ClaimId  
+	   {
+	    
+	     get
+		{
+		   return claimId;
+		 }
+		 set
+		 {
+		   if(claimId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ClaimId",OldValue=claimId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   claimId=value;
+		   }
+			
+		 }
+	   }
+	  private string currentEntityId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CurrentEntityId  
+	   {
+	    
+	     get
+		{
+		   return currentEntityId;
+		 }
+		 set
+		 {
+		   if(currentEntityId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CurrentEntityId",OldValue=currentEntityId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   currentEntityId=value;
+		   }
+			
+		 }
+	   }
+	  private string currentTableName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CurrentTableName  
+	   {
+	    
+	     get
+		{
+		   return currentTableName;
+		 }
+		 set
+		 {
+		   if(currentTableName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CurrentTableName",OldValue=currentTableName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   currentTableName=value;
+		   }
+			
+		 }
+	   }
+	  private string currentCustomsDocumentsTicketId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CurrentCustomsDocumentsTicketId  
+	   {
+	    
+	     get
+		{
+		   return currentCustomsDocumentsTicketId;
+		 }
+		 set
+		 {
+		   if(currentCustomsDocumentsTicketId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CurrentCustomsDocumentsTicketId",OldValue=currentCustomsDocumentsTicketId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   currentCustomsDocumentsTicketId=value;
+		   }
+			
+		 }
+	   }
+	  private string externalEntityName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExternalEntityName  
+	   {
+	    
+	     get
+		{
+		   return externalEntityName;
+		 }
+		 set
+		 {
+		   if(externalEntityName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExternalEntityName",OldValue=externalEntityName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   externalEntityName=value;
+		   }
+			
+		 }
+	   }
+	  private string externalEntityReference ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExternalEntityReference  
+	   {
+	    
+	     get
+		{
+		   return externalEntityReference;
+		 }
+		 set
+		 {
+		   if(externalEntityReference != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExternalEntityReference",OldValue=externalEntityReference,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   externalEntityReference=value;
+		   }
+			
+		 }
+	   }
+	  private string documentId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DocumentId  
+	   {
+	    
+	     get
+		{
+		   return documentId;
+		 }
+		 set
+		 {
+		   if(documentId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DocumentId",OldValue=documentId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   documentId=value;
+		   }
+			
+		 }
+	   }
+	  private string documentsFilingCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DocumentsFilingCode  
+	   {
+	    
+	     get
+		{
+		   return documentsFilingCode;
+		 }
+		 set
+		 {
+		   if(documentsFilingCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DocumentsFilingCode",OldValue=documentsFilingCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   documentsFilingCode=value;
+		   }
+			
+		 }
+	   }
+	  private bool isSendToQueue ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsSendToQueue  
+	   {
+	    
+	     get
+		{
+		   return isSendToQueue;
+		 }
+		 set
+		 {
+		   if(isSendToQueue != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsSendToQueue",OldValue=isSendToQueue,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isSendToQueue=value;
+		   }
+			
+		 }
+	   }
+	  private bool forceRemoveCustomsDocId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool ForceRemoveCustomsDocId  
+	   {
+	    
+	     get
+		{
+		   return forceRemoveCustomsDocId;
+		 }
+		 set
+		 {
+		   if(forceRemoveCustomsDocId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ForceRemoveCustomsDocId",OldValue=forceRemoveCustomsDocId,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   forceRemoveCustomsDocId=value;
+		   }
+			
+		 }
+	   }
+	  private string collateralId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CollateralId  
+	   {
+	    
+	     get
+		{
+		   return collateralId;
+		 }
+		 set
+		 {
+		   if(collateralId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CollateralId",OldValue=collateralId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   collateralId=value;
+		   }
+			
+		 }
+	   }
+	  private bool isDigitallySigned ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsDigitallySigned  
+	   {
+	    
+	     get
+		{
+		   return isDigitallySigned;
+		 }
+		 set
+		 {
+		   if(isDigitallySigned != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsDigitallySigned",OldValue=isDigitallySigned,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isDigitallySigned=value;
+		   }
+			
+		 }
+	   }
+	  private string signersList ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SignersList  
+	   {
+	    
+	     get
+		{
+		   return signersList;
+		 }
+		 set
+		 {
+		   if(signersList != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SignersList",OldValue=signersList,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   signersList=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

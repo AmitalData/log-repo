@@ -1,0 +1,40 @@
+Severity: High
+Object: batchservicesdefinitions
+Title: DropColumn
+The column(s) "INACTIVE", numberofthreads on table batchservicesdefinitions will be dropped. Any data in the columns will be lost.
+----------------------------------------------------
+Severity: High
+Object: zzzcontactpasswords
+Title: DropTable
+The table zzzcontactpasswords will be dropped. Any data in the table will be lost.
+----------------------------------------------------
+Severity: Medium
+Object: apicredintials
+Title: RebuildTable
+The table apicredintials will be rebuilt. To rebuild a table, the table is dropped and then recreated. A temporary table is used to store data when the table is dropped. Note that rebuilding a table can cause the deployment script to run slowly.
+----------------------------------------------------
+Severity: Medium
+Object: monitorservicelastupdates
+Title: RebuildTable
+The table monitorservicelastupdates will be rebuilt. To rebuild a table, the table is dropped and then recreated. A temporary table is used to store data when the table is dropped. Note that rebuilding a table can cause the deployment script to run slowly.
+----------------------------------------------------
+Severity: Medium
+Object: tenantmanagementlicenses
+Title: RebuildTable
+The table tenantmanagementlicenses will be rebuilt. To rebuild a table, the table is dropped and then recreated. A temporary table is used to store data when the table is dropped. Note that rebuilding a table can cause the deployment script to run slowly.
+----------------------------------------------------
+Severity: Medium
+Object: apicredintials
+Title: PossibleDataTruncation
+Make sure the data in column "ID" can fit in a VARCHAR2(15 CHAR).
+----------------------------------------------------
+Severity: Medium
+Object: monitorservicelastupdates
+Title: PossibleDataTruncation
+Make sure the data in column code can fit in a VARCHAR2(15 CHAR).
+----------------------------------------------------
+Severity: Medium
+Object: tenantmanagementlicenses
+Title: PossibleDataTruncation
+Make sure the data in column "ID" can fit in a VARCHAR2(15 CHAR).
+----------------------------------------------------

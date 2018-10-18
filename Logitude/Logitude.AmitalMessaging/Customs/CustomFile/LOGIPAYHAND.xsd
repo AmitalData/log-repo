@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://tempuri.org/LOGIPAYHAND" elementFormDefault="qualified" targetNamespace="http://tempuri.org/LOGIPAYHAND" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="LOGIPAYHAND">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="LogitudePayHand" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LogitudePayHand">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="logitude_file" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="logitude_file" type="xs:string" />
+</xs:schema>

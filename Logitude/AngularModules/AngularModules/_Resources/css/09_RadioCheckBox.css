@@ -1,0 +1,111 @@
+﻿/* CheckBox | Radio Buttons */
+/*http://ryanfait.com/resources/custom-checkboxes-and-radio-buttons/*/
+
+.RadioButton input:focus + label {
+    border: 1px solid #3BB3E2;
+}
+
+.RadioButton input:disabled + label {
+    opacity: 0.5;
+    pointer-events: none;    
+}
+
+.RadioButton input:checked + label {
+    background-image: url('../Images/Icons/All/RadioButtonChecked.png');
+    background-repeat: no-repeat;
+    background-position: 3px 3px;
+    background-color: white;
+    background-size: 8.2px 8px;
+}
+
+.RadioButton label {
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+}
+
+.RadioButton label {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    display: block;
+    background: white;
+    border: 1px solid #AAAAAA;
+    user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-shadow: inset 0 0 3px #AAAAAA;
+    -webkit-box-shadow: inset 0 0 3px #AAAAAA;
+    box-shadow: inset 0 0 3px #AAAAAA;
+    line-height: 15px;
+    text-indent: 20px;
+    font-size: 11px;
+    color: #6E7172;
+    position: absolute;
+}
+
+.RadioButton input {
+    opacity:0;
+    display: none;
+    position: absolute;
+}
+
+.RadioButton {
+    position: relative;
+    display: block;
+    height: 16px;
+}
+
+
+/*------------
+    Check Box    
+------------*/
+.CheckBox input:focus + label {
+    border: 1px solid #3BB3E2;
+}
+.CheckBox input:disabled + label {
+    opacity: 0.5;
+    pointer-events: none;
+}
+.CheckBox input:checked + label {
+    background: url('../Images/Icons/All/CheckBoxIcon.png') center center no-repeat white;
+}
+.CheckBox label {
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+}
+.CheckBox label {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    display: block;
+    background: white;
+    border: 1px solid #AAAAAA;
+    user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -moz-box-shadow: inset 0 0 3px #AAAAAA;
+    -webkit-box-shadow: inset 0 0 3px #AAAAAA;
+    box-shadow: inset 0 0 3px #AAAAAA;
+    line-height: 15px;
+    text-indent: 20px;
+    font-size: 11px;
+    color: #6E7172;
+    position: absolute;
+}
+.CheckBox input {    
+    opacity: 0;
+    display: none;
+    position: absolute;
+}
+.CheckBox {
+    position: relative;
+    display: block;
+    height: 16px;
+}

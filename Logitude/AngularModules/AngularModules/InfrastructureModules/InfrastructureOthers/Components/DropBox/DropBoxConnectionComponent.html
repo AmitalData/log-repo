@@ -1,0 +1,84 @@
+﻿
+<style>
+    .SendRequestButton {
+        width: 100px;
+        height: 30px;
+        background-color: #ffffff;
+        background-image: -moz-linear-gradient(top, #ffffff -20%, #008553 100%);
+        background-image: -webkit-linear-gradient(top, #ffffff -20%, #008553 100%);
+        background-image: -ms-linear-gradient(top, #ffffff -20%, #008553 100%);
+        background-image: linear-gradient(top, #ffffff -20%, #008553 100%);
+        background-image: -o-linear-gradient(top, #ffffff -20%, #008553 100%);
+        background-image: -webkit-gradient(linear, right top, right bottom, color-stop(-20%,#ffffff), color-stop(100%,#008553));
+        border: solid 1px #006C53;
+        color: white;
+    }
+
+        .SendRequestButton:hover {
+            opacity: 0.8;
+        }
+</style>
+<table>
+    <tr style="height:1px;">
+        <td>
+            <span style="font-size:12px;text-align:left;">Connect to your dropbox account to activate<br /> integration with external systems</span>
+        </td>
+    </tr>
+    <tr style="height:35px;">
+        <td></td>
+    </tr>
+    <tr *ngIf="IsConnected == false" style="height:1px;">
+        <td>
+            <div style="text-align:center;">
+                <button (click)="ConnectToDropBox()" class="Button" style="width:70px;margin-left:132px;">Connect</button>
+            </div>
+        </td>
+    </tr>
+    <tr *ngIf="IsConnected == true" style="height:1px;">
+        <td>
+            <table>
+                <tr>
+                    <td><button (click)="Disconnect()" class="Button" style="width:107px;float:right;">Disconnect</button></td>
+                    <td><div style="width:7px;"></div></td>
+                    <td><button (click)="CheckConnection()" class="Button" style="width:107px;">Check Connection</button></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr style="height:10px;">
+        <td></td>
+    </tr>
+    <tr style="height:1px;">
+        <td style="text-align:center;">
+            <span *ngIf="IsConnected == true" style="font-size:12px;text-align:left;color:green;">Connected to {{DropBoxEmail}}</span>
+            <span *ngIf="IsConnected == false" style="font-size:12px;text-align:left;color:red;">Not Connected</span>
+        </td>
+    </tr>
+    <tr style="height:35px;">
+        <td></td>
+    </tr>
+    <tr style="height:1px;">
+        <td>
+            <table>
+                <tr>
+                    <td>
+                        <div>
+                            <button *ngIf="ShowTestButton == true" class="Button" (click)="SendTestFile()" style="width:90px;float: left;margin-left: 7px;margin-right: 7px;">Send Test File</button>
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <button class="RedButton" (click)="CloseBtnClicked()" style="width:57px;float: right;margin-left: 7px;margin-right: 7px;">Close</button>
+                        </div>
+                    </td> 
+                </tr>
+            </table>
+        </td> 
+    </tr>
+    <tr>
+        <td>
+            <div></div>
+        </td>
+    </tr>
+</table>
+<!--<BusyIndicator [Text]="BusyIndicatorText" [IsBusy]="ShowBusyIndicator"></BusyIndicator>-->

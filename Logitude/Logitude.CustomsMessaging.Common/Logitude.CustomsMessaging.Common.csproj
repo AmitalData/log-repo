@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F0039DBE-4A1A-4755-8F37-E4005EA74746}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Logitude.CustomsMessaging.Common</RootNamespace>
+    <AssemblyName>Logitude.CustomsMessaging.Common</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'All Projects|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\All Projects\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|AnyCPU'">
+    <OutputPath>bin\None\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Gen\CustomDomainServiceErrorCodesEnum.Shared.cs" />
+    <Compile Include="Gen\LuhnAlgorithm.Shared.cs" />
+    <Compile Include="Gen\SubscribeSignServer.Shared.cs" />
+    <Compile Include="RequestParams\AddAddressContactForClient.Shared.cs" />
+    <Compile Include="RequestParams\CargoSplitRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\CLAIM_2340_ClaimRequestRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\CourierBOLQueryRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\CreateClientRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\CustomItemLegalDemandsRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\CustomsBookInRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\DeclarationFilterRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\ExportDeclarationDataRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\GuaranteeCertificateRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\GuaranteeRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\CreditQueryRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\NewVehicleRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\RTGSInfoQueryRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\SendALLCorrectRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\SendPayReadyLowRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\StorageEntranceUnloadingRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\TPG_NG_8244_ClaimFileFilterRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\TSH_NG_8285_Web01_PaymentRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\CustomRequestStep.Shared.cs" />
+    <Compile Include="RequestParams\DeficitFileFilterRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\DF_NG_8302_Web03_DeclarationPrintRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityRequestParam.Shared.cs" />
+    <Compile Include="RequestParams\FaultProceduralRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\BankAccountToRefundRequestParams.Shared.cs" />
+    <Compile Include="DCAParams\DCAServerUploadResponse.Shared.cs" />
+    <Compile Include="DCAParams\DCAServerUploadStatus.Shared.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RequestParams\BlockListInWarehouseRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\CargoQueryRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\CD_NG_8347_Web01_CurrencyRateSearchRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\CH_NG_191_MSG2_ChangingTimeRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\ClientSearchRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\CollateralRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\ConstraintAgentAnswerRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\ConstraintAgentObjectionRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\ConstraintApprovalListRequestParams.cs" />
+    <Compile Include="RequestParams\ConstraintApprovalRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\DeclarationRestoreRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\DeclarationStatusRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\EV_NG_8215_MSG23002_ConstraintApprovalDecisionRequestParams.cs" />
+    <Compile Include="RequestParams\GenericRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\GuaranteeReturnRequesRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\ImporterDeclarationRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\MANIFESTRequestRequestParams.cs" />
+    <Compile Include="RequestParams\MasavPaymentsToAgentRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\MasterBOLQueryRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\MessageRestoreRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\MessageToAgentRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\MorningMessageRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\NewPaymentRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\RequestParamsBase.Shared.cs" />
+    <Compile Include="RequestParams\RequestSheetParam.Shared.cs" />
+    <Compile Include="RequestParams\RequiredDocumentRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\SpecialActivityRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\ST_8328_Web01_WarehouseBlockBalanceRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\CustomFileCreditRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\SystemTableRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\Unifreight_L2US01RequestParam.cs" />
+    <Compile Include="RequestParams\UpdateDeleteVehicleRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\VE_MSG010_VendorInsertUpdateDeleteMessageRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\VE_MSG013_VendorAddCommunicationDeviceRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\VE_MSG051_VendorSearchByCustomsAgentRequestParams.Shared.cs" />
+    <Compile Include="ResponseData\AddAttachmentResponseData.Shared.cs" />
+    <Compile Include="ResponseData\BlockListInWarehouseResponseData.Shared.cs" />
+    <Compile Include="ResponseData\CargoQueryResponseData.Shared.cs" />
+    <Compile Include="ResponseData\CD_NG_8348_Web02_CurrencyRateDetailResponseData.Shared.cs" />
+    <Compile Include="ResponseData\CH_NG_192_MSG3_ApproveChangeTimeResponseData.Shared.cs" />
+    <Compile Include="ResponseData\ClaimAnswerResponseData.Shared.cs" />
+    <Compile Include="ResponseData\ClientSearchByIDResponseData.Shared.cs" />
+    <Compile Include="ResponseData\ClientSearchResponseData.Shared.cs" />
+    <Compile Include="ResponseData\ConstraintAgentAnswerResponseData.Shared.cs" />
+    <Compile Include="ResponseData\CourierBOLQueryResponseData.Shared.cs" />
+    <Compile Include="ResponseData\CustomItemLegalDemandsResponseData.Shared.cs" />
+    <Compile Include="ResponseData\CustomsBookInResponseData.Shared.cs" />
+    <Compile Include="ResponseData\DeclarationFilterResponseData.Shared.cs" />
+    <Compile Include="ResponseData\ExportDeclarationDataResponseData.Shared.cs" />
+    <Compile Include="ResponseData\GuaranteeCertificateResponseData.Shared.cs" />
+    <Compile Include="ResponseData\GuaranteeResponseData.Shared.cs" />
+    <Compile Include="ResponseData\CreditQueryResponseData.Shared.cs" />
+    <Compile Include="ResponseData\PaymentOrderReplyResponseData.Shared.cs" />
+    <Compile Include="ResponseData\ReleaseGoodsResponseData.Shared.cs" />
+    <Compile Include="ResponseData\RequiredDocumentResponseData.Shared.cs" />
+    <Compile Include="ResponseData\RTGSInfoQueryResponseData.Shared.cs" />
+    <Compile Include="ResponseData\StorageEntranceUnloadingResponseData.Shared.cs" />
+    <Compile Include="ResponseData\SystemTableResponseData.Shared.cs" />
+    <Compile Include="ResponseData\TPG_NG_8245_ClaimFilesDetailResponseData.Shared.cs" />
+    <Compile Include="ResponseData\TSH_NG_8285_Web01_PaymentResponseData.Shared.cs" />
+    <Compile Include="ResponseData\DeclarationPrintM.Shared.cs" />
+    <Compile Include="ResponseData\DeclarationPrintResponseData.Shared.cs" />
+    <Compile Include="ResponseData\DeclarationRestoreResponseData.Shared.cs" />
+    <Compile Include="ResponseData\DeclarationStatusResponseData.Shared.cs" />
+    <Compile Include="ResponseData\DeficitFilesDetailResponseData.Shared.cs" />
+    <Compile Include="ResponseData\DF_NG_2754_MSG10004_ImportDeclarationResponseData.Shared.cs" />
+    <Compile Include="ResponseData\D_NG_2716_MSG22001_AddAttachmentResponseData.Shared.cs" />
+    <Compile Include="ResponseData\EV_NG_8215_MSG23002_ConstraintApprovalDecisionResponseData.cs" />
+    <Compile Include="ResponseData\FaultProceduralResponseData.Shared.cs" />
+    <Compile Include="ResponseData\ImporterDeclarationResponseData.Shared.cs" />
+    <Compile Include="ResponseData\INF_MSG_GenericResponseData.Shared.cs" />
+    <Compile Include="ResponseData\MANIFESTRequestResponseData.cs" />
+    <Compile Include="ResponseData\MasavPaymentsToAgentResponseData.Shared.cs" />
+    <Compile Include="ResponseData\MasterBOLFeedBackResponseData.Shared.cs" />
+    <Compile Include="ResponseData\MessageRestoreResponseData.Shared.cs" />
+    <Compile Include="ResponseData\MessageToAgentResponseData.Shared.cs" />
+    <Compile Include="ResponseData\MorningMessageResponseData.Shared.cs" />
+    <Compile Include="ResponseData\NewPaymentResponseData.Shared.cs" />
+    <Compile Include="ResponseData\ResponseDataBase.Shared.cs" />
+    <Compile Include="ResponseData\ST_8328_Web01_WarehouseBlockBalanceResponseData.Shared.cs" />
+    <Compile Include="ResponseData\CustomFileCreditResponseData.Shared.cs" />
+    <Compile Include="ResponseData\Unifreight_L2US01ResponseData.cs" />
+    <Compile Include="ResponseData\VE_MSG010_VendorInsertUpdateDeleteResponseData.Shared.cs" />
+    <Compile Include="ResponseData\VE_MSG052_VendorSearchResultsForCustomsAgentResponseData.Shared.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="RequestParams\CustomsStepEnum.Shared.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

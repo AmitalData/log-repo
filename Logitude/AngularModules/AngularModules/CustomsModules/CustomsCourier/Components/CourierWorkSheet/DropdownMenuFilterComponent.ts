@@ -1,0 +1,119 @@
+import { Component, EventEmitter, Output, Input, OnInit, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { AppTool } from '../../../../Infrastructure/Tools';
+import { ResponseDataBase, CustomsStepEnum } from '../../../../Customs/DataContract/ResponseData/ResponseDataBase';
+import { CustomSendOptionsArgs, RequestParamsBase, SendRequestVIA} from '../../../../Customs/DataContract/RequestParams/RequestParamsBase';
+import { CommunicationLogStepListService } from '../../../../Common/Services/ExtendedLists/CommunicationLogStepListService';
+import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+
+@Component({
+    selector: 'courier-filter-button',
+    moduleId: module.id,
+    host: { '(document:click)': 'handleClick($event)', },
+    templateUrl: 'DropdownMenuFilterComponent.html',
+})
+
+export class DropdownMenuFilterComponent implements OnInit {
+    @Input()
+    public IsDisabled: boolean
+    @Input()
+    public Dropdownbutton_Text: string = "Show Dropdown Content";
+  @Output()
+  public DropdownMenuButtonClicked: EventEmitter<any> = new EventEmitter<any>();
+
+    private _CustomSendOptionsArgs: CustomSendOptionsArgs;
+    public _DropdownDisplay: string = 'none';
+    private _ElementRef: any;
+
+    static MyId: number = 0;
+    static LastDropdownMenuFilterId: number = 0;
+    public _DropdownMenuFilterComponentId: string;
+    public _DropdownMenuFilterComponentMenuId: string;
+    MyDropdownMenuFilterId: number;
+
+  constructor(private _CD: ChangeDetectorRef,myElement: ElementRef) {
+        this._ElementRef = myElement;
+        ///this.DataContext = this; 
+        this._CustomSendOptionsArgs = new CustomSendOptionsArgs();
+        this._CustomSendOptionsArgs.ForcePersonalSign = false;
+        var curId = DropdownMenuFilterComponent.MyId++;
+        this.MyDropdownMenuFilterId = curId;
+        this._DropdownMenuFilterComponentId = "DropdownMenuFilterComponent_" + curId;
+        this._DropdownMenuFilterComponentMenuId = "DropdownButtonComponentMenuId_" + curId;
+    }
+
+  handleClick(event) {
+    if (this._DropdownDisplay == 'none') {
+      return;
+    }
+        var clickedComponent = event.target;
+        var inside = false;
+        let conter = 0;
+        do {
+            if (clickedComponent === this._ElementRef.nativeElement) {
+                inside = true;
+                break;
+            }
+            if (clickedComponent.class === "class-dropdownfilter-content") {
+                inside = true;
+                break;
+            }
+            if (conter > 50) {
+                break;
+            }
+            conter++;
+            clickedComponent = clickedComponent.parentNode;
+        } while (clickedComponent);
+        if (inside) {
+
+        } else {
+
+            //if (this._DropdownDisplay == 'block') {
+            //    this.DropdowndisplayToggle(null);
+          //}
+          this.DropdownDisplayClose();
+        }
+    }
+
+    ngOnInit() {
+    }
+
+    DropdownDisplayClose() {
+      this._DropdownDisplay = 'none';
+      this._CD.detectChanges();
+    }
+
+
+    Width = -60;
+    Height = -40;
+
+    public static EnsureLastDropdownMenuIsClosed() {
+        //var lastDropdownMenuFilter = document.getElementById("DropdownButtonComponentMenuId_" + DropdownMenuFilterComponent.LastDropdownMenuFilterId);
+        //if (!AppTool.IsNullOrEmpty(lastDropdownMenuFilter)) {
+        //    lastDropdownMenuFilter.style.display = 'none';
+        //}
+  }
+  DropdownMenuButtonClick(event) {
+    this.DropdowndisplayToggle(event);
+    this.DropdownMenuButtonClicked.emit(event);
+
+  }
+    DropdowndisplayToggle(event) {
+        if (!AppTool.IsNullOrEmpty(event)){
+           // event.stopPropagation();
+        }
+        DropdownMenuFilterComponent.LastDropdownMenuFilterId = this.MyDropdownMenuFilterId;
+        if (this._DropdownDisplay == 'none') {
+            var item = document.getElementById(this._DropdownMenuFilterComponentId);
+            var itemRect = item.getBoundingClientRect();
+            document.getElementById(this._DropdownMenuFilterComponentMenuId).style.top =
+                (itemRect.top + 27) + 'px';
+            document.getElementById(this._DropdownMenuFilterComponentMenuId).style.left =
+                (itemRect.left - 50) + 'px';//min-width: 80px
+            this._DropdownDisplay = 'block';
+        } else {
+            this._DropdownDisplay = 'none';
+      }
+      this._CD.detectChanges();
+    }
+
+}

@@ -1,0 +1,58 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization; 
+
+namespace Logitude.Customs.Data.EntityLists
+{
+   [DataContract]
+   public partial class CustomBankList
+   {
+   
+       [Key]
+       [DataMember]
+       public string Id  { get; set; }
+       [DataMember]
+       public int Tenant  { get; set; }
+       [DataMember]
+       public string InternalCode  { get; set; }
+       [DataMember]
+       public string BankCode  { get; set; }
+       [DataMember]
+       public string BranchCode  { get; set; }
+       [DataMember]
+       public string AccountNumber  { get; set; }
+       [DataMember]
+       public string LocalName  { get; set; }
+       [DataMember]
+       public string EnglishName  { get; set; }
+       [DataMember]
+       public bool InActive  { get; set; }
+       [DataMember]
+       public string PayerTypeCode  { get; set; }
+       [DataMember]
+       public string BankAddress  { get; set; }
+       [DataMember]
+       public string PayerTypeName  { get; set; }
+       [DataMember]
+       public bool ClientBank  { get; set; }
+       [DataMember]
+       public string CardId  { get; set; }
+       [DataMember]
+       public string SearchFields  { get; set; }
+       [DataMember]
+       public string BankName  { get; set; }
+       [DataMember]
+       public string BranchName  { get; set; }
+       [DataMember]
+       public string CustomsBranchId  { get; set; }
+       [DataMember]
+       public string Name  { get; set; }
+   }
+
+}
+	 

@@ -1,0 +1,107 @@
+﻿import {Component, ChangeDetectorRef} from '@angular/core';
+import {WebFreightDomainService} from '../../../Infrastructure/Services/WebFreightDomainService';
+import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
+import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
+import {ShipmentPMService} from '../../../Shipment/Services/StandardPMs/ShipmentPMService';
+import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
+import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
+import {DocumentsFilingExtendedPMService} from '../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
+import {ShipmentAdditionalCloudDataService} from '../../../Shipment/Services/Others/ShipmentAdditionalCloudDataService';
+import {AppTool} from '../../../Infrastructure/Tools';
+
+@Component({
+
+    template: `<table *ngIf="ShowButtons == true">
+                <tr style="height:1px;"> 
+                    <td>
+                        <div style="height:30px;">
+                            <button class="Button" (click)="ApproveButtonClicked()" style="width:122px;margin:4px;">Declaration Approval</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            `
+})
+
+export class ApprovePaymentButtonListTemplate {
+    //
+    // <td *ngIf="this.HasSharedDocs == false" >
+    //<div style="height:30px;" >
+    //    <span style="color:red;" > No documents were shared with agent yet.</span>
+    //        < /div>
+    //        < /td>
+    public rowData: any;
+    public fieldName: any;
+    public Source: any;
+    public ConnectBtn: string = "Connect";
+    public Width: number = 57;
+    public ShowButtons: boolean = true;
+    public HasSharedDocs: boolean = true;
+    public _ShipmentPMService: ShipmentPMService;
+    public _ShipmentAdditionalCloudDataService: ShipmentAdditionalCloudDataService;
+    public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService;
+    constructor(private CD: ChangeDetectorRef) {
+        this._ShipmentPMService = new ShipmentPMService();
+        this._ShipmentAdditionalCloudDataService = new ShipmentAdditionalCloudDataService();
+        //if (SessionLocator.PrivateLableSettings) {
+        //    this._documentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
+        //    this.Width = 80;
+        //    this.ConnectBtn = SessionLocator.PrivateLableSettings.PrivateLabelShortName + " Connect";
+        //}
+    }
+
+    setVariables(rowData: any, fieldName: string) {
+        this.rowData = rowData; 
+        if (SessionLocator.PrivateLableSettings) {
+            this.ShowButtons = (this.rowData['IsImporterApprovalRequried'] == true);// && AppTool.IsNullOrEmpty(this.rowData['ApprovedByUserName'])
+            //if (SessionLocator.PrivateLableSettings) {
+            //    this._documentsFilingExtendedPMService.IsEntityHasSharedDocs(this.rowData['Id'], SessionLocator.Tenant).subscribe(res => {
+            //        if (res.Result == false) {
+            //            this.HasSharedDocs = false;
+            //        }
+            //    });
+            //}
+        }
+        //this.fieldName = fieldName;
+        //var myService: WebFreightDomainService = new WebFreightDomainService();
+        //if (rowData['PartnerLogoId']){
+        //    myService.getHypridPartnerLogo(rowData['PartnerLogoId']).subscribe(myResult => {
+        //        this.Source = "data:image/JPEG;base64," + myResult;
+        //        this.CD.detectChanges(); 
+        //    });
+        //}
+    } 
+    ApproveButtonClicked() {
+        SessionLocator.CurrentSession.PseventRowSelectEvent.emit("PreventLogBoxSelect");
+        //SessionLocator.CurrentSession.SessionEvent.emit("DisableBusyIndicator");
+        //SessionLocator.CurrentSession.StartBusyIndicator("Loading ...");
+        this._ShipmentPMService.get(this.rowData.Id).subscribe(myResult => {
+            if (!myResult.HasError) {
+                this._ShipmentAdditionalCloudDataService.get(this.rowData.Id).subscribe(AdditionalResult => {
+                    //SessionLocator.CurrentSession.StopBusyIndicator();
+                    var newWindow = new LogitudeWindow();
+                    newWindow.Width = 665;
+                    newWindow.Height = 700;
+                    newWindow.RTL = true;
+                    //newWindow.CustomTitleIcon = "data:image/JPEG;base64," + SessionLocator.PrivateLableSettings.SmallLogo;
+                    newWindow.Title = "אישור היבואן להגשת הצהרת יבוא למכס";
+                    var windowArgs: any = {};
+                    //windowArgs.IsNew = false;
+                    windowArgs.EntityPm = myResult.Result
+                    windowArgs.AdditionalData = AdditionalResult.Result
+                    newWindow.WindowArgs = windowArgs;
+                    //newWindow.Add(control); 
+                    newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/PrivateLabelApprovePaymentComponent');
+                    newWindow.WindowClosed.subscribe(($event: any) => {
+                        SessionLocator.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
+                        //if ($event == "MyShipmentAdded") {
+                        //    SessionLocator.CurrentSession.FireEvent({ Name: 'ReloadShipments' });
+                        //}
+                    });
+                });
+                
+            }
+        });
+    }
+
+}

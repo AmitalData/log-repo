@@ -1,0 +1,127 @@
+﻿
+<table>
+    <tr style="height: 1px;" *ngIf="IsCurrencyFilterVisible">
+        <td>
+            <table>
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 66px;">
+                        <div style="width: 66px;">
+                            <ul class="FiltersMenu">
+                                <li (click)="OnSelectCurrency(ProfitCurrencyCode)" [class.SelectedFilter]="SelectedCurrencyCode === ProfitCurrencyCode" style="width:33px;">
+                                    {{ProfitCurrencyCode}}
+                                </li>
+                                <li (click)="OnSelectCurrency(LocalCurrencyCode)" [class.SelectedFilter]="SelectedCurrencyCode === LocalCurrencyCode" style="width:33px;">
+                                    {{LocalCurrencyCode}}
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 5px;" *ngIf="IsCurrencyFilterVisible">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div class="MediaFill">
+                <div class="SimpleGridView">
+                    <div class="SimpleGridViewHeader">
+                        <table>
+                            <tr>
+                                <td>{{'Shipment.S.Profit.ChargeType' | TextCodeTranslationPipe}}</td>
+                                <td style="width: 120px; min-width: 120px; max-width: 120px; text-align: right; padding-right: 3px;">{{ReceivablesHeader}}</td>
+                                <td style="width: 120px; min-width: 120px; max-width: 120px; text-align: right; padding-right: 3px;">{{PayablesHeader}}</td>
+                                <td style="width: 200px; min-width: 200px; max-width: 200px; text-align: right; padding-right: 3px;">{{'Shipment.S.Profit.Profit' | TextCodeTranslationPipe}} ({{SelectedCurrencyCode}})</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="SimpleGridViewBody">
+                        <table>
+                            <tr class="SimpleGridViewRow" *ngFor="let item of ProfitsCollection">
+
+                                <td class="GridViewCell">
+                                    {{item.ChargeTypeName}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right; padding-right: 3px;">
+                                    {{item.ReceivableAmount | NumbersPipe:'N2'}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right; padding-right: 3px;">
+                                    {{item.PayableAmount | NumbersPipe:'N2'}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px; text-align: right; padding-right: 3px;" [ngStyle]="{color: item.Profit | StringToColorPipe:'number'}">
+                                    {{item.Profit | NumbersPipe:'N2'}}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="4">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 70px;">
+        <td>
+            <div class="MediaFill">
+                <div class="MediaFillRelative WindowSummary">
+                    <div class="MediaFixedPadding5">
+                        <table>
+                            <tr>
+                                <td>
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 120px; vertical-align:top; text-align: right; padding-right: 3px;">
+                                    {{TotalReceivablesText}}
+                                </td>
+
+                                <td style="width: 120px; vertical-align:top; text-align: right; padding-right: 3px;">
+                                    {{TotalPayablesText}}
+                                </td>
+
+                                <td style="width: 200px;">
+                                    <table>
+                                        <tr>
+                                            <td class="Label" style="padding-left: 3px;">{{'Shipment.S.Profit.Profit' | TextCodeTranslationPipe}}</td>
+                                            <td class="Value" style="text-align: right;" [ngStyle]="{color: TotalProfit | StringToColorPipe:'number'}">{{TotalProfitText}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="Label" style="padding-left: 3px;">{{'Shipment.S.Profit.EstimateProfit' | TextCodeTranslationPipe}}</td>
+                                            <td class="Value" style="text-align: right;">{{EstimateProfit | NumbersPipe:'N2'}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="Label" style="padding-left: 3px;">{{'Shipment.S.Profit.Difference' | TextCodeTranslationPipe}}</td>
+                                            <td class="Value" style="text-align: right;" [ngStyle]="{color: Difference | StringToColorPipe:'number'}">{{Difference | NumbersPipe:'N2'}}</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+</table>

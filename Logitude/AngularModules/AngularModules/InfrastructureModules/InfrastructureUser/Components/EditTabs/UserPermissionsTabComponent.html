@@ -1,0 +1,246 @@
+﻿
+<div class="TabHolder">
+    <table>
+        <tr class="TabTitleRow">
+            <td>{{'User.TH.Permissions' | TextCodeTranslationPipe}}</td>
+        </tr>
+
+        <tr>
+            <td>
+                <table>
+                    <tr>
+                        <td style="width: 10px;">
+                            <div></div>
+                        </td>
+
+                        <!-- Branches -->
+                        <td>
+                            <div class="MediaFill">
+                                <table>
+                                    <tr style="height: 1px;">
+                                        <td style="font-size: 14px; color: #1B90CB;">Branches</td>
+                                    </tr>
+
+                                    <tr style="height: 5px;">
+                                        <td></td>
+                                    </tr>
+
+                                    <tr style="height: 1px;">
+                                        <td style="padding-left: 10px;">
+                                            <RadioButton [Name]="'BranchesRadio'" [IsEnabled]="IsEditingEnabled" [IsChecked]="IsNotBranchRestricted" (Checked)="IsNotBranchRestricted = $event" [Text]="'All branches are permitted'"></RadioButton>
+                                            <RadioButton [Name]="'BranchesRadio'" [IsEnabled]="IsEditingEnabled" [IsChecked]="IsBranchRestricted" (Checked)="IsBranchRestricted = $event" [Text]="'Some branches are permitted'" [Top]="5"></RadioButton>
+                                        </td>
+                                    </tr>
+
+                                    <tr style="height: 5px;">
+                                        <td></td>
+                                    </tr>
+
+                                    <tr class="FormFieldRow">
+                                        <td>
+                                            <div class="MediaFill">
+                                                <table>
+                                                    <tr>
+                                                        <td style="width: 100px;" class="Label">Default Branch:</td>
+
+                                                        <td style="width: 200px;">
+                                                            <ComboBox [ItemsSource]="ComboBoxBranches" [IsDisabled]="!IsEditingEnabled" (SelectedItemChanged)="SelectedBranchChanged($event)" [SelectedItem]="SelectedBranch" [Binding]="'EnglishName'"></ComboBox>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>                                            
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div class="MediaFill">
+                                                <div class="SimpleGridView">
+                                                    <div class="SimpleGridViewHeader">
+                                                        <table>
+                                                            <tr>
+                                                                <td style="width: 200px; min-width: 200px; max-width: 200px;">Branch</td>
+                                                                <td style="width: 80px; min-width: 80px;max-width: 80px;">Is Premitted</td>
+                                                                <td class="LastChild"></td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+
+                                                    <div class="SimpleGridViewBody">
+                                                        <table>
+                                                            <tr style="height: 1px;">
+                                                                <td>
+                                                                    <table>
+                                                                        <tr class="SimpleGridViewRow RowHover" *ngFor="let item of UserBranches">
+                                                                            <td>
+                                                                                <table>
+                                                                                    <tr style="height:25px;">
+                                                                                        <td class="GridViewCell" style="width:  200px; min-width: 200px; max-width: 200px;">
+                                                                                            {{item.Name}}
+                                                                                        </td>
+
+                                                                                        <td class="GridViewCell" style="width: 80px; min-width: 80px; max-width: 80px;">
+                                                                                            <div class="MediaFill">
+                                                                                                <div class="MediaFillRelative">
+                                                                                                    <div class="CenterCenter" style="width: 16px;">
+                                                                                                        <CheckBox [IsChecked]="item.IsPermitted" (Checked)="item.IsPermitted = $event" [IsEnabled]="IsEditingEnabled && IsBranchRestricted"></CheckBox>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </td>
+
+                                                                                        <td>
+                                                                                            <div></div>
+                                                                                        </td>
+                                                                                    </tr>
+
+                                                                                    <tr>
+                                                                                        <td colspan="3"></td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+
+                        <td style="width: 40px;">
+                            <div></div>
+                        </td>
+
+                        <!-- Products -->
+                        <td>
+                            <div class="MediaFill">
+                                <table *ngIf="IsProductsVisible">
+                                    <tr style="height: 1px;">
+                                        <td style="font-size: 14px; color: #1B90CB;">Products</td>
+                                    </tr>
+
+                                    <tr style="height: 5px;">
+                                        <td></td>
+                                    </tr>
+
+                                    <tr style="height: 1px;">
+                                        <td style="padding-left: 10px;">
+                                            <RadioButton [Name]="'ProductsRadio'" [IsEnabled]="IsEditingEnabled" [IsChecked]="IsNotProductRestricted" (Checked)="IsNotProductRestricted = $event" [Text]="'All products are permitted'"></RadioButton>
+                                            <RadioButton [Name]="'ProductsRadio'" [IsEnabled]="IsEditingEnabled" [IsChecked]="IsProductRestricted" (Checked)="IsProductRestricted = $event" [Text]="'Some products are permitted'" [Top]="5"></RadioButton>
+                                        </td>
+                                    </tr>
+
+                                    <tr style="height: 5px;">
+                                        <td></td>
+                                    </tr>
+
+                                    <tr class="FormFieldRow">
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div class="MediaFill">
+                                                <div class="SimpleGridView">
+                                                    <div class="SimpleGridViewHeader">
+                                                        <table>
+                                                            <tr>
+                                                                <td style="width: 200px; min-width: 200px; max-width: 200px;">Product Type</td>
+                                                                <td style="width: 80px; min-width: 80px;max-width: 80px;">Is Premitted</td>
+                                                                <td class="LastChild"></td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+
+                                                    <div class="SimpleGridViewBody">
+                                                        <table>
+                                                            <tr style="height: 1px;">
+                                                                <td>
+                                                                    <table>
+                                                                        <tr class="SimpleGridViewRow" *ngFor="let item of UserProducts">
+                                                                            <td>
+                                                                                <table>
+                                                                                    <tr style="height:25px;">
+                                                                                        <td class="GridViewCell" style="width:  200px; min-width: 200px; max-width: 200px;">
+                                                                                            <table>
+                                                                                                <tr>
+                                                                                                    <td style="width: 20px;">
+                                                                                                        <img *ngIf="item.DirectionId" style="float: left; vertical-align: middle;" [attr.src]="'./Images/Directions/' + item.DirectionId + '.png'" />
+                                                                                                    </td>
+
+                                                                                                    <td style="width: 20px;">
+                                                                                                        <img *ngIf="item.TransportModeId" style="float: left; vertical-align: middle;" [attr.src]="'./Images/Icons/' + item.TransportModeId + '.png'" />
+                                                                                                    </td>
+
+                                                                                                    <td>{{item.Name}}</td>
+                                                                                                </tr>
+                                                                                            </table>
+                                                                                        </td>
+
+                                                                                        <td class="GridViewCell" style="width: 80px; min-width: 80px; max-width: 80px;">
+                                                                                            <div class="MediaFill">
+                                                                                                <div class="MediaFillRelative">
+                                                                                                    <div class="CenterCenter" style="width: 16px;">
+                                                                                                        <CheckBox [IsChecked]="item.IsPermitted" (Checked)="item.IsPermitted = $event" [IsEnabled]="IsEditingEnabled && IsProductRestricted"></CheckBox>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </td>
+
+                                                                                        <td>
+                                                                                            <div></div>
+                                                                                        </td>
+                                                                                    </tr>
+
+                                                                                    <tr>
+                                                                                        <td colspan="3"></td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>

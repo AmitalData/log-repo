@@ -1,0 +1,120 @@
+﻿import {Component, ViewChild, ViewContainerRef} from '@angular/core';
+import {Validator} from '../../../../Infrastructure/Validators/Validator';
+import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
+import {NewPartnerTamplate} from '../Templates/NewPartnerTamplate';
+import {PartnersDomainService, PartnerServicePM} from '../../../../Common/Services/PartnersDomainService';
+import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import {WarehousePM} from '../../../../Common/EntityPMs/WarehousePM';
+import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
+
+@Component({
+    moduleId: module.id,
+    templateUrl: './NewWarehouseComponent.html',
+})
+
+export class NewWarehouseComponent {
+    public EntityPM: WarehousePM;
+    public PartnerTypeId: string = "WH";
+    public ObjectTableName: string = "Warehouse";
+    public ValidationErrorsList: string[] = [];
+    public DomainService: PartnersDomainService;
+    private PartnerTamplate: NewPartnerTamplate;
+    private _entityResourceService: EntityResourceService = new EntityResourceService();
+    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    constructor() {
+        this.EntityPM = new WarehousePM();
+        this.EntityPM.Tenant = SessionLocator.Tenant;
+        this.EntityPM.PartnerTypeId = this.PartnerTypeId;
+        this.EntityPM.AddedManually = true;
+        this.DomainService = new PartnersDomainService();
+        this.RunComponent();
+    }
+
+    RunComponent() {
+        if (this.viewContainerRef) {
+            this.LoadChildComponent();
+        }
+
+        else {
+            this.RunComponentTimer();
+        }
+    }
+
+    private Retries: number = 0;
+    private timerToken: any;
+    private RunComponentTimer() {
+        this.Retries++;
+
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
+        }
+
+        if (this.Retries < 3) {
+            this.timerToken = setTimeout(() => this.RunComponent(), 1);
+        }
+    }
+
+    LoadChildComponent() {
+        this._entityResourceService.getEntityResourceByTableName("Address", 0).subscribe(response=> {
+            this._entityResourceService.getEntityResourceByTableName("Customer").subscribe(response2 => {
+                SessionLocator.DynamicLoader.Load("./CommonModules/CommonPartners/Components/Templates/NewPartnerTamplate", this.viewContainerRef)
+                    .then(cmpRef => {
+                        this.PartnerTamplate = cmpRef.instance;
+                        this.PartnerTamplate.EntityPM = this.EntityPM;
+                        this.PartnerTamplate.CardTableName = this.ObjectTableName;
+                        this.PartnerTamplate.PartnerTypeId = this.PartnerTypeId;
+                        this.PartnerTamplate.DomainService = this.DomainService;
+                        this.PartnerTamplate.InitTemplate();
+                    });
+            });
+        });
+    }
+
+    CancelButtonClicked() {
+        SessionLocator.CurrentSession.CloseCurrentWindow();
+    }
+
+    OkButtonClicked() {
+        var errors: string[] = this.PartnerTamplate.Validate();
+
+        if (errors.length == 0) {
+            this.EntityPM.Code = this.PartnerTamplate.CardCode;
+            this.EntityPM.EnglishName = this.PartnerTamplate.Name;
+            this.EntityPM.LocalName = this.PartnerTamplate.Name;
+            this.EntityPM.VatNumber = this.PartnerTamplate.VatNumber;
+            this.EntityPM.ExistedContactId = this.PartnerTamplate.ExistedContactId;
+
+            Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
+        }
+
+        this.ValidationErrorsList = errors;
+
+        if (errors.length == 0) {
+
+            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+
+            var args = new PartnerServicePM();
+            args.Tenant = this.EntityPM.Tenant;
+            args.PartnerTypeId = this.PartnerTypeId;
+            args.Warehouse = this.EntityPM;
+            args.Address = this.PartnerTamplate.Address;
+            if (this.PartnerTamplate.IsAddContactChecked) {
+                args.Contact = this.PartnerTamplate.Contact;
+            }
+
+            this.DomainService.PostPartnerAddress(args).subscribe((myResponse: ServiceResponse) => {
+
+                SessionLocator.CurrentSession.StopBusyIndicator();
+
+                if (!myResponse.HasError) {
+                    this.EntityPM = myResponse.Result.Warehouse;
+                    SessionLocator.CurrentSession.CloseCurrentWindowEmit(this.EntityPM.Id);
+                }
+
+                else {
+                    this.ValidationErrorsList = myResponse.ErrorsArray;
+                }
+            });
+        }
+    }
+}

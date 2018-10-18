@@ -1,0 +1,72 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Customs.Data.EntityPOCOs
+{
+   
+    public class CustomsSetting
+    {
+	 string dbms;
+
+        [Key]
+        [Column("Id")]
+	    public string Id { get; set; }
+        [Column("IsConnectedToUniFreight")]
+	    public bool IsConnectedToUniFreight { get; set; }
+        [Column("CustomsAgentId")]
+	    public string CustomsAgentId { get; set; }
+        [Column("SignServiceAddress")]
+	    public string SignServiceAddress { get; set; }
+        [Column("IIGServiceAddress")]
+	    public string IIGServiceAddress { get; set; }
+        [Column("DCAServiceAddress")]
+	    public string DCAServiceAddress { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+        [Column("DCAPartnerVault")]
+	    public string DCAPartnerVault { get; set; }
+        [Column("UServerServiceAddress")]
+	    public string UServerServiceAddress { get; set; }
+        [ForeignKey("User")]
+        [Column("DefaultNotificationAssignee")]
+	    public string DefaultNotificationAssignee { get; set; }
+	      
+        public virtual User User { get; set; }
+        [Column("SearchFields")]
+	    public string SearchFields { get; set; }
+        [ForeignKey("CustomsEnvoirmentType")]
+        [Column("CustomsEnvoirmentTypeCode")]
+	    public string CustomsEnvoirmentTypeCode { get; set; }
+	      
+        public virtual CustomsEnvoirmentType CustomsEnvoirmentType { get; set; }
+        [Column("OnPremiseFillingService")]
+	    public string OnPremiseFillingService { get; set; }
+        [Column("UnfConnectionString")]
+	    public string UnfConnectionString { get; set; }
+        [Column("TehilaDca")]
+	    public bool TehilaDca { get; set; }
+        [Column("BlockAgentBankForMasab")]
+	    public bool BlockAgentBankForMasab { get; set; }
+        [Column("PaymentOrderAccCard")]
+	    public string PaymentOrderAccCard { get; set; }
+        [Column("UnifreightCertificateActivated")]
+	    public bool UnifreightCertificateActivated { get; set; }
+        [Column("AutoFillPaymentScreen")]
+	    public bool AutoFillPaymentScreen { get; set; }
+        [Column("AutoFillAccountType")]
+	    public bool AutoFillAccountType { get; set; }
+        [Column("AutoUnitMeasurement")]
+	    public bool AutoUnitMeasurement { get; set; }
+    }
+}
+	 

@@ -1,0 +1,216 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Customs.Def.Validators;
+  
+namespace Logitude.Customs.Def.EntityPMs
+{
+   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class SupplierInvoiceItemsLevyPM : EntityPM
+   {
+   	  private string declarationId ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DeclarationId  
+	   {
+	    
+	     get
+		{
+		   return declarationId;
+		 }
+		 set
+		 {
+		   if(declarationId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeclarationId",OldValue=declarationId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   declarationId=value;
+		   }
+			
+		 }
+	   }
+	  private int invoiceCounterKey ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int InvoiceCounterKey  
+	   {
+	    
+	     get
+		{
+		   return invoiceCounterKey;
+		 }
+		 set
+		 {
+		   if(invoiceCounterKey != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InvoiceCounterKey",OldValue=invoiceCounterKey,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   invoiceCounterKey=value;
+		   }
+			
+		 }
+	   }
+	  private int invoiceItemLineNumber ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int InvoiceItemLineNumber  
+	   {
+	    
+	     get
+		{
+		   return invoiceItemLineNumber;
+		 }
+		 set
+		 {
+		   if(invoiceItemLineNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InvoiceItemLineNumber",OldValue=invoiceItemLineNumber,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   invoiceItemLineNumber=value;
+		   }
+			
+		 }
+	   }
+	  private int lineNumber ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int LineNumber  
+	   {
+	    
+	     get
+		{
+		   return lineNumber;
+		 }
+		 set
+		 {
+		   if(lineNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LineNumber",OldValue=lineNumber,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   lineNumber=value;
+		   }
+			
+		 }
+	   }
+	  private int tenant ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+	  private string tradeLevyExamptCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TradeLevyExamptCode  
+	   {
+	    
+	     get
+		{
+		   return tradeLevyExamptCode;
+		 }
+		 set
+		 {
+		   if(tradeLevyExamptCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TradeLevyExamptCode",OldValue=tradeLevyExamptCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   tradeLevyExamptCode=value;
+		   }
+			
+		 }
+	   }
+	  private string tradeLevyNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TradeLevyNumber  
+	   {
+	    
+	     get
+		{
+		   return tradeLevyNumber;
+		 }
+		 set
+		 {
+		   if(tradeLevyNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TradeLevyNumber",OldValue=tradeLevyNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   tradeLevyNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string tradeLevyExamptName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TradeLevyExamptName  
+	   {
+	    
+	     get
+		{
+		   return tradeLevyExamptName;
+		 }
+		 set
+		 {
+		   if(tradeLevyExamptName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TradeLevyExamptName",OldValue=tradeLevyExamptName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   tradeLevyExamptName=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

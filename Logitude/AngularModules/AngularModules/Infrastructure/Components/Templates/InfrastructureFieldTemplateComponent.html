@@ -1,0 +1,34 @@
+﻿
+<table *ngIf="Entity">
+    <tr>
+        <td>
+            <div class="MediaFill">
+                <div *ngIf="FieldName == 'TransportModeId'" class="MediaFillRelative">
+                    <img class="CenterCenter" [attr.src]="'./Images/Icons/' + FieldValue + '.png'" [title]="Entity['TransportModeName']" />
+                </div>
+
+                <div *ngIf="ObjectTableName == 'CommunicationLog' && (FieldName == 'CreateDate' || FieldName == 'CreateDateUTC')" class="TemplateTrimming">
+                    {{FieldValue | DateTimePipe:'DTL12'}}
+                </div>
+
+                <div *ngIf="ObjectTableName == 'APILogs' && FieldName == 'Direction'">
+                    <img *ngIf="FieldValue == 'O' || FieldValue == 'Out'" style="vertical-align:middle; margin: auto;margin-top:-2px" [attr.src]="'./Images/Icons/ArrowRight.png'" [title]="'Out'" />
+
+                    <img *ngIf="FieldValue == 'I' || FieldValue == 'In' " style="vertical-align:middle; margin: auto;margin-top:-2px" [attr.src]="'./Images/Icons/ArrowLeft.png'" [title]="'In'" />
+                </div>
+
+                <div *ngIf="ObjectTableName == 'APILogs' && (FieldName == 'CreateDate' || FieldName == 'CreateDateUTC')">
+                    {{FieldValue | DateTimePipe:'DTL12'}}
+                </div>
+
+                <div *ngIf="ObjectTableName == 'TenantManagement' && FieldName == 'Id'" style="text-align: left;">{{FieldValue}}</div>
+
+                <div *ngIf="IsSpotLightTemplate == true" style="position:absolute;top:0;bottom:0;left:0;right:0;">
+                    <div style="height:100%;width:100%;">
+
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>

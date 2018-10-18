@@ -1,0 +1,217 @@
+﻿import { Injectable } from '@angular/core';
+import { Http, Headers } from '@angular/http';
+import { Observable } from 'rxjs/Rx';
+import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { DeclarationList } from '../../EntityLists/DeclarationList';
+
+import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
+
+@Injectable()
+
+export class DeclarationExtendedListService {
+    private _http: Http
+    private _apiUrl: string;
+    constructor() {
+        this._http = ServiceHelper.Http;
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/Declarartion';
+    }
+
+
+    GetSingleDeclarationByCustomFileNo(customFileNo: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
+
+
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetSingleDeclarationByCustomFileNo/?' + 'customFileNo=' + customFileNo,
+                { headers: authHeader }).map(response => {
+
+
+                    var serviceResponse: ServiceResponse = new ServiceResponse();
+                    serviceResponse.Result = response.json();
+                    var declarationList: DeclarationList;
+                    if (serviceResponse.Result) {
+
+
+                        var entity: DeclarationList;
+                        declarationList = entity = this.MapJsonToEntityList(serviceResponse.Result);
+
+
+
+                    }
+
+                    serviceResponse.Result = declarationList;
+                    return serviceResponse;
+                }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
+    GetSupplierInvoiceItemsCount(declarationId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
+
+
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetSupplierInvoiceItemCount/?' + 'declarationId=' + declarationId,
+                { headers: authHeader }).map(response => {
+
+
+                    var serviceResponse: ServiceResponse = new ServiceResponse();
+                    serviceResponse.Result = response.json();
+                  
+                    return serviceResponse;
+                }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
+    GetSingleDeclarationByNumber(declarationByNumber: string, tenant: number) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
+        var url = this._apiUrl + '/GetSingleDeclarationByCustomFileNo';
+
+        return Observable.defer(() => {
+            return this._http
+                .get(this._apiUrl + '/GetSingleDeclarationByNumber/?' + 'declarationByNumber=' + declarationByNumber + '&tenant=' + tenant,
+                { headers: authHeader }).map(response => {
+
+
+                    var serviceResponse: ServiceResponse = new ServiceResponse();
+                    serviceResponse.Result = response.json();
+                    var declarationList: DeclarationList;
+                    if (serviceResponse.Result) {
+
+
+                        var entity: DeclarationList;
+                        declarationList = entity = this.MapJsonToEntityList(serviceResponse.Result);
+
+
+
+                    }
+
+                    serviceResponse.Result = declarationList;
+                    return serviceResponse;
+                }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
+    GetConsignmentListPMByCustomFileNo(customFileNo: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
+        var url = this._apiUrl + '/GetConsignmentListPMByCustomFileNo';
+
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetConsignmentListPMByCustomFileNo/?' + 'customFileNo=' + customFileNo,
+                { headers: authHeader }).map(response => {
+
+
+                    var serviceResponse: ServiceResponse = new ServiceResponse();
+                    serviceResponse.Result = response.json();
+                    return serviceResponse;
+                }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
+    GetCurrenciesCodesForDeclaration(declarationId: string, tenant: number) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
+        //var url = this._apiUrl + '/GetConsignmentListPMByCustomFileNo';
+
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetCurrenciesCodesForDeclaration/?' + 'declarationId=' + declarationId + '&tenant=' + tenant,
+                { headers: authHeader }).map(response => {
+
+
+                    var serviceResponse: ServiceResponse = new ServiceResponse();
+                    serviceResponse.Result = response.json();
+                    
+                    return serviceResponse;
+                }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
+    GetSingleDeclarationPMByCargoIdentifiers(cargoTypeCode: string, manifestNumber: string, secondCargoID: string, tenant: number) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
+        //var url = this._apiUrl + '/GetConsignmentListPMByCustomFileNo';
+
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetSingleDeclarationPMByCargoIdentifiers/?' + 'cargoTypeCode=' + cargoTypeCode + '&manifestNumber=' + manifestNumber + '&secondCargoID=' + secondCargoID + '&tenant=' + tenant,
+                { headers: authHeader }).map(response => {
+
+
+                    var serviceResponse: ServiceResponse = new ServiceResponse();
+                    serviceResponse.Result = response.json();
+
+                    return serviceResponse;
+                }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
+
+    PutCopyDeclaration(fromDeclarationId: string, toDeclarationId: string, tenant: number) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
+   
+
+        return Observable.defer(() => {
+            return this._http.put(this._apiUrl + '/PutCopyDeclaration/?' + 'fromDeclarationId=' + fromDeclarationId + '&toDeclarationId=' + toDeclarationId + '&tenant=' + tenant,
+                { headers: authHeader }).map(response => {
+
+
+                    var serviceResponse: ServiceResponse = new ServiceResponse();
+                    serviceResponse.Result = response.json();
+
+                    return serviceResponse;
+                }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
+    GetDeclarationByCustomFileNoAndCCU(customFileNo: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetDeclarationByCustomFileNoAndCCU/?' + 'customFileNo=' + customFileNo,
+                { headers: authHeader }).map(response => {
+
+                    var serviceResponse: ServiceResponse = new ServiceResponse();
+                    serviceResponse.Result = response.json();
+                    var declarationList: DeclarationList;
+                    if (serviceResponse.Result) {
+                        var entity: DeclarationList;
+                        declarationList = entity = this.MapJsonToEntityList(serviceResponse.Result);
+                    }
+
+                    serviceResponse.Result = declarationList;
+                    return serviceResponse;
+                }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
+    MapJsonToEntityList(jsonList: any) {
+
+        var entityList: DeclarationList;
+        entityList = new DeclarationList();
+        var jsonListKeys = Object.keys(jsonList);
+
+        for (var key in jsonListKeys) {
+            var property = jsonListKeys[key];
+            entityList[property] = jsonList[property];
+        }
+
+
+        return entityList;
+    }
+
+
+
+}

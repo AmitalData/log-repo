@@ -1,0 +1,247 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Customs.Def.Validators;
+  
+namespace Logitude.Customs.Def.EntityPMs
+{
+   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class DecCargoSplitConPM : EntityPM
+   {
+   	  private string declarationCargoSplitId ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DeclarationCargoSplitId  
+	   {
+	    
+	     get
+		{
+		   return declarationCargoSplitId;
+		 }
+		 set
+		 {
+		   if(declarationCargoSplitId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeclarationCargoSplitId",OldValue=declarationCargoSplitId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   declarationCargoSplitId=value;
+		   }
+			
+		 }
+	   }
+	  private int tenant ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+	  private int lineNumber ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int LineNumber  
+	   {
+	    
+	     get
+		{
+		   return lineNumber;
+		 }
+		 set
+		 {
+		   if(lineNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LineNumber",OldValue=lineNumber,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   lineNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string importerCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ImporterCode  
+	   {
+	    
+	     get
+		{
+		   return importerCode;
+		 }
+		 set
+		 {
+		   if(importerCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ImporterCode",OldValue=importerCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   importerCode=value;
+		   }
+			
+		 }
+	   }
+	  private string conditionCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ConditionCode  
+	   {
+	    
+	     get
+		{
+		   return conditionCode;
+		 }
+		 set
+		 {
+		   if(conditionCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ConditionCode",OldValue=conditionCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   conditionCode=value;
+		   }
+			
+		 }
+	   }
+	  private string procedureCurrentCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ProcedureCurrentCode  
+	   {
+	    
+	     get
+		{
+		   return procedureCurrentCode;
+		 }
+		 set
+		 {
+		   if(procedureCurrentCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ProcedureCurrentCode",OldValue=procedureCurrentCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   procedureCurrentCode=value;
+		   }
+			
+		 }
+	   }
+	  private string conditionName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ConditionName  
+	   {
+	    
+	     get
+		{
+		   return conditionName;
+		 }
+		 set
+		 {
+		   if(conditionName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ConditionName",OldValue=conditionName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   conditionName=value;
+		   }
+			
+		 }
+	   }
+	  private string procedureCurrentName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ProcedureCurrentName  
+	   {
+	    
+	     get
+		{
+		   return procedureCurrentName;
+		 }
+		 set
+		 {
+		   if(procedureCurrentName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ProcedureCurrentName",OldValue=procedureCurrentName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   procedureCurrentName=value;
+		   }
+			
+		 }
+	   }
+
+	   private List<DecCargoSplitConsItemPM> decCargoSplitConsItems;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("DecCargoSplitConsDecCargoSplitConsItems", "DeclarationCargoSplitId,LineNumber","DeclarationCargoSplitId,DecCargoSplitConsLineNo")]
+	   [DataMember]
+	   public virtual List<DecCargoSplitConsItemPM> DecCargoSplitConsItems  
+	   {
+	        get
+             {
+                 if (decCargoSplitConsItems == null)
+                 {
+                     decCargoSplitConsItems = new List<DecCargoSplitConsItemPM>();
+                 }
+                 return decCargoSplitConsItems;
+              }
+             set { decCargoSplitConsItems = value; }
+	    }
+		   
+	   private List<DecCargoSplitConsItemPM>  deletedDecCargoSplitConsItems;
+	   public virtual List<DecCargoSplitConsItemPM> DeletedDecCargoSplitConsItems  
+	   {
+	        get
+             {
+                 if ( deletedDecCargoSplitConsItems == null)
+                 {
+                      deletedDecCargoSplitConsItems = new List<DecCargoSplitConsItemPM>();
+                 }
+                 return  deletedDecCargoSplitConsItems;
+              }
+             set {  deletedDecCargoSplitConsItems = value; }
+	    }
+	     }
+   
+}
+	 

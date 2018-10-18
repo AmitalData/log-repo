@@ -1,0 +1,1 @@
+alter table [Customs].[PaymentTypes] alter column localname nvarchar(100) null

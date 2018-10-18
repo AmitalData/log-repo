@@ -1,0 +1,16 @@
+alter table [Customs].[Clients] add constraint [Client_Country] foreign key ([PassportCountryCode]) references [Customs].[Countries]([Code]);
+alter table [Customs].[Clients] add constraint [Client_CustomerTypeGeneral] foreign key ([ClientTypeSpecificCode]) references [Customs].[CustomerTypeGenerals]([Code]);
+alter table [Customs].[Clients] add constraint [Client_Gender] foreign key ([GenderCode]) references [Customs].[Genders]([Code]);
+alter table [Customs].[Clients] add constraint [Client_PassportType] foreign key ([PassportTypeCode]) references [Customs].[PassportTypes]([Code]);
+alter table [Customs].[ClientAddresses] add constraint [ClientAddress_AddressContactState] foreign key ([ContactStateCode]) references [Customs].[AddressContactStates]([Code]);
+alter table [Customs].[ClientAddresses] add constraint [ClientAddress_AddressPurpose] foreign key ([AddressPurposeCode]) references [Customs].[AddressPurposes]([Code]);
+alter table [Customs].[ClientAddresses] add constraint [ClientAddress_AddressType] foreign key ([AddressTypeCode]) references [Customs].[AddressTypes]([Code]);
+alter table [Customs].[ClientAddresses] add constraint [ClientAddress_AuthorizedSigner1] foreign key ([AuthorizedSignerPermit1]) references [Customs].[AuthorizedSignerPermits]([Code]);
+alter table [Customs].[ClientAddresses] add constraint [ClientAddress_AuthorizedSigner2] foreign key ([AuthorizedSignerPermit2]) references [Customs].[AuthorizedSignerPermits]([Code]);
+alter table [Customs].[ClientAddresses] add constraint [ClientAddress_AuthorizedSigner3] foreign key ([AuthorizedSignerPermit3]) references [Customs].[AuthorizedSignerPermits]([Code]);
+alter table [Customs].[ClientAddresses] add constraint [ClientAddress_City] foreign key ([LocalCityCode]) references [Customs].[Cities]([Code]);
+alter table [Customs].[ClientAddresses] add constraint [ClientAddress_Client] foreign key ([ClientId]) references [Customs].[Clients]([Id]);
+alter table [Customs].[ClientAddresses] add constraint [ClientAddress_CommunicationType] foreign key ([CommunicationTypeCode]) references [Customs].[CommunicationTypes]([Code]);
+alter table [Customs].[ClientAddresses] add constraint [ClientAddress_ContactRoleType] foreign key ([ContactRoleTypeCode]) references [Customs].[ContactRoleTypes]([Code]);
+alter table [Customs].[ClientAddresses] add constraint [ClientAddress_Country] foreign key ([EnglishCountryCode]) references [Customs].[Countries]([Code]);
+alter table [Customs].[ClientAddresses] add constraint [ClientAddress_SubCountry] foreign key ([EnglishSubCountryCode]) references [Customs].[SubCountries]([Code]);

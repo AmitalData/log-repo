@@ -1,0 +1,384 @@
+﻿<div class="TabHolder">
+    <table>
+        <tr class="TabTitleRow">
+            <td>{{'Airline.TH.CCSSettings' | TextCodeTranslationPipe}}</td>
+        </tr>
+
+        <tr style="height:10px;">
+            <td>
+                <div></div>
+            </td>
+        </tr>
+
+        <tr style="height:1px;">
+            <td>
+                <table>
+                    <tr>
+                        <td style="width:500px;">
+                            <table>
+                                <tr class="FormFieldRow">
+                                    <td style="width: 120px;">
+                                        <LogLabel [ObjectFieldName]="'TTY'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td style="width:200px;">
+                                        <LogTextBox [ObjectFieldName]="'TTY'" [Text]="TTY" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'GLSHKPIMA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'GLSHKPIMA'" [Text]="GLSHKPIMA" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <tr style="height: 100px;">
+                                    <td colspan="3">
+                                        <table>
+                                            <tr>
+                                                <td style="width:120px;">
+                                                    <LogLabel [ObjectFieldName]="'RegistrationNotes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="height: 100px; vertical-align: top; width:350px;">
+                                                    <div style="height: 100%; width: 100%;">
+                                                        <LogTextBox [ObjectFieldName]="'RegistrationNotes'" [Text]="RegistrationNotes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>                                    
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr style="height: 10px;">
+            <td>
+                <div></div>
+            </td>
+        </tr>
+
+        <tr class="TabTitleRow"><td>Parameters</td></tr>
+
+        <tr style="height:1px;">
+            <td>
+                <table>
+                    <tr class="FormFieldRow">
+                        <td style="width: 120px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width:100px; text-align:center; font-size:13px; color:#1B90CB;">
+                            Champ
+                        </td>
+
+                        <td style="width:100px; text-align:center; font-size:13px; color:#1B90CB;">
+                            GLS HK
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <tr class="FormFieldRow">
+                        <td>
+                            <label class="Label">FSR/FSA</label>
+                        </td>
+
+                        <td>
+                            <table>
+                                <tr>
+                                    <td style="width:40px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td>
+                                        <LogCheckBox [ObjectFieldName]="'ChampFSRFSA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                    </td>
+                                </tr>
+                            </table> 
+                        </td>
+
+                        <td>
+                            <table>
+                                <tr>
+                                    <td style="width:40px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td>
+                                        <LogCheckBox [ObjectFieldName]="'GLSHKFSRFSA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                    </td>
+                                </tr>
+                            </table> 
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <tr class="FormFieldRow">
+                        <td>
+                            <label class="Label">FSU</label>
+                        </td>
+
+                        <td>
+                            <table>
+                                <tr>
+                                    <td style="width:40px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td>
+                                        <LogCheckBox [ObjectFieldName]="'ChampFSU'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td>
+                            <table>
+                                <tr>
+                                    <td style="width:40px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td>
+                                        <LogCheckBox [ObjectFieldName]="'GLSHKFSU'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <tr class="FormFieldRow">
+                        <td>
+                            <label class="Label">FWB</label>
+                        </td>
+
+                        <td>
+                            <table>
+                                <tr>
+                                    <td style="width:40px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td>
+                                        <LogCheckBox [ObjectFieldName]="'ChampFWB'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td>
+                            <table>
+                                <tr>
+                                    <td style="width:40px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td>
+                                        <LogCheckBox [ObjectFieldName]="'GLSHKFWB'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <tr class="FormFieldRow">
+                        <td>
+                            <label class="Label">FHL</label>
+                        </td>
+
+                        <td>
+                            <table>
+                                <tr>
+                                    <td style="width:40px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td>
+                                        <LogCheckBox [ObjectFieldName]="'ChampFHL'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td>
+                            <table>
+                                <tr>
+                                    <td style="width:40px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td>
+                                        <LogCheckBox [ObjectFieldName]="'GLSHKFHL'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <tr class="FormFieldRow">
+                        <td>
+                            <label class="Label">FVR/FVA</label>
+                        </td>
+
+                        <td>
+                            <table>
+                                <tr>
+                                    <td style="width:40px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td>
+                                        <LogCheckBox [ObjectFieldName]="'ChampFVRFVA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td>
+                            <table>
+                                <tr>
+                                    <td style="width:40px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td>
+                                        <LogCheckBox [ObjectFieldName]="'GLSHKFVRFVA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <tr class="FormFieldRow">
+                        <td>
+                            <label class="Label">FFR/FFA</label>
+                        </td>
+
+                        <td>
+                            <table>
+                                <tr>
+                                    <td style="width:40px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td>
+                                        <LogCheckBox [ObjectFieldName]="'ChampFFRFFA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td>
+                            <table>
+                                <tr>
+                                    <td style="width:40px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td>
+                                        <LogCheckBox [ObjectFieldName]="'GLSHKFFRFFA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <tr class="FormFieldRow">
+                        <td>
+                            <label class="Label">Needs Registration</label>
+                        </td>
+
+                        <td>
+                            <table>
+                                <tr>
+                                    <td style="width:40px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td>
+                                        <LogCheckBox [ObjectFieldName]="'ChampNeedsRegistration'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td>
+                            <table>
+                                <tr>
+                                    <td style="width:40px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td>
+                                        <LogCheckBox [ObjectFieldName]="'GLSHKNeedsRegistration'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <div></div>
+            </td>
+        </tr>
+    </table>
+</div>

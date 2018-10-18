@@ -1,0 +1,114 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Server.Infrastructure;
+using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
+using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.QuoteModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
+using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
+using Logitude.BL.Helpers;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Simplog.Data.CommonDataModel;
+
+ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
+{ 
+   public partial class MeasurementQueryService
+   {
+   
+		ICommonDataContext  context;
+		//MeasurementService service; 
+		
+		MeasurementQuery query; 
+
+        public MeasurementQueryService(int tenant)
+        {
+				    context = CommonDataContext.GetContext(tenant); 
+			//service = new MeasurementService(context, tenant); 
+			query = new MeasurementQuery(tenant);
+        }
+
+		
+		public Measurement GetMeasurementById(string Id,int Tenant)
+        { 
+		    try
+            {
+
+				
+				var temp = query.GetSinglePM(Id,Tenant);				
+				 if (temp == null)
+                    throw new ApplicationException("Measurement with Id " + Id + " doesn't exist");
+
+				return MeasurementDataMapping(temp,Tenant);
+			}
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+		
+		public Measurement MeasurementDataMapping(MeasurementPM MyEntityPM,int Tenant,string ComputingPartnerName = "")
+        {
+		    try
+            {
+				   
+				   var temp = new Measurement(); 
+				   temp.Id = MyEntityPM.Id;
+				   temp.Code = MyEntityPM.Code;
+				   temp.Name = MyEntityPM.Name;
+				   temp.ShortName = MyEntityPM.ShortName;					
+				   return temp;
+			}
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        } 
+
+		public MeasurementPM MeasurementDataMappingAndValidatin(Measurement MyEntity,int Tenant,string ComputingPartnerName = "")
+        {
+		    try
+            {
+				   					var temp = new MeasurementPM();								  
+					if (!string.IsNullOrEmpty(MyEntity.Id))
+					{
+						temp = query.GetSinglePM(MyEntity.Id, Tenant);
+					} 
+										   
+					if(temp == null)
+					{
+					    throw new ApplicationException("Measurement with Id " + MyEntity.Id + " doesn't exist");
+					} 
+					if(string.IsNullOrEmpty(temp.Id))
+					{
+						temp.Id = MyEntity.Id;
+					}
+					if(string.IsNullOrEmpty(temp.Code))
+					{
+						temp.Code = MyEntity.Code;
+					}
+					temp.Name = MyEntity.Name;
+					temp.ShortName = MyEntity.ShortName;					   
+					   return temp;
+		    }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            } 
+        }
+		 
+   }
+}

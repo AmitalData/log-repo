@@ -1,0 +1,130 @@
+﻿
+<table>
+        <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+            <td colspan="2">
+                <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+            </td>
+        </tr>
+
+        <tr>
+            <td style="width: 380px;">
+                <table>
+                    <tr class="FormFieldRow">
+                        <td>
+                            <table>
+
+                                <!-- Code -->
+                                <tr class="FormFieldRow">
+                                    <td style="width: 160px;">
+                                        <LogLabel [ObjectFieldName]="'Code'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"></LogLabel>
+                                    </td>
+
+                                    <td style="width: 200px; padding-right: 100px;">
+                                        <LogTextBox [ObjectFieldName]="'Code'" [InputType]="'text'" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+
+                                </tr>
+
+                                <!-- LocalName -->
+                                <!--<tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'LocalName'" [DataContext]="DataContext"  [ObjectTableName]="ObjectTableName"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'LocalName'" [InputType]="'ntext'" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+
+                                </tr>-->
+
+                                <!-- AutomaticReconcile1 -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'AutomaticReconcile1'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td colspan="2">
+                                        <LogLov [ObjectFieldName]="'AutomaticReconcile1'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'AutomaticReconcile'">
+                                        </LogLov>
+                                    </td>
+                                </tr>
+
+                                <!-- AutomaticReconcile2 -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'AutomaticReconcile2'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td colspan="2">
+                                        <LogLov [ObjectFieldName]="'AutomaticReconcile2'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'AutomaticReconcile'">
+                                        </LogLov>
+                                    </td>
+                                </tr>
+
+                                <!-- AutomaticReconcile3 -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'AutomaticReconcile3'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td colspan="2">
+                                        <LogLov [ObjectFieldName]="'AutomaticReconcile3'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'AutomaticReconcile'">
+                                        </LogLov>
+                                    </td>
+                                </tr>
+
+
+                                <tr><td><div></div></td></tr>
+                            </table>
+
+                        </td>
+                        <td><div></div></td>
+                    </tr>
+                </table>
+            </td>
+            <td><div></div></td>
+        </tr>
+
+        <tr style="height: 32px;">
+            <td colspan="2" style="vertical-align: bottom">
+                <table style="height: 22px;">
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+
+                        <td style="width: 57px;">
+                            <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                        </td>
+
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 57px;">
+                            <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+    </table>
+

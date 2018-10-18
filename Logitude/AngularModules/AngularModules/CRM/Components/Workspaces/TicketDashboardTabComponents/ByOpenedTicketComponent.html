@@ -1,0 +1,354 @@
+﻿<style type="text/css">
+    .SquareIcon {
+        width: 10px;
+        height: 10px;
+        line-height: 10px;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+    }
+
+
+        .amcharts-pie-slice {
+  cursor: pointer;
+}
+
+
+    .SectionHeader td, .SectionHeader label {
+        font-size: 13px;
+    }
+</style>
+<div class="TabHolder">
+    <table>
+        <tr style="height:40px">
+            <td>
+                <table>
+                    <tr>
+                        <td style="width:20px">
+                            <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
+                        </td>
+                        <td></td>
+                        <td style="width:345px">
+                            <table>
+                                <tr>
+                                    <td style="width:80px">
+                                        Create Date
+                                    </td>
+                                    <td>
+                                        <ComboBox [ItemsSource]="DateFilterList" [Binding]="'Name'" [SelectedItem]="SelectedDateFilter" (SelectedItemChanged)="SelectedDateFilter = $event"></ComboBox>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td style="width:5px;">
+                            <div></div>
+                        </td>             
+
+                        <td style="width:150px;">
+                            <ComboBox [ItemsSource]="EmployeeGroupFilterList" [Binding]="'Name'" [SelectedItem]="SelectedEmployeeGroupFilter" (SelectedItemChanged)="SelectedEmployeeGroupFilter = $event"></ComboBox>
+                        </td>
+                        <td style="width:2px;">
+                            <div></div>
+                        </td>
+                        <td style="width:200px;" *ngIf="SelectedEmployeeGroupFilter">
+                            <ComboBox *ngIf="SelectedEmployeeGroupFilter.Code != 'A'" [IsDisabled]="SelectedEmployeeGroupFilter.Code == 'M'" [ItemsSource]="UsersFilterList" [Binding]="'Name'" [SelectedItem]="SelectedUserFilter" (SelectedItemChanged)="SelectedUserFilter = $event"></ComboBox>
+                            <LogLov *ngIf="SelectedEmployeeGroupFilter.Code == 'A'"
+                                    [ObjectFieldName]="'ListOfValuesUserId'"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'User'"
+                                    [HideColumns]="true">
+                            </LogLov>
+                        </td>
+
+
+
+
+
+                    </tr>
+                </table>
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                <table>
+                    <tr>
+                        <td>
+                            <table>
+                                <tr class="SectionHeader" style="padding-right:10px">
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <label>Tickets By Classification</label>
+
+                                                </td>
+                                                <td></td>                                            
+                                            </tr>
+                                        </table>
+                                    </td>
+
+
+                                </tr>
+                                <tr style="height:10px"></tr>
+                                <tr>
+                                    <td class="CellStretch">                                        
+                                        <table>
+                                            <tr style="height:1px">
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <div [attr.id]="TicketsByClassificationId" style="height:100%;width:100%" class="CellContent" (click)="TicketClicking('M')"></div>
+                                                            </td>
+                                                            <td style="width:130px;min-width:130px;overflow-y:auto">
+                                                                <div class="MediaFill">
+                                                                    <ScrollViewer [Small]="true">
+                                                                        <div [attr.id]="TicketsByClassificationLegendId" style="position:relative;width:100%;float:left"></div>
+                                                                    </ScrollViewer>
+                                                                </div>
+                                                            </td>
+
+                                                        </tr>
+                                                    </table>
+                                                </td>                                                            
+                                            </tr>
+
+                                            <tr *ngIf="!TicketsByClassificationIdExistance">
+                                                <td style="vertical-align:top">
+                                                    <div style="text-align:center;vertical-align:central;margin-top:10px;width:100%;overflow-y:hidden">
+                                                        <label style="font-size:small;color:gray;text-align:center;vertical-align:central;width:100%;height:100%">No Tickets</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                    </td>
+
+                                </tr>
+                            </table>
+
+                        </td>
+
+                        <td style="width:10px"></td>
+
+                        <td style="width: 32%">
+                            <table>
+                                <tr class="SectionHeader" style="padding-right:10px">
+                                    <td>
+                                        <label>Tickets By Severity</label>
+                                    </td>
+                                </tr>
+                                <tr style="height:10px"></tr>
+                                <tr>
+
+                                    <td class="CellStretch">
+
+                                        <table>
+                                            <tr style="height:1px">
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <div [attr.id]="TicketsBySeverityId" style="height:100%;width:100%" class="CellContent" (click)="TicketClicking('S')"></div>
+                                                            </td>
+                                                            <td style="width:130px;min-width:130px;overflow-y:auto">
+                                                                <div class="MediaFill">
+                                                                    <ScrollViewer [Small]="true">
+                                                                        <div [attr.id]="TicketsBySeverityLegendId" style="position:relative;width:100%;float:left"></div>
+                                                                    </ScrollViewer>
+                                                                </div>
+                                                            </td>
+
+                                                        </tr>
+                                                    </table>
+                                                </td>                                               
+                                            </tr>
+
+                                            <tr *ngIf="!TicketsBySeverityIdExistance">
+                                                <td style="vertical-align:top">
+                                                    <div style="text-align:center;vertical-align:central;margin-top:10px;width:100%;overflow-y:hidden">
+                                                        <label style="font-size:small;color:gray;text-align:center;vertical-align:central;width:100%;height:100%">No Tickets</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                    </td>
+
+                                </tr>
+                            </table>
+
+                        </td>
+
+                        <td style="width:10px"></td>
+
+
+                        <td>
+                            <table>
+                                <tr class="SectionHeader">
+                                    <td>
+                                        <label>Tickets By Ticket Owner</label>
+                                    </td>
+                                </tr>
+                                <tr style="height:10px"></tr>
+                                <tr>
+
+                                    <td class="CellStretch">
+
+                                        <table>
+                                            <tr style="height:1px">
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <div [attr.id]="TicketsByTicketOwnerId" style="height:100%;width:100%" class="CellContent" (click)="TicketClicking('C')"></div>
+                                                            </td>
+                                                            <td style="width:130px;min-width:130px;overflow-y:auto">
+                                                                <div class="MediaFill">
+                                                                    <ScrollViewer [Small]="true">
+                                                                        <div [attr.id]="TicketsByTicketsOwnerLegendId" style="position:relative;width:100%;float:left"></div>
+                                                                    </ScrollViewer>
+                                                                </div>
+                                                            </td>
+
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                               
+                                            </tr>
+
+                                            <tr *ngIf="!TicketsByTicketOwnerIdExistance">
+                                                <td style="vertical-align:top">
+                                                    <div style="text-align:center;vertical-align:central;margin-top:10px;width:100%;overflow-y:hidden">
+                                                        <label style="font-size:small;color:gray;text-align:center;vertical-align:central;width:100%;height:100%">No Tickets</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                    </td>
+
+                                </tr>
+                            </table>
+
+                        </td>
+
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr style="height:50%">
+            <td>
+                <table>
+                    <tr>
+                        <td>
+
+
+                            <table>
+                                <tr class="SectionHeader">
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td> <label>SLA Violation</label></td>
+                                                <td></td>
+
+                                                <td style="width: 100px; vertical-align:middle;">
+                                                    <div class="SquareIcon" style="background: #487E9F; display:inline-block;"></div>
+                                                    <span style="font-size: 11px; color: #282E30; text-indent: 15px;">First Response</span>
+                                                </td>
+
+                                                <td style="width: 80px; vertical-align:middle;">
+                                                    <div class="SquareIcon" style="background: #DA7B38; display:inline-block;"></div>
+                                                    <span style="font-size: 11px; color: #282E30; text-indent: 15px;">Resolve</span>
+                                                </td>
+                                                    
+                                                        
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td></td>
+
+                                </tr>
+                                <tr style="height:10px"></tr>
+                                <tr>
+
+                                    <td class="CellStretch">
+
+                                        <table>
+                                            <tr style="height:1px">
+                                                <td>
+                                                    <div [attr.id]="SLAViolationId" style="height:100%;width:100%" class="CellContent" (click)="SLAClicking()"></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr *ngIf="!SLAViolationIdExistance">
+                                                <td style="vertical-align:top">
+                                                    <div style="text-align:center;vertical-align:central;margin-top:10px;width:100%;overflow-y:hidden">
+                                                        <label style="font-size:small;color:gray;text-align:center;vertical-align:central;width:100%;height:100%">No Tickets</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                    </td>
+
+                                </tr>
+                            </table>
+
+
+                        </td>
+
+                        <td style="width:10px"></td>
+
+                        <td style="width:50%">
+
+
+                            <table>
+                                <tr class="SectionHeader">
+                                    <td>
+                                        <table>
+                                            <tr>
+
+                                                <td><label>Open Tickets</label></td>
+                                                <td></td>                                              
+                                            </tr>
+                                        </table>
+                                    </td>
+
+                                </tr>
+                                <tr style="height:10px"></tr>
+                                <tr>
+
+                                    <td class="CellStretch">
+
+                                        <table>
+                                            <tr style="height:1px">
+                                                <td>
+                                                    <div [attr.id]="OpenTicketsId" style="height:100%;width:100%" class="CellContent" (click)="OpenTicketsClicking()"></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr *ngIf="!OpenTicketsIdExistance">
+                                                <td style="vertical-align:top">
+                                                    <div style="text-align:center;vertical-align:central;margin-top:10px;width:100%;overflow-y:hidden">
+                                                        <label style="font-size:small;color:gray;text-align:center;vertical-align:central;width:100%;height:100%">No Tickets</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                    </td>
+
+                                </tr>
+                            </table>
+
+
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>

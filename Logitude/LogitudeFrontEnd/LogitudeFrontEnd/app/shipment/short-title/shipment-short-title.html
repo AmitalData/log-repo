@@ -1,0 +1,50 @@
+﻿
+<style type="text/css">
+    .ShortTitleControl span img {
+        margin: auto;
+        margin-top: -2px;
+        border-image: none;
+        vertical-align: middle;
+    }
+
+    .ShortTitleControl span {
+        color: #1B90CB;
+        font-size: 18px;
+        height: 21px;
+        line-height: 21px;
+    }
+
+    .ShortTitleControl {
+        height: 21px;
+        line-height: 21px;
+        padding-left: 7px;
+        padding-right: 7px;
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        overflow: hidden;
+    }
+</style>
+
+<table style="height: 21px;">
+    <tr>
+        <td style="height: 100%; vertical-align: middle;">
+            <div class="ShortTitleControl" [ngStyle]="{background: Background}">
+                <span><img [attr.src]="DirectionImageSRC" /></span>
+                <span style="margin-left: 2px;"><img [attr.src]="TransportModeImageSRC" /></span>
+                <span style="margin-left: 2px;">{{EntityPM.ShipmentNumber}}:</span>
+                <span style="margin-left: 2px;">{{PartnerName}}</span>
+
+                <div style="display: inline-block;" *ngIf="IsRankVisible">
+                    <span><img style="width: 16px; height: 16px;" [attr.src]="RankSource1" [attr.title]="CustomerRankName" /></span>
+                    <span><img style="width: 16px; height: 16px;" [attr.src]="RankSource2" [attr.title]="CustomerRankName"/></span>
+                    <span><img style="width: 16px; height: 16px;" [attr.src]="RankSource3" [attr.title]="CustomerRankName"/></span>
+                </div>
+            </div>
+        </td>
+
+        <td>
+            <div class="ShortTitleControl" style="background: red; margin-left: 5px; color: white;" *ngIf="IsCancelled">Cancelled</div>
+        </td>
+    </tr>
+</table>

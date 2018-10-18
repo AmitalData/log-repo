@@ -1,0 +1,1 @@
+update GlobalTenants set Version=1 where Id<>0 and Version<>-1 and IsActive<>0

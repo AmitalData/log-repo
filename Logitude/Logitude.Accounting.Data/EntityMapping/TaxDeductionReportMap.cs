@@ -1,0 +1,65 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data;
+ 
+namespace Logitude.Accounting.Data.EntityMapping
+{
+ 
+    public class TaxDeductionReportMap : EntityTypeConfiguration<TaxDeductionReport>
+    {
+	    string dbms;
+        public TaxDeductionReportMap()
+        { 
+				this.ToTable("TaxDeductionReports");
+		
+		    this.HasKey(t => new { t.Id });
+	 
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
+
+            this.Property(t => t.CreateDate).HasColumnName("CreateDate").IsRequired();
+
+            this.Property(t => t.CreatedByUserId).HasColumnName("CreatedByUserId").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.UpdateDate).HasColumnName("UpdateDate").IsRequired();
+
+            this.Property(t => t.UpdatedByUserId).HasColumnName("UpdatedByUserId").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsMaxLength().IsUnicode(true);
+
+            this.Property(t => t.ReportNumber).HasColumnName("ReportNumber");
+
+            this.Property(t => t.StatusTypeCode).HasColumnName("StatusTypeCode").HasMaxLength(1).IsUnicode(false);
+
+            this.Property(t => t.IsAdditionalReportExist).HasColumnName("IsAdditionalReportExist");
+
+            this.Property(t => t.TaxYear).HasColumnName("TaxYear");
+
+            this.Property(t => t.Email).HasColumnName("Email").HasMaxLength(70).IsUnicode(false);
+
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.ErrorMessage).HasMaxLength(2000);
+			}
+            else
+            {
+              this.Property(t => t.ErrorMessage).HasMaxLength(4000);
+			}
+
+
+            this.Property(t => t.ErrorMessage).HasColumnName("ErrorMessage").IsUnicode(true);
+        }
+    }
+}
+	 

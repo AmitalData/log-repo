@@ -1,0 +1,345 @@
+﻿
+<style>
+    .subTitle {
+        color: #1b90cb;
+        font-size: 16px;
+    }
+
+    .DisbleBox {
+        display: inline-block;
+        border: 1px solid #ffd800;
+        border-radius: 5px;
+        background: #faf5c0;
+        padding: 2px 10px;
+        margin: 5px;
+        color: gray;
+        font-family: sans-serif;
+    }
+
+    .MyLabel {
+        text-align: center;
+        Margin: 0px 5px 0px 0px;
+        width: 100px;
+        text-align: right;
+    }
+
+    .MyTextBox {
+        text-align: center;
+        Margin: 0px 5px 0px 0px;
+        color: #282E30;
+        font-weight: bold;
+        width: 100px;
+        text-align: right;
+    }
+</style>
+<table>
+    <tr>
+        <td>
+            <div class="TableHolder">
+                <table *ngIf="IsVisible">
+
+                    
+
+                    <tr style="height:25px">
+                        <td  class="TabTitleRow" style="width:150px">
+                            {{'Customs.Declaration.O.GeneralData'| TextCodeTranslationPipe}}
+                        </td>
+                        <td colspan="2">
+                            
+                            <div class="DisbleBox" style="margin-right:-80px;" *ngIf="ShowErrorMessage">
+                                {{ErrorMessage}}
+                            </div>
+                                                
+                        </td>
+                        
+                    </tr>
+
+                    <tr style="height:100px">
+                        <td>
+
+                            <div >
+                                <table style="margin:10px;">
+                                    <tr class="FormFieldRow">
+                                        <td>
+                                            <div class="MyLabel">{{'Customs.Declaration.F.CIFValue'| TextCodeTranslationPipe}}</div>
+                                        </td>
+                                        <td>
+                                            <!--Text="{Binding CIFValue,StringFormat=\{0:N2\}}"-->
+                                            <div class="MyTextBox">  {{ CIFValue | NumbersPipe :'N2' }} </div>
+                                        </td>
+                                        <td style="width:10px;"></td>
+
+                                        <td>
+                                            <div class="MyLabel">{{'Customs.Declaration.F.DealValue'| TextCodeTranslationPipe}}</div>
+                                        </td>
+                                        <td>
+                                            <!--Text="{Binding CIFValue,StringFormat=\{0:N2\}}"-->
+                                            <div class="MyTextBox">  {{ DealValue | NumbersPipe :'N2' }} </div>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr class="FormFieldRow">
+                                        <td>
+                                            <div class="MyLabel">{{'Customs.Declaration.F.TotalTax'| TextCodeTranslationPipe}}</div>
+                                        </td>
+                                        <td>
+                                            <!--Text="{Binding CIFValue,StringFormat=\{0:N2\}}"-->
+                                            <div class="MyTextBox">  {{ TotalTax | NumbersPipe :'N2' }} </div>
+                                        </td>
+                                        <td style="width:10px;"></td>
+
+                                        <td>
+                                            <div class="MyLabel">{{'Customs.Declaration.F.DealValueWithoutFactor'| TextCodeTranslationPipe}}</div>
+                                        </td>
+                                        <td>
+
+                                            <div class="MyTextBox">  {{  DealValueWithoutFactor| NumbersPipe :'N2' }} </div>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr class="FormFieldRow">
+
+
+
+
+                                        <td>
+                                            <div class="MyLabel">{{'Customs.Declaration.F.PlatformFee'| TextCodeTranslationPipe}}</div>
+                                        </td>
+                                        <td>
+                                            <!--Text="{Binding CIFValue,StringFormat=\{0:N2\}}"-->
+                                            <div class="MyTextBox">  {{ PlatformFee | NumbersPipe :'N3' }} </div>
+                                        </td>
+
+
+
+                                        <td style="width:10px;"></td>
+                                        <td>
+                                            <div class="MyLabel">{{'Customs.Declaration.F.LoadingFactor'| TextCodeTranslationPipe}}</div>
+                                        </td>
+                                        <td>
+                                            <!--Text="{Binding CIFValue,StringFormat=\{0:N2\}}"-->
+                                            <div class="MyTextBox">  {{ LoadingFactor  }} </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </div>
+
+
+                        </td>
+                        <td  >
+
+                            <div style="width:300px;height:100px;margin-right:50px;">
+                                <div style="width: 100% ; height : 100%">
+                                    <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
+                                        <logitude-edit-grid GridWidth="100%"
+                                                            GridHeight="100%"
+                                                            [ItemSource]="CurrencyRatesView">
+
+                                            <!-- currency -->
+                                            <log-column [header]="'Customs.CustomsExchangeRate.F.CurrencyTypeCode' | TextCodeTranslationPipe"
+                                                        [width]="'100'" [Alignment]="'right'"
+                                                        [binding]="'InvoiceCurrencyId'">
+                                                <log-cell-template template="let item" #logcelltemplate>
+                                                    <div class="TextTrimming RightCenter">
+                                                        <span>{{item.InvoiceCurrencyId}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </log-column>
+
+                                            <!-- rate -->
+                                            <log-column [header]="'Customs.CustomsExchangeRate.F.ExchangeRate' | TextCodeTranslationPipe"
+                                                        [width]="'100'" [Alignment]="'right'"
+                                                        [binding]="'ExchangeRate'">
+                                                <log-cell-template template="let item" #logcelltemplate>
+                                                    <div class="TextTrimming RightCenter" >
+                                                        <span>{{item.ExchangeRate}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </log-column>
+
+                                        </logitude-edit-grid>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </td>
+                        <td></td>
+
+                    </tr>
+                    
+                    <tr style="height:25px">
+                        <td colspan="3" class="TabTitleRow" style="width:150px">
+                            {{'Customs.Declaration.O.DeclarationTaxesLines'| TextCodeTranslationPipe}}
+                        </td>
+
+                    </tr>
+                    <tr style="height:200px">
+                        <td colspan="3" >
+                            <div class="CellContent" style="bottom: 5px;padding:5px;">
+
+
+                                <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
+                                    <logitude-edit-grid GridWidth="100%"
+                                                        GridHeight="100%"
+                                                        [FooterTop]="FooterMethods"
+                                                        [ItemSource]="TaxesObslist">
+
+                                        <!-- TaxTypeName -->
+                                        <log-column [header]="'Customs.DeclarationTax.F.TaxTypeCode' | TextCodeTranslationPipe"
+                                                    [width]="'100'" [Alignment]="'right'"
+                                                    [binding]="'TaxTypeName'">
+                                            <log-footer>
+                                                <log-footer-template template="let item">
+                                                    <div class="TextTrimming RightCenter" style="font-size: 12px; font-weight: bold; color:#25446C;">{{'Customs.Declaration.O.TotalTaxes' | TextCodeTranslationPipe}}</div>
+                                                </log-footer-template>
+                                            </log-footer>
+
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="TextTrimming RightCenter">
+                                                    <span>{{item.TaxTypeName}}</span>
+                                                </div>
+                                            </log-cell-template>
+
+                                            
+                                        </log-column>
+
+                                        <!-- TaxBaseAmount -->
+                                        <log-column [header]="'Customs.DeclarationTax.F.TaxBaseAmount' | TextCodeTranslationPipe"
+                                                    [width]="'130'" [Alignment]="'right'"
+                                                    [binding]="'TaxBaseAmount'">
+                                            <log-footer>
+                                                <log-footer-template template="let item">
+                                                    <div class="TextTrimming RightCenter" style="font-size: 12px; font-weight: bold; color:#25446C;">{{TaxBaseAmountTotal | NumbersPipe:'N2'}}</div>
+                                                </log-footer-template>
+                                            </log-footer>
+
+                                             <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="TextTrimming RightCenter">
+                                                    <span>{{item.TaxBaseAmount | NumbersPipe :'N2'  }}</span>
+                                                </div>
+                                            </log-cell-template>
+
+                                           
+                                        </log-column>
+
+
+                                        <!-- TaxToPay the header must be 'Customs.DeclarationTax.F.TaxToPay' but anat and odelia mixed them because they are mixed in the db bug 36030-->
+                                        <log-column [header]="'Customs.SupplierInvoiceItemsTax.F.TaxAmount' | TextCodeTranslationPipe"
+                                                    [width]="'100'" [Alignment]="'right'"
+                                                    [binding]="'TaxToPay'">
+                                            <log-footer>
+                                                <log-footer-template template="let item">
+                                                    <div class="TextTrimming RightCenter" style="font-size: 12px; font-weight: bold; color:#25446C;">{{TaxToPayTotal | NumbersPipe:'N2'}}</div>
+                                                </log-footer-template>
+                                            </log-footer>
+
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="TextTrimming RightCenter">
+                                                    <span>{{item.TaxToPay | NumbersPipe :'N2'  }}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+
+                                        <!-- TotalAmount the header must be 'Customs.SupplierInvoiceItemsTax.F.TaxAmount' but anat and odelia mixed them because they are mixed in the db bug 36030-->
+                                        <log-column [header]="'Customs.DeclarationTax.F.TaxToPay' | TextCodeTranslationPipe"
+                                                    [width]="'100'" [Alignment]="'right'"
+                                                    [binding]="'TotalAmount'">
+                                            <log-footer>
+                                                <log-footer-template template="let item">
+                                                    <div class="TextTrimming RightCenter" style="font-size: 12px; font-weight: bold; color:#25446C;">{{TotalAmountTotal | NumbersPipe:'N2'}}</div>
+                                                </log-footer-template>
+                                            </log-footer>
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="TextTrimming RightCenter">
+                                                    <span>{{item.TotalAmount | NumbersPipe :'N2'  }}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+
+
+                                        <!-- DeferredTaxAmount -->
+                                        <log-column [header]="'Customs.DeclarationTax.F.DeferredTaxAmount' | TextCodeTranslationPipe"
+                                                    [width]="'100'" [Alignment]="'right'"
+                                                    [binding]="'DeferredTaxAmount'">
+                                            <log-footer>
+                                                <log-footer-template template="let item">
+                                                    <div class="TextTrimming RightCenter" style="font-size: 12px; font-weight: bold; color:#25446C;">{{DeferredTaxAmountTotal | NumbersPipe:'N2'}}</div>
+                                                </log-footer-template>
+                                            </log-footer>
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="TextTrimming RightCenter" >
+                                                    <span>{{item.DeferredTaxAmount | NumbersPipe :'N2'  }}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                    </logitude-edit-grid>
+                                </div>
+
+
+
+
+                            </div>
+                        </td>
+                    </tr>
+
+
+
+                    <tr style="height:25px">
+                        <td colspan="3" class="TabTitleRow" style="width:150px">
+                            {{'Customs.Declaration.O.ItemTaxes'| TextCodeTranslationPipe}}
+                        </td>
+
+                    </tr>
+                    <tr style="height:240px">
+                        <td colspan="3" style="height: 100%;">
+                            <div class="CellContent" style="bottom: 5px;padding:5px;" *ngIf="isOk">
+
+                                <!--[QueryChangeEvent]="onQueryChangeEvent"-->
+                                <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
+             
+                                    <logitude-grid GridWidth="100%" GridHeight="100%"
+                                                   [ObjectTable]="ObjectTableName"
+                                                   [dataSource]="DataSource"
+                                                   (AfterViewInitCompleted)="ViewInitCompleted($event)"
+                                                   (rowSelectedEvent)="OnRowSelected2($event)"
+                                                   [MenuHeaderchangeevent]="MenuHeaderchangeevent"
+                                                   [columns]="columns"
+                                                   
+                                                   [SelectedRow]="SelectedRow2"
+                                                   [IsCustomTemplate]="true" 
+                                                   [IsGradiantSelectedColor]="true">
+                                    </logitude-grid>
+
+                                </div>
+
+
+
+
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr  *ngIf="IsCloseButtonVisibile" >
+                        <td colspan="2"></td> 
+                        <td>
+                            <button style="width:70px; top:10px" class="Button" (click)="CloseButtonClicked()">{{'Customs.General.B.Close' |TextCodeTranslationPipe}}</button>
+                        </td>
+                    </tr>
+
+                </table>
+
+            </div>
+        </td>
+    </tr>
+
+ 
+
+</table>

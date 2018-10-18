@@ -1,0 +1,379 @@
+﻿
+<style type="text/css">
+    .circleBase {
+        border-radius: 50%;
+        behavior: url(PIE.htc);
+    }
+
+    .type1 {
+        width: 22px;
+        height: 22px;
+        background: #1B90CB;
+        border: 1px solid lightgray;
+        color: white;
+    }
+
+    .WizardTabControl .WizardTabControlHead li:not(.Selected) {
+        height: 28px;
+        margin-top: 1px;
+    }
+
+    .WizardTabControl .WizardTabControlHead li.Selected {
+        height: 30px;
+        background: #E6EBF0;
+        border-left: 1px solid lightgray;
+        border-right: 1px solid lightgray;
+        border-top: 1px solid lightgray;
+        border-bottom: none;
+        border-radius: 5px 5px 0px 0px;
+        background-color: #E6EBF0;
+    }
+
+    .WizardTabControl .WizardTabControlHead li:not(:first-child):not(.Selected) {
+        border-left: none;
+        border-radius: 0px 3px 0px 0px;
+        -moz-border-radius: 0px 3px 0px 0px;
+        -webkit-border-radius: 0px 3px 0px 0px;
+    }
+
+    .WizardTabControl .WizardTabControlHead li .InnerChild {
+        height: 100%;
+        width: 100%;
+        color: #1B90CB;
+        text-align: left;
+        padding-left: 3px;
+        padding-right: 3px;
+        border-radius: 1px 1px 0px 0px;
+        -moz-border-radius: 1px 1px 0px 0px;
+        -webkit-border-radius: 1px 1px 0px 0px;
+    }
+
+    .WizardTabControl .WizardTabControlHead li {
+        height: 28px;
+        line-height: 25px;
+        display: inline-block;
+        float: left;
+        cursor: default;
+        border: 0px;
+        border-bottom: none;
+        overflow: hidden;
+        border-radius: 3px 3px 0px 0px;
+        -moz-border-radius: 3px 3px 0px 0px;
+        -webkit-border-radius: 3px 3px 0px 0px;
+    }
+
+    .WizardTabControl .WizardTabControlHead ul {
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+
+    .WizardTabControl .WizardTabControlBody {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 30px;
+        border: 1px solid lightgray;
+        border-top: none;
+        border-radius: 0px 0px 3px 3px;
+        -moz-border-radius: 0px 0px 3px 3px;
+        -webkit-border-radius: 0px 0px 3px 3px;
+        background: white;
+    }
+
+    .WizardTabControl .WizardTabControlHead {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 30px;
+        border-bottom: 1px solid lightgray;
+    }
+
+    .WizardTabControl {
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+</style>
+
+<div class="MediaFill CurvedArea" style="background: white">
+    <div class="MarginAbsolute5">
+        <table [hidden]="!IsResourcesReady">
+
+            <!-- Header -->
+            <tr style="height: 1px;">
+                <td>
+                    <table>
+                        <tr>
+                            <td style="width: 1px;">
+                                <img style="width:50px; height:50px" src="./Images/ApplicationLogo/LogitudeSmallLogo.png" />
+                            </td>
+
+                            <td style="width: 10px;">
+                                <div></div>
+                            </td>
+
+                            <td style="width: 1px;">
+                                <div style="font-size: 20px; color: #1B90CB;">Company Setup wizard</div>
+                                <div style="font-size: 11px; color: Gray; font-family: Arial;">Welcome to the new Company Setup wizard.</div>
+                                <div style="font-size: 11px; color: Gray; font-family: Arial;">This wizard will help you setup your company easily and quickly.</div>
+                            </td>
+
+                            <td>
+                                <div></div>
+                            </td>
+
+                            <td style="width: 1px; vertical-align: top;">
+                                <IconButton [Name]="'Signout'" [IsIconOnly]="true" (click)="SignoutClicked()" title="Sign Out"></IconButton>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <tr style="height: 15px;">
+                <td>
+                    <div></div>
+                </td>
+            </tr>
+
+            <!-- Tabs -->
+            <tr>
+                <td>
+                    <div class="MediaFill">
+                        <div class="WizardTabControl">
+
+                            <div class="WizardTabControlHead">
+                                <ul>
+
+                                    <!-- Address -->
+                                    <li [class.Selected]="SelectedTabCode === 'ADD'" style="text-align:center">
+                                        <div style="text-align:center;color:black;" class="InnerChild">
+                                            <table>
+                                                <tr>
+                                                    <td style="width:5px">
+                                                        <div></div>
+                                                    </td>
+
+                                                    <td style="width:22px">
+                                                        <div style="text-align:center" class="circleBase type1">
+                                                            <span style="left:0px;top:2px;right:0px;bottom:0px;position:absolute;">1</span>
+                                                        </div>
+                                                    </td>
+
+                                                    <td style="width:5px">
+                                                        <div></div>
+                                                    </td>
+                                                    <td style="text-align:center;font-size:15px;color:#1B90CB">Address</td>
+
+                                                    <td style="width:5px">
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </li>
+
+                                    <!-- Logo -->
+                                    <li [class.Selected]="SelectedTabCode === 'LOG'" style="text-align:center;margin-left:30px">
+                                        <div style="text-align:center;color:black;" class="InnerChild">
+
+                                            <table>
+                                                <tr>
+                                                    <td style="width:5px">
+                                                        <div style="width:5px"></div>
+                                                    </td>
+                                                    <td style="width:22px">
+                                                        <div [style.background-color]="LogoTabBackground" style="text-align:center;" class="circleBase type1">
+                                                            <span [style.color]="LogoTabIndexColor" style="left:0px;top:1px;right:0px;bottom:0px;position:absolute;">2</span>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:5px">
+                                                        <div style="width:5px"></div>
+                                                    </td>
+                                                    <td [style.color]="LogoTabTextColor" style="text-align:center;font-size:15px;">Logo</td>
+                                                    <td style="width:5px">
+                                                        <div style="width:5px"></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+
+                                        </div>
+                                    </li>
+
+                                    <!-- Accounting Settings -->
+                                    <li [class.Selected]="SelectedTabCode === 'ACC'" style="text-align:center;margin-left:30px;width:190px">
+                                        <div style="text-align:center;color:black;" class="InnerChild">
+
+                                            <table>
+
+
+                                                <tr>
+                                                    <td style="width:5px">
+                                                        <div style="width:5px"></div>
+                                                    </td>
+                                                    <td style="width:22px">
+                                                        <div [style.background-color]="AccountingSettingsTabBackground" style="text-align:center;" class="circleBase type1">
+                                                            <span [style.color]="AccountingSettingsTabIndexColor" style="left:0px;top:1px;right:0px;bottom:0px;position:absolute;">3</span>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:5px">
+                                                        <div style="width:5px"></div>
+                                                    </td>
+                                                    <td [style.color]="AccountingSettingsTabTextColor" style="text-align:center;font-size:15px;">Accounting Settings</td>
+                                                    <td style="width:5px">
+                                                        <div style="width:5px"></div>
+                                                    </td>
+                                                </tr>
+
+
+                                            </table>
+
+                                        </div>
+                                    </li>
+
+                                    <!-- Finish -->
+                                    <li [class.Selected]="SelectedTabCode === 'FIN'" style="text-align:center;margin-left:30px">
+                                        <div style="text-align:center;color:black;" class="InnerChild">
+
+                                            <table>
+                                                <tr>
+                                                    <td style="width:5px">
+                                                        <div style="width:5px"></div>
+                                                    </td>
+                                                    <td style="width:22px">
+                                                        <div [style.background-color]="FinishTabBackground" style="text-align:center;" class="circleBase type1">
+                                                            <span [style.color]="FinishTabIndexColor" style="left:0px;top:1px;right:0px;bottom:0px;position:absolute;">4</span>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:5px">
+                                                        <div style="width:5px"></div>
+                                                    </td>
+                                                    <td [style.color]="FinishTabTextColor" style="text-align:center;font-size:15px;">Finish</td>
+                                                    <td style="width:5px">
+                                                        <div style="width:5px"></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div style="background-color:#E6EBF0" class="WizardTabControlBody">
+                                <div class="MediaFillRelative">
+                                    <div class="MarginAbsolute5">
+                                        <table>
+
+                                            <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+                                                <td>
+                                                    <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>
+
+                                                    <!-- Address -->
+                                                    <div class="MediaFill" [hidden]="SelectedTabCode != 'ADD'">
+                                                        <div LocationDirective Code="ADD"></div>
+                                                    </div>
+
+                                                    <!-- Logo -->
+                                                    <div class="MediaFill" [hidden]="SelectedTabCode != 'LOG'">
+                                                        <div LocationDirective Code="LOG"></div>
+                                                    </div>
+
+                                                    <!-- Accounting Settings -->
+                                                    <div class="MediaFill" [hidden]="SelectedTabCode != 'ACC'">
+                                                        <div LocationDirective Code="ACC"></div>
+                                                    </div>
+
+                                                    <!-- Finish -->
+                                                    <div class="MediaFill" [hidden]="SelectedTabCode != 'FIN'">
+                                                        <table>
+
+                                                            <tr style="height:1px;">
+                                                                <td style="font-size:13px;color:#282E30">
+                                                                    The system is now ready to to activate your tenant and save the information you have provided.
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr style="height:1px">
+                                                                <td>
+                                                                    <div style="font-size:11px;color:#6E7172;font-style: italic;">If you want to view or modify your company settings later, open the Maintenance</div>
+                                                                    <div style="font-size:11px;color:#6E7172;font-style: italic;">menu and choose the option you need.</div>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr style="height:10px">
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr style="height:1px">
+                                                                <td>
+                                                                    <div style="font-size:11px;color:#6E7172;font-style: italic;">Click finish to complete the wizard.</div>
+                                                                    <button class="Button" style="float:left; width:57px;" (click)="FinishButtonClicked()">Finish</button>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+
+                                                        </table>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr style="height: 5px;">
+                <td>
+                    <div></div>
+                </td>
+            </tr>
+
+            <!-- Buttons -->
+            <tr style="height: 22px">
+                <td>
+                    <table>
+                        <tr>
+                            <td>
+                                <div></div>
+                            </td>
+
+                            <td style="width: 57px;">
+                                <button [disabled]="SelectedTabCode == 'ADD' ? true : false" class="Button" (click)="BackButtonClicked()">Back</button>
+                            </td>
+
+                            <td style="width: 5px;">
+                                <div></div>
+                            </td>
+
+                            <td style="width: 57px;">
+                                <button [disabled]="SelectedTabCode== 'FIN' ? true : false" class="Button" (click)="NextButtonClicked()">Next</button>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+

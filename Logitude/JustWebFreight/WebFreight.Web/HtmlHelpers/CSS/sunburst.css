@@ -1,0 +1,189 @@
+pre code {
+	background: rgb(0, 0, 0); padding: 0.5em; color: rgb(248, 248, 248); display: block;
+}
+pre .comment {
+	color: rgb(174, 174, 174); font-style: italic;
+}
+pre .template_comment {
+	color: rgb(174, 174, 174); font-style: italic;
+}
+pre .javadoc {
+	color: rgb(174, 174, 174); font-style: italic;
+}
+pre .keyword {
+	color: rgb(226, 137, 100);
+}
+pre .ruby .function .keyword {
+	color: rgb(226, 137, 100);
+}
+pre .function .keyword {
+	color: rgb(153, 207, 80);
+}
+pre .sub .keyword {
+	color: rgb(153, 207, 80);
+}
+pre .method {
+	color: rgb(153, 207, 80);
+}
+pre .list .title {
+	color: rgb(153, 207, 80);
+}
+pre .string {
+	color: rgb(101, 176, 66);
+}
+pre .tag .value {
+	color: rgb(101, 176, 66);
+}
+pre .cdata {
+	color: rgb(101, 176, 66);
+}
+pre .filter .argument {
+	color: rgb(101, 176, 66);
+}
+pre .attr_selector {
+	color: rgb(101, 176, 66);
+}
+pre .apache .cbracket {
+	color: rgb(101, 176, 66);
+}
+pre .date {
+	color: rgb(101, 176, 66);
+}
+pre .tex .command {
+	color: rgb(101, 176, 66);
+}
+pre .subst {
+	color: rgb(218, 239, 163);
+}
+pre .regexp {
+	color: rgb(233, 192, 98);
+}
+pre .function .title {
+	color: rgb(137, 189, 255);
+}
+pre .sub .identifier {
+	color: rgb(137, 189, 255);
+}
+pre .pi {
+	color: rgb(137, 189, 255);
+}
+pre .tag {
+	color: rgb(137, 189, 255);
+}
+pre .tag .keyword {
+	color: rgb(137, 189, 255);
+}
+pre .decorator {
+	color: rgb(137, 189, 255);
+}
+pre .ini .title {
+	color: rgb(137, 189, 255);
+}
+pre .shebang {
+	color: rgb(137, 189, 255);
+}
+pre .input_number {
+	color: rgb(137, 189, 255);
+}
+pre .class .title {
+	text-decoration: underline;
+}
+pre .haskell .label {
+	text-decoration: underline;
+}
+pre .smalltalk .class {
+	text-decoration: underline;
+}
+pre .javadoctag {
+	text-decoration: underline;
+}
+pre .yardoctag {
+	text-decoration: underline;
+}
+pre .phpdoc {
+	text-decoration: underline;
+}
+pre .symbol {
+	color: rgb(51, 135, 204);
+}
+pre .ruby .symbol .string {
+	color: rgb(51, 135, 204);
+}
+pre .ruby .symbol .keyword {
+	color: rgb(51, 135, 204);
+}
+pre .ruby .symbol .keymethods {
+	color: rgb(51, 135, 204);
+}
+pre .number {
+	color: rgb(51, 135, 204);
+}
+pre .params {
+	color: rgb(62, 135, 227);
+}
+pre .variable {
+	color: rgb(62, 135, 227);
+}
+pre .css .tag {
+	color: rgb(205, 168, 105);
+}
+pre .rules .property {
+	color: rgb(205, 168, 105);
+}
+pre .pseudo {
+	color: rgb(205, 168, 105);
+}
+pre .tex .special {
+	color: rgb(205, 168, 105);
+}
+pre .css .class {
+	color: rgb(155, 112, 63);
+}
+pre .rules .keyword {
+	color: rgb(197, 175, 117);
+}
+pre .rules .value {
+	color: rgb(207, 106, 76);
+}
+pre .css .id {
+	color: rgb(139, 152, 171);
+}
+pre .annotation {
+	color: rgb(155, 133, 157);
+}
+pre .apache .sqbracket {
+	color: rgb(155, 133, 157);
+}
+pre .nginx .built_in {
+	color: rgb(155, 133, 157);
+}
+pre .preprocessor {
+	color: rgb(137, 150, 168);
+}
+pre .hexcolor {
+	color: rgb(221, 123, 59);
+}
+pre .css .value .number {
+	color: rgb(221, 123, 59);
+}
+pre .css .function {
+	color: rgb(218, 208, 133);
+}
+pre .diff .header {
+	color: rgb(248, 248, 248); font-style: italic; background-color: rgb(14, 34, 49);
+}
+pre .chunk {
+	color: rgb(248, 248, 248); font-style: italic; background-color: rgb(14, 34, 49);
+}
+pre .tex .formula {
+	color: rgb(248, 248, 248); font-style: italic; background-color: rgb(14, 34, 49);
+}
+pre .diff .change {
+	color: rgb(248, 248, 248); background-color: rgb(74, 65, 13);
+}
+pre .addition {
+	color: rgb(248, 248, 248); background-color: rgb(37, 59, 34);
+}
+pre .deletion {
+	color: rgb(248, 248, 248); background-color: rgb(66, 14, 9);
+}

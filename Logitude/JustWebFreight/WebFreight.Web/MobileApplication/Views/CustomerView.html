@@ -1,0 +1,271 @@
+﻿
+      <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+
+<body>
+    <div data-role="view"  data-transition="slide" data-show="onDataShow">
+
+      <!--<header data-role="header">
+        <div data-role="navbar" id="employee-navbar">
+            <a data-role="backbutton" id="employee-back" data-align="left">Back</a>
+            <span data-role="view-title"></span>
+            <a data-align="right" data-role="button" class="nav-button" href="#index">Index</a>
+        </div>
+    </header>-->
+          <header data-role="header">
+           
+            <div style="height:55px;display:table;width:100% ">
+
+                  <div style="display:table-cell; width:auto; vertical-align:middle;margin-top:-15px;">
+                             <a data-role="backbutton" data-align="left" style="margin-left:5px;margin-bottom:10px;width:90px;height:30px;font-size:11px;position:relative;"><span style="position:absolute;top:7px;left:8px;">< Customers</span></a>
+                          
+                  </div>
+             </div>
+           
+      </header>
+
+                   <div style="width:100% ;background-color: white ;">
+                        <div style ="margin-left :10px; margin-right:10px; background-color: white;">
+                                    <div style="display:table;width:100% ; height: 55px; border-bottom:1px solid #EEF0F1  ;" >
+                                                                  
+                                                         <div style="display:table-cell; vertical-align:middle; text-align:left; width:320px;">
+                                                                     <div class="HeaderNameCustomer TemplateItem" style="display:inline-block;   margin-top:4px; max-width:270px;"  data-bind="text: EnglishName"></div>
+
+                                                                 <div id="Rank1" style="display:none; width:19px;margin-top:4px;"><img style="width: 18px; height:18px; padding:0px; margin:0px;" <img src="images/Rank.png"/></div>
+                                                                    <div id="Rank2"  style="display:none; width:19px;margin-top:4px;"><img style="width: 18px; height:18px; padding:0px; margin:0px;" <img src="images/Rank.png" /></div>
+										                                  <div id="Rank3"  style="display:none; width:19px;margin-top:4px;"><img style="width: 18px; height:18px; padding:0px; margin:0px;" <img src="images/Rank.png" /></div>
+                                                              
+                                                                    
+                                                        </div>
+
+
+
+
+                                    </div>
+                        </div>
+
+           </div>
+   
+
+    <div style ="height:12px; background-color:white; width:100%"></div>
+
+    
+        
+           <div style="height:196px;  background-color:white;  position:relative;">
+
+                <div  style="height:188px; margin-left:11px; margin-right:11px; border:1px solid #ACB3B7;">
+                    
+                    <div style="display:table; height:31px; width:100%;border-bottom :1px solid #E0E8EB" >
+                        <div  class="SHDQD1TextStyle "  style="display:table-cell; width:107px; vertical-align:middle; text-align:left;background-color:#ECF1F4;text-indent:10px;" >Code</div>
+                         
+                        <div class="HeaderValue TemplateItem" style="display:table-cell;width:200px;background-color:white;vertical-align:middle; max-width:150px; text-indent:10px;" data-bind=" text: Code"></div>
+                  </div>
+
+
+
+                    
+                    <div style="display:table; height:31px; width:100%;border-bottom :1px solid #E0E8EB" >
+                        <div  class="SHDQD1TextStyle "  style="display:table-cell; width:107px; vertical-align:middle; text-align:left;background-color:#ECF1F4;text-indent:10px;" >City</div>
+                         
+                        <div class="HeaderValue TemplateItem" style="display:table-cell;width:200px;background-color:white;vertical-align:middle; max-width:150px; text-indent:10px;" data-bind=" text: CityName"></div>
+                  </div>
+
+            
+                     <div style="display:table; height:31px; width:100%;border-bottom :1px solid #E0E8EB" >
+                        <div  class="SHDQD1TextStyle "  style="display:table-cell; width:107px; vertical-align:middle; text-align:left;background-color:#ECF1F4;text-indent:10px;">Salesman</div>
+                         
+                        <div class="HeaderValue TemplateItem" style="display:table-cell;width:200px;background-color:white;vertical-align:middle; max-width:150px; text-indent:10px;" data-bind=" text: SalesmanUserEnglishName"></div>
+                  </div>
+
+
+
+          
+                  
+
+
+       <div style="display:table; height:31px; width:100%;border-bottom :1px solid #E0E8EB" >
+                        <div  class="SHDQD1TextStyle "  style="display:table-cell; width:107px; vertical-align:middle; text-align:left;background-color:#ECF1F4;text-indent:10px;" >Last Shipment</div>
+                         
+                        <div class="HeaderValueDate TemplateItem" style="display:table-cell;width:200px;background-color:white;vertical-align:middle; max-width:150px; text-indent:10px;" data-bind=" text: LastShipmentDate"></div>
+                  </div>
+
+
+                  <div style="display:table; height:31px; width:100%;border-bottom :1px solid #E0E8EB" >
+                        <div  class="SHDQD1TextStyle "  style="display:table-cell; width:107px; vertical-align:middle; text-align:left;background-color:#ECF1F4;text-indent:10px;" >Start Working</div>
+                         
+                        <div class="HeaderValueDate TemplateItem" style="display:table-cell;width:200px;background-color:white;vertical-align:middle; max-width:150px; text-indent:10px;" data-bind=" text: StartWorkingDate"></div>
+                  </div>
+                  
+
+                     <div style="display:table; height:31px; width:100%;border-bottom :1px solid #E0E8EB" >
+                        <div  class="SHDQD1TextStyle "  style="display:table-cell; width:107px; vertical-align:middle; text-align:left;background-color:#ECF1F4;text-indent:10px;" >Industry</div>
+                         
+                        <div class="HeaderValue TemplateItem" style="display:table-cell;width:200px;background-color:white;vertical-align:middle; max-width:150px; text-indent:10px;" data-bind=" text: IndustryName"></div>
+                  </div>
+                    <!--IndustryName-->
+                 
+         
+
+                </div>
+
+               <div style ="height:22px; background-color:white; width:100% ; border-bottom:1px solid #C5CACD"></div>
+            </div>
+
+
+        <ul data-role="listview" data-style="inset" data-type="group" style="margin-top:10px" >
+               <li>
+                   <ul>
+
+                      <li style="text-indent:10px; border-bottom: 1px solid #C5CACD;">
+                        <a href="Views/CustomerViews/ActionItemsfo.html" style="margin-right:-5px">
+                            <div style="display:table; height:50px; width:100%;background-color:transparent">
+                               <!-- <div style="display:table-cell; text-align:left; vertical-align:middle; border-right:1px solid #C5CACD;  width:41px; background-color:transparent;">
+                                
+                                    <div style="width:12px;"></div>
+                                </div>-->
+                                <div class="HederSHDQD2TextStyle" style="display:table-cell; vertical-align:middle; background-color:transparent">
+                                    Action Items
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+
+           
+                    <li style="text-indent:10px; border-bottom: 1px solid #C5CACD;">
+                        <a href="Views/CustomerViews/ResponsibilityInfo.html" style="margin-right:-5px">
+                            <div style="display:table; height:50px; width:100%;background-color:transparent">
+                               <!-- <div style="display:table-cell; text-align:left; vertical-align:middle; border-right:1px solid #C5CACD;  width:41px; background-color:transparent;">
+                                
+                                    <div style="width:12px;"></div>
+                                </div>-->
+                                <div class="HederSHDQD2TextStyle" style="display:table-cell; vertical-align:middle; background-color:transparent">
+                                    Responsibilities
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+
+                   <li style="text-indent:10px; border-bottom: 1px solid #C5CACD;">
+                        <a href="Views/CustomerViews/CompetitorsInfo.html" style="margin-right:-5px">
+                            <div style="display:table; height:50px; width:100%;background-color:transparent">
+                               <!-- <div style="display:table-cell; text-align:left; vertical-align:middle; border-right:1px solid #C5CACD;  width:41px; background-color:transparent;">
+                                
+                                    <div style="width:12px;"></div>
+                                </div>-->
+                                <div class="HederSHDQD2TextStyle" style="display:table-cell; vertical-align:middle; background-color:transparent">
+                                    Competitors
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                         
+                      <li style="text-indent:10px; border-bottom: 1px solid #C5CACD;">
+                        <a href="Views/CustomerViews/ContactInfo.html" style="margin-right:-5px">
+                            <div style="display:table; height:50px; width:100%;background-color:transparent">
+                               <!-- <div style="display:table-cell; text-align:left; vertical-align:middle; border-right:1px solid #C5CACD;  width:41px; background-color:transparent;">
+                                
+                                    <div style="width:12px;"></div>
+                                </div>-->
+                                <div class="HederSHDQD2TextStyle" style="display:table-cell; vertical-align:middle; background-color:transparent">
+                                    Contacts
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+
+                 <li style="text-indent:10px; border-bottom: 1px solid #C5CACD;">
+                        <a href="Views/CustomerViews/AdressesInfo.html" style="margin-right:-5px">
+                            <div style="display:table; height:50px; width:100%;background-color:transparent">
+                               <!-- <div style="display:table-cell; text-align:left; vertical-align:middle; border-right:1px solid #C5CACD;  width:41px; background-color:transparent;">
+                                
+                                    <div style="width:12px;"></div>
+                                </div>-->
+                                <div class="HederSHDQD2TextStyle" style="display:table-cell; vertical-align:middle; background-color:transparent">
+                                     Addresses
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                
+                           
+                      <li style="text-indent:10px; border-bottom: 1px solid #C5CACD;">
+                        <a href="Views/CustomerViews/Chart.html" style="margin-right:-5px">
+                            <div style="display:table; height:50px; width:100%;background-color:transparent">
+                               <!-- <div style="display:table-cell; text-align:left; vertical-align:middle; border-right:1px solid #C5CACD;  width:41px; background-color:transparent;">
+                                
+                                    <div style="width:12px;"></div>
+                                </div>-->
+                                <div class="HederSHDQD2TextStyle" style="display:table-cell; vertical-align:middle; background-color:transparent">
+                                    Shipments Chart
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                   
+
+                    </ul>
+            </li>
+        </ul>
+         
+        
+    </div>
+
+      
+
+    <script>
+
+
+
+        jQuery.LoadRankCustomerView = (function () {
+
+
+            switch ($.CurrentEntityList.RankCode) {
+
+            case "1": {
+
+                document.getElementById('Rank1').style.display = "inline-block";
+                document.getElementById('Rank2').style.display = "none";
+                document.getElementById('Rank3').style.display = "none";
+            
+                break;
+            }
+
+            case "2": {
+                document.getElementById('Rank1').style.display = "inline-block";
+                document.getElementById('Rank2').style.display = "inline-block";
+                document.getElementById('Rank3').style.display = "none";
+                break;
+            }
+
+            case "3": {
+                document.getElementById('Rank1').style.display = "inline-block";
+                document.getElementById('Rank2').style.display = "inline-block";
+                document.getElementById('Rank3').style.display = "inline-block";
+                break;
+            }
+            default :{
+                document.getElementById('Rank1').style.display = "none";
+                document.getElementById('Rank2').style.display = "none";
+                document.getElementById('Rank3').style.display = "none";
+            }
+
+        }
+
+        });
+
+
+        function onDataShow(e) {
+            
+            //var scroller = e.view.scroller;
+            //scroller.reset();
+
+            ko.applyBindings($.CurrentEntityList);
+            $.LoadRankCustomerView();
+        }
+    </script> 
+
+</body>
+</html>

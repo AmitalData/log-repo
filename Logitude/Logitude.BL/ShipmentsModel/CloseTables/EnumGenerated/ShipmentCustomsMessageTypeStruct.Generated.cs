@@ -1,0 +1,18 @@
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+ 
+namespace Logitude.BL.ShipmentsModel.CloseTables
+{
+    public struct ShipmentCustomsMessageTypeValues
+    {   
+       public const string ArtemusBillofLading = "ARBL";  
+       public const string ArtemusVoyage = "ASVO";  
+       public const string CBPAES = "CBAS";  
+    }
+}
+

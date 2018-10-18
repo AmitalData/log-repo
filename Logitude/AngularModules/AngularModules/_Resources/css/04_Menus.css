@@ -1,0 +1,225 @@
+﻿.DisabledTabItem {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.DefaultMenuItem:not(.SelectedMenuItem):not(.DisabledTabItem):hover {
+    height: 26px;
+    line-height: 26px;
+    width: 100%;
+    border: 1px solid #BDBEC0;
+    cursor: pointer;
+    position: relative;
+    background: -moz-linear-gradient(50% 17.31% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    background: -webkit-gradient(linear,50% 17.31%,50% 105.85%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
+    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+}
+
+.DefaultMenuItem {
+    height: 26px;
+    line-height: 26px;
+    width: 100%;
+    border: 1px solid transparent;
+    color: #464A4B;
+    text-shadow: 1px 1px white;
+    font-size: 12px;
+    cursor: default;
+    text-align: left;
+    text-indent: 10px;
+    position: relative;
+}
+
+.SelectedMenuItem {
+    height: 26px;
+    line-height: 26px;
+    width: 100%;
+    text-indent: 11px;
+    border: 0px solid transparent;
+    color: white;
+    text-shadow: none;
+    background: -moz-linear-gradient(50% 100% 90deg,rgba(28, 131, 185, 1) 0%,rgba(32, 133, 187, 1) 13.69%,rgba(45, 141, 191, 1) 28.14%,rgba(66, 153, 198, 1) 42.94%,rgba(96, 170, 209, 1) 57.99%,rgba(134, 192, 222, 1) 73.22%,rgba(180, 219, 239, 1) 88.4%,rgba(220, 242, 253, 1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(28, 131, 185, 1) 0%, rgba(32, 133, 187, 1) 13.69%, rgba(45, 141, 191, 1) 28.14%, rgba(66, 153, 198, 1) 42.94%, rgba(96, 170, 209, 1) 57.99%, rgba(134, 192, 222, 1) 73.22%, rgba(180, 219, 239, 1) 88.4%, rgba(220, 242, 253, 1) 100%);
+    background: -webkit-gradient(linear,50% 100%,50% 0%,color-stop(0,rgba(28, 131, 185, 1) ),color-stop(0.1369,rgba(32, 133, 187, 1) ),color-stop(0.2814,rgba(45, 141, 191, 1) ),color-stop(0.4294,rgba(66, 153, 198, 1) ),color-stop(0.5799,rgba(96, 170, 209, 1) ),color-stop(0.7322,rgba(134, 192, 222, 1) ),color-stop(0.884,rgba(180, 219, 239, 1) ),color-stop(1,rgba(220, 242, 253, 1) ));
+    background: -o-linear-gradient(90deg, rgba(28, 131, 185, 1) 0%, rgba(32, 133, 187, 1) 13.69%, rgba(45, 141, 191, 1) 28.14%, rgba(66, 153, 198, 1) 42.94%, rgba(96, 170, 209, 1) 57.99%, rgba(134, 192, 222, 1) 73.22%, rgba(180, 219, 239, 1) 88.4%, rgba(220, 242, 253, 1) 100%);
+    background: linear-gradient(0deg, rgba(28, 131, 185, 1) 0%, rgba(32, 133, 187, 1) 13.69%, rgba(45, 141, 191, 1) 28.14%, rgba(66, 153, 198, 1) 42.94%, rgba(96, 170, 209, 1) 57.99%, rgba(134, 192, 222, 1) 73.22%, rgba(180, 219, 239, 1) 88.4%, rgba(220, 242, 253, 1) 100%);
+    position: relative;
+}
+
+/* PagesMenu */
+.PagesMenu .SelectedPageMenu {
+    color: #FFFFFF;
+    background: -moz-linear-gradient(50% 100% 90deg,rgba(24, 130, 184, 1) 0%,rgba(28, 132, 186, 1) 13.58%,rgba(41, 140, 190, 1) 27.91%,rgba(62, 152, 198, 1) 42.6%,rgba(92, 169, 209, 1) 57.53%,rgba(130, 191, 223, 1) 72.64%,rgba(176, 218, 239, 1) 87.7%,rgba(219, 243, 255, 1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(24, 130, 184, 1) 0%, rgba(28, 132, 186, 1) 13.58%, rgba(41, 140, 190, 1) 27.91%, rgba(62, 152, 198, 1) 42.6%, rgba(92, 169, 209, 1) 57.53%, rgba(130, 191, 223, 1) 72.64%, rgba(176, 218, 239, 1) 87.7%, rgba(219, 243, 255, 1) 100%);
+    background: -webkit-gradient(linear,50% 100%,50% 0%,color-stop(0,rgba(24, 130, 184, 1) ),color-stop(0.1358,rgba(28, 132, 186, 1) ),color-stop(0.2791,rgba(41, 140, 190, 1) ),color-stop(0.426,rgba(62, 152, 198, 1) ),color-stop(0.5753,rgba(92, 169, 209, 1) ),color-stop(0.7264,rgba(130, 191, 223, 1) ),color-stop(0.877,rgba(176, 218, 239, 1) ),color-stop(1,rgba(219, 243, 255, 1) ));
+    background: -o-linear-gradient(90deg, rgba(24, 130, 184, 1) 0%, rgba(28, 132, 186, 1) 13.58%, rgba(41, 140, 190, 1) 27.91%, rgba(62, 152, 198, 1) 42.6%, rgba(92, 169, 209, 1) 57.53%, rgba(130, 191, 223, 1) 72.64%, rgba(176, 218, 239, 1) 87.7%, rgba(219, 243, 255, 1) 100%);
+    background: linear-gradient(0deg, rgba(24, 130, 184, 1) 0%, rgba(28, 132, 186, 1) 13.58%, rgba(41, 140, 190, 1) 27.91%, rgba(62, 152, 198, 1) 42.6%, rgba(92, 169, 209, 1) 57.53%, rgba(130, 191, 223, 1) 72.64%, rgba(176, 218, 239, 1) 87.7%, rgba(219, 243, 255, 1) 100%);
+}
+
+.PagesMenu li:not(.SelectedPageMenu):hover {
+    background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
+    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    cursor: pointer;
+    color: #1B90CB;
+}
+
+.PagesMenu li {
+    float: left;
+    height: 25px;
+    line-height: 25px;
+    margin-right: 10px;
+    padding: 0px 5px;
+    min-width: 80px;
+    text-align: center;
+    border: 1px solid #DADADA;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background: -moz-linear-gradient(50% 164.29% 90deg,rgba(188, 190, 192, 1) 0%,rgba(230, 231, 232, 1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(188, 190, 192, 1) 0%, rgba(230, 231, 232, 1) 100%);
+    background: -webkit-gradient(linear,50% 164.29%,50% 6.67%,color-stop(0,rgba(188, 190, 192, 1) ),color-stop(1,rgba(230, 231, 232, 1) ));
+    background: -o-linear-gradient(90deg, rgba(188, 190, 192, 1) 0%, rgba(230, 231, 232, 1) 100%);
+    background: linear-gradient(0deg, rgba(188, 190, 192, 1) 0%, rgba(230, 231, 232, 1) 100%);
+    font-size: 14px;
+    color: #6E7172;
+    cursor: default;
+}
+
+.PagesMenu {
+    height: 25px;
+    width: 100%;
+}
+
+
+.FiltersMenu .SelectedFilter {
+    color: white;
+    background: -moz-linear-gradient(50% 100% 90deg,rgba(24, 130, 184, 1) 0%,rgba(28, 132, 186, 1) 13.58%,rgba(41, 140, 190, 1) 27.91%,rgba(62, 152, 198, 1) 42.6%,rgba(92, 169, 209, 1) 57.53%,rgba(130, 191, 223, 1) 72.64%,rgba(176, 218, 239, 1) 87.7%,rgba(219, 243, 255, 1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(24, 130, 184, 1) 0%, rgba(28, 132, 186, 1) 13.58%, rgba(41, 140, 190, 1) 27.91%, rgba(62, 152, 198, 1) 42.6%, rgba(92, 169, 209, 1) 57.53%, rgba(130, 191, 223, 1) 72.64%, rgba(176, 218, 239, 1) 87.7%, rgba(219, 243, 255, 1) 100%);
+    background: -webkit-gradient(linear,50% 100%,50% 0%,color-stop(0,rgba(24, 130, 184, 1) ),color-stop(0.1358,rgba(28, 132, 186, 1) ),color-stop(0.2791,rgba(41, 140, 190, 1) ),color-stop(0.426,rgba(62, 152, 198, 1) ),color-stop(0.5753,rgba(92, 169, 209, 1) ),color-stop(0.7264,rgba(130, 191, 223, 1) ),color-stop(0.877,rgba(176, 218, 239, 1) ),color-stop(1,rgba(219, 243, 255, 1) ));
+    background: -o-linear-gradient(90deg, rgba(24, 130, 184, 1) 0%, rgba(28, 132, 186, 1) 13.58%, rgba(41, 140, 190, 1) 27.91%, rgba(62, 152, 198, 1) 42.6%, rgba(92, 169, 209, 1) 57.53%, rgba(130, 191, 223, 1) 72.64%, rgba(176, 218, 239, 1) 87.7%, rgba(219, 243, 255, 1) 100%);
+    background: linear-gradient(0deg, rgba(24, 130, 184, 1) 0%, rgba(28, 132, 186, 1) 13.58%, rgba(41, 140, 190, 1) 27.91%, rgba(62, 152, 198, 1) 42.6%, rgba(92, 169, 209, 1) 57.53%, rgba(130, 191, 223, 1) 72.64%, rgba(176, 218, 239, 1) 87.7%, rgba(219, 243, 255, 1) 100%);
+}
+
+.FiltersMenu li:not(.SelectedFilter):hover {
+    cursor: pointer;
+    background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
+    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+}
+
+.FiltersMenu li:first-child {
+    border-radius: 3px 0 0 3px;
+}
+
+.FiltersMenu li:last-child {
+    border-radius: 0 3px 3px 0;
+    border-style: Solid;
+    border-color: #6A8299;
+    border-width: 1px 1px 1px 1px;
+}
+
+.FiltersMenu li {
+    float: left;
+    cursor: default;
+    width: 28px;
+    height: 21px;
+    line-height: 21px;
+    font-size: 11px;
+    color: #282E30;
+    text-indent: 0px;
+    text-align: center;
+    vertical-align: middle;
+    border-style: Solid;
+    border-color: #6A8299;
+    border-width: 1px 0 1px 1px;
+    background: -moz-linear-gradient(50% 164.29% 90deg,rgba(188, 190, 192, 1) 0%,rgba(230, 231, 232, 1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(188, 190, 192, 1) 0%, rgba(230, 231, 232, 1) 100%);
+    background: -webkit-gradient(linear,50% 164.29%,50% 6.67%,color-stop(0,rgba(188, 190, 192, 1) ),color-stop(1,rgba(230, 231, 232, 1) ));
+    background: -o-linear-gradient(90deg, rgba(188, 190, 192, 1) 0%, rgba(230, 231, 232, 1) 100%);
+    background: linear-gradient(0deg, rgba(188, 190, 192, 1) 0%, rgba(230, 231, 232, 1) 100%);
+    position: relative;
+}
+
+.FiltersMenuDisabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.FiltersMenu {
+    height: 21px;
+    max-height: 21px;
+    min-height: 21px;
+}
+
+
+
+
+
+
+
+
+
+/* Filter Menu with Images */
+
+
+
+.FiltersMenuImage .SelectedFilter {
+    color: white;
+    background: -moz-linear-gradient(50% 100% 90deg,rgba(24, 130, 184, 1) 0%,rgba(28, 132, 186, 1) 13.58%,rgba(41, 140, 190, 1) 27.91%,rgba(62, 152, 198, 1) 42.6%,rgba(92, 169, 209, 1) 57.53%,rgba(130, 191, 223, 1) 72.64%,rgba(176, 218, 239, 1) 87.7%,rgba(219, 243, 255, 1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(24, 130, 184, 1) 0%, rgba(28, 132, 186, 1) 13.58%, rgba(41, 140, 190, 1) 27.91%, rgba(62, 152, 198, 1) 42.6%, rgba(92, 169, 209, 1) 57.53%, rgba(130, 191, 223, 1) 72.64%, rgba(176, 218, 239, 1) 87.7%, rgba(219, 243, 255, 1) 100%);
+    background: -webkit-gradient(linear,50% 100%,50% 0%,color-stop(0,rgba(24, 130, 184, 1) ),color-stop(0.1358,rgba(28, 132, 186, 1) ),color-stop(0.2791,rgba(41, 140, 190, 1) ),color-stop(0.426,rgba(62, 152, 198, 1) ),color-stop(0.5753,rgba(92, 169, 209, 1) ),color-stop(0.7264,rgba(130, 191, 223, 1) ),color-stop(0.877,rgba(176, 218, 239, 1) ),color-stop(1,rgba(219, 243, 255, 1) ));
+    background: -o-linear-gradient(90deg, rgba(24, 130, 184, 1) 0%, rgba(28, 132, 186, 1) 13.58%, rgba(41, 140, 190, 1) 27.91%, rgba(62, 152, 198, 1) 42.6%, rgba(92, 169, 209, 1) 57.53%, rgba(130, 191, 223, 1) 72.64%, rgba(176, 218, 239, 1) 87.7%, rgba(219, 243, 255, 1) 100%);
+    background: linear-gradient(0deg, rgba(24, 130, 184, 1) 0%, rgba(28, 132, 186, 1) 13.58%, rgba(41, 140, 190, 1) 27.91%, rgba(62, 152, 198, 1) 42.6%, rgba(92, 169, 209, 1) 57.53%, rgba(130, 191, 223, 1) 72.64%, rgba(176, 218, 239, 1) 87.7%, rgba(219, 243, 255, 1) 100%);
+}
+
+.FiltersMenuImage li:not(.SelectedFilter):hover {
+    cursor: pointer;
+    background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
+    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+}
+
+.FiltersMenuImage li:first-child {
+    border-radius: 3px 0 0 3px;
+}
+
+.FiltersMenuImage li:last-child {
+    border: 1px Solid #6A8299;
+    border-radius: 0 3px 3px 0;
+}
+
+.FiltersMenuImage li {
+    float: left;
+    cursor: default;
+    width: 28px;
+    height: 21px;
+    line-height: 21px;
+    font-size: 11px;
+    color: #282E30;
+    text-indent: 0px;
+    text-align: center;
+    vertical-align: middle;
+    border-style: Solid;
+    border-color: #6A8299;
+    border-width: 1px 0 1px 1px;
+    background: -moz-linear-gradient(50% 164.29% 90deg,rgba(188, 190, 192, 1) 0%,rgba(230, 231, 232, 1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(188, 190, 192, 1) 0%, rgba(230, 231, 232, 1) 100%);
+    background: -webkit-gradient(linear,50% 164.29%,50% 6.67%,color-stop(0,rgba(188, 190, 192, 1) ),color-stop(1,rgba(230, 231, 232, 1) ));
+    background: -o-linear-gradient(90deg, rgba(188, 190, 192, 1) 0%, rgba(230, 231, 232, 1) 100%);
+    background: linear-gradient(0deg, rgba(188, 190, 192, 1) 0%, rgba(230, 231, 232, 1) 100%);
+    position: relative;
+}
+
+.FiltersMenuImage {
+    height: 24px;
+    max-height: 24px;
+    min-height: 24px;
+}

@@ -1,0 +1,181 @@
+﻿<style>
+    /* Abdullah: the use of 'deep' is removing angular encabsulation of css selectors */
+    * /deep/ textarea::shadow  {
+        padding: 2px 8px !important;
+    }
+    .subTitle {
+        color: #4b90cb;
+        font-size: 14px;
+    }
+     .FormFieldRow{
+        height: 35px !important;
+    }
+
+     .GrayBox {
+        width: 100%;
+        min-height: 50px;
+        margin: 0 auto;
+        background: #ebf1f1;
+        border: 1px solid #cacaca;
+        vertical-align: middle;
+        margin-bottom: 15px;
+        color: #747474;
+        padding: 15px;
+        word-wrap: break-word;
+        white-space: normal;
+        line-height: 1.5;
+    }
+
+     .noselect {
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none; /* Chrome/Safari/Opera */
+        -khtml-user-select: none; /* Konqueror */
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+        user-select: none; /* Non-prefixed version, currently
+                                  not supported by any browser */
+    }
+
+     /* Others */
+    .hidden{
+        opacity: 0;
+        visibility: collapse
+    }
+
+    
+</style>
+<table>
+
+    <!-- Gray Box -->
+    <tr style="height: 65px;">
+        <td>
+            <div class="GrayBox">
+                {{DeclarationError.Description}}
+            </div>
+        </td>
+    </tr>
+
+    <!-- Fields -->
+    <tr style="height: 120px;">
+        <td>
+            <table style="height: 120px;">
+
+                <tr>
+                    <!-- ConstraintStatusName -->
+                    <td style="width: 90px;">
+                        <LogLabel [ObjectFieldName]="'ConstraintStatusName'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width: 150px; padding-left: 5px; color: #d89d0c;">
+                        {{ConstraintPM.ConstraintStatusName}}
+                    </td>
+
+                    <td style="width: 10px;"><div></div></td>
+
+                    <!-- EntityName -->
+                    <td style="width: 100px; color: #6e7172;">
+                        {{'Customs.DeclarationConstraint.O.EntityName' | TextCodeTranslationPipe}}
+                    </td>
+                    <td>
+                        {{ DeclarationError.TableNameTextCode | TextCodeTranslationPipe }}
+                    </td>
+
+                </tr>
+                
+                <tr>
+                    <!-- ConstraintNumber -->
+                    <td style="">
+                        <LogLabel [ObjectFieldName]="'ConstraintNumber'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="padding-left: 5px;">
+                        {{ConstraintPM.ConstraintNumber}}
+                    </td>
+
+                    <td style=""><div></div></td>
+
+                    <!-- FieldName -->
+                    <td style="color: #6e7172;">
+                        {{'Customs.DeclarationConstraint.O.FieldName' | TextCodeTranslationPipe}}
+                    </td>
+                    <td>
+                        {{ DeclarationError.Field }}
+                    </td>
+                    
+
+
+                </tr>
+
+                <tr>
+                    <!-- ConstraintTypeName -->
+                    <td style="">
+                        <LogLabel [ObjectFieldName]="'ConstraintTypeName'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="padding-left: 5px;">
+                        {{ConstraintPM.ConstraintTypeName}}
+                    </td>
+
+                    <td style=""><div></div></td>
+
+                    <!-- ApprovalDecisionName -->
+                    <td style=" color: #6e7172;">
+                        {{'Customs.DeclarationConstraint.O.ApprovalDecision' | TextCodeTranslationPipe}}
+                    </td>
+                    <td>
+                        {{ ConstraintPM.ApprovalDecisionName }}
+                    </td>
+
+
+
+                </tr>
+
+                <tr style="height: 7px;"><td><div></div></td></tr>
+
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 30px;">
+        <td>
+            <div class="subTitle">
+                {{'Customs.DeclarationConstraint.F.AgentObjection' | TextCodeTranslationPipe}}
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top;">
+            <div style="height: 100%;">
+                <LogTextBox [ObjectFieldName]="'AgentObjection'" [HideColumns]="true"
+                            [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 105px;">
+                        <custom-send-options style=""
+                                             #MyCustomSendOptionsComponent
+                                             (SendButtonClicked)="SendButtonClicked()">
+                        </custom-send-options>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

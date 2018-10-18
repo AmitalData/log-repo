@@ -1,0 +1,67 @@
+﻿<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table>
+                <tr class="FormFieldRow">
+                    <td style="width:110px">
+                        <LogLabel [ObjectFieldName]="'FromDatetime'" [NoObjectField]="true" [Text]="'From Date'"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:200px">
+                        <LogDatePicker [ObjectFieldName]="'FromDatetime'" [NoObjectField]="true" [ObjectTableName]="'CustomerTenantAccessCardsBatch'"
+                                       [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>                    </td>
+
+                    <td></td>
+                </tr>
+
+                <tr class="FormFieldRow">
+                    <td style="width:110px">
+                        <LogLabel [ObjectFieldName]="'ToDatetime'" [NoObjectField]="true" [Text]="'To Date'"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:200px">
+                        <LogDatePicker [ObjectFieldName]="'ToDatetime'" [NoObjectField]="true" [ObjectTableName]="'CustomerTenantAccessCardsBatch'"
+                                       [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                    </td>
+
+                    <td></td>
+                </tr>
+
+                <tr></tr>
+            </table>
+
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+    </tr>
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">OK</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

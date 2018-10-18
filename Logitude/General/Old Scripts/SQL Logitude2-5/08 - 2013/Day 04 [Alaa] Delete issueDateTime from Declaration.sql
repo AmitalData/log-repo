@@ -1,0 +1,3 @@
+delete from ObjectFields where FieldName= 'IssueDateTime' and Objecttableid = (select id from ObjectTables where name='customs.declaration')
+delete from  QueryColumns where ObjectFieldId = (select id from ObjectFields where FieldName = 'IssueDateTime' and ObjectTableId = (select id from ObjectTables where name='customs.declaration'))
+delete from AdvancedQueryFilters where ObjectFieldId = (select id from ObjectFields where FieldName = 'IssueDateTime' and ObjectTableId = (select id from ObjectTables where name='customs.declaration'))

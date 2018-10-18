@@ -1,0 +1,171 @@
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Server.Infrastructure.Helpers;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
+
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.EntityLists;
+
+namespace Logitude.Customs.Data.EntityListQueryServices
+{ 
+
+    public partial class SubCountryListQueryService
+    {
+         private ICustomContext context;
+        public SubCountryListQueryService(ICustomContext context)
+        {
+            this.context = context;
+        }
+
+        public List<SubCountryList> GetList(QueryOperations queryOperations, int tenant)
+        {
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+
+            IQueryable<SubCountry> iQueryable = (from a in context.SubCountries
+                                               select a);
+            			iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+
+            iQueryable = filter.GetFilteredQuery<SubCountry>(nonListQueryOperation, iQueryable);
+
+            int skippedPorts = queryOperations.PageIndex;
+
+            IQueryable<SubCountryList> query2 = GetIqueryableList(iQueryable);
+           
+            query2 = filter.GetFilteredQuery<SubCountryList>(listQueryOperation, query2);
+
+            if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
+            {
+                PropertyInfo propInfo = typeof(SubCountryList).GetProperty(queryOperations.SortByColumnName);
+                List<ObjectField> SubCountryObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.SubCountry",tenant).ToList();
+
+                ObjectField objectField = (from a in SubCountryObjectFields
+                                           where a.FieldName == queryOperations.SortByColumnName
+                                           select a).FirstOrDefault();
+
+                if (objectField != null)
+                {
+				 if (objectField.IsCustom)
+                    {
+                        query2 = sortClass.GetSorterQuery<SubCountryList, string>(queryOperations, query2);
+                    }
+                    else
+                    {
+                     switch (objectField.DataTypeCode.ToLower())
+                     {
+                         case "ntext":
+                        case "text":
+                            {
+                                query2 = sortClass.GetSorterQuery<SubCountryList, string>(queryOperations, query2);
+                                break;
+                            }
+						case "sigdouble":
+						case "double":
+                            {
+                                query2 = sortClass.GetSorterQuery<SubCountryList, double>(queryOperations, query2);
+                                break;
+                            }
+						case "date":
+                        case "datetime":
+                            {
+                                query2 = sortClass.GetSorterQuery<SubCountryList, DateTime>(queryOperations, query2);
+                                break;
+                            }
+						case "unsinteger":
+                        case "integer":
+                            {
+                                query2 = sortClass.GetSorterQuery<SubCountryList, int>(queryOperations, query2);
+                                break;
+                            }
+                        case "boolean":
+                            {
+                                query2 = sortClass.GetSorterQuery<SubCountryList, bool>(queryOperations, query2);
+                                break;
+                            }
+						case "unsdecimal":
+						case "decimal":
+                            {
+                                query2 = sortClass.GetSorterQuery<SubCountryList, decimal>(queryOperations, query2);
+                                break;
+                            }
+                        default:
+                            {
+                                query2 = query2.OrderBy(d => d.Code);
+                                break;
+                            }
+                    }
+				 }
+                }
+            }
+		    else
+            {
+                query2 = query2.OrderBy(d => d.Code);
+            }
+			if(!queryOperations.GetAll)
+			{
+             query2 = query2.Skip(skippedPorts);
+             query2 = query2.Take(queryOperations.PageSize);
+			}
+            return query2.ToList();
+
+    
+        }
+
+         public List<SubCountryList> GetList(int tenant)
+         {
+             return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
+         }
+
+        public SubCountryList GetSingle(string code)
+        {
+            IQueryable<SubCountry> SubCountryQuery = (from a in context.SubCountries
+                                                       where a.Code == code
+                                                       select a);
+
+             
+            IQueryable<SubCountryList> SubCountryListQuery = GetIqueryableList( SubCountryQuery);
+            SubCountryList SubCountryList = SubCountryListQuery.FirstOrDefault();
+            return SubCountryList;
+           
+        }
+
+        public int GetListCount(QueryOperations queryOperations)
+        {
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+
+            IQueryable<SubCountry> iQueryable = (from a in context.SubCountries  select a);
+
+			  			iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+            
+			iQueryable = filter.GetFilteredQuery<SubCountry>(nonListQueryOperation, iQueryable);
+
+            IQueryable<SubCountryList> query2 = GetIqueryableList(iQueryable);
+
+            query2 = filter.GetFilteredQuery<SubCountryList>(listQueryOperation, query2);
+            int count = query2.Count();
+            return count;
+        }
+
+      
+    }
+}
+	 

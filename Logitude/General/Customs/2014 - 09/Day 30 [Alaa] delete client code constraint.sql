@@ -1,0 +1,1 @@
+alter table customs.clients drop UQ_Tenant_Code_Clients

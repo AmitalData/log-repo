@@ -1,0 +1,320 @@
+CreateObject (1 item)
+	Create table glaccounttotaldatetypes
+RebuildTable (1 item)
+	Rebuild table quotes
+CreateObject (46 items)
+	Create index ix_quotes_businessunitid
+	Create index ix_quotes_consigneeid
+	Create index ix_n880678532
+	Create index ix_quotes_departmentid
+	Create index ix_quotes_salecurrencyid
+	Create index ix_quotes_quotetemplateid
+	Create index ix_quotes_packagetype5id
+	Create index ix_quotes_topartnerid
+	Create index ix_quotes_createdbyuserid
+	Create index ix_quotes_updatedbyuserid
+	Create index ix_quotes_consigneecontactid
+	Create index ix_quotes_shipperid
+	Create index ix_quotes_toaddresscountryid
+	Create index ix_quotes_customercontactid
+	Create index ix_quotes_freelancercontactid
+	Create index ix_2035932221
+	Create index ix_quotes_agentid
+	Create index ix_quotes_frompartneraddressid
+	Create index ix_quotes_toaddressid
+	Create index ix_quotes_packagetype3id
+	Create index ix_quotes_freelancerid
+	Create index ix_quotes_packagetype4id
+	Create index ix_quotes_salesmanuserid
+	Create index ix_quotes_shippercontactid
+	Create index ix_quotes_directionid
+	Create index ix_quotes_customerid
+	Create index ix_quotes_packagetype1id
+	Create index ix_quotes_freelanceraddressid
+	Create index ix_quotes_toportid
+	Create index ix_quotes_transportmodeid
+	Create index ix_quotes_packagetype2id
+	Create index ix_quotes_incotermid
+	Create index ix_quotes_topartneraddressid
+	Create index ix_quotes_stageid
+	Create index ix_quotes_agentaddressid
+	Create index ix_quotes_fromaddressid
+	Create index ix_quotes_movetypeid
+	Create index ix_quotes_shipmenttypeid
+	Create index ix_quotes_branchid
+	Create index ix_quotes_ratingcode
+	Create index ix_quotes_quotetypecode
+	Create index ix_quotes_frompartnerid
+	Create index ix_quotes_agentcontactid
+	Create index ix_1056685832
+	Create index ix_quotes_fromportid
+	Create index ix_quotes_fromaddresscountryid
+CreateColumn (1 item)
+	Create columns fwbnotifycontacts,fhlnotifycontacts,ffrnotifycontacts on table participants
+ModifyColumn (2 items)
+	Modify column tty on table participants
+	Modify column description on table notifications
+CreateColumn (3 items)
+	Create column notesrighttoleft on table customeradditionalservices
+	Create column notesrighttoleft on table opportunityproducts
+	Create column orderby on table documenttypes
+ModifyColumn (1 item)
+	Modify column responsetocustoms on table notificationreplies
+CreateColumn (3 items)
+	Create column goodsvalue on table shipmentpackageitems
+	Create column indexorder on table governmentproceduretypes
+	Create column externalcertificatcode on table supplierinvioceitemcertificats
+CreateObject (1 item)
+	Create table customsinsurancecompanies
+RebuildTable (1 item)
+	Rebuild table eventtypecategories
+CreateColumn (1 item)
+	Create column answerreasonfornoreply on table flightsschedulesrequests
+DropColumn (1 item)
+	Drop column answerreasonfornoreplay on table flightsschedulesrequests
+CreateColumn (2 items)
+	Create column messagingstatus on table airlinestatistics
+	Create columns vgm,methodused on table shipmentpackages
+ModifyColumn (1 item)
+	Modify column description on table shipmentpackages
+CreateColumn (2 items)
+	Create columns groupnumber,isadjusttransaction on table reconciliationlines
+	Create columns hascustomfilter,entityresource,entityresourcelastupdate,newwizardcomponentpath,hashelper,hasshorttitle,hasmenubuttons,hasfiltersmenu,updatekey on table objecttables
+DropColumn (1 item)
+	Drop column shorttitlecontrolpath on table objecttables
+CreateObject (1 item)
+	Create table arinvoicelineactions
+CreateColumn (1 item)
+	Create columns dateforinterest,valuedate,glaccountid,lineactioncode on table arinvoicelines
+CreateForeignKeyConstraint (1 item)
+	Create foreign key constraint fk_2066896815 on table arinvoicelines
+ModifyColumn (1 item)
+	Modify column "INACTIVE" on table automaticreconciles
+CreateColumn (1 item)
+	Create columns isrequesteddocuments,requesteddocumentscount on table shipmentcomputedfields
+CreateObject (5 items)
+	Create table category2
+	Create table category3
+	Create table category1
+	Create table category4
+	Create table category5
+ModifyColumn (1 item)
+	Modify column "INACTIVE" on table periodtypes
+CreateColumn (4 items)
+	Create columns signaturehtml,companyname,createdate on table contacts
+	Create column searchfields on table "ROLES"
+	Create columns childentityid,childobjecttableid on table communicationlogs
+	Create column isexternalcodesfromapi on table accountingsystems
+ModifyColumn (1 item)
+	Modify columns localname,englishname on table chartofaccounts
+CreateColumn (2 items)
+	Create columns payabledebitglacountid,receivablecreditglaccountid on table chargetypeaccountings
+	Create columns allowedincustfieldssettings,hastemplate on table objectfields
+CreateObject (1 item)
+	Create table tempsupplierinvoiceitem
+DropObject (1 item)
+	Drop index ix_1183768689
+CreateColumn (1 item)
+	Create columns "ID",tenant,localname on table chargesgroups
+DropIndexConstraint (1 item)
+	Drop index constraint sys_c0067017 from table chargesgroups
+CreateIndexConstraint (1 item)
+	Create index constraint pk_chargesgroups on table chargesgroups
+CreateColumn (1 item)
+	Create columns payabledebitglacountid,receivablecreditglaccountid,chargesgroupid on table chargestypes
+DropForeignKeyConstraint (1 item)
+	Drop foreign key constraint fk_n1848553637 from table chargestypes
+CreateForeignKeyConstraint (1 item)
+	Create foreign key constraint fk_15239512 on table chargestypes
+CreateColumn (1 item)
+	Create columns "TYPE",blnumber on table oceaninsightsrequests
+ModifyColumn (1 item)
+	Modify column containernumber on table oceaninsightsrequests
+DropObject (2 items)
+	Drop index ix_glaccounts_vendorid
+	Drop index ix_glaccounts_clientid
+CreateColumn (1 item)
+	Create columns customerglaccountid,balanceinlocalcurrency,revaluationenabled,parentaccountid,category1id,category2id,category3id,category4id,category5id,isvatexempt,localbalanceindue,nextduedate on table glaccounts
+DropColumn (1 item)
+	Drop columns clientid,vendorid on table glaccounts
+ModifyColumn (1 item)
+	Modify columns localname,englishname on table glaccounts
+CreateForeignKeyConstraint (5 items)
+	Create foreign key constraint fk_n1012722752 on table glaccounts
+	Create foreign key constraint fk_n1543478236 on table glaccounts
+	Create foreign key constraint fk_n2129805032 on table glaccounts
+	Create foreign key constraint fk_1075789468 on table glaccounts
+	Create foreign key constraint fk_1990637140 on table glaccounts
+ModifyColumn (1 item)
+	Modify column "INACTIVE" on table glaccounttypes
+CreateColumn (1 item)
+	Create columns showchargedescriptionpackages,showchargedesccontainers on table quotetemplatesettings
+DropObject (1 item)
+	Drop index ix_iatacodes_code
+DropForeignKeyConstraint (1 item)
+	Drop foreign key constraint fk_n1399473174 from table iatacodes
+CreateObject (1 item)
+	Create table ticketsources
+ModifyColumn (1 item)
+	Modify column "INACTIVE" on table revenueexpensetypes
+CreateColumn (1 item)
+	Create columns createdbyuserid,createdate,updatedbyuserid,updatedate on table airlinemessagingrules
+CreateForeignKeyConstraint (2 items)
+	Create foreign key constraint fk_n1113426957 on table airlinemessagingrules
+	Create foreign key constraint fk_n1280132609 on table airlinemessagingrules
+CreateObject (1 item)
+	Create table glaccounttotalbymonths
+CreateColumn (1 item)
+	Create columns unifreightcertificateactivated,autofillpaymentscreen on table customssettings
+DropObject (1 item)
+	Drop index ix_461344001
+CreateObject (1 item)
+	Create table importerdeclarationtypes
+ModifyColumn (1 item)
+	Modify columns claimid,importerloideclarationtypecode on table claimimporterdeclarspage3s
+CreateForeignKeyConstraint (1 item)
+	Create foreign key constraint fk_1735938328 on table claimimporterdeclarspage3s
+CreateColumn (7 items)
+	Create columns technology,setangularasdefault on table "USERS"
+	Create columns qborealmeid,qboaccesstoken,qboaccesstokensecret on table accountingsettings
+	Create columns templatefooterhtml,templateheaderhtml on table documenttypetemplates
+	Create columns iswebaccessactivated,iscorrespondencertlenabled,isnotesrighttoleftenabled,accountingactivationdate,accountingactivated on table tenants
+	Create columns vendoeglaccountid,accountingdate,isexternalentity,isgeneralinvoice on table apinvoices
+	Create column iscancelled on table reconciliations
+	Create column saleisfixedrate on table quotecharges
+DropColumn (1 item)
+	Drop column saleisexchangeratefixed on table quotecharges
+CreateColumn (1 item)
+	Create columns dateforvatinterest,splitjournalbycurrency,isexternalentity,isgeneralinvoice on table arinvoices
+CreateObject (1 item)
+	Create table ticketcreatedbytypes
+RebuildTable (1 item)
+	Rebuild table industries
+ModifyColumn (2 items)
+	Modify columns localname,"INACTIVE" on table journalstatustypes
+	Modify column "INACTIVE" on table reconcilemethods
+CreateColumn (8 items)
+	Create columns isvoided,voidedbyjournalid,externalsystem,queueid on table journals
+	Create column isprivatelabelcustomer on table customertenantaccesses
+	Create columns isprivatelabelcustomer,iscreditlimitenabled,creditlimitamount,creditlimitopenbalance,creditlimitwarningpercentage on table customers
+	Create column isautomationdone on table automations
+	Create column notesrighttoleft on table customerproducts
+	Create column isreconciled on table ledgertransactions
+	Create columns "INACTIVE",searchfields on table automaticreconcilemethods
+	Create column lastfsrstatusrequestdate on table bookings
+CreateObject (1 item)
+	Create table customerfieldsupdatesettings
+CreateColumn (1 item)
+	Create columns supportnotes,glaccountid on table cards
+RebuildTable (1 item)
+	Rebuild table eventtypes
+CreateObject (5 items)
+	Create index ix_eventtypes_entitystatusid
+	Create index ix_1285598049
+	Create index ix_eventtypes_customerroleid
+	Create index ix_eventtypes_agentroleid
+	Create index ix_eventtypes_objecttableid
+CreateColumn (1 item)
+	Create column bankaccountid on table creditcardtypes
+CreateObject (1 item)
+	Create table otherparticipantids
+CreateColumn (1 item)
+	Create columns lastexceptiondescription,otherparticipantidcode1,otherparticipantidcode2,otherparticipantidcode3,valueofgoods,valueofgoodscurrencyid on table shipments
+DropColumn (1 item)
+	Drop columns otherparticipantinfoid1,otherparticipantinfoid2,otherparticipantinfoid3 on table shipments
+ModifyColumn (1 item)
+	Modify columns mainharmonize,exceptiondescription,exceptionresolveddescription on table shipments
+DropForeignKeyConstraint (1 item)
+	Drop foreign key constraint fk_n149812359 from table shipments
+CreateForeignKeyConstraint (1 item)
+	Create foreign key constraint fk_n1113505999 on table shipments
+DropForeignKeyConstraint (1 item)
+	Drop foreign key constraint fk_1078312687 from table shipments
+CreateForeignKeyConstraint (5 items)
+	Create foreign key constraint fk_n149812359 on table shipments
+	Create foreign key constraint fk_n613434399 on table shipments
+	Create foreign key constraint fk_1078312687 on table shipments
+	Create foreign key constraint fk_1725217761 on table shipments
+	Create foreign key constraint fk_2107554785 on table shipments
+ModifyColumn (1 item)
+	Modify column "ID" on table blobfiles
+DropObject (1 item)
+	Drop index ix_713112715
+DropForeignKeyConstraint (1 item)
+	Drop foreign key constraint fk_1182566035 from table cardexternalcodebycurrencies
+CreateColumn (1 item)
+	Create columns "SOURCE",createdbytype,firstclosedate,lastclosedate,opendate,openperiodminutes on table tickets
+CreateForeignKeyConstraint (2 items)
+	Create foreign key constraint fk_1052069270 on table tickets
+	Create foreign key constraint fk_1194336602 on table tickets
+CreateColumn (2 items)
+	Create column notesrighttoleft on table opportunityadditionalservices
+	Create column isrequested on table documentsfilings
+ModifyColumn (1 item)
+	Modify column description on table insideshipmentpackages
+CreateColumn (1 item)
+	Create columns isdeclined,declinenotes,oldtty on table airlines
+ModifyColumn (1 item)
+	Modify column tty on table airlines
+CreateColumn (1 item)
+	Create column externalopenamount on table journallines
+ModifyColumn (3 items)
+	Modify columns duedate,localamount,foreignamount on table journallines
+	Modify column "INACTIVE" on table journalactiontypes
+	Modify column "INACTIVE" on table journaltypes
+CreateColumn (2 items)
+	Create columns activitywith,descriptionrighttoleft,meetingsummaryrighttoleft on table activities
+	Create columns bankaccountid,cashbookid on table arpayments
+RebuildTable (2 items)
+	Rebuild table passwordpolicies
+	Rebuild table quoteclosingreasons
+CreateColumn (2 items)
+	Create columns vehiclestatus,itemadditionalstatus on table supplierinvoiceitems
+	Create columns isclose,closedate on table ticketescalations
+DropColumn (1 item)
+	Drop columns isdone,donedate on table ticketescalations
+ModifyColumn (1 item)
+	Modify column "INACTIVE" on table chartofaccountstypes
+CreateColumn (2 items)
+	Create columns chargetypeglaccountid,authorizedsignatory on table apinvoicelines
+	Create columns htmlfullbody,righttoleft on table correspondences
+DropObject (4 items)
+	Drop index ix_146000098
+	Drop index ix_702593025
+	Drop table glaccountbalancesbyyear
+	Drop index ix_1428104379
+CreateObject (1 item)
+	Create index ix_1428104379
+DropObject (1 item)
+	Drop index ix_898613642
+CreateObject (1 item)
+	Create index ix_898613642
+DropObject (1 item)
+	Drop table glaccounttotalsbymonth
+CreateObject (21 items)
+	Create index ix_1683089910
+	Create index ix_n342950714
+	Create index ix_n672349387
+	Create index ix_1995701446
+	Create index ix_chargestypes_chargesgroupid
+	Create index ix_402044491
+	Create index ix_855333610
+	Create index ix_1789055542
+	Create index ix_n40378670
+	Create index ix_466963647
+	Create index ix_tickets_source
+	Create index ix_2000961675
+	Create index ix_glaccounts_category1id
+	Create index ix_39386310
+	Create index ix_tickets_createdbytype
+	Create index ix_glaccounts_category4id
+	Create index ix_glaccounts_category5id
+	Create index ix_glaccounts_category2id
+	Create index ix_glaccounts_category3id
+	Create view documentsfilingsview
+	Create view proceduralfaultdeclarationview
+Compile (4 items)
+	Compile procedure usp_copysuppinvoiceitemcers
+	Compile procedure usp_updatequeuecommunicationlo
+	Compile procedure usp_copysupplierinvoiceitems
+	Compile procedure usp_updateinvoiceitemssequence

@@ -1,0 +1,65 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Accounting.Data.EntityPOCOs
+{
+   
+    public class Revaluation
+    {
+	 string dbms;
+
+        [Key]
+        [Column("Id")]
+	    public string Id { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+        [Column("CreateDate")]
+	    public DateTime CreateDate { get; set; }
+        [ForeignKey("CreatedByUser")]
+        [Column("CreatedByUserId")]
+	    public string CreatedByUserId { get; set; }
+	      
+        public virtual User CreatedByUser { get; set; }
+        [Column("SearchFields")]
+	    public string SearchFields { get; set; }
+        [Column("RevaluationNumber")]
+	    public int RevaluationNumber { get; set; }
+        [Column("RevaluationDate")]
+	    public DateTime RevaluationDate { get; set; }
+        [ForeignKey("ChartOfAccount")]
+        [Column("ChartOfAccountsId")]
+	    public string ChartOfAccountsId { get; set; }
+	      
+        public virtual ChartOfAccount ChartOfAccount { get; set; }
+        [ForeignKey("GLAccount")]
+        [Column("GLAccountId")]
+	    public string GLAccountId { get; set; }
+	      
+        public virtual GLAccount GLAccount { get; set; }
+        [Column("RevaluationEnabled")]
+	    public bool? RevaluationEnabled { get; set; }
+        [ForeignKey("RevaluationStatus")]
+        [Column("Status")]
+	    public string Status { get; set; }
+	      
+        public virtual RevaluationStatus RevaluationStatus { get; set; }
+        [Column("Message")]
+	    public string Message { get; set; }
+        [ForeignKey("RevaluationGLAccount")]
+        [Column("RevaluationsGLAccountId")]
+	    public string RevaluationsGLAccountId { get; set; }
+	      
+        public virtual GLAccount RevaluationGLAccount { get; set; }
+    }
+}
+	 

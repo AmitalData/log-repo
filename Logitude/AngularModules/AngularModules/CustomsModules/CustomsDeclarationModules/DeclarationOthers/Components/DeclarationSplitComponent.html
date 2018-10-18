@@ -1,0 +1,548 @@
+﻿
+<style>
+    .BodyBox {
+        position: absolute;
+        top: 40px;
+        left: 0;
+        right: 10px;
+        bottom: 0;
+        overflow: auto;
+        text-align: center;
+        white-space: nowrap;
+    }
+
+        /*.BodyBox:before {
+        content: "";
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+    }*/
+
+        .BodyBox img {
+            transform-origin: right top;
+            display: block;
+            vertical-align: middle;
+        }
+
+
+    .HeaderBox {
+        height: 40px;
+        width: 100%;
+        background: #f7f7f7;
+        border-radius: 5px;
+        color: #4494c1;
+    }
+
+        .HeaderBox .DocsListButton {
+            transition: .5s all;
+            width: 215px;
+            text-align: center;
+            font-size: 16px;
+            cursor: pointer;
+            user-select: none;
+            border-right: 1px solid #e7ebee;
+        }
+
+            .HeaderBox .DocsListButton:hover {
+                background: #f4f4f4;
+            }
+
+            .HeaderBox .DocsListButton:active {
+                background: #f0f0f0;
+            }
+
+    .toolbar-menu {
+        list-style: none;
+    }
+
+        .toolbar-menu li {
+            user-select: none;
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            margin-top: 5px;
+            cursor: pointer;
+        }
+
+            .toolbar-menu li:hover {
+                opacity: 0.8;
+            }
+
+            .toolbar-menu li:active {
+                transform: scale(0.9);
+            }
+
+        .toolbar-menu img {
+            vertical-align: bottom;
+        }
+
+        .toolbar-menu .TrackBar {
+            display: inline-block;
+            width: 150px;
+            height: 28px;
+            margin: 2px;
+            cursor: default;
+        }
+
+        .toolbar-menu .Pager {
+            display: inline;
+            width: 45px;
+            height: 28px;
+            margin: 2px;
+            cursor: default;
+            color: black;
+        }
+
+            .toolbar-menu .TrackBar:active, .toolbar-menu .Pager:active {
+                transform: none;
+            }
+
+        .toolbar-menu .seperator {
+            display: inline-block;
+            width: 1px;
+            height: 22px;
+            margin: 2px;
+            border-right: 1px solid #dfdfdf;
+            cursor: default;
+            margin: 0px 3px;
+        }
+
+    .TrackBar input {
+        width: 150px;
+        border: none;
+        box-shadow: none;
+    }
+
+    .DocumentsDropDown {
+        background: #f7f7f7;
+        position: absolute;
+        /*z-index: 99;*/
+        top: 40px;
+        bottom: 8px;
+        left: 0px;
+        width: 216px;
+        border-right: 1px solid #8eabc1;
+        border-left: 1px solid #8eabc1;
+        border-bottom: 1px solid #8eabc1;
+        border-bottom-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+        overflow: auto;
+        padding-bottom: 10px;
+    }
+
+    .BrdrRt {
+        border-right: 1px solid #8eabc1 !important;
+        border-left: 1px solid #8eabc1 !important;
+        border-top: 1px solid #8eabc1 !important;
+        border-bottom-left-radius: 0px;
+        background: #f0f0f0;
+    }
+
+    /* Ticket item styles : by mohammad */
+
+
+    .RelatedDocItem {
+        cursor: pointer;
+        user-select: none;
+        padding: 5px;
+        border-radius: 3px;
+        border: solid 1px #BABABA;
+        height: 85px;
+        /*width: 100%;*/
+        background: white; /* For browsers that do not support gradients */
+        background: -webkit-linear-gradient(#E7F5FE, #62AAC4); /* For Safari 5.1 to 6.0 */
+        background: -o-linear-gradient(#E7F5FE, #62AAC4); /* For Opera 11.1 to 12.0 */
+        background: -moz-linear-gradient(#E7F5FE, #62AAC4); /* For Firefox 3.6 to 15 */
+        background: linear-gradient(#E7F5FE, #62AAC4); /* Standard syntax */
+    }
+
+        .RelatedDocItem:hover {
+            opacity: 0.85;
+        }
+
+    .SelectedTicket {
+        box-shadow: 0 0 6px 3px #74bfff;
+        border: 1px solid #7ea8cc;
+    }
+
+    .disconnectIcon {
+        visibility: hidden;
+    }
+
+    .ConnectedTicketItem:hover .disconnectIcon {
+        visibility: visible;
+    }
+
+    .deletebuttonicon {
+        visibility: hidden;
+    }
+
+    .DisConnectedTicketItem:hover .deletebuttonicon {
+        visibility: visible;
+    }
+
+    .DisbleBox {
+        display: inline-block;
+        border: 1px solid #ffd800;
+        border-radius: 5px;
+        background: #faf5c0;
+        padding: 2px 10px;
+        margin: 5px;
+        color: gray;
+        font-family: sans-serif;
+    }
+
+    .showCustomAnswerButton:hover {
+        border-radius: 2px;
+        padding: 4px;
+        border: solid 1px #BABABA;
+        background: white; /* For browsers that do not support gradients */
+        background: -webkit-linear-gradient(#E7F5FE, #62AAC4); /* For Safari 5.1 to 6.0 */
+        background: -o-linear-gradient(#E7F5FE, #62AAC4); /* For Opera 11.1 to 12.0 */
+        background: -moz-linear-gradient(#E7F5FE, #62AAC4); /* For Firefox 3.6 to 15 */
+        background: linear-gradient(#E7F5FE, #62AAC4); /* Standard syntax */
+    }
+
+    /* end ticket styles */
+
+    .disabled {
+        pointer-events: none;
+        opacity: 0.7;
+        cursor: default;
+    }
+
+    .NoDocumentSelected {
+        font-size: 18px;
+        color: gray;
+        text-align: center;
+        margin: 30px 0px 0px 190px;
+        user-select: none;
+        cursor: default;
+    }
+
+    .grabbable {
+        cursor: move; /* fallback if grab cursor is unsupported */
+        cursor: grab;
+        cursor: -moz-grab;
+        cursor: -webkit-grab;
+    }
+
+        /* (Optional) Apply a "closed-hand" cursor during drag operation. */
+        .grabbable:active {
+            cursor: grabbing;
+            cursor: -moz-grabbing;
+            cursor: -webkit-grabbing;
+        }
+
+        /*indicator*/
+
+        .split-busy-indicator{
+            position: absolute;
+            top: 40px;
+            left: 0;
+            right: 10px;
+            bottom: 0;
+            overflow: hidden;
+            text-align: center;
+            white-space: nowrap;
+            padding-top: 200px;
+        }
+
+        /* spinner */
+
+        .spinner {
+          margin: 100px auto 0;
+          width: 70px;
+          text-align: center;
+          /*height: 100%;*/
+        }
+
+        .spinner > div {
+            height: 100%;
+            width: 14px;
+            height: 14px;
+            background-color: #359fec;
+
+            border-radius: 100%;
+            display: inline-block;
+            -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+            animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+        }
+
+        .spinner .bounce1 {
+          -webkit-animation-delay: -0.32s;
+          animation-delay: -0.32s;
+        }
+
+        .spinner .bounce2 {
+          -webkit-animation-delay: -0.16s;
+          animation-delay: -0.16s;
+        }
+
+    @-webkit-keyframes sk-bouncedelay {
+      0%, 80%, 100% { -webkit-transform: scale(0) }
+      40% { -webkit-transform: scale(1.0) }
+    }
+
+    @keyframes sk-bouncedelay {
+      0%, 80%, 100% { 
+        -webkit-transform: scale(0);
+        transform: scale(0);
+      } 40% { 
+        -webkit-transform: scale(1.0);
+        transform: scale(1.0);
+      }
+    }
+
+    /* end spinner*/
+</style>
+
+<div style="height: 100%;">
+
+    <!-- Header -->
+    <div class="HeaderBox">
+        <table>
+
+            <tr>
+                <!-- Toolbar -->
+                <td style="text-align: center;">
+                    <ul class="toolbar-menu">
+
+                        <li class="Pager" style="top: 15px;right: 63px;position: absolute;">{{pagesCount}} / </li>
+                        <li class="Pager" style="margin-left: 35px;">
+                            <LogTextBox style="width: 32px;position: absolute;top: 12px;"
+                                        [ObjectFieldName]="'CurrentPageIndex'"
+                                        [NoObjectField]="true"
+                                        [InputType]="'integer'"
+                                        [DataContext]="DataContext"
+                                        [HideColumns]="true"
+                                        [Text]="CurrentPageIndex"
+                                        [Max]="pagesCount"
+                                        [Min]="0"
+                                        (ValueChanged)="TextChanged($event)"></LogTextBox>
+                        </li>
+                        <li class="seperator"></li>
+
+                        <li [class.disabled]="currentPageIndex >= pagesCount" style="width: 23px;" (click)="PageDown()"><img src="./Images/Split/doc-viewer-arrow-up.png" style="transform: rotate(180deg);" alt="" /></li>
+                        <li [class.disabled]="currentPageIndex <= 1" style="width: 23px;" (click)="PageUp()"><img src="./Images/Split/doc-viewer-arrow-up.png" alt="" /></li>
+                        <li class="seperator"></li>
+
+                        <li><img src="./Images/Split/doc-viewer-rotate-right.png" alt="" (click)="RotateRightButton()" /></li>
+                        <li><img src="./Images/Split/doc-viewer-rotate-right.png" style="transform: rotate(180deg);" (click)="RotateLeftButton()" alt="" /></li>
+                        <li class="seperator"></li>
+
+                        <li (click)="ZoomOutButton()"><img src="./Images/Split/doc-viewer-minus.png" alt="" /></li>
+                        <li class="TrackBar"><input [(ngModel)]="TrackBarValue" min="1" max="3" [attr.step]="TrackBarStep" type="range" /></li>
+                        <li (click)="ZoomInButton()"><img src="./Images/Split/doc-viewer-plus.png" alt="" /></li>
+
+                        <li class="seperator"></li>
+                        <li (click)="RefreshButtonClicked()"><img src="./Images/Split/doc-viewer-refresh.png" alt="" /></li>
+                        <!--<li (click)="Rotate()"><img src="./Images/Split/doc-viewer-rotate-right.png" alt="" /></li>-->
+
+                    </ul>
+                </td>
+
+                <!-- Docs List Button -->
+                <td class="DocsListButton" (click)="IsDocsPanelVisible = !IsDocsPanelVisible" [class.BrdrRt]="IsDocsPanelVisible">
+                    <img src="./Images/Split/split-doc-icon.png" alt="" style="padding-left: 5px;" />
+                    מסמכים מקושרים
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Body -->
+    <div class="BodyBox" [attr.id]="DocumentViewerImageId">
+        <div (mousewheel)="OnMouseWheel($event)">
+
+            <div *ngIf="IsNoDocumentSelected" class="NoDocumentSelected">בחר מסמך מרשימת המסמכים</div>
+
+            <!--In case the document has no TIF file display a message - “Document wasn't converted to TIF” (המסמך הנ”ל לא הומר ל TIF - יש לשנות את הגדרות הספריה בניהול המסמכים)-->
+            <div *ngIf="!IsNoDocumentSelected &&  this.base64Image==null " style="display: inline-block;color:#ff8025;white-space: pre-line;" class="NoDocumentSelected">
+                מסמך זה לא הומר ל TIF
+                אנא בדוק הגדרות הספריה בתיוק
+            </div>
+
+            <!--<img *ngIf="!IsNoDocumentSelected &&  this.base64Image!=null " style="width: 100%;" class="grabbable"
+
+                 (mousemove)="OnMouseMove($event)"
+                 (mousedown)="OnMouseDown($event)"
+                 (mouseup)="OnMouseUp($event)"
+                 [attr.src]="base64Image" alt=""
+                 [style.transform]="ImgScaleValue"
+                 [style.transform-origin]="ImgTransformOriginValue"
+                 draggable="false" />-->
+
+
+
+            <div id="cont" 
+                 style="width: 100%; transform-origin: right top;"
+                 class="grabbable"
+                 [style.transform]="ImgScaleValue"
+                 (mousemove)="OnMouseMove($event)"
+                 (mousedown)="OnMouseDown($event)"
+                 (mouseup)="OnMouseUp($event)"
+                 draggable="false">
+                <canvas id="canvas" style="width: 100% !important;" class="grabbable"></canvas>
+            </div>
+
+
+        </div>
+    </div>
+
+
+    <div class="split-busy-indicator" *ngIf="showSplitIndicator">
+        <div class="spinner">
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+        </div>
+        <br />
+        <!--{{splitIndicatorText}}-->
+    </div>
+
+    <!-- Documents Panel -->
+    <div class="DocumentsDropDown" *ngIf="IsDocsPanelVisible">
+        <table>
+            <tr style="height:35px;">
+                <td>
+                    <div style="margin-top: 10px; margin-right: 20px;">
+                        <ul class="FiltersMenu" style="direction:rtl;float:right; margin-right:10px ">
+                            <li id="all" (click)="DocumentFilterItemClicked('all')" class="FilterItem" style="width:50px"
+                                [class.SelectedFilter]="DocumentFilterSelectedValue === 'all'">
+                                הכל
+                            </li>
+
+                            <li id="forwarding" (click)="DocumentFilterItemClicked('forwarding')" class="FilterItem" style="width:50px"
+                                [class.SelectedFilter]="DocumentFilterSelectedValue === 'forwarding'">
+                                שילוח
+                            </li>
+
+                            <li id="customs" (click)="DocumentFilterItemClicked('customs')" class="FilterItem" style="width:50px"
+                                [class.SelectedFilter]="DocumentFilterSelectedValue === 'customs'">
+                                עמילות
+                            </li>
+
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="vertical-align:top;">
+                    <ul style="width: 100%;">
+
+                        <!-- Ticket Item -->
+                        <li *ngFor="let relatedDoc of RelatedDocuments" style="width: 100%; padding: 10px;padding-bottom: 0px;" (click)="TicketItemClicked(relatedDoc)">
+                            <div class="RelatedDocItem" [class.SelectedTicket]="SelectedTicket == relatedDoc">
+                                <table>
+
+                                    <!--Header-->
+                                    <tr>
+                                        <td>
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <table>
+                                                            <tr>
+                                                                <td>
+                                                                    <div style="font-size:10px;color:#312C31;margin-right:6px; margin-top:5px; float:right;">
+                                                                        {{relatedDoc.Name}}
+                                                                    </div>
+                                                                </td>
+                                                                <td style="vertical-align:top;float:left; margin-top:5px; margin-left:9px;">
+                                                                    <img [src]="relatedDoc.Extension | AttatchmentIconPipe" style="width:22px;height:25px;margin-left:5px; margin-top:3px; cursor:pointer;" (click)="DownloadDocumentFile(relatedDoc.Id)" (mouseenter)="IsMouseOverDownload = true" (mouseleave)="IsMouseOverDownload = false" />
+
+                                                                    <!-- sign mark -->
+                                                                    <img *ngIf="relatedDoc.documentsFilingPM.IsDigitallySigned"
+                                                                         style="width: 23px;position: absolute;top: 5px;left: -15px;"
+                                                                         src="./Images/medalicon.png"
+                                                                         [attr.title]="relatedDoc.documentsFilingPM.SignersList" />
+
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="vertical-align:top;text-align:center;">
+                                                        <table>
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="TextTrimming" style="font-size:10px;color:#312C31;margin-right:6px;float:right;width:170px;">
+                                                                        {{relatedDoc.DocumentTypeName}}
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="TextTrimming" style="font-size:10px;color:#312C31; margin-right:6px;float:right;width:170px;">
+                                                                        {{relatedDoc.LeadingMetaDataName}}
+                                                                        {{relatedDoc.LeadingMetaDataValue}}
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+
+                                                </tr>
+
+
+                                            </table>
+                                        </td>
+                                    </tr>
+
+                                    <!--Bottom-->
+                                    <tr>
+                                        <td>
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <div style="margin-right:6px;overflow:hidden">
+                                                            <img *ngIf="relatedDoc.Status2ImageGreen" src="./Images/CheckBoxIcon.png" style="width:14px; margin-top:3px;" />
+                                                            <img *ngIf="relatedDoc.Status2ImageGray" src="./Images/CheckBoxIcon.png" style="width:14px;filter:grayscale(100%); margin-top:3px;" />
+                                                            <img *ngIf="relatedDoc.Status2ErrorImage" src="./Images/RedX.png" style="width:14px; margin-top:3px;" />
+
+                                                            <img *ngIf="relatedDoc.Status1ImageGreen" src="./Images/CheckBoxIcon.png" style="width:14px; margin-top:3px;" />
+                                                            <img *ngIf="relatedDoc.Status1ImageGray" src="./Images/CheckBoxIcon.png" style="width:14px;filter:grayscale(100%); margin-top:3px;" />
+
+
+                                                            <div style="font-size:11px;display: inline-block;vertical-align: bottom;" *ngIf="relatedDoc.ExternalAttachmentIdVisibility">
+                                                                <span style="float:right; font-size:11px;overflow:hidden;width:50px;">
+                                                                    {{'Customs.CustomsDocument.ExternalAttachmentIdLabel' | TextCodeTranslationPipe}}
+                                                                </span>
+                                                                <span class="TextTrimming" style="float:right;margin-right:3px; font-size:11px;overflow:hidden; width:80px;">
+                                                                    {{relatedDoc.ExternalAttachmentId}}
+                                                                </span>
+                                                            </div>
+                                                            <div style="font-size:10px;display: inline-block;vertical-align: bottom;" *ngIf="relatedDoc.CodeVisibility">
+                                                                <span style="float:right;font-size:11px; overflow:hidden;width:50px;">
+                                                                    {{'Customs.CustomsDocument.ExternalAttachmentIdLabel' | TextCodeTranslationPipe}}
+                                                                </span>
+                                                                <span class="TextTrimming" style="float:right;margin-right:3px; font-size:11px;overflow:hidden; width:80px;">
+                                                                    {{relatedDoc.Code}}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </div>
+                        </li>
+
+                    </ul>
+                </td>
+            </tr>
+        </table>
+
+
+
+
+
+    </div>
+
+</div>

@@ -1,0 +1,831 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{EF658C59-1D85-4D60-A725-98F3CEF9546E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Logitude.MetaData</RootNamespace>
+    <AssemblyName>Logitude.MetaData</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AutoGenerators\CommonClassesGenerator.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CommonClassesGenerator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AutoGenerators\EntityControllersGenerator.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntityControllersGenerator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AutoGenerators\EntityPMsGenerator.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntityPMsGenerator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AutoGenerators\DataContractsClassesGenerator.cs">
+      <DependentUpon>DataContractsClassesGenerator.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="AutoGenerators\GlobalClassesGenerator.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GlobalClassesGenerator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AutoGenerators\InfrastructureClassesGenerator.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InfrastructureClassesGenerator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AutoGenerators\InvoiceClassesGenerator.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InvoiceClassesGenerator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AutoGenerators\LogitudeClassesGenerator.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LogitudeClassesGenerator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AutoGenerators\QuoteClassesGenerator.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>QuoteClassesGenerator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AutoGenerators\ServicesGenerator.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ServicesGenerator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AutoGenerators\ShipmentClassesGeneraor.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ShipmentClassesGeneraor.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AutoGenerators\CommonClassesGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CommonClassesGenerator.cs</LastGenOutput>
+    </Content>
+    <Content Include="AutoGenerators\EntityControllersGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EntityControllersGenerator.cs</LastGenOutput>
+      <LastOutputs>.\EntityControllersGenerator.cs</LastOutputs>
+    </Content>
+    <Content Include="AutoGenerators\EntityPMsGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EntityPMsGenerator.cs</LastGenOutput>
+      <LastOutputs>.\EntityPMsGenerator.cs</LastOutputs>
+    </Content>
+    <Content Include="AutoGenerators\DataContractsClassesGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DataContractsClassesGenerator.cs</LastGenOutput>
+      <LastOutputs>.\DataContractsClassesGenerator.cs</LastOutputs>
+    </Content>
+    <Content Include="AutoGenerators\GlobalClassesGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>GlobalClassesGenerator.cs</LastGenOutput>
+    </Content>
+    <Content Include="AutoGenerators\InfrastructureClassesGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>InfrastructureClassesGenerator.cs</LastGenOutput>
+    </Content>
+    <Content Include="AutoGenerators\InvoiceClassesGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>InvoiceClassesGenerator.cs</LastGenOutput>
+    </Content>
+    <Content Include="AutoGenerators\LogitudeClassesGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastOutputs>.\LogitudeClassesGenerator.cs</LastOutputs>
+      <LastGenOutput>LogitudeClassesGenerator.cs</LastGenOutput>
+    </Content>
+    <Content Include="AutoGenerators\QuoteClassesGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastOutputs>.\QuoteClassesGenerator.cs</LastOutputs>
+      <LastGenOutput>QuoteClassesGenerator.cs</LastGenOutput>
+    </Content>
+    <Content Include="AutoGenerators\ServicesGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ServicesGenerator.cs</LastGenOutput>
+      <LastOutputs>.\ServicesGenerator.cs</LastOutputs>
+    </Content>
+    <Content Include="AutoGenerators\ShipmentClassesGeneraor.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ShipmentClassesGeneraor.cs</LastGenOutput>
+      <LastOutputs>.\ShipmentClassesGeneraor.cs</LastOutputs>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="test2\" />
+    <Folder Include="test\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="EntityFiles\CommonDataModel\AccountingSetting.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\AccountingSystem.lxml" />
+    <None Include="EntityFiles\CommonDataModel\AdditionalService.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\Address.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\Agent.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\Airline.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\AirlineMessagingRule.lxml" />
+    <None Include="EntityFiles\CommonDataModel\AirlineStatistics.lxml" />
+    <None Include="EntityFiles\CommonDataModel\DocumentFilingBackupBatch.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\FilingInbox.lxml" />
+    <None Include="EntityFiles\CommonDataModel\FilingInboxAttachmentLog.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\AccountingSetting.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\AccountingSystem.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\AdditionalService.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\Address.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\Agent.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\AgentSharedDocument.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\AgentSharedManifest.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\Airline.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\AirlineMessagingRule.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\AirlineStatistics.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\Automation.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\AutomationResultEmailRecipient.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\AWBDescriptionOfGoods.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\Branch.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\BusinessUnit.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\Card.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\CardExternalAccountsByProduct.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\CardExternalCodeByCurrency.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\ChargesExternalAccountsByProduct.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\ChargesType.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\ChargeTypeAccounting.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\Commodity.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\CommunicationLog.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\CommunicationLogType.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\CommunicationStatusType.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\Competitor.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\ComputingPartner.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\ComputingPartnerCode.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\ComputingPartnerTable.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\ComputingPartnerTranslation.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\Contact.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\ContactDoneMethod.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\Country.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\CountryCity.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\CreditLimitSetting.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\Currency.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\CustomAgent.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\Customer.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\CustomerAccountManagerByProduct.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\CustomerAdditionalService.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\CustomerFieldsUpdateSetting.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\CustomerProduct.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\CustomerSalesNote.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\CustomerSize.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\CustomerStatus.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\CustomerTenantAccess.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\CustomerTenantAccessCard.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\CustomerTenantAccessCardsBatch.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\CustomerTenantAccessStatusType.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\CustomsInterface.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\CustomsInterfaceSetting.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\Department.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\DimensionsUnit.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\Distributor.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\DocumentFilingBackupBatch.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\DocumentFilingBackupSetting.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\DocumentFolder.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\DocumentsFiling.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\DocumentType.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\DocumentTypeCategory.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\DocumentTypeCopy.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\DocumentTypeCustomField.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\DocumentTypeTemplate.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\DueType.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\DWHSetting.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\FeatureAccessLevel.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\FeaturePackageType.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\FilingInbox.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\FilingInboxAttachment.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\FilingInboxAttachmentLog.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\FTPDetail.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\GlobalZone.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\HybridPartner.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\HybridTenantThreshold.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\Incoterm.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\Industry.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\INTTRABranchRegisteredCarrier.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\INTTRASetting.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\INTTRASettingMode.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\LeadSource.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\LoginPolicy.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\LogitudeMessagesTransmissionLog.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\MAWBStack.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\Measurement.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\MetodoPago.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\Package.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\PackageConnectedPackage.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\PackageType.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\Participant.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\PartnerType.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\PasswordPolicy.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\PaymentTerm.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\PaymentTermDateType.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\Port.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\ProductPeriod.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\ProductType.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\Rank.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\RateClass.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\Region.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\RegistryDateType.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\Report.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\ReportsTemplate.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\ReportsTemplatesVersion.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\Restriction.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\Role.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\SharedManifestsStatus.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\ShippingAgent.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\ShippingLine.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\State.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\SystemData.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\NewFiles\TarrifCharge.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\TarrifFromToType.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\TarrifHeader.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\TarrifStep.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\TarrifType.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\TemperatureUnit.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\TemplateFormat.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\Tenant.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\TenantLoginPolicy.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\TermsofUseSignature.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\Trucker.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\TwoFactorAuthenticationDevice.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\User.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\UserLicense.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\UsoCFDI.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\VatFormatType.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\VatMandatoryType.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\VatType.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\VatTypePercentage.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\VATTypesGroup.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\VatUniqueType.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\Vendor.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\Vessel.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\Warehouse.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\WarehouseType.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\WeightUnit.lxml" />
+    <None Include="EntityFiles\CommonDataModel\ReportsTemplate.lxml" />
+    <None Include="EntityFiles\CommonDataModel\ReportsTemplatesVersion.lxml" />
+    <None Include="EntityFiles\CommonDataModel\DocumentFilingBackupSetting.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\User.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\UsoCFDI.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\MetodoPago.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\Automation.lxml" />
+    <None Include="EntityFiles\CommonDataModel\AutomationResultEmailRecipient.lxml" />
+    <None Include="EntityFiles\CommonDataModel\AWBDescriptionOfGoods.lxml" />
+    <None Include="EntityFiles\CommonDataModel\Branch.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\BusinessUnit.lxml" />
+    <None Include="EntityFiles\CommonDataModel\Card.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\CardExternalAccountsByProduct.lxml" />
+    <None Include="EntityFiles\CommonDataModel\ChargesType.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\ChargeTypeAccounting.lxml" />
+    <None Include="EntityFiles\CommonDataModel\Commodity.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\CommunicationLog.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\CommunicationLogType.lxml" />
+    <None Include="EntityFiles\CommonDataModel\CommunicationStatusType.lxml" />
+    <None Include="EntityFiles\CommonDataModel\Competitor.lxml" />
+    <None Include="EntityFiles\CommonDataModel\ComputingPartnerCode.lxml" />
+    <None Include="EntityFiles\CommonDataModel\ComputingPartnerTable.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\ComputingPartnerTranslation.lxml" />
+    <None Include="EntityFiles\CommonDataModel\Contact.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\ContactDoneMethod.lxml" />
+    <None Include="EntityFiles\CommonDataModel\Country.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\CountryCity.lxml" />
+    <None Include="EntityFiles\CommonDataModel\CreditLimitSetting.lxml" />
+    <None Include="EntityFiles\CommonDataModel\Currency.lxml" />
+    <None Include="EntityFiles\CommonDataModel\CustomAgent.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\Customer.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\CustomerAdditionalService.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\CustomerFieldsUpdateSetting.lxml" />
+    <None Include="EntityFiles\CommonDataModel\CustomerProduct.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\CustomerSalesNote.lxml" />
+    <None Include="EntityFiles\CommonDataModel\CustomerSize.lxml" />
+    <None Include="EntityFiles\CommonDataModel\CustomerStatus.lxml" />
+    <None Include="EntityFiles\CommonDataModel\CustomerTenantAccess.lxml" />
+    <None Include="EntityFiles\CommonDataModel\CustomerTenantAccessCard.lxml" />
+    <None Include="EntityFiles\CommonDataModel\CustomerTenantAccessCardsBatch.lxml" />
+    <None Include="EntityFiles\CommonDataModel\CustomerTenantAccessStatusType.lxml" />
+    <None Include="EntityFiles\CommonDataModel\CustomsInterface.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\CustomsInterfaceSetting.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\Department.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\DimensionsUnit.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\Distributor.lxml" />
+    <None Include="EntityFiles\CommonDataModel\DocsIn.lxml" />
+    <None Include="EntityFiles\CommonDataModel\DocsOut.lxml" />
+    <None Include="EntityFiles\CommonDataModel\DocumentFolder.lxml" />
+    <None Include="EntityFiles\CommonDataModel\DocumentsFiling.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\DocumentTypeCategory.lxml" />
+    <None Include="EntityFiles\CommonDataModel\DocumentTypeCopy.lxml" />
+    <None Include="EntityFiles\CommonDataModel\DocumentTypeCustomField.lxml" />
+    <None Include="EntityFiles\CommonDataModel\DocumentTypeTemplate.lxml" />
+    <None Include="EntityFiles\CommonDataModel\FeatureAccessLevel.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\FeaturePackageType.lxml" />
+    <None Include="EntityFiles\CommonDataModel\FTPDetail.lxml" />
+    <None Include="EntityFiles\CommonDataModel\GlobalZone.lxml" />
+    <None Include="EntityFiles\CommonDataModel\HybridTenantThreshold.lxml" />
+    <None Include="EntityFiles\CommonDataModel\Incoterm.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\Industry.lxml" />
+    <None Include="EntityFiles\CommonDataModel\LeadSource.lxml" />
+    <None Include="EntityFiles\CommonDataModel\LogitudeMessagesTransmissionLog.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\MAWBStack.lxml" />
+    <None Include="EntityFiles\CommonDataModel\Measurement.lxml" />
+    <None Include="EntityFiles\CommonDataModel\Package.lxml" />
+    <None Include="EntityFiles\CommonDataModel\PackageConnectedPackage.lxml" />
+    <None Include="EntityFiles\CommonDataModel\Participant.lxml" />
+    <None Include="EntityFiles\CommonDataModel\PartnerType.lxml" />
+    <None Include="EntityFiles\CommonDataModel\PasswordPolicy.lxml" />
+    <None Include="EntityFiles\CommonDataModel\PaymentTerm.lxml" />
+    <None Include="EntityFiles\CommonDataModel\PaymentTermDateType.lxml" />
+    <None Include="EntityFiles\CommonDataModel\ProductPeriod.lxml" />
+    <None Include="EntityFiles\CommonDataModel\ProductType.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\Rank.lxml" />
+    <None Include="EntityFiles\CommonDataModel\RateClass.lxml" />
+    <None Include="EntityFiles\CommonDataModel\Region.lxml" />
+    <None Include="EntityFiles\CommonDataModel\Report.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\Restriction.lxml" />
+    <None Include="EntityFiles\CommonDataModel\Role.lxml" />
+    <None Include="EntityFiles\CommonDataModel\ShippingAgent.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\ShippingLine.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\State.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\SystemData.lxml" />
+    <None Include="EntityFiles\CommonDataModel\TarrifCharge.lxml" />
+    <None Include="EntityFiles\CommonDataModel\TarrifFromToType.lxml" />
+    <None Include="EntityFiles\CommonDataModel\TarrifHeader.lxml" />
+    <None Include="EntityFiles\CommonDataModel\TarrifStep.lxml" />
+    <None Include="EntityFiles\CommonDataModel\TarrifType.lxml" />
+    <None Include="EntityFiles\CommonDataModel\TemplateFormat.lxml" />
+    <None Include="EntityFiles\CommonDataModel\Tenant.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\TenantLoginPolicy.lxml" />
+    <None Include="EntityFiles\CommonDataModel\TermsofUseSignature.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\Trucker.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\TwoFactorAuthenticationDevice.lxml" />
+    <None Include="EntityFiles\CommonDataModel\LoginPolicy.lxml" />
+    <None Include="EntityFiles\CommonDataModel\UserLicense.lxml" />
+    <None Include="EntityFiles\CommonDataModel\VatFormatType.lxml" />
+    <None Include="EntityFiles\CommonDataModel\VatMandatoryType.lxml" />
+    <None Include="EntityFiles\CommonDataModel\VatType.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\VatTypePercentage.lxml" />
+    <None Include="EntityFiles\CommonDataModel\VATTypesGroup.lxml" />
+    <None Include="EntityFiles\CommonDataModel\VatUniqueType.lxml" />
+    <None Include="EntityFiles\CommonDataModel\Vendor.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\Vessel.lxml" />
+    <None Include="EntityFiles\CommonDataModel\Warehouse.lxml" />
+    <None Include="EntityFiles\CommonDataModel\WarehouseType.lxml" />
+    <None Include="EntityFiles\GlobalModel\AnalyzeQueue.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\GlobalModel\ApiCredintials.lxml" />
+    <None Include="EntityFiles\GlobalModel\AWBMessagesCCSType.lxml" />
+    <None Include="EntityFiles\GlobalModel\BatchServicesDefinition.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\GlobalModel\BluesnapContract.lxml" />
+    <None Include="EntityFiles\GlobalModel\NewFiles\AnalyzeQueue.lxml" />
+    <None Include="EntityFiles\GlobalModel\NewFiles\ApiCredintials.lxml" />
+    <None Include="EntityFiles\GlobalModel\NewFiles\AWBMessagesCCSType.lxml" />
+    <None Include="EntityFiles\GlobalModel\NewFiles\BatchServicesDefinition.lxml" />
+    <None Include="EntityFiles\GlobalModel\NewFiles\BluesnapContract.lxml" />
+    <None Include="EntityFiles\GlobalModel\NewFiles\PaymentChannel.lxml" />
+    <None Include="EntityFiles\GlobalModel\NewFiles\PaymentCurrency.lxml" />
+    <None Include="EntityFiles\GlobalModel\NewFiles\PaymentMethod.lxml" />
+    <None Include="EntityFiles\GlobalModel\NewFiles\RecurringPeriod.lxml" />
+    <None Include="EntityFiles\GlobalModel\NewFiles\TenantAddOn.lxml" />
+    <None Include="EntityFiles\GlobalModel\NewFiles\TenantManagement.lxml" />
+    <None Include="EntityFiles\GlobalModel\NewFiles\TenantManagementLicense.lxml" />
+    <None Include="EntityFiles\GlobalModel\NewFiles\TenantManagmentPrivateLabels.lxml" />
+    <None Include="EntityFiles\GlobalModel\NewFiles\TenantType.lxml" />
+    <None Include="EntityFiles\GlobalModel\PaymentChannel.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\GlobalModel\PaymentCurrency.lxml" />
+    <None Include="EntityFiles\GlobalModel\PaymentMethod.lxml" />
+    <None Include="EntityFiles\GlobalModel\RecurringPeriod.lxml" />
+    <None Include="EntityFiles\GlobalModel\TenantAddOn.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\GlobalModel\TenantManagement.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\GlobalModel\TenantManagementLicense.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\GlobalModel\TenantManagmentPrivateLabels.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\GlobalModel\TenantType.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\APILogs.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\BusinessHour.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\BusinessHoursHoliday.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\InfrastructureModel\ChargesGroup.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\Direction.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\DWObjectField.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\DWObjectTable.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\EntityStatus.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\HybridPartner.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\EventType.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\InfrastructureModel\IATACode.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\InfrastructureModel\InboundEmail.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\InboundEmailLine.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\InfrastructureModel\NewFiles\APILogs.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\NewFiles\BusinessHour.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\NewFiles\BusinessHoursHoliday.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\NewFiles\ChargesGroup.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\NewFiles\CustomPickList.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\NewFiles\Direction.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\NewFiles\DWObjectField.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\NewFiles\DWObjectTable.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\NewFiles\EntityStatus.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\NewFiles\EventType.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\NewFiles\IATACode.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\NewFiles\InboundEmail.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\NewFiles\InboundEmailLine.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\NewFiles\MoveType.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\NewFiles\ObjectField.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\NewFiles\ObjectTable.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\NewFiles\PrepaidCollect.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\NewFiles\RatesTable.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\NewFiles\TaskSchedulerHistory.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\NewFiles\TasksScheduler.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\NewFiles\TransportMode.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\NewFiles\VolumeUnit.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\ObjectField.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\ObjectTable.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\RatesTable.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\TaskSchedulerHistory.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\TasksScheduler.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\TransportMode.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\VolumeUnit.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\WeightUnit.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\InfrastructureModel\MoveType.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\PackageType.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\Port.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\InvoiceModel\Account.lxml" />
+    <None Include="EntityFiles\InvoiceModel\AccountingSystemsSetting.lxml" />
+    <None Include="EntityFiles\InvoiceModel\AccountingSystemsSyncStatus.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\InvoiceModel\AccountingTransferHeader.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\InvoiceModel\AccountingTransferLine.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\InvoiceModel\AccountingTransferType.lxml" />
+    <None Include="EntityFiles\InvoiceModel\AccountType.lxml" />
+    <None Include="EntityFiles\InvoiceModel\APInvoice.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\InvoiceModel\APInvoiceLine.lxml" />
+    <None Include="EntityFiles\InvoiceModel\APInvoicePayment.lxml" />
+    <None Include="EntityFiles\InvoiceModel\APInvoiceStatus.lxml" />
+    <None Include="EntityFiles\InvoiceModel\APInvoiceTotalVAT.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\InvoiceModel\APInvoiceTransferStatus.lxml" />
+    <None Include="EntityFiles\InvoiceModel\APInvoiceType.lxml" />
+    <None Include="EntityFiles\InvoiceModel\APPayment.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\InvoiceModel\APPaymentMethod.lxml" />
+    <None Include="EntityFiles\InvoiceModel\APPaymentStatus.lxml" />
+    <None Include="EntityFiles\InvoiceModel\ARInvoice.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\InvoiceModel\ARInvoiceLine.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\InvoiceModel\ARInvoicePayment.lxml" />
+    <None Include="EntityFiles\InvoiceModel\ARInvoiceStatus.lxml" />
+    <None Include="EntityFiles\InvoiceModel\ARInvoiceTotalVAT.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\InvoiceModel\ARInvoiceTransferStatus.lxml" />
+    <None Include="EntityFiles\InvoiceModel\ARInvoiceType.lxml" />
+    <None Include="EntityFiles\InvoiceModel\ARPayment.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\InvoiceModel\NewFiles\AccountingPaymentMethod.lxml" />
+    <None Include="EntityFiles\InvoiceModel\NewFiles\AccountingSystemsSetting.lxml" />
+    <None Include="EntityFiles\InvoiceModel\NewFiles\AccountingSystemsSyncStatus.lxml" />
+    <None Include="EntityFiles\InvoiceModel\NewFiles\AccountingTransferHeader.lxml" />
+    <None Include="EntityFiles\InvoiceModel\NewFiles\AccountingTransferLine.lxml" />
+    <None Include="EntityFiles\InvoiceModel\NewFiles\AccountingTransferType.lxml" />
+    <None Include="EntityFiles\InvoiceModel\NewFiles\APInvoice.lxml" />
+    <None Include="EntityFiles\InvoiceModel\NewFiles\APInvoiceLine.lxml" />
+    <None Include="EntityFiles\InvoiceModel\NewFiles\APInvoicePayment.lxml" />
+    <None Include="EntityFiles\InvoiceModel\NewFiles\APInvoiceStatus.lxml" />
+    <None Include="EntityFiles\InvoiceModel\NewFiles\APInvoiceTotalVAT.lxml" />
+    <None Include="EntityFiles\InvoiceModel\NewFiles\APInvoiceTransferStatus.lxml" />
+    <None Include="EntityFiles\InvoiceModel\NewFiles\APInvoiceType.lxml" />
+    <None Include="EntityFiles\InvoiceModel\NewFiles\APPayment.lxml" />
+    <None Include="EntityFiles\InvoiceModel\NewFiles\APPaymentMethod.lxml" />
+    <None Include="EntityFiles\InvoiceModel\NewFiles\APPaymentStatus.lxml" />
+    <None Include="EntityFiles\InvoiceModel\NewFiles\APPaymentTransferStatus.lxml" />
+    <None Include="EntityFiles\InvoiceModel\NewFiles\ARInvoice.lxml" />
+    <None Include="EntityFiles\InvoiceModel\NewFiles\ARInvoiceLine.lxml" />
+    <None Include="EntityFiles\InvoiceModel\NewFiles\ARInvoicePayment.lxml" />
+    <None Include="EntityFiles\InvoiceModel\NewFiles\ARInvoiceStatus.lxml" />
+    <None Include="EntityFiles\InvoiceModel\NewFiles\ARInvoiceTotalVAT.lxml" />
+    <None Include="EntityFiles\InvoiceModel\NewFiles\ARInvoiceTransferStatus.lxml" />
+    <None Include="EntityFiles\InvoiceModel\NewFiles\ARInvoiceType.lxml" />
+    <None Include="EntityFiles\InvoiceModel\NewFiles\ARPayment.lxml" />
+    <None Include="EntityFiles\InvoiceModel\NewFiles\ARPaymentStatus.lxml" />
+    <None Include="EntityFiles\InvoiceModel\NewFiles\ARPaymentTransferStatus.lxml" />
+    <None Include="EntityFiles\InvoiceModel\NewFiles\BankAccountLite.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\InvoiceModel\NewFiles\CreditCardType.lxml" />
+    <None Include="EntityFiles\InvoiceModel\NewFiles\ExternalSystemsTablesCode.lxml" />
+    <None Include="EntityFiles\InvoiceModel\NewFiles\SATInterface.lxml" />
+    <None Include="EntityFiles\InvoiceModel\NewFiles\SATInterfaceSetting.lxml" />
+    <None Include="EntityFiles\InvoiceModel\NewFiles\SATInvoiceStatus.lxml" />
+    <None Include="EntityFiles\InvoiceModel\NewFiles\SATPaymentMethod.lxml" />
+    <None Include="EntityFiles\InvoiceModel\NewFiles\SATTransferStatus.lxml" />
+    <None Include="EntityFiles\InvoiceModel\SATInvoiceStatus.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\InvoiceModel\SATTransferStatus.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\InvoiceModel\BankAccountLite.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\InvoiceModel\SATInterface.lxml" />
+    <None Include="EntityFiles\InvoiceModel\SATInterfaceSetting.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\InvoiceModel\SATPaymentMethod.lxml" />
+    <None Include="EntityFiles\QuoteModel\MarkUpType.lxml" />
+    <None Include="EntityFiles\InvoiceModel\AccountingPaymentMethod.lxml" />
+    <None Include="EntityFiles\InvoiceModel\ARPaymentStatus.lxml" />
+    <None Include="EntityFiles\InvoiceModel\CreditCardType.lxml" />
+    <None Include="EntityFiles\InvoiceModel\ExternalSystemsTablesCode.lxml" />
+    <None Include="EntityFiles\QuoteModel\NewFiles\MarkUpType.lxml" />
+    <None Include="EntityFiles\QuoteModel\NewFiles\Quote.lxml" />
+    <None Include="EntityFiles\QuoteModel\NewFiles\QuoteCharge.lxml" />
+    <None Include="EntityFiles\QuoteModel\NewFiles\QuoteClosingReason.lxml" />
+    <None Include="EntityFiles\QuoteModel\NewFiles\QuoteCustomerType.lxml" />
+    <None Include="EntityFiles\QuoteModel\NewFiles\QuotePackage.lxml" />
+    <None Include="EntityFiles\QuoteModel\NewFiles\QuotePriceSteps.lxml" />
+    <None Include="EntityFiles\QuoteModel\NewFiles\QuoteRating.lxml" />
+    <None Include="EntityFiles\QuoteModel\NewFiles\QuoteSetting.lxml" />
+    <None Include="EntityFiles\QuoteModel\NewFiles\QuoteStage.lxml" />
+    <None Include="EntityFiles\QuoteModel\NewFiles\QuoteTemplate.lxml" />
+    <None Include="EntityFiles\QuoteModel\NewFiles\QuoteTotalVAT.lxml" />
+    <None Include="EntityFiles\QuoteModel\NewFiles\QuoteType.lxml" />
+    <None Include="EntityFiles\QuoteModel\Quote.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\QuoteModel\QuoteCharge.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\QuoteModel\QuoteClosingReason.lxml" />
+    <None Include="EntityFiles\QuoteModel\QuoteCustomerType.lxml" />
+    <None Include="EntityFiles\QuoteModel\QuotePackage.lxml" />
+    <None Include="EntityFiles\QuoteModel\QuotePriceSteps.lxml" />
+    <None Include="EntityFiles\QuoteModel\QuoteRating.lxml" />
+    <None Include="EntityFiles\QuoteModel\QuoteStage.lxml" />
+    <None Include="EntityFiles\QuoteModel\QuoteTemplate.lxml" />
+    <None Include="EntityFiles\QuoteModel\QuoteTotalVAT.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\QuoteModel\QuoteType.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\AccountingInformationIdentifier.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\AWBChargesCode.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\AWBCustomsInformation.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\AWBInformation.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\AWBMessagingStock.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\ShipmentsModel\AWBOCI.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\AWBSpecialHandlingCode.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\CommodityPackage.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\ShipmentsModel\FBLStock.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\CustomsTransmissionsStatus.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\InsideShipmentPackage.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\ManifestStatus.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\NewFiles\AccountingInformationIdentifier.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\NewFiles\AWBChargesCode.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\NewFiles\AWBCustomsInformation.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\NewFiles\AWBInformation.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\NewFiles\AWBMessagingStock.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\NewFiles\AWBOCI.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\NewFiles\AWBSpecialHandlingCode.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\NewFiles\CustomsTransmissionsStatus.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\NewFiles\FBLStock.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\NewFiles\InsideShipmentPackage.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\NewFiles\INTTRADocumentType.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\NewFiles\ManifestStatus.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\NewFiles\OBLType.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\NewFiles\OtherParticipantId.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\NewFiles\PickUpDeliveryTransportMode.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\NewFiles\Shipment.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentAssembly.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentAWBPrintOnly.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentCommodity.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentCustomerType.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentCustomsMessageType.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentCustomsTransmission.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentLevel.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentPackage.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentPayable.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentPayableLineStatus.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentPayableStatus.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentReceivable.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentReceivableLineStatus.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentReceivableStatus.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentType.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\NewFiles\SpecialServicesType.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\OtherParticipantId.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\Shipment.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\ShipmentsModel\ShipmentAssembly.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\ShipmentAWBPrintOnly.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\ShipmentCommodity.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\ShipmentsModel\ShipmentCustomerType.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\ShipmentCustomsMessageType.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\ShipmentCustomsTransmission.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\ShipmentsModel\ShipmentLevel.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\ShipmentPackage.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\ShipmentsModel\ShipmentPayable.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\ShipmentReceivable.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\ShipmentReceivableStatus.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\ShipmentType.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\SpecialServicesType.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\PrepaidCollect.lxml" />
+    <None Include="EntityFiles\SystemLogsModel\BatchServicesLog.lxml" />
+    <None Include="EntityFiles\SystemLogsModel\ErrorLog.lxml">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

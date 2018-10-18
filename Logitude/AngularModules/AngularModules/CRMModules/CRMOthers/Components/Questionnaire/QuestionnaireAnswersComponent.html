@@ -1,0 +1,369 @@
+<style type="text/css">
+      .HeaderStyle{
+        font-size:17px;
+        color:black;
+        font-weight:bold;
+        background-color:lightgray;
+        margin-left:5px;
+        height:27px;
+        vertical-align:central;
+        
+    }
+    .LableStyle{
+        font-size:14px;
+        color:black;
+    }
+       .ValueStyle{
+        font-size:14px;
+        color:black;
+        width:200px;
+    }
+</style>
+<table style="height:100%;vertical-align:top">
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr style="height:100%;vertical-align:top;">
+        <td>
+            <ScrollViewer style="margin:5px;">
+                <!--<div class="ScrollContent">-->
+
+                <table [ngStyle]="{direction: FlowDirection}">
+                    <tr style="height:100%;vertical-align:top;;">
+                        <td>
+                            <table style="height:100%;vertical-align:top;">
+                                <tr>
+                                    <td style="height:100%;vertical-align:top;">
+                                        <div *ngFor="let item of ItemsSource.Collection; let i = index" style="margin:5px;vertical-align:top;">
+                                            <table *ngIf="item.QuestionTypeCode != 'HL' && item.ColumnNumber === 0">
+                                                <tr>
+                                                    <td style="width:10px">
+                                                        <div style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;" *ngIf="item.IsMandatory"></div>
+
+                                                    </td>
+                                                    <td><div style="font-size:14px;font-weight:bold;color:black;">{{item.Question}}</div></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div style="height:5px;"></div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td style="width:400px">
+                                                        <div *ngIf="item.QuestionTypeCode == 'YN'" class="LableStyle">
+                                                            <div class="RadioButton" style="margin:5px;">
+                                                                <input [attr.id]="'RadioButton_' + SessionIndex + 'Yes'  + item.IndexKey + item.Question" [attr.name]="'RadioButton' + SessionIndex + 'Yes'  + item.IndexKey" type="radio" [checked]="item.AnswerValue == 'Yes'" (click)="item.AnswerValue = 'Yes'" />
+                                                                <label [attr.for]="'RadioButton_' + SessionIndex + 'Yes'  + item.IndexKey  + item.Question" style="text-indent: 25px; font-size: 14px" [ngStyle]="{color: item.AnswerValue == 'Yes' ? '#287828':'#282E30'}">
+                                                                    Yes
+                                                                </label>
+                                                            </div>
+
+                                                            <div class="RadioButton" style="margin:5px;">
+                                                                <input [attr.id]="'RadioButton_' + SessionIndex + 'No'  + item.IndexKey  + item.Question" [attr.name]="'RadioButton' + SessionIndex+ 'No' + item.IndexKey" type="radio" [checked]="item.AnswerValue == 'No'" (click)="item.AnswerValue = 'No'" />
+                                                                <label [attr.for]="'RadioButton_' + SessionIndex + 'No'  + item.IndexKey  + item.Question" style="text-indent: 25px; font-size: 14px" [ngStyle]="{color: item.AnswerValue == 'No' ? '#287828':'#282E30'}">
+                                                                    No
+                                                                </label>
+                                                            </div>
+                                                            <!--<LogCheckBox [ObjectFieldName]="objectField.FieldName" [ObjectTableName]="objectField.ObjectTableName" [Checked]="EntityPM[objectField.FieldName]" [DataContext]="item"></LogCheckBox>-->
+                                                        </div>
+
+                                                        <div *ngIf="item.QuestionTypeCode == 'TE' || item.QuestionTypeCode == 'DS'">
+                                                            <LogTextBox (ValueChanged)="item.onTextChange($event)" [ObjectFieldName]="'AnswerValue'" [DataContext]="item" class="ValueStyle"></LogTextBox>
+                                                        </div>
+
+                                                        <div *ngIf="item.QuestionTypeCode == 'ES'">
+                                                            <LogTextBox (ValueChanged)="item.onTextChange($event)" [ObjectFieldName]="'AnswerValue'" [DataContext]="item" [IsMultiline]="'true'" class="ValueStyle"></LogTextBox>
+                                                        </div>
+
+                                                        <div *ngIf="item.QuestionTypeCode == 'DA'">
+                                                            <LogDatePicker (ValueChanged)="item.onTextChange($event)" [ObjectFieldName]="'AnswerValue'" [DataContext]="item" class="ValueStyle"></LogDatePicker>
+                                                        </div>
+
+                                                        <div *ngIf="item.QuestionTypeCode == 'CL'">
+                                                            <PickList [ObjectFieldName]="'AnswerValue'"
+                                                                      [ObjectTableName]="'QuestionnaireQuestion'"
+                                                                      [PickListCode]="item.PickListCode"
+                                                                      [DataContext]="item"
+                                                                      [IsMultipleChoice]="true"
+                                                                      class="ValueStyle"
+                                                                      (SelectedItemChanged)="item.pickListItemChanged($event)">
+                                                            </PickList>
+                                                        </div>
+
+                                                        <div *ngIf="item.QuestionTypeCode == 'MC'" class="LableStyle">
+                                                            <div class="RadioButton" *ngFor="let pl of item.CustomPickListItems; let pi = index" style="margin:5px;">
+                                                                <input [attr.id]="'RadioButton_' + SessionIndex + pl.Value + item.IndexKey  + item.Question" [attr.name]="'RadioButton' + SessionIndex  + pl.Value + item.IndexKey" type="radio" [checked]="item.AnswerValue == pl.Value" (click)="item.AnswerValue = pl.Value" />
+                                                                <label [attr.for]="'RadioButton_' + SessionIndex + pl.Value + item.IndexKey  + item.Question" style="text-indent: 25px; font-size: 14px" [ngStyle]="{color: item.AnswerValue == pl.Value ? '#287828':'#282E30'}" class="LableStyle">
+                                                                    {{pl.Value}}
+                                                                </label>
+
+                                                            </div>
+
+                                                            <div *ngIf="item.IsAddOther == true" style="margin:5px;">
+                                                                <table>
+                                                                    <tr class="FormFieldRow">
+                                                                        <td style="width:70px">
+                                                                            <div class="RadioButton">
+                                                                                <input [attr.id]="'RadioButton_' + SessionIndex + 'Other' + item.IndexKey + item.Question" [attr.name]="'RadioButton' + SessionIndex  + 'Other' + item.IndexKey" type="radio" [checked]="item.AnswerValue == 'Other'" (click)="item.AnswerValue = 'Other'" />
+                                                                                <label [attr.for]="'RadioButton_' + SessionIndex + 'Other' + item.IndexKey + item.Question" style="text-indent: 25px; font-size: 14px" [ngStyle]="{color: item.AnswerValue == 'Other' ? '#287828':'#282E30'}" class="LableStyle">
+                                                                                    Other
+                                                                                </label>
+
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div>
+                                                                                <LogTextBox (ValueChanged)="item.onTextChange($event)" [DataContext]="item" class="ValueStyle"></LogTextBox>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+
+                                                            </div>
+
+
+                                                        </div>
+
+                                                        <div *ngIf="item.QuestionTypeCode == 'CB'" class="LableStyle">
+                                                            <div class="CheckBox" *ngFor="let pl of item.CustomPickListItems; let pi = index" style="margin:5px;">
+                                                                <input [attr.id]="'CheckBox_' + SessionIndex + pl.Value" [attr.name]="'CheckBox' + SessionIndex + pl.Value" type="checkbox" (change)="item.OnItemChecked(pl.Value)" />
+                                                                <label [attr.for]="'CheckBox_' + SessionIndex + pl.Value" style="text-indent: 25px; font-size: 14px" class="LableStyle">
+                                                                    {{pl.Value}}
+                                                                </label>
+                                                            </div>
+
+                                                            <div *ngIf="item.IsAddOther == true" style="margin:5px;">
+                                                                <table>
+                                                                    <tr class="FormFieldRow">
+                                                                        <td style="width:70px">
+                                                                            <div class="CheckBox">
+                                                                                <input [attr.id]="'CheckBox_' + SessionIndex + 'Other'" [attr.name]="'CheckBox' + SessionIndex  + 'Other'" type="checkbox" (change)="item.OnItemChecked('Other')" />
+                                                                                <label [attr.for]="'CheckBox_' + SessionIndex + 'Other'" style="text-indent: 25px; font-size: 14px" class="LableStyle">
+                                                                                    Other
+                                                                                </label>
+
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div>
+                                                                                <LogTextBox (ValueChanged)="item.onTextChange($event)" [DataContext]="item" class="ValueStyle"></LogTextBox>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>
+
+                                                        <div style="height:8px;"></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <div *ngIf="item.QuestionTypeCode == 'HL'" class="HeaderStyle">
+                                                <p class="HeaderStyle" style="padding-top:2px;padding-left:5px;padding-right:5px">{{item.Question}}</p>
+                                            </div>
+                                        </div>
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td style="height:100%;vertical-align:top">
+                            <table style="height:100%;vertical-align:top;">
+                                <tr>
+                                    <td style="height:100%;vertical-align:top;">
+                                        <div *ngFor="let item of ItemsSource.Collection; let i = index" style="margin:5px;vertical-align:top;">
+                                            <table *ngIf="item.QuestionTypeCode != 'HL' && item.ColumnNumber === 1">
+                                                <tr>
+                                                    <td style="width:10px">
+                                                        <div style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;" *ngIf="item.IsMandatory"></div>
+
+                                                    </td>
+                                                    <td><div style="font-size:14px;font-weight:bold;color:black;">{{item.Question}}</div></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div style="height:5px;"></div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td style="width:400px">
+                                                        <div *ngIf="item.QuestionTypeCode == 'YN'" class="LableStyle">
+                                                            <div class="RadioButton" style="margin:5px;">
+                                                                <input [attr.id]="'RadioButton_' + SessionIndex + 'Yes'  + item.IndexKey  + item.Question" [attr.name]="'RadioButton' + SessionIndex + 'Yes'  + item.IndexKey" type="radio" [checked]="item.AnswerValue == 'Yes'" (click)="item.AnswerValue = 'Yes'" />
+                                                                <label [attr.for]="'RadioButton_' + SessionIndex + 'Yes'  + item.IndexKey  + item.Question" style="text-indent: 25px; font-size: 14px" [ngStyle]="{color: item.AnswerValue == 'Yes' ? '#287828':'#282E30'}">
+                                                                    Yes
+                                                                </label>
+                                                            </div>
+
+                                                            <div class="RadioButton" style="margin:5px;">
+                                                                <input [attr.id]="'RadioButton_' + SessionIndex + 'No'  + item.IndexKey  + item.Question" [attr.name]="'RadioButton' + SessionIndex+ 'No'  + item.IndexKey" type="radio" [checked]="item.AnswerValue == 'No'" (click)="item.AnswerValue = 'No'" />
+                                                                <label [attr.for]="'RadioButton_' + SessionIndex + 'No'  + item.IndexKey  + item.Question" style="text-indent: 25px; font-size: 14px" [ngStyle]="{color: item.AnswerValue == 'No' ? '#287828':'#282E30'}">
+                                                                    No
+                                                                </label>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div *ngIf="item.QuestionTypeCode == 'TE' || item.QuestionTypeCode == 'DS'">
+                                                            <LogTextBox (ValueChanged)="item.onTextChange($event)" [ObjectFieldName]="'AnswerValue'" [DataContext]="item" class="ValueStyle"></LogTextBox>
+                                                        </div>
+
+                                                        <div *ngIf="item.QuestionTypeCode == 'ES'">
+                                                            <LogTextBox (ValueChanged)="item.onTextChange($event)" [ObjectFieldName]="'AnswerValue'" [DataContext]="item" [IsMultiline]="'true'" class="ValueStyle"></LogTextBox>
+                                                        </div>
+
+                                                        <div *ngIf="item.QuestionTypeCode == 'DA'">
+                                                            <LogDatePicker (ValueChanged)="item.onTextChange($event)" [ObjectFieldName]="'AnswerValue'" [DataContext]="item" class="ValueStyle"></LogDatePicker>
+                                                        </div>
+
+                                                        <div *ngIf="item.QuestionTypeCode == 'CL'">
+                                                            <PickList [ObjectFieldName]="'AnswerValue'"
+                                                                      [ObjectTableName]="'QuestionnaireQuestion'"
+                                                                      [PickListCode]="item.PickListCode"
+                                                                      [DataContext]="item"
+                                                                      [IsMultipleChoice]="true"
+                                                                      class="ValueStyle"
+                                                                      (SelectedItemChanged)="item.pickListItemChanged($event)">
+                                                            </PickList>
+                                                        </div>
+
+                                                        <div *ngIf="item.QuestionTypeCode == 'MC'" class="LableStyle">
+                                                            <div class="RadioButton" *ngFor="let pl of item.CustomPickListItems; let pi = index" style="margin:5px;">
+                                                                <input [attr.id]="'RadioButton_' + SessionIndex + pl.Value + item.IndexKey + item.Question" [attr.name]="'RadioButton' + SessionIndex  + pl.Value" type="radio" [checked]="item.AnswerValue == pl.Value" (click)="item.AnswerValue = pl.Value" />
+                                                                <label [attr.for]="'RadioButton_' + SessionIndex + pl.Value + item.IndexKey + item.Question" style="text-indent: 25px; font-size: 14px" [ngStyle]="{color: item.AnswerValue == pl.Value ? '#287828':'#282E30'}" class="LableStyle">
+                                                                    {{pl.Value}}
+                                                                </label>
+
+                                                            </div>
+
+                                                            <div *ngIf="item.IsAddOther == true" style="margin:5px;">
+                                                                <table>
+                                                                    <tr class="FormFieldRow">
+                                                                        <td style="width:70px">
+                                                                            <div class="RadioButton">
+                                                                                <input [attr.id]="'RadioButton_' + SessionIndex + 'Other' + item.IndexKey + item.Question" [attr.name]="'RadioButton' + SessionIndex  + 'Other' + item.IndexKey" type="radio" [checked]="item.AnswerValue == 'Other'" (click)="item.AnswerValue = 'Other'" />
+                                                                                <label [attr.for]="'RadioButton_' + SessionIndex + 'Other' + item.IndexKey + item.Question" style="text-indent: 25px; font-size: 14px" [ngStyle]="{color: item.AnswerValue == 'Other' ? '#287828':'#282E30'}" class="LableStyle">
+                                                                                    Other
+                                                                                </label>
+
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div>
+                                                                                <LogTextBox (ValueChanged)="item.onTextChange($event)" [DataContext]="item" class="ValueStyle"></LogTextBox>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+
+                                                            </div>
+
+
+                                                        </div>
+
+                                                        <div *ngIf="item.QuestionTypeCode == 'CB'" class="LableStyle">
+                                                            <div class="CheckBox" *ngFor="let pl of item.CustomPickListItems; let pi = index" style="margin:5px;">
+                                                                <input [attr.id]="'CheckBox_' + SessionIndex + pl.Value" [attr.name]="'CheckBox' + SessionIndex + pl.Value" type="checkbox" (change)="item.OnItemChecked(pl.Value)" />
+                                                                <label [attr.for]="'CheckBox_' + SessionIndex + pl.Value" style="text-indent: 25px; font-size: 14px" class="LableStyle">
+                                                                    {{pl.Value}}
+                                                                </label>
+                                                            </div>
+
+                                                            <div *ngIf="item.IsAddOther == true" style="margin:5px;">
+                                                                <table>
+                                                                    <tr class="FormFieldRow">
+                                                                        <td style="width:70px">
+                                                                            <div class="CheckBox">
+                                                                                <input [attr.id]="'CheckBox_' + SessionIndex + 'Other'" [attr.name]="'CheckBox' + SessionIndex  + 'Other'" type="checkbox" (change)="item.OnItemChecked('Other')" />
+                                                                                <label [attr.for]="'CheckBox_' + SessionIndex + 'Other'" style="text-indent: 25px; font-size: 14px" class="LableStyle">
+                                                                                    Other
+                                                                                </label>
+
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div>
+                                                                                <LogTextBox (ValueChanged)="item.onTextChange($event)" [DataContext]="item" class="ValueStyle"></LogTextBox>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>
+
+                                                        <div style="height:8px;"></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <!--<div *ngIf="item.QuestionTypeCode == 'HL'" class="HeaderStyle">
+                                        <p class="HeaderStyle" style="padding-top:2px;padding-left:5px;padding-right:5px"></p>
+                                    </div>-->
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                </table>
+
+
+                <!--</div>-->
+                <!--</div>-->
+            </ScrollViewer>
+        </td>
+     
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

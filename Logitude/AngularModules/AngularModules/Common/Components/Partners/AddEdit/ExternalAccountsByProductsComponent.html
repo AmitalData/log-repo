@@ -1,0 +1,165 @@
+﻿
+<style type="text/css">
+    .AreaBox {
+        height: 100%;
+        width: 100%;
+        border: 1px solid #BABABA;
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        overflow: hidden;
+    }
+
+    .AreaBoxHeader {
+        height: 22px;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(245, 245, 245, 1) 0%,rgba(243, 243, 243, 1) 50.24%,rgba(236, 236, 236, 1) 69.98%,rgba(224, 224, 224, 1) 84.35%,rgba(207, 207, 207, 1) 96.04%,rgba(199, 199, 199, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(245, 245, 245, 1) ),color-stop(0.5024,rgba(243, 243, 243, 1) ),color-stop(0.6998,rgba(236, 236, 236, 1) ),color-stop(0.8435,rgba(224, 224, 224, 1) ),color-stop(0.9604,rgba(207, 207, 207, 1) ),color-stop(1,rgba(199, 199, 199, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
+        -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#F5F5F5', endColorstr='#C7C7C7' ,GradientType=0)";
+        background: linear-gradient(180deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
+    }
+</style>
+
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr style="height: 1px;">
+        <td style="font-family: Arial; font-size: 11px; color: gray; font-style: italic;">This screen gives you the option to manage additional accounting related information</td>
+    </tr>
+
+    <tr style="height: 1px;">
+        <td>
+            <table>
+                <tr class="FormFieldRow">
+                    <td style="width: 100px;">
+                        <LogLabel [ObjectFieldName]="'ExternalAccountingBusinessArea'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td style="width: 200px;">
+                        <LogTextBox [ObjectFieldName]="'ExternalAccountingBusinessArea'" [Text]="ExternalAccountingBusinessArea" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'ExternalId2'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'ExternalId2'" [Text]="ExternalId2" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div class="MediaFill">
+                <div class="AreaBox">
+                    <table>
+                        <tr class="AreaBoxHeader">
+                            <td style="font-size: 12px; color: #1B90CB; padding-left: 5px;">GL Account / Cost Center</td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div class="MediaFill" *ngIf="IsResourcesReady">
+                                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource" (SelectedItemChanged)="SelectedRow = $event" [SelectedRow]="SelectedRow">
+
+                                        <!-- ProductTypeName [width]="'110'" -->
+                                        <log-column [width]="'400'" [header]="'CardExternalAccountsByProduct.F.ProductTypeCode' | TextCodeTranslationPipe">
+                                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                                                {{item.ProductTypeName}}
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- GLAccount -->
+                                        <log-column [width]="'130'" [header]="'CardExternalAccountsByProduct.F.GLAccount' | TextCodeTranslationPipe">
+                                            <log-cell-template template="let item" #logcelltemplate>
+
+                                                <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%;">
+                                                    {{item.GLAccount}}
+                                                </div>
+
+                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'GLAccount'" [Text]="item.GLAccount" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- CostCenter -->
+                                        <log-column [width]="'130'" [header]="'CardExternalAccountsByProduct.F.CostCenter' | TextCodeTranslationPipe">
+                                            <log-cell-template template="let item" #logcelltemplate>
+
+                                                <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%;">
+                                                    {{item.CostCenter}}
+                                                </div>
+
+                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'CostCenter'" [Text]="item.CostCenter" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+
+
+                                        <!-- UpdateDate -->
+                                        <!--<log-column [width]="'110'" [header]="'CardExternalAccountsByProduct.F.UpdateDate' | TextCodeTranslationPipe">
+                                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                                                {{item.UpdateDate | DateTimePipe:'DT'}}
+                                            </log-cell-template>
+                                        </log-column>-->
+                                        <!-- UpdatedByUserName -->
+                                        <!--<log-column [width]="'200'" [header]="'CardExternalAccountsByProduct.F.UpdatedByUserId' | TextCodeTranslationPipe">
+                                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                                                {{item.UpdatedByUserName}}
+                                            </log-cell-template>
+                                        </log-column>-->
+                                    </logitude-edit-grid>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

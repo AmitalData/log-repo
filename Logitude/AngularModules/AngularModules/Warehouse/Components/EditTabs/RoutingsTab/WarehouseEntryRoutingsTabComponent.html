@@ -1,0 +1,310 @@
+﻿
+<div class="TabHolder">
+
+    <table *ngIf="!IsInlandDomestic">
+        <tr class="TabTitleRow">
+            <td>{{'WarehouseEntry.TH.Routings' | TextCodeTranslationPipe}}</td>
+        </tr>
+        <tr>
+            <td style="width: 400px;">
+                <table>
+
+                    <!-- GateWay -->
+                    <tr class="FormFieldRow">
+                        <td style="width: 115px;">
+                            <LogLabel [ObjectFieldName]="'FromPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 240px;">
+                            <LogLov [ObjectFieldName]="'FromPortId'"
+                                    [SelectedValue]="FromPortId"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'Port'"
+                                    [DependencyFilter1Value]="TransportModeId">
+                            </LogLov>
+                        </td>
+                        <td></td>
+                    </tr>
+
+                    <!-- Destination -->
+                    <tr class="FormFieldRow">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'ToPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td>
+                            <LogLov [ObjectFieldName]="'ToPortId'"
+                                    [SelectedValue]="ToPortId"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'Port'"
+                                    [DependencyFilter1Value]="TransportModeId">
+                            </LogLov>
+                        </td>
+                        <td></td>
+                    </tr>
+
+                    <!-- Trucker -->
+                    <tr class="FormFieldRow">
+                        <td style="width: 115px;">
+                            <LogLabel [ObjectFieldName]="'TruckerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 240px;">
+                            <LogLov [ObjectFieldName]="'TruckerId'"
+                                    [SelectedValue]="TruckerId"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'Carrier'"
+                                    [DependencyFilter1Value]="'TR'">
+                            </LogLov>
+                        </td>
+                    </tr>
+
+                    <!-- TruckNumber -->
+                    <tr class="FormFieldRow">
+                        <td class="FormFieldRow">
+                            <LogLabel [ObjectFieldName]="'TruckerReference'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 240px;">
+                            <LogTextBox [ObjectFieldName]="'TruckerReference'" [Text]="TruckerReference" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="3">
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+
+            <td>
+                <div></div>
+            </td>
+        </tr>
+    </table>
+
+    <!-- InlandDomestic -->
+    <table *ngIf="IsInlandDomestic">
+        <tr class="TabTitleRow">
+            <td>{{'WarehouseEntry.TH.Routings' | TextCodeTranslationPipe}}</td>
+        </tr>
+
+        <tr style="height: 170px;">
+            <td>
+                <table>
+                    <tr>
+                        <td style="width: 400px;">
+                            <SectionBox [HeaderHeight]="22" [Border]="'1px solid #BABABA'">
+                                <SectionHead [Left]="5" [IsLight]="true">
+                                    <span style="font-size: 12px; color: #1B90CB;">From Partner</span>
+                                </SectionHead>
+
+                                <SectionBody>
+                                    <table>
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 105px;">
+                                                <LogLabel [ObjectFieldName]="'FromPartnerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Name'"></LogLabel>
+                                            </td>
+
+                                            <td style="width: 240px;">
+                                                <LogLov [ObjectFieldName]="'FromPartnerId'"
+                                                        [SelectedValue]="FromPartnerId"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'Card'"
+                                                        [DependencyFilter1Value]="CardDependencyProperty1"
+                                                        [DependencyFilter1IsList]="CardDependencyProperty1IsList">
+                                                </LogLov>
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'FromAddressId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Address'"></LogLabel>
+                                            </td>
+
+                                            <td>
+                                                <LogLov [ObjectFieldName]="'FromAddressId'"
+                                                        [SelectedValue]="FromAddressId"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'Address'"
+                                                        [DependencyFilter1Value]="FromPartnerId">
+                                                </LogLov>
+                                            </td>
+
+                                            <td>
+                                                <div style="float: right; padding-right: 5px;">
+                                                    <IconButton [IsEnabled]="!IswarehouseEntryConnectedToShipment" [Name]="'Edit'" [IsSmall]="true" (click)="EditAddressClicked('F')" [IsEnabled]="FromPartnerId"></IconButton>
+                                                    <IconButton [IsEnabled]="!IswarehouseEntryConnectedToShipment" [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddAddressClicked('F')" [IsEnabled]="FromAddressId"></IconButton>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <div></div>
+                                            </td>
+
+                                            <td style="vertical-align: top; padding-top: 5px;">
+                                                <AddressTemplate [Address]="FromAddressList" [Right]="36"></AddressTemplate>
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </SectionBody>
+                            </SectionBox>
+                        </td>
+
+                        <td style="width: 10px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 400px;">
+                            <SectionBox [HeaderHeight]="22" [Border]="'1px solid #BABABA'">
+                                <SectionHead [Left]="5" [IsLight]="true">
+                                    <span style="font-size: 12px; color: #1B90CB;">To Partner</span>
+                                </SectionHead>
+
+                                <SectionBody>
+                                    <table>
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 105px;">
+                                                <LogLabel [ObjectFieldName]="'ToPartnerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Name'"></LogLabel>
+                                            </td>
+
+                                            <td style="width: 240px;">
+                                                <LogLov [ObjectFieldName]="'ToPartnerId'"
+                                                        [SelectedValue]="ToPartnerId"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'Card'"
+                                                        [DependencyFilter1Value]="CardDependencyProperty1"
+                                                        [DependencyFilter1IsList]="CardDependencyProperty1IsList">
+                                                </LogLov>
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'ToAddressId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Address'"></LogLabel>
+                                            </td>
+
+                                            <td>
+                                                <LogLov [ObjectFieldName]="'ToAddressId'"
+                                                        [SelectedValue]="ToAddressId"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'Address'"
+                                                        [DependencyFilter1Value]="ToPartnerId">
+                                                </LogLov>
+                                            </td>
+
+                                            <td>
+                                                <div style="float: right; padding-right: 5px;">
+                                                    <IconButton [IsEnabled]="!IswarehouseEntryConnectedToShipment" [Name]="'Edit'" [IsSmall]="true" (click)="EditAddressClicked('T')" [IsEnabled]="ToAddressId"></IconButton>
+                                                    <IconButton [IsEnabled]="!IswarehouseEntryConnectedToShipment" [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddAddressClicked('T')" [IsEnabled]="ToPartnerId"></IconButton>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <div></div>
+                                            </td>
+
+                                            <td style="vertical-align: top; padding-top: 5px;">
+                                                <AddressTemplate [Address]="ToAddressList" [Right]="36"></AddressTemplate>
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </SectionBody>
+                            </SectionBox>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr style="height: 10px;">
+            <td>
+                <div></div>
+            </td>
+        </tr>
+
+        <tr style="height: 1px;">
+            <td>
+                <table>
+                    <tr>
+                        <td style="width: 400px;">
+                            <table>
+                                <!-- Trucker -->
+                                <tr class="FormFieldRow">
+                                    <td style="width: 115px;">
+                                        <LogLabel [ObjectFieldName]="'TruckerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td style="width: 240px;">
+                                        <LogLov [ObjectFieldName]="'TruckerId'"
+                                                [SelectedValue]="TruckerId"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Carrier'"
+                                                [DependencyFilter1Value]="CarrierDependencyProperty1">
+                                        </LogLov>
+
+
+                                    </td>
+                                </tr>
+                                <!-- TruckNumber -->
+                                <tr class="FormFieldRow">
+                                    <td class="FormFieldRow">
+                                        <LogLabel [ObjectFieldName]="'TruckerReference'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td style="width: 240px;">
+                                        <LogTextBox [ObjectFieldName]="'TruckerReference'" [Text]="TruckerReference" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="3">
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <div></div>
+            </td>
+        </tr>
+    </table>
+
+</div>

@@ -1,0 +1,376 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3E75C83F-67C7-4B62-9759-7EA92E16F272}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Logitude.XSD</RootNamespace>
+    <AssemblyName>Logitude.XSD</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\General\Dlls\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.Edm, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Edm.5.7.0\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.OData.5.7.0\lib\net40\Microsoft.Data.OData.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.Services.Client, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Services.Client.5.7.0\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\General\Dlls\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ServiceBus, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAzure.ServiceBus.3.4.4\lib\net45-full\Microsoft.ServiceBus.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Diagnostics, Version=2.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\Microsoft.WindowsAzure.Diagnostics.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.ServiceRuntime, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\Microsoft.WindowsAzure.ServiceRuntime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=8.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAzure.Storage.8.0.1\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Spatial, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Spatial.5.7.0\lib\net40\System.Spatial.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureEventSource.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WindowsAzureTelemetryEvents, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureTelemetryEvents.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Analyzers\CHAMPAnalyzer\CHAMPAnalyzer.cs" />
+    <Compile Include="Analyzers\CHAMPAnalyzer\CHAMPAnalyzer.FFA.cs" />
+    <Compile Include="Analyzers\CHAMPAnalyzer\CHAMPAnalyzer.FMA.cs" />
+    <Compile Include="Analyzers\CHAMPAnalyzer\CHAMPAnalyzer.FNA.cs" />
+    <Compile Include="Analyzers\CHAMPAnalyzer\CHAMPAnalyzer.FSA.cs" />
+    <Compile Include="Analyzers\CHAMPAnalyzer\CHAMPAnalyzer.FVA.cs" />
+    <Compile Include="Analyzers\GLSHKAnalyzer\GLSHKAnalyzer.cs" />
+    <Compile Include="Analyzers\GLSHKAnalyzer\GLSHKAnalyzer.FMA.cs" />
+    <Compile Include="Analyzers\GLSHKAnalyzer\GLSHKAnalyzer.FNA.cs" />
+    <Compile Include="Analyzers\GLSHKAnalyzer\GLSHKAnalyzer.FSU.cs" />
+    <Compile Include="Analyzers\INTTRAAnalyzer\INTTRAAnalyzer.Z.Acknowledgment.cs" />
+    <Compile Include="Analyzers\INTTRAAnalyzer\INTTRAAnalyzer.Z.CONTRL.cs" />
+    <Compile Include="Analyzers\INTTRAAnalyzer\INTTRAAnalyzer.cs" />
+    <Compile Include="Analyzers\INTTRAAnalyzer\INTTRAAnalyzer.Z.Status.cs" />
+    <Compile Include="Analyzers\StatusContext.cs" />
+    <Compile Include="Analyzers\StatusParams.cs" />
+    <Compile Include="Artemus\ArtemusAnalyzer.cs" />
+    <Compile Include="Artemus\ArtemusManager.cs" />
+    <Compile Include="AWBPrintingManager.cs" />
+    <Compile Include="AWBValidator.cs" />
+    <Compile Include="CCSHelper.cs" />
+    <Compile Include="CHAMP17\cargoxml.cs" />
+    <Compile Include="CHAMP\cargoxml.cs" />
+    <Compile Include="CW_API\ABM\ABMDataBuilder.cs" />
+    <Compile Include="CW_API\ABM\ABMDataContext.cs" />
+    <Compile Include="CW_API\ABM\ABMHelper.cs" />
+    <Compile Include="CW_API\CW.cs" />
+    <Compile Include="DataContracts\FHLShipmentValidator.cs" />
+    <Compile Include="FFR\FFRDataBuilder.cs" />
+    <Compile Include="FFR\FFRDataContext.cs" />
+    <Compile Include="FHLDataBuilder.cs" />
+    <Compile Include="FHLDataContext.cs" />
+    <Compile Include="FSR\FSRManager.cs" />
+    <Compile Include="FVR\FVRManager.cs" />
+    <Compile Include="FWBDataBuilder.cs" />
+    <Compile Include="FWBDataContext.cs" />
+    <Compile Include="GLSHKCustomsBuilder.cs" />
+    <Compile Include="GLSHKCustomsContext.cs" />
+    <Compile Include="GLSHK\glshk_cargomsg_2_0.cs" />
+    <Compile Include="GLSHK_ISAC\ISAC_TDEC_v4_0.cs" />
+    <Compile Include="INTTRA\BL\INTRADataBuilder.cs" />
+    <Compile Include="INTTRA\BL\INTRADataContext.cs" />
+    <Compile Include="INTTRA\BL\INTRAHelper.cs" />
+    <Compile Include="INTTRA\INTTRA_XML_SI_IG_v32.cs">
+      <DependentUpon>INTTRA_XML_SI_IG_v32.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="INTTRA_Status\XML_Status_Message_OUT_v13.cs" />
+    <Compile Include="INTTRA_Out\INTTRA_XML_SI_IG_v34a_with_VGM.cs" />
+    <Compile Include="MACO\MACO.cs" />
+    <Compile Include="MessagesTransmissionHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Simulators\CHAMPSimulators\CHAMPSimulator.cs" />
+    <Compile Include="Simulators\CHAMPSimulators\CHAMPSimulator.FFA.cs" />
+    <Compile Include="Simulators\CHAMPSimulators\CHAMPSimulator.FMA.cs" />
+    <Compile Include="Simulators\CHAMPSimulators\CHAMPSimulator.FNA.cs" />
+    <Compile Include="Simulators\CHAMPSimulators\CHAMPSimulator.FSA.cs" />
+    <Compile Include="Simulators\CHAMPSimulators\CHAMPSimulator.FVA.cs" />
+    <Compile Include="Simulators\GLSHKSimulators\GLSHKSimulator.cs" />
+    <Compile Include="Simulators\GLSHKSimulators\GLSHKSimulator.FMA.cs" />
+    <Compile Include="Simulators\GLSHKSimulators\GLSHKSimulator.FNA.cs" />
+    <Compile Include="Simulators\GLSHKSimulators\GLSHKSimulator.FSA.cs" />
+    <Compile Include="Simulators\Simulator.cs" />
+    <Compile Include="Simulators\SimulatorArgs.Shared.cs" />
+    <Compile Include="XmlSender.cs" />
+    <Compile Include="XSDHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="CHAMP17\AdviceOfDiscrepancy.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CHAMP17\AirlineFlightManifest.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CHAMP17\AirWaybillData.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CHAMP17\AirWaybillDataRequest.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CHAMP17\AWBSpaceAllocationAnswer.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CHAMP17\AWBSpaceAllocationRequest.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CHAMP17\CargoXML.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CHAMP17\common.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CHAMP17\common_avail.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CHAMP17\common_waybill.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CHAMP17\ConsolidationList.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CHAMP17\CustomsStatusNotification.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CHAMP17\ErrorMessage.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CHAMP17\FreightBookedList.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CHAMP17\MessageAcknowledgement.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CHAMP17\ScheduleAndAvailabilityInformationAnswer.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CHAMP17\ScheduleAndAvailabilityInformationRequest.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CHAMP17\StatusDetails.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CHAMP17\StatusRequest.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CHAMP17\TrackingXML.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CHAMP17\XMLFHL5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CHAMP17\XMLFWB17.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CHAMP\AdviceOfDiscrepancy.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CHAMP\AirlineFlightManifest.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CHAMP\AirWaybillData.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CHAMP\AirWaybillDataRequest.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CHAMP\CargoXML.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CHAMP\common.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CHAMP\ConsolidationList.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CHAMP\CustomsStatusNotification.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CHAMP\ErrorMessage.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CHAMP\FreightBookedList.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CHAMP\MessageAcknowledgement.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CHAMP\StatusDetails.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CHAMP\StatusRequest.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CHAMP\TrackingXML.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CW_API\CW.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CW_API\CWRequest.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CW_API\CWResponse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="GLSHK\glshk_cargomsg_2_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="GLSHK\glshk_cargomsg_elements_2_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="GLSHK_ISAC\ISAC_TDEC_element_v4_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="GLSHK_ISAC\ISAC_TDEC_v4_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="INTTRA\INTTRA_XML_SI_IG_v32.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="INTTRA_Status\XML_Status_Message_OUT_v13.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="MACO\MACO.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
+      <Project>{a663e7ef-b858-4bb6-bc33-e473f51b8e56}</Project>
+      <Name>Logitude.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.BookingLib.BL\Logitude.BookingLib.BL.csproj">
+      <Project>{cb2702fc-5d52-44f2-a1d2-b760b07bdb91}</Project>
+      <Name>Logitude.BookingLib.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.BookingLib.Data\Logitude.BookingLib.Data.csproj">
+      <Project>{147a706d-221a-4fd1-8f27-c12e4ab276cf}</Project>
+      <Name>Logitude.BookingLib.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
+      <Project>{9b477a08-8ee2-4457-88fe-17e8a6ec4d00}</Project>
+      <Name>Logitude.Server.Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.SystemLogs\Logitude.SystemLogs.csproj">
+      <Project>{9ffc5b97-f09a-4eed-a66e-d4160374ae6e}</Project>
+      <Name>Logitude.SystemLogs</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
+      <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
+      <Name>Simplog.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Global.Data.csproj">
+      <Project>{6d7ffad2-35b6-4133-8700-cf73e58d0c85}</Project>
+      <Name>Simplog.Global.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
+      <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
+      <Name>Simplog.Server.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="INTTRA\FTPSimulate\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CHAMP17\command.txt" />
+    <Content Include="CHAMP\command.txt" />
+    <Content Include="MACO\Command.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

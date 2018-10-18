@@ -1,0 +1,156 @@
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs; 
+using Logitude.Customs.Data;
+
+namespace Logitude.Customs.BL.EntityDataMappings
+{
+   
+   public partial class TapagConnectionTableDataMapping: IMapping<TapagConnectionTablePM, TapagConnectionTable>,IMappingEncodeBase64NVARCHARFields<TapagConnectionTablePM>
+   {
+          public enum POCOPropertyNames
+          { 
+		     None,  
+	         TapagId, 
+	         DeclarationId, 
+	         Tenant, 
+	         CustomsTapagFile, 
+	         CustomsNumeral, 
+	         RequestFileNumber,
+	      }
+
+
+	      public enum PMPropertyNames
+          { 
+		     None,  
+	         TapagId, 
+	         DeclarationId, 
+	         Tenant, 
+	         CustomsTapagFile, 
+	         CustomsNumeral, 
+	         RequestFileNumber,
+	      }
+
+		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
+        List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
+    
+	    public void PMToPOCO(TapagConnectionTablePM entityPM, TapagConnectionTable entityPOCO)
+        {
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsTapagFile))
+            {
+				entityPOCO.CustomsTapagFile = entityPM.CustomsTapagFile;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsNumeral))
+            {
+				entityPOCO.CustomsNumeral = entityPM.CustomsNumeral;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RequestFileNumber))
+            {
+				entityPOCO.RequestFileNumber = entityPM.RequestFileNumber;
+			}
+			}
+
+		public void POCOToPM(TapagConnectionTablePM entityPM, TapagConnectionTable entityPOCO)
+        {
+			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TapagId))
+            {
+					entityPM.TapagId = entityPOCO.TapagId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DeclarationId))
+            {
+					entityPM.DeclarationId = entityPOCO.DeclarationId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
+            {
+					entityPM.Tenant = entityPOCO.Tenant;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomsTapagFile))
+            {
+					entityPM.CustomsTapagFile = entityPOCO.CustomsTapagFile;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomsNumeral))
+            {
+					entityPM.CustomsNumeral = entityPOCO.CustomsNumeral;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.RequestFileNumber))
+            {
+					entityPM.RequestFileNumber = entityPOCO.RequestFileNumber;
+            }
+
+		}
+
+		public void PMToOldPM(TapagConnectionTablePM entityPM, TapagConnectionTablePM oldEntityPM)
+        {
+		     oldEntityPM.ChangedProperties.Clear();
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+                oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsTapagFile))
+            {
+                oldEntityPM.CustomsTapagFile = entityPM.CustomsTapagFile;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsNumeral))
+            {
+                oldEntityPM.CustomsNumeral = entityPM.CustomsNumeral;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RequestFileNumber))
+            {
+                oldEntityPM.RequestFileNumber = entityPM.RequestFileNumber;
+            }
+			
+		}
+
+	    public void EncodeBase64NVARCHARFields(TapagConnectionTablePM entityPM)
+        {
+            if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
+            {
+                return;
+
+            }
+            entityPM.EncodeBase64NVARCHARFieldsBy=null;
+		}
+
+
+	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
+        {
+            CustomMappedPOCOProperties.Add(pocoPropertyName);
+        }
+
+        public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
+        {
+            CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+			  
+   }
+}
+	 

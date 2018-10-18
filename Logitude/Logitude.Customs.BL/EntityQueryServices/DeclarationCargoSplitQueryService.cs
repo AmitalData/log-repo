@@ -1,0 +1,64 @@
+﻿using Logitude.Customs.Def.EntityPMs;
+using Logitude.Customs.Data;
+using Logitude.Customs.Data.EntityKeys;
+using Logitude.Customs.Data.EntityLists;
+using Logitude.Customs.Data.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Logitude.Customs.BL.EntityQueryServices
+{
+    public partial class DeclarationCargoSplitQueryService
+    {
+
+        public override void GetComposition(Simplog.Server.Infrastructure.EntityKeyFields entityKeys, DeclarationCargoSplitPM entityPM)
+        {
+            ICustomContext context = MainContext as CustomContext;
+            DeclarationCargoSplitKeys DeclarationCargoSplitKeys = entityKeys as DeclarationCargoSplitKeys;
+            DecCargoSplitConQueryService decCargoSplitConQueryService = new DecCargoSplitConQueryService(context);
+            entityPM.DecCargoSplitCons = decCargoSplitConQueryService.GetMulti(DeclarationCargoSplitKeys, true);
+
+            if (entityPM.DecCargoSplitCons != null)
+            {
+                if (entityPM.DecCargoSplitCons.Count > 0)
+                {
+                    entityPM.DecCargoSplitConLastLineNumber = entityPM.DecCargoSplitCons.Max(m => m.LineNumber);
+                }
+            }
+
+            if (entityPM.DecCargoSplitCargoIdentifiers != null)
+            {
+                if (entityPM.DecCargoSplitCargoIdentifiers.Count > 0)
+                {
+                    entityPM.DecCargoSplitCargoIdentifierLastLineNumber = entityPM.DecCargoSplitCargoIdentifiers.Max(m => m.LineNumber);
+                }
+            }
+        }
+
+        public string GetIdByDeclarationCargoSplitRequestNumber(string declarationCargoSplitRequestNumber, int tenant)
+        {
+            if (String.IsNullOrWhiteSpace(declarationCargoSplitRequestNumber)) return "";
+            return repository.GetIdByDeclarationCargoSplitRequestNumber(declarationCargoSplitRequestNumber, tenant);
+        }
+
+        public List<DeclarationCargoSplitPM> GetDeclarationCargoSplitsList(string declarationId, int tenant)
+        {
+            List<DeclarationCargoSplit> DeclarationCargoSplits = repository.GetDeclarationCargoSplitsList(declarationId, tenant);
+            List<DeclarationCargoSplitPM> DeclarationCargoSplitList = new List<DeclarationCargoSplitPM>();
+            if (DeclarationCargoSplits != null)
+            {
+                foreach (var DeclarationCargoSplitItem in DeclarationCargoSplits)
+                {
+                    DeclarationCargoSplitPM DeclarationCargoSplitPM = this.GetSingle(DeclarationCargoSplitItem.Id,true,false);
+                    DeclarationCargoSplitList.Add(DeclarationCargoSplitPM);
+                }
+            }
+
+
+            return DeclarationCargoSplitList;
+        }
+    }
+}

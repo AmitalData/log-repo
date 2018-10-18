@@ -1,0 +1,114 @@
+﻿<style>
+    .iwanttohover:hover {
+        background: #DDE6F0;
+    }
+
+    GridView th, .GridView td, .GridView td div {
+        text-align: left;
+        text-indent: 5px;
+        /*height: 24px;*/
+        line-height: 17px;
+        vertical-align: middle;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+</style>
+
+
+
+
+
+
+    <table>
+
+
+
+
+        <tr style="height:100%">
+
+
+            <td style="position: relative;">
+                <div>
+                    <table style="height:auto;width:100%;margin-top:0px">
+
+                        <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+                            <td colspan="4">
+                                <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+                            </td>
+                        </tr>
+
+
+
+                        <tr style="height:5px"><td style="height:5px"><div style="height:5px"></div></td></tr>
+
+                        <tr style="vertical-align:top;height:25px">
+                            <td style="width:8px"><div></div></td>
+                            <td style="width:110px;">
+
+                                <table style="table-layout: fixed;">
+                                    <tr>
+                                        <td style="width:10px; vertical-align: middle;">
+                                            <div *ngIf="!Description" style="width: 10px;">
+                                                <div style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
+
+                                            </div>
+                                        </td>
+                                        <td class="TextTrimming" style="text-align: left; vertical-align:middle;">
+                                            <label *ngIf="Description" class="Label" style="color:#6E7172">Description</label>
+                                            <label *ngIf="!Description" class="Label" style="color:red">Description</label>
+                                        </td>
+                                    </tr>
+                                </table>
+
+
+                            </td>
+
+                            <td style="width:200px"><input type="text" style="height:22px;width:200px;" [(ngModel)]="Description" value="" /></td>
+                            <td><div></div></td>
+                        </tr>
+
+
+                        <tr>
+                            <td><div></div></td>
+                        </tr>
+
+                    </table>
+
+
+                </div>
+            </td>
+
+
+
+
+        </tr>
+
+        <tr style="height: 32px;">
+            <td style="vertical-align: bottom">
+                <table style="height: 22px;">
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+
+                        <td style="width: 57px;">
+                            <div>
+                                <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
+                            </div>
+                        </td>
+
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 57px;">
+                            <button class="RedButton" (click)="SaveButtonClicked()">OK</button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+    </table>
+

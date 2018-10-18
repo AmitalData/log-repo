@@ -1,0 +1,237 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Customs.Def.Validators;
+  
+namespace Logitude.Customs.Def.EntityPMs
+{
+   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class SupplierInvoiceModificationPM : EntityPM
+   {
+   	  private string declarationId ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DeclarationId  
+	   {
+	    
+	     get
+		{
+		   return declarationId;
+		 }
+		 set
+		 {
+		   if(declarationId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeclarationId",OldValue=declarationId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   declarationId=value;
+		   }
+			
+		 }
+	   }
+	  private int invoiceCounterKey ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int InvoiceCounterKey  
+	   {
+	    
+	     get
+		{
+		   return invoiceCounterKey;
+		 }
+		 set
+		 {
+		   if(invoiceCounterKey != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InvoiceCounterKey",OldValue=invoiceCounterKey,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   invoiceCounterKey=value;
+		   }
+			
+		 }
+	   }
+	  private string typeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TypeCode  
+	   {
+	    
+	     get
+		{
+		   return typeCode;
+		 }
+		 set
+		 {
+		   if(typeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TypeCode",OldValue=typeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   typeCode=value;
+		   }
+			
+		 }
+	   }
+	  private int tenant ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+	  private string currencyTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CurrencyTypeCode  
+	   {
+	    
+	     get
+		{
+		   return currencyTypeCode;
+		 }
+		 set
+		 {
+		   if(currencyTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CurrencyTypeCode",OldValue=currencyTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   currencyTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? amount ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? Amount  
+	   {
+	    
+	     get
+		{
+		   return amount;
+		 }
+		 set
+		 {
+		   if(amount != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Amount",OldValue=amount,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   amount=value;
+		   }
+			
+		 }
+	   }
+	  private string typeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TypeName  
+	   {
+	    
+	     get
+		{
+		   return typeName;
+		 }
+		 set
+		 {
+		   if(typeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TypeName",OldValue=typeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   typeName=value;
+		   }
+			
+		 }
+	   }
+	  private string currencyTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CurrencyTypeName  
+	   {
+	    
+	     get
+		{
+		   return currencyTypeName;
+		 }
+		 set
+		 {
+		   if(currencyTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CurrencyTypeName",OldValue=currencyTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   currencyTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private int modificationCounterKey ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int ModificationCounterKey  
+	   {
+	    
+	     get
+		{
+		   return modificationCounterKey;
+		 }
+		 set
+		 {
+		   if(modificationCounterKey != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ModificationCounterKey",OldValue=modificationCounterKey,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   modificationCounterKey=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

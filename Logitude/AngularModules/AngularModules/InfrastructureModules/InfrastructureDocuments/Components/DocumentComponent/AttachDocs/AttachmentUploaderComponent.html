@@ -1,0 +1,170 @@
+﻿
+<style>
+    .iwanttohover:hover {
+        background: #DDE6F0;
+    }
+
+
+        .myBar {
+        width: 0%;
+        height: 18px;
+        background: #C2DFED;
+        /*background: -webkit-linear-gradient(left,red,orange,yellow,green,blue,indigo);
+        background: -o-linear-gradient(left,red,orange,yellow,green,blue,indigo);
+        background: -moz-linear-gradient(left,red,orange,yellow,green,blue,indig);
+        background: linear-gradient(to right, red,orange,yellow,green,blue,indigo);*/
+    }
+
+</style>
+
+
+
+
+
+
+    <table>
+
+
+        <tr *ngIf ="!IsUploadVisibile" style="height:100%;vertical-align:top">
+
+
+            <td>
+                <table style="vertical-align:top">
+
+                    <tr style="height:10px">
+                        <td colspan="4"><div></div></td>
+                    </tr>
+                    <tr style="height:30px">
+                        <td style="width:10px"></td>
+                        <td style="width:165px;font-size:11px"><span>Choose the Document Type</span></td>
+
+                        <td style="width:300px;vertical-align:middle">
+                            <div style="width:300px;">
+                                <LogLov style="width:300px" [DependencyFilter1Value]="ObjectTableId"  [DependencyFilter2Value]="'true'" [LookUpTableName]="'DocumentType'" [LogitudeForm]="myForm" [ObjectFieldName]="'DocumentTypeId'" [DisplayMemberPath]="'Name'" [ObjectTableName]="'DocumentType'" [DataContext]="DataContext"></LogLov>
+                     
+                            </div>
+                        </td>
+
+                        <td><div></div></td>
+
+                    </tr>
+
+
+                    <tr>
+                       <td colspan="4"><div></div></td> 
+                    </tr>
+
+                </table>
+            </td>
+
+
+
+
+        </tr>
+
+
+        <tr *ngIf="IsUploadVisibile" style="height:100%;vertical-align:top">
+
+            <td>
+
+                <table>
+
+                    <tr style="height:10px"><td colspan="6"><div></div></td></tr>
+
+                    <tr style="height:35px">
+                        <td style="width:10px;">
+                            <div>
+                            </div>
+                        </td>
+                        <td style="width:62px;text-align:left">
+
+                            <button [disabled]="!UploadButtonIsEnabled"  style="width:55px;" class="Button" (click)="OpenUpLoadFile()">Upload</button>
+                            <input [attr.id]="UploadFileId" type="file" [(ngModel)]="FileData" (change)="UploadFile($event)" style="display:none;width:65px" class="upload" />
+
+                        </td>
+                        <td  style="background-color:white">
+                            <div *ngIf="IsShowProgressBar" style="height:20px;border:1px solid gray;border-radius:3px">
+                                <div class="myBar" [attr.id]="ProgressBarId" style="height:16px;margin:1px;"></div>
+                            </div>
+
+                       
+
+                        </td>
+
+                        <td style="width:4px;"></td>
+                        <td style="width:30px;color:gray">{{ProgressBarPercentText}}</td>
+
+                        <td style="width:10px;"></td>
+                    </tr>
+
+                    <tr style="height:30px">
+                        <td style="width:10px;"><div></div> </td>
+                        <td style="width:62px;text-align:left"><span style="font-size:11px;color:dimgray">File Name:</span></td>
+                        <td colspan="4" style="text-align:left"><span style="text-align:left;width:350px;overflow:hidden;text-overflow: ellipsis;white-space: nowrap;display:inline-block;color:dimgray;font-size:11px;vertical-align:central;margin-top:6px">{{FileName}}</span></td>
+
+                    </tr>
+
+                    <tr style="height:20px">
+                        <td style="width:10px;"><div></div> </td>
+                        <td style="width:62px;text-align:left;font-size:11px;color:dimgray"><span>File Size:</span></td>
+                        <td style="text-align:left"><span style="font-size:11px;color:dimgray">{{FileSize}}</span></td>
+                        <td colspan="3"><div></div></td>
+                    </tr>
+
+
+                    <tr *ngIf="UploadedSuccessfully" style="height:20px">
+                        <td style="width:10px;"><div></div> </td>
+                        <td style="width:62px;text-align:left;font-size:11px;color:dimgray"><span></span></td>
+                        <td style="text-align:left"><span style="color:#009161;font-size:11px;text-align:left">{{'DocsIn.M.FileUploadedSuccessfully' | TextCodeTranslationPipe}}</span></td>
+                        <td colspan="3"><div></div></td>
+                    </tr>
+
+
+
+
+                    <tr><td colspan="6"><div></div></td></tr>
+
+
+
+                </table>
+
+
+             
+            </td>
+
+
+        </tr>
+
+
+        <tr style="height: 32px;">
+            <td style="vertical-align: bottom">
+                <table style="height: 22px;">
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+
+                        <td style="width: 57px;">
+                            <div>
+                                <button *ngIf="IsCancelVisibile" class="RedButton" (click)="CancelButtonClicked()">Cancel</button>
+                            </div>
+                        </td>
+
+                        <td  *ngIf="!IsUploadVisibile" style="width: 5px;">
+                            <div></div>
+                        </td>
+
+                        <td *ngIf="!IsUploadVisibile" style="width: 57px;">
+                            <button class="Button" (click)="NextButtonClcik()">Continue</button>
+                        </td>
+
+
+                        <td *ngIf="IsCloseButtonVisibile" style="width: 57px;">
+                            <button class="RedButton" (click)="CloseButtonClicked()">Close</button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+    </table>

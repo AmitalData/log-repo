@@ -1,0 +1,449 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{89132340-6F21-4CE1-8DE4-1CA45E2CD9F3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Logitude.Customs.Def</RootNamespace>
+    <AssemblyName>Logitude.Customs.Def</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ClosedTable\CustomsDeploymentStage.cs" />
+    <Compile Include="ClosedTable\CustomsRequestsSheetStatusDetails.cs" />
+    <Compile Include="ClosedTable\ICloseTable.cs" />
+    <Compile Include="ClosedTable\InterfaceManagementDetails.cs" />
+    <Compile Include="ClosedTable\InterfaceSendOptionsDetails.cs" />
+    <Compile Include="ClosedTable\NotificationDefinitionDetails.cs" />
+    <Compile Include="Contracts\IIIGClosedTable.cs" />
+    <Compile Include="Contracts\SendDeclarationChecksResult.cs" />
+    <Compile Include="Contracts\UnifreightGenericService.cs" />
+    <Compile Include="EntityPMs\CityPM.cs" />
+    <Compile Include="EntityPMs\ClaimsRelatedEntityPM.cs" />
+    <Compile Include="EntityPMs\ClientAddressPM.cs" />
+    <Compile Include="EntityPMs\ConsignmentPackagePM.cs" />
+    <Compile Include="EntityPMs\ConsignmentPM.cs" />
+    <Compile Include="EntityPMs\CourierMasterPM.cs" />
+    <Compile Include="EntityPMs\CustomBankPM.cs" />
+    <Compile Include="EntityPMs\CustomDocumentTypePM.cs" />
+    <Compile Include="EntityPMs\CustomsBranchPM.cs" />
+    <Compile Include="EntityPMs\CustomsCollateralPM.cs" />
+    <Compile Include="EntityPMs\CustomsCollateralsAnswerPM.cs" />
+    <Compile Include="EntityPMs\CustomsCountryPM.cs" />
+    <Compile Include="EntityPMs\CustomsDocumentPM.cs" />
+    <Compile Include="EntityPMs\CustomsDocumentPointerPM.cs" />
+    <Compile Include="EntityPMs\CustomsDocumentsTicketPM.cs" />
+    <Compile Include="EntityPMs\CustomsHouseTypePM.cs" />
+    <Compile Include="EntityPMs\CustomsPartnersItemPM.cs" />
+    <Compile Include="EntityPMs\CustomsPartnersItemValidator.cs" />
+    <Compile Include="EntityPMs\CustomsRequestsSheetPM.cs" />
+    <Compile Include="EntityPMs\CustomsSettingPM.cs" />
+    <Compile Include="EntityPMs\CustomsVendorPM.cs" />
+    <Compile Include="EntityPMs\DecCargoSplitConPM.cs" />
+    <Compile Include="EntityPMs\DecCargoSplitConsItemPM.cs" />
+    <Compile Include="EntityPMs\DeclarationCargoSplitPM.cs" />
+    <Compile Include="EntityPMs\DeclarationConsignmentPM.cs" />
+    <Compile Include="EntityPMs\DeclarationConstraintPM.cs" />
+    <Compile Include="EntityPMs\DeclarationErrorViewPM.cs" />
+    <Compile Include="EntityPMs\DeclarationPM.cs" />
+    <Compile Include="EntityPMs\DeficitPM.cs" />
+    <Compile Include="EntityPMs\DepositPM.cs" />
+    <Compile Include="EntityPMs\Generated\AcceptanceStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\AccumalationStatePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ActionCodePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\AddressContactStatePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\AddressPurposePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\AgentTalkBackTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\AmendmentFieldReasonTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\AmendmentRequestStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\AssigneeNotificationTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\AttachmentTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\AuthorityPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\AuthorizedSignerPermitPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\AutonomyTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\BankPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CargoIdentifireTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CargoIdentityQualifierPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CargoSplitRequestStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CargoStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CertificateExemptionTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CertificatesStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CheckEntityTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CheckEssenceLookupPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CheckQueueTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CheckRepresentativeTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CheckTypeLookupPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CityPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ClaimEntityPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ClaimExplanationCodePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ClaimImporterDeclarsP3LoiPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ClaimImporterDeclarsPage3APM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ClaimImporterDeclarsPage3BPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ClaimImporterDeclarsPage3PM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ClaimPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ClaimsRelatedEntitiesAmountPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ClaimsRelatedEntitiesReasonPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ClaimsRelatedEntityPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ClaimsRelatedEntsExpDeclarPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ClaimsRelatedEntsReasonsExpPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ClientAddressPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ClientDrivingLicensePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ClientDrivingLicenseTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ClientPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ClientsAddressCommTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ClosedTableStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CollateralAnswerStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CollateralAnswerTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CollateralRequestStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CollateralsRequestFileCondPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CollateralTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CommercialSalePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CommunicationTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ConfirmationTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ConsignmentInternalTransitionPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ConsignmentPackagePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ConsignmentPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ConstraintApprovalDecisionPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ConstraintProcessTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ConstraintStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ConstraintTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ContactRoleTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ContinuousMessagesTypeCodePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ConverterTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CountryGroupPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CourierCustomStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CourierDeclarationPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CourierDeclarationStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CourierManifestStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CourierMasterPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CourierPaymentStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CourierPendingReasonPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CourierStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CouriersVatPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CourtInstancePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CurrencyTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomBankPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomBanksCardPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomDocumentTypeMetaDataPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomDocumentTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomerActivityTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomerIdentifyTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomerRoleTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomerTypeGeneralPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomMetaDataTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsAddressTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsAirlinePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsBookPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsBookTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsBranchPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsClosedTablePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsCollateralPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsCollateralsAnswerPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsCollateralsConditionPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsCountryPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsDocumentMetaDataValuePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsDocumentPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsDocumentPointerPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsDocumentsDefinitionPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsDocumentStatusTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsDocumentsTicketPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsEnvoirmentTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsExchangeRatePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsHouseTypeAdditionalPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsHouseTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsInsuranceCompanyPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsItemDetailsHistoryPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsItemPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsPartnersItemPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsPaymentTermPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsRequestsSheetPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsRequestsSheetStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsRequiredFieldPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsSettingPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsTransportModePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsVendorPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsVerificationStatusTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DangerousGoodsPackingReqPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DebtNotificationTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DecCargoSplitCargoIdentifierPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DecCargoSplitConPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DecCargoSplitConsItemPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DecCargoSplitConsPackDetPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DeclarationCargoSplitPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DeclarationConsAcceptancePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DeclarationConstraintPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DeclarationCourierStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DeclarationErrorMappingPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DeclarationPaymentMethodPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DeclarationPaymentPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DeclarationPaymentProtestPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DeclarationPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DeclarationStatementTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DeclarationStatusTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DeclarationTaxPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DeficitConnFileParagraphTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DeficitPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DeliverySiteTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DemanderTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DepositConditionPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DepositCustomerActivityPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DepositEssenceTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DepositFileTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DepositPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DocumentTypeCustomsDataPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\EntitlementTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\EntityTypeLookupPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\FacilitationTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\FaultInspectionTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\FreightPaymentMethodPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\FuelTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\GenderPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\GovernmentProcedureTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\GuaranteeCertificateTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\GuaranteeConditionPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\GuaranteeCustomerActivityPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\GuaranteePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ImporterDeclarationTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ImporterDespositionPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ImporterPeriodicDeclarStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ImporterTypeForClaimPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\InterfaceManagementPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\InterfaceSendOptionPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\InterfaceTenantDefinitionPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\InternalBorderSiteTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\InternationalSitePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\InvoiceTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ItemGovernmentProcedureTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\LastReleaseFromWarehousePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\LeadDocumentExceptionTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\LeadDocumentTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\MamanStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ManifestCargoStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\MAWBTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\MeasureQualifierPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\MeasurmentUnitPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ModificationAndDiscountTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\MorningMessageTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\NotificationDefinitionPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\NotificationPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\NotificationReplyPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\NotificationTenantDefinitionPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\NotificationTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\OrganizationUnitTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\PackageMeasureQualifierPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\PackingTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ParagraphTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\PassportTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\PayerActivityTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\PayerTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\PaymentMethodStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\PaymentMethodTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\PaymentOrderConnectionTablePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\PaymentOrderLinePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\PaymentOrderMethodPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\PaymentOrderPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\PaymentOrderProtestReasonPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\PaymentOrderStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\PaymentOrderTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\PaymentProcessPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\PaymentProtestTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\PaymentTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\PhysicalCheckOperationPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\PhysicalCheckPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\PhysicalCheckStatusMessagePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\PointerLevelPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ProceduralFaultInProcessTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ProceduralFaultInSourceTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ProceduralFaultPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ProceduralFaultsConnEntityPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ProceduralFaultStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ProceduralFaultTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ProcessingReasonPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ProductIdentificationTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ProductNameTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\PropertiesDetailsHistoryPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\RansomViolationTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\RegisteredWarehouseSiteTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\RequestStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\RequiredGuaranteeTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ReturnConditionPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SalesTaxExemptionTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SignatureTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SiteLookupPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SiteTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SpecialActionDescriptionTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SpecializationTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SplitOrMergeReasonPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\StorageMessageTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\StorageStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SubCountryPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SupplierInvioceItemCertificatPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SupplierInvoiceFreightAmountPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SupplierInvoiceItemModVehiclePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SupplierInvoiceItemPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SupplierInvoiceItemProcesTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SupplierInvoiceItemsConDeclarPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SupplierInvoiceItemsDescriptPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SupplierInvoiceItemsLevyPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SupplierInvoiceItemsModPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SupplierInvoiceItemsProdIdentPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SupplierInvoiceItemsSerialNumPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SupplierInvoiceItemsTaxPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SupplierInvoiceItemVehicleAddPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SupplierInvoiceItemVehicleModPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SupplierInvoiceItemVehiclePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SupplierInvoiceModificationPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SupplierInvoicePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\TapagConnectionTablePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\TapagPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\TapagTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\TermsOfSaleTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\TPGFileTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\TradeAgreementPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\TradeLevyExamptTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\TreatmentWayPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\UIMessageAdditionalPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\UIMessagePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\UnloadingSiteTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ValidCustomsItemPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\VehicleManufacturerPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\VehicleOwnerPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\VehiclePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\VehiclePoolTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\VehiclePriceListTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\VehicleReductionTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\VehicleSafeAccessoryInstlTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\VehicleSafetyAccessoryPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\VehicleSafetyAccessoryTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\VehicleStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\VehicleTecnologyTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\VehicleTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\VendorCommissionPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\VendorCommunicationPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\VendorStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\VendorTransactionTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\VendorTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\GovernmentProcedureTypePM.cs" />
+    <Compile Include="EntityPMs\GuaranteePM.cs" />
+    <Compile Include="EntityPMs\IIGMessagePM.cs" />
+    <Compile Include="EntityPMs\ImporterDespositionPM.cs" />
+    <Compile Include="EntityPMs\InterfaceManagementPM.cs" />
+    <Compile Include="EntityPMs\InterfaceTenantDefinitionManagementPM.cs" />
+    <Compile Include="EntityPMs\InternationalSitePM.cs" />
+    <Compile Include="EntityPMs\ITapagPM.cs" />
+    <Compile Include="EntityPMs\NotificationDefinitionPM.cs" />
+    <Compile Include="EntityPMs\OpenAccessDeclarationPM.cs" />
+    <Compile Include="EntityPMs\PaymentOrderPM.cs" />
+    <Compile Include="EntityPMs\PhysicalCheckPM.cs" />
+    <Compile Include="EntityPMs\SupplierInvoiceItemPM.cs" />
+    <Compile Include="EntityPMs\SupplierInvoiceItemVehiclePM.cs" />
+    <Compile Include="EntityPMs\SupplierInvoicePM.cs" />
+    <Compile Include="EntityPMs\TapagConnectionTablePM.cs" />
+    <Compile Include="EntityPMs\TradeAgreementPM.cs" />
+    <Compile Include="EntityPMs\UIMessagePM.cs" />
+    <Compile Include="EntityPMs\ValidCustomsItemPM.cs" />
+    <Compile Include="EntityPMs\VehiclePM.cs" />
+    <Compile Include="EntityPMs\VehicleValidator.cs" />
+    <Compile Include="EntityQueryServicesExt\ICustomsDocumentQueryServiceExt.cs" />
+    <Compile Include="Messaging\Customs\RequestSheetContext.cs" />
+    <Compile Include="Messaging\LogitudeClient\DeclarationErrorPointer\DeclarationErrorView.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validators\CustomBankValidator.cs" />
+    <Compile Include="Validators\CustomsClassLevelValidator.cs" />
+    <Compile Include="Validators\CustomsClassLevelValidator.Shared.cs" />
+    <Compile Include="Validators\CustomsValidationClass.cs" />
+    <Compile Include="Validators\CustomsValidationClass.Shared.cs" />
+    <Compile Include="Validators\DeclarationValidator.cs" />
+    <Compile Include="Validators\PaymentOrderValidator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="EntityUpdateServicesExt\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Logitude.Customs.Data\Logitude.Customs.Data.csproj">
+      <Project>{643f92c9-7cf1-4429-b79e-1e354b758abf}</Project>
+      <Name>Logitude.Customs.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.CustomsMessaging.Common\Logitude.CustomsMessaging.Common.csproj">
+      <Project>{f0039dbe-4a1a-4755-8f37-e4005ea74746}</Project>
+      <Name>Logitude.CustomsMessaging.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
+      <Project>{9b477a08-8ee2-4457-88fe-17e8a6ec4d00}</Project>
+      <Name>Logitude.Server.Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
+      <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
+      <Name>Simplog.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
+      <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
+      <Name>Simplog.Server.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Unifreight.BL\Unifreight.BL.csproj">
+      <Project>{0ec1bd46-2613-4227-a6d7-d345dd0978cd}</Project>
+      <Name>Unifreight.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Unifreight.Data\Unifreight.Data.csproj">
+      <Project>{40f07800-11e8-4fba-9fc2-fd6c8d11e3ef}</Project>
+      <Name>Unifreight.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

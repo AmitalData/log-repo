@@ -1,0 +1,84 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data;
+ 
+namespace Logitude.Customs.Data.EntityMapping
+{
+ 
+    public class PaymentOrderMap : EntityTypeConfiguration<PaymentOrder>
+    {
+	    string dbms;
+        public PaymentOrderMap()
+        { 
+			  this.ToTable("PaymentOrders", "Customs");
+		
+		    this.HasKey(t => new { t.Id });
+	 
+            this.Property(t => t.Id).HasColumnName("Id").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Tenant).HasColumnName("Tenant");
+
+            this.Property(t => t.PaymentNumber).HasColumnName("PaymentNumber").HasMaxLength(9).IsUnicode(false);
+
+            this.Property(t => t.TotalSumToPay).HasColumnName("TotalSumToPay");
+
+            this.Property(t => t.LastPayDate).HasColumnName("LastPayDate");
+
+            this.Property(t => t.Reason).HasColumnName("Reason").HasMaxLength(512).IsUnicode(true);
+
+            this.Property(t => t.CustomerId).HasColumnName("CustomerId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.CustomerActivityTypeCode).HasColumnName("CustomerActivityTypeCode").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.PaymentOrderTypeCode).HasColumnName("PaymentOrderTypeCode").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.PaymentProcessCode).HasColumnName("PaymentProcessCode").HasMaxLength(4).IsUnicode(false);
+
+            this.Property(t => t.PaymentStatusCode).HasColumnName("PaymentStatusCode").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.CustomsHouseCode).HasColumnName("CustomsHouseCode").HasMaxLength(17).IsUnicode(false);
+
+            this.Property(t => t.ActualPayDate).HasColumnName("ActualPayDate");
+
+            this.Property(t => t.InternalNotes).HasColumnName("InternalNotes").HasMaxLength(512).IsUnicode(true);
+
+            this.Property(t => t.CreateDate).HasColumnName("CreateDate");
+
+            this.Property(t => t.UpdateDate).HasColumnName("UpdateDate");
+
+            this.Property(t => t.SearchFields).HasColumnName("SearchFields").HasMaxLength(2000).IsUnicode(true);
+
+            this.Property(t => t.CustomsEntityTypeCode).HasColumnName("CustomsEntityTypeCode").HasMaxLength(9).IsUnicode(false);
+
+            this.Property(t => t.FirstEntityID).HasColumnName("FirstEntityID").HasMaxLength(35).IsUnicode(false);
+
+            this.Property(t => t.SecondEntityID).HasColumnName("SecondEntityID").HasMaxLength(35).IsUnicode(false);
+
+            this.Property(t => t.ThirdEntityID).HasColumnName("ThirdEntityID").HasMaxLength(35).IsUnicode(false);
+
+            this.Property(t => t.ImporterId).HasColumnName("ImporterId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.IsClosed).HasColumnName("IsClosed");
+
+            this.Property(t => t.ConcurrencyGUID).HasColumnName("ConcurrencyGUID").HasMaxLength(40).IsUnicode(false);
+
+            this.Property(t => t.AccountingCustomFile).HasColumnName("AccountingCustomFile").HasMaxLength(30).IsUnicode(false);
+
+            this.Property(t => t.CustomFiles).HasColumnName("CustomFiles").HasMaxLength(30).IsUnicode(false);
+
+            this.Property(t => t.PaymentOrderSelectedLabel).HasColumnName("PaymentOrderSelectedLabel").HasMaxLength(100).IsUnicode(false);
+
+            this.Property(t => t.PaymentOrderLeftAmount).HasColumnName("PaymentOrderLeftAmount").HasPrecision(16, 2);
+        }
+    }
+}
+	 

@@ -1,0 +1,112 @@
+﻿<div>
+    
+        <!-- DeclarationReshimonConversionComponent  view-->
+        <!--[CustomSendOptionsButtonIsDisable]="CustomSendOptionsButtonIsDisable"-->
+        <custom-message-wrapper [CustomSendOptionsButtonCanForcePersonalSign]="false"
+                                [IsShowCustomResponseContent]="false"
+                                [IsShowCustomToolBar]="false">
+            <div class="class-request-content">
+
+                <table style="width: 300px; height:130px; padding-top: 10px;">
+                    <!--style="height:1px"-->
+
+
+
+                    <tr class="FormFieldRow">
+                        <td style="width: 200px">
+                            <LogLabel [NoObjectField]="true"
+                                      [ObjectFieldName]="'ToDate'"
+                                      [ObjectTableName]="ObjectTableName"
+                                      [DataContext]="DataContext"
+                                      [TextCode]="'Customs.DeclarationReshimonConversion.O.DeclarationType'">
+
+                            </LogLabel>
+                        </td>
+                        <td style="width:10px"></td>
+
+                        <td style="width: 200px; padding-right: 36px;">
+                            <!-- DeclarationReshimonConversionComponent  Request.CustomFileNo-->
+                            <select (change)="DeclarationTypeListSelected($event.target.value)"
+                                    style="width:150px;border:1px solid gray;border-radius:3px">
+
+                                <option *ngFor="let item of _DeclarationTypeList" [value]="item.DeclarationConvertionDigits">{{item.Name}}</option>
+                            </select>
+
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <tr class="FormFieldRow"
+                        *ngIf="SelectedDeclarationConvertionDigits">
+                        <td style="width: 120px">
+                            <LogLabel [NoObjectField]="true"
+                                      [ObjectFieldName]="'ReshimonNumber'"
+                                      [ObjectTableName]="ObjectTableName"
+                                      [DataContext]="DataContext"
+                                      [TextCode]="'Customs.DeclarationReshimonConversion.O.ReshimonNumber'"></LogLabel>
+                        </td>
+                        <td style="width:10px"></td>
+
+                        <td style="width: 200px; padding-right: 36px;">
+                            <!-- DeclarationReshimonConversionComponent  Request.CustomFileNo-->
+                            <LogTextBox [ObjectFieldName]="'ReshimonNumber'" [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                        [HideColumns]="true"
+                                        (LostFocus)="ReshimonNumberTextChanged($event)"
+                                        [Text]="ReshimonNumber"></LogTextBox>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                    <!--style="height:200px"-->
+                    <tr class="FormFieldRow"
+                        *ngIf="SelectedDeclarationConvertionDigits">
+                        <td style="width: 120px">
+                            <LogLabel [ObjectFieldName]="'DeclarationNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:10px"></td>
+                        <td style="width: 200px; padding-right: 36px;">
+                            <!-- DeclarationReshimonConversionComponent  Request.DeclarationNumber-->
+                            <LogTextBox [ObjectFieldName]="'DeclarationNumber'" [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                        [HideColumns]="true"
+                                        [Text]="DeclarationNumber"
+                                        (LostFocus)="DeclarationNumberTextChanged($event)"></LogTextBox>
+
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+
+                    <tr><td></td><td></td></tr>
+                </table>
+
+            </div>
+
+
+
+            <!-- DeclarationReshimonConversionComponent  Response  -->
+            <!--<div class="class-response-content">
+                <div style="height:0px;margin-top:1em;margin-bottom:1em;font-weight: bold;">
+
+                </div>
+            </div>-->
+
+
+            <div class="class-response-ToolBar" style="height:22px;">
+                <div style="width: 57px;margin-left:10px;float: left;">
+                    <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                </div>
+            </div>
+
+        </custom-message-wrapper>
+
+
+    
+    
+</div>

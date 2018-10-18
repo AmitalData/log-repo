@@ -1,0 +1,127 @@
+﻿
+<style type="text/css">
+    .LogitudeToggleButtonBody {
+        position: fixed;
+        z-index: 1;
+        top: 23px;
+        background: white;
+        border: 1px solid #AAAAAA;
+        border-radius: 0 0 4px 4px;
+        -moz-border-radius: 0 0 4px 4px;
+        -webkit-border-radius: 0 0 4px 4px;
+        box-shadow: 0px 2px 3px 2px #DADADA;
+        -moz-box-shadow: 0px 2px 3px 2px #DADADA;
+        -webkit-box-shadow: 0px 2px 3px 2px #DADADA;
+    }
+
+    .LogitudeToggleButtonHeader {
+        font-size: 11px !important;
+        color: #45494A !important;
+        text-shadow: 1px 1px white !important;
+        text-align: left !important;
+        line-height: 20px !important;
+    }
+
+    .LogitudeToggleButton:focus:not(:disabled) {
+        border: 1px solid #3BB3E2;
+        -webkit-box-shadow: 0px 0px 6px 0px #3BB3E2;
+        -moz-box-shadow: 0px 0px 6px 0px #3BB3E2;
+        box-shadow: 0px 0px 6px 0px #3BB3E2;
+    }
+
+    .LogitudeToggleButton:hover:not(:disabled) {
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(221, 232, 245, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(221, 232, 245, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+    }
+
+    .LogitudeToggleButton:disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+    .LogitudeToggleButton {
+        position: relative;
+        width: 100%;
+        min-width: 40px;
+        height: 22px;
+        padding: 0 !important;
+        display: block;
+        outline: none;
+        cursor: pointer;
+        border: 1px solid #6A8299;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        text-shadow: 1px 1px white;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    }
+
+    .LogitudeToggleButtonContainer {
+        position: relative;
+        width: 100%;
+        min-width: 40px;
+        height: 22px;
+        padding: 0 !important;
+        display: block;
+        outline: none;
+    }
+</style>
+
+<div [attr.id]="ComponentId" class="LogitudeToggleButtonContainer">
+
+    <!-- Head -->
+    <div class="MediaFillAbsolute">
+        <button [attr.id]="ComponentButtonId"
+                class="LogitudeToggleButton"
+                (click)="OnButtonClicked()"                
+                (mouseover)="IsMouseOverButton = true;"
+                (mouseleave)="IsMouseOverButton = false;"
+                [disabled]="!IsEnabled">
+
+            <div class="MediaFillAbsolute" style="left: 5px; right: 3px;">
+                <table>
+                    <tr>
+                        <td>
+                            <img *ngIf="IconPath" style="float: left" [attr.src]="IconPath" width="13" height="13" />
+
+                            <div *ngIf="!IconPath" class="MediaFill LogitudeToggleButtonHeader TextTrimming">
+                                {{Title}}
+                            </div>
+                        </td>
+
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 1px;">
+                            <img src="./Images/ToggleIcon.png" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </button>
+    </div>
+
+    <!-- Body -->
+    <div class="LogitudeToggleButtonBody"
+         [attr.id]="ComponentContentId"
+         [style.width.px]="DropDownWidth"
+         [style.height.px]="DropDownHeight"
+         (mouseover)="IsMouseOver = true;"
+         (mouseleave)="IsMouseOver = false;"
+         [hidden]="!IsOpened">
+
+        <div class="MediaFillRelative">
+            <div class="MediaFillAbsolute" style="bottom: 2px; left: 2px; right: 2px; top: 2px;">
+                <ng-content></ng-content>
+            </div>
+        </div>
+    </div>
+</div>

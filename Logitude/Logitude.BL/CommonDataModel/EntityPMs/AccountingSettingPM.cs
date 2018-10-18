@@ -1,0 +1,55 @@
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace Logitude.BL.CommonDataModel.EntityPMs
+{
+    [CustomValidation(typeof(Validators.ClassLevelValidator), "ValidateClass")]
+    public class AccountingSettingPM
+    {
+        [Key]
+        public int Id { get; set; }
+        public bool AllowVoidARI { get; set; }
+        public bool AllowVoidARP { get; set; }
+        public bool AllowVoidAPI { get; set; }
+        public bool AllowVoidAPP { get; set; }
+        public bool AllowManualInvoiceNumber { get; set; }
+        public bool IsVatNumberMandatoryInAR { get; set; }
+        public bool IsVatNumberMandatoryInAP { get; set; }
+        public bool IsChronologicalDates { get; set; }
+        public string AccountingSystemCode { get; set; }
+        public string ReceivableVATableTempCard { get; set; }
+        public string ReceivableVATExemptTempCard { get; set; }
+        public string PayableVATableTempCard { get; set; }
+        public string PayableVATExemptTempCard { get; set; }
+        public bool AllowMinusInvoicelines { get; set; }
+        public bool AllowClosureWithoutPayables { get; set; }
+        public bool IsSingleTaxPerInvoice { get; set; }
+        public bool IsARInvoicesTransferEnabled { get; set; }
+        public bool IsAPInvoicesTransferEnabled { get; set; }
+        public bool IsARPaymentsTransferEnabled { get; set; }
+        public DateTime? ARInvoiceTransferStartDate { get; set; }
+        public DateTime? APInvoiceTransferStartDate { get; set; }
+        public DateTime? ARPaymentTransferStartDate { get; set; }
+        public bool AllowPositiveAmountsInTheCreditNote { get; set; }
+        public string QBOrealMeID { get; set; }
+        public string QBOAccessToken { get; set; }
+        public string QBOAccessTokenSecret { get; set; }
+        public string VatNumber { get; set; }
+        public string PaymentTermId { get; set; }
+        public DateTime? AccountingActivationDate { get; set; }
+        public bool AccountingActivated { get; set; }
+        //public bool RequestedPaymentMethodIsMandatory { get; set; }
+        public bool TransferToDropboxActivated { get; set; }
+        public bool EnableMultiPercentageVATTypes { get; set; }
+        public bool NotifyPastDateOnInvoiceEdit { get; set; }
+        public bool EnableMultiRateAPInvoices { get; set; }
+        public string RegistryDateTypeCode { get; set; }
+        public string ReceivableVATCard { get; set; }
+        public string PayableVATCard { get; set; }
+        public bool EnableMultiCurrencyARPayments { get; set; }
+        public bool EnableMultiCurrencyAPPayments { get; set; }
+        public bool IsAPPaymentsTransferEnabled { get; set; }
+        public bool EnableNegativeOffsetARPayments { get; set; }
+        public bool EnableNegativeOffsetAPPayments { get; set; }        
+    }
+}

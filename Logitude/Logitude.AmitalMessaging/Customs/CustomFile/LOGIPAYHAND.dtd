@@ -1,0 +1,3 @@
+<!ELEMENT LOGIPAYHAND (LogitudePayHand*)>
+<!ELEMENT LogitudePayHand (logitude_file?)>
+<!ELEMENT logitude_file (#PCDATA)>

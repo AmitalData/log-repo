@@ -1,0 +1,164 @@
+﻿
+<table>
+    <tr>
+        <td>
+            <div class="MediaFill">
+                <div class="MarginAbsolute10">
+                    <table>
+                        <tr>
+                            <td style="width: 380px;">
+                                <table class="FixedTable">
+                                    <tr class="FormFieldRow">
+                                        <td [style.width.px]="LabelColumnWidth">
+                                            <LogLabel [ObjectFieldName]="'AWBCurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [ShowWarning]="ShowWarning_AWBCurrencyId"></LogLabel>
+                                        </td>
+                                        <td>
+                                            <LogLov [ObjectFieldName]="'AWBCurrencyId'"
+                                                    [SelectedValue]="AWBCurrencyId"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"
+                                                    [LookUpTableName]="'Currency'">
+                                            </LogLov>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="FormFieldRow">
+                                        <td [style.width.px]="LabelColumnWidth">
+                                            <LogLabel [ObjectFieldName]="'RateClassCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [ShowWarning]="ShowWarning_RateClassCode"></LogLabel>
+                                        </td>
+                                        <td>
+                                            <LogLov [ObjectFieldName]="'RateClassCode'"
+                                                    [SelectedValue]="RateClassCode"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"
+                                                    [LookUpTableName]="'RateClass'">
+                                            </LogLov>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="FormFieldRow">
+                                        <td [style.width.px]="LabelColumnWidth">
+                                            <LogLabel [ObjectFieldName]="'AWBChargeRate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [ShowWarning]="ShowWarning_AWBChargeRate"></LogLabel>
+                                        </td>
+                                        <td>
+                                            <LogTextBox [ObjectFieldName]="'AWBChargeRate'" [Text]="AWBChargeRate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="FormFieldRow">
+                                        <td [style.width.px]="LabelColumnWidth">
+                                            <LogLabel [ObjectFieldName]="'AsAgreedFreight'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td>
+                                            <LogCheckBox [ObjectFieldName]="'AsAgreedFreight'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="FormFieldRow">
+                                        <td [style.width.px]="LabelColumnWidth">
+                                            <LogLabel [ObjectFieldName]="'ChargeableWeight'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="ChargeableWeightLabel" [ShowWarning]="ShowWarning_ChargeableWeight"></LogLabel>
+                                        </td>
+                                        <td>
+                                            <LogTextBox [ObjectFieldName]="'ChargeableWeight'" [Text]="ChargeableWeight" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="FormFieldRow">
+                                        <td [style.width.px]="LabelColumnWidth">
+                                            <LogLabel [ObjectFieldName]="'AWBChargeAmount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [ShowWarning]="ShowWarning_AWBChargeAmount"></LogLabel>
+                                        </td>
+                                        <td>
+                                            <LogTextBox [ObjectFieldName]="'AWBChargeAmount'" [Text]="AWBChargeAmount" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="2">
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+
+                            <td style="width: 30px;">
+                                <div></div>
+                            </td>
+
+                            <td style="width: 380px;">
+                                <table class="FixedTable">
+                                    <tr class="FormFieldRow">
+                                        <td [style.width.px]="LabelColumnWidth">
+                                            <LogLabel [ObjectFieldName]="'AWBChargesCodeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [ShowWarning]="ShowWarning_AWBChargesCodeCode"></LogLabel>
+                                        </td>
+                                        <td>
+                                            <LogLov [ObjectFieldName]="'AWBChargesCodeCode'"
+                                                    [SelectedValue]="AWBChargesCodeCode"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"
+                                                    [LookUpTableName]="'AWBChargesCode'">
+                                            </LogLov>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="FormFieldRow">
+                                        <td [style.width.px]="LabelColumnWidth">
+                                            <LogLabel [ObjectFieldName]="'FreightPrepaidCollectId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td>
+                                            <table>
+                                                <tr>
+                                                    <td style="width: 70px;">
+                                                        <div class="RadioButton">
+                                                            <input id="FreightPrepaidRadio" type="radio" name="FreightPrepaidCollectRadio" [checked]="FreightPrepaidCollectId == 'P'" (click)="SetFreightPrepaidCollect('P')" [disabled]="!IsEditingEnabled" />
+                                                            <label for="FreightPrepaidRadio">Prepaid</label>
+                                                        </div>
+                                                    </td>
+
+                                                    <td>
+                                                        <div class="RadioButton">
+                                                            <input id="FreightCollectRadio" type="radio" name="FreightPrepaidCollectRadio" [checked]="FreightPrepaidCollectId == 'C'" (click)="SetFreightPrepaidCollect('C')" [disabled]="!IsEditingEnabled" />
+                                                            <label for="FreightCollectRadio">Collect</label>
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="FormFieldRow">
+                                        <td [style.width.px]="LabelColumnWidth">
+                                            <LogLabel [ObjectFieldName]="'AWBFreightAmountPrepaid'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.S.AWB.PrepaidCharge'"></LogLabel>
+                                        </td>
+                                        <td>
+                                            <LogTextBox [ObjectFieldName]="'AWBFreightAmountPrepaid'" [Text]="AWBFreightAmountPrepaid" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="FormFieldRow">
+                                        <td [style.width.px]="LabelColumnWidth">
+                                            <LogLabel [ObjectFieldName]="'AWBFreightAmountCollect'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.S.AWB.CollectCharge'"></LogLabel>
+                                        </td>
+                                        <td>
+                                            <LogTextBox [ObjectFieldName]="'AWBFreightAmountCollect'" [Text]="AWBFreightAmountCollect" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="2">
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>

@@ -1,0 +1,289 @@
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs; 
+using Logitude.Customs.Data;
+
+namespace Logitude.Customs.BL.EntityDataMappings
+{
+   
+   public partial class SupplierInvoiceItemVehicleAddDataMapping: IMapping<SupplierInvoiceItemVehicleAddPM, SupplierInvoiceItemVehicleAdd>,IMappingEncodeBase64NVARCHARFields<SupplierInvoiceItemVehicleAddPM>
+   {
+          public enum POCOPropertyNames
+          { 
+		     None,  
+	         DeclarationId, 
+	         InvoiceCounterKey, 
+	         InvoiceItemLineNumber, 
+	         LineNumber, 
+	         VehicleModel, 
+	         RichbitNumber, 
+	         ChassisNumber, 
+	         EngineNumber, 
+	         WindowNumber, 
+	         VehicleValue, 
+	         ChassisTax, 
+	         ChassisPurchaseTax, 
+	         ChassisVat, 
+	         Exempt_type, 
+	         Tenant,
+	      }
+
+
+	      public enum PMPropertyNames
+          { 
+		     None,  
+	         DeclarationId, 
+	         InvoiceCounterKey, 
+	         InvoiceItemLineNumber, 
+	         LineNumber, 
+	         VehicleModel, 
+	         RichbitNumber, 
+	         ChassisNumber, 
+	         EngineNumber, 
+	         WindowNumber, 
+	         VehicleValue, 
+	         ChassisTax, 
+	         ChassisPurchaseTax, 
+	         ChassisVat, 
+	         Exempt_type, 
+	         Tenant,
+	      }
+
+		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
+        List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
+    
+	    public void PMToPOCO(SupplierInvoiceItemVehicleAddPM entityPM, SupplierInvoiceItemVehicleAdd entityPOCO)
+        {
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VehicleModel))
+            {
+				entityPOCO.VehicleModel = entityPM.VehicleModel;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RichbitNumber))
+            {
+				entityPOCO.RichbitNumber = entityPM.RichbitNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChassisNumber))
+            {
+				entityPOCO.ChassisNumber = entityPM.ChassisNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EngineNumber))
+            {
+				entityPOCO.EngineNumber = entityPM.EngineNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WindowNumber))
+            {
+				entityPOCO.WindowNumber = entityPM.WindowNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VehicleValue))
+            {
+				entityPOCO.VehicleValue = entityPM.VehicleValue;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChassisTax))
+            {
+				entityPOCO.ChassisTax = entityPM.ChassisTax;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChassisPurchaseTax))
+            {
+				entityPOCO.ChassisPurchaseTax = entityPM.ChassisPurchaseTax;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChassisVat))
+            {
+				entityPOCO.ChassisVat = entityPM.ChassisVat;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Exempt_type))
+            {
+				entityPOCO.Exempt_type = entityPM.Exempt_type;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			}
+
+		public void POCOToPM(SupplierInvoiceItemVehicleAddPM entityPM, SupplierInvoiceItemVehicleAdd entityPOCO)
+        {
+			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DeclarationId))
+            {
+					entityPM.DeclarationId = entityPOCO.DeclarationId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.InvoiceCounterKey))
+            {
+					entityPM.InvoiceCounterKey = entityPOCO.InvoiceCounterKey;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.InvoiceItemLineNumber))
+            {
+					entityPM.InvoiceItemLineNumber = entityPOCO.InvoiceItemLineNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LineNumber))
+            {
+					entityPM.LineNumber = entityPOCO.LineNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.VehicleModel))
+            {
+					entityPM.VehicleModel = entityPOCO.VehicleModel;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.RichbitNumber))
+            {
+					entityPM.RichbitNumber = entityPOCO.RichbitNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ChassisNumber))
+            {
+					entityPM.ChassisNumber = entityPOCO.ChassisNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EngineNumber))
+            {
+					entityPM.EngineNumber = entityPOCO.EngineNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.WindowNumber))
+            {
+					entityPM.WindowNumber = entityPOCO.WindowNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.VehicleValue))
+            {
+					entityPM.VehicleValue = entityPOCO.VehicleValue;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ChassisTax))
+            {
+					entityPM.ChassisTax = entityPOCO.ChassisTax;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ChassisPurchaseTax))
+            {
+					entityPM.ChassisPurchaseTax = entityPOCO.ChassisPurchaseTax;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ChassisVat))
+            {
+					entityPM.ChassisVat = entityPOCO.ChassisVat;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Exempt_type))
+            {
+					entityPM.Exempt_type = entityPOCO.Exempt_type;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
+            {
+					entityPM.Tenant = entityPOCO.Tenant;
+            }
+
+		}
+
+		public void PMToOldPM(SupplierInvoiceItemVehicleAddPM entityPM, SupplierInvoiceItemVehicleAddPM oldEntityPM)
+        {
+		     oldEntityPM.ChangedProperties.Clear();
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VehicleModel))
+            {
+                oldEntityPM.VehicleModel = entityPM.VehicleModel;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RichbitNumber))
+            {
+                oldEntityPM.RichbitNumber = entityPM.RichbitNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChassisNumber))
+            {
+                oldEntityPM.ChassisNumber = entityPM.ChassisNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EngineNumber))
+            {
+                oldEntityPM.EngineNumber = entityPM.EngineNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WindowNumber))
+            {
+                oldEntityPM.WindowNumber = entityPM.WindowNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VehicleValue))
+            {
+                oldEntityPM.VehicleValue = entityPM.VehicleValue;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChassisTax))
+            {
+                oldEntityPM.ChassisTax = entityPM.ChassisTax;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChassisPurchaseTax))
+            {
+                oldEntityPM.ChassisPurchaseTax = entityPM.ChassisPurchaseTax;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChassisVat))
+            {
+                oldEntityPM.ChassisVat = entityPM.ChassisVat;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Exempt_type))
+            {
+                oldEntityPM.Exempt_type = entityPM.Exempt_type;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+                oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+		}
+
+	    public void EncodeBase64NVARCHARFields(SupplierInvoiceItemVehicleAddPM entityPM)
+        {
+            if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
+            {
+                return;
+
+            }
+            entityPM.EncodeBase64NVARCHARFieldsBy=null;
+		}
+
+
+	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
+        {
+            CustomMappedPOCOProperties.Add(pocoPropertyName);
+        }
+
+        public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
+        {
+            CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+			  
+   }
+}
+	 

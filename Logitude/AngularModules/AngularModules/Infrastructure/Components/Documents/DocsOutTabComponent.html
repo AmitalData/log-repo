@@ -1,0 +1,319 @@
+﻿
+<style>
+    /*FF282E30*/
+
+    .CustomLink:hover {
+        cursor: pointer;
+        color: #1B90CB;
+        text-decoration: underline;
+    }
+
+    .CustomLink {
+        color: #0026ff;
+        text-decoration: none;
+    }
+</style>
+
+<div *ngIf="IsStardLoadPage" class="TabHolder">
+    <table>
+        <tr class="TabTitleRow">
+            <td>
+                <table>
+                    <tr>
+                        <td style="width: 1px;">{{TabHeaderTextCode | TextCodeTranslationPipe}}</td>
+
+                        <td style="width: 10px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 1px;">
+                            <HelpIcon [IconSize]="14" [Header]="'DocsOut.AddTemplates' | TextCodeTranslationPipe" [Text]="'DocsOut.AddYourOwnTemplates' | TextCodeTranslationPipe"></HelpIcon>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+
+                        <td style="width:200px;vertical-align:central">
+
+                            <div style="width:200px;height:20px">
+                                <p *ngIf="IsShowAddFromLibraryLink" (click)="LinkAddDocumentFromLibraryClcik()" class="CustomLink" style="font-size:12px;float:right;width:173px;height:22px">Add Document From Library</p>
+
+                            </div>
+
+                        </td>
+                        <td style="width:5px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width:150px;">
+                            <SearchTextBox [ObjectTableName]="'Shipment'" [PlaceHolder]="'Search'" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)"></SearchTextBox>
+                        </td>
+
+                    
+                        <td style="width: 7px;">
+                            <div></div>
+                        </td>
+                        <td style="width: 21px;">
+                            <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
+                        </td>
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+           </td>
+        </tr>
+
+        <tr>
+            <td>
+                <div class="MediaFill">
+                    <div class="SimpleGridView">
+                        <div class="SimpleGridViewHeader">
+                            <table>
+                                <tr>
+                                    <td style="width: 30px; min-width: 30px;"></td>
+                                    <td style="width: 30px; min-width: 30px;"></td>
+                                    <td style="width: 30px; min-width: 30px;"></td>
+                                    <td style="width: 100px; min-width: 100px;">Actions</td>
+                                    <td style="width: 300px; min-width: 300px;">Name</td>
+                                    <td style="width: 100px; min-width: 100px;">Reference No.</td>
+                                    <td style="width: 70px; min-width: 70px;">Issued By</td>
+                                    <td style="width: 100px; min-width: 100px;">Issued Date</td>
+                                    <td *ngIf="IsShowFollowColum" style="width: 65px; min-width: 65px;">Follow-Up</td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="SimpleGridViewBody">
+                            <table>
+                                <tr style="height: 1px;">
+                                    <td>
+                                        <table>
+                                            <tr id="{{item.DocumentTypeCode+'-L-DocsOut' | IdGeneratorPipe}}" class="SimpleGridViewRow RowHover" *ngFor="let item of ItemsSource" >
+                                                <td>
+                                                    <table style="height:22px;">
+                                                        <tr style="height:22px" (click)="OnSelectedDocumentOutList(item)" [class.RowSelected]="item === SelectedInternalDocument" (mouseleave)="OnmMouseleave(item)" (mouseover)="OnmMouseOver(item)">
+                                                            <td class="CellStretched" style="width: 30px; min-width: 30px; max-width: 30px; position: relative;">
+
+                                                                <div class="CenterCenter" *ngIf="item &&  item.HasTree" style="width:20px">
+                                                                    <span *ngIf="item && !item.IsViewTree" style="width:20px;"><img (click)="item.ViewTree()" style="margin-top:-2px;border:0px;background-color:transparent;height:12px;width:12px" src="./Images/CustomTreeIcon.png" /></span>
+                                                                    <span *ngIf="item && item.IsViewTree" style="width:20px"><img (click)="item.ViewTree()" style="margin-top:2px;border:0px;background-color:transparent;height:12px;width:12px" src="./Images/CustomtreeIcon2.png" /></span>
+                                                                </div>
+
+                                                            </td>
+
+                                                            <td class="CellStretched" style="width: 30px; min-width: 30px; max-width: 30px; position: relative;">
+
+
+                                                                <img class="CenterCenter" *ngIf="item.IsSendButtonsVisible" style="width:23px;height:27px;" src="./Images/DoumentIcon/SendIcon.png" />
+
+                                                                <img class="CenterCenter" *ngIf="item.IsBuildViewButtonsVisible" style="width:25px;height:25px" src="./Images/DoumentIcon/Print.png" />
+
+
+                                                            </td>
+
+                                                            <td class="CellStretched" style="width: 30px; min-width: 30px; max-width: 30px; position: relative;">
+                                                                <img *ngIf="item.HasFile" style="margin-right: 3px;width:20px;height:20px;" src="./Images/SimplogIcons/tick.png" />
+
+                                                            </td>
+
+
+                                                            <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px; position: relative;">
+
+                                                                <button id="{{item.DocumentTypeCode+'-S-DocsOut' | IdGeneratorPipe}}" *ngIf="item.VisibleSendButton" style="width: 40px;" class="Button"  (click)="SendButtonClick(item)"   >Send</button>
+                                                                <button id="{{item.DocumentTypeCode+'-P-DocsOut' | IdGeneratorPipe}}" *ngIf="item.VisiblePrintButton" style="width: 75px;" class="Button" (click)="PrintButtonClick(item)"   >Print/Send</button>
+
+
+
+                                                            </td>
+                                                            <td [attr.title]="item.Name" class="GridViewCell" style="width: 300px; min-width: 300px; max-width: 300px; position: relative;">
+                                                                {{item.Name}}
+                                                            </td>
+
+
+                                                            <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px; position: relative;">
+
+
+                                                                {{item.ChildReference}}
+                                                            </td>
+
+                                                            <td [attr.title]="item.IssuedByUserName" class="GridViewCell" style="width: 80px; min-width: 80px; max-width: 80px; position: relative;">
+
+                                                                {{item.IssuedByUserName}}
+
+                                                            </td>
+
+                                                            <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width:100px; position: relative;">
+
+
+                                                                {{item.IssuedDate | DateTimeToDatePipe}}
+                                                            </td>
+
+
+
+                                                            <td *ngIf="IsShowFollowColum" (mouseleave)="OnFollowMouseleave(item)" (mouseover)="OnFollowMouseOver(item)" class="GridViewCell" style="width: 70px; min-width: 70px; max-width: 70px; position: relative;">
+
+                                                                <span id="{{item.DocumentTypeCode+'-F-DocsOut' | IdGeneratorPipe}}" (click)="AddFollowUp(item)" style="width:20px"  >
+
+                                                                    <img *ngIf="item.ShowFollowUp || item.HasFollowUp" src="./_Resources/Images/Icons/Followups/Followup_Black.png" />
+                                                                    <img style="opacity:0.7" *ngIf="!item.ShowFollowUp && !item.HasFollowUp" src="./_Resources/Images/Icons/Followups/Followup.png" />
+
+                                                                    
+                                                                </span>
+
+                                                            </td>
+
+
+
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+
+                                                    <table *ngIf="item.IsViewTree" [style.height]="item.CommunicationLogObsListHeight">
+
+                                                        <tr style="height:5px;">
+                                                            <td></td>
+                                                        </tr>
+
+                                                        <tr >
+
+                                                            <td   class="CellStretch">
+                                                                <div style="overflow-x:hidden;"  class="SimpleGridView">
+                                                                    <div  class="SimpleGridViewHeader">
+                                                                        <table>
+                                                                            <tr>
+
+                                                                                <td style="width: 30px; min-width: 30px;"></td>
+                                                                                <td style="width: 200px; min-width: 200px;">To</td>
+                                                                                <td style="width: 160px; min-width: 160px;">CC</td>
+                                                                                <td style="width: 150px; min-width: 150px;">Subject</td>
+                                                                                <td style="width: 170px; min-width: 170px;">Status</td>
+                                                                                <td style="width: 120px; min-width: 120px;">Create Date</td>
+                                                                                <td style="width: 120px; min-width: 120px;">Done Date</td>
+
+                                                                                <td>
+                                                                                    <div></div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </div>
+
+                                                                    <div class="SimpleGridViewBody">
+                                                                        <table>
+                                                                            <tr style="height: 1px;">
+                                                                                <td>
+                                                                                    <table>
+                                                                                        <tr (click)="item.OnSelectedChangeCommunicationLogObsList(itemLog)" [class.RowSelected]="itemLog === item.SelectedCommunicationLogViewMode" class="SimpleGridViewRow RowHover" *ngFor="let itemLog of item.CommunicationLogObsList">
+
+                                                                                            <td class="CellStretched" style="width: 30px; min-width: 30px; max-width: 30px; position: relative;">
+                                                                                                <button style="width: 30px;height:18px;text-align:left" class="Button" (click)="ViewCommunicationLog(item,itemLog)"><span style="margin-left:-3px;font-size:10px">View</span></button>
+                                                                                            </td>
+
+                                                                                            <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px; position: relative;">
+
+                                                                                                <div [attr.title]="itemLog.To">{{itemLog.To}}</div>
+                                                                                            </td>
+
+                                                                                            <td class="GridViewCell" style="width: 160px; min-width: 160px; max-width: 160px; position: relative;">
+
+                                                                                                <div [attr.title]="itemLog.CC">{{itemLog.CC}}</div>
+
+                                                                                            </td>
+                                                                                            <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px; position: relative;">
+
+                                                                                                {{itemLog.Subject}}
+                                                                                            </td>
+
+                                                                                            <td style="width:170px; min-width: 170px; max-width: 170px; position: relative;">
+                                                                                                <div class="MediaFill">
+                                                                                                    <table>
+                                                                                                        <tr>
+                                                                                                            <td style="width:80px;">
+                                                                                                                <div style="text-align:left;">{{itemLog.CommunicationStatusTypeName}}</div>
+                                                                                                            </td>
+                                                                                                            <td style="width:2px;">
+                                                                                                                <div></div>
+                                                                                                            </td>
+                                                                                                            <td *ngIf="itemLog.EmailDeliveryError != null && itemLog.CommunicationStatusTypeCode == 'D'" style="width:25px;">
+                                                                                                                <HelpIcon [IconSize]='25' [Header]="'Email Delivery Error'" [Text]="itemLog.EmailDeliveryError" [IconPath]="'./Images/Warning_icon_24.png'"></HelpIcon>
+                                                                                                            </td>
+                                                                                                            <td>
+                                                                                                                <div></div>
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                    </table>
+                                                                                                </div>
+                                                                                            </td>
+
+                                                                                            <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; position: relative;">
+
+                                                                                                {{itemLog.CreateDate | DateTimeToDatePipe}} {{itemLog.CreateDate | DateTimeToTimePipe}}
+
+                                                                                            </td>
+
+                                                                                            <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; position: relative;">
+                                                                                                {{itemLog.DoneDate | DateTimeToDatePipe}} {{itemLog.DoneDate | DateTimeToTimePipe}}
+
+                                                                                            </td>
+
+
+                                                                                            <td>
+                                                                                                <div></div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr>
+                                                                                <td colspan="8"></td>
+                                                                            </tr>
+                                                                        </table>
+
+
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+
+
+                                                        </tr>
+
+                                                        <tr >
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr style="height:5px;">
+                                                            <td></td>
+                                                        </tr>
+
+                                                    </table>
+
+
+
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+

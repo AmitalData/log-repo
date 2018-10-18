@@ -1,0 +1,205 @@
+﻿<div class="TabHolder">
+    <table>
+        <tr class="TabTitleRow">
+            <td>{{'Agent.TH.Billing' | TextCodeTranslationPipe}}</td>
+        </tr>
+
+        <tr style="height: 1px;">
+            <td>
+                <div style="width: 100%; position: relative;">
+                    <div #BillingChild></div>
+                </div>
+            </td>
+        </tr>
+
+        <tr style="height: 1px;" *ngIf="DisplaySATSettings">
+            <td>
+                <table>
+                    <tr class="TabTitleRow">
+                        <td colspan="2">SAT</td>
+                    </tr>
+
+                    <tr>
+                        <td style="width: 380px;">
+
+                            <table>
+                                 
+                                <tr class="FormFieldRow">
+                                    <td style="width: 140px;">
+                                        <LogLabel [ObjectFieldName]="'PaymentMethodCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'PaymentMethodCode'"
+                                                [SelectedValue]="PaymentMethodCode"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'SATPaymentMethod'">
+                                        </LogLov>
+                                    </td>
+                                </tr>
+
+
+                                <tr class="FormFieldRow">
+                                    <td style="width: 140px;">
+                                        <LogLabel [ObjectFieldName]="'MetodoPagoCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'MetodoPagoCode'"
+                                                [SelectedValue]="MetodoPagoCode"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'MetodoPago'">
+                                        </LogLov>
+                                    </td>
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <td style="width: 140px;">
+                                        <LogLabel [ObjectFieldName]="'UsoCFDICode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'UsoCFDICode'"
+                                                [SelectedValue]="UsoCFDICode"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'UsoCFDI'">
+                                        </LogLov>
+                                    </td>
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <td style="width: 140px;">
+                                        <LogLabel [ObjectFieldName]="'SATForeignRFC'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'SATForeignRFC'" [Text]="SATForeignRFC" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td></td>
+                                </tr>
+
+                            </table>
+
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <!-- CreditLimit -->
+        <tr style="height: 1px;"  *ngIf="HasCreditLimitFeature">
+            <td>
+                <table>
+                    <tr style="height: 25px; min-height: 25px;">
+                        <td>
+                            <table>
+                                <tr>
+                                    <td style="width: 1px;" *ngIf="!IsCreditLimitActivated">
+                                        <div class="OrangeInfo" style="height: 22px;">
+                                            To enter data , please enable the credit limit management from the maintenance
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr style="height: 1px;">
+                        <td>
+                            <table>
+                                <tr>
+                                    <td style="width: 20px;">
+                                        <LogCheckBox [ObjectFieldName]="'IsCreditLimitEnabled'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                    </td>
+
+                                    <td style="width: 1px; font-size: 13px; color: #1B90CB;">{{'Customer.F.IsCreditLimitEnabled' | TextCodeTranslationPipe}}</td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr style="height: 1px;">
+                        <td>
+                            <table>
+
+                                <!-- BlockNewShipmentCreation -->
+                                <tr class="FormFieldRow">
+                                    <td style="width: 10px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width: 1px;">
+                                        <div class="Label">
+                                            {{'Agent.F.BlockNewShipmentCreation' | TextCodeTranslationPipe}}
+                                        </div>
+                                    </td>
+
+                                    <td style="width: 5px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width: 20px;">
+                                        <LogCheckBox [ObjectFieldName]="'BlockNewShipmentCreation'" [Checked]="BlockNewShipmentCreation" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <!-- BlockNewInvoiceCreation -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <div></div>
+                                    </td>
+
+                                    <td>
+                                        <div class="Label">
+                                            {{'Agent.F.BlockNewInvoiceCreation' | TextCodeTranslationPipe}}
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+
+                                    <td>
+                                        <LogCheckBox [ObjectFieldName]="'BlockNewInvoiceCreation'" [Checked]="BlockNewInvoiceCreation" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <div></div>
+            </td>
+        </tr>
+    </table>
+</div>

@@ -1,0 +1,469 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{66797CCD-466C-4D18-8B6F-A4FC2694AA43}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Logitude.Customs.MetaData</RootNamespace>
+    <AssemblyName>Logitude.Customs.MetaData</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'All Projects|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\All Projects\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|AnyCPU'">
+    <OutputPath>bin\None\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AmazedSaint.Elastic">
+      <HintPath>..\General\Dlls\AmazedSaint.Elastic.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Shell.11.0, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Program Files (x86)\Microsoft Visual Studio 11.0\VSSDK\VisualStudioIntegration\Common\Assemblies\v4.0\Microsoft.VisualStudio.Shell.11.0.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Shell.Interop.11.0, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\Program Files (x86)\Microsoft Visual Studio 11.0\VSSDK\VisualStudioIntegration\Common\Assemblies\v4.0\Microsoft.VisualStudio.Shell.Interop.11.0.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.TextTemplating.11.0, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Program Files (x86)\Microsoft Visual Studio 11.0\VSSDK\VisualStudioIntegration\Common\Assemblies\v4.0\Microsoft.VisualStudio.TextTemplating.11.0.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.TextTemplating.Interfaces.11.0, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Program Files (x86)\Microsoft Visual Studio 11.0\VSSDK\VisualStudioIntegration\Common\Assemblies\v4.0\Microsoft.VisualStudio.TextTemplating.Interfaces.11.0.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.TextTemplating.Modeling.11.0, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.TextTemplating.VSHost.11.0, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Program Files (x86)\Microsoft Visual Studio 11.0\VSSDK\VisualStudioIntegration\Common\Assemblies\v4.0\Microsoft.VisualStudio.TextTemplating.VSHost.11.0.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Entity.Design" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.DomainServices.Hosting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AutoGenerators\ContextGenerator.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ContextGenerator.tt</DependentUpon>
+    </Compile>
+    <None Include="EntityFiles\MamanStatus.lxml" />
+    <None Include="EntityFiles\ClientDrivingLicense.lxml" />
+    <None Include="EntityFiles\ClientDrivingLicenseType.lxml" />
+    <None Include="EntityFiles\AcceptanceStatus.lxml" />
+    <None Include="EntityFiles\CourierPendingReason.lxml" />
+    <None Include="EntityFiles\CustomsAirline.lxml" />
+    <None Include="EntityFiles\DecCargoSplitCargoIdentifier.lxml" />
+    <None Include="EntityFiles\DecCargoSplitConsPackDet.lxml" />
+    <None Include="EntityFiles\DecCargoSplitConsItem.lxml" />
+    <None Include="EntityFiles\TPGFileType.lxml" />
+    <None Include="EntityFiles\TreatmentWay.lxml" />
+    <None Include="EntityFiles\CargoSplitRequestStatus.lxml" />
+    <None Include="EntityFiles\DecCargoSplitCon.lxml" />
+    <None Include="EntityFiles\SplitOrMergeReason.lxml" />
+    <None Include="EntityFiles\AgentTalkBackType.lxml" />
+    <None Include="EntityFiles\CargoStatus.lxml" />
+    <None Include="EntityFiles\ActionCode.lxml" />
+    <None Include="EntityFiles\CourierCustomStatus.lxml" />
+    <None Include="EntityFiles\CourierDeclaration.lxml" />
+    <None Include="EntityFiles\CourierDeclarationStatus.lxml" />
+    <None Include="EntityFiles\CourierManifestStatus.lxml" />
+    <None Include="EntityFiles\CourierMaster.lxml" />
+    <None Include="EntityFiles\CourierPaymentStatus.lxml" />
+    <None Include="EntityFiles\CouriersVat.lxml" />
+    <None Include="EntityFiles\AccumalationState.lxml" />
+    <None Include="EntityFiles\Claim.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\ClaimImporterDeclarsP3Loi.lxml" />
+    <None Include="EntityFiles\ClaimImporterDeclarsPage3.lxml" />
+    <None Include="EntityFiles\ClaimsRelatedEntitiesAmount.lxml" />
+    <None Include="EntityFiles\ClaimsRelatedEntitiesReason.lxml" />
+    <None Include="EntityFiles\ClaimsRelatedEntity.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <Compile Include="AutoGenerators\CustomClassesGenerator.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CustomClassesGenerator.tt</DependentUpon>
+    </Compile>
+    <None Include="EntityFiles\CustomsDocumentsDefinition.lxml" />
+    <None Include="EntityFiles\CustomsInsuranceCompany.lxml" />
+    <None Include="EntityFiles\DeclarationCargoSplit.lxml" />
+    <None Include="EntityFiles\DeclarationConsAcceptance.lxml" />
+    <None Include="EntityFiles\DeclarationCourierStatus.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\DocumentTypeCustomsData.lxml" />
+    <None Include="EntityFiles\FreightPaymentMethod.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\ImporterDeclarationType.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="AutoGenerators\ContextGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ContextGenerator.cs</LastGenOutput>
+    </None>
+    <None Include="AutoGenerators\CustomClassesGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CustomClassesGenerator.cs</LastGenOutput>
+    </None>
+    <None Include="EntityFiles\AddressContactState.lxml" />
+    <None Include="EntityFiles\AddressPurpose.lxml" />
+    <None Include="EntityFiles\AmendmentFieldReasonType.lxml" />
+    <None Include="EntityFiles\AmendmentRequestStatus.lxml" />
+    <None Include="EntityFiles\AssigneeNotificationType.lxml" />
+    <None Include="EntityFiles\AttachmentType.lxml" />
+    <None Include="EntityFiles\Authority.lxml" />
+    <None Include="EntityFiles\AuthorizedSignerPermit.lxml" />
+    <None Include="EntityFiles\AutonomyType.lxml" />
+    <None Include="EntityFiles\Bank.lxml" />
+    <None Include="EntityFiles\CargoIdentityQualifier.lxml" />
+    <None Include="EntityFiles\CertificatesStatus.lxml" />
+    <None Include="EntityFiles\CheckEssenceLookup.lxml" />
+    <None Include="EntityFiles\CheckTypeLookup.lxml" />
+    <None Include="EntityFiles\ClaimEntity.lxml" />
+    <None Include="EntityFiles\ClaimExplanationCode.lxml" />
+    <None Include="EntityFiles\ClaimImporterDeclarsPage3A.lxml" />
+    <None Include="EntityFiles\ClaimImporterDeclarsPage3B.lxml" />
+    <None Include="EntityFiles\ClaimsRelatedEntsExpDeclar.lxml" />
+    <None Include="EntityFiles\ClaimsRelatedEntsReasonsExp.lxml" />
+    <None Include="EntityFiles\ClosedTableStatus.lxml" />
+    <None Include="EntityFiles\CollateralAnswerStatus.lxml" />
+    <None Include="EntityFiles\CollateralAnswerType.lxml" />
+    <None Include="EntityFiles\CollateralRequestStatus.lxml" />
+    <None Include="EntityFiles\CollateralsRequestFileCond.lxml" />
+    <None Include="EntityFiles\CollateralType.lxml" />
+    <None Include="EntityFiles\CommercialSale.lxml" />
+    <None Include="EntityFiles\ConstraintApprovalDecision.lxml" />
+    <None Include="EntityFiles\ConstraintProcessType.lxml" />
+    <None Include="EntityFiles\ContinuousMessagesTypeCode.lxml" />
+    <None Include="EntityFiles\ConverterType.lxml" />
+    <None Include="EntityFiles\CourtInstance.lxml" />
+    <None Include="EntityFiles\CustomBanksCard.lxml" />
+    <None Include="EntityFiles\CustomerIdentifyType.lxml" />
+    <None Include="EntityFiles\CustomsBook.lxml" />
+    <None Include="EntityFiles\CustomsBranch.lxml" />
+    <None Include="EntityFiles\CargoIdentifireType.lxml" />
+    <None Include="EntityFiles\CertificateExemptionType.lxml" />
+    <None Include="EntityFiles\CheckEntityType.lxml" />
+    <None Include="EntityFiles\CheckQueueType.lxml" />
+    <None Include="EntityFiles\CheckRepresentativeType.lxml" />
+    <None Include="EntityFiles\City.lxml" />
+    <None Include="EntityFiles\Client.lxml" />
+    <None Include="EntityFiles\ClientAddress.lxml" />
+    <None Include="EntityFiles\ClientsAddressCommType.lxml" />
+    <None Include="EntityFiles\CommunicationType.lxml" />
+    <None Include="EntityFiles\ConfirmationType.lxml" />
+    <None Include="EntityFiles\Consignment.lxml" />
+    <None Include="EntityFiles\ConsignmentInternalTransition.lxml" />
+    <None Include="EntityFiles\ConsignmentPackage.lxml" />
+    <None Include="EntityFiles\ConstraintStatus.lxml" />
+    <None Include="EntityFiles\ConstraintType.lxml" />
+    <None Include="EntityFiles\ContactRoleType.lxml" />
+    <None Include="EntityFiles\CustomsClosedTable.lxml" />
+    <None Include="EntityFiles\CustomsCollateral.lxml" />
+    <None Include="EntityFiles\CustomsCollateralsAnswer.lxml" />
+    <None Include="EntityFiles\CustomsCollateralsCondition.lxml" />
+    <None Include="EntityFiles\CustomsCountry.lxml" />
+    <None Include="EntityFiles\CountryGroup.lxml" />
+    <None Include="EntityFiles\CurrencyType.lxml" />
+    <None Include="EntityFiles\CustomBank.lxml" />
+    <None Include="EntityFiles\CustomDocumentType.lxml" />
+    <None Include="EntityFiles\CustomDocumentTypeMetaData.lxml" />
+    <None Include="EntityFiles\CustomerActivityType.lxml" />
+    <None Include="EntityFiles\CustomerRoleType.lxml" />
+    <None Include="EntityFiles\CustomerTypeGeneral.lxml" />
+    <None Include="EntityFiles\CustomMetaDataType.lxml" />
+    <None Include="EntityFiles\CustomsAddressType.lxml" />
+    <None Include="EntityFiles\CustomsBookType.lxml" />
+    <None Include="EntityFiles\CustomsDocument.lxml" />
+    <None Include="EntityFiles\CustomsDocumentPointer.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CustomsDocumentMetaDataValue.lxml" />
+    <None Include="EntityFiles\CustomsDocumentStatusType.lxml" />
+    <None Include="EntityFiles\CustomsDocumentsTicket.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CustomsEnvoirmentType.lxml" />
+    <None Include="EntityFiles\CustomsExchangeRate.lxml" />
+    <None Include="EntityFiles\CustomsHouseType.lxml" />
+    <None Include="EntityFiles\CustomsHouseTypeAdditional.lxml" />
+    <None Include="EntityFiles\CustomsItem.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CustomsItemDetailsHistory.lxml" />
+    <None Include="EntityFiles\CustomsRequestsSheet.lxml" />
+    <None Include="EntityFiles\CustomsRequestsSheetStatus.lxml" />
+    <None Include="EntityFiles\CustomsRequiredField.lxml" />
+    <None Include="EntityFiles\CustomsSetting.lxml" />
+    <None Include="EntityFiles\CustomsTransportMode.lxml" />
+    <None Include="EntityFiles\CustomsVerificationStatusType.lxml" />
+    <None Include="EntityFiles\DangerousGoodsPackingReq.lxml" />
+    <None Include="EntityFiles\DebtNotificationType.lxml" />
+    <None Include="EntityFiles\Declaration.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\DeclarationConstraint.lxml" />
+    <None Include="EntityFiles\DeclarationErrorMapping.lxml" />
+    <None Include="EntityFiles\DeclarationPayment.lxml" />
+    <None Include="EntityFiles\DeclarationPaymentMethod.lxml" />
+    <None Include="EntityFiles\DeclarationPaymentProtest.lxml" />
+    <None Include="EntityFiles\DeclarationStatusType.lxml" />
+    <None Include="EntityFiles\DeclarationTax.lxml" />
+    <None Include="EntityFiles\DeficitConnFileParagraphType.lxml" />
+    <None Include="EntityFiles\Deficit.lxml" />
+    <None Include="EntityFiles\DeliverySiteType.lxml" />
+    <None Include="EntityFiles\DemanderType.lxml" />
+    <None Include="EntityFiles\Deposit.lxml" />
+    <None Include="EntityFiles\DepositCondition.lxml" />
+    <None Include="EntityFiles\DepositCustomerActivity.lxml" />
+    <None Include="EntityFiles\DepositEssenceType.lxml" />
+    <None Include="EntityFiles\DepositFileType.lxml" />
+    <None Include="EntityFiles\EntitlementType.lxml" />
+    <None Include="EntityFiles\EntityTypeLookup.lxml" />
+    <None Include="EntityFiles\FacilitationType.lxml" />
+    <None Include="EntityFiles\FaultInspectionType.lxml" />
+    <None Include="EntityFiles\FuelType.lxml" />
+    <None Include="EntityFiles\Gender.lxml" />
+    <None Include="EntityFiles\GovernmentProcedureType.lxml" />
+    <None Include="EntityFiles\Guarantee.lxml" />
+    <None Include="EntityFiles\GuaranteeCertificateType.lxml" />
+    <None Include="EntityFiles\GuaranteeCondition.lxml" />
+    <None Include="EntityFiles\GuaranteeCustomerActivity.lxml" />
+    <None Include="EntityFiles\ImporterDesposition.lxml" />
+    <None Include="EntityFiles\ImporterPeriodicDeclarStatus.lxml" />
+    <None Include="EntityFiles\ImporterTypeForClaim.lxml" />
+    <None Include="EntityFiles\InterfaceManagement.lxml" />
+    <None Include="EntityFiles\InterfaceTenantDefinition.lxml" />
+    <None Include="EntityFiles\InternalBorderSiteType.lxml" />
+    <None Include="EntityFiles\InternationalSite.lxml" />
+    <None Include="EntityFiles\InvoiceType.lxml" />
+    <None Include="EntityFiles\CustomsPartnersItem.lxml" />
+    <None Include="EntityFiles\ItemGovernmentProcedureType.lxml" />
+    <None Include="EntityFiles\LastReleaseFromWarehouse.lxml" />
+    <None Include="EntityFiles\LeadDocumentExceptionType.lxml" />
+    <None Include="EntityFiles\LeadDocumentType.lxml" />
+    <None Include="EntityFiles\ManifestCargoStatus.lxml" />
+    <None Include="EntityFiles\MAWBType.lxml" />
+    <None Include="EntityFiles\MeasureQualifier.lxml" />
+    <None Include="EntityFiles\MeasurmentUnit.lxml" />
+    <None Include="EntityFiles\ModificationAndDiscountType.lxml" />
+    <None Include="EntityFiles\MorningMessageType.lxml" />
+    <None Include="EntityFiles\Notification.lxml" />
+    <None Include="EntityFiles\NotificationDefinition.lxml" />
+    <None Include="EntityFiles\NotificationReply.lxml" />
+    <None Include="EntityFiles\NotificationTenantDefinition.lxml" />
+    <None Include="EntityFiles\NotificationType.lxml" />
+    <None Include="EntityFiles\InterfaceSendOption.lxml" />
+    <None Include="EntityFiles\OrganizationUnitType.lxml" />
+    <None Include="EntityFiles\PackageMeasureQualifier.lxml" />
+    <None Include="EntityFiles\PackingType.lxml" />
+    <None Include="EntityFiles\ParagraphType.lxml" />
+    <None Include="EntityFiles\PassportType.lxml" />
+    <None Include="EntityFiles\PayerActivityType.lxml" />
+    <None Include="EntityFiles\PayerType.lxml" />
+    <None Include="EntityFiles\PaymentMethodStatus.lxml" />
+    <None Include="EntityFiles\PaymentMethodType.lxml" />
+    <None Include="EntityFiles\PaymentOrder.lxml" />
+    <None Include="EntityFiles\PaymentOrderConnectionTable.lxml" />
+    <None Include="EntityFiles\PaymentOrderLine.lxml" />
+    <None Include="EntityFiles\PaymentOrderMethod.lxml" />
+    <None Include="EntityFiles\PaymentOrderProtestReason.lxml" />
+    <None Include="EntityFiles\PaymentOrderStatus.lxml" />
+    <None Include="EntityFiles\PaymentOrderType.lxml" />
+    <None Include="EntityFiles\PaymentProcess.lxml" />
+    <None Include="EntityFiles\PaymentProtestType.lxml" />
+    <None Include="EntityFiles\CustomsPaymentTerm.lxml" />
+    <None Include="EntityFiles\PaymentType.lxml" />
+    <None Include="EntityFiles\PhysicalCheck.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\PhysicalCheckOperation.lxml" />
+    <None Include="EntityFiles\PhysicalCheckStatusMessage.lxml" />
+    <None Include="EntityFiles\PointerLevel.lxml" />
+    <None Include="EntityFiles\ProceduralFaultInProcessType.lxml" />
+    <None Include="EntityFiles\ProceduralFaultInSourceType.lxml" />
+    <None Include="EntityFiles\ProceduralFault.lxml" />
+    <None Include="EntityFiles\ProceduralFaultsConnEntity.lxml" />
+    <None Include="EntityFiles\ProceduralFaultStatus.lxml" />
+    <None Include="EntityFiles\ProceduralFaultType.lxml" />
+    <None Include="EntityFiles\ProcessingReason.lxml" />
+    <None Include="EntityFiles\ProductIdentificationType.lxml" />
+    <None Include="EntityFiles\ProductNameType.lxml" />
+    <None Include="EntityFiles\PropertiesDetailsHistory.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\RansomViolationType.lxml" />
+    <None Include="EntityFiles\RegisteredWarehouseSiteType.lxml" />
+    <None Include="EntityFiles\RequestStatus.lxml" />
+    <None Include="EntityFiles\RequiredGuaranteeType.lxml" />
+    <None Include="EntityFiles\ReturnCondition.lxml" />
+    <None Include="EntityFiles\SalesTaxExemptionType.lxml" />
+    <None Include="EntityFiles\SignatureType.lxml" />
+    <None Include="EntityFiles\SiteLookup.lxml" />
+    <None Include="EntityFiles\SiteType.lxml" />
+    <None Include="EntityFiles\SpecialActionDescriptionType.lxml" />
+    <None Include="EntityFiles\SpecializationType.lxml" />
+    <None Include="EntityFiles\DeclarationStatementType.lxml" />
+    <None Include="EntityFiles\StorageMessageType.lxml" />
+    <None Include="EntityFiles\StorageStatus.lxml" />
+    <None Include="EntityFiles\SubCountry.lxml" />
+    <None Include="EntityFiles\SupplierInvioceItemCertificat.lxml" />
+    <None Include="EntityFiles\SupplierInvoice.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\SupplierInvoiceFreightAmount.lxml" />
+    <None Include="EntityFiles\SupplierInvoiceItemModVehicle.lxml" />
+    <None Include="EntityFiles\SupplierInvoiceItem.lxml" />
+    <None Include="EntityFiles\SupplierInvoiceItemsConDeclar.lxml" />
+    <None Include="EntityFiles\SupplierInvoiceItemsDescript.lxml" />
+    <None Include="EntityFiles\SupplierInvoiceItemsLevy.lxml" />
+    <None Include="EntityFiles\SupplierInvoiceItemsMod.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\SupplierInvoiceItemProcesType.lxml" />
+    <None Include="EntityFiles\SupplierInvoiceItemsProdIdent.lxml" />
+    <None Include="EntityFiles\SupplierInvoiceItemsSerialNum.lxml" />
+    <None Include="EntityFiles\SupplierInvoiceItemsTax.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\SupplierInvoiceItemVehicle.lxml" />
+    <None Include="EntityFiles\SupplierInvoiceItemVehicleMod.lxml" />
+    <None Include="EntityFiles\SupplierInvoiceItemVehicleAdd.lxml" />
+    <None Include="EntityFiles\SupplierInvoiceModification.lxml" />
+    <None Include="EntityFiles\Tapag.lxml" />
+    <None Include="EntityFiles\TapagConnectionTable.lxml" />
+    <None Include="EntityFiles\TapagType.lxml" />
+    <None Include="EntityFiles\TermsOfSaleType.lxml" />
+    <None Include="EntityFiles\TradeAgreement.lxml" />
+    <None Include="EntityFiles\CustomsVendor.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\TradeLevyExamptType.lxml" />
+    <None Include="EntityFiles\UIMessage.lxml" />
+    <None Include="EntityFiles\UIMessageAdditional.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\UnloadingSiteType.lxml" />
+    <None Include="EntityFiles\ValidCustomsItem.lxml" />
+    <None Include="EntityFiles\Vehicle.lxml" />
+    <None Include="EntityFiles\VehicleManufacturer.lxml" />
+    <None Include="EntityFiles\VehicleOwner.lxml" />
+    <None Include="EntityFiles\VehiclePoolType.lxml" />
+    <None Include="EntityFiles\VehiclePriceListType.lxml" />
+    <None Include="EntityFiles\VehicleReductionType.lxml" />
+    <None Include="EntityFiles\VehicleSafetyAccessory.lxml" />
+    <None Include="EntityFiles\VehicleSafeAccessoryInstlType.lxml" />
+    <None Include="EntityFiles\VehicleSafetyAccessoryType.lxml" />
+    <None Include="EntityFiles\VehicleStatus.lxml" />
+    <None Include="EntityFiles\VehicleTecnologyType.lxml" />
+    <None Include="EntityFiles\VehicleType.lxml" />
+    <None Include="EntityFiles\VendorCommission.lxml" />
+    <None Include="EntityFiles\VendorCommunication.lxml" />
+    <None Include="EntityFiles\VendorStatus.lxml" />
+    <None Include="EntityFiles\VendorTransactionType.lxml" />
+    <None Include="EntityFiles\VendorType.lxml" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JustWebFreight\WebFreight.Web\WebFreight.Web.csproj">
+      <Project>{8408e4e5-b4b7-46bc-8300-1ae163b36e2d}</Project>
+      <Name>WebFreight.Web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Customs.Data\Logitude.Customs.Data.csproj">
+      <Project>{643f92c9-7cf1-4429-b79e-1e354b758abf}</Project>
+      <Name>Logitude.Customs.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
+      <Project>{9b477a08-8ee2-4457-88fe-17e8a6ec4d00}</Project>
+      <Name>Logitude.Server.Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
+      <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
+      <Name>Simplog.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Global.Data.csproj">
+      <Project>{6d7ffad2-35b6-4133-8700-cf73e58d0c85}</Project>
+      <Name>Simplog.Global.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
+      <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
+      <Name>Simplog.Server.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="EntityFiles\CourierStatus.lxml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

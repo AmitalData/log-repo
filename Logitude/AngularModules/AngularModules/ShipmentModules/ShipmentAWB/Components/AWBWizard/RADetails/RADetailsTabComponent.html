@@ -1,0 +1,173 @@
+﻿
+<table>
+    <tr>
+        <td>
+            <div class="MediaFill">
+                <div class="MarginAbsolute10">
+                    <table>
+                        <tr style="height: 20px;">
+                            <td style="color: #1B90CB; font-size: 14px;">Regulated Agent Details</td>
+                        </tr>
+
+                        <tr style="height: 1px;">
+                            <td>
+                                <table class="FixedTable">
+                                    <tr class="FormFieldRow">
+                                        <td style="width: 10px;">
+                                            <div></div>
+                                        </td>
+                                        <td [style.width.px]="LabelColumnWidth">
+                                            <LogLabel [ObjectFieldName]="'IsKnownCargo'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td [style.width.px]="ControlColumnWidth">
+                                            <LogCheckBox [ObjectFieldName]="'IsKnownCargo'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                        </td>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="FormFieldRow">
+                                        <td style="width: 10px;">
+                                            <div></div>
+                                        </td>
+                                        <td [style.width.px]="LabelColumnWidth">
+                                            <LogLabel [ObjectFieldName]="'RegulatedAgentRANumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td [style.width.px]="ControlColumnWidth">
+                                            <LogTextBox [ObjectFieldName]="'RegulatedAgentRANumber'" [Text]="RegulatedAgentRANumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="FormFieldRow">
+                                        <td style="width: 10px;">
+                                            <div></div>
+                                        </td>
+                                        <td [style.width.px]="LabelColumnWidth">
+                                            <LogLabel [ObjectFieldName]="'KnownConsignorNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td [style.width.px]="ControlColumnWidth">
+                                            <LogTextBox [ObjectFieldName]="'KnownConsignorNumber'" [Text]="KnownConsignorNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="FormFieldRow">
+                                        <td style="width: 10px;">
+                                            <div></div>
+                                        </td>
+                                        <td [style.width.px]="LabelColumnWidth">
+                                            <LogLabel [ObjectFieldName]="'KCExpirationDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td [style.width.px]="ControlColumnWidth" [ngStyle]="{color: KCExpirationDateForeground}">
+                                            {{KCExpirationDate | DateTimeToDatePipe}}
+                                        </td>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                    <tr class="FormFieldRow">
+                                        <td style="width: 10px;">
+                                            <div></div>
+                                        </td>
+                                        <td [style.width.px]="LabelColumnWidth">
+                                            <LogLabel [ObjectFieldName]="'ColoaderRANumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td [style.width.px]="ControlColumnWidth">
+                                            <LogTextBox [ObjectFieldName]="'ColoaderRANumber'" [Text]="ColoaderRANumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <tr style="height: 10px;">
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>
+
+                        <tr style="height: 20px;">
+                            <td style="color: #1B90CB; font-size: 14px;">AWB Printing Fields</td>
+                        </tr>
+
+                        <tr style="height: 1px;">
+                            <td>
+                                <table>
+                                    <tr class="FormFieldRow">
+                                        <td style="width: 10px;">
+                                            <div></div>
+                                        </td>
+                                        <td [style.width.px]="LabelColumnWidth">
+                                            <LogLabel [ObjectFieldName]="'AWBPrintingSecurityStatusId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td [style.width.px]="ControlColumnWidth">
+                                            <LogLov [ObjectFieldName]="'AWBPrintingSecurityStatusId'"
+                                                    [SelectedValue]="AWBPrintingSecurityStatusId"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"
+                                                    [LookUpTableName]="'AWBSpecialHandlingCode'"
+                                                    [DependencyFilter1Value]="TenantZeroAirlineId">
+                                            </LogLov>
+                                        </td>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="FormFieldRow">
+                                        <td style="width: 10px;">
+                                            <div></div>
+                                        </td>
+                                        <td [style.width.px]="LabelColumnWidth">
+                                            <LogLabel [ObjectFieldName]="'AWBPrintingRANumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td [style.width.px]="ControlColumnWidth">
+                                            <LogTextBox [ObjectFieldName]="'AWBPrintingRANumber'" [Text]="AWBPrintingRANumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="FormFieldRow">
+                                        <td colspan="4">
+                                            <table>
+                                                <tr class="FormFieldRow">
+                                                    <td style="width: 10px;">
+                                                        <div></div>
+                                                    </td>
+                                                    <td [style.width.px]="LabelColumnWidth">
+                                                        <LogLabel [ObjectFieldName]="'AdditionalHandlingInfo'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                    </td>
+                                                    <td style="width: 400px;">
+                                                        <LogTextBox [ObjectFieldName]="'AdditionalHandlingInfo'" [Text]="AdditionalHandlingInfo" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                    </td>
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>

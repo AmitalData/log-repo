@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://tempuri.org/Logitudecustomsdraft" elementFormDefault="qualified" targetNamespace="http://tempuri.org/Logitudecustomsdraft" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="LOGICUSTDRAFT">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="Logitudecustomsdraft" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Logitudecustomsdraft">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="CustomFileNo" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="DeclarationNumber" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CIFValue" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="TotalTax" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="PaymentDate" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="DeclarationStatusCode" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="Taxes" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="Payments" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CustomFileNo" type="xs:string" />
+  <xs:element name="DeclarationNumber" type="xs:string" />
+  <xs:element name="CIFValue" type="xs:string" />
+  <xs:element name="TotalTax" type="xs:string" />
+  <xs:element name="PaymentDate" type="xs:string" />
+  <xs:element name="DeclarationStatusCode" type="xs:string" />
+  <xs:element name="Taxes">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="TaxTypeCode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="TotalAmount" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TaxTypeCode" type="xs:string" />
+  <xs:element name="TotalAmount" type="xs:string" />
+  <xs:element name="Payments">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="PayeeType" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Amount" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PayeeType" type="xs:string" />
+  <xs:element name="Amount" type="xs:string" />
+</xs:schema>

@@ -1,0 +1,126 @@
+﻿
+<table style="height: 24px;">
+    <tr>
+        <td style="width: 1px;">
+            <div style="height: 24px;">
+                <table *ngIf="EntityPM" class="TopTableCells">
+                    <tr>
+                        <td>
+                            <div class="ShortTitleControl" style="background: rgba(255, 0, 0, 0.1);display: flex;">
+                                <span>{{'ARInvoice.S.ShortTitle' | TextCodeTranslationPipe}}:</span>
+                                <span style="margin-left: 5px;">{{EntityNumber}}</span>
+                                <span class="TextTrimming" style="max-width: 200px;">{{EntityPM.BillToName}}</span>
+                            </div>
+                        </td>
+
+                        <!-- Customs Invoice -->
+                        <td style="padding-left: 5px;" *ngIf="EntityPM.ARInvoiceTypeCode == 'CI'">
+                            <div class="ShortTitleControl" style="background: Orange;">
+                                <span style="color: white;">{{'ARInvoice.S.ShortTitle.CustomsInvoice' | TextCodeTranslationPipe}} </span>
+                            </div>
+                        </td>
+
+                        <!-- Customs Credit Invoice -->
+                        <td style="padding-left: 5px;" *ngIf="EntityPM.ARInvoiceTypeCode == 'CC'">
+                            <div class="ShortTitleControl" style="background: Orange;">
+                                <span style="color: white;">{{'ARInvoice.S.ShortTitle.CustomsCreditNote' | TextCodeTranslationPipe}} </span>
+                            </div>
+                        </td>
+
+                        <!-- Constituent -->
+                        <td style="padding-left: 5px;" *ngIf="EntityPM.IsConstituentInvoice">
+                            <div class="ShortTitleControl" style="background: Orange;">
+                                <span style="color: white;">{{'ARInvoice.S.ShortTitle.Constituent' | TextCodeTranslationPipe}}</span>
+
+                                <span *ngIf="IsConnectedToConsolidation" style="margin-left: 10px; font-family:Arial; font-size: 11px; color: gray; font-style:italic;">{{'ARInvoice.S.ShortTitle.ConnectedToConsolidation' | TextCodeTranslationPipe}}:</span>
+                                <span *ngIf="IsConnectedToConsolidation">
+                                    <Hyperlink (click)="ViewEntityClicked(EntityPM.ConsolidationInvoiceId)" [Text]="EntityPM.ConsolidationInvoiceNumber"></Hyperlink>
+                                </span>
+                            </div>
+                        </td>
+
+                        <!-- Consolidation -->
+                        <td style="padding-left: 5px;" *ngIf="EntityPM.IsConsolidationInvoice">
+                            <div class="ShortTitleControl" style="background: Orange;">
+                                <span style="color: white;">{{'ARInvoice.S.ShortTitle.Consolidation' | TextCodeTranslationPipe}}  </span>
+                            </div>
+                        </td>
+
+                        <!-- Void -->
+                        <td style="padding-left: 5px;" *ngIf="EntityPM.StatusCode == 'VD'">
+                            <div class="ShortTitleControl" style="background: #6E7172;">
+                                <span style="color: white;">{{'General.O.Void' | TextCodeTranslationPipe}}</span>
+                            </div>
+                        </td>
+
+                        <!-- Credit Note -->
+                        <td style="padding-left: 5px;" *ngIf="!EntityPM.IsAutoCredit && EntityPM.ARInvoiceTypeCode == 'CD'">
+                            <div class="ShortTitleControl" style="background: Orange;">
+                                <span style="color: white;">{{'ARInvoice.S.ShortTitle.CreditNote' | TextCodeTranslationPipe}} </span>
+                            </div>
+                        </td>
+
+                        <!-- Auto Credit -->
+                        <td style="padding-left: 5px;" *ngIf="EntityPM.IsAutoCredit">
+                            <div class="ShortTitleControl" style="background: Orange; padding-right:0px;">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <span style="color: white; padding-right: 5px;">{{'ARInvoice.S.ShortTitle.AutoCredit' | TextCodeTranslationPipe}} </span>
+                                        </td>
+
+                                        <td style="vertical-align:top;">
+                                            <div class="RightBorderRadius">
+                                                <span style="font-size: 12px; color: #282E30;">{{'ARInvoice.S.ShortTitle.ByInvoice' | TextCodeTranslationPipe}}</span>
+                                                <Hyperlink (click)="ViewEntityClicked(EntityPM.AutoCreditByARInvoiceId)">{{EntityPM.AutoCreditByARInvoiceNumber}}</Hyperlink>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+
+                        <!-- Auto Credited -->
+                        <td style="padding-left: 5px;" *ngIf="EntityPM.StatusCode == 'AR'">
+                            <div class="ShortTitleControl" style="background: Orange; padding-right:0px;">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <span style="color: white; padding-right: 5px;">{{'ARInvoice.S.ShortTitle.AutoCredited' | TextCodeTranslationPipe}}</span>
+                                        </td>
+
+                                        <td style="vertical-align:top;">
+                                            <div class="RightBorderRadius">
+                                                <span style="font-size: 12px; color: #282E30;">{{'ARInvoice.S.ShortTitle.ByInvoice' | TextCodeTranslationPipe}}</span>
+                                                <Hyperlink (click)="ViewEntityClicked(EntityPM.AutoCreditedByARInvoiceId)">{{EntityPM.AutoCreditedByARInvoiceNumber}}</Hyperlink>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+
+                        <!-- Cancelled -->
+                        <td style="padding-left: 5px;" *ngIf="EntityPM.StatusCode == 'LL'">
+                            <div class="ShortTitleControl" style="background: Red;">
+                                <span style="color: white;">{{'ARInvoice.S.ShortTitle.Cancelled' | TextCodeTranslationPipe}} </span>
+                            </div>
+                        </td>
+
+                        <!-- SATTransferStatusName -->
+                        <td style="padding-left: 5px;" *ngIf="DisplaySATSettings == true">
+                            <div class="ShortTitleControl" style="background: #6E7172;">
+                                <span style="color: white;">{{EntityPM.SATTransferStatusName}}</span>
+                            </div>
+                        </td>
+
+                    </tr>
+                </table>
+            </div>
+        </td>
+
+        <td>
+            <div></div>
+        </td>
+    </tr>
+</table>

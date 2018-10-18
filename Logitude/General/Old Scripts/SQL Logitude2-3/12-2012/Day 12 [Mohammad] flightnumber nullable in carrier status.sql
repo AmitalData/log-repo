@@ -1,0 +1,1 @@
+alter table shipmentcarrierstatuses alter column FlightNumber varchar(15) null

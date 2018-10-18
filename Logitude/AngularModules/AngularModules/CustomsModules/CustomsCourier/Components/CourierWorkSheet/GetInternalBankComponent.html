@@ -1,0 +1,113 @@
+﻿
+
+<style type="text/css">
+    
+    
+    
+    .promptBox {
+        text-align: center;
+        padding: 10px;
+        background: #fff4cd;
+        width: 500px;
+        height: 85px;
+        color: #545454;
+        border-radius: 5px;
+    }
+</style>
+<log-column [header]="'Customs.DeclarationPaymentMethod.F.BankCode' | TextCodeTranslationPipe" [width]="'140'" [Alignment]="'right'" [binding]="'BankCode'">
+    <log-cell-template template="let item" #logcelltemplate>
+        <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+            <span>{{item.InternalBankName}}</span>
+        </div>
+        <div *ngIf="logcelltemplate.IsEditMode">
+            
+        </div>
+    </log-cell-template>
+</log-column>
+
+<table>
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div class="ScrollViewer">
+                <div class="ScrollContent">
+                    <div class="TableHolder" style="padding-top: 5px;">
+                        <table>
+
+                            <tr style="height: 30px;"><td><div></div></td></tr>
+
+                            <!-- Year + Browse -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 120px;">
+                                    <LogLabel [NoObjectField]="true" [ObjectFieldName]="'SelectedBank'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Customs.DeclarationPaymentMethod.F.BankCode'"></LogLabel>
+                                </td>
+
+                                <td style="width: 120px;">
+
+                                    <!--(ComboBoxDropDownClicked)="ComboBoxClicked()"-->
+                                    <ComboBox [ItemsSource]="BanksList" [FocusOnMe]="true"
+                                              [SelectedItem]="SelectedBank"
+                                              (SelectedItemChanged)="SelectedBank = $event"
+                                              [Binding]="'Name'"></ComboBox>
+
+                                </td>
+                                <td style="width: 30px;">
+                                    <div></div>
+                                </td>
+
+                                <td><div></div></td>
+                            </tr>
+
+                            <tr><td><div></div></td></tr>
+                            <tr>
+                                <td>
+                                </td>
+                            </tr>
+
+
+
+
+                            <tr><td><div></div></td></tr>
+
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">בטל</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="OkButtonClicked()">שלח</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>
+
+
+

@@ -1,0 +1,1 @@
+delete from ObjectFields where FieldName = 'Remark' and ObjectTableId = (select Id from ObjectTables where Name = 'Country')

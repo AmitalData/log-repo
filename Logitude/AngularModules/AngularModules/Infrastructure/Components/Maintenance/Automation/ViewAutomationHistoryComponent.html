@@ -1,0 +1,73 @@
+﻿<table>
+
+    <tr>
+
+        <td>
+            <table>
+                <tr style="height:5px"><td><div style="height:5px"></div></td></tr>
+                <!--ALL Conditions in this area-->
+
+                <tr style="height:180px">
+
+                    <td>
+
+
+                        <AutomationsConditionAreaComponent [AutomationCondationLists]="AutomationCondationAndList" [Title]="'Conditions (meet ALL Conditions in this area'" [TiggerComponent]="DataContext" [CondationListType]="'And'" [IsDisabled]="true" [ListHeight]="'150px'"></AutomationsConditionAreaComponent>
+
+                    </td>
+
+
+                </tr>
+
+                <tr style="height:5px"><td><div style="height:5px"></div></td></tr>
+                <!--ANY Conditions in this area-->
+                <tr style="height:180px">
+
+                    <td>
+                        <AutomationsConditionAreaComponent [AutomationCondationLists]="AutomationCondationOrList" [Title]="'Conditions (meet ANY Conditions in this area)'" [TiggerComponent]="DataContext" [CondationListType]="'Or'" [IsDisabled]="true" [ListHeight]="'150px'"></AutomationsConditionAreaComponent>
+                    </td>
+
+
+                </tr>
+
+
+                <tr style="height:5px"><td><div style="height:5px"></div></td></tr>
+
+            </table>
+        </td>
+    </tr>
+
+
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;margin-right:5px">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <div>
+
+                        </div>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CloseButtonClicked()">Close</button>
+                    </td>
+
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

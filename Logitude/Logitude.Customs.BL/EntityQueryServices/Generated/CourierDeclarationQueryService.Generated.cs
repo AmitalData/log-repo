@@ -1,0 +1,69 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.Customs.BL.EntityDataMappings;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Data.EntityKeys;
+using Logitude.Customs.Data;
+using Simplog.Server.Infrastructure;
+namespace Logitude.Customs.BL.EntityQueryServices
+{ 
+   public partial class CourierDeclarationQueryService: EntityQueryService<CourierDeclaration,CourierDeclarationKeys,CourierDeclarationPM,object,CourierDeclarationKeys>
+   {
+   
+        CourierDeclarationRepository repository;
+		ICustomContext  context;
+        public CourierDeclarationQueryService(int tenant)
+        {
+		    context = CustomContext.GetContext(tenant);
+            MainContext = context;
+            repository = new CourierDeclarationRepository(context);
+            Repository = repository;
+            mapping = new CourierDeclarationDataMapping();
+        }
+
+        public CourierDeclarationQueryService(CourierDeclarationRepository repository)
+        {
+            this.repository = repository;
+            Repository = repository;
+            mapping = new CourierDeclarationDataMapping();
+        }
+
+        public CourierDeclarationQueryService(ICustomContext context)
+        {
+            this.repository = new CourierDeclarationRepository(context);
+            this.context = context;
+
+            MainContext = context;
+            Repository = repository;
+            mapping = new CourierDeclarationDataMapping();
+        }
+		 
+		public  CourierDeclarationPM GetSingle(string declarationid, string couriermasterid,bool getComposition, bool getFromCache)
+        {
+             EntityKeys = new CourierDeclarationKeys(){ DeclarationId = declarationid, CourierMasterId = couriermasterid };
+
+			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
+        }
+
+       
+	    protected override EntityKeyFields GetKeys(CourierDeclaration entityPOCO)
+        {
+            CourierDeclarationKeys entityKeys = new CourierDeclarationKeys() { DeclarationId = entityPOCO.DeclarationId, CourierMasterId = entityPOCO.CourierMasterId,  };
+            return entityKeys;
+        }
+     
+	 
+   }
+   
+}
+	 

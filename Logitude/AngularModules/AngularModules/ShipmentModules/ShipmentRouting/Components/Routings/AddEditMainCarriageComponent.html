@@ -1,0 +1,1375 @@
+﻿
+<style type="text/css">
+    .LegSection {
+        margin: 5px;
+        padding: 5px;
+        min-height: 160px;
+        overflow: hidden;
+        border: 1px solid #AAAAAA;
+        border-radius: 8px;
+        -moz-border-radius: 8px;
+        -webkit-border-radius: 8px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-shadow: 0px 0px 2px 2px #DADADA;
+        -moz-box-shadow: 0px 0px 2px 2px #DADADA;
+        -webkit-box-shadow: 0px 0px 2px 2px #DADADA;
+    }
+</style>
+
+
+<table>
+    <tr style="height:1px;" *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr style="height: 1px;" *ngIf="IsCloseHouseInfoVisible">
+        <td>
+            <div class="OrangeInfo" style="margin: 5px;">
+                In house shipments, Routing should be edited from the master
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table class="FixedTable">
+                <tr>
+                    <!-- Left Side -->
+                    <td style="width: 270px;">
+                        <table class="FixedTable">
+                            <tr class="FormFieldRow">
+                                <td style="width: 95px;">
+                                    <LogLabel [ObjectFieldName]="'MainCarriageFromPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="FromTextCodeLabel"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogLov [ObjectFieldName]="'MainCarriageFromPortId'"
+                                            [SelectedValue]="MainCarriageFromPortId"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Port'"
+                                            [DependencyFilter1Value]="TransportModeId">
+                                    </LogLov>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'Transshipment1FromPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="Via1Label"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogLov [ObjectFieldName]="'Transshipment1FromPortId'"
+                                            [SelectedValue]="Transshipment1FromPortId"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Port'"
+                                            [DependencyFilter1Value]="TransportModeId">
+                                    </LogLov>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'Transshipment2FromPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="Via2Label"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogLov [ObjectFieldName]="'Transshipment2FromPortId'"
+                                            [SelectedValue]="Transshipment2FromPortId"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Port'"
+                                            [DependencyFilter1Value]="TransportModeId">
+                                    </LogLov>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'Transshipment3FromPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="Via3Label"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogLov [ObjectFieldName]="'Transshipment3FromPortId'"
+                                            [SelectedValue]="Transshipment3FromPortId"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Port'"
+                                            [DependencyFilter1Value]="TransportModeId">
+                                    </LogLov>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'MainCarriageFinalDestinationPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="ToTextCodeLabel"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogLov [ObjectFieldName]="'MainCarriageFinalDestinationPortId'"
+                                            [SelectedValue]="MainCarriageFinalDestinationPortId"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Port'"
+                                            [DependencyFilter1Value]="TransportModeId">
+                                    </LogLov>
+                                </td>
+                            </tr>
+
+                            <tr style="height: 1px;" *ngIf="IsCloseMasterInfoVisible">
+                                <td colspan="2">
+                                    <div class="OrangeInfo" style="margin: 5px;">
+                                        <div class="MultiLinesText">
+                                            {{ConnectedMasterText}}
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="2">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <!-- Right Side -->
+                    <td>
+                        <div class="MediaFill">
+                            <ScrollViewer>
+
+                                <!-- Main Carriage -->
+                                <div class="LegSection">
+                                    <table>
+
+                                        <!-- Header -->
+                                        <tr style="height: 20px;">
+                                            <td colspan="2">
+                                                <span class="BlueTitle">{{Leg0TextCodeLabel}}:</span>
+                                                <img style="vertical-align:middle; width: 16px; height: 16px;" [attr.src]="EntityPM.MainCarriageFromPortCountryCode | CountryFlagPipe" [attr.title]="EntityPM.MainCarriageFromPortCountryName" />
+                                                <span class="Value">{{EntityPM.MainCarriageFromPortCode}}</span>
+                                                <span class="Label">{{EntityPM.MainCarriageFromPortName}}</span>
+                                                <span class="Value" style="padding-left: 15px; padding-right: 15px; text-align: center; font-weight: bold;">{{'Shipment.O.Routings.To' | TextCodeTranslationPipe}}</span>
+                                                <img style="vertical-align:middle; width: 16px; height: 16px;" [attr.src]="EntityPM.MainCarriageToPortCountryCode | CountryFlagPipe" [attr.title]="EntityPM.MainCarriageToPortCountryName" />
+                                                <span class="Value">{{EntityPM.MainCarriageToPortCode}}</span>
+                                                <span class="Label">{{EntityPM.MainCarriageToPortName}}</span>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <table>
+
+                                                    <!-- Carrier -->
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <table class="FixedTable">
+                                                                <tr>
+                                                                    <td [style.width.px]="LabelWidth">
+                                                                        <LogLabel [ObjectFieldName]="'MainCarriageCarrierId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="CarrierTextCode"></LogLabel>
+                                                                    </td>
+
+                                                                    <td style="width: 152px;">
+                                                                        <LogLov [ObjectFieldName]="'MainCarriageCarrierId'"
+                                                                                [SelectedValue]="MainCarriageCarrierId"
+                                                                                [ObjectTableName]="ObjectTableName"
+                                                                                [DataContext]="DataContext"
+                                                                                [LookUpTableName]="'Carrier'"
+                                                                                [DependencyFilter1Value]="CarrierDependencyProperty1"
+                                                                                [HideLastColumn]="true">
+                                                                        </LogLov>
+                                                                    </td>
+
+                                                                    <td style="width: 10px;">
+                                                                        <div></div>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <div>
+                                                                            <Hyperlink *ngIf="MainCarriageCarrierId && TransportModeId == 'A'" (click)="AddStockClicked(MainCarriageCarrierId)">Add Stock</Hyperlink>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- Carrier Number -->
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <table class="FixedTable">
+                                                                <tr>
+                                                                    <td [style.width.px]="LabelWidth">
+                                                                        <LogLabel [ObjectFieldName]="'MainCarriageCarrierNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="CarrierNumberTextCode"></LogLabel>
+                                                                    </td>
+
+                                                                    <td style="width: 170px;">
+                                                                        <table>
+                                                                            <tr>
+                                                                                <td style="width: 45px;" *ngIf="TransportModeId == 'A'">
+                                                                                    <LogTextBox [ObjectFieldName]="'MainCarriageCarrierPrefix'" [Text]="MainCarriageCarrierPrefix" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <LogTextBox [ObjectFieldName]="'MainCarriageCarrierNumber'" [Text]="MainCarriageCarrierNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- TrailerNumber -->
+                                                    <tr class="FormFieldRow" *ngIf="TransportModeId == 'I'">
+                                                        <td>
+                                                            <table class="FixedTable">
+                                                                <tr>
+                                                                    <td [style.width.px]="LabelWidth">
+                                                                        <LogLabel [ObjectFieldName]="'TrailerNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                    </td>
+                                                                    <td style="width:170px">
+                                                                        <LogTextBox [ObjectFieldName]="'TrailerNumber'" [Text]="TrailerNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- Interline -->
+                                                    <tr class="FormFieldRow" *ngIf="TransportModeId == 'A'">
+                                                        <td>
+                                                            <table class="FixedTable">
+                                                                <tr>
+                                                                    <td [style.width.px]="LabelWidth">
+                                                                        <div>
+                                                                            <span *ngIf="IsInterlineAdded">
+                                                                                <LogLabel [ObjectFieldName]="'InterlineId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                            </span>
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <td style="width: 152px;">
+
+                                                                        <span *ngIf="!IsInterlineAdded">
+                                                                            <Hyperlink [IsEnabled]="IsAddInterlineEnabled" (click)="AddInterlineClicked()">Add Interline</Hyperlink>
+                                                                        </span>
+
+                                                                        <span *ngIf="IsInterlineAdded">
+                                                                            <LogLov [ObjectFieldName]="'InterlineId'"
+                                                                                    [SelectedValue]="InterlineId"
+                                                                                    [ObjectTableName]="ObjectTableName"
+                                                                                    [DataContext]="DataContext"
+                                                                                    [LookUpTableName]="'Carrier'"
+                                                                                    [DependencyFilter1Value]="'AL'"
+                                                                                    [HideLastColumn]="true"
+                                                                                    (LostFocus)="OnInterlineLostFocus($event)">
+                                                                            </LogLov>
+                                                                        </span>
+                                                                    </td>
+
+                                                                    <td style="width: 10px;">
+                                                                        <div></div>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <div>
+                                                                            <Hyperlink *ngIf="InterlineId && TransportModeId == 'A'" (click)="AddStockClicked(InterlineId)">Add Stock</Hyperlink>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- Master -->
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <table class="FixedTable">
+                                                                <tr>
+                                                                    <td [style.width.px]="LabelWidth">
+                                                                        <LogLabel [ObjectFieldName]="'Master'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="MasterTextCode"></LogLabel>
+                                                                    </td>
+
+                                                                    <td style="width: 152px;">
+                                                                        <table>
+                                                                            <tr>
+                                                                                <td style="width: 45px;" *ngIf="TransportModeId == 'A'">
+                                                                                    <LogTextBox [ObjectFieldName]="'AirlinePrefix'" [Text]="AirlinePrefix" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                                                </td>
+
+                                                                                <td>
+                                                                                    <LogTextBox [ObjectFieldName]="'Master'" [Text]="Master" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideLastColumn]="true" (LostFocus)="MasterLostFocus($event)"></LogTextBox>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <button id="{{'GetFromStockBtn' | IdGeneratorPipe}}" style="margin-left: -5px; width: 90px;" class="Button" *ngIf="IsFromStockVisible && TransportModeId == 'A'" [disabled]="!IsFromStockEnabled" (click)="GetStockClicked()">Get from stock</button>
+                                                                        <button id="{{'ReturnStockBtn' | IdGeneratorPipe}}" style="margin-left: -5px; width: 90px;" class="Button" *ngIf="IsReturnStockVisible && TransportModeId == 'A'" [disabled]="!IsReturnStockEnabled" (click)="ReturnStockClicked()">Return to stock</button>
+                                                                    </td>
+
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- Master Date -->
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <table class="FixedTable">
+                                                                <tr>
+                                                                    <td [style.width.px]="LabelWidth">
+                                                                        <LogLabel [ObjectFieldName]="'MAWBOBLDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="MasterDateTextCode"></LogLabel>
+                                                                    </td>
+
+                                                                    <td style="width: 134px;">
+                                                                        <LogDatePicker [HideColumns]="true" [ObjectFieldName]="'MAWBOBLDate'" [SelectedDateValue]="MAWBOBLDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                                                                    </td>
+
+                                                                    <td style="width:18px;">
+                                                                        <FollowupButton [IsEnabled]="IsEditingEntityEnabled" [ShipmentPM]="EntityPM" [LegType]="'MAWBOBLDate'"></FollowupButton>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- OBLTypeCode -->
+                                                    <tr class="FormFieldRow" *ngIf="TransportModeId == 'O'">
+                                                        <td>
+                                                            <table class="FixedTable">
+                                                                <tr>
+                                                                    <td [style.width.px]="LabelWidth">
+                                                                        <LogLabel [ObjectFieldName]="'OBLTypeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                    </td>
+
+                                                                    <td style="width: 170px;">
+                                                                        <LogLov [ObjectFieldName]="'OBLTypeCode'"
+                                                                                [SelectedValue]="OBLTypeCode"
+                                                                                [ObjectTableName]="ObjectTableName"
+                                                                                [DataContext]="DataContext"
+                                                                                [LookUpTableName]="'OBLType'">
+                                                                        </LogLov>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- Cutt Off Date -->
+                                                    <tr class="FormFieldRow" *ngIf="EntityPM.TransportModeId == 'A' || EntityPM.TransportModeId == 'O'">
+                                                        <td>
+                                                            <table class="FixedTable">
+                                                                <tr>
+                                                                    <td [style.width.px]="LabelWidth">
+                                                                        <LogLabel [ObjectFieldName]="'CutoffDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.CutOff'"></LogLabel>
+                                                                    </td>
+
+                                                                    <td style="width: 152px;">
+                                                                        <LogDatePicker [HideLastColumn]="true" [ObjectFieldName]="'CutoffDate'" [SelectedDateValue]="CutoffDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                                                                    </td>
+
+                                                                    <td style="width:18px;">
+                                                                        <FollowupButton [IsEnabled]="IsEditingEntityEnabled" [ShipmentPM]="EntityPM" [LegType]="'CutoffDate'"></FollowupButton>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- Cutt Off Time -->
+                                                    <tr class="FormFieldRow" *ngIf="EntityPM.TransportModeId == 'A' || EntityPM.TransportModeId == 'O'">
+                                                        <td>
+                                                            <table class="FixedTable">
+                                                                <tr>
+                                                                    <td [style.width.px]="LabelWidth">
+                                                                        <LogLabel [ObjectFieldName]="'CutoffDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.CutOffTime'"></LogLabel>
+                                                                    </td>
+
+                                                                    <td style="width: 170px;">
+                                                                        <LogDatePicker [ObjectFieldName]="'CutoffDate'" [SelectedDateValue]="CutoffDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- DocumentsClosingDate -->
+                                                    <tr class="FormFieldRow" *ngIf="EntityPM.DirectionId == 'E' && EntityPM.TransportModeId == 'O'">
+                                                        <td>
+                                                            <table class="FixedTable">
+                                                                <tr>
+                                                                    <td [style.width.px]="LabelWidth">
+                                                                        <LogLabel [ObjectFieldName]="'DocumentsClosingDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                    </td>
+
+                                                                    <td style="width: 170px;">
+                                                                        <LogDatePicker [ObjectFieldName]="'DocumentsClosingDate'" [SelectedDateValue]="DocumentsClosingDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- DocumentsClosingTime -->
+                                                    <tr class="FormFieldRow" *ngIf="EntityPM.DirectionId == 'E' && EntityPM.TransportModeId == 'O'">
+                                                        <td>
+                                                            <table class="FixedTable">
+                                                                <tr>
+                                                                    <td [style.width.px]="LabelWidth">
+                                                                        <LogLabel [TextCode]="'Shipment.S.Routings.DocumentsClosingTime'"  [ObjectFieldName]="'DocumentsClosingDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                    </td>
+
+                                                                    <td style="width: 170px;">
+                                                                        <LogDatePicker [ObjectFieldName]="'DocumentsClosingDate'" [SelectedDateValue]="DocumentsClosingDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- Vessel -->
+                                                    <tr class="FormFieldRow" *ngIf="TransportModeId == 'O'">
+                                                        <td>
+                                                            <table class="FixedTable">
+                                                                <tr>
+                                                                    <td [style.width.px]="LabelWidth">
+                                                                        <LogLabel [ObjectFieldName]="'MainCarriageVesselId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.F.MainCarriageVesselId.Short'"></LogLabel>
+                                                                    </td>
+
+                                                                    <td style="width: 170px;">
+                                                                        <LogLov [ObjectFieldName]="'MainCarriageVesselId'"
+                                                                                [SelectedValue]="MainCarriageVesselId"
+                                                                                [ObjectTableName]="ObjectTableName"
+                                                                                [DataContext]="DataContext"
+                                                                                [LookUpTableName]="'Vessel'">
+                                                                        </LogLov>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+
+                                            <!-- Dates -->
+                                            <td style="width: 340px;">
+                                                <div class="MediaFill">
+                                                    <table>
+
+                                                        <!-- ETD -->
+                                                        <tr class="FormFieldRow">
+                                                            <td>
+                                                                <div>
+                                                                    <button *ngIf="MainCarriageETD && !MainCarriageATD" (click)="SetActualDateClicked('MainCarriageETD')" class="Button" [disabled]="!IsEditingEnabled" style="height: 18px; font-size: 10px;">Set as Actual</button>
+                                                                </div>
+                                                            </td>
+
+                                                            <td style="width: 45px;">
+                                                                <LogLabel [ObjectFieldName]="'MainCarriageETD'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="ETDLabel"></LogLabel>
+                                                            </td>
+
+                                                            <td style="width: 105px;">
+                                                                <LogDatePicker [ObjectFieldName]="'MainCarriageETD'" [SelectedDateValue]="MainCarriageETD" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                            </td>
+
+                                                            <td style="width: 2px;">
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td style="width: 95px;">
+                                                                <LogDatePicker [ObjectFieldName]="'MainCarriageETD'" [SelectedDateValue]="MainCarriageETD" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                                            </td>
+
+                                                            <td style="width: 18px;">
+                                                                <FollowupButton [IsEnabled]="IsEditingEntityEnabled" [ShipmentPM]="EntityPM" [LegType]="'MainCarriageDeparture'" [IsAutomatic]="true"></FollowupButton>
+                                                            </td>
+                                                        </tr>
+
+                                                        <!-- ETA -->
+                                                        <tr class="FormFieldRow">
+                                                            <td>
+                                                                <div>
+                                                                    <button *ngIf="MainCarriageETA && !MainCarriageATA" (click)="SetActualDateClicked('MainCarriageETA')" class="Button" [disabled]="!IsEditingEnabled" style="height: 18px; font-size: 10px;">Set as Actual</button>
+                                                                </div>
+                                                            </td>
+
+                                                            <td>
+                                                                <LogLabel [ObjectFieldName]="'MainCarriageETA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="ETALabel"></LogLabel>
+                                                            </td>
+
+                                                            <td>
+                                                                <LogDatePicker [ObjectFieldName]="'MainCarriageETA'" [SelectedDateValue]="MainCarriageETA" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                            </td>
+
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td>
+                                                                <LogDatePicker [ObjectFieldName]="'MainCarriageETA'" [SelectedDateValue]="MainCarriageETA" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                                            </td>
+
+                                                            <td>
+                                                                <FollowupButton [IsEnabled]="IsEditingEntityEnabled" [ShipmentPM]="EntityPM" [LegType]="'MainCarriageArrival'" [IsAutomatic]="true"></FollowupButton>
+                                                            </td>
+                                                        </tr>
+
+                                                        <!-- ATD -->
+                                                        <tr class="FormFieldRow">
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td>
+                                                                <LogLabel [ObjectFieldName]="'MainCarriageATD'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="ATDLabel"></LogLabel>
+                                                            </td>
+
+                                                            <td>
+                                                                <LogDatePicker [ObjectFieldName]="'MainCarriageATD'" [SelectedDateValue]="MainCarriageATD" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                            </td>
+
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td>
+                                                                <LogDatePicker [ObjectFieldName]="'MainCarriageATD'" [SelectedDateValue]="MainCarriageATD" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                                            </td>
+
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <!-- ATA -->
+                                                        <tr class="FormFieldRow">
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td>
+                                                                <LogLabel [ObjectFieldName]="'MainCarriageATA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="ATALabel"></LogLabel>
+                                                            </td>
+
+                                                            <td>
+                                                                <LogDatePicker [ObjectFieldName]="'MainCarriageATA'" [SelectedDateValue]="MainCarriageATA" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                            </td>
+
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td>
+                                                                <LogDatePicker [ObjectFieldName]="'MainCarriageATA'" [SelectedDateValue]="MainCarriageATA" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                                            </td>
+
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td colspan="6">
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <!-- Via 1 -->
+                                <div class="LegSection" style="margin-top: 10px;" *ngIf="Transshipment1FromPortId">
+                                    <table>
+
+                                        <!-- Header -->
+                                        <tr style="height: 20px;">
+                                            <td colspan="2">
+                                                <span class="BlueTitle">{{Leg1TextCodeLabel}}:</span>
+                                                <img style="vertical-align:middle; width: 16px; height: 16px;" [attr.src]="EntityPM.Transshipment1FromPortCountryCode | CountryFlagPipe" />
+                                                <span class="Value">{{EntityPM.Transshipment1FromPortCode}}</span>
+                                                <span class="Label">{{EntityPM.Transshipment1FromPortName}}</span>
+                                                <span class="Value" style="padding-left: 15px; padding-right: 15px; text-align: center; font-weight: bold;">To</span>
+                                                <img style="vertical-align:middle; width: 16px; height: 16px;" [attr.src]="EntityPM.Transshipment1ToPortCountryCode  | CountryFlagPipe" />
+                                                <span class="Value">{{EntityPM.Transshipment1ToPortCode}}</span>
+                                                <span class="Label">{{EntityPM.Transshipment1ToPortName}}</span>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <table>
+
+                                                    <!-- Carrier -->
+                                                    <tr class="FormFieldRow">
+                                                        <td [style.width.px]="LabelWidth">
+                                                            <LogLabel [ObjectFieldName]="'Transshipment1CarrierId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="CarrierTextCode"></LogLabel>
+                                                        </td>
+
+                                                        <td style="width: 170px;">
+                                                            <LogLov [ObjectFieldName]="'Transshipment1CarrierId'"
+                                                                    [SelectedValue]="Transshipment1CarrierId"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'Carrier'"
+                                                                    [DependencyFilter1Value]="CarrierDependencyProperty1">
+                                                            </LogLov>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- Carrier Number -->
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'Transshipment1CarrierNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="CarrierNumberTextCode"></LogLabel>
+                                                        </td>
+
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="width: 45px;" *ngIf="TransportModeId == 'A'">
+                                                                        <LogTextBox [ObjectFieldName]="'Transshipment1CarrierPrefix'" [Text]="Transshipment1CarrierPrefix" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                                    </td>
+                                                                    <td>
+                                                                        <LogTextBox [ObjectFieldName]="'Transshipment1CarrierNumber'" [Text]="Transshipment1CarrierNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- Master -->
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'Transshipment1AdditionalMAWBOBLBL'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="MasterTextCode"></LogLabel>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogTextBox [ObjectFieldName]="'Transshipment1AdditionalMAWBOBLBL'" [Text]="Transshipment1AdditionalMAWBOBLBL" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- Vessel -->
+                                                    <tr class="FormFieldRow" *ngIf="TransportModeId == 'O'">
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'Transshipment1VesselId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.F.Transshipment1VesselId.Short'"></LogLabel>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogLov [ObjectFieldName]="'Transshipment1VesselId'"
+                                                                    [SelectedValue]="Transshipment1VesselId"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'Vessel'">
+                                                            </LogLov>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td colspan="3">
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                </table>
+                                            </td>
+
+                                            <!-- Dates -->
+                                            <td style="width: 340px;">
+                                                <table>
+
+                                                    <!-- ETD -->
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <div>
+                                                                <button *ngIf="Transshipment1ETD && !Transshipment1ATD" (click)="SetActualDateClicked('Transshipment1ETD')" class="Button" [disabled]="!IsEditingEnabled" style="height: 18px; font-size: 10px;">Set as Actual</button>
+                                                            </div>
+                                                        </td>
+
+                                                        <td style="width: 45px;">
+                                                            <LogLabel [ObjectFieldName]="'Transshipment1ETD'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="ETDLabel"></LogLabel>
+                                                        </td>
+
+                                                        <td style="width: 105px;">
+                                                            <LogDatePicker [ObjectFieldName]="'Transshipment1ETD'" [SelectedDateValue]="Transshipment1ETD" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                        </td>
+
+                                                        <td style="width: 2px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td style="width: 95px;">
+                                                            <LogDatePicker [ObjectFieldName]="'Transshipment1ETD'" [SelectedDateValue]="Transshipment1ETD" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                                        </td>
+
+                                                        <td style="width: 18px;">
+                                                            <FollowupButton [IsEnabled]="IsEditingEntityEnabled" [ShipmentPM]="EntityPM" [LegType]="'Transshipment1Departure'" [IsAutomatic]="true"></FollowupButton>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- ETA -->
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <div>
+                                                                <button *ngIf="Transshipment1ETA && !Transshipment1ATA" (click)="SetActualDateClicked('Transshipment1ETA')" class="Button" [disabled]="!IsEditingEnabled" style="height: 18px; font-size: 10px;">Set as Actual</button>
+                                                            </div>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'Transshipment1ETA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="ETALabel"></LogLabel>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogDatePicker [ObjectFieldName]="'Transshipment1ETA'" [SelectedDateValue]="Transshipment1ETA" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogDatePicker [ObjectFieldName]="'Transshipment1ETA'" [SelectedDateValue]="Transshipment1ETA" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                                        </td>
+
+                                                        <td>
+                                                            <FollowupButton [IsEnabled]="IsEditingEntityEnabled" [ShipmentPM]="EntityPM" [LegType]="'Transshipment1Arrival'" [IsAutomatic]="true"></FollowupButton>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- ATD -->
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'Transshipment1ATD'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="ATDLabel"></LogLabel>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogDatePicker [ObjectFieldName]="'Transshipment1ATD'" [SelectedDateValue]="Transshipment1ATD" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogDatePicker [ObjectFieldName]="'Transshipment1ATD'" [SelectedDateValue]="Transshipment1ATD" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- ATA -->
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'Transshipment1ATA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="ATALabel"></LogLabel>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogDatePicker [ObjectFieldName]="'Transshipment1ATA'" [SelectedDateValue]="Transshipment1ATA" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogDatePicker [ObjectFieldName]="'Transshipment1ATA'" [SelectedDateValue]="Transshipment1ATA" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td colspan="6">
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <!-- Via 2 -->
+                                <div class="LegSection" style="margin-top: 10px;" *ngIf="Transshipment2FromPortId">
+                                    <table>
+
+                                        <!-- Header -->
+                                        <tr style="height: 20px;">
+                                            <td colspan="2">
+                                                <span class="BlueTitle">{{Leg2TextCodeLabel}}:</span>
+                                                <img style="vertical-align:middle; width: 16px; height: 16px;" [attr.src]="EntityPM.Transshipment2FromPortCountryCode | CountryFlagPipe" />
+                                                <span class="Value">{{EntityPM.Transshipment2FromPortCode}}</span>
+                                                <span class="Label">{{EntityPM.Transshipment2FromPortName}}</span>
+                                                <span class="Value" style="padding-left: 15px; padding-right: 15px; text-align: center; font-weight: bold;">To</span>
+                                                <img style="vertical-align:middle; width: 16px; height: 16px;" [attr.src]="EntityPM.Transshipment2ToPortCountryCode  | CountryFlagPipe" />
+                                                <span class="Value">{{EntityPM.Transshipment2ToPortCode}}</span>
+                                                <span class="Label">{{EntityPM.Transshipment2ToPortName}}</span>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <table>
+
+                                                    <!-- Carrier -->
+                                                    <tr class="FormFieldRow">
+                                                        <td [style.width.px]="LabelWidth">
+                                                            <LogLabel [ObjectFieldName]="'Transshipment2CarrierId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="CarrierTextCode"></LogLabel>
+                                                        </td>
+
+                                                        <td style="width: 170px;">
+                                                            <LogLov [ObjectFieldName]="'Transshipment2CarrierId'"
+                                                                    [SelectedValue]="Transshipment2CarrierId"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'Carrier'"
+                                                                    [DependencyFilter1Value]="CarrierDependencyProperty1">
+                                                            </LogLov>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- Carrier Number -->
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'Transshipment2CarrierNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="CarrierNumberTextCode"></LogLabel>
+                                                        </td>
+
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="width: 45px;" *ngIf="TransportModeId == 'A'">
+                                                                        <LogTextBox [ObjectFieldName]="'Transshipment2CarrierPrefix'" [Text]="Transshipment2CarrierPrefix" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                                    </td>
+                                                                    <td>
+                                                                        <LogTextBox [ObjectFieldName]="'Transshipment2CarrierNumber'" [Text]="Transshipment2CarrierNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- Master -->
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'Transshipment2AdditionalMAWBOBLBL'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="MasterTextCode"></LogLabel>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogTextBox [ObjectFieldName]="'Transshipment2AdditionalMAWBOBLBL'" [Text]="Transshipment2AdditionalMAWBOBLBL" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- Vessel -->
+                                                    <tr class="FormFieldRow" *ngIf="TransportModeId == 'O'">
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'Transshipment2VesselId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.F.Transshipment2VesselId.Short'"></LogLabel>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogLov [ObjectFieldName]="'Transshipment2VesselId'"
+                                                                    [SelectedValue]="Transshipment2VesselId"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'Vessel'">
+                                                            </LogLov>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td colspan="3">
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                </table>
+                                            </td>
+
+                                            <!-- Dates -->
+                                            <td style="width: 340px;">
+                                                <table>
+
+                                                    <!-- ETD -->
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <div>
+                                                                <button *ngIf="Transshipment2ETD && !Transshipment2ATD" (click)="SetActualDateClicked('Transshipment2ETD')" class="Button" [disabled]="!IsEditingEnabled" style="height: 18px; font-size: 10px;">Set as Actual</button>
+                                                            </div>
+                                                        </td>
+
+                                                        <td style="width: 45px;">
+                                                            <LogLabel [ObjectFieldName]="'Transshipment2ETD'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="ETDLabel"></LogLabel>
+                                                        </td>
+
+                                                        <td style="width: 105px;">
+                                                            <LogDatePicker [ObjectFieldName]="'Transshipment2ETD'" [SelectedDateValue]="Transshipment2ETD" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                        </td>
+
+                                                        <td style="width: 2px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td style="width: 95px;">
+                                                            <LogDatePicker [ObjectFieldName]="'Transshipment2ETD'" [SelectedDateValue]="Transshipment2ETD" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                                        </td>
+
+                                                        <td style="width: 18px;">
+                                                            <FollowupButton [IsEnabled]="IsEditingEntityEnabled" [ShipmentPM]="EntityPM" [LegType]="'Transshipment2Departure'" [IsAutomatic]="true"></FollowupButton>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- ETA -->
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <div>
+                                                                <button *ngIf="Transshipment2ETA && !Transshipment2ATA" (click)="SetActualDateClicked('Transshipment2ETA')" class="Button" [disabled]="!IsEditingEnabled" style="height: 18px; font-size: 10px;">Set as Actual</button>
+                                                            </div>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'Transshipment2ETA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="ETALabel"></LogLabel>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogDatePicker [ObjectFieldName]="'Transshipment2ETA'" [SelectedDateValue]="Transshipment2ETA" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogDatePicker [ObjectFieldName]="'Transshipment2ETA'" [SelectedDateValue]="Transshipment2ETA" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                                        </td>
+
+                                                        <td>
+                                                            <FollowupButton [IsEnabled]="IsEditingEntityEnabled" [ShipmentPM]="EntityPM" [LegType]="'Transshipment2Arrival'" [IsAutomatic]="true"></FollowupButton>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- ATD -->
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'Transshipment2ATD'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="ATDLabel"></LogLabel>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogDatePicker [ObjectFieldName]="'Transshipment2ATD'" [SelectedDateValue]="Transshipment2ATD" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogDatePicker [ObjectFieldName]="'Transshipment2ATD'" [SelectedDateValue]="Transshipment2ATD" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- ATA -->
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'Transshipment2ATA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="ATALabel"></LogLabel>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogDatePicker [ObjectFieldName]="'Transshipment2ATA'" [SelectedDateValue]="Transshipment2ATA" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogDatePicker [ObjectFieldName]="'Transshipment2ATA'" [SelectedDateValue]="Transshipment2ATA" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td colspan="6">
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <!-- Via 3 -->
+                                <div class="LegSection" style="margin-top: 10px;" *ngIf="Transshipment3FromPortId">
+                                    <table>
+
+                                        <!-- Header -->
+                                        <tr style="height: 20px;">
+                                            <td colspan="2">
+                                                <span class="BlueTitle">{{Leg3TextCodeLabel}}:</span>
+                                                <img style="vertical-align:middle; width: 16px; height: 16px;" [attr.src]="EntityPM.Transshipment3FromPortCountryCode | CountryFlagPipe" />
+                                                <span class="Value">{{EntityPM.Transshipment3FromPortCode}}</span>
+                                                <span class="Label">{{EntityPM.Transshipment3FromPortName}}</span>
+                                                <span class="Value" style="padding-left: 15px; padding-right: 15px; text-align: center; font-weight: bold;">To</span>
+                                                <img style="vertical-align:middle; width: 16px; height: 16px;" [attr.src]="EntityPM.Transshipment3ToPortCountryCode  | CountryFlagPipe" />
+                                                <span class="Value">{{EntityPM.Transshipment3ToPortCode}}</span>
+                                                <span class="Label">{{EntityPM.Transshipment3ToPortName}}</span>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <table>
+
+                                                    <!-- Carrier -->
+                                                    <tr class="FormFieldRow">
+                                                        <td [style.width.px]="LabelWidth">
+                                                            <LogLabel [ObjectFieldName]="'Transshipment3CarrierId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="CarrierTextCode"></LogLabel>
+                                                        </td>
+
+                                                        <td style="width: 170px;">
+                                                            <LogLov [ObjectFieldName]="'Transshipment3CarrierId'"
+                                                                    [SelectedValue]="Transshipment3CarrierId"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'Carrier'"
+                                                                    [DependencyFilter1Value]="CarrierDependencyProperty1">
+                                                            </LogLov>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- Carrier Number -->
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'Transshipment3CarrierNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="CarrierNumberTextCode"></LogLabel>
+                                                        </td>
+
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="width: 45px;" *ngIf="TransportModeId == 'A'">
+                                                                        <LogTextBox [ObjectFieldName]="'Transshipment3CarrierPrefix'" [Text]="Transshipment3CarrierPrefix" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                                    </td>
+                                                                    <td>
+                                                                        <LogTextBox [ObjectFieldName]="'Transshipment3CarrierNumber'" [Text]="Transshipment3CarrierNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- Master -->
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'Transshipment3AdditionalMAWBOBLBL'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="MasterTextCode"></LogLabel>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogTextBox [ObjectFieldName]="'Transshipment3AdditionalMAWBOBLBL'" [Text]="Transshipment3AdditionalMAWBOBLBL" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- Vessel -->
+                                                    <tr class="FormFieldRow" *ngIf="TransportModeId == 'O'">
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'Transshipment3VesselId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.F.Transshipment3VesselId.Short'"></LogLabel>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogLov [ObjectFieldName]="'Transshipment3VesselId'"
+                                                                    [SelectedValue]="Transshipment3VesselId"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'Vessel'">
+                                                            </LogLov>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td colspan="3">
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                </table>
+                                            </td>
+
+                                            <!-- Dates -->
+                                            <td style="width: 340px;">
+                                                <table>
+
+                                                    <!-- ETD -->
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <div>
+                                                                <button *ngIf="Transshipment3ETD && !Transshipment3ATD" (click)="SetActualDateClicked('Transshipment3ETD')" class="Button" [disabled]="!IsEditingEnabled" style="height: 18px; font-size: 10px;">Set as Actual</button>
+                                                            </div>
+                                                        </td>
+
+                                                        <td style="width: 45px;">
+                                                            <LogLabel [ObjectFieldName]="'Transshipment3ETD'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="ETDLabel"></LogLabel>
+                                                        </td>
+
+                                                        <td style="width: 105px;">
+                                                            <LogDatePicker [ObjectFieldName]="'Transshipment3ETD'" [SelectedDateValue]="Transshipment3ETD" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                        </td>
+
+                                                        <td style="width: 2px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td style="width: 95px;">
+                                                            <LogDatePicker [ObjectFieldName]="'Transshipment3ETD'" [SelectedDateValue]="Transshipment3ETD" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                                        </td>
+
+                                                        <td style="width: 18px;">
+                                                            <FollowupButton [IsEnabled]="IsEditingEntityEnabled" [ShipmentPM]="EntityPM" [LegType]="'Transshipment3Departure'" [IsAutomatic]="true"></FollowupButton>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- ETA -->
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <div>
+                                                                <button *ngIf="Transshipment3ETA && !Transshipment3ATA" (click)="SetActualDateClicked('Transshipment3ETA')" class="Button" [disabled]="!IsEditingEnabled" style="height: 18px; font-size: 10px;">Set as Actual</button>
+                                                            </div>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'Transshipment3ETA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="ETALabel"></LogLabel>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogDatePicker [ObjectFieldName]="'Transshipment3ETA'" [SelectedDateValue]="Transshipment3ETA" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogDatePicker [ObjectFieldName]="'Transshipment3ETA'" [SelectedDateValue]="Transshipment3ETA" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                                        </td>
+
+                                                        <td>
+                                                            <FollowupButton [IsEnabled]="IsEditingEntityEnabled" [ShipmentPM]="EntityPM" [LegType]="'Transshipment3Arrival'" [IsAutomatic]="true"></FollowupButton>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- ATD -->
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'Transshipment3ATD'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="ATDLabel"></LogLabel>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogDatePicker [ObjectFieldName]="'Transshipment3ATD'" [SelectedDateValue]="Transshipment3ATD" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogDatePicker [ObjectFieldName]="'Transshipment3ATD'" [SelectedDateValue]="Transshipment3ATD" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- ATA -->
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'Transshipment3ATA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="ATALabel"></LogLabel>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogDatePicker [ObjectFieldName]="'Transshipment3ATA'" [SelectedDateValue]="Transshipment3ATA" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogDatePicker [ObjectFieldName]="'Transshipment3ATA'" [SelectedDateValue]="Transshipment3ATA" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td colspan="6">
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                            </ScrollViewer>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()" id="{{ 'MainCarriageCancelBtn' | IdGeneratorPipe}}">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!IsEditingEnabled" id="{{ 'MainCarriageOKBtn' | IdGeneratorPipe}}">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

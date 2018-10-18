@@ -1,0 +1,77 @@
+﻿
+
+
+
+
+
+
+
+<div class="TabHolder">
+    <table>
+        <tr class="TabTitleRow">
+            <td>{{'User.TH.Distributor' | TextCodeTranslationPipe}}</td>
+        </tr>
+
+        <tr>
+            <td>
+                <table>
+                    <tr>
+                        <td style="width: 350px;">
+                            <table>
+
+                               
+
+                                
+
+
+                               
+
+
+
+
+
+
+                                <!-- IsSalesman -->
+                                <tr class="FormFieldRow" >
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'IsDistributor'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td>
+                                        <LogCheckBox [ObjectFieldName]="'IsDistributor'" [Checked]="IsSalesman" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                    </td>
+                                </tr>
+
+                                <!-- DepartmentId -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'DistributorCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'DistributorCode'"
+                                                [SelectedValue]="DistributorCode"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [SelectedValuePath]="'Code'"
+                                                [LookUpTableName]="'Distributor'">
+                                        </LogLov>
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <td colspan="2">
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>

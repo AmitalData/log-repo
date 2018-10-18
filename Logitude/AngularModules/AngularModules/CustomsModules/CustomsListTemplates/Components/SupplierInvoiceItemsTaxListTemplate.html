@@ -1,0 +1,40 @@
+﻿<style>
+    .red {
+        color: red !important;
+    }
+</style>
+
+<div>
+    <div class="TextTrimming" *ngIf="fieldName == 'TaxBaseAmount'" style="text-align: right; padding: 0px 2px;">
+        {{ rowData[fieldName] | NumbersPipe:'N2'  }}
+    </div>
+    <div class="TextTrimming" *ngIf="fieldName == 'TaxRate'" style="text-align: right; padding: 0px 2px;">
+        {{ rowData[fieldName] | NumbersPipe:'N2'  }}
+    </div>
+    <div class="TextTrimming" *ngIf="fieldName == 'TaxToPay'" style="text-align: right; padding: 0px 2px;">
+        {{ MyTaxToPay | NumbersPipe:'N2'  }}
+    </div>
+    <div class="TextTrimming" *ngIf="fieldName == 'TaxAmount'" style="text-align: right; padding: 0px 2px;">
+        {{ rowData[fieldName] | NumbersPipe:'N2'  }}
+    </div>
+
+    <div class="TextTrimming" *ngIf="fieldName == 'DeferedTaxAmount'" style="text-align: right; padding: 0px 2px;">
+        {{ rowData[fieldName] | NumbersPipe:'N2'  }}
+    </div>
+
+    
+
+    
+    <div class="TextTrimming " *ngIf="fieldName == 'EditButton' ">
+        <!--[Left]="3"--> 
+        <IconButton 
+                    [Name]="'Edit'" 
+                    [IsSmall]="true" 
+                    
+                    (click)="ShowTaxMore()"></IconButton>
+        
+        
+    </div>
+
+</div>
+

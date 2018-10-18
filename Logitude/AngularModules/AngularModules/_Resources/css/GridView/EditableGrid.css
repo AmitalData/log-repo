@@ -1,0 +1,319 @@
+﻿.EditableGrid .ag-header-cell {
+    text-align: left;
+    text-indent: 5px;
+    height: 24px;
+    cursor: pointer;
+    overflow: hidden;
+    border-right: 1px solid #DADADA;
+}
+
+.EditableGrid .row-cell {
+    text-align: left;
+    text-indent: 10px;
+    height: 27px;
+    line-height: 27px; 
+    max-height: 27px;
+    cursor: pointer;
+    overflow: hidden;
+}
+.EditableGrid .Mask{
+    background-color:#DADADA; 
+}
+.EditableGrid .ag-header-cell:hover {
+    /*background: #cfcbcb !important;
+    color: rgb(103, 103, 103) !important;*/
+    cursor: default;
+    background: -moz-linear-gradient(50% 17.31% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    background: -webkit-gradient(linear,50% 17.31%,50% 105.85%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
+    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+}
+
+.EditableGrid .ag-header {
+    /*color: white;
+    height: 24px;
+    min-height: 24px;
+    line-height: 24px;
+    width: 100%;
+    background: -moz-linear-gradient(50% 100% 90deg,rgba(112, 112, 112, 1) 0%,rgba(168, 168, 168, 1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(112, 112, 112, 1) 0%, rgba(168, 168, 168, 1) 100%);
+    background: -webkit-gradient(linear,50% 100%,50% 0%,color-stop(0,rgba(112, 112, 112, 1) ),color-stop(1,rgba(168, 168, 168, 1) ));
+    background: -o-linear-gradient(90deg, rgba(112, 112, 112, 1) 0%, rgba(168, 168, 168, 1) 100%);
+    background: linear-gradient(0deg, rgba(112, 112, 112, 1) 0%, rgba(168, 168, 168, 1) 100%);*/
+    font-weight: normal;
+    font-size: 12px;
+    color: #1B90CB;
+    border: 1px solid #DADADA;
+    background: -moz-linear-gradient(50% 0% -90deg,rgba(247, 247, 247, 1) 0%,rgba(245, 245, 245, 1) 52.38%,rgba(238, 238, 238, 1) 72.96%,rgba(226, 226, 226, 1) 87.88%,rgba(209, 209, 209, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 52.38%, rgba(238, 238, 238, 1) 72.96%, rgba(226, 226, 226, 1) 87.88%, rgba(209, 209, 209, 1) 100%);
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(247, 247, 247, 1) ),color-stop(0.5238,rgba(245, 245, 245, 1) ),color-stop(0.7296,rgba(238, 238, 238, 1) ),color-stop(0.8788,rgba(226, 226, 226, 1) ),color-stop(1,rgba(209, 209, 209, 1) ));
+    background: -o-linear-gradient(-90deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 52.38%, rgba(238, 238, 238, 1) 72.96%, rgba(226, 226, 226, 1) 87.88%, rgba(209, 209, 209, 1) 100%);
+    background: linear-gradient(180deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 52.38%, rgba(238, 238, 238, 1) 72.96%, rgba(226, 226, 226, 1) 87.88%, rgba(209, 209, 209, 1) 100%);
+}
+
+.EditableGrid .ag-row:hover, .Row:hover {
+    /*background: rgba(230, 231, 232, 0.3) none repeat scroll 0 0;*/
+     color: black;
+    cursor: pointer;
+    border: 1px solid #85CBED;
+    background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(221, 232, 245, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(221, 232, 245, 1) ));
+    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFFFFF', endColorstr='#DDE8F5' ,GradientType=0)";
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+    /*color: black;
+    cursor: pointer;*/
+    /*border: 1px solid #85CBED;*/
+    /*border: none;
+    background-color: transparent;
+    background-image: none;*/
+    /*background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(221, 232, 245, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(221, 232, 245, 1) ));
+    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFFFFF', endColorstr='#DDE8F5' ,GradientType=0)";
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);*/
+}
+
+.EditableGrid .ag-selected-row, .SelectedRow {
+    background: #b6e0f5 none repeat scroll 0 0;
+    color: black;
+    cursor: pointer;
+    /*border: 1px solid #85CBED;*/
+    /*border: none;
+    background-color: transparent;
+    background-image: none;*/
+    /*background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(221, 232, 245, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(221, 232, 245, 1) ));
+    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFFFFF', endColorstr='#DDE8F5' ,GradientType=0)";
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);*/
+}
+ 
+
+.EditableGrid .ag-cell {
+    padding: 0px;
+    height: 27px;
+    max-height: 27px;
+    line-height: 27px;
+    text-align: left;
+    text-indent: 10px;
+}
+
+.EditableGrid .ag-row {
+    padding: 0px;
+    height: 27px;
+    max-height: 27px;
+    line-height: 27px;
+    border: 1px solid transparent;
+    /*border-top: 1px solid transparent;*/
+    border-bottom: 1px solid #A7A9AC;
+}
+
+.EditableGrid .EditableGridBody {
+    top: 27px;
+    /*bottom: 0;*/
+    min-width: Calc(100% - 2px); 
+    /*overflow-x: hidden;*/
+    /*background: pink;*/
+    max-width: 100%;
+    overflow: auto;
+
+      bottom: 0;
+   
+}
+.EditableGrid .EditableGridBody {
+    position: absolute;
+}
+
+.EditableGrid .EditableGridHeader {
+    /*background: red;*/
+    font-weight: normal;
+    vertical-align:middle;
+    font-size: 12px;
+    color: #1B90CB;
+    border: 1px solid #DADADA;
+    /*height: 27px;*/
+    /*color: white;*/
+    /*line-height: 24px;*/
+    min-height: 27px;
+    background: -moz-linear-gradient(50% 0% -90deg,rgba(247, 247, 247, 1) 0%,rgba(245, 245, 245, 1) 52.38%,rgba(238, 238, 238, 1) 72.96%,rgba(226, 226, 226, 1) 87.88%,rgba(209, 209, 209, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 52.38%, rgba(238, 238, 238, 1) 72.96%, rgba(226, 226, 226, 1) 87.88%, rgba(209, 209, 209, 1) 100%);
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(247, 247, 247, 1) ),color-stop(0.5238,rgba(245, 245, 245, 1) ),color-stop(0.7296,rgba(238, 238, 238, 1) ),color-stop(0.8788,rgba(226, 226, 226, 1) ),color-stop(1,rgba(209, 209, 209, 1) ));
+    background: -o-linear-gradient(-90deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 52.38%, rgba(238, 238, 238, 1) 72.96%, rgba(226, 226, 226, 1) 87.88%, rgba(209, 209, 209, 1) 100%);
+    background: linear-gradient(180deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 52.38%, rgba(238, 238, 238, 1) 72.96%, rgba(226, 226, 226, 1) 87.88%, rgba(209, 209, 209, 1) 100%);
+}
+
+.EditableGridHeaderLines {
+    height: 54px;
+    line-height: 51px;
+    min-height: 51px;
+}
+ 
+.EditableGrid .EditableGridHeader, .EditableGrid .EditableGridBody {
+    position: absolute;
+    
+}
+
+.EditableGridContainer .EditableGrid {
+    /*background: green;*/
+}
+
+.EditableGridContainer {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    /*overflow-x: auto;
+    overflow-y: hidden;*/
+    /*background: blue;*/
+}
+
+/*.EditableGrid {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}*/
+
+#edit-log-grid {
+    position: absolute;
+    max-width: 100%;
+    max-height: 100%;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+}
+
+#logHeader {
+    overflow: hidden;
+    color: white;
+    height: 24px;
+    min-height: 24px;
+    line-height: 24px;
+    width: 100%;
+    background: -moz-linear-gradient(50% 100% 90deg,rgba(112, 112, 112, 1) 0%,rgba(168, 168, 168, 1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(112, 112, 112, 1) 0%, rgba(168, 168, 168, 1) 100%);
+    background: -webkit-gradient(linear,50% 100%,50% 0%,color-stop(0,rgba(112, 112, 112, 1) ),color-stop(1,rgba(168, 168, 168, 1) ));
+    background: -o-linear-gradient(90deg, rgba(112, 112, 112, 1) 0%, rgba(168, 168, 168, 1) 100%);
+    background: linear-gradient(0deg, rgba(112, 112, 112, 1) 0%, rgba(168, 168, 168, 1) 100%);
+}
+
+/*input:hover:not(:disabled), input:focus:not(:disabled) {
+    border: 1px solid #3BB3E2;
+}*/
+
+/*input:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+input {
+    height: 22px;
+    min-height: 22px;
+    max-height: 22px;
+    line-height: 21px;
+    width: 100%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border: 1px solid #AAAAAA;
+    outline: none;
+    font-size: 11px;
+    color: #45494A;
+    background: white;
+    text-indent: 5px;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -moz-box-shadow: inset 0 0 3px #AAAAAA;
+    -webkit-box-shadow: inset 0 0 3px #AAAAAA;
+    box-shadow: inset 0 0 3px #AAAAAA;
+}
+
+textarea:hover:not(:disabled), textarea:focus:not(:disabled) {
+    border: 1px solid #3BB3E2;
+}
+
+textarea:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+textarea {
+    height: 100%;
+    width: 100%;
+    white-space: pre-wrap;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: 1px solid #AAAAAA;
+    outline-width: 0px;
+    font-size: 11px;
+    color: #45494A;
+    background: white;
+    text-indent: 5px;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -moz-box-shadow: inset 0 0 3px #AAAAAA;
+    -webkit-box-shadow: inset 0 0 3px #AAAAAA;
+    box-shadow: inset 0 0 3px #AAAAAA;
+    resize: none;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    display: none;
+    
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+    -webkit-appearance:textfield;
+}
+
+select {
+    text-indent: 5px;
+    border: 1px solid #AAAAAA !important;
+    border-radius: 3px !important;
+}*/
+
+
+
+.darkHeader {
+    color: white !important;
+    background: -moz-linear-gradient(50% 100% 90deg,rgba(112, 112, 112, 1) 0%,rgba(168, 168, 168, 1) 100%) !important;
+    background: -webkit-linear-gradient(90deg, rgba(112, 112, 112, 1) 0%, rgba(168, 168, 168, 1) 100%) !important;
+    background: -webkit-gradient(linear,50% 100%,50% 0%,color-stop(0,rgba(112, 112, 112, 1) ),color-stop(1,rgba(168, 168, 168, 1) )) !important;
+    background: -o-linear-gradient(90deg, rgba(112, 112, 112, 1) 0%, rgba(168, 168, 168, 1) 100%) !important;
+    background: linear-gradient(0deg, rgba(112, 112, 112, 1) 0%, rgba(168, 168, 168, 1) 100%) !important;
+}
+    .darkHeader .ag-header-cell{
+        border-right: 1px solid #8a8a8a !important;
+        border-left: 1px solid #b1b1b1 !important;
+    }
+    .darkHeader .ag-header-cell:hover {
+        background: #cecece !important;
+        background: -moz-linear-gradient(top,  #cecece 0%, #efefef 6%, #ededed 75%, #cecece 100%) !important;
+        background: -webkit-linear-gradient(top,  #cecece 0%,#efefef 6%,#ededed 75%,#cecece 100%) !important;
+        background: linear-gradient(to bottom,  #cecece 0%,#efefef 6%,#ededed 75%,#cecece 100%) !important;
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cecece', endColorstr='#cecece',GradientType=0 ) !important;
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#efefef', endColorstr='#dbdbdb',GradientType=0 ) !important;
+        color: #58595B !important;
+    }
+    /*.darkHeader .ag-row:hover, .Row:hover {
+        color: black !important;
+        cursor: pointer !important;
+        border: 1px solid #85CBED !important;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(221, 232, 245, 1) 100%) !important;
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%) !important;
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(221, 232, 245, 1) )) !important;
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%) !important;
+        -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFFFFF', endColorstr='#DDE8F5' ,GradientType=0)" !important;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%) !important;
+    }*/

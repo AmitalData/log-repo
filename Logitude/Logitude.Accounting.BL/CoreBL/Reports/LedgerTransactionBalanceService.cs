@@ -1,0 +1,492 @@
+﻿using Logitude.Accounting.BL.CoreBL.Mapping;
+using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityListQueryServices;
+using Logitude.Accounting.Data.EntityLists;
+using Logitude.Accounting.Data.Repositories;
+using Simplog.Server.Infrastructure.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
+
+namespace Logitude.Accounting.BL.CoreBL.Reports
+{
+    public class LedgerTransactionBalanceService
+    {
+        private LedgerTransactionBalanceFilter _Param;
+        private IAccountingContext _AccountingContext;
+        private bool _IsAccountingCurrencyRequested;
+        private IQueryable<string> _allIdAccounts;
+        private string _SearchByFilter;
+        //private string _ForeignCurrencyId = null;
+        public LedgerTransactionBalanceService(IAccountingContext accountingContext ,LedgerTransactionBalanceFilter param)
+        {
+            _AccountingContext = accountingContext;
+            _Param = param;
+
+            ///Look at  GLAccountReconcileSearchViewModel
+            //var view = new VirtualQueryableCollectionView<Customer>() { LoadSize = pageSize, VirtualItemCount = customerProvider.FetchCount() };
+            //view.ItemsLoading += (s, args) =>
+            //{
+            //    new Thread(() =>
+            //    {
+            //        Thread.Sleep(1000);
+            //        view.Load(args.StartIndex, customerProvider.FetchRange(args.StartIndex, args.ItemCount));
+            //    }).Start();
+            //};
+            //DataContext = view;
+        }
+
+
+        public void Run()
+        {
+            DateTime? maxCreateDate = null;
+            
+            this.Response = new LedgerTransactionBalanceResponse();
+            CheckParam();
+
+            var TransactionFactoryWrapper = new TransactionFactoryWrapper();
+
+
+            using (var scope = TransactionFactoryWrapper.GetTransaction())
+            {
+                
+                var ledgerTransactionRepository = new LedgerTransactionRepository(_AccountingContext);
+
+
+                _SearchByFilter = null;
+
+                if (_Param.CallBack != null)
+                {
+                    maxCreateDate = _Param.CallBack.MaxCreateAt;
+                    if (_Param.CallBack.AllIdAccounts == null)
+                    {
+                        throw new Exception("Dear Programer it's about time to remap 'AllIdAccounts' Property");
+                    }
+                    _allIdAccounts = (new GLAccountRepository(_AccountingContext)).GetQId(_Param.CallBack.AllIdAccounts, _Param.Tenant);
+                    _SearchByFilter = _Param.CallBack.SearchFields;
+                }
+                else
+                {
+                    _SearchByFilter = _Param.SearchFields;
+                    var myGLAccountQueryService = new GLAccountQueryService(_AccountingContext);
+
+                    //var hashsetallIdAccounts = myGLAccountQueryService.GetAllIdAccounts(_Param.Tenant, _Param.GLAccountId, _Param.IncludeRelatedCurrenciesAccount, _Param.IncludeChildAccounts);
+                    //_allIdAccounts =new List<string>(hashsetallIdAccounts);
+
+
+
+                    var hashsetallIdAccounts = myGLAccountQueryService.GetQAllIdAccounts(_Param.Tenant, _Param.GLAccountId, _Param.IncludeRelatedCurrenciesAccount, _Param.IncludeChildAccounts);
+                    _allIdAccounts = hashsetallIdAccounts;//new List<string>(hashsetallIdAccounts);
+                }
+
+
+
+                var QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId = 
+                    ledgerTransactionRepository.GetQueryOrderAccDateAndIdBy(_Param.Tenant, _allIdAccounts, _Param.From, _Param.To,
+                    _Param.CurrencyId, _SearchByFilter,maxCreateDate);
+
+                
+                
+                if (_Param.CallBack == null)
+                {
+                    BuildCallBack(QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId);
+
+
+                }
+                else // if callback
+                {
+                    ReCopyCallBack();
+                }
+
+                //int pageSize = 100; int curPageZeroBase = 0;
+                var list = Translate2ListMode(QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId);
+                if (!this.Response.OmitAllBalance)
+                {
+
+
+                    decimal CumulativeForeignAmount = 0;//this.Response.StartBalanceForeign.GetValueOrDefault();
+                    if (this.Response.StartBalanceForeignList.Any())
+                    {
+                        CumulativeForeignAmount =
+                        this.Response.StartBalanceForeignList//.First()
+                        .FirstOrDefault().BalanceForeign.GetValueOrDefault();
+                    }
+                    decimal CumulativeLocalAmount = this.Response.StartBalanceLocal.GetValueOrDefault();
+                    //if (!this.Response.SuppressCumulativeDueMultiCurrencyInPeriod)
+                    //{
+                    list.ForEach(rec =>
+                    {
+                        decimal LocalAmountDebit = rec.LocalAmountDebit;
+                        decimal LocalAmountCredit = rec.LocalAmountCredit;
+
+                        CumulativeLocalAmount += (LocalAmountDebit - LocalAmountCredit);
+                        rec.CumulativeLocalAmount = CumulativeLocalAmount;
+
+                        if (!this.Response.SuppressCumulativeDueMultiCurrencyInPeriod.GetValueOrDefault())
+                        {
+                            CumulativeForeignAmount += (rec.ForeignAmountDebit - rec.ForeignAmountCredit);
+                            rec.CumulativeForeignAmount = CumulativeForeignAmount;
+                        }
+
+                    });
+                    //}
+                }
+                Response.MyLedgerTransactionList = list;
+            }
+
+        }
+
+        private void BuildCallBack(IQueryable<Data.EntityPOCOs.LedgerTransaction> QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId)
+        {
+            bool includeChildAccounts = false;
+            bool includeAccoutingDateLTransaction = false;
+            //var BeginOfYearLocalAmountBalance = GetBeginOfYearLocalAmountBalance(_AccountingContext,_Param.From);
+
+            
+
+            var qGperiod = (from r in QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId
+                            group r by 1 into g
+                            select new
+                            {
+                                AllCurrencyId = g.Select(r => r.CurrencyId).Distinct(),
+                                MaxCreateDate = g.Max(rec => rec.CreateDate),
+                                SumLocalAmount = g.Sum(rec => rec.LocalAmountDebit - rec.LocalAmountCredit),
+                                SumForeignAmount = g.Sum(rec => rec.ForeignAmountDebit - rec.ForeignAmountCredit),
+                                Count = g.Count()
+                            }
+            );
+            var myStatstic4period = qGperiod
+                //.First()  = fail : Sequence contains no elements
+                    .FirstOrDefault();
+            DateTime periodMaxCreateDate = DateTime.Now;
+            decimal periodSumLocalAmount = 0;
+            decimal periodSumForeignAmount = 0;
+            int periodTotalRowCount = 0;
+            var AllCurrencyId = new List<string>();
+            if (myStatstic4period != null)
+            {
+                AllCurrencyId = myStatstic4period.AllCurrencyId.ToList();
+                periodMaxCreateDate = myStatstic4period.MaxCreateDate;
+                periodSumLocalAmount = myStatstic4period.SumLocalAmount;
+                periodSumForeignAmount = myStatstic4period.SumForeignAmount;
+                periodTotalRowCount = myStatstic4period.Count;
+            }
+            Response.MaxCreateAt = periodMaxCreateDate;
+            Response.TotalRowCount = periodTotalRowCount;
+
+
+            Response.AllIdAccounts = _allIdAccounts.ToList();
+
+            Response.SearchFields = _SearchByFilter;
+            Response.OmitAllBalance = !String.IsNullOrWhiteSpace(_SearchByFilter);
+            if (Response.OmitAllBalance)
+            {
+                return;
+            }
+
+            Init1CurrAndSuppressCumuDueMultiCurrrency(AllCurrencyId);
+
+
+
+
+            var startAccountBalanceService = GetStartAccountBalance(//includeChildAccounts, 
+                includeAccoutingDateLTransaction);
+            includeAccoutingDateLTransaction = true;
+            var endAccountBalanceService = GetEndAccountBalance(//includeChildAccounts, 
+                includeAccoutingDateLTransaction
+                );
+            InitForeignList(startAccountBalanceService, endAccountBalanceService);
+
+            Response.HaveAccountingQueued=(startAccountBalanceService.HaveAccountingQueued || endAccountBalanceService.HaveAccountingQueued);
+
+            CheckSumLocalEqualDiffEndStart(startAccountBalanceService, endAccountBalanceService, periodSumLocalAmount, periodSumForeignAmount);
+
+
+            
+
+
+            var gLAccountTotalByMonthRepository = new GLAccountTotalByMonthRepository(_AccountingContext);
+            this.Response.OpenBalanceForYearInLocalCurrency = gLAccountTotalByMonthRepository.GetLocalOpenBalanceForYear(_Param.GLAccountId, _Param.From.Year, _Param.Tenant);
+        }
+
+        private void InitForeignList(AccountBalanceM startAccountBalanceService, AccountBalanceM endAccountBalanceService)
+        {
+
+            var featureForeignList = true;
+            if (featureForeignList)//this.Response.SuppressCumulativeDueMultiCurrencyInPeriod) = Multi Currency 
+            {
+                var qTotals =
+                    (from tot in startAccountBalanceService.Totals
+                     select new CallBackBalance
+                     {
+                         CurrencyId = tot.CurrencyId,
+                         BalanceForeign = tot.ForeignAmountDebit - tot.ForeignAmountCredit
+                     });
+                if (!String.IsNullOrWhiteSpace(_Param.CurrencyId))
+                {
+                    qTotals = qTotals.Where(r => r.CurrencyId == _Param.CurrencyId);
+                }
+                this.Response.StartBalanceForeignList = qTotals.ToList();
+
+
+                qTotals = (from tot in endAccountBalanceService.Totals
+                           select new CallBackBalance
+                           {
+                               CurrencyId = tot.CurrencyId,
+                               BalanceForeign = tot.ForeignAmountDebit - tot.ForeignAmountCredit
+                           });
+                if (!String.IsNullOrWhiteSpace(_Param.CurrencyId))
+                {
+                    qTotals = qTotals.Where(r => r.CurrencyId == _Param.CurrencyId);
+                }
+                this.Response.EndBalanceForeignList = qTotals.ToList();
+
+
+            }
+
+            if (!String.IsNullOrWhiteSpace(_Param.CurrencyId))
+            {
+
+                this.Response.StartBalanceLocal = startAccountBalanceService.GetBalanceOfLocalAmount(_Param.CurrencyId).GetValueOrDefault();
+                this.Response.EndBalanceLocal = endAccountBalanceService.GetBalanceOfLocalAmount(_Param.CurrencyId).GetValueOrDefault();
+
+
+                this.Response.StartBalanceForeignList = startAccountBalanceService.GetCallBackBalanceOfCurrency(_Param.CurrencyId);
+                this.Response.EndBalanceForeignList = endAccountBalanceService.GetCallBackBalanceOfCurrency(_Param.CurrencyId);
+
+            }
+            else
+            {
+                this.Response.StartBalanceForeignList = startAccountBalanceService.GetCallBackBalance();
+                this.Response.EndBalanceForeignList = endAccountBalanceService.GetCallBackBalance();
+
+
+                this.Response.StartBalanceLocal = startAccountBalanceService.GetBalanceOfLocalAmount().GetValueOrDefault();
+                this.Response.EndBalanceLocal = endAccountBalanceService.GetBalanceOfLocalAmount().GetValueOrDefault();
+            }
+            
+            
+
+            this.Response.StartBalanceForeignList = this.Response.StartBalanceForeignList ?? new List<CallBackBalance>();
+            this.Response.EndBalanceForeignList = this.Response.EndBalanceForeignList ?? new List<CallBackBalance>();
+        }
+
+        private void CheckSumLocalEqualDiffEndStart(AccountBalanceM startAccountBalanceService, AccountBalanceM endAccountBalanceService, decimal periodSumLocalAmount, decimal periodSumForeignAmount)
+        {
+            var periodSumLocal = this.Response.EndBalanceLocal - this.Response.StartBalanceLocal;
+            if (periodSumLocal != periodSumLocalAmount)
+            {
+                throw new Exception("periodSum!=periodSumLocalAmount");
+            }
+
+            if (!this.Response.SuppressCumulativeDueMultiCurrencyInPeriod.GetValueOrDefault())
+            {
+
+                var currentCurrencyId = GetCurrCurrencyId();
+
+                var //this.Response.
+                    StartBalanceForeign = startAccountBalanceService.GetBalanceOfCurrency(currentCurrencyId);
+                var //this.Response.
+                    EndBalanceForeign = endAccountBalanceService.GetBalanceOfCurrency(currentCurrencyId);
+
+                var periodSumForeign = //this.Response.
+                    EndBalanceForeign - //this.Response.
+                    StartBalanceForeign.GetValueOrDefault();
+                if (periodSumForeign != periodSumForeignAmount)
+                {
+                    throw new Exception("periodSum(this.Response.EndBalanceForeign - this.Response.StartBalanceForeign.GetValueOrDefault())!=periodSumLocalAmount");
+                }
+
+            }
+        }
+
+        private void Init1CurrAndSuppressCumuDueMultiCurrrency(List<string> AllCurrencyId)
+        {
+            if (!String.IsNullOrWhiteSpace(_Param.CurrencyId))
+            {
+                AllCurrencyId.Remove(_Param.CurrencyId);
+                if (AllCurrencyId.Count > 0)
+                {
+                    this.Response.SuppressCumulativeDueMultiCurrencyInPeriod = true;
+                }
+
+            }
+            else
+            {
+                if (AllCurrencyId.Count <= 1)
+                {
+                    this.Response.SuppressCumulativeDueMultiCurrencyInPeriod = true;
+                    if (AllCurrencyId.Count == 1)
+                    {
+                        this.Response.SuppressCumulativeDueMultiCurrencyInPeriod = false;
+                        this.Response.Have1CurrencyIdInPeriod = AllCurrencyId.First();
+                    }
+                }
+                else
+                {
+                    this.Response.SuppressCumulativeDueMultiCurrencyInPeriod = true;
+                }
+            }
+            if (Response.TotalRowCount == 0)// No Row >> SuppressCumulativeDueMultiCurrencyInPeriod = true;
+            {
+                this.Response.SuppressCumulativeDueMultiCurrencyInPeriod = true;
+            }
+            this.Response.SuppressCumulativeDueMultiCurrencyInPeriod = this.Response.SuppressCumulativeDueMultiCurrencyInPeriod ?? false;
+        }
+
+        private void ReCopyCallBack()
+        {
+            this.Response.SuppressCumulativeDueMultiCurrencyInPeriod = _Param.CallBack.SuppressCumulativeDueMultiCurrencyInPeriod;
+
+            this.Response.Have1CurrencyIdInPeriod = _Param.CallBack.Have1CurrencyIdInPeriod;
+            this.Response.StartBalanceLocal = _Param.CallBack.StartBalanceLocal;
+            this.Response.EndBalanceLocal = _Param.CallBack.EndBalanceLocal;
+
+            //this.Response.StartBalanceForeign = _Param.CallBack.StartBalanceForeign;
+            //this.Response.EndBalanceForeign = _Param.CallBack.EndBalanceForeign;
+            this.Response.MaxCreateAt = _Param.CallBack.MaxCreateAt;
+            this.Response.AllIdAccounts = _Param.CallBack.AllIdAccounts;
+            this.Response.TotalRowCount = _Param.CallBack.TotalRowCount;
+            this.Response.SearchFields = _Param.CallBack.SearchFields;
+            this.Response.OmitAllBalance = _Param.CallBack.OmitAllBalance;
+
+            this.Response.StartBalanceForeignList = _Param.CallBack.StartBalanceForeignList;
+            this.Response.EndBalanceForeignList = _Param.CallBack.EndBalanceForeignList;
+            this.Response.OpenBalanceForYearInLocalCurrency = _Param.CallBack.OpenBalanceForYearInLocalCurrency;
+        }
+
+        public virtual List<LedgerTransactionList> Translate2ListMode(IQueryable<Data.EntityPOCOs.LedgerTransaction> QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId)
+        {
+            var ledgerTransactionListQueryService = new LedgerTransactionListQueryService(_AccountingContext);
+            var list = ledgerTransactionListQueryService.GetLedgerTransactionListForceOrderByAccDateAndId(QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId, _Param.PageSize, _Param.PageStartAtRecordIndex);
+            return list;
+        }
+
+        
+
+        private AccountBalanceM GetEndAccountBalance(
+            //bool includeChildAccounts, 
+            bool includeAccoutingDateLTransaction
+            )
+        {
+            var endAccountBalanceService = new AccountBalanceService(_AccountingContext, _Param.Tenant,
+                _Param.GLAccountId, 
+                //includeChildAccounts, _Param.IncludeRelatedCurrenciesAccount
+                _allIdAccounts
+                );
+            var To = _Param.To.AddDays(1);
+            
+            endAccountBalanceService.CalculateBalance(To, includeAccoutingDateLTransaction, false);
+            var endAccountBalance = endAccountBalanceService.AccountBalance;
+            return endAccountBalance;
+        }
+
+        private AccountBalanceM GetStartAccountBalance(
+            //bool includeChildAccounts, 
+            bool includeAccoutingDateLTransaction)
+        {
+            var startAccountBalanceService = new AccountBalanceService(
+                _AccountingContext, _Param.Tenant, _Param.GLAccountId, 
+                //includeChildAccounts, _Param.IncludeRelatedCurrenciesAccount
+                _allIdAccounts);
+
+            startAccountBalanceService.CalculateBalance(_Param.From, includeAccoutingDateLTransaction, false);
+            var startAccountBalance = startAccountBalanceService.AccountBalance;
+            return startAccountBalance;
+        }
+
+        private decimal GetBeginOfYearLocalAmountBalance(IAccountingContext _AccountingContext,DateTime From)
+        {
+            int lastYear = //_Param.
+                From.Date.Year - 1;
+            int month12 = 12;
+            var BeginOfYearMonthQueryService = new GLAccountTotalByMonthQueryService(_AccountingContext);
+            var BeginOfYearCurrencySum = BeginOfYearMonthQueryService
+                //.GetCurrencySumUntillNotInclude(new List<string>() { _Param.GLAccountId }, lastYear, month12, _Param.Tenant);
+                .GetCurrencySumUntillNotInclude(
+                (new GLAccountRepository(_AccountingContext)).GetQId(new List<string>() { _Param.GLAccountId } , _Param.Tenant),
+
+            lastYear, month12, _Param.Tenant);
+            var BeginOfYearLocalAmountBalance = BeginOfYearCurrencySum.Sum(cSum => cSum.LocalAmountDebit - cSum.LocalAmountCredit);
+            return BeginOfYearLocalAmountBalance;
+        }
+
+        
+
+        private string GetCurrCurrencyId()
+        {
+            var currentCurrencyId = _Param.CurrencyId;
+            if (String.IsNullOrWhiteSpace(currentCurrencyId))
+            {
+                currentCurrencyId = this.Response.Have1CurrencyIdInPeriod;
+            }
+            return currentCurrencyId;
+        }
+
+    
+        private void CheckParam()
+        {
+            _Param.To = _Param.To.Date;
+            _Param.From = _Param.From.Date;
+
+            if (_AccountingContext==null)
+            {
+                throw new Exception("_AccountingContext is null (Developer Error )");
+            }
+
+            if (_Param.To < _Param.From)
+            {
+                throw new Exception("_Param.To < _Param.from");
+            }
+            if (string.IsNullOrWhiteSpace(_Param.GLAccountId))
+            {
+                throw new Exception("string.IsNullOrWhiteSpace(_Param.AccountId)");
+            }
+
+            if (string.IsNullOrWhiteSpace(_Param.CurrencyId))
+            {
+                //not must throw new Exception("string.IsNullOrWhiteSpace(_Param.CurrencyId)");
+            }
+
+            if (_Param.CallBack == null)
+            {
+                return;
+            }
+            if (!String.IsNullOrWhiteSpace(_Param.CallBack.SearchFields) && 
+                (_Param.CallBack.StartBalanceLocal.HasValue || _Param.CallBack.EndBalanceLocal.HasValue  )
+                )
+            {
+                throw new Exception("if Was Search By Text then all Balance is Omit ");
+            }
+            if (!_Param.CallBack.TotalRowCount.HasValue)
+            {
+                throw new Exception("!_Param.CallBack.TotalRowCount.HasValue");
+            }
+            //if (!_Param.CallBack.StartBalance.HasValue)
+            //{
+            //    throw new Exception("!_Param.CallBack.OpenBalance.HasValue");
+            //}
+            //if (!_Param.CallBack.EndBalance.HasValue)
+            //{
+            //    throw new Exception("!_Param.CallBack.EndBalance.HasValue");
+            //}
+            if (!_Param.CallBack.MaxCreateAt.HasValue)
+            {
+                throw new Exception("!_Param.CallBack.LastCreateAt.HasValue");
+            }
+
+        }
+
+
+
+
+        public LedgerTransactionBalanceResponse Response { get; set; }
+    }
+
+
+    
+}

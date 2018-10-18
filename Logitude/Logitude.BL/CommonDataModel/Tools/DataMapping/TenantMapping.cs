@@ -1,0 +1,134 @@
+﻿using System;
+using System.Web;
+using System.Linq;
+using System.Collections.Generic;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.Server.Tools.Helpers;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Security;
+
+namespace Logitude.BL.CommonDataModel.Tools.DataMapping
+{
+    public class TenantMapping
+    {
+        public static void MapEntity(TenantPM entityPM, Tenant poco, bool isNewState)
+        {
+            if (isNewState)
+            {
+                poco.Id = entityPM.Id;
+            }
+
+            poco.AddressId = entityPM.AddressId;
+            poco.CurrencyId = entityPM.CurrencyId;
+            poco.Direction = entityPM.Direction;
+            poco.Email = entityPM.Email;
+            poco.Format = entityPM.Format;
+            poco.Company = entityPM.Company;
+            poco.Language = entityPM.Language;
+            poco.Website = entityPM.Website;
+            poco.IATA = entityPM.IATA;
+            poco.Signature = entityPM.Signature;
+            poco.DimensionsUnitCode = entityPM.DimensionsUnitCode;
+            poco.VolumeUnitCode = entityPM.VolumeUnitCode;
+            poco.GrossWeightUnitCode = entityPM.GrossWeightUnitCode;
+            poco.ChargeableWeightUnitCode = entityPM.ChargeableWeightUnitCode;
+            poco.FreightCurrencyId = entityPM.FreightCurrencyId;
+            poco.ExportFreightPrepaidCollectId = entityPM.ExportFreightPrepaidCollectId;
+            poco.ExportOtherPrepaidCollectId = entityPM.ExportOtherPrepaidCollectId;
+            poco.ImportFreightPrepaidCollectId = entityPM.ImportFreightPrepaidCollectId;
+            poco.ImportOtherPrepaidCollectId = entityPM.ImportOtherPrepaidCollectId;
+            poco.VatNumber = entityPM.VatNumber;
+            poco.OtherChargesCurrencyId = entityPM.OtherChargesCurrencyId;
+            poco.TimeZoneOffset = entityPM.TimeZoneOffset;
+            poco.DayLightStartDate = entityPM.DayLightStartDate;
+            poco.DayLightEndDate = entityPM.DayLightEndDate;
+            poco.DayLightOffset = entityPM.DayLightOffset;
+            poco.QuoteSaleCurrencyId = entityPM.QuoteSaleCurrencyId;
+            poco.PaymentTermId = entityPM.PaymentTermId;
+            poco.ProfitCurrencyId = entityPM.ProfitCurrencyId;
+            poco.AgentId = entityPM.AgentId;
+            poco.PasswordPolicyCode = entityPM.PasswordPolicyCode;
+            poco.MasterExportFreightPrepaidCollectId = entityPM.MasterExportFreightPrepaidCollectId;
+            poco.MasterExportOtherPrepaidCollectId = entityPM.MasterExportOtherPrepaidCollectId;
+            poco.MasterImportFreightPrepaidCollectId = entityPM.MasterImportFreightPrepaidCollectId;
+            poco.MasterImportOtherPrepaidCollectId = entityPM.MasterImportOtherPrepaidCollectId;
+            poco.IsDataBackupBuilt = entityPM.IsDataBackupBuilt;
+            poco.WeightMeasurementUnitCode = entityPM.WeightMeasurementUnitCode;
+            poco.DateTimeFormat = entityPM.DateTimeFormat;
+            poco.InvoiceSection1 = entityPM.InvoiceSection1;
+            poco.InvoiceSection2 = entityPM.InvoiceSection2;
+            poco.BankDetails = entityPM.BankDetails;
+            poco.IsSharedLogisticsActivated = entityPM.IsSharedLogisticsActivated;
+            poco.SharedLogisticsMessageLink = entityPM.SharedLogisticsMessageLink;
+            poco.CASSCode = entityPM.CASSCode;
+            poco.LocalCustomsCode = entityPM.LocalCustomsCode;
+            poco.IsHybrid = entityPM.IsHybrid;
+            poco.VatUniqueTypeCode = entityPM.VatUniqueTypeCode;
+            poco.VatMandatoryTypeCode = entityPM.VatMandatoryTypeCode;
+            poco.VatUniqueCountryId = entityPM.VatUniqueCountryId;
+            poco.VatMandatoryCountryId = entityPM.VatMandatoryCountryId;
+            poco.VatMandatoryForPotentialCustomers = entityPM.VatMandatoryForPotentialCustomers;
+            poco.IsCustomerTelRequired = entityPM.IsCustomerTelRequired;
+            poco.IsCustomerFaxRequired = entityPM.IsCustomerFaxRequired;
+            poco.IsPickDelAdrsRequired = entityPM.IsPickDelAdrsRequired;
+            poco.IsCustomerAddress1Required = entityPM.IsCustomerAddress1Required;
+            poco.HasPrimaryContact = entityPM.HasPrimaryContact;
+            poco.DefaultQuestionnaireId = entityPM.DefaultQuestionnaireId;
+            poco.IsQuoteSubjectEdited = entityPM.IsQuoteSubjectEdited;
+            poco.AllowEAWBMoreThanTenPackages = entityPM.AllowEAWBMoreThanTenPackages;
+            poco.IsMobileActivated = entityPM.IsMobileActivated;
+            poco.RegulatedAgentNumber = entityPM.RegulatedAgentNumber;
+            poco.RegulatedAgentRegimeActivated = entityPM.RegulatedAgentRegimeActivated;
+            poco.CustomerId = entityPM.CustomerId;
+            poco.IsCustomerTenantShare = entityPM.IsCustomerTenantShare;
+            poco.CustomerTenantShareImportFile = entityPM.CustomerTenantShareImportFile;
+            poco.AllowAgentInCustomersLOV = entityPM.AllowAgentInCustomersLOV;
+            poco.IsPotentialTelRequired = entityPM.IsPotentialTelRequired;
+            poco.IsPotentialFaxRequired = entityPM.IsPotentialFaxRequired;
+            poco.VatFormatTypeCode = entityPM.VatFormatTypeCode;
+            poco.VatFormatCountryId = entityPM.VatFormatCountryId;
+            poco.IsNumeric = entityPM.IsNumeric;
+            poco.VatSize = entityPM.VatSize;
+            poco.LogBoxAdminUserId = entityPM.LogBoxAdminUserId;
+            poco.IsDocumentsArchive = entityPM.IsDocumentsArchive;
+            poco.IsWebAccessActivated = entityPM.IsWebAccessActivated;
+            poco.IsCorrespondenceRightToLeftEnabled = entityPM.IsCorrespondenceRightToLeftEnabled;
+            poco.IsNotesRightToLeftEnabled = entityPM.IsNotesRightToLeftEnabled;
+            poco.AccountingActivationDate = entityPM.AccountingActivationDate;
+            poco.AccountingActivated = entityPM.AccountingActivated;
+            //poco.DropBoxAccessToken = entityPM.DropBoxAccessToken;
+            poco.IsInternalTicketByDefault = entityPM.IsInternalTicketByDefault;
+            poco.ProrateMasterReceivables = entityPM.ProrateMasterReceivables;
+            poco.SCACCode = entityPM.SCACCode;
+            poco.ExportQuotationsToIntegratedSystem = entityPM.ExportQuotationsToIntegratedSystem;
+            poco.FMCNumber = entityPM.FMCNumber;
+            poco.TenantVATManagement = entityPM.TenantVATManagement;
+            poco.DocumentShareAsDefault = entityPM.DocumentShareAsDefault;
+            poco.TemperatureUnitCode = entityPM.TemperatureUnitCode;
+            poco.DefaultSLAId = entityPM.DefaultSLAId;
+            poco.StockTypeCode = entityPM.StockTypeCode;
+            // poco.StorageEncryptionKey = entityPM.StorageEncryptionKey;
+            BuildSearchFields(entityPM, poco);
+        }
+
+        private static void BuildSearchFields(TenantPM entityPM, Tenant entityPOCO)
+        {
+            string mySearchFields = "";
+
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Company);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Direction);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Email);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Language);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.VatNumber);
+
+            if (mySearchFields.Length > 1000)
+            {
+                mySearchFields = mySearchFields.Substring(0, 1000);
+            }
+
+            entityPM.SearchFields = mySearchFields;
+            entityPOCO.SearchFields = mySearchFields;
+        }
+    }
+}

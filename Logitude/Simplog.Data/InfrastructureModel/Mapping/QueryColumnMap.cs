@@ -1,0 +1,57 @@
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.ModelConfiguration;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+
+namespace Simplog.Data.InfrastructureModel.Mapping
+{
+    public class QueryColumnMap : EntityTypeConfiguration<QueryColumn>
+    {
+        public QueryColumnMap()
+        {
+            // Primary Key
+            this.HasKey(t => t.Id);
+
+            // Properties
+            this.Property(t => t.Id)
+                .IsRequired()
+                .HasMaxLength(15)
+                .IsUnicode(false);
+
+            this.Property(t => t.QueryId)
+                .IsRequired()
+                .HasMaxLength(15)
+                .IsUnicode(false);
+
+            this.Property(t => t.ObjectFieldId)
+                .IsRequired()
+                .HasMaxLength(15)
+                .IsUnicode(false);
+
+            this.Property(t => t.UserId)
+                .HasMaxLength(15)
+                .IsUnicode(false);
+
+            // Table & Column Mappings
+            this.ToTable("QueryColumns");
+            this.Property(t => t.Id).HasColumnName("Id");
+            this.Property(t => t.Tenant).HasColumnName("Tenant");
+            this.Property(t => t.QueryId).HasColumnName("QueryId");
+            this.Property(t => t.ObjectFieldId).HasColumnName("ObjectFieldId");
+            this.Property(t => t.IndexOrder).HasColumnName("IndexOrder");
+            this.Property(t => t.ColumnWidth).HasColumnName("ColumnWidth");
+            this.Property(t => t.UserId).HasColumnName("UserId");
+
+            // Relationships
+            //this.HasRequired(t => t.ObjectField)
+            //    .WithMany(t => t.QueryColumns)
+            //    .HasForeignKey(d => d.ObjectFieldId);
+            //this.HasRequired(t => t.Query)
+            //    .WithMany(t => t.QueryColumns)
+            //    .HasForeignKey(d => d.QueryId);
+            this.HasOptional(t => t.User)
+                .WithMany()
+                .HasForeignKey(d => d.UserId);
+
+        }
+    }
+}

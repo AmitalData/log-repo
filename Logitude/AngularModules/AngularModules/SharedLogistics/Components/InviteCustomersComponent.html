@@ -1,0 +1,234 @@
+﻿<table style="height:100%;vertical-align:top">
+    <tr style="height:100%;vertical-align:top">
+
+        <td>
+
+            <table>
+
+                <tr style="height:10px;">
+                    <td colspan="5">
+                        <div></div>
+                    </td>
+                </tr>
+                 
+
+                <tr style="height:20px;">
+                    <td colspan="5">
+                        <span style="float: left;font-size:11px;color:gray">
+                            This Customer Invitations screen enables you to select and invite your customers. Once invited, they will be able to view their own shipments.
+                        </span>
+                        <span style="float: right;">
+                            <button  style="width:80px" class="Button" (click)="NewContactButtonClick()">New Contact</button>
+                        </span>
+                    </td>
+                </tr>
+
+                <tr style="height:5px;">
+                    <td colspan="5">
+                        <div></div>
+                    </td> 
+                </tr>
+
+                <tr style="height:100%" >
+                    <td  style="height:100%" colspan="5">
+                        <div style="height:100%;border:1px solid LightGray;border-radius:6px">
+
+                            <table style="height:100%"> 
+                                <tr style="height:10px"><td ></td></tr>
+                                <tr style="height:38px;">
+                                    <td>
+                                        <div style="height:25px;display:block">
+                                            <table>
+                                                <tr>
+                                                    <td style="font-size:13px;width:10px;"><div></div> </td>
+
+
+                                                    <td style="font-size:13px;width:100px;color:gray;vertical-align:central;"><span style="width:70px"></span>Customer Code: </td>
+                                                    <td style="font-size:12px;color:black;width:200px;text-align:left;vertical-align:central;">{{CustomerCode}}</td>
+
+                                                    <td style="font-size:13px;width:100px;text-align:left;color:gray;vertical-align:central">Customer Name: </td>
+                                                    <td style="font-size:12px;color:black;width:200px;text-align:left;vertical-align:central">{{CustomerName}}</td>
+
+
+                                                    <td style="font-size:13px;width:100px;color:gray">Invitation Status: </td>
+                                                    <td style="font-size:12px;color:black;width:140px">{{InvitationStatus}}</td>
+                    
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div style="border-top:3px solid LightGray;border-radius:7px;display:block;height:12px"></div>
+                                    </td>
+                                    
+                                </tr>
+                         
+                                <tr style="height:100%">
+                                    
+                                    <td>
+                                 
+                                            <div class="ScrollViewer" style="height:100%;width:100%;vertical-align:top">
+                                                <div class="ScrollContent" style="margin-left:6px;">
+                                                    <div  *ngFor="let item of SharedLogisticCustomerLineList" style="height:177px;width:32.2%;background-color:white;border:1px solid LightGray;border-radius:5px;float:left;margin-left:5px;margin-bottom:4px">
+                                                       
+
+                                                     <table>
+                                                         <tr style="height:6px"><td colspan="5"></td></tr>
+                                                         <tr style="height:17px">
+                                                             <td style="width:6px"></td>
+                                                             <td style="width:100px;color:#0B3861;font-size:10px">Name:</td>
+                                                             <td style="color:#0B3861;font-size:10px">{{item.EnglishName}}</td>
+                                                             <td style="width:30px">
+
+                                                                 <span class="EditButton" (click)="EditUserButtoClick(item)" style="display:inline;width:18px;margin-left:0px;float: right">
+                                                                     <IconButton [Name]="'Edit'" [IsSmall]="true" style="display: inline; float: right;margin-top:0px;"></IconButton>
+                                                                 </span>
+
+                                                             </td>
+                                                             <td style="width:6px"></td>
+                                                         </tr>
+
+                                                         <tr style="height:17px">
+                                                             <td style="width:6px"></td>
+                                                             <td style="width:100px;color:#0B3861;font-size:10px">Email:</td>
+                                                             <td style="color:#0B3861;font-size:10px">{{item.Email}}</td>
+                                                             <td style="width:30px"></td>
+                                                             <td style="width:6px"></td>
+                                                         </tr>
+
+
+
+                                                         <tr style="height:17px">
+                                                             <td style="width:6px"></td>
+                                                             <td style="width:100px;color:#0B3861;font-size:10px">Position:</td>
+                                                             <td style="color:#0B3861;font-size:10px">{{item.Position}}</td>
+                                                             <td style="width:30px"></td>
+                                                             <td style="width:6px"></td>
+                                                         </tr>
+
+
+                                                         <tr *ngIf="item.BusinessPhone" style="height:17px;">
+                                                             <td style="width:6px"></td>
+                                                             <td style="width:100px;color:#0B3861;font-size:10px">Tel:</td>
+                                                             <td style="color:#0B3861;font-size:10px">{{item.BusinessPhone}}</td>
+                                                             <td style="width:30px"></td>
+                                                             <td style="width:6px"></td>
+                                                         </tr>
+
+                                                         <tr *ngIf="item.Mobile" style="height:17px;">
+                                                             <td style="width:6px"></td>
+                                                             <td style="width:100px;color:#0B3861;font-size:10px">Mobile:</td>
+                                                             <td style="color:#0B3861;font-size:10px">{{item.Mobile}}</td>
+                                                             <td style="width:30px"></td>
+                                                             <td style="width:6px"></td>
+                                                         </tr>
+
+
+                                                         <tr  *ngIf="item.Fax" style="height:17px;">
+                                                             <td style="width:6px"></td>
+                                                             <td style="width:100px;color:#0B3861;font-size:10px">Fax:</td>
+                                                             <td style="color:#0B3861;font-size:10px">{{item.Fax}}</td>
+                                                             <td style="width:30px"></td>
+                                                             <td style="width:6px"></td>
+                                                         </tr>
+
+
+
+
+                                                         <tr style="height:20px">
+                                                             <td style="width:6px"></td>
+                                                             <td style="width:100px;color:#0B3861;font-size:10px">Has Access</td>
+                                                             <td style="color:#0B3861;font-size:10px">
+                                                                 <span style="width:20px;height:20px">
+                                                                     <img  *ngIf="item.InternetAccess" src="./Images/GreenTick.png" />
+                                                                     <img style="margin-top:-2px" *ngIf="!item.InternetAccess" src="./Images/RedX2.png" />
+                                                                 </span>
+                                                                 <span><button *ngIf="item.InternetAccess" style="width:80px;font-size:10px;display:inline" class="Button" (click)="item.BlockAccessButtonclick()">Block Access</button></span>
+                                                               
+                                                       </td>
+                                                             <td style="width:30px"></td>
+                                                             <td style="width:6px"></td>
+                                                         </tr>
+
+                                                         <tr style="height:15px">
+                                                             <td style="width:6px"></td>
+                                                             <td style="width:100px;color:#0B3861;font-size:10px">LastLogin:</td>
+                                                             <td style="color:#0B3861;font-size:10px">{{item.LastLoginDate}}</td>
+                                                             <td style="width:30px"></td>
+                                                             <td style="width:6px"></td>
+                                                         </tr>
+
+                                                         <tr><td colspan="5"></td></tr>
+
+                                                         <tr style="height:26px">
+                                                             
+                                                             <td colspan="4">
+                                                                 
+                                                            <div>
+                                                              <button style="width:80px;display:inline;font-size:10px;float:right" class="GreenButton" (click)="item.InviteButtonButtonclick()"> {{item.InviteButtonContent}}</button>
+
+                                                            </div>
+                                                              </td>
+                                                             <td style="width:6px"></td>
+                                                         
+                                                         </tr>
+                                                         <tr style="height:3px"><td colspan="5"></td></tr>
+                                                     </table>
+                                                    </div>
+
+                                                    <div *ngIf="NoContactsVisibility" style="vertical-align:top;text-align:center;color:#6E7172;font-size:13px">There is No Contacts for this Customer !</div>
+                                                </div>
+                                            </div>
+                                   
+                                  
+                                    
+                                    </td>
+                                
+                                
+                                </tr>
+                                <tr style="height:10px"><td ></td></tr>
+                            </table>
+
+                        </div>
+                    </td>
+                </tr>
+
+
+
+            </table>
+
+        </td>
+
+
+    </tr>
+
+
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div>
+
+
+                        </div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <div>
+
+                        </div>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="CloseButtonClicked()">Close</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

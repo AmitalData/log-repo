@@ -1,0 +1,349 @@
+﻿<style>
+    .FormFieldRow {
+        height: 32px;
+    }
+    /*right: 0;
+    left: 0;*/
+    .CenterCenter {
+    position: absolute;
+    
+    /*top: 0;
+    bottom: 0;*/
+    
+}
+</style>
+<div style="padding:10px;" *ngIf="Loaded">
+    <table>
+        <tr >
+
+            <td class="TabTitleRow" style="width:150px;">  {{'Customs.Vehicle.TH.OwnersAndSafety'| TextCodeTranslationPipe}} </td>
+            
+            <td><div></div></td>
+            <td style="height: 20px;padding: 5px;padding-bottom: 0px;">
+                <!--[IsEnabled]="AddAmountEnabled"-->
+                <div style="float:left;">
+                    <IconButton [IsSmall]="true"
+                                [Name]="'Add'"
+                                (click)="AddRowSafetiesList()"
+                                style="float:left;"></IconButton>
+                    
+                </div>
+                <div style="width:130px;float:left;margin-top:1px;margin-left:15px;">
+                    <span *ngIf="_SafetiesErrorMessage" class="Outlook2013Message">
+                        {{_SafetiesErrorMessage}}
+                    </span>
+                </div>
+            </td>
+            
+            <td><div style="width:10px"></div></td>
+
+
+        </tr>
+        <tr style="height:200px" >
+            <td colspan="3">
+                <table>
+                
+                    <tr>
+                        <td>
+                            <div class="CellContent" style="bottom: 5px;padding:5px">
+                                <!--GridWidth="100%"-->
+                                <logitude-edit-grid 
+                                                    GridHeight="100%"
+                                                    [ItemSource]="SafetiesList">
+
+
+
+                                    <log-column 
+                                                [header]="'Customs.VehicleSafetyAccessory.F.VehicleSafetyAccessoryCode' | TextCodeTranslationPipe" 
+                                                [binding]="'VehicleSafetyAccessoryName'" [width]="'180'" [Editable]="true" [Alignment]="'right'">
+
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
+                                                <span>{{item.VehicleSafetyAccessoryName}}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <!--[DisplayMemberPath]="'Code'"-->
+                                                <LogLov [ObjectFieldName]="'VehicleSafetyAccessoryCode'"
+                                                        [ObjectTableName]="'Customs.VehicleSafetyAccessories'"
+                                                        [DataContext]="item"
+                                                        [LookUpTableName]="'Customs.VehicleSafetyAccessoryType'"
+                                                        (SelectedItemChanged)="SetVehicleSafetyAccessoryTypeLocalName (item,$event)"
+                                                        
+                                                        [HideColumns]="true"
+                                                        [FocusOnMe]="true"
+                                                        [SelectedValue]="VehicleSafetyAccessoryCode">
+                                                </LogLov>
+
+                                            </div>
+                                        </log-cell-template>
+
+                                    </log-column>
+
+
+
+                                    <!--[Editable]="true"-->
+                                    <log-column 
+                                                [header]="'Customs.VehicleSafetyAccessory.F.VehicleSafAccessoryInstlTypCod' | TextCodeTranslationPipe" 
+                                                [binding]="'Amount'" 
+                                                [width]="'200'" 
+                                                 
+                                                [Alignment]="'right'">
+
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            
+                                                
+                                                
+                                                <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                    <span>{{item.VehicleSafAccessoryInstlTypName}}</span>
+                                                </div>
+                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                    <!--[DisplayMemberPath]="'Code'"-->
+                                                    <LogLov [ObjectFieldName]="'VehicleSafAccessoryInstlTypCod'"
+                                                            [ObjectTableName]="item.ObjectTableName"
+                                                            [DataContext]="item"
+                                                            [LookUpTableName]="'Customs.VehicleSafeAccessoryInstlType'"
+                                                            (SelectedItemChanged)="SetVehicleSafeAccessoryInstlType(item,$event)"
+                                                            [HideColumns]="true"
+                                                            [FocusOnMe]="true"
+                                                            [SelectedValue]="VehicleSafAccessoryInstlTypCod">
+                                                    </LogLov>
+
+
+                                                </div>
+                                            
+                                        </log-cell-template>
+                                    </log-column>
+
+
+                                    <log-column [width]="'22'" [Editable]="true" [Alignment]="'right'" [visibility]="'visibile'">
+                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                                            <div style="width: 18px; float: left; height:20px; padding-top: 2px;">
+                                                <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteSafetiesList(item)" [IsEnabled]="!IsDisplayOnly"></IconButton>
+                                            </div>
+
+
+
+                                        </log-cell-template>
+                                    </log-column>
+
+                                </logitude-edit-grid>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+            </td>
+
+            <td><div style="width:10px"></div></td>
+        </tr>
+
+
+        <tr>
+
+            <td class="TabTitleRow" style="width:150px;">  {{'Customs.Vehicle.O.VehicaleOwner'| TextCodeTranslationPipe}} </td>
+            <td><div ></div></td>
+            
+            
+            <td style="height: 20px;padding: 5px;padding-bottom: 0px;">
+                <!--[IsEnabled]="AddAmountEnabled"-->
+                
+                    <div style="float:left;">
+                        <IconButton [IsSmall]="true"
+                                    [Name]="'Add'"
+                                    (click)="AddOwnersList()"
+                                    style="float:left;"></IconButton>
+                        
+                    </div>
+                <div style="width:130px;float:left;margin-top:1px;margin-left:15px;">
+                    <span *ngIf="_OwnersErrorMessage" class="Outlook2013Message">
+                        {{_OwnersErrorMessage}}
+                    </span>
+                </div>
+                
+                
+
+            </td>
+            
+            <td><div style="width:10px"></div></td>
+
+
+        </tr>
+        <tr style="height:220px">
+            <td colspan="3">
+                <table>
+
+                    <tr>
+                        <td>
+                            <div class="CellContent" style="bottom: 5px;padding:5px">
+                                <!--GridWidth="100%"-->
+                                <logitude-edit-grid 
+                                                    GridHeight="100%"
+                                                    [ItemSource]="OwnersList">
+
+
+
+                                    <log-column [header]="'Customs.VehicleOwner.F.ClientId' | TextCodeTranslationPipe"
+                                                [binding]="'VehicleSafetyAccessoryName'" [width]="'100'" [Editable]="true" [Alignment]="'right'">
+
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
+                                                <span>{{item.ClientId}}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <!--[DisplayMemberPath]="'Code'"-->
+                                                <!--<LogLov [ObjectFieldName]="'ClientId'"
+                                                        [ObjectTableName]="'Customs.VehicleOwner'"
+                                                        [DataContext]="item"
+                                                        [LookUpTableName]="'Customs.Client'"
+                                                        (SelectedItemChanged)="VehicleOwnerChanged(item,$event)"
+                                                        [HideColumns]="true"
+                                                        [FocusOnMe]="true"
+                                                        [SelectedValue]="ClientId">
+                                                </LogLov>-->
+
+                                                <LogTextBox [ObjectFieldName]="'ClientId'" [DataContext]="item" [FocusOnMe]="true" 
+                                                            [Text]="item.ClientId" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
+                                                            [InputType]="'unsDecimal'"
+                                                            ></LogTextBox>
+
+
+                                            </div>
+                                        </log-cell-template>
+
+                                    </log-column>
+
+                                    <log-column [header]="'Customs.VehicleOwner.F.PassportNumber' | TextCodeTranslationPipe" [binding]="'PassportNumber'" [width]="'200'" [Editable]="true" [Alignment]="'right'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
+                                                <span>{{item.PassportNumber}}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'PassportNumber'" [DataContext]="item"
+                                                            [Text]="item.PassportNumber" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <log-column [header]="'Customs.VehicleOwner.F.PassCountryCode' | TextCodeTranslationPipe" [binding]="'PassCountryCode'" [width]="'200'" [Alignment]="'right'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div style="text-align:right" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                <span>{{item.PassCountryName}}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogLov [ObjectFieldName]="'PassCountryCode'"
+                                                        [ObjectTableName]="'Customs.VehicleOwner'"
+                                                        [DataContext]="item"
+                                                        [LookUpTableName]="'Customs.CustomsCountry'"
+                                                        (SelectedItemChanged)="SetPassportCountryLocalName(item,$event)"
+                                                        [FocusOnMe]="'true'"
+                                                        [HideColumns]="true"
+                                                        [SelectedValue]="PassCountryCode">
+                                                </LogLov>
+
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <log-column [header]="'Customs.VehicleOwner.F.ImporterPassportTypeCode' | TextCodeTranslationPipe" [binding]="'ImporterPassportTypeCode'" [width]="'200'" [Alignment]="'right'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div style="text-align:right" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                <span>{{item.ImporterPassportTypeName}}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogLov [ObjectFieldName]="'ImporterPassportTypeCode'"
+                                                        [ObjectTableName]="'Customs.VehicleOwner'"
+                                                        [DataContext]="item"
+                                                        [LookUpTableName]="'Customs.PassportType'"
+                                                        (SelectedItemChanged)="SetPassportTypeLocalName(item,$event)"
+                                                        [FocusOnMe]="'true'"
+                                                        [HideColumns]="true"
+                                                        [SelectedValue]="ImporterPassportTypeCode">
+                                                </LogLov> 
+
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <log-column [header]="'Customs.VehicleOwner.F.FirstName' | TextCodeTranslationPipe"
+                                                [binding]="'Amount'"
+                                                [width]="'200'"
+                                                [Editable]="true"
+                                                [Alignment]="'right'">
+
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming" style="text-align:right">
+                                                <span>{{item.FirstName}}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogTextBox [ObjectFieldName]="'FirstName'" [DataContext]="item" [FocusOnMe]="true" 
+                                                            [Text]="item.FirstName" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+
+
+
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <log-column [header]="'Customs.VehicleOwner.F.LastNameOrCorporationName' | TextCodeTranslationPipe"
+                                                [binding]="'Amount'"
+                                                [width]="'200'"
+                                                [Editable]="true"
+                                                [Alignment]="'right'">
+
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming" style="text-align:right">
+                                                <span>{{item.LastNameOrCorporationName}}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogTextBox [ObjectFieldName]="'LastNameOrCorporationName'" [DataContext]="item" [FocusOnMe]="true"
+                                                            [Text]="item.LastNameOrCorporationName" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+
+
+
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <log-column [header]="'Customs.VehicleOwner.F.IsMain' | TextCodeTranslationPipe"
+                                                [binding]="'VehicleSafetyAccessoryName'" [width]="'110'" [Editable]="true" [Alignment]="'right'">
+
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <!--style="text-align:right" class="TextTrimming"  --> 
+                                            <div  style="position: absolute;left:50%;top:10%;" *ngIf="logcelltemplate.IsDisplayMode">
+                                                <CheckBox (Checked)="item.IsMain = $event" [IsChecked]="item.IsMain"></CheckBox>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode" style="position: absolute;left:50%;top:10%;">
+                                                <!--[DisplayMemberPath]="'Code'"-->
+                                                <CheckBox (Checked)="item.IsMain = $event" [IsChecked]="item.IsMain"></CheckBox>
+
+
+                                            </div>
+                                        </log-cell-template>
+
+                                    </log-column>
+
+
+                                    <log-column [width]="'22'" [Editable]="true" [Alignment]="'right'" [visibility]="'visibile'">
+                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                                            <div style="width: 18px; float: left; height:20px; padding-top: 2px;">
+                                                <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteOwnersList(item)" [IsEnabled]="!IsDisplayOnly"></IconButton>
+                                            </div>
+
+
+
+                                        </log-cell-template>
+                                    </log-column>
+
+                                </logitude-edit-grid>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+            </td>
+
+            <td><div style="width:10px"></div></td>
+        </tr>
+    </table>
+</div>

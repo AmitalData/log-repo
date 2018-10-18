@@ -1,0 +1,24 @@
+﻿
+open 192.168.10.88
+amital
+Saas256
+cd amital/bin
+put "Logitude.Customs.BL.dll"
+put "Logitude.Customs.BL.pdb"
+put "Logitude.Customs.Data.dll"
+put "Logitude.Customs.Data.pdb"
+put "Logitude.CustomsMessaging.dll"
+put "Logitude.CustomsMessaging.pdb"
+
+
+put  "Unifreight.BL.dll"
+put  "Unifreight.BL.pdb"
+put  "Unifreight.data.dll"
+put  "Unifreight.data.pdb"
+
+cd ..
+rename web.config _web.config
+rename _web.config web.config
+
+close
+bye

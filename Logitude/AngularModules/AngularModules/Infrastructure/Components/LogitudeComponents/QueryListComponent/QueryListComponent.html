@@ -1,0 +1,224 @@
+﻿
+<style type="text/css">
+    .ComboBox:focus ul {
+        transition: height 0.35s ease;
+    }
+
+    .ComboBox:focus .ComboBoxDropdown {
+        transition: visibility 0.35s ease, height 0.35s ease;
+    }
+
+    .ComboBox:hover, .ComboBox:focus {
+        border: 1px solid #3BB3E2;
+    }
+
+    .Selected {
+        background: #edfaff;
+        background: -moz-linear-gradient(top, #edfaff 9%, #86cbed 100%);
+        background: -webkit-linear-gradient(top, #edfaff 9%,#86cbed 100%);
+        background: linear-gradient(to bottom, #edfaff 9%,#86cbed 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#edfaff', endColorstr='#86cbed',GradientType=0 );
+        outline: 1px solid #74c2e8;
+
+    }
+
+    .ComboBoxItem:not(.Selected):hover {
+        outline: 1px solid #b5c9d8;
+        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,dce8f7+100 */
+        background: #ffffff; /* Old browsers */
+        background: -moz-linear-gradient(top,  #ffffff 0%, #cce0f7  100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#cce0f7  100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom,  #ffffff 0%,#cce0f7  100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#dce8f7',GradientType=0 ); /* IE6-9 */
+         display: block;
+    }
+
+    .ComboBoxItem {
+        height: 22px;
+        min-height: 22px;
+        text-align: left;
+            cursor: default;
+            padding-left: 10px;
+            padding-top: 2px;
+            margin: 3px 0px;
+    }
+
+    .ComboBoxItemRTL:not(.Selected):hover {
+        outline: 1px solid #b5c9d8;
+        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,dce8f7+100 */
+        background: #ffffff; /* Old browsers */
+        background: -moz-linear-gradient(top,  #ffffff 0%, #cce0f7  100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#cce0f7  100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom,  #ffffff 0%,#cce0f7  100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#dce8f7',GradientType=0 ); /* IE6-9 */
+         display: block;
+    }
+
+    .ComboBoxItemRTL {
+        height: 22px;
+        min-height: 22px;
+        text-align: left;
+            cursor: default;
+            padding-left: 5px;
+            padding-top: 2px;
+            margin: 3px 0px;
+    }
+
+
+    .ComboBoxDropdown ul {
+        padding: 1px;
+        width: 200px;
+        height: 0;
+        overflow: hidden;
+    }
+
+    .ComboBoxDropdown {
+        position: fixed;
+        background: white;
+        border: 1px solid #AAAAAA;
+        box-shadow: 0 4px 8px 0 #AAAAAA;
+        height: 0;
+        visibility: hidden;
+        transition: visibility 0.15s, height 0.15s;
+        z-index: 55555555555555555;
+        overflow-y: hidden;
+        overflow-x:auto;
+        width: 200px;
+    }
+
+    .ComboBox {
+        display: block;
+        height: 22px;
+        max-height: 22px;
+        line-height: 22px;
+        outline: none;
+        width: 150px;
+        background: white;
+        border: 1px solid #AAAAAA;
+        font-size: 11px;
+        color: #45494A;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        position: relative;
+    }
+
+        .ComboBox:not(.Selected):hover {
+            background: -moz-linear-gradient(50% 17.31% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
+            background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+            background: -webkit-gradient(linear,50% 17.31%,50% 105.85%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
+            background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        }
+        .ToggleButtonMain:not(.Selected):hover {
+            /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,dce8f7+100 */
+            background: #ffffff; /* Old browsers */
+            background: -moz-linear-gradient(top,  #ffffff 0%, #cce0f7  100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(top,  #ffffff 0%,#cce0f7  100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(to bottom,  #ffffff 0%,#cce0f7  100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#dce8f7',GradientType=0 ); /* IE6-9 */
+        }
+        .ToggleButtonMain{
+              color: #45494A;
+        height: 20px;
+        max-height: 20px;
+        line-height: 20px;
+        background: white;
+        font-size: 11px;
+        }
+    .NewView {
+        text-decoration: underline;
+        float: left;
+        color: #45494A;
+        font-size: 11px;
+        text-indent: 3px;
+    }
+
+        .NewView:hover {
+            text-decoration: underline;
+            float: left;
+            color: lightskyblue;
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+
+        .ActionButtonsParent:hover .ActionButtons{
+            display: block;
+        }
+    .ActionButtons {
+        display: none;
+    }
+    .ToggleButton:focus:not(.IconToggleButton) {
+        pointer-events: none;
+        border: 1px solid #3BB3E2;
+        -webkit-box-shadow: 0px 0px 6px 0px rgb(59, 179, 226);
+        -moz-box-shadow: 0px 0px 6px 0px rgb(59, 179, 226);
+        box-shadow: 0px 0px 4px 0px rgb(59, 179, 226) !important;
+    }
+</style>
+<div tabindex="0" class="ToggleButton" [attr.id]="ControlId" style="margin: auto; width: 150px !important; background: transparent none repeat scroll 0 0;border: 1px solid #aaaaaa;border-radius: 3px;" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'">
+
+    <table class="ToggleButtonMain" style="border-radius: 3px;">
+        <tr>
+            <td style="width: 5px;" class="dropcontent">
+                <div></div>
+            </td>
+
+            <td>
+                <div class="FillParent dropcontent">
+                    <div class="TextTrimming dropcontent" [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'">{{Text}}</div>
+                </div>
+            </td>
+
+            <td style="width: 3px;" class="dropcontent">
+                <div></div>
+            </td>
+
+            <td style="width: 14px;">
+                <img class="dropcontent" [className]="LayoutDirection == 'rtl' ? 'RightCenter' : 'LeftCenter'" src="./Images/ToggleIcon.png" />
+            </td>
+        </tr>
+    </table>
+
+    <ul [attr.id]="ListControlId" class="ToggleButtonMenu" style="top: 21px;padding:2px;left:0;width:197px;z-index:2;border-radius: 0 0 5px 5px;overflow-y: auto;max-height: 450px;">
+
+        <li class="ComboBoxItem TextTrimming" *ngFor="let item of ItemsSource" (click)="ItemClicked(item)" [class.Selected]="item === SelectedItem">
+            <div style="margin-top:6px;" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'">
+                <img (click)="ItemClicked(item)" src="./Images/Menu/screenIcon-sm.png" style="margin-right:5px;position:relative;pointer-events:none;" />
+            </div>
+            <div style="max-width:145px;" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" [style.padding-right]="LayoutDirection=='rtl' ? '15px' : ''" class="TextTrimming">
+                <span (click)="ItemClicked(item)" *ngIf="Binding != null">{{item[Binding] | TextCodeTranslationPipe}}</span>
+            </div>
+        </li>
+
+        <li *ngIf="UserItemSource" style="border-top: 1px solid #b7b7b7; border-bottom: 1px solid #e5f5ff; margin: 7px -2px;">
+        </li>
+
+        <li class="ActionButtonsParent TextTrimming" [class.ComboBoxItem]="LayoutDirection!='rtl'" [class.ComboBoxItemRTL]="LayoutDirection=='rtl'" style="margin-bottom: 4px;" *ngFor="let item of UserItemSource" (click)="ItemClicked(item)" [class.Selected]="item === SelectedItem">
+            <div>
+                <div [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'">
+                    <img (click)="ItemClicked(item)" src="./Images/Menu/Person.small.png" style="margin-right:5px;margin-top:9px;position:relative;pointer-events:none;" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" />
+                </div>
+                <div style="max-width:110px;" class="TextTrimming" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" [style.padding-right]="LayoutDirection=='rtl' ? '15px' : ''">
+                    <span (click)="ItemClicked(item)" title="{{item[Binding] | TextCodeTranslationPipe}}" *ngIf="Binding != null" style="float:left;max-width:100px;" class="TextTrimming">{{item[Binding] | TextCodeTranslationPipe}}</span>
+                </div>
+                <div>
+                    <div class="Button ActionButtons" (click)="DeleteButtonClicked(item)" style="width:18px;height:18px;margin-right:3px;margin-top:1px;" [style.float]="LayoutDirection=='rtl' ? 'left' : 'right'">
+                        <img src="./Images/Buttons/Delete.over.png" class="CenterCenter" style="margin-left:3px;margin-top:1px;" />
+                    </div>
+                    <div class="Button ActionButtons" (click)="EditButtonClicked(item)" style="width:18px;height:18px; margin-right:5px;margin-top:1px;" [style.float]="LayoutDirection=='rtl' ? 'left' : 'right'">
+                        <img src="./Images/Buttons/Edit.over.png" class="CenterCenter" style="margin-left:3px;margin-top:1px;" />
+                    </div>
+                </div>
+            </div>
+        </li>
+
+        <li [attr.id]="NewViewId" class="dropcontent" style="background-color:#DFECF7;height:30px;border-top:1px solid #AAAAAA;margin-top:3px;margin: -2px;border-radius: 0px 0px 4px 5px;" (click)="IgnoreMouseDown()">
+            <div style="margin:4px;background-color:transparent;" class="dropcontent">
+                <span class="NewView" (click)="NewViewClicked()" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'">{{'General.O.NewView' | TextCodeTranslationPipe}}</span>
+            </div>
+        </li>
+    </ul>
+
+</div> 

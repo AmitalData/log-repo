@@ -1,0 +1,187 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Accounting.Def.Validators;
+  
+namespace Logitude.Accounting.Def.EntityPMs
+{
+   [CustomValidation(typeof(AccountingClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class AccountingPeriodPM : EntityPM
+   {
+   	  private string id ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Id  
+	   {
+	    
+	     get
+		{
+		   return id;
+		 }
+		 set
+		 {
+		   if(id != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   id=value;
+		   }
+			
+		 }
+	   }
+	  private int tenant ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+	  private int year ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Year  
+	   {
+	    
+	     get
+		{
+		   return year;
+		 }
+		 set
+		 {
+		   if(year != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Year",OldValue=year,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   year=value;
+		   }
+			
+		 }
+	   }
+	  private string periodTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PeriodTypeCode  
+	   {
+	    
+	     get
+		{
+		   return periodTypeCode;
+		 }
+		 set
+		 {
+		   if(periodTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PeriodTypeCode",OldValue=periodTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   periodTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string periodTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PeriodTypeName  
+	   {
+	    
+	     get
+		{
+		   return periodTypeName;
+		 }
+		 set
+		 {
+		   if(periodTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PeriodTypeName",OldValue=periodTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   periodTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private int openMonth ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int OpenMonth  
+	   {
+	    
+	     get
+		{
+		   return openMonth;
+		 }
+		 set
+		 {
+		   if(openMonth != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OpenMonth",OldValue=openMonth,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   openMonth=value;
+		   }
+			
+		 }
+	   }
+	  private int? closedMonth ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? ClosedMonth  
+	   {
+	    
+	     get
+		{
+		   return closedMonth;
+		 }
+		 set
+		 {
+		   if(closedMonth != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ClosedMonth",OldValue=closedMonth,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   closedMonth=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

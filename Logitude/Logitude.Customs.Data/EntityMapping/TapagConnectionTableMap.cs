@@ -1,0 +1,40 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data;
+ 
+namespace Logitude.Customs.Data.EntityMapping
+{
+ 
+    public class TapagConnectionTableMap : EntityTypeConfiguration<TapagConnectionTable>
+    {
+	    string dbms;
+        public TapagConnectionTableMap()
+        { 
+			  this.ToTable("TapagConnectionTables", "Customs");
+		
+		    this.HasKey(t => new { t.TapagId, t.DeclarationId });
+	 
+            this.Property(t => t.TapagId).HasColumnName("TapagId").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.DeclarationId).HasColumnName("DeclarationId").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Tenant).HasColumnName("Tenant");
+
+            this.Property(t => t.CustomsTapagFile).HasColumnName("CustomsTapagFile").HasMaxLength(25).IsUnicode(false);
+
+            this.Property(t => t.CustomsNumeral).HasColumnName("CustomsNumeral");
+
+            this.Property(t => t.RequestFileNumber).HasColumnName("RequestFileNumber").HasMaxLength(35).IsUnicode(false);
+        }
+    }
+}
+	 

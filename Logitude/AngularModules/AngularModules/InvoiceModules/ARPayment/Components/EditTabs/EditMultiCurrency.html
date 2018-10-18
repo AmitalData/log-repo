@@ -1,0 +1,78 @@
+﻿
+<table>
+    <!--<tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>-->
+
+    <tr>
+        <td>
+            <table *ngIf="IsResourcesReady">
+
+                <!-- PaymentAmount -->
+                <tr class="FormFieldRow">
+                    <td style="width: 130px; padding-left: 10px;">
+                        Amount to Pay ({{PaymentCurrencyCode}})
+                    </td>
+
+                    <td>
+                        <LogTextBox [DigitsAfterPoint]="2" [InputType]="'sigdouble'" [ObjectFieldName]="'PaymentAmount'" [Text]="PaymentAmount" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                    </td>
+                </tr>
+
+                <!-- InvoiceAmount -->
+                <tr class="FormFieldRow">
+                    <td style="width: 130px; padding-left: 10px;">
+                        Amount to Pay ({{InvoiceCurrencyCode}})
+                    </td>
+
+                    <td>
+                        <LogTextBox [DigitsAfterPoint]="2" [InputType]="'sigdouble'" [ObjectFieldName]="'ForeignAmount'" [Text]="ForeignAmount" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                    </td>
+                </tr>
+
+                <!-- ExchangeRate -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'ExchangeRate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogTextBox [DigitsAfterPoint]="5" [ObjectFieldName]="'ExchangeRate'" [Text]="ExchangeRate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2">
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

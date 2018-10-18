@@ -1,0 +1,41 @@
+---- No need to run
+
+--declare @NewId as varchar(15)
+--EXECUTE usp_GetNextTableIdValue @NewId OUTPUT,'BusinessHour'
+
+---- Note Please when execute this script change 1-2389 to any user Id in your DB
+--insert into BusinessHours(Id, Tenant, Name,Code,Is247, CreatedByUserId, UpdatedByUserId,CreateDate,UpdateDate ,SundayToHour,SundayFromHour,FridayToHour,FridayFromHour,ThursdayToHour,ThursdayFromHour,WednesdayFromHour,WednesdayToHour,TuesdayFromHour,TuesdayToHour,MondayFromHour,MondayToHour,SaturdayFromHour,SaturdayToHour,
+--IsSundayEnabeled,IsFridayEnabeled,IsThursdayEnabeled,IsWednesdayEnabeled,IsTuesdayEnabeled,IsMondayEnabeled,IsSaturdayEnabeled)
+--values
+--(
+--@NewId,
+--1,
+--'Calender',
+--'CAL',
+--'1',
+--'1-2389',
+--'1-2389',
+--'2015-11-03 14:07:12.000',
+--'2015-11-03 14:07:12.000',
+--'20:00:00.0000000',
+--'20:00:00.0000000',
+--'20:00:00.0000000',
+--'20:00:00.0000000',
+--'20:00:00.0000000',
+--'20:00:00.0000000',
+--'20:00:00.0000000',
+--'20:00:00.0000000',
+--'20:00:00.0000000',
+--'20:00:00.0000000',
+--'20:00:00.0000000',
+--'20:00:00.0000000',
+--'20:00:00.0000000',
+--'20:00:00.0000000',
+--'1',
+--'1',
+--'1',
+--'1',
+--'1',
+--'1',
+--'1'
+--);

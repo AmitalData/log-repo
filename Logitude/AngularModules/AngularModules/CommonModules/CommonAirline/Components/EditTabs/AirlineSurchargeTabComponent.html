@@ -1,0 +1,142 @@
+﻿
+<div class="TabHolder">
+    <table>
+        <tr style="height:5px">
+            <td></td>
+        </tr>
+        <tr style="height:1px;">
+            <td>
+                <table>
+                    <tr>
+                        <td style="width:150px">
+
+
+                            <div class="RadioButton">
+                                <input [id]="ActiveTariff" type="radio" [attr.name]="ActiveTariff" [checked]="ShowActiveTarrifs" (click)="ClickShowActiveTarrifs()" />
+                                <label [attr.for]="ActiveTariff" style="font-size: 12px">
+                                    {{ShowActiveTarrifsString}}
+                                </label>
+                            </div>
+
+                          
+                           
+                        </td>
+
+                        <td style="width:150px">
+                            <div class="RadioButton">
+                                <input [id]="AllTariff" [attr.name]="AllTariff" type="radio"  [checked]="ShowAllTarrifs" (click)="ClickAllTariff()" />
+                                <label [attr.for]="AllTariff" style="font-size: 12px">
+                                    {{ShowAllTarrifsString}}
+
+                                </label>
+                            </div>
+                           
+                        </td>
+
+                        <td> <div>  </div> </td>
+                    </tr>
+                </table>
+            </td>
+
+            <td>
+                <table>
+                    <tr>
+                        <td colspan="2"> <div> </div> </td>
+                        <td style="width: 1px;">
+                            <button class="Button" (click)="AddSurchargeTariff()">
+                                {{AddSurchargeTarrif}}
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr style="height: 5px;">
+            <td>
+                <div></div>
+            </td>
+        </tr>
+
+
+        <!--  -->
+
+        <tr >
+            <td colspan="2" >
+                <div class="SimpleGridView">
+                    <div class="SimpleGridViewHeader">
+                        <table>
+                            <tr>
+                                <td style="width: 230px; min-width: 230px;max-width:230px;">{{TarrifHeaderDate}}</td>
+                                <td  style="width: 150px; min-width: 150px;max-width:150px">{{TarrifHeaderCreateDate}}</td>
+                                <td  style="width: 100px; min-width: 100px;max-width:100px">{{TarrifHeaderFromLocation}}</td>
+                                <td  style="width: 100px; min-width: 100px;max-width:100px">{{TarrifHeaderToLocation}}</td>
+                                <td  style="width: 300px;min-width:200px; max-width:300px">{{TarrifHeaderNotes}}</td>
+                                <td style="width: 25px; max-width:25px;max-width:25px"></td>
+                                <td> </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="SimpleGridViewBody" style="overflow-y:auto;overflow-x:hidden">
+                        <table>
+                            <tr class="SimpleGridViewRow RowHover" *ngFor="let item of ObsList" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem" [ngStyle]="{background: CheckColor(item)}">
+                                <td class="GridViewCell" style="width: 230px; min-width: 230px;max-width:230px;">
+                                    <table>
+                                        <tr>
+                                                        <td style="width:80px">
+                                        {{item.FromDate | DateTimeToDatePipe}}
+                                                        </td>
+                                                        <td style="width:10px">
+                                                            -
+                                                        </td>
+                                                        <td style="width:80px">
+                                                            {{item.ToDate | DateTimeToDatePipe}}
+                                                        </td>
+                                                        <td>
+                                                            <div style="float:left" [ngStyle]="{color: item.DateStatusColor}">{{item.DateStatus }}</div>
+
+                                                        </td>
+                                                 
+                                          
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td class="GridViewCell" style="width: 150px; min-width: 150px;max-width:150px;">
+                                    {{item.CreateDate | DateTimeToDatePipe}}
+                                </td>
+                                <td class="GridViewCell" style="width: 100px; min-width: 100px;max-width:100px;">
+                                    {{item.FromLocationString}}
+                                </td>
+                                <td class="GridViewCell" style="width: 100px; min-width: 100px;max-width:100px;">
+                                    {{item.ToLocationString}}
+                                </td>
+                                <td class="GridViewCell" style="width: 300px; min-width: 200px;max-width:300px;">
+
+                                    <div>{{item.Notes}}</div>
+                                </td>
+
+                                <td class="GridViewCell" style="width: 25px;min-width:25px; max-width:25px">
+                                    <IconButton [Name]="'Edit'" [Left]="3" [IsSmall]="true" (click)="OpenEdit(item)" ></IconButton>
+
+                                </td>
+
+                                <td class="GridViewCell"></td>
+
+                            </tr>
+
+                            <tr>
+                                <td colspan="6">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </td>
+        </tr>
+
+        <!--  -->
+
+    </table>
+</div>

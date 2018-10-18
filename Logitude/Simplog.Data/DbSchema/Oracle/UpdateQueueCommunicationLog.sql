@@ -1,0 +1,50 @@
+--CREATE OR REPLACE PROCEDURE usp_UpdateQueueCommunicationLo(
+--    v_pCommunicationLogId          IN VARCHAR2,
+--    v_pTenant                      IN NUMBER,
+--    v_pCommunicationStatusTypeCode IN VARCHAR2,
+--    iv_pLog                        IN NVARCHAR2,
+--    v_pExceptionMessage            IN NVARCHAR2,
+--    v_pMessageLockId               IN VARCHAR2 )
+--AS
+--  v_pLog NVARCHAR2(2000) := iv_pLog;
+--  v_LogString NVARCHAR2(2000);
+--  v_OldLogString NVARCHAR2(2000);
+--  v_NewLineChar CHAR(2)      := CHR(13) || CHR(10);
+--  v_temp        NUMBER(1, 0) := 0;
+--BEGIN
+--  BEGIN
+--    SELECT 1
+--    INTO v_temp
+--    FROM DUAL
+--    WHERE EXISTS
+--      (SELECT Id
+--      FROM CommunicationLogs
+--      WHERE Id   = v_pCommunicationLogId
+--      AND Tenant = v_pTenant
+--      );
+--  EXCEPTION
+--  WHEN OTHERS THEN
+--    NULL;
+--  END;
+--  IF v_temp = 1 THEN
+--    BEGIN
+--      SELECT Logs_
+--      INTO v_OldLogString
+--      FROM CommunicationLogs
+--      WHERE Id             = v_pCommunicationLogId
+--      AND Tenant           = v_pTenant;
+--      IF ( v_OldLogString IS NOT NULL ) THEN
+--        BEGIN
+--          v_pLog := v_OldLogString || v_NewLineChar || v_pLog ;
+--        END;
+--      END IF;
+--      UPDATE CommunicationLogs
+--      SET MessageLockId_             = v_pMessageLockId,
+--        CommunicationStatusTypeCode = v_pCommunicationStatusTypeCode,
+--        Logs_                        = v_pLog,
+--        ExceptionMessage_            = v_pExceptionMessage
+--      WHERE Id                      = v_pCommunicationLogId
+--      AND Tenant                    = v_pTenant;
+--    END;
+--  END IF;
+--END;

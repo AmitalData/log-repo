@@ -1,0 +1,129 @@
+﻿
+
+<table style="height:260px">
+
+    <tr style="height:5px"><td style="width:450px"><div></div></td><td style="background-color:lightgray;width:1px;"></td><td><div></div></td></tr>
+
+    <tr style="height:260px">
+        <td style="width:450px">
+
+            <table>
+                <tr style="height:55px">
+                    <td><div style="width:30px"></div></td>
+                    <td style="text-align:left;width:75px"><span style="text-align:left;width:75px"><img style="width:75px;" src="Images/ser-password-icon.png" /></span></td>
+
+                    <td>
+                        <table>
+                            <tr><td><div></div></td></tr>
+                            <tr style="height:22px">
+                                <td><span style="height:22px;color:#45494A;font-weight:bold;font-size:14px">Enter password</span></td>
+                            </tr>
+                            <tr style="height:3px"><td><div></div></td></tr>
+                        </table>
+
+                    </td>
+                </tr>
+                <tr style="height:5px"><td colspan="3"><div></div></td></tr>
+
+
+                <tr style="height:22px">
+                    <td colspan="3">
+
+                        <table>
+                            <tr>
+
+                                <td style="width:30px"><div></div></td>
+                                <td style="text-align:left;width:60px"><div style="text-align:left;width:60px;font-size:11px;color:#000000">Password:</div> </td>
+                                <td style="text-align:left;width:100px">
+                                    <div style="text-align:left">
+                                        <input  (keypress)="onPasswordChanged($event)"   autocomplete="new-password" type="password" style="height:22px;border-radius:3px;border:1px solid gray;width:150px;" [(ngModel)]="CurrentPassword" />
+
+                                    </div>
+                                </td>
+                                <td style="width:4px;"><div></div></td>
+                                <td style="text-align:left;"> <img style="width:18px;height:18px;" src="Images/change-password-icon.png" /></td>
+                                <td></td>
+
+                            </tr>
+                            <tr><td colspan="6"></td></tr>
+                        </table>
+
+
+
+
+                    </td>
+                </tr>
+
+
+                <tr style="height:15px"><td colspan="3"><div></div></td></tr>
+
+                <tr *ngIf="IsValidPassword" style="height:20px">
+
+
+                    <td style="width:30px"><div></div></td>
+                    <td colspan="2">
+
+
+                        <div style="color:white;background-color:red;font-size:13px;font-weight:normal;height:20px;vertical-align:central;margin-right:10px">Invalid password !</div>
+
+                    </td>
+
+
+                </tr>
+
+
+                <tr *ngIf="IsShowProgressLoading" style="height:15px">
+
+
+                    <td style="width:30px"><div></div></td>
+                    <td  colspan="2">
+
+
+                        <div style="height:20px;vertical-align:central;margin-right:10px"><img style="width:400px;height:15px;margin-top:-5px" src="Images/progress2.gif" /></div>
+
+                    </td>
+
+
+                </tr>
+
+         
+
+                <tr style="height:20px">
+
+
+                    <td style="width:30px"><div></div></td>
+                    <td colspan="2">
+
+
+                        <div style="color:red;font-size:12px;font-weight:normal;">Another user has logged in with your id invalidating this session. </div>
+
+                    </td>
+
+
+                </tr>
+
+                <tr style="height:30px"><td colspan="3"></td></tr>
+                <!--<tr style="height:25px"><td colspan="3"><button style="float:right;height:30px;width:80px;font-size: 17px;" class="UnLockButton" (click)="UnlockClicked()">UnLock ></button></td></tr>-->
+
+                <tr style="height:25px"><td colspan="3">
+                    
+                    <div style="float:right">
+                        <button style="float:right;height:30px;width:90px;font-size: 17px;margin-right:20px" class="UnLockButton" (click)="UnlockClicked()">Unlock ></button>
+                    </div>
+                    </td></tr>
+
+                <tr><td colspan="3"></td></tr>
+            </table>
+
+        </td>
+
+        <td  style="background-color:lightgray;width:1px;"><div></div></td>
+        <!--<td style="background:url(./Images/LoginScreen/Layser.png) center center no-repeat;vertical-align:top">-->
+<td style="background:url(./Images/LoginScreen/Layer.png) center center no-repeat;vertical-align:top">
+
+            <IconButton style="vertical-align:top;float:right;height:20px" [Name]="'Signout'" [IsIconOnly]="true" (click)="OnSignoutClicked()" title="Sign Out"></IconButton>
+
+        </td>
+
+    </tr>
+</table>

@@ -1,0 +1,180 @@
+﻿
+<table>
+    <tr style="height:1px;" *ngIf="ValidationErrorsList && ValidationErrorsList.length > 0">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <td>
+                        <table>
+                            <tr class="FormFieldRow" *ngIf="DataContext.IsChargesTypeVisible">
+                                <td style="width: 100px">
+                                    <LogLabel [ObjectFieldName]="'ChargesTypeId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogLov [ObjectFieldName]="'ChargesTypeId'"
+                                            [SelectedValue]="DataContext.ChargesTypeId"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'ChargesType'">
+                                    </LogLov>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td style="width: 100px">
+                                    <LogLabel [ObjectFieldName]="'IATACodeId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogLov [ObjectFieldName]="'IATACodeId'"
+                                            [SelectedValue]="DataContext.IATACodeId"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'IATACode'"
+                                            [DependencyFilter1Value]="TenantZeroAirlineId">
+                                    </LogLov>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td style="width: 100px">
+                                    <LogLabel [ObjectFieldName]="'DueTypeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogLov [ObjectFieldName]="'DueTypeCode'"
+                                            [SelectedValue]="DataContext.DueTypeCode"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'DueType'">
+                                    </LogLov>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td style="width: 100px">
+                                    <LogLabel [ObjectFieldName]="'Quantity'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'Quantity'" [Text]="DataContext.Quantity" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td style="width: 100px">
+                                    <LogLabel [ObjectFieldName]="'UnitPrice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'UnitPrice'" [Text]="DataContext.UnitPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td style="width: 100px">
+                                    <LogLabel [ObjectFieldName]="DataContext.AmountFieldName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Total amount'"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="DataContext.AmountFieldName" [Text]="DataContext.Amount" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="2">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td style="width: 15px;">
+                        <div></div>
+                    </td>
+
+                    <td>
+                        <table>
+                            <tr class="FormFieldRow">
+                                <td style="width: 100px">
+                                    <LogLabel [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogLov [ObjectFieldName]="'CurrencyId'"
+                                            [SelectedValue]="DataContext.CurrencyId"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Currency'">
+                                    </LogLov>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td style="width: 100px">
+                                    <LogLabel [ObjectFieldName]="'PrepaidCollectId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogLov [ObjectFieldName]="'PrepaidCollectId'"
+                                            [SelectedValue]="DataContext.PrepaidCollectId"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'PrepaidCollect'"
+                                            [DependencyFilter1Value]="true">
+                                    </LogLov>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td style="width: 100px">
+                                    <LogLabel [ObjectFieldName]="'MeasurementId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogLov [ObjectFieldName]="'MeasurementId'"
+                                            [SelectedValue]="DataContext.MeasurementId"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Measurement'"
+                                            [DependencyFilter1Value]="false"
+                                            [DependencyFilter2Value]="false">
+                                    </LogLov>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="2">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!DataContext.IsEditingItemEnabled">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

@@ -1,0 +1,79 @@
+﻿
+
+
+
+
+<div>
+    <div class="TextTrimming" *ngIf="fieldName == 'DueDate'"     style="text-align: right;   padding: 0px 2px;">
+      
+        <span style="background-color:#ff6a00;color:white" [style.background-color]="datecolor" [style.color]="fontcolor" [ngStyle]="rowData['IsSeenByAssignee'] == true ? {'font-weight': 'normal'} : {'font-weight': 'bold'}" >  {{ rowData[fieldName] | DateTimeToDatePipe  }}</span>
+
+    </div>
+
+    <div class="TextTrimming" *ngIf="fieldName == 'CreateDate'"   style="text-align: right; color: #808080;  padding: 0px 2px;" [ngStyle]="rowData['IsSeenByAssignee'] == true ? {'font-weight': 'normal'} : {'font-weight': 'bold'}">
+
+       {{ rowData[fieldName] | DateTimePipe:'DT'  }}
+
+    </div>
+
+    <div class="TextTrimming" *ngIf="fieldName == 'AssigneToNotificationTypeCode'" style="text-align: center;  ">
+
+        <img *ngIf="IconeVisibility"  src="./Images/Action.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px "/>
+        <img *ngIf="BlueIconVisibility" src="./Images/BlueIcon.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
+
+    </div>
+    
+    <div  *ngIf="fieldName == 'IsClosedByAssignee'" >
+        <div style="height:22px" *ngIf="!IsClosed">
+            <button class="Button" style="top:7px;height:22px;width:85px;" (click)="ClosedByAssigneeClicked()">{{'Customs.Notification.O.MarkAsClosed' | TextCodeTranslationPipe}}</button>
+        </div>
+        <!--<div>
+            <span *ngIf="IsClosed">{{ ClosedByAssignee}}</span>
+        </div>-->
+    </div>
+    <div *ngIf="fieldName == 'IsClosedByAssignee'"   [id]="'Text' + AdditionalData.rowIndex" style="display:none;text-align:right;color: #808080;  padding: 0px 2px;" >
+        <div *ngIf="IsClosed" >
+            <span [ngStyle]="rowData['IsSeenByAssignee'] == true ? {'font-weight': 'normal'} : {'font-weight': 'bold'}">{{ rowData['ClosedByAssigneeName']}}</span>  
+        </div> 
+    </div>
+
+    <div *ngIf="fieldName == 'IsClosedByAssignee'" [id]="'Tick' + AdditionalData.rowIndex" >
+        <div style="height:22px;float:right" *ngIf="IsClosed">
+            <img  style="width:20px; height:20px;vertical-align:central;" src="./Images/GreenTick.png" />
+        </div> 
+    </div>
+
+
+    <div class="TextTrimming" *ngIf="fieldName == 'Reference1Number'" style="text-align: right; color: #808080;  " [ngStyle]="rowData['IsSeenByAssignee'] == true ? {'font-weight': 'normal'} : {'font-weight': 'bold'}">
+
+        {{ rowData[fieldName]   }}
+
+    </div>
+
+    <div class="TextTrimming" *ngIf="fieldName == 'CustomerName'" style="text-align: right; color: #808080;  " [ngStyle]="rowData['IsSeenByAssignee'] == true ? {'font-weight': 'normal'} : {'font-weight': 'bold'}">
+
+        {{ rowData[fieldName]   }}
+
+    </div>
+
+    <div class="TextTrimming" *ngIf="fieldName == 'AssigneToName'" style="text-align: right; color: #808080;  " [ngStyle]="rowData['IsSeenByAssignee'] == true ? {'font-weight': 'normal'} : {'font-weight': 'bold'}">
+
+        {{ rowData[fieldName]   }}
+
+    </div>
+
+    <div class="TextTrimming" *ngIf="fieldName == 'NotificationDefinitionName'" style="text-align: right; color: #808080;  " [ngStyle]="rowData['IsSeenByAssignee'] == true ? {'font-weight': 'normal'} : {'font-weight': 'bold'}">
+
+         {{ rowData[fieldName]   }}
+
+    </div>
+
+    <!--<div *ngIf="fieldName == 'Selected'"  >
+
+        <div style="width: 27px;" (click)="FirePreventSelect()">
+            <CheckBox style="padding-top:10px;float:right;"  
+                      [IsChecked]="IsSelected" (Checked)="IsSelected = $event "></CheckBox>
+        </div>
+     
+    </div>-->
+</div>

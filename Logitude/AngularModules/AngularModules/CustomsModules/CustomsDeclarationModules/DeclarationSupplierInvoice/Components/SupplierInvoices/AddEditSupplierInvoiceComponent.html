@@ -1,0 +1,496 @@
+﻿
+<style  type="text/css">
+    .FlipImgHoriz {
+        transform: rotate(180deg);
+    }
+
+    .DisbleBox {
+        display: inline-block;
+        border: 1px solid #ffd800;
+        border-radius: 5px;
+        background: #faf5c0;
+        padding: 2px 10px;
+        margin: 5px;
+        color: gray;
+        font-family: sans-serif;
+    }
+
+    .DoesNotExistMessageBox {
+        display: inline-block;
+        border: 1px solid #ffd800;
+        border-radius: 5px;
+        background: #faf5c0;
+        margin-right: 5px;
+        padding: 2px 5px;
+        color: gray;
+        font-family: sans-serif;
+    }
+
+ 
+    .container {
+        text-align: right;
+        height: 23px;
+        /*direction: rtl;*/
+    }
+    
+    .x-split-button {
+        position: relative;
+        display: inline-block;
+        text-align: left;
+        /*margin-top: 20px;*/
+    }
+    
+    .x-button {
+        width:initial !important;
+        position: relative;
+        margin: 0;
+        height: 22px;
+        float: left;
+        outline: none;
+        line-height: 21px;
+        /*background: #F2F2F2;
+      border: 1px solid  #00b300;*/
+        border: 1px solid  #6A8299;
+       background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(237, 192, 147, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(237, 192, 147, 1) ));
+    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+ }
+    
+    .x-button:disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+    
+    .x-button:hover {
+        cursor: pointer;
+        /*background:  #00b300;*/
+         background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(237, 192, 147, 0.85) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 0.85) 100%);
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(237, 192, 147, 0.85) ));
+    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 0.85) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 0.85) 100%);
+    }
+    
+    .x-button:active {
+        background: #F2F2F2;
+    }
+    
+    .x-button.x-button-drop {
+        border-right: 0;
+        height: 22px;
+        
+    }
+    /*.open > .x-button-drop-menu {
+      display: block;
+    }*/
+    
+    .x-button-drop-menu {
+        position: absolute;
+        top: 22px;
+        right: 0;
+        z-index: 1000;
+        /*display: none;*/
+        text-align: right;
+        float: left;
+        min-width: 130px;
+        /*padding: 5px 0;
+        margin: 2px 0 0;*/
+        font-size: 15px;
+        list-style: none;
+        background-color: #F2F2F2;
+        background-clip: padding-box;
+        border: .5px solid  #45494A;
+        box-shadow: .5px .5px 2px #6A8299;
+
+
+                
+        
+    }
+    
+    .x-button-drop-menu li span {
+        display: block;
+        padding: 3px 20px;
+        clear: both;
+        font-family: arial;
+        color: #444;
+        text-decoration: none;
+        height: 22px;
+    }
+    
+    .x-button-drop-menu li span:hover {
+        background: #D3D3D3;
+        cursor: pointer;
+    }
+
+
+        /** Send button design  **/
+
+   -button:active::shadow  {
+        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#7ad6ba+0,74bf9c+7,7ad6ba+9,1aa580+81,189b69+100 */
+          background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(237, 192, 147, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(237, 192, 147, 1) ));
+    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7ad6ba', endColorstr='#189b69',GradientType=0 ); /* IE6-9 */
+    }
+ /* Abdullah: the use of 'deep' is removing angular encabsulation of css selectors */
+    * /deep/ .x-button::shadow  {
+      
+        /* 1 - Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#eafff8+0,6abfa3+100 */
+          background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(237, 192, 147, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(237, 192, 147, 1) ));
+    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eafff8', endColorstr='#6abfa3',GradientType=0 ); /* IE6-9 */
+
+        /* 2 -  Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#7ad6ba+6,199e7a+100 */
+        color: #45494A !important;
+       
+         background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(237, 192, 147, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(237, 192, 147, 1) ));
+    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7ad6ba', endColorstr='#199e7a',GradientType=0 ); /* IE6-9 */
+
+        /* 3- */
+        color: #45494A !important;
+        border: 1px solid #529267;
+        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#7ad6ba+0,a2e5cd+7,7ad6ba+9,199e7a+100 */
+          background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(237, 192, 147, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(237, 192, 147, 1) ));
+    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7ad6ba', endColorstr='#199e7a',GradientType=0 ); /* IE6-9 */
+
+    }
+    * /deep/ .x-button:hover::shadow  {
+        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#7ad6ba+0,a2e5cd+7,7ad6ba+9,45d3b2+55,1cb28a+100 */
+         background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(237, 192, 147, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(237, 192, 147, 1) ));
+    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7ad6ba', endColorstr='#1cb28a',GradientType=0 ); /* IE6-9 */
+    }
+    * /deep/ .x
+    /* end: send button design */
+
+    .x-button-checkbox{
+        border: 0 !important;
+        box-shadow: none !important;
+    }
+
+    .disabled{
+        pointer-events: none;
+        opacity: 0.7;
+        cursor: default;
+    }
+</style>
+
+<table>
+
+    <tr style="height:22px">
+        <td colspan="6">
+            <div style="width:100%;text-align:center;margin:0 auto">
+                <table>
+                    <tr style="height:22px">
+                        <td>
+                            <div style="width:5px;font-size: 18px; color: #1B90CB; padding-right: 7px; ">
+                                {{WindowTitle}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="DisbleBox" *ngIf="NextPreviousVisible">
+                                {{InvoiceItemsMessage}}
+                            </div>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height:22px">
+        <td colspan="6">
+            <div style="width:100%;text-align:center;margin:0 auto;">
+                <table>
+                    <tr>
+                       <td><div></div></td>
+                        <td>
+                            <div class="DisbleBox" *ngIf="SearchItemsFound">
+                                {{SearchItemsMessage}}
+                            </div>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </td>
+    </tr>
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td colspan="4">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="3">
+            <table>
+
+
+                <tr style="height: 40%;">
+
+                    <td>
+
+
+
+                        <div class="FillParent CurvedArea">
+                            <table>
+                                <tr>
+                                    <td style="width: 85px">
+                                        <div class="FillParent AppLeftMenuBackgroundRTL">
+                                            <table>
+                                                <tr style="height:5px;">
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td style="vertical-align: top;">
+                                                        <ul>
+                                                            <li class="DefaultMenuItem" *ngFor="let item of TabsItemsSource" (click)="SelectedTabCode = item.code" [class.SelectedMenuItem]="item.code === SelectedTabCode"
+                                                                [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'">
+                                                                <!--<img *ngIf="item != SelectedMenu" style="position:absolute; top:0; bottom:0; margin:auto;" [attr.src]="item.IconSource" [ngStyle]="LayoutDirection == 'rtl' ? {'right': '10px;'} : {'left': '10px;'}" />
+                                                                <img *ngIf="item == SelectedMenu" style="position:absolute; top:0; bottom:0; margin:auto;" [attr.src]="item.IconSelectedSource" [ngStyle]="LayoutDirection == 'rtl' ? {'right': '11px;'} : {'left': '11px;'}" />-->
+                                                                <div style="position:absolute; top:0; bottom:0; margin:auto; height: 22px; line-height: 22px;" [ngStyle]="LayoutDirection == 'rtl' ? {'right': '5px;','padding-right':'5px'} : {'left': '25px'}">{{item.textCode | TextCodeTranslationPipe}}</div>
+                                                                <img *ngIf="SelectedTabCode == item.code" [className]="LayoutDirection == 'rtl' ? 'LeftCenter' : 'RightCenter'" [class.FlipImgHoriz]="LayoutDirection" src="./Images/SelectedMenuArrow.png" style="margin-right: -1px;" />
+
+                                                                <!--<img class="RightCenter" *ngIf="SelectedTabCode == item.code" src="./Images/SelectedMenuArrow.png" style="margin-right: -1px" />
+
+                                                                <div>{{item.textCode | TextCodeTranslationPipe}}</div>-->
+
+
+                                                            </li>
+
+                                                        </ul>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="FillParent">
+                                            <div class="ScrollViewer">
+                                                <div class="ScrollContent">
+                                                    <div class="FillParent" style="padding:7px;">
+
+                                                        <!-- GENERAL -->
+                                                        <div class="MediaStretch" [hidden]="SelectedTabCode != 'GENERAL'">
+                                                            <div LocationDirective Code="GENERAL"></div>
+                                                        </div>
+
+                                                        <!-- DOCUMENTS -->
+                                                        <div class="MediaStretch" [hidden]="SelectedTabCode != 'DOCUMENT'">
+                                                            <div LocationDirective Code="DOCUMENT"></div>
+                                                        </div>
+
+                                                        <!-- MORE -->
+                                                        <div class="MediaStretch" [hidden]="SelectedTabCode != 'MORE'">
+                                                            <div LocationDirective Code="MORE"></div>
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+
+                    </td>
+
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height:10px"></tr>
+
+    <tr style="height: 22px;">
+        <td>
+            <table>
+                <tr>
+                    <td style="width:350px;vertical-align: bottom ">
+                        <div style="float:right; margin-right:7px;">
+                            <span style="font-size:14px; font-weight:bold;padding-left:10px">{{'Customs.Declaration.O.TotalForeignCurrency' | TextCodeTranslationPipe}}</span>
+
+                            <span style="font-weight:bold;font-size:14px; display:inline-block">{{TotalForeignCurrency| NumbersPipe:'N2'}}</span>
+                        </div>
+
+                        <div style="float:right;padding-right:15px">
+                            <span style="width:70px;float:right;font-size:14px;font-weight:bold;" [ngStyle]="{color: DifferenceColor }">{{'Customs.Declaration.O.Difference' | TextCodeTranslationPipe}}</span>
+                            <span style="float:right;font-weight:bold;font-size:14px; padding-right:10px" [ngStyle]="{color: DifferenceColor }">{{Difference | NumbersPipe:'N2'}}</span>
+
+
+                        </div>
+                    </td>
+
+                    <td style="width:250px;" *ngIf="SelectedTabCode=='GENERAL' && NextPreviousVisible">
+                        <table style="height: 22px;">
+                            <tr>
+
+                                <td style="width: 57px;">
+                                    <button class="Button" [disabled]="!IsNextButtonEnabled" (click)="Next()">
+                                        <img src="./Images/Arrow-right.png" style="height:10px;width:10px;" />
+                                        {{'Customs.General.O.Next' | TextCodeTranslationPipe}}
+
+                                    </button>
+                                </td>
+
+                                <td style="width: 5px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 70px;">
+                                    <input style="text-align:center;" type="number" on (keyup)="TextBoxKeyUp($event)" [(ngModel)]="FirstCurrentLine" />
+                                </td>
+
+                                <td style="width: 11px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 57px;">
+                                    <button class="Button" [disabled]="!IsPreviousButtonEnabled" (click)="Previous()">
+                                        {{'Customs.General.O.Previous' |TextCodeTranslationPipe}}
+                                        <img src="./Images/Arrow-left.png" style="height:10px;width:10px;" />
+                                    </button>
+                                </td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td style="width:200px" *ngIf="SelectedTabCode=='GENERAL' && IsSelectedRowTextBoxVisibile">
+                        <table>
+                            <tr>
+                                <td style="width: 70px;">
+                                    <input style="text-align:center" tabindex="-1" type="number" [(ngModel)]="TextValue" placeholder="{{'Customs.Declaration.O.MoveTo' | TextCodeTranslationPipe}}" (keyup)="SelectedTextBoxKeyUp($event)" />
+                                </td>
+
+                                <td style="width:100px">
+                                    <div class="DoesNotExistMessageBox" *ngIf="LineDoesNotExist">
+                                        {{LineDoesNotExistMessage}}
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td style="vertical-align: bottom;width:200px">
+                        <table style="height: 22px;">
+                            <tr>
+                                <td>
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 57px;">
+                                    <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel' |TextCodeTranslationPipe}}</button>
+                                </td>
+
+                                <td *ngIf="IsSaveAndNewVisible" style="width: 5px;">
+                                    <div></div>
+                                </td>
+
+                                <!--<td *ngIf="IsSaveAndNewVisible" style="width: 80px;">
+                                    <button class="RedButton" [disabled]="IsDisplayOnly" (click)="SaveAndNewButtonClicked()">{{'Customs.General.B.SaveAndNew' | TextCodeTranslationPipe}}</button>
+                                </td>-->
+
+                                
+                                <td *ngIf="IsSaveAndNewVisible" style="width:120px">
+                                 
+                                    <div  [attr.id]="'savebutton'"
+                                         [class.disabled]="IsDisplayOnly">
+                                        <span class="x-split-button">
+
+                                            <button [disabled]="IsDisplayOnly"
+                                                    class="x-button x-button-drop"
+                                                    style="min-width: 10px;border-radius: 5px 0px 0px 5px;color:gray !important"
+                                                    (click)="dropdowndisplayToggle()">
+                                                &#9660;
+                                            </button>
+
+                                            <button 
+                                                    [disabled]="IsDisplayOnly"
+                                                    (click)="SaveAndNewButtonClicked()"
+                                                    class="RedButton"
+                                                  style="width:90px;border-radius: 0px 5px 5px 0px" >
+                                                &nbsp;{{'Customs.General.B.SaveAndNew' | TextCodeTranslationPipe}}
+                                            </button>
+                                            <div [attr.id]="'dropdowmenu'"
+                                                 [ngStyle]="{'display': _DropdownDisplay  }"
+                                                 style="position: fixed;z-index: 1;background-color : aquamarine;">
+                                                <ul class="x-button-drop-menu">
+                                                  
+                                                    <li>
+                                                        <span (click)="CopyInvoiceClicked()">שמור והעתק</span>
+                                                    </li>
+                                                    <li>
+                                                        <span (click)="CopyInvoiceWithItemsClicked()">שמור והעתק מורחב </span>
+                                                    </li>
+                                                  
+                                                </ul>
+
+
+                                            </div>
+                                        </span>
+                                    </div>
+                                    
+                                       <!--<div tabindex="-1" class="RedToggleButton" [class.RedToggleButtonDisabled]="IsDisplayOnly" style="float:right">
+
+
+    <label style="float:right">{{'Customs.General.B.SaveAndNew' | TextCodeTranslationPipe}}</label>
+    <img src="./Images/ToggleIcon.png" style="float:left" />
+    <div class="ToggleButtonMenu"  style="width: 115px;text-align:center;top:-81px"  >
+        <button (click)="SaveAndNewButtonClicked()" [disabled]="IsDisplayOnly">{{'Customs.General.B.SaveAndNew' | TextCodeTranslationPipe}}</button>
+
+           <button (click)="CopyInvoiceClicked()" [disabled]="IsDisplayOnly" >שמור והעתק</button>
+        <button (click)="CopyInvoiceWithItemsClicked()" [disabled]="IsDisplayOnly">שמור והעתק מורחב</button>
+
+    </div>
+</div>-->
+</td>
+                              
+                                <td style="width: 57px;">
+                                    <button class="RedButton" [disabled]="IsDisplayOnly" (click)="OkButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+
+    </tr>
+</table>

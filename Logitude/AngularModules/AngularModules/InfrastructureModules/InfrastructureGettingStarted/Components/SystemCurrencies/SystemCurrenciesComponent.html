@@ -1,0 +1,155 @@
+﻿
+<table>
+
+    <tr *ngIf="DemoMessageVisibility" style="height:1px;">
+        <td>
+            <div style="margin:1px">
+                <label style="margin: 2px 0px 0px 5px">This is a demo tenant, therefore you can't edit the system settings </label>
+            </div>
+        </td>
+    </tr>
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td style="width: 400px">
+            <table class="FixedTable" *ngIf="IsResourcesReady">
+
+                <!-- CurrencyId -->
+                <tr class="FormFieldRow">
+                    <td style="width: 150px;">
+                        <LogLabel [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td style="width: 230px;">
+                        <LogLov [ObjectFieldName]="'CurrencyId'"
+                                [ObjectTableName]="'Tenant'"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'Currency'" [SelectedValue]="CurrencyId">
+                        </LogLov>
+                    </td>
+
+                    <td style="width: 18px;margin-left:-10px;margin-top:5px; float:left;vertical-align:middle;" class="EditButton">
+                        <IconButton [Name]="'Edit'" [disabled]="DemoMessageVisibility" [IsSmall]="true" (click)="EditCurrency()" style="display: block; float: left;"></IconButton>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- FreightCurrencyId -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'FreightCurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogLov [ObjectFieldName]="'FreightCurrencyId'"
+                                [ObjectTableName]="'Tenant'"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'Currency'"
+                                [SelectedValue]="FreightCurrencyId">
+                        </LogLov>
+                    </td>
+                    <td colspan="2"></td>
+                </tr>
+
+                <!-- OtherChargesCurrencyId -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'OtherChargesCurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogLov [ObjectFieldName]="'OtherChargesCurrencyId'"
+                                [ObjectTableName]="'Tenant'"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'Currency'" [SelectedValue]="OtherChargesCurrencyId">
+                        </LogLov>
+                    </td>
+                    <td colspan="2"></td>
+                </tr>
+
+                <!-- QuoteSaleCurrencyId -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'QuoteSaleCurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogLov [ObjectFieldName]="'QuoteSaleCurrencyId'"
+                                [ObjectTableName]="'Tenant'"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'Currency'" [SelectedValue]="QuoteSaleCurrencyId">
+                        </LogLov>
+                    </td>
+                    <td colspan="2"></td>
+                </tr>
+
+                <!-- ProfitCurrencyId -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'ProfitCurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogLov [ObjectFieldName]="'ProfitCurrencyId'"
+                                [ObjectTableName]="'Tenant'"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'Currency'" [SelectedValue]="ProfitCurrencyId">
+                        </LogLov>
+                    </td>
+
+                    <td colspan="2"></td>
+                </tr>
+
+                <!-- Hyperlink -->
+                <tr class="FormFieldRow">
+                    <td></td>
+                    <td>
+                        <span class="hyperlink" style="font-size:13px;font-weight:bold;color:blue;" (click)="DailyExchangeRates()" [class.HyperlinkDisabled]="!IsEditingEnabled"> Daily Exchange Rates </span>
+                    </td>
+
+                    <td colspan="2"></td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" [disabled]="!IsEditingEnabled" (click)="OkButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

@@ -1,0 +1,112 @@
+﻿
+<div class="TabHolder">
+    <table>
+        <tr class="TabTitleRow">
+            <td>{{'General.O.Billing' | TextCodeTranslationPipe}}</td>
+        </tr>
+
+        <!--<tr>
+            <td>
+                <div class="FillParent">
+                    <div class="LocationDirective" #Child></div>
+                </div>
+            </td>
+        </tr>-->
+        <tr style="height: 1px;">
+            <td>
+                <div style="width: 100%; position: relative;">
+                    <div class="LocationDirective" #Child></div>
+                </div>
+            </td>
+        </tr>
+
+        <tr style="height: 1px;" *ngIf="DisplaySATSettings">
+            <td>
+                <table>
+                    <tr class="TabTitleRow">
+                        <td colspan="2">SAT</td>
+                    </tr>
+
+                    <tr>
+                        <td style="width: 380px;">
+
+                            <table>
+                                <!-- Code -->
+                                <tr class="FormFieldRow">
+                                    <td style="width: 140px;">
+                                        <LogLabel [ObjectFieldName]="'PaymentMethodCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'PaymentMethodCode'"
+                                                [SelectedValue]="PaymentMethodCode"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'SATPaymentMethod'">
+                                        </LogLov>
+                                    </td>
+                                </tr>
+
+
+                                <tr class="FormFieldRow">
+                                    <td style="width: 140px;">
+                                        <LogLabel [ObjectFieldName]="'MetodoPagoCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'MetodoPagoCode'"
+                                                [SelectedValue]="MetodoPagoCode"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'MetodoPago'">
+                                        </LogLov>
+                                    </td>
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <td style="width: 140px;">
+                                        <LogLabel [ObjectFieldName]="'UsoCFDICode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'UsoCFDICode'"
+                                                [SelectedValue]="UsoCFDICode"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'UsoCFDI'">
+                                        </LogLov>
+                                    </td>
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <td style="width: 140px;">
+                                        <LogLabel [ObjectFieldName]="'SATForeignRFC'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'SATForeignRFC'" [Text]="SATForeignRFC" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td></td>
+                                </tr>
+
+                            </table>
+
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div></div>
+            </td>
+        </tr>
+    </table>
+</div>

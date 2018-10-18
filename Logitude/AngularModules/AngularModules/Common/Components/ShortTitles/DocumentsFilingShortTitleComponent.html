@@ -1,0 +1,52 @@
+﻿
+<table style="height: 24px">
+    <tr>
+
+        <td style="width: 1px; padding-left: 10px; padding-right: 5px;">
+            <table>
+                <tr>
+                    <td>
+                        <div>
+                            <span><img style="width:22px;height:25px;margin-left:5px;cursor:pointer;" *ngIf="FileExtension" src="{{FileExtension | AttatchmentIconPipe}}" /></span> 
+                        </div>
+                    </td>
+
+                    <td style="width: 5px; min-width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="font-family: Arial; font-size: 20px; font-weight: bold; color: #1B90CB;">
+                        {{Code}}
+                    </td>
+
+                    <td style="width: 5px; min-width: 5px;font-family: Arial; font-size: 20px; font-weight: bold; color: #1B90CB;">
+                        <div> - </div>
+                    </td>
+
+                    <td style="font-family: Arial; font-size: 20px; font-weight: bold; color: #1B90CB;">
+                        {{DocumentTypeName}}
+                    </td>
+
+                    <td style="width: 5px; min-width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td>
+                        <div>
+                            <span *ngIf="IsDigitallySigned">
+                                <img src="./Images/DigitallySigned.png" />
+                            </span>
+                            <span *ngIf="!IsDigitallySigned">
+                                <img src="./Images/DigitallySignedG.png" /> 
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+            </table>           
+        </td>
+
+        <td>
+            <div></div>
+        </td>
+    </tr>
+</table>

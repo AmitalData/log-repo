@@ -1,0 +1,1 @@
+delete from MenusTables where Code = 'CSCM'

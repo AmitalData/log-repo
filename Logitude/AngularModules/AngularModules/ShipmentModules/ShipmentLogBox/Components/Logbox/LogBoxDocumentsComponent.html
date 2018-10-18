@@ -1,0 +1,854 @@
+﻿
+<style>
+    .IconButton img {
+        position: absolute;
+        top: 1px;
+        left: 1px;
+        bottom: 0;
+        right: 0;
+        margin: auto;
+    }
+
+    .IconButton:focus:not(:disabled) {
+        border: 1px solid #3BB3E2;
+        -webkit-box-shadow: 0px 0px 6px 0px #3BB3E2;
+        -moz-box-shadow: 0px 0px 6px 0px #3BB3E2;
+        box-shadow: 0px 0px 6px 0px #3BB3E2;
+    }
+
+    .IconButton:hover:not(:disabled) {
+        cursor: pointer;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(221, 232, 245, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(221, 232, 245, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+    }
+
+    .IconButton:disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+    .IconButton {
+        display: block;
+        float: left;
+        width: 21px;
+        height: 21px;
+        outline: none;
+        border: 1px solid #6A8299;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        position: relative;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    }
+
+    .Archive {
+        text-decoration: underline;
+        float: left;
+        color: lightskyblue;
+        font-size: 11px;
+    }
+
+        .Archive:hover {
+            text-decoration: underline;
+            float: left;
+            color: #45494A;
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+    .CustomTabControl .CustomTabControlHead li:not(.Selected):hover {
+        background: #BACEE3;
+        background: -moz-linear-gradient(white,#BACEE3);
+        background: -webkit-linear-gradient(white,#BACEE3);
+        background: -o-linear-gradient(white,#BACEE3);
+        background: linear-gradient(white,#BACEE3);
+        height: 30px;
+    }
+
+    .CustomTabControl .CustomTabControlHead li:not(.Selected) {
+        height: 26px;
+        margin-top: 2px;
+        border-radius: 1px 1px 0px 0px;
+    }
+
+    .CustomTabControl .CustomTabControlHead li.Selected {
+        height: 33px;
+        margin-bottom: -1px;
+        background: #DFECF7;
+        border: 1px solid #A3AEB9;
+        border-bottom: none;
+    }
+
+    .CustomTabControl .CustomTabControlHead li:not(:first-child):not(.Selected) {
+        border-left: none;
+        border-radius: 0px 1px 0px 0px;
+        -moz-border-radius: 0px 1px 0px 0px;
+        -webkit-border-radius: 0px 1px 0px 0px;
+    }
+
+    .CustomTabControl .CustomTabControlHead li .InnerChild {
+        height: 100%;
+        width: 100%;
+        color: black;
+        text-align: left;
+        padding-left: 3px;
+        padding-right: 3px;
+        /*border: 1px solid #FFFFFF;*/
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        border-radius: 1px 1px 0px 0px;
+        -moz-border-radius: 1px 1px 0px 0px;
+        -webkit-border-radius: 1px 1px 0px 0px;
+        /*background: -moz-linear-gradient(rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.976) 37.5%, rgba(255, 255, 255, 0.898) 62.5%, rgba(255, 255, 255, 0.776) 100%);
+    background: -webkit-linear-gradient(rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.976) 37.5%, rgba(255, 255, 255, 0.898) 62.5%, rgba(255, 255, 255, 0.776) 100%);
+    background: -o-linear-gradient(rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.976) 37.5%, rgba(255, 255, 255, 0.898) 62.5%, rgba(255, 255, 255, 0.776) 100%);
+    background: linear-gradient(rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.976) 37.5%, rgba(255, 255, 255, 0.898) 62.5%, rgba(255, 255, 255, 0.776) 100%);*/
+    }
+
+    .CustomTabControl .CustomTabControlHead li {
+        height: 25px;
+        line-height: 20px;
+        display: inline-block;
+        float: left;
+        cursor: default;
+        overflow: hidden;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        border-radius: 1px 1px 0px 0px;
+        -moz-border-radius: 1px 1px 0px 0px;
+        -webkit-border-radius: 1px 1px 0px 0px;
+    }
+
+    .CustomTabControl .TabControlBody {
+        width: 100%;
+        height: calc(100% - 25px);
+        border: 1px solid #A3AEB9;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        border-radius: 0px 0px 3px 3px;
+        -moz-border-radius: 0px 0px 3px 3px;
+        -webkit-border-radius: 0px 0px 3px 3px;
+        /*background: white;*/
+        /*position: relative;*/
+    }
+
+    .CustomTabControl .CustomTabControlHead ul {
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+    }
+
+    .CustomTabControl .CustomTabControlHead {
+        width: 100%;
+        height: 25px;
+        position: relative;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+    }
+
+    .CustomTabControl {
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+    }
+
+    .BodyBackground {
+        background: #DFECF7;
+    }
+
+    select {
+        border: none !important;
+    }
+
+    .emptyticket {
+        border: 1px solid #8C8C8C;
+        border-radius: 10px;
+        width: 168px;
+        height: 164px;
+        background: white;
+        margin: 5px;
+        margin-left: 15px;
+        float: left;
+    }
+
+        .emptyticket:hover {
+            background: #8C8C8C;
+            cursor: pointer;
+        }
+
+    .infoColor {
+        background: -moz-linear-gradient(50.55% 126.37% 91.55deg,rgba(255, 255, 255, 1) 0%,rgba(242, 242, 242, 1) 51.84%,rgba(212, 212, 212, 1) 100%);
+        background: -webkit-linear-gradient(91.55deg, rgba(255, 255, 255, 1) 0%, rgba(242, 242, 242, 1) 51.84%, rgba(212, 212, 212, 1) 100%);
+        background: -webkit-gradient(linear,50.55% 126.37%,49.7% 8.42%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(0.5184,rgba(242, 242, 242, 1) ),color-stop(1,rgba(212, 212, 212, 1) ));
+        background: -o-linear-gradient(91.55deg, rgba(255, 255, 255, 1) 0%, rgba(242, 242, 242, 1) 51.84%, rgba(212, 212, 212, 1) 100%);
+        background: -ms-linear-gradient(91.55deg, rgba(255, 255, 255, 1) 0%, rgba(242, 242, 242, 1) 51.84%, rgba(212, 212, 212, 1) 100%);
+        background: linear-gradient(-1.55deg, rgba(255, 255, 255, 1) 0%, rgba(242, 242, 242, 1) 51.84%, rgba(212, 212, 212, 1) 100%);
+        border-style: Solid;
+        border-color: #BCBEC0;
+        border-color: rgba(188, 190, 192, 1);
+        border-width: 1px;
+        border-radius: 0px 0px 10px 10px;
+    }
+
+    .SearchResult {
+        border: 1px solid #FFD700;
+    }
+
+    .emptyticket .infoColor .ActionButtons {
+        visibility: hidden;
+    }
+
+    .emptyticket:hover .infoColor .ActionButtons {
+        visibility: visible;
+    }
+
+    .emptyticket .MyIconButton {
+        visibility: hidden;
+    }
+
+    .emptyticket:hover .MyIconButton {
+        visibility: visible;
+    }
+
+    .BoxWrapper::after, .BoxWrapper::before {
+        clear: both;
+    }
+    .Disable{
+        opacity: 0.5;
+        pointer-events: none;
+    }
+         .tooltip {
+    position: relative;
+    display: inline-block;
+    
+}
+     .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 350px;
+    height:50px;
+    background-color: #6A8299;
+    color: #fff;
+    text-align: left;
+    border-radius: 6px;
+    padding: 5px 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: -35px;
+    right: 110%;
+    margin-left: 5px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 5%;
+    left: 98%;
+    margin-left: 5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent transparent #6A8299;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+</style>
+
+<table>
+    <tr style="height:100px;">
+        <td>
+            <div style="border-bottom:1px solid #cccccc;margin-left:10px;margin-right:10px;height: 100px;">
+                <table>
+                    <tr style="height:5px;">
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr style="height:43px;">
+                        <td>
+                            <img *ngIf="SelectedShipment && SelectedShipment.TransportModeId == 'O'" src="./Images/Vessel.png" style="width:23px;height:18px;vertical-align:middle;" />
+                            <img *ngIf="SelectedShipment && SelectedShipment.TransportModeId == 'A'" src="./Images/Airline.png" style="width:23px;height:18px;vertical-align:middle;" />
+                            <img *ngIf="SelectedShipment && SelectedShipment.TransportModeId == 'I'" src="./Images/Trucker.png" style="width:23px;height:18px;vertical-align:middle;" />
+                            <span style="vertical-align:middle;font-size:18px;color:#6E7172;margin-left: 10px;" [title]="SelectedShipment ? SelectedShipment.ShipmentNumber : ''">{{SelectedShipment ? (SelectedShipment.ForwarderShipmentNumber ? SelectedShipment.ForwarderShipmentNumber : SelectedShipment.CustomerReference1) : ''}}</span>
+                            <span *ngIf="IsPrivateLabel == true" style="vertical-align:middle;font-size:18px;color:#6E7172;margin-left: 10px;" >{{SelectedShipment ? (SelectedShipment.IncotermCode && SelectedShipment.IncotermCode != '---' ? ( '( ' + SelectedShipment.IncotermCode + ' )' ) : '' ): ''}}</span>
+                        </td>
+                        <!--<td style="width:1px;" *ngIf="!IsPrivateLabel && this.SelectedShipment && !this.SelectedShipment.ForwarderShipmentNumber"> 
+                            <button class="IconButton" style="width:140px;height:26px;margin-right:5px;float:right;" (click)="ShareDocumentsClick()" [class.Disable]="AllowSendingDocsToAgent == false || DocsSentToAgent == true">
+                                <img src="./Images/LogBox/Share.png" style="position:relative;width:25px;margin-left:-5px;" />
+                                <span style="vertical-align:middle;" *ngIf="DocsSentToAgent == false">Share Documents</span>
+                                <span style="vertical-align:middle;" *ngIf="DocsSentToAgent == true">Shared with agent</span>
+                            </button>
+                            <div class="tooltip" style="float:left;margin-top:5px;">
+                                <img src="./Images/SharedNote.png" style="width:22px;height:22px;float:left" class="ActionButtons" />
+                                <div class="tooltiptext" *ngIf="AllowSendingDocsToAgent == true">
+                                    <table>
+                                        <tr><td> This option allows you to digitally send the shared </td></tr>
+                                        <tr><td> documents to your agent before he created the shipment. </td></tr> 
+                                    </table>
+                                </div>
+                                <div class="tooltiptext" *ngIf="AllowSendingDocsToAgent == false">
+                                    <table>
+                                        <tr><td> Sorry , this option is not supported for this agent. </td></tr>
+                                    </table>
+                                </div>
+                                <div class="tooltiptext" *ngIf="DocsSentToAgent == true">
+                                    <table>
+                                        <tr><td> Documents was already shared with Agent. </td></tr>
+                                    </table>
+                                </div>
+                            </div> 
+                        </td>-->
+                        <td style="float:right;">
+                            <div style="border-radius:15px;border:1px solid #5AACE5;margin:10px;min-width:100px;text-align:center;">
+                                <span style="margin:5px;">{{SelectedShipment ? SelectedShipment.StatusName : ''}}</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <img *ngIf="SelectedShipment && SelectedShipment.MainCarriageFromPortCode != '---'" src="{{SelectedShipment.MainCarriageFromPortCountryCode | CountryFlagPipe}}" style="width:17px;height:18px;vertical-align:middle;" />
+                            <span style="vertical-align:middle;font-size:12px;color:#6E7172;">{{SelectedShipment ? SelectedShipment.MainCarriageFromPortCode : ''}} , </span>
+                            <img *ngIf="SelectedShipment && SelectedShipment.MainCarriageToPortCode != '---'" src="{{SelectedShipment.MainCarriageToPortCountryCode | CountryFlagPipe}}" style="width:17px;height:18px;vertical-align:middle;" />
+                            <span style="vertical-align:middle;font-size:12px;color:#6E7172;">{{SelectedShipment ? SelectedShipment.MainCarriageToPortCode : ''}}</span>
+                            <span *ngIf="ShipmentPM && IsPrivateLabel == true && ShipmentPM.ForwarderPartnerId == ShipmentPM.ForwardingPartnerId" style="vertical-align:middle;font-size:12px;color:#6E7172;">{{'(' + AgentLable + ' Forwarding)'}}</span>
+                        </td> 
+                        <td style="float:right;min-width:170px;">
+                            <span style="vertical-align:middle;font-size:12px;color:#6E7172;float:left;">{{SelectedShipment ? ((SelectedShipment.CustomerReference1? SelectedShipment.CustomerReference1 : '') + '/' + (SelectedShipment.CustomerReference2 ? SelectedShipment.CustomerReference2 : '')) : ''}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td *ngIf="SelectedShipment && (ShipmentTypeId === 'FCL' || ShipmentTypeId === 'FCLD') && SelectedShipment.TransportModeId != 'A'">
+                            <span *ngIf="SelectedShipment.PackagesQuantity == null || SelectedShipment.PackagesQuantity == 0" style="vertical-align:middle;font-size:12px;color:#6E7172;">
+                                {{SelectedShipment ? ((SelectedShipment.PackagesQuantity == null ? 0 : SelectedShipment.PackagesQuantity) + ' Containers' + ' / ' + (SelectedShipment.GrossWeight == null ? 0 : SelectedShipment.GrossWeight) + ' Kgm') : ''}}
+                            </span>
+                            <span class="Archive" *ngIf="SelectedShipment.PackagesQuantity != null && SelectedShipment.PackagesQuantity != 0" style="vertical-align:middle;font-size:12px;" (click)="OnPackagesClick('Containers')">
+                                {{SelectedShipment ? ((SelectedShipment.PackagesQuantity == null ? 0 : SelectedShipment.PackagesQuantity) + ' Containers' + ' / ' + (SelectedShipment.GrossWeight == null ? 0 : SelectedShipment.GrossWeight) + ' Kgm') : ''}}
+                            </span>
+                        </td>
+                        <td *ngIf="SelectedShipment && (ShipmentTypeId != 'FCL' && ShipmentTypeId != 'FCLD') || (SelectedShipment && SelectedShipment.TransportModeId == 'A')">
+                            <!--<span class="Archive" style="vertical-align:middle;font-size:12px;color:#6E7172;" >{{SelectedShipment ? ((SelectedShipment.PackagesQuantity == null ? 0 : SelectedShipment.PackagesQuantity) + ' Pcs' + ' / ' + (SelectedShipment.GrossWeight == null ? 0 : SelectedShipment.GrossWeight) + ' Kgm') : ''}}</span>-->
+                            <span *ngIf="SelectedShipment.PackagesQuantity == null || SelectedShipment.PackagesQuantity == 0" style="vertical-align:middle;font-size:12px;color:#6E7172;">
+                                {{SelectedShipment ? ((SelectedShipment.PackagesQuantity == null ? 0 : SelectedShipment.PackagesQuantity) + ' Pcs' + ' / ' + (SelectedShipment.GrossWeight == null ? 0 : SelectedShipment.GrossWeight) + ' Kgm') : ''}}
+                            </span>
+                            <span class="Archive" *ngIf="SelectedShipment.PackagesQuantity != null && SelectedShipment.PackagesQuantity != 0" style="vertical-align:middle;font-size:12px;" (click)="OnPackagesClick('Packages')">
+                                {{SelectedShipment ? ((SelectedShipment.PackagesQuantity == null ? 0 : SelectedShipment.PackagesQuantity) + ' Pcs' + ' / ' + (SelectedShipment.GrossWeight == null ? 0 : SelectedShipment.GrossWeight) + ' Kgm') : ''}}
+                            </span>
+                        </td>
+                        <td *ngIf="!SelectedShipment">
+                            <span style="vertical-align:middle;font-size:12px;color:#6E7172;"></span>
+                        </td>
+                        <td style="float:right;min-width:170px;">
+                            <span style="vertical-align:middle;font-size:12px;color:#6E7172;float:left;">{{TextChanged}}</span>
+                            <span style="vertical-align:middle;font-size:12px;color:#6E7172;float:left;min-width:30px;">{{ValueChanged}}</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 5px;">
+        <td></td>
+    </tr>
+
+    <tr>
+        <td>
+            <div class="MediaFill">
+                <table>
+                    <tr style="height:10px;">
+                        <td>
+                            <table style="margin-top:5px;">
+                                <tr>
+                                    <td style="float:left;">
+                                        <span style="vertical-align:middle;font-size:18px;color:#6E7172;margin-left: 10px;">Documents</span>
+                                    </td>
+                                    <td style="float:right;">
+                                        <button class="IconButton"  style="width:114px;height:26px;margin-right:5px;" (click)="AddDocumentClick()" [class.Disable]="DisableAddDocumentButton == true">
+                                            <img src="./Images/LogBox/Add.png"  style="visibility:inherit;left:2px;vertical-align:middle;position:relative;" />
+                                            <span style="vertical-align:middle;">Add Document</span>
+                                        </button>
+                                    </td>
+                                    <td style="float:right;">
+                                        <button class="IconButton" style="width:114px;height:26px;margin-right:5px;" (click)="DownloadAllClicked()">
+                                            <img src="./Images/LogBox/DownArrow.png" style="visibility:inherit;left:2px;vertical-align:middle;position:relative;width:20px;" />
+                                            <span style="vertical-align:middle;">Download All</span>
+                                        </button>
+                                    </td>
+                                    <td style="width:160px;float:right;" *ngIf="!IsPrivateLabel && this.SelectedShipment && !this.SelectedShipment.ForwarderShipmentNumber">
+                                        <button class="IconButton" style="width:130px;height:26px;margin-right:5px;float:right;" (click)="ShareDocumentsClick()" [class.Disable]="AllowSendingDocsToAgent == false || DocsSentToAgent == true">
+                                            <img src="./Images/LogBox/Share.png" style="position:relative;width:25px;margin-left:-5px;" />
+                                            <span style="vertical-align:middle;" *ngIf="DocsSentToAgent == false">Share with agent</span>
+                                            <span style="vertical-align:middle;" *ngIf="DocsSentToAgent == true">Shared with agent</span>
+                                        </button>
+                                        <div class="tooltip" style="float:left;margin-top:5px;">
+                                            <img src="./Images/SharedNote.png" style="width:22px;height:22px;float:left" class="ActionButtons" />
+                                            <div class="tooltiptext" *ngIf="AllowSendingDocsToAgent == true">
+                                                <table>
+                                                    <tr><td> This option allows you to digitally send the shared </td></tr>
+                                                    <tr><td> documents to your agent before he created the shipment. </td></tr>
+                                                </table>
+                                            </div>
+                                            <div class="tooltiptext" *ngIf="AllowSendingDocsToAgent == false">
+                                                <table>
+                                                    <tr><td> Sorry , this option is not supported for this agent. </td></tr>
+                                                </table>
+                                            </div>
+                                            <div class="tooltiptext" *ngIf="DocsSentToAgent == true">
+                                                <table>
+                                                    <tr><td> Documents were already shared with Agent. </td></tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr style="height: 5px;">
+                        <td></td>
+                    </tr>
+                    <tr style="height:45px;">
+                        <td style="vertical-align:top;">
+                            <table style="margin-top:5px;height:30px;">
+                                <tr>
+                                    <td style="float:left;">
+                                        <div></div>
+                                    </td>
+                                    <td style="float:right;width:21px;margin-right:5px;">
+                                        <IconButton [Name]="'Refresh'" (click)="RefreshBtnClick()"></IconButton>
+                                    </td>
+                                    <td style="float:right;margin-right:5px;">
+                                        <span class="Archive" (click)="ArchiveClicked()" style="font-weight:bold;font-size:12px;margin-right:2px;">{{ArchiveButtonText}}</span>
+                                        <img src="./Images/LogBox/Archive.png" style="visibility:inherit;vertical-align:middle;position:relative;width:20px;" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr style="height:100%;">
+                        <td>
+                            <div class="CustomTabControl" style="margin-top:-20px; float:left; top: 50px; height: 100%;">
+                                <div class="CustomTabControlHead">
+                                    <ul style="margin-left: 15px;width:80%;">
+                                        <li [class.Selected]="SelectedTabCode == 'CAT'" (click)="SelectedTabCode = 'CAT'" style="width:120px;font-size:13px;color:#45494A;border-radius: 2px 2px 0 0;">
+                                            <div class="InnerChild" style="text-align:center;line-height:30px;">
+                                                <span style="left:2px;top:5px;font-size:12px;">{{AllHeader}}</span>
+                                            </div>
+                                        </li>
+                                        <li [class.Selected]="SelectedTabCode == 'REQ'" (click)="SelectedTabCode = 'REQ'" style="width:101px;font-size:13px;color:#45494A;border-radius: 2px 2px 0 0;">
+                                            <div class="InnerChild" style="text-align:center;line-height:30px;">
+                                                <span style="left:120px;top:5px;font-size:12px;" [style.color]="SelectedTabCode == 'REQ' ? '#FE6F0A' : '#45494A'">Requested ({{RequestedCount}})</span>
+                                            </div>
+                                        </li>
+                                        <li *ngIf="IsRequestedSelected" [class.Selected]="SelectedTabCode == 'SREQ'" (click)="SelectedTabCode = 'SREQ'" style="width:120px;font-size:13px;color:#45494A;border-radius: 2px 2px 0 0;">
+                                            <div class="InnerChild" style="text-align:center;line-height:30px;">
+                                                <span style="left:120px;top:5px;font-size:12px;" [style.color]="SelectedTabCode == 'SREQ' ? '#FE6F0A' : '#45494A'">Sign Required ({{SignRequiredCount}})</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <div style="float:right;width:180px;margin-right: 5px;direction: rtl;">
+                                        <LogCheckBox [ObjectFieldName]="'ShowDeleted'" [DataContext]="DataContext" style="float:right;"></LogCheckBox>
+                                        <label style="margin-right:-10px;">Show Cancelled</label>
+                                        <!--<input type="checkbox" for="Cancel" [(ngModel)]="ShowDeleted" />-->
+                                    </div>
+                                </div>
+                                <div class="TabControlBody BodyBackground" style="height:calc(100% - 16px);">
+                                    <!-- Category -->
+                                    <div id="DocsTab" class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'CAT'">
+                                        <div class="LocationDirective" LocationDirective Code="CAT" style="height:calc(100% - 6px);">
+                                            <div style="overflow-y:auto;overflow-x:hidden;" class="BodyBackground MediaFill">
+
+                                                <div *ngFor="let item1 of externalDocs" style="padding:5px;float:left;width:100%;">
+                                                    <span style="font-size:16px;border-bottom:1px solid #BCBEC0;width:100%;float:left;">{{item1.key}}</span>
+                                                    <div *ngFor="let item of item1.value let i = index" class="emptyticket" [class.SearchResult]="(SearchText != null && SearchText != '' && item.SearchFields.toLowerCase().indexOf(SearchText.toLowerCase()) > -1)" style="max-width:164px;margin-top:10px;">
+                                                        <table *ngIf="!item.hasFile" style="height:162px;width:162px;" (click)="DocumentClicked(item)">
+                                                            <tr>
+                                                                <td style="height:40px;">
+                                                                    <div style="margin:5px;float:left;width:10%;" class="MyIconButton">
+                                                                        <IconButton [Name]="'Delete'" [disabled]="item.IsSharedWithForwarder" [Width]="'18'" [Height]="'18'" (click)="DeleteDocumentClicked(item)"></IconButton>
+                                                                    </div>
+                                                                    <div style="margin:5px;float:right;max-width:150px;" class="TextTrimming">
+                                                                        <span *ngIf="item.IsRequested" style="color:orange;text-align:right;">Requested Document</span>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="height:1px;"> 
+                                                                    <div style="margin:5px;float:right;max-width:150px;" class="TextTrimming" [title]="item.Description">
+                                                                        <span *ngIf="item.IsRequested && item.Description" style="text-align:right;">{{item.Description}}</span>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr style="height:1px;">
+                                                                <td>
+                                                                    <img *ngIf="(SearchText != null && SearchText != '' && item.SearchFields.toLowerCase().indexOf(SearchText.toLowerCase()) > -1)" src="./Images/DocSearchResult.png" style="float:right;" />
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <img src="./Images/Plus.png" style="margin-left:70px;" />
+                                                                </td>
+                                                            </tr>
+                                                            <tr style="height:55px;">
+                                                                <td>
+                                                                    <div class="infoColor" style="height:55px;max-width:162px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                                                                        <span style="text-align:left;margin-left:5px;vertical-align:middle;font-size: 14px;white-space:nowrap;line-height:50px;" [title]="item.DocumentTypeName">{{item.DocumentTypeName}}</span>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                        <table *ngIf="item.hasFile" style="height:162px;max-width:162px;width:162px">
+                                                            <tr>
+                                                                <td>
+                                                                    <!--<div [id]="'BusyIndecator' + item.Id" class="CenterCenter" [style.width.px]="162" [style.height.px]="162" [style.display]="item.SignRequestByUserEmail ? 'block' : 'none'" style="z-index: 1;background: linear-gradient(rgba(240, 240, 240, 0.5), rgba(198, 198, 198, 0.5));">
+                                                                        <div style="margin: auto; margin-top: 40px;" [style.width.px]="25" [style.height.px]="25">
+                                                                            <img src="./Images/BusyIndicator.gif" alt="Loading..." [style.width.px]="25" [style.height.px]="25" />
+                                                                        </div>
+
+                                                                        <div style="margin-top: 15px; height: 20px; width: 100%; text-align: center;">
+                                                                            <label style="font-weight:bold;color:orange;">waiting to be signed ...</label>
+                                                                        </div>
+                                                                    </div>-->
+                                                                    <table (click)="DocumentClicked(item)">
+                                                                        <tr style="max-width:162px;">
+                                                                            <td style="height:40px;max-width:162px;">
+                                                                                <div style="margin:2px;margin-top:-10px;border: 1px solid #5AACE5;border-radius:30px;width:98%;background-color:#5AACE5;text-align:center;height:18px;">
+                                                                                    <div style="color:white;float:left;width:80%;padding-left:3px;" class="TextTrimming" [title]="item.DocumentTypeName">
+                                                                                        <span style="text-align:center;color: white;">{{item.DocumentTypeName}}</span>
+                                                                                    </div>
+                                                                                    <img *ngIf="item.IsCustomReference == true" src="./Images/CustomReference.png" style="float:right;padding-right:5px;"  [title]="'Customs Reference: ' + item.CustomReference"/>
+                                                                                </div> 
+                                                                                <img *ngIf="(SearchText != null && SearchText != '' && item.SearchFields.toLowerCase().indexOf(SearchText.toLowerCase()) > -1)" src="./Images/DocSearchResult.png" style="float:right;" />
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr style="max-width:162px;">
+                                                                            <td style="max-width:162px;">
+                                                                                <table style="width:162px;table-layout:fixed;">
+                                                                                    <tr>
+                                                                                        <td>
+                                                                                            <span style="white-space:pre-wrap;margin-left:2px;text-align:center;color: #45494A;font-size: 13px;word-wrap: break-word;" [title]="item.Description && item.Description.length > 56 ? item.Description : ''">{{item.Description && item.Description.length > 56 ? item.Description.substring(0, 54) + '...' : item.Description}}</span>
+                                                                                            
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>
+                                                                                            <div [id]="'BusyIndecator' + item.Id" [style.display]="item.SignRequestByUserEmail ? 'block' : 'none'"> 
+                                                                                                <div style="height: 20px; width: 100%; text-align: center;">
+                                                                                                    <label style="font-weight:bold;color:orange;">Signing in progress..</label>
+                                                                                                    <img src="./Images/close.png" style="width:22px;height:22px;cursor:pointer;" class="ActionButtons" title="Delete" (click)="CancelSignProcess(item)" />
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td></td>
+                                                                                    </tr>
+                                                                                </table> 
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr style="height:40px;max-width:162px;">
+                                                                            <td style="max-width:162px;">
+                                                                                <div class="infoColor" style="height:40px;">
+                                                                                    <table>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <img [src]="item.FileExtension | AttatchmentIconPipe" style="width:22px;height:25px;margin-left:5px;cursor:pointer;" (click)="DownloadDocumentFile(item)" />
+                                                                                            </td>
+                                                                                            <td style="min-width: 75px;">
+                                                                                                <div *ngIf="!item.SignRequestByUserEmail" >
+                                                                                                    <img src="./Images/close.png" style="width:22px;height:22px;cursor:pointer;" class="ActionButtons" [class.Disable]="item.IsSharedWithForwarder" title="Delete" (click)="DeleteDocumentFile(item)" />
+                                                                                                    <img src="./Images/sendmail.png" style="width:22px;height:22px;cursor:pointer;" class="ActionButtons" title="Send" (click)="SendDocumentFile(item)" />
+                                                                                                    <img src="./Images/DownArrow.png" style="width:22px;height:22px;cursor:pointer;" class="ActionButtons" title="DownLoad" (click)="DownloadDocumentFile(item)" />
+                                                                                                </div>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <div>
+                                                                                                    <div style="float:left;margin:3px;" *ngIf="!item.SignRequestByUserEmail">
+                                                                                                        <img *ngIf="item.IsDigitallySigned" src="./Images/DigitallySigned.png" [title]="item.SignersList" />
+                                                                                                        <img *ngIf="!item.IsDigitallySigned" src="./Images/DigitallySignedG.png" (click)="SetDigitallySigned(item)" />
+                                                                                                    </div>
+                                                                                                    <div style="float:left;margin:3px;" *ngIf="item.SignRequestByUserEmail">
+                                                                                                        <img src="./Images/BusyIndicator.gif" style="position:absolute;top:5px;left:-20px;width:30px;height:30px;" />
+                                                                                                        <img src="./Images/DigitallySignedO.png" style="position:absolute;top:14px;left:-10px;" />
+                                                                                                    </div>
+                                                                                                    <div style="float:left;margin:3px;" *ngIf="item.IsSharedWithForwarder"><!--*ngIf="!item.ForwarderDocumentId && item.IsSharedWithCustomer == false"-->
+                                                                                                       <img src="./Images/SharedWithAgentB.png" [title]="'Shared With ' + AgentLable" />
+                                                                                                    </div>
+                                                                                                    <div style="float:left;margin:3px;" *ngIf="item.IsSharedWithForwarder == false && item.IsSharedWithCustomer == false">
+                                                                                                        <img src="./Images/ShareWithAgentGray.png" (click)="ShareWithAgent(item)" [title]="'Share With ' + AgentLable" />
+                                                                                                    </div>
+                                                                                                    <div style="float:left;margin:3px;" *ngIf="item.IsSharedWithForwarder == false && item.IsSharedWithCustomer == true">
+                                                                                                        <img src="./Images/CloudArrowUp.png" [title]="item.ExternalEntityReference ? 'Agent Reference : ' + item.ExternalEntityReference : ''"/>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                        <!--<div>
+                                                            <img [id]="'Note' + item1.key + i" src="./Images/ToggleNote.png" style="position:relative;z-index:1;display:none;" />
+                                                        </div>-->
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Requested -->
+                                    <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'REQ'">
+                                        <div class="LocationDirective" LocationDirective Code="REQ" style="height:calc(100% - 6px);">
+                                            <div style="overflow-y:auto;overflow-x:hidden;" class="BodyBackground MediaFill">
+                                                <div *ngFor="let item1 of externalRequestedDocs" style="padding:5px;float:left;width:100%;">
+                                                    <span style="font-size:16px;border-bottom:1px solid #BCBEC0;width:100%;float:left;">{{item1.key}}</span>
+                                                    <div *ngFor="let item of item1.value let i = index" class="emptyticket" style="max-width:164px;margin-top:10px;">
+                                                        <table *ngIf="!item.hasFile" style="height:162px;width:162px;" (click)="DocumentClicked(item)">
+                                                            <tr>
+                                                                <td style="height:40px;">
+                                                                    <div style="margin:5px;float:left;width:10%;" class="MyIconButton">
+                                                                        <IconButton [Name]="'Delete'" [disabled]="item.IsSharedWithForwarder" [Width]="'18'" [Height]="'18'" (click)="DeleteDocumentClicked(item)"></IconButton>
+                                                                    </div>
+                                                                    <div style="margin:5px;float:right;max-width:150px;" class="TextTrimming">
+                                                                        <span *ngIf="item.IsRequested" style="color:orange;text-align:right;">Requested Document</span>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="height:1px;">
+                                                                    <div style="margin:5px;float:right;max-width:150px;" class="TextTrimming" [title]="item.Description">
+                                                                        <span *ngIf="item.IsRequested && item.Description" style="text-align:right;">{{item.Description}}</span>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr style="height:1px;">
+                                                                <td>
+                                                                    <img *ngIf="(SearchText != null && SearchText != '' && item.SearchFields.toLowerCase().indexOf(SearchText.toLowerCase()) > -1)" src="./Images/DocSearchResult.png" style="float:right;" />
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <img src="./Images/Plus.png" style="margin-left:70px;" />
+                                                                </td>
+                                                            </tr>
+                                                            <tr style="height:55px;">
+                                                                <td>
+                                                                    <div class="infoColor" style="height:55px;max-width:162px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                                                                        <span style="text-align:left;margin-left:5px;vertical-align:middle;font-size: 14px;white-space:nowrap;line-height:50px;" [title]="item.DocumentTypeName">{{item.DocumentTypeName}}</span>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Sign Required -->
+                                    <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'SREQ'">
+                                        <div class="LocationDirective" LocationDirective Code="SREQ" style="height:calc(100% - 6px);">
+                                            <div style="overflow-y:auto;overflow-x:hidden;" class="BodyBackground MediaFill">
+                                                <div *ngFor="let item1 of SignReqDocs; let myIndex = index" style="padding:5px;float:left;width:100%;">
+                                                    <div style="border-bottom:1px solid #BCBEC0;width:100%;height:30px;">
+                                                        <button *ngIf="myIndex == 0" class="IconButton" style="width:70px;height:26px;margin-right:5px;float:right" (click)="SignAllClick()">
+                                                            <img src="./Images/DigitallySignedG.png" style="visibility:inherit;left:2px;vertical-align:middle;position:relative;" />
+                                                            <span style="vertical-align:middle;">Sign All</span>
+                                                        </button>
+                                                        <span style="font-size:16px;float:left;">{{item1.key}}</span>
+                                                    </div> 
+                                                    <div *ngFor="let item of item1.value let i = index" class="emptyticket" [class.SearchResult]="(SearchText != null && SearchText != '' && item.SearchFields.toLowerCase().indexOf(SearchText.toLowerCase()) > -1)" style="max-width:164px;margin-top:10px;">
+                                                        <table *ngIf="!item.hasFile" style="height:162px;width:162px;" (click)="DocumentClicked(item)">
+                                                            <tr>
+                                                                <td style="height:40px;">
+                                                                    <div style="margin:5px;float:left;width:10%;" class="MyIconButton">
+                                                                        <IconButton [Name]="'Delete'" [disabled]="item.IsSharedWithForwarder" [Width]="'18'" [Height]="'18'" (click)="DeleteDocumentClicked(item)"></IconButton>
+                                                                    </div>
+                                                                    <div style="margin:5px;float:right;max-width:150px;" class="TextTrimming">
+                                                                        <span *ngIf="item.IsRequested" style="color:orange;text-align:right;">Requested Document</span>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="height:1px;">
+                                                                    <div style="margin:5px;float:right;max-width:150px;" class="TextTrimming" [title]="item.Description">
+                                                                        <span *ngIf="item.IsRequested && item.Description" style="text-align:right;">{{item.Description}}</span>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr style="height:1px;">
+                                                                <td>
+                                                                    <img *ngIf="(SearchText != null && SearchText != '' && item.SearchFields.toLowerCase().indexOf(SearchText.toLowerCase()) > -1)" src="./Images/DocSearchResult.png" style="float:right;" />
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <img src="./Images/Plus.png" style="margin-left:70px;" />
+                                                                </td>
+                                                            </tr>
+                                                            <tr style="height:55px;">
+                                                                <td>
+                                                                    <div class="infoColor" style="height:55px;max-width:162px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                                                                        <span style="text-align:left;margin-left:5px;vertical-align:middle;font-size: 14px;white-space:nowrap;line-height:50px;" [title]="item.DocumentTypeName">{{item.DocumentTypeName}}</span>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                        <table *ngIf="item.hasFile" style="height:162px;max-width:162px;width:162px">
+                                                            <tr>
+                                                                <td>
+                                                                    <table (click)="DocumentClicked(item)">
+                                                                        <tr style="max-width:162px;">
+                                                                            <td style="height:40px;max-width:162px;">
+                                                                                <div style="margin:2px;margin-top:-10px;border: 1px solid #5AACE5;border-radius:30px;width:98%;background-color:#5AACE5;text-align:center;height:18px;">
+                                                                                    <div style="color:white;float:left;width:80%;padding-left:3px;" class="TextTrimming" [title]="item.DocumentTypeName">
+                                                                                        <span style="text-align:center;color: white;">{{item.DocumentTypeName}}</span>
+                                                                                    </div>
+                                                                                    <img *ngIf="item.IsCustomReference == true" src="./Images/CustomReference.png" style="float:right;padding-right:5px;" [title]="'Customs Reference: ' + item.CustomReference" />
+                                                                                </div>
+                                                                                <img *ngIf="(SearchText != null && SearchText != '' && item.SearchFields.toLowerCase().indexOf(SearchText.toLowerCase()) > -1)" src="./Images/DocSearchResult.png" style="float:right;" />
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr style="max-width:162px;">
+                                                                            <td style="max-width:162px;">
+                                                                                <table style="width:162px;table-layout:fixed;">
+                                                                                    <tr>
+                                                                                        <td>
+                                                                                            <span style="white-space:pre-wrap;margin-left:2px;text-align:center;color: #45494A;font-size: 13px;word-wrap: break-word;" [title]="item.Description && item.Description.length > 56 ? item.Description : ''">{{item.Description && item.Description.length > 56 ? item.Description.substring(0, 54) + '...' : item.Description}}</span>
+
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>
+                                                                                            <div [id]="'BusyIndecator' + item.Id" [style.display]="item.SignRequestByUserEmail ? 'block' : 'none'">
+                                                                                                <div style="height: 20px; width: 100%; text-align: center;">
+                                                                                                    <label style="font-weight:bold;color:orange;">Signing in progress..</label>
+                                                                                                    <img src="./Images/close.png" style="width:22px;height:22px;cursor:pointer;" class="ActionButtons" title="Delete" (click)="CancelSignProcess(item)" />
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td></td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr style="height:40px;max-width:162px;">
+                                                                            <td style="max-width:162px;">
+                                                                                <div class="infoColor" style="height:40px;">
+                                                                                    <table>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <img [src]="item.FileExtension | AttatchmentIconPipe" style="width:22px;height:25px;margin-left:5px;cursor:pointer;" (click)="DownloadDocumentFile(item)" />
+                                                                                            </td>
+                                                                                            <td style="min-width: 75px;">
+                                                                                                <div *ngIf="!item.SignRequestByUserEmail">
+                                                                                                    <img src="./Images/close.png" style="width:22px;height:22px;cursor:pointer;" class="ActionButtons" [class.Disable]="item.IsSharedWithForwarder" title="Delete" (click)="DeleteDocumentFile(item)" />
+                                                                                                    <img src="./Images/sendmail.png" style="width:22px;height:22px;cursor:pointer;" class="ActionButtons" title="Send" (click)="SendDocumentFile(item)" />
+                                                                                                    <img src="./Images/DownArrow.png" style="width:22px;height:22px;cursor:pointer;" class="ActionButtons" title="DownLoad" (click)="DownloadDocumentFile(item)" />
+                                                                                                </div>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <div>
+                                                                                                    <div style="float:left;margin:3px;" *ngIf="!item.SignRequestByUserEmail">
+                                                                                                        <img *ngIf="item.IsDigitallySigned" src="./Images/DigitallySigned.png" [title]="item.SignersList" />
+                                                                                                        <img *ngIf="!item.IsDigitallySigned" src="./Images/DigitallySignedG.png" (click)="SetDigitallySigned(item)" />
+                                                                                                    </div>
+                                                                                                    <div style="float:left;margin:3px;" *ngIf="item.SignRequestByUserEmail">
+                                                                                                        <img src="./Images/BusyIndicator.gif" style="position:absolute;top:5px;left:-20px;width:30px;height:30px;" />
+                                                                                                        <img src="./Images/DigitallySignedO.png" style="position:absolute;top:14px;left:-10px;" />
+                                                                                                    </div>
+                                                                                                    <div style="float:left;margin:3px;" *ngIf="item.IsSharedWithForwarder">
+                                                                                                        <!--*ngIf="!item.ForwarderDocumentId && item.IsSharedWithCustomer == false"-->
+                                                                                                        <img src="./Images/SharedWithAgentB.png" [title]="'Shared With ' + AgentLable" />
+                                                                                                    </div>
+                                                                                                    <div style="float:left;margin:3px;" *ngIf="item.IsSharedWithForwarder == false && item.IsSharedWithCustomer == false">
+                                                                                                        <img src="./Images/ShareWithAgentGray.png" (click)="ShareWithAgent(item)" [title]="'Share With ' + AgentLable" />
+                                                                                                    </div>
+                                                                                                    <div style="float:left;margin:3px;" *ngIf="item.IsSharedWithForwarder == false && item.IsSharedWithCustomer == true">
+                                                                                                        <img src="./Images/CloudArrowUp.png" [title]="item.ExternalEntityReference ? 'Agent Reference : ' + item.ExternalEntityReference : ''" />
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </td>
+    </tr>
+</table>
+
+<!--<div class="BusyIndicator" tabindex="-1" *ngIf="ShowBusyIndicator">
+    <div class="BusyIndicatorOuter">
+        <div class="BusyIndicatorInner">
+            <div style="height: 50px; width: 50px; margin: auto; margin-top: 20px;">
+                <img style="width:50px; height: 50px;" src="./Images/Loading.gif" alt="Loading..." />
+            </div>
+
+            <div style="margin-top: 15px; height: 20px; width: 100%; text-align: center;">
+                <label>{{BusyIndicatorText}}</label>
+            </div>
+        </div>
+    </div>
+</div>-->
+<BusyIndicator [Text]="BusyIndicatorText" [IsBusy]="ShowBusyIndicator"></BusyIndicator>

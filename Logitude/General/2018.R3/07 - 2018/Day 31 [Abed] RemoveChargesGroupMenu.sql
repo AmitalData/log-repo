@@ -1,0 +1,1 @@
+  delete MenusTables where ObjectTableId = (select id from ObjectTables where Name = 'ChargesGroup') and Code = 'BLCG'

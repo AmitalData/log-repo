@@ -1,0 +1,1683 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Customs.Def.Validators;
+  
+namespace Logitude.Customs.Def.EntityPMs
+{
+   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class VehiclePM : EntityPM
+   {
+   	  private string id ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Id  
+	   {
+	    
+	     get
+		{
+		   return id;
+		 }
+		 set
+		 {
+		   if(id != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   id=value;
+		   }
+			
+		 }
+	   }
+	  private int tenant ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+	  private string richbitFileNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string RichbitFileNumber  
+	   {
+	    
+	     get
+		{
+		   return richbitFileNumber;
+		 }
+		 set
+		 {
+		   if(richbitFileNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RichbitFileNumber",OldValue=richbitFileNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   richbitFileNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string vehicleChassisNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string VehicleChassisNumber  
+	   {
+	    
+	     get
+		{
+		   return vehicleChassisNumber;
+		 }
+		 set
+		 {
+		   if(vehicleChassisNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VehicleChassisNumber",OldValue=vehicleChassisNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   vehicleChassisNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string vehiclePoolTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string VehiclePoolTypeCode  
+	   {
+	    
+	     get
+		{
+		   return vehiclePoolTypeCode;
+		 }
+		 set
+		 {
+		   if(vehiclePoolTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VehiclePoolTypeCode",OldValue=vehiclePoolTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   vehiclePoolTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string vehiclePriceListTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string VehiclePriceListTypeCode  
+	   {
+	    
+	     get
+		{
+		   return vehiclePriceListTypeCode;
+		 }
+		 set
+		 {
+		   if(vehiclePriceListTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VehiclePriceListTypeCode",OldValue=vehiclePriceListTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   vehiclePriceListTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string vehicleManufacturerCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string VehicleManufacturerCode  
+	   {
+	    
+	     get
+		{
+		   return vehicleManufacturerCode;
+		 }
+		 set
+		 {
+		   if(vehicleManufacturerCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VehicleManufacturerCode",OldValue=vehicleManufacturerCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   vehicleManufacturerCode=value;
+		   }
+			
+		 }
+	   }
+	  private string modelCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ModelCode  
+	   {
+	    
+	     get
+		{
+		   return modelCode;
+		 }
+		 set
+		 {
+		   if(modelCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ModelCode",OldValue=modelCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   modelCode=value;
+		   }
+			
+		 }
+	   }
+	  private bool isABS ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsABS  
+	   {
+	    
+	     get
+		{
+		   return isABS;
+		 }
+		 set
+		 {
+		   if(isABS != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsABS",OldValue=isABS,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isABS=value;
+		   }
+			
+		 }
+	   }
+	  private int? airBagsNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? AirBagsNumber  
+	   {
+	    
+	     get
+		{
+		   return airBagsNumber;
+		 }
+		 set
+		 {
+		   if(airBagsNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AirBagsNumber",OldValue=airBagsNumber,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   airBagsNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string converterTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ConverterTypeCode  
+	   {
+	    
+	     get
+		{
+		   return converterTypeCode;
+		 }
+		 set
+		 {
+		   if(converterTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ConverterTypeCode",OldValue=converterTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   converterTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private bool isArmoredVehicle ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsArmoredVehicle  
+	   {
+	    
+	     get
+		{
+		   return isArmoredVehicle;
+		 }
+		 set
+		 {
+		   if(isArmoredVehicle != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsArmoredVehicle",OldValue=isArmoredVehicle,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isArmoredVehicle=value;
+		   }
+			
+		 }
+	   }
+	  private bool isLoweringVehicleForInvalid ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsLoweringVehicleForInvalid  
+	   {
+	    
+	     get
+		{
+		   return isLoweringVehicleForInvalid;
+		 }
+		 set
+		 {
+		   if(isLoweringVehicleForInvalid != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsLoweringVehicleForInvalid",OldValue=isLoweringVehicleForInvalid,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isLoweringVehicleForInvalid=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? greenIndex ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? GreenIndex  
+	   {
+	    
+	     get
+		{
+		   return greenIndex;
+		 }
+		 set
+		 {
+		   if(greenIndex != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GreenIndex",OldValue=greenIndex,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   greenIndex=value;
+		   }
+			
+		 }
+	   }
+	  private int? greenIndexGroup ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? GreenIndexGroup  
+	   {
+	    
+	     get
+		{
+		   return greenIndexGroup;
+		 }
+		 set
+		 {
+		   if(greenIndexGroup != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GreenIndexGroup",OldValue=greenIndexGroup,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   greenIndexGroup=value;
+		   }
+			
+		 }
+	   }
+	  private bool isStabilityControl ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsStabilityControl  
+	   {
+	    
+	     get
+		{
+		   return isStabilityControl;
+		 }
+		 set
+		 {
+		   if(isStabilityControl != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsStabilityControl",OldValue=isStabilityControl,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isStabilityControl=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? israelEnterDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? IsraelEnterDate  
+	   {
+	    
+	     get
+		{
+		   return israelEnterDate;
+		 }
+		 set
+		 {
+		   if(israelEnterDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsraelEnterDate",OldValue=israelEnterDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   israelEnterDate=value;
+		   }
+			
+		 }
+	   }
+	  private int? engineCapacity ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? EngineCapacity  
+	   {
+	    
+	     get
+		{
+		   return engineCapacity;
+		 }
+		 set
+		 {
+		   if(engineCapacity != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EngineCapacity",OldValue=engineCapacity,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   engineCapacity=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? vehiclePowerKW ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? VehiclePowerKW  
+	   {
+	    
+	     get
+		{
+		   return vehiclePowerKW;
+		 }
+		 set
+		 {
+		   if(vehiclePowerKW != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VehiclePowerKW",OldValue=vehiclePowerKW,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   vehiclePowerKW=value;
+		   }
+			
+		 }
+	   }
+	  private string vehicleTecnologyTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string VehicleTecnologyTypeCode  
+	   {
+	    
+	     get
+		{
+		   return vehicleTecnologyTypeCode;
+		 }
+		 set
+		 {
+		   if(vehicleTecnologyTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VehicleTecnologyTypeCode",OldValue=vehicleTecnologyTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   vehicleTecnologyTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string fuelTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FuelTypeCode  
+	   {
+	    
+	     get
+		{
+		   return fuelTypeCode;
+		 }
+		 set
+		 {
+		   if(fuelTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FuelTypeCode",OldValue=fuelTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   fuelTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string vehicleWindowNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string VehicleWindowNumber  
+	   {
+	    
+	     get
+		{
+		   return vehicleWindowNumber;
+		 }
+		 set
+		 {
+		   if(vehicleWindowNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VehicleWindowNumber",OldValue=vehicleWindowNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   vehicleWindowNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string manufactureCountryCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ManufactureCountryCode  
+	   {
+	    
+	     get
+		{
+		   return manufactureCountryCode;
+		 }
+		 set
+		 {
+		   if(manufactureCountryCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ManufactureCountryCode",OldValue=manufactureCountryCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   manufactureCountryCode=value;
+		   }
+			
+		 }
+	   }
+	  private string medalNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string MedalNumber  
+	   {
+	    
+	     get
+		{
+		   return medalNumber;
+		 }
+		 set
+		 {
+		   if(medalNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MedalNumber",OldValue=medalNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   medalNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string commercialNickname ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CommercialNickname  
+	   {
+	    
+	     get
+		{
+		   return commercialNickname;
+		 }
+		 set
+		 {
+		   if(commercialNickname != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CommercialNickname",OldValue=commercialNickname,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   commercialNickname=value;
+		   }
+			
+		 }
+	   }
+	  private string modelDescription ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ModelDescription  
+	   {
+	    
+	     get
+		{
+		   return modelDescription;
+		 }
+		 set
+		 {
+		   if(modelDescription != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ModelDescription",OldValue=modelDescription,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   modelDescription=value;
+		   }
+			
+		 }
+	   }
+	  private int? numberOfSeats ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? NumberOfSeats  
+	   {
+	    
+	     get
+		{
+		   return numberOfSeats;
+		 }
+		 set
+		 {
+		   if(numberOfSeats != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NumberOfSeats",OldValue=numberOfSeats,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   numberOfSeats=value;
+		   }
+			
+		 }
+	   }
+	  private int? totalVehicleWeight ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? TotalVehicleWeight  
+	   {
+	    
+	     get
+		{
+		   return totalVehicleWeight;
+		 }
+		 set
+		 {
+		   if(totalVehicleWeight != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TotalVehicleWeight",OldValue=totalVehicleWeight,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   totalVehicleWeight=value;
+		   }
+			
+		 }
+	   }
+	  private int? selfVehicleWeight ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? SelfVehicleWeight  
+	   {
+	    
+	     get
+		{
+		   return selfVehicleWeight;
+		 }
+		 set
+		 {
+		   if(selfVehicleWeight != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SelfVehicleWeight",OldValue=selfVehicleWeight,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   selfVehicleWeight=value;
+		   }
+			
+		 }
+	   }
+	  private int? numberOfWheels ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? NumberOfWheels  
+	   {
+	    
+	     get
+		{
+		   return numberOfWheels;
+		 }
+		 set
+		 {
+		   if(numberOfWheels != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NumberOfWheels",OldValue=numberOfWheels,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   numberOfWheels=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? vehicleManufactureDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? VehicleManufactureDate  
+	   {
+	    
+	     get
+		{
+		   return vehicleManufactureDate;
+		 }
+		 set
+		 {
+		   if(vehicleManufactureDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VehicleManufactureDate",OldValue=vehicleManufactureDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   vehicleManufactureDate=value;
+		   }
+			
+		 }
+	   }
+	  private string vehicleTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string VehicleTypeCode  
+	   {
+	    
+	     get
+		{
+		   return vehicleTypeCode;
+		 }
+		 set
+		 {
+		   if(vehicleTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VehicleTypeCode",OldValue=vehicleTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   vehicleTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? transmissionDateWithoutTax ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? TransmissionDateWithoutTax  
+	   {
+	    
+	     get
+		{
+		   return transmissionDateWithoutTax;
+		 }
+		 set
+		 {
+		   if(transmissionDateWithoutTax != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TransmissionDateWithoutTax",OldValue=transmissionDateWithoutTax,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   transmissionDateWithoutTax=value;
+		   }
+			
+		 }
+	   }
+	  private string importerIdentityId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ImporterIdentityId  
+	   {
+	    
+	     get
+		{
+		   return importerIdentityId;
+		 }
+		 set
+		 {
+		   if(importerIdentityId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ImporterIdentityId",OldValue=importerIdentityId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   importerIdentityId=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? dateOnRoadAbroad ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? DateOnRoadAbroad  
+	   {
+	    
+	     get
+		{
+		   return dateOnRoadAbroad;
+		 }
+		 set
+		 {
+		   if(dateOnRoadAbroad != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DateOnRoadAbroad",OldValue=dateOnRoadAbroad,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   dateOnRoadAbroad=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? vehicleSafetyAccessoryPoints ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? VehicleSafetyAccessoryPoints  
+	   {
+	    
+	     get
+		{
+		   return vehicleSafetyAccessoryPoints;
+		 }
+		 set
+		 {
+		   if(vehicleSafetyAccessoryPoints != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VehicleSafetyAccessoryPoints",OldValue=vehicleSafetyAccessoryPoints,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   vehicleSafetyAccessoryPoints=value;
+		   }
+			
+		 }
+	   }
+	  private string statusCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string StatusCode  
+	   {
+	    
+	     get
+		{
+		   return statusCode;
+		 }
+		 set
+		 {
+		   if(statusCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatusCode",OldValue=statusCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   statusCode=value;
+		   }
+			
+		 }
+	   }
+
+	   private List<VehicleSafetyAccessoryPM> vehicleSafetyAccessories;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("VehicleVehicleSafetyAccessories", "Id","VehicleId")]
+	   [DataMember]
+	   public virtual List<VehicleSafetyAccessoryPM> VehicleSafetyAccessories  
+	   {
+	        get
+             {
+                 if (vehicleSafetyAccessories == null)
+                 {
+                     vehicleSafetyAccessories = new List<VehicleSafetyAccessoryPM>();
+                 }
+                 return vehicleSafetyAccessories;
+              }
+             set { vehicleSafetyAccessories = value; }
+	    }
+		   
+	   private List<VehicleSafetyAccessoryPM>  deletedVehicleSafetyAccessories;
+	   public virtual List<VehicleSafetyAccessoryPM> DeletedVehicleSafetyAccessories  
+	   {
+	        get
+             {
+                 if ( deletedVehicleSafetyAccessories == null)
+                 {
+                      deletedVehicleSafetyAccessories = new List<VehicleSafetyAccessoryPM>();
+                 }
+                 return  deletedVehicleSafetyAccessories;
+              }
+             set {  deletedVehicleSafetyAccessories = value; }
+	    }
+	  
+	   private List<VehicleOwnerPM> vehicleOwners;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("VehicleVehicleOwner", "Id","VehicleId")]
+	   [DataMember]
+	   public virtual List<VehicleOwnerPM> VehicleOwners  
+	   {
+	        get
+             {
+                 if (vehicleOwners == null)
+                 {
+                     vehicleOwners = new List<VehicleOwnerPM>();
+                 }
+                 return vehicleOwners;
+              }
+             set { vehicleOwners = value; }
+	    }
+		   
+	   private List<VehicleOwnerPM>  deletedVehicleOwners;
+	   public virtual List<VehicleOwnerPM> DeletedVehicleOwners  
+	   {
+	        get
+             {
+                 if ( deletedVehicleOwners == null)
+                 {
+                      deletedVehicleOwners = new List<VehicleOwnerPM>();
+                 }
+                 return  deletedVehicleOwners;
+              }
+             set {  deletedVehicleOwners = value; }
+	    }
+	  	  private string importerName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ImporterName  
+	   {
+	    
+	     get
+		{
+		   return importerName;
+		 }
+		 set
+		 {
+		   if(importerName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ImporterName",OldValue=importerName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   importerName=value;
+		   }
+			
+		 }
+	   }
+	  private string vehiclePoolTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string VehiclePoolTypeName  
+	   {
+	    
+	     get
+		{
+		   return vehiclePoolTypeName;
+		 }
+		 set
+		 {
+		   if(vehiclePoolTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VehiclePoolTypeName",OldValue=vehiclePoolTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   vehiclePoolTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private string vehicleManufacturerName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string VehicleManufacturerName  
+	   {
+	    
+	     get
+		{
+		   return vehicleManufacturerName;
+		 }
+		 set
+		 {
+		   if(vehicleManufacturerName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VehicleManufacturerName",OldValue=vehicleManufacturerName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   vehicleManufacturerName=value;
+		   }
+			
+		 }
+	   }
+	  private int lastSaftyLineNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int LastSaftyLineNumber  
+	   {
+	    
+	     get
+		{
+		   return lastSaftyLineNumber;
+		 }
+		 set
+		 {
+		   if(lastSaftyLineNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastSaftyLineNumber",OldValue=lastSaftyLineNumber,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   lastSaftyLineNumber=value;
+		   }
+			
+		 }
+	   }
+	  private int lastOwnerLineNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int LastOwnerLineNumber  
+	   {
+	    
+	     get
+		{
+		   return lastOwnerLineNumber;
+		 }
+		 set
+		 {
+		   if(lastOwnerLineNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastOwnerLineNumber",OldValue=lastOwnerLineNumber,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   lastOwnerLineNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string vehiclePriceListTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string VehiclePriceListTypeName  
+	   {
+	    
+	     get
+		{
+		   return vehiclePriceListTypeName;
+		 }
+		 set
+		 {
+		   if(vehiclePriceListTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VehiclePriceListTypeName",OldValue=vehiclePriceListTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   vehiclePriceListTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private string converterTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ConverterTypeName  
+	   {
+	    
+	     get
+		{
+		   return converterTypeName;
+		 }
+		 set
+		 {
+		   if(converterTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ConverterTypeName",OldValue=converterTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   converterTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private string vehicleTecnologyTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string VehicleTecnologyTypeName  
+	   {
+	    
+	     get
+		{
+		   return vehicleTecnologyTypeName;
+		 }
+		 set
+		 {
+		   if(vehicleTecnologyTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VehicleTecnologyTypeName",OldValue=vehicleTecnologyTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   vehicleTecnologyTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private string manufactureCountryName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ManufactureCountryName  
+	   {
+	    
+	     get
+		{
+		   return manufactureCountryName;
+		 }
+		 set
+		 {
+		   if(manufactureCountryName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ManufactureCountryName",OldValue=manufactureCountryName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   manufactureCountryName=value;
+		   }
+			
+		 }
+	   }
+	  private string vehicleTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string VehicleTypeName  
+	   {
+	    
+	     get
+		{
+		   return vehicleTypeName;
+		 }
+		 set
+		 {
+		   if(vehicleTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VehicleTypeName",OldValue=vehicleTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   vehicleTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private string statusName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string StatusName  
+	   {
+	    
+	     get
+		{
+		   return statusName;
+		 }
+		 set
+		 {
+		   if(statusName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatusName",OldValue=statusName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   statusName=value;
+		   }
+			
+		 }
+	   }
+	  private string searchFields ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SearchFields  
+	   {
+	    
+	     get
+		{
+		   return searchFields;
+		 }
+		 set
+		 {
+		   if(searchFields != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchFields",OldValue=searchFields,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   searchFields=value;
+		   }
+			
+		 }
+	   }
+	  private string fuelTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FuelTypeName  
+	   {
+	    
+	     get
+		{
+		   return fuelTypeName;
+		 }
+		 set
+		 {
+		   if(fuelTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FuelTypeName",OldValue=fuelTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   fuelTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private bool invalidChassisNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool InvalidChassisNumber  
+	   {
+	    
+	     get
+		{
+		   return invalidChassisNumber;
+		 }
+		 set
+		 {
+		   if(invalidChassisNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InvalidChassisNumber",OldValue=invalidChassisNumber,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   invalidChassisNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string concurrencyGUID ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ConcurrencyGUID  
+	   {
+	    
+	     get
+		{
+		   return concurrencyGUID;
+		 }
+		 set
+		 {
+		   if(concurrencyGUID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ConcurrencyGUID",OldValue=concurrencyGUID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   concurrencyGUID=value;
+		   }
+			
+		 }
+	   }
+	  private string newConcurrencyGUID ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string NewConcurrencyGUID  
+	   {
+	    
+	     get
+		{
+		   return newConcurrencyGUID;
+		 }
+		 set
+		 {
+		   if(newConcurrencyGUID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NewConcurrencyGUID",OldValue=newConcurrencyGUID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   newConcurrencyGUID=value;
+		   }
+			
+		 }
+	   }
+	  private string declarationId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DeclarationId  
+	   {
+	    
+	     get
+		{
+		   return declarationId;
+		 }
+		 set
+		 {
+		   if(declarationId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeclarationId",OldValue=declarationId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   declarationId=value;
+		   }
+			
+		 }
+	   }
+	  private string customFileNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomFileNumber  
+	   {
+	    
+	     get
+		{
+		   return customFileNumber;
+		 }
+		 set
+		 {
+		   if(customFileNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomFileNumber",OldValue=customFileNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customFileNumber=value;
+		   }
+			
+		 }
+	   }
+	  private bool isThreeWheeledForReduction ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsThreeWheeledForReduction  
+	   {
+	    
+	     get
+		{
+		   return isThreeWheeledForReduction;
+		 }
+		 set
+		 {
+		   if(isThreeWheeledForReduction != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsThreeWheeledForReduction",OldValue=isThreeWheeledForReduction,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isThreeWheeledForReduction=value;
+		   }
+			
+		 }
+	   }
+	  private string taxiMedalOwner ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TaxiMedalOwner  
+	   {
+	    
+	     get
+		{
+		   return taxiMedalOwner;
+		 }
+		 set
+		 {
+		   if(taxiMedalOwner != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TaxiMedalOwner",OldValue=taxiMedalOwner,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   taxiMedalOwner=value;
+		   }
+			
+		 }
+	   }
+	  private string importerPassportNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ImporterPassportNumber  
+	   {
+	    
+	     get
+		{
+		   return importerPassportNumber;
+		 }
+		 set
+		 {
+		   if(importerPassportNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ImporterPassportNumber",OldValue=importerPassportNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   importerPassportNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string importerPassCountryCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ImporterPassCountryCode  
+	   {
+	    
+	     get
+		{
+		   return importerPassCountryCode;
+		 }
+		 set
+		 {
+		   if(importerPassCountryCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ImporterPassCountryCode",OldValue=importerPassCountryCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   importerPassCountryCode=value;
+		   }
+			
+		 }
+	   }
+	  private string importerPassCountryName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ImporterPassCountryName  
+	   {
+	    
+	     get
+		{
+		   return importerPassCountryName;
+		 }
+		 set
+		 {
+		   if(importerPassCountryName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ImporterPassCountryName",OldValue=importerPassCountryName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   importerPassCountryName=value;
+		   }
+			
+		 }
+	   }
+	  private string importerPassportTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ImporterPassportTypeCode  
+	   {
+	    
+	     get
+		{
+		   return importerPassportTypeCode;
+		 }
+		 set
+		 {
+		   if(importerPassportTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ImporterPassportTypeCode",OldValue=importerPassportTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   importerPassportTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string importerPassportTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ImporterPassportTypeName  
+	   {
+	    
+	     get
+		{
+		   return importerPassportTypeName;
+		 }
+		 set
+		 {
+		   if(importerPassportTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ImporterPassportTypeName",OldValue=importerPassportTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   importerPassportTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private bool isCBS ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsCBS  
+	   {
+	    
+	     get
+		{
+		   return isCBS;
+		 }
+		 set
+		 {
+		   if(isCBS != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsCBS",OldValue=isCBS,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isCBS=value;
+		   }
+			
+		 }
+	   }
+	  private bool isSlipperClutch ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsSlipperClutch  
+	   {
+	    
+	     get
+		{
+		   return isSlipperClutch;
+		 }
+		 set
+		 {
+		   if(isSlipperClutch != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsSlipperClutch",OldValue=isSlipperClutch,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isSlipperClutch=value;
+		   }
+			
+		 }
+	   }
+	  private bool isSteeringDamper ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsSteeringDamper  
+	   {
+	    
+	     get
+		{
+		   return isSteeringDamper;
+		 }
+		 set
+		 {
+		   if(isSteeringDamper != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsSteeringDamper",OldValue=isSteeringDamper,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isSteeringDamper=value;
+		   }
+			
+		 }
+	   }
+	  private bool isTCS ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsTCS  
+	   {
+	    
+	     get
+		{
+		   return isTCS;
+		 }
+		 set
+		 {
+		   if(isTCS != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsTCS",OldValue=isTCS,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isTCS=value;
+		   }
+			
+		 }
+	   }
+	  private bool isTPS ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsTPS  
+	   {
+	    
+	     get
+		{
+		   return isTPS;
+		 }
+		 set
+		 {
+		   if(isTPS != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsTPS",OldValue=isTPS,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isTPS=value;
+		   }
+			
+		 }
+	   }
+	  private string vehicleCategory ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string VehicleCategory  
+	   {
+	    
+	     get
+		{
+		   return vehicleCategory;
+		 }
+		 set
+		 {
+		   if(vehicleCategory != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VehicleCategory",OldValue=vehicleCategory,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   vehicleCategory=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? vehicleMaxPowerKW ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? VehicleMaxPowerKW  
+	   {
+	    
+	     get
+		{
+		   return vehicleMaxPowerKW;
+		 }
+		 set
+		 {
+		   if(vehicleMaxPowerKW != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VehicleMaxPowerKW",OldValue=vehicleMaxPowerKW,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   vehicleMaxPowerKW=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

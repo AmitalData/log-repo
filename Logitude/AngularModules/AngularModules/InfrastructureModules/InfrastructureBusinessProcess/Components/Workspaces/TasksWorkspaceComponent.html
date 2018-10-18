@@ -1,0 +1,126 @@
+﻿<style type="text/css">
+    .QueueEntityItem {
+        height: 35px;
+        line-height: 35px;
+        border: 1px solid #DADADA;
+        border-radius: 8px;
+        -moz-border-radius: 8px;
+        -webkit-border-radius: 8px;
+        margin-bottom: 3px;
+        background-color: #E2E2E2;
+        cursor: default;
+    }
+
+    .QueueEntityItem:not(.SelectedItem):hover {
+        cursor: pointer;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    }
+
+    .SelectedItem {
+        color: white;
+        background: -moz-linear-gradient(50% 100% 90deg,rgba(24, 130, 184, 1) 0%,rgba(28, 132, 186, 1) 13.58%,rgba(41, 140, 190, 1) 27.91%,rgba(62, 152, 198, 1) 42.6%,rgba(92, 169, 209, 1) 57.53%,rgba(130, 191, 223, 1) 72.64%,rgba(176, 218, 239, 1) 87.7%,rgba(219, 243, 255, 1) 100%);
+        background: -webkit-linear-gradient(90deg, rgba(24, 130, 184, 1) 0%, rgba(28, 132, 186, 1) 13.58%, rgba(41, 140, 190, 1) 27.91%, rgba(62, 152, 198, 1) 42.6%, rgba(92, 169, 209, 1) 57.53%, rgba(130, 191, 223, 1) 72.64%, rgba(176, 218, 239, 1) 87.7%, rgba(219, 243, 255, 1) 100%);
+        background: -webkit-gradient(linear,50% 100%,50% 0%,color-stop(0,rgba(24, 130, 184, 1) ),color-stop(0.1358,rgba(28, 132, 186, 1) ),color-stop(0.2791,rgba(41, 140, 190, 1) ),color-stop(0.426,rgba(62, 152, 198, 1) ),color-stop(0.5753,rgba(92, 169, 209, 1) ),color-stop(0.7264,rgba(130, 191, 223, 1) ),color-stop(0.877,rgba(176, 218, 239, 1) ),color-stop(1,rgba(219, 243, 255, 1) ));
+        background: -o-linear-gradient(90deg, rgba(24, 130, 184, 1) 0%, rgba(28, 132, 186, 1) 13.58%, rgba(41, 140, 190, 1) 27.91%, rgba(62, 152, 198, 1) 42.6%, rgba(92, 169, 209, 1) 57.53%, rgba(130, 191, 223, 1) 72.64%, rgba(176, 218, 239, 1) 87.7%, rgba(219, 243, 255, 1) 100%);
+        background: linear-gradient(0deg, rgba(24, 130, 184, 1) 0%, rgba(28, 132, 186, 1) 13.58%, rgba(41, 140, 190, 1) 27.91%, rgba(62, 152, 198, 1) 42.6%, rgba(92, 169, 209, 1) 57.53%, rgba(130, 191, 223, 1) 72.64%, rgba(176, 218, 239, 1) 87.7%, rgba(219, 243, 255, 1) 100%);
+    }
+</style>
+
+<table style="min-width:1150px">
+    <tr style="height: 1px;">
+        <td>
+            <table>
+                <tr>
+                    <td style="vertical-align:middle; color: #45494A; font-size: 16px;">Queued Tasks</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 5px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div class="MediaFill">
+                <table>
+                    <tr>
+                        <td style="width:265px;">
+                            <div class="MediaFill">
+                                <SectionBox [Scrolling]="true">
+                                    <SectionHead>
+                                        <table>
+                                            <tr>
+                                                <td style="color:black; font-weight:bold; font-size: 14px;">Queues</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width:91px;">
+                                                    <ul class="FiltersMenu">
+                                                        <li (click)="FilterItemClicked('My')" [class.SelectedFilter]="SelectedFilterValue === 'My'">
+                                                            My
+                                                        </li>
+                                                        <li style="width:35px;" (click)="FilterItemClicked('Team')" [class.SelectedFilter]="SelectedFilterValue === 'Team'">
+                                                            Team
+                                                        </li>
+                                                        <li (click)="FilterItemClicked('All')" [class.SelectedFilter]="SelectedFilterValue === 'All'">
+                                                            All
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </SectionHead>
+
+                                    <SectionBody>
+                                        <ul>
+                                            <li class="QueueEntityItem" *ngFor="let item of QueuesItemsSource" (click)="SelectQueue(item)" [class.SelectedItem]="item === SelectedQueue">
+                                                <table>
+                                                    <tr>
+                                                        <td style="width:10px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td style="font-size:13px;" class="TextTrimming">{{item.Title}}</td>
+
+                                                        <td style="width:22px;">
+                                                            <img *ngIf="item == SelectedQueue" src="./Images/arrow_right_w.png" width="22" height="24" />
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </li>
+                                        </ul>
+
+                                        <div *ngIf="NoQueuesVisibility" class="NoDataText" style="top:5px;">No Queues</div>
+                                    </SectionBody>
+                                </SectionBox>
+                            </div>
+                        </td>
+
+                        <td style="width:10px;">
+                            <div></div>
+                        </td>
+
+                        <td>
+                            <div class="MediaFill">
+                                <div class="MediaFillAbsolute">
+                                    <div class="LocationDirective" #Child></div>
+                                </div>                                
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>           
+        </td>
+    </tr>
+
+</table>

@@ -1,0 +1,391 @@
+﻿
+<style>
+    .MenuFilters {
+        color: #909293;
+        text-align: center;
+        cursor: default;
+    }
+
+        .MenuFilters:hover {
+            text-align: center;
+            background-image: url('../../../Images/LogBox/FilterHover.png');
+            background-repeat: no-repeat;
+        }
+
+    .Selected {
+        color: white;
+        text-align: center;
+        background-image: url('../../../Images/LogBox/FilterSelected.png');
+        background-repeat: no-repeat;
+    }
+
+        .Selected:hover {
+            color: white;
+            text-align: center;
+            background-image: url('../../../Images/LogBox/FilterSelected.png');
+            background-repeat: no-repeat;
+        }
+
+    .MenuFilters .MenuFiltersCount {
+        font-size: 33px;
+    }
+
+    .MenuFilters .MenuFiltersName {
+        font-size: 13px;
+    }
+
+    .Disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+</style>
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+        </td>
+    </tr>
+    <tr *ngIf="WarningErrorsList != null && WarningErrorsList.length > 0" style="height:1px;">
+        <td>
+            <WarningSummary [ItemsSource]="WarningErrorsList" [SingleLine]="true"></WarningSummary>
+        </td>
+    </tr>
+    <tr style="height: 10px;">
+        <td style="height: 10px;">
+            <div></div>
+            <!--<sample-element style="height:500px;" class="jumbotron simple-element"></sample-element>-->
+        </td>
+    </tr>
+    <tr *ngIf="IsPrivateLabel == true">
+        <td>
+            <table>
+                <tr>
+                    <td>
+                        <span style="color:#838383;">If you would like to open a new Shipment in {{AgentShortName}} System, please press "Create" button:</span>
+                    </td>
+                </tr>
+                <tr style="height:10px;">
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="height: 22px;width:145px;">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <div style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
+                                            </td>
+                                            <td>
+                                                <label style="padding-left:10px;color: rgb(110, 113, 114);font-weight:bold;">
+                                                    Transportation Type
+                                                </label>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+
+                                    <!--<LogLabel [ObjectFieldName]="'SelectedTransportationTypes'" [DataContext]="DataContext"></LogLabel>-->
+                                </td>
+                                <td style="width:12px;"></td>
+                                <td style="height: 22px;width:149px;position:absolute;">
+                                    <ComboBox [ItemsSource]="TransportationTypes" (SelectedItemChanged)="onTransportationTypeChange($event)" [SelectedItem]="SelectedTransportationTypes" [Binding]="'Name'"></ComboBox>
+                                </td>
+                                <td style="width:15px;"></td>
+                                <td style="height: 22px;width:145px;">
+                                    <label style="padding-left:10px;color: rgb(110, 113, 114);font-weight:bold;">
+                                        Supplier Name
+                                    </label>
+                                </td>
+                                <td style="width:12px;"></td>
+                                <td style="height: 22px;width:185px;">
+                                    <LogTextBox [ObjectFieldName]="'ShipperName'" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                                <td style="width:15px;"></td>
+                                <td style="height: 22px;width:315px;">
+                                    <button class="RedButton" *ngIf="this.HasSharedDocs == true" (click)="CreateButtonClicked()" style="width:57px;float:left;">Create</button>
+                                    <div *ngIf="this.HasSharedDocs == false">
+                                        <button class="RedButton" title="No documents were shared with agent yet." style="width:57px;float: left;margin:4px; opacity:0.5;">Create</button>
+                                        <div style="float:left;color:red;margin-top:5px;">No documents were shared with agent yet.</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                            <tr style="height:7px;">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="height: 22px;width:145px;">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <div style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
+                                            </td>
+                                            <td>
+                                                <label style="padding-left:10px;color: rgb(110, 113, 114);font-weight:bold;">
+                                                    Order Number
+                                                </label>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                </td>
+                                <td style="width:12px;"></td>
+                                <td style="height: 22px;width:185px;">
+                                    <LogTextBox [ObjectFieldName]="'CustomerReference1'" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                                <td style="width:15px;"></td>
+                                <td style="height: 22px;width:145px;">
+                                    <label style="padding-left:10px;color: rgb(110, 113, 114);font-weight:bold;">
+                                        Gateway
+                                    </label>
+                                </td>
+                                <td style="width:12px;"></td>
+                                <td style="height: 22px;width:185px;">
+                                    <LogLov [RunToggleMode]="true"
+                                            [ObjectFieldName]="'FromPortId'"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Port'">
+                                    </LogLov>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                            <tr style="height:7px;">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                            <!----------------------------------------------->
+                            <tr *ngIf="TransportModeId == 'A'">
+                                <td style="height: 22px;width:145px;">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <div style="width: 7px; height: 7px; background-color:transparent; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
+                                            </td>
+                                            <td>
+                                                <label style="padding-left:10px;color: rgb(110, 113, 114);font-weight:bold;">
+                                                    Master AWB
+                                                </label>
+                                            </td>
+                                        </tr>
+                                    </table> 
+                                </td>
+                                <td style="width:12px;"></td>
+                                <td style="height: 22px;width:185px;">
+                                    <LogTextBox [ObjectFieldName]="'Master'" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                                <td style="width:15px;"></td>
+                                <td style="height: 22px;width:145px;">
+                                    <label style="padding-left:10px;color: rgb(110, 113, 114);font-weight:bold;">
+                                        House AWB
+                                    </label>
+                                </td>
+                                <td style="width:12px;"></td>
+                                <td style="height: 22px;width:185px;">
+                                    <LogTextBox [ObjectFieldName]="'House'" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                            <!----------------------------------------------->
+                            <tr style="height:7px;">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                            <tr *ngIf="TransportModeId == 'O' || TransportModeId == 'I'">
+                                <td style="height: 22px;width:145px;">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <div style="width: 7px; height: 7px; background-color:transparent; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
+                                            </td>
+                                            <td>
+                                                <label style="padding-left:10px;color: rgb(110, 113, 114);font-weight:bold;">
+                                                    Container #
+                                                </label>
+                                            </td>
+                                        </tr>
+                                    </table>  
+                                </td>
+                                <td style="width:12px;"></td>
+                                <td style="height: 22px;width:185px;">
+                                    <LogTextBox [ObjectFieldName]="'ContainerNumber'" [DataContext]="DataContext" (LostFocus)="ValidateContainerNumber($event)"></LogTextBox>
+                                </td>
+                                <td style="width:15px;"></td>
+                                <td style="height: 22px;width:145px;">
+                                    <!--<label style="padding-left:10px;color: rgb(110, 113, 114);font-weight:bold;">
+                                        Container #
+                                    </label>-->
+                                </td>
+                                <td style="width:12px;"></td>
+                                <td style="height: 22px;width:185px;">
+                                    <!--<LogTextBox [ObjectFieldName]="'ContainerNumber'" [DataContext]="DataContext"></LogTextBox>-->
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                            <!----------------------------------------------->
+                            <tr style="height:7px;">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                            <tr style="height:50px;">
+                                <td style="height: 22px;width:145px;">
+                                    <label style="padding-left:20px;color: rgb(110, 113, 114);font-weight:bold;">
+                                        User Notes
+                                    </label>
+                                </td>
+                                <td style="width:12px;"></td>
+                                <td colspan="6">
+                                    <LogTextBox style="position: absolute;height: 50px;top:5px;" [ObjectFieldName]="'Notes'" [UseArialFont]="true" [IsMultiline]="true" [DataContext]="DataContext" [Text]="Notes">
+                                        </LogTextBox>
+                                </td>
+                                <td></td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                            
+                        </table>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr style="height:10px;">
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>
+                        <span style="color:#838383;">In case your shipment was already opened by {{AgentShortName}} , you can search and choose it from the query below:</span>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr style="height:10px;">
+        <td></td>
+    </tr>
+    <tr style="height: 21px;">
+        <td style="height: 21px; vertical-align:middle;">
+            <table>
+                <tr>
+                    <td style="width: 21px;">
+                        <IconButton [Name]="'Refresh'" (click)="RefreshBtnClick()"></IconButton>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 250px; vertical-align: middle;">
+                        <SearchTextBox [ObjectTableName]="'Shipment'" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)" [PlaceHolder]="'Search Shipments ...'"></SearchTextBox>
+                    </td>
+
+                    <td style="width: 590px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 120px; vertical-align: middle; position:relative;">
+                        <ShipmentTypeFilter (SelectedTypeValueChanged)="SelectedArchiveFilter = $event"></ShipmentTypeFilter>
+                    </td>
+
+                    <td style="width: 3px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 120px; vertical-align: middle; position:relative;">
+                        <TransportsFilter (SelectedValueChanged)="SelectedTransportFilter = $event"></TransportsFilter>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 10px;">
+        <td style="height: 10px;">
+            <div></div>
+        </td>
+    </tr>
+    <tr>
+        <td style="height: 100%">
+            <div style="width:100%;height:100%;background-color: #EAEAEB;border: 1px solid #cccccc;">
+                <table>
+                    <tr>
+                        <td>
+                            <div style="height: Calc(100% - 1px);background-color:white;">
+                                <logitude-grid GridWidth="100%" GridHeight="100%" [ObjectTable]="'Shipment'" [dataSource]="DataSource" [MenuHeaderchangeevent]="MenuHeaderchangeevent" (rowSelectedEvent)="onRowSelected($event)" [SelectedRow]="SelectedRow"
+                                               [columns]="columns" [autoLoad]="true" [rows]="items" [CustomColumnsReady]="CustomColumnsReady" (AfterViewInitCompleted)="GridAfterViewInitCompleted($event)"
+                                               [SearchFieldchangeevent]="SearchFieldchangeevent" [EnableRowHoverVisibility]="true" [RowHoverVisibilityQueryName]="SelectedFilter" [HoverTemplateIndex]="5">
+                                </logitude-grid>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+    <tr style="height:1px;">
+        <td>
+            <div style="height:30px;float:right;">
+                <button class="Button" (click)="CloseButtonClicked()" style="width:80px;float: right;margin:4px;">Close</button>
+            </div>
+        </td>
+    </tr>
+</table>

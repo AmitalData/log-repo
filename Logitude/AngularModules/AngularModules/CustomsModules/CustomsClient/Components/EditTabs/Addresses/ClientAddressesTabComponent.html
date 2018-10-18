@@ -1,0 +1,193 @@
+﻿<style>
+    .subTitle {
+        color: #1990d0;
+        font-size: 16px;
+        padding-left: 5px;
+    }
+    .FormFieldRow {
+        height: auto !important;
+    }
+
+    /* Cards Styles*/
+    .AddressesWrapper{
+        height: 435px; 
+        overflow: auto; 
+        padding: 10px 0px;
+    }
+    .AddressCard{
+        /*cursor: pointer;*/
+        float: right;
+        padding: 10px;
+        width: 258px;
+        min-height: 206px; /* 180px;*/
+        background: #f5f5f5;
+        border: 1px solid #bfbfbf;
+        border-radius: 5px;
+        margin-left: 5px;
+        margin-bottom: 5px;
+
+        border: 1px solid #dedede;
+        -webkit-box-shadow: -1px 1px 0px 0px rgba(0, 0, 0, 0.12);
+        -moz-box-shadow: -1px 1px 0px 0px rgba(0, 0, 0, 0.12);
+        box-shadow: -1px 1px 0px 0px rgba(0, 0, 0, 0.12);
+    }
+        .AddressCard:hover {
+            background: #f9f9f9;
+        }
+
+    .InnerGrid td, .InnerGrid li span{
+        color: #00338b;
+        font-size: 10px;
+        line-height: 1.5;
+    }
+</style>
+<table>
+    <tr>
+        <td>
+            <div>
+                <table>
+
+                    <!-- subtitle -->
+                    <tr style="height: 30px; padding-bottom: 3px; border-bottom: 1px solid #c8c8c8;">
+                        <td class="subTitle">{{'Address.O.Addresses' | TextCodeTranslationPipe}}</td>
+                        <td></td>
+                        <td width="80px;">
+                            <button class="Button" *ngIf="NewAddressButtonVisibility" (click)="NewAddressButtonClicked()">{{'General.O.AddAddress' | TextCodeTranslationPipe}}</button>
+                        </td>
+                    </tr>
+
+                    <!-- Grid -->
+                    <tr>
+                        <td colspan="3" style="height: 100%;">
+                            <div class="AddressesWrapper" style="height: 435px; overflow: auto; padding: 10px 0px;" *ngIf="entityPM">
+                                <div class="AddressCard" *ngFor="let address of entityPM.ClientAddresses">
+                                    <table>
+                                        <tr style="height: 20px;">
+                                            <td>
+                                                <IconButton *ngIf="EditButtonVisibility" [IsSmall]="true" style="float: left; padding-left: 5px;" [Name]="'editOrange'" (click)="EditAddress(address)"></IconButton>
+                                                <IconButton *ngIf="EditButtonVisibility" [IsSmall]="true" style="float: left; padding-left: 5px;" [Name]="'Delete'" (click)="DeleteAddress(address)"></IconButton>
+                                                <IconButton *ngIf="Mode == 'Claims'" [IsSmall]="true" style="float: left; padding-left: 5px;" [Name]="'editOrange'" (click)="ChooseAddressButtonClicked(address)"></IconButton>
+                                            </td>
+                                        </tr>
+                                        <tr style="">
+                                            <td>
+                                                <!-- Hebrew -->
+                                                <div *ngIf="address.IsHebrewAddress" class="InnerGrid">
+                                                    <table>
+                                                        <tr>
+                                                            <td style="padding-left: 10px;width: 50px;">{{address.AddressTypeName}}</td>
+                                                            <td>{{address.AddressPurposeName}}</td>
+                                                            <td style="width: 45px;" rowspan="4">
+                                                                <img style="width: 45px;" [attr.src]="address.CountryCode | CountryFlagPipe" [attr.title]="address.CountryName" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding-left: 10px;">{{address.LocalCityName}}</td>
+                                                            <td>{{address.BranchName}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding-left: 10px;">{{address.LocalStreetName}}</td>
+                                                            <td>{{address.LocalSecondLine}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding-left: 10px;">{{address.LocalHouseNumber }}</td>
+                                                            <td>{{address.localHouseLetterAndlocalEntrance}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding-left: 10px;">{{address.LocalPOBox }}</td>
+                                                            <td>{{address.LocalPostalCode }}</td>
+                                                        </tr>
+                                                        <!--<tr>
+                                                            <td>{{ address.CountryCode | CountryFlagPipe}}</td>
+                                                            <td></td>
+                                                        </tr>-->
+                                                    </table>
+                                                </div>
+
+                                                <!-- English -->
+                                                <div *ngIf="!address.IsHebrewAddress" class="InnerGrid">
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width: 50px;">{{address.AddressTypeName}}</td>
+                                                            <td>{{address.AddressPurposeName}}</td>
+                                                            <td style="width: 45px; padding-left: 2px;" rowspan="4">
+                                                                <img style="width: 45px;" [attr.src]="address.EnglishCountryCode | CountryFlagPipe" [attr.title]="address.EnglishCountryName" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>{{address.EnglishCountryName}}</td>
+                                                            <td>{{address.EnglishSubCountryName}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>{{address.EnglishCityName}}</td>
+                                                            <td>{{address.EnglishMainAddressLine}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>{{address.EnglishPostalCode}}</td>
+                                                            <td></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+
+                                                <div style="padding-top: 5px;" class="InnerGrid">
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width: 50px;">{{address.ContactIdentifier}}</td>
+                                                            <td>{{address.ContactRoleTypeName}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>{{address.ContactFirstName}}</td>
+                                                            <td>{{address.ContactLastName}}</td>
+                                                        </tr>
+                                                        <!--<tr>
+                                                            <td>{{address.EnglishCityName}}</td>
+                                                            <td>{{address.EnglishMainAddressLine}}</td>
+                                                        </tr>-->
+                                                        <tr>
+                                                            <td>{{address.AuthorizedSignerPermit1Name}}</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>{{address.AuthorizedSignerPermit2Name}}</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>{{address.AuthorizedSignerPermit3Name}}</td>
+                                                            <td></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+
+                                                <!-- Communication -->
+                                                <div class="InnerGrid">
+                                                    <table>
+                                                        <tr>
+                                                            <td colspan="2" style="font-size: 11px; color: black; padding-top: 5px;">{{'Customs.Vendor.O.Communications' | TextCodeTranslationPipe}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="2">
+                                                                <ul>
+                                                                    <li *ngFor="let communication of address.ClientsAddressCommTypes">
+                                                                        <span style="padding-left: 10px;">{{communication.CommunicationTypeName}}</span>
+                                                                        <span>{{communication.CommunicationAddress}}</span>
+                                                                    </li>
+                                                                </ul>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                        <tr style=""><td></td></tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>

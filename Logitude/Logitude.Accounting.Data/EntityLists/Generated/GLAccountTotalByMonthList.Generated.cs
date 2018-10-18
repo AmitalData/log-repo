@@ -1,0 +1,60 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization; 
+
+namespace Logitude.Accounting.Data.EntityLists
+{
+   [DataContract]
+   public partial class GLAccountTotalByMonthList
+   {
+          [DataMember]
+       public int Tenant  { get; set; }
+
+       [Key]
+       [DataMember]
+       public string AccountId  { get; set; }
+
+       [Key]
+       [DataMember]
+       public string DateTypeCode  { get; set; }
+
+       [Key]
+       [DataMember]
+       public int Year  { get; set; }
+
+       [Key]
+       [DataMember]
+       public int Month  { get; set; }
+
+       [Key]
+       [DataMember]
+       public string CurrencyId  { get; set; }
+       [DataMember]
+       public decimal LocalAmountDebit  { get; set; }
+       [DataMember]
+       public decimal LocalAmountCredit  { get; set; }
+       [DataMember]
+       public decimal ForeignAmountDebit  { get; set; }
+       [DataMember]
+       public decimal ForeignAmountCredit  { get; set; }
+       [DataMember]
+       public string CurrencyName  { get; set; }
+       [DataMember]
+       public string AccountName  { get; set; }
+       [DataMember]
+       public decimal? LocalBalance  { get; set; }
+       [DataMember]
+       public string CurrencySign  { get; set; }
+       [DataMember]
+       public string CardId  { get; set; }
+       [DataMember]
+       public string AccountTypeCode  { get; set; }
+   }
+
+}
+	 

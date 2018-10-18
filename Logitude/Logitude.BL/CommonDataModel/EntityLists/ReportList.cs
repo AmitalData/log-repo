@@ -1,0 +1,26 @@
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace Logitude.BL.CommonDataModel.EntityLists
+{
+    public class ReportList
+    {
+        [Key]
+        public string Id { get; set; }
+        public int Tenant { get; set; }
+        public string Name { get; set; }
+        public string LocalName { get; set; }
+        public string Code { get; set; }
+        public string Description { get; set; }
+        public string SearchFields { get; set; }
+        public string FilterControlName { get; set; }
+        public string ReportGroupId { get; set; }
+        public string FeatureId { get; set; }
+        public string FeatureCode { get; set; }
+        public string ReportDocumentId { get; set; }
+        public bool InActive { get; set; }
+        public string FilterHtmlComponentUrl { get; set; }
+        public string DefaultTemplateId { get; set; }
+        public string DefaultMessageTemplateId { get; set; }
+    }
+}

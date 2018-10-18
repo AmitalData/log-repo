@@ -1,0 +1,230 @@
+﻿td::before {
+    /*content: '';*/
+}
+
+td {
+    position: relative;
+    vertical-align: middle;
+}
+
+.MediaFill {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.MediaFillRelative {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-width: 100%;
+    min-height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    padding: 0!important;
+}
+
+.MediaFillAbsolute {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+.MarginAbsolute0 {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right:0px;
+}
+
+
+.MarginAbsolute3 {
+    position: absolute;
+    top: 3px;
+    bottom: 3px;
+    left: 3px;
+    right: 3px;
+}
+
+.MarginAbsolute5 {
+    position: absolute;
+    top: 5px;
+    bottom: 5px;
+    left: 5px;
+    right: 5px;
+}
+
+.MarginAbsolute10 {
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    margin: auto;
+}
+
+.MarginAbsolute15 {
+    position: absolute;
+    top: 15px;
+    bottom: 15px;
+    left: 15px;
+    right: 15px;
+    margin: auto;
+}
+
+.CellStretch {
+    height: 100%;
+}
+
+.CellContent {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+.Stretch {
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    min-height: 100%;
+    position: relative;
+}
+
+.MediaFixed {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+.MediaFixedPadding {
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    margin: auto;
+}
+
+.MediaFixedPadding5 {
+    position: absolute;
+    top: 5px;
+    bottom: 5px;
+    left: 5px;
+    right: 5px;
+    margin: auto;
+}
+
+/*.MediaFill {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}*/
+
+.MediaStretch {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.MediaFillColor {
+    background: #A2CB95;
+}
+
+/*IE*/
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    td {
+        position: static;
+        vertical-align: middle;
+    }
+
+    .MediaFill {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        min-width: 100%;
+        min-height: 100%;
+        max-width: 100%;
+        max-height: 100%;
+        float: left;
+    }
+
+    .CellContent {
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+}
+
+.CenterCenter {
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.RightCenter {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.LeftTop {
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: auto;
+}
+
+.LeftCenter {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+/*FireFox*/
+@media screen and (-moz-images-in-menus:0) {
+}
+
+@-moz-document url-prefix() {
+    .Stretch {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+    }
+}
+
+/*Webkit (Chrome, Safari)*/
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+}
+
+
+/*
+    https://philipnewcomer.net/2014/04/target-internet-explorer-10-11-css/
+    https://css-tricks.com/how-to-create-an-ie-only-stylesheet/
+    http://stackoverflow.com/questions/11173106/apply-style-only-on-ie
+    http://stackoverflow.com/questions/3541982/apply-css-rules-if-browser-is-ie
+*/

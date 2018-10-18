@@ -1,0 +1,469 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Customs.Def.Validators;
+  
+namespace Logitude.Customs.Def.EntityPMs
+{
+   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class SupplierInvioceItemCertificatPM : EntityPM
+   {
+   	  private string declarationId ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DeclarationId  
+	   {
+	    
+	     get
+		{
+		   return declarationId;
+		 }
+		 set
+		 {
+		   if(declarationId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeclarationId",OldValue=declarationId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   declarationId=value;
+		   }
+			
+		 }
+	   }
+	  private int invoiceCounterKey ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int InvoiceCounterKey  
+	   {
+	    
+	     get
+		{
+		   return invoiceCounterKey;
+		 }
+		 set
+		 {
+		   if(invoiceCounterKey != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InvoiceCounterKey",OldValue=invoiceCounterKey,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   invoiceCounterKey=value;
+		   }
+			
+		 }
+	   }
+	  private int lineNumber ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int LineNumber  
+	   {
+	    
+	     get
+		{
+		   return lineNumber;
+		 }
+		 set
+		 {
+		   if(lineNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LineNumber",OldValue=lineNumber,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   lineNumber=value;
+		   }
+			
+		 }
+	   }
+	  private int itemCertificateCounterKey ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int ItemCertificateCounterKey  
+	   {
+	    
+	     get
+		{
+		   return itemCertificateCounterKey;
+		 }
+		 set
+		 {
+		   if(itemCertificateCounterKey != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ItemCertificateCounterKey",OldValue=itemCertificateCounterKey,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   itemCertificateCounterKey=value;
+		   }
+			
+		 }
+	   }
+	  private string certificateNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CertificateNumber  
+	   {
+	    
+	     get
+		{
+		   return certificateNumber;
+		 }
+		 set
+		 {
+		   if(certificateNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CertificateNumber",OldValue=certificateNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   certificateNumber=value;
+		   }
+			
+		 }
+	   }
+	  private int tenant ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+	  private string reqConfirmationTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ReqConfirmationTypeCode  
+	   {
+	    
+	     get
+		{
+		   return reqConfirmationTypeCode;
+		 }
+		 set
+		 {
+		   if(reqConfirmationTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ReqConfirmationTypeCode",OldValue=reqConfirmationTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   reqConfirmationTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string certificateExemptionTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CertificateExemptionTypeCode  
+	   {
+	    
+	     get
+		{
+		   return certificateExemptionTypeCode;
+		 }
+		 set
+		 {
+		   if(certificateExemptionTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CertificateExemptionTypeCode",OldValue=certificateExemptionTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   certificateExemptionTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string attachmentTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AttachmentTypeCode  
+	   {
+	    
+	     get
+		{
+		   return attachmentTypeCode;
+		 }
+		 set
+		 {
+		   if(attachmentTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AttachmentTypeCode",OldValue=attachmentTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   attachmentTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string resConfirmationTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ResConfirmationTypeCode  
+	   {
+	    
+	     get
+		{
+		   return resConfirmationTypeCode;
+		 }
+		 set
+		 {
+		   if(resConfirmationTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ResConfirmationTypeCode",OldValue=resConfirmationTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   resConfirmationTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string customsAttachmentID ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomsAttachmentID  
+	   {
+	    
+	     get
+		{
+		   return customsAttachmentID;
+		 }
+		 set
+		 {
+		   if(customsAttachmentID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsAttachmentID",OldValue=customsAttachmentID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customsAttachmentID=value;
+		   }
+			
+		 }
+	   }
+	  private string reqConfirmationTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ReqConfirmationTypeName  
+	   {
+	    
+	     get
+		{
+		   return reqConfirmationTypeName;
+		 }
+		 set
+		 {
+		   if(reqConfirmationTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ReqConfirmationTypeName",OldValue=reqConfirmationTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   reqConfirmationTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private string certificateExemptionTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CertificateExemptionTypeName  
+	   {
+	    
+	     get
+		{
+		   return certificateExemptionTypeName;
+		 }
+		 set
+		 {
+		   if(certificateExemptionTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CertificateExemptionTypeName",OldValue=certificateExemptionTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   certificateExemptionTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private string attachmentTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AttachmentTypeName  
+	   {
+	    
+	     get
+		{
+		   return attachmentTypeName;
+		 }
+		 set
+		 {
+		   if(attachmentTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AttachmentTypeName",OldValue=attachmentTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   attachmentTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private string resConfirmationTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ResConfirmationTypeName  
+	   {
+	    
+	     get
+		{
+		   return resConfirmationTypeName;
+		 }
+		 set
+		 {
+		   if(resConfirmationTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ResConfirmationTypeName",OldValue=resConfirmationTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   resConfirmationTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private int sequenceNumeric ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int SequenceNumeric  
+	   {
+	    
+	     get
+		{
+		   return sequenceNumeric;
+		 }
+		 set
+		 {
+		   if(sequenceNumeric != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SequenceNumeric",OldValue=sequenceNumeric,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   sequenceNumeric=value;
+		   }
+			
+		 }
+	   }
+	  private string externalCertificatCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExternalCertificatCode  
+	   {
+	    
+	     get
+		{
+		   return externalCertificatCode;
+		 }
+		 set
+		 {
+		   if(externalCertificatCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExternalCertificatCode",OldValue=externalCertificatCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   externalCertificatCode=value;
+		   }
+			
+		 }
+	   }
+	  private string externalRequestTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExternalRequestTypeCode  
+	   {
+	    
+	     get
+		{
+		   return externalRequestTypeCode;
+		 }
+		 set
+		 {
+		   if(externalRequestTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExternalRequestTypeCode",OldValue=externalRequestTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   externalRequestTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string approvalRequestNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ApprovalRequestNumber  
+	   {
+	    
+	     get
+		{
+		   return approvalRequestNumber;
+		 }
+		 set
+		 {
+		   if(approvalRequestNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ApprovalRequestNumber",OldValue=approvalRequestNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   approvalRequestNumber=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

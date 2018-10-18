@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+            xmlns:api="http://www.customsware.com/schema/api" 
+            xmlns="http://www.customsware.com/schema/request"
+            targetNamespace="http://www.customsware.com/schema/request" 
+            elementFormDefault="qualified"   
+            attributeFormDefault="unqualified"
+            >
+  
+  
+  <xsd:import namespace="http://www.customsware.com/schema/api" schemaLocation="CW.xsd"/>
+  
+  <xsd:element name="CustomsForceServiceResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="MessageHeader" minOccurs="0">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="TransactionIdentifier" type="xsd:string" minOccurs="0"/>
+              <xsd:element name="SecurityToken" minOccurs="0">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="SessionCompanyCode" type="xsd:string" minOccurs="0"/>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="SessionInfo" minOccurs="0">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="LanguageCode" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="StatusCode" type="xsd:string" minOccurs="0"/>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="MessageBody" minOccurs="0">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="ResponseList" minOccurs="0">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="ResponseItem" minOccurs="0">
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element name="DataList" minOccurs="0">
+                            <xsd:complexType>
+                              <xsd:sequence>
+                                <xsd:element name="DataItem" minOccurs="0">
+                                  <xsd:complexType>
+                                    <xsd:sequence>
+                                      <xsd:element name="DataContent">
+                                        <xsd:complexType mixed="true">
+                                          <xsd:sequence>
+                                            <xsd:element ref="api:InputDocument" minOccurs="0"/>
+                                          </xsd:sequence>
+                                        </xsd:complexType>
+                                      </xsd:element>
+                                      <xsd:element name="DataMetaData" minOccurs="0">
+                                        <xsd:complexType>
+                                          <xsd:sequence>
+                                            <xsd:element name="StatusCode" type="xsd:string" minOccurs="0"/>
+                                          </xsd:sequence>
+                                        </xsd:complexType>
+                                      </xsd:element>
+                                      <xsd:element name="ErrorList" minOccurs="0">
+                                        <xsd:complexType>
+                                          <xsd:sequence>
+                                            <xsd:element name="ErrorItem" minOccurs="0" maxOccurs="unbounded">
+                                              <xsd:complexType>
+                                                <xsd:sequence>
+                                                  <xsd:element name="ErrorIdentifier" type="xsd:string" minOccurs="0"/>
+                                                  <xsd:element name="ErrorCode" type="xsd:string" minOccurs="0"/>
+                                                  <xsd:element name="ErrorDescription" type="xsd:string" minOccurs="0"/>
+                                                  <xsd:element name="ErrorText" type="xsd:string" minOccurs="0"/>
+                                                  <xsd:element name="ErrorOwnerIdentifier" type="xsd:string" minOccurs="0"/>
+                                                </xsd:sequence>
+                                              </xsd:complexType>
+                                            </xsd:element>
+                                          </xsd:sequence>
+                                        </xsd:complexType>
+                                      </xsd:element>
+                                    </xsd:sequence>
+                                  </xsd:complexType>
+                                </xsd:element>
+                              </xsd:sequence>
+                            </xsd:complexType>
+                          </xsd:element>
+                        </xsd:sequence>
+                      </xsd:complexType>
+                    </xsd:element>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="ErrorList" minOccurs="0">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="ErrorItem" minOccurs="0">
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element name="ErrorIdentifier" type="xsd:string" minOccurs="0"/>
+                          <xsd:element name="ErrorCode" type="xsd:string" minOccurs="0"/>
+                          <xsd:element name="ErrorDescription" type="xsd:string" minOccurs="0"/>
+                          <xsd:element name="ErrorText" type="xsd:string" minOccurs="0"/>
+                        </xsd:sequence>
+                      </xsd:complexType>
+                    </xsd:element>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

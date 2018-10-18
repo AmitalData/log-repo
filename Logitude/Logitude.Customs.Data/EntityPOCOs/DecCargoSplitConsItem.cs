@@ -1,0 +1,49 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Customs.Data.EntityPOCOs
+{
+   
+    public class DecCargoSplitConsItem
+    {
+	 string dbms;
+
+        [Key]
+        [ForeignKey("DecCargoSplitCon")]
+        [Column("DeclarationCargoSplitId" ,Order = 1)]
+	    public string DeclarationCargoSplitId { get; set; }
+	      
+        public virtual DecCargoSplitCon DecCargoSplitCon { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+     [Key]
+        [ForeignKey("DecCargoSplitCon")]
+        [Column("DecCargoSplitConsLineNo" ,Order = 2)]
+	    public int? DecCargoSplitConsLineNo { get; set; }
+     [Key]
+        [Column("ItemLine" ,Order = 3)]
+	    public int ItemLine { get; set; }
+        [Column("GrossMassMeasure")]
+	    public decimal? GrossMassMeasure { get; set; }
+        [Column("CargoDescription")]
+	    public string CargoDescription { get; set; }
+        [ForeignKey("SplitOrMergeReason")]
+        [Column("RequestReasonCode")]
+	    public string RequestReasonCode { get; set; }
+	      
+        public virtual SplitOrMergeReason SplitOrMergeReason { get; set; }
+        [Column("ParentCargoConsinmentItem")]
+	    public string ParentCargoConsinmentItem { get; set; }
+    }
+}
+	 

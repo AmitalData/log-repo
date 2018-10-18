@@ -1,0 +1,171 @@
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Server.Infrastructure.Helpers;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
+
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.EntityLists;
+
+namespace Logitude.Customs.Data.EntityListQueryServices
+{ 
+
+    public partial class NotificationDefinitionListQueryService
+    {
+         private ICustomContext context;
+        public NotificationDefinitionListQueryService(ICustomContext context)
+        {
+            this.context = context;
+        }
+
+        public List<NotificationDefinitionList> GetList(QueryOperations queryOperations, int tenant)
+        {
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+
+            IQueryable<NotificationDefinition> iQueryable = (from a in context.NotificationDefinitions
+                                               select a);
+            			iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+
+            iQueryable = filter.GetFilteredQuery<NotificationDefinition>(nonListQueryOperation, iQueryable);
+
+            int skippedPorts = queryOperations.PageIndex;
+
+            IQueryable<NotificationDefinitionList> query2 = GetIqueryableList(iQueryable);
+           
+            query2 = filter.GetFilteredQuery<NotificationDefinitionList>(listQueryOperation, query2);
+
+            if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
+            {
+                PropertyInfo propInfo = typeof(NotificationDefinitionList).GetProperty(queryOperations.SortByColumnName);
+                List<ObjectField> NotificationDefinitionObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.NotificationDefinition",tenant).ToList();
+
+                ObjectField objectField = (from a in NotificationDefinitionObjectFields
+                                           where a.FieldName == queryOperations.SortByColumnName
+                                           select a).FirstOrDefault();
+
+                if (objectField != null)
+                {
+				 if (objectField.IsCustom)
+                    {
+                        query2 = sortClass.GetSorterQuery<NotificationDefinitionList, string>(queryOperations, query2);
+                    }
+                    else
+                    {
+                     switch (objectField.DataTypeCode.ToLower())
+                     {
+                         case "ntext":
+                        case "text":
+                            {
+                                query2 = sortClass.GetSorterQuery<NotificationDefinitionList, string>(queryOperations, query2);
+                                break;
+                            }
+						case "sigdouble":
+						case "double":
+                            {
+                                query2 = sortClass.GetSorterQuery<NotificationDefinitionList, double>(queryOperations, query2);
+                                break;
+                            }
+						case "date":
+                        case "datetime":
+                            {
+                                query2 = sortClass.GetSorterQuery<NotificationDefinitionList, DateTime>(queryOperations, query2);
+                                break;
+                            }
+						case "unsinteger":
+                        case "integer":
+                            {
+                                query2 = sortClass.GetSorterQuery<NotificationDefinitionList, int>(queryOperations, query2);
+                                break;
+                            }
+                        case "boolean":
+                            {
+                                query2 = sortClass.GetSorterQuery<NotificationDefinitionList, bool>(queryOperations, query2);
+                                break;
+                            }
+						case "unsdecimal":
+						case "decimal":
+                            {
+                                query2 = sortClass.GetSorterQuery<NotificationDefinitionList, decimal>(queryOperations, query2);
+                                break;
+                            }
+                        default:
+                            {
+                                query2 = query2.OrderBy(d => d.Code);
+                                break;
+                            }
+                    }
+				 }
+                }
+            }
+		    else
+            {
+                query2 = query2.OrderBy(d => d.Code);
+            }
+			if(!queryOperations.GetAll)
+			{
+             query2 = query2.Skip(skippedPorts);
+             query2 = query2.Take(queryOperations.PageSize);
+			}
+            return query2.ToList();
+
+    
+        }
+
+         public List<NotificationDefinitionList> GetList(int tenant)
+         {
+             return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
+         }
+
+        public NotificationDefinitionList GetSingle(string code)
+        {
+            IQueryable<NotificationDefinition> NotificationDefinitionQuery = (from a in context.NotificationDefinitions
+                                                       where a.Code == code
+                                                       select a);
+
+             
+            IQueryable<NotificationDefinitionList> NotificationDefinitionListQuery = GetIqueryableList( NotificationDefinitionQuery);
+            NotificationDefinitionList NotificationDefinitionList = NotificationDefinitionListQuery.FirstOrDefault();
+            return NotificationDefinitionList;
+           
+        }
+
+        public int GetListCount(QueryOperations queryOperations)
+        {
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+
+            IQueryable<NotificationDefinition> iQueryable = (from a in context.NotificationDefinitions  select a);
+
+			  			iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+            
+			iQueryable = filter.GetFilteredQuery<NotificationDefinition>(nonListQueryOperation, iQueryable);
+
+            IQueryable<NotificationDefinitionList> query2 = GetIqueryableList(iQueryable);
+
+            query2 = filter.GetFilteredQuery<NotificationDefinitionList>(listQueryOperation, query2);
+            int count = query2.Count();
+            return count;
+        }
+
+      
+    }
+}
+	 

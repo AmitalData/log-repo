@@ -1,0 +1,662 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+     <div data-role="view"  data-transition="slide" data-show="onPostDatilesViewShow">
+
+
+          <header class="headerPost" data-role="header">
+              
+            <div style="height:43px; display: table;width:100%;">
+
+                <div style="display: table-cell; width:80px; vertical-align: middle">
+             
+                   <div data-align="left" style="margin-left: 5px; margin-top:2px; color:white;font-size: 15px; width: auto; height: auto;"><a  onclick="ButtonBackFunPostDatiles()">< Posts</a></div>
+                </div>
+
+                <div style="display: table-cell; width: 175px; vertical-align: middle;text-align:left">
+                    <div class="HeaderTitil"></div>
+                </div>
+                  
+
+                   <div style="display: table-cell; width: auto; vertical-align: middle;text-align:right">
+                                  <button id="buttonrefershPost" style="height: auto;margin-left:15px;  width:auto; background-color: transparent; " onclick="buttonrefershPostCommentfun()"><img style="width:22px;margin-right:20px; height:22px;margin-top:4px;" src="images/refersh.png"/ ></button>
+                </div>
+
+                  <div style="display: table-cell; width: 20px; vertical-align: middle;text-align:right">
+
+                      <button id="buttonViewAddComment" style="height: auto; margin-right:15px; margin-bottom:2px; width: auto; background-color: transparent ;" onclick="AddbuttonViewComment()"><img style="width:25px; height:25px;margin-top:5px;" src="images/AddComment.png"/ ></button>
+                </div>
+             
+
+            </div>
+      </header>
+
+         <ul id="Post" data-role="listview" style="margin-left:0px;margin-bottom:30px;margin-top:20px; margin-right:10px;"></ul>
+         <ul id="CommentsListBox" data-role="listview" style="margin-top:-15px; margin-left:5px; margin-right:10px;"></ul>
+         <div id="endlinePostComment" style="height:1px;  margin-left:10px; margin-right:10px; border-bottom:1px solid #D1D1D1" ></div>
+
+         </div>
+
+     <script type="text/x-kendo-tmpl" id="PostTemplate">
+      <div  style="height:auto;">
+          <div  style="height:auto; display:inline-block; width:30;height:auto;margin-left:7px;margin-top:7px;"><img style="width:35px;height:37px padding:0px; margin:0px;" src="images/009.png" /></div>
+          
+             <div  style="height:auto; display:inline-block; vertical-align:top; max-width:210px; margin-left:7px;margin-right:5px;">
+
+                   <div class="CreatePost" style="height:auto; display:block;margin-top:5px; vertical-align:top;"> ${CreatedByUserNameP}</div>
+                   <div class="bodypost"  style="height:auto; display:block; vertical-align:top;">${BodyTextP}</div>
+              <div class="bodypost"  style="height:5px; display:block; vertical-align:top;"></div>
+                 <div  style="height:auto; display:block; vertical-align:top;margin-top:5px; margin-bottom:7px; ">
+
+
+                           <div class="DatePost" style="height:auto;display:inline-block" >${CreateDateP} </div>
+                           <div class="DatePost" style="height:auto; display:inline-block" >${CreateDateTimeP} </div>
+                 </div>
+
+                   <div class="AreaLikep"  style="height:auto; display:none; vertical-align:top;  display: #= DisplayAreaLikeP #">
+                          
+                                                    <div  style="height:auto;vertical-align:middle; ; display:inline-block"> <img style="width:30px;height:30px;"src="images/LikeIcon.png" /></div>  
+                                                   <div   style="font-size:13px; color:\\#C1C6C9; ; display:inline-block" > ${textlikeP}</div>                
+
+                       </div>
+               <div  style="height:auto;  display:block; vertical-align:top;margin-top:2px">
+
+                                   <div  class="LinkPost" style="height:auto; margin-bottom:3px; display:none; display: #= DisplayLikeP #"> <a id="#= PostTestId #" onclick="LikePostFun(id)">Like </a> </div>
+                                   <div  class="LinkPost" style="height:auto;margin-bottom:3px; display:none; display: #= DisplayUnLikeP #"> <a id="#= PostTestId #" onclick="UnLikePostFun(id)">UnLike </a> </div>
+                                   <div style="height:15px;display:inline-block; display:none; border-right:2px solid \\#FF9B4F; margin-left:5px;margin-right:5px; display: #= DisplayLineDeleteP #"></div>
+                                   <div  class="LinkPost" style="height:auto; margin-bottom:3px;display:inline-block; display:none;display: #= DisplayDeleteButtonP #"> <a id="#= PostTestId #" onclick="DeletePostFun(id)">Delete</a> </div>
+                                  
+                  
+              </div>
+              </div>   
+
+             </div>
+
+         </script>
+    <!--display:none; display: #= DisplayAreaLikeP#-->
+     <script type="text/x-kendo-tmpl" id="CommentsItemTemplate">
+       
+    <div  style="height:auto;  background-color:\\#F7F3F7; border-left:1px solid \\#D1D1D1 ;border-right:1px solid \\#D1D1D1 ;border-top:1px solid \\#D1D1D1">
+          <div  style="height:auto; display:inline-block; width:30;height:auto;margin-left:7px;margin-top:7px;"><img style="width:35px;height:37px padding:0px; margin:0px;" src="images/009.png" /></div>
+          
+             <div  style="height:auto; display:inline-block; vertical-align:top; max-width:170px; margin-left:7px;margin-right:5px;">
+
+                   <div class="CreatePost" style="height:auto; display:block;margin-top:5px; vertical-align:top;"> ${CreatedByUserNameComment}</div>
+                   <div contenteditable="true" class="bodypost"  style="height:auto; vertical-align:top;">${BodyTextComment}</div>
+                 <div  style="height:auto; display:block; vertical-align:top; margin-top:5px; margin-bottom:5px; ">
+
+
+                           <div class="DatePost" style="height:auto;display:inline-block" >${CreateDateComment} </div>
+                           <div class="DatePost" style="height:auto; display:inline-block" >${CreateDateTimeComment} </div>
+                 </div>
+
+                   <div  style="height:auto   ; display:block; vertical-align:top;">
+                          
+                                                    <div class="postbody" style="height:auto; display:none;  vertical-align:middle;display: #= DisplayImageLikeC#"> <img style="width:30px;height:30px;"src="images/LikeIcon.png" /></div>  
+                                                   <div  class="postbody"  style="font-size:13px; display:none;color:\\#C1C6C9;  display: #= DisplayCommentPerson #">Person</div>
+                                                   <div class="postbody " style="font-size:13px; color:\\#C1C6C9; display:none;vertical-align:middle; display: #= DisplayNumberLikeC #"> ${NumberOfLikesComment}</div>     
+
+                       </div>
+                   <div  style="height:auto; display:block; vertical-align:top;;margin-top:2px">
+                                   <div class="LinkPost" style="height:auto; margin-bottom:0px;  display:none; display: #= DisplayLikeComment #"> <a id="#= CommentId #" onclick="LikePostFun(id)">Like </a> </div>
+                                   <div  class="LinkPost" style="height:auto;margin-bottom:0px; display:none; display: #= DisplayUnLikeComment #"> <a id="#= CommentId #" onclick="UnLikePostFun(id)">UnLike </a> </div>
+                                   <div style="height:15px; display:none; border-right:2px solid \\#FF9B4F; margin-left:5px;margin-right:5px;display: #= DisplayLineDeleteC #"></div>
+                                   <div  class="LinkPost" style="height:auto; margin-bottom:3px; display:none;display: #= DisplayDeleteButtonC #"> <a id="#= CommentId #" onclick="DeletePostFun(id)">Delete</a> </div>
+                      </div>
+
+                     <div  style="height:10px; display:block; vertical-align:top;"></div>
+               </div>   
+
+             </div>
+
+ </script>
+
+      <script>
+
+        //Comment
+        var PostCommentListClass = function () {
+            this.BodyTextComment = "";
+            this.CreateDateComment = "";
+            this.CreateDateTimeComment = "";
+            this.CreatedByUserNameComment = "";
+            this.PostIdComment = "";
+            this.NumberOfLikesComment = "";
+            this.CommentId = "";
+            this.DisplayLikeComment = "";
+            this.DisplayUnLikeComment = "";
+            this.DisplayNumberLikeC = "";
+            this.DisplayCommentPerson = "";
+            this.DisplayImageLikeC = "";
+            this.DisplayLineDeleteC = "";
+            this.DisplayDeleteButtonC = "";
+
+        }
+        jQuery.BuildPostCommentList = (function (list) {
+            
+            var CommentList = [];
+            $.each(list, function (index, Comment) {
+                var ac = "";
+                var bc = "";
+                var item = new PostCommentListClass();
+                item.CommentList = Comment;
+
+                if ($.trim(Comment.PostLikes.length) == 0) {
+                    item.NumberOfLikesComment = $.trim(Comment.PostLikes.length);
+                    item.DisplayLikeComment = "inline-block";
+                    item.DisplayUnLikeComment = "none";
+                    item.DisplayNumberLikeC = "none";
+                    item.DisplayCommentPerson = "none";
+                    item.DisplayImageLikeC = "none";
+                }
+                else {
+                    if ($.trim(Comment.PostLikes.length) == 1) {
+                        item.NumberOfLikesComment = $.trim(Comment.PostLikes.length);
+
+                        $.each(Comment.PostLikes, function (index, ComLike) {
+                            if ($.trim(ComLike.UserId) == $.CurrentUserId) {
+                                bc = 1;
+                            }
+                        });
+                        if (bc == "1") {
+
+                            item.DisplayLikeComment = "none";
+                            item.DisplayUnLikeComment = "inline-block";
+                            item.DisplayNumberLikeC = "inline-block";
+                            item.DisplayCommentPerson = "inline-block";
+                            item.DisplayImageLikeC = "inline-block";
+                        }
+                        else {
+                            item.DisplayLikeComment = "inline-block";
+                            item.DisplayUnLikeComment = "none";
+                            item.DisplayNumberLikeC = "inline-block";
+                            item.DisplayCommentPerson = "inline-block";
+                            item.DisplayImageLikeC = "inline-block";
+                        }
+
+
+                    }
+                
+                    else {
+
+
+                        $.each(Comment.PostLikes, function (index, ComLike) {
+                            if ($.trim(ComLike.UserId) == $.CurrentUserId) {
+                                ac = 1;
+                            }
+                        });
+
+                        if (ac == "1") {
+                            item.NumberOfLikesComment = $.trim(Comment.PostLikes.length);
+                            item.DisplayLikeComment = "none";
+                            item.DisplayUnLikeComment = "inline-block";
+                            item.DisplayNumberLikeC = "inline-block";
+                            item.DisplayCommentPerson = "inline-block";
+                            item.DisplayImageLikeC = "inline-block";
+                        }
+                        else {
+                            item.NumberOfLikesComment = $.trim(Comment.PostLikes.length);
+                            item.DisplayLikeComment = "inline-block";
+                            item.DisplayUnLikeComment = "none";
+                            item.DisplayNumberLikeC = "inline-block";
+                            item.DisplayCommentPerson = "inline-block";
+                            item.DisplayImageLikeC = "inline-block";
+                        }
+
+                    }
+
+                }
+           
+                item.CommentId = $.trim(Comment.Id);
+                
+                if ($.trim(Comment.CreatedById) == $.CurrentUserId)
+                {
+              
+                    item.DisplayLineDeleteC = "inline-block";
+                    item.DisplayDeleteButtonC = "inline-block";
+                }
+               else
+                 {
+                    item.DisplayLineDeleteC = "none";
+                    item.DisplayDeleteButtonC = "none";
+                  }
+               
+
+                item.BodyTextComment = $.trim(Comment.BodyText);
+                item.CreateDateTimeComment = $.Convert.ToShortTime(Comment.CreateDate);
+                item.CreateDateComment = $.Convert.ToShortDate(Comment.CreateDate);
+                item.CreatedByUserNameComment = $.trim(Comment.CreatedByUserName);
+             
+            
+             
+
+                CommentList.push(item);
+
+            });
+
+
+            return CommentList;
+
+
+        });
+        jQuery.LoadPostComment = (function () {
+            $.Application.showLoading();
+
+            var url = "../api/Posts?id=" + $.CurrentEntityPostId + "&tenant=" + $.CurrentTenant;
+       
+            $.ajax({
+                url: url,
+                type: 'Get',
+                contentType: 'application/json',
+                success: function (result) {
+
+                        if (result.NumberOfComments > 0) {
+                            document.getElementById('endlinePostComment').style.display = "block";
+                    }
+                    else {
+                            document.getElementById('endlinePostComment').style.display = "none";
+                    }
+                    var dataSource = new kendo.data.DataSource({
+                        data: $.BuildPostCommentList(result.PostComments),
+                    });
+
+                    $("#CommentsListBox").kendoMobileListView(
+                    {
+                        dataSource: dataSource,
+                        template: kendo.template($("#CommentsItemTemplate").html()),
+
+                    });
+
+                    $.Application.hideLoading();
+                },
+
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $.Application.hideLoading();
+
+                }
+            });
+
+        })
+        //EndComment
+
+
+
+        //Post
+        var PostListClassP = function () {
+            this.BodyTextP = "";
+            this.CreateDateP = "";
+            this.CreateDateTimeP= "";
+            this.CreatedByUserNameP = "";
+            this.PostIdP = "";
+           
+            this.DisplayImageLikeP = "";
+            //this.DisplayYouLikeP = "";
+          
+            ////this.DisplayYouAndOthersLikeP = "";
+            this.DisplayLikeP = "";
+            this.DisplayUnLikeP = "";
+            this.PostTestId = "";
+            this.DisplayLineDeleteP = "";
+            this.DisplayDeleteButtonP = "";
+          
+            //this.DisplayNumberLikeP = "";
+            //this.NumberOfLikesP = "";
+           
+            this.textlike2P = "";
+            this.DisplayAreaLikeP = "";
+            this.NumberOflikep = 0;
+            this.textlikeP = "";
+            //this.DisplayImageLikeP = "";
+            //this.DisplaytextlikeP = "";
+         
+        }
+        jQuery.BuildPost = (function (Post) {
+
+            var PostListP = [];
+            var PostLikeNumber = [];
+            var item = new PostListClassP();
+            item.PostListP = Post;
+            var a = ""
+            var b = 0;
+            var aa = "";
+            var text2 = "";
+            var NumberLike = 0;
+            var h = 0;
+            var d = 0;
+
+
+
+            if ($.trim(Post.NumberOfLikes) > 0) {
+                item.NumberOfLikesP = $.trim(Post.NumberOfLikes);
+                item.DisplayAreaLikeP = "block";
+                //item.DisplayImageLikeP = "inline-block";
+                //item.DisplaytextlikeP = "inline-block";
+               
+
+                if ($.trim(Post.NumberOfLikes) == 1) {
+
+                        $.each(Post.PostLikes, function (index, PLike) {
+                            if ($.trim(PLike.UserId) == $.CurrentUserId) {
+                         
+                                item.textlikeP = "You like this";
+                                item.DisplayUnLikeP = "inline-block";
+                            }
+                            else {
+                                item.textlikeP = PLike.UserName + " like this";
+                                item.DisplayLikeP = "inline-block";
+                            }
+                        });
+                }
+
+
+                else if ($.trim(Post.NumberOfLikes) > 1 && $.trim(Post.NumberOfLikes) < 3 ) {
+                    $.each(Post.PostLikes, function (index, PLike) {
+                            if ($.trim(PLike.UserId) == $.CurrentUserId) {
+                                a = "1";
+
+                            }
+                    });
+
+                    if (a == "1") {
+                        $.each(Post.PostLikes, function (index, PLike) {
+                            if ($.trim(PLike.UserId) != $.CurrentUserId) {
+                                text2 = PLike.UserName ;
+                            }
+                        });
+
+                        item.DisplayUnLikeP = "inline-block";
+                        item.textlikeP = "you" + " , " + text2 + " Like this";
+                    }
+
+                    else {
+                        $.each(Post.PostLikes, function (index, PLike) {
+                            d += 1;
+                            if (d == 1) {
+                                text2 += PLike.UserName + " , ";
+                            }
+                            else {
+                                text2 += PLike.UserName;
+                            }
+                        
+                        });
+                        item.DisplayLikeP = "inline-block";
+                        item.textlikeP =  text2 + " Like this";
+                    }
+                    
+                        
+
+                }
+
+
+                else if ($.trim(Post.NumberOfLikes) > 1 && $.trim(Post.NumberOfLikes) > 2) {
+               
+                    $.each(Post.PostLikes, function (index, PLike) {
+                        if ($.trim(PLike.UserId) == $.CurrentUserId) {
+                            a = "1"; 
+
+                        }
+                    });
+                    if (a == "1") {
+                        $.each(Post.PostLikes, function (index, PLike) {
+                            if (aa != "1") {
+                                if ($.trim(PLike.UserId) != $.CurrentUserId) {
+                                    text2 = PLike.UserName;
+                                    textid = PLike.UserId;
+                                    aa = "1";
+                                }
+                            }
+                        });
+                        $.each(Post.PostLikes, function (index, PLike) {
+                   
+                            if (PLike.UserId != textid && PLike.UserId != $.CurrentUserId) {
+                                NumberLike += 1;
+                            }
+                        });
+
+                        item.textlikeP = "You" + "," + text2 + "," + NumberLike + "Others like this";
+                        item.DisplayUnLikeP = "inline-block";
+                    }
+
+                    else {
+                        $.each(Post.PostLikes, function (index, PLike) {
+                            h += 1;
+                            if (h < 3) {
+                               
+                                    text2 += PLike.UserName + " , ";
+                            
+                            }
+                            else {
+                                NumberLike += 1;
+                            }
+                        });
+                        item.DisplayUnLikeP = "inline-block";
+                        item.textlikeP = text2 + NumberLike + " Others Like this";
+                    }
+  
+               }
+
+
+            }
+
+
+
+            else {
+                item.DisplayLikeP = "inline-block";
+                 item.DisplayAreaLikeP = "none";
+            }
+
+            
+
+
+
+
+
+            if ($.trim(Post.CreatedById) == $.CurrentUserId) {
+
+                item.DisplayLineDeleteP = "inline-block";
+                item.DisplayDeleteButtonP = "inline-block";
+            }
+            else {
+                item.DisplayLineDeleteP = "none";
+                item.DisplayDeleteButtonP = "none";
+            }
+            item.PostIdP = $.trim(Post.Id);
+            item.BodyTextP = $.trim(Post.BodyText);
+            item.CreateDateTimeP = $.Convert.ToShortTime(Post.CreateDate);
+            item.CreateDateP = $.Convert.ToShortDate(Post.CreateDate);
+            item.CreatedByUserNameP = $.trim(Post.CreatedByUserName);
+            item.PostTestId = "";
+
+            PostListP.push(item);
+            return PostListP;
+
+        });
+        jQuery.LoadPost = (function () {
+
+            $.Application.showLoading();
+     
+            var url = "../api/Posts?postid=" + $.CurrentEntityPostId + "&tenant=" + $.CurrentTenant;
+            $.ajax({
+                url: url,
+                type: 'Get',
+                contentType: 'application/json',
+                success: function (result) {
+                    var dataSource = new kendo.data.DataSource({
+                        data: $.BuildPost(result),
+                    });
+
+                    $("#Post").kendoMobileListView(
+                    {
+                        dataSource: dataSource,
+                        template: kendo.template($("#PostTemplate").html()),
+
+                    });
+
+                    $.Application.hideLoading();
+                },
+
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $.Application.hideLoading();
+
+                }
+            });
+
+        })
+       //EndPost
+
+
+
+        //HeaderButtoms
+        function AddbuttonViewComment()
+        {
+            $.Application.navigate("Views/PostViews/AddNewPost.html?c");
+        }
+        function buttonrefershPostCommentfun() {
+            $.LoadPostComment();
+            $.LoadPost();
+        }
+        function ButtonBackFunPostDatiles() {
+            $.Application.navigate("Views/PostsView.html");
+        }
+        //HeaderButtoms
+
+
+        //ButtonLike&UnLike
+        function LikePostFun(id) {
+            $.Application.showLoading();
+            function PostLikeFilters() {
+
+            if (id == "") {
+                        this.PostId = $.CurrentEntityPostList.PostId;
+                        this.UserId = $.CurrentUserId;
+                        this.Tenant = $.CurrentTenant;
+            }
+            else {
+                        this.PostId = id;
+                        this.UserId = $.CurrentUserId;
+                        this.Tenant = $.CurrentTenant;
+            }
+   
+            }
+
+            var PostLikeFilters = new PostLikeFilters();
+            var url = "../api/PostLikes";
+
+            $.ajax({
+                url: url,
+                data: JSON.stringify(PostLikeFilters),
+                type: 'POST',
+                contentType: 'application/json',
+                success: function (result) {
+                 
+                    if (id == "") {
+                        $.LoadPost();
+                    }
+
+                    else {
+                        $.LoadPostComment();
+                    }
+
+                    $.Application.hideLoading();
+                }
+
+            });
+
+        }
+        function UnLikePostFun(id) {
+   
+            $.Application.showLoading();
+            if (id == "") {
+                var url = "../api/PostLikes?PostId=" + $.CurrentEntityPostId + "&UserId=" + $.CurrentUserId + "&tenant=" + $.CurrentTenant;
+            }
+
+            else {
+                var url = "../api/PostLikes?PostId=" + id + "&UserId=" + $.CurrentUserId + "&tenant=" + $.CurrentTenant;
+            }
+            $.ajax({
+                url: url,
+                type: 'DELETE',
+                contentType: 'application/json',
+                success: function (result) {
+                    if (id == "") {
+                        $.LoadPost();
+                    }
+
+                    else {
+                        $.LoadPostComment();
+                    }
+                    $.Application.hideLoading();
+                }
+                   
+            });
+        }
+        //endButtonLike&UnLike
+
+        //ButtonDelete
+        function DeletePostFun(id) {
+       
+           
+         if (id == "") {
+
+             if (confirm('Do you Want to Delete this Post?')) {
+                    $.Application.showLoading();
+                    var url = "../api/Posts?PostId=" + $.CurrentEntityPostId + "&UserId=" + $.CurrentUserId + "&tenant=" + $.CurrentTenant;
+              }
+             else {
+
+                }
+          }
+
+
+            else {
+                $.Application.showLoading();
+
+                var url = "../api/Posts?PostId=" + id + "&UserId=" + $.CurrentUserId + "&tenant=" + $.CurrentTenant;
+            }
+                //var url = "../api/Posts?PostId=" + id + "&UserId=" + $.CurrentUserId + "&tenant=" + $.CurrentTenant;
+            $.ajax({
+                url: url,
+                type: 'DELETE',
+                contentType: 'application/json',
+                success: function (result) {
+                    $.LoadPostComment();
+                    if (id == "") {
+                        $.Application.navigate("Views/PostsView.html");
+                    }
+
+                    else {
+                        $.LoadPostComment();
+                    }
+                    $.Application.hideLoading();
+                }
+
+            });
+
+        }
+        //EndButtonDelete
+      
+
+        //ShowPage
+        function onPostDatilesViewShow(e) {
+            var scroller = e.view.scroller;
+            scroller.reset();
+            $.LoadPostComment();
+            $.LoadPost();
+
+            var hash = $(location).attr('href');
+            var hashSplit = hash.split("?");
+   
+            var CodeText = hashSplit[1].toLowerCase();
+            if (CodeText == "posts") {
+                var scroller = e.view.scroller;
+                scroller.reset();
+            }
+        
+        }
+        //EndShowPage
+
+          </script>
+</body>
+</html>

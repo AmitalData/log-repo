@@ -1,0 +1,1 @@
+update  objectfields set [maxlength] = 16 where fieldname = 'Master' and Tenant = 0

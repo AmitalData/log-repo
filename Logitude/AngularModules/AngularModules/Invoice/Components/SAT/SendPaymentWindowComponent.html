@@ -1,0 +1,278 @@
+﻿
+<style type="text/css">
+    .RadioButton label {
+        font-size: 12px;
+        color: #282E30;
+    }
+
+    .RecipientValue {
+        width: 55px;
+        font-size: 11px;
+        color: #6E7172;
+    }
+</style>
+
+<table>
+    <tr *ngIf="ValidationErrorsList && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr *ngIf="ValidationWarningsList && ValidationWarningsList.length > 0" style="height:1px;">
+        <td>
+            <WarningSummary [ItemsSource]="ValidationWarningsList"></WarningSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td>
+                        <div class="FillParent CurvedArea">
+                            <table>
+                                <tr>
+
+                                    <td>
+                                        <table>
+                                            <tr style="height: 10px">
+                                                <td colspan="3">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td style="width: 15px;">
+                                                    <div></div>
+                                                </td>
+                                                <td style="vertical-align:top">
+                                                    <table>
+
+                                                        <tr style="height: 40px">
+                                                            <td>
+                                                                <table>
+                                                                    <tr style="height: 20px">
+                                                                        <td style="font-size: 16px; color: #1B90CB">Payment Status</td>
+                                                                    </tr>
+
+                                                                    <tr style="height: 20px">
+                                                                        <td>
+                                                                            <table>
+                                                                                <tr *ngIf="IsPaymentValid">
+                                                                                    <td style="width: 15px; position: relative">
+                                                                                        <img class="LeftCenter" src="./Images/GreenTick.png" />
+                                                                                    </td>
+
+                                                                                    <td style="font-size: 12px; color: #009161;">Valid</td>
+                                                                                </tr>
+
+                                                                                <tr *ngIf="IsPaymentWarning">
+                                                                                    <td style="width: 15px; position: relative">
+                                                                                        <img class="LeftCenter" src="./Images/WarningIcon.png" />
+                                                                                    </td>
+
+                                                                                    <td style="font-size: 12px; color: #D8770E;">{{PaymentWarningText}}</td>
+                                                                                </tr>
+
+                                                                                <tr *ngIf="IsPaymentError">
+                                                                                    <td style="width: 15px; position: relative">
+                                                                                        <img class="LeftCenter" src="./Images/RedX.png" />
+                                                                                    </td>
+
+                                                                                    <td style="font-size: 12px; color: #E53030;">{{PaymentErrorText}}</td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr style="height: 10px">
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+
+                                                        
+                                                        <!-- SAT -->
+                                                        <tr>
+
+                                                            <td *ngIf="IsInvoicesStatusVisible">
+                                                                <table>
+                                                                    <tr style="height: 20px">
+                                                                        <td style="font-size: 16px; color: #1B90CB">{{InvoicesStatusLabel}}</td>
+                                                                    </tr>
+
+                                                                    <tr style="height: 20px;">
+                                                                        <td>
+                                                                            <table>
+                                                                                <tr style="height: 20px" *ngIf="IsInvoicesValid">
+                                                                                    <td style="width: 15px; position: relative">
+                                                                                        <img class="LeftCenter" src="./Images/GreenTick.png" />
+                                                                                    </td>
+
+                                                                                    <td style="font-size: 12px; color: #009161;">Valid</td>
+                                                                                </tr>
+
+                                                                                <tr style="height: 20px" *ngIf="IsInvoicesWarning">
+                                                                                    <td style="width: 18px; position: relative">
+                                                                                        <img class="LeftTop" src="./Images/WarningIcon.png" />
+                                                                                    </td>
+
+                                                                                    <td style="font-size: 12px; color: #D8770E;">
+                                                                                        <div class="MultiLinesText">
+                                                                                            {{InvoicesWarningText}}
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <tr style="height: 20px" *ngIf="IsInvoicesError">
+                                                                                    <td style="width: 15px; position: relative">
+                                                                                        <img class="LeftCenter" src="./Images/RedX.png" />
+                                                                                    </td>
+
+                                                                                    <td style="font-size: 12px; color: #E53030;">{{InvoicesErrorText}}</td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr style="height: 15px;">
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr style="height: 20px;">
+                                                                        <td>
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td style="font-size: 11px; color: #1B90CB; width: 100px;">Invoice Number</td>
+                                                                                    <td style="font-size: 11px; color: #1B90CB;"></td>
+                                                                                    <td style="width: 10px;">
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                    <td style="font-size: 11px; color: #1B90CB; width: 50px; text-align: center">Valid</td>
+                                                                                    <td style="width: 10px;">
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                    <td style="font-size: 11px; color: #1B90CB; width: 200px;">Status</td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div class="ScrollViewer">
+                                                                                <div class="ScrollContent">
+                                                                                    <table>
+                                                                                        <tr style="height: 20px;" *ngFor="let item of ARInvoiceSATStatusList">
+
+                                                                                            <td style="width: 100px;">
+                                                                                                <div>{{item.ARInvoiceNumber}}</div>
+                                                                                              
+                                                                                            </td>
+
+                                                                                            <td style="font-size: 12px; color: #282E30;"></td>
+
+                                                                                            <td style="width: 10px;">
+                                                                                                <div></div>
+                                                                                            </td>
+
+                                                                                            <td style="width: 50px; position: relative">
+                                                                                                <img *ngIf="item.IsSATValid === true" class="CenterCenter" src="./Images/GreenTick.png" />
+                                                                                                <img *ngIf="item.SATStatusCode === 'SNTE'" class="CenterCenter" src="./Images/RedX.png" />
+                                                                                                <img *ngIf="item.SATStatusCode === 'NSNT'" class="CenterCenter" src="./Images/RedX.png" />
+                                                                                            </td>
+
+                                                                                            <td style="width: 10px;">
+                                                                                                <div></div>
+                                                                                            </td>
+
+                                                                                            <td style="font-size: 11px; width: 200px;" [ngStyle]="{color: item.SATStatusName | StringToColorPipe}">{{item.SATStatusName}}</td>
+                                                                                        </tr>
+
+                                                                                        <tr>
+                                                                                            <td colspan="6">
+                                                                                                <div></div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+
+                                                    
+
+                                                        <!--<tr style="height: 30px;">
+                                                            <td style="text-align: center; vertical-align: middle; font-size: 14px;" [ngStyle]="{color: SendingResultForeground}">
+                                                                {{SendingResultMessage}}
+                                                            </td>
+                                                        </tr>-->
+                                                    </table>
+                                                </td>
+                                                <td style="width: 15px;">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr style="height: 10px">
+                                                <td colspan="3">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+
+                                    <td style="width: 10px;">
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CloseClicked()">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;" *ngIf="IsSendButtonVisible">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 75px;" *ngIf="IsSendButtonVisible">
+                        <button class="RedButton" (click)="SendClicked()">Send</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

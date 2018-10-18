@@ -1,0 +1,203 @@
+﻿
+<div>
+    <custom-message-wrapper [CustomSendOptionsButtonCanForcePersonalSign]="false"
+                            [IsShowCustomResponseContent]="false">
+        <div class="class-request-content">
+            <div style="width: 520px; height:250px; ">
+                <table>
+                    <tr>
+                        <td>
+                            <div class="TableHolder">
+                                <table style="width: 520px;height: 250px;padding-top: 10px;">
+
+                                    <tr style="height: 46px;">
+                                        <td>
+                                            <table>
+                                                <tr class="FormFieldRow">
+                                                    <td style="width: 100px;">
+                                                        <LogLabel [ObjectFieldName]="'FileTypeCode'" [DataContext]="DataContext" [TextCode]="'Customs.DeclarationFilter.F.GuaranteeFileTypeName'"></LogLabel>
+                                                    </td>
+                                                    <td style="width: 120px;">
+                                                        <LogLov [ObjectFieldName]="'FileTypeCode'"
+                                                                [ObjectTableName]="'Customs.TPGFileType'"
+                                                                [DataContext]="DataContext"
+                                                                [LookUpTableName]="'Customs.TPGFileType'"
+                                                                [HideColumns]="true"
+                                                                [SelectedValue]="FileTypeCode">
+                                                        </LogLov>
+                                                    </td>
+
+                                                    <td style="width: 10px;"><div></div></td>
+
+                                                    <td style="width: 100px;">
+                                                        <LogLabel [NoObjectField]="true" [ObjectFieldName]="'CountryCode'" [ObjectTableName]="ObjectTableName"
+                                                                  [DataContext]="DataContext" [TextCode]="'Customs.BankAccountToRefundQuery.O.CountryCode'">
+                                                        </LogLabel>
+                                                    </td>
+                                                    <td style="width: 120px;">
+                                                        <LogLov [ObjectFieldName]="'CountryCode'"
+                                                                [ObjectTableName]="'Customs.CustomsCountry'"
+                                                                [DataContext]="DataContext"
+                                                                [LookUpTableName]="'Customs.CustomsCountry'"
+                                                                [HideColumns]="true"
+                                                                [SelectedValue]="CountryCode">
+                                                        </LogLov>
+                                                    </td>
+                                                </tr>
+
+                                                <tr class="FormFieldRow">
+                                                    <td style="width: 100px;">
+                                                        <LogLabel [ObjectFieldName]="'FileNumber'" [DataContext]="DataContext" [TextCode]="'Customs.BankAccountToRefundQuery.O.FileNumber'"></LogLabel>
+                                                    </td>
+                                                    <td style="width: 120px;">
+                                                        <LogTextBox [ObjectFieldName]="'FileNumber'"
+                                                                    [DataContext]="DataContext"
+                                                                    [HideColumns]="true"
+                                                                    [AddCommasToNumbers]="false"
+                                                                    [Text]="FileNumber"></LogTextBox>
+                                                    </td>
+
+                                                    <td style="width: 10px;"><div></div></td>
+
+                                                    <td style="width: 120px; ">
+                                                        <LogLabel [NoObjectField]="true"
+                                                                  [ObjectFieldName]="'InternalBankId'"
+                                                                  [ObjectTableName]="ObjectTableName"
+                                                                  [DataContext]="DataContext"
+                                                                  [TextCode]="'Customs.PaymentQuery.O.InternalBankId'"></LogLabel>
+                                                    </td>
+                                                    <td style="width: 120px;">
+                                                        <ComboBox [ItemsSource]="banksList"
+                                                                  [SelectedItem]="SelectedBankIndex"
+                                                                  (SelectedItemChanged)="SelectedBankIndex = $event"
+                                                                  [Binding]="'LocalName'" [IsDisabled]="!IsraelBankFieldsEnabled"></ComboBox>
+                                                    </td>
+                                                </tr>
+
+                                                <tr class="FormFieldRow">
+                                                    <td style="width: 100px;">
+                                                        <LogLabel [ObjectFieldName]="'Numeral'" [DataContext]="DataContext" [TextCode]="'Customs.BankAccountToRefundQuery.O.Numeral'"></LogLabel>
+                                                    </td>
+                                                    <td style="width: 120px;">
+                                                        <LogTextBox [ObjectFieldName]="'Numeral'"
+                                                                    [InputType]="integer"
+                                                                    [DataContext]="DataContext"
+                                                                    [HideColumns]="true"
+                                                                    [AddCommasToNumbers]="false"
+                                                                    [Text]="Numeral"></LogTextBox>
+                                                    </td>
+
+                                                    <td style="width: 10px;"><div></div></td>
+
+                                                    <td style="width: 100px;">
+                                                        <LogLabel [ObjectFieldName]="'BankCode'" [DataContext]="DataContext" [TextCode]="'Customs.BankAccountToRefundQuery.O.BankCode'"></LogLabel>
+                                                    </td>
+                                                    <td style="width: 120px;">
+                                                        <LogTextBox [ObjectFieldName]="'BankCode'"
+                                                                    [DataContext]="DataContext"
+                                                                    [HideColumns]="true"
+                                                                    [AddCommasToNumbers]="false"
+                                                                    [Text]="BankCode"></LogTextBox>
+                                                    </td>
+                                                </tr>
+
+                                                <tr class="FormFieldRow">
+                                                    <td style="width: 100px;">
+                                                        <LogLabel [ObjectFieldName]="'IdentifierType'" [DataContext]="DataContext" [TextCode]="'Customs.BankAccountToRefundQuery.O.IdentifierType'"></LogLabel>
+                                                    </td>
+                                                    <td style="width: 120px;">
+                                                        <LogLov [ObjectFieldName]="'IdentifierType'"
+                                                                [DataContext]="DataContext"
+                                                                [LookUpTableName]="'Customs.DepositCustomerActivity'"
+                                                                [HideColumns]="true"
+                                                                [SelectedValue]="IdentifierType">
+                                                        </LogLov>
+                                                    </td>
+
+                                                    <td style="width: 10px;"><div></div></td>
+
+                                                    <td style="width: 100px;">
+                                                        <LogLabel [ObjectFieldName]="'AccountBranch'" [DataContext]="DataContext" [TextCode]="'Customs.BankAccountToRefundQuery.O.BankBranch'"></LogLabel>
+                                                    </td>
+                                                    <td style="width: 120px;">
+                                                        <LogTextBox *ngIf="CountryCode != 'IL'" 
+                                                                    [ObjectFieldName]="'AccountBranch'"
+                                                                    [DataContext]="DataContext"
+                                                                    [HideColumns]="true"
+                                                                    [AddCommasToNumbers]="false"
+                                                                    [Text]="AccountBranch"></LogTextBox>
+
+                                                        <LogLov *ngIf="CountryCode == 'IL'" 
+                                                                [ObjectFieldName]="'AccountBranch'"
+                                                                [ObjectTableName]="ObjectTableName"
+                                                                [DataContext]="DataContext"
+                                                                [LookUpTableName]="'Customs.CustomsBranch'"
+                                                                [SelectedValue]="AccountBranch"
+                                                                [HideLastColumn]="true"
+                                                                [HideColumns]="true">
+                                                        </LogLov>
+                                                    </td>
+                                                </tr>
+
+                                                <tr class="FormFieldRow">
+                                                    <td style="width: 100px;">
+                                                        <LogLabel [ObjectFieldName]="'IdentifierCode'" [DataContext]="DataContext" [TextCode]="'Customs.BankAccountToRefundQuery.O.IdentifierCode'"></LogLabel>
+                                                    </td>
+                                                    <td style="width: 120px;">
+                                                        <LogTextBox [ObjectFieldName]="'IdentifierCode'"
+                                                                    [DataContext]="DataContext"
+                                                                    [HideColumns]="true"
+                                                                    [Text]="IdentifierCode"></LogTextBox>
+                                                    </td>
+
+                                                    <td style="width: 10px;"><div></div></td>
+
+                                                    <td style="width: 100px;">
+                                                        <LogLabel [ObjectFieldName]="'AccountNumber'" [DataContext]="DataContext" [TextCode]="'Customs.BankAccountToRefundQuery.O.AccountNumber'"></LogLabel>
+                                                    </td>
+                                                    <td style="width: 120px;">
+                                                        <LogTextBox [ObjectFieldName]="'AccountNumber'"
+                                                                    [DataContext]="DataContext"
+                                                                    [HideColumns]="true"
+                                                                    [AddCommasToNumbers]="false"
+                                                                    [Text]="AccountNumber"></LogTextBox>
+                                                    </td>
+                                                </tr>
+
+                                                <tr class="FormFieldRow">
+                                                    <td style="width: 100px;"><div></div></td>
+                                                    <td style="width: 120px;"><div></div></td>
+                                                    <td style="width: 10px;"><div></div></td>
+
+                                                    <td style="width: 100px;">
+                                                        <LogLabel [ObjectFieldName]="'AccountCurrency'" [DataContext]="DataContext" [TextCode]="'Customs.BankAccountToRefundQuery.O.AccountCurrency'"></LogLabel>
+                                                    </td>
+                                                    <td style="width: 120px;">
+                                                        <LogLov *ngIf="CountryCode != 'IL'" [ObjectFieldName]="'AccountCurrency'"
+                                                                [DataContext]="DataContext"
+                                                                [LookUpTableName]="'Customs.CurrencyType'"
+                                                                [SelectedValue]="AccountCurrency"
+                                                                [HideLastColumn]="true"
+                                                                [HideColumns]="true">
+                                                        </LogLov>
+                                                    </td>
+                                                </tr>
+
+                                                <tr><td><div></div></td></tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+                                    <tr> <td><div></div></td> </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+
+    </custom-message-wrapper>
+
+</div>

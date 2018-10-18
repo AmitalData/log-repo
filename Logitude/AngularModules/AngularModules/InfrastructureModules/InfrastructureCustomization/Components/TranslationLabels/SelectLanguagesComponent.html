@@ -1,0 +1,51 @@
+﻿<table>
+
+    <tr style="height:10px;">
+        <td><div></div></td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr class="FormFieldRow">
+                    <td style="width: 65px;">
+                        <label> Language: </label>
+                    </td>
+
+                    <td style="width:150px">
+                        <ComboBox style="width:150px;" [ItemsSource]="LanguagesList" (SelectedItemChanged)="LanguageSelectedChange($event)" [SelectedItem]="LanguageSelectedItem" [Binding]="'Description'"></ComboBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+                <tr><td colspan="3"><div></div></td></tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe }}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe }}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

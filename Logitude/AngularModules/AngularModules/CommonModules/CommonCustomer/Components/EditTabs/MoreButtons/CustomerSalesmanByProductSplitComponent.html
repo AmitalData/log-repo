@@ -1,0 +1,63 @@
+﻿
+<table>
+    <tr>
+        <td>
+            <div class="MediaFill">
+                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource">
+
+                    <log-column [width]="'150'" [header]="'Product Type'">
+                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="true">
+                            {{item.ProductTypeName}}
+                        </log-cell-template>
+                    </log-column>
+
+                    <log-column [width]="'200'" [header]="'Salesman'">
+                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="!IsUnifreightEditable">
+                            <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: left;" class="TextTrimming">
+                                {{item.PartnerName}}
+                            </div>
+
+                            <div *ngIf="logcelltemplate.IsEditMode">
+                                <LogLov [FocusOnMe]="true"
+                                        [ObjectFieldName]="'PartnerId'"
+                                        [DisplayMemberPath]="'EnglishName'"
+                                        [DataContext]="item"
+                                        [HideColumns]="true"
+                                        (SelectedItemChanged)="item.Partner = $event"
+                                        [LookUpTableName]="'User'"
+                                        [ObjectTableName]="'CustomerSalesmanByProduct'"
+                                        >
+                                </LogLov>
+                            </div>
+                        </log-cell-template>
+                    </log-column>
+                </logitude-edit-grid>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CencelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+

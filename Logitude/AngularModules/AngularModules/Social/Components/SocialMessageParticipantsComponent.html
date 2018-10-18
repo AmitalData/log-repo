@@ -1,0 +1,112 @@
+﻿<style>
+    .SectionItem:not(.SelectedSectionItem):hover {
+   
+    width: 100%;
+    /*border: 1px solid #BDBEC0;*/
+    cursor: pointer;
+    position: relative;
+    background: -moz-linear-gradient(50% 17.31% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    background: -webkit-gradient(linear,50% 17.31%,50% 105.85%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
+    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+}
+
+
+    .SectionItem {
+        width: 100%;
+        cursor: pointer;
+        height: 29px;
+        position: relative;
+    }
+
+        
+.SelectedSectionItem {
+    width: 100%;
+    cursor: pointer;
+    background: -moz-linear-gradient(50% 106.14% 90deg,rgba(133, 203, 237, 1) 0%,rgba(150, 211, 240, 1) 22.59%,rgba(196, 231, 248, 1) 67.37%,rgba(232, 247, 255, 1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 100%);
+    background: linear-gradient(0deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 100%);
+    position: relative;
+}
+
+</style>
+
+<table>
+
+    <tr style="height:20px">
+        <td>
+            <button style="float:right;width:50px" class="Button" (click)="AddConversationHeaderParticipantPMButtonClicked()">Add</button>
+        </td>
+       
+    </tr>
+
+
+
+    <tr style="height:100%;vertical-align:top">
+
+
+        <td>
+            <div class="ScrollViewer">
+                <table class="ScrollContent" style="vertical-align:top;">
+
+                  
+                    <tr [class.SelectedSectionItem]="item === ConversationHeaderParticipantPMSelected" class="SectionItem" (click)="ConversationHeaderParticipantPMSelected=item" style="text-align:left;vertical-align:top;" *ngFor="let item of ConversationHeaderParticipantPMLists">
+
+                        <td style="width:10px; min-width: 10px; max-width: 10px;"><div></div></td>
+
+
+                        <td class="GridViewCell" style="width: 100%;border-bottom:1px solid #E4E3E1; min-width:  100%; max-width:  100%; position: relative;">
+                            {{item.ParticipantName}}
+
+                        </td>
+
+
+
+                    </tr>
+
+
+
+                    <tr>
+                        <td colspan="8">
+                            <div></div>
+                        </td>
+                    </tr>
+
+
+                </table>
+            </div>
+        </td>
+
+
+
+    </tr>
+
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <div>
+                            <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
+                        </div>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="SaveButtonClicked()">Save</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

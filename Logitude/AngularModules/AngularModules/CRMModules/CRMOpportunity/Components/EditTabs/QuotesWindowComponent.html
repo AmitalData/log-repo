@@ -1,0 +1,148 @@
+﻿<table>
+    <tr style="height:460px">
+        <td>
+            <table>
+                <tr style="height:20px;">
+                    <td colspan="3">
+                        <table>
+                            <tr>
+                                <td></td>
+                                <td style="padding-right:10px;width:200px">
+                                    <SearchBox (TextChanged)="SearchText = $event" [Watermark]="SearchTextLabel"></SearchBox>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                </tr>
+                <tr style="height:5px">
+                    <td colspan="3"></td>
+                </tr>
+                <tr style="overflow-y:hidden">
+                    <td style="width:10px"></td>
+                    <td>
+                        <div class="SimpleGridView">
+                            <div class="SimpleGridViewHeader">
+                                <table>
+                                    <tr>
+                                        <td style="width: 50px; min-width: 50px;max-width:50px"></td>
+                                        <td style="width: 150px; min-width: 150px;max-width:150px">Quote Number</td>
+                                        <td style="width: 100px; min-width: 100px;max-width:100px">Routing</td>
+                                        <td style="width: 150px; min-width: 150px;max-width:150px">Open Date</td>
+                                        <td style="width: 150px; min-width: 150px;max-width:150px">Expiration Date</td>
+                                        <td style="width: 80px; min-width: 80px;max-width:80px">Stage</td>
+                                        <td class="LastChild">Type</td>
+
+
+
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div class="SimpleGridViewBody" style="overflow-y:auto">
+                                <table>
+                                    <tr class="SimpleGridViewRow RowHover RowSelected" *ngFor="let item of ObsList" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem">
+                                        <td class="GridViewCell" style="width:50px; min-width: 50px;max-width:50px">
+                                            <LogCheckBox [ObjectFieldName]="'IsChecked'" [NoObjectField]="true" [DataContext]="item" [Checked]="item.IsChecked"></LogCheckBox>
+
+                                        </td>
+
+                                        <td class="GridViewCell" style="width:150px; min-width: 150px;max-width:150px">
+                                            <div>{{item.QuoteNumber}}</div>
+
+                                        </td>
+
+                                        <td class="GridViewCell" style="width:100px; min-width: 100px;max-width:100px">
+                                            <table>
+                                                <tr>
+                                                    <td style="width:20px">
+                                                        <div [attr.title]="item.FromPortCountry"><img style="height:16px;width:16px" src="{{item.FromCountryCode | CountryFlagPipe}}" /> </div>
+
+                                                    </td>
+                                                    <td style="width:20px">
+                                                        >
+                                                    </td>
+                                                    <td>
+                                                        <div [attr.title]="item.ToPortCountry"><img style="height:16px;width:16px" src="{{item.ToCountryCode | CountryFlagPipe}}" /> </div>
+
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+
+                                        <td class="GridViewCell" style="width:150px; min-width: 150px;max-width:150px">
+                                            <div>{{item.OpenDate |  DateTimePipe:'SD'}}</div>
+                                        </td>
+
+                                        <td class="GridViewCell" style="width:150px; min-width: 150px;max-width:150px">
+                                            <div>{{item.ExpirationDate |  DateTimePipe:'SD'}}</div>
+                                        </td>
+
+                                        <td class="GridViewCell" style="width:80px; min-width: 80px;max-width:80px">
+                                            <div [ngStyle]="{color: item.StageName | StringToColorPipe}">{{item.StageName}}</div>
+                                        </td>
+
+                                        <td class="GridViewCell">
+                                            <div>{{item.QuoteTypeName}}</div>
+                                        </td>
+
+                                    </tr>
+
+
+
+                                    <tr>
+                                        <td colspan="7">
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                <table *ngIf="NoConnectedQuotes" style="height:100%;width:100%">
+                    <tr>
+                        <td colspan="7" style="vertical-align:middle;text-align:center;align-items:center;align-content:center;font-size:medium">
+                        <label style="color:#7F7F76"> The System doesn't contain any matches Quotes</label>
+                            </td>
+                    </tr>
+                </table>
+                </div>
+                </div>
+</td>
+                    <td style="width:10px"></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr>
+<td>
+
+</td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+
+
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!OKButtonEnabled">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+
+</table>

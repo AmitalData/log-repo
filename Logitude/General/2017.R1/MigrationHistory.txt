@@ -1,0 +1,33 @@
+﻿ALTER TABLE [dbo].[DocumentTypeTemplates] ADD [TemplateHeaderHeight] [int] NOT NULL DEFAULT 0
+ALTER TABLE [dbo].[DocumentTypeTemplates] ADD [TemplateFooterHeight] [int] NOT NULL DEFAULT 0
+ALTER TABLE [dbo].[DocumentTypeTemplates] ADD [TemplateTechnologyCode] [varchar](2)
+
+ALTER TABLE [dbo].[AccountingSettings] ADD [IsSingleTaxPerInvoice] [bit] NOT NULL DEFAULT 0
+
+update AccountingSystems set IsSingleTaxPerInvoice = 0 where Code in ('AI', 'GI')
+update AccountingSettings set IsSingleTaxPerInvoice = 1 where AccountingSystemCode in ('AI', 'GI')
+
+
+
+
+CREATE TABLE [dbo].[CardExternalAccountsByProducts] (
+    [Id] [varchar](15) NOT NULL,
+    [Tenant] [int] NOT NULL,
+    [GLAccount] [varchar](25),
+    [CostCenter] [varchar](25),
+    [UpdateDate] [datetime],
+    [CardId] [varchar](15) NOT NULL,
+    [ProductTypeCode] [varchar](2) NOT NULL,
+    [UpdatedByUserId] [varchar](15) NOT NULL,
+    CONSTRAINT [PK_dbo.CardExternalAccountsByProducts] PRIMARY KEY ([Id])
+)
+CREATE INDEX [IX_CardId] ON [dbo].[CardExternalAccountsByProducts]([CardId])
+CREATE INDEX [IX_ProductTypeCode] ON [dbo].[CardExternalAccountsByProducts]([ProductTypeCode])
+CREATE INDEX [IX_UpdatedByUserId] ON [dbo].[CardExternalAccountsByProducts]([UpdatedByUserId])
+ALTER TABLE [dbo].[Cards] ADD [ExternalAccountingBusinessArea] [varchar](25)
+ALTER TABLE [dbo].[CardExternalAccountsByProducts] ADD CONSTRAINT [FK_dbo.CardExternalAccountsByProducts_dbo.Cards_CardId] FOREIGN KEY ([CardId]) REFERENCES [dbo].[Cards] ([Id])
+ALTER TABLE [dbo].[CardExternalAccountsByProducts] ADD CONSTRAINT [FK_dbo.CardExternalAccountsByProducts_dbo.ProductTypes_ProductTypeCode] FOREIGN KEY ([ProductTypeCode]) REFERENCES [dbo].[ProductTypes] ([Code])
+ALTER TABLE [dbo].[CardExternalAccountsByProducts] ADD CONSTRAINT [FK_dbo.CardExternalAccountsByProducts_dbo.Users_UpdatedByUserId] FOREIGN KEY ([UpdatedByUserId]) REFERENCES [dbo].[Users] ([Id])
+
+ALTER TABLE [dbo].[ChargesGroups] ALTER COLUMN [LocalName] [nvarchar](40) NULL
+

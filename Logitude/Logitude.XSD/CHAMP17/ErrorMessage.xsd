@@ -1,0 +1,18 @@
+<xs:schema
+    attributeFormDefault="unqualified"
+	elementFormDefault="qualified"
+    xmlns:GCCSCargoImp="http://www.champ.aero/GCCS/CargoXML"
+	targetNamespace="http://www.champ.aero/GCCS/CargoXML"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    version="2.1"
+>
+	<xs:include schemaLocation="common.xsd"/>
+
+    <xs:complexType name="ErrorMessage">
+        <xs:sequence>
+            <xs:element name="StandardMessageIdentification" type="GCCSCargoImp:StandardMessageIdentification"/>
+            <xs:element name="ReasonForRejection" maxOccurs="2" type="GCCSCargoImp:ReasonForRejectionError"/>
+            <xs:element name="ReceivedMessageDetail" type="GCCSCargoImp:BloboOfData"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

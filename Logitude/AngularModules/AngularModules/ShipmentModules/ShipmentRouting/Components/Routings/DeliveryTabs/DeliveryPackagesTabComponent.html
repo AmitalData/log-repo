@@ -1,0 +1,157 @@
+﻿
+<div class="TabHolder">
+    <table>
+        <tr class="TabTitleRow">
+            <td>
+                <table>
+                    <tr>
+                        <td>{{'ShipmentPickUpDelivery.TH.Packages' | TextCodeTranslationPipe}}</td>
+
+                        <td style="width:20px">
+                            <span style="display:inline;width:18px;">
+                                <IconButton [IsEnabled]="IsEditingEnabled" [Name]="'Add'" (click)="AddButtonClicked()"></IconButton>
+                            </span>
+                        </td>
+
+
+                        <td style="width:5px;">
+                            <div></div>
+                        </td>
+
+                        <td *ngIf="IsShowCopyFromReleasesPackages" style="width: 1px">
+                            <button class="Button" (click)="CopyFromReleasesPackages()">Copy from Releases Packages</button>
+                        </td>
+
+                        <td *ngIf="IsShowCopyFromReleasesPackages" style="width:5px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 1px">
+                            <button [disabled]="!IsEditingEnabled" class="Button" (click)="CopyfromShipmentPackagesButtonClicked()">Copy from Shipment Packages</button>
+                        </td>
+
+                        <td style="width:5px;" *ngIf="IsFCLEntity && IsContainersFUVisible && DirectionId == 'I'">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 1px" *ngIf="IsFCLEntity && IsContainersFUVisible && DirectionId == 'I'">
+                            <button class="Button" (click)="ConnectPackagesButtonClicked()">Connect Packages</button>
+                        </td>
+
+                        <td style="width:5px;">
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr style="height: 5px;">
+            <td>
+                <div></div>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <div class="MediaFill">
+                    <div class="SimpleGridView">
+                        <div class="SimpleGridViewHeader">
+                            <table>
+                                <tr>
+                                    <td style="width: 25px; min-width: 25px; max-width: 25px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td [style.width.px]="PackageTypeColumnWidth" [style.min-width.px]="PackageTypeColumnWidth" [style.max-width.px]="PackageTypeColumnWidth">{{'ShipmentPickUpDeliveryPackage.O.PackageType' | TextCodeTranslationPipe}}</td>
+                                    <td style="width: 150px; min-width: 150px; max-width: 150px;" *ngIf="IsLCLEntity">{{DimensionsLabel}}</td>
+                                    <td style="width: 110px; min-width: 110px; max-width: 110px;" *ngIf="TransportModeId != 'A'">{{'ShipmentPickUpDeliveryPackage.O.ContainerNumber' | TextCodeTranslationPipe}}</td>
+                                    <td style="width: 60px; min-width: 60px; max-width: 60px;">{{'ShipmentPickUpDeliveryPackage.O.Quantity' | TextCodeTranslationPipe}}</td>
+                                    <td style="width: 90px; min-width: 90px; max-width: 90px;">{{VolumeLabel}}</td>
+                                    <td style="width: 110px; min-width: 110px; max-width: 110px;">{{GrossWeightLabel}}</td>
+                                    <td>{{'ShipmentPickUpDeliveryPackage.O.DescriptionOfGoods' | TextCodeTranslationPipe}}</td>
+                                    <td style="width: 25px; min-width: 25px; max-width: 25px;">
+                                        <div></div>
+                                    </td>
+                                    <td class="LastChild" style="width: 25px; min-width: 25px; max-width: 25px;">
+                                        <div></div>
+                                    </td>
+
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="SimpleGridViewBody">
+                            <table>
+                                <tr class="SimpleGridViewRow RowHover RowSelected" *ngFor="let item of ItemsSource" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem">
+
+                                    <!-- Icons -->
+                                    <td class="GridViewCell" style="width: 25px; min-width: 25px; max-width: 25px; position: relative;">
+                                        <img *ngIf="!item.IsContainer" src="./Images/CellIcons/Package.png" class="CenterCenter" />
+                                        <img *ngIf="item.IsContainer" src="./Images/CellIcons/Container.png" class="CenterCenter" />
+                                    </td>
+
+                                    <!-- PackageType -->
+                                    <td class="GridViewCell" [style.width.px]="PackageTypeColumnWidth" [style.min-width.px]="PackageTypeColumnWidth" [style.max-width.px]="PackageTypeColumnWidth">
+                                        {{item.PackageTypeName}}
+                                    </td>
+
+                                    <!-- Dimensions -->
+                                    <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px; text-align: right" *ngIf="IsLCLEntity">
+                                        {{item.Dimensions}}
+                                    </td>
+
+                                    <!-- ContainerNumber -->
+                                    <td class="GridViewCell" style="width: 110px; min-width: 110px; max-width: 110px;" *ngIf="TransportModeId != 'A'">
+                                        {{item.ContainerNumber}}
+                                    </td>
+
+                                    <!-- Quantity -->
+                                    <td class="GridViewCell" style="width: 60px; min-width: 60px; max-width: 60px; text-align: right">
+                                        {{item.Quantity | NumbersPipe:'N0'}}
+                                    </td>
+
+                                    <!-- Volume -->
+                                    <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px; text-align: right">
+                                        {{item.Volume | NumbersPipe:'N3'}}
+                                    </td>
+
+                                    <!-- GrossWeight -->
+                                    <td class="GridViewCell" style="width: 110px; min-width: 110px; max-width: 110px; text-align: right">
+                                        {{item.Weight | NumbersPipe:'N3'}}
+                                    </td>
+
+                                    <!-- Description -->
+                                    <td class="GridViewCell">
+                                        <div class="MediaFill TextTrimming" style="padding-left: 4px; padding-left: 2px; line-height: 26px;">
+                                            {{item.Description}}
+                                        </div>
+                                    </td>
+
+                                    <!-- Tools -->
+                                    <td class="CellTools" style="width: 25px; min-width: 25px; max-width: 25px;">
+                                        <span class="CellSeparator"></span>
+                                        <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditPackageClicked(item)"></IconButton>
+                                    </td>
+
+
+                                    <td class="CellTools" style="width: 25px; min-width: 25px; max-width: 25px;">
+                                        <span class="CellSeparator"></span>
+                                        <IconButton [disabled]="!IsEditingEnabled" [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteButtonClicked(item)"></IconButton>
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+                                    <td colspan="9">
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>

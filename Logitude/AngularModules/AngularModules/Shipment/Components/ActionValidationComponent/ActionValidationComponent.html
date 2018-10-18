@@ -1,0 +1,53 @@
+﻿
+<style type="text/css">
+    .RadioButton label {
+        font-size: 12px;
+        color: #282E30;
+    }
+
+    .RecipientValue {
+        width: 55px;
+        font-size: 11px;
+        color: #6E7172;
+    }
+</style>
+
+<table>
+    <tr *ngIf="ValidationErrorsList && ValidationErrorsList.length > 0" style="height:1px;">
+        <td  style="vertical-align: top">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr *ngIf="ValidationWarningsList && ValidationWarningsList.length > 0" style="height:1px;">
+        <td style="vertical-align: top">
+            <WarningSummary [ItemsSource]="ValidationWarningsList"></WarningSummary>
+        </td>
+    </tr>
+
+ 
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CloseClicked()">{{'Shipment.B.Close' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;" *ngIf="IsConfirmButtonVisible">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 75px;" *ngIf="IsConfirmButtonVisible">
+                        <button class="RedButton" (click)="ConfirmClicked()">Confirm</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

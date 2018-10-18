@@ -1,0 +1,235 @@
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Def.EntityPMs; 
+using Logitude.Accounting.Data;
+
+namespace Logitude.Accounting.BL.EntityDataMappings
+{
+   
+   public partial class GLAccountWithholdingTaxDataMapping: IMapping<GLAccountWithholdingTaxPM, GLAccountWithholdingTax>,IMappingEncodeBase64NVARCHARFields<GLAccountWithholdingTaxPM>
+   {
+          public enum POCOPropertyNames
+          { 
+		     None,  
+	         Id, 
+	         Tenant, 
+	         CreateDate, 
+	         CreatedByUserId, 
+	         GLAccountId, 
+	         FromDate, 
+	         ToDate, 
+	         Percentage, 
+	         Inactive, 
+	         LineNumber,
+	      }
+
+
+	      public enum PMPropertyNames
+          { 
+		     None,  
+	         Id, 
+	         Tenant, 
+	         CreateDate, 
+	         CreatedByUserId, 
+	         GLAccountId, 
+	         FromDate, 
+	         ToDate, 
+	         Percentage, 
+	         Inactive, 
+	         LineNumber, 
+	         Changed,
+	      }
+
+		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
+        List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
+    
+	    public void PMToPOCO(GLAccountWithholdingTaxPM entityPM, GLAccountWithholdingTax entityPOCO)
+        {
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateDate))
+            {
+				entityPOCO.CreateDate = entityPM.CreateDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreatedByUserId))
+            {
+				entityPOCO.CreatedByUserId = entityPM.CreatedByUserId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GLAccountId))
+            {
+				entityPOCO.GLAccountId = entityPM.GLAccountId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromDate))
+            {
+				entityPOCO.FromDate = entityPM.FromDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToDate))
+            {
+				entityPOCO.ToDate = entityPM.ToDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Percentage))
+            {
+				entityPOCO.Percentage = entityPM.Percentage;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Inactive))
+            {
+				entityPOCO.Inactive = entityPM.Inactive;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LineNumber))
+            {
+				entityPOCO.LineNumber = entityPM.LineNumber;
+			}
+			}
+
+		public void POCOToPM(GLAccountWithholdingTaxPM entityPM, GLAccountWithholdingTax entityPOCO)
+        {
+			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
+            {
+					entityPM.Id = entityPOCO.Id;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
+            {
+					entityPM.Tenant = entityPOCO.Tenant;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CreateDate))
+            {
+					entityPM.CreateDate = entityPOCO.CreateDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CreatedByUserId))
+            {
+					entityPM.CreatedByUserId = entityPOCO.CreatedByUserId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.GLAccountId))
+            {
+					entityPM.GLAccountId = entityPOCO.GLAccountId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FromDate))
+            {
+					entityPM.FromDate = entityPOCO.FromDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ToDate))
+            {
+					entityPM.ToDate = entityPOCO.ToDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Percentage))
+            {
+					entityPM.Percentage = entityPOCO.Percentage;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Inactive))
+            {
+					entityPM.Inactive = entityPOCO.Inactive;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LineNumber))
+            {
+					entityPM.LineNumber = entityPOCO.LineNumber;
+            }
+
+		}
+
+		public void PMToOldPM(GLAccountWithholdingTaxPM entityPM, GLAccountWithholdingTaxPM oldEntityPM)
+        {
+		     oldEntityPM.ChangedProperties.Clear();
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+                oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateDate))
+            {
+                oldEntityPM.CreateDate = entityPM.CreateDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreatedByUserId))
+            {
+                oldEntityPM.CreatedByUserId = entityPM.CreatedByUserId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GLAccountId))
+            {
+                oldEntityPM.GLAccountId = entityPM.GLAccountId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromDate))
+            {
+                oldEntityPM.FromDate = entityPM.FromDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToDate))
+            {
+                oldEntityPM.ToDate = entityPM.ToDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Percentage))
+            {
+                oldEntityPM.Percentage = entityPM.Percentage;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Inactive))
+            {
+                oldEntityPM.Inactive = entityPM.Inactive;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LineNumber))
+            {
+                oldEntityPM.LineNumber = entityPM.LineNumber;
+            }
+			
+		}
+
+	    public void EncodeBase64NVARCHARFields(GLAccountWithholdingTaxPM entityPM)
+        {
+            if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
+            {
+                return;
+
+            }
+            entityPM.EncodeBase64NVARCHARFieldsBy=null;
+		}
+
+
+	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
+        {
+            CustomMappedPOCOProperties.Add(pocoPropertyName);
+        }
+
+        public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
+        {
+            CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+			  
+   }
+}
+	 

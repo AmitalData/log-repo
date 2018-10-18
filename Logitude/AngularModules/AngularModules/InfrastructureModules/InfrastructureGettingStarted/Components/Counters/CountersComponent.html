@@ -1,0 +1,76 @@
+﻿
+<style type="text/css">
+    .CounterBoxItem:not(.CounterBoxItemDisabled):hover {
+        background: #EAEEF5;
+    }
+
+    .CounterBoxItem {
+        float: left;
+        display: block;
+        width: 220px;
+        height: 32px;
+        min-height: 32px;
+        background: white;
+        border: 1px solid #DADADA;
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        position: relative;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+</style>
+
+<table>
+    <tr style="height: 1px;" *ngIf="IsDemoTenant">
+        <td>
+            <div class="OrangeInfo" style="margin: 5px;">
+                This is a demo tenant, therefore you can't edit the system settings
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div class="MediaFill">
+                <ScrollViewer>
+                    <ul [style.opacity]="IsDemoTenant ? 0.5 : 1">
+                        <li class="CounterBoxItem" [class.CounterBoxItemDisabled]="IsDemoTenant === true" *ngFor="let item of Counters">
+                            <div class="MarginAbsolute5">
+                                <table>
+                                    <tr>
+                                        <td style="font-size: 12px; color: #595B5B;">
+                                            {{item.Name}}
+                                        </td>
+
+                                        <td style="width: 1px;">
+                                            <Hyperlink [FontSize]="14" [Color]="'#1B90CB'" [IsEnabled]="!IsDemoTenant" (click)="ItemClicked(item)">Set</Hyperlink>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </li>
+                    </ul>
+                </ScrollViewer>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="Close()">Close</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

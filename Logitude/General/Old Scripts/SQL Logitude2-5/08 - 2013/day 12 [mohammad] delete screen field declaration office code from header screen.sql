@@ -1,0 +1,3 @@
+delete from ScreenFields where ObjectFieldId=(select id from ObjectFields where FieldName='DeclarationOfficeCode') and ScreenId=(select id from Screens where Code='Customs.Declaration.HeaderScreen')
+delete from ScreenFields where ObjectFieldId=(select id from ObjectFields where FieldName='DeclarationOfficeName') and ScreenId=(select id from Screens where Code='Customs.Declaration.GeneralTabScreen')
+select * from ScreenFields where ScreenId= (select id from Screens where Code='Customs.Declaration.HeaderScreen')

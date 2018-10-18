@@ -1,0 +1,332 @@
+﻿<!-- PaymentOrderReplyComponent view  -->
+<style>
+    .TitleStyle {
+        width: 100px;
+        font-size: 12px; 
+        color: #1B90CB;
+    }
+
+    .LabelStyle {
+        height: 22px;
+        width: 160px;
+        position: absolute;
+        right: 0;
+        top: 10px;
+        bottom: 5px;
+        margin: auto;
+        text-align:right; 
+        font-size: 15px; 
+        color: #1B90CB;
+    }
+
+</style>
+<div>
+    <custom-message-wrapper [CustomSendOptionsButtonCanForcePersonalSign]="false"
+                            [IsShowCustomResponseContent] ="false"
+                            [IsShowCustomToolBar]="false">
+
+        <!-- Request -->
+        <div class="class-request-content" *ngIf="RequestParams">
+            <table style="width: 680px;height: 420px;padding-top: 10px;">
+                <!-- Request Fields -->
+                <tr style="width: 100%;">
+                    <td style="width: 100%;">
+                        <table style="width: 100%; ">
+
+                            <!-- PaymentHeader -->
+                            <tr class="FormFieldRow" style="height: 22px">
+                                <td colspan="2" style="width: 160px;">
+                                    <div class="LabelStyle" style="font-size: 17px">{{PaymentNumberHeader}}</div>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+                            <tr class="FormFieldRow" style="height: 22px">
+                                <td colspan="2" style="width: 160px;">
+                                    <div class="LabelStyle">{{'הודעות מערכת'}}</div>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+                            <tr class="FormFieldRow" style="height: 22px">
+                                <td colspan="2" style="width: 160px;">
+                                    <div class="TextTrimming RightCenter">
+                                        <span style="color: #1B90CB;">{{'נתונים שנרשמו בתכנית הניתוח:'}}</span>
+                                    </div>
+                                </td>
+                                <td colspan="2" style="width: 160px;">
+                                    <div class="TextTrimming RightCenter">
+                                        <span>{{UserMessage}}</span>
+                                    </div>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+                        
+                            <!--Manifest + Cargo Details-->
+                            <tr class="FormFieldRow" style="height: 22px">
+                                <td colspan="2" style="width: 160px;">
+                                    <div class="LabelStyle">{{'נתונים כלליים'}}</div>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+                            <tr class="FormFieldRow" style="height: 22px">
+                                <td style="width: 65px;">
+                                    <div class="TextTrimming RightCenter">
+                                        <span style="color: #1B90CB;">{{'סכום כולל:'}}</span>
+                                    </div>
+                                </td>
+                                <td style="width: 100px;">
+                                    <div class="TextTrimming RightCenter">
+                                        <span>{{PaymentOrderTotalSumToPay | NumbersPipe:'n'}}</span>
+                                    </div>
+                                </td>
+
+                                <td style="width: 65px;">
+                                    <div class="TextTrimming RightCenter">
+                                        <span style="color: #1B90CB;">{{'סטטוס:'}}</span>
+                                    </div>
+                                </td>
+                                <td style="width: 110px;">
+                                    <div class="TextTrimming RightCenter">
+                                        <span>{{PaymentStatusName}}</span>
+                                    </div>
+                                </td>
+
+                                <td style="width: 65px;">
+                                    <div class="TextTrimming RightCenter">
+                                        <span style="color: #1B90CB;">{{'סוג הוראה:'}}</span>
+                                    </div>
+                                </td>
+                                <td style="width: 100px;">
+                                    <div class="TextTrimming RightCenter">
+                                        <span>{{PaymentOrderTypeName}}</span>
+                                    </div>
+                                </td>
+
+                                <td style="width: 110px;">
+                                    <div class="TextTrimming RightCenter">
+                                        <span style="color: #1B90CB;">{{'תאריך אחרון לתשלום:'}}</span>
+                                    </div>
+                                </td>
+                                <td style="width: 90px;">
+                                    <div class="TextTrimming RightCenter">
+                                        <span>{{PaymentOrderPayDate | DateTimePipe:'D'}}</span>
+                                    </div>
+                                </td>
+
+                                <td><div></div></td>
+                            </tr>
+                            <tr class="FormFieldRow" style="height: 22px">
+                                <td style="width: 65px;">
+                                    <div class="TextTrimming RightCenter">
+                                        <span style="color: #1B90CB;">{{'מוטב משלם:'}}</span>
+                                    </div>
+                                </td>
+                                <td style="width: 100px;">
+                                    <div class="TextTrimming RightCenter">
+                                        <span>{{PaymentDetailDataCustomerActivityTypeExternalID}}</span>
+                                    </div>
+                                </td>
+
+                                <td style="width: 65px;">
+                                    <div class="TextTrimming RightCenter">
+                                        <span style="color: #1B90CB;">{{'תהליך יוצר:'}}</span>
+                                    </div>
+                                </td>
+                                <td style="width: 110px;">
+                                    <div class="TextTrimming RightCenter">
+                                        <span>{{PaymentProcessName}}</span>
+                                    </div>
+                                </td>
+
+                                <td style="width: 65px;">
+                                    <div class="TextTrimming RightCenter">
+                                        <span style="color: #1B90CB;">{{'תחנת מכס:'}}</span>
+                                    </div>
+                                </td>
+                                <td style="width: 100px;">
+                                    <div class="TextTrimming RightCenter">
+                                        <span>{{CustomsHouseName}}</span>
+                                    </div>
+                                </td>
+
+                                <td colspan="2" style="width: 200px;">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 50px;">
+                                                <div class="TextTrimming RightCenter">
+                                                    <span style="color: #1B90CB;">{{'הערות:'}}</span>
+                                                </div>
+                                            </td>
+                                            <td style="width: 150px;">
+                                                <div class="TextTrimming RightCenter">
+                                                    <span>{{PaymentOrderReason}}</span>
+                                                </div>
+                                            </td>
+                                            <td><div></div></td>
+                                        </tr>
+                                    </table>
+                                </td>
+
+                                <td><div></div></td>
+                            </tr>
+
+                            <!--ConnectedEntity-->
+                            <tr class="FormFieldRow" style="height: 22px">
+                                <td colspan="2" style="width: 160px;">
+                                    <div class="LabelStyle">{{'ישויות קשורות'}}</div>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+                            <tr class="FormFieldRow" style="height: 22px">
+                                <td style="width: 65px;">
+                                    <div class="TextTrimming RightCenter">
+                                        <span style="font-size: 12px; color: #1B90CB;">{{'סוג ישות:'}}</span>
+                                    </div>
+                                </td>
+                                <td style="width: 100px;">
+                                    <div class="TextTrimming RightCenter">
+                                        <span>{{EntityTypeName}}</span>
+                                    </div>
+                                </td>
+
+                                <td style="width: 65px;">
+                                    <div class="TextTrimming RightCenter">
+                                        <span style="color: #1B90CB;">{{'מזהה 1:'}}</span>
+                                    </div>
+                                </td>
+                                <td style="width: 110px;">
+                                    <div class="TextTrimming RightCenter">
+                                        <span>{{EntityIdKey1}}</span>
+                                    </div>
+                                </td>
+
+                                <td style="width: 65px;">
+                                    <div class="TextTrimming RightCenter">
+                                        <span style="color: #1B90CB;">{{'מזהה 2:'}}</span>
+                                    </div>
+                                </td>
+                                <td style="width: 100px;">
+                                    <div class="TextTrimming RightCenter">
+                                        <span>{{EntityIdKey2}}</span>
+                                    </div>
+                                </td>
+
+                                <td colspan="2" style="width: 200px;">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 60px;">
+                                                <div class="TextTrimming RightCenter">
+                                                    <span style="color: #1B90CB;">{{'מזהה 3:'}}</span>
+                                                </div>
+                                            </td>
+                                            <td style="width: 140px;">
+                                                <div class="TextTrimming RightCenter">
+                                                    <span>{{EntityIdKey3}}</span>
+                                                </div>
+                                            </td>
+                                            <td><div></div></td>
+                                        </tr>
+                                    </table>
+                                </td>
+
+                                <td><div></div></td>
+                            </tr>
+
+                            <!-- TaxParagraph -->
+                            <tr class="FormFieldRow" style="height: 22px">
+                                <td colspan="2" style="width: 160px;">
+                                    <div class="LabelStyle">{{'סעיפי חיוב'}}</div>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+                            <tr class="FormFieldRow" style="height: 70px; width: 100%; top: 10px;">
+                                <td colspan="4">
+                                    <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
+                                        <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="TaxParagraphList">
+
+                                            <!-- ParagraphTypeName -->
+                                            <log-column [header]="'סעיף מס'"
+                                                        [binding]="'ParagraphTypeName'" [width]="'100'" [Alignment]="'right'">
+                                                <log-cell-template template="let item" #logcelltemplate>
+                                                    <div class="TextTrimming" style="text-align:right">
+                                                        <span>{{item.ParagraphTypeName}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </log-column>
+
+                                            <!-- Amount -->
+                                            <log-column [header]="'סכום'"
+                                                        [binding]="'Amount'" [width]="'90'" [Alignment]="'right'">
+                                                <log-cell-template template="let item" #logcelltemplate>
+                                                    <div class="TextTrimming" style="text-align:right">
+                                                        <span>{{item.Amount | NumbersPipe:'N2'}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </log-column>
+
+                                        </logitude-edit-grid>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- PaymentMethods -->
+                            <tr class="FormFieldRow" style="height: 22px">
+                                <td colspan="2" style="width: 160px;">
+                                    <div class="LabelStyle">{{'אמצעי תשלום'}}</div>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+                            <tr class="FormFieldRow" style="height: 50px; width: 100%; top: 10px;">
+                                <td colspan="4">
+                                    <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
+                                        <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="PaymentMethodsList">
+
+                                            <!-- PaymentMethodTypeName -->
+                                            <log-column [header]="'סוג אמצעי'"
+                                                        [binding]="'PaymentMethodTypeName'" [width]="'100'" [Alignment]="'right'">
+                                                <log-cell-template template="let item" #logcelltemplate>
+                                                    <div class="TextTrimming" style="text-align:right">
+                                                        <span>{{item.PaymentMethodTypeName}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </log-column>
+
+                                            <!-- Amount -->
+                                            <log-column [header]="'סכום'"
+                                                        [binding]="'Amount'" [width]="'100'" [Alignment]="'right'">
+                                                <log-cell-template template="let item" #logcelltemplate>
+                                                    <div class="TextTrimming" style="text-align:right">
+                                                        <span>{{item.Amount | NumbersPipe:'N2'}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </log-column>
+
+                                            <!-- PaymentMethodStatus -->
+                                            <log-column [header]="'סטטוס אמצעי'"
+                                                        [binding]="'PaymentMethodStatus'" [width]="'100'" [Alignment]="'right'">
+                                                <log-cell-template template="let item" #logcelltemplate>
+                                                    <div class="TextTrimming" style="text-align:right">
+                                                        <span>{{item.PaymentMethodStatusName}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </log-column>
+
+                                        </logitude-edit-grid>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        </td>
+                    </tr>
+
+                <tr> <td><div></div></td> </tr>
+            </table>
+        </div>
+
+        <div class="class-response-ToolBar" style="height:22px;">
+            <div style="width: 57px;margin-left:10px;float: left;">
+                <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+            </div>
+        </div>
+
+    </custom-message-wrapper>
+</div>

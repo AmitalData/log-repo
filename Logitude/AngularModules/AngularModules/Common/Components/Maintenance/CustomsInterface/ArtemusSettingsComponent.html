@@ -1,0 +1,118 @@
+﻿<style type="text/css">    
+    .BoxText {
+        width: 100%;
+        height: 22px;
+        white-space: normal;
+        word-wrap: break-word;
+        overflow-x: hidden;
+        font-size: 11px;
+        background-color:white;
+    }
+</style>
+
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table class="FixedTable">
+                <tr>
+                    <td>
+                        <table>
+
+                            <tr class="FormFieldRow">
+                                <td style="width: 90px;">
+                                    <LogLabel [ObjectFieldName]="'ArtemusOutSettingsId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td style="width: 200px;">
+                                    <div class="BoxText" style="border:1px solid #ccc9c9; border-radius:3px;">
+                                        <div style="padding-left:1px; display:inline-block; vertical-align:middle;">
+                                            <span style="padding-left:5px;vertical-align:middle;">{{ArtemusOutSettingsHost}}</span>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td style="width: 23px; padding-left: 5px;">
+                                    <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="Edit('OUT')" [disabled]="ArtemusOutSettingsId == null"></IconButton>
+                                </td>
+
+                                <td style="width: 20px; padding-left: 2px;">
+                                    <IconButton [Name]="'Add'" [IsSmall]="true" (click)="Add('OUT')"></IconButton>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td style="width: 90px;">
+                                    <LogLabel [ObjectFieldName]="'ArtemusInSettingsId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td style="width: 200px;">
+                                    <div class="BoxText" style="border:1px solid #ccc9c9; border-radius:3px;">
+                                        <div style="padding-left:1px; display:inline-block; vertical-align:middle;">
+                                            <span style="padding-left:5px;vertical-align:middle;">{{ArtemusInSettingsHost}}</span>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td style="width: 23px; padding-left: 5px;">
+                                    <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="Edit('IN')" [disabled]="ArtemusInSettingsId == null"></IconButton>
+                                </td>
+
+                                <td style="width: 20px; padding-left: 2px;">
+                                    <IconButton [Name]="'Add'" [IsSmall]="true" (click)="Add('IN')"></IconButton>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="5">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

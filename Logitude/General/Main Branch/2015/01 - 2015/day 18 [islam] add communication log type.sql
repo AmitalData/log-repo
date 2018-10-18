@@ -1,0 +1,2 @@
+insert into CommunicationLogTypes(code,name,SearchFields) values ('Q','Queue Service','Q,Queue Service')
+insert into CommunicationStatusTypes(code,name,SearchFields) values ('P','InProgress','P,InProgress')

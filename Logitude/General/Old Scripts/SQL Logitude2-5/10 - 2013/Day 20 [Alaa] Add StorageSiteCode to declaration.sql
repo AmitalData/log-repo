@@ -1,0 +1,1 @@
+alter table [customs].[Declarations] add StorageSiteCode varchar(20)

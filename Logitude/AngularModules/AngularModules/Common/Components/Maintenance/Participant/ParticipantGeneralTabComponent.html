@@ -1,0 +1,130 @@
+﻿<style>
+        .SectionTitle {
+        height: 20px;
+        line-height: 20px;
+        font-size: 14px;
+        color: #1B90CB;
+        user-select: text;
+        -webkit-user-select: text;
+    }
+</style>      
+      <div class="TableHolder">
+                <table>
+                    <tr class="TabTitleRow">
+                        <td colspan="3">General </td>
+                    </tr>
+                    <tr class="FormFieldRow">
+                        <td style="width:140px">
+                            <LogLabel [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:200px">
+                            <LogTextBox [ObjectFieldName]="'Code'"  [DataContext]="DataContext"
+                                        [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr class="FormFieldRow">
+                        <td style="width:140px">
+                            <LogLabel [ObjectFieldName]="'EnglishName'" [ObjectTableName]="ObjectTableName"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:200px">
+                            <LogTextBox [ObjectFieldName]="'EnglishName'" [DataContext]="DataContext"
+                                        [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                        </td>
+                        <td></td>
+                    </tr>
+
+                    <tr class="FormFieldRow">
+                        <td style="width:140px">
+                            <LogLabel [ObjectFieldName]="'LocalName'" [ObjectTableName]="ObjectTableName"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:200px">
+                            <LogTextBox [ObjectFieldName]="'LocalName'" [DataContext]="DataContext"
+                                        [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                        </td>
+                        <td></td>
+                    </tr>
+
+                    <tr class="FormFieldRow">
+                        <td style="width:140px">
+                            <LogLabel [ObjectFieldName]="'TTY'" [ObjectTableName]="ObjectTableName"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:200px">
+                            <LogTextBox [ObjectFieldName]="'TTY'" [DataContext]="DataContext"
+                                        [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                        </td>
+                        <td></td>
+                    </tr>
+
+                    <tr class="FormFieldRow">
+                        <td style="width:140px">
+                            <LogLabel [ObjectFieldName]="'RegistrationRequested'" [ObjectTableName]="ObjectTableName"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:200px">
+                            <CheckBox [IsEnabled]="false" [IsChecked]="RegistrationRequested" (Checked)="RegistrationRequested = $event"></CheckBox>
+
+                        </td>
+                        <td></td>
+                    </tr>
+
+                    <tr class="FormFieldRow">
+                        <td style="width:140px">
+                            <LogLabel [ObjectFieldName]="'Registered'" [ObjectTableName]="ObjectTableName"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:200px">
+                            <CheckBox [IsChecked]="Registered" (Checked)="Registered = $event"></CheckBox>
+
+                        </td>
+                        <td></td>
+                    </tr>
+
+                    <tr class="FormFieldRow">
+                        <td style="width:140px">
+                            <LogLabel [ObjectFieldName]="'IsDirect'" [ObjectTableName]="ObjectTableName"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:200px">
+                            <CheckBox [IsEnabled]="false" [IsChecked]="IsDirect" (Checked)="IsDirect = $event"></CheckBox>
+
+                        </td>
+                        <td></td>
+                    </tr>
+
+                    <tr class="FormFieldRow">
+                        <td style="width:140px">
+                            <LogLabel [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:200px">
+                            <CheckBox  [IsChecked]="InActive" (Checked)="InActive = $event"></CheckBox>
+
+                        </td>
+                        <td></td>
+                    </tr>  
+                    <tr>
+                        <td colspan="3">
+                            <table>
+                                <tr style="height: 1px;">
+                                    <td class="SectionTitle">Additional Fields</td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div class="FillParent">
+                                            <div class="LocationDirective" #Child></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                          
+
+                </table>
+</div>

@@ -1,0 +1,1 @@
+alter table customs.PaymentOrderProtestReasons add Tenant int not null

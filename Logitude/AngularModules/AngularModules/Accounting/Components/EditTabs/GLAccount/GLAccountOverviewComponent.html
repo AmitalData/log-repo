@@ -1,0 +1,300 @@
+<style>
+    .red {
+        color: red !important;
+    }
+
+    .orangeCircle {
+        background: #ff7920 !important;
+    }
+
+    .circleDraw {
+        background: #00b1e9;
+        margin: 0 auto;
+        margin-top: 9px;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        display: block;
+    }
+
+    .circleWrapper {
+        /*padding: 9px;*/
+    }
+
+    .SourceTypeIcon {
+        padding: 2px;
+        margin-right: 3px;
+        border-radius: 6px;
+        width: 15px;
+        height: 15px;
+        color: white;
+        background: #1ea8d4;
+        font-size: 9px;
+    }
+
+    /* 1-Journal */
+    .color-1 {
+        background: #18b283;
+        padding: 2px 4px;
+    }
+    /* 2-ARInvoice */
+    .color-2 {
+        background: #ffac00;
+        padding: 2px 3px;
+    }
+    /* 3-ARPayment */
+    .color-3 {
+        background: #c65571;
+    }
+    /* 4-APInvoice */
+    .color-4 {
+        background: #ff6e0e;
+        padding: 2px 3px;
+    }
+
+    /* 5-APPayment */
+    .color-5 {
+        background: #be69db;
+    }
+
+    /* 6-Cheque Deposit */
+    .color-6 {
+        background: #1082b2;
+    }
+
+    /* 7-Cash Deposit */
+    .color-7 {
+        background: #0fb2c7;
+    }
+
+    /* 8-Revaluation */
+    .color-8 {
+        background: #7941a0;
+    }
+
+    /* 9-Payment Cheque */
+    .color-9 {
+        background: #e45cea;
+    }
+</style>
+<style>
+    .subTitle {
+        color: #1b90cb;
+        font-size: 16px;
+    }
+
+    .widget {
+        width: 30%;
+        height: 350px;
+        /*background: red;*/
+        margin: 0 15px;
+        float: left;
+        min-width: 400px;
+        max-width: 500px;
+        padding-bottom: 25px;
+    }
+
+        .widget .header {
+            font-size: 13px;
+            border-radius: 4px 4px 0px 0px;
+            -moz-border-radius: 4px 4px 0px 0px;
+            -webkit-border-radius: 4px 4px 0px 0px;
+            background: linear-gradient(180deg, rgba(235, 235, 235, 1) 0%, rgba(233, 233, 233, 1) 48.14%, rgba(226, 226, 226, 1) 67.05%, rgba(214, 214, 214, 1) 80.81%, rgba(197, 197, 197, 1) 92.01%, rgba(179, 179, 179, 1) 100%);
+            padding: 4px 12px;
+        }
+
+        .widget .content {
+            height: calc(100% - 26px);
+            padding: 7px;
+        }
+        .widget .content-no-header {
+            height: 100%;
+            padding: 7px;
+        }
+
+    .header-labels {
+        font-size: 16px;
+    }
+    .amount-labels {
+        color: #21a373;
+        font-size: 15px;
+        /*font-weight: bold;*/
+        font-family: sans-serif;
+    }
+    .labels-table td{
+        text-align: center;
+    }
+    .red {
+        color: #b63d3d !important;
+    }
+    .Last-Labels {
+        height: 20px;
+    }
+    .Last-Labels div{
+        display: inline-block;
+        color: #1b90cb;
+    }
+    .Last-Transaction-Item {
+        height: 35px;
+    }
+        .Last-Transaction-Item div {
+            display: inline-block;
+            height: 100%;
+        }
+    .last-transactions-list {
+        height: calc(100% - 20px);
+        overflow: auto;
+    }
+    .FiltersMenu li {
+        width: fit-content;
+        height: 22px;
+        padding: 0 10px;
+    }
+</style>
+
+<table>
+    <tr>
+        <td>
+            <div class="TableHolder">
+                <table>
+                    <tr class="TabTitleRow">
+                        <td>{{'GLAccount.TH.Overview' | TextCodeTranslationPipe}}</td>
+                    </tr>
+                    <tr>
+
+                        <td style="vertical-align: top;">
+                            <div>
+
+                                <!-- Widget: Balance Section -->
+                                <div [style.float]="isRTL ? 'right' : 'left'" *ngIf="GLAccountMoreData" class="widget">
+                                    <div class="content-no-header" style="height: 90px;">
+                                        <table class="labels-table" style="table-layout: fixed;">
+                                            <tr>
+                                                <td class="header-labels">{{ 'GLAccounts.O.AccountingBalance' | TextCodeTranslationPipe }}</td>
+                                                <td class="header-labels">{{ 'GLAccounts.O.TotalDue' | TextCodeTranslationPipe }}</td>
+                                                <td class="header-labels">{{ 'GLAccounts.O.OpenTransactions' | TextCodeTranslationPipe }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="amount-labels" [class.red]="GLAccountMoreData.BalanceInLocalCurrency<=0">{{ GLAccountMoreData.BalanceInLocalCurrency | NumbersPipe:'N2' }}</td>
+                                                <td class="amount-labels" [class.red]="GLAccountMoreData.LocalBalanceInDue<=0">{{ GLAccountMoreData.LocalBalanceInDue | NumbersPipe:'N2' }}</td>
+                                                <td class="amount-labels" style="color: black;">{{ GLAccountOpenTransactionsCount }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a style="font-size: 11px;" (click)="DisplayTransactionsLinkClicked()">{{ 'GLAccounts.O.DispalyTransactions' | TextCodeTranslationPipe }}</a></td>
+                                                <td style="font-size: 11px;">{{ 'GLAccounts.O.NextDueDate' | TextCodeTranslationPipe }}: {{GLAccountMoreData.NextDueDate | DateTimePipe:'SD'}}</td>
+                                                <td><a style="font-size: 11px;" (click)="ReconcileLinkClicked()">{{ 'GLAccounts.O.Reconcile' | TextCodeTranslationPipe }}</a></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <!-- Widget: Last 10 transactions -->
+                                <div [style.float]="isRTL ? 'right' : 'left'" class="widget" style="min-width: 500px;">
+                                    <div class="header">
+                                        {{ 'GLAccounts.O.LastTransactions' | TextCodeTranslationPipe }}
+                                    </div>
+                                    <div class="content">
+                                        <div class="Last-Labels">
+                                            <div style="width: 80px;"></div>
+                                            <div style="width: 100px;padding: 0 5px;">{{ 'GLAccounts.O.Date' | TextCodeTranslationPipe }}</div>
+                                            <div style="width: 100px;text-align: right;">{{ GetAmountLabel() }}</div>
+                                            <div style="width: 145px;padding: 0 15px 0 15px;">{{ 'Accounting.General.O.References' | TextCodeTranslationPipe }}</div>
+                                        </div>
+                                        <ul class="last-transactions-list">
+                                            <li class="Last-Transaction-Item RecentEntityItem" *ngFor="let transaction of lastTransactionsList">
+
+                                                <!-- SourceType -->
+                                                <div style="width: 30px; padding: 10px 5px 2px 5px;">
+                                                    <span title="{{transaction['SourceType']}}"
+                                                          [class]="'SourceTypeIcon color-' + transaction['SourceTypeCode']"
+                                                          (click)="OpenSource(transaction['SourceId'])"
+                                                          style="font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;">{{GetIconText(transaction)}}</span>
+                                                </div>
+                                                <div style="width: 50px;padding: 9px 0;">
+                                                    <a href="javascript:;" (click)="OpenSource(transaction, transaction['SourceId'])">
+                                                        {{ transaction['SourceNumber'] }}
+                                                    </a>
+                                                </div>
+
+                                                <div style="width: 100px;padding: 9px 0;">
+                                                    {{ transaction.AccountingDate | DateTimePipe:'SD' }}
+                                                </div>
+                                                <div class="TextTrimming" style="width: 100px;padding: 9px 0;color:#00a24d; text-align: right; direction: ltr;" [class.red]='transaction["OpenAmount"]>0'>
+                                                    {{ (transaction["OpenAmount"] != 0 ? -1*Abs(transaction["OpenAmount"]) : Abs(transaction["OpenAmount"]))| NumbersPipe:'N2' }}
+                                                </div>
+
+                                                <div style="width: 145px;padding: 9px 5px;">
+                                                    {{ GetReferencesText(transaction) }}
+                                                </div>
+                                                <div style="width: 20px;padding: 5px 0;height: 100%;" title="{{transaction['OpenAmount'] != CalculateOriginalAmount(transaction) ? 'Partial transaction' : 'Open transaction'}}">
+                                                    <div class="circleDraw" style="height: 7px;" [class.orangeCircle]="transaction['OpenAmount'] != CalculateOriginalAmount(transaction)"></div>
+                                                </div>
+
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div [style.float]="isRTL ? 'right' : 'left'" class="widget">3</div>
+
+                                <!-- Widget: Aging Details -->
+                                <div [style.float]="isRTL ? 'right' : 'left'" class="widget" style="position: relative;">
+                                    <div class="header">
+                                        {{ GetAgingHeader() }}
+                                    </div>
+                                    <div class="content">
+
+                                        <!-- Filters -->
+                                        <div style="height: 22px; width: 100%;">
+                                            <!-- Months -->
+                                            <ul [style.float]="isRTL ? 'right' : 'left'" class="FiltersMenu">
+                                                <li id="3mo" (click)="FilterItemClicked('3mo')"
+                                                    [class.SelectedFilter]="FilterSelectedValue === '3mo'">
+                                                    3 Mo
+                                                </li>
+                                                <li id="6mo" (click)="FilterItemClicked('6mo')"
+                                                    [class.SelectedFilter]="FilterSelectedValue === '6mo'">
+                                                    6 Mo
+                                                </li>
+                                                <li id="9mo" (click)="FilterItemClicked('9mo')"
+                                                    [class.SelectedFilter]="FilterSelectedValue === '9mo'">
+                                                    9 Mo
+                                                </li>
+                                                <li id="12mo" (click)="FilterItemClicked('12mo')"
+                                                    [class.SelectedFilter]="FilterSelectedValue === '12mo'">
+                                                    12 Mo
+                                                </li>
+                                            </ul>
+
+                                            <ul [style.float]="isRTL ? 'left' : 'right'" class="FiltersMenu">
+                                                <li id="filter_Collecting" (click)="DateFilterItemClicked('filter_Collecting')"
+                                                    [class.SelectedFilter]="DateFilterSelectedValue === 'filter_Collecting'">
+                                                    {{ 'GLAccounts.O.Collecting' | TextCodeTranslationPipe }}
+                                                </li>
+                                                <li id="filter_Accounting" (click)="DateFilterItemClicked('filter_Accounting')"
+                                                    [class.SelectedFilter]="DateFilterSelectedValue === 'filter_Accounting'">
+                                                    {{ 'GLAccounts.O.Accounting' | TextCodeTranslationPipe }}
+                                                </li>
+                                            </ul>
+
+                                        </div>
+
+                                        <!-- Chart -->
+                                        <div style="width: 100%;overflow: auto;position:absolute;top: 62px;bottom: 0;left: 0;">
+                                            <div [style.width.px]="FilterSelectedValue=='12mo' ? '650' : '450'" [id]="chartId" style="position:absolute;top:0;bottom:0;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div [style.float]="isRTL ? 'right' : 'left'" class="widget">5</div>
+                                <div [style.float]="isRTL ? 'right' : 'left'" class="widget">6</div>
+                            </div>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>

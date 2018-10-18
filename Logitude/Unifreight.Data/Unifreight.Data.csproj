@@ -1,0 +1,348 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{40F07800-11E8-4FBA-9FC2-FD6C8D11E3EF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Unifreight.Data</RootNamespace>
+    <AssemblyName>Unifreight.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'All Projects|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\All Projects\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|AnyCPU'">
+    <OutputPath>bin\None\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Devart.Data, Version=5.0.828.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\General\Dlls\Devart\Devart.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Devart.Data.Linq, Version=4.4.441.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\General\Dlls\Devart\Devart.Data.Linq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle, Version=8.1.36.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\General\Dlls\Devart\Devart.Data.Oracle.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle.Entity, Version=8.1.36.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\General\Dlls\Devart\Devart.Data.Oracle.Entity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle.Linq, Version=4.4.441.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\General\Dlls\Devart\Devart.Data.Oracle.Linq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle.Web, Version=8.2.103.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\General\Dlls\Devart\Devart.Data.Oracle.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\General\Dlls\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\General\Dlls\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AmitalModel\AmitalContext.cs" />
+    <Compile Include="AmitalModel\AmitalContext.Template.cs" />
+    <None Include="AmitalModel\AmitalContext.Views.cs" />
+    <Compile Include="AmitalModel\EntityKeys\ATBPTILKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CCUACCSUPKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CCUCARKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CCUCARLKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CCUCRREQKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CCUCUSTITEMKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CCUFILEMKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CCUMESSAGEKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CCUMSHGRKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CCUPAYHANDKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CCUPAYLINEFKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CCUQUELOCKKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CCUSIGNUMKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CCUSUPITEMKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CCUSUPITEMSIKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CCUTAXKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CCUTRANSPVALKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CCUTSRUFOTKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CFICONNKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CFIGOODDESCKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CCUCARSCKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CFIMSVDOCKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CFIMSVFILEKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CFIMSVLINEKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CFIMSVPAGEKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CFIPACKKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CTBAPPROVKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CTBAPPROVTYPEKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CTBBONDEDKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CTBCOUNTRYKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CTBCURRENCYKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CTBERRORKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CTBIDNTPKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CTBIMPORTKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CTBINCOTERMKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CTBLOADKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CTBMEMIRTYPEKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CTBMISHGURKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CTBPACKTYPEKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CTBPARTKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CTBPKDTKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CTBRESHTYPEKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CTBRGOWNKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CTBSTORAGEKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CTBTARIFFKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CTBTAXTYPEKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CTBTRANSPKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CTBTSRUFTYPEKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\GAQDOCKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\GAQFILEDATAKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\GDFDATAKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\GDMENTITYKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\GDMFILEVERKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\GDMFILINGKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\GDMFLDRTRKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\GDMREFKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\GGGQKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\GITITEMKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\GNDADRKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\GNDCARDKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\GTBDOCKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\GTBITEMKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\GTBITMCNKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\GTBMANDTKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\GTBREQCERT.cs" />
+    <Compile Include="AmitalModel\EntityKeys\GTRTRANKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CTBUNLOADKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\ITBPCKTYKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\YCULTASKKeys.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.ATBPTIL.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CCUACCSUP.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CCUCAR.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CCUCARL.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CCUCRREQ.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CCUCUSTITEM.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CCUFILEM.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CCUMESSAGE.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CCUMSHGR.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CCUPAYHAND.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CCUPAYLINEF.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CCUQUELOCK.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CCUSIGNUM.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CCUSUPITEM.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CCUSUPITEMSI.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CCUTAX.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CCUTRANSPVAL.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CCUTSRUFOT.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CFICONN.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CFIGOODDESC.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CFIMSVDOC.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CFIMSVFILE.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CFIMSVPAGE.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CFIPACK.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBAPPROV.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBAPPROVTYPE.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBBONDED.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBCOUNTRY.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBCURRENCY.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBCUSTSUP.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBERROR.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBIDNTP.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBIMPORT.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBINCOTERM.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBLOAD.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBMEMIRTYPE.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBMISHGUR.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBPACKTYPE.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBPART.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBPKDT.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBRESHTYPE.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBRGOWN.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBSTORAGE.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBTARIFF.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBTAXTYPE.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBTRANSP.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBTSRUFTYPE.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBUNLOAD.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GAQDOC.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GAQFILEDATA.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GDFDATA.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GDMENTITY.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GDMFILEVER.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GDMFILING.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GDMFILING.NO.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GDMFLDRTR.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GDMREF.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GGGQ.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GITITEM.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GNDADR.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GNDCARD.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GRTRATE.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GTBDOC.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GTBITEM.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GTBITMCN.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GTBMANDT.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GTBREQCERT.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GTRTRAN.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.ITBPCKTY.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.YCULPROCESS.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.YCULTASK.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.YTBCUSTTB.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\Class1.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CCUCARSC.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CFIMSVLINE.cs" />
+    <Compile Include="AmitalModel\ExtensionObjectContext.cs" />
+    <Compile Include="AmitalModel\Repsitories\ATBPTILRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CCUACCSUPRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CCUCARLRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CCUCARRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CCUCRREQRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CCUCUSTITEMRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CCUFILEMRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CCUMESSAGERepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CCUMSHGRRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CCUPAYHANDRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CCUPAYLINEFRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CCUQUELOCKRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CCUSIGNUMRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CCUSUPITEMRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CCUSUPITEMSIRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CCUTAXRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CCUTRANSPVALRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CCUTSRUFOTRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CFICONNRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CFIGOODDESCRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CCUCARSCRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CFIMSVDOCRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CFIMSVFILERepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CFIMSVLINERepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CFIMSVPAGERepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CFIPACKRepository.cs.cs" />
+    <Compile Include="AmitalModel\Repsitories\CTBAPPROVRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CTBAPPROVTYPERepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CTBBONDEDRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CTBCOUNTRYRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CTBCURRENCYRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CTBERRORRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CTBIDNTPRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CTBIMPORTRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CTBINCOTERMRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CTBLOADRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CTBMEMIRTYPERepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CTBMISHGURRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CTBPACKTYPERepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CTBPARTRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CTBPKDTRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CTBRESHTYPERepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CTBRGOWNRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CTBSTORAGERepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CTBTARIFFRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CTBTAXTYPERepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CTBTRANSPRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CTBTSRUFTYPERepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CTBUNLOADRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\DualRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\GAQDOCRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\GAQFILEDATARepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\GDFDATARepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\GDMENTITYRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\GDMFILEVERRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\GDMFILINGRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\GDMFLDRTRRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\GDMREFRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\GGGQRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\GITITEMRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\GNDADRRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\GNDCARDRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\GTBDOCRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\GTBITEMRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\GTBITMCNRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\GTBMANDTRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\GTBREQCERTRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\GTRTRANRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\ITBPCKTYRepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\YCULTASKRepository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Global.Data.csproj">
+      <Project>{6d7ffad2-35b6-4133-8700-cf73e58d0c85}</Project>
+      <Name>Simplog.Global.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
+      <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
+      <Name>Simplog.Server.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\unifreight.data.dll.licenses" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

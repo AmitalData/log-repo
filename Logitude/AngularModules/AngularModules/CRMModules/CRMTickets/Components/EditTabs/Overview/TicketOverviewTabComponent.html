@@ -1,0 +1,267 @@
+﻿
+<style>
+    .LogitudeSectionBody {
+        height: 100%;
+        width: 100%;
+        min-width: 100%;
+        min-height: 100%;
+        max-height: 100%;
+        max-width: 100%;
+        white-space: nowrap;
+    }
+</style>
+
+
+<div class="TabHolder" style="overflow-x:auto;overflow-y:auto;height:100%;width:100%;">
+    <table style="min-width:1150px;">
+        <tr class="TabTitleRow">
+            <td>
+                <table>
+                    <tr>
+                        <td style="text-align:left;">{{'Ticket.TH.Overview' | TextCodeTranslationPipe}}</td>
+                        <td>
+                            <div></div>
+                        </td>
+                        <td style="width: 22px;height:22px;  vertical-align:middle; text-align:right;">
+                            <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr style="height:66%;">
+            <td>
+                <table class="FixedTable">
+                    <tr>
+                        <td style="border:solid;border-color:lightgrey;border-width:1px;border-top:none;">
+                            <table>
+                                <tr class="SectionHeader">
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td style="width:10px;">
+                                                    <div></div>
+                                                </td>
+                                                <td>
+                                                    <div style="vertical-align:middle; font-size:13px;color:#282E30;text-align:left;">Performance</div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <table>
+                                            <tr style="height:1px">
+                                                <td>
+                                                    <div [attr.id]="PerformanceChartId" style="height:100%;width:100%" class="CellContent"></div>
+                                                </td>
+                                                <td style="min-width:150px;width:150px">
+                                                    <div [attr.id]="LegendDiv" style="position:relative;width:100%;float:left"></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr *ngIf="!PerformanceChartIdExistance">
+                                                <td style="vertical-align:top">
+                                                    <div style="text-align:center;vertical-align:top;margin-top:10px;width:100%;overflow-y:hidden">
+                                                        <label style="font-size:small;color:gray;text-align:center;vertical-align:central;width:100%;height:100%">No Data</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td style="width:10px;">
+                            <div></div>
+                        </td>
+                        <td style="border:solid;border-color:lightgrey;border-width:1px;border-top:none;">
+                            <table>
+                                <tr class="SectionHeader">
+                                    <td colspan="3">
+                                        <table>
+                                            <tr>
+                                                <td style="width:10px;">
+                                                    <div></div>
+                                                </td>
+                                                <td>
+                                                    <div style="vertical-align:middle; font-size:13px;color:#282E30;text-align:left;">Log</div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:20px;">
+                                        <div></div>
+                                    </td>
+                                    <td>
+                                        <div class="MediaFill" style="overflow-x:auto;">
+                                            <table>
+                                                <tr style="height:20px;">
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td style="vertical-align:central;text-align:center;">
+                                                        <table>
+                                                            <tr style="height:1px;">
+                                                                <td class="TextTrimming" style="font-size:15px;vertical-align:middle;text-align:center; width:260px;min-width:260px;max-width:260px;"> Create Date </td>
+                                                                <td class="TextTrimming"style="font-size:15px;vertical-align:middle;text-align:center;width:260px;min-width:260px;max-width:260px;"> First Response Date </td>
+                                                                <td  class="TextTrimming" style="font-size:15px;vertical-align:middle;text-align:center;width:260px;min-width:260px;max-width:260px;"> Resolve Date </td>
+                                                            </tr>
+                                                            <tr style="height:1px;">
+                                                                <td class="TextTrimming" style="color:blue;font-size:20px;vertical-align:middle;text-align:center;width:260px;min-width:260px;max-width:260px;"> {{CreateDate | DateTimePipe:'DDMM'}}  </td>
+                                                                <td class="TextTrimming" style="color:blue;font-size:20px;vertical-align:middle;text-align:center;width:260px;min-width:260px;max-width:260px;"> {{FirstResponseTime | DateTimePipe:'DDMM'}}  </td>
+                                                                <td class="TextTrimming" style="color:blue;font-size:20px;vertical-align:middle;text-align:center;width:260px;min-width:260px;max-width:260px;"> {{FullResolvedTime | DateTimePipe:'DDMM'}}  </td>
+                                                            </tr>
+                                                            <tr style="height:1px;">
+                                                                <td class="TextTrimming" style="color:blue;font-size:20px;vertical-align:middle;text-align:center;width:260px;min-width:260px;max-width:260px;"> {{CreateDate | DateTimePipe:'T'}} </td>
+                                                                <td class="TextTrimming" style="color:blue;font-size:20px;vertical-align:middle;text-align:center;width:260px;min-width:260px;max-width:260px;"> {{FirstResponseTime | DateTimePipe:'T'}} </td>
+                                                                <td class="TextTrimming" style="color:blue;font-size:20px;vertical-align:middle;text-align:center;width:260px;min-width:260px;max-width:260px;"> {{FullResolvedTime | DateTimePipe:'T'}} </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td style="vertical-align:central;text-align:center;">
+                                                        <table>
+                                                            <tr style="height:1px;">
+                                                                <td style="font-size:15px;vertical-align:middle;text-align:center;width:260px;min-width:260px;max-width:260px;">Total Open Period </td>
+                                                                <td style="font-size:15px;vertical-align:middle;text-align:center;width:260px;min-width:260px;max-width:260px;"> Response SLA Violated </td>
+                                                                <td style="font-size:15px;vertical-align:middle;text-align:center;width:260px;min-width:260px;max-width:260px;"> Resolve SLA Violated </td>
+                                                            </tr>
+                                                            <tr style="height:1px;">
+                                                                <td *ngIf="TotalOpenPeriodVisibility" style="color:blue;font-size:20px;vertical-align:middle;text-align:center;width:260px;min-width:260px;max-width:260px;"> {{OpenPeriodMinutes}} </td>
+                                                                <td *ngIf="!TotalOpenPeriodVisibility" style="color:blue;font-size:20px;vertical-align:middle;text-align:center;width:260px;min-width:260px;max-width:260px;">
+                                                                    <div></div>
+                                                                </td>
+                                                                <td *ngIf="ResponseSLAViolatedVisibility" style="color:red;font-size:20px;vertical-align:middle;text-align:center;width:260px;min-width:260px;max-width:260px;"> {{ResponseSLAViolatedString}}  </td>
+                                                                <td *ngIf="!ResponseSLAViolatedVisibility" style="color:blue;font-size:20px;vertical-align:middle;text-align:center;width:260px;min-width:260px;max-width:260px;">
+                                                                    <div></div>
+                                                                </td>
+                                                                <td *ngIf="ResolveSLAViolatedVisibility" style="color:red;font-size:20px;vertical-align:middle;text-align:center;width:260px;min-width:260px;max-width:260px;"> {{ResolveSLAViolatedString}}  </td>
+                                                                <td *ngIf="!ResolveSLAViolatedVisibility" style="color:blue;font-size:20px;vertical-align:middle;text-align:center;width:260px;min-width:260px;max-width:260px;">
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr style="height:1px;">
+                                                                <td *ngIf="TotalOpenPeriodVisibility" style="color:blue;font-size:20px;vertical-align:middle;text-align:center;width:260px;min-width:260px;max-width:260px;"> (Business Hours)</td>
+                                                                <td *ngIf="!TotalOpenPeriodVisibility" style="color:blue;font-size:20px;vertical-align:middle;text-align:center;width:260px;min-width:260px;max-width:260px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td *ngIf="ResponseSLAViolatedVisibility" style="color:red;font-size:20px;vertical-align:middle;text-align:center;width:260px;min-width:260px;max-width:260px;"> (Business Hours) </td>
+                                                                <td *ngIf="!ResponseSLAViolatedVisibility" style="color:blue;font-size:20px;vertical-align:middle;text-align:center;width:260px;min-width:260px;max-width:260px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td *ngIf="ResolveSLAViolatedVisibility" style="color:red;font-size:20px;vertical-align:middle;text-align:center;width:260px;min-width:260px;max-width:260px;"> (Business Hours) </td>
+                                                                <td *ngIf="!ResolveSLAViolatedVisibility" style="color:blue;font-size:20px;vertical-align:middle;text-align:center;width:260px;min-width:260px;max-width:260px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+
+                                                <tr style="height:20px;">
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </td>
+                                    <td style="width:20px;">
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr style="height:10px;">
+            <td>
+                <div></div>
+            </td>
+
+        </tr>
+
+        <tr style="height:33%;">
+            <td style="border:solid;border-color:lightgrey;border-width:1px;border-top:none;width:100%">
+                <table>
+                    <tr class="SectionHeader">
+                        <td>
+                            <table>
+                                <tr>
+                                    <td style="width:10px;">
+                                        <div></div>
+                                    </td>
+                                    <td>
+                                        <div style="vertical-align:middle; font-size:13px;color:#282E30;text-align:left;">Statistics</div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table class="FixedTable">
+                                <tr style="vertical-align:central;text-align:center;">
+                                    <td>
+                                        <div style="font-size:50px;text-align:center;color:#282E30;"> {{NumberOfExCorrespondences}}</div>
+                                        <div style="height:5px;"></div>
+                                        <div style="font-size:11px;text-align:center;color:#6E7172;vertical-align:middle;text-align:center;"> External Correspondence </div>
+                                    </td>
+
+                                    <td>
+                                        <div style="font-size:50px;text-align:center;color:#282E30;"> {{NumberOfInCorrespondences}}</div>
+                                        <div style="height:5px;"></div>
+                                        <div style="font-size:11px;text-align:center;color:#6E7172;vertical-align:middle;text-align:center;"> Internal  Correspondence </div>
+                                    </td>
+
+                                    <td>
+                                        <div style="font-size:50px;text-align:center;color:#1B90CB;">
+                                            <span class="QueryLink" style="font-size:50px;text-align:center;color:#1B90CB;" (click)="ViewAllData('Activites')"> {{NumberOfAllActivities}} </span>
+                                        </div>
+                                        <div style="height:5px;"></div>
+                                        <div style="font-size:11px;text-align:center;color:#6E7172;vertical-align:middle;text-align:center;"> All Activities </div>
+                                    </td>
+
+                                    <td>
+                                        <div style="font-size:50px;text-align:center;color:#1B90CB;">
+                                            <span class="QueryLink" style="font-size:50px;text-align:center;color:#1B90CB;" (click)="ViewAllData('Escalations')"> {{NumberOfEscalations}} </span>
+                                        </div>
+                                        <div style="height:5px;"></div>
+                                        <div style="font-size:11px;text-align:center;color:#6E7172;vertical-align:middle;text-align:center;"> Escalations </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+    </table>
+</div>

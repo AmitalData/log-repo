@@ -1,0 +1,135 @@
+﻿<table>
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px">
+        <td colspan="3">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr class="FormFieldRow">
+        <td style="width:90px">
+            <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="TargetEntityName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+        <td style="width:260px">
+            <LogTextBox [ObjectFieldName]="'Name'"  [ObjectTableName]="TargetEntityName" [InputType]="'text'" [Text]="Name" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+
+        </td>
+
+        <td></td>
+    </tr>
+
+    <tr class="FormFieldRow">
+        <td style="width:90px">
+            <LogLabel [ObjectFieldName]="'ObjectTableId'" [ObjectTableName]="TargetEntityName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+        <td style="width:260px">
+            <LogLov [ObjectFieldName]="'ObjectTableId'"
+                    [ObjectTableName]="TargetEntityName"
+                    [SelectedValue]="ObjectTableId"
+                    [DataContext]="DataContext"
+                    [LookUpTableName]="'ObjectTable'"
+                    [HideColumns]="true"
+                    [DependencyFilter2Value]="true"
+                    >
+            </LogLov>
+
+        </td>
+
+        <td></td>
+    </tr>
+
+    <tr class="FormFieldRow" *ngIf="HiddenFields">
+        <td colspan="2">
+            <table>
+                <tr>
+                    <td style="width:30px">
+                        <CheckBox [IsChecked]="HasPartnerList" (Checked)="HasPartnerList = $event"></CheckBox>
+
+                    </td>
+                    <td>Has Partner List</td>
+
+                </tr>
+            </table>
+        </td>
+        <td></td>
+    </tr>
+
+
+    <tr class="FormFieldRow" *ngIf="HiddenFields">
+        <td colspan="2">
+            <table>
+                <tr>
+                    <td style="width:30px">
+                        <CheckBox [IsChecked]="MustUsePartnerList" (Checked)="MustUsePartnerList = $event"></CheckBox>
+                    </td>
+                    <td>Must User Partner List </td>
+
+                </tr>
+            </table>
+
+        </td>
+        <td></td>
+    </tr>
+
+
+    <tr class="FormFieldRow">
+        <td colspan="2">
+            <table>
+                <tr>
+                    <td style="width:30px"><CheckBox [IsChecked]="TransalationRequired" (Checked)="TransalationRequired = $event"></CheckBox>
+</td>
+                    <td>Translation Required</td>
+
+                </tr>
+            </table>
+
+        </td>
+        <td></td>
+    </tr>
+
+
+    <tr class="FormFieldRow" *ngIf="HiddenFields">
+        <td colspan="2">
+            <table>
+                <tr>
+                    <td style="width:30px"><CheckBox [IsChecked]="TenantLevelTranslationBlocked" (Checked)="TenantLevelTranslationBlocked = $event"></CheckBox>
+</td>
+                    <td>Tenant Level Translation Blocked</td>
+
+                </tr>
+            </table>
+
+        </td>
+        <td></td>
+    </tr>
+
+    <tr>
+        <td colspan="3"></td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom" colspan="3">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

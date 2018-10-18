@@ -1,0 +1,82 @@
+﻿
+<table>
+    <tr>
+        <td class="CellStretch">
+            <div class="CellContent">
+                <div class="SimpleGridView">
+                    <div class="SimpleGridViewHeader">
+                        <table>
+                            <tr>
+                                <td style="width: 90px; min-width: 90px;">Message Type</td>
+                                <td style="width: 80px; min-width: 80px;">Entity #</td>
+                                <td style="width: 100px; min-width: 100px;">MAWB</td>
+                                <td style="width: 150px; min-width: 150px;">HAWB</td>
+                                <td style="width: 90px; min-width: 90px;">Action</td>
+                                <td style="width: 100px; min-width: 100px;">Last Action Date</td>
+                                <td>Last Action by</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="SimpleGridViewBody">
+                        <table>
+                            <tr class="SimpleGridViewRow" *ngFor="let item of ItemsSource">
+
+                                <td class="GridViewCell" style="width: 90px; min-width: 90px;">
+                                    {{item.MessageType}}
+                                </td>
+
+                                <td class="GridViewCell ColorBlue" style="width: 80px; min-width: 80px; font-size: 11px;">
+                                    {{item.EntityNumber}}
+                                </td>
+
+
+                                <td class="GridViewCell" style="width: 100px; min-width: 100px; font-size: 11px;">
+                                    {{item.MAWB}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 150px; min-width: 150px; font-size: 11px;">
+                                    {{item.HAWB}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 90px; min-width: 90px; font-size: 11px;">
+                                    {{item.ActionType}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 100px; min-width: 100px; font-size: 11px;">
+                                    {{item.LastActionDate | DateTimeToDatePipe}}
+                                </td>
+
+                                <td class="GridViewCell" style="font-size: 11px;">
+                                    {{item.LastActionByUserName}}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="7">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CloseButtonClicked()">Close</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

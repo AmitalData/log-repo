@@ -1,0 +1,252 @@
+﻿<style>
+    .NotesBox {
+        border: 1px solid gray;
+        border-radius: 5px;
+        padding: 2px 10px;
+        margin: 5px;
+        color: gray;
+        font-family: sans-serif;
+    }
+
+    .DisbleBox {
+        display: inline-block;
+        border: 1px solid #ffd800;
+        border-radius: 5px;
+        background: #faf5c0;
+        padding: 2px 10px;
+        margin: 5px;
+        color: gray;
+        font-family: sans-serif;
+    }
+
+</style>
+
+<table>
+    <tr>
+        <td>
+            <fieldset [disabled]="!IsControlEnabled">
+                <div class="TableHolder">
+                    <table style="width: 500px; height: 400px;padding-top: 10px;">
+
+                        <!--General Fields -->
+                        <tr style="width: 500px; height: 20px;">
+                            <td class="TabTitleRow" style="width: 200px;height:20px;">
+                                {{'Customs.Claim.O.ClaimFileData'| TextCodeTranslationPipe}}
+                            </td>
+                        </tr>
+                        <tr style="width: 500px; height: 70px">
+                            <td style="width: 500px; height: 70px">
+                                <div style="width: 500px; height: 70px;">
+                                    <table style="width: 500px; height: 70px">
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 100px; ">
+                                                <LogLabel [ObjectFieldName]="'ClaimEntityTypeCode'" [ObjectTableName]="ObjectTableName"
+                                                          [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td style="width: 150px;">
+                                                <LogLov [ObjectFieldName]="'ClaimEntityTypeCode'"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'Customs.ClaimEntity'"
+                                                        [SelectedValue]="ClaimEntityTypeCode">
+                                                </LogLov>
+                                            </td>
+
+                                            <td><div style="width:10px"></div></td>
+
+                                            <td style="width: 100px;">
+                                                <LogLabel [ObjectFieldName]="'ExternalClaimNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td style="width: 150px;">
+                                                <LogTextBox [ObjectFieldName]="'ExternalClaimNumber'" [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext" [AddCommasToNumbers]="false"
+                                                            [Text]="ExternalClaimNumber" (LostFocus)="ExternalClaimNumberLostFocus()"></LogTextBox>
+                                            </td>
+
+                                            <td><div></div></td>
+
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 100px;">
+                                                <LogLabel [ObjectFieldName]="'ClaimEntityNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td style="width: 150px;">
+                                                <LogTextBox [ObjectFieldName]="'ClaimEntityNumber'" [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext" [AddCommasToNumbers]="false" [Text]="ClaimEntityNumber"
+                                                            (LostFocus)="ClaimEntityNumberLostFocus()"></LogTextBox>
+                                            </td>
+
+                                            <td><div style="width:10px"></div></td>
+
+                                            <td style="width: 100px;">
+                                                <LogLabel [ObjectFieldName]="'DeclarationVersion'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td style="width: 150px;">
+                                                <LogTextBox [ObjectFieldName]="'DeclarationVersion'" [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext" [AddCommasToNumbers]="false" [Text]="DeclarationVersion"></LogTextBox>
+                                            </td>
+
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
+                                            <!-->td style="width: 100px; ">
+                                    <LogLabel [ObjectFieldName]="'ClaimAmount'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td style="width: 150px;">
+                                    <LogTextBox [ObjectFieldName]="'ClaimAmount'" [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext" [AddCommasToNumbers]="true" [Text]="ClaimAmount"></LogTextBox>
+                                </td>
+
+                                <td><div style="width:10px"></div></td-->
+
+                                            <td style="width: 100px;">
+                                                <LogLabel [ObjectFieldName]="'IsFinancialRefundDemand'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td style="width: 150px;">
+                                                <LogCheckBox [ObjectFieldName]="'IsFinancialRefundDemand'" [ObjectTableName]="ObjectTableName"
+                                                             [Checked]="IsFinancialRefundDemand"
+                                                             [DataContext]="DataContext" [HideColumns]="true"
+                                                             (ValueChanged)="IsFinancialRefundDemandUnchecked($event)"></LogCheckBox>
+                                            </td>
+
+                                            <td><div></div></td>
+
+                                        </tr>
+
+                                        <tr>
+                                            <td><div></div></td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+                            </td>
+
+                            <td><div></div></td>
+                        </tr>
+
+                        <tr style="height: 1px;"><td><div style="width: 15px;"></div></td></tr>
+
+                        <!-- Claims Related Entities Amount -->
+                        <tr style="height: 200px; width: 300px; top:0px">
+                            <td style="height: 200px; width: 300px;">
+                                <div style="height: 200px; width: 300px;">
+                                    <table style="height: 230px; width: 300px;">
+                                        <tr style="height: 30px">
+                                            <td class="TabTitleRow" style="width:150px">
+                                                {{'Customs.Claim.O.PaymentDetails'| TextCodeTranslationPipe}}
+                                            </td>
+
+                                            <td> <div></div> </td>
+                                            <td style="height: 20px;padding: 5px;padding-bottom: 0px;">
+                                                <div>
+                                                    <IconButton [IsSmall]="true" [IsEnabled]="IsFinancialRefundDemand"
+                                                                [Name]="'Add'"
+                                                                (click)="AddPaymentAmountCommand()"
+                                                                style="float:left;"></IconButton>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr style="width: 300px; height: 170px; overflow: auto;">
+                                            <td colspan="5">
+                                                <div class="CellContent">
+                                                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [FooterTop]="FooterMethods"
+                                                                        [ItemSource]="ClaimsRelatedEntitiesAmountsList" [IsReadOnly]="!IsFinancialRefundDemand">
+
+                                                        <!-- PaymentType -->
+                                                        <log-column [header]="'Customs.ClaimsRelatedEntitiesAmount.F.PaymentTypeCode' | TextCodeTranslationPipe"
+                                                                    [width]="'160'" [Alignment]="'right'" [binding]="'PaymentTypeCode'">
+                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                    <span>{{item.PaymentTypeName}}</span>
+                                                                </div>
+                                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                                    <LogLov [ObjectFieldName]="'PaymentTypeCode'"
+                                                                            [ObjectTableName]="'Customs.ParagraphType'"
+                                                                            [DataContext]="item"
+                                                                            [LookUpTableName]="'Customs.ParagraphType'"
+                                                                            (SelectedItemChanged)="item.SetLocalName($event,'PaymentTypeName')"
+                                                                            [HideColumns]="true"
+                                                                            [FocusOnMe]="true"
+                                                                            [SelectedValue]="item.PaymentTypeCode">
+                                                                    </LogLov>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </log-column>
+
+                                                        <!-- Amount -->
+                                                        <log-column [header]="'Customs.ClaimsRelatedEntitiesAmount.F.Amount' | TextCodeTranslationPipe"
+                                                                    [width]="'80'" [Alignment]="'right'" [binding]="'Amount'">
+                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                    <span>{{item.Amount  | NumbersPipe:'n0'}}</span>
+                                                                </div>
+                                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                                    <LogTextBox [ObjectFieldName]="'Amount'" [DataContext]="item" [InputType]="'integer'"
+                                                                                [FocusOnMe]="true" [ObjectTableName]="ObjectTableName" [AddCommasToNumbers]="true"
+                                                                                [Text]="item.Amount" [HideColumns]="true" (LostFocus)="CalcClaimsRelatedEntitiesAmountsTotal()"></LogTextBox>
+
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </log-column>
+
+                                                        <!-- Delete Button-->
+                                                        <log-column [width]="'30'" [Alignment]="'right'">
+                                                            <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
+                                                                <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeletePaymentAmountCommand(item)"
+                                                                            [IsEnabled]="!IsDisplayOnly"
+                                                                            style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
+                                                            </log-cell-template>
+                                                        </log-column>
+
+                                                    </logitude-edit-grid>
+                                                </div>
+                                            </td>
+                                        <tr></tr>
+                                        <!--
+            <tr style="width: 300px; height: 25px; overflow: auto;">
+                <!--background: #E2E2E4; -->
+                                        <!--
+                <td style="width: 160px;">
+                    {{'Customs.Declaration.O.Total'| TextCodeTranslationPipe}}
+                </td>
+
+                <td>
+                    <div style="top:5px;font-size:14px;color:#282E30">
+                        <span> {{Total |NumbersPipe:'N'}}</span>
+
+                    </div>
+                </td>
+            </tr>
+            -->
+                                        <tr><td><div></div></td></tr>
+                                    </table>
+
+                                    <table style="width: 300px; height: 60px;padding-top: 35px;">
+                                        <tr style="width: 300px; height: 25px; overflow: auto;">
+                                            <!--background: #E2E2E4; -->
+
+                                            <td style="width: 160px;">
+                                                {{'Customs.Declaration.O.Total'| TextCodeTranslationPipe}}
+                                            </td>
+
+                                            <td>
+                                                <div style="top:5px;font-size:14px;color:#282E30">
+                                                    <span> {{Total |NumbersPipe:'N0'}}</span>
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                        
+                    </table>
+                </div>
+            </fieldset>
+        </td>
+    </tr>
+</table>

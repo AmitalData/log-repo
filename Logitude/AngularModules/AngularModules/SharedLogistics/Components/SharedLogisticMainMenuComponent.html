@@ -1,0 +1,32 @@
+﻿
+<div style="position: absolute; top:10px; bottom:0px; left:15px; right:10px;margin:auto; background:white;">
+    <table>
+        <tr style="height:21px;">
+            <td>
+                <ul class="PagesMenu">
+                    <li [class.SelectedPageMenu]="SelectedItem == 'SHLO'" (click)="SelectedItem = 'SHLO'">Shared Logistics and Mobile</li>
+
+                    <li *ngIf="CustomerTenantAccessVisibility" [class.SelectedPageMenu]="SelectedItem == 'LOBO'" (click)="SelectedItem = 'LOBO'">Access Management</li>
+                </ul>
+            </td>
+        </tr>
+
+
+
+        <tr>
+            <td class="CellStretch">
+                <!--SharedLogistics-->
+                <div class="CellContent" [hidden]="SelectedItem != 'SHLO'">
+                    <div LocationDirective Code="SHLO"></div>
+                </div>
+
+                <!--LogBox-->
+                <div class="CellContent" [hidden]="SelectedItem != 'LOBO'">
+                    <div LocationDirective Code="LOBO"></div>
+                </div>
+
+
+            </td>
+        </tr>
+    </table>
+</div>

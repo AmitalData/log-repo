@@ -1,0 +1,314 @@
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL.EntityPMs; 
+using Logitude.Infrastructure.Data;
+
+namespace Logitude.Infrastructure.BL.EntityDataMappings
+{
+   
+   public partial class BatchTaskExecutionDataMapping: IMapping<BatchTaskExecutionPM, BatchTaskExecution>,IMappingEncodeBase64NVARCHARFields<BatchTaskExecutionPM>
+   {
+          public enum POCOPropertyNames
+          { 
+		     None,  
+	         Id, 
+	         Tenant, 
+	         CreateDate, 
+	         CreatedByUserId, 
+	         SearchFields, 
+	         ClassName, 
+	         PrametersXml, 
+	         StatusCode, 
+	         ErrorLog, 
+	         StartDateTime, 
+	         DoneDateTime, 
+	         ProgressMessage, 
+	         ProgressPercentage,
+	      }
+
+
+	      public enum PMPropertyNames
+          { 
+		     None,  
+	         Id, 
+	         Tenant, 
+	         CreateDate, 
+	         CreatedByUserId, 
+	         SearchFields, 
+	         ClassName, 
+	         PrametersXml, 
+	         StatusCode, 
+	         ErrorLog, 
+	         StartDateTime, 
+	         DoneDateTime, 
+	         ProgressMessage, 
+	         ProgressPercentage, 
+	         StatusName, 
+	         CreatedByUserName,
+	      }
+
+		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
+        List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
+    
+	    public void PMToPOCO(BatchTaskExecutionPM entityPM, BatchTaskExecution entityPOCO)
+        {
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateDate))
+            {
+				entityPOCO.CreateDate = entityPM.CreateDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreatedByUserId))
+            {
+				entityPOCO.CreatedByUserId = entityPM.CreatedByUserId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
+            {
+				entityPOCO.SearchFields = entityPM.SearchFields;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClassName))
+            {
+				entityPOCO.ClassName = entityPM.ClassName;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PrametersXml))
+            {
+				entityPOCO.PrametersXml = entityPM.PrametersXml;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatusCode))
+            {
+				entityPOCO.StatusCode = entityPM.StatusCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ErrorLog))
+            {
+				entityPOCO.ErrorLog = entityPM.ErrorLog;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StartDateTime))
+            {
+				entityPOCO.StartDateTime = entityPM.StartDateTime;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DoneDateTime))
+            {
+				entityPOCO.DoneDateTime = entityPM.DoneDateTime;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ProgressMessage))
+            {
+				entityPOCO.ProgressMessage = entityPM.ProgressMessage;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ProgressPercentage))
+            {
+				entityPOCO.ProgressPercentage = entityPM.ProgressPercentage;
+			}
+			
+				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
+		  }
+
+		public void POCOToPM(BatchTaskExecutionPM entityPM, BatchTaskExecution entityPOCO)
+        {
+			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
+            {
+					entityPM.Id = entityPOCO.Id;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
+            {
+					entityPM.Tenant = entityPOCO.Tenant;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CreateDate))
+            {
+					entityPM.CreateDate = entityPOCO.CreateDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CreatedByUserId))
+            {
+					entityPM.CreatedByUserId = entityPOCO.CreatedByUserId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SearchFields))
+            {
+					entityPM.SearchFields = entityPOCO.SearchFields;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ClassName))
+            {
+					entityPM.ClassName = entityPOCO.ClassName;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PrametersXml))
+            {
+					entityPM.PrametersXml = entityPOCO.PrametersXml;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.StatusCode))
+            {
+					entityPM.StatusCode = entityPOCO.StatusCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ErrorLog))
+            {
+					entityPM.ErrorLog = entityPOCO.ErrorLog;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.StartDateTime))
+            {
+					entityPM.StartDateTime = entityPOCO.StartDateTime;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DoneDateTime))
+            {
+					entityPM.DoneDateTime = entityPOCO.DoneDateTime;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ProgressMessage))
+            {
+					entityPM.ProgressMessage = entityPOCO.ProgressMessage;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ProgressPercentage))
+            {
+					entityPM.ProgressPercentage = entityPOCO.ProgressPercentage;
+            }
+
+		}
+
+		public void PMToOldPM(BatchTaskExecutionPM entityPM, BatchTaskExecutionPM oldEntityPM)
+        {
+		     oldEntityPM.ChangedProperties.Clear();
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+                oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateDate))
+            {
+                oldEntityPM.CreateDate = entityPM.CreateDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreatedByUserId))
+            {
+                oldEntityPM.CreatedByUserId = entityPM.CreatedByUserId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
+            {
+                oldEntityPM.SearchFields = entityPM.SearchFields;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClassName))
+            {
+                oldEntityPM.ClassName = entityPM.ClassName;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PrametersXml))
+            {
+                oldEntityPM.PrametersXml = entityPM.PrametersXml;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatusCode))
+            {
+                oldEntityPM.StatusCode = entityPM.StatusCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ErrorLog))
+            {
+                oldEntityPM.ErrorLog = entityPM.ErrorLog;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StartDateTime))
+            {
+                oldEntityPM.StartDateTime = entityPM.StartDateTime;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DoneDateTime))
+            {
+                oldEntityPM.DoneDateTime = entityPM.DoneDateTime;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ProgressMessage))
+            {
+                oldEntityPM.ProgressMessage = entityPM.ProgressMessage;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ProgressPercentage))
+            {
+                oldEntityPM.ProgressPercentage = entityPM.ProgressPercentage;
+            }
+			
+		}
+
+	    public void EncodeBase64NVARCHARFields(BatchTaskExecutionPM entityPM)
+        {
+            if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
+            {
+                return;
+
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.SearchFields)) //T4 find type == nText 
+            {
+                entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.PrametersXml)) //T4 find type == nText 
+            {
+                entityPM.PrametersXml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.PrametersXml));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.ErrorLog)) //T4 find type == nText 
+            {
+                entityPM.ErrorLog = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ErrorLog));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.ProgressMessage)) //T4 find type == nText 
+            {
+                entityPM.ProgressMessage = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ProgressMessage));
+            }
+            entityPM.EncodeBase64NVARCHARFieldsBy=null;
+		}
+
+
+	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
+        {
+            CustomMappedPOCOProperties.Add(pocoPropertyName);
+        }
+
+        public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
+        {
+            CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+		
+		private void BuildSearchFieldsGenerated(BatchTaskExecutionPM entityPM, BatchTaskExecution entityPOCO, bool isNewEntity)
+        {
+            string mySearchFields = "";
+			
+           
+            entityPM.SearchFields += mySearchFields;
+            entityPOCO.SearchFields += mySearchFields;
+        }
+			  
+   }
+}
+	 

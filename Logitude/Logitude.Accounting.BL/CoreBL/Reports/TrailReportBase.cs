@@ -1,0 +1,414 @@
+﻿using Logitude.Accounting.BL.CloseTables;
+using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.Repositories;
+using Logitude.Accounting.Def.EntityPMs;
+using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Logitude.Accounting.BL.CoreBL.Reports
+{
+    public abstract class TrailReportBase :Logitude.Accounting.BL.CoreBL.Reports.ITrailReportBase
+    {
+        protected TrailReportParam _TrailReportParam = null;
+        protected readonly int __TimeOutInMinutes = 129;
+        private System.Transactions.TransactionScope _TransactionScope;
+        protected IAccountingContext _AccountingContext;
+        private FullAccountingSettingPM _FullAccountingSetting;
+        protected IQueryable<AccountCOAM> QBaseAllCardsAndDetailsAccType;
+        private IQueryable<ChartOfAccount5LevelM> _QAllChartOfAccountFlattenBy5LevelofHierarchy;
+
+        protected IEnumerable //IQueryable
+            <TrailReportM> _QBaseTrailReportFull=null;
+        protected DbContextBase.IDbContextLogger _DbLogger;
+
+
+
+
+        DateTime _FromBeginOfMonth;
+
+        DateTime _ToBeginOfMonth;
+
+        protected IQueryable<Data.EntityPOCOs.GLAccountTotalByMonth> QBaseGLAccountTotalByMonthsFrom0BCTilNotIncludeStartOfMonthFromDate;
+
+        protected IQueryable<Data.EntityPOCOs.GLAccountTotalByMonth> QBaseTotalsFromStartOfMonthFromTilStartOfMonthTo;
+
+        protected IQueryable<Data.EntityPOCOs.LedgerTransaction> QBaseTranactionBeginOfMonthFromTillFromDateNotInclude;
+
+        protected IQueryable<Data.EntityPOCOs.LedgerTransaction> QBaseTranactionBeginOfMonthToDateTillToDateInculde;
+
+        protected IQueryable<ChartOfAccount5LevelM> QBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy;
+
+        public TrailReportBase(TrailReportParam trailReportParam, int timeOutInMinutes)
+        {
+            _TrailReportParam = trailReportParam;
+            __TimeOutInMinutes = timeOutInMinutes;
+
+        }
+
+
+        public List<TrailReportM> Execute()
+        {
+            _TrailReportParam.FromDate = _TrailReportParam.FromDate.Date;
+            _TrailReportParam.ToDate = _TrailReportParam.ToDate.Date;
+            _FromBeginOfMonth = new DateTime(_TrailReportParam.FromDate.Year, _TrailReportParam.FromDate.Month, 1);
+
+            _ToBeginOfMonth = new DateTime(_TrailReportParam.ToDate.Year, _TrailReportParam.ToDate.Month, 1);
+            _TransactionScope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(__TimeOutInMinutes)); //snapshot isolation performance
+
+            _AccountingContext = AccountingContext.GetContext(_TrailReportParam.Tenant);
+            _DbLogger = (_AccountingContext as DbContextBase).CreateLogger();
+
+            _FullAccountingSetting = //Hope From Cache
+                FullAccountingSettingQueryService
+                .Get(_TrailReportParam.Tenant);
+
+
+            var repoGLAccount = new GLAccountRepository(_AccountingContext);
+            var myQBaseAllCardsAndDetailsAccType = //Get The Account List
+                repoGLAccount.
+                GetQAllCardsAndDetailsAccType(
+                _TrailReportParam.Tenant,
+                GetClientContolAcc(_FullAccountingSetting),
+                GetVendorContolAcc(_FullAccountingSetting),
+                "",
+                GetFileContolAcc(_FullAccountingSetting))
+                //.Where(a => !a.Inactive)
+                ;
+            if (!String.IsNullOrWhiteSpace(_TrailReportParam.Category1))
+            {
+                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
+                    .Where(a => a.Category5Id == _TrailReportParam.Category1);
+            }
+            if (!String.IsNullOrWhiteSpace(_TrailReportParam.Category5))
+            {
+                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
+                    .Where(a => a.Category5Id == _TrailReportParam.Category5);
+            }
+
+
+            QBaseAllCardsAndDetailsAccType = (
+                from a in myQBaseAllCardsAndDetailsAccType
+                select new AccountCOAM //Made 4 Short(Projoction) +Algant+Fast SQL
+                {
+                    Id = a.Id,
+                    Tenant = a.Tenant,
+                    AccountTypeCode = a.AccountTypeCode,
+                    EnglishName = a.EnglishName,
+                    ChartOfAccountsTypeCode = a.ChartOfAccountsTypeCode,
+                    ChartOfAccountsId = a.ChartOfAccountsId,
+                    IsControlAccount = a.IsControlAccount,
+                    ParentId = a.ParentAccountId,
+                    DisplayNumber = a.DisplayNumber,
+                    LocalName = a.LocalName,
+                }
+                );
+            QBaseGLAccountTotalByMonthsFrom0BCTilNotIncludeStartOfMonthFromDate =
+                 (from tot in _AccountingContext.GLAccountTotalByMonths.Where(tot => tot.DateTypeCode == GLAccountTotalDateTypeValues.Accountingdate)
+                  where tot.Tenant == _TrailReportParam.Tenant
+                  where tot.Year < _FromBeginOfMonth.Year ||
+                  (tot.Year == _FromBeginOfMonth.Year &&
+                     tot.Month < _FromBeginOfMonth.Month)
+                  select tot
+                     );
+
+            QBaseTotalsFromStartOfMonthFromTilStartOfMonthTo =
+                (from tot in _AccountingContext.GLAccountTotalByMonths.Where(tot => tot.DateTypeCode == GLAccountTotalDateTypeValues.Accountingdate)
+                 where tot.Tenant == _TrailReportParam.Tenant
+
+
+                 where tot.Year > _FromBeginOfMonth.Year ||
+              (tot.Year == _FromBeginOfMonth.Year && tot.Month > _FromBeginOfMonth.Month)
+
+                 where tot.Year < _ToBeginOfMonth.Year ||
+                 (tot.Year == _ToBeginOfMonth.Year && tot.Month < _ToBeginOfMonth.Month)
+                 select tot
+                 );
+
+
+            QBaseTranactionBeginOfMonthFromTillFromDateNotInclude = (
+                from trans in _AccountingContext.LedgerTransactions
+                where trans.Tenant == _TrailReportParam.Tenant
+                //fromBeginOfMonth:20160101 until (Not INclude)_TrailReportParam.FromDate:20160113
+
+                where trans.AccountingDate >= _FromBeginOfMonth
+                where trans.AccountingDate < _TrailReportParam.FromDate//Not INclude 
+                select trans
+                   );
+            var toDateAdd1Day = _TrailReportParam.ToDate.AddDays(1);//INclude //
+            QBaseTranactionBeginOfMonthToDateTillToDateInculde =
+                (
+                from trans in _AccountingContext.LedgerTransactions
+                where trans.Tenant == _TrailReportParam.Tenant
+                //toBeginOfMonth:20160201 until (InculdeAllTransOf)_TrailReportParam.ToDate:20160215
+                where trans.AccountingDate >= _ToBeginOfMonth  //20160201
+                where trans.AccountingDate <
+                toDateAdd1Day //_TrailReportParam.ToDate.AddDays(1)//INclude //==20160216 
+                select trans
+                );
+            var qsChartOfAccount = new ChartOfAccountQueryService(_AccountingContext);
+            _QAllChartOfAccountFlattenBy5LevelofHierarchy = //Flatten ChartOfAccount By 5 Level hierarchy
+                qsChartOfAccount
+                .GetQChartOfAccount5LevelM(_TrailReportParam.Tenant, null
+                ///,_TrailReportParam.MyTrailReportLevel == TrailReportLevel.ChartofaccountType
+                );
+            QBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy =
+            JoinEachAccountWithisChartOfAccount5hierarchy(QBaseAllCardsAndDetailsAccType);
+
+
+
+
+            Prepare();
+
+            if (_QBaseTrailReportFull == null)
+            {
+                throw new Exception("(_QBaseTrailReportFull==null)");
+            }
+            var myOutputReport = _QBaseTrailReportFull.ToList();
+            var myTotalRow =
+                (from r in
+                     myOutputReport
+                 group r by 1 into g
+                 select new TrailReportM()
+         {
+             ChartOfAcount1 = "Total",
+             LocalOpenBalance = g.Sum(r => r.LocalOpenBalance),
+             LocalDebit = g.Sum(r => r.LocalDebit),
+             LocalCredit = g.Sum(r => r.LocalCredit),
+             LocalCloseBalance = g.Sum(r => r.LocalCloseBalance),
+
+
+             ForeignOpenBalance = g.Sum(r => r.ForeignOpenBalance),
+             ForeignDebit = g.Sum(r => r.ForeignDebit),
+             ForeignCredit = g.Sum(r => r.ForeignCredit),
+             ForeignCloseBalance = g.Sum(r => r.ForeignCloseBalance),
+
+         }).FirstOrDefault();
+
+            myOutputReport.Add(myTotalRow);
+
+
+            DbLog = _DbLogger.ToString();
+            return myOutputReport;
+        }
+
+        protected abstract void Prepare();
+
+
+        private IQueryable<ChartOfAccount5LevelM> JoinEachAccountWithisChartOfAccount5hierarchy(IQueryable<AccountCOAM> qAllCardsAndDetialsAccType)
+        {
+            IQueryable<ChartOfAccount5LevelM> qAllCardsAndDetialsAccTypeBy5LevelHierarchy =
+                //Join Each Account With is ChartOfAccount 5 hierarchy
+            (from aGL in qAllCardsAndDetialsAccType
+             join chart in _QAllChartOfAccountFlattenBy5LevelofHierarchy
+             on aGL.ChartOfAccountsId  //ChartOfAccountsId  is must (not null)
+             equals chart.LeafId
+             //into groupJoin
+             select new ChartOfAccount5LevelM()
+             {
+                 Tenant = aGL.Tenant,
+
+
+                 Level1Id = chart.Level1Id,
+                 Level1Name = chart.Level1Name,
+                 Level1Code =  chart.Level1Code,
+
+                 Level2Id = chart.Level2Id,
+                 Level2Name = chart.Level2Name,
+                 Level2Code = chart.Level2Code,
+
+                 Level3Id = chart.Level3Id,
+                 Level3Name = chart.Level3Name,
+                 Level3Code = chart .Level3Code,
+
+                 Level4Id = chart.Level4Id,
+                 Level4Name = chart.Level4Name,
+                 Level4Code = chart.Level4Code,
+
+                 Level5Id = chart.Level5Id,
+                 Level5Name = chart.Level5Name,
+                 Level5Code  = chart.Level5Code,
+
+
+                 GLAccountId = aGL.Id,
+                 GLAccountName = aGL.LocalName,
+                 GLAccountNumber = aGL.DisplayNumber,
+               
+                 ChartOfAccountId=aGL.ChartOfAccountsId,
+                 ChartOfAccountTypeCode = //aGL.AccountTypeCode,
+                 aGL.ChartOfAccountsTypeCode,
+               
+                 LeafId = chart.LeafId,
+                
+
+             }
+                 );
+            return qAllCardsAndDetialsAccTypeBy5LevelHierarchy;
+        }
+
+
+        private string GetClientContolAcc(FullAccountingSettingPM fullAccountingSetting)
+        {
+            string controlAccountId = "";
+            if (_TrailReportParam.DetailedControlClients)
+            {
+                if (!String.IsNullOrWhiteSpace(fullAccountingSetting.CustomerControlAccountId))
+                {
+                    controlAccountId = fullAccountingSetting.CustomerControlAccountId;
+                }
+
+            }
+            return controlAccountId;
+        }
+        private string GetVendorContolAcc(FullAccountingSettingPM fullAccountingSetting)
+        {
+            string vendorControlAccountId = "";
+            if (_TrailReportParam.DetailedControlVendors)
+            {
+                if (!String.IsNullOrWhiteSpace(fullAccountingSetting.VendorControlAccountId))
+                {
+                    vendorControlAccountId = fullAccountingSetting.VendorControlAccountId;
+                }
+
+            }
+            return vendorControlAccountId;
+        }
+
+
+        private string GetFileContolAcc(FullAccountingSettingPM fullAccountingSetting)
+        {
+            string controlAccountId = "";
+            if (_TrailReportParam.DetailedControlFile)
+            {
+                if (!String.IsNullOrWhiteSpace(fullAccountingSetting.FileControlAccountId))
+                {
+                    controlAccountId = fullAccountingSetting.FileControlAccountId;
+                }
+
+            }
+            return controlAccountId;
+        }
+
+
+
+        public void Dispose()
+        {
+            _DbLogger.Dispose();
+            _TransactionScope.Dispose();
+        }
+
+        public string DbLog { get; set; }
+
+        internal bool NotUsingControlAccount()
+        {
+            return (
+                _TrailReportParam.DetailedControlClients==true &&
+                _TrailReportParam.DetailedControlFile == true &&
+                _TrailReportParam.DetailedControlJob == true &&
+                _TrailReportParam.DetailedControlVendors == true
+                );
+        }
+    }
+
+    public static class TrailReportFactory
+    {
+        public static ITrailReportBase CreateNew(TrailReportParam trailReportParam)
+        {
+           
+
+            if (ReportLevel.GLAccount != trailReportParam.MyTrailReportLevel && ! trailReportParam.Skip)
+            {
+                if (trailReportParam.DetailedControlClients
+                    ||
+                    trailReportParam.DetailedControlFile
+                    ||
+                    trailReportParam.DetailedControlJob
+                    ||
+                    trailReportParam.DetailedControlVendors
+                    ||
+                    trailReportParam.Suppress_DoNotShowCardWithoutActivity
+                    )
+                {
+                    throw new Exception("Only in TrailReportLevel.GLAccount DetailedControl is allowed !!!");
+                }
+                if (!string.IsNullOrWhiteSpace(trailReportParam.Category1)
+                    ||
+
+                    !string.IsNullOrWhiteSpace(trailReportParam.Category5)
+
+                    )
+                {
+                    throw new Exception("Only in TrailReportLevel.GLAccount Fillter by Category is allowed !!!");
+                }
+                
+            }
+
+            switch (trailReportParam.MyTrailReportLevel)
+            {
+                case ReportLevel.ChartofaccountType:
+                    if (trailReportParam.CurrenciesDetailed)
+                    {
+                        return new TrailReportChartofaccountTypeCurrenciesDetailed(trailReportParam, 30);
+                    }
+                    else
+                    {
+                        return new TrailReportChartofaccountType(trailReportParam, 30);
+                    }
+                    break;
+                case ReportLevel.Chartofaccount:
+                    if (trailReportParam.CurrenciesDetailed)
+                    {
+
+                        return new TrailReportChartofaccountCurrenciesDetailed(trailReportParam, 120);
+                    }
+                    else
+                    {
+
+                        return new TrailReportChartofaccount(trailReportParam, 90);
+
+                    }
+                    break;
+                case ReportLevel.GLAccount:
+                default:
+                    if (trailReportParam.CurrenciesDetailed)
+                    {
+                        return new TrailReportGLAccountCurrenciesDetailed(trailReportParam, 130);
+
+                    }
+                    else
+                    {
+                        return new TrailReportGLAccount(trailReportParam, 130);
+                    }
+                    break;
+                
+                    break;
+            }
+
+        }
+    }
+
+    public class AccountCOAM
+    {
+
+        public string Id { get; set; }
+
+        public string ChartOfAccountsTypeCode { get; set; }
+
+        public string ChartOfAccountsId { get; set; }
+
+        public int Tenant { get; set; }
+
+        public string AccountTypeCode { get; set; }
+
+        public string EnglishName { get; set; }
+        public string LocalName { get; set; }
+        public bool? IsControlAccount { get; set; }
+        public string DisplayNumber { get; set; }
+        public string ParentId { get; set; }
+    }
+}

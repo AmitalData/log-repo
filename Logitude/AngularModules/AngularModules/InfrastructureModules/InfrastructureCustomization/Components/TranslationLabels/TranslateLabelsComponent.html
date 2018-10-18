@@ -1,0 +1,285 @@
+﻿<style type="text/css">
+    .BoxSection {
+        width: 100%;
+        border-radius: 4px 4px 4px 4px;
+        -moz-border-radius: 4px 4px 4px 4px;
+        -webkit-border-radius: 4px 4px 4px 4px;
+        border: 1px solid #83A5D2;
+        overflow: hidden;
+    }
+
+    .BoxSectionHead {
+        height: 20px;
+        width: 100%;
+        color: #282E30;
+        font-size: 12px;
+        text-align: left;
+        padding-left: 5px;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(235, 243, 255, 1) 0%,rgba(198, 223, 255, 1) 42%,rgba(171, 201, 238, 1) 43%,rgba(208, 232, 255, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(235, 243, 255, 1) 0%, rgba(198, 223, 255, 1) 42%, rgba(171, 201, 238, 1) 43%, rgba(208, 232, 255, 1) 100%);
+        background: -o-linear-gradient(-90deg, rgba(235, 243, 255, 1) 0%, rgba(198, 223, 255, 1) 42%, rgba(171, 201, 238, 1) 43%, rgba(208, 232, 255, 1) 100%);
+        background: linear-gradient(180deg, rgba(235, 243, 255, 1) 0%, rgba(198, 223, 255, 1) 42%, rgba(171, 201, 238, 1) 43%, rgba(208, 232, 255, 1) 100%);
+    }
+
+    .BoxSectionBody {
+        padding: 1px;
+    }
+
+    .ListItem {
+        float: left;
+        width: 200px;
+        height: 20px;
+        line-height: 20px;
+    }
+</style>
+
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr style="height: 1px;">
+        <td>
+            <table>
+                <tr>
+                    <td style="width: 185px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 200px;">
+                        <SearchBox [UseTimer]="true" [SearchText]="SearchText" (TextChanged)="OnSearchTextChanged($event)"></SearchBox>
+                    </td>
+
+                    <td style="width:5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 150px; text-align:left; vertical-align:central;">
+                        Count: {{CountText}}
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 2px; min-height: 2px;">
+        <td></td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <td style="width: 175px;">
+                        <div class="MediaFill">
+                            <ScrollViewer>
+                                <table>
+
+                                    <!-- Tables -->
+                                    <tr style="height: 1px;">
+                                        <td>
+                                            <div class="BoxSection">
+                                                <div class="BoxSectionHead">Tables</div>
+                                                <div class="BoxSectionBody">
+                                                    <LogLov [SelectedValue]="ObjectTableId"
+                                                            [ObjectFieldName]="'ObjectTableId'"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'ObjectTable'"
+                                                            [NoObjectField]="true"
+                                                            [HideColumns]="true">
+                                                    </LogLov>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr style="height: 5px;">
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Spell Checked -->
+                                    <tr style="height: 1px;">
+                                        <td>
+                                            <div class="BoxSection">
+                                                <div class="BoxSectionHead">Spell Checked</div>
+                                                <div class="BoxSectionBody">
+                                                    <div class="RadioButton" *ngFor="let item of SpellCheckedList" style="margin: 2px;">
+                                                        <input [attr.id]="'SpellCheckedRadio_' + ComponentId + item.Code" [attr.name]="'SpellCheckedRadio_' + ComponentId" type="radio" [checked]="SpellCheckedSelectedItem == item" (click)="SpellCheckedSelectedItem = item" />
+                                                        <label [attr.for]="'SpellCheckedRadio_' + ComponentId + item.Code" style="font-size: 12px" [ngStyle]="{color: SpellCheckedSelectedItem == item ? '#287828':'#282E30'}">
+                                                            {{item.Name}}
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr style="height: 5px;">
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Check Date -->
+                                    <tr style="height: 1px;">
+                                        <td>
+                                            <div class="BoxSection">
+                                                <div class="BoxSectionHead">Check Date</div>
+                                                <div class="BoxSectionBody">
+                                                    <div class="RadioButton" *ngFor="let item of DateCheckedList" style="margin: 2px;">
+                                                        <input [attr.id]="'DateCheckedRadio_' + ComponentId + item.Code" [attr.name]="'DateCheckedRadio_' + ComponentId" type="radio" [checked]="DateCheckedSelectedItem == item" (click)="DateCheckedSelectedItem = item" />
+                                                        <label [attr.for]="'DateCheckedRadio_' + ComponentId + item.Code" style="font-size: 12px" [ngStyle]="{color: DateCheckedSelectedItem == item ? '#287828':'#282E30'}">
+                                                            {{item.Name}}
+                                                        </label>
+                                                    </div>
+
+                                                    <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'SelectedCheckDate'" [SelectedDateValue]="SelectedCheckDate" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr style="height: 5px;">
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Types -->
+                                    <tr style="height: 1px;">
+                                        <td>
+                                            <div class="BoxSection">
+                                                <div class="BoxSectionHead">Types</div>
+                                                <div class="BoxSectionBody">
+                                                    <div class="RadioButton" *ngFor="let item of TextCodeTypesList" style="margin: 2px;">
+                                                        <input [attr.id]="'TextCodeTypesRadio_' + ComponentId + item.Code" [attr.name]="'TextCodeTypesRadio_' + ComponentId" type="radio" [checked]="TextCodeTypeSelectedItem == item" (click)="TextCodeTypeSelectedItem = item" />
+                                                        <label [attr.for]="'TextCodeTypesRadio_' + ComponentId + item.Code" style="font-size: 12px" [ngStyle]="{color: TextCodeTypeSelectedItem == item ? '#287828':'#282E30'}">
+                                                            {{item.Name}}
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </ScrollViewer>
+                        </div>
+                    </td>
+
+                    <td style="width: 10px;">
+                        <div></div>
+                    </td>
+
+                    <td>
+                        <div class="MediaFill">
+                            <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource" (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
+
+                                <!-- Code -->
+                                <log-column [width]="'250'" [header]="'Code'">
+                                    <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                                        {{item.Code}}
+                                    </log-cell-template>
+                                </log-column>
+
+                                <!-- DefaultText -->
+                                <log-column [width]="'150'" [header]="'Default Text'">
+                                    <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                                        {{item.DefaultText}}
+                                    </log-cell-template>
+                                </log-column>
+
+                                <!-- Display Label -->
+                                <log-column [width]="'600'" [header]="'Display Label'">
+                                    <log-cell-template template="let item" #logcelltemplate >
+                                        <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%;" class="TextTrimming">
+                                            {{item.TranslatedText}}
+                                        </div>
+                                        
+                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                            <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'TranslatedText'" [NoObjectField]="true" [Text]="item.TranslatedText" [DataContext]="item" [HideColumns]="true"></LogTextBox>
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
+                                <!-- Is Translated  -->
+                                <log-column [width]="'90'" [header]="'Translated'" [Alignment]="'left'">
+                                    <log-cell-template template="let item" #logcelltemplate [Alignment]="'left'" [CellColor]="item.CellBackgroundColor">
+                                        <div style="width: 100%; text-align: left;" class="TextTrimming">
+                                            <img *ngIf="item.IsTranslated" width="11" height="11" style="vertical-align: middle;" src="./Images/Icons/MiniGreenTick.png" />
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
+                                <!-- Translated By  -->
+                                <log-column [width]="'100'" [header]="'Translated by'" [Alignment]="'left'">
+                                    <log-cell-template template="let item" #logcelltemplate [Alignment]="'left'" [CellColor]="item.CellBackgroundColor">
+                                        <div style="width: 100%; text-align: left;" class="TextTrimming">
+                                            {{item.TranslatedBy}}
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
+                                <!-- Translated Date  -->
+                                <log-column [width]="'100'" [header]="'Translate Date'" [Alignment]="'left'">
+                                    <log-cell-template template="let item" #logcelltemplate [Alignment]="'left'" [CellColor]="item.CellBackgroundColor">
+                                        <div style="width: 100%; text-align: left;" class="TextTrimming">
+                                            {{item.TranslateDate | DateTimePipe:'D'}}
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+                            </logitude-edit-grid>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 120px;">
+                        <button class="Button" (click)="SaveAndPreviousClicked()" [disabled]="!DataContext.PreviousButtonIsEnabled">Save And Previous</button>
+                    </td>
+
+                    <td style="width:5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 120px;">
+                        <button class="Button" (click)="SaveAndNextClicked()" [disabled]="!DataContext.NextButtonIsEnabled">Save And Next</button>
+                    </td>
+
+                    <td style="width:5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CloseClicked()" *ngIf="!HasChanges">Close</button>
+                        <button class="RedButton" (click)="CloseClicked()" *ngIf="HasChanges">Close</button>
+                    </td>
+
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

@@ -1,0 +1,841 @@
+﻿
+<style type="text/css">
+    .BoxItem:hover .DateButton {
+        visibility: visible;
+    }
+
+    .BoxItem .DateButton {
+        visibility: collapse;
+    }
+
+    .BoxItem td {
+        vertical-align: middle;
+    }
+
+    .BoxItem {
+        display: block;
+        background: rgba(235, 235, 235, 0.5);
+        border: 1px solid #BABABA;
+        margin-bottom: 5px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    .PartnerTemplateRow, .PartnerTemplateRow td, .PartnerTemplateRow td div, .PartnerTemplateRow td span {
+        color: #6E7172;
+        font-size: 10px;
+        height: 15px;
+        line-height: 15px;
+        white-space: nowrap;
+        text-align: left;
+    }
+</style>
+
+<div class="TabHolder">
+
+    <!-- Default -->
+    <table *ngIf="!IsInlandDomestic">
+        <tr class="TabTitleRow">
+            <td>{{'Shipment.TH.Routings' | TextCodeTranslationPipe}}</td>
+
+            <td style="width: 85px;">
+                <div tabindex="0"  id="{{ 'RoutingToggle' | IdGeneratorPipe}}" class="ToggleButton" [class.ToggleButtonDisabled]="!IsEditingEnabled">
+                    <label>{{'Shipment.B.Routings.AddRoute' | TextCodeTranslationPipe}}</label>
+                    <img src="./Images/ToggleIcon.png" />
+                    <div class="ToggleButtonMenu" style="width: 100px">
+                        <button id="{{ 'Pick Up' | IdGeneratorPipe}}" (click)="AddLeg('Pick Up')">{{'Shipment.O.Routings.Pickup' | TextCodeTranslationPipe}}</button>
+                        <button id="{{ 'Pre Carriage' | IdGeneratorPipe}}" (click)="AddLeg('Pre Carriage')" [disabled]="IsAddPreCarriageDisabled">{{'Shipment.O.Routings.PreCarriage' | TextCodeTranslationPipe}}</button>
+                        <button id="{{ 'On Carriage' | IdGeneratorPipe}}" (click)="AddLeg('On Carriage')" [disabled]="IsAddOnCarriageDisabled">{{'Shipment.O.Routings.OnCarriage' | TextCodeTranslationPipe}}</button>
+                        <button id="{{ 'Delivery' | IdGeneratorPipe}}" (click)="AddLeg('Delivery')">{{'Shipment.O.Routings.Delivery' | TextCodeTranslationPipe}}</button>
+                    </div>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                <div class="MediaFill">
+                    <ScrollViewer>
+                        <ul>
+                            <li class="BoxItem" *ngFor="let item of ItemsSource">
+                                <table [style.height.px]="item.LegHeight">
+                                    <tr style="height: 5px;">
+                                        <td colspan="3">
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td style="width: 5px;">
+                                            <div></div>
+                                        </td>
+
+                                        <td>
+                                            <table>
+
+                                                <!-- Head -->
+                                                <tr style="height: 18px;">
+                                                    <td>
+                                                        <table>
+                                                            <tr>
+                                                                <td>
+                                                                    <div style="font-size: 13px; color: #1B90CB;">{{item.LegName}}</div>
+                                                                </td>
+
+                                                                <td style="width:18px; vertical-align:middle;" *ngIf="item.IsAddButtonVisible">
+                                                                    <IconButton [ExternalId]="'-'+item.LegType"  [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsEditingEnabled" *ngIf="item.LegType == 'Pick Up'" (click)="AddLeg('Pick Up')"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType"  [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsEditingEnabled" *ngIf="item.LegType == 'Delivery'" (click)="AddLeg('Delivery')"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType"  [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsEditingEnabled" *ngIf="item.LegType == 'WarehouseLeg_Pickups'" (click)="AddLeg('WarehouseLeg_Pickups')"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType"  [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsEditingEnabled" *ngIf="item.LegType == 'WarehouseLeg'" (click)="AddLeg('WarehouseLeg')"></IconButton>
+                                                                </td>
+
+                                                                <td style="width:18px; vertical-align:middle;" *ngIf="item.IsEditButtonVisible">
+                                                                    <IconButton [ExternalId]="'-'+item.LegType"  [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'Pick Up'" (click)="EditLeg(item)"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType"  [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'WarehouseLeg_Pickups'" (click)="EditLeg(item)"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType"  [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'Pre Carriage'" (click)="EditLeg(item)"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType"  [Name]="'Edit'" [IsSmall]="true" *ngIf="item.IsMainLeg" (click)="EditLeg(item)"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType"  [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'On Carriage'" (click)="EditLeg(item)"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType"  [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'WarehouseLeg'" (click)="EditLeg(item)"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType"  [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'Delivery'" (click)="EditLeg(item)"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType"  [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'EmptyCR'" (click)="EditLeg(item)"></IconButton>
+                                                                </td>
+
+                                                                <td style="width: 3px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="width: 1px; vertical-align: middle;" *ngIf="item.IsDeleteButtonVisible">
+                                                                    <IconButton [ExternalId]="'-'+item.LegType"  [Name]="'Delete'" [IsSmall]="true" [IsEnabled]="IsEditingEnabled" (click)="DeleteLeg(item)"></IconButton>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>
+                                                        <div *ngIf="!item.IsLegExists" style="width: 100%; text-align: center; font-size: 12px; color: #6E7172;">{{item.NoLegTextCode | TextCodeTranslationPipe}}</div>
+
+                                                        <table *ngIf="item.IsLegExists">
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="MediaFill" *ngIf="!item.IsWarehouseLeg">
+                                                                        <table>
+                                                                            <tr style="height: 5px;">
+                                                                                <td>
+                                                                                    <div></div>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <table>
+                                                                                        <tr>
+                                                                                            <td style="width: 55px; text-align: center;">
+                                                                                                <img style="width: 40px; height: 35px;" [attr.src]="item.ImageSource" />
+                                                                                            </td>
+
+                                                                                            <td style="width: 5px;">
+                                                                                                <div></div>
+                                                                                            </td>
+
+                                                                                            <td>
+                                                                                                <table style="table-layout: fixed;">
+                                                                                                    <tr>
+                                                                                                        <td style="width: 40px;" class="Label">{{'Shipment.O.Routings.From' | TextCodeTranslationPipe}}:</td>
+
+                                                                                                        <td>
+                                                                                                            <img style="float: left; width: 16px; height: 16px;" [attr.src]="item.FromCountryCode | CountryFlagPipe" [attr.title]="item.FromCountryName" />
+                                                                                                            <div style="float: left; margin-left: 3px;" class="Value">{{item.FromCountryText}}</div>
+                                                                                                        </td>
+
+                                                                                                        <td style="width: 75px;">
+                                                                                                            <button id="{{ 'ActualDeparture' | IdGeneratorPipe}}" (click)="item.SetActualDepartureClicked()" class="Button DateButton" [disabled]="!IsEditingEnabled" *ngIf="item.IsSetActualDepartureVisible" style="height: 18px; font-size: 10px;">Set as Actual</button>
+                                                                                                        </td>
+
+                                                                                                        <td style="width: 15px;">
+                                                                                                            <div></div>
+                                                                                                        </td>
+
+                                                                                                        <td style="width: 65px;" class="Label">{{'Shipment.O.Routings.Departure' | TextCodeTranslationPipe}}:</td>
+                                                                                                        <td style="width: 65px; font-size: 10px;" [ngStyle]="{color: item.DepartureColor}">{{item.DepartureDate | DateTimeToDatePipe}}</td>
+                                                                                                        <td style="width: 30px; font-size: 10px; text-align: right;" [ngStyle]="{color: item.DepartureColor}">{{item.DepartureDate | DateTimeToTimePipe}}</td>
+
+                                                                                                        <td style="width: 18px;">
+                                                                                                            <FollowupButton [IsEnabled]="IsEditingEnabled" [ShipmentPM]="EntityPM" [PickUpPM]="item.Pickup" [DeliveryPM]="item.Delivery" [LegType]="item.FollowupLegTypeDeparture"></FollowupButton>
+                                                                                                        </td>
+                                                                                                    </tr>
+
+                                                                                                    <tr>
+                                                                                                        <td style="width: 40px;" class="Label">{{'Shipment.O.Routings.To' | TextCodeTranslationPipe}}:</td>
+                                                                                                        <td>
+                                                                                                            <img style="float: left; width: 16px; height: 16px;" [attr.src]="item.ToCountryCode | CountryFlagPipe" [attr.title]="item.ToCountryName" />
+                                                                                                            <div style="float: left; margin-left: 3px;" class="Value">{{item.ToCountryText}}</div>
+                                                                                                        </td>
+
+                                                                                                        <td style="width: 75px;">
+                                                                                                            <button id="{{ 'ActualArrival' | IdGeneratorPipe}}" (click)="item.SetActualArrivalClicked()" class="Button DateButton" [disabled]="!IsEditingEnabled" *ngIf="item.IsSetActualArrivalVisible" style="height: 18px; font-size: 10px;">Set as Actual</button>
+                                                                                                        </td>
+
+                                                                                                        <td style="width: 15px;">
+                                                                                                            <div></div>
+                                                                                                        </td>
+
+                                                                                                        <td style="width: 65px;" class="Label">{{'Shipment.O.Routings.Arrival' | TextCodeTranslationPipe}}:</td>
+                                                                                                        <td style="width: 65px; font-size: 10px;" [ngStyle]="{color: item.ArrivalColor}">{{item.ArrivalDate | DateTimeToDatePipe}}</td>
+                                                                                                        <td style="width: 30px; font-size: 10px; text-align: right;" [ngStyle]="{color: item.ArrivalColor}">{{item.ArrivalDate | DateTimeToTimePipe}}</td>
+
+                                                                                                        <td style="width: 18px;">
+                                                                                                            <FollowupButton [IsEnabled]="IsEditingEnabled" [ShipmentPM]="EntityPM" [PickUpPM]="item.Pickup" [DeliveryPM]="item.Delivery" [LegType]="item.FollowupLegTypeArrival"></FollowupButton>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </table>
+                                                                                            </td>
+
+                                                                                            <td style="width: 5px;">
+                                                                                                <div></div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr style="height: 5px;">
+                                                                                <td>
+                                                                                    <div></div>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr style="height: 15px;">
+                                                                                <td style="vertical-align: middle;">
+
+                                                                                    <div style="float: left;" *ngIf="item.IsBookingConfirmationVisible">
+                                                                                        <img src="./Images/GreenTick.png" title="Shipment Booked" />
+                                                                                        <span style="display: inline-block; width:3px; height:3px; "></span>
+                                                                                    </div>
+
+                                                                                    <div style="float: left;">
+                                                                                        <span class="Label" style="float: left;">{{'Shipment.O.Routings.Carrier' | TextCodeTranslationPipe}}:</span>
+                                                                                        <span *ngIf="item.IsCarrierTextVisible" class="Value" style="float: left; margin-left: 3px;">{{item.CarrierText}}</span>
+                                                                                        <span *ngIf="item.IsCarrierSiteVisible" style="float: left; margin-left: 3px;"><a [attr.href]="item.CarrierSite" target="_blank">{{item.CarrierText}}</a></span>
+                                                                                    </div>
+
+                                                                                    <div style="float: left; margin-left: 10px;">
+                                                                                        <span class="Label" style="float: left;">{{'Shipment.O.Routings.No' | TextCodeTranslationPipe}}:</span>
+                                                                                        <span class="Value" style="float: left; margin-left: 3px;">{{item.CarrierNumber}}</span>
+                                                                                    </div>
+
+
+                                                                                    <div style="float: left; margin-left: 10px;" *ngIf="item.IsVesselVisible">
+                                                                                        <span class="Label" style="float: left;">{{'Shipment.O.Routings.Vessel' | TextCodeTranslationPipe}}:</span>
+                                                                                        <span class="Value" style="float: left; margin-left: 3px;">{{item.VesselName}}</span>
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </div>
+
+                                                                    <div class="MediaFill" *ngIf="item.IsWarehouseLeg">
+                                                                        <table>
+                                                                            <tr style="height: 5px;">
+                                                                                <td>
+                                                                                    <div></div>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <table>
+                                                                                        <tr>
+                                                                                            <td style="width: 220px;">
+                                                                                                <table>
+                                                                                                    <tr style="height:22px;">
+                                                                                                        <td style="width: 40px;" class="Label">Terminal:</td>
+                                                                                                        <td style="width: 180px;">
+                                                                                                            <div  style="float: left;width: 180px; margin-left: 3px;" class="Value TextTrimming"> {{WarehouseLegTerminalName}}</div>
+                                                                                                        </td>
+                                                                                                        <td>
+                                                                                                            <div></div>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                    <tr>
+                                                                                                        <td colspan="3">
+                                                                                                            <AddressTemplate [Border]="'0px'" [Address]="WarehouseAddressList" [Right]="36"></AddressTemplate>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </table>
+                                                                                            </td>
+
+                                                                                            <td style="width: 5px;">
+                                                                                                <div></div>
+                                                                                            </td>
+
+                                                                                            <td style="float:left;">
+                                                                                                <table style="table-layout: fixed;">
+                                                                                                    <tr class="FieldRow">
+                                                                                                        <td style="width: 130px;" class="Label">{{'Shipment.O.Routings.WarehouseLegReference' | TextCodeTranslationPipe}}:</td>
+                                                                                                        <td>
+                                                                                                            <div style="float: left;" class="Value"> {{item.WarehouseLegReference}}</div>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                    <tr class="FieldRow">
+                                                                                                        <td class="Label">{{'Shipment.O.Routings.WarehouseLegTerminalCode' | TextCodeTranslationPipe}}:</td>
+                                                                                                        <td>
+                                                                                                            <div style="float: left;" class="Value TextTrimming">{{item.WarehouseLegTerminalCode}}</div>
+                                                                                                        </td>
+                                                                                                    </tr>
+
+                                                                                                    <!-- LastFreeDate -->
+                                                                                                    <tr class="FieldRow" *ngIf="item.LegType == 'WarehouseLeg'">
+                                                                                                        <td class="Label">{{'Shipment.O.Routings.WarehouseLegLastFreeDate' | TextCodeTranslationPipe}}:</td>
+                                                                                                        <td>
+                                                                                                            <div style="float: left;" class="Value">{{item.WarehouseLegLastFreeDate | DateTimePipe:'SHWH'}}</div>
+                                                                                                        </td>
+                                                                                                    </tr>
+
+                                                                                                    <!-- TerminalAvailable -->
+                                                                                                    <tr class="FieldRow" *ngIf="item.LegType == 'WarehouseLeg'">
+                                                                                                        <td class="Label">{{'Shipment.O.Routings.TerminalAvailable' |TextCodeTranslationPipe}}:</td>
+                                                                                                        <td>
+                                                                                                            <div style="float: left;" class="Value">{{item.TerminalAvailable | DateTimePipe:'SHWH'}}</div>
+                                                                                                        </td>
+                                                                                                    </tr>
+
+                                                                                                    <!-- CutOffDate -->
+                                                                                                    <tr class="FieldRow" *ngIf="item.LegType == 'WarehouseLeg_Pickups'">
+                                                                                                        <td class="Label">{{'Shipment.F.WarehouseLegCutOffDate' | TextCodeTranslationPipe}}:</td>
+                                                                                                        <td>
+                                                                                                            <div style="float: left;" class="Value">{{item.WarehouseLegCutOffDate | DateTimePipe:'SHWH'}}</div>
+                                                                                                        </td>
+                                                                                                    </tr>
+
+                                                                                                    <!-- VGMCutOffDate -->
+                                                                                                    <tr class="FieldRow" *ngIf="item.LegType == 'WarehouseLeg_Pickups' && TransportModeId != 'A'">
+                                                                                                        <td class="Label">{{'Shipment.F.WarehouseLegVGMCutOffDate' |TextCodeTranslationPipe}}:</td>
+                                                                                                        <td>
+                                                                                                            <div style="float: left;" class="Value">{{item.WarehouseLegVGMCutOffDate | DateTimePipe:'SHWH'}}</div>
+                                                                                                        </td>
+                                                                                                    </tr>
+
+                                                                                                    <tr>
+                                                                                                        <td colspan="2">
+                                                                                                            <div></div>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </table>
+                                                                                            </td>
+
+                                                                                            <td style="width: 268px;">
+                                                                                                <table style="table-layout: fixed;">
+                                                                                                    <tr>
+                                                                                                        <td>
+                                                                                                            <table>
+                                                                                                                <tr style="height:22px;">
+                                                                                                                    <td style="width: 75px;">
+                                                                                                                        <button (click)="item.SetActualDepartureClicked()" class="Button DateButton" [disabled]="!IsEditingEnabled" *ngIf="item.IsSetActualDepartureVisible" style="height: 18px; font-size: 10px;">Set as Actual</button>
+                                                                                                                    </td>
+
+                                                                                                                    <td style="width: 15px;">
+                                                                                                                        <div></div>
+                                                                                                                    </td>
+
+                                                                                                                    <td style="width: 65px;" class="Label">{{'Shipment.O.Routings.Entry' | TextCodeTranslationPipe}}:</td>
+                                                                                                                    <td style="width: 65px; font-size: 10px;" [ngStyle]="{color: item.DepartureColor}">{{item.DepartureDate | DateTimeToDatePipe}}</td>
+                                                                                                                    <td style="width: 30px; font-size: 10px; text-align: right;" [ngStyle]="{color: item.DepartureColor}">{{item.DepartureDate | DateTimeToTimePipe}}</td>
+
+                                                                                                                    <td style="width: 18px;">
+                                                                                                                        <FollowupButton [IsEnabled]="IsEditingEnabled" [ShipmentPM]="EntityPM" [PickUpPM]="item.Pickup" [DeliveryPM]="item.Delivery" [LegType]="item.FollowupLegTypeDeparture"></FollowupButton>
+                                                                                                                    </td>
+                                                                                                                </tr>
+                                                                                                                <tr style="height:22px;">
+                                                                                                                    <td style="width: 75px;">
+                                                                                                                        <button (click)="item.SetActualArrivalClicked()" class="Button DateButton" [disabled]="!IsEditingEnabled" *ngIf="item.IsSetActualArrivalVisible" style="height: 18px; font-size: 10px;">Set as Actual</button>
+                                                                                                                    </td>
+
+                                                                                                                    <td style="width: 15px;">
+                                                                                                                        <div></div>
+                                                                                                                    </td>
+                                                                                                                    <td style="width: 65px;" class="Label">{{'Shipment.O.Routings.Release' | TextCodeTranslationPipe}}:</td>
+                                                                                                                    <td style="width: 65px; font-size: 10px;" [ngStyle]="{color: item.ArrivalColor}">{{item.ArrivalDate | DateTimeToDatePipe}}</td>
+                                                                                                                    <td style="width: 30px; font-size: 10px; text-align: right;" [ngStyle]="{color: item.ArrivalColor}">{{item.ArrivalDate | DateTimeToTimePipe}}</td>
+
+                                                                                                                    <td style="width: 18px;">
+                                                                                                                        <FollowupButton [IsEnabled]="IsEditingEnabled" [ShipmentPM]="EntityPM" [PickUpPM]="item.Pickup" [DeliveryPM]="item.Delivery" [LegType]="item.FollowupLegTypeArrival"></FollowupButton>
+                                                                                                                    </td>
+                                                                                                                </tr>
+                                                                                                                <tr>
+                                                                                                                    <td colspan="2">
+                                                                                                                        <div></div>
+                                                                                                                    </td>
+                                                                                                                </tr>
+                                                                                                            </table>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </table>
+                                                                                            </td>
+
+                                                                                            <td style="width: 5px;">
+                                                                                                <div></div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr style="height: 5px;">
+                                                                                <td>
+                                                                                    <div></div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+
+                                            </table>
+                                        </td>
+
+                                        <td style="width: 5px;">
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <tr style="height: 5px;">
+                                        <td colspan="3">
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </li>
+                        </ul>
+                    </ScrollViewer>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <!-- InlandDomestic -->
+    <table *ngIf="IsInlandDomestic">
+        <tr class="TabTitleRow">
+            <td>{{'Shipment.TH.Routings' | TextCodeTranslationPipe}}</td>
+        </tr>
+
+        <tr style="height: 170px;">
+            <td>
+                <table>
+                    <tr>
+                        <td style="width: 400px;">
+                            <SectionBox [HeaderHeight]="22" [Border]="'1px solid #BABABA'">
+                                <SectionHead [Left]="5" [IsLight]="true">
+                                    <span style="font-size: 12px; color: #1B90CB;">From Partner</span>
+                                </SectionHead>
+
+                                <SectionBody>
+                                    <table>
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 105px;">
+                                                <LogLabel [ObjectFieldName]="'MainCarriageFromPartnerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.S.NewShipment.Name'"></LogLabel>
+                                            </td>
+
+                                            <td style="width: 240px;">
+                                                <LogLov [ObjectFieldName]="'MainCarriageFromPartnerId'"
+                                                        [SelectedValue]="MainCarriageFromPartnerId"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'Card'"
+                                                        [DependencyFilter1Value]="CardLOVDependencyProperty1">
+                                                </LogLov>
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'MainCarriageFromAddressId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.S.Partners.Address'"></LogLabel>
+                                            </td>
+
+                                            <td>
+                                                <LogLov [ObjectFieldName]="'MainCarriageFromAddressId'"
+                                                        [SelectedValue]="MainCarriageFromAddressId"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'Address'"
+                                                        [DependencyFilter1Value]="MainCarriageFromPartnerId">
+                                                </LogLov>
+                                            </td>
+
+                                            <td>
+                                                <div style="float: right; padding-right: 5px;">
+                                                    <IconButton [ExternalId]="'-F'"  [Name]="'Edit'" [IsSmall]="true" (click)="EditAddressClicked('F')" [IsEnabled]="MainCarriageFromAddressId && IsEditingEnabled"></IconButton>
+                                                    <IconButton [ExternalId]="'-F'"  [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddAddressClicked('F')" [IsEnabled]="IsEditingEnabled && MainCarriageFromAddressId"></IconButton>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <div></div>
+                                            </td>
+
+                                            <td style="vertical-align: top; padding-top: 5px;">
+                                                <AddressTemplate [Address]="FromAddressList" [Right]="36"></AddressTemplate>
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </SectionBody>
+                            </SectionBox>
+                        </td>
+
+                        <td style="width: 10px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 400px;">
+                            <SectionBox [HeaderHeight]="22" [Border]="'1px solid #BABABA'">
+                                <SectionHead [Left]="5" [IsLight]="true">
+                                    <span style="font-size: 12px; color: #1B90CB;">To Partner</span>
+                                </SectionHead>
+
+                                <SectionBody>
+                                    <table>
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 105px;">
+                                                <LogLabel [ObjectFieldName]="'MainCarriageToPartnerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.S.NewShipment.Name'"></LogLabel>
+                                            </td>
+
+                                            <td style="width: 240px;">
+                                                <LogLov [ObjectFieldName]="'MainCarriageToPartnerId'"
+                                                        [SelectedValue]="MainCarriageToPartnerId"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'Card'"
+                                                        [DependencyFilter1Value]="CardLOVDependencyProperty1">
+                                                </LogLov>
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'MainCarriageToAddressId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.S.Partners.Address'"></LogLabel>
+                                            </td>
+
+                                            <td>
+                                                <LogLov [ObjectFieldName]="'MainCarriageToAddressId'"
+                                                        [SelectedValue]="MainCarriageToAddressId"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'Address'"
+                                                        [DependencyFilter1Value]="MainCarriageToPartnerId">
+                                                </LogLov>
+                                            </td>
+
+                                            <td>
+                                                <div style="float: right; padding-right: 5px;">
+                                                    <IconButton [ExternalId]="'-T'"  [Name]="'Edit'" [IsSmall]="true" (click)="EditAddressClicked('T')" [IsEnabled]="MainCarriageToAddressId && IsEditingEnabled"></IconButton>
+                                                    <IconButton [ExternalId]="'-T'" [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddAddressClicked('T')" [IsEnabled]="IsEditingEnabled && MainCarriageToPartnerId"></IconButton>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <div></div>
+                                            </td>
+
+                                            <td style="vertical-align: top; padding-top: 5px;">
+                                                <AddressTemplate [Address]="ToAddressList" [Right]="36"></AddressTemplate>
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </SectionBody>
+                            </SectionBox>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr style="height: 10px;">
+            <td>
+                <div></div>
+            </td>
+        </tr>
+
+        <tr style="height: 1px;">
+            <td>
+                <table>
+                    <tr>
+                        <td style="width: 400px;">
+                            <table>
+
+                                <!-- Trucker -->
+                                <tr class="FormFieldRow">
+                                    <td style="width: 115px;">
+                                        <LogLabel [ObjectFieldName]="'MainCarriageCarrierId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.Trucker'"></LogLabel>
+                                    </td>
+
+                                    <td style="width: 240px;">
+                                        <LogLov [ObjectFieldName]="'MainCarriageCarrierId'"
+                                                [SelectedValue]="MainCarriageCarrierId"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Carrier'"
+                                                [DependencyFilter1Value]="'TR'">
+                                        </LogLov>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <!-- Driver -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'Driver'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'Driver'" [Text]="Driver" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <!-- TruckNumber -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'TruckNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'TruckNumber'" [Text]="TruckNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <!-- TrailerNumber -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'TrailerNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'TrailerNumber'" [Text]="TrailerNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <!-- Master -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'Master'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.CMR/RWB#'"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'Master'" [Text]="Master" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="3">
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td style="width: 10px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 400px;">
+                            <table>
+
+                                <!-- ETD -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width: 75px;">
+                                        <div>
+                                            <button *ngIf="MainCarriageETD && !MainCarriageATD" (click)="SetActualDateClicked('MainCarriageETD')" class="Button" [disabled]="!IsEditingEnabled" style="height: 18px; font-size: 10px;">Set as Actual</button>
+                                        </div>
+                                    </td>
+
+                                    <td style="width: 45px;">
+                                        <LogLabel [ObjectFieldName]="'MainCarriageETD'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.ETD'"></LogLabel>
+                                    </td>
+
+                                    <td style="width: 105px;">
+                                        <LogDatePicker [ObjectFieldName]="'MainCarriageETD'" [SelectedDateValue]="MainCarriageETD" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                    </td>
+
+                                    <td style="width: 2px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width: 95px;">
+                                        <LogDatePicker [ObjectFieldName]="'MainCarriageETD'" [SelectedDateValue]="MainCarriageETD" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                    </td>
+
+                                    <td style="width: 18px;">
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <!-- ETA -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width: 75px;">
+                                        <div>
+                                            <button *ngIf="MainCarriageETA && !MainCarriageATA" (click)="SetActualDateClicked('MainCarriageETA')" class="Button" [disabled]="!IsEditingEnabled" style="height: 18px; font-size: 10px;">Set as Actual</button>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'MainCarriageETA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.ETA'"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogDatePicker [ObjectFieldName]="'MainCarriageETA'" [SelectedDateValue]="MainCarriageETA" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+
+                                    <td>
+                                        <LogDatePicker [ObjectFieldName]="'MainCarriageETA'" [SelectedDateValue]="MainCarriageETA" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <!-- ATD -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <div></div>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'MainCarriageATD'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.ATD'"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogDatePicker [ObjectFieldName]="'MainCarriageATD'" [SelectedDateValue]="MainCarriageATD" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+
+                                    <td>
+                                        <LogDatePicker [ObjectFieldName]="'MainCarriageATD'" [SelectedDateValue]="MainCarriageATD" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <!-- ATA -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <div></div>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'MainCarriageATA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.ATA'"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogDatePicker [ObjectFieldName]="'MainCarriageATA'" [SelectedDateValue]="MainCarriageATA" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+
+                                    <td>
+                                        <LogDatePicker [ObjectFieldName]="'MainCarriageATA'" [SelectedDateValue]="MainCarriageATA" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="7">
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <div></div>
+            </td>
+        </tr>
+    </table>
+</div>

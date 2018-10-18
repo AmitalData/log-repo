@@ -1,0 +1,56 @@
+﻿<table *ngIf="IsVisible">
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [SingleLine]="true" [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+    <tr style="height:10px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+    <tr style="height: 32px;vertical-align: top;">
+        <td style="vertical-align: top;">
+            <table style="height: 22px;">
+                <tr [hidden]="!IsMessageValid">
+                    <td style="font-size: 12px; width:320px;">{{MessageText}}</td>
+                    <td style="width: 24px;">
+                        <img src="./Images/Icons/MiniGreenTick.png" style="height:20px;width:20px;" />
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+                <tr [hidden]="IsMessageValid">
+                    <td style="font-size: 12px; width:320px;">{{MessageText}}</td>
+                    <td style="width: 24px;">
+                        <img src="./Images/SimplogIcons/ErrorIcon.png" style="height:20px;width:20px;" />
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div></div>
+        </td>
+    </tr>
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="CloseButtonClicked()">Close</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

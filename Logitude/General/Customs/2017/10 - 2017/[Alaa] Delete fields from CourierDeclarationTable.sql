@@ -1,0 +1,2 @@
+alter table customs.CourierDeclarations drop column CasualSupplierName
+alter table customs.CourierDeclarations drop column CasualSupplierAddress

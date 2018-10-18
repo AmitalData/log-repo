@@ -1,0 +1,150 @@
+﻿
+<style>
+    .iwanttohover:hover {
+        background: #DDE6F0;
+    }
+
+    GridView th, .GridView td, .GridView td div {
+        text-align: left;
+        text-indent: 5px;
+        /*height: 24px;*/
+        line-height: 17px;
+        vertical-align: middle;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+</style>
+
+
+
+
+
+
+
+    <table>
+
+        <tr>
+
+            <td>
+                <div>Available Documents :</div>
+            </td>
+        </tr>
+
+
+        <tr style="height:100%">
+
+
+            <td class="CellStretch">
+                <div class="SimpleGridView">
+                    <div class="SimpleGridViewHeader">
+                        <table>
+                            <tr>
+                                <td style="width: 40px;min-width:40px;max-width:40px;"></td>
+                                <td style="width: 170px;min-width:170px;max-width:170px;">Name</td>
+                                <td style="width: 250px;min-width:250px;max-width:250px;">FileName</td>
+                                <td style="width: 50px;min-width:50px;max-width:50px;"></td>
+                                <td style="width: 100%;min-width:100%;max-width:100%;"><div></div></td>
+
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="SimpleGridViewBody">
+                        <table>
+                            <tr style="height: 1px;">
+                                <td>
+                                    <table>
+                                        <tr class="SimpleGridViewRow RowHover" *ngFor="let item of DocumentsFilingList">
+                                            <td>
+                                                <table>
+                                                    <tr style="height:25px;" (click)="SelectDocumentsFilingViewModel = item" [class.RowSelected]="item === SelectDocumentsFilingViewModel">
+
+
+                                                        <td class="GridViewCell" style="width: 40px; min-width: 40px; max-width: 40px; position: relative;">
+                                                            <!--<div class="CheckBox">
+                                                                <input class="CenterCenter" style="text-align:center" (change)="CheckboxClick(item)" [attr.id]="item.Id" type="checkbox" />
+                                                                <label class="CenterCenter" [attr.for]="item.Id"></label>
+                                                            </div>-->
+                                                            <CheckBox (Checked)="CheckboxClick(item)"></CheckBox>
+                                                        </td>
+
+
+                                                        <td class="GridViewCell" style="width: 170px; min-width: 170px; max-width: 170px; position: relative;">
+                                                            {{item.DocumentTypeName}}
+                                                        </td>
+
+
+                                                        <td class="GridViewCell" style="width: 250px; min-width: 250px; max-width: 250px; position: relative;">
+
+                                                       {{item.FileName}}
+
+                                                        </td>
+
+
+
+
+                                                        <td class="GridViewCell" style="width: 50px; min-width: 50px; max-width: 50px; position: relative;">
+
+                                                            <div style="font-size:11px;text-align:left"><a (click)="View(item)" style="margin-left:0px;color:#0094ff;font-size:12px;text-align:left">View</a></div>
+
+                                                        </td>
+
+                                                        <td><div></div></td>
+
+
+
+                                                    </tr>
+                                                    <tr><td colspan="5"></td></tr>
+                                                </table>
+
+
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+            </td>
+
+
+
+        </tr>
+
+        <tr style="height: 32px;">
+            <td style="vertical-align: bottom">
+                <table style="height: 22px;">
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+
+                        <td style="width: 57px;">
+                            <div>
+                                <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
+                            </div>
+                        </td>
+
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 57px;">
+                            <button class="RedButton" (click)="SaveButtonClicked()">OK</button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+    </table>
+

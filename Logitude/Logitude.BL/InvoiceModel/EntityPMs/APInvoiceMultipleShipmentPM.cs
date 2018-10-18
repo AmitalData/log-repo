@@ -1,0 +1,57 @@
+﻿using Logitude.BL.DataContracts;
+using Simplog.Server.Infrastructure;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.ServiceModel.DomainServices.Server;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Logitude.BL.InvoiceModel.EntityPMs
+{
+    public class APInvoiceMultipleShipmentPM
+    {
+        [Key]
+        public string ShipmentId { get; set; }
+        public string APInvoiceId { get; set; }
+        public int Tenant { get; set; }
+        public string House { get; set; }
+        public string Master { get; set; }
+        public string LongMaster { get; set; }
+        public string ShipmentNumber { get; set; }
+        public string PartnerType { get; set; }
+        public string PartnerName { get; set; }                
+        public string ShipmentLevelCode { get; set; }
+        public string MainCarriageCarrierName { get; set; }
+        public double? SubTotalInLocalCurrency { get; set; }
+        public double? SubTotalInInvoiceCurrency { get; set; }
+        public double? ExpectedAmount { get; set; }
+        public double? AccountedAmount { get; set; }
+        public double? OpenAmount { get; set; }
+        public double? TotalAmount { get; set; }
+        public double? TotalVATAmount { get; set; }
+        public int IndexOrder { get; set; }
+
+        private List<string> totalVatsList;
+        public List<string> TotalVatsList
+        {
+            get
+            {
+                if (totalVatsList == null)
+                {
+                    totalVatsList = new List<string>();
+                }
+
+                return totalVatsList;
+            }
+
+            set
+            {
+                totalVatsList = value;
+            }
+        }
+
+        public ChangeSetOperation ChangeSetOp { get; set; }
+    }
+}

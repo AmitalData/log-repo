@@ -1,0 +1,200 @@
+﻿
+<style type="text/css">
+    .BoxItemRow td:not(:first-child) {
+        color: #0B3861;
+    }
+
+    .BoxItemRow td:first-child {
+        color: #6E7172;
+    }
+
+    .BoxItemRow td {
+        font-size: 10px;
+    }
+
+    .BoxItemRow {
+        height: 15px;
+    }
+
+    .TemplateBoxItem {
+        float: left;
+        display: block;
+        width: 500px;
+        width: calc(33.33% - 3px);
+        height: 135px;
+        min-height: 135px;
+        margin-left: 3px;
+        margin-bottom: 3px;
+        padding: 5px;
+        background: rgba(235, 235, 235, 0.5);
+        border: 1px solid #BABABA;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+    }
+
+    .SetPrimary:hover .SetPrimaryIcon {
+        background: url('./Images/Menu/Person.png') center center;
+        background-size: contain;
+    }
+
+    .SetPrimary:hover .SetPrimaryText {
+        color: #0075AF;
+    }
+
+    .SetPrimaryIcon {
+        display: inline-block;
+        background: url('./Images/Menu/Person.Gray.png') center center;
+        background-size: contain;
+    }
+
+    .SetPrimaryText {
+        color: #BABABA;
+    }
+
+    .SetPrimary {
+        cursor: pointer;
+    }
+</style>
+
+<div class="TabHolder">
+    <table *ngIf="IsVisibile">
+        <tr class="TabTitleRow">
+            <td>
+                <table>
+                    <tr>
+                        <td>{{'Contact.O.Contacts' | TextCodeTranslationPipe}}</td>
+
+                        <td style="width: 1px;">
+                            <button class="Button" (click)="NewEntityClicked()">{{'Contact.B.NewContact' | TextCodeTranslationPipe}}</button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <div class="ScrollViewer">
+                    <ul class="ScrollContent">
+                        <li class="TemplateBoxItem" *ngFor="let item of ItemsSource">
+                            <table>
+
+                                <!-- Header -->
+                                <tr style="height: 22px;">
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td style="font-size: 12px; vertical-align: top;" class="ColorBlue">{{item.Name}}</td>
+
+                                                <td style="width: 1px;" *ngIf="item.IsPrimary">
+                                                    <div>
+                                                        <span style="display:inline-block; color:#0075AF; font-size:11px;">Primary</span>
+                                                        <span style="display:inline-block; width: 14px; height: 14px; margin-bottom: -2px; background: url('./Images/Menu/Person.png') center center; background-size: contain;"></span>
+                                                    </div>
+                                                </td>
+
+                                                <td style="width: 1px;" *ngIf="!item.IsPrimary">
+                                                    <div class="SetPrimary" (mousedown)="item.SetPrimary()">
+                                                        <span class="SetPrimaryText" style="font-size: 11px;">Set as Primary</span>
+                                                        <span class="SetPrimaryIcon" style="width: 14px; height: 14px; margin-bottom: -2px;"></span>
+                                                    </div>
+                                                </td>
+
+                                                <td style="width: 3px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width: 1px;">
+                                                    <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditEntityClicked(item)"></IconButton>
+                                                </td>
+
+                                                <td style="width: 3px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width: 1px;">
+                                                    <IconButton [Name]="'Disconnect'" [IsSmall]="true" (click)="DisconnectClicked(item)" title="Disconnect"></IconButton>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div class="MediaFill">
+                                            <div class="MediaFillRelative">
+                                                <table>
+                                                    <tr class="BoxItemRow">
+                                                        <td style="width: 1px;">Name:</td>
+                                                        <td style="width: 5px;">
+                                                            <div></div>
+                                                        </td>
+                                                        <td>{{item.Name}}</td>
+                                                    </tr>
+                                                    <tr class="BoxItemRow">
+                                                        <td style="width: 1px;">Email:</td>
+                                                        <td style="width: 5px;">
+                                                            <div></div>
+                                                        </td>
+                                                        <td>{{item.Email}}</td>
+                                                    </tr>
+                                                    <tr class="BoxItemRow" *ngIf="item.BusinessPhone">
+                                                        <td style="width: 1px;">Tel:</td>
+                                                        <td style="width: 5px;">
+                                                            <div></div>
+                                                        </td>
+                                                        <td>{{item.BusinessPhone}}</td>
+                                                    </tr>
+                                                    <tr class="BoxItemRow" *ngIf="item.Mobile">
+                                                        <td style="width: 1px;">Mobile:</td>
+                                                        <td style="width: 5px;">
+                                                            <div></div>
+                                                        </td>
+                                                        <td>{{item.Mobile}}</td>
+                                                    </tr>
+                                                    <tr class="BoxItemRow" *ngIf="item.Fax">
+                                                        <td style="width: 1px;">Fax:</td>
+                                                        <td style="width: 5px;">
+                                                            <div></div>
+                                                        </td>
+                                                        <td>{{item.Fax}}</td>
+                                                    </tr>
+                                                    <tr class="BoxItemRow" *ngIf="item.Position">
+                                                        <td style="width: 1px;">Position:</td>
+                                                        <td style="width: 5px;">
+                                                            <div></div>
+                                                        </td>
+                                                        <td>{{item.Position}}</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td colspan="3">
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+
+                                                <div style="position: absolute; right:0; bottom:0;" *ngIf="item.InActive">
+                                                    <table>
+                                                        <tr>
+                                                            <td><img style="float: left;" src="./Images/RedX2.png"/></td>
+                                                            <td style="font-size: 11px; padding-left: 3px;" class="ColorRed">Inactive</td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </li>
+                    </ul>
+                </div>
+
+                <span class="NoDataText" *ngIf="IsNoDataVisible">Click New Contact Button to add new contacts</span>
+            </td>
+        </tr>
+    </table>
+</div>

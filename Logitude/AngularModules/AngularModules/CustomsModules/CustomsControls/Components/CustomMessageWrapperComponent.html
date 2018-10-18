@@ -1,0 +1,122 @@
+﻿<!-- DeclarationRestoreComponent  view  -->
+<style>
+    .CustomResponseBorderClass {
+        border: 1px solid #3BB3E2;
+        /*padding: 1rem;*/
+        padding: 2px;
+    }
+</style>
+<div class="ScrollViewer">
+    <div class="ScrollContent">
+        <table>
+            <tr style="vertical-align: top">
+                <td>
+                    <table>
+
+                        <!-- ValidationSummary  -->
+                        <tr style="height:15px;">
+
+                            <td>
+                                <div></div>
+                                <div *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
+                                    <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+                                </div>
+                            </td>
+                        </tr>
+
+
+                        <!--  Request  -->
+                        <tr style="vertical-align: top;">
+                            <!--style="height: 130px;"-->
+                            <td>
+
+
+                                <fieldset [disabled]="CustomRequestContentIsDisable">
+                                    <div style="border: 1px solid #3BB3E2; padding: 1rem">
+                                        <ng-content select=".class-request-content"></ng-content>
+                                    </div>
+                                </fieldset>
+
+                            </td>
+                        </tr>
+
+
+
+                        <tr style="height :15px;" *ngIf="ShowCustomResponseContent">
+                            <td class="TabTitleRow">
+                                <div>תוצאות {{FormTitle}}</div>
+                            </td>
+                        </tr>
+
+                        <!-- Response  -->
+                        <tr *ngIf="ShowCustomResponseContent">
+                            <td>
+                                <fieldset [disabled]="CustomResponseContentIsDisable">
+                                    <div class="CustomResponseBorderClass">
+                                        <ng-content select=".class-response-content"></ng-content>
+                                    </div>
+                                </fieldset>
+                            </td>
+                        </tr>
+
+
+
+
+                        <!--  ToolBar  -->
+                        <tr [ngStyle]="ShowCustomToolBar ?  { 'display': 'normal'} : {'display' : 'none' }"
+                            style="height: 35px;padding-top: 2px;padding-bottom: 2px; ">
+                            <td style="vertical-align: bottom">
+                                <!--style="height: 22px;"-->
+                                <table>
+                                    <tr>
+
+                                        <td>
+                                            <div>
+                                            </div>
+                                        </td>
+
+                                        <td style="width: 57px;">
+                                            <button *ngIf="" class="Button" (click)="MessageDisplayIsDisableToggle()">Disable temp</button>
+
+                                            <button class="Button"  style="background-color: white;width: 22px;margin-right:26px;" *ngIf="MyCustomsMenuItem?.CanExportExcel &&  (MyLastCustomsRequestSheetId != null || MyCommunicationLogId != null) " (click)="ExportExcel()"><img class="CenterCenter" title="Export To Excel" src="./Images/Buttons/excelicon.png" /></button>
+
+                                        </td>
+                                        <td style="width: 57px;">
+                                            <button class="Button" (click)="CancelButtonClickedBase()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                                        </td>
+                                        <td style="width:5px">
+                                            <div></div>
+                                        </td>
+                                        <td style="width: 157px;">
+
+                                            <!--
+
+                                            (SendButtonClicked)="OnCustomSendOptionsClick($event)
+                                                [IsDisabled]="CustomSendOptionsButtonIsDisable"
+                                                -->
+                                            <custom-send-options #MyCustomSendOptionsComponent
+                                                                 [CustomSendOptionsButtonCanForcePersonalSign]="CustomSendOptionsButtonCanForcePersonalSign"></custom-send-options>
+
+                                        </td>
+                                        <td style="width:5px">
+                                            <div></div>
+                                        </td>
+
+
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <ng-content select=".class-response-ToolBar"></ng-content>
+                            </td>
+                        </tr>
+                    </table>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

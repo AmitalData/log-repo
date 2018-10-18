@@ -1,0 +1,1 @@
+update  ARInvoices set TransferTries = 0

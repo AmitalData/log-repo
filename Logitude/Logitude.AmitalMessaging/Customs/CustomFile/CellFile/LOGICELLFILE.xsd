@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://tempuri.org/LOGICELLFILE" elementFormDefault="qualified" targetNamespace="http://tempuri.org/LOGICELLFILE" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="LOGICELLFILE">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="LogitudeCellularFile" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LogitudeCellularFile">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="LOGITUDEFILE" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="TENANT" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="INVOICE" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LOGITUDEFILE" type="xs:string" />
+  <xs:element name="TENANT" type="xs:string" />
+  <xs:element name="INVOICE">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="INVOICELINENO" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ACCOUNTTYPE" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="INVOICENUMBER" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="VENDORNUMBER" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CURRENCYCODE" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="INVOICEAMOUNT" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ISSUEDATE" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ISSUECOUNTRYCODE" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="INVOICEITEMS" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="INVOICELINENO" type="xs:string" />
+  <xs:element name="ACCOUNTTYPE" type="xs:string" />
+  <xs:element name="INVOICENUMBER" type="xs:string" />
+  <xs:element name="VENDORNUMBER" type="xs:string" />
+  <xs:element name="CURRENCYCODE" type="xs:string" />
+  <xs:element name="INVOICEAMOUNT" type="xs:string" />
+  <xs:element name="ISSUEDATE" type="xs:string" />
+  <xs:element name="ISSUECOUNTRYCODE" type="xs:string" />
+  <xs:element name="INVOICEITEMS">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="ITEMLINENO" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CLASSIFICATIONCODE" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="TRADEAGREEMENTCODE" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="QUANTITY" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ITEMPRICE" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ITEMORIGINCOUNTRY" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ITEMCODE" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ACTUALINVOICELINES" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="UNIT" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="CARS" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ITEMLINENO" type="xs:string" />
+  <xs:element name="CLASSIFICATIONCODE" type="xs:string" />
+  <xs:element name="TRADEAGREEMENTCODE" type="xs:string" />
+  <xs:element name="QUANTITY" type="xs:string" />
+  <xs:element name="ITEMPRICE" type="xs:string" />
+  <xs:element name="ITEMORIGINCOUNTRY" type="xs:string" />
+  <xs:element name="ITEMCODE" type="xs:string" />
+  <xs:element name="ACTUALINVOICELINES" type="xs:string" />
+  <xs:element name="UNIT" type="xs:string" />
+  <xs:element name="CARS">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="SITEM_LINE" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="COUNTER" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="MODEL" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CHASSIS" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SITEM_LINE" type="xs:string" />
+  <xs:element name="COUNTER" type="xs:string" />
+  <xs:element name="MODEL" type="xs:string" />
+  <xs:element name="CHASSIS" type="xs:string" />
+</xs:schema>

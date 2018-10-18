@@ -1,0 +1,97 @@
+﻿
+
+<table>
+
+    <tr *ngIf="ValidationErrorsList == null" style="height:10px">
+        <td><div style="height:15px"></div></td>
+    </tr>
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td colspan="3">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:5px;">
+        <td colspan="3">
+            <div style="height:5px"></div>
+        </td>
+    </tr>
+
+    <tr>
+
+
+        <td>
+            <div>
+                <table>
+                    <tr style="height:22px;">
+
+
+                        <td style="height:22px;width:100px">
+                            <div *ngIf="IsShowAddDataField" style="width:auto;height:22px;top:0px;float:left;position:relative;text-align:left;margin-left:6px;margin-top:-5px"><button (click)="AddDataField('FroalaEditor')" style="width:auto;background-color:#E6E6E6;height:22px;" class="Button">Add Data Field</button></div>
+                        </td>
+
+                        <td><div></div></td>
+                        <td *ngIf="IsShowHeightBox" style="width:140px">
+                            <div style="display:inline">
+
+                                <span style="font-size:12px;color:gray;float: left;width:40px;margin-top:2px">Height:</span>
+                                <input type="number" [(ngModel)]="HeightValue" style="height:22px;border-radius:3px;border:1px solid #a8a8a8;width:60px;float:left;color:gray;margin-left:5px;font-size:12px;display:inline">
+                                <span style="font-size:12px;color:gray;width:30px;margin-top:2px"> Cm</span>
+                            </div>
+
+                        </td>
+
+                    </tr>
+                </table>
+            </div>
+        </td>
+
+    </tr>
+    <tr style="height:5px">
+        <td><div style="height:5px"></div></td>
+    </tr>
+
+    <tr style="height:100%">
+
+
+        <td style="position: relative;">
+            <div style="margin:5px;height:100%;vertical-align:top">
+                <FroalaEditor style="text-align:center;" [EditorfroalaSetting]="froalaEditorSetting"></FroalaEditor>
+            </div>
+        </td>
+
+
+
+
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <div>
+                            <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                        </div>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="SaveButtonClicked()">OK</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>
+

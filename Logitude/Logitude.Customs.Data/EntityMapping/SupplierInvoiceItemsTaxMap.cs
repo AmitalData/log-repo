@@ -1,0 +1,66 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data;
+ 
+namespace Logitude.Customs.Data.EntityMapping
+{
+ 
+    public class SupplierInvoiceItemsTaxMap : EntityTypeConfiguration<SupplierInvoiceItemsTax>
+    {
+	    string dbms;
+        public SupplierInvoiceItemsTaxMap()
+        { 
+			  this.ToTable("SupplierInvoiceItemsTaxes", "Customs");
+		
+		    this.HasKey(t => new { t.DeclarationId, t.InvoiceCounterKey, t.LineNumber, t.TaxTypeCode });
+	 
+            this.Property(t => t.DeclarationId).HasColumnName("DeclarationId").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.InvoiceCounterKey).HasColumnName("InvoiceCounterKey").IsRequired().HasDatabaseGeneratedOption(null);
+
+            this.Property(t => t.LineNumber).HasColumnName("LineNumber").IsRequired().HasDatabaseGeneratedOption(null);
+
+            this.Property(t => t.TaxTypeCode).HasColumnName("TaxTypeCode").IsRequired().HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.Tenant).HasColumnName("Tenant");
+
+            this.Property(t => t.TradeAgreementTypeCode).HasColumnName("TradeAgreementTypeCode").HasMaxLength(8).IsUnicode(false);
+
+            this.Property(t => t.TaxRate).HasColumnName("TaxRate").HasPrecision(17, 2);
+
+            this.Property(t => t.TaxBaseAmount).HasColumnName("TaxBaseAmount").HasPrecision(16, 2);
+
+            this.Property(t => t.TaxAmount).HasColumnName("TaxAmount").HasPrecision(16, 2);
+
+            this.Property(t => t.DeferedTaxAmount).HasColumnName("DeferedTaxAmount").HasPrecision(16, 2);
+
+            this.Property(t => t.DefinedPerUnitMeasure).HasColumnName("DefinedPerUnitMeasure");
+
+            this.Property(t => t.AlternateDefinedPerUnitMeasure).HasColumnName("AlternateDefinedPerUnitMeasure");
+
+            this.Property(t => t.DefinedPerUnitQuantity).HasColumnName("DefinedPerUnitQuantity");
+
+            this.Property(t => t.AlternateDefinedPerUnitQuant).HasColumnName("AlternateDefinedPerUnitQuant");
+
+            this.Property(t => t.MeasurementUnitCode).HasColumnName("MeasurementUnitCode").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.AlternateMeasurementUnitCode).HasColumnName("AlternateMeasurementUnitCode").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.TradeLevyNumber).HasColumnName("TradeLevyNumber").HasMaxLength(9).IsUnicode(false);
+
+            this.Property(t => t.TotalBtlCoverageNIS).HasColumnName("TotalBtlCoverageNIS");
+
+            this.Property(t => t.AlternateRate).HasColumnName("AlternateRate");
+        }
+    }
+}
+	 

@@ -1,0 +1,110 @@
+﻿
+<ToggleButton [DropDownHeight]="170" [DropDownWidth]="400" [Position]="'Left'" [IconPath]="'./Images/CalenderBlue.png'" [IsOpened]="IsOpened" (Opened)="IsOpened = $event">
+    <div class="MediaFillRelative">
+        <div class="MediaFixedPadding5">
+            <table>
+                <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+                    <td>
+                        <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+                    </td>
+                </tr>
+
+                <tr style="height:1px">
+                    <td style="font-size: 14px; color: #1B90CB;">
+                        {{State}}
+                    </td>
+                </tr>
+
+                <tr style="height:1px;">
+                    <td>
+                        <table>
+                            <tr class="FormFieldRow">
+                                <td style="width: 85px;" class="Label">Expected Date:</td>
+
+                                <td style="width: 105px;">
+                                    <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'ExpectedDate'" [SelectedDateValue]="ExpectedDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                </td>
+
+                                <td style="width: 2px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 95px;">
+                                    <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'ExpectedDate'" [SelectedDateValue]="ExpectedDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                </td>
+
+                                <td style="width: 2px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 60px;">
+                                    <button *ngIf="ExpectedDate && !ActualDate" (click)="SetActualDateClicked()" class="Button CustomButton" style="height: 18px; font-size: 10px;">Set as Actual</button>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td class="Label">Actual Date:</td>
+
+                                <td>
+                                    <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'ActualDate'" [SelectedDateValue]="ActualDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+
+                                <td>
+                                    <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'ActualDate'" [SelectedDateValue]="ActualDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td></td>
+                </tr>
+
+                <tr style="height:32px;">
+                    <td style="vertical-align: bottom">
+                        <table style="margin-top: 7px;margin-bottom: 7px;float:right;">
+                            <tr>
+                                <td>
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 57px;">
+                                    <button class="Button CustomButton" id="{{ 'OnCarriageDateCancelBtn' | IdGeneratorPipe}}"  (click)="CancelButtonClicked()">Cancel</button>
+                                </td>
+
+                                <td style="width: 5px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 57px;">
+                                    <button class="RedButton CustomButton" id="{{ 'OnCarriageDateOKBtn' | IdGeneratorPipe}}"  (click)="OkButtonClicked()">Ok</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>   
+</ToggleButton>

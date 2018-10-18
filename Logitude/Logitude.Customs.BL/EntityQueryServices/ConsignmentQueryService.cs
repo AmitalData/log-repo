@@ -1,0 +1,64 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.Customs.Data;
+using Logitude.Customs.Data.EntityKeys;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Server.Tools;
+using Simplog.Server.Infrastructure;
+
+namespace Logitude.Customs.BL.EntityQueryServices
+{
+    public partial class ConsignmentQueryService : EntityQueryService<Consignment, ConsignmentKeys, ConsignmentPM, DeclarationPM, DeclarationKeys>
+    {
+        public override void GetComposition(EntityKeyFields entityKeys, ConsignmentPM entityPM)
+        {
+            ICustomContext context = MainContext as CustomContext;
+            ConsignmentKeys consignmentKeys = entityKeys as ConsignmentKeys;
+            ConsignmentPackageQueryService consignmentPackageQueryService = new ConsignmentPackageQueryService(context);
+
+            entityPM.ConsignmentPackages = consignmentPackageQueryService.GetMulti(consignmentKeys, true);
+
+            if (entityPM.ConsignmentPackages != null)
+            {
+                if (entityPM.ConsignmentPackages.Count > 0)
+                {
+                    entityPM.ConsignmentPackagLastLineNumber = entityPM.ConsignmentPackages.Max(m => m.LineNumber);
+                }
+            }
+
+            ConsignmentInternalTransitionQueryService consignmentInternalTransitionQueryService = new ConsignmentInternalTransitionQueryService(context);
+
+            entityPM.ConsignmentInternalTransitions = consignmentInternalTransitionQueryService.GetMulti(consignmentKeys, true);
+            if (entityPM.ConsignmentInternalTransitions != null)
+            {
+                if (entityPM.ConsignmentInternalTransitions.Count > 0)
+                {
+                    entityPM.ConsignmentInternalTransitionLastLineNumber = entityPM.ConsignmentInternalTransitions.Max(m => m.LineNumber);
+                }
+            }
+
+            base.GetComposition(entityKeys, entityPM);
+        }
+
+        public Consignment GetConsignmentByIdentifiers(string cargoTypeCode, string manifestNumber, string secondCargoID, int tenant)
+        {
+            if (String.IsNullOrWhiteSpace(manifestNumber) || String.IsNullOrWhiteSpace(secondCargoID)) return null;
+            return repository.GetConsignmentByIdentifiers(cargoTypeCode, manifestNumber, secondCargoID, tenant);
+        }
+
+        public int? GetMaxCounterKey(string declarationId, int tenant)
+        {
+            return repository.GetMaxCounterKey(declarationId, tenant);
+        }
+
+        public string GetDeclarationIdByConsignmentCargoId(string manifestNumber, string secondCargoID, string thirdCargoID, int tenant)
+        {
+            if (String.IsNullOrWhiteSpace(manifestNumber) && String.IsNullOrWhiteSpace(secondCargoID) && String.IsNullOrWhiteSpace(thirdCargoID)) return null;
+            return repository.GetDeclarationIdByConsignmentCargoId(manifestNumber, secondCargoID, thirdCargoID, tenant);
+        }
+    }
+}

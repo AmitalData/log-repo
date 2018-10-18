@@ -1,0 +1,3 @@
+delete from ScreenFields where   ScreenId = ( select id from Screens where code = 'Customs.CustomsSetting.HeaderScreen') and ObjectFieldId = (select id from ObjectFields where FieldName = 'SignServiceAddress')
+
+delete from QueryColumns where QueryId = (select id from Queries where Code = 'CustomsSettings') and ObjectFieldId = (select id from ObjectFields where FieldName = 'DefaultNotificationAssignee')

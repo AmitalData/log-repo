@@ -1,0 +1,55 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Customs.Data.EntityPOCOs
+{
+   
+    public class CustomsDocumentsTicket
+    {
+	 string dbms;
+
+        [Key]
+        [Column("Id")]
+	    public string Id { get; set; }
+        [ForeignKey("DocumentsFiling")]
+        [Column("DocumentsFilingId")]
+	    public string DocumentsFilingId { get; set; }
+	      
+        public virtual DocumentsFiling DocumentsFiling { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+        [ForeignKey("CustomDocumentType")]
+        [Column("DocumentTypeCode")]
+	    public string DocumentTypeCode { get; set; }
+	      
+        public virtual CustomDocumentType CustomDocumentType { get; set; }
+        [Column("RequestedCustomsDocId")]
+	    public string RequestedCustomsDocId { get; set; }
+        [Column("Remarks")]
+	    public string Remarks { get; set; }
+        [Column("UploadApproved")]
+	    public bool UploadApproved { get; set; }
+        [ForeignKey("CustomsVerificationStatusType")]
+        [Column("VerificationStatusTypeCode")]
+	    public string VerificationStatusTypeCode { get; set; }
+	      
+        public virtual CustomsVerificationStatusType CustomsVerificationStatusType { get; set; }
+        [Column("VerificationRemarks")]
+	    public string VerificationRemarks { get; set; }
+        [Column("UserRemarks")]
+	    public string UserRemarks { get; set; }
+        [Column("IsSendMandatory")]
+	    public bool IsSendMandatory { get; set; }
+    }
+}
+	 

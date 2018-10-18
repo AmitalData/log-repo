@@ -1,0 +1,275 @@
+﻿
+
+<table>
+    <tr style="height:1px;" *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <td style="width: 340px;">
+                        <table>
+
+                            <!-- PreCarriageTransportModeId -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 110px;">
+                                    <LogLabel [ObjectFieldName]="'PreCarriageTransportModeId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.TransportMode'"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogLov [ObjectFieldName]="'PreCarriageTransportModeId'"
+                                            [SelectedValue]="PreCarriageTransportModeId"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'TransportMode'"
+                                            >
+                                    </LogLov>
+                                </td>
+                            </tr>
+
+                            <!-- PreCarriageFromPortId -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'PreCarriageFromPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.From'"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogLov [ObjectFieldName]="'PreCarriageFromPortId'"
+                                            [SelectedValue]="PreCarriageFromPortId"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Port'"
+                                            [DependencyFilter1Value]="PreCarriageTransportModeId">
+                                    </LogLov>
+                                </td>
+                            </tr>
+
+                            <!-- PreCarriageToPortId -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'PreCarriageToPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.To'"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogLov [ObjectFieldName]="'PreCarriageToPortId'"
+                                            [SelectedValue]="PreCarriageToPortId"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Port'"
+                                            [DependencyFilter1Value]="PreCarriageTransportModeId">
+                                    </LogLov>
+                                </td>
+                            </tr>
+
+                            <!-- PreCarriageCarrierId -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'PreCarriageCarrierId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.Carrier'"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogLov [ObjectFieldName]="'PreCarriageCarrierId'"
+                                            [SelectedValue]="PreCarriageCarrierId"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Carrier'"
+                                            [DependencyFilter1Value]="CarrierDependencyProperty1">
+                                    </LogLov>
+                                </td>
+                            </tr>
+
+                            <!-- PreCarriageCarrierNumber -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'PreCarriageCarrierNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.CarrierNo'"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'PreCarriageCarrierNumber'" [Text]="PreCarriageCarrierNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                            </tr>
+
+                            <!-- PreCarriageVesselId -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'PreCarriageVesselId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.Vessel'"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogLov [ObjectFieldName]="'PreCarriageVesselId'"
+                                            [SelectedValue]="PreCarriageVesselId"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Vessel'"
+                                            >
+                                    </LogLov>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="2">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 340px;">
+                        <table>
+
+                            <!-- ETD -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <div>
+                                        <button *ngIf="PreCarriageETD && !PreCarriageATD" (click)="SetActualDateClicked('PreCarriageETD')" class="Button" [disabled]="!IsEditingEnabled" style="height: 18px; font-size: 10px;">Set as Actual</button>
+                                    </div>
+                                </td>
+
+                                <td style="width: 45px;">
+                                    <LogLabel [ObjectFieldName]="'PreCarriageETD'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.ETD'"></LogLabel>
+                                </td>
+
+                                <td style="width: 105px;">
+                                    <LogDatePicker [ObjectFieldName]="'PreCarriageETD'" [SelectedDateValue]="PreCarriageETD" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                </td>
+
+                                <td style="width: 2px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 95px;">
+                                    <LogDatePicker [ObjectFieldName]="'PreCarriageETD'" [SelectedDateValue]="PreCarriageETD" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                </td>
+
+                                <td style="width: 18px;">
+                                    <FollowupButton [IsEnabled]="IsEditingEnabled" [ShipmentPM]="EntityPM" [LegType]="'PreCarriageDeparture'"></FollowupButton>
+                                </td>
+                            </tr>
+
+                            <!-- ETA -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <div>
+                                        <button *ngIf="PreCarriageETA && !PreCarriageATA" (click)="SetActualDateClicked('PreCarriageETA')" class="Button" [disabled]="!IsEditingEnabled" style="height: 18px; font-size: 10px;">Set as Actual</button>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'PreCarriageETA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.ETA'"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogDatePicker [ObjectFieldName]="'PreCarriageETA'" [SelectedDateValue]="PreCarriageETA" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+
+                                <td>
+                                    <LogDatePicker [ObjectFieldName]="'PreCarriageETA'" [SelectedDateValue]="PreCarriageETA" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                </td>
+
+                                <td>
+                                    <FollowupButton [IsEnabled]="IsEditingEnabled" [ShipmentPM]="EntityPM" [LegType]="'PreCarriageArrival'"></FollowupButton>
+                                </td>
+                            </tr>
+
+                            <!-- ATD -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <div></div>
+                                </td>
+
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'PreCarriageATD'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.ATD'"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogDatePicker [ObjectFieldName]="'PreCarriageATD'" [SelectedDateValue]="PreCarriageATD" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+
+                                <td>
+                                    <LogDatePicker [ObjectFieldName]="'PreCarriageATD'" [SelectedDateValue]="PreCarriageATD" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <!-- ATA -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <div></div>
+                                </td>
+
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'PreCarriageATA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.ATA'"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogDatePicker [ObjectFieldName]="'PreCarriageATA'" [SelectedDateValue]="PreCarriageATA" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+
+                                <td>
+                                    <LogDatePicker [ObjectFieldName]="'PreCarriageATA'" [SelectedDateValue]="PreCarriageATA" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="6">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" id="{{ 'PreCarriageCancelBtn' | IdGeneratorPipe}}" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()" id="{{ 'PreCarriageOKBtn' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

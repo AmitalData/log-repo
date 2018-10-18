@@ -1,0 +1,201 @@
+﻿<!-- PrintRequestComponent view  -->
+<style>
+    .Tbl1Col0 {
+        width: 90px;
+    }
+
+    .Tbl1Col1 {
+        width: 100px;
+    }
+
+    .MessageBox {
+        width: 200px;
+        height: 30px;
+        padding: 2px 10px;
+        margin: 5px;
+        color: green;
+        font-family: sans-serif;
+        font-size: 12px;
+        text-align: center;
+    }
+
+    .MyBack {
+        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#fcfff4+0,dfe5d7+40,b3bead+100;Wax+3D+%233 */
+        background: rgb(252,255,244); /* Old browsers */
+        background: -moz-linear-gradient(-45deg, rgba(252,255,244,1) 0%, rgba(223,229,215,1) 40%, rgba(179,190,173,1) 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(-45deg, rgba(252,255,244,1) 0%,rgba(223,229,215,1) 40%,rgba(179,190,173,1) 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(135deg, rgba(252,255,244,1) 0%,rgba(223,229,215,1) 40%,rgba(179,190,173,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfff4', endColorstr='#b3bead',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    }
+    .MyDate{
+        width:70px;margin-left:2px;text-align:right;height:30px;
+    }
+    .MyTime{
+        width:60px;margin-left:2px;text-align:right;height:30px;
+    }
+    .MyButtonTD{
+        width:100px;margin-left:10px;margin-right:10px;height:30px;
+    }
+    .MyRow:hover {
+        background: -moz-linear-gradient(50% 119.23% 90deg,rgba(133, 203, 237, 1) 0%,rgba(232, 247, 255, 1) 100%);
+        background: -webkit-linear-gradient(90deg, rgba(133, 203, 237, 1) 0%, rgba(232, 247, 255, 1) 100%);
+        background: linear-gradient(0deg, rgba(133, 203, 237, 1) 0%, rgba(232, 247, 255, 1) 100%);
+    }
+</style>
+
+<div style="margin:10px;" class="MediaFill">
+    <table>
+        <tr class="FormFieldRow">
+            <td>
+                <div *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
+                    <ValidationSummary [ItemsSource]="ErrorsList"></ValidationSummary>
+                </div>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="MediaFill">
+                    <div style="float:right;">
+                        <table style="width: 250px;height: 350px;padding-top: 10px;float:right;">
+
+                            <tr style="height:25px">
+                                <td  colspan="3" class="TabTitleRow" style="width:150px">
+                                    {{'Customs.PhysicalCheck.O.Request'| TextCodeTranslationPipe}}
+                                </td>
+                            </tr>
+                            <tr class="FormFieldRow">
+                                <td colspan="3">
+                                    <div class="RadioButton">
+                                        <input id="ByAskForAnEarlierDate" type="radio" name="MyRadio" [checked]="AskForAnEarlierDate" (click)="SetByAskForAnEarlierDate()" />
+                                        <label for="ByAskForAnEarlierDate">{{'Customs.PhysicalCheck.O.AskForAnEarlierDate' | TextCodeTranslationPipe}}</label>
+                                    </div>
+                                </td>
+
+
+                            </tr>
+                            <tr class="FormFieldRow">
+                                <td colspan="3">
+                                    <div class="RadioButton">
+                                        <input id="ByAskForAnLaterDate" type="radio" name="MyRadio" [checked]="AskForAnLaterDate" (click)="SetByAskForAnLaterDate()" />
+                                        <label for="ByAskForAnLaterDate">{{'Customs.PhysicalCheck.O.AskForAnLaterDate' | TextCodeTranslationPipe}}</label>
+                                    </div>
+                                </td>
+
+
+                            </tr>
+                            <tr class="FormFieldRow">
+                                <td colspan="3">
+                                    <div class="RadioButton">
+                                        <input id="ByAvailableTimeChecked" type="radio" name="MyRadio" [checked]="AvailableTimeChecked" (click)="SetByAvailableTimeChecked()" />
+                                        <label for="ByAvailableTimeChecked">{{'Customs.PhysicalCheck.O.GetAvailableTimeList' | TextCodeTranslationPipe}}</label>
+                                    </div>
+                                </td>
+                                <td> <div></div> </td>
+
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td class="Tbl1Col0">
+                                    <LogLabel [NoObjectField]="true" [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                              [TextCode]="'Customs.PhysicalCheck.O.FromDate'"></LogLabel>
+                                </td>
+                                <td class="Tbl1Col1">
+
+                                    <LogDatePicker [ForceSubscribe]="'true'"
+                                                   [NoObjectField]="true"
+                                                   [ObjectFieldName]="'FromDate'"
+                                                   [ObjectTableName]="ObjectTableName"
+                                                   [InputType]="'date'"
+                                                   [DataContext]="DataContext"
+                                                   [HideColumns]="true"></LogDatePicker>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td class="Tbl1Col0">
+                                    <LogLabel [NoObjectField]="true" [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                              [TextCode]="'Customs.PhysicalCheck.O.ToDate'"></LogLabel>
+                                </td>
+                                <td class="Tbl1Col1">
+                                    <LogDatePicker #ToDate
+                                                   [ForceSubscribe]="'true'"
+                                                   [NoObjectField]="true"
+                                                   [ObjectFieldName]="'ToDate'"
+                                                   [ObjectTableName]="ObjectTableName"
+                                                   [InputType]="'date'"
+                                                   [DataContext]="DataContext"
+                                                   [HideColumns]="true"></LogDatePicker>
+
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td colspan="2">
+                                    <custom-send-options [CustomSendOptionsButtonCanForcePersonalSign]="'false'"
+                                                         (SendButtonClicked)="OnCustomSendOptionsButtonClick($event)">
+                                    </custom-send-options>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><div></div></td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div style="width: 1px; height: 100%;min-height:220px; margin:4px; background: #DADADA;float:right;"></div>
+
+                    <div style="float:right;height: 100%;">
+                        <table style="max-width: 300px;height:100%; padding-top: 10px;float:left;">
+                            <tr style="height:25px">
+                                <td class="TabTitleRow" style="width:150px">
+                                    {{'Customs.PhysicalCheck.O.Response'| TextCodeTranslationPipe}}
+                                </td>
+                            </tr>
+                            <tr class="FormFieldRow" style="margin-top:3px;">
+                                <th>
+                                    <div class="MyBack">
+                                        {{'Customs.PhysicalCheck.O.XRayAvailableTimes' | TextCodeTranslationPipe }}
+                                    </div>
+                                </th>
+
+                            </tr>
+                            <tr style="height:100%;">
+                                <td>
+                                    <!--class="MediaFill" width:300px  -->
+                                    <div  style="overflow-y:scroll;min-width:270px;height:100%;">
+                                        <table>
+                                            <tr *ngFor="let item of XrayItems" class="FormFieldRow MyRow" style="max-height:32px;" >
+                                                <td class="MyDate">{{item |  DateTimeToDatePipe}}</td>
+                                                <td style="width:3px;"><div></div></td>
+                                                <td class="MyTime">{{item |  DateTimeToTimePipe :'L24' }}</td>
+                                                <td style="width:3px;"><div></div></td>
+                                                <td class="MyButtonTD">
+                                                    <button class="Button" (click)="Choose(item)">{{'Customs.PhysicalCheck.O.Choose' | TextCodeTranslationPipe  }}</button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="5"></td>
+                                            </tr>
+
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+
+</div>

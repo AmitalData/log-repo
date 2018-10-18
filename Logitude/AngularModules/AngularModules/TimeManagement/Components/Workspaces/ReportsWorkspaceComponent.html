@@ -1,0 +1,43 @@
+﻿
+<style type="text/css">
+    .ReportsSectionHead {
+        height: 20px;
+        line-height: 20px;
+        font-size: 14px;
+        color: #1B90CB;
+    }
+
+    .ReportsSection:not(:first-child) {
+        margin-top: 10px;
+    }
+</style>
+
+<div class="TabHolder">
+    <table>
+        <tr>
+            <td>
+                <div class="MediaFill">
+                    <div class="ReportsSection" *ngFor="let item of ItemsSource">
+                        <div class="ReportsSectionHead">{{item.Name}}</div>
+                        <div class="ReportsSectionBody">
+                            <table>
+                                <tr>
+                                    <td style="width: 1px;">
+                                        <div *ngFor="let Report of item.ItemsSource">
+                                            <HyperlinkQuery (click)="ViewReportClicked(item.GroupList, Report)">{{Report.Name}}</HyperlinkQuery>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+</div>

@@ -1,0 +1,35 @@
+﻿
+<table *ngIf="Entity">
+    <tr>
+        <td>
+            <div class="MediaFill">
+
+                <!-- Sprint  -->
+                <table *ngIf="ObjectTableName == 'Sprint'">
+                    <tr>
+                        <td>
+                            <div class="MediaFill">
+
+                                <!-- FromDate -->
+                                <div *ngIf="FieldName == 'FromDate'">
+                                    <div style="font-size:11px;">
+                                        {{Entity[FieldName] | DateTimePipe:'DTTA'}}
+                                    </div>
+                                </div>
+
+                                <!-- ToDate -->
+                                <div *ngIf="FieldName == 'ToDate'">
+                                    <div style="font-size:11px;">
+                                        {{Entity[FieldName] | DateTimePipe:'DTTA'}}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                
+            </div>
+        </td>
+    </tr>
+</table>

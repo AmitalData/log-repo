@@ -1,0 +1,79 @@
+﻿
+<table>
+    <tr class="FormFieldRow" *ngIf="ShowClosingReason">
+        <td>
+            <table>
+                <tr>
+                    <td style="width: 100px;">
+                        <LogLabel [ObjectFieldName]="'QuoteClosingReasonCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Decline Reason'" [HideColumns]="true"></LogLabel>
+                    </td>
+
+                    <td style="width: 250px;">
+                        <LogLov [ObjectFieldName]="'QuoteClosingReasonCode'"
+                                [SelectedValue]="QuoteClosingReasonCode"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'QuoteClosingReason'">
+                        </LogLov>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 1px;">
+        <td class="Label">{{NotesHeader}}</td>
+    </tr>
+
+    <tr style="height: 90px;">
+        <td>
+            <table>
+                <tr>
+                    <td style="width: 350px; height: 90px;">
+                        <div style="height: 90px;">
+                            <LogTextBox [NoObjectField] ="true" [ObjectFieldName]="'EventNote'" [Text]="EventNote" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                        </div>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="OkButtonClicked()">Confirm</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

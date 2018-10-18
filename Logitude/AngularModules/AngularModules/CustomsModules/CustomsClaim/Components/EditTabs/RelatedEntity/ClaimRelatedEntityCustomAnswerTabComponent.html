@@ -1,0 +1,69 @@
+﻿<table>
+    <tr>
+        <td>
+            <fieldset [disabled]="!IsControlEnabled">
+                <div class="TableHolder">
+                    <table style="width: 550px; height: 350px;padding-top: 10px;">
+                        <!-- Claims Related Entities Reasons -->
+                        <tr style="width: 550px; height: 30px;">
+                            <td class="TabTitleRow" style="width:150px">
+                                {{'Customs.Claim.TH.CustomAnswer'| TextCodeTranslationPipe}}
+                            </td>
+
+                            <td> <div></div> </td>
+                        </tr>
+
+                        <tr style="width: 550px; height: 300px">
+                            <td style="width: 550px; height: 300px">
+                                <div style="width: 550px; height: 300px">
+                                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" 
+                                                        [ItemSource]="ClaimRelatedEntityCustomAnswerlist" [IsReadOnly]="true">
+
+                                        <!-- ExceptionType -->
+                                        <log-column [header]="'Customs.ClaimsRelatedEntitiesAmount.F.PaymentTypeCode' | TextCodeTranslationPipe"
+                                                    [width]="'70'" [Alignment]="'right'" [binding]="'ExceptionType'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                    <span>{{item.ExceptionType}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- ExceptionDescription -->
+                                        <log-column [header]="'Customs.Declaration.O.Description' | TextCodeTranslationPipe"
+                                                    [width]="'450'" [Alignment]="'right'" [binding]="'ExceptionDescription'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                    <span data-toggle="tooltip" data-placement="bottom" title="{{item.ExceptionDescription}}">{{item.ExceptionDescription}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!--<log-column [header]="'Customs.Declaration.O.Description' | TextCodeTranslationPipe"
+                                                    [width]="'350'" [Alignment]="'right'" [binding]="'ExceptionDescription'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div style="width:100%;height:100%; white-space: nowrap;">
+                                                    <a title="Show Exception Description" href="#" (click)="ShowMore(item.ExceptionDescription,item.ExceptionType)">
+                                                        {{item.ExceptionDescription }}
+                                                    </a>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>-->
+
+
+                                    </logitude-edit-grid>
+                                </div>
+                            </td>
+
+                            <td> <div></div> </td>
+                        </tr>
+
+                        <tr> <td><div></div></td> </tr>
+
+                    </table>
+                </div>
+            </fieldset>
+        </td>
+    </tr>
+
+</table>

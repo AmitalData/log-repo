@@ -1,0 +1,11 @@
+﻿<button *ngIf="IsComponentVisible"
+        style="background: none !important; border: none !important; cursor: pointer; position: relative;"
+        [ngStyle]="{cursor: IsEnabled ? 'pointer' : 'default'}"
+        [disabled]="!IsEnabled"
+        tabindex="-1"
+        (mouseenter)="IsMouseOver = true"
+        (mouseleave)="IsMouseOver = false"
+        (click)="ButtonClicked()">
+
+    <img class="RightCenter" [attr.src]="Source" [attr.title]="Tootip" style="visibility:inherit; display: block; vertical-align: middle; float: right;" />
+</button>

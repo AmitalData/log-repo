@@ -1,0 +1,336 @@
+﻿
+<style type="text/css">
+    .ItemBox {
+        height: 40px;
+        border: 1px solid #D1D1D1;
+        margin: 2px;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        overflow-x: hidden;
+    }
+
+    .ToolsButton {
+        display: none;
+    }
+
+    .ItemBox:hover .ToolsButton {
+        display: block;
+    }
+
+    .ItemBox:hover .ToolsButtonDisabled {
+        display: block;
+    }
+
+    .SaveTMButton {
+        background: #349BDB;
+        height: 30px;
+        color: white;
+        border-radius: 2px;
+        cursor: pointer;
+    }
+
+    .SaveTMButtonHasChanges {
+        background: Orange;
+        height: 30px;
+        color: white;
+        border-radius: 2px;
+        cursor: pointer;
+    }
+</style>
+
+<div style="overflow-x:auto;height:100%;width:100%">
+    <table style="min-width:1370px">
+        <tr>
+            <td style="width:10px;">
+                <div></div>
+            </td>
+            <td>
+                <table>
+                    <tr style="height:5px;">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                    <tr style="height:22px;">
+                        <td style="float:right;color:#1B90CB;">{{LoggedUserName}}</td>
+                    </tr>
+                    <tr style="height:5px;">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                    <tr style="height:22px;">
+                        <td>
+                            <table>
+                                <tr>
+                                    <td style="width:10px;">
+                                        <div></div>
+                                    </td>
+
+                                    <!-- Locations Filters -->
+                                    <td style="width:70px;">
+                                        <LogLabel [Text]="'Location'" [DataContext]="DataContext" [NoObjectField]="true"></LogLabel>
+                                    </td>
+
+                                    <td style="width:170px;">
+                                        <LocationsFilter (SelectedValueChanged)="SelectedLocationFilter = $event" [SelectedValue]="SelectedLocationFilter"></LocationsFilter>
+                                    </td>
+
+                                    <td style="width:10px;">
+                                        <div></div>
+                                    </td>
+
+                                    <!-- Dates Filters -->
+                                    <td style="width:50px;">
+                                        <LogLabel [Text]="'Date'" [DataContext]="DataContext" [NoObjectField]="true"></LogLabel>
+                                    </td>
+
+                                    <td style="width:195px;">
+                                        <DatesFilter (SelectedValueChanged)="SelectedDateFilter = $event" [SelectedValue]="SelectedDateFilter"></DatesFilter>
+                                    </td>
+
+                                    <td style="width:10px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width:410px;" *ngIf="SelectedDateFilter == 'P'">
+                                        <table>
+                                            <tr>
+                                                <td style="width:200px;">
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width:70px;">
+                                                                <div style="width:70px">From Date:</div>
+                                                            </td>
+                                                            <td style="width:120px;">
+                                                                <div style="width:120px;">
+                                                                    <LogDatePicker [ObjectFieldName]="'StartDate'" [SelectedDateValue]="StartDate" [DataContext]="DataContext" [NoObjectField]="true" [HideColumns]="true"></LogDatePicker>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td style="width:5px">
+                                                    <div style="width:5px"></div>
+                                                </td>
+                                                <td style="width:200px;">
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width:55px;">
+                                                                <div style="width:55px;"> To Date: </div>
+                                                            </td>
+                                                            <td style="width:120px;">
+                                                                <div style="width:120px;">
+                                                                    <LogDatePicker [ObjectFieldName]="'EndDate'" [SelectedDateValue]="EndDate" [DataContext]="DataContext" [NoObjectField]="true" [HideColumns]="true"></LogDatePicker>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td style="width:5px">
+                                                    <div style="width:5px"></div>
+                                                </td>
+                                                <td style="width:100px;">
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width:100px">
+                                                                <button class="Button" (click)="SearchButtonClicked()">Search</button>
+                                                            </td> 
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+
+                                    <!-- Buttons -->
+                                    <td style="float:right;width:400px">
+                                        <table>
+                                            <tr style="height: 32px;">
+                                                <td>
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width: 90px;">
+                                                    <button class="Button" style="height:25px;" (click)="AddLineClicked()">
+                                                        <img class="LeftCenter" style="width:17px;height:12px;padding-left:2px;padding-right:2px;" src="./Images/Buttons/AddGreenSolid.png" />
+                                                        Add Line
+                                                    </button>
+                                                </td>
+
+                                                <td style="width: 5px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width: 145px;">
+                                                    <button class="Button" style="height:25px;" (click)="PrintPreviewClicked()">
+                                                        <img class="LeftCenter" style="width:17px;height:12px;padding-left:2px;padding-right:2px;" src="./Images/FileIcons/File-pdf-48.png" />
+                                                        Print Preview (PDF)
+                                                    </button>
+                                                </td>
+
+                                                <td style="width: 5px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width: 57px;">
+                                                    <button *ngIf="!HasChanges" class="Button" style="height:25px;">
+                                                        <img [ngStyle]="{'margin-left': '2px'}" src="./Images/Buttons/Save.png" [className]="LeftCenter" />
+                                                        <span style="line-height: 19px;" [ngStyle]="{'margin-left': '5px'}">Save</span>
+                                                    </button>
+                                                    <button *ngIf="HasChanges" class="EntityChangesButton" (click)="SaveClicked()" style="height:25px;">
+                                                        <img src="./Images/Buttons/Save.Red.png" [className]="LeftCenter" [ngStyle]="{'margin-left': '2px'}" />
+                                                        <span style="line-height: 19px;" [ngStyle]="{'margin-left': '5px'}">Save</span>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr style="height: 20px;">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="MediaFill">
+                                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ItemSource">
+                                    <!-- ProjectName -->
+                                    <log-column [width]="'150'" [Alignment]="'left'" [header]="'TMEmployeeTime.F.ProjectName' | TextCodeTranslationPipe">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsDisplayMode">
+                                                {{item.ProjectName}}
+                                            </div>
+                                            <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsEditMode">
+                                                <LogLov [FocusOnMe]="'true'"
+                                                        [DataContext]="item.DataContext"
+                                                        [ObjectTableName]="'TMEmployeeTime'"
+                                                        [ObjectFieldName]="'ProjectId'"
+                                                        [SelectedValue]="item.ProjectId"
+                                                        [LookUpTableName]="'TMProject'"
+                                                        [HideColumns]="true">
+                                                </LogLov>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <!-- Date -->
+                                    <log-column *ngIf="SelectedDateFilter == 'P'" [Alignment]="'left'" [width]="'120'" [header]="'Date'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            {{item.DateOfWork|  DateTimePipe:'SD'}}
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <!-- Hours -->
+                                    <log-column [width]="'120'" [Alignment]="'center'" [header]="'Hours' ">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <TimeInput [TotalMinutes]="item.TimeInMinutes" (TotalMinutesChanged)="item.TimeInMinutes = $event" [InputValue]="item.DayDateFormat" [DisplayValue]="item.DayDateFormat" (Changed)="item.DayDateFormat = $event"></TimeInput>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <!-- WINumber -->
+                                    <log-column [width]="'120'" [Alignment]="'left'" [header]="'TMEmployeeTime.F.WINumber' | TextCodeTranslationPipe ">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <Hyperlink [FontSize]="14" (click)="item.ViewWI(item.WINumber)" [Text]="item.WINumber"></Hyperlink>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <!-- Description -->
+                                    <log-column [width]="'250'" [Alignment]="'left'" [header]="'TMEmployeeTime.F.Description' | TextCodeTranslationPipe ">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsDisplayMode">
+                                                {{item.Description}}
+                                            </div>
+                                            <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsEditMode">
+                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Description'" [Text]="item.Description" [DataContext]="item.DataContext" [ObjectTableName]="'TMEmployeeTime'" [HideColumns]="true"></LogTextBox>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <!-- Tool -->
+                                    <log-column [width]="'80'" [Alignment]="'center'" [header]="''">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div>
+                                                <table>
+                                                    <tr>
+                                                        <td style="width:18px;">
+                                                            <div style="width: 18px; height: 18px;">
+                                                                <IconButton [Name]="'copy'" [IsSmall]="true" (click)="CopyLineClicked(item)"></IconButton>
+                                                            </div>
+                                                        </td>
+                                                        <td style="width:2px;">
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="width:18px;">
+                                                            <div style="width: 18px; height: 18px;">
+                                                                <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteLineClicked(item)"></IconButton>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                </logitude-edit-grid>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr style="height:50px;">
+                        <td>
+                            <div style="height:50px;border:1px solid #E9E9E9; background: #E9E9E9; color:#1B90CB;margin:2px;border-radius:3px;">
+                                <table>
+                                    <tr>
+                                        <td style="width:150px;min-width:150px;max-width:150px;">
+                                            <div style="color:#1B90CB;text-align:left;margin-left:10px;">Totals</div>
+                                        </td>
+                                        <td *ngIf="SelectedDateFilter == 'P'" style="width:120px;min-width:120px;max-width:120px;">
+                                            <div></div>
+                                        </td>
+                                        <td style="width:120px;min-width:120px;max-width:120px;text-align:center; font-size: 16px;">
+                                            {{TotalDayHours | TimeToHoursMinutesPipe}}
+                                            <span *ngIf="TotalFromClock != null && SelectedLocationFilter=='O'" style="font-size: 16px;">
+                                                | <span style="font-size: 16px;color:black;">{{TotalFromClock}}</span>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr style="height: 15px;">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+
+            <td style="width:10px;">
+                <div></div>
+            </td>
+        </tr>
+    </table>
+</div>

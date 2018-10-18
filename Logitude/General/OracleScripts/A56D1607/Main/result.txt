@@ -1,0 +1,221 @@
+table SUPPLIERINVOICEITEMSCONDECLARS altered.
+table SUPPLIERINVOICEITEMSTAXES altered.
+table SUPPLIERINVOICEITEMSTAXES altered.
+table CONSIGNMENTPACKAGES altered.
+table CONSIGNMENTPACKAGES altered.
+table SUPPLIERINVOICEITEMS altered.
+table SUPPLIERINVOICEITEMS altered.
+table SUPPLIERINVOICEITEMS altered.
+sequence QUEUEMESSAGES_SEQ1 created.
+table BOOKINGS altered.
+table BOOKINGS altered.
+table ACCOUNTINGTRANSFERHEADERS altered.
+global temporary TABLE created.
+table CUSTOMERPRODUCTS altered.
+table CUSTOMERPRODUCTS altered.
+table DOCUMENTTYPETEMPLATES altered.
+table OPPORTUNITYADDITIONALSERVICES altered.
+table TICKETS altered.
+table TICKETS altered.
+table TICKETS altered.
+table SHIPMENTS altered.
+table PARTICIPANTS altered.
+table AIRLINES altered.
+table CUSTOMERADDITIONALSERVICES altered.
+table PAYMENTORDERS altered.
+table HYBRIDPARTNERS altered.
+table INBOUNDEMAILLINES altered.
+table INBOUNDEMAILLINES altered.
+table OPPORTUNITYPRODUCTS altered.
+table OPPORTUNITYPRODUCTS altered.
+table NEWSUPPLIERITEMVEHICLE created.
+table PACKAGEFEATURES altered.
+table PAYMENTTERMDATETYPES created.
+table PAYMENTTERMS altered.
+table PAYMENTTERMS altered.
+table APINVOICES altered.
+table AUTOMATIONHISTORYS created.
+table ENTITYCASUALDATA created.
+table RG_TEMP_361101706_45 created.
+table Z1606MEASURMENTUNITS created.
+0 rows inserted.
+committed.
+table MEASURMENTUNITS dropped.
+table RG_TEMP_361101706_45 altered.
+table ARINVOICES altered.
+table ARINVOICES altered.
+table ARINVOICES altered.
+table ARINVOICES altered.
+index IX_624428485 dropped.
+table CLAIMIMPORTERDECLARSP3LOIS altered.
+table CLAIMIMPORTERDECLARSP3LOIS altered.
+table CLAIMIMPORTERDECLARSP3LOIS altered.
+
+Error starting at line : 159 in command -
+ALTER TABLE claimimporterdeclarsp3lois DROP CONSTRAINT fk_1638544082
+Error report -
+SQL Error: ORA-02443: לא ניתן למחוק אילוץ - האילוץ לא קיים
+02443. 00000 -  "Cannot drop constraint  - nonexistent constraint"
+*Cause:    alter table drop constraint <constraint_name>
+*Action:   make sure you supply correct constraint name.
+table CLAIMIMPORTERDECLARSP3LOIS altered.
+table CLAIMIMPORTERDECLARSP3LOIS altered.
+table CLAIMIMPORTERDECLARSP3LOIS altered.
+table CLAIMIMPORTERDECLARSPAGE3S altered.
+table CLAIMIMPORTERDECLARSPAGE3S altered.
+table TASKSSCHEDULER created.
+table RG_TEMP_361101706_46 created.
+table Z1607CLAIMIMPORTERDECLSPA3BS created.
+0 rows inserted.
+committed.
+table CLAIMIMPORTERDECLARSPAGE3BS dropped.
+table RG_TEMP_361101706_46 altered.
+table CLAIMIMPORTERDECLARSPAGE3BS altered.
+index RG_TEMP_361101706_58 altered.
+table CLAIMIMPORTERDECLARSPAGE3BS altered.
+index IX_1822660010 created.
+table TICKETCLASSIFICATIONS altered.
+table TICKETCLASSIFICATIONS altered.
+table TICKETCLASSIFICATIONS altered.
+index IX_866452815 dropped.
+table CLAIMSRELATEDENTSREASONSEXPS altered.
+table CLAIMSRELATEDENTSREASONSEXPS altered.
+table CLAIMSRELATEDENTSREASONSEXPS altered.
+table CLAIMSRELATEDENTSREASONSEXPS altered.
+
+Error starting at line : 247 in command -
+ALTER TABLE claimsrelatedentsreasonsexps DROP CONSTRAINT fk_n1422415057
+Error report -
+SQL Error: ORA-02443: לא ניתן למחוק אילוץ - האילוץ לא קיים
+02443. 00000 -  "Cannot drop constraint  - nonexistent constraint"
+*Cause:    alter table drop constraint <constraint_name>
+*Action:   make sure you supply correct constraint name.
+table CLAIMSRELATEDENTSREASONSEXPS altered.
+table CLAIMSRELATEDENTSREASONSEXPS altered.
+table CLAIMSRELATEDENTSREASONSEXPS altered.
+table CLAIMSRELATEDENTITIESREASONS altered.
+table CLAIMSRELATEDENTITIESREASONS altered.
+table CLAIMSRELATEDENTITIESREASONS altered.
+table CLAIMSRELATEDENTITIESREASONS altered.
+table CLAIMSRELATEDENTITIESREASONS altered.
+table CLAIMSRELATEDENTITIESREASONS altered.
+table AWBSTOCKUSAGEHISTORIES altered.
+table AWBSTOCKUSAGEHISTORIES altered.
+table AWBSTOCKUSAGEHISTORIES altered.
+table AWBSTOCKUSAGEHISTORIES altered.
+table INBOUNDEMAILS altered.
+table EMPLOYEEGROUPS altered.
+table EMPLOYEEGROUPS altered.
+table EMPLOYEEGROUPS altered.
+table DOCUMENTSFILINGS altered.
+table OBJECTFIELDS altered.
+index IX_N370408663 dropped.
+table CLAIMIMPORTERDECLARSPAGE3AS altered.
+table CLAIMIMPORTERDECLARSPAGE3AS altered.
+table AWBDESCRIPTIONOFGOODS altered.
+table NOTIFICATIONS altered.
+table NOTIFICATIONS altered.
+table NEWPAYMENTORDERS created.
+table NEWSUPPLIERINVITEMCERS created.
+table ENTITYCHANGES altered.
+table ENTITYCHANGES altered.
+table ENTITYCHANGES altered.
+table ENTITYCHANGES altered.
+table RG_TEMP_361101706_47 created.
+table Z1607LOGITUDEMESSGESTRNSLOGS created.
+0 rows inserted.
+committed.
+table LOGITUDEMESSAGESTRANSLOGS dropped.
+table RG_TEMP_361101706_47 altered.
+table TASKSCHEDULERHISTORY created.
+table AIRLINEMESSAGINGRULES created.
+table USERLICENSES altered.
+table AUTOMATIONS altered.
+table AUTOMATIONS altered.
+table AUTOMATIONS altered.
+table AUTOMATIONS altered.
+table AUTOMATIONLASTUPDATES created.
+table "PACKAGES" altered.
+table FLIGHTSSCHEDULESRESPONSES altered.
+table FLIGHTSSCHEDULESRESPONSES altered.
+table AUTOMATIONRESULTEMAILRECIPS altered.
+table AUTOMATIONRESULTEMAILRECIPS altered.
+table PACKAGECONNECTEDPACKAGES altered.
+table PACKAGECONNECTEDPACKAGES altered.
+table PACKAGECONNECTEDPACKAGES altered.
+index IX_876134226 dropped.
+index IX_730412180 dropped.
+table AUTOMATIONCONDITIONS dropped.
+index IX_TENANTADDONS_PACKAGECODE dropped.
+table TENANTADDONS dropped.
+table ENTITYCHANGESAUTOMATIONS dropped.
+index IX_NOTIFICATIONS_CUSTOMERID created.
+index IX_N744866354 created.
+index IX_836460380 created.
+index IX_N1313665179 created.
+index IX_N1239001948 created.
+index IX_CRS_DCAAGGRKEY created.
+index IX_AUTOMATIONS_CREATEDBYUSERID created.
+
+Error starting at line : 478 in command -
+DROP INDEX ix_n2074643273
+Error report -
+SQL Error: ORA-01418: האינדקס שצוין אינו קיים
+01418. 00000 -  "specified index does not exist"
+*Cause:    
+*Action:
+index IX_N2074643273 created.
+index IX_TASKSCHEDULERHISTORY_TASKID created.
+index IX_18623159 created.
+
+Error starting at line : 486 in command -
+DROP INDEX ix_n192688320
+Error report -
+SQL Error: ORA-01418: האינדקס שצוין אינו קיים
+01418. 00000 -  "specified index does not exist"
+*Cause:    
+*Action:
+index IX_N192688320 created.
+index IX_AUTOMATIONS_UPDATEDBYUSERID created.
+index IX_1292319833 created.
+index IX_1289860281 created.
+index IX_591782138 created.
+index IX_N1065836496 created.
+
+Error starting at line : 500 in command -
+DROP INDEX ix_n1285744811
+Error report -
+SQL Error: ORA-01418: האינדקס שצוין אינו קיים
+01418. 00000 -  "specified index does not exist"
+*Cause:    
+*Action:
+index IX_N1285744811 created.
+index IX_410647628 created.
+
+Error starting at line : 506 in command -
+DROP INDEX ix_n1666276523
+Error report -
+SQL Error: ORA-01418: האינדקס שצוין אינו קיים
+01418. 00000 -  "specified index does not exist"
+*Cause:    
+*Action:
+index IX_N1666276523 created.
+PROCEDURE QUEUE_RETURNMESSAGE compiled
+PROCEDURE QUEUE_ENQUEUE compiled
+PROCEDURE QUEUE_SETSTATUS compiled
+PROCEDURE QUEUE_PEEK compiled
+PROCEDURE USP_UPDATEINVOICEITEMSSEQUENCE compiled
+PROCEDURE QUEUE_DELAYMESSAGE compiled
+procedure ZZ_UPDATEQUEUECOMMUNICATIONLO dropped.
+TRIGGER QUEUEMESSAGES_TRG compiled
+TRIGGER QUEUEMESSAGES_INS_TRG compiled
+table SUPPLIERINVOICEITEMSCONDECLARS altered.
+table SUPPLIERINVOICEITEMSTAXES altered.
+table SUPPLIERINVOICEITEMSTAXES altered.
+table CONSIGNMENTPACKAGES altered.
+table CONSIGNMENTPACKAGES altered.
+table SUPPLIERINVOICEITEMS altered.
+table SUPPLIERINVOICEITEMS altered.
+table SUPPLIERINVOICEITEMS altered.
+anonymous block completed
+committed.

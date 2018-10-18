@@ -1,0 +1,1027 @@
+﻿<style type="text/css">
+    .TabCloseIcon:hover {
+        background: url('./Images/Tab.X.Blue.png') no-repeat;
+    }
+
+    .TabCloseIcon {
+        background: url('./Images/Tab.X.Gray.png') no-repeat;
+    }
+
+    /* HOVER */
+    .LogTabControl .TabControlHead li:not(.Selected):not(.NewTabItem):hover .InnerChild {
+        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,ffffff+18,b3d2f2+94,ffffff+95,ffffff+100 */
+        background: #ffffff; /* Old browsers */
+        background: -moz-linear-gradient(top,  #ffffff 0%, #ffffff 18%, #b3d2f2 94%, #ffffff 95%, #ffffff 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#ffffff 18%,#b3d2f2 94%,#ffffff 95%,#ffffff 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom,  #ffffff 0%,#ffffff 18%,#b3d2f2 94%,#ffffff 95%,#ffffff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+
+    }
+
+    /* ACTIVE */
+    .LogTabControl .TabControlHead li:not(.Selected):not(.NewTabItem):active .InnerChild {
+        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#c2d7ed+0,eff2f4+16,b4d0ed+94,ffffff+95,ffffff+100 */
+        background: #c2d7ed; /* Old browsers */
+        background: -moz-linear-gradient(top,  #c2d7ed 0%, #eff2f4 16%, #b4d0ed 94%, #ffffff 95%, #ffffff 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top,  #c2d7ed 0%,#eff2f4 16%,#b4d0ed 94%,#ffffff 95%,#ffffff 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom,  #c2d7ed 0%,#eff2f4 16%,#b4d0ed 94%,#ffffff 95%,#ffffff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c2d7ed', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+    }
+
+    .LogTabControl .TabControlHead li:not(.Selected):not(.NewTabItem):hover {
+        background: #448DCA;
+    }
+
+    .LogTabControl .TabControlHead li:not(.NewTabItem) .InnerChild {
+        height: 100%;
+        width: 100%;
+        color: black;
+        font-size: 13px;
+        text-align: left;
+        padding-left: 5px;
+        padding-right: 3px;
+        background: transparent;
+    }
+
+    .LogTabControl .TabControlHead li:not(.NewTabItem) {
+        height: 23px;
+        width: 95px;
+        line-height: 23px;
+        border: 1px solid #b1b1b1;
+        display: inline-block;
+        float: left;
+        cursor: default;
+        overflow: hidden;
+        border-radius: 4px 4px 0px 0px;
+        -moz-border-radius: 4px 4px 0px 0px;
+        -webkit-border-radius: 4px 4px 0px 0px;
+         /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,ffffff+21,e2e2e2+94,e2e2e2+94,ffffff+95,ffffff+100 */
+        background: #ffffff; /* Old browsers */
+        background: -moz-linear-gradient(top,  #ffffff 0%, #ffffff 21%, #e2e2e2 94%, #e2e2e2 94%, #ffffff 95%, #ffffff 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#ffffff 21%,#e2e2e2 94%,#e2e2e2 94%,#ffffff 95%,#ffffff 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom,  #ffffff 0%,#ffffff 21%,#e2e2e2 94%,#e2e2e2 94%,#ffffff 95%,#ffffff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+
+
+    }
+
+    .LogTabControl .TabControlHead li:not(.Selected) {
+        height: 23px;
+        margin-top: 2px;
+        border-bottom: 1px solid #b9b9b9;
+    }
+
+    .LogTabControl .TabControlHead li.Selected {
+        pointer-events: none;
+        height: 25px;
+        line-height: 25px;
+        margin-bottom: -1px;
+        background: white;
+        border: 1px solid #6dbdd1;
+        border-bottom: 1px solid white;
+        transition: margin 0.2s;
+    }
+
+    .LogTabControl .TabControlBody {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 25px;
+        bottom: 0;
+        background: white;
+        border: 1px solid #b9b9b9;
+        border-top: none;
+    }
+
+    .LogTabControl .TabControlHead ul {
+        width: 100%;
+        height: 100%;
+        padding-left: 8px;
+        padding-right: 0px;
+    }
+
+    .LogTabControl .TabControlHead {
+        width: 100%;
+        height: 25px;
+        position: relative;
+        border-bottom: 1px solid #a3aeb9;
+    }
+
+    .LogTabControl {
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+</style>
+
+<table>
+
+    <!-- #region validation -->
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td colspan="4">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+        </td>
+    </tr>
+    <!-- #endregion -->
+
+    <tr>
+        <td style="margin:5px">
+            <div style="position: absolute; top: 0;" class="LogTabControl">
+
+                <!-- Tab Header-->
+                <div class="TabControlHead">
+                    <ul>
+                        <li *ngFor="let tab of TabsSource" style="width: auto; min-width: 48px;" [class.Selected]="tab.isSelected" [style.float]="LayoutDirection ? 'right' : 'left'" (click)="SelectionChanged(tab)">
+
+                            <div style="position: relative; width: 100%;" class="InnerChild"
+                                 [style.text-align]="'center'">
+                                <div class="TextTrimming" style="font-size: 11px;">{{tab.Header}}</div>
+                            </div>
+
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Tab Body -->
+                <div class="TabControlBody" style="background: white;">
+                    <div class="MediaFillAbsolute">
+                        <div  style="height: 100%;padding: 15px;" [ngSwitch]="SelectedTab">
+
+                            <!-- #region Details Tab -->
+                            <div *ngSwitchCase="'Details'" style="height: 100%;">
+                                
+                                <!-- Filters Fields-->
+                                <table *ngIf="ClonedItemPM" style="height: 150px;">
+
+                                    <tr>
+                                        <!-- StatisticQuantity -->
+                                        <td style="width: 115px;">
+                                            <LogLabel [ObjectFieldName]="'StatisticQuantity'" [ObjectTableName]="ObjectTableName"
+                                                      [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td style="width: 65px; padding-left: 5px;">
+                                            <LogTextBox [ObjectFieldName]="'StatisticQuantity'" [ObjectTableName]="ObjectTableName" [IsAccumulative]="true"
+                                                        [InputType]="'decimal'" [HideColumns]="true" [DataContext]="DataContext" ></LogTextBox>
+                                        </td>
+                                        <td style="width: 70px;">
+                                            <LogLov [ObjectFieldName]="'StatisticQuantityType'"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"
+                                                    [LookUpTableName]="'Customs.MeasurmentUnit'"
+                                                    [HideColumns]="true">
+                                            </LogLov>
+                                        </td>
+
+                                        <td style="width: 10px;"><div></div></td>
+
+                                        <!-- DeferredCustomsTax -->
+                                        <td style="width: 140px;">
+                                            <LogLabel [ObjectFieldName]="'DeferredCustomsTax'" [ObjectTableName]="ObjectTableName"
+                                                      [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td style="width: 135px;">
+                                            <LogTextBox [ObjectFieldName]="'DeferredCustomsTax'" [ObjectTableName]="ObjectTableName"  [AddCommasToNumbers]="true"
+                                                        [InputType]="'decimal'" [HideColumns]="true" [DataContext]="DataContext" ></LogTextBox>
+                                        </td>
+
+                                        <td style="width: 10px;"><div></div></td>
+
+                                        <!-- NonCustomsItemPrice -->
+                                        <td style="width: 185px;">
+                                            <LogLabel [ObjectFieldName]="'NonCustomsItemPrice'" [ObjectTableName]="ObjectTableName"
+                                                      [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td style="width: 85px; padding-left: 5px;">
+                                            <LogTextBox [ObjectFieldName]="'NonCustomsItemPrice'" [ObjectTableName]="ObjectTableName"
+                                                        [InputType]="'decimal'" [HideColumns]="true" [DataContext]="DataContext" ></LogTextBox>
+                                        </td>
+                                        <td style="width: 70px;">
+                                            <LogLov [ObjectFieldName]="'NonCustomsItemPriceCurCode'"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"
+                                                    [LookUpTableName]="'Customs.CurrencyType'"
+                                                    [HideColumns]="true">
+                                            </LogLov>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <!-- AdditionalQuantity -->
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'AdditionalQuantity'" [ObjectTableName]="ObjectTableName"
+                                                      [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td style="width: 65px; padding-left: 5px;">
+                                            <LogTextBox [ObjectFieldName]="'AdditionalQuantity'" [ObjectTableName]="ObjectTableName"
+                                                        [InputType]="'decimal'" [HideColumns]="true" [DataContext]="DataContext" ></LogTextBox>
+                                        </td>
+                                        <td style="width: 70px;">
+                                            <LogLov [ObjectFieldName]="'AdditionalQuantityType'"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"
+                                                    [LookUpTableName]="'Customs.MeasurmentUnit'"
+                                                    [HideColumns]="true">
+                                            </LogLov>
+                                        </td>
+
+                                        <td style="width: 10px;"><div></div></td>
+
+                                        <!-- DeferredPurchaseTax -->
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'DeferredPurchaseTax'" [ObjectTableName]="ObjectTableName"
+                                                      [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td>
+                                            <LogTextBox [ObjectFieldName]="'DeferredPurchaseTax'" [ObjectTableName]="ObjectTableName"  [AddCommasToNumbers]="true"
+                                                        [InputType]="'decimal'" [HideColumns]="true" [DataContext]="DataContext" ></LogTextBox>
+                                        </td>
+
+                                        <td style="width: 10px;"><div></div></td>
+
+                                        <!-- WholeSaleItemPrice -->
+                                        <td style="width: 170px;">
+                                            <LogLabel [ObjectFieldName]="'WholeSaleItemPrice'" [ObjectTableName]="ObjectTableName"
+                                                      [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td style="width: 85px; padding-left: 5px;">
+                                            <LogTextBox [ObjectFieldName]="'WholeSaleItemPrice'" [ObjectTableName]="ObjectTableName"
+                                                        [InputType]="'decimal'" [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+                                        <td style="width: 70px;">
+                                            <LogLov [ObjectFieldName]="'WholeSaleItemPriceCurrencyCode'"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"
+                                                    [LookUpTableName]="'Customs.CurrencyType'"
+                                                    [HideColumns]="true">
+                                            </LogLov>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <!-- CustomsBookTypeCode -->
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'CustomsBookTypeCode'" [ObjectTableName]="ObjectTableName"
+                                                      [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td colspan="2">
+                                            <LogLov [ObjectFieldName]="'CustomsBookTypeCode'"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"
+                                                    [HideColumns]="true"
+                                                    [QueryFilterItems]="CustomsBookTypeFilterItems"
+                                                    [LookUpTableName]="'Customs.CustomsBookType'">
+                                            </LogLov>
+                                        </td>
+
+                                        <td style="width: 10px;"><div></div></td>
+
+                                        <!-- SalesTaxExemptionTypeCode -->
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'SalesTaxExemptionTypeCode'" [ObjectTableName]="ObjectTableName"
+                                                      [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td>
+                                            <LogLov [ObjectFieldName]="'SalesTaxExemptionTypeCode'"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"
+                                                    [HideColumns]="true"
+                                                    [LookUpTableName]="'Customs.SalesTaxExemptionType'">
+                                            </LogLov>
+                                        </td>
+
+                                        <td style="width: 10px;"><div></div></td>
+
+                                        <!-- IsUsed -->
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'IsUsed'" [ObjectTableName]="ObjectTableName"
+                                                      [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td colspan="2" style="width: 160px;">
+                                            <CheckBox [IsChecked]="IsUsed" [IsEnabled]="!IsDisplayOnly" (Checked)="IsUsed = $event"></CheckBox>
+                                        </td>
+
+
+                                    </tr>
+                                    <tr>
+                                        <!-- PreferenceDocumentNumber -->
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'PreferenceDocumentNumber'" [ObjectTableName]="ObjectTableName"
+                                                      [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td colspan="2">
+                                            <LogTextBox [ObjectFieldName]="'PreferenceDocumentNumber'" [ObjectTableName]="ObjectTableName"
+                                                        [InputType]="'text'" [HideColumns]="true" [DataContext]="DataContext" ></LogTextBox>
+                                        </td>
+
+                                        <td style="width: 10px;"><div></div></td>
+
+                                        <!-- TaxExemptCode -->
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'TaxExemptCode'" [ObjectTableName]="ObjectTableName"
+                                                      [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td>
+                                            <!--<LogTextBox [ObjectFieldName]="'TaxExemptCode'" [ObjectTableName]="ObjectTableName"
+                                                        [InputType]="'ntext'" [HideColumns]="true" [DataContext]="DataContext" ></LogTextBox>-->
+
+                                            <SearchBox [ObjectTableName]="'Customs.CustomsItems'"
+                                                       [IsQuickSearch]="true"
+                                                       [DropDownWidth]="144"
+                                                       [ItemHeight]="20"
+                                                       [DisplayText]="CustomsItem"
+                                                       [ErrorMessage]="CustomItemErrorMessage"
+                                                       [MaxPopupItemsCount]="10"
+                                                       (ItemClicked)="CustomsItemClicked($event)"
+                                                       (TextChanged)="CustomsItemTextChanged($event)"
+                                                       [IsDisabled]="IsDisplayOnly"
+                                                       [HideIcons]="true"
+                                                       (LostFocus)="CustomsItemLostFocus($event)"></SearchBox>
+
+                                        </td>
+
+                                        <td style="width: 10px;"><div></div></td>
+
+                                        <!-- ManufactureIdentifier -->
+                                        <td style="width: 130px;">
+                                            <LogLabel [ObjectFieldName]="'ManufactureIdentifier'" [ObjectTableName]="ObjectTableName"
+                                                      [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td colspan="2" style="width: 135px;">
+                                            <LogTextBox [ObjectFieldName]="'ManufactureIdentifier'" [ObjectTableName]="ObjectTableName"
+                                                        [InputType]="'text'" [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <!-- ActualInvoiceLines -->
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'ActualInvoiceLines'" [ObjectTableName]="ObjectTableName"
+                                                      [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td colspan="2">
+                                            <LogTextBox style="float: right; width: 107px;" [ObjectFieldName]="'ActualInvoiceLines'" [ObjectTableName]="ObjectTableName"   [Text]="ActualInvoiceLines"
+                                                        [InputType]="'text'" [HideColumns]="true" [DataContext]="DataContext" ></LogTextBox>
+                                            <IconButton [IsEnabled]="!IsDisplayOnly" style="float: left; padding-top: 2px;" [IsSmall]="true" [Name]="'edit'" (click)="EditActualLines()"></IconButton>
+                                        </td>
+
+                                        <td style="width: 10px;"><div></div></td>
+
+                                        <!-- OptionalTamaPercentage -->
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'OptionalTamaPercentage'" [ObjectTableName]="ObjectTableName"
+                                                      [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td>
+                                            <LogTextBox [ObjectFieldName]="'OptionalTamaPercentage'" [ObjectTableName]="ObjectTableName" [AddCommasToNumbers]="true"
+                                                        [InputType]="'decimal'" [HideColumns]="true" [DataContext]="DataContext" ></LogTextBox>
+                                        </td>
+
+                                        <td style="width: 10px;"><div></div></td>
+
+                                        <!-- DangerousClassificationCode -->
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'DangerousClassificationCode'" [ObjectTableName]="ObjectTableName"
+                                                      [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td colspan="2">
+                                            <LogTextBox [ObjectFieldName]="'DangerousClassificationCode'" [ObjectTableName]="ObjectTableName"
+                                                        [InputType]="'integer'" [HideColumns]="true" [DataContext]="DataContext"
+                                                        (LostFocus)="OnDangClasCodeBlur()" ></LogTextBox>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6"><div></div></td>
+
+                                        <td style="width: 10px;"><div></div></td>
+
+                                        <!-- DangerousPackingGroupTypeCode -->
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'DangerousPackingGroupTypeCode'" [ObjectTableName]="ObjectTableName"
+                                                      [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td colspan="2">
+                                            <LogLov [ObjectFieldName]="'DangerousPackingGroupTypeCode'"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"
+                                                    [HideColumns]="true"
+                                                    [LookUpTableName]="'Customs.DangerousGoodsPackingReq'">
+                                            </LogLov>
+                                        </td>
+                                    </tr>
+                                    <tr style="height: 7px;"><td><div></div></td></tr>
+
+                                </table>
+
+                                <!-- Grids-->
+                                <table style="height: calc(100%  - 150px);">
+                                    <tr>
+                                        <!-- Modification Grid -->
+                                        <td style="width: 455px;">
+                                            <table>
+
+                                                <tr style="height: 25px;">
+                                                    <td><span style="font-size: 13px; color: #1b90cb;">{{'Customs.Declaration.O.Modifications' | TextCodeTranslationPipe}}</span></td>
+                                                    <td style="width: 30px;"><IconButton [IsEnabled]="!IsDisplayOnly" [Name]="'Add'" [IsSmall]="true" (click)="AddModificationButton()"></IconButton></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td colspan="2" style="height: 100%;">
+                                                        <div class="CellContent">
+                                                            <logitude-edit-grid GridWidth="100%" GridHeight="100%" [Disabled]="IsDisplayOnly" [ItemSource]="ModificationsList" (RowEnded)="OnRowEnded($event)" (Ondblclick)="OnFocus()">
+
+                                                                <!-- TypeCode -->
+                                                                <log-column [header]="'Customs.SupplierInvoiceItemsMod.F.TypeCode' | TextCodeTranslationPipe" [width]="'160'" [Alignment]="'right'" [binding]="'TypeCode'">
+                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                        <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.TypeName}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogLov [ObjectFieldName]="'TypeCode'"
+                                                                                    [ObjectTableName]="'Customs.SupplierInvoiceItemsMod'"
+                                                                                    [DataContext]="item"
+                                                                                    [HideColumns]="true"
+                                                                                    [LookUpTableName]="'Customs.ModificationAndDiscountType'"
+                                                                                    (SelectedItemChanged)="item.SetLocalName($event, 'TypeName')"
+                                                                                    [FocusOnMe]="true">
+                                                                            </LogLov>
+
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </log-column>
+
+                                                                <!-- CurrencyTypeCode -->
+                                                                <log-column [header]="'Customs.SupplierInvoiceItemsMod.F.CurrencyTypeCode' | TextCodeTranslationPipe" [width]="'148'" [Alignment]="'right'" [binding]="'CurrencyTypeCode'">
+                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                        <div style="text-align: right;"  class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.CurrencyTypeName}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogLov [ObjectFieldName]="'CurrencyTypeCode'"
+                                                                                    [ObjectTableName]="'Customs.SupplierInvoiceItemsMod'"
+                                                                                    [DataContext]="item"
+                                                                                    [HideColumns]="true"
+                                                                                    [LookUpTableName]="'Customs.CurrencyType'"
+                                                                                    (SelectedItemChanged)="item.SetLocalName($event, 'CurrencyTypeName')"
+                                                                                    [FocusOnMe]="true">
+                                                                            </LogLov>
+
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </log-column>
+
+                                                                <!-- Amount -->
+                                                                <log-column [header]="'Customs.SupplierInvoiceItemsMod.F.Amount' | TextCodeTranslationPipe" [width]="'85'" [Alignment]="'right'" [binding]="'Amount'">
+                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                        <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.Amount | NumbersPipe:'n2'}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogTextBox [ObjectFieldName]="'Amount'" [InputType]="'double'" [DataContext]="item"
+                                                                                        [ObjectTableName]="'Customs.SupplierInvoiceItemsMod'" [HideColumns]="true" [FocusOnMe]="true" ></LogTextBox>
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </log-column>
+
+                                                                <!-- Buttons -->
+                                                                <log-column [width]="'40'" [Alignment]="'right'">
+                                                                    <log-cell-template template="let item"  [IgnoreMods]="true">
+                                                                        <span class="CellSeparator" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'"></span>
+                                                                        <IconButton [IsEnabled]="!IsDisplayOnly" [Name]="'Delete'" [IsSmall]="true" (click)="RemoveModification(item)"
+                                                                                    style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
+                                                                    </log-cell-template>
+                                                                </log-column>
+
+                                                            </logitude-edit-grid>
+                                                        </div>
+
+                                                    </td>
+                                                </tr>
+
+                                            </table>
+                                        </td>
+
+                                        <td style="width: 30px;"><div></div></td>
+
+                                        <!-- Process Types -->
+                                        <td>
+                                            <table>
+                                                <tr style="height: 25px;">
+                                                    <td><span style="font-size: 13px; color: #1b90cb;">{{'Customs.Declaration.O.ProcessTypes' | TextCodeTranslationPipe}}</span></td>
+                                                    <td style="width: 30px;"><IconButton [IsEnabled]="!IsDisplayOnly" [Name]="'Add'" [IsSmall]="true" (click)="AddProcessTypeButton()"></IconButton></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td colspan="2" style="height: 100%;">
+                                                        <div class="CellContent">
+                                                            <logitude-edit-grid GridWidth="100%" GridHeight="100%" [Disabled]="IsDisplayOnly" [ItemSource]="ProcessTypesList">
+
+                                                                <!-- ProcessTypeCode -->
+                                                                <log-column [header]="'Customs.SupplierInvoiceItemProcesType.F.ProcessTypeCode' | TextCodeTranslationPipe" [width]="'415'" [Alignment]="'right'" [binding]="'ProcessTypeCode'">
+                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                        <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.ProcessTypeName}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogLov [ObjectFieldName]="'ProcessTypeCode'"
+                                                                                    [ObjectTableName]="'Customs.SupplierInvoiceItemProcesType'"
+                                                                                    [DataContext]="item"
+                                                                                    [HideColumns]="true"
+                                                                                    [LookUpTableName]="'Customs.ItemGovernmentProcedureType'"
+                                                                                    (SelectedItemChanged)="item.SetLocalName($event, 'ProcessTypeName')"
+                                                                                    [FocusOnMe]="true">
+                                                                            </LogLov>
+
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </log-column>
+
+                                                                <!-- Buttons -->
+                                                                <log-column [width]="'35'" [Alignment]="'right'">
+                                                                    <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
+                                                                        <span class="CellSeparator" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'"></span>
+                                                                        <IconButton [IsEnabled]="!IsDisplayOnly" [Name]="'Delete'" [IsSmall]="true" (click)="RemoveProcessType(item)"
+                                                                                    style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
+                                                                    </log-cell-template>
+                                                                </log-column>
+
+                                                            </logitude-edit-grid>
+                                                        </div>
+
+                                                    </td>
+                                                </tr>
+
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            </div>
+                            <!-- #endregion -->
+
+                            <!-- #region Declarations Tab -->
+                            <div *ngSwitchCase="'Declarations'" style="height: 100%;">
+                                
+                                <table style="height: 100%;">
+                                    <tr>
+                                        <td>
+
+                                            <!-- Grid -->
+                                            <table>
+
+                                                <tr style="height: 25px;">
+                                                    <td><span style="font-size: 13px; color: #1b90cb;"></span></td>
+                                                    <td style="width: 30px;"><IconButton [IsEnabled]="!IsDisplayOnly" [Name]="'Add'" [IsSmall]="true" (click)="AddConnDeclarButton()"></IconButton></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td colspan="2" style="height: 100%;">
+                                                        <div class="CellContent">
+                                                            <logitude-edit-grid GridWidth="100%" GridHeight="100%" [Disabled]="IsDisplayOnly" [ItemSource]="ConDeclarList">
+
+                                                                <!-- DeclarationTypeCode -->
+                                                                <log-column [header]="'Customs.SupplierInvoiceItemsConDeclar.F.DeclarationTypeCode' | TextCodeTranslationPipe" [width]="'105'" [Alignment]="'right'" [binding]="'DeclarationTypeCode'">
+                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                        <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.DeclarationTypeName}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogLov [ObjectFieldName]="'DeclarationTypeCode'"
+                                                                                    [ObjectTableName]="'Customs.SupplierInvoiceItemsConDeclar'"
+                                                                                    [DataContext]="item"
+                                                                                    [HideColumns]="true"
+                                                                                    [LookUpTableName]="'Customs.LeadDocumentType'"
+                                                                                    (SelectedItemChanged)="item.SetLocalName($event, 'DeclarationTypeName')"
+                                                                                    [FocusOnMe]="true">
+                                                                            </LogLov>
+
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </log-column>
+
+                                                                <!-- DeclarationNumber -->
+                                                                <log-column [header]="'Customs.SupplierInvoiceItemsConDeclar.F.DeclarationNumber' | TextCodeTranslationPipe" [width]="'115'" [Alignment]="'right'" [binding]="'DeclarationNumber'">
+                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                        <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.DeclarationNumber}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogTextBox [ObjectFieldName]="'DeclarationNumber'" [InputType]="'text'" [DataContext]="item"
+                                                                                        [ObjectTableName]="'Customs.SupplierInvoiceItemsConDeclar'" [HideColumns]="true" [FocusOnMe]="true" ></LogTextBox>
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </log-column>
+
+                                                                <!-- InvoiceNumber -->
+                                                                <log-column [header]="'Customs.SupplierInvoiceItemsConDeclar.F.InvoiceNumber' | TextCodeTranslationPipe" [width]="'95'" [Alignment]="'right'" [binding]="'InvoiceNumber'">
+                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                        <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.InvoiceNumber}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogTextBox [ObjectFieldName]="'InvoiceNumber'" [InputType]="'Integer'" [DataContext]="item"
+                                                                                        [ObjectTableName]="'Customs.SupplierInvoiceItemsConDeclar'" [HideColumns]="true" [FocusOnMe]="true" ></LogTextBox>
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </log-column>
+
+                                                                <!-- ItemSequence -->
+                                                                <log-column [header]="'Customs.SupplierInvoiceItemsConDeclar.F.ItemSequence' | TextCodeTranslationPipe" [width]="'95'" [Alignment]="'right'" [binding]="'ItemSequence'">
+                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                        <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.ItemSequence}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogTextBox [ObjectFieldName]="'ItemSequence'" [InputType]="'Integer'" [DataContext]="item"
+                                                                                        [ObjectTableName]="'Customs.SupplierInvoiceItemsConDeclar'" [HideColumns]="true" [FocusOnMe]="true" ></LogTextBox>
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </log-column>
+
+                                                                <!-- Quantity -->
+                                                                <log-column [header]="'Customs.SupplierInvoiceItemsConDeclar.F.Quantity' | TextCodeTranslationPipe" [width]="'55'" [Alignment]="'right'" [binding]="'Quantity'">
+                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                        <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.Quantity | NumbersPipe:'N3'}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogTextBox [ObjectFieldName]="'Quantity'" [InputType]="'double'" [DataContext]="item"
+                                                                                        [ObjectTableName]="'Customs.SupplierInvoiceItemsConDeclar'" [HideColumns]="true" [FocusOnMe]="true" ></LogTextBox>
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </log-column>
+
+                                                                <!-- QuantityTypeCode -->
+                                                                <log-column [header]="'Customs.SupplierInvoiceItemsConDeclar.F.QuantityTypeName' | TextCodeTranslationPipe" [width]="'65'" [Alignment]="'right'" [binding]="'QuantityTypeName'">
+                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                        <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.QuantityTypeName}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogLov [ObjectFieldName]="'QuantityTypeCode'"
+                                                                                    [ObjectTableName]="'Customs.SupplierInvoiceItemsConDeclar'"
+                                                                                    [DataContext]="item"
+                                                                                    [HideColumns]="true"
+                                                                                    [LookUpTableName]="'Customs.MeasurmentUnit'"
+                                                                                    [DisplayMemberPath]="'LocalName'"
+                                                                                    (SelectedItemChanged)="item.SetLocalName($event, 'QuantityTypeName')"
+                                                                                    [FocusOnMe]="true">
+                                                                            </LogLov>
+
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </log-column>
+
+                                                                <!-- Buttons -->
+                                                                <log-column [width]="'40'" [Alignment]="'right'">
+                                                                    <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
+                                                                        <span class="CellSeparator" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'"></span>
+                                                                        <IconButton [IsEnabled]="!IsDisplayOnly" [Name]="'Delete'" [IsSmall]="true" (click)="RemoveConnDeclar(item)"
+                                                                                    style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
+                                                                    </log-cell-template>
+                                                                </log-column>
+
+                                                            </logitude-edit-grid>
+                                                        </div>
+
+                                                    </td>
+                                                </tr>
+
+                                            </table>
+
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+
+                            </div>
+                            <!-- #endregion -->
+
+                            <!-- #region Serial Numbers Tab -->
+                            <div *ngSwitchCase="'SerialNumbers'" style="height: 100%;">
+                                
+                                <table style="height: 100%;">
+                                    <tr>
+                                        <!-- SerialNumbersList -->
+                                        <td style="width: 300px;">
+                                            <table>
+                                                <tr style="height: 25px;">
+                                                    <td><span style="font-size: 13px; color: #1b90cb;">{{'Customs.Declaration.O.SerialNumber' | TextCodeTranslationPipe}}</span></td>
+                                                    <td style="width: 30px;"><IconButton [IsEnabled]="!IsDisplayOnly" [Name]="'Add'" [IsSmall]="true" (click)="AddSerialNumberButton()"></IconButton></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td colspan="2" style="height: 100%;">
+                                                        <div class="CellContent">
+                                                            <logitude-edit-grid GridWidth="100%" GridHeight="100%" [Disabled]="IsDisplayOnly" [ItemSource]="SerialNumbersList">
+
+                                                                <!-- TypeCode -->
+                                                                <log-column [header]="'Customs.SupplierInvoiceItemsSerialNum.F.TypeCode' | TextCodeTranslationPipe" [width]="'130'" [Alignment]="'right'" [binding]="'TypeCode'">
+                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                        <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.TypeName}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogLov [ObjectFieldName]="'TypeCode'"
+                                                                                    [ObjectTableName]="'Customs.SupplierInvoiceItemsSerialNum'"
+                                                                                    [DataContext]="item"
+                                                                                    [HideColumns]="true"
+                                                                                    [DisplayMemberPath]="'LocalName'"
+                                                                                    [LookUpTableName]="'Customs.CargoIdentityQualifier'"
+                                                                                    (SelectedItemChanged)="item.SetLocalName($event, 'TypeName')"
+                                                                                    [FocusOnMe]="true">
+                                                                            </LogLov>
+
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </log-column>
+
+                                                                <!-- SerialNumber -->
+                                                                <log-column [header]="'Customs.SupplierInvoiceItemsSerialNum.F.SerialNumber' | TextCodeTranslationPipe" [width]="'130'" [Alignment]="'right'" [binding]="'SerialNumber'">
+                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                        <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.SerialNumber}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogTextBox [ObjectFieldName]="'SerialNumber'" [InputType]="'text'" [DataContext]="item"
+                                                                                        [ObjectTableName]="'Customs.SupplierInvoiceItemsSerialNum'" [HideColumns]="true" [FocusOnMe]="true" ></LogTextBox>
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </log-column>
+
+                                                                <!-- Buttons -->
+                                                                <log-column [width]="'35'" [Alignment]="'right'">
+                                                                    <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
+                                                                        <span class="CellSeparator" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'"></span>
+                                                                        <IconButton [IsEnabled]="!IsDisplayOnly" [Name]="'Delete'" [IsSmall]="true" (click)="RemoveSerialNumber(item)"
+                                                                                    style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
+                                                                    </log-cell-template>
+                                                                </log-column>
+
+                                                            </logitude-edit-grid>
+                                                        </div>
+
+                                                    </td>
+                                                </tr>
+
+                                            </table>
+
+                                        </td>
+
+                                        <td style="width: 12px;"><div></div></td>
+
+                                        <!-- DescriptionsList  -->
+                                        <td style="width: 300px;">
+                                            <table>
+                                                <tr style="height: 25px;">
+                                                    <td><span style="font-size: 13px; color: #1b90cb;">{{'Customs.Declaration.O.Descriptions' | TextCodeTranslationPipe}}</span></td>
+                                                    <td style="width: 30px;"><IconButton [IsEnabled]="!IsDisplayOnly" [Name]="'Add'" [IsSmall]="true" (click)="AddDescriptionButton()"></IconButton></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td colspan="2" style="height: 100%;">
+                                                        <div class="CellContent">
+                                                            <logitude-edit-grid GridWidth="100%" GridHeight="100%" [Disabled]="IsDisplayOnly" [ItemSource]="DescriptionsList">
+
+                                                                <!-- TypeCode -->
+                                                                <log-column [header]="'Customs.SupplierInvoiceItemsDescript.F.TypeCode' | TextCodeTranslationPipe" [width]="'130'" [Alignment]="'right'" [binding]="'TypeCode'">
+                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                        <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.TypeName}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogLov [ObjectFieldName]="'TypeCode'"
+                                                                                    [ObjectTableName]="'Customs.SupplierInvoiceItemsDescript'"
+                                                                                    [DataContext]="item"
+                                                                                    [HideColumns]="true"
+                                                                                    [DisplayMemberPath]="'LocalName'"
+                                                                                    [LookUpTableName]="'Customs.ProductNameType'"
+                                                                                    (SelectedItemChanged)="item.SetLocalName($event, 'TypeName')"
+                                                                                    [FocusOnMe]="true">
+                                                                            </LogLov>
+
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </log-column>
+
+                                                                <!-- Description -->
+                                                                <log-column [header]="'Customs.SupplierInvoiceItemsDescript.F.Description' | TextCodeTranslationPipe" [width]="'130'" [Alignment]="'right'" [binding]="'Description'">
+                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                        <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.Description}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogTextBox [ObjectFieldName]="'Description'" [InputType]="'ntext'" [DataContext]="item"
+                                                                                        [ObjectTableName]="'Customs.SupplierInvoiceItemsDescript'" [HideColumns]="true" [FocusOnMe]="true" ></LogTextBox>
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </log-column>
+
+                                                                <!-- Buttons -->
+                                                                <log-column [width]="'35'" [Alignment]="'right'">
+                                                                    <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
+                                                                        <span class="CellSeparator" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'"></span>
+                                                                        <IconButton [IsEnabled]="!IsDisplayOnly" [Name]="'Delete'" [IsSmall]="true" (click)="RemoveDescription(item)"
+                                                                                    style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
+                                                                    </log-cell-template>
+                                                                </log-column>
+
+                                                            </logitude-edit-grid>
+                                                        </div>
+
+                                                    </td>
+                                                </tr>
+
+                                            </table>
+
+                                        </td>
+
+                                        <td style="width: 12px;"><div></div></td>
+
+                                        <!-- IdentificationsList -->
+                                        <td style="width: 300px;">
+                                            <table>
+                                                <tr style="height: 25px;">
+                                                    <td><span style="font-size: 13px; color: #1b90cb;">{{'Customs.Declaration.O.ProductIdentifications' | TextCodeTranslationPipe}}</span></td>
+                                                    <td style="width: 30px;"><IconButton [IsEnabled]="!IsDisplayOnly" [Name]="'Add'" [IsSmall]="true" (click)="AddIdentificationButton()"></IconButton></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td colspan="2" style="height: 100%;">
+                                                        <div class="CellContent">
+                                                            <logitude-edit-grid GridWidth="100%" GridHeight="100%" [Disabled]="IsDisplayOnly" [ItemSource]="IdentificationsList">
+
+                                                                <!-- TypeCode -->
+                                                                <log-column [header]="'Customs.SupplierInvoiceItemsProdIdent.F.TypeCode' | TextCodeTranslationPipe" [width]="'130'" [Alignment]="'right'" [binding]="'TypeCode'">
+                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                        <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.TypeName}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogLov [ObjectFieldName]="'TypeCode'"
+                                                                                    [ObjectTableName]="'Customs.SupplierInvoiceItemsProdIdent'"
+                                                                                    [DataContext]="item"
+                                                                                    [HideColumns]="true"
+                                                                                    [DependencyFilter1Value]="'SS'"
+                                                                                    [DisplayMemberPath]="'LocalName'"
+                                                                                    [LookUpTableName]="'Customs.ProductIdentificationType'"
+                                                                                    (SelectedItemChanged)="item.SetLocalName($event, 'TypeName')"
+                                                                                    [FocusOnMe]="true">
+                                                                            </LogLov>
+
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </log-column>
+
+                                                                <!-- Identification -->
+                                                                <log-column [header]="'Customs.SupplierInvoiceItemsProdIdent.F.Identification' | TextCodeTranslationPipe" [width]="'130'" [Alignment]="'right'" [binding]="'Identification'">
+                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                        <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.Identification}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogTextBox [ObjectFieldName]="'Identification'" [InputType]="'text'" [DataContext]="item"
+                                                                                        [ObjectTableName]="'Customs.SupplierInvoiceItemsProdIdent'" [HideColumns]="true" [FocusOnMe]="true" ></LogTextBox>
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </log-column>
+
+                                                                <!-- Buttons -->
+                                                                <log-column [width]="'35'" [Alignment]="'right'">
+                                                                    <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
+                                                                        <span class="CellSeparator" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'"></span>
+                                                                        <IconButton [IsEnabled]="!IsDisplayOnly" [Name]="'Delete'" [IsSmall]="true" (click)="RemoveIdentification(item)"
+                                                                                    style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
+                                                                    </log-cell-template>
+                                                                </log-column>
+
+                                                            </logitude-edit-grid>
+                                                        </div>
+
+                                                    </td>
+                                                </tr>
+
+                                            </table>
+
+                                        </td>
+
+                                        <td></td>
+                                    </tr>
+                                </table>
+
+                            </div>
+                            <!-- #endregion -->
+
+                            <!-- #region Levies  Tab -->
+                            <div *ngSwitchCase="'Levies'" style="height: 100%;">
+                                
+                                <table style="height: 100%;">
+                                    <tr>
+                                        <td>
+
+                                            <!-- Grid -->
+                                            <table>
+
+                                                <tr style="height: 25px;">
+                                                    <td><span style="font-size: 13px; color: #1b90cb;"></span></td>
+                                                    <td style="width: 30px;"><IconButton [IsEnabled]="!IsDisplayOnly" [Name]="'Add'" [IsSmall]="true" (click)="AddLevyButton()"></IconButton></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td colspan="2" style="height: 100%;">
+                                                        <div class="CellContent">
+                                                            <logitude-edit-grid GridWidth="100%" GridHeight="100%" [Disabled]="IsDisplayOnly" [ItemSource]="LevyList">
+
+                                                                <!-- TradeLevyExamptCode -->
+                                                                <log-column [header]="'Customs.SupplierInvoiceItemsLevy.F.TradeLevyExamptCode' | TextCodeTranslationPipe" [width]="'160'" [Alignment]="'right'" [binding]="'TradeLevyExamptCode'">
+                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                        <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.TradeLevyExamptName}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogLov [ObjectFieldName]="'TradeLevyExamptCode'"
+                                                                                    [ObjectTableName]="'Customs.SupplierInvoiceItemsLevy'"
+                                                                                    [DataContext]="item"
+                                                                                    [HideColumns]="true"
+                                                                                    [LookUpTableName]="'Customs.TradeLevyExamptType'"
+                                                                                    (SelectedItemChanged)="item.SetLocalName($event, 'TradeLevyExamptName')"
+                                                                                    [FocusOnMe]="true">
+                                                                            </LogLov>
+
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </log-column>
+
+                                                                <!-- TradeLevyNumber -->
+                                                                <log-column [header]="'Customs.SupplierInvoiceItemsLevy.F.TradeLevyNumber' | TextCodeTranslationPipe" [width]="'148'" [Alignment]="'right'" [binding]="'DeclarationNumber'">
+                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                        <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.TradeLevyNumber}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogTextBox [ObjectFieldName]="'TradeLevyNumber'" [InputType]="'Integer'" [DataContext]="item"
+                                                                                        [ObjectTableName]="'Customs.SupplierInvoiceItemsLevy'" [HideColumns]="true" [FocusOnMe]="true" ></LogTextBox>
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </log-column>
+
+                                                                <!-- Buttons -->
+                                                                <log-column [width]="'40'" [Alignment]="'right'">
+                                                                    <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
+                                                                        <span class="CellSeparator" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'"></span>
+                                                                        <IconButton [IsEnabled]="!IsDisplayOnly" [Name]="'Delete'" [IsSmall]="true" (click)="Removelevy(item)"
+                                                                                    style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
+                                                                    </log-cell-template>
+                                                                </log-column>
+
+                                                            </logitude-edit-grid>
+                                                        </div>
+
+                                                    </td>
+                                                </tr>
+
+                                            </table>
+
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+
+                            </div>
+                            <!-- #endregion -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+    <!-- #region cancel and ok buttons -->
+    <tr style="height: 32px;">
+        <td colspan="1" style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="IsDisplayOnly">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <!-- #endregion -->
+
+</table>
+

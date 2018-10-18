@@ -1,0 +1,136 @@
+﻿
+<table>
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+
+    <tr>
+        <td>
+            <table>
+             
+           
+
+                <!-- Description -->
+              
+
+                <tr class="FormFieldRow">
+                    <td style="width:100px">
+                        <LogLabel [ObjectFieldName]="'WorkDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td style="width:200px">                       
+                     <LogDatePicker [ObjectFieldName]="'WorkDate'" [SelectedDateValue]="WorkDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"  [HideColumns]="true"></LogDatePicker>                                                         
+                    </td>
+
+                    <td>
+                        <div>
+
+                        </div>
+                    </td>
+                </tr>
+
+
+                <tr class="FormFieldRow">
+                    <td style="width:100px">
+                        <LogLabel [ObjectFieldName]="'EntryTime'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td style="width:200px">
+                        <LogDatePicker [ObjectFieldName]="'EntryTime'" [SelectedDateValue]="EntryTime" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                    </td>
+
+                    <td>
+                        <div>
+
+                        </div>
+                    </td>
+                </tr>
+
+
+                <tr class="FormFieldRow">
+                    <td style="width:100px">
+                        <LogLabel [ObjectFieldName]="'ExitTime'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td style="width:200px">
+                        <LogDatePicker [ObjectFieldName]="'ExitTime'" [SelectedDateValue]="ExitTime" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+
+                    </td>
+
+                    <td>
+                        <div>
+
+                        </div>
+                    </td>
+                </tr>
+                <tr style="height:10px">
+                    <td colspan="3"></td>
+                </tr>
+
+                <tr class="FormFieldRow">
+                    <td style="vertical-align:top;width:100px">
+                        <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td colspan="2">
+                        <table>
+                            <tr>
+                                <td style="width:370px;height:85px;">
+                                    <div class="MediaFill">
+                                        <LogTextBox [ObjectFieldName]="'Description'" [Text]="Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true" [HideColumns]="true"></LogTextBox>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                </tr>
+             
+                <tr style="height:20px;">
+                    <td colspan="3">
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="3">
+                        <div></div>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Create</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

@@ -1,0 +1,151 @@
+<style>
+    .FormFieldRow {
+        height: 30px;
+    }
+
+    .subTitle {
+        color: #1b90cb;
+        font-size: 15px;
+        padding-top: 10px;
+        padding-bottom: 2px;
+    }
+</style>
+<table>
+
+    <tr>
+        <td>
+            <div class="TableHolder">
+                <table>
+
+                    <!-- Filters Fields -->
+                    <tr>
+                        <td colspan="2" style="width: 700px;">
+                            <table style="table-layout: fixed;" [style.pointer-events]="AllowPointerEvents">
+                                <tr class="FormFieldRow" >
+                                    <!-- FromCreateDate -->
+                                    <td style="width: 100px; text-align:right !important;" >
+                                       <div style="color: #555555;">
+                                           {{'General.O.CreateDateFrom' |TextCodeTranslationPipe}}
+                                       </div>
+                                    </td>
+                                    <td style="width: 130px;">
+                                        <LogDatePicker [ObjectFieldName]="'FromCreateDate'" [ObjectTableName]="'DocumentsFiling'"
+                                                       [DataContext]="DataContext" [HideColumns]="true" [SelectedDateValue]="FromCreateDate"></LogDatePicker>
+                                    </td>
+
+                                    <td style="width: 30px;"><div></div></td>
+
+                                    <!-- ToCreateDate -->
+                                    <td style="width: 100px; text-align:right !important;" >
+                                        <div style="color: #555555;">
+                                            {{'General.O.CreateDateTo' |TextCodeTranslationPipe}}
+                                        </div>
+                                    </td>
+                                    <td style="width: 130px; text-align:right !important;">
+                                        <LogDatePicker [ObjectFieldName]="'ToCreateDate'" [ObjectTableName]="'DocumentsFiling'"
+                                                       [DataContext]="DataContext" [HideColumns]="true" [SelectedDateValue]="ToCreateDate"></LogDatePicker>
+                                    </td>
+
+                                    <td colspan="3"></td>
+                                </tr>
+                                <tr class="FormFieldRow" >
+                                    <!-- DocumentTypeId -->
+                                    <td style="text-align:right !important;">
+                                        <div style="color: #555555;">
+                                            סוג מסמך:
+                                        </div>
+                                    </td>
+                                    <td >
+                                        <LogLov [ObjectFieldName]="'DocumentTypeId'"
+                                                [ObjectTableName]="'DocumentsFiling'"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'DocumentType'"
+                                                [HideColumns]="true"
+                                                [SelectedValue]="DocumentTypeId"
+                                                [NoValidation]="true"
+                                                >
+                                        </LogLov>
+                                    </td>
+
+                                    <td style="width: 30px;"><div></div></td>
+
+                                    <!-- CustomsDocId -->
+                                    <td style="text-align:right !important;" >
+                                        <div style="color: #555555;">
+                                            {{'Customs.CustomsDocuments.CustomsDocIdLabel' |TextCodeTranslationPipe}} :
+                                        </div>
+                                    </td>
+                                    <td >
+
+                                        <LogTextBox [ObjectFieldName]="'CustomsDocId'" [InputType]="'text'" [DataContext]="DataContext"
+                                                    [ObjectTableName]="'DocumentsFiling'" [HideColumns]="true" [Text]="CustomsDocId"></LogTextBox>
+                                    </td>
+
+                                    <td></td>
+
+                                    <!-- search text box -->
+                                    <td style="width:100px; text-align:center !important;">
+                                        <div style="color: #555555; text-align: left;">
+                                            שדות חיפוש:
+                                        </div>
+                                    </td>
+                                    <td style="width:130px;">
+
+                                        <SearchTextBox [PlaceHolder]="'שם יישות/תאור'" [ObjectTableName]="'DocumentsFiling'" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
+                                    </td>
+
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <!-- Grid -->
+                    <tr>
+                        <td colspan="4" style="height: 100%;">
+
+                            <div style="height: 100%;">
+
+                                <table style="height: 100%;">
+                                    <tr>
+                                        <td>
+                                            <!-- Grid -->
+                                            <logitude-grid GridWidth="100%" GridHeight="100%" [ObjectTable]="'DocumentsFiling'" [dataSource]="DataSource"
+                                                            [columns]="columns" [autoLoad]="true" [QueryChangeEvent]="onQueryChangeEvent" (rowSelectedEvent)="OnRowSelected($event)" (DataLoaded)="OnDataLoaded($event)"
+                                                           >
+                                            </logitude-grid>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- footer -->
+                     <tr style="height: 30px;">
+                        <td>
+                            <div></div>
+                        </td>
+
+                        <td style="width: 57px;">
+                            <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Close' |TextCodeTranslationPipe}}</button>
+                        </td>
+
+                        <!--<td style="width: 5px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 57px;">
+                            <button class="RedButton" [disabled]="IsDisplayOnly" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                        </td>-->
+                    </tr>
+
+                </table>
+            </div>
+        </td>
+    </tr>
+
+</table>

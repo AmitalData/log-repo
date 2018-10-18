@@ -1,0 +1,2 @@
+-- do not run this script
+--alter table ShipmentPackages add AWBPrintRate float null

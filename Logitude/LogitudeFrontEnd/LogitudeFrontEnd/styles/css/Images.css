@@ -1,0 +1,40 @@
+﻿img {
+    border:0px;
+}
+
+.ImageContainer {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.ImageLeftCenter {
+    position: absolute;
+    left: 0px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.ImageRightCenter {
+    position: absolute;
+    right: 0px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.ImageCenterCenter {
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+/*#imgBackground {
+    background-image: url("images/LoginScreen/map.png");
+    background-size: 907px 466px;
+    background-repeat: no-repeat;
+}*/

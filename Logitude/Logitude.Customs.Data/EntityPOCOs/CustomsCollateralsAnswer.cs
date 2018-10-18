@@ -1,0 +1,79 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Customs.Data.EntityPOCOs
+{
+   
+    public class CustomsCollateralsAnswer
+    {
+	 string dbms;
+
+        [Key]
+        [ForeignKey("CustomsCollateral")]
+        [Column("CustomsCollateralId" ,Order = 1)]
+	    public string CustomsCollateralId { get; set; }
+	      
+        public virtual CustomsCollateral CustomsCollateral { get; set; }
+     [Key]
+        [Column("LineNumber" ,Order = 2)]
+	    public int LineNumber { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+        [ForeignKey("AnswerEntityType")]
+        [Column("AnswerEntityTypeCode")]
+	    public string AnswerEntityTypeCode { get; set; }
+	      
+        public virtual CollateralAnswerType AnswerEntityType { get; set; }
+        [Column("AllocatedAmount")]
+	    public decimal? AllocatedAmount { get; set; }
+        [Column("Remarks")]
+	    public string Remarks { get; set; }
+        [Column("CustomsTapgFile")]
+	    public string CustomsTapgFile { get; set; }
+        [Column("CustomsNumeral")]
+	    public string CustomsNumeral { get; set; }
+        [ForeignKey("CollateralAnswerStatus")]
+        [Column("AnswerForCollateralStatusCode")]
+	    public string AnswerForCollateralStatusCode { get; set; }
+	      
+        public virtual CollateralAnswerStatus CollateralAnswerStatus { get; set; }
+        [Column("Errors")]
+	    public string Errors { get; set; }
+        [ForeignKey("Tapag")]
+        [Column("TapagId")]
+	    public string TapagId { get; set; }
+	      
+        public virtual Tapag Tapag { get; set; }
+        [Column("NewFileRequest")]
+	    public bool NewFileRequest { get; set; }
+        [ForeignKey("CollateralAnswerType")]
+        [Column("RequestFileTypeCode")]
+	    public string RequestFileTypeCode { get; set; }
+	      
+        public virtual CollateralAnswerType CollateralAnswerType { get; set; }
+        [Column("RequestFileAmount")]
+	    public decimal? RequestFileAmount { get; set; }
+        [Column("IsClosed")]
+	    public bool IsClosed { get; set; }
+        [Column("RequestedTapagNumeral")]
+	    public string RequestedTapagNumeral { get; set; }
+        [Column("RequestedTapagFile")]
+	    public string RequestedTapagFile { get; set; }
+        [ForeignKey("PaymentOrder")]
+        [Column("PaymentOrderId")]
+	    public string PaymentOrderId { get; set; }
+	      
+        public virtual PaymentOrder PaymentOrder { get; set; }
+    }
+}
+	 

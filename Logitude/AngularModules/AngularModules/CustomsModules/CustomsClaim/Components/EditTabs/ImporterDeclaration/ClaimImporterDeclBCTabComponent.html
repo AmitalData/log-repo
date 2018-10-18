@@ -1,0 +1,187 @@
+﻿
+<table *ngIf="IsLoaded">
+    <tr>
+        <td>
+            <fieldset [disabled]="!IsControlEnabled">
+                <div class="TableHolder">
+                    <table style="width: 860px; height: 400px;vertical-align:top;">      
+                        <!-- ValidationSummary  -->
+                        <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+                            <td colspan="4">
+                                <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+                            </td>
+                        </tr>
+                                       
+                        <!-- Claims Importer Declaration B -->
+                        <tr style="height: 200px; width: 850px; top:0px">
+                            <td style="height: 200px; width: 850px;">
+                                <div style="height: 200px; width: 850px;">
+                                    <table style="height: 200px; width: 850px;">
+                                        <tr>
+                                            <td class="TabTitleRow" style="width:150px">
+                                                {{'סעיף 3 ב - הצהרת המכירה'}}
+                                            </td>
+
+                                            <td> <div></div> </td>
+                                            <td style="height: 20px;padding: 5px;padding-bottom: 0px;">
+                                                <div>
+                                                    <IconButton [IsSmall]="true"
+                                                                [Name]="'Add'"
+                                                                (click)="AddSaleDeclarCommand()"
+                                                                style="float:left;"></IconButton>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr style="height: 170px;">
+                                            <td colspan="5" >
+                                                <div class="CellContent">
+                                                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [FooterTop]="FooterMethods"
+                                                                        [ItemSource]="SaleDeclarlist">
+
+                                                        <!-- DescriptionOfGoods -->
+                                                        <log-column [header]="'Customs.ClaimImporterDeclarsPage3B.F.DescriptionOfGoods' | TextCodeTranslationPipe"
+                                                                    [width]="'150'" [Alignment]="'right'" [binding]="'DescriptionOfGoods'">
+                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                    <span>{{item.DescriptionOfGoods}}</span>
+                                                                </div>
+                                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                                    <LogTextBox [ObjectFieldName]="'DescriptionOfGoods'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
+                                                                                [FocusOnMe]="true" [DataContext]="item" [Text]="DescriptionOfGoods"></LogTextBox>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </log-column>
+
+                                                        <!-- SaleAmountBefore -->
+                                                        <log-column [header]="'Customs.ClaimImporterDeclarsPage3B.F.SaleAmountBefore' | TextCodeTranslationPipe"
+                                                                    [width]="'140'" [Alignment]="'right'" [binding]="'SaleAmountBefore'">
+                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                    <span>{{item.SaleAmountBefore | NumbersPipe:'n0'}}</span>
+                                                                </div>
+                                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                                    <LogTextBox [ObjectFieldName]="'SaleAmountBefore'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
+                                                                                [InputType]="'integer'" [FocusOnMe]="true"
+                                                                                [DataContext]="item" [Text]="SaleAmountBefore"></LogTextBox>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </log-column>
+
+                                                        <!-- SaleAmountAfter -->
+                                                        <log-column [header]="'Customs.ClaimImporterDeclarsPage3B.F.SaleAmountAfter' | TextCodeTranslationPipe"
+                                                                    [width]="'140'" [Alignment]="'right'" [binding]="'SaleAmountAfter'">
+                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                    <span>{{item.SaleAmountAfter | NumbersPipe:'n0'}}</span>
+                                                                </div>
+                                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                                    <LogTextBox [ObjectFieldName]="'SaleAmountAfter'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
+                                                                                [InputType]="'integer'" [FocusOnMe]="true"
+                                                                                [DataContext]="item" [Text]="SaleAmountAfter"></LogTextBox>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </log-column>
+
+                                                        <!-- SaleAmountClaim -->
+                                                        <log-column [header]="'Customs.ClaimImporterDeclarsPage3B.F.SaleAmountClaim' | TextCodeTranslationPipe"
+                                                                    [width]="'165'" [Alignment]="'right'" [binding]="'SaleAmountClaim'">
+                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                    <span>{{item.SaleAmountClaim | NumbersPipe:'n0'}}</span>
+                                                                </div>
+                                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                                    <LogTextBox [ObjectFieldName]="'SaleAmountClaim'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
+                                                                                [InputType]="'integer'" [FocusOnMe]="true"
+                                                                                [DataContext]="item" [Text]="SaleAmountClaim"></LogTextBox>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </log-column>
+
+                                                        <!-- InventoryAmount -->
+                                                        <log-column [header]="'Customs.ClaimImporterDeclarsPage3B.F.InventoryAmount' | TextCodeTranslationPipe"
+                                                                    [width]="'90'" [Alignment]="'right'" [binding]="'InventoryAmount'">
+                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                    <span>{{item.InventoryAmount | NumbersPipe:'n0'}}</span>
+                                                                </div>
+                                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                                    <LogTextBox [ObjectFieldName]="'InventoryAmount'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
+                                                                                [InputType]="'integer'" [FocusOnMe]="true"
+                                                                                [DataContext]="item" [Text]="InventoryAmount"></LogTextBox>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </log-column>
+
+                                                        <!-- SoldGoodsAmount -->
+                                                        <log-column [header]="'Customs.ClaimImporterDeclarsPage3B.F.SoldGoodsAmount' | TextCodeTranslationPipe"
+                                                                    [width]="'100'" [Alignment]="'right'" [binding]="'SoldGoodsAmount'">
+                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                    <span>{{item.SoldGoodsAmount | NumbersPipe:'n0'}}</span>
+                                                                </div>
+                                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                                    <LogTextBox [ObjectFieldName]="'SoldGoodsAmount'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
+                                                                                [InputType]="'integer'" [FocusOnMe]="true"
+                                                                                [DataContext]="item" [Text]="SoldGoodsAmount"></LogTextBox>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </log-column>
+
+                                                        <!-- Delete Button-->
+                                                        <log-column [width]="'30'" [Alignment]="'right'">
+                                                            <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
+                                                                <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteSaleDeclarCommand(item)"
+                                                                            [IsEnabled]="!IsDisplayOnly"
+                                                                            style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
+                                                            </log-cell-template>
+                                                        </log-column>
+
+                                                    </logitude-edit-grid>
+                                                </div>
+                                            </td>
+
+                                            <td> <div></div> </td>
+                                        </tr>
+
+                                        <tr><td><div></div></td></tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr class="FormFieldRow"><td><div></div></td></tr>
+
+                        <!-- RawMaterialsDescription -->
+                        <tr style="width: 550px; height: 70px">
+                            <td style="width: 550px; height: 70px">
+                                <div style="width: 550px; height: 70px;">
+                                    <table style="width: 550px; height: 70px">
+                                        <tr style="height: 30px">
+                                            <td class="TabTitleRow" style="width:150px">
+                                                {{'סעיף 3 ג - תיאור חומרי הגלם'}}
+                                            </td>
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 300px; height:100px">
+                                                <div style="width: 100%; height:100%; text-align:center;">
+                                                    <textarea [(ngModel)]="RawMaterialsDescription"></textarea>
+                                                </div>
+                                            </td>
+
+                                            <td><div></div></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+
+                            <td><div></div></td>
+                        </tr>
+
+                    </table>
+                </div>
+            </fieldset>
+        </td>
+    </tr>
+</table>

@@ -1,0 +1,386 @@
+﻿
+<style type="text/css">
+    .NotemItemSeparator {
+        height: 0px;
+    }
+
+    .Notes .NotesItem:not(:last-child) .NotemItemSeparator {
+        height: 1px;
+    }
+</style>
+
+<table>
+    <tr style="height:5px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <td style="width:15px;">
+                        <div></div>
+                    </td>
+
+                    <td>
+                        <table>
+                            <tr class="TabTitleRow">
+                                <td>{{'Shipment.TH.Overview' | textcodeTranslation}}</td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <table class="Section">
+                                                    <tr class="SectionHeader">
+                                                        <td>{{'Shipment.O.Overview.CargoInformation' | textcodeTranslation}}</td>
+                                                    </tr>
+
+                                                    <tr style="height:5px;">
+                                                        <td></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="width: 255px;">
+                                                                        <table>
+                                                                            <tr style="height: 25px;">
+                                                                                <td style="font-size: 14px; color: #1B90CB;">{{'Shipment.O.Overview.Shipment' | textcodeTranslation}}</td>
+                                                                            </tr>
+
+                                                                            <tr>
+                                                                                <td style="height: 100%;">
+
+                                                                                    <table *ngIf="IsLCLEntity">
+                                                                                        <tr style="height: 60px;">
+                                                                                            <td style="text-align: center;">
+                                                                                                <div class="Value" style="font-size: 20px;">{{GrossWeight | number:'1.3-3'}}</div>
+                                                                                                <div class="Label">{{'Shipment.O.Overview.GrossWeight' | textcodeTranslation}} ({{GrossWeightUnitCode}})</div>
+                                                                                            </td>
+                                                                                            <td style="text-align: center;">
+                                                                                                <div class="Value" style="font-size: 20px;">{{Volume | number:'1.3-3'}}</div>
+                                                                                                <div class="Label">{{'Shipment.O.Overview.Volume' | textcodeTranslation}} ({{VolumeUnitCode}})</div>
+                                                                                            </td>
+                                                                                        </tr>
+
+                                                                                        <tr style="height: 10px;">
+                                                                                            <td colspan="2">
+                                                                                                <div></div>
+                                                                                            </td>
+                                                                                        </tr>
+
+                                                                                        <tr style="height: 60px;">
+                                                                                            <td style="text-align: center;">
+                                                                                                <div class="Value" style="font-size: 20px;">{{ChargeableWeight | number:'1.3-3'}}</div>
+                                                                                                <div class="Label">{{'Shipment.O.Overview.ChargeableWeight' | textcodeTranslation}} ({{ChargeableWeightUnitCode}})</div>
+                                                                                            </td>
+                                                                                            <td style="text-align: center;">
+                                                                                                <div class="Value" style="font-size: 20px;">{{NumberOfPackages | number:'1.0-0'}}</div>
+                                                                                                <div class="Label">{{'ShipmentPackage.F.Quantity' | textcodeTranslation}}</div>
+                                                                                            </td>
+                                                                                        </tr>
+
+                                                                                        <tr>
+                                                                                            <td colspan="2">
+                                                                                                <div></div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+
+                                                                                    <div class="GridView" *ngIf="IsFCLEntity">
+                                                                                        <table>
+                                                                                            <thead>
+                                                                                                <tr>
+                                                                                                    <th style="width: 90px; min-width: 90px;">{{'ShipmentPackage.F.Quantity' | textcodeTranslation}}</th>
+                                                                                                    <th>{{'Shipment.O.Overview.ContainerType' | textcodeTranslation}}</th>
+                                                                                                </tr>
+                                                                                            </thead>
+
+                                                                                            <tbody>
+                                                                                                <tr *ngFor="#item of ContainersList">
+                                                                                                    <td style="width: 90px; min-width: 90px; text-align: right;">{{item.Quantity}}</td>
+                                                                                                    <td>{{item.PackageTypeName}}</td>
+                                                                                                </tr>
+
+                                                                                                <tr>
+                                                                                                    <td colspan="2"></td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+
+                                                                    <td style="width: 30px;">
+                                                                        <div style="width:1px; height: 130px; background: #DADADA; margin:auto; margin-top: 10px;"></div>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <table>
+                                                                            <tr style="height: 25px;">
+                                                                                <td>
+                                                                                    <div style="font-size: 14px; color: #1B90CB;">{{'Shipment.O.Overview.Master' | textcodeTranslation}}</div>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr style="height: 60px;">
+                                                                                <td>
+                                                                                    <table *ngIf="IsDataLoaded">
+                                                                                        <tr>
+                                                                                            <td style="width: 5px;">
+                                                                                                <div></div>
+                                                                                            </td>
+
+                                                                                            <td>
+                                                                                                <table>
+                                                                                                    <tr class="FieldRow">
+                                                                                                        <td class="Label" [ngStyle]="{width: MasterDataLableWidth}">{{MasterLabel}}:</td>
+                                                                                                        <td class="Value">{{LongMaster}}</td>
+                                                                                                    </tr>
+                                                                                                    <tr class="FieldRow">
+                                                                                                        <td class="Label" [ngStyle]="{width: MasterDataLableWidth}">{{CarrierLabel}}:</td>
+                                                                                                        <td class="Value">{{MainCarriageCarrierName}}</td>
+                                                                                                    </tr>
+                                                                                                    <tr class="FieldRow">
+                                                                                                        <td class="Label" [ngStyle]="{width: MasterDataLableWidth}">{{CarrierNoLabel}}:</td>
+                                                                                                        <td class="Value">{{MainCarriageCarrierNumber}}</td>
+                                                                                                    </tr>
+                                                                                                    <tr class="FieldRow">
+                                                                                                        <td class="Label" [ngStyle]="{width: MasterDataLableWidth}">{{CarrierDateLabel}}:</td>
+                                                                                                        <td class="Value">{{MasterDepartureDate | DateTimeToDatePipe}} {{MasterDepartureDate | DateTimeToTimePipe}}</td>
+                                                                                                    </tr>
+                                                                                                    <tr>
+                                                                                                        <td colspan="2"></td>
+                                                                                                    </tr>
+                                                                                                </table>
+                                                                                            </td>
+
+                                                                                            <td style="width: 5px;">
+                                                                                                <div></div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <div></div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+
+                                            <td style="width: 15px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width: 330px;">
+                                                <table class="Section">
+                                                    <tr class="SectionHeader">
+                                                        <td>Connected To</td>
+                                                    </tr>
+
+                                                    <tr style="height:5px;">
+                                                        <td></td>
+                                                    </tr>
+
+                                                    <tr class="SectionBody">
+                                                        <td>
+                                                            <div class="ScrollViewer">
+
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr style="height: 15px;">
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <tr style="height: 200px; max-height: 200px; ">
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <table class="Section">
+                                                    <tr class="SectionHeader">
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td>{{'Shipment.O.Overview.MoneyInformation' | textcodeTranslation}}</td>
+                                                                    <td style="width: 70px;">
+                                                                        <ul class="FiltersMenu">
+                                                                            <li (click)="onSelectCurrency('USD')" [class.SelectedFilter]="SelectedCurrencyFilter === 'USD'" style="width:33px;">
+                                                                                USD
+                                                                            </li>
+                                                                            <li (click)="onSelectCurrency('NIS')" [class.SelectedFilter]="SelectedCurrencyFilter === 'NIS'" style="width:33px;">
+                                                                                NIS
+                                                                            </li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr style="height:5px;">
+                                                        <td></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="width:150px; text-align:center;">
+                                                                        <div class="Value" style="font-size: 20px; margin-top: 5px;">{{ARInvoices | number:'1.2-2'}}</div>
+                                                                        <div class="Label">{{'Shipment.O.Overview.ARInvoices' | textcodeTranslation}} ({{SelectedCurrencyFilter}})</div>
+
+                                                                        <div class="Value" style="font-size: 20px; margin-top: 15px;">{{OpenReceivables | number:'1.2-2'}}</div>
+                                                                        <div class="Label">{{'Shipment.O.Overview.OpenReceivables' | textcodeTranslation}} ({{SelectedCurrencyFilter}})</div>
+                                                                        <div style="height: 1px; background: #DADADA; margin-top: 10px;"></div>
+                                                                        <div style="margin-top: 5px;">
+                                                                            <span class="Value" style="font-size: 20px;">{{TotalAR | number:'1.2-2'}}</span>
+                                                                            <span class="Label">({{SelectedCurrencyFilter}})</span>
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <td style="width: 30px;">
+                                                                        <div style="width:1px; height:120px; background: #DADADA; margin:auto; margin-top: 15px;"></div>
+                                                                    </td>
+
+                                                                    <td style="width:150px; text-align:center;">
+                                                                        <div style="font-size: 20px; color: #282E30; margin-top: 5px;">{{APInvoices | number:'1.2-2'}}</div>
+                                                                        <div class="Label">{{'Shipment.O.Overview.APInvoices' | textcodeTranslation}} ({{SelectedCurrencyFilter}})</div>
+
+                                                                        <div class="Value" style="font-size: 20px; margin-top: 15px;">{{OpenPayables | number:'1.2-2'}}</div>
+                                                                        <div class="Label">{{'Shipment.O.Overview.OpenPayables' | textcodeTranslation}} ({{SelectedCurrencyFilter}})</div>
+                                                                        <div style="height: 1px; background: #DADADA; margin-top: 10px;"></div>
+                                                                        <div style="margin-top: 5px;">
+                                                                            <span class="Value" style="font-size: 20px;">{{TotalAP | number:'1.2-2'}}</span>
+                                                                            <span class="Label">({{SelectedCurrencyFilter}})</span>
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <td style="width: 30px;">
+                                                                        <div style="width:1px; height:120px; background: #DADADA; margin:auto; margin-top: 15px;"></div>
+                                                                    </td>
+
+                                                                    <td style="width:100px; text-align:center;">
+                                                                        <div style="font-size: 20px; margin-top: 5px;" [ngStyle]="{color: ProfitColor}">{{Profit | number:'1.2-2'}}</div>
+                                                                        <div class="Label" style="font-size: 11px; color: #6E7172;">{{'Shipment.O.Overview.Profit' | textcodeTranslation}} ({{SelectedCurrencyFilter}})</div>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+
+                                            <td style="width: 15px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width: 330px; max-width: 330px;">
+                                                <table class="Section">
+                                                    <tr class="SectionHeader">
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="width: 16px; position: relative;">
+                                                                        <img *ngIf="HasEntityNotes" class="CenterCenter" src="images/Notes_exists.png" />
+                                                                        <img *ngIf="!HasEntityNotes" class="CenterCenter" src="images/Notes_notexists.png" />
+                                                                    </td>
+                                                                    <td style="width: 5px;">
+                                                                        <div></div>
+                                                                    </td>
+                                                                    <td>{{'Shipment.O.Notes' | textcodeTranslation}}</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr style="height:5px;">
+                                                        <td></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td style="height: 100%;">
+                                                            <div class="Notes" style="height: 100%; width: 320px; margin:auto; overflow-x: hidden; overflow-y:auto;">
+                                                                <div class="NotesItem" *ngFor="#item of NotesList" style="height: 100px; max-height: 100px; margin: 0 5px 0 5px;">
+                                                                    <table style="table-layout: fixed;">
+                                                                        <tr style="height: 20px; font-size: 12px; color: #0075AF;">
+                                                                            <td>
+                                                                                {{item.Header}}
+                                                                            </td>
+                                                                        </tr>
+
+                                                                        <tr style="height: 100%;">
+                                                                            <td style="height: 100%;">
+                                                                                <div style="height: 100%; width: 100%; white-space:pre-line; overflow-x: hidden; overflow-y:auto; font-size: 11px; color: #595B5B; line-height: 15px;">{{item.Notes}}</div>
+                                                                            </td>
+                                                                        </tr>
+
+                                                                        <tr style="height:1px;">
+                                                                            <td>
+                                                                                <div class="NotemItemSeparator" style="width: 100%; background: #DADADA;"></div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr style="height:5px;">
+                                                        <td></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td style="width:15px;">
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height:5px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+</table>

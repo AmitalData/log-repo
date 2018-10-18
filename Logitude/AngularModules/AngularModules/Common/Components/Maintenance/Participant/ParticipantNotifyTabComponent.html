@@ -1,0 +1,49 @@
+﻿<div class="TableHolder">
+    <table>
+        <tr class="TabTitleRow">
+            <td colspan="5">General </td>
+
+</tr>
+        <tr class="FormFieldRow">
+            <td style="width:130px">
+                <LogLabel [ObjectFieldName]="'FWBNotifyContacts'" [ObjectTableName]="ObjectTableName"
+                          [DataContext]="DataContext"></LogLabel>
+            </td>
+            <td style="width:600px"><EmailSearchTextBox [Watermark]="'Add Contacts'" [EmailsText]="FWBNotifyContacts" (EmailsTextChanged)="FWBNotifyContacts = $event" ></EmailSearchTextBox></td>
+            <td style="width:5px"></td>
+               <td style="width:20px">
+                <IconButton [Name]="'Add'"  (click)="Add('FWB')"></IconButton>       
+                 </td>
+            <td></td>
+        </tr>
+        <tr class="FormFieldRow">
+            <td style="width:130px">
+                <LogLabel [ObjectFieldName]="'FHLNotifyContacts'" [ObjectTableName]="ObjectTableName"
+                          [DataContext]="DataContext"></LogLabel>
+            </td>
+            <td style="width:600px"><EmailSearchTextBox [Watermark]="'Add Contacts'" [EmailsText]="FHLNotifyContacts" (EmailsTextChanged)="FHLNotifyContacts = $event" ></EmailSearchTextBox></td>
+            <td style="width:5px"></td>
+              <td style="width:20px">
+                <IconButton [Name]="'Add'" (click)="Add('FHL')"></IconButton>
+            </td>
+            <td></td>
+        </tr>
+
+        <tr class="FormFieldRow">
+            <td style="width:130px">
+                <LogLabel [ObjectFieldName]="'FFRNotifyContacts'" [ObjectTableName]="ObjectTableName"
+                          [DataContext]="DataContext"></LogLabel>
+            </td>
+            <td style="width:600px"><EmailSearchTextBox [Watermark]="'Add Contacts'" [EmailsText]="FFRNotifyContacts" (EmailsTextChanged)="FFRNotifyContacts = $event" ></EmailSearchTextBox></td>
+            <td style="width:5px"></td>
+             <td style="width:20px">
+                <IconButton [Name]="'Add'" (click)="Add('FFR')"></IconButton>
+            </td>
+            <td></td>
+        </tr>
+
+        <tr>
+           <td colspan="5"></td>
+        </tr>
+</table>
+</div>

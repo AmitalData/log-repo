@@ -1,0 +1,69 @@
+﻿using Logitude.Server.Tools;
+using Simplog.Server.Infrastructure;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Serialization;
+using System.ServiceModel;
+using System.ServiceModel.Activation;
+using System.Text;
+using System.Web;
+using WebFreight.Web.DataContracts;
+using WebFreight.Web.Security;
+
+namespace WebFreight.Web.WcfApi
+{
+    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "FeatureWcfService" in code, svc and config file together.
+    // NOTE: In order to launch WCF Test Client for testing this service, please select FeatureWcfService.svc or FeatureWcfService.svc.cs at the Solution Explorer and start debugging.
+    [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
+    public class FeatureWcfService : IFeatureWcfService
+    {
+        public List<FeatureAccessInfo> GetActiveFeaturesForUser(List<FeatureAccessInfo> featuresList, int tenant, ref Response response)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+            try
+            {
+                if (featuresList != null)
+                {
+                    SecurityUtility.CheckContactTableFeatures(featuresList, HttpContext.Current.User.Identity.Name, tenant);
+                    //SecurityUtility.CheckCustomContactTableFeatures(featuresList, HttpContext.Current.User.Identity.Name, tenant);//
+
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsAuthenticationError = ex.GetType() == typeof(AutenticationException);
+                response.HasError = true;
+                response.ErrorMessage = ex.Message;
+                response.InnerErrorMessage = ex.InnerException != null ? ex.InnerException.Message : null;
+                if (!string.IsNullOrEmpty(ex.StackTrace))
+                {
+                    response.ErrorMessage += Environment.NewLine + ex.StackTrace;
+                }
+
+                return null;
+
+            }
+            return featuresList;
+        }
+
+        public bool CheckOutlookVersion(string Version)
+        {
+                var CurrentVersionarr = Version.Split('.');
+                var MinVersionarr = LogitudeSettings.MinimumOutlookVersion.Split('.');
+                int Curversion = 0;
+                int Minversion = 0;
+                bool CheckResult = true;
+                for (int i = 0; i < MinVersionarr.Length; i++)
+                {
+                    int.TryParse(CurrentVersionarr[i], out Curversion);
+                    int.TryParse(MinVersionarr[i], out Minversion);
+                    if (Curversion < Minversion)
+                    {
+                        CheckResult = false;
+                    }
+                }
+                return CheckResult;
+        }
+    }
+}

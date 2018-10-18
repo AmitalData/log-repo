@@ -1,0 +1,850 @@
+﻿
+<style type="text/css">
+    .FieldSet {
+        display: block;
+        margin-left: 5px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        border-width: 1px;
+        border-color: gray;
+        border-style: Solid;
+        border-radius: 5px;
+    }
+
+    .StatRow td {
+        text-align: left;
+        font-size: 11px;
+        color: #6E7172;
+    }
+
+    .StatRow {
+        height: 25px;
+    }
+</style>
+
+<div class="TabHolder">
+    <table>
+        <tr style="height:30px;">
+            <td>
+                <table>
+                    <tr>
+                        <td class="TabTitleRow">{{'TenantManagement.TH.Statistics' | TextCodeTranslationPipe}}</td>
+
+                        <td>
+                            <div></div>
+                        </td>
+
+                        <td style="width: 100px;" class="Label">{{'TenantManagement.F.StatisticsUpdateDate' | TextCodeTranslationPipe}}:</td>
+
+                        <td style="width: 65px;" class="Label">{{StatisticsUpdateDate | DateTimeToDatePipe}}</td>
+
+                        <td style="width:5px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 30px;" class="Label">{{StatisticsUpdateDate | DateTimeToTimePipe: 'S12'}}</td>
+
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 1px;">
+                            <button class="Button" (click)="RefreshClicked()" [disabled]="!IsEditingAllowed">Refresh</button>
+                        </td>
+
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 1px;">
+                            <button class="Button" (click)="UpdateClicked()" [disabled]="!IsEditingAllowed">Update</button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <div class="MediaFill">
+                    <ScrollViewer>
+                        <table>
+
+                            <!-- General + Customer -->
+                            <tr>
+                                <td style="width:420px; vertical-align:top;">
+                                    <fieldset class="FieldSet">
+                                        <legend style="color:#1B90CB; margin-left:5px; font-size:11px;">General Statistics</legend>
+
+                                        <table style="margin:5px;">
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'LastFWBSentDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 65px;">{{LastFWBSentDate | DateTimeToDatePipe}}</td>
+
+                                                <td style="width:10px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width: 30px; text-align: right;">{{LastFWBSentDate | DateTimeToTimePipe: 'S12'}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'LastFHLSentDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 65px;">{{LastFHLSentDate | DateTimeToDatePipe}}</td>
+
+                                                <td style="width:10px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width: 30px; text-align: right;">{{LastFHLSentDate | DateTimeToTimePipe: 'S12'}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'LastFFRSentDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 65px;">{{LastFFRSentDate | DateTimeToDatePipe}}</td>
+
+                                                <td style="width:10px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width: 30px; text-align: right;">{{LastFFRSentDate | DateTimeToTimePipe: 'S12'}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'LastFWBCargonautSentDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 65px;">{{LastFWBCargonautSentDate | DateTimeToDatePipe}}</td>
+
+                                                <td style="width:10px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width: 30px; text-align: right;">{{LastFWBCargonautSentDate | DateTimeToTimePipe: 'S12'}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'LastFHLCargonautSentDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 65px;">{{LastFHLCargonautSentDate | DateTimeToDatePipe}}</td>
+
+                                                <td style="width:10px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width: 30px; text-align: right;">{{LastFHLCargonautSentDate | DateTimeToTimePipe: 'S12'}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'FSRLastSentDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 65px;">{{FSRLastSentDate | DateTimeToDatePipe}}</td>
+
+                                                <td style="width:10px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width: 30px; text-align: right;">{{FSRLastSentDate | DateTimeToTimePipe: 'S12'}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'FSULastReceivedDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 65px;">{{FSULastReceivedDate | DateTimeToDatePipe}}</td>
+
+                                                <td style="width:10px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width: 30px; text-align: right;">{{FSULastReceivedDate | DateTimeToTimePipe: 'S12'}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'FSALastReceivedDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 65px;">{{FSALastReceivedDate | DateTimeToDatePipe}}</td>
+
+                                                <td style="width:10px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width: 30px; text-align: right;">{{FSALastReceivedDate | DateTimeToTimePipe: 'S12'}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </fieldset>
+                                </td>
+
+                                <td style="width:10px;"></td>
+
+                                <td style="width:420px;">
+                                    <fieldset class="FieldSet">
+                                        <legend style="color:#1B90CB; margin-left:5px; font-size:11px;">Customer Statistics</legend>
+
+                                        <table style="margin:5px;">
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'CustomerLastDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 65px;" [ngStyle]="{color: CustomerLastDateColor}">{{CustomerLastDate | DateTimeToDatePipe}}</td>
+
+                                                <td style="width:10px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width: 30px; text-align: right;" [ngStyle]="{color: CustomerLastDateColor}">{{CustomerLastDate | DateTimeToTimePipe: 'S12'}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'CustomerTotalLastWeek'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td colspan="3">{{CustomerTotalLastWeek}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'CustomerTotalLastMonth'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td colspan="3">{{CustomerTotalLastMonth}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="StatRow">
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="StatRow">
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="StatRow">
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="StatRow">
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="StatRow">
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                        </table>
+                                    </fieldset>
+                                </td>
+
+                                <td></td>
+                            </tr>
+
+                            <tr style="height:10px;">
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <!-- Shipment + ARInvoice -->
+                            <tr>
+                                <td style="width:420px;">
+                                    <fieldset class="FieldSet">
+                                        <legend style="color:#1B90CB; margin-left:5px; font-size:11px;">Shipment Statistics</legend>
+
+                                        <table style="margin:5px;">
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'ShipmentLastDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 65px;" [ngStyle]="{color: ShipmentLastDateColor}">{{ShipmentLastDate | DateTimeToDatePipe}}</td>
+
+                                                <td style="width:10px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width: 30px; text-align: right;" [ngStyle]="{color: ShipmentLastDateColor}">{{ShipmentLastDate | DateTimeToTimePipe: 'S12'}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'ShipmentTotalLastWeek'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td colspan="3">{{ShipmentTotalLastWeek}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'ShipmentTotalLastMonth'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td colspan="3">{{ShipmentTotalLastMonth}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                        </table>
+                                    </fieldset>
+                                </td>
+
+                                <td style="width:10px;"></td>
+
+                                <td style="width:420px;">
+                                    <fieldset class="FieldSet">
+                                        <legend style="color:#1B90CB; margin-left:5px; font-size:11px;">AR Invoice Statistics</legend>
+
+                                        <table style="margin:5px;">
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'ARInvoiceLastDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 65px;" [ngStyle]="{color: ARInvoiceLastDateColor}">{{ARInvoiceLastDate | DateTimeToDatePipe}}</td>
+
+                                                <td style="width:10px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width: 30px; text-align: right;" [ngStyle]="{color: ARInvoiceLastDateColor}">{{ARInvoiceLastDate | DateTimeToTimePipe: 'S12'}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'ARInvoiceTotalLastWeek'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td colspan="3">{{ARInvoiceTotalLastWeek}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'ARInvoiceTotalLastMonth'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td colspan="3">{{ARInvoiceTotalLastMonth}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                        </table>
+                                    </fieldset>
+                                </td>
+
+                                <td></td>
+                            </tr>
+
+                            <tr style="height:10px;">
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <!-- Quote + APInvoice -->
+                            <tr>
+                                <td style="width:420px;">
+                                    <fieldset class="FieldSet">
+                                        <legend style="color:#1B90CB; margin-left:5px; font-size:11px;">Quote Statistics</legend>
+
+                                        <table style="margin:5px;">
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'QuoteLastDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 65px;" [ngStyle]="{color: QuoteLastDateColor}">{{QuoteLastDate | DateTimeToDatePipe}}</td>
+
+                                                <td style="width:10px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width: 30px; text-align: right;" [ngStyle]="{color: QuoteLastDateColor}">{{QuoteLastDate | DateTimeToTimePipe: 'S12'}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'QuoteTotalLastWeek'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td colspan="3">{{QuoteTotalLastWeek}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'QuoteTotalLastMonth'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td colspan="3">{{QuoteTotalLastMonth}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                        </table>
+                                    </fieldset>
+                                </td>
+
+                                <td style="width:10px;"></td>
+
+                                <td style="width:420px;">
+                                    <fieldset class="FieldSet">
+                                        <legend style="color:#1B90CB; margin-left:5px; font-size:11px;">AP Invoice Statistics</legend>
+
+                                        <table style="margin:5px;">
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'APInvoiceLastDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 65px;" [ngStyle]="{color: APInvoiceLastDateColor}">{{APInvoiceLastDate | DateTimeToDatePipe}}</td>
+
+                                                <td style="width:10px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width: 30px; text-align: right;" [ngStyle]="{color: APInvoiceLastDateColor}">{{APInvoiceLastDate | DateTimeToTimePipe: 'S12'}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'APInvoiceTotalLastWeek'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td colspan="3">{{APInvoiceTotalLastWeek}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'APInvoiceTotalLastMonth'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td colspan="3">{{APInvoiceTotalLastMonth}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                        </table>
+                                    </fieldset>
+                                </td>
+
+                                <td></td>
+                            </tr>
+
+                            <tr style="height:10px;">
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <!-- Opportunity + Activity -->
+                            <tr>
+                                <td style="width:420px;">
+                                    <fieldset class="FieldSet">
+                                        <legend style="color:#1B90CB; margin-left:5px; font-size:11px;">Opportunity Statistics</legend>
+
+                                        <table style="margin:5px;">
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'OpportunityLastDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 65px;" [ngStyle]="{color: OpportunityLastDateColor}">{{OpportunityLastDate | DateTimeToDatePipe}}</td>
+
+                                                <td style="width:10px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width: 30px; text-align: right;" [ngStyle]="{color: OpportunityLastDateColor}">{{OpportunityLastDate | DateTimeToTimePipe: 'S12'}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'OpportunityTotalLastWeek'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td colspan="3">{{OpportunityTotalLastWeek}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'OpportunityTotalLastMonth'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td colspan="3">{{OpportunityTotalLastMonth}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                        </table>
+                                    </fieldset>
+                                </td>
+
+                                <td style="width:10px;"></td>
+
+                                <td style="width:420px;">
+                                    <fieldset class="FieldSet">
+                                        <legend style="color:#1B90CB; margin-left:5px; font-size:11px;">Activity Statistics</legend>
+
+                                        <table style="margin:5px;">
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'ActivityLastDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 65px;" [ngStyle]="{color: ActivityLastDateColor}">{{ActivityLastDate | DateTimeToDatePipe}}</td>
+
+                                                <td style="width:10px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width: 30px; text-align: right;" [ngStyle]="{color: ActivityLastDateColor}">{{ActivityLastDate | DateTimeToTimePipe: 'S12'}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'ActivityTotalLastWeek'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td colspan="3">{{ActivityTotalLastWeek}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'ActivityTotalLastMonth'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td colspan="3">{{ActivityTotalLastMonth}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                        </table>
+                                    </fieldset>
+                                </td>
+
+                                <td></td>
+                            </tr>
+
+                            <tr style="height:10px;">
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <!-- SharedLogistic + Mobile -->
+                            <tr>
+                                <td style="width:420px;">
+                                    <fieldset class="FieldSet">
+                                        <legend style="color:#1B90CB; margin-left:5px; font-size:11px;">Shared Logistic Statistics</legend>
+
+                                        <table style="margin:5px;">
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'ShardLogisticLastDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 65px;" [ngStyle]="{color: ShardLogisticLastDateColor}">{{ShardLogisticLastDate | DateTimeToDatePipe}}</td>
+
+                                                <td style="width:10px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width: 30px; text-align: right;" [ngStyle]="{color: ShardLogisticLastDateColor}">{{ShardLogisticLastDate | DateTimeToTimePipe: 'S12'}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'ShardLogisticTotalLastWeek'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td colspan="3">{{ShardLogisticTotalLastWeek}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'ShardLogisticTotalLastMonth'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td colspan="3">{{ShardLogisticTotalLastMonth}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                        </table>
+                                    </fieldset>
+                                </td>
+
+                                <td style="width:10px;"></td>
+
+                                <td style="width:420px;">
+                                    <fieldset class="FieldSet">
+                                        <legend style="color:#1B90CB; margin-left:5px; font-size:11px;">Mobile Statistics</legend>
+
+                                        <table style="margin:5px;">
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'MobileLastDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 65px;" [ngStyle]="{color: MobileLastDateColor}">{{MobileLastDate | DateTimeToDatePipe}}</td>
+
+                                                <td style="width:10px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width: 30px; text-align: right;" [ngStyle]="{color: MobileLastDateColor}">{{MobileLastDate | DateTimeToTimePipe: 'S12'}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'MobileTotalLastWeek'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td colspan="3">{{MobileTotalLastWeek}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'MobileTotalLastMonth'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td colspan="3">{{MobileTotalLastMonth}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                        </table>
+                                    </fieldset>
+                                </td>
+
+                                <td></td>
+                            </tr>
+
+
+
+                            <tr style="height:10px;">
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                            <!--SharedAgent-->
+                            <tr>
+                                <td style="width:420px;">
+                                    <fieldset class="FieldSet">
+                                        <legend style="color:#1B90CB; margin-left:5px; font-size:11px;">Agent Shared Logistics Statistics</legend>
+
+                                        <table style="margin:5px;">
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'AgentSharedLogisticsStatisticsLastDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 65px;" [ngStyle]="{color: AgentSharedLogisticsStatisticsLastDateColor}">{{AgentSharedLogisticsStatisticsLastDate | DateTimeToDatePipe}}</td>
+
+                                                <td style="width:10px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width: 30px; text-align: right;" [ngStyle]="{color: AgentSharedLogisticsStatisticsLastDateColor}">{{AgentSharedLogisticsStatisticsLastDate | DateTimeToTimePipe: 'S12'}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'AgentSharedLogisticsStatisticsLastWeek'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td colspan="3">{{AgentSharedLogisticsStatisticsLastWeek}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'AgentSharedLogisticsStatisticsLastMonth'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td colspan="3">{{AgentSharedLogisticsStatisticsLastMonth}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                        </table>
+                                    </fieldset>
+                                </td>
+
+                                <td style="width:10px;"></td>
+
+                                <td style="width:420px;">
+                                 
+                                </td>
+
+                                <td></td>
+                            </tr>
+
+                        </table>
+                    </ScrollViewer>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+

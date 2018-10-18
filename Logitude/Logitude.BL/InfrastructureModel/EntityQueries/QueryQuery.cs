@@ -1,0 +1,541 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+using Simplog.Data.InfrastructureModel;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure.Helpers;
+
+using Logitude.BL.Helpers;
+using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+
+namespace Logitude.BL.InfrastructureModel.EntityQueries
+{
+    public class QueryQuery
+    {
+         QueryRepository repository;
+
+        public QueryQuery()
+        {
+            repository = new QueryRepository(); 
+        }
+
+        public QueryQuery(int tenant)
+        {
+            repository = new QueryRepository(tenant);
+        }
+
+        public QueryQuery(QueryRepository queryRepository)
+        {
+            repository = queryRepository;
+        }
+
+        public QueryPM GetSingleQueryPM(string id, int tenant)
+        {
+            QueryPM result =
+            (from a in repository.context.Queries.Include("ObjectTable").Include("QueryGroup").Include("NameTextCode")
+             where a.Id == id && (a.Tenant == tenant || a.Tenant == 0)
+             select new QueryPM()
+             {
+                 Code = a.Code,
+                 DisplayCount = a.DisplayCount,
+                 Id = a.Id,
+                 IndexOrder = a.IndexOrder,
+                 QuerySection = a.QuerySection,
+                 ObjectTableId = a.ObjectTableId,
+                 ObjectTableName = a.ObjectTable.Name,
+                 OriginalQueryId = a.OriginalQueryId,
+                 SystemLevel = a.SystemLevel,
+                 Tenant = a.Tenant,
+                 TenantLevel = a.TenantLevel,
+                 UserId = a.UserId,
+                 ObjectTableNewWizardControlName = a.ObjectTable.NewWizardControlName,
+                 IsAddNewEntityEnabled = a.IsAddNewEntityEnabled,
+                 QueryGroupCode = a.QueryGroupCode,
+                 QueryGroupIndexOrder = a.QueryGroup != null ? a.QueryGroup.IndexOrder : 0,
+                 NameTextCodeId = a.NameTextCodeId,
+                 NameTextCodeCode = a.NameTextCode == null ? null : a.NameTextCode.Code,
+                 DefaultSortColumn = a.DefaultSortColumn,
+                 DefaultSortDirection = a.DefaultSortDirection,
+                 SpotlightDataTemplate = a.SpotlightDataTemplate,
+                 Agent = a.Agent,
+                 Customer = a.Customer,
+                 Internal = a.Internal,
+                 FeatureId = a.FeatureId,
+                 EditWizardName = a.EditWizardName,
+                 Perspective = a.Perspective,
+                 IsHiddenFromView = a.IsHiddenFromView,
+                 IsNewFromTenantZeroOnly = a.IsNewFromTenantZeroOnly,
+               
+                 NewViewName = a.NameTextCode == null ? null : a.NameTextCode.DefaultText,
+                 EditWizardComponentPath = a.EditWizardComponentPath,
+             }).FirstOrDefault();
+
+            //if (result != null)
+            //{
+            //    if (!string.IsNullOrEmpty(result.NameTextCodeCode))
+            //    {
+            //        result.QueryLabel = TranslateTextsClass.Translate(result.NameTextCodeCode, result.Tenant);
+            //    }
+
+            //    else
+            //    {
+            //        result.QueryLabel = result.Code;
+            //    }
+            //}
+
+            return result;
+
+        }
+
+        public QueryPM GetSingleQueryPM(string id)
+        {
+            QueryPM result =
+            (from a in repository.context.Queries.Include("ObjectTable").Include("QueryGroup").Include("NameTextCode")
+             where a.Id == id
+             select new QueryPM()
+             {
+                 Code = a.Code,
+                 DisplayCount = a.DisplayCount,
+                 Id = a.Id,
+                 IndexOrder = a.IndexOrder,
+                 QuerySection = a.QuerySection,
+                 ObjectTableId = a.ObjectTableId,
+                 ObjectTableName = a.ObjectTable.Name,
+                 OriginalQueryId = a.OriginalQueryId,
+                 SystemLevel = a.SystemLevel,
+                 Tenant = a.Tenant,
+                 TenantLevel = a.TenantLevel,
+                 UserId = a.UserId,
+                 ObjectTableNewWizardControlName = a.ObjectTable.NewWizardControlName,
+                 IsAddNewEntityEnabled = a.IsAddNewEntityEnabled,
+                 QueryGroupCode = a.QueryGroupCode,
+                 QueryGroupIndexOrder = a.QueryGroup != null ? a.QueryGroup.IndexOrder : 0,
+                 NameTextCodeId = a.NameTextCodeId,
+                 NameTextCodeCode = a.NameTextCode == null ? null : a.NameTextCode.Code,
+                 DefaultSortColumn = a.DefaultSortColumn,
+                 DefaultSortDirection = a.DefaultSortDirection,
+                 SpotlightDataTemplate = a.SpotlightDataTemplate,
+                 Agent = a.Agent,
+                 Customer = a.Customer,
+                 Internal = a.Internal,
+                 FeatureId = a.FeatureId,
+                 EditWizardName = a.EditWizardName,
+                 Perspective = a.Perspective,
+                 IsHiddenFromView = a.IsHiddenFromView,
+                 IsNewFromTenantZeroOnly = a.IsNewFromTenantZeroOnly,
+                 NewViewName = a.NameTextCode == null ? null : a.NameTextCode.DefaultText,
+                 EditWizardComponentPath = a.EditWizardComponentPath,
+             }).FirstOrDefault();
+
+            //if (result != null)
+            //{
+            //    if (!string.IsNullOrEmpty(result.NameTextCodeCode))
+            //    {
+            //        result.QueryLabel = TranslateTextsClass.Translate(result.NameTextCodeCode, result.Tenant);
+            //    }
+
+            //    else
+            //    {
+            //        result.QueryLabel = result.Code;
+            //    }
+            //}
+
+            return result;
+
+        }
+
+        public IQueryable<QueryPM> GetQueryPMsByTenant(int tenant)
+        {
+            List<QueryPM> queries = (from a in repository.context.Queries.Include("ObjectTable").Include("QueryGroup").Include("NameTextCode")
+                                     where a.Tenant == tenant
+                                     select new QueryPM()
+                                     {
+                                         Code = a.Code,
+                                         DisplayCount = a.DisplayCount,
+                                         Id = a.Id,
+                                         IndexOrder = a.IndexOrder,
+                                         QuerySection = a.QuerySection,
+                                         ObjectTableId = a.ObjectTableId,
+                                         ObjectTableName = a.ObjectTable.Name,
+                                         OriginalQueryId = a.OriginalQueryId,
+                                         SystemLevel = a.SystemLevel,
+                                         Tenant = a.Tenant,
+                                         TenantLevel = a.TenantLevel,
+                                         UserId = a.UserId,
+                                         ObjectTableIsNewWizard = a.ObjectTable.IsNewWizard,
+                                         ObjectTableNewWizardControlName = a.ObjectTable.NewWizardControlName,
+                                         IsAddNewEntityEnabled = a.IsAddNewEntityEnabled,
+                                         QueryGroupCode = a.QueryGroupCode,
+                                         QueryGroupIndexOrder = a.QueryGroup != null ? a.QueryGroup.IndexOrder : 0,
+                                         NameTextCodeId = a.NameTextCodeId,
+                                         NameTextCodeCode = a.NameTextCode == null ? null : a.NameTextCode.Code,
+                                         DefaultSortColumn = a.DefaultSortColumn,
+                                         DefaultSortDirection = a.DefaultSortDirection,
+                                         SpotlightDataTemplate = a.SpotlightDataTemplate,
+                                         Agent = a.Agent,
+                                         Customer = a.Customer,
+                                         Internal = a.Internal,
+                                         FeatureId = a.FeatureId,
+                                         EditWizardName = a.EditWizardName,
+                                         Perspective = a.Perspective,
+                                         IsHiddenFromView = a.IsHiddenFromView,
+                                         IsNewFromTenantZeroOnly = a.IsNewFromTenantZeroOnly,
+                                         NewViewName = a.NameTextCode == null ? null : a.NameTextCode.DefaultText,
+                                         EditWizardComponentPath = a.EditWizardComponentPath,
+                                     }).ToList();
+
+            //foreach (QueryPM item in queries)
+            //{
+            //    if (!string.IsNullOrEmpty(item.NameTextCodeCode))
+            //    {
+            //        item.QueryLabel = TranslateTextsClass.Translate(item.NameTextCodeCode, item.Tenant);
+            //    }
+
+            //    else
+            //    {
+            //        item.QueryLabel = item.Code;
+            //    }
+            //}
+
+            return queries.AsQueryable().OrderBy(d => d.IndexOrder);
+        }
+
+        public List<QueryPM> GetQueries(int tenant, string userid)
+        {
+            List<QueryPM> queries = ( from a in repository.context.Queries.Include("ObjectTable").Include("QueryGroup").Include("NameTextCode")
+                   where (a.Tenant == tenant && a.UserId == userid) || a.Tenant == 0
+                   select new QueryPM()
+                   {
+                       Code = a.Code,
+                       DisplayCount = a.DisplayCount,
+                       Id = a.Id,
+                       IndexOrder = a.IndexOrder,
+                       QuerySection = a.QuerySection,
+                       ObjectTableId = a.ObjectTableId,
+                       ObjectTableName = a.ObjectTable.Name,
+                       OriginalQueryId = a.OriginalQueryId,
+                       SystemLevel = a.SystemLevel,
+                       Tenant = a.Tenant,
+                       TenantLevel = a.TenantLevel,
+                       UserId = a.UserId,
+                       ObjectTableIsNewWizard = a.ObjectTable.IsNewWizard,
+                       ObjectTableNewWizardControlName = a.ObjectTable.NewWizardControlName,
+                       IsAddNewEntityEnabled = a.IsAddNewEntityEnabled,
+                       QueryGroupCode = a.QueryGroupCode,
+                       QueryGroupIndexOrder = a.QueryGroup != null ? a.QueryGroup.IndexOrder : 0,
+                       NameTextCodeId = a.NameTextCodeId,
+                       NameTextCodeCode = a.NameTextCode == null ? null : a.NameTextCode.Code,
+                       DefaultSortColumn = a.DefaultSortColumn,
+                       DefaultSortDirection = a.DefaultSortDirection,
+                       SpotlightDataTemplate = a.SpotlightDataTemplate,
+                       Agent = a.Agent,
+                       Customer = a.Customer,
+                       Internal = a.Internal,
+                       FeatureId = a.FeatureId,
+                       EditWizardName = a.EditWizardName,
+                       Perspective = a.Perspective,
+                       IsHiddenFromView = a.IsHiddenFromView,
+                       IsNewFromTenantZeroOnly = a.IsNewFromTenantZeroOnly,
+                       NewViewName = a.NameTextCode == null ? null : a.NameTextCode.DefaultText,
+                       EditWizardComponentPath = a.EditWizardComponentPath,
+                   }).ToList();
+
+            //TranslationRepository translationRepository=new TranslationRepository(tenant);
+            //Dictionary<string, Translation> translations = translationRepository.GetTranslationsByTenantDictionary(tenant);
+            
+            //foreach (QueryPM item in queries)
+            //{
+            //    if (!string.IsNullOrEmpty(item.NameTextCodeCode))
+            //    {
+            //        item.QueryLabel = TranslateTextsClass.Translate(item.NameTextCodeCode, item.Tenant);
+            //    }
+
+            //    else
+            //    {
+            //        item.QueryLabel = item.Code;
+            //    }
+            //}
+
+            return queries;
+
+        }
+
+        public IQueryable<QueryPM> GetQueryPMsByTenantSystemLevel(int tenant)
+        {
+            List<QueryPM> queries = (from a in repository.context.Queries.Include("ObjectTable").Include("QueryGroup").Include("NameTextCode")
+                                     where a.Tenant == tenant && a.SystemLevel == true && a.UserId == null
+                                     select new QueryPM()
+                                     {
+                                         Code = a.Code,
+                                         DisplayCount = a.DisplayCount,
+                                         Id = a.Id,
+                                         IndexOrder = a.IndexOrder,
+                                         QuerySection = a.QuerySection,
+                                         ObjectTableId = a.ObjectTableId,
+                                         ObjectTableName = a.ObjectTable.Name,
+                                         OriginalQueryId = a.OriginalQueryId,
+                                         SystemLevel = a.SystemLevel,
+                                         Tenant = a.Tenant,
+                                         TenantLevel = a.TenantLevel,
+                                         UserId = a.UserId,
+                                         ObjectTableIsNewWizard = a.ObjectTable.IsNewWizard,
+                                         ObjectTableNewWizardControlName = a.ObjectTable.NewWizardControlName,
+                                         IsAddNewEntityEnabled = a.IsAddNewEntityEnabled,
+                                         QueryGroupCode = a.QueryGroupCode,
+                                         QueryGroupIndexOrder = a.QueryGroup != null ? a.QueryGroup.IndexOrder : 0,
+                                         NameTextCodeId = a.NameTextCodeId,
+                                         NameTextCodeCode = a.NameTextCode == null ? null : a.NameTextCode.Code,
+                                         DefaultSortColumn = a.DefaultSortColumn,
+                                         DefaultSortDirection = a.DefaultSortDirection,
+                                         SpotlightDataTemplate = a.SpotlightDataTemplate,
+                                         Agent = a.Agent,
+                                         Customer = a.Customer,
+                                         Internal = a.Internal,
+                                         FeatureId = a.FeatureId,
+                                         EditWizardName = a.EditWizardName,
+                                         Perspective = a.Perspective,
+                                         IsHiddenFromView = a.IsHiddenFromView,
+                                         IsNewFromTenantZeroOnly = a.IsNewFromTenantZeroOnly,
+                                         NewViewName = a.NameTextCode == null ? null : a.NameTextCode.DefaultText,
+                                         EditWizardComponentPath = a.EditWizardComponentPath,
+                                     }).ToList();
+
+            //foreach (QueryPM item in queries)
+            //{
+            //    if (!string.IsNullOrEmpty(item.NameTextCodeCode))
+            //    {
+            //        item.QueryLabel = TranslateTextsClass.Translate(item.NameTextCodeCode, item.Tenant);
+            //    }
+
+            //    else
+            //    {
+            //        item.QueryLabel = item.Code;
+            //    }
+            //}
+
+            return queries.AsQueryable().OrderBy(d => d.IndexOrder);
+        }
+
+        public QueryPM GetQueryByNameTenant(int tenant, string name)
+        {
+            QueryPM result = (from a in repository.context.Queries.Include("ObjectTable").Include("QueryGroup").Include("NameTextCode")
+                              where a.Code == name && a.Tenant == tenant
+                              select new QueryPM()
+                              {
+                                  Code = a.Code,
+                                  DisplayCount = a.DisplayCount,
+                                  Id = a.Id,
+                                  IndexOrder = a.IndexOrder,
+                                  QuerySection = a.QuerySection,
+                                  ObjectTableId = a.ObjectTableId,
+                                  ObjectTableName = a.ObjectTable.Name,
+                                  OriginalQueryId = a.OriginalQueryId,
+                                  SystemLevel = a.SystemLevel,
+                                  Tenant = a.Tenant,
+                                  TenantLevel = a.TenantLevel,
+                                  UserId = a.UserId,
+                                  ObjectTableIsNewWizard = a.ObjectTable.IsNewWizard,
+                                  ObjectTableNewWizardControlName = a.ObjectTable.NewWizardControlName,
+                                  IsAddNewEntityEnabled = a.IsAddNewEntityEnabled,
+                                  QueryGroupCode = a.QueryGroupCode,
+                                  QueryGroupIndexOrder = a.QueryGroup != null ? a.QueryGroup.IndexOrder : 0,
+                                  NameTextCodeId = a.NameTextCodeId,
+                                  NameTextCodeCode = a.NameTextCode == null ? null : a.NameTextCode.Code,
+                                  DefaultSortColumn = a.DefaultSortColumn,
+                                  DefaultSortDirection = a.DefaultSortDirection,
+                                  SpotlightDataTemplate = a.SpotlightDataTemplate,
+                                  Agent = a.Agent,
+                                  Customer = a.Customer,
+                                  Internal = a.Internal,
+                                  FeatureId = a.FeatureId,
+                                  EditWizardName = a.EditWizardName,
+                                  Perspective = a.Perspective,
+                                  IsHiddenFromView = a.IsHiddenFromView,
+                                  IsNewFromTenantZeroOnly = a.IsNewFromTenantZeroOnly,
+                                  NewViewName = a.NameTextCode == null ? null : a.NameTextCode.DefaultText,
+                                  EditWizardComponentPath = a.EditWizardComponentPath,
+                              }).FirstOrDefault();
+
+
+            //if (result != null)
+            //{
+            //    if (!string.IsNullOrEmpty(result.NameTextCodeCode))
+            //    {
+            //        result.QueryLabel = TranslateTextsClass.Translate(result.NameTextCodeCode, result.Tenant);
+            //    }
+
+            //    else
+            //    {
+            //        result.QueryLabel = result.Code;
+            //    }
+            //}
+
+            return result;
+
+        }
+
+        public IQueryable<QueryPM> GetQueryByTenantAndUser(int tenant, string userId)
+        {
+            List<QueryPM> query = null;
+            if (!string.IsNullOrEmpty(userId))
+            {
+                query =
+                    (from a in repository.context.Queries.Include("ObjectTable").Include("QueryGroup").Include("NameTextCode")
+                     where a.UserId == userId && a.Tenant == tenant
+                     select new QueryPM()
+                     {
+                         Code = a.Code,
+                         DisplayCount = a.DisplayCount,
+                         Id = a.Id,
+                         IndexOrder = a.IndexOrder,
+                         QuerySection = a.QuerySection,
+                         ObjectTableId = a.ObjectTableId,
+                         ObjectTableName = a.ObjectTable.Name,
+                         OriginalQueryId = a.OriginalQueryId,
+                         SystemLevel = a.SystemLevel,
+                         Tenant = a.Tenant,
+                         TenantLevel = a.TenantLevel,
+                         UserId = a.UserId,
+                         ObjectTableIsNewWizard = a.ObjectTable.IsNewWizard,
+                         ObjectTableNewWizardControlName = a.ObjectTable.NewWizardControlName,
+                         IsAddNewEntityEnabled = a.IsAddNewEntityEnabled,
+                         QueryGroupCode = a.QueryGroupCode,
+                         QueryGroupIndexOrder = a.QueryGroup != null ? a.QueryGroup.IndexOrder : 0,
+                         NameTextCodeId = a.NameTextCodeId,
+                         NameTextCodeCode = a.NameTextCode == null ? null : a.NameTextCode.Code,
+                         DefaultSortColumn = a.DefaultSortColumn,
+                         DefaultSortDirection = a.DefaultSortDirection,
+                         SpotlightDataTemplate = a.SpotlightDataTemplate,
+                         Agent = a.Agent,
+                         Customer = a.Customer,
+                         Internal = a.Internal,
+                         FeatureId = a.FeatureId,
+                         EditWizardName = a.EditWizardName,
+                         Perspective = a.Perspective,
+                         IsHiddenFromView = a.IsHiddenFromView,
+                         IsNewFromTenantZeroOnly = a.IsNewFromTenantZeroOnly,
+                         NewViewName = a.NameTextCode == null ? null : a.NameTextCode.DefaultText,
+                         EditWizardComponentPath = a.EditWizardComponentPath,
+                     }).ToList();
+
+            }
+            else
+            {
+                query = (from a in repository.context.Queries.Include("ObjectTable").Include("QueryGroup").Include("NameTextCode")
+                         where a.Tenant == tenant
+                         select new QueryPM()
+                         {
+                             Code = a.Code,
+                             DisplayCount = a.DisplayCount,
+                             Id = a.Id,
+                             IndexOrder = a.IndexOrder,
+                             QuerySection = a.QuerySection,
+                             ObjectTableId = a.ObjectTableId,
+                             ObjectTableName = a.ObjectTable.Name,
+                             OriginalQueryId = a.OriginalQueryId,
+                             SystemLevel = a.SystemLevel,
+                             Tenant = a.Tenant,
+                             TenantLevel = a.TenantLevel,
+                             UserId = a.UserId,
+                             ObjectTableIsNewWizard = a.ObjectTable.IsNewWizard,
+                             ObjectTableNewWizardControlName = a.ObjectTable.NewWizardControlName,
+                             IsAddNewEntityEnabled = a.IsAddNewEntityEnabled,
+                             QueryGroupCode = a.QueryGroupCode,
+                             QueryGroupIndexOrder = a.QueryGroup != null ? a.QueryGroup.IndexOrder : 0,
+                             NameTextCodeId = a.NameTextCodeId,
+                             NameTextCodeCode = a.NameTextCode == null ? null : a.NameTextCode.Code,
+                             DefaultSortColumn = a.DefaultSortColumn,
+                             DefaultSortDirection = a.DefaultSortDirection,
+                             SpotlightDataTemplate = a.SpotlightDataTemplate,
+                             Agent = a.Agent,
+                             Customer = a.Customer,
+                             Internal = a.Internal,
+                             FeatureId = a.FeatureId,
+                             EditWizardName = a.EditWizardName,
+                             Perspective = a.Perspective,
+                             IsHiddenFromView = a.IsHiddenFromView,
+                             IsNewFromTenantZeroOnly = a.IsNewFromTenantZeroOnly,
+                             NewViewName = a.NameTextCode == null ? null : a.NameTextCode.DefaultText,
+                             EditWizardComponentPath = a.EditWizardComponentPath,
+                         }).ToList();
+
+            }
+
+
+            //foreach (QueryPM item in query)
+            //{
+            //    if (!string.IsNullOrEmpty(item.NameTextCodeCode))
+            //    {
+            //        item.QueryLabel = TranslateTextsClass.Translate(item.NameTextCodeCode, item.Tenant);
+            //    }
+
+            //    else
+            //    {
+            //        item.QueryLabel = item.Code;
+            //    }
+            //}
+
+            return query.AsQueryable().OrderBy(d => d.IndexOrder);
+
+        }
+
+
+
+
+
+
+
+
+        public List<QueryPM> GetQueriesByObjectTableAndUserId(string userid, string objectTableId ,int tenant)
+        {
+            List<QueryPM> queries = (from a in repository.context.Queries.Include("NameTextCode")
+                                     where (a.Tenant == tenant && a.UserId == userid && a.ObjectTableId == objectTableId) 
+                                     select new QueryPM()
+                                     {
+                                         Code = a.Code,
+                                         DisplayCount = a.DisplayCount,
+                                         Id = a.Id,
+                                         IndexOrder = a.IndexOrder,
+                                         QuerySection = a.QuerySection,
+                                         ObjectTableId = a.ObjectTableId,
+                                         ObjectTableName = a.ObjectTable.Name,
+                                         OriginalQueryId = a.OriginalQueryId,
+                                         SystemLevel = a.SystemLevel,
+                                         Tenant = a.Tenant,
+                                         TenantLevel = a.TenantLevel,
+                                         UserId = a.UserId,
+                                         IsAddNewEntityEnabled = a.IsAddNewEntityEnabled,
+                                         QueryGroupCode = a.QueryGroupCode,
+                                         NameTextCodeId = a.NameTextCodeId,
+                                         NameTextCodeCode = a.NameTextCode == null ? null : a.NameTextCode.Code,
+                                         DefaultSortColumn = a.DefaultSortColumn,
+                                         DefaultSortDirection = a.DefaultSortDirection,
+                                         SpotlightDataTemplate = a.SpotlightDataTemplate,
+                                         Agent = a.Agent,
+                                         Customer = a.Customer,
+                                         Internal = a.Internal,
+                                         FeatureId = a.FeatureId,
+                                         EditWizardName = a.EditWizardName,
+                                         Perspective = a.Perspective,
+                                         IsHiddenFromView = a.IsHiddenFromView,
+                                         IsNewFromTenantZeroOnly = a.IsNewFromTenantZeroOnly,
+
+                                         EditWizardComponentPath = a.EditWizardComponentPath,
+                                     }).ToList();
+
+      
+
+            return queries;
+
+        }
+
+
+
+
+
+    }
+}

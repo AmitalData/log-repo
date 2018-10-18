@@ -1,0 +1,12557 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Web.Services;
+using System.Xml.Serialization;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.Repositories;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using WebFreight.Web.DataContracts;
+using WebFreight.Web.DataProviders;
+using Logitude.BL.ShipmentsModel.EntityLists;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.Repositories;
+using Logitude.BL.InvoiceModel.EntityQueries;
+using Logitude.BL.InvoiceModel.EntityLists;
+using Simplog.Data.Helpers;
+using Simplog.Data.QuoteModel.Repositories;
+using Logitude.BL.QuoteModel.EntityQueries;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Logitude.BL.QuoteModel.EntityLists;
+using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Server.Infrastructure.Helpers;
+using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.CRM.Data.EntityListQueryServices;
+using Logitude.CRM.Data;
+using Logitude.CRM.Data.EntityLists;
+using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.CRM.Data.Repsitories;
+using Logitude.CRM.Data.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Server.Infrastructure;
+using System.Transactions;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using WebFreight.Web.InfrastructureModel.DomainServices;
+using WebFreight.Web.Security;
+using Logitude.BL.CommonDataModel.BusinessUnitFilters;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools.Helpers;
+using Logitude.BL.QuoteModel;
+using Logitude.BL.InvoiceModel.CustomFilters;
+using Logitude.BL.ShipmentsModel.CustomFilters;
+using Logitude.BL.Helpers;
+using Simplog.Data.ShipmentsModel;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.InvoiceModel;
+using Logitude.WarehouseLib.BL.EntityQueryServices;
+using Logitude.WarehouseLib.BL.DataContracts;
+using Logitude.TimeManagement.Data.Repositories;
+using Logitude.TimeManagement.Data.EntityPOCOs;
+using Logitude.TimeManagement.Data;
+using Logitude.Accounting.BL.CoreBL.Reports;
+using Logitude.Accounting.Data.Repositories;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.BL.GlobalModel.EntityQueries;
+using Logitude.BL.GlobalModel.EntityLists;
+using Logitude.BL.CommonDataModel.EntityLists;
+using static Logitude.Accounting.BL.CoreBL.Reports.RevenueExpenseReportParam;
+using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Server.Tools;
+using System.Data;
+using Newtonsoft.Json;
+using Logitude.Accounting.Data;
+using WebFreight.Web.Helpers.DataProviderHelpers;
+using System.Text;
+using System.Web;
+
+namespace WebFreight.Web.ReportsWebServices
+{
+    /// <summary>
+    /// Summary description for LogitudeReportsWebService
+    /// </summary>
+    [WebService(Namespace = "http://tempuri.org/")]
+    [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
+    [System.ComponentModel.ToolboxItem(false)]
+    // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
+    // [System.Web.Script.Services.ScriptService]
+    public class LogitudeReportsWebService : System.Web.Services.WebService
+    {
+        #region AirlineStatistics
+        [WebMethod]
+        public byte[] LoadAirlineStatisticsData(byte[] xmlFilters, bool isClosed, int tenant)
+        {
+            AirlineStatisticsDataProvider dataprovider = LoadAirlineStatisticsDataProvider(xmlFilters, isClosed, tenant);
+            dataprovider.Logo = DataProviders.General.GetLogo(tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(AirlineStatisticsDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+        public AirlineStatisticsDataProvider LoadAirlineStatisticsDataProvider(byte[] xmlFilters, bool isClosed, int tenant)
+        {
+            AirlineStatisticsDataProvider dataProvider = new AirlineStatisticsDataProvider();
+            dataProvider.AirlineStatisticsReportList = new List<AirlineStatisticsDataProvider.AirlineStatisticsReport>();
+
+            ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+            IQueryable<ShipmentDataView> shipments = shipmentRepository.GetShipmentViewsByTenant(tenant);
+
+            AddressQuery addressQuery = new AddressQuery(tenant);
+            TenantPM currentTenant = TenantQuery.GetSingleTenantPM(tenant, false);
+
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+            DateTime myStartDate = todayDate.AddMonths(-1);
+
+            #region Report Filters
+
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+
+            QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CreateDateTime" && d.Operator == "GreaterThanOrEqual").FirstOrDefault();
+            QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CreateDateTime" && d.Operator == "LessThanOrEqual").FirstOrDefault();
+            QueryFilterItem filterItem_Direction = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Direction").FirstOrDefault();
+            QueryFilterItem filterItem_Closed = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IsOperationalClosed").FirstOrDefault();
+
+            DateTime fromDate = new DateTime(myStartDate.Year, myStartDate.Month, 1);
+            DateTime toDate = new DateTime(todayDate.Year, todayDate.Month, DateTime.DaysInMonth(todayDate.Year, todayDate.Month));
+
+            string direction = null;
+            bool includeOperationalClosed = false;
+
+            if (filterItem_Direction != null)
+            {
+                if (filterItem_Direction.FieldValue != null)
+                {
+                    direction = filterItem_Direction.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_Closed != null)
+            {
+                if (filterItem_Closed.FieldValue != null)
+                {
+                    includeOperationalClosed = (bool)filterItem_Closed.FieldValue;
+                }
+            }
+
+            if (filterItem_FromDate != null)
+            {
+                DateTime.TryParse(filterItem_FromDate.FieldValue.ToString(), out fromDate);
+            }
+
+            if (filterItem_ToDate != null)
+            {
+                DateTime.TryParse(filterItem_ToDate.FieldValue.ToString(), out toDate);
+            }
+
+            #endregion
+
+            #region General Data
+
+            dataProvider.Name = "Airline statistics";
+            dataProvider.FromPeriod = fromDate;
+            dataProvider.ToPeriod = toDate;
+
+            if (!string.IsNullOrEmpty(direction))
+            {
+                dataProvider.Direction = direction == "E" ? "Export" : direction == "I" ? "Import" : "Domestic";
+            }
+            else
+            {
+                dataProvider.Direction = "All";
+            }
+
+            if (currentTenant != null)
+            {
+                dataProvider.TenantName = currentTenant.Company;
+                dataProvider.Signature = currentTenant.Signature;
+                dataProvider.Logo = DataProviders.General.GetLogo(currentTenant.Id);
+
+                AddressPM address = addressQuery.GetSingleAddressPM(currentTenant.AddressId, currentTenant.Id, false);
+                if (address != null)
+                {
+                    dataProvider.Address1 = address.Address1;
+                    dataProvider.Address2 = address.Address2;
+                    dataProvider.City = address.City;
+                    dataProvider.Country = address.CountryName;
+                    dataProvider.TenantFax = address.FaxNumber;
+                    dataProvider.TenantPhone = address.PhoneNumber;
+                    dataProvider.State = address.StateEnglishName;
+                    dataProvider.ZipCode = address.ZipCode;
+                }
+            }
+
+            #endregion
+
+            #region Base Data Filterd
+
+            shipments = shipments.Where(f => f.ShipmentLevelCode != "H" && f.TransportModeId == "A" && !f.IsCancelled);
+
+            if (!includeOperationalClosed)
+            {
+                shipments = shipments.Where(d => !d.IsOperationalClosed);
+            }
+
+            if (!string.IsNullOrEmpty(direction))
+            {
+                shipments = shipments.Where(d => d.DirectionId == direction);
+            }
+
+            if (fromDate != null)
+            {
+                shipments = shipments.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDateTime) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+            }
+
+            if (toDate != null)
+            {
+                shipments = shipments.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDateTime) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
+            }
+
+            #endregion
+
+            #region Fill Report Data
+
+            double? totalGrossWeight = shipments.Sum(d => d.GrossWeightInKG);
+            int totalCount = shipments.Count();
+
+            dataProvider.TotalGrossWeight = totalGrossWeight;
+            dataProvider.TotalShipments = totalCount;
+            dataProvider.TotalChargeableWeight = shipments.Sum(d => d.ChargeableWeightInKG);
+            dataProvider.TotalVolume = shipments.Sum(d => d.VolumeInCBM);
+
+            dataProvider.AirlineStatisticsReportList = (from a in shipments
+                                                        group a by new
+                                                        {
+                                                            a.MainCarriageCarrierId,
+                                                            a.MainCarriageCarrierName,
+                                                        } into gr
+                                                        orderby gr.Key.MainCarriageCarrierName
+                                                        select new AirlineStatisticsDataProvider.AirlineStatisticsReport()
+                                                        {
+                                                            AirlineName = gr.Key.MainCarriageCarrierName == null ? "(No Carrier Specified)" : gr.Key.MainCarriageCarrierName,
+                                                            ChargeableWeight = gr.Sum(d => d.ChargeableWeightInKG),
+                                                            GrossWeight = gr.Sum(d => d.GrossWeightInKG),
+                                                            Shipments = gr.Count(),
+                                                            PercentageFromTotalGrossWeight = totalGrossWeight == 0 ? 0 : (gr.Sum(d => d.GrossWeightInKG) / totalGrossWeight),
+                                                            PercentageFromTotalShipment = totalCount == 0 ? 0 : ((double)gr.Count() / (double)totalCount),
+                                                            Volume = gr.Sum(d => d.VolumeInCBM),
+                                                        }).ToList();
+
+            #endregion
+
+            return dataProvider;
+        }
+        #endregion
+
+        #region ShippingLineStatistics
+        [WebMethod]
+        public byte[] LoadShippingLineStatisticsData(byte[] xmlFilters, bool isClosed, int tenant)
+        {
+            ShippingLineStatisticsDataProvider dataprovider = LoadShippingLineStatisticsDataProvider(xmlFilters, isClosed, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(ShippingLineStatisticsDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+        public ShippingLineStatisticsDataProvider LoadShippingLineStatisticsDataProvider(byte[] xmlFilters, bool isClosed, int tenant)
+        {
+            ShippingLineStatisticsDataProvider dataProvider = new ShippingLineStatisticsDataProvider();
+            dataProvider.ShippingLineStatisticsReportList = new List<ShippingLineStatisticsDataProvider.ShippingLineStatisticsReport>();
+
+            ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+            AddressQuery addressQuery = new AddressQuery(tenant);
+
+            TenantPM currentTenant = TenantQuery.GetSingleTenantPM(tenant, false);
+            IQueryable<ShipmentDataView> shipments = shipmentRepository.GetShipmentViewsByTenant(tenant);
+
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+            DateTime myStartDate = todayDate.AddMonths(-1);
+
+            #region Report Filters
+
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+
+            QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CreateDateTime" && d.Operator == "GreaterThanOrEqual").FirstOrDefault();
+            QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CreateDateTime" && d.Operator == "LessThanOrEqual").FirstOrDefault();
+            QueryFilterItem filterItem_Direction = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Direction").FirstOrDefault();
+            QueryFilterItem filterItem_Closed = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IsOperationalClosed").FirstOrDefault();
+
+            DateTime fromDate = new DateTime(myStartDate.Year, myStartDate.Month, 1);
+            DateTime toDate = new DateTime(todayDate.Year, todayDate.Month, DateTime.DaysInMonth(todayDate.Year, todayDate.Month));
+
+            string direction = null;
+            bool includeOperationalClosed = false;
+
+            if (filterItem_Direction != null)
+            {
+                if (filterItem_Direction.FieldValue != null)
+                {
+                    direction = filterItem_Direction.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_Closed != null)
+            {
+                if (filterItem_Closed.FieldValue != null)
+                {
+                    includeOperationalClosed = (bool)filterItem_Closed.FieldValue;
+                }
+            }
+
+            if (filterItem_FromDate != null)
+            {
+                DateTime.TryParse(filterItem_FromDate.FieldValue.ToString(), out fromDate);
+            }
+
+            if (filterItem_ToDate != null)
+            {
+                DateTime.TryParse(filterItem_ToDate.FieldValue.ToString(), out toDate);
+            }
+
+            #endregion
+
+            #region General Data
+
+            dataProvider.Name = "Shipping Line statistics";
+            dataProvider.FromPeriod = fromDate;
+            dataProvider.ToPeriod = toDate;
+
+            if (!string.IsNullOrEmpty(direction))
+            {
+                dataProvider.Direction = direction == "E" ? "Export" : direction == "I" ? "Import" : "Domestic";
+            }
+            else
+            {
+                dataProvider.Direction = "All";
+            }
+
+            if (currentTenant != null)
+            {
+                dataProvider.TenantName = currentTenant.Company;
+                dataProvider.Signature = currentTenant.Signature;
+                dataProvider.Logo = DataProviders.General.GetLogo(currentTenant.Id);
+
+                AddressPM address = addressQuery.GetSingleAddressPM(currentTenant.AddressId, currentTenant.Id, false);
+                if (address != null)
+                {
+                    dataProvider.Address1 = address.Address1;
+                    dataProvider.Address2 = address.Address2;
+                    dataProvider.City = address.City;
+                    dataProvider.Country = address.CountryName;
+                    dataProvider.TenantFax = address.FaxNumber;
+                    dataProvider.TenantPhone = address.PhoneNumber;
+                    dataProvider.State = address.StateEnglishName;
+                    dataProvider.ZipCode = address.ZipCode;
+                }
+            }
+
+            #endregion
+
+            #region Base Data Filterd
+
+            shipments = shipments.Where(f => f.ShipmentLevelCode != "H" && f.TransportModeId == "O" && !f.IsCancelled);
+
+            if (!includeOperationalClosed)
+            {
+                shipments = shipments.Where(d => !d.IsOperationalClosed);
+            }
+
+            if (!string.IsNullOrEmpty(direction))
+            {
+                shipments = shipments.Where(d => d.DirectionId == direction);
+            }
+
+            if (fromDate != null)
+            {
+                shipments = shipments.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDateTime) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+            }
+
+            if (toDate != null)
+            {
+                shipments = shipments.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDateTime) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
+            }
+
+            #endregion
+
+            #region Fill Report Data
+
+            dataProvider.TotalFCLShipments = shipments.Where(d => d.ShipmentType.Contains("FCL")).Count();
+            dataProvider.TotalLCLShipments = shipments.Where(d => d.ShipmentType.Contains("LCL")).Count();
+            dataProvider.TotalLCLWeight = shipments.Where(d => d.ShipmentType.Contains("LCL")).Sum(d => d.GrossWeightInKG);
+            dataProvider.TotalShipments = shipments.Count();
+            dataProvider.TotalTEU = shipments.Sum(d => d.TEU);
+
+            dataProvider.ShippingLineStatisticsReportList = (from a in shipments
+
+                                                             group a by new
+                                                             {
+                                                                 a.MainCarriageCarrierId,
+                                                                 a.MainCarriageCarrierName,
+                                                             } into gr
+
+                                                             orderby gr.Key.MainCarriageCarrierName
+
+                                                             select new ShippingLineStatisticsDataProvider.ShippingLineStatisticsReport()
+                                                             {
+                                                                 Carrier = gr.Key.MainCarriageCarrierName == null ? "(No Carrier Specified)" : gr.Key.MainCarriageCarrierName,
+                                                                 FCLShipments = gr.Where(t => t.ShipmentType.Contains("FCL")).Count(),
+                                                                 LCLShipments = gr.Where(t => t.ShipmentType.Contains("LCL")).Count(),
+                                                                 TotalShipments = gr.Count(),
+                                                                 LCLWeight = gr.Where(t => t.ShipmentType.Contains("LCL")).Sum(t => t.GrossWeightInKG),
+                                                                 TEU = gr.Sum(t => t.TEU),
+                                                                 PercentageFromTotalShipment = ((double)gr.Count() / (double)dataProvider.TotalShipments),
+                                                             }).ToList();
+            #endregion
+
+            return dataProvider;
+        }
+        #endregion
+
+        #region ProfitByShipment
+        [WebMethod]
+        public byte[] LoadProfitByShipmentData(byte[] xmlFilters, string currency, bool closed, int tenant)
+        {
+            ProfitByShipmentDataProvider dataprovider = LoadProfitByShipmentDataProvider(xmlFilters, currency, closed, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(ProfitByShipmentDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+        public ProfitByShipmentDataProvider LoadProfitByShipmentDataProvider(byte[] xmlFilters, string currency, bool closed, int tenant)
+        {
+            ProfitByShipmentDataProvider dataProvider = new ProfitByShipmentDataProvider();
+            dataProvider.ProfitByShipmentReportList = new List<ProfitByShipmentDataProvider.ProfitByShipmentReport>();
+
+            ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+            UserQuery userQuery = new UserQuery(tenant);
+
+            IQueryable<ShipmentDataView> shipments = shipmentRepository.GetShipmentViewsByTenant(tenant);
+
+            #region Report Filters
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+
+            QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
+            QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
+            QueryFilterItem filterItem_DirectionId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DirectionId").FirstOrDefault();
+            QueryFilterItem filterItem_AgentId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "AgentId").FirstOrDefault();
+            QueryFilterItem filterItem_CustomerId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomerId").FirstOrDefault();
+            QueryFilterItem filterItem_SalesmanUserId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "SalesmanUserId").FirstOrDefault();
+            QueryFilterItem filterItem_AccountingClosed = queryOperations.QueryFilterItems.Where(d => d.FieldName == "AccountingClosed").FirstOrDefault();
+            QueryFilterItem filterItem_IncludeAccountedOnly = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeAccountedOnly").FirstOrDefault();
+            QueryFilterItem filterItem_IsByCreateDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IsByCreateDate").FirstOrDefault();
+            QueryFilterItem filterItem_DepartmentId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DepartmentId").FirstOrDefault();
+
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+            DateTime myStartDate = todayDate.AddMonths(-1);
+
+            DateTime fromDate = new DateTime(myStartDate.Year, myStartDate.Month, 1);
+            DateTime toDate = new DateTime(todayDate.Year, todayDate.Month, DateTime.DaysInMonth(todayDate.Year, todayDate.Month));
+            string directionId = null;
+            string agentId = null;
+            string customerId = null;
+            string salesmanUserId = null;
+            bool accountingClosed = false;
+            bool includeAccountedOnly = false;
+            bool isByCreateDate = false;
+            string departmentId = null;
+
+            if (filterItem_AccountingClosed != null)
+            {
+                if (filterItem_AccountingClosed.FieldValue != null)
+                {
+                    accountingClosed = (bool)filterItem_AccountingClosed.FieldValue;
+                    shipments = shipments.Where(d => d.IsAccountingClosed == accountingClosed);
+                }
+            }
+
+            if (filterItem_IncludeAccountedOnly != null)
+            {
+                if (filterItem_IncludeAccountedOnly.FieldValue != null)
+                {
+                    includeAccountedOnly = (bool)filterItem_IncludeAccountedOnly.FieldValue;
+                }
+            }
+
+            if (filterItem_IsByCreateDate != null)
+            {
+                if (filterItem_IsByCreateDate.FieldValue != null)
+                {
+                    isByCreateDate = (bool)filterItem_IsByCreateDate.FieldValue;
+                }
+            }
+
+            if (filterItem_FromDate != null)
+            {
+                DateTime.TryParse(filterItem_FromDate.FieldValue.ToString(), out fromDate);
+            }
+
+            if (filterItem_ToDate != null)
+            {
+                DateTime.TryParse(filterItem_ToDate.FieldValue.ToString(), out toDate);
+            }
+
+            if (filterItem_DirectionId != null)
+            {
+                if (filterItem_DirectionId.FieldValue != null)
+                {
+                    directionId = filterItem_DirectionId.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_AgentId != null)
+            {
+                if (filterItem_AgentId.FieldValue != null)
+                {
+                    agentId = filterItem_AgentId.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_CustomerId != null)
+            {
+                if (filterItem_CustomerId.FieldValue != null)
+                {
+                    customerId = filterItem_CustomerId.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_SalesmanUserId != null)
+            {
+                if (filterItem_SalesmanUserId.FieldValue != null)
+                {
+                    salesmanUserId = filterItem_SalesmanUserId.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_DepartmentId != null)
+            {
+                if (filterItem_DepartmentId.FieldValue != null)
+                {
+                    departmentId = filterItem_DepartmentId.FieldValue.ToString();
+                }
+            }
+            #endregion
+
+            #region Filter data
+            shipments = shipments.Where(f => f.IsCancelled == false && (f.ShipmentLevelCode == "H" || f.ShipmentLevelCode == "D"));
+
+            if (fromDate != null)
+            {
+                if (isByCreateDate)
+                {
+                    shipments = shipments.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDateTime) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                }
+
+                else
+                {
+                    shipments = shipments.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.OperationalDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                }
+            }
+
+            if (toDate != null)
+            {
+                if (isByCreateDate)
+                {
+                    shipments = shipments.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDateTime) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
+                }
+
+                else
+                {
+                    shipments = shipments.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.OperationalDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
+                }
+            }
+
+            if (!string.IsNullOrEmpty(directionId) && directionId != "All")
+            {
+                shipments = shipments.Where(d => d.DirectionId == directionId);
+                dataProvider.Direction = directionId == "E" ? "Export" : directionId == "I" ? "Import" : "Domestic";
+            }
+            else
+            {
+                dataProvider.Direction = "All";
+            }
+
+            if (!string.IsNullOrEmpty(customerId))
+            {
+                shipments = shipments.Where(d => d.CustomerId == customerId);
+
+                Card customer = CardRepository.GetSingleCard(customerId, tenant, true);
+                dataProvider.Customer = customer.EnglishName;
+            }
+            else
+            {
+                dataProvider.Customer = "All";
+            }
+
+            if (!string.IsNullOrEmpty(agentId))
+            {
+                shipments = shipments.Where(d => d.AgentId == agentId);
+
+                Card agent = CardRepository.GetSingleCard(agentId, tenant, true);
+                dataProvider.Agent = agent.EnglishName;
+            }
+            else
+            {
+                dataProvider.Agent = "All";
+            }
+
+            if (!string.IsNullOrEmpty(salesmanUserId))
+            {
+                shipments = shipments.Where(d => d.SalesmanUserId == salesmanUserId);
+            }
+
+            if (closed)
+            {
+                shipments = shipments.Where(d => d.IsOperationalClosed);
+            }
+
+            if (!string.IsNullOrEmpty(departmentId))
+            {
+                shipments = shipments.Where(d => d.DepartmentId == departmentId);
+            }
+            #endregion
+
+            #region General Data
+            dataProvider.Name = @"P/L by Shipments";
+
+            TenantPM currentTenant = TenantQuery.GetSingleTenantPM(tenant, false);
+            if (currentTenant != null)
+            {
+                dataProvider.TenantName = currentTenant.Company;
+                dataProvider.Signature = currentTenant.Signature;
+                dataProvider.Logo = DataProviders.General.GetLogo(currentTenant.Id);
+                dataProvider.FromPeriod = fromDate;
+                dataProvider.ToPeriod = toDate;
+
+                AddressQuery addressQuery = new AddressQuery(tenant);
+                AddressPM address = addressQuery.GetSingleAddressPM(currentTenant.AddressId, currentTenant.Id, false);
+                if (address != null)
+                {
+                    dataProvider.Address1 = address.Address1;
+                    dataProvider.Address2 = address.Address2;
+                    dataProvider.City = address.City;
+                    dataProvider.Country = address.CountryName;
+                    dataProvider.TenantFax = address.FaxNumber;
+                    dataProvider.TenantPhone = address.PhoneNumber;
+                    dataProvider.State = address.StateEnglishName;
+                    dataProvider.ZipCode = address.ZipCode;
+                }
+            }
+            #endregion
+
+            #region Fill Report Data
+            string[] currencyarray = currency.Split(',');
+            dataProvider.Currency = currencyarray[0];
+
+            if (shipments.Count() > 0)
+            {
+                dataProvider.TotalChargeableWeightMT = shipments.Sum(d => (d.ChargeableWeightInKG / 1000.0));
+                dataProvider.TotalWeight = shipments.Sum(d => d.GrossWeightInKG);
+                dataProvider.TotalTEU = shipments.Sum(d => d.TEU);
+
+                foreach (ShipmentDataView a in shipments)
+                {
+                    //Arrival: This should give the Main Carriage ATA if available and the ETA if there is no ATA.
+                    //Departure: This should give the Main Carriage ATD if available and the ETD if there is no ATD
+
+                    ProfitByShipmentDataProvider.ProfitByShipmentReport profitrecord = new ProfitByShipmentDataProvider.ProfitByShipmentReport();
+                    profitrecord.ArrivalDepartureDate = a.DirectionId == "E" ? a.MainCarriageATD : a.MainCarriageATA;
+                    profitrecord.OperationalDate = a.OperationalDate;
+                    profitrecord.Routing = a.Routing;
+                    profitrecord.Carrier = a.MainCarriageCarrierName;
+                    profitrecord.Customer = a.CustomerName;
+                    profitrecord.ShipmentType = a.TransportModeName + " " + a.DirectionName;
+                    profitrecord.AccountManagerName = a.AccountManagerUserName;
+                    profitrecord.OperationalStatus = a.IsOperationalClosed ? "Close" : "Open";
+                    profitrecord.AccountingStatus = a.IsAccountingClosed ? "Close" : "Open";
+                    profitrecord.ShipmentCreateDate = a.CreateDateTime;
+                    profitrecord.ChargeableWeight = a.ChargeableWeight;
+                    profitrecord.ShipmentNo = a.ShipmentNumber;
+                    profitrecord.TEU = a.TEU;
+                    profitrecord.Agent = a.AgentName;
+                    profitrecord.Weight = a.GrossWeightInKG;
+                    profitrecord.ChargeableWeightMT = a.ChargeableWeightInKG / 1000.0;
+                    profitrecord.ShipmentMasterNumber = a.MasterShipmentNumber;
+                    profitrecord.Origin = a.MainCarriageFromPortName;
+                    profitrecord.Destination = a.ToPortName;
+
+                    CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                    customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, a, profitrecord);
+
+                    if (!string.IsNullOrEmpty(a.DepartmentId))
+                    {
+                        DepartmentRepository departmentRepository = new DepartmentRepository(tenant);
+                        Department department = departmentRepository.GetSingleDepartment(a.DepartmentId, tenant);
+                        if (department != null)
+                        {
+                            profitrecord.Department = department.EnglishName;
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(a.IncotermId))
+                    {
+                        IncotermRepository incotermRepository = new IncotermRepository(tenant);
+                        Incoterm incoterm = incotermRepository.GetSingleIncoterm(a.IncotermId, tenant);
+                        if (incoterm != null)
+                        {
+                            profitrecord.Incoterm = incoterm.Name;
+                        }
+                    }
+
+                    if (a.MainCarriageATA != null)
+                    {
+                        profitrecord.Arrival = String.Format("{0:dd MMM yyyy}", a.MainCarriageATA);
+                    }
+
+                    else if (a.MainCarriageETA != null)
+                    {
+                        profitrecord.Arrival = String.Format("{0:dd MMM yyyy}", a.MainCarriageETA) + " (expected)";
+                    }
+
+                    if (a.MainCarriageATD != null)
+                    {
+                        profitrecord.Departure = String.Format("{0:dd MMM yyyy}", a.MainCarriageATD);
+                    }
+
+                    else if (a.MainCarriageETD != null)
+                    {
+                        profitrecord.Departure = String.Format("{0:dd MMM yyyy}", a.MainCarriageETD) + " (expected)";
+                    }
+
+                    if (a.CustomerId == a.ShipperId)
+                    {
+                        profitrecord.ShipperConsignee = a.Consignee;
+                    }
+
+                    else if (a.CustomerId == a.ConsigneeId)
+                    {
+                        profitrecord.ShipperConsignee = a.Shipper;
+                    }
+
+                    else if (a.CustomerId == a.AgentId)
+                    {
+                        profitrecord.ShipperConsignee = a.Shipper;
+                    }
+
+                    else if (a.DirectionId == "E")
+                    {
+                        profitrecord.ShipperConsignee = a.Consignee;
+                    }
+
+                    else if (a.DirectionId == "I")
+                    {
+                        profitrecord.ShipperConsignee = a.Shipper;
+                    }
+
+                    if (!string.IsNullOrEmpty(a.SalesmanUserId))
+                    {
+                        UserPM salesman = userQuery.GetSinglePM(a.SalesmanUserId, tenant);
+                        if (salesman != null)
+                        {
+                            profitrecord.Salesman = salesman.EnglishName;
+                        }
+                    }
+
+                    if (currencyarray[1] == "profit")
+                    {
+                        if (includeAccountedOnly)
+                        {
+                            profitrecord.Payables = a.AccountedPayablesInProfitCurrency;
+                            profitrecord.Margin = a.ProfitInProfitCurrency / profitrecord.Payables;
+
+                            if (profitrecord.Margin != null && (double.IsInfinity(profitrecord.Margin.Value) || double.IsNaN(profitrecord.Margin.Value)))
+                            {
+                                profitrecord.Margin = null;
+                            }
+
+                            profitrecord.Receivables = a.AccountedReceivablesInProfitCurrency;
+                            profitrecord.Profit = profitrecord.Receivables - profitrecord.Payables;
+                        }
+
+                        else
+                        {
+                            profitrecord.Payables = a.OpenPayablesInProfitCurrency + a.AccountedPayablesInProfitCurrency;
+                            profitrecord.Margin = a.ProfitInProfitCurrency / profitrecord.Payables;
+
+                            if (profitrecord.Margin != null && (double.IsInfinity(profitrecord.Margin.Value) || double.IsNaN(profitrecord.Margin.Value)))
+                            {
+                                profitrecord.Margin = null;
+                            }
+
+                            profitrecord.Receivables = (a.OpenReceivablesInProfitCurrency + a.AccountedReceivablesInProfitCurrency);
+                            profitrecord.Profit = profitrecord.Receivables - profitrecord.Payables;
+                        }
+                    }
+
+                    else if (currencyarray[1] == "local")
+                    {
+                        if (includeAccountedOnly)
+                        {
+                            profitrecord.Payables = a.AccountedPayablesInLocalCurrency;
+                            profitrecord.Margin = (a.ProfitInLocalCurrency / profitrecord.Payables);
+
+                            if (profitrecord.Margin != null && (double.IsInfinity(profitrecord.Margin.Value) || double.IsNaN(profitrecord.Margin.Value)))
+                            {
+                                profitrecord.Margin = null;
+                            }
+
+                            profitrecord.Receivables = a.AccountedReceivablesInLocalCurrency;
+                            profitrecord.Profit = profitrecord.Receivables - profitrecord.Payables;
+                        }
+
+                        else
+                        {
+                            profitrecord.Payables = a.OpenPayablesInLocalCurrency + a.AccountedPayablesInLocalCurrency;
+                            profitrecord.Margin = (a.ProfitInLocalCurrency / profitrecord.Payables);
+
+                            if (profitrecord.Margin != null && (double.IsInfinity(profitrecord.Margin.Value) || double.IsNaN(profitrecord.Margin.Value)))
+                            {
+                                profitrecord.Margin = null;
+                            }
+
+                            profitrecord.Receivables = a.OpenReceivablesInLocalCurrency + a.AccountedReceivablesInLocalCurrency;
+                            profitrecord.Profit = profitrecord.Receivables - profitrecord.Payables;
+                        }
+                    }
+
+                    dataProvider.ProfitByShipmentReportList.Add(profitrecord);
+                }
+
+                dataProvider.TotalPayables = dataProvider.ProfitByShipmentReportList.Sum(d => (d.Payables));
+                dataProvider.TotalReceivables = dataProvider.ProfitByShipmentReportList.Sum(d => (d.Receivables));
+                dataProvider.TotalProfit = dataProvider.ProfitByShipmentReportList.Sum(d => d.Profit);
+            }
+            #endregion
+
+            return dataProvider;
+        }
+        #endregion
+
+        #region Statement
+        [WebMethod]
+        public byte[] LoadStatementData(byte[] xmlFilters, int tenant)
+        {
+            StatementDataProvider dataprovider = LoadStatementDataProvider(xmlFilters, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(StatementDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+        public StatementDataProvider LoadStatementDataProvider(byte[] xmlFilters, int tenant)
+        {
+            StatementDataProvider dataProvider = new StatementDataProvider();
+            dataProvider.StatementRecordList = new List<StatementDataProvider.StatementRecord>();
+            dataProvider.StatementAgingSummaryRecordList = new List<StatementDataProvider.StatmentAging>();
+
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
+            ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+            IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
+
+            ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(invoiceContext);
+            ARPaymentRepository aRPaymentRepository = new ARPaymentRepository(invoiceContext);
+            APPaymentRepository aPPaymentRepository = new APPaymentRepository(invoiceContext);
+            APInvoiceRepository aPInvoiceRepository = new APInvoiceRepository(invoiceContext);
+
+            ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+            AddressRepository addressRepository = new AddressRepository(commonContext);
+
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+
+            List<Currency> allCurrencies = (from d in commonContext.Currencies where d.Tenant == tenant select d).ToList();
+
+            #region Report Filters
+
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+
+            QueryFilterItem filterItem_Customer = queryOperations.QueryFilterItems.Where(d => d.FieldName == "BillToId").FirstOrDefault();
+            QueryFilterItem filterItem_DueDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DueDate").FirstOrDefault();
+
+            string customerId = null;
+            DateTime? dueDate = null;
+
+            if (filterItem_Customer != null)
+            {
+                if (filterItem_Customer.FieldValue != null)
+                {
+                    customerId = filterItem_Customer.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_DueDate != null)
+            {
+                if (filterItem_DueDate.FieldValue != null)
+                {
+                    dueDate = (DateTime)filterItem_DueDate.FieldValue;
+                }
+            }
+
+            #endregion
+
+            #region General Report Data
+
+            TenantPM currentTenant = TenantQuery.GetSingleTenantPM(tenant, false);
+            Address tenantAddress = addressRepository.GetSingleAddress(currentTenant.AddressId, currentTenant.Id);
+            Card myFilterdCustomer = null;
+            Address myFilterdCustomerAddress = null;
+
+            if (!string.IsNullOrEmpty(customerId))
+            {
+                myFilterdCustomer = CardRepository.GetSingleCard(customerId, tenant, true);
+                myFilterdCustomerAddress = addressRepository.GetMainAddressByCardId(customerId, tenant);
+            }
+
+            dataProvider.GeneralAddress = DataProviders.General.GetAddress(tenantAddress);
+            dataProvider.TenantName = currentTenant.Company;
+            dataProvider.Signature = currentTenant.Signature;
+            dataProvider.BankDetails = currentTenant.BankDetails;
+            dataProvider.Logo = DataProviders.General.GetLogo(currentTenant.Id);
+            dataProvider.Name = @"Statement";
+
+            if (tenantAddress != null)
+            {
+                dataProvider.Address1 = tenantAddress.Address1;
+                dataProvider.Address2 = tenantAddress.Address2;
+                dataProvider.City = tenantAddress.City;
+                dataProvider.Country = tenantAddress.Country == null ? null : tenantAddress.Country.EnglishName;
+                dataProvider.TenantFax = tenantAddress.FaxNumber;
+                dataProvider.TenantPhone = tenantAddress.PhoneNumber;
+                dataProvider.State = tenantAddress.State == null ? null : tenantAddress.State.EnglishName;
+                dataProvider.ZipCode = tenantAddress.ZipCode;
+            }
+
+            if (myFilterdCustomerAddress != null)
+            {
+                dataProvider.Address = DataProviders.General.GetAddress(myFilterdCustomerAddress);
+                dataProvider.Phone = myFilterdCustomerAddress.PhoneNumber;
+                dataProvider.Fax = myFilterdCustomerAddress.FaxNumber;
+            }
+
+            if (myFilterdCustomer != null)
+            {
+                dataProvider.CustomerName = myFilterdCustomer.EnglishName;
+            }
+
+            else
+            {
+                dataProvider.CustomerName = "All";
+            }
+
+            #endregion
+
+            #region Base Data Filtered
+
+            IQueryable<ARInvoice> iQueryable_ARInvoice = aRInvoiceRepository.GetUnpaidARInvoices(tenant);
+            IQueryable<APInvoice> iQueryable_APInvoice = aPInvoiceRepository.GetUnpaidAPInvoices(tenant);
+            IQueryable<ARPayment> iQueryable_ARPayment = aRPaymentRepository.GetOpenedARPayments(tenant);
+            IQueryable<APPayment> iQueryable_APPayment = aPPaymentRepository.GetOpenedAPPayments(tenant);
+
+            iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => !d.IsConstituentInvoice);
+
+            if (!string.IsNullOrEmpty(customerId))
+            {
+                iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.BillToId == customerId);
+                iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.VendorId == customerId);
+                iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.BillToId == customerId);
+                iQueryable_APPayment = iQueryable_APPayment.Where(d => d.VendorId == customerId);
+            }
+
+            if (dueDate != null)
+            {
+                iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.DueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.DueDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+                iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.DueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.DueDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+                iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.ValueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+                iQueryable_APPayment = iQueryable_APPayment.Where(d => d.ValueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
+            }
+
+            #endregion
+
+            #region Fill Statement Record List
+
+            List<StatementDataProvider.StatementRecord> list_ARInvoices =
+                (from d in iQueryable_ARInvoice
+                 select new StatementDataProvider.StatementRecord()
+                 {
+                     MasterNumber = d.MasterNumber,
+                     Desicription = d.Description + " " + d.MainEntityReference,
+                     ShipmentId = d.MainEntityId,
+                     HouseNumber = d.HouseNumber,
+                     Date = d.InvoiceDate.Value,
+                     DueDate = d.DueDate.Value,
+                     OurRefrence = d.InvoiceNumber,
+                     YourRefrence = d.CustomerRef,
+                     CurrencyId = d.InvoiceCurrencyId,
+                     Type = d.ARInvoiceTypeCode == "CD" ? "Credit Note" : (d.ARInvoiceTypeCode == "CC" ? "Customs Credit Note" : (d.ARInvoiceTypeCode == "CI" ? "Customs Invoice" : "A\\R Invoice")),
+                     Debit = d.AmountDue == null ? null : ((d.ARInvoiceTypeCode == "CD" || d.ARInvoiceTypeCode == "CC") ? null : d.AmountDue),
+                     Credit = d.AmountDue == null ? null : ((d.ARInvoiceTypeCode != "CD" && d.ARInvoiceTypeCode != "CC") ? null : d.AmountDue),
+                     Notes = d.InternalNotes,
+                 }).ToList();
+
+            List<StatementDataProvider.StatementRecord> list_APInvoices =
+                (from d in iQueryable_APInvoice
+                 select new StatementDataProvider.StatementRecord()
+                 {
+                     MasterNumber = d.MasterNumber,
+                     Desicription = d.Description + " " + d.MainEntityReference,
+                     ShipmentId = d.MainEntityId,
+                     HouseNumber = d.HouseNumber,
+                     Date = d.InvoiceDate.Value,
+                     DueDate = d.DueDate.Value,
+                     OurRefrence = d.InternalNumber,
+                     CurrencyId = d.InvoiceCurrencyId,
+                     Type = "A\\P Invoice",
+                     Debit = d.AmountDue == null ? null : (d.AmountDue > 0 ? null : d.AmountDue),
+                     Credit = d.AmountDue == null ? null : (d.AmountDue > 0 ? d.AmountDue : null),
+                     Notes = d.InternalNotes,
+                     YourRefrence = d.InvoiceNumber,
+                 }).ToList();
+
+            List<StatementDataProvider.StatementRecord> list_ARPayments =
+                (from d in iQueryable_ARPayment
+                 select new StatementDataProvider.StatementRecord()
+                 {
+                     Date = d.CreateDate.Value,
+                     DueDate = d.ValueDate != null ? d.ValueDate.Value : d.CreateDate.Value,
+                     OurRefrence = d.PaymentNo,
+                     CurrencyId = d.PaymentCurrencyId,
+                     Type = "A\\R Payment",
+                     Credit = d.OpenAmount == null ? null : d.OpenAmount,
+                     Notes = d.InternalNotes,
+                     RegisterDate = d.RegisterDate,
+                     ValueDate = d.ValueDate,
+                     PaymentMethod = d.AccountingPaymentMethod == null ? null : d.AccountingPaymentMethod.Name,
+                 }).ToList();
+
+            List<StatementDataProvider.StatementRecord> list_APPayments =
+                (from d in iQueryable_APPayment
+                 select new StatementDataProvider.StatementRecord()
+                 {
+                     Date = d.CreateDate.Value,
+                     DueDate = d.ValueDate != null ? d.ValueDate.Value : d.CreateDate.Value,
+                     OurRefrence = d.PaymentNo,
+                     CurrencyId = d.PaymentCurrencyId,
+                     Type = "A\\P Payment",
+                     Debit = d.OpenAmount == null ? null : d.OpenAmount,
+                     Notes = d.InternalNotes,
+                     RegisterDate = d.RegisterDate,
+                     ValueDate = d.ValueDate,
+                     PaymentMethod = d.PaymentMethod == null ? null : d.PaymentMethod.Name,
+                 }).ToList();
+
+            List<StatementDataProvider.StatementRecord> totalList = new List<StatementDataProvider.StatementRecord>();
+            totalList = list_ARInvoices.Concat(list_APInvoices).Concat(list_ARPayments).Concat(list_APPayments).ToList();
+
+            List<string> allShipmentIds = totalList.Select(s => s.ShipmentId).ToList();
+            List<ShipmentEntityClass> allShipmentData = (from d in shipmentsContext.Shipments.Include("ShipperCard")
+                                                         where d.Tenant == tenant && allShipmentIds.Contains(d.Id)
+                                                         select new ShipmentEntityClass
+                                                         {
+                                                             ShipmentId = d.Id,
+                                                             ShipperName = d.ShipperCard == null ? null : d.ShipperCard.EnglishName,
+                                                             ShipperRef1 = d.ShipperReference1,
+                                                             ShipperRef2 = d.ShipperReference2,
+                                                             DescriptionOfGoods = d.DescriptionOfGoods,
+                                                         }).ToList();
+
+            foreach (StatementDataProvider.StatementRecord record in totalList)
+            {
+                if (!string.IsNullOrEmpty(record.CurrencyId))
+                {
+                    Currency myCurrency = allCurrencies.Where(d => d.Id == record.CurrencyId).FirstOrDefault();
+
+                    if (myCurrency != null)
+                    {
+                        record.Currency = myCurrency.Code;
+                    }
+                }
+
+                if (record.Debit != null)
+                {
+                    record.Debit = (double)Math.Abs((decimal)record.Debit);
+                }
+
+                if (record.Credit != null)
+                {
+                    record.Credit = (double)Math.Abs((decimal)record.Credit);
+                }
+
+                ShipmentEntityClass shipmentEntity = allShipmentData.Where(d => d.ShipmentId == record.ShipmentId).FirstOrDefault();
+
+                if (shipmentEntity != null)
+                {
+                    customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipmentEntity, record);
+
+                    record.SupplierName = shipmentEntity.ShipperName;
+
+                    if (!string.IsNullOrEmpty(shipmentEntity.ShipperRef1) && !string.IsNullOrEmpty(shipmentEntity.ShipperRef2))
+                    {
+                        record.SupplierRefrence = shipmentEntity.ShipperRef1 + "," + shipmentEntity.ShipperRef2;
+                    }
+
+                    else if (string.IsNullOrEmpty(shipmentEntity.ShipperRef2))
+                    {
+                        record.SupplierRefrence = shipmentEntity.ShipperRef1;
+                    }
+                    else if (string.IsNullOrEmpty(shipmentEntity.ShipperRef1))
+                    {
+                        record.SupplierRefrence = shipmentEntity.ShipperRef2;
+                    }
+
+                    record.DescriptionOfGoods = shipmentEntity.DescriptionOfGoods;
+                }
+            }
+
+            dataProvider.StatementRecordList = totalList;
+
+            #endregion
+
+            #region Fill Statement Group List
+
+            var results = from p in dataProvider.StatementRecordList
+                          group p by p.Currency into g
+                          select new { Currency = g.Key, records = g.ToList() };
+
+            foreach (var result in results)
+            {
+                List<StatementDataProvider.StatementRecord> statementRecords = result.records.ToList();
+
+                List<StatementDataProvider.StatementRecord> currentDue = statementRecords.Where(d => d.DueDate >= todayDate).ToList();
+                List<StatementDataProvider.StatementRecord> Due1_30 = statementRecords.Where(d => (todayDate - d.DueDate).TotalDays >= 1 && (todayDate - d.DueDate).TotalDays <= 30).ToList();
+                List<StatementDataProvider.StatementRecord> Due31_60 = statementRecords.Where(d => (((todayDate - d.DueDate).TotalDays) > 30) && (((todayDate - d.DueDate).TotalDays) <= 60)).ToList();
+                List<StatementDataProvider.StatementRecord> Due61_90 = statementRecords.Where(d => (((todayDate - d.DueDate).TotalDays) > 60) && (((todayDate - d.DueDate).TotalDays) <= 90)).ToList();
+                List<StatementDataProvider.StatementRecord> Due90 = statementRecords.Where(d => (todayDate - d.DueDate).TotalDays > 90).ToList();
+
+                double? currentResult = (currentDue.Sum(d => ((d.Debit != null ? d.Debit : 0) - (d.Credit != null ? d.Credit : 0))));
+                double? due1_30Result = (Due1_30.Sum(d => ((d.Debit != null ? d.Debit : 0) - (d.Credit != null ? d.Credit : 0))));
+                double? due31_60Result = (Due31_60.Sum(d => ((d.Debit != null ? d.Debit : 0) - (d.Credit != null ? d.Credit : 0))));
+                double? due61_90Result = (Due61_90.Sum(d => ((d.Debit != null ? d.Debit : 0) - (d.Credit != null ? d.Credit : 0))));
+                double? due90Result = (Due90.Sum(d => ((d.Debit != null ? d.Debit : 0) - (d.Credit != null ? d.Credit : 0))));
+
+                StatementDataProvider.StatmentAging agingRecord = new StatementDataProvider.StatmentAging()
+                {
+                    Currency = result.Currency,
+                    currentDue = currentResult,
+                    Due1_30 = due1_30Result,
+                    Due31_60 = due31_60Result,
+                    Due61_90 = due61_90Result,
+                    Due90 = due90Result,
+                };
+
+                dataProvider.StatementAgingSummaryRecordList.Add(agingRecord);
+            }
+
+            dataProvider.StatementRecordList = dataProvider.StatementRecordList.OrderBy(or => or.Currency).ToList();
+            dataProvider.StatementAgingSummaryRecordList = dataProvider.StatementAgingSummaryRecordList.OrderBy(d => d.Currency).ToList();
+
+            List<StatementDataProvider.StatementGroup> finalResults = (from p in dataProvider.StatementRecordList
+                                                                       group p by p.Currency into g
+                                                                       select new StatementDataProvider.StatementGroup()
+                                                                       {
+                                                                           Currency = g.Key,
+                                                                           StatementRecordList = g.ToList(),
+                                                                       }).ToList();
+
+            foreach (StatementDataProvider.StatementGroup group in finalResults)
+            {
+                List<StatementDataProvider.StatmentAging> agingList = dataProvider.StatementAgingSummaryRecordList.Where(d => d.Currency == group.Currency).ToList();
+                group.StatementAgingSummaryRecordList = agingList;
+            }
+
+            #endregion
+
+            dataProvider.StatementGroupList = finalResults.OrderBy(d => d.Currency).ToList();
+            return dataProvider;
+        }
+        #endregion
+
+        #region StatementAging
+        [WebMethod]
+        public byte[] LoadStatementAgingData(byte[] xmlFilters, int tenant)
+        {
+            StatementDataProvider dataprovider = LoadStatementAgingDataProvider(xmlFilters, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(StatementDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+        public StatementDataProvider LoadStatementAgingDataProvider(byte[] xmlFilters, int tenant)
+        {
+            StatementDataProvider dataProvider = new StatementDataProvider();
+            ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(tenant);
+            ARPaymentRepository aRPaymentRepository = new ARPaymentRepository(tenant);
+            ARPaymentQuery arPaymentQuery = new ARPaymentQuery(aRPaymentRepository);
+            ARInvoiceQuery arInvoiceQuery = new ARInvoiceQuery(aRInvoiceRepository);
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+
+            IQueryable<ARInvoice> iQueryable = aRInvoiceRepository.GetUnpaidARInvoices(tenant);
+            IQueryable<ARPayment> iQueryablePayment = aRPaymentRepository.GetOpenedARPayments(tenant);
+
+            InvoiceCustomFilter customFilters = new InvoiceCustomFilter(tenant);
+            iQueryable = customFilters.GetFilteredQuery(queryOperations, iQueryable);
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+
+            iQueryable = filter.GetFilteredQuery<ARInvoice>(nonListQueryOperation, iQueryable);
+            iQueryablePayment = filter.GetFilteredQuery<ARPayment>(nonListQueryOperation, iQueryablePayment);
+
+            IQueryable<ARInvoiceList> invoicequery = arInvoiceQuery.GetIQueryableEntityList(iQueryable);
+            IQueryable<ARPaymentList> paymentquery = arPaymentQuery.GetIQueryableEntityList(iQueryablePayment);
+
+
+            QueryFilterItem customerItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "BillToId" && d.Operator == "Equals").FirstOrDefault();
+            string id = "";
+            Card customer = null;
+            if (customerItem != null)
+            {
+                id = customerItem.FieldValue.ToString();
+                customer = CardRepository.GetSingleCard(id, tenant, true);
+                dataProvider.CustomerName = customer.EnglishName;
+            }
+            else
+            {
+                dataProvider.CustomerName = "All";
+            }
+
+
+            AddressRepository addressRepository = new AddressRepository(tenant);
+            Address cardAddress = addressRepository.GetMainAddressByCardId(id, tenant);
+
+            if (cardAddress != null)
+            {
+
+                dataProvider.Phone = cardAddress.PhoneNumber;
+                dataProvider.Fax = cardAddress.FaxNumber;
+                dataProvider.CustomerName = cardAddress.Name;
+                dataProvider.Address = DataProviders.General.GetAddress(cardAddress);
+
+            }
+
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+            dataProvider.StatementAgingSummaryRecordList = new List<StatementDataProvider.StatmentAging>();
+
+            TenantPM currentTenant = TenantQuery.GetSingleTenantPM(tenant, false);
+            AddressQuery addressQuery = new AddressQuery(tenant);
+            AddressPM address = addressQuery.GetSingleAddressPM(currentTenant.AddressId, currentTenant.Id, false);
+            if (address != null)
+            {
+
+                dataProvider.Address1 = address.Address1;
+                dataProvider.Address2 = address.Address2;
+                dataProvider.City = address.City;
+                dataProvider.Country = address.CountryName;
+                dataProvider.TenantFax = address.FaxNumber;
+                dataProvider.TenantPhone = address.PhoneNumber;
+
+                dataProvider.State = address.StateEnglishName;
+                dataProvider.ZipCode = address.ZipCode;
+
+            }
+
+            dataProvider.TenantName = currentTenant.Company;
+            dataProvider.Signature = currentTenant.Signature;
+            dataProvider.Logo = DataProviders.General.GetLogo(currentTenant.Id);
+
+            foreach (ARInvoiceList a in invoicequery)
+            {
+                IQueryable<ARInvoiceList> currentDueInvoices = invoicequery.Where(d => (d.DueDate) >= todayDate);
+                IQueryable<ARInvoiceList> Due1_30Invoices = invoicequery.Where(d => (d.DueDate.Value - todayDate).TotalDays < 30);
+                IQueryable<ARInvoiceList> Due31_60Invoices = invoicequery.Where(d => (((d.DueDate.Value - todayDate).TotalDays) > 30) && (((d.DueDate.Value - todayDate).TotalDays) < 60));
+                IQueryable<ARInvoiceList> Due61_90Invoices = invoicequery.Where(d => (((d.DueDate.Value - todayDate).TotalDays) > 60) && (((d.DueDate.Value - todayDate).TotalDays) < 90));
+                IQueryable<ARInvoiceList> Due90Invoices = invoicequery.Where(d => (((d.DueDate.Value - todayDate).TotalDays) > 90));
+
+                dataProvider.CurrentDue = (currentDueInvoices.Sum(d => d.AmountDue));
+                dataProvider.DaysPastDue1_30 = Due1_30Invoices.Sum(d => d.AmountDue);
+                dataProvider.DaysPastDue31_60 = Due31_60Invoices.Sum(d => d.AmountDue);
+                dataProvider.DaysPastDue61_90 = Due61_90Invoices.Sum(d => d.AmountDue);
+                dataProvider.Over90DaysPastDue = Due90Invoices.Sum(d => d.AmountDue);
+
+                StatementDataProvider.StatmentAging statementAgingRecord = new StatementDataProvider.StatmentAging();
+                statementAgingRecord.Currency = a.InvoiceCurrencyCode;
+                statementAgingRecord.currentDue = dataProvider.CurrentDue;
+                statementAgingRecord.Due1_30 = dataProvider.DaysPastDue1_30;
+                statementAgingRecord.Due31_60 = dataProvider.DaysPastDue31_60;
+                statementAgingRecord.Due61_90 = dataProvider.DaysPastDue61_90;
+                statementAgingRecord.Due90 = dataProvider.Over90DaysPastDue;
+
+                dataProvider.StatementAgingSummaryRecordList.Add(statementAgingRecord);
+            }
+
+            foreach (ARPaymentList a in paymentquery)
+            {
+                IQueryable<ARPaymentList> currentDuePayments = paymentquery.Where(d => (d.RegisterDate) >= todayDate);
+                IQueryable<ARPaymentList> Due1_30Payments = paymentquery.Where(d => (d.RegisterDate.Value - todayDate).TotalDays < 30);
+                IQueryable<ARPaymentList> Due31_60Payments = paymentquery.Where(d => (((d.RegisterDate.Value - todayDate).TotalDays) > 30) && (((d.RegisterDate.Value - todayDate).TotalDays) < 60));
+                IQueryable<ARPaymentList> Due61_90Payments = paymentquery.Where(d => (((d.RegisterDate.Value - todayDate).TotalDays) > 60) && (((d.RegisterDate.Value - todayDate).TotalDays) < 90));
+                IQueryable<ARPaymentList> Due90Payments = paymentquery.Where(d => (((d.RegisterDate.Value - todayDate).TotalDays) > 90));
+
+                dataProvider.CurrentDue = (currentDuePayments.Sum(d => d.OpenAmount));
+                dataProvider.DaysPastDue1_30 = Due1_30Payments.Sum(d => d.OpenAmount);
+                dataProvider.DaysPastDue31_60 = Due31_60Payments.Sum(d => d.OpenAmount);
+                dataProvider.DaysPastDue61_90 = Due61_90Payments.Sum(d => d.OpenAmount);
+                dataProvider.Over90DaysPastDue = Due90Payments.Sum(d => d.OpenAmount);
+
+                StatementDataProvider.StatmentAging statementAgingRecord = new StatementDataProvider.StatmentAging();
+                statementAgingRecord.Currency = a.PaymentCurrencyCode;
+                statementAgingRecord.currentDue = dataProvider.CurrentDue;
+                statementAgingRecord.Due1_30 = dataProvider.DaysPastDue1_30;
+                statementAgingRecord.Due31_60 = dataProvider.DaysPastDue31_60;
+                statementAgingRecord.Due61_90 = dataProvider.DaysPastDue61_90;
+                statementAgingRecord.Due90 = dataProvider.Over90DaysPastDue;
+
+                dataProvider.StatementAgingSummaryRecordList.Add(statementAgingRecord);
+
+            }
+
+            dataProvider.Name = "Statement Aging Summary";
+
+            return dataProvider;
+
+        }
+        #endregion
+
+        #region Unpaid Invoices
+        [WebMethod]
+        public byte[] LoadInvoiceByPartnerData(byte[] xmlFilters, string currency, string dateType, int tenant)
+        {
+            InvoicesByPartnerDataProvider dataprovider = LoadInvoicesByPartnerDataProvider(xmlFilters, currency, dateType, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(InvoicesByPartnerDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+        public InvoicesByPartnerDataProvider LoadInvoicesByPartnerDataProvider(byte[] xmlFilters, string currency, string dateType, int tenant)
+        {
+            InvoicesByPartnerDataProvider dataProvider = new InvoicesByPartnerDataProvider();
+            ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(tenant);
+            ARInvoiceQuery arInvoiceQuery = new ARInvoiceQuery(aRInvoiceRepository);
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+            ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+            IQueryable<ARInvoice> iQueryable = aRInvoiceRepository.GetUnpaidARInvoices(tenant);
+            iQueryable = iQueryable.Where(d => !d.IsConstituentInvoice);
+
+            InvoiceCustomFilter customFilters = new InvoiceCustomFilter(tenant);
+            iQueryable = customFilters.GetFilteredQuery(queryOperations, iQueryable);
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+
+            QueryFilterItem fromDateItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CreateDate" && d.Operator == "GreaterThanOrEqual").FirstOrDefault();
+            QueryFilterItem toDateItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CreateDate" && d.Operator == "LessThanOrEqual").FirstOrDefault();
+
+            TenantPM currentTenant = TenantQuery.GetSingleTenantPM(tenant, false);
+            AddressQuery addressQuery = new AddressQuery(tenant);
+            AddressPM address = addressQuery.GetSingleAddressPM(currentTenant.AddressId, currentTenant.Id, false);
+            AddressRepository addressRep = new AddressRepository(currentTenant.Id);
+            Address tenantAddress = addressRep.GetSingleAddress(currentTenant.AddressId, currentTenant.Id);
+            dataProvider.GeneralAddress = DataProviders.General.GetAddress(tenantAddress);
+            if (address != null)
+            {
+                dataProvider.Address1 = address.Address1;
+                dataProvider.Address2 = address.Address2;
+                dataProvider.City = address.City;
+                dataProvider.Country = address.CountryName;
+                dataProvider.TenantFax = address.FaxNumber;
+                dataProvider.TenantPhone = address.PhoneNumber;
+                dataProvider.State = address.StateEnglishName;
+                dataProvider.ZipCode = address.ZipCode;
+            }
+
+            dataProvider.TenantName = currentTenant.Company;
+            dataProvider.Signature = currentTenant.Signature;
+            dataProvider.Logo = DataProviders.General.GetLogo(currentTenant.Id);
+
+            if (dateType == "CreateDate")
+            {
+                DateTime fromDate = (DateTime)fromDateItem.FieldValue;
+                dataProvider.FromPeriod = fromDate;
+
+                DateTime toDate = (DateTime)toDateItem.FieldValue;
+                toDate = toDate.Date;
+                toDate = toDate.AddHours(23).AddMinutes(59);
+                queryOperations.QueryFilterItems.Where(d => d.FieldName == "CreateDate" && d.Operator == "LessThanOrEqual").FirstOrDefault().FieldValue = toDate;
+
+                dataProvider.ToPeriod = toDate;
+            }
+            else
+            {
+                queryOperations.QueryFilterItems.Add(new QueryFilterItem() { FieldName = "InvoiceDate", FieldValue = fromDateItem.FieldValue, Operator = "GreaterThanOrEqual" });
+
+                DateTime fromDate = (DateTime)fromDateItem.FieldValue;
+                dataProvider.FromPeriod = fromDate;
+                queryOperations.QueryFilterItems.Remove(fromDateItem);
+                queryOperations.QueryFilterItems.Add(new QueryFilterItem() { FieldName = "InvoiceDate", FieldValue = toDateItem.FieldValue, Operator = "LessThanOrEqual" });
+
+                DateTime toDate = (DateTime)toDateItem.FieldValue;
+                queryOperations.QueryFilterItems.Remove(toDateItem);
+                toDate = toDate.Date;
+                toDate = toDate.AddHours(23).AddMinutes(59);
+                queryOperations.QueryFilterItems.Where(d => d.FieldName == "InvoiceDate" && d.Operator == "LessThanOrEqual").FirstOrDefault().FieldValue = toDate;
+
+                dataProvider.ToPeriod = toDate;
+            }
+
+            iQueryable = filter.GetFilteredQuery<ARInvoice>(queryOperations, iQueryable);
+            IQueryable<ARInvoiceList> invoicequery = arInvoiceQuery.GetIQueryableEntityList(iQueryable);
+
+            QueryFilterItem customerItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "BillToId" && d.Operator == "Equals").FirstOrDefault();
+            string id = "";
+            Card customer = null;
+            Address myFilterdCustomerAddress = null;
+            if (customerItem != null)
+            {
+                id = customerItem.FieldValue.ToString();
+                customer = CardRepository.GetSingleCard(id, tenant, true);
+                dataProvider.CustomerName = customer.EnglishName;
+
+                myFilterdCustomerAddress = addressRep.GetMainAddressByCardId(id, tenant);
+                if (myFilterdCustomerAddress != null)
+                {
+                    dataProvider.CustomerPhone = myFilterdCustomerAddress.PhoneNumber;
+                }
+            }
+            else
+            {
+                dataProvider.CustomerName = "All";
+            }
+
+            dataProvider.InvoicesByPartnerList = new List<InvoicesByPartnerDataProvider.InvoicesByPartner>();
+
+            string[] currencyarray = currency.Split(',');
+            dataProvider.Currency = currencyarray[0];
+            List<string> shipmentIds = (from a in invoicequery
+                                        select a.MainEntityId).ToList();
+
+            List<ShipmentPM> shipments = shipmentQuery.GetShipmentsForUnpaidInvoicesReport(shipmentIds);
+            foreach (ARInvoiceList a in invoicequery)
+            {
+                ShipmentPM shipment = (from s in shipments
+                                       where s.Id == a.MainEntityId
+                                       select s).FirstOrDefault();
+
+                InvoicesByPartnerDataProvider.InvoicesByPartner invoicesRecored = new InvoicesByPartnerDataProvider.InvoicesByPartner();
+                invoicesRecored.InvoiceDate = a.InvoiceDate;
+                invoicesRecored.InvoiceType = a.ARInvoiceTypeName;
+                invoicesRecored.DueDate = a.DueDate;
+                invoicesRecored.OurReference = a.InvoiceNumber;
+                invoicesRecored.MasterNumber = a.MasterNumber;
+                invoicesRecored.HouseNumber = a.HouseNumber;
+                invoicesRecored.YourRefrence = a.CustomerRef;
+
+                if (shipment != null)
+                {
+                    switch (shipment.DirectionId)
+                    {
+                        case "E":
+                            {
+                                if (shipment.ShipmentLevelCode == "H")
+                                {
+                                    invoicesRecored.Description = "Export to " + shipment.ToPort;
+                                }
+                                else
+                                {
+                                    invoicesRecored.Description = "Export to " + shipment.MainCarriageFinalDestinationPortCode;
+                                }
+
+                                break;
+                            }
+                        case "I": { invoicesRecored.Description = "Import from " + shipment.MainCarriageFromPortCode; break; }
+                        case "D": { invoicesRecored.Description = "Ship to " + shipment.ToPartnerCity; break; }
+                    }
+                }
+
+                if (currencyarray[1] == "profit")
+                {
+                    invoicesRecored.Amount = a.AmountDueInProfitCurrency;
+                }
+                else if (currencyarray[1] == "local")
+                {
+                    invoicesRecored.Amount = a.AmountDueInLocalCurrency;
+                }
+
+                dataProvider.InvoicesByPartnerList.Add(invoicesRecored);
+            }
+
+            dataProvider.Name = @"Invoices By Partner";
+            return dataProvider;
+        }
+        #endregion
+
+        #region Quotes
+        [WebMethod]
+        public byte[] LoadQuotesData(byte[] xmlFilters, string Type, int tenant)
+        {
+            QuotesDataProvider dataprovider = LoadQuotesDataProvider(xmlFilters, Type, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(QuotesDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+        public QuotesDataProvider LoadQuotesDataProvider(byte[] xmlFilters, string Type, int tenant)
+        {
+            QuotesDataProvider dataProvider = new QuotesDataProvider();
+            dataProvider.QuotesList = new List<QuotesDataProvider.Quotes>();
+
+            QuoteRepository quoteRepository = new QuoteRepository(tenant);
+            QuoteQuery quoteQuery = new QuoteQuery(quoteRepository);
+
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+
+            IQueryable<Quote> iQueryable = quoteRepository.GetQuotes(tenant);
+
+            #region Report Filters
+
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+
+            QueryFilterItem filterItem_OpenDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "OpenDate" && d.Operator == "GreaterThanOrEqual").FirstOrDefault();
+            QueryFilterItem filterItem_ExpirationDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ExpirationDate" && d.Operator == "LessThanOrEqual").FirstOrDefault();
+            QueryFilterItem filterItem_CustomerId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomerId").FirstOrDefault();
+            QueryFilterItem filterItem_SalesmanUserId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "SalesmanUserId").FirstOrDefault();
+
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+            DateTime myStartDate = todayDate.AddMonths(-1);
+
+            DateTime openDate = new DateTime(myStartDate.Year, myStartDate.Month, 1);
+            DateTime expirationDate;
+            string customerId = null;
+            string salesmanUserId = null;
+
+            if (filterItem_OpenDate != null)
+            {
+                DateTime.TryParse(filterItem_OpenDate.FieldValue.ToString(), out openDate);
+            }
+
+            if (filterItem_ExpirationDate != null)
+            {
+                DateTime.TryParse(filterItem_ExpirationDate.FieldValue.ToString(), out expirationDate);
+
+                iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.ExpirationDate) <= System.Data.Entity.DbFunctions.TruncateTime(expirationDate));
+                dataProvider.To = expirationDate.Month.ToString() + @"/" + expirationDate.Year.ToString();
+            }
+
+            if (filterItem_CustomerId != null)
+            {
+                if (filterItem_CustomerId.FieldValue != null)
+                {
+                    customerId = filterItem_CustomerId.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_SalesmanUserId != null)
+            {
+                if (filterItem_SalesmanUserId.FieldValue != null)
+                {
+                    salesmanUserId = filterItem_SalesmanUserId.FieldValue.ToString();
+                }
+            }
+
+            #endregion
+
+            #region Base Data Filtered
+
+            if (openDate != null)
+            {
+                iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.OpenDate) >= System.Data.Entity.DbFunctions.TruncateTime(openDate));
+                dataProvider.From = openDate.Month.ToString() + @"/" + openDate.Year.ToString();
+            }
+
+            //if (expirationDate != null)
+            //{
+            //    iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.ExpirationDate) <= System.Data.Entity.DbFunctions.TruncateTime(expirationDate));
+            //    dataProvider.To = expirationDate.Month.ToString() + @"/" + expirationDate.Year.ToString();
+            //}
+
+            if (!string.IsNullOrEmpty(customerId))
+            {
+                iQueryable = iQueryable.Where(d => d.CustomerId == customerId);
+
+                Card customer = CardRepository.GetSingleCard(customerId, tenant, true);
+                if (customer != null)
+                {
+                    dataProvider.CustomerName = customer.EnglishName;
+                }
+            }
+
+            else
+            {
+                dataProvider.CustomerName = "All";
+            }
+
+            if (!string.IsNullOrEmpty(salesmanUserId))
+            {
+                UserRepository repository = new UserRepository(tenant);
+                iQueryable = iQueryable.Where(d => d.SalesmanUserId == salesmanUserId);
+
+                User salesman = repository.GetSingleUser(salesmanUserId, tenant);
+                if (salesman != null)
+                {
+                    dataProvider.Salesman = salesman.Contact.EnglishName;
+                }
+            }
+
+            else
+            {
+                dataProvider.Salesman = "All";
+            }
+
+            #endregion
+
+            #region General Data
+
+            TenantPM currentTenant = TenantQuery.GetSingleTenantPM(tenant, false);
+            AddressQuery addressQuery = new AddressQuery(tenant);
+            AddressPM address = addressQuery.GetSingleAddressPM(currentTenant.AddressId, currentTenant.Id, false);
+            if (address != null)
+            {
+                dataProvider.Address1 = address.Address1;
+                dataProvider.Address2 = address.Address2;
+                dataProvider.City = address.City;
+                dataProvider.Country = address.CountryName;
+                dataProvider.TenantFax = address.FaxNumber;
+                dataProvider.TenantPhone = address.PhoneNumber;
+                dataProvider.State = address.StateEnglishName;
+                dataProvider.ZipCode = address.ZipCode;
+            }
+
+            dataProvider.TenantName = currentTenant.Company;
+            dataProvider.Signature = currentTenant.Signature;
+            dataProvider.Logo = DataProviders.General.GetLogo(currentTenant.Id);
+
+            #endregion
+
+            QuoteCustomFilter customFilters = new QuoteCustomFilter(tenant);
+            iQueryable = customFilters.GetFilteredQuery(queryOperations, iQueryable);
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+            iQueryable = filter.GetFilteredQuery<Quote>(nonListQueryOperation, iQueryable);
+
+            IQueryable<QuoteList> quotequery = quoteQuery.GetIQueryableEntityList(iQueryable);
+
+            dataProvider.NumberOfQuotesApproved = quotequery.Where(d => d.StageName == "Accepted" || d.StageName == "Used").Count();
+            dataProvider.NumberOfQuotesSent = quotequery.Where(d => d.StageName == "Sent" || d.StageName == "No Answer").Count();
+            dataProvider.NumberOfQuotesNotApproved = quotequery.Where(d => d.StageName == "Declined" || d.StageName == "Sent" || d.StageName == "Viewed").Count();
+            dataProvider.NumberOfQuotesApprovedWithoutShipment = quotequery.Where(d => d.StageName == "Accepted").Count();
+
+            foreach (QuoteList a in quotequery)
+            {
+                QuotesDataProvider.Quotes quotesRecored = new QuotesDataProvider.Quotes();
+                quotesRecored.ExpiredDate = a.ExpirationDate;
+                quotesRecored.From = a.FromPort;
+                quotesRecored.To = a.ToPort;
+                quotesRecored.Status = a.StageName;
+                quotesRecored.QuoteNumber = a.QuoteNumber;
+                quotesRecored.Type = a.QuoteTypeName;
+                quotesRecored.OpenDate = a.OpenDate;
+                quotesRecored.DirectionTransportMode = a.DirectionName + " / " + a.TransportModeName;
+
+                if (a.QuoteTypeCode == "A")
+                {
+                    if (a.ShipmentTypeId == "LCL" || a.ShipmentTypeId == "LTL" || a.TransportModeId == "A")
+                    {
+                        if (a.ChargeableWeight != null && a.NumberOfPackages == null)
+                        {
+                            quotesRecored.Details = "Weight: " + a.ChargeableWeight.ToString() + " KG ";
+                        }
+                        else if (a.ChargeableWeight == null && a.NumberOfPackages != null)
+                        {
+                            quotesRecored.Details = "Packages: " + a.NumberOfPackages.ToString() + " Pcs";
+                        }
+                        else if (a.ChargeableWeight != null && a.NumberOfPackages != null)
+                        {
+                            quotesRecored.Details = "Weight: " + a.ChargeableWeight.ToString() + " KG " + "/ " + "Packages: " + a.NumberOfPackages.ToString() + " Pcs";
+                        }
+                    }
+                    else if ((a.ShipmentTypeId == "FCL" || a.ShipmentTypeId == "FTL") && a.NumberOfContainers != null)
+                    {
+                        quotesRecored.Details = "Total Containers: " + a.NumberOfContainers.ToString();
+                    }
+                }
+
+                dataProvider.QuotesList.Add(quotesRecored);
+            }
+
+            dataProvider.Name = @"Quotes";
+            return dataProvider;
+        }
+        #endregion
+
+        #region AR Invoice Include Vat
+
+        [WebMethod]
+        public byte[] LoadInvoicesData(byte[] xmlFilters, int tenant)
+        {
+            InvoiceDataProvider dataprovider = LoadInvoicesDataProvider(xmlFilters, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(InvoiceDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+        public InvoiceDataProvider LoadInvoicesDataProvider(byte[] xmlFilters, int tenant)
+        {
+            InvoiceDataProvider dataProvider = new InvoiceDataProvider();
+            dataProvider.InvoicesReportList = new List<InvoiceDataProvider.InvoicesReport>();
+            dataProvider.InvoicesReportList_NotSorted = new List<InvoiceDataProvider.InvoicesReport>();
+            dataProvider.InvoiceTotalsList = new List<InvoiceDataProvider.InvoiceTotals>();
+
+            ARInvoiceTotalVATRepository aRInvoiceToatalVatRepository = new ARInvoiceTotalVATRepository(tenant);
+            ARInvoiceQuery arInvoiceQuery = new ARInvoiceQuery(tenant);
+            AddressQuery addressQuery = new AddressQuery(tenant);
+            VatTypeRepository vatTypeRepository = new VatTypeRepository(tenant);
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+
+            IQueryable<ARInvoiceList> iQueryable = arInvoiceQuery.GetInvoiceListByTenant(tenant);
+            List<VatType> tenantVatTypes = vatTypeRepository.GetVatTypes(tenant).ToList();
+
+            #region Report Filters
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+
+            QueryFilterItem filterItem_InvoiceDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "InvoiceDate").FirstOrDefault();
+            QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
+            QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
+            QueryFilterItem filterItem_BranchId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "BranchId").FirstOrDefault();
+            QueryFilterItem filterItem_LocalCurrency = queryOperations.QueryFilterItems.Where(d => d.FieldName == "LocalCurrency").FirstOrDefault();
+            QueryFilterItem filterItem_IncludeVoidInvoices = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeVoidInvoices").FirstOrDefault();
+            QueryFilterItem filterItem_IncludeDraftInvoices = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeDraftInvoices").FirstOrDefault();
+
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+            DateTime date1 = todayDate.AddDays(-(todayDate.Day - 1)).AddMonths(-1);
+            DateTime date2 = date1.AddMonths(2);
+
+            bool invoiceDate = true;
+            if (filterItem_InvoiceDate != null)
+            {
+                if (filterItem_InvoiceDate.FieldValue != null)
+                {
+                    invoiceDate = (bool)filterItem_InvoiceDate.FieldValue;
+                }
+            }
+
+            if (filterItem_FromDate != null)
+            {
+                DateTime.TryParse(filterItem_FromDate.FieldValue.ToString(), out date1);
+
+                if (filterItem_ToDate != null)
+                {
+                    DateTime.TryParse(filterItem_ToDate.FieldValue.ToString(), out date2);
+                    //date2 = date2.AddMonths(1);
+                }
+
+                else
+                {
+                    date2 = date1.AddMonths(1);
+                }
+            }
+
+            string branchId = null;
+            if (filterItem_BranchId != null)
+            {
+                if (filterItem_BranchId.FieldValue != null)
+                {
+                    branchId = filterItem_BranchId.FieldValue.ToString();
+                }
+            }
+
+            bool localCurrency = true;
+            if (filterItem_LocalCurrency != null)
+            {
+                if (filterItem_LocalCurrency.FieldValue != null)
+                {
+                    localCurrency = (bool)filterItem_LocalCurrency.FieldValue;
+                }
+            }
+
+            bool includeVoidInvoices = true;
+            if (filterItem_IncludeVoidInvoices != null)
+            {
+                if (filterItem_IncludeVoidInvoices.FieldValue != null)
+                {
+                    includeVoidInvoices = (bool)filterItem_IncludeVoidInvoices.FieldValue;
+                }
+            }
+
+            bool includeDraftInvoices = true;
+            if (filterItem_IncludeDraftInvoices != null)
+            {
+                if (filterItem_IncludeDraftInvoices.FieldValue != null)
+                {
+                    includeDraftInvoices = (bool)filterItem_IncludeDraftInvoices.FieldValue;
+                }
+            }
+            #endregion
+
+            #region Filter Data
+            iQueryable = iQueryable.Where(d => !d.IsConstituentInvoice);
+
+            if (!includeDraftInvoices)
+            {
+                iQueryable = iQueryable.Where(d => d.StatusCode != "DR");
+            }
+
+            if (!includeVoidInvoices)
+            {
+                iQueryable = iQueryable.Where(d => d.StatusCode != "VD");
+            }
+
+            if (!string.IsNullOrEmpty(branchId))
+            {
+                iQueryable = iQueryable.Where(d => d.BranchId == branchId);
+            }
+
+            if (invoiceDate)
+            {
+                iQueryable = iQueryable.Where(d => d.InvoiceDate >= date1 && d.InvoiceDate <= date2);
+            }
+
+            else
+            {
+                iQueryable = iQueryable.Where(d => d.CreateDate >= date1 && d.CreateDate <= date2);
+            }
+            #endregion
+
+            #region Fill General Data
+            TenantPM currentTenant = TenantQuery.GetSingleTenantPM(tenant, false);
+            AddressPM address = addressQuery.GetSingleAddressPM(currentTenant.AddressId, currentTenant.Id, false);
+
+            if (address != null)
+            {
+                dataProvider.Address1 = address.Address1;
+                dataProvider.Address2 = address.Address2;
+                dataProvider.City = address.City;
+                dataProvider.Country = address.CountryName;
+                dataProvider.TenantFax = address.FaxNumber;
+                dataProvider.TenantPhone = address.PhoneNumber;
+                dataProvider.State = address.StateEnglishName;
+                dataProvider.ZipCode = address.ZipCode;
+            }
+
+            dataProvider.TenantName = currentTenant.Company;
+            dataProvider.Signature = currentTenant.Signature;
+            dataProvider.Logo = DataProviders.General.GetLogo(currentTenant.Id);
+            dataProvider.FromPeriod = date1;
+            dataProvider.ToPeriod = date2;
+            #endregion
+
+            #region Fill Report
+            double? totalVat = 0;
+            double? totalGrands = 0;
+            double? subTotals = 0;
+            List<ARInvoiceTotalVAT> totalVats = aRInvoiceToatalVatRepository.GetInvoiceTotalVATsByTenant(tenant).ToList();
+            int counter = 1;
+
+            foreach (ARInvoiceList a in iQueryable)
+            {
+                InvoiceDataProvider.InvoicesReport invoicesRecored = new InvoiceDataProvider.InvoicesReport();
+                List<ARInvoiceTotalVAT> myTotalVats = totalVats.Where(d => d.ARInvoiceId == a.Id).ToList();
+                List<VATClass> myVATS = new List<VATClass>();
+
+                //ARInvoicePM invoicePM = invoiceQuery.GetSinglePM(currentInvoice.Id, currentInvoice.Tenant);
+                customFieldResolver.SetDataProviderCustomFieldsValues("ARInvoice", tenant, a, invoicesRecored);
+
+                foreach (ARInvoiceTotalVAT vat in myTotalVats)
+                {
+                    VATClass item = new VATClass()
+                    {
+                        Index = counter,
+                        Percentage = vat.VatPercent,
+                        VATName = tenantVatTypes.Where(d => d.Id == vat.VatTypeId).FirstOrDefault().EnglishName,
+                        VATCode = tenantVatTypes.Where(d => d.Id == vat.VatTypeId).FirstOrDefault().Code,
+                        InvoiceAmount = vat.InvoiceCurrencyVATAmount,
+                        LocalAmount = vat.LocalVATAmount,
+                    };
+
+                    myVATS.Add(item);
+
+                    counter++;
+                }
+
+                foreach (VATClass item in myVATS)
+                {
+                    //1
+                    if (string.IsNullOrEmpty(dataProvider.VAT1Code))
+                    {
+                        dataProvider.VAT1Code = item.VATCode;
+                        dataProvider.VAT1Header = item.Percentage + "% " + item.VATName;
+                        invoicesRecored.VAT1Amount = localCurrency ? item.LocalAmount : item.InvoiceAmount;
+                        continue;
+                    }
+
+                    else
+                    {
+                        if (dataProvider.VAT1Code == item.VATCode)
+                        {
+                            dataProvider.VAT1Code = item.VATCode;
+                            dataProvider.VAT1Header = item.Percentage + "% " + item.VATName;
+                            invoicesRecored.VAT1Amount = localCurrency ? item.LocalAmount : item.InvoiceAmount;
+                            continue;
+                        }
+                    }
+
+                    //2
+                    if (string.IsNullOrEmpty(dataProvider.VAT2Code))
+                    {
+                        dataProvider.VAT2Code = item.VATCode;
+                        dataProvider.VAT2Header = item.Percentage + "% " + item.VATName;
+                        invoicesRecored.VAT2Amount = localCurrency ? item.LocalAmount : item.InvoiceAmount;
+                        continue;
+                    }
+
+                    else
+                    {
+                        if (dataProvider.VAT2Code == item.VATCode)
+                        {
+                            dataProvider.VAT2Code = item.VATCode;
+                            dataProvider.VAT2Header = item.Percentage + "% " + item.VATName;
+                            invoicesRecored.VAT2Amount = localCurrency ? item.LocalAmount : item.InvoiceAmount;
+                            continue;
+                        }
+                    }
+
+                    //3
+                    if (string.IsNullOrEmpty(dataProvider.VAT3Code))
+                    {
+                        dataProvider.VAT3Code = item.VATCode;
+                        dataProvider.VAT3Header = item.Percentage + "% " + item.VATName;
+                        invoicesRecored.VAT3Amount = localCurrency ? item.LocalAmount : item.InvoiceAmount;
+                        continue;
+                    }
+
+                    else
+                    {
+                        if (dataProvider.VAT3Code == item.VATCode)
+                        {
+                            dataProvider.VAT3Code = item.VATCode;
+                            dataProvider.VAT3Header = item.Percentage + "% " + item.VATName;
+                            invoicesRecored.VAT3Amount = localCurrency ? item.LocalAmount : item.InvoiceAmount;
+                            continue;
+                        }
+                    }
+
+                    //4
+                    if (string.IsNullOrEmpty(dataProvider.VAT4Code))
+                    {
+                        dataProvider.VAT4Code = item.VATCode;
+                        dataProvider.VAT4Header = item.Percentage + "% " + item.VATName;
+                        invoicesRecored.VAT4Amount = localCurrency ? item.LocalAmount : item.InvoiceAmount;
+                        continue;
+                    }
+
+                    else
+                    {
+                        if (dataProvider.VAT4Code == item.VATCode)
+                        {
+                            dataProvider.VAT4Code = item.VATCode;
+                            dataProvider.VAT4Header = item.Percentage + "% " + item.VATName;
+                            invoicesRecored.VAT4Amount = localCurrency ? item.LocalAmount : item.InvoiceAmount;
+                            continue;
+                        }
+                    }
+                }
+
+                invoicesRecored.InvoiceType = a.ARInvoiceTypeName;
+                invoicesRecored.InvoiceDate = a.InvoiceDate.Value;
+                invoicesRecored.InvoiceNumber = a.InvoiceNumber;
+                invoicesRecored.BillTo = a.BillToName;
+                invoicesRecored.OurRefNumber = a.MainEntityReference;
+                invoicesRecored.InvoiceStatus = a.StatusName;
+                invoicesRecored.Currency = a.InvoiceCurrencyCode;
+                invoicesRecored.CreateDate = a.CreateDate;
+                invoicesRecored.DueDate = a.DueDate;
+
+                if (localCurrency)
+                {
+                    totalVat = totalVat + myTotalVats.Sum(d => d.LocalVATAmount);
+                    subTotals = subTotals + a.SubTotalInLocalCurrency;
+                    totalGrands = totalGrands + totalVat + subTotals;
+
+                    invoicesRecored.Currency = a.LocalCurrencyCode;
+                    invoicesRecored.SubTotallocal = a.SubTotalInLocalCurrency;
+                    invoicesRecored.VATlocal = myTotalVats.Sum(d => d.LocalVATAmount);
+                    invoicesRecored.GrandTotallocal = invoicesRecored.SubTotallocal + invoicesRecored.VATlocal;
+                }
+
+                else
+                {
+                    invoicesRecored.Currency = a.InvoiceCurrencyCode;
+                    invoicesRecored.SubTotallocal = a.SubTotalInInvoiceCurrency;
+                    invoicesRecored.VATlocal = myTotalVats.Sum(d => d.InvoiceCurrencyVATAmount);
+                    invoicesRecored.GrandTotallocal = invoicesRecored.SubTotallocal + invoicesRecored.VATlocal;
+
+                    invoicesRecored.vatInLocal = myTotalVats.Sum(d => d.LocalVATAmount);
+                    invoicesRecored.subInLocal = a.SubTotalInLocalCurrency;
+                    invoicesRecored.LocalCurrency = a.LocalCurrencyCode;
+                }
+
+                dataProvider.InvoicesReportList.Add(invoicesRecored);
+                dataProvider.InvoicesReportList_NotSorted.Add(invoicesRecored);
+            }
+
+            dataProvider.InvoiceTotalsList = (from b in dataProvider.InvoicesReportList
+                                              group b by new { b.Currency } into g
+                                              select new WebFreight.Web.DataProviders.InvoiceDataProvider.InvoiceTotals()
+                                              {
+                                                  Currency = g.Key.Currency,
+                                                  TotalSubTotals = g.Sum(b => b.SubTotallocal),
+                                                  TotalGrands = g.Sum(b => b.GrandTotallocal),
+                                                  TotalVats = g.Sum(b => b.VATlocal).Value,
+                                                  totalGrandTotal = g.Sum(b => b.vatInLocal) + g.Sum(b => b.subInLocal),
+                                                  VAT1Amount = g.Sum(b => b.VAT1Amount),
+                                                  VAT2Amount = g.Sum(b => b.VAT2Amount),
+                                                  VAT3Amount = g.Sum(b => b.VAT3Amount),
+                                                  VAT4Amount = g.Sum(b => b.VAT4Amount),
+                                              }).ToList();
+
+            dataProvider.TotalVats_1 = dataProvider.InvoicesReportList.Sum(s => s.VAT1Amount);
+            dataProvider.TotalVats_2 = dataProvider.InvoicesReportList.Sum(s => s.VAT2Amount);
+            dataProvider.TotalVats_3 = dataProvider.InvoicesReportList.Sum(s => s.VAT3Amount);
+            dataProvider.TotalVats_4 = dataProvider.InvoicesReportList.Sum(s => s.VAT4Amount);
+
+            dataProvider.TotalVats = totalVat;
+            dataProvider.TotalSub = subTotals;
+            dataProvider.TotalsGrands = totalVat + subTotals;
+            dataProvider.Name = @"Invoices";
+
+            dataProvider.InvoicesReportList = dataProvider.InvoicesReportList.OrderBy(d => d.InvoiceDate).ToList();
+            #endregion
+
+            return dataProvider;
+        }
+
+        #endregion       
+
+        #region AgedAccountsReceivable
+        [WebMethod]
+        public byte[] LoadAgedAccountsReceivableData(byte[] xmlFilters, int tenant)
+        {
+            AgedAccountsReceivableDataProvider dataprovider = LoadAgedAccountsReceivableDataProvider(xmlFilters, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(AgedAccountsReceivableDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+        public AgedAccountsReceivableDataProvider LoadAgedAccountsReceivableDataProvider(byte[] xmlFilters, int tenant)
+        {
+            AgedAccountsReceivableDataProvider dataProvider = new AgedAccountsReceivableDataProvider();
+            dataProvider.AgedAccountsReceivableList = new List<AgedAccountsReceivableDataProvider.AgedAccountsReceivable>();
+
+            IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
+            ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+
+            ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(invoiceContext);
+            ARPaymentRepository aRPaymentRepository = new ARPaymentRepository(invoiceContext);
+            APInvoiceRepository aPInvoiceRepository = new APInvoiceRepository(invoiceContext);
+            APPaymentRepository aPPaymentRepository = new APPaymentRepository(invoiceContext);
+
+            AddressRepository addressRepository = new AddressRepository(commonContext);
+
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+
+            #region Report Filters
+
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+
+            QueryFilterItem filterItem_InvoiceType = queryOperations.QueryFilterItems.Where(d => d.FieldName == "InvoiceType").FirstOrDefault();
+
+            string invoiceType = null;
+
+            if (filterItem_InvoiceType != null)
+            {
+                if (filterItem_InvoiceType.FieldValue != null)
+                {
+                    invoiceType = filterItem_InvoiceType.FieldValue.ToString();
+                }
+            }
+
+            #endregion
+
+            #region General Report Data
+
+            TenantQuery tenantQuery = new TenantQuery(tenant);
+            TenantPM currentTenant = tenantQuery.GetSinglePM(tenant);
+            if (currentTenant != null)
+            {
+                dataProvider.CompanyName = currentTenant.Company;
+                dataProvider.TenantName = currentTenant.Company;
+                dataProvider.Signature = currentTenant.Signature;
+                dataProvider.Logo = DataProviders.General.GetLogo(currentTenant.Id);
+                dataProvider.Name = @" Aging report - Statement summarized";
+                dataProvider.Currency = currentTenant.AccountingCurrencyCode;
+
+                Address tenantAddress = addressRepository.GetSingleAddress(currentTenant.AddressId, currentTenant.Id);
+                if (tenantAddress != null)
+                {
+                    dataProvider.Address1 = tenantAddress.Address1;
+                    dataProvider.Address2 = tenantAddress.Address2;
+                    dataProvider.City = tenantAddress.City;
+                    dataProvider.Country = tenantAddress.Country == null ? null : tenantAddress.Country.EnglishName;
+                    dataProvider.TenantFax = tenantAddress.FaxNumber;
+                    dataProvider.TenantPhone = tenantAddress.PhoneNumber;
+                    dataProvider.State = tenantAddress.State == null ? null : tenantAddress.State.EnglishName;
+                    dataProvider.ZipCode = tenantAddress.ZipCode;
+                }
+            }
+            #endregion
+
+            #region Base Data Filtered
+
+            IQueryable<ARInvoice> iQueryable_ARInvoice = aRInvoiceRepository.GetUnpaidARInvoices(tenant);
+            IQueryable<APInvoice> iQueryable_APInvoice = aPInvoiceRepository.GetUnpaidAPInvoices(tenant);
+            IQueryable<ARPayment> iQueryable_ARPayment = aRPaymentRepository.GetOpenedARPayments(tenant);
+            IQueryable<APPayment> iQueryable_APPayment = aPPaymentRepository.GetOpenedAPPayments(tenant);
+            iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => !d.IsConstituentInvoice);
+
+            #endregion
+
+            #region Fill Aging Statemant Data
+
+            List<AgingStatemantDataItem> list_ARInvoice = (from d in iQueryable_ARInvoice
+                                                           select new AgingStatemantDataItem()
+                                                           {
+                                                               Id = "ARInvoice:" + d.Id,
+                                                               TypeCode = "AR",
+                                                               EntityName = "ARInvoice",
+                                                               EntityTypeCode = d.ARInvoiceTypeCode,
+                                                               CardId = d.BillToId,
+                                                               Date = d.DueDate,
+                                                               Debit = d.AmountDueInLocalCurrency == null ? null : ((d.ARInvoiceTypeCode == "CD" || d.ARInvoiceTypeCode == "CC") ? null : d.AmountDueInLocalCurrency),
+                                                               Credit = d.AmountDueInLocalCurrency == null ? null : ((d.ARInvoiceTypeCode != "CD" && d.ARInvoiceTypeCode != "CC") ? null : d.AmountDueInLocalCurrency),
+                                                           }).ToList();
+
+            List<AgingStatemantDataItem> list_APInvoice = (from d in iQueryable_APInvoice
+                                                           select new AgingStatemantDataItem()
+                                                           {
+                                                               Id = "APInvoice:" + d.Id,
+                                                               TypeCode = "AP",
+                                                               EntityName = "APInvoice",
+                                                               CardId = d.VendorId,
+                                                               Date = d.DueDate,
+                                                               Debit = d.AmountDueInLocalCurrency == null ? null : (d.AmountDueInLocalCurrency > 0 ? null : d.AmountDueInLocalCurrency),
+                                                               Credit = d.AmountDueInLocalCurrency == null ? null : (d.AmountDueInLocalCurrency > 0 ? d.AmountDueInLocalCurrency : null),
+                                                           }).ToList();
+
+            List<AgingStatemantDataItem> list_ARPayment = (from d in iQueryable_ARPayment
+                                                           select new AgingStatemantDataItem()
+                                                           {
+                                                               Id = "ARPayment:" + d.Id,
+                                                               TypeCode = "AR",
+                                                               EntityName = "ARPayment",
+
+                                                               CardId = d.BillToId,
+                                                               Date = d.ValueDate,
+                                                               Credit = d.OpenAmount * d.PaymentCurrencyExchangeRate,
+                                                           }).ToList();
+
+            List<AgingStatemantDataItem> list_APPayment = (from d in iQueryable_APPayment
+                                                           select new AgingStatemantDataItem()
+                                                           {
+                                                               Id = "APPayment:" + d.Id,
+                                                               TypeCode = "AP",
+                                                               EntityName = "APPayment",
+                                                               CardId = d.VendorId,
+                                                               Date = d.ValueDate,
+                                                               Debit = d.OpenAmount * d.PaymentCurrencyExchangeRate,
+                                                           }).ToList();
+
+
+            this.FixValues(list_ARInvoice);
+            this.FixValues(list_APInvoice);
+            this.FixValues(list_ARPayment);
+            this.FixValues(list_APPayment);
+
+            List<AgingStatemantDataItem> totalList = new List<AgingStatemantDataItem>();
+
+            if (invoiceType == "All")
+            {
+                totalList = list_ARInvoice.Concat(list_APInvoice).Concat(list_ARPayment).Concat(list_APPayment).ToList();
+            }
+
+            else if (invoiceType == "AR")
+            {
+                totalList = list_ARInvoice.Concat(list_ARPayment).ToList();
+            }
+
+            else if (invoiceType == "AP")
+            {
+                totalList = list_APInvoice.Concat(list_APPayment).ToList();
+            }
+
+            #endregion
+
+            #region Fill
+
+            List<string> cardIdsList = totalList.Select(s => s.CardId).ToList();
+            cardIdsList = cardIdsList.Distinct().ToList();
+
+            List<CardEntityClass> allCardData = (from d in commonContext.Cards.Include("PaymentTerm")
+                                                 where d.Tenant == tenant && cardIdsList.Contains(d.Id)
+                                                 select new CardEntityClass
+                                                 {
+                                                     Id = d.Id,
+                                                     Name = d.EnglishName,
+                                                     PaymentTerm = d.PaymentTerm == null ? null : d.PaymentTerm.EnglishName,
+                                                 }).ToList();
+
+            foreach (string cardId in cardIdsList)
+            {
+                AgedAccountsReceivableDataProvider.AgedAccountsReceivable acountsRecored = new AgedAccountsReceivableDataProvider.AgedAccountsReceivable();
+
+                double? currentsum = 0;
+                double? sum1_30 = 0;
+                double? sum31_60 = 0;
+                double? sum61_90 = 0;
+                double? sum91_120 = 0;
+                double? over120 = 0;
+
+                List<AgingStatemantDataItem> tempList = totalList.Where(d => d.CardId == cardId).ToList();
+
+                List<AgingStatemantDataItem> currentDueItems = tempList.Where(d => d.Date >= todayDate).ToList();
+                List<AgingStatemantDataItem> Due1_30Items = tempList.Where(d => (todayDate - d.Date.Value).TotalDays >= 1 && (todayDate - d.Date.Value).TotalDays <= 30).ToList();
+                List<AgingStatemantDataItem> Due31_60Items = tempList.Where(d => (((todayDate - d.Date.Value).TotalDays) > 30) && (((todayDate - d.Date.Value).TotalDays) <= 60)).ToList();
+                List<AgingStatemantDataItem> Due61_90Items = tempList.Where(d => (((todayDate - d.Date.Value).TotalDays) > 60) && (((todayDate - d.Date.Value).TotalDays) <= 90)).ToList();
+                List<AgingStatemantDataItem> Due91_120Items = tempList.Where(d => (((todayDate - d.Date.Value).TotalDays) > 90) && (((todayDate - d.Date.Value).TotalDays) <= 120)).ToList();
+                List<AgingStatemantDataItem> over120Items = tempList.Where(d => (todayDate - d.Date.Value).TotalDays > 120).ToList();
+
+                currentsum = currentDueItems.Sum(d => d.Debit + d.Credit);
+                sum1_30 = Due1_30Items.Sum(d => d.Debit + d.Credit);
+                sum31_60 = Due31_60Items.Sum(d => d.Debit + d.Credit);
+                sum61_90 = Due61_90Items.Sum(d => d.Debit + d.Credit);
+                sum91_120 = Due91_120Items.Sum(d => d.Debit + d.Credit);
+                over120 = over120Items.Sum(d => d.Debit + d.Credit);
+
+                CardEntityClass cardEntity = allCardData.Where(d => d.Id == cardId).FirstOrDefault();
+
+                if (cardEntity != null)
+                {
+                    acountsRecored.PaymentTerm = cardEntity.PaymentTerm;
+                    acountsRecored.CustomerName = cardEntity.Name;
+                }
+
+                acountsRecored.CurrentDue = currentsum;
+                acountsRecored.DaysPastDue1_30 = sum1_30;
+                acountsRecored.DaysPastDue31_60 = sum31_60;
+                acountsRecored.DaysPastDue61_90 = sum61_90;
+                acountsRecored.DaysPastDue91_120 = sum91_120;
+                acountsRecored.Over120DaysPastDue = over120;
+                acountsRecored.CustomerTotals = currentsum + sum1_30 + sum31_60 + sum61_90 + sum91_120 + over120;
+
+                dataProvider.AgedAccountsReceivableList.Add(acountsRecored);
+            }
+
+            #endregion
+
+            return dataProvider;
+        }
+        private void FixValues(List<AgingStatemantDataItem> list)
+        {
+            foreach (AgingStatemantDataItem item in list)
+            {
+                if (item.Credit == null)
+                {
+                    item.Credit = 0;
+                }
+
+                else if (item.Credit > 0)
+                {
+                    item.Credit *= -1;
+                }
+
+                if (item.Debit == null)
+                {
+                    item.Debit = 0;
+                }
+
+                else if (item.Debit < 0)
+                {
+                    item.Debit *= -1;
+                }
+            }
+        }
+        #endregion
+
+        #region IATAStatistics
+        [WebMethod]
+        public byte[] LoadIATAStatisticsData(byte[] xmlFilters, bool isClosed, int tenant)
+        {
+            IATAStatisticsDataProvider dataprovider = LoadIATAStatisticsDataProvider(xmlFilters, isClosed, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(IATAStatisticsDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+        public IATAStatisticsDataProvider LoadIATAStatisticsDataProvider(byte[] xmlFilters, bool isClosed, int tenant)
+        {
+            IATAStatisticsDataProvider dataProvider = new IATAStatisticsDataProvider();
+            ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+            ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
+
+            TenantPM currentTenant = TenantQuery.GetSingleTenantPM(tenant, false);
+
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+            GenericFilter filter = new GenericFilter();
+            ShipmentCustomFilter customfilters = new ShipmentCustomFilter(tenant);
+            IQueryable<ShipmentDataView> iQueryable = shipmentRepository.GetMasterViewsByTenant(tenant);
+
+            iQueryable = customfilters.GetFilteredQuery(queryOperations, iQueryable);
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+
+            QueryFilterItem fromDateItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate" && d.Operator == "GreaterThanOrEqual").FirstOrDefault();
+            QueryFilterItem ToDateItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate" && d.Operator == "LessThanOrEqual").FirstOrDefault();
+
+            nonListQueryOperation.QueryFilterItems.Remove(fromDateItem);
+            nonListQueryOperation.QueryFilterItems.Remove(ToDateItem);
+            iQueryable = filter.GetFilteredQuery<ShipmentDataView>(nonListQueryOperation, iQueryable);
+
+            QueryFilterItem customerItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "MainCarriageCarrierId" && d.Operator == "Equals").FirstOrDefault();
+            if (customerItem != null)
+            {
+                string id = customerItem.FieldValue.ToString();
+                Card airline = CardRepository.GetSingleCard(id, tenant, true);
+                dataProvider.SelectedAirline = airline.EnglishName;
+            }
+            else
+            {
+                // dataProvider.airline = "All";
+            }
+
+            AddressQuery addressQuery = new AddressQuery(tenant);
+            AddressPM address = addressQuery.GetSingleAddressPM(currentTenant.AddressId, currentTenant.Id, false);
+            if (address != null)
+            {
+                dataProvider.Address1 = address.Address1;
+                dataProvider.Address2 = address.Address2;
+                dataProvider.City = address.City;
+                dataProvider.Country = address.CountryName;
+                dataProvider.TenantFax = address.FaxNumber;
+                dataProvider.TenantPhone = address.PhoneNumber;
+                dataProvider.State = address.StateEnglishName;
+                dataProvider.ZipCode = address.ZipCode;
+            }
+
+            dataProvider.TenantName = currentTenant.Company;
+            dataProvider.Signature = currentTenant.Signature;
+            dataProvider.Logo = DataProviders.General.GetLogo(currentTenant.Id);
+            dataProvider.ChargeableWeightUnit = currentTenant.ChargeableWeightUnitCode;
+
+            iQueryable = iQueryable.Where(f => f.IsCancelled == false && f.TransportModeId == "A" && f.DirectionId == "E");
+            IQueryable<ShipmentDataView> iQueryable1 = iQueryable.Where(d => d.MainCarriageATD != null);
+            IQueryable<ShipmentDataView> iQueryable2 = iQueryable.Where(d => d.MainCarriageATD == null && d.MainCarriageETD != null);
+            IQueryable<ShipmentDataView> iQueryable3 = iQueryable.Where(d => d.MainCarriageATD == null && d.MainCarriageETD == null);
+
+            QueryFilterItem newfromDateItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate" && d.Operator == "GreaterThanOrEqual").FirstOrDefault();
+            DateTime fromDate;
+            if (newfromDateItem.FieldValue != null)
+            {
+                DateTime.TryParse(newfromDateItem.FieldValue.ToString(), out fromDate);
+                dataProvider.FromPeriod = fromDate;
+
+                iQueryable1 = iQueryable1.Where(f => f.MainCarriageATD >= fromDate);
+                iQueryable2 = iQueryable2.Where(f => f.MainCarriageETD >= fromDate);
+                iQueryable3 = iQueryable3.Where(f => f.CreateDateTime >= fromDate);
+            }
+
+            QueryFilterItem newToDateItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate" && d.Operator == "LessThanOrEqual").FirstOrDefault();
+            DateTime toDate;
+            if (newToDateItem.FieldValue != null)
+            {
+                DateTime.TryParse(newToDateItem.FieldValue.ToString(), out toDate);
+                dataProvider.ToPeriod = toDate;
+
+                iQueryable1 = iQueryable1.Where(f => f.MainCarriageATD <= toDate);
+                iQueryable2 = iQueryable2.Where(f => f.MainCarriageETD <= toDate);
+                iQueryable3 = iQueryable3.Where(f => f.CreateDateTime <= toDate);
+            }
+
+            #region queryATD
+            IQueryable<ShipmentList> queryATD = from f in iQueryable1
+                                                select new ShipmentList()
+                                                {
+                                                    MainCarriageCarrierPrefix = f.MainCarriageAirlinePrefix,
+                                                    CarrierLastStatusDate = f.CarrierLastStatusDate,
+                                                    CarrierLastStatusName = f.CarrierLastStatusName,
+                                                    CarrierLastStatusCode = f.CarrierLastStatusCode,
+                                                    IsOperationalClosed = f.IsOperationalClosed,
+                                                    ShipmentViewId = f.Id,
+                                                    Id = f.Id,
+                                                    Shipper = f.ShipperName,
+                                                    Consignee = f.ConsigneeName,
+                                                    DirectionId = f.DirectionId,
+                                                    DirectionName = f.DirectionName,
+                                                    TransportModeName = f.TransportModeName,
+                                                    MasterShipmentNumber = f.MasterShipmentNumber,
+                                                    House = f.House,
+                                                    CreateDateTime = f.CreateDateTime,
+                                                    ShipmentNumber = f.ShipmentNumber,
+                                                    ShipmentType = !string.IsNullOrEmpty(f.ShipmentTypeName) ? f.ShipmentTypeName + " " + f.ShipmentLevelName : f.ShipmentLevelName,
+                                                    TransportModeId = f.TransportModeId,
+                                                    Field1 = f.Field1,
+                                                    Field2 = f.Field2,
+                                                    Field3 = f.Field3,
+                                                    Field4 = f.Field4,
+                                                    Field5 = f.Field5,
+                                                    Field6 = f.Field6,
+                                                    Field7 = f.Field7,
+                                                    Field9 = f.Field9,
+                                                    Field8 = f.Field8,
+                                                    Field10 = f.Field10,
+                                                    ChargeableWeightInKG = f.ChargeableWeightInKG,
+                                                    ChargeableWeight = f.ChargeableWeight,
+                                                    GrossWeight = f.GrossWeight,
+                                                    ShipperReference1 = f.ShipperReference1,
+                                                    Master = f.Master,
+                                                    OpenReceivablesInLocalCurrency = f.OpenReceivablesInLocalCurrency,
+                                                    OpenReceivablesInProfitCurrency = f.OpenReceivablesInProfitCurrency,
+                                                    AccountedReceivablesInLocalCurrency = f.AccountedReceivablesInLocalCurrency,
+                                                    OpenPayablesInLocalCurrency = f.OpenPayablesInLocalCurrency,
+                                                    ShipmentPayableStatusCode = f.ShipmentPayableStatusCode,
+                                                    ShipmentReceivableStatusCode = f.ShipmentReceivableStatusCode,
+                                                    ShipmentPayableStatusName = f.ShipmentPayableStatusName,
+                                                    ShipmentReceivableStatusName = f.ShipmentReceivableStatusName,
+                                                    ProfitInLocalCurrency = f.ProfitInLocalCurrency,
+                                                    ProfitInProfitCurrency = f.ProfitInProfitCurrency,
+                                                    EstimateProfitInLocalCurrency = f.EstimateProfitInLocalCurrency,
+                                                    EstimateProfitInProfitCurrency = f.EstimateProfitInProfitCurrency,
+                                                    BranchId = f.BranchId,
+                                                    DepartmentId = f.DepartmentId,
+                                                    MainCarriageETA = f.MainCarriageETA,
+                                                    MainCarriageATD = f.MainCarriageATD,
+                                                    LocalCurrencyCode = currentTenant.CurrencyCode,
+                                                    ProfitCurrencyCode = currentTenant.ProfitCurrencyCode,
+                                                    NextETA = f.NextETA,
+                                                    NextETD = f.NextETD,
+                                                    NextLegName = f.NextLegName,
+                                                    Routing = f.Routing,
+                                                    FromPortId = !string.IsNullOrEmpty(f.MainCarriageFromPortId) ? f.MainCarriageFromPortId : f.FromPortId,
+                                                    ToPortId = !string.IsNullOrEmpty(f.MainCarriageToPortId) ? f.MainCarriageToPortId : f.ToPortId,
+                                                    FromPort = !string.IsNullOrEmpty(f.MainCarriageFromPortCode) ? f.MainCarriageFromPortCode : f.FromPortCode,
+                                                    FromPortName = !string.IsNullOrEmpty(f.MainCarriageFromPortName) ? f.MainCarriageFromPortName : f.FromPortName,
+                                                    FromPortCountry = f.MainCarriageFromPortCountryName,
+                                                    ToPort = !string.IsNullOrEmpty(f.MainCarriageFinalDestinationPortCode) ? f.MainCarriageFinalDestinationPortCode : f.ToPortCode,
+                                                    ToPortName = !string.IsNullOrEmpty(f.MainCarriageFinalDestinationPortName) ? f.MainCarriageFinalDestinationPortName : f.ToPortName,
+                                                    ToPortCountry = f.MainCarriageToPortCountryName,
+                                                    MasterShipmentDataId = f.MasterShipmentDataId,
+                                                    BranchName = f.BranchName,
+                                                    CustomerName = f.CustomerName,
+                                                    GrossWeightInKG = f.GrossWeightInKG,
+                                                    ShipmentLevelCode = f.ShipmentLevelCode,
+                                                    ShipmentLevelName = f.ShipmentLevelName,
+                                                    VolumetricWeight = f.VolumetricWeight,
+                                                    AirlinePrefix = f.AirlinePrefix,
+                                                    AccountedPayablesInLocalCurrency = f.AccountedPayablesInLocalCurrency,
+                                                    AccountedPayablesInProfitCurrency = f.AccountedPayablesInProfitCurrency,
+                                                    AccountedReceivablesInProfitCurrency = f.AccountedReceivablesInProfitCurrency,
+                                                    MainCarriageFromPortId = f.MainCarriageFromPortId,
+                                                    MainCarriageFromPortName = f.MainCarriageFromPortName,
+                                                    MainCarriageATA = f.MainCarriageATA,
+                                                    MainCarriageETD = f.MainCarriageETD,
+                                                    IncotermId = f.IncotermId,
+                                                    OpenPayablesInProfitCurrency = f.OpenPayablesInProfitCurrency,
+                                                    CustomerReference1 = f.CustomerReference1,
+                                                    CustomerReference2 = f.CustomerReference2,
+                                                    IssuingCarrierAgentId = f.IssuingCarrierAgentId,
+                                                    IncotermCode = f.IncotermCode,
+                                                    MainCarriageCarrierId = f.MainCarriageCarrierId,
+                                                    AsAgreedFreight = f.AsAgreedFreight,
+                                                    AsAgreedOtherCharges = f.AsAgreedOtherCharges,
+                                                    AccountNumber = f.AccountNumber,
+                                                    AWBPrint = f.AWBPrint,
+                                                    FHLStatusCode = f.FHLStatusCode,
+                                                    FHLStatusName = f.FHLStatusName,
+                                                    FWBStatusCode = f.FWBStatusCode,
+                                                    FWBStatusName = f.FWBStatusName,
+                                                    FNAReason = f.FNAReason,
+                                                    AgentName = f.AgentName,
+                                                    MainCarriageCarrierName = f.MainCarriageCarrierName,
+                                                    FinalArrivalDate = f.FinalArrivalDate,
+                                                    CustomerId = f.CustomerId,
+                                                    ShipperId = f.ShipperId,
+                                                    ConsigneeId = f.ConsigneeId,
+                                                    TEU = f.TEU,
+                                                    VolumeInCBM = f.VolumeInCBM,
+                                                    CASSCode = f.CASSCode,
+                                                    ChargeableWeightUnitCode = f.ChargeableWeightUnitCode,
+                                                    AWBCurrencyCode = f.AWBCurrencyCode,
+                                                    AWBChargeAmount = f.FreightPrepaidCollectId == "P" ? f.AWBFreightAmountPrepaid : f.AWBFreightAmountCollect,
+                                                    StatusId = f.MasterShipmentDataId != null ? (f.ShipmentMasterDataStatusWeight > f.ShipmentStatusWeight ? f.ShipmentMasterDataStatusId : f.ShipmentStatusId) : (f.ShipmentStatusId),
+                                                    StatusDate = f.MasterShipmentDataId != null ? (f.ShipmentMasterDataStatusWeight > f.ShipmentStatusWeight ? f.ShipmentMasterDataStatusDate : f.ShipmentStatusDate) : (f.ShipmentStatusDate),
+                                                    StatusName = f.MasterShipmentDataId != null ? (f.ShipmentMasterDataStatusWeight > f.ShipmentStatusWeight ? f.ShipmentMasterDataStatusName : f.ShipmentStatusName) : (f.ShipmentStatusName),
+                                                    StatusLocation = f.MasterShipmentDataId != null ? (f.ShipmentMasterDataStatusWeight > f.ShipmentStatusWeight ? f.ShipmentMasterDataStatusLocation : f.ShipmentStatusLocation) : (f.ShipmentStatusLocation),
+                                                    LongMaster = f.TransportModeId == "A" ? (!string.IsNullOrEmpty(f.AirlinePrefix) && !string.IsNullOrEmpty(f.Master) ? f.AirlinePrefix + "-" + f.Master : "") : f.Master,
+                                                };
+            #endregion
+
+            #region queryETD
+            IQueryable<ShipmentList> queryETD = from f in iQueryable2
+                                                select new ShipmentList()
+                                                {
+                                                    MainCarriageCarrierPrefix = f.MainCarriageAirlinePrefix,
+                                                    CarrierLastStatusDate = f.CarrierLastStatusDate,
+                                                    CarrierLastStatusName = f.CarrierLastStatusName,
+                                                    CarrierLastStatusCode = f.CarrierLastStatusCode,
+                                                    IsOperationalClosed = f.IsOperationalClosed,
+                                                    ShipmentViewId = f.Id,
+                                                    Id = f.Id,
+                                                    Shipper = f.ShipperName,
+                                                    Consignee = f.ConsigneeName,
+                                                    DirectionId = f.DirectionId,
+                                                    DirectionName = f.DirectionName,
+                                                    TransportModeName = f.TransportModeName,
+                                                    MasterShipmentNumber = f.MasterShipmentNumber,
+                                                    House = f.House,
+                                                    CreateDateTime = f.CreateDateTime,
+                                                    ShipmentNumber = f.ShipmentNumber,
+                                                    ShipmentType = !string.IsNullOrEmpty(f.ShipmentTypeName) ? f.ShipmentTypeName + " " + f.ShipmentLevelName : f.ShipmentLevelName,
+                                                    TransportModeId = f.TransportModeId,
+                                                    Field1 = f.Field1,
+                                                    Field2 = f.Field2,
+                                                    Field3 = f.Field3,
+                                                    Field4 = f.Field4,
+                                                    Field5 = f.Field5,
+                                                    Field6 = f.Field6,
+                                                    Field7 = f.Field7,
+                                                    Field9 = f.Field9,
+                                                    Field8 = f.Field8,
+                                                    Field10 = f.Field10,
+                                                    ChargeableWeightInKG = f.ChargeableWeightInKG,
+                                                    ChargeableWeight = f.ChargeableWeight,
+                                                    GrossWeight = f.GrossWeight,
+                                                    ShipperReference1 = f.ShipperReference1,
+                                                    Master = f.Master,
+                                                    OpenReceivablesInLocalCurrency = f.OpenReceivablesInLocalCurrency,
+                                                    OpenReceivablesInProfitCurrency = f.OpenReceivablesInProfitCurrency,
+                                                    AccountedReceivablesInLocalCurrency = f.AccountedReceivablesInLocalCurrency,
+                                                    OpenPayablesInLocalCurrency = f.OpenPayablesInLocalCurrency,
+                                                    ShipmentPayableStatusCode = f.ShipmentPayableStatusCode,
+                                                    ShipmentReceivableStatusCode = f.ShipmentReceivableStatusCode,
+                                                    ShipmentPayableStatusName = f.ShipmentPayableStatusName,
+                                                    ShipmentReceivableStatusName = f.ShipmentReceivableStatusName,
+                                                    ProfitInLocalCurrency = f.ProfitInLocalCurrency,
+                                                    ProfitInProfitCurrency = f.ProfitInProfitCurrency,
+                                                    EstimateProfitInLocalCurrency = f.EstimateProfitInLocalCurrency,
+                                                    EstimateProfitInProfitCurrency = f.EstimateProfitInProfitCurrency,
+                                                    BranchId = f.BranchId,
+                                                    DepartmentId = f.DepartmentId,
+                                                    MainCarriageETA = f.MainCarriageETA,
+                                                    MainCarriageATD = f.MainCarriageATD,
+                                                    LocalCurrencyCode = currentTenant.CurrencyCode,
+                                                    ProfitCurrencyCode = currentTenant.ProfitCurrencyCode,
+                                                    NextETA = f.NextETA,
+                                                    NextETD = f.NextETD,
+                                                    NextLegName = f.NextLegName,
+                                                    Routing = f.Routing,
+                                                    FromPortId = !string.IsNullOrEmpty(f.MainCarriageFromPortId) ? f.MainCarriageFromPortId : f.FromPortId,
+                                                    ToPortId = !string.IsNullOrEmpty(f.MainCarriageToPortId) ? f.MainCarriageToPortId : f.ToPortId,
+                                                    FromPort = !string.IsNullOrEmpty(f.MainCarriageFromPortCode) ? f.MainCarriageFromPortCode : f.FromPortCode,
+                                                    FromPortName = !string.IsNullOrEmpty(f.MainCarriageFromPortName) ? f.MainCarriageFromPortName : f.FromPortName,
+                                                    FromPortCountry = f.MainCarriageFromPortCountryName,
+                                                    ToPort = !string.IsNullOrEmpty(f.MainCarriageFinalDestinationPortCode) ? f.MainCarriageFinalDestinationPortCode : f.ToPortCode,
+                                                    ToPortName = !string.IsNullOrEmpty(f.MainCarriageFinalDestinationPortName) ? f.MainCarriageFinalDestinationPortName : f.ToPortName,
+                                                    ToPortCountry = f.MainCarriageToPortCountryName,
+                                                    MasterShipmentDataId = f.MasterShipmentDataId,
+                                                    BranchName = f.BranchName,
+                                                    CustomerName = f.CustomerName,
+                                                    GrossWeightInKG = f.GrossWeightInKG,
+                                                    ShipmentLevelCode = f.ShipmentLevelCode,
+                                                    ShipmentLevelName = f.ShipmentLevelName,
+                                                    VolumetricWeight = f.VolumetricWeight,
+                                                    AirlinePrefix = f.AirlinePrefix,
+                                                    AccountedPayablesInLocalCurrency = f.AccountedPayablesInLocalCurrency,
+                                                    AccountedPayablesInProfitCurrency = f.AccountedPayablesInProfitCurrency,
+                                                    AccountedReceivablesInProfitCurrency = f.AccountedReceivablesInProfitCurrency,
+                                                    MainCarriageFromPortId = f.MainCarriageFromPortId,
+                                                    MainCarriageFromPortName = f.MainCarriageFromPortName,
+                                                    MainCarriageATA = f.MainCarriageATA,
+                                                    MainCarriageETD = f.MainCarriageETD,
+                                                    IncotermId = f.IncotermId,
+                                                    OpenPayablesInProfitCurrency = f.OpenPayablesInProfitCurrency,
+                                                    CustomerReference1 = f.CustomerReference1,
+                                                    CustomerReference2 = f.CustomerReference2,
+                                                    IssuingCarrierAgentId = f.IssuingCarrierAgentId,
+                                                    IncotermCode = f.IncotermCode,
+                                                    MainCarriageCarrierId = f.MainCarriageCarrierId,
+                                                    AsAgreedFreight = f.AsAgreedFreight,
+                                                    AsAgreedOtherCharges = f.AsAgreedOtherCharges,
+                                                    AccountNumber = f.AccountNumber,
+                                                    AWBPrint = f.AWBPrint,
+                                                    FHLStatusCode = f.FHLStatusCode,
+                                                    FHLStatusName = f.FHLStatusName,
+                                                    FWBStatusCode = f.FWBStatusCode,
+                                                    FWBStatusName = f.FWBStatusName,
+                                                    FNAReason = f.FNAReason,
+                                                    AgentName = f.AgentName,
+                                                    MainCarriageCarrierName = f.MainCarriageCarrierName,
+                                                    FinalArrivalDate = f.FinalArrivalDate,
+                                                    CustomerId = f.CustomerId,
+                                                    ShipperId = f.ShipperId,
+                                                    ConsigneeId = f.ConsigneeId,
+                                                    TEU = f.TEU,
+                                                    VolumeInCBM = f.VolumeInCBM,
+                                                    CASSCode = f.CASSCode,
+                                                    ChargeableWeightUnitCode = f.ChargeableWeightUnitCode,
+                                                    AWBCurrencyCode = f.AWBCurrencyCode,
+                                                    AWBChargeAmount = f.FreightPrepaidCollectId == "P" ? f.AWBFreightAmountPrepaid : f.AWBFreightAmountCollect,
+                                                    StatusId = f.MasterShipmentDataId != null ? (f.ShipmentMasterDataStatusWeight > f.ShipmentStatusWeight ? f.ShipmentMasterDataStatusId : f.ShipmentStatusId) : (f.ShipmentStatusId),
+                                                    StatusDate = f.MasterShipmentDataId != null ? (f.ShipmentMasterDataStatusWeight > f.ShipmentStatusWeight ? f.ShipmentMasterDataStatusDate : f.ShipmentStatusDate) : (f.ShipmentStatusDate),
+                                                    StatusName = f.MasterShipmentDataId != null ? (f.ShipmentMasterDataStatusWeight > f.ShipmentStatusWeight ? f.ShipmentMasterDataStatusName : f.ShipmentStatusName) : (f.ShipmentStatusName),
+                                                    StatusLocation = f.MasterShipmentDataId != null ? (f.ShipmentMasterDataStatusWeight > f.ShipmentStatusWeight ? f.ShipmentMasterDataStatusLocation : f.ShipmentStatusLocation) : (f.ShipmentStatusLocation),
+                                                    LongMaster = f.TransportModeId == "A" ? (!string.IsNullOrEmpty(f.AirlinePrefix) && !string.IsNullOrEmpty(f.Master) ? f.AirlinePrefix + "-" + f.Master : "") : f.Master,
+                                                };
+            #endregion
+
+            #region queryCreatDate
+            IQueryable<ShipmentList> queryCreatDate = from f in iQueryable3
+                                                      select new ShipmentList()
+                                                      {
+                                                          MainCarriageCarrierPrefix = f.MainCarriageAirlinePrefix,
+                                                          CarrierLastStatusDate = f.CarrierLastStatusDate,
+                                                          CarrierLastStatusName = f.CarrierLastStatusName,
+                                                          CarrierLastStatusCode = f.CarrierLastStatusCode,
+                                                          IsOperationalClosed = f.IsOperationalClosed,
+                                                          ShipmentViewId = f.Id,
+                                                          Id = f.Id,
+                                                          Shipper = f.ShipperName,
+                                                          Consignee = f.ConsigneeName,
+                                                          DirectionId = f.DirectionId,
+                                                          DirectionName = f.DirectionName,
+                                                          TransportModeName = f.TransportModeName,
+                                                          MasterShipmentNumber = f.MasterShipmentNumber,
+                                                          House = f.House,
+                                                          CreateDateTime = f.CreateDateTime,
+                                                          ShipmentNumber = f.ShipmentNumber,
+                                                          ShipmentType = !string.IsNullOrEmpty(f.ShipmentTypeName) ? f.ShipmentTypeName + " " + f.ShipmentLevelName : f.ShipmentLevelName,
+                                                          TransportModeId = f.TransportModeId,
+                                                          Field1 = f.Field1,
+                                                          Field2 = f.Field2,
+                                                          Field3 = f.Field3,
+                                                          Field4 = f.Field4,
+                                                          Field5 = f.Field5,
+                                                          Field6 = f.Field6,
+                                                          Field7 = f.Field7,
+                                                          Field9 = f.Field9,
+                                                          Field8 = f.Field8,
+                                                          Field10 = f.Field10,
+                                                          ChargeableWeightInKG = f.ChargeableWeightInKG,
+                                                          ChargeableWeight = f.ChargeableWeight,
+                                                          GrossWeight = f.GrossWeight,
+                                                          ShipperReference1 = f.ShipperReference1,
+                                                          Master = f.Master,
+                                                          OpenReceivablesInLocalCurrency = f.OpenReceivablesInLocalCurrency,
+                                                          OpenReceivablesInProfitCurrency = f.OpenReceivablesInProfitCurrency,
+                                                          AccountedReceivablesInLocalCurrency = f.AccountedReceivablesInLocalCurrency,
+                                                          OpenPayablesInLocalCurrency = f.OpenPayablesInLocalCurrency,
+                                                          ShipmentPayableStatusCode = f.ShipmentPayableStatusCode,
+                                                          ShipmentReceivableStatusCode = f.ShipmentReceivableStatusCode,
+                                                          ShipmentPayableStatusName = f.ShipmentPayableStatusName,
+                                                          ShipmentReceivableStatusName = f.ShipmentReceivableStatusName,
+                                                          ProfitInLocalCurrency = f.ProfitInLocalCurrency,
+                                                          ProfitInProfitCurrency = f.ProfitInProfitCurrency,
+                                                          EstimateProfitInLocalCurrency = f.EstimateProfitInLocalCurrency,
+                                                          EstimateProfitInProfitCurrency = f.EstimateProfitInProfitCurrency,
+                                                          BranchId = f.BranchId,
+                                                          DepartmentId = f.DepartmentId,
+                                                          MainCarriageETA = f.MainCarriageETA,
+                                                          MainCarriageATD = f.MainCarriageATD,
+                                                          LocalCurrencyCode = currentTenant.CurrencyCode,
+                                                          ProfitCurrencyCode = currentTenant.ProfitCurrencyCode,
+                                                          NextETA = f.NextETA,
+                                                          NextETD = f.NextETD,
+                                                          NextLegName = f.NextLegName,
+                                                          Routing = f.Routing,
+                                                          FromPortId = !string.IsNullOrEmpty(f.MainCarriageFromPortId) ? f.MainCarriageFromPortId : f.FromPortId,
+                                                          ToPortId = !string.IsNullOrEmpty(f.MainCarriageToPortId) ? f.MainCarriageToPortId : f.ToPortId,
+                                                          FromPort = !string.IsNullOrEmpty(f.MainCarriageFromPortCode) ? f.MainCarriageFromPortCode : f.FromPortCode,
+                                                          FromPortName = !string.IsNullOrEmpty(f.MainCarriageFromPortName) ? f.MainCarriageFromPortName : f.FromPortName,
+                                                          FromPortCountry = f.MainCarriageFromPortCountryName,
+                                                          ToPort = !string.IsNullOrEmpty(f.MainCarriageFinalDestinationPortCode) ? f.MainCarriageFinalDestinationPortCode : f.ToPortCode,
+                                                          ToPortName = !string.IsNullOrEmpty(f.MainCarriageFinalDestinationPortName) ? f.MainCarriageFinalDestinationPortName : f.ToPortName,
+                                                          ToPortCountry = f.MainCarriageToPortCountryName,
+                                                          MasterShipmentDataId = f.MasterShipmentDataId,
+                                                          BranchName = f.BranchName,
+                                                          CustomerName = f.CustomerName,
+                                                          GrossWeightInKG = f.GrossWeightInKG,
+                                                          ShipmentLevelCode = f.ShipmentLevelCode,
+                                                          ShipmentLevelName = f.ShipmentLevelName,
+                                                          VolumetricWeight = f.VolumetricWeight,
+                                                          AirlinePrefix = f.AirlinePrefix,
+                                                          AccountedPayablesInLocalCurrency = f.AccountedPayablesInLocalCurrency,
+                                                          AccountedPayablesInProfitCurrency = f.AccountedPayablesInProfitCurrency,
+                                                          AccountedReceivablesInProfitCurrency = f.AccountedReceivablesInProfitCurrency,
+                                                          MainCarriageFromPortId = f.MainCarriageFromPortId,
+                                                          MainCarriageFromPortName = f.MainCarriageFromPortName,
+                                                          MainCarriageATA = f.MainCarriageATA,
+                                                          MainCarriageETD = f.MainCarriageETD,
+                                                          IncotermId = f.IncotermId,
+                                                          OpenPayablesInProfitCurrency = f.OpenPayablesInProfitCurrency,
+                                                          CustomerReference1 = f.CustomerReference1,
+                                                          CustomerReference2 = f.CustomerReference2,
+                                                          IssuingCarrierAgentId = f.IssuingCarrierAgentId,
+                                                          IncotermCode = f.IncotermCode,
+                                                          MainCarriageCarrierId = f.MainCarriageCarrierId,
+                                                          AsAgreedFreight = f.AsAgreedFreight,
+                                                          AsAgreedOtherCharges = f.AsAgreedOtherCharges,
+                                                          AccountNumber = f.AccountNumber,
+                                                          AWBPrint = f.AWBPrint,
+                                                          FHLStatusCode = f.FHLStatusCode,
+                                                          FHLStatusName = f.FHLStatusName,
+                                                          FWBStatusCode = f.FWBStatusCode,
+                                                          FWBStatusName = f.FWBStatusName,
+                                                          FNAReason = f.FNAReason,
+                                                          AgentName = f.AgentName,
+                                                          MainCarriageCarrierName = f.MainCarriageCarrierName,
+                                                          FinalArrivalDate = f.FinalArrivalDate,
+                                                          CustomerId = f.CustomerId,
+                                                          ShipperId = f.ShipperId,
+                                                          ConsigneeId = f.ConsigneeId,
+                                                          TEU = f.TEU,
+                                                          VolumeInCBM = f.VolumeInCBM,
+                                                          CASSCode = f.CASSCode,
+                                                          ChargeableWeightUnitCode = f.ChargeableWeightUnitCode,
+                                                          AWBCurrencyCode = f.AWBCurrencyCode,
+                                                          AWBChargeAmount = f.FreightPrepaidCollectId == "P" ? f.AWBFreightAmountPrepaid : f.AWBFreightAmountCollect,
+                                                          StatusId = f.MasterShipmentDataId != null ? (f.ShipmentMasterDataStatusWeight > f.ShipmentStatusWeight ? f.ShipmentMasterDataStatusId : f.ShipmentStatusId) : (f.ShipmentStatusId),
+                                                          StatusDate = f.MasterShipmentDataId != null ? (f.ShipmentMasterDataStatusWeight > f.ShipmentStatusWeight ? f.ShipmentMasterDataStatusDate : f.ShipmentStatusDate) : (f.ShipmentStatusDate),
+                                                          StatusName = f.MasterShipmentDataId != null ? (f.ShipmentMasterDataStatusWeight > f.ShipmentStatusWeight ? f.ShipmentMasterDataStatusName : f.ShipmentStatusName) : (f.ShipmentStatusName),
+                                                          StatusLocation = f.MasterShipmentDataId != null ? (f.ShipmentMasterDataStatusWeight > f.ShipmentStatusWeight ? f.ShipmentMasterDataStatusLocation : f.ShipmentStatusLocation) : (f.ShipmentStatusLocation),
+                                                          LongMaster = f.TransportModeId == "A" ? (!string.IsNullOrEmpty(f.AirlinePrefix) && !string.IsNullOrEmpty(f.Master) ? f.AirlinePrefix + "-" + f.Master : "") : f.Master,
+                                                      };
+            #endregion
+
+            IQueryable<ShipmentList> fullQuery = queryATD.Concat(queryETD).Concat(queryCreatDate);
+
+            dataProvider.RecordList = new List<IATAStatisticsDataProvider.IATAStatisticsRecord>();
+            dataProvider.GroupList = new List<IATAStatisticsDataProvider.IATAStatisticsGroup>();
+
+            if (currentTenant.IATA != null && currentTenant.CASSCode != null)
+            {
+                dataProvider.IataCASSCode = currentTenant.IATA + '/' + currentTenant.CASSCode;
+            }
+            else if (currentTenant.IATA != null && currentTenant.CASSCode == null)
+            {
+                dataProvider.IataCASSCode = currentTenant.IATA;
+            }
+            else if (currentTenant.IATA == null && currentTenant.CASSCode != null)
+            {
+                dataProvider.IataCASSCode = currentTenant.CASSCode;
+            }
+
+            foreach (ShipmentList a in fullQuery)
+            {
+                IATAStatisticsDataProvider.IATAStatisticsRecord statisticsrecord = new IATAStatisticsDataProvider.IATAStatisticsRecord();
+
+                statisticsrecord.AirlineId = a.MainCarriageCarrierId;
+                statisticsrecord.AirlineName = a.MainCarriageCarrierName;
+                statisticsrecord.ChargeableWeight = a.ChargeableWeight;
+                statisticsrecord.Destination = a.ToPortName;
+                statisticsrecord.Master = a.LongMaster;
+                statisticsrecord.ShipperName = a.Shipper;
+                statisticsrecord.ConsigneeName = a.Consignee;
+                statisticsrecord.Departure = a.FromPortName;
+                statisticsrecord.Prefix = a.MainCarriageCarrierPrefix;
+                statisticsrecord.PortOfOriginCode = a.MainCarriageFromPortCode;
+                statisticsrecord.MainCarriageETA = a.MainCarriageETA;
+                statisticsrecord.GrossWeight = a.GrossWeight;
+                statisticsrecord.ShipmentStatus = a.StatusName;
+
+                if (a.ChargeableWeight != null && a.ChargeableWeight != 0)
+                {
+                    statisticsrecord.WeightUnit = a.ChargeableWeightUnitCode;
+                }
+
+                if (a.AsAgreedFreight)
+                {
+                    statisticsrecord.FreightChargeString = "As Agreed";
+                    statisticsrecord.FreightChargeAmount = null;
+                    statisticsrecord.FreightChargeCurrency = null;
+                }
+                else
+                {
+                    statisticsrecord.FreightChargeAmount = a.AWBChargeAmount;
+
+                    if (a.AWBChargeAmount != null && a.AWBChargeAmount != 0)
+                    {
+                        statisticsrecord.FreightChargeCurrency = a.AWBCurrencyCode;
+                    }
+                }
+
+                if (a.MainCarriageATD != null)
+                {
+                    statisticsrecord.DepartureDate = a.MainCarriageATD;
+                }
+                else if (a.MainCarriageETD != null)
+                {
+                    statisticsrecord.DepartureDate = a.MainCarriageETD;
+                }
+                else
+                {
+                    statisticsrecord.DepartureDate = a.CreateDateTime;
+                }
+
+                if (a.Consignee != null)
+                {
+                    statisticsrecord.ShipperOrConsignee = a.Consignee;
+                }
+                else if (a.Shipper != null)
+                {
+                    statisticsrecord.ShipperOrConsignee = a.Shipper;
+                }
+
+                if (statisticsrecord.AirlineName == null)
+                {
+                    statisticsrecord.AirlineName = "No Carrier Specified";
+                }
+
+                dataProvider.RecordList.Add(statisticsrecord);
+            }
+
+            List<IATAStatisticsDataProvider.IATAStatisticsGroup> finalResults = (from p in dataProvider.RecordList
+                                                                                 group p by new { p.AirlineId, p.AirlineName } into g
+                                                                                 select new IATAStatisticsDataProvider.IATAStatisticsGroup()
+                                                                                 {
+                                                                                     AirlineId = g.Key.AirlineId,
+                                                                                     AirlineName = g.Key.AirlineName,
+                                                                                     InsideGroupList = g.ToList(),
+                                                                                 }).ToList();
+
+            List<AmountsClass> allReportAmounts = new List<AmountsClass>();
+            foreach (IATAStatisticsDataProvider.IATAStatisticsGroup item in finalResults)
+            {
+                List<AmountsClass> allAmounts = new List<AmountsClass>();
+
+                foreach (IATAStatisticsDataProvider.IATAStatisticsRecord record in item.InsideGroupList)
+                {
+                    AmountsClass myAmountsClass = allAmounts.Where(d => d.Currency == record.FreightChargeCurrency).FirstOrDefault();
+
+                    if (myAmountsClass == null)
+                    {
+                        myAmountsClass = new AmountsClass()
+                        {
+                            Amount = record.FreightChargeAmount == null ? 0 : record.FreightChargeAmount.Value,
+                            Currency = record.FreightChargeCurrency,
+                        };
+
+                        allAmounts.Add(myAmountsClass);
+                        allReportAmounts.Add(myAmountsClass);
+                    }
+
+                    else
+                    {
+                        myAmountsClass.Amount = myAmountsClass.Amount + (record.FreightChargeAmount == null ? 0 : record.FreightChargeAmount.Value);
+                    }
+                }
+
+                string str = "";
+                foreach (AmountsClass amount in allAmounts)
+                {
+                    if (amount.Amount != 0)
+                    {
+                        str = str + amount.Amount + " " + amount.Currency + Environment.NewLine;
+                    }
+                }
+
+                item.TotalFreight = str;
+            }
+
+            List<AmountsClass> newList = (from p in allReportAmounts
+                                          group p by new { p.Currency } into g
+                                          select new AmountsClass()
+                                          {
+                                              Amount = g.Sum(s => s.Amount),
+                                              Currency = g.Key.Currency,
+                                          }).ToList();
+
+            foreach (AmountsClass item in newList)
+            {
+                if (item.Amount != 0)
+                {
+                    dataProvider.TotalFreightCharges = dataProvider.TotalFreightCharges + item.Amount + " " + item.Currency + Environment.NewLine;
+                }
+            }
+
+            dataProvider.GroupList = finalResults.OrderBy(d => d.AirlineName).ToList();
+            dataProvider.TotalChargeableWeight = dataProvider.RecordList.Sum(s => s.ChargeableWeight);
+            dataProvider.Name = @"IATA Statistics";
+
+            return dataProvider;
+        }
+        #endregion
+
+        #region AccountingLedger
+        //[WebMethod]
+        //public byte[] LoadAccountingLedgerData(byte[] xmlFilters, int tenant, string dateType)
+        //{
+        //    AccountingLedgerDataProvider dataprovider = LoadAccountingLedgerDataProvider(xmlFilters, tenant, dateType);
+        //    XmlSerializer serializer = new XmlSerializer(typeof(AccountingLedgerDataProvider));
+        //    MemoryStream memstream = new MemoryStream();
+        //    serializer.Serialize(memstream, dataprovider);
+        //    memstream.Seek(0, SeekOrigin.Begin);
+        //    var reader = new StreamReader(memstream);
+        //    string content = reader.ReadToEnd();
+        //    byte[] bytearray = memstream.ToArray();
+        //    return bytearray;
+        //}
+
+        //public AccountingLedgerDataProvider LoadAccountingLedgerDataProvider(byte[] xmlFilters, int tenant, string dateType)
+        //{
+        //    AccountingLedgerDataProvider dataProvider = new AccountingLedgerDataProvider();
+        //    ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(tenant);
+        //    ARPaymentRepository aRPaymentRepository = new ARPaymentRepository(tenant);
+        //    APPaymentRepository aPPaymentRepository = new APPaymentRepository(tenant);
+        //    APInvoiceRepository aPInvoiceRepository = new APInvoiceRepository(tenant);
+        //    ARPaymentQuery arPaymentQuery = new ARPaymentQuery(aRPaymentRepository);
+        //    ARInvoiceQuery arInvoiceQuery = new ARInvoiceQuery(aRInvoiceRepository);
+        //    APPaymentQuery aPPaymentQuery = new APPaymentQuery(aPPaymentRepository);
+        //    APInvoiceQuery aPInvoiceQuery = new APInvoiceQuery(aPInvoiceRepository);
+        //    MemoryStream memorystream = new MemoryStream(xmlFilters);
+        //    XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+        //    QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+        //    GenericFilter filter = new GenericFilter();
+        //    GenericSort sortClass = new GenericSort();
+        //    ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+
+        //    TenantPM currentTenant = TenantQuery.GetSingleTenantPM(tenant, false);
+
+        //    IQueryable<ARInvoice> iQueryable = aRInvoiceRepository.GetAccountingLedgerARInvoices(tenant);
+        //    IQueryable<ARPayment> iQueryablePayment = aRPaymentRepository.GetAccountingLedgerARPayments(tenant);
+        //    IQueryable<APPayment> iQueryableApPayment = aPPaymentRepository.GetAccountingLedgerAPPayments(tenant);
+        //    IQueryable<APInvoice> iQueryableApInvoice = aPInvoiceRepository.GetAccountingLedgerAPInvoices(tenant);
+
+        //    QueryOperations nonListQueryOperation = new QueryOperations();
+        //    nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+        //    QueryOperations listQueryOperation = new QueryOperations();
+        //    listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+
+        //    InvoiceCustomFilter customFilters = new InvoiceCustomFilter(tenant);
+
+        //    QueryFilterItem fromDateItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CreateDate" && d.Operator == "GreaterThanOrEqual").FirstOrDefault();
+        //    DateTime fromDate;
+        //    DateTime.TryParse(fromDateItem.FieldValue.ToString(), out fromDate);
+        //    dataProvider.FromPeriod = fromDate;
+
+        //    QueryFilterItem toDateItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CreateDate" && d.Operator == "LessThanOrEqual").FirstOrDefault();
+        //    DateTime toDate;
+        //    DateTime.TryParse(toDateItem.FieldValue.ToString(), out toDate);
+        //    toDate = toDate.Date.AddHours(23).AddMinutes(59);
+        //    dataProvider.ToPeriod = toDate;
+        //    toDateItem.FieldValue = toDate;
+
+        //    AddressQuery addressQuery = new AddressQuery(tenant);
+        //    AddressPM address = addressQuery.GetSingleAddressPM(currentTenant.AddressId, currentTenant.Id, false);
+        //    if (address != null)
+        //    {
+        //        dataProvider.Address1 = address.Address1;
+        //        dataProvider.Address2 = address.Address2;
+        //        dataProvider.City = address.City;
+        //        dataProvider.Country = address.CountryName;
+        //        dataProvider.TenantFax = address.FaxNumber;
+        //        dataProvider.TenantPhone = address.PhoneNumber;
+        //        dataProvider.State = address.StateEnglishName;
+        //        dataProvider.ZipCode = address.ZipCode;
+        //        dataProvider.State = address.StateEnglishName;
+
+        //    }
+        //    dataProvider.CompanyAddress = currentTenant.CompanyAddress;
+        //    dataProvider.CompanyName = currentTenant.Company;
+        //    dataProvider.TenantName = currentTenant.Company;
+        //    dataProvider.Signature = currentTenant.Signature;
+        //    dataProvider.Logo = DataProviders.General.GetLogo(currentTenant.Id);
+
+        //    QueryFilterItem valueFromDateItem = null;
+        //    QueryFilterItem valueToDateItem = null;
+        //    if (dateType == "ValueDate")
+        //    {
+        //        fromDateItem.FieldName = "InvoiceDate";
+        //        toDateItem.FieldName = "InvoiceDate";
+        //        valueFromDateItem = new QueryFilterItem() { FieldName = "InvoiceDate", FieldValue = fromDate, Operator = "GreaterThanOrEqual", DisplayInList = false };
+        //        valueToDateItem = new QueryFilterItem() { FieldName = "InvoiceDate", FieldValue = toDate, Operator = "LessThanOrEqual", DisplayInList = false };
+        //    }
+
+        //    ARPaymentCustomFilter ARpaymentFilters = new ARPaymentCustomFilter(tenant);
+
+        //    iQueryable = customFilters.GetFilteredQuery(queryOperations, iQueryable);
+        //    iQueryable = filter.GetFilteredQuery<ARInvoice>(nonListQueryOperation, iQueryable);
+        //    if (dateType == "ValueDate")
+        //    {
+        //        fromDateItem.FieldName = "ValueDate";
+        //        toDateItem.FieldName = "ValueDate";
+        //    }
+
+        //    iQueryablePayment = ARpaymentFilters.GetFilteredQuery(queryOperations, iQueryablePayment);
+        //    iQueryablePayment = filter.GetFilteredQuery<ARPayment>(nonListQueryOperation, iQueryablePayment);
+
+        //    IQueryable<ARInvoiceList> invoicequery = arInvoiceQuery.GetIQueryableEntityList(iQueryable);
+        //    IQueryable<ARPaymentList> paymentquery = arPaymentQuery.GetIQueryableEntityList(iQueryablePayment);
+
+        //    QueryFilterItem customerItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "BillToId" && d.Operator == "Equals").FirstOrDefault();
+        //    string id = "";
+        //    Card customer = null;
+        //    if (customerItem != null)
+        //    {
+        //        id = customerItem.FieldValue.ToString();
+        //        customer = CardRepository.GetSingleCard(id, tenant, true);
+        //        dataProvider.CustomerName = customer.EnglishName;
+        //    }
+        //    else
+        //    {
+        //        dataProvider.CustomerName = "All";
+        //    }
+
+        //    AddressRepository addressRepository = new AddressRepository(tenant);
+        //    IQueryable<APInvoiceList> openAPInvoiceQuery = null;
+        //    IQueryable<APPaymentList> openAPPaymentQuery = null;
+        //    IQueryable<ARPaymentList> openiARPaymentQuery = null;
+        //    IQueryable<ARInvoiceList> openARInoiceQuery = null;
+        //    IQueryable<APPaymentList> aPpaymentQuery = null;
+        //    IQueryable<APInvoiceList> aPinvoiceQuery = null;
+
+        //    QueryOperations APqueryOperations = new QueryOperations() { QueryFilterItems = new List<QueryFilterItem>(), };
+        //    QueryFilterItem vendorFilterItem = new QueryFilterItem() { DisplayInList = false, FieldName = "VendorId", FieldValue = customerItem.FieldValue, Operator = customerItem.Operator, };
+        //    APqueryOperations.QueryFilterItems.Add(vendorFilterItem);
+        //    if (dateType == "CreateDate")
+        //    {
+        //        APqueryOperations.QueryFilterItems.Add(fromDateItem);
+        //        APqueryOperations.QueryFilterItems.Add(toDateItem);
+        //    }
+        //    else
+        //    {
+        //        APqueryOperations.QueryFilterItems.Add(valueFromDateItem);
+        //        APqueryOperations.QueryFilterItems.Add(valueToDateItem);
+        //    }
+
+        //    QueryOperations nonListAPQueryOperation = new QueryOperations();
+        //    nonListAPQueryOperation.QueryFilterItems = APqueryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+        //    QueryOperations listAPQueryOperation = new QueryOperations();
+        //    listAPQueryOperation.QueryFilterItems = APqueryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+
+        //    APInvoiceCustomFilter APinvoiceFilters = new APInvoiceCustomFilter(tenant);
+        //    iQueryableApInvoice = APinvoiceFilters.GetFilteredQuery(APqueryOperations, iQueryableApInvoice);
+        //    APPaymentCustomFilter APpaymentFilters = new APPaymentCustomFilter(tenant);
+        //    iQueryableApPayment = APpaymentFilters.GetFilteredQuery(APqueryOperations, iQueryableApPayment);
+
+        //    iQueryableApInvoice = filter.GetFilteredQuery<APInvoice>(nonListAPQueryOperation, iQueryableApInvoice);
+        //    aPinvoiceQuery = aPInvoiceQuery.GetIQueryableEntityList(iQueryableApInvoice);
+
+        //    if (dateType == "ValueDate")
+        //    {
+        //        valueFromDateItem.FieldName = "ValueDate";
+        //        valueToDateItem.FieldName = "ValueDate";
+        //    }
+
+        //    iQueryableApPayment = filter.GetFilteredQuery<APPayment>(nonListAPQueryOperation, iQueryableApPayment);
+        //    aPpaymentQuery = aPPaymentQuery.GetIQueryableEntityList(iQueryableApPayment);
+
+        //    #region Open
+
+        //    IQueryable<ARInvoice> OpeniQueryable = aRInvoiceRepository.GetAccountingLedgerARInvoices(tenant);
+        //    IQueryable<ARPayment> openiQueryablePayment = aRPaymentRepository.GetAccountingLedgerARPayments(tenant);
+        //    IQueryable<APPayment> openiQueryableApPayment = aPPaymentRepository.GetAccountingLedgerAPPayments(tenant);
+        //    IQueryable<APInvoice> openiQueryableApInvoice = aPInvoiceRepository.GetAccountingLedgerAPInvoices(tenant);
+
+        //    QueryFilterItem OpenDateItem = new QueryFilterItem() { FieldName = "CreateDate", FieldValue = fromDateItem.FieldValue, Operator = "LessThan", DisplayInList = false };
+        //    if (dateType == "ValueDate")
+        //    {
+        //        OpenDateItem.FieldName = "InvoiceDate";
+        //    }
+
+        //    QueryOperations openARqueryOperations = new QueryOperations() { QueryFilterItems = new List<QueryFilterItem>(), };
+        //    openARqueryOperations.QueryFilterItems.Add(OpenDateItem);
+        //    openARqueryOperations.QueryFilterItems.Add(customerItem);
+
+        //    QueryOperations nonListARQueryOperation = new QueryOperations();
+        //    nonListARQueryOperation.QueryFilterItems = openARqueryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+        //    QueryOperations listARQueryOperation = new QueryOperations();
+        //    listARQueryOperation.QueryFilterItems = openARqueryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+
+        //    QueryOperations openAPqueryOperations = new QueryOperations() { QueryFilterItems = new List<QueryFilterItem>(), };
+        //    openAPqueryOperations.QueryFilterItems.Add(OpenDateItem);
+        //    openAPqueryOperations.QueryFilterItems.Add(vendorFilterItem);
+
+        //    QueryOperations nonListOpenAPQueryOperation = new QueryOperations();
+        //    nonListOpenAPQueryOperation.QueryFilterItems = openAPqueryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+        //    QueryOperations listAPOpenQueryOperation = new QueryOperations();
+        //    listAPOpenQueryOperation.QueryFilterItems = openAPqueryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+
+        //    OpeniQueryable = filter.GetFilteredQuery<ARInvoice>(nonListARQueryOperation, OpeniQueryable);
+        //    openARInoiceQuery = arInvoiceQuery.GetIQueryableEntityList(OpeniQueryable);
+        //    openiQueryableApInvoice = filter.GetFilteredQuery<APInvoice>(nonListOpenAPQueryOperation, openiQueryableApInvoice);
+        //    openAPInvoiceQuery = aPInvoiceQuery.GetIQueryableEntityList(openiQueryableApInvoice);
+
+        //    if (dateType == "ValueDate")
+        //    {
+        //        OpenDateItem.FieldName = "ValueDate";
+        //    }
+
+        //    openiQueryablePayment = filter.GetFilteredQuery<ARPayment>(nonListARQueryOperation, openiQueryablePayment);
+        //    openiARPaymentQuery = arPaymentQuery.GetIQueryableEntityList(openiQueryablePayment);
+        //    openiQueryableApPayment = filter.GetFilteredQuery<APPayment>(nonListOpenAPQueryOperation, openiQueryableApPayment);
+        //    openAPPaymentQuery = aPPaymentQuery.GetIQueryableEntityList(openiQueryableApPayment);
+
+        //    #endregion
+
+        //    string Id = "";
+        //    Card vendor = null;
+        //    if (vendorFilterItem != null)
+        //    {
+        //        Id = vendorFilterItem.FieldValue.ToString();
+        //        vendor = CardRepository.GetSingleCard(id, tenant, true);
+        //        dataProvider.CustomerName = vendor.EnglishName;
+        //    }
+        //    else
+        //    {
+        //        dataProvider.CustomerName = "All";
+        //    }
+
+        //    Address cardAddress = addressRepository.GetMainAddressByCardId(id, tenant);
+        //    if (cardAddress != null)
+        //    {
+        //        dataProvider.Address = DataProviders.General.GetAddress(cardAddress);
+        //        dataProvider.Phone = cardAddress.PhoneNumber;
+        //        if (cardAddress.State != null)
+        //            dataProvider.CustomerState = cardAddress.State.EnglishName;
+        //        dataProvider.ZIPCode = cardAddress.ZipCode;
+        //    }
+
+        //    double? Openbalance = 0;
+        //    List<AccountingLedgerDataProvider.AccountingLedger> OpeningAccounts = new List<AccountingLedgerDataProvider.AccountingLedger>();
+
+        //    Dictionary<string, object> openAccountingDectionary = new Dictionary<string, object>();
+
+        //    foreach (ARInvoiceList openArInvoice in openARInoiceQuery)
+        //    {
+        //        openAccountingDectionary.Add(openArInvoice.Id + "arin", openArInvoice);
+        //    }
+
+        //    foreach (ARPaymentList openArPayment in openiARPaymentQuery)
+        //    {
+        //        openAccountingDectionary.Add(openArPayment.Id + "arpa", openArPayment);
+        //    }
+
+        //    foreach (APInvoiceList openApInvoice in openAPInvoiceQuery)
+        //    {
+        //        openAccountingDectionary.Add(openApInvoice.Id + "apin", openApInvoice);
+        //    }
+
+        //    foreach (APPaymentList openApPayment in openAPPaymentQuery)
+        //    {
+        //        openAccountingDectionary.Add(openApPayment.Id + "appa", openApPayment);
+        //    }
+
+        //    foreach (object openItem in openAccountingDectionary.Values)
+        //    {
+        //        ARInvoiceList openARinvoice = openItem as ARInvoiceList;
+        //        if (openARinvoice != null)
+        //        {
+        //            AccountingLedgerDataProvider.AccountingLedger accountingLedgerRecord = new AccountingLedgerDataProvider.AccountingLedger();
+
+        //            accountingLedgerRecord.Currency = openARinvoice.InvoiceCurrencyCode;
+        //            if (openARinvoice.ARInvoiceTypeCode == "CD")
+        //            {
+        //                accountingLedgerRecord.ReferenceType = "Credit Note";
+        //            }
+
+        //            else if (openARinvoice.ARInvoiceTypeCode == "CC")
+        //            {
+        //                accountingLedgerRecord.ReferenceType = "Customs Credit";
+        //            }
+
+        //            else if (openARinvoice.ARInvoiceTypeCode == "CI")
+        //            {
+        //                accountingLedgerRecord.ReferenceType = "Customs Invoice";
+        //            }
+
+        //            else
+        //            {
+        //                accountingLedgerRecord.ReferenceType = "A\\R Invoice";
+        //            }
+
+        //            if (openARinvoice.ARInvoiceTypeCode == "IN" || openARinvoice.ARInvoiceTypeCode == "MN" || openARinvoice.ARInvoiceTypeCode == "CI")
+        //            {
+        //                if (openARinvoice.StatusCode == "AC")
+        //                {
+        //                    accountingLedgerRecord.Credits = (double)Math.Abs((decimal)openARinvoice.AmountInInvoiceCurrency);
+        //                }
+
+        //                else
+        //                {
+        //                    accountingLedgerRecord.Debit = openARinvoice.AmountInInvoiceCurrency;
+        //                }
+        //            }
+        //            else
+        //            {
+        //                accountingLedgerRecord.Credits = (double)Math.Abs((decimal)openARinvoice.AmountInInvoiceCurrency);
+        //            }
+
+        //            accountingLedgerRecord.Notes = openARinvoice.InternalNotes;
+        //            OpeningAccounts.Add(accountingLedgerRecord);
+        //            continue;
+        //        }
+
+        //        ARPaymentList openARpayment = openItem as ARPaymentList;
+        //        if (openARpayment != null)
+        //        {
+        //            AccountingLedgerDataProvider.AccountingLedger accountingLedgerRecord = new AccountingLedgerDataProvider.AccountingLedger();
+        //            accountingLedgerRecord.ReferenceType = "A\\R Payment";
+
+        //            if (openARpayment.AccountingPaymentMethodCode == "FS")
+        //            {
+        //                if(openARpayment.AmountInPaymentCurrency < 0)
+        //                {
+        //                    accountingLedgerRecord.Debit = (double)Math.Abs((decimal)openARpayment.AmountInPaymentCurrency);
+        //                }
+
+        //                else
+        //                {
+        //                    accountingLedgerRecord.Credits = (double)Math.Abs((decimal)openARpayment.AmountInPaymentCurrency);
+        //                }
+        //            }
+
+        //            else
+        //            {
+        //                accountingLedgerRecord.Credits = (double)Math.Abs((decimal)openARpayment.AmountInPaymentCurrency);
+        //            }
+
+        //            accountingLedgerRecord.Currency = openARpayment.PaymentCurrencyCode;
+        //            accountingLedgerRecord.Notes = openARpayment.InternalNotes;
+        //            OpeningAccounts.Add(accountingLedgerRecord);
+        //            continue;
+        //        }
+
+        //        APPaymentList openAPpayment = openItem as APPaymentList;
+        //        if (openAPpayment != null)
+        //        {
+        //            AccountingLedgerDataProvider.AccountingLedger accountingLedgerRecord = new AccountingLedgerDataProvider.AccountingLedger();
+        //            accountingLedgerRecord.ReferenceType = "A\\P Payment";
+
+        //            if (openAPpayment.PaymentMethodCode == "FS")
+        //            {
+        //                if (openAPpayment.AmountInPaymentCurrency < 0)
+        //                {
+        //                    accountingLedgerRecord.Credits = (double)Math.Abs((decimal)openAPpayment.AmountInPaymentCurrency);
+        //                }
+
+        //                else
+        //                {
+        //                    accountingLedgerRecord.Debit = (double)Math.Abs((decimal)openAPpayment.AmountInPaymentCurrency);
+        //                }
+        //            }
+
+        //            else
+        //            {
+        //                accountingLedgerRecord.Debit = (double)Math.Abs((decimal)openAPpayment.AmountInPaymentCurrency);
+        //            }
+
+        //            accountingLedgerRecord.Currency = openAPpayment.PaymentCurrencyCode;
+        //            accountingLedgerRecord.Notes = openAPpayment.InternalNotes;
+        //            OpeningAccounts.Add(accountingLedgerRecord);
+        //            continue;
+        //        }
+
+        //        APInvoiceList openAPInvoice = openItem as APInvoiceList;
+        //        if (openAPInvoice != null)
+        //        {
+        //            AccountingLedgerDataProvider.AccountingLedger accountingLedgerRecord = new AccountingLedgerDataProvider.AccountingLedger();
+
+        //            if (openAPInvoice.AmountInInvoiceCurrency > 0)
+        //            {
+        //                accountingLedgerRecord.ReferenceType = "A\\P Invoice";
+        //                accountingLedgerRecord.Credits = (double)Math.Abs((decimal)openAPInvoice.AmountInInvoiceCurrency);
+        //            }
+        //            else
+        //            {
+        //                accountingLedgerRecord.ReferenceType = "A\\P Credit Note";
+        //                accountingLedgerRecord.Debit = (double)Math.Abs((decimal)openAPInvoice.AmountInInvoiceCurrency);
+        //            }
+
+        //            if (accountingLedgerRecord.Debit != null || accountingLedgerRecord.Credits != null)
+        //            {
+        //                accountingLedgerRecord.Currency = openAPInvoice.InvoiceCurrencyCode;
+        //            }
+
+        //            accountingLedgerRecord.Notes = openAPInvoice.InternalNotes;
+        //            OpeningAccounts.Add(accountingLedgerRecord);
+        //            continue;
+        //        }
+        //    }
+
+        //    OpeningAccounts = OpeningAccounts.OrderBy(d => d.CreateDate).ToList();
+
+        //    var OpenledgerGroups = from item in OpeningAccounts
+        //                           group item by item.Currency into g
+        //                           select new { CurrencyCode = g.Key, Items = g };
+
+        //    List<AccountingLedgerDataProvider.AccountingLedger> lastLedgers = new List<AccountingLedgerDataProvider.AccountingLedger>();
+
+        //    foreach (var ledgerGroup in OpenledgerGroups)
+        //    {
+        //        Openbalance = 0;
+        //        foreach (AccountingLedgerDataProvider.AccountingLedger ledger in ledgerGroup.Items)
+        //        {
+        //            switch (ledger.ReferenceType)
+        //            {
+        //                case "A\\P Payment":
+        //                case "A\\R Invoice":
+        //                case "A\\P Credit Note":
+        //                    {
+        //                        Openbalance = Openbalance + ledger.Debit;
+        //                        ledger.AccountBanalnce = Openbalance;
+        //                        break;
+        //                    }
+
+
+        //                case "A\\R Payment":
+        //                case "Credit Note":
+        //                case "A\\P Invoice":
+        //                    {
+        //                        Openbalance = Openbalance - ledger.Credits;
+        //                        ledger.AccountBanalnce = Openbalance;
+        //                        break;
+        //                    }
+        //            }
+        //        }
+        //        AccountingLedgerDataProvider.AccountingLedger lastLedger = ledgerGroup.Items.LastOrDefault();
+        //        AccountingLedgerDataProvider.AccountingLedger newLastLedger = new AccountingLedgerDataProvider.AccountingLedger()
+        //        {
+        //            AccountBanalnce = lastLedger.AccountBanalnce,
+
+        //            ReferenceType = "Opening Balance",
+        //            Currency = lastLedger.Currency,
+        //        };
+        //        lastLedgers.Add(newLastLedger);
+        //    }
+
+        //    #region Accounting
+
+        //    double? balance = 0;
+        //    dataProvider.AccountingLedgerList = new List<AccountingLedgerDataProvider.AccountingLedger>();
+        //    Dictionary<string, object> accountingDictionary = new Dictionary<string, object>();
+
+        //    foreach (ARInvoiceList arInvoice in invoicequery)
+        //    {
+        //        accountingDictionary.Add(arInvoice.Id + "arin", arInvoice);
+        //    }
+
+        //    foreach (ARPaymentList arPayment in paymentquery)
+        //    {
+        //        accountingDictionary.Add(arPayment.Id + "arpa", arPayment);
+        //    }
+
+        //    foreach (APInvoiceList apInvoice in aPinvoiceQuery)
+        //    {
+        //        accountingDictionary.Add(apInvoice.Id + "apin", apInvoice);
+        //    }
+
+        //    foreach (APPaymentList apPayment in aPpaymentQuery)
+        //    {
+        //        accountingDictionary.Add(apPayment.Id + "appa", apPayment);
+        //    }
+
+        //    foreach (object accountingItem in accountingDictionary.Values)
+        //    {
+        //        #region ARInvoice
+        //        ARInvoiceList arInvoice = accountingItem as ARInvoiceList;
+        //        if (arInvoice != null)
+        //        {
+        //            AccountingLedgerDataProvider.AccountingLedger accountingLedgerRecord = new AccountingLedgerDataProvider.AccountingLedger();
+        //            accountingLedgerRecord.ReferenceNumber = arInvoice.InvoiceNumber;
+        //            accountingLedgerRecord.Currency = arInvoice.InvoiceCurrencyCode;
+        //            accountingLedgerRecord.DueDate = arInvoice.DueDate.Value;
+        //            accountingLedgerRecord.Notes = arInvoice.InternalNotes;
+        //            if (!string.IsNullOrEmpty(arInvoice.MainEntityId))
+        //            {
+        //                Shipment shipment = shipmentRepository.GetSingleShipment(arInvoice.MainEntityId, tenant);
+        //                if (shipment != null)
+        //                {
+        //                    accountingLedgerRecord.ShipperReference1 = shipment.ShipperReference1;
+        //                    accountingLedgerRecord.ShipperReference2 = shipment.ShipperReference2;
+        //                    accountingLedgerRecord.ShipmentNumber = shipment.ShipmentNumber;
+        //                }
+        //            }
+
+        //            if (dateType == "ValueDate")
+        //            {
+        //                accountingLedgerRecord.CreateDate = arInvoice.InvoiceDate.Value;
+        //            }
+        //            else
+        //            {
+        //                accountingLedgerRecord.CreateDate = arInvoice.CreateDate.Value;
+        //            }
+
+        //            if (arInvoice.ARInvoiceTypeCode == "CD")
+        //            {
+        //                accountingLedgerRecord.ReferenceType = "Credit Note";
+        //            }
+
+        //            else if (arInvoice.ARInvoiceTypeCode == "CC")
+        //            {
+        //                accountingLedgerRecord.ReferenceType = "Customs Credit";
+        //            }
+
+        //            else if (arInvoice.ARInvoiceTypeCode == "CI")
+        //            {
+        //                accountingLedgerRecord.ReferenceType = "Customs Invoice";
+        //            }
+
+        //            else
+        //            {
+        //                accountingLedgerRecord.ReferenceType = "A\\R Invoice";
+        //            }
+
+        //            if (arInvoice.ARInvoiceTypeCode == "IN" || arInvoice.ARInvoiceTypeCode == "MN" || arInvoice.ARInvoiceTypeCode == "CI")
+        //            {
+        //                if (arInvoice.StatusCode == "AC")
+        //                {
+        //                    accountingLedgerRecord.Credits = (double)Math.Abs((decimal)arInvoice.AmountInInvoiceCurrency);
+        //                }
+
+        //                else
+        //                {
+        //                    accountingLedgerRecord.Debit = arInvoice.AmountInInvoiceCurrency;
+        //                }
+        //            }
+        //            else
+        //            {
+        //                if (arInvoice.StatusCode == "AC" && (arInvoice.CreditedByARInvoiceTypeCode == "CD" || arInvoice.CreditedByARInvoiceTypeCode == "CC"))
+        //                {
+        //                    accountingLedgerRecord.Debit = arInvoice.AmountInInvoiceCurrency;
+        //                }
+
+        //                else
+        //                {
+        //                    accountingLedgerRecord.Credits = (double)Math.Abs((decimal)arInvoice.AmountInInvoiceCurrency);
+        //                }
+        //            }
+
+        //            dataProvider.AccountingLedgerList.Add(accountingLedgerRecord);
+        //            continue;
+        //        }
+        //        #endregion
+
+        //        #region ARPayment
+        //        ARPaymentList arPaymentList = accountingItem as ARPaymentList;
+        //        if (arPaymentList != null)
+        //        {
+        //            AccountingLedgerDataProvider.AccountingLedger accountingLedgerRecord = new AccountingLedgerDataProvider.AccountingLedger();
+
+        //            if (dateType == "ValueDate")
+        //            {
+        //                accountingLedgerRecord.CreateDate = arPaymentList.ValueDate.Value;
+        //            }
+        //            else
+        //            {
+        //                accountingLedgerRecord.CreateDate = arPaymentList.CreateDate.Value;
+        //            }
+        //            accountingLedgerRecord.DueDate = arPaymentList.ValueDate != null ? arPaymentList.ValueDate.Value : arPaymentList.CreateDate.Value;
+        //            accountingLedgerRecord.ReferenceNumber = arPaymentList.PaymentNo;
+        //            accountingLedgerRecord.ReferenceType = "A\\R Payment";
+
+        //            if (arPaymentList.AccountingPaymentMethodCode == "FS")
+        //            {
+        //                if (arPaymentList.AmountInPaymentCurrency < 0)
+        //                {
+        //                    accountingLedgerRecord.Debit = (double)Math.Abs((decimal)arPaymentList.AmountInPaymentCurrency);
+        //                }
+
+        //                else
+        //                {
+        //                    accountingLedgerRecord.Credits = (double)Math.Abs((decimal)arPaymentList.AmountInPaymentCurrency);
+        //                }
+        //            }
+
+        //            else
+        //            {
+        //                accountingLedgerRecord.Credits = (double)Math.Abs((decimal)arPaymentList.AmountInPaymentCurrency);
+        //            }
+
+        //            accountingLedgerRecord.Currency = arPaymentList.PaymentCurrencyCode;
+        //            accountingLedgerRecord.Notes = arPaymentList.InternalNotes;
+        //            accountingLedgerRecord.RegisterDate = arPaymentList.RegisterDate;
+        //             accountingLedgerRecord.ValueDate = arPaymentList.ValueDate;
+        //             accountingLedgerRecord.PaymentMethod = arPaymentList.AccountingPaymentMethodName;
+        //             dataProvider.AccountingLedgerList.Add(accountingLedgerRecord);
+        //             continue;
+        //         }
+        //         #endregion
+
+        //        #region APInvoice
+        //        APInvoiceList apInvoiceList = accountingItem as APInvoiceList;
+        //        if (apInvoiceList != null)
+        //        {
+        //            AccountingLedgerDataProvider.AccountingLedger accountingLedgerRecord = new AccountingLedgerDataProvider.AccountingLedger();
+        //            accountingLedgerRecord.DueDate = apInvoiceList.DueDate.Value;
+        //            accountingLedgerRecord.ReferenceNumber = apInvoiceList.InvoiceNumber;
+        //            accountingLedgerRecord.Notes = apInvoiceList.InternalNotes;
+        //            if (!string.IsNullOrEmpty(apInvoiceList.MainEntityReference))
+        //            {
+        //                Shipment shipment = shipmentRepository.GetSingleShipmentByShipmentNumber(apInvoiceList.MainEntityReference, tenant);
+        //                if (shipment != null)
+        //                {
+        //                    accountingLedgerRecord.ShipperReference1 = shipment.ShipperReference1;
+        //                    accountingLedgerRecord.ShipperReference2 = shipment.ShipperReference2;
+        //                    accountingLedgerRecord.ShipmentNumber = shipment.ShipmentNumber;
+        //                }
+        //            }
+
+        //            if (dateType == "ValueDate")
+        //            {
+        //                accountingLedgerRecord.CreateDate = apInvoiceList.InvoiceDate.Value;
+        //            }
+        //            else
+        //            {
+        //                accountingLedgerRecord.CreateDate = apInvoiceList.CreateDate.Value;
+        //            }
+
+        //            if (apInvoiceList.AmountInInvoiceCurrency > 0)
+        //            {
+        //                accountingLedgerRecord.ReferenceType = "A\\P Invoice";
+        //                accountingLedgerRecord.Credits = (double)Math.Abs((decimal)apInvoiceList.AmountInInvoiceCurrency);
+        //            }
+        //            else
+        //            {
+        //                accountingLedgerRecord.ReferenceType = "A\\P Credit Note";
+        //                accountingLedgerRecord.Debit = (double)Math.Abs((decimal)apInvoiceList.AmountInInvoiceCurrency);
+        //            }
+
+        //            if (accountingLedgerRecord.Debit != null || accountingLedgerRecord.Credits != null)
+        //            {
+        //                accountingLedgerRecord.Currency = apInvoiceList.InvoiceCurrencyCode;
+        //            }
+
+        //            dataProvider.AccountingLedgerList.Add(accountingLedgerRecord);
+        //            continue;
+        //        }
+        //        #endregion
+
+        //        #region APPayment
+        //        APPaymentList apPaymentList = accountingItem as APPaymentList;
+        //        if (apPaymentList != null)
+        //        {
+        //            AccountingLedgerDataProvider.AccountingLedger accountingLedgerRecord = new AccountingLedgerDataProvider.AccountingLedger();
+
+        //            if (dateType == "ValueDate")
+        //            {
+        //                accountingLedgerRecord.CreateDate = apPaymentList.ValueDate.Value;
+        //            }
+        //            else
+        //            {
+        //                accountingLedgerRecord.CreateDate = apPaymentList.CreateDate.Value;
+        //            }
+        //            accountingLedgerRecord.DueDate = apPaymentList.ValueDate != null ? apPaymentList.ValueDate.Value : apPaymentList.CreateDate.Value;
+        //            accountingLedgerRecord.ReferenceNumber = apPaymentList.PaymentNo;
+        //            accountingLedgerRecord.ReferenceType = "A\\P Payment";
+
+        //            if (apPaymentList.PaymentMethodCode == "FS")
+        //            {
+        //                if (apPaymentList.AmountInPaymentCurrency < 0)
+        //                {
+        //                    accountingLedgerRecord.Credits = (double)Math.Abs((decimal)apPaymentList.AmountInPaymentCurrency);
+        //                }
+
+        //                else
+        //                {
+        //                    accountingLedgerRecord.Debit = (double)Math.Abs((decimal)apPaymentList.AmountInPaymentCurrency);
+        //                }
+        //            }
+
+        //            else
+        //            {
+        //                accountingLedgerRecord.Debit = (double)Math.Abs((decimal)apPaymentList.AmountInPaymentCurrency);
+        //            }
+
+        //            accountingLedgerRecord.Currency = apPaymentList.PaymentCurrencyCode;
+        //            accountingLedgerRecord.Notes = apPaymentList.InternalNotes;
+        //            accountingLedgerRecord.RegisterDate = apPaymentList.RegisterDate;
+        //            accountingLedgerRecord.ValueDate = apPaymentList.ValueDate;
+        //            accountingLedgerRecord.PaymentMethod = apPaymentList.PaymentMethodName;
+        //            dataProvider.AccountingLedgerList.Add(accountingLedgerRecord);
+        //            continue;
+        //        }
+        //        #endregion
+        //    }
+
+        //    dataProvider.AccountingLedgerList = dataProvider.AccountingLedgerList.OrderBy(d => d.CreateDate).ToList();
+        //    var ledgerGroups = from item in dataProvider.AccountingLedgerList
+        //                       group item by item.Currency into g
+        //                       select new { CurrencyCode = g.Key, Items = g };
+
+        //    foreach (var ledgerGroup in ledgerGroups)
+        //    {
+        //        balance = 0;
+        //        foreach (AccountingLedgerDataProvider.AccountingLedger ledger in ledgerGroup.Items)
+        //        {
+        //            switch (ledger.ReferenceType)
+        //            {
+        //                case "A\\P Payment":
+        //                case "A\\R Invoice":
+        //                case "A\\P Credit Note":
+        //                    {
+        //                        balance = balance + ledger.Debit;
+        //                        ledger.AccountBanalnce = balance;
+        //                        break;
+        //                    }
+
+        //                case "A\\R Payment":
+        //                case "Credit Note":
+        //                case "A\\P Invoice":
+        //                    {
+        //                        balance = balance - ledger.Credits;
+        //                        ledger.AccountBanalnce = balance;
+        //                        break;
+        //                    }
+        //            }
+        //        }
+        //    }
+
+        //    #endregion
+
+        //    double? firstitem = 0;
+        //    foreach (AccountingLedgerDataProvider.AccountingLedger ledger in lastLedgers)
+        //    {
+        //        dataProvider.AccountingLedgerList.Add(ledger);
+        //    }
+
+        //    var list = (from item in dataProvider.AccountingLedgerList
+        //                group item by item.Currency into g
+        //                select new { Currency = g.Key, Items = g });
+
+        //    dataProvider.AccountingLedgerList = new List<AccountingLedgerDataProvider.AccountingLedger>();
+
+        //    foreach (var group in list)
+        //    {
+        //        List<AccountingLedgerDataProvider.AccountingLedger> ledgerList = group.Items.ToList();
+        //        List<AccountingLedgerDataProvider.AccountingLedger> OpenList = group.Items.Where(d => d.ReferenceType == "Opening Balance").ToList();
+        //        if (OpenList.Count() == 0)
+        //        {
+        //            AccountingLedgerDataProvider.AccountingLedger accountingLedgerRecord = new AccountingLedgerDataProvider.AccountingLedger();
+        //            accountingLedgerRecord.ReferenceType = "Opening Balance";
+        //            accountingLedgerRecord.AccountBanalnce = 0.00;
+        //            accountingLedgerRecord.Currency = group.Currency;
+        //            ledgerList.Add(accountingLedgerRecord);
+        //        }
+
+        //        ledgerList = ledgerList.OrderBy(d => d.CreateDate).ToList();
+
+        //        foreach (AccountingLedgerDataProvider.AccountingLedger ledger in ledgerList)
+        //        {
+        //            dataProvider.AccountingLedgerList.Add(ledger);
+
+        //            int i = ledgerList.IndexOf(ledger);
+
+        //            if (i == 0)
+        //            {
+        //                firstitem = ledgerList[i].AccountBanalnce;
+        //            }
+
+        //            if (i < ledgerList.Count && i != 0)
+        //            {
+        //                ledger.AccountBanalnce = ledgerList[i - 1].AccountBanalnce + (ledgerList[i].Credits != null ? -1 * ledgerList[i].Credits : ledgerList[i].Debit);
+        //            }
+
+        //            ledger.Total = ledger.AccountBanalnce;
+        //        }
+        //    }
+
+        //    dataProvider.Name = @"Accounting Ledger";
+
+        //    if (dateType == "ValueDate")
+        //    {
+        //        dataProvider.DateType = "Value Date";
+        //    }
+        //    else
+        //    {
+        //        dataProvider.DateType = "Create Date";
+        //    }
+
+        //    return dataProvider;
+        //}
+        #endregion
+
+        #region AP Invoice Include Vat
+
+        [WebMethod]
+        public byte[] LoadAPInvoicesData(byte[] xmlFilters, int tenant)
+        {
+            InvoiceDataProvider dataprovider = LoadAPInvoicesDataProvider(xmlFilters, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(InvoiceDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+        public InvoiceDataProvider LoadAPInvoicesDataProvider(byte[] xmlFilters, int tenant)
+        {
+            InvoiceDataProvider dataProvider = new InvoiceDataProvider();
+            dataProvider.InvoicesReportList = new List<InvoiceDataProvider.InvoicesReport>();
+            dataProvider.InvoiceTotalsList = new List<InvoiceDataProvider.InvoiceTotals>();
+
+            APInvoiceTotalVATRepository aPInvoiceToatalVatRepository = new APInvoiceTotalVATRepository(tenant);
+            APInvoiceQuery aPInvoiceQuery = new APInvoiceQuery(tenant);
+            AddressQuery addressQuery = new AddressQuery(tenant);
+            VatTypeRepository vatTypeRepository = new VatTypeRepository(tenant);
+
+            IQueryable<APInvoiceList> iQueryable = aPInvoiceQuery.GetInvoiceListByTenant(tenant);
+            List<VatType> tenantVatTypes = vatTypeRepository.GetVatTypes(tenant).ToList();
+
+            #region Report Filters
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+
+            QueryFilterItem filterItem_InvoiceDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "InvoiceDate").FirstOrDefault();
+            QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
+            QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
+            QueryFilterItem filterItem_BranchId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "BranchId").FirstOrDefault();
+            QueryFilterItem filterItem_LocalCurrency = queryOperations.QueryFilterItems.Where(d => d.FieldName == "LocalCurrency").FirstOrDefault();
+            QueryFilterItem filterItem_IncludeVoidInvoices = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeVoidInvoices").FirstOrDefault();
+            QueryFilterItem filterItem_IncludeDraftInvoices = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeDraftInvoices").FirstOrDefault();
+
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+            DateTime date1 = todayDate.AddDays(-(todayDate.Day - 1)).AddMonths(-1);
+            DateTime date2 = date1.AddMonths(2);
+
+            bool invoiceDate = true;
+            if (filterItem_InvoiceDate != null)
+            {
+                if (filterItem_InvoiceDate.FieldValue != null)
+                {
+                    invoiceDate = (bool)filterItem_InvoiceDate.FieldValue;
+                }
+            }
+
+            if (filterItem_FromDate != null)
+            {
+                DateTime.TryParse(filterItem_FromDate.FieldValue.ToString(), out date1);
+
+                if (filterItem_ToDate != null)
+                {
+                    DateTime.TryParse(filterItem_ToDate.FieldValue.ToString(), out date2);
+                    //date2 = date2.AddMonths(1);
+                }
+
+                else
+                {
+                    date2 = date1.AddMonths(1);
+                }
+            }
+
+            string branchId = null;
+            if (filterItem_BranchId != null)
+            {
+                if (filterItem_BranchId.FieldValue != null)
+                {
+                    branchId = filterItem_BranchId.FieldValue.ToString();
+                }
+            }
+
+            bool localCurrency = true;
+            if (filterItem_LocalCurrency != null)
+            {
+                if (filterItem_LocalCurrency.FieldValue != null)
+                {
+                    bool.TryParse(filterItem_LocalCurrency.FieldValue.ToString(), out localCurrency);
+                }
+            }
+
+            bool includeVoidInvoices = true;
+            if (filterItem_IncludeVoidInvoices != null)
+            {
+                if (filterItem_IncludeVoidInvoices.FieldValue != null)
+                {
+                    bool.TryParse(filterItem_IncludeVoidInvoices.FieldValue.ToString(), out includeVoidInvoices);
+
+                }
+            }
+
+            bool includeDraftInvoices = true;
+            if (filterItem_IncludeDraftInvoices != null)
+            {
+                if (filterItem_IncludeDraftInvoices.FieldValue != null)
+                {
+                    bool.TryParse(filterItem_IncludeDraftInvoices.FieldValue.ToString(), out includeDraftInvoices);
+
+                }
+            }
+            #endregion
+
+            #region Filter Data
+            if (!includeDraftInvoices)
+            {
+                iQueryable = iQueryable.Where(d => d.StatusCode != "DR");
+            }
+
+            if (!includeVoidInvoices)
+            {
+                iQueryable = iQueryable.Where(d => d.StatusCode != "VD");
+            }
+
+            if (!string.IsNullOrEmpty(branchId))
+            {
+                iQueryable = iQueryable.Where(d => d.BranchId == branchId);
+            }
+
+            if (invoiceDate)
+            {
+                iQueryable = iQueryable.Where(d => d.InvoiceDate >= date1 && d.InvoiceDate <= date2);
+            }
+
+            else
+            {
+                iQueryable = iQueryable.Where(d => d.CreateDate >= date1 && d.CreateDate <= date2);
+            }
+            #endregion
+
+            #region Fill General Data
+            TenantPM currentTenant = TenantQuery.GetSingleTenantPM(tenant, false);
+            AddressPM address = addressQuery.GetSingleAddressPM(currentTenant.AddressId, currentTenant.Id, false);
+
+            if (address != null)
+            {
+                dataProvider.Address1 = address.Address1;
+                dataProvider.Address2 = address.Address2;
+                dataProvider.City = address.City;
+                dataProvider.Country = address.CountryName;
+                dataProvider.TenantFax = address.FaxNumber;
+                dataProvider.TenantPhone = address.PhoneNumber;
+                dataProvider.State = address.StateEnglishName;
+                dataProvider.ZipCode = address.ZipCode;
+            }
+
+            dataProvider.TenantName = currentTenant.Company;
+            dataProvider.Signature = currentTenant.Signature;
+            dataProvider.Logo = DataProviders.General.GetLogo(currentTenant.Id);
+            dataProvider.FromPeriod = date1;
+            dataProvider.ToPeriod = date2;
+            #endregion
+
+            #region Fill Report
+            double? totalVat = 0;
+            double? totalGrands = 0;
+            double? subTotals = 0;
+            List<APInvoiceTotalVAT> totalVats = aPInvoiceToatalVatRepository.GetAPInvoiceTotalVats(tenant).ToList();
+            int counter = 1;
+
+            foreach (APInvoiceList a in iQueryable.OrderBy(d => d.InvoiceDate))
+            {
+                InvoiceDataProvider.InvoicesReport invoicesRecored = new InvoiceDataProvider.InvoicesReport();
+                List<APInvoiceTotalVAT> myTotalVats = totalVats.Where(d => d.APInvoiceId == a.Id).ToList();
+                List<VATClass> myVATS = new List<VATClass>();
+
+                foreach (APInvoiceTotalVAT vat in myTotalVats)
+                {
+                    VATClass item = new VATClass()
+                    {
+                        Index = counter,
+                        Percentage = vat.VatPercent,
+                        VATName = tenantVatTypes.Where(d => d.Id == vat.VatTypeId).FirstOrDefault().EnglishName,
+                        VATCode = tenantVatTypes.Where(d => d.Id == vat.VatTypeId).FirstOrDefault().Code,
+                        InvoiceAmount = vat.InvoiceCurrencyVATAmount,
+                        LocalAmount = vat.LocalVATAmount,
+                    };
+
+                    myVATS.Add(item);
+
+                    counter++;
+                }
+
+                foreach (VATClass item in myVATS)
+                {
+                    //1
+                    if (string.IsNullOrEmpty(dataProvider.VAT1Code))
+                    {
+                        dataProvider.VAT1Code = item.VATCode;
+                        dataProvider.VAT1Header = item.Percentage + "% " + item.VATName;
+                        invoicesRecored.VAT1Amount = localCurrency ? item.LocalAmount : item.InvoiceAmount;
+                        continue;
+                    }
+
+                    else
+                    {
+                        if (dataProvider.VAT1Code == item.VATCode)
+                        {
+                            dataProvider.VAT1Code = item.VATCode;
+                            dataProvider.VAT1Header = item.Percentage + "% " + item.VATName;
+                            invoicesRecored.VAT1Amount = localCurrency ? item.LocalAmount : item.InvoiceAmount;
+                            continue;
+                        }
+                    }
+
+                    //2
+                    if (string.IsNullOrEmpty(dataProvider.VAT2Code))
+                    {
+                        dataProvider.VAT2Code = item.VATCode;
+                        dataProvider.VAT2Header = item.Percentage + "% " + item.VATName;
+                        invoicesRecored.VAT2Amount = localCurrency ? item.LocalAmount : item.InvoiceAmount;
+                        continue;
+                    }
+
+                    else
+                    {
+                        if (dataProvider.VAT2Code == item.VATCode)
+                        {
+                            dataProvider.VAT2Code = item.VATCode;
+                            dataProvider.VAT2Header = item.Percentage + "% " + item.VATName;
+                            invoicesRecored.VAT2Amount = localCurrency ? item.LocalAmount : item.InvoiceAmount;
+                            continue;
+                        }
+                    }
+
+                    //3
+                    if (string.IsNullOrEmpty(dataProvider.VAT3Code))
+                    {
+                        dataProvider.VAT3Code = item.VATCode;
+                        dataProvider.VAT3Header = item.Percentage + "% " + item.VATName;
+                        invoicesRecored.VAT3Amount = localCurrency ? item.LocalAmount : item.InvoiceAmount;
+                        continue;
+                    }
+
+                    else
+                    {
+                        if (dataProvider.VAT3Code == item.VATCode)
+                        {
+                            dataProvider.VAT3Code = item.VATCode;
+                            dataProvider.VAT3Header = item.Percentage + "% " + item.VATName;
+                            invoicesRecored.VAT3Amount = localCurrency ? item.LocalAmount : item.InvoiceAmount;
+                            continue;
+                        }
+                    }
+
+                    //4
+                    if (string.IsNullOrEmpty(dataProvider.VAT4Code))
+                    {
+                        dataProvider.VAT4Code = item.VATCode;
+                        dataProvider.VAT4Header = item.Percentage + "% " + item.VATName;
+                        invoicesRecored.VAT4Amount = localCurrency ? item.LocalAmount : item.InvoiceAmount;
+                        continue;
+                    }
+
+                    else
+                    {
+                        if (dataProvider.VAT4Code == item.VATCode)
+                        {
+                            dataProvider.VAT4Code = item.VATCode;
+                            dataProvider.VAT4Header = item.Percentage + "% " + item.VATName;
+                            invoicesRecored.VAT4Amount = localCurrency ? item.LocalAmount : item.InvoiceAmount;
+                            continue;
+                        }
+                    }
+                }
+
+                invoicesRecored.InvoiceType = a.APInvoiceTypeName;
+                invoicesRecored.InvoiceDate = a.InvoiceDate.Value;
+                invoicesRecored.InvoiceNumber = a.InvoiceNumber;
+                invoicesRecored.BillTo = a.VendorName;
+                invoicesRecored.OurRefNumber = a.MainEntityReference;
+                invoicesRecored.InvoiceStatus = a.StatusName;
+                invoicesRecored.Currency = a.InvoiceCurrencyCode;
+                invoicesRecored.CreateDate = a.CreateDate;
+
+                if (localCurrency)
+                {
+                    totalVat = totalVat + myTotalVats.Sum(d => d.LocalVATAmount);
+                    subTotals = subTotals + a.SubTotalInLocalCurrency;
+                    totalGrands = totalGrands + totalVat + subTotals;
+                    invoicesRecored.SubTotallocal = a.SubTotalInLocalCurrency;
+                    invoicesRecored.VATlocal = myTotalVats.Sum(d => d.LocalVATAmount);
+                    invoicesRecored.Currency = a.LocalCurrencyCode;
+                    invoicesRecored.GrandTotallocal = invoicesRecored.SubTotallocal + invoicesRecored.VATlocal;
+                }
+                else
+                {
+                    invoicesRecored.SubTotallocal = a.SubTotalInInvoiceCurrency;
+                    invoicesRecored.VATlocal = myTotalVats.Sum(d => d.InvoiceCurrencyVATAmount);
+                    invoicesRecored.GrandTotallocal = invoicesRecored.SubTotallocal + invoicesRecored.VATlocal;
+                    invoicesRecored.Currency = a.InvoiceCurrencyCode;
+                    invoicesRecored.vatInLocal = myTotalVats.Sum(d => d.LocalVATAmount);
+                    invoicesRecored.subInLocal = a.SubTotalInLocalCurrency;
+                    invoicesRecored.LocalCurrency = a.LocalCurrencyCode;
+                }
+
+                dataProvider.InvoicesReportList.Add(invoicesRecored);
+            }
+
+            dataProvider.InvoiceTotalsList = (from b in dataProvider.InvoicesReportList
+                                              group b by new { b.Currency } into g
+                                              select new WebFreight.Web.DataProviders.InvoiceDataProvider.InvoiceTotals()
+                                              {
+                                                  Currency = g.Key.Currency,
+                                                  TotalSubTotals = g.Sum(b => b.SubTotallocal),
+                                                  TotalGrands = g.Sum(b => b.GrandTotallocal),
+                                                  TotalVats = g.Sum(b => b.VATlocal).Value,
+                                                  VAT1Amount = g.Sum(b => b.VAT1Amount),
+                                                  VAT2Amount = g.Sum(b => b.VAT2Amount),
+                                                  VAT3Amount = g.Sum(b => b.VAT3Amount),
+                                                  VAT4Amount = g.Sum(b => b.VAT4Amount),
+                                                  totalGrandTotal = g.Sum(b => b.vatInLocal) + g.Sum(b => b.subInLocal),
+                                              }).ToList();
+
+            dataProvider.TotalVats_1 = dataProvider.InvoicesReportList.Sum(s => s.VAT1Amount);
+            dataProvider.TotalVats_2 = dataProvider.InvoicesReportList.Sum(s => s.VAT2Amount);
+            dataProvider.TotalVats_3 = dataProvider.InvoicesReportList.Sum(s => s.VAT3Amount);
+            dataProvider.TotalVats_4 = dataProvider.InvoicesReportList.Sum(s => s.VAT4Amount);
+
+            dataProvider.TotalVats = totalVat;
+            dataProvider.TotalSub = subTotals;
+            dataProvider.TotalsGrands = totalVat + subTotals;
+            dataProvider.Name = @"Invoices";
+            #endregion
+
+            return dataProvider;
+        }
+
+        #endregion
+
+        #region Statement By Invoice Date
+        [WebMethod]
+        public byte[] LoadStatementByInvoiceDateData(byte[] xmlFilters, int tenant)
+        {
+            StatementByInvoiceDateDataProvider dataProviderData = LoadStatementByInvoiceDateDataProvider(xmlFilters, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(StatementByInvoiceDateDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataProviderData);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+        public StatementByInvoiceDateDataProvider LoadStatementByInvoiceDateDataProvider(byte[] xmlFilters, int tenant)
+        {
+            StatementByInvoiceDateDataProvider totalData = new StatementByInvoiceDateDataProvider();
+            totalData.RecordList = new List<StatementByInvoiceDateDataProvider.StatementByInvoiceRecord>();
+            totalData.GroupList = new List<StatementByInvoiceDateDataProvider.StatementByInvoiceGroup>();
+
+            IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
+            CardRepository cardRepository = new CardRepository(tenant);
+            UserRepository userRepository = new UserRepository(tenant);
+            ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(invoiceContext);
+            ARPaymentRepository aRPaymentRepository = new ARPaymentRepository(invoiceContext);
+            APPaymentRepository aPPaymentRepository = new APPaymentRepository(invoiceContext);
+            APInvoiceRepository aPInvoiceRepository = new APInvoiceRepository(invoiceContext);
+            ARPaymentQuery arPaymentQuery = new ARPaymentQuery(aRPaymentRepository);
+            ARInvoiceQuery arInvoiceQuery = new ARInvoiceQuery(aRInvoiceRepository);
+            APPaymentQuery aPPaymentQuery = new APPaymentQuery(aPPaymentRepository);
+            APInvoiceQuery aPInvoiceQuery = new APInvoiceQuery(aPInvoiceRepository);
+
+            IQueryable<ARInvoiceList> iQueryableARInvoice = arInvoiceQuery.GetUnpaidARInvoices(tenant);
+            IQueryable<ARPaymentList> iQueryableARPayment = arPaymentQuery.GetOpenedARPayments(tenant);
+            IQueryable<APPaymentList> iQueryableAPPayment = aPPaymentQuery.GetOpenedAPPayments(tenant);
+            IQueryable<APInvoiceList> iQueryableAPInvoice = aPInvoiceQuery.GetUnpaidAPInvoices(tenant);
+
+            iQueryableARInvoice = iQueryableARInvoice.Where(d => !d.IsConstituentInvoice);
+
+            #region Report Filters
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+
+            QueryFilterItem customerItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomerId" && d.Operator == "Equals").FirstOrDefault();
+
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+            string customerId = null;
+            Card customer = null;
+
+            if (customerItem != null && customerItem.FieldValue != null)
+            {
+                customerId = customerItem.FieldValue.ToString();
+            }
+
+            if (!string.IsNullOrEmpty(customerId))
+            {
+                customer = CardRepository.GetSingleCard(customerId, tenant, true);
+
+                iQueryableARInvoice = iQueryableARInvoice.Where(d => d.BillToId == customerId);
+                iQueryableARPayment = iQueryableARPayment.Where(d => d.BillToId == customerId);
+                iQueryableAPPayment = iQueryableAPPayment.Where(d => d.VendorId == customerId);
+                iQueryableAPInvoice = iQueryableAPInvoice.Where(d => d.VendorId == customerId);
+            }
+
+            totalData.CustomerName = customer != null ? customer.EnglishName : "";
+            totalData.CurrentDate = todayDate;
+            #endregion
+
+            #region General Data
+            TenantPM currentTenant = TenantQuery.GetSingleTenantPM(tenant, false);
+            if (currentTenant != null)
+            {
+                AddressQuery addressQuery = new AddressQuery(tenant);
+                AddressPM address = addressQuery.GetSingleAddressPM(currentTenant.AddressId, currentTenant.Id, false);
+                AddressRepository addressRep = new AddressRepository(currentTenant.Id);
+                Address tenantAddress = addressRep.GetSingleAddress(currentTenant.AddressId, currentTenant.Id);
+                totalData.GeneralAddress = DataProviders.General.GetAddress(tenantAddress);
+
+                if (address != null)
+                {
+                    totalData.Address1 = address.Address1;
+                    totalData.Address2 = address.Address2;
+                    totalData.City = address.City;
+                    totalData.Country = address.CountryName;
+                    totalData.TenantFax = address.FaxNumber;
+                    totalData.TenantPhone = address.PhoneNumber;
+                    totalData.State = address.StateEnglishName;
+                    totalData.ZipCode = address.ZipCode;
+                }
+
+                totalData.TenantName = currentTenant.Company;
+                totalData.Signature = currentTenant.Signature;
+                totalData.Logo = DataProviders.General.GetLogo(currentTenant.Id);
+            }
+            #endregion
+
+            #region ARinvoice
+
+            if (iQueryableARInvoice.Count() > 0)
+            {
+                StatementByInvoiceDateDataProvider.StatementByInvoiceRecord statementRecord = null; ;
+
+                foreach (ARInvoiceList a in iQueryableARInvoice)
+                {
+                    statementRecord = new StatementByInvoiceDateDataProvider.StatementByInvoiceRecord();
+
+                    Card billTo = cardRepository.GetSingleCard(a.BillToId, tenant);
+
+                    statementRecord.InvoiceCurrency = a.InvoiceCurrencyCode;
+                    statementRecord.ShipmentNumber = a.MainEntityReference;
+                    statementRecord.InvoiceNumber = a.InvoiceNumber;
+                    statementRecord.SentDate = a.InvoiceDate;
+                    statementRecord.Age = Convert.ToInt32((todayDate - a.InvoiceDate.Value).TotalDays);
+                    statementRecord.DueAge = Convert.ToInt32((todayDate - a.DueDate.Value).TotalDays);
+                    statementRecord.PastTotalAmount = a.AmountDue;
+
+                    if (a.DueDate.Value.Date >= todayDate.Date)
+                    {
+                        statementRecord.OverDue = "";
+                    }
+                    else
+                    {
+                        statementRecord.OverDue = "Yes (" + statementRecord.DueAge + " days)";
+                    }
+
+                    if (billTo != null)
+                    {
+                        statementRecord.Customer = billTo.EnglishName;
+
+                        User salesman = userRepository.GetSingleUser(billTo.SalesmanUserId, tenant);
+                        if (salesman != null)
+                        {
+                            statementRecord.Salesman = salesman.Contact.EnglishName;
+                        }
+                    }
+
+                    if (a.DueDate >= todayDate)
+                    {
+                        statementRecord.CurrentAmount = a.AmountDue;
+                    }
+
+                    else if (((todayDate - a.DueDate.Value).TotalDays >= 1) && ((todayDate - a.DueDate.Value).TotalDays <= 30))
+                    {
+                        statementRecord.PastAmount_30 = a.AmountDue;
+                    }
+
+                    else if (((todayDate - a.DueDate.Value).TotalDays > 30) && ((todayDate - a.DueDate.Value).TotalDays <= 45))
+                    {
+                        statementRecord.PastAmount_45 = a.AmountDue;
+                    }
+
+                    else if (((todayDate - a.DueDate.Value).TotalDays > 45) && ((todayDate - a.DueDate.Value).TotalDays <= 60))
+                    {
+                        statementRecord.PastAmount_60 = a.AmountDue;
+                    }
+
+                    else if (((todayDate - a.DueDate.Value).TotalDays > 60) && ((todayDate - a.DueDate.Value).TotalDays <= 90))
+                    {
+                        statementRecord.PastAmount_90 = a.AmountDue;
+                    }
+
+                    else if ((todayDate - a.DueDate.Value).TotalDays > 90)
+                    {
+                        statementRecord.PastAmountOver_90 = a.AmountDue;
+                    }
+
+                    totalData.RecordList.Add(statementRecord);
+                }
+            }
+            #endregion
+
+            #region APinvoice
+
+            if (iQueryableAPInvoice.Count() > 0)
+            {
+                StatementByInvoiceDateDataProvider.StatementByInvoiceRecord statementRecord = null;
+
+                foreach (APInvoiceList a in iQueryableAPInvoice)
+                {
+                    statementRecord = new StatementByInvoiceDateDataProvider.StatementByInvoiceRecord();
+
+                    Card vendor = cardRepository.GetSingleCard(a.VendorId, tenant);
+
+                    statementRecord.InvoiceCurrency = a.InvoiceCurrencyCode;
+                    statementRecord.ShipmentNumber = a.MainEntityReference;
+                    statementRecord.InvoiceNumber = a.InvoiceNumber;
+                    statementRecord.SentDate = a.InvoiceDate;
+                    statementRecord.Age = Convert.ToInt32((todayDate - a.InvoiceDate.Value).TotalDays);
+                    statementRecord.DueAge = Convert.ToInt32((todayDate - a.DueDate.Value).TotalDays);
+                    statementRecord.PastTotalAmount = a.AmountDue * -1;
+
+                    if (a.DueDate.Value.Date >= todayDate.Date)
+                    {
+                        statementRecord.OverDue = "";
+                    }
+                    else
+                    {
+                        statementRecord.OverDue = "Yes (" + statementRecord.DueAge + " days)";
+                    }
+
+                    if (vendor != null)
+                    {
+                        statementRecord.Customer = vendor.EnglishName;
+
+                        User salesman = userRepository.GetSingleUser(vendor.SalesmanUserId, tenant);
+                        if (salesman != null)
+                        {
+                            statementRecord.Salesman = salesman.Contact.EnglishName;
+                        }
+                    }
+
+                    if (a.DueDate >= todayDate)
+                    {
+                        statementRecord.CurrentAmount = a.AmountDue * -1;
+                    }
+
+                    else if (((todayDate - a.DueDate.Value).TotalDays >= 1) && ((todayDate - a.DueDate.Value).TotalDays <= 30))
+                    {
+                        statementRecord.PastAmount_30 = a.AmountDue * -1;
+                    }
+
+                    else if (((todayDate - a.DueDate.Value).TotalDays > 30) && ((todayDate - a.DueDate.Value).TotalDays <= 45))
+                    {
+                        statementRecord.PastAmount_45 = a.AmountDue * -1;
+                    }
+
+                    else if (((todayDate - a.DueDate.Value).TotalDays > 45) && ((todayDate - a.DueDate.Value).TotalDays <= 60))
+                    {
+                        statementRecord.PastAmount_60 = a.AmountDue * -1;
+                    }
+
+                    else if (((todayDate - a.DueDate.Value).TotalDays > 60) && ((todayDate - a.DueDate.Value).TotalDays <= 90))
+                    {
+                        statementRecord.PastAmount_90 = a.AmountDue * -1;
+                    }
+
+                    else if ((todayDate - a.DueDate.Value).TotalDays > 90)
+                    {
+                        statementRecord.PastAmountOver_90 = a.AmountDue * -1;
+                    }
+
+                    totalData.RecordList.Add(statementRecord);
+                }
+            }
+            #endregion
+
+            #region ARPayment
+
+            if (iQueryableARPayment.Count() > 0)
+            {
+                StatementByInvoiceDateDataProvider.StatementByInvoiceRecord statementRecord = null; ;
+
+                foreach (ARPaymentList a in iQueryableARPayment)
+                {
+                    statementRecord = new StatementByInvoiceDateDataProvider.StatementByInvoiceRecord();
+
+                    Card billTo = cardRepository.GetSingleCard(a.BillToId, tenant);
+
+                    statementRecord.InvoiceCurrency = a.PaymentCurrencyCode;
+                    statementRecord.ShipmentNumber = ""; // ????
+                    statementRecord.InvoiceNumber = a.PaymentNo;
+                    statementRecord.SentDate = a.RegisterDate;
+                    statementRecord.Age = Convert.ToInt32((todayDate - a.RegisterDate.Value).TotalDays);
+                    statementRecord.DueAge = Convert.ToInt32((todayDate - a.ValueDate.Value).TotalDays);
+                    statementRecord.PastTotalAmount = a.OpenAmount * -1;
+
+                    if (a.ValueDate.Value.Date >= todayDate.Date)
+                    {
+                        statementRecord.OverDue = "";
+                    }
+                    else
+                    {
+                        statementRecord.OverDue = "Yes (" + statementRecord.DueAge + " days)";
+                    }
+
+                    if (billTo != null)
+                    {
+                        statementRecord.Customer = billTo.EnglishName;
+
+                        User salesman = userRepository.GetSingleUser(billTo.SalesmanUserId, tenant);
+                        if (salesman != null)
+                        {
+                            statementRecord.Salesman = salesman.Contact.EnglishName;
+                        }
+                    }
+
+                    if (a.ValueDate >= todayDate)
+                    {
+                        statementRecord.CurrentAmount = a.OpenAmount * -1;
+                    }
+
+                    else if (((todayDate - a.ValueDate.Value).TotalDays >= 1) && ((todayDate - a.ValueDate.Value).TotalDays <= 30))
+                    {
+                        statementRecord.PastAmount_30 = a.OpenAmount * -1;
+                    }
+
+                    else if (((todayDate - a.ValueDate.Value).TotalDays > 30) && ((todayDate - a.ValueDate.Value).TotalDays <= 45))
+                    {
+                        statementRecord.PastAmount_45 = a.OpenAmount * -1;
+                    }
+
+                    else if (((todayDate - a.ValueDate.Value).TotalDays > 45) && ((todayDate - a.ValueDate.Value).TotalDays <= 60))
+                    {
+                        statementRecord.PastAmount_60 = a.OpenAmount * -1;
+                    }
+
+                    else if (((todayDate - a.ValueDate.Value).TotalDays > 60) && ((todayDate - a.ValueDate.Value).TotalDays <= 90))
+                    {
+                        statementRecord.PastAmount_90 = a.OpenAmount * -1;
+                    }
+
+                    else if ((todayDate - a.ValueDate.Value).TotalDays > 90)
+                    {
+                        statementRecord.PastAmountOver_90 = a.OpenAmount * -1;
+                    }
+
+                    totalData.RecordList.Add(statementRecord);
+                }
+            }
+            #endregion
+
+            #region APPayment
+
+            if (iQueryableAPPayment.Count() > 0)
+            {
+                StatementByInvoiceDateDataProvider.StatementByInvoiceRecord statementRecord = null;
+
+                foreach (APPaymentList a in iQueryableAPPayment)
+                {
+                    statementRecord = new StatementByInvoiceDateDataProvider.StatementByInvoiceRecord();
+
+                    Card vendor = cardRepository.GetSingleCard(a.VendorId, tenant);
+
+                    statementRecord.InvoiceCurrency = a.PaymentCurrencyCode;
+                    statementRecord.ShipmentNumber = ""; // ????
+                    statementRecord.InvoiceNumber = a.PaymentNo;
+                    statementRecord.SentDate = a.RegisterDate;
+                    statementRecord.Age = Convert.ToInt32((todayDate - a.RegisterDate.Value).TotalDays);
+                    statementRecord.DueAge = Convert.ToInt32((todayDate - a.ValueDate.Value).TotalDays);
+                    statementRecord.PastTotalAmount = a.OpenAmount;
+
+                    if (a.ValueDate.Value.Date >= todayDate.Date)
+                    {
+                        statementRecord.OverDue = "";
+                    }
+                    else
+                    {
+                        statementRecord.OverDue = "Yes (" + statementRecord.DueAge + " days)";
+                    }
+
+                    if (vendor != null)
+                    {
+                        statementRecord.Customer = vendor.EnglishName;
+
+                        User salesman = userRepository.GetSingleUser(vendor.SalesmanUserId, tenant);
+                        if (salesman != null)
+                        {
+                            statementRecord.Salesman = salesman.Contact.EnglishName;
+                        }
+                    }
+
+                    if (a.ValueDate >= todayDate)
+                    {
+                        statementRecord.CurrentAmount = a.OpenAmount;
+                    }
+
+                    else if (((todayDate - a.ValueDate.Value).TotalDays >= 1) && ((todayDate - a.ValueDate.Value).TotalDays <= 30))
+                    {
+                        statementRecord.PastAmount_30 = a.OpenAmount;
+                    }
+
+                    else if (((todayDate - a.ValueDate.Value).TotalDays > 30) && ((todayDate - a.ValueDate.Value).TotalDays <= 45))
+                    {
+                        statementRecord.PastAmount_45 = a.OpenAmount;
+                    }
+
+                    else if (((todayDate - a.ValueDate.Value).TotalDays > 45) && ((todayDate - a.ValueDate.Value).TotalDays <= 60))
+                    {
+                        statementRecord.PastAmount_60 = a.OpenAmount;
+                    }
+
+                    else if (((todayDate - a.ValueDate.Value).TotalDays > 60) && ((todayDate - a.ValueDate.Value).TotalDays <= 90))
+                    {
+                        statementRecord.PastAmount_90 = a.OpenAmount;
+                    }
+
+                    else if ((todayDate - a.ValueDate.Value).TotalDays > 90)
+                    {
+                        statementRecord.PastAmountOver_90 = a.OpenAmount;
+                    }
+
+                    totalData.RecordList.Add(statementRecord);
+                }
+            }
+            #endregion
+
+            totalData.RecordList = totalData.RecordList.OrderBy(or => or.InvoiceCurrency).ToList();
+
+            List<StatementByInvoiceDateDataProvider.StatementByInvoiceGroup> finalResults = (from p in totalData.RecordList
+                                                                                             group p by p.InvoiceCurrency into g
+                                                                                             select new StatementByInvoiceDateDataProvider.StatementByInvoiceGroup()
+                                                                                             {
+                                                                                                 InvoiceCurrency = g.Key,
+                                                                                                 StatementRecordList = g.ToList(),
+                                                                                             }).ToList();
+
+            totalData.GroupList = finalResults.OrderBy(d => d.InvoiceCurrency).ToList();
+
+            foreach (StatementByInvoiceDateDataProvider.StatementByInvoiceGroup item in totalData.GroupList)
+            {
+                item.TotalCurrentAmount = item.StatementRecordList.Sum(d => d.CurrentAmount);
+                item.TotalPastAmount_30 = item.StatementRecordList.Sum(d => d.PastAmount_30);
+                item.TotalPastAmount_45 = item.StatementRecordList.Sum(d => d.PastAmount_45);
+                item.TotalPastAmount_60 = item.StatementRecordList.Sum(d => d.PastAmount_60);
+                item.TotalPastAmount_90 = item.StatementRecordList.Sum(d => d.PastAmount_90);
+                item.TotalPastAmountOver_90 = item.StatementRecordList.Sum(d => d.PastAmountOver_90);
+                item.TotalAmount = item.StatementRecordList.Sum(d => d.PastTotalAmount);
+            }
+
+            return totalData;
+        }
+        #endregion
+
+        #region Opportunity Stage Changing
+        [WebMethod]
+        public byte[] LoadOpportunityStageChangingData(byte[] xmlFilters, int tenant)
+        {
+            OpportunityStageChangingDataProvider dataProvider = this.LoadOpportunityStageChangingDataProvider(xmlFilters, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(OpportunityStageChangingDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataProvider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+        private OpportunityStageChangingDataProvider LoadOpportunityStageChangingDataProvider(byte[] xmlFilters, int tenant)
+        {
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+
+            QueryFilterItem filterItem_IsByStageDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IsByStageDate").FirstOrDefault();
+            QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
+            QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
+            QueryFilterItem filterItem_OwnerId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "OwnerId").FirstOrDefault();
+            QueryFilterItem filterItem_LeadSources = queryOperations.QueryFilterItems.Where(d => d.FieldName == "LeadSources").FirstOrDefault();
+            QueryFilterItem filterItem_OpportunityTypeId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "OpportunityTypeId").FirstOrDefault();
+
+            bool isByStageDate = true;
+            if (filterItem_IsByStageDate != null)
+            {
+                if (filterItem_IsByStageDate.FieldValue != null)
+                {
+                    isByStageDate = (bool)filterItem_IsByStageDate.FieldValue;
+                }
+            }
+
+            string ownerId = null;
+            if (filterItem_OwnerId != null)
+            {
+                if (filterItem_OwnerId.FieldValue != null)
+                {
+                    ownerId = filterItem_OwnerId.FieldValue.ToString();
+                }
+            }
+
+            string leadSources = null;
+            if (filterItem_LeadSources != null)
+            {
+                if (filterItem_LeadSources.FieldValue != null)
+                {
+                    leadSources = filterItem_LeadSources.FieldValue.ToString();
+                }
+            }
+
+            string opportunityTypeId = null;
+            if (filterItem_OpportunityTypeId != null)
+            {
+                if (filterItem_OpportunityTypeId.FieldValue != null)
+                {
+                    opportunityTypeId = filterItem_OpportunityTypeId.FieldValue.ToString();
+                }
+            }
+
+            List<string> myLeadSourcesList = new List<string>();
+            if (!string.IsNullOrEmpty(leadSources))
+            {
+                leadSources = leadSources.Replace(" ", "");
+                leadSources = leadSources.Trim(',');
+                string[] myLeadSources = leadSources.Split(',');
+                myLeadSourcesList = myLeadSources.ToList();
+            }
+
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+            DateTime myStartDate = todayDate.AddMonths(-1);
+
+            DateTime date1 = new DateTime(myStartDate.Year, myStartDate.Month, 1);
+            DateTime date2 = new DateTime(todayDate.Year, todayDate.Month, DateTime.DaysInMonth(todayDate.Year, todayDate.Month));
+
+            if (filterItem_FromDate != null)
+            {
+                DateTime.TryParse(filterItem_FromDate.FieldValue.ToString(), out date1);
+            }
+
+            if (filterItem_ToDate != null)
+            {
+                DateTime.TryParse(filterItem_ToDate.FieldValue.ToString(), out date2);
+            }
+
+            OpportunityStageChangingDataProvider dataProvider = new OpportunityStageChangingDataProvider();
+            dataProvider.RecordsList = new List<OpportunityStageChangingDataProvider.StageChangingRecord>();
+
+            ICRMContext context = CRMContext.GetContext(tenant);
+            OpportunityStageListQueryService oppStageQuery = new OpportunityStageListQueryService(context);
+
+            IQueryable<OpportunityStageList> iQueryable = oppStageQuery.GetOpportunityStagesByTenant(tenant);
+            iQueryable = iQueryable.Where(d => d.IsCancelled == false);
+
+            if (!string.IsNullOrEmpty(ownerId))
+            {
+                iQueryable = iQueryable.Where(d => d.OwnerId == ownerId);
+            }
+
+            if (!string.IsNullOrEmpty(opportunityTypeId))
+            {
+                iQueryable = iQueryable.Where(d => d.OpportunityTypeId == opportunityTypeId);
+            }
+
+            if (date1 != null)
+            {
+                if (isByStageDate)
+                {
+                    iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.EndDate) >= System.Data.Entity.DbFunctions.TruncateTime(date1));
+                }
+
+                else
+                {
+                    iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDate) >= System.Data.Entity.DbFunctions.TruncateTime(date1));
+                }
+            }
+
+            if (date2 != null)
+            {
+                if (isByStageDate)
+                {
+                    iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.EndDate) <= System.Data.Entity.DbFunctions.TruncateTime(date2));
+                }
+
+                else
+                {
+                    iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDate) <= System.Data.Entity.DbFunctions.TruncateTime(date2));
+                }
+            }
+
+            if (myLeadSourcesList.Count() > 0)
+            {
+                iQueryable = iQueryable.Where(d => myLeadSourcesList.Contains(d.LeadSourceId));
+            }
+
+            foreach (OpportunityStageList item in iQueryable.OrderByDescending(d => d.LastModifiedDate))
+            {
+                OpportunityStageChangingDataProvider.StageChangingRecord record = new OpportunityStageChangingDataProvider.StageChangingRecord();
+                TimeSpan? duration = item.EndDate - item.StartDate;
+
+                record.OpportunityName = !string.IsNullOrEmpty(item.OpportunityTopic) ? item.OpportunityTopic : "";
+                record.Country = !string.IsNullOrEmpty(item.CountryName) ? item.CountryName : "";
+                record.FromStage = !string.IsNullOrEmpty(item.FromStageName) ? item.FromStageName : "";
+                record.ToStage = !string.IsNullOrEmpty(item.ToStageName) ? item.ToStageName : "";
+                record.LastModifiedDate = item.LastModifiedDate;
+
+                int days = Convert.ToInt32(duration.Value.TotalDays);
+                if (days < 1)
+                {
+                    record.StageDuration = "0 days";
+                }
+                else
+                {
+                    record.StageDuration = days + " days";
+                }
+
+                record.CreateDate = item.CreateDate;
+                record.Customer = item.Customer;
+                record.OpportunityType = item.OpportunityType;
+                record.Salesman = item.OwnerName;
+                record.StartDate = item.StartDate;
+                record.EndDate = item.EndDate;
+
+                dataProvider.RecordsList.Add(record);
+            }
+
+            TenantPM currentTenant = TenantQuery.GetSingleTenantPM(tenant, false);
+            AddressQuery addressQuery = new AddressQuery(tenant);
+            AddressPM address = addressQuery.GetSingleAddressPM(currentTenant.AddressId, currentTenant.Id, false);
+
+            if (address != null)
+            {
+
+                dataProvider.Address1 = address.Address1;
+                dataProvider.Address2 = address.Address2;
+                dataProvider.City = address.City;
+                dataProvider.Country = address.CountryName;
+                dataProvider.TenantFax = address.FaxNumber;
+                dataProvider.TenantPhone = address.PhoneNumber;
+                dataProvider.State = address.StateEnglishName;
+                dataProvider.ZipCode = address.ZipCode;
+            }
+
+            dataProvider.TenantName = currentTenant.Company;
+            dataProvider.Signature = currentTenant.Signature;
+            dataProvider.Logo = DataProviders.General.GetLogo(currentTenant.Id);
+
+            return dataProvider;
+        }
+
+        #endregion
+
+        #region Monthly Conversion Report
+        [WebMethod]
+        public byte[] LoadOpportunityMonthlyConversionData(byte[] xmlFilters, int tenant)
+        {
+            OpportunityMonthlyConversionDataProvider dataProvider = this.LoadOpportunityMonthlyConversionDataProvider(xmlFilters, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(OpportunityMonthlyConversionDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataProvider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+        private OpportunityMonthlyConversionDataProvider LoadOpportunityMonthlyConversionDataProvider(byte[] xmlFilters, int tenant)
+        {
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+
+            QueryFilterItem filterItem_IsByCreateDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IsByCreateDate").FirstOrDefault();
+            QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
+            QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
+            QueryFilterItem filterItem_DataType = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DataType").FirstOrDefault();
+            QueryFilterItem filterItem_CountryId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CountryId").FirstOrDefault();
+            QueryFilterItem filterItem_OwnerId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "OwnerId").FirstOrDefault();
+            QueryFilterItem filterItem_BusinessUnitId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "BusinessUnitId").FirstOrDefault();
+            QueryFilterItem filterItem_LeadSources = queryOperations.QueryFilterItems.Where(d => d.FieldName == "LeadSources").FirstOrDefault();
+            QueryFilterItem filterItem_Reseller = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ResellerId").FirstOrDefault();
+
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+            DateTime date1 = todayDate;
+            DateTime date2 = todayDate;
+
+            bool isByCreateDate = true;
+            if (filterItem_IsByCreateDate != null)
+            {
+                if (filterItem_IsByCreateDate.FieldValue != null)
+                {
+                    isByCreateDate = (bool)filterItem_IsByCreateDate.FieldValue;
+                }
+            }
+
+            if (filterItem_FromDate != null)
+            {
+                DateTime.TryParse(filterItem_FromDate.FieldValue.ToString(), out date1);
+
+                if (filterItem_ToDate != null)
+                {
+                    DateTime.TryParse(filterItem_ToDate.FieldValue.ToString(), out date2);
+                }
+
+            }
+
+            string opportunityTypeCode = null;
+            if (filterItem_DataType != null)
+            {
+                if (filterItem_DataType.FieldValue != null)
+                {
+                    opportunityTypeCode = filterItem_DataType.FieldValue.ToString();
+                }
+            }
+
+            string countryId = null;
+            if (filterItem_CountryId != null)
+            {
+                if (filterItem_CountryId.FieldValue != null)
+                {
+                    countryId = filterItem_CountryId.FieldValue.ToString();
+                }
+            }
+
+            string ownerId = null;
+            if (filterItem_OwnerId != null)
+            {
+                if (filterItem_OwnerId.FieldValue != null)
+                {
+                    ownerId = filterItem_OwnerId.FieldValue.ToString();
+                }
+            }
+
+            string businessUnitId = null;
+            if (filterItem_BusinessUnitId != null)
+            {
+                if (filterItem_BusinessUnitId.FieldValue != null)
+                {
+                    businessUnitId = filterItem_BusinessUnitId.FieldValue.ToString();
+                }
+            }
+
+            string leadSources = null;
+            if (filterItem_LeadSources != null)
+            {
+                if (filterItem_LeadSources.FieldValue != null)
+                {
+                    leadSources = filterItem_LeadSources.FieldValue.ToString();
+                }
+            }
+
+            List<string> myLeadSourcesList = new List<string>();
+            if (!string.IsNullOrEmpty(leadSources))
+            {
+                leadSources = leadSources.Replace(" ", "");
+
+                if (leadSources.ToLower() == "all")
+                {
+                    //LeadSourceRepository leadSourceRepository = new LeadSourceRepository(tenant);
+                    //IQueryable<LeadSource> iQueryable = leadSourceRepository.GetLeadSources(tenant).Where(d => !d.InActive);
+                    //if (iQueryable.Count() > 0)
+                    //{
+                    //    myLeadSourcesList = iQueryable.Select(s => s.Id).ToList();
+                    //}
+                }
+
+                else
+                {
+                    leadSources = leadSources.Trim(',');
+                    string[] myLeadSources = leadSources.Split(',');
+                    myLeadSourcesList = myLeadSources.ToList();
+                }
+            }
+
+            string resellerId = null;
+            if (filterItem_Reseller != null)
+            {
+                if (filterItem_Reseller.FieldValue != null)
+                {
+                    resellerId = filterItem_Reseller.FieldValue.ToString();
+                }
+            }
+
+            OpportunityMonthlyConversionDataProvider myDataProvider = null;
+
+            if (isByCreateDate)
+            {
+                myDataProvider = GetMonthlyConversionByCreateDate(tenant, date1, date2, opportunityTypeCode, countryId, ownerId, businessUnitId, myLeadSourcesList, resellerId);
+            }
+
+            else
+            {
+                myDataProvider = GetMonthlyConversionByStageDate(tenant, date1, date2, opportunityTypeCode, countryId, ownerId, businessUnitId, myLeadSourcesList, resellerId);
+            }
+
+            return myDataProvider;
+        }
+
+        private OpportunityMonthlyConversionDataProvider GetMonthlyConversionByCreateDate(int tenant, DateTime date1, DateTime date2, string opportunityTypeCode, string countryId, string ownerId, string businessUnitId, List<string> myLeadSourcesList, string resellerId)
+        {
+            OpportunityMonthlyConversionDataProvider myDataProvider = new OpportunityMonthlyConversionDataProvider();
+            myDataProvider.MonthlyDataList = new List<MonthItemClass>();
+
+            #region Get Base Data
+            ICRMContext myCRMCotnext = CRMContext.GetContext(tenant);
+            StageRepository stageRepository = new StageRepository(myCRMCotnext);
+            OpportunityRepository opportunityRepository = new OpportunityRepository(myCRMCotnext);
+            OpportunityStageRepository opportunityStageRepository = new OpportunityStageRepository(myCRMCotnext);
+
+            IQueryable<OpportunityStage> iQueryable_OpportunityStages = opportunityStageRepository.GetAll(tenant);
+
+            IQueryable<Opportunity> iQueryable_Opportunities =
+                (from a in opportunityRepository.GetAllForReport(tenant)
+                 where a.IsCancelled == false
+                 && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDate) >= date1
+                 && System.Data.Entity.DbFunctions.TruncateTime(a.CreateDate) < date2
+                 select a);
+
+            if (!string.IsNullOrEmpty(opportunityTypeCode))
+            {
+                iQueryable_Opportunities = iQueryable_Opportunities.Where(d => d.OpportunityTypeId == opportunityTypeCode);
+            }
+
+            if (!string.IsNullOrEmpty(countryId))
+            {
+                iQueryable_Opportunities = iQueryable_Opportunities.Where(d => d.Customer.CountryId == countryId);
+            }
+
+            if (!string.IsNullOrEmpty(ownerId))
+            {
+                iQueryable_Opportunities = iQueryable_Opportunities.Where(d => d.OwnerId == ownerId);
+            }
+
+            if (!string.IsNullOrEmpty(resellerId))
+            {
+                iQueryable_Opportunities = iQueryable_Opportunities.Where(d => d.Customer.Customer != null && d.Customer.Customer.Field2 == resellerId);
+            }
+
+            if (!string.IsNullOrEmpty(businessUnitId))
+            {
+                iQueryable_Opportunities = iQueryable_Opportunities.Where(d => d.BusinessUnitId == businessUnitId);
+            }
+
+            if (myLeadSourcesList.Count() > 0)
+            {
+                iQueryable_Opportunities = iQueryable_Opportunities.Where(d => myLeadSourcesList.Contains(d.LeadSourceId));
+            }
+
+            IQueryable<Stage> allStages = stageRepository.GetAll(tenant).Where(d => !d.InActive);
+            IQueryable<Stage> allStages_WithProbability = allStages.Where(d => d.Probability != 0);
+            IQueryable<Stage> allStages_ZeroProbability = allStages.Where(d => d.Probability == 0);
+
+            //Qualification Stage
+            string myQuaStageId = null;
+            string myQuaStageName = null;
+            Stage myQuaStage = allStages_WithProbability.Where(d => d.Code == "QUA").FirstOrDefault();
+            if (myQuaStage != null)
+            {
+                myQuaStageId = myQuaStage.Id;
+                myQuaStageName = myQuaStage.Name;
+                allStages_WithProbability = allStages_WithProbability.Where(d => d.Id != myQuaStageId);
+            }
+
+            // Closed Won Stage
+            string myCloseWonStageId = null;
+            string myCloseWonStageName = null;
+            Stage myCloseWonStage = allStages_WithProbability.Where(d => d.Code == "CWN").FirstOrDefault();
+            if (myCloseWonStage != null)
+            {
+                myCloseWonStageId = myCloseWonStage.Id;
+                myCloseWonStageName = myCloseWonStage.Name;
+                allStages_WithProbability = allStages_WithProbability.Where(d => d.Id != myCloseWonStageId);
+            }
+
+            // Closed Lost Stage
+            string myCloseLostStageId = null;
+            string myCloseLostStageName = null;
+            Stage myCloseLostStage = allStages_ZeroProbability.Where(d => d.Code == "CLS").FirstOrDefault();
+            if (myCloseLostStage != null)
+            {
+                myCloseLostStageId = myCloseLostStage.Id;
+                myCloseLostStageName = myCloseLostStage.Name;
+                allStages_ZeroProbability = allStages_ZeroProbability.Where(d => d.Id != myCloseLostStageId);
+            }
+
+            // First Stage
+            string myFirstStageId = null;
+            string myFirstStageName = null;
+            allStages_WithProbability = allStages_WithProbability.OrderBy(o => o.Probability);
+            Stage myFirstStage = allStages_WithProbability.FirstOrDefault();
+            if (myFirstStage != null)
+            {
+                myFirstStageId = myFirstStage.Id;
+                myFirstStageName = myFirstStage.Name;
+                allStages_WithProbability = allStages_WithProbability.Where(d => d.Id != myFirstStageId);
+            }
+            #endregion
+
+            int index = 0;
+
+            DateTime myDate1 = date1;
+            int myMonthItemIndex = 0;
+            int numberOfMonths = 0;
+
+            while (myDate1 < date2)
+            {
+                numberOfMonths++;
+
+                #region
+                index = 0;
+
+                IQueryable<Opportunity> iQueryable_Monthly =
+                    (from f in iQueryable_Opportunities
+                     where f.CreateDate.Value.Year == myDate1.Year
+                     && f.CreateDate.Value.Month == myDate1.Month
+                     select f);
+
+                #region First Stage
+                int myLeadCount = iQueryable_Monthly.Count();
+
+                myDataProvider.MonthlyDataList.Add(new MonthItemClass()
+                {
+                    Id = myMonthItemIndex++,
+                    Date = myDate1,
+                    DateString = myDate1.Month + "." + myDate1.Year,
+                    StageName = myFirstStageName,
+                    OpportunitiesCount = myLeadCount,
+                    RowIndex = index++,
+                });
+                #endregion
+
+                #region QUA Stage
+                int myQuasCount = (from a in iQueryable_Monthly
+                                   join b in iQueryable_OpportunityStages
+                                   on a.Id equals b.OpportunityId
+                                   where b.FromStageId == myQuaStageId
+                                   select a).Count();
+
+                myDataProvider.MonthlyDataList.Add(new MonthItemClass()
+                {
+                    Id = myMonthItemIndex++,
+                    Date = myDate1,
+                    DateString = myDate1.Month + "." + myDate1.Year,
+                    StageName = myQuaStageName,
+                    OpportunitiesCount = myQuasCount,
+                    RowIndex = index++,
+                    Percentage = myLeadCount == 0 ? 0 : (myQuasCount * 100 / myLeadCount),
+                    PercentageString = myLeadCount == 0 ? "" : (myQuasCount * 100 / myLeadCount) + "%"
+                });
+                #endregion
+
+                #region Loop stages Probability != 0
+                foreach (Stage myStage in allStages_WithProbability.OrderBy(o => o.Probability))
+                {
+                    IQueryable<Opportunity> iQueryable_ByStage =
+                        (from a in iQueryable_Monthly
+                         join b in iQueryable_OpportunityStages
+                         on a.Id equals b.OpportunityId
+                         where b.ToStageId == myStage.Id
+                         select a);
+
+                    int myCount = iQueryable_ByStage.Count();
+
+                    myDataProvider.MonthlyDataList.Add(new MonthItemClass()
+                    {
+                        Id = myMonthItemIndex++,
+                        Date = myDate1,
+                        DateString = myDate1.Month + "." + myDate1.Year,
+                        StageName = myStage.Name,
+                        OpportunitiesCount = myCount,
+                        RowIndex = index++,
+                        Percentage = myLeadCount == 0 ? 0 : (myCount * 100 / myLeadCount),
+                        PercentageString = myLeadCount == 0 ? "" : (myCount * 100 / myLeadCount) + "%"
+                    });
+                }
+                #endregion
+
+                #region Closed Won Stage
+                int myWonsCount = iQueryable_Monthly.Where(d => d.Stage.Id == myCloseWonStageId).Count();
+
+                myDataProvider.MonthlyDataList.Add(new MonthItemClass()
+                {
+                    Id = myMonthItemIndex++,
+                    Date = myDate1,
+                    DateString = myDate1.Month + "." + myDate1.Year,
+                    StageName = myCloseWonStageName,
+                    OpportunitiesCount = myWonsCount,
+                    RowIndex = index++,
+                    Percentage = myLeadCount == 0 ? 0 : (myWonsCount * 100 / myLeadCount),
+                    PercentageString = myLeadCount == 0 ? "" : (myWonsCount * 100 / myLeadCount) + "%"
+                });
+                #endregion
+
+                #region Closed Lost Stage
+                int myLostCount = iQueryable_Monthly.Where(d => d.Stage.Id == myCloseLostStageId).Count();
+
+                myDataProvider.MonthlyDataList.Add(new MonthItemClass()
+                {
+                    Id = myMonthItemIndex++,
+                    Date = myDate1,
+                    DateString = myDate1.Month + "." + myDate1.Year,
+                    StageName = myCloseLostStageName,
+                    OpportunitiesCount = myLostCount,
+                    RowIndex = index++,
+                    Percentage = myLeadCount == 0 ? 0 : (myLostCount * 100 / myLeadCount),
+                    PercentageString = myLeadCount == 0 ? "" : (myLostCount * 100 / myLeadCount) + "%"
+                });
+                #endregion
+
+                #region Loop stages Probability == 0
+                foreach (Stage myStage in allStages_ZeroProbability.OrderBy(o => o.Name))
+                {
+                    IQueryable<Opportunity> iQueryable_ByStage =
+                        (from a in iQueryable_Monthly
+                         join b in iQueryable_OpportunityStages
+                         on a.Id equals b.OpportunityId
+                         where b.ToStageId == myStage.Id
+                         select a);
+
+                    int myCount = iQueryable_ByStage.Count();
+
+                    myDataProvider.MonthlyDataList.Add(new MonthItemClass()
+                    {
+                        Id = myMonthItemIndex++,
+                        Date = myDate1,
+                        DateString = myDate1.Month + "." + myDate1.Year,
+                        StageName = myStage.Name,
+                        OpportunitiesCount = myCount,
+                        RowIndex = index++,
+                        Percentage = myLeadCount == 0 ? 0 : (myCount * 100 / myLeadCount),
+                        PercentageString = myLeadCount == 0 ? "" : (myCount * 100 / myLeadCount) + "%"
+                    });
+                }
+                #endregion
+
+                myDate1 = myDate1.AddMonths(1);
+                #endregion
+            }
+
+            #region Average
+
+            myDataProvider.MonthlyDataList.Add(new MonthItemClass()
+            {
+                Id = myMonthItemIndex++,
+                Date = myDate1,
+                DateString = "Average",
+                StageName = myFirstStageName,
+                OpportunitiesCount = MethodHelper.Round(myDataProvider.MonthlyDataList.Where(d => d.StageName == myFirstStageName).Sum(s => s.OpportunitiesCount) / numberOfMonths, 2),
+                RowIndex = myDataProvider.MonthlyDataList.Where(d => d.StageName == myFirstStageName).FirstOrDefault().RowIndex,
+            });
+
+            myDataProvider.MonthlyDataList.Add(new MonthItemClass()
+            {
+                Id = myMonthItemIndex++,
+                Date = myDate1,
+                DateString = "Average",
+                StageName = myQuaStageName,
+                OpportunitiesCount = MethodHelper.Round(myDataProvider.MonthlyDataList.Where(d => d.StageName == myQuaStageName).Sum(s => s.OpportunitiesCount) / numberOfMonths, 2),
+                RowIndex = myDataProvider.MonthlyDataList.Where(d => d.StageName == myQuaStageName).FirstOrDefault().RowIndex,
+            });
+
+            foreach (Stage myStage in allStages_WithProbability.OrderBy(o => o.Probability))
+            {
+                myDataProvider.MonthlyDataList.Add(new MonthItemClass()
+                {
+                    Id = myMonthItemIndex++,
+                    Date = myDate1,
+                    DateString = "Average",
+                    StageName = myStage.Name,
+                    OpportunitiesCount = MethodHelper.Round(myDataProvider.MonthlyDataList.Where(d => d.StageName == myStage.Name).Sum(s => s.OpportunitiesCount) / numberOfMonths, 2),
+                    RowIndex = myDataProvider.MonthlyDataList.Where(d => d.StageName == myStage.Name).FirstOrDefault().RowIndex,
+                });
+            }
+
+            myDataProvider.MonthlyDataList.Add(new MonthItemClass()
+            {
+                Id = myMonthItemIndex++,
+                Date = myDate1,
+                DateString = "Average",
+                StageName = myCloseWonStageName,
+                OpportunitiesCount = MethodHelper.Round(myDataProvider.MonthlyDataList.Where(d => d.StageName == myCloseWonStageName).Sum(s => s.OpportunitiesCount) / numberOfMonths, 2),
+                RowIndex = myDataProvider.MonthlyDataList.Where(d => d.StageName == myCloseWonStageName).FirstOrDefault().RowIndex,
+            });
+
+            myDataProvider.MonthlyDataList.Add(new MonthItemClass()
+            {
+                Id = myMonthItemIndex++,
+                Date = myDate1,
+                DateString = "Average",
+                StageName = myCloseLostStageName,
+                OpportunitiesCount = MethodHelper.Round(myDataProvider.MonthlyDataList.Where(d => d.StageName == myCloseLostStageName).Sum(s => s.OpportunitiesCount) / numberOfMonths, 2),
+                RowIndex = myDataProvider.MonthlyDataList.Where(d => d.StageName == myCloseLostStageName).FirstOrDefault().RowIndex,
+            });
+
+            foreach (Stage myStage in allStages_ZeroProbability.OrderBy(o => o.Name))
+            {
+                myDataProvider.MonthlyDataList.Add(new MonthItemClass()
+                {
+                    Id = myMonthItemIndex++,
+                    Date = myDate1,
+                    DateString = "Average",
+                    StageName = myStage.Name,
+                    OpportunitiesCount = MethodHelper.Round(myDataProvider.MonthlyDataList.Where(d => d.StageName == myStage.Name).Sum(s => s.OpportunitiesCount) / numberOfMonths, 2),
+                    RowIndex = myDataProvider.MonthlyDataList.Where(d => d.StageName == myStage.Name).FirstOrDefault().RowIndex,
+                });
+            }
+
+            #endregion
+
+            return myDataProvider;
+        }
+
+        private OpportunityMonthlyConversionDataProvider GetMonthlyConversionByStageDate(int tenant, DateTime date1, DateTime date2, string opportunityTypeCode, string countryId, string ownerId, string businessUnitId, List<string> myLeadSourcesList, string resellerId)
+        {
+            OpportunityMonthlyConversionDataProvider myDataProvider = new OpportunityMonthlyConversionDataProvider();
+            myDataProvider.MonthlyDataList = new List<MonthItemClass>();
+
+            #region Get Base Data
+            ICRMContext myCRMCotnext = CRMContext.GetContext(tenant);
+            StageRepository stageRepository = new StageRepository(myCRMCotnext);
+            OpportunityRepository opportunityRepository = new OpportunityRepository(myCRMCotnext);
+            OpportunityStageRepository opportunityStageRepository = new OpportunityStageRepository(myCRMCotnext);
+
+            IQueryable<OpportunityStage> iQueryable_OpportunityStages = opportunityStageRepository.GetAll(tenant);
+
+            IQueryable<Opportunity> iQueryable_Opportunities =
+                (from a in opportunityRepository.GetAllForReport(tenant)
+                 where a.IsCancelled == false
+                 select a);
+
+            if (!string.IsNullOrEmpty(opportunityTypeCode))
+            {
+                iQueryable_Opportunities = iQueryable_Opportunities.Where(d => d.OpportunityTypeId == opportunityTypeCode);
+            }
+
+            if (!string.IsNullOrEmpty(countryId))
+            {
+                iQueryable_Opportunities = iQueryable_Opportunities.Where(d => d.Customer.CountryId == countryId);
+            }
+
+            if (!string.IsNullOrEmpty(ownerId))
+            {
+                iQueryable_Opportunities = iQueryable_Opportunities.Where(d => d.OwnerId == ownerId);
+            }
+
+            if (!string.IsNullOrEmpty(resellerId))
+            {
+                iQueryable_Opportunities = iQueryable_Opportunities.Where(d => d.Customer.Customer != null && d.Customer.Customer.Field2 == resellerId);
+            }
+
+            if (!string.IsNullOrEmpty(businessUnitId))
+            {
+                iQueryable_Opportunities = iQueryable_Opportunities.Where(d => d.BusinessUnitId == businessUnitId);
+            }
+
+            if (myLeadSourcesList.Count() > 0)
+            {
+                iQueryable_Opportunities = iQueryable_Opportunities.Where(d => myLeadSourcesList.Contains(d.LeadSourceId));
+            }
+
+            IQueryable<Stage> allStages = stageRepository.GetAll(tenant).Where(d => !d.InActive);
+            IQueryable<Stage> allStages_WithProbability = allStages.Where(d => d.Probability != 0);
+            IQueryable<Stage> allStages_ZeroProbability = allStages.Where(d => d.Probability == 0);
+
+            //Qualification Stage
+            string myQuaStageId = null;
+            string myQuaStageName = null;
+            Stage myQuaStage = allStages_WithProbability.Where(d => d.Code == "QUA").FirstOrDefault();
+            if (myQuaStage != null)
+            {
+                myQuaStageId = myQuaStage.Id;
+                myQuaStageName = myQuaStage.Name;
+                allStages_WithProbability = allStages_WithProbability.Where(d => d.Id != myQuaStageId);
+            }
+
+            // Closed Won Stage
+            string myCloseWonStageId = null;
+            string myCloseWonStageName = null;
+            Stage myCloseWonStage = allStages_WithProbability.Where(d => d.Code == "CWN").FirstOrDefault();
+            if (myCloseWonStage != null)
+            {
+                myCloseWonStageId = myCloseWonStage.Id;
+                myCloseWonStageName = myCloseWonStage.Name;
+                allStages_WithProbability = allStages_WithProbability.Where(d => d.Id != myCloseWonStageId);
+            }
+
+            // Closed Lost Stage
+            string myCloseLostStageId = null;
+            string myCloseLostStageName = null;
+            Stage myCloseLostStage = allStages_ZeroProbability.Where(d => d.Code == "CLS").FirstOrDefault();
+            if (myCloseLostStage != null)
+            {
+                myCloseLostStageId = myCloseLostStage.Id;
+                myCloseLostStageName = myCloseLostStage.Name;
+                allStages_ZeroProbability = allStages_ZeroProbability.Where(d => d.Id != myCloseLostStageId);
+            }
+
+            // First Stage
+            string myFirstStageId = null;
+            string myFirstStageName = null;
+            allStages_WithProbability = allStages_WithProbability.OrderBy(o => o.Probability);
+            Stage myFirstStage = allStages_WithProbability.FirstOrDefault();
+            if (myFirstStage != null)
+            {
+                myFirstStageId = myFirstStage.Id;
+                myFirstStageName = myFirstStage.Name;
+                allStages_WithProbability = allStages_WithProbability.Where(d => d.Id != myFirstStageId);
+            }
+            #endregion
+
+            int index = 0;
+            DateTime myDate1 = date1;
+            int myMonthItemIndex = 0;
+            int numberOfMonths = 0;
+
+            while (myDate1 < date2)
+            {
+                numberOfMonths++;
+
+                #region
+                index = 0;
+
+                IQueryable<Opportunity> iQueryable =
+                    (from f in iQueryable_Opportunities
+                     where f.CreateDate.Value.Year == myDate1.Year
+                     && f.CreateDate.Value.Month == myDate1.Month
+                     select f);
+
+                IQueryable<Opportunity> iQueryable1 =
+                    (from f in iQueryable_Opportunities
+                     select f);
+
+                #region First Stage
+                int myLeadCount = iQueryable.Count();
+
+                myDataProvider.MonthlyDataList.Add(new MonthItemClass()
+                {
+                    Id = myMonthItemIndex++,
+                    Date = myDate1,
+                    DateString = myDate1.Month + "." + myDate1.Year,
+                    StageName = myFirstStageName,
+                    OpportunitiesCount = myLeadCount,
+                    RowIndex = index++,
+                });
+                #endregion
+
+                #region QUA Stage
+                int myQuasCount = (from a in iQueryable1
+                                   join b in iQueryable_OpportunityStages
+                                   on a.Id equals b.OpportunityId
+                                   where b.FromStageId == myQuaStageId
+                                   && b.EndDate.Value.Year == myDate1.Year
+                                   && b.EndDate.Value.Month == myDate1.Month
+                                   select a).Count();
+
+                myDataProvider.MonthlyDataList.Add(new MonthItemClass()
+                {
+                    Id = myMonthItemIndex++,
+                    Date = myDate1,
+                    DateString = myDate1.Month + "." + myDate1.Year,
+                    StageName = myQuaStageName,
+                    OpportunitiesCount = myQuasCount,
+                    RowIndex = index++,
+                    Percentage = myLeadCount == 0 ? 0 : (myQuasCount * 100 / myLeadCount),
+                    PercentageString = myLeadCount == 0 ? "" : (myQuasCount * 100 / myLeadCount) + "%"
+                });
+
+                #endregion
+
+                #region Loop stages Probability != 0
+                foreach (Stage myStage in allStages_WithProbability.OrderBy(o => o.Probability))
+                {
+                    IQueryable<OpportunityStage> iQueryable_ByStage =
+                        (from a in iQueryable_OpportunityStages
+                         join b in iQueryable_Opportunities
+                         on a.OpportunityId equals b.Id
+                         where a.ToStageId == myStage.Id
+                         && a.EndDate != null
+                         && a.EndDate.Value.Year == myDate1.Year
+                         && a.EndDate.Value.Month == myDate1.Month
+                         select a);
+
+                    int myCount = iQueryable_ByStage.Count();
+
+                    myDataProvider.MonthlyDataList.Add(new MonthItemClass()
+                    {
+                        Id = myMonthItemIndex++,
+                        Date = myDate1,
+                        DateString = myDate1.Month + "." + myDate1.Year,
+                        StageName = myStage.Name,
+                        OpportunitiesCount = myCount,
+                        RowIndex = index++,
+                        Percentage = myLeadCount == 0 ? 0 : (myCount * 100 / myLeadCount),
+                        PercentageString = myLeadCount == 0 ? "" : (myCount * 100 / myLeadCount) + "%"
+                    });
+                }
+                #endregion
+
+                #region Close Won
+                int myWonsCount = iQueryable.Where(d => d.Stage.Id == myCloseWonStageId).Count();
+
+                myDataProvider.MonthlyDataList.Add(new MonthItemClass()
+                {
+                    Id = myMonthItemIndex++,
+                    Date = myDate1,
+                    DateString = myDate1.Month + "." + myDate1.Year,
+                    StageName = myCloseWonStageName,
+                    OpportunitiesCount = myWonsCount,
+                    RowIndex = index++,
+                    Percentage = myLeadCount == 0 ? 0 : (myWonsCount * 100 / myLeadCount),
+                    PercentageString = myLeadCount == 0 ? "" : (myWonsCount * 100 / myLeadCount) + "%"
+                });
+                #endregion
+
+                #region Close Lost
+                int myLostCount = iQueryable.Where(d => d.Stage.Id == myCloseLostStageId).Count();
+
+                myDataProvider.MonthlyDataList.Add(new MonthItemClass()
+                {
+                    Id = myMonthItemIndex++,
+                    Date = myDate1,
+                    DateString = myDate1.Month + "." + myDate1.Year,
+                    StageName = myCloseLostStageName,
+                    OpportunitiesCount = myLostCount,
+                    RowIndex = index++,
+                    Percentage = myLeadCount == 0 ? 0 : (myLostCount * 100 / myLeadCount),
+                    PercentageString = myLeadCount == 0 ? "" : (myLostCount * 100 / myLeadCount) + "%"
+                });
+                #endregion
+
+                #region Loop stages Probability == 0
+                foreach (Stage myStage in allStages_ZeroProbability.OrderBy(o => o.Name))
+                {
+                    IQueryable<OpportunityStage> iQueryable_ByStage =
+                        (from a in iQueryable_OpportunityStages
+                         where a.ToStageId == myStage.Id
+                         && a.EndDate != null
+                         && a.EndDate.Value.Year == myDate1.Year
+                         && a.EndDate.Value.Month == myDate1.Month
+                         select a);
+
+                    int myCount = iQueryable_ByStage.Count();
+
+                    myDataProvider.MonthlyDataList.Add(new MonthItemClass()
+                    {
+                        Id = myMonthItemIndex++,
+                        Date = myDate1,
+                        DateString = myDate1.Month + "." + myDate1.Year,
+                        StageName = myStage.Name,
+                        OpportunitiesCount = myCount,
+                        RowIndex = index++,
+                        Percentage = myLeadCount == 0 ? 0 : (myCount * 100 / myLeadCount),
+                        PercentageString = myLeadCount == 0 ? "" : (myCount * 100 / myLeadCount) + "%"
+                    });
+                }
+                #endregion
+
+                myDate1 = myDate1.AddMonths(1);
+                #endregion
+            }
+
+            #region Average
+
+            myDataProvider.MonthlyDataList.Add(new MonthItemClass()
+            {
+                Id = myMonthItemIndex++,
+                Date = myDate1,
+                DateString = "Average",
+                StageName = myFirstStageName,
+                OpportunitiesCount = MethodHelper.Round(myDataProvider.MonthlyDataList.Where(d => d.StageName == myFirstStageName).Sum(s => s.OpportunitiesCount) / numberOfMonths, 2),
+                RowIndex = myDataProvider.MonthlyDataList.Where(d => d.StageName == myFirstStageName).FirstOrDefault().RowIndex,
+            });
+
+            myDataProvider.MonthlyDataList.Add(new MonthItemClass()
+            {
+                Id = myMonthItemIndex++,
+                Date = myDate1,
+                DateString = "Average",
+                StageName = myQuaStageName,
+                OpportunitiesCount = MethodHelper.Round(myDataProvider.MonthlyDataList.Where(d => d.StageName == myQuaStageName).Sum(s => s.OpportunitiesCount) / numberOfMonths, 2),
+                RowIndex = myDataProvider.MonthlyDataList.Where(d => d.StageName == myQuaStageName).FirstOrDefault().RowIndex,
+            });
+
+            foreach (Stage myStage in allStages_WithProbability.OrderBy(o => o.Probability))
+            {
+                myDataProvider.MonthlyDataList.Add(new MonthItemClass()
+                {
+                    Id = myMonthItemIndex++,
+                    Date = myDate1,
+                    DateString = "Average",
+                    StageName = myStage.Name,
+                    OpportunitiesCount = MethodHelper.Round(myDataProvider.MonthlyDataList.Where(d => d.StageName == myStage.Name).Sum(s => s.OpportunitiesCount) / numberOfMonths, 2),
+                    RowIndex = myDataProvider.MonthlyDataList.Where(d => d.StageName == myStage.Name).FirstOrDefault().RowIndex,
+                });
+            }
+
+            myDataProvider.MonthlyDataList.Add(new MonthItemClass()
+            {
+                Id = myMonthItemIndex++,
+                Date = myDate1,
+                DateString = "Average",
+                StageName = myCloseWonStageName,
+                OpportunitiesCount = MethodHelper.Round(myDataProvider.MonthlyDataList.Where(d => d.StageName == myCloseWonStageName).Sum(s => s.OpportunitiesCount) / numberOfMonths, 2),
+                RowIndex = myDataProvider.MonthlyDataList.Where(d => d.StageName == myCloseWonStageName).FirstOrDefault().RowIndex,
+            });
+
+            myDataProvider.MonthlyDataList.Add(new MonthItemClass()
+            {
+                Id = myMonthItemIndex++,
+                Date = myDate1,
+                DateString = "Average",
+                StageName = myCloseLostStageName,
+                OpportunitiesCount = MethodHelper.Round(myDataProvider.MonthlyDataList.Where(d => d.StageName == myCloseLostStageName).Sum(s => s.OpportunitiesCount) / numberOfMonths, 2),
+                RowIndex = myDataProvider.MonthlyDataList.Where(d => d.StageName == myCloseLostStageName).FirstOrDefault().RowIndex,
+            });
+
+            foreach (Stage myStage in allStages_ZeroProbability.OrderBy(o => o.Name))
+            {
+                myDataProvider.MonthlyDataList.Add(new MonthItemClass()
+                {
+                    Id = myMonthItemIndex++,
+                    Date = myDate1,
+                    DateString = "Average",
+                    StageName = myStage.Name,
+                    OpportunitiesCount = MethodHelper.Round(myDataProvider.MonthlyDataList.Where(d => d.StageName == myStage.Name).Sum(s => s.OpportunitiesCount) / numberOfMonths, 2),
+                    RowIndex = myDataProvider.MonthlyDataList.Where(d => d.StageName == myStage.Name).FirstOrDefault().RowIndex,
+                });
+            }
+
+            #endregion
+
+            return myDataProvider;
+        }
+        #endregion
+
+        #region Expected Income Report
+        [WebMethod]
+        public byte[] LoadExpectedIncomeData(byte[] xmlFilters, int tenant)
+        {
+            ExpectedIncomeDataProvider dataProvider = this.LoadExpectedIncomeDataProvider(xmlFilters, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(ExpectedIncomeDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataProvider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+        private ExpectedIncomeDataProvider LoadExpectedIncomeDataProvider(byte[] xmlFilters, int tenant)
+        {
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+
+            CustomerRepository customerRepository = new CustomerRepository(tenant);
+            ExpectedIncomeDataProvider dataProvider = new ExpectedIncomeDataProvider();
+            dataProvider.RecordList = new List<CRMCustomer>();
+            dataProvider.ErrorsList = new List<ErrorItemClass>();
+
+            // Need it for the sort
+            List<CRMCustomer> myRecordList = new List<CRMCustomer>();
+            List<ErrorItemClass> myErrorList = new List<ErrorItemClass>();
+
+            #region Customers Base Data
+            QueryFilterItem filterItem_Salesman = queryOperations.QueryFilterItems.Where(d => d.FieldName == "SalesmanId").FirstOrDefault();
+            QueryFilterItem filterItem_Country = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CountryId").FirstOrDefault();
+            QueryFilterItem filterItem_Reseller = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ResellerId").FirstOrDefault();
+
+            IQueryable<CustomersDataView> iQueryable_AllCustomers = customerRepository.GetCustomersDataViews(LogitudeSettings.LogitudeCRMTenantNumber);
+
+            if (filterItem_Salesman != null)
+            {
+                string mySalesmanId = filterItem_Salesman.FieldValue.ToString();
+
+                if (!string.IsNullOrEmpty(mySalesmanId))
+                {
+                    iQueryable_AllCustomers = iQueryable_AllCustomers.Where(d => d.SalesmanUserId == mySalesmanId);
+                }
+            }
+
+            if (filterItem_Country != null)
+            {
+                string myCountryId = filterItem_Country.FieldValue.ToString();
+
+                if (!string.IsNullOrEmpty(myCountryId))
+                {
+                    iQueryable_AllCustomers = iQueryable_AllCustomers.Where(d => d.CountryId == myCountryId);
+                }
+            }
+
+            if (filterItem_Reseller != null)
+            {
+                string myResellerId = filterItem_Reseller.FieldValue.ToString();
+
+                if (!string.IsNullOrEmpty(myResellerId))
+                {
+                    iQueryable_AllCustomers = iQueryable_AllCustomers.Where(d => d.Field2 == myResellerId);
+                }
+            }
+            #endregion
+
+            #region Tenant Managements Base Data
+            QueryFilterItem filterItem_Payment = queryOperations.QueryFilterItems.Where(d => d.FieldName == "PaymentChannelCode" && d.Operator == "Equals").FirstOrDefault();
+            QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
+            QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
+            QueryFilterItem filterItem_Recurring = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Recurring").FirstOrDefault();
+
+            IQueryable<TenantManagement> iQueryable_TenantManagements = null;
+
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
+                iQueryable_TenantManagements = tenantManagementRepository.GetTenants();
+                scope.Complete();
+            }
+
+            if (filterItem_Payment != null)
+            {
+                string myPaymentChannelCode = filterItem_Payment.FieldValue.ToString();
+
+                if (!string.IsNullOrEmpty(myPaymentChannelCode))
+                {
+                    iQueryable_TenantManagements = iQueryable_TenantManagements.Where(d => d.PaymentChannelCode == myPaymentChannelCode);
+                }
+            }
+
+            if (filterItem_Recurring != null)
+            {
+                string myRecurringCode = filterItem_Recurring.FieldValue.ToString();
+
+                if (!string.IsNullOrEmpty(myRecurringCode))
+                {
+                    if (myRecurringCode == "A")
+                    {
+
+                    }
+
+                    else if (myRecurringCode == "Y")
+                    {
+                        iQueryable_TenantManagements = iQueryable_TenantManagements.Where(d => d.IsRecurring);
+                    }
+
+                    else if (myRecurringCode == "N")
+                    {
+                        iQueryable_TenantManagements = iQueryable_TenantManagements.Where(d => !d.IsRecurring);
+                    }
+                }
+            }
+
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+            DateTime myStartDate = todayDate.AddMonths(-1);
+
+            DateTime? fromDate = null;
+            DateTime? toDate = null;
+
+            if (filterItem_FromDate != null)
+            {
+                if (filterItem_FromDate.FieldValue != null)
+                {
+                    DateTime from = new DateTime(myStartDate.Year, myStartDate.Month, 1);
+                    DateTime.TryParse(filterItem_FromDate.FieldValue.ToString(), out from);
+                    fromDate = from;
+                }
+            }
+
+            if (filterItem_ToDate != null)
+            {
+                if (filterItem_ToDate.FieldValue != null)
+                {
+                    DateTime to = new DateTime(todayDate.Year, todayDate.Month, DateTime.DaysInMonth(todayDate.Year, todayDate.Month));
+                    DateTime.TryParse(filterItem_ToDate.FieldValue.ToString(), out to);
+                    toDate = to;
+                }
+            }
+
+            if (fromDate != null)
+            {
+                iQueryable_TenantManagements = iQueryable_TenantManagements.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.PaidUntilDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+            }
+
+            if (toDate != null)
+            {
+                iQueryable_TenantManagements = iQueryable_TenantManagements.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.PaidUntilDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
+            }
+
+            #endregion
+
+            IQueryable<CustomersDataView> iQueryable_IsActiveCustomers = iQueryable_AllCustomers.Where(d => d.ReceivablesAccountingCard != null && d.IsCustomer == true && d.CustomerStatusCode == "ACT");
+            IQueryable<CustomersDataView> iQueryable_InActiveCustomers = iQueryable_AllCustomers.Where(d => d.ReceivablesAccountingCard != null && d.CustomerStatusCode != "ACT");
+
+            #region Error list
+            if (iQueryable_InActiveCustomers.Count() > 0 && iQueryable_TenantManagements.Count() > 0)
+            {
+                foreach (CustomersDataView customerView in iQueryable_InActiveCustomers)
+                {
+                    int externalTenantId = 0;
+                    bool isTenantManagementExists = Int32.TryParse(customerView.ReceivablesAccountingCard, out externalTenantId);
+
+                    if (isTenantManagementExists)
+                    {
+                        TenantManagement myTenantManagement = iQueryable_TenantManagements.Where(d => d.Id == externalTenantId).FirstOrDefault();
+
+                        if (myTenantManagement != null)
+                        {
+                            bool isOnErrorRecord = false;
+
+                            if (myTenantManagement.IsRecurring)
+                            {
+                                isOnErrorRecord = true;
+                            }
+
+                            else if (myTenantManagement.PaidUntilDate != null)
+                            {
+                                if (myTenantManagement.PaidUntilDate > todayDate)
+                                {
+                                    isOnErrorRecord = true;
+                                }
+                            }
+
+                            if (isOnErrorRecord)
+                            {
+                                myErrorList.Add(new ErrorItemClass()
+                                {
+                                    Id = customerView.Id,
+                                    Tenant = externalTenantId,
+                                    CustomerName = customerView.EnglishName,
+                                    CustomerCode = customerView.Code,
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            #endregion
+
+            #region Report list
+            if (iQueryable_IsActiveCustomers.Count() > 0 && iQueryable_TenantManagements.Count() > 0)
+            {
+                TenantRepository tenantRepository = new TenantRepository(tenant);
+                PackageRepository packageRepository = new PackageRepository(tenant);
+                PaymentChannelRepository paymentChannelRepository = new PaymentChannelRepository(tenant);
+                CustomerSalesNoteRepository salesNoteRepository = new CustomerSalesNoteRepository(tenant);
+                WebFreightDomainService webFreightDomain = new WebFreightDomainService();
+
+                IQueryable<Tenant> iQueryable_Tenants = tenantRepository.GetTenants();
+                IQueryable<PaymentChannel> iQueryable_PaymentChannels = paymentChannelRepository.GetPaymentChannels();
+                IQueryable<CustomerSalesNote> iQueryable_SalesNotes = salesNoteRepository.GetCustomerSalesNotes();
+
+                foreach (CustomersDataView customerView in iQueryable_IsActiveCustomers)
+                {
+                    if (!string.IsNullOrEmpty(customerView.ReceivablesAccountingCard))
+                    {
+                        int externalTenantId = 0;
+                        bool isTenantManagementExists = Int32.TryParse(customerView.ReceivablesAccountingCard, out externalTenantId);
+
+                        if (isTenantManagementExists)
+                        {
+                            TenantManagement myTenantManagement = iQueryable_TenantManagements.Where(d => d.Id == externalTenantId).FirstOrDefault();
+
+                            if (myTenantManagement != null)
+                            {
+                                if (!myTenantManagement.IsTrial)
+                                {
+                                    CRMCustomer myResultItem = new DataProviders.CRMCustomer();
+
+                                    myResultItem.TenantNumber = externalTenantId;
+                                    myResultItem.CustomerName = customerView.EnglishName;
+                                    myResultItem.SalesmanName = customerView.SalesmanUserEnglishName;
+                                    myResultItem.CountryName = customerView.CountryName;
+                                    myResultItem.FreeUsersNumber = myTenantManagement.FreeUsers;
+                                    myResultItem.LicensedUsersNumber = myTenantManagement.NumberOfUsers;
+                                    myResultItem.PaidUntilDate = myTenantManagement.PaidUntilDate;
+
+                                    if (!string.IsNullOrEmpty(myTenantManagement.PackageCode))
+                                    {
+                                        Package package = packageRepository.GetSinglePackage(myTenantManagement.PackageCode);
+                                        if (package != null)
+                                        {
+                                            myResultItem.Package = package.Name;
+                                        }
+                                    }
+
+                                    #region Recurring
+                                    if (!string.IsNullOrEmpty(myTenantManagement.RecurringPeriodCode) && myTenantManagement.IsRecurring)
+                                    {
+                                        myResultItem.RecurringPeriodCode = myTenantManagement.RecurringPeriodCode.Substring(0, 1);
+                                        myResultItem.PaidUntilDate = null;
+                                    }
+                                    #endregion
+
+                                    #region PaymentChannel
+
+                                    myResultItem.PaymentDate = myTenantManagement.FirstPaymentDate;
+
+                                    if (!string.IsNullOrEmpty(myTenantManagement.PaymentChannelCode))
+                                    {
+                                        PaymentChannel myPaymentChannel = iQueryable_PaymentChannels.Where(d => d.Code == myTenantManagement.PaymentChannelCode).FirstOrDefault();
+                                        if (myPaymentChannel != null)
+                                        {
+                                            myResultItem.PaymentChannelName = myPaymentChannel.Name;
+                                        }
+                                    }
+                                    #endregion
+
+                                    #region SalesNotes
+                                    IQueryable<CustomerSalesNote> mySalesNotes = iQueryable_SalesNotes.Where(d => d.CustomerId == customerView.Id && d.Tenant == externalTenantId);
+                                    if (mySalesNotes.Count() > 0)
+                                    {
+                                        string mySalesNotesString = "";
+
+                                        foreach (CustomerSalesNote item in mySalesNotes)
+                                        {
+                                            if (string.IsNullOrEmpty(mySalesNotesString))
+                                            {
+                                                mySalesNotesString = item.Notes;
+                                            }
+
+                                            else
+                                            {
+                                                mySalesNotesString += "\n" + item.Notes;
+                                            }
+                                        }
+
+                                        myResultItem.SalesNotes = mySalesNotesString;
+                                    }
+                                    #endregion
+
+                                    #region Reseller
+                                    if (!string.IsNullOrEmpty(customerView.Field2))
+                                    {
+                                        CardRepository cardRepository = new CardRepository(tenant);
+                                        Card card = cardRepository.GetSingleCard(customerView.Field2, tenant);
+                                        if (card != null)
+                                        {
+                                            myResultItem.ResellerName = card.EnglishName;
+                                        }
+                                    }
+                                    #endregion
+
+                                    #region Currency
+
+                                    myResultItem.CurrencyCode = myTenantManagement.PaymentCurrencyCode;
+
+                                    if (string.IsNullOrEmpty(myResultItem.CurrencyCode))
+                                    {
+                                        myResultItem.CurrencyCode = "null";
+                                    }
+                                    #endregion
+
+                                    if (myTenantManagement.LicensePrice != null && !string.IsNullOrEmpty(myTenantManagement.PaymentCurrencyCode))
+                                    {
+                                        double myPrice = 0;
+                                        int myLicensedUsers = 0;
+
+                                        if (myTenantManagement.LicensePrice != null)
+                                        {
+                                            myPrice = myTenantManagement.LicensePrice.Value;
+                                        }
+
+                                        if (myResultItem.LicensedUsersNumber != null)
+                                        {
+                                            myLicensedUsers = myResultItem.LicensedUsersNumber.Value;
+                                        }
+
+                                        myResultItem.Price = myPrice;
+                                        myResultItem.Total = (myPrice * myLicensedUsers);
+
+                                        #region USD : EUR
+
+                                        if (myTenantManagement.PaymentCurrencyCode == "USD")
+                                        {
+                                            myResultItem.TotalInUSD = myResultItem.Total;
+                                            myResultItem.GrandTotalInUSD = myResultItem.Total;
+                                        }
+
+                                        else if (myTenantManagement.PaymentCurrencyCode == "EUR")
+                                        {
+                                            myResultItem.TotalInEUR = myResultItem.Total;
+                                            myResultItem.GrandTotalInEUR = myResultItem.Total;
+                                        }
+
+                                        #endregion
+                                    }
+
+                                    myRecordList.Add(myResultItem);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            #endregion
+
+            if (myErrorList.Count > 0)
+            {
+                foreach (ErrorItemClass item in myErrorList.OrderBy(o1 => o1.CustomerName).OrderBy(o => o.Tenant))
+                {
+                    dataProvider.ErrorsList.Add(item);
+                }
+            }
+
+            if (myRecordList.Count > 0)
+            {
+                foreach (CRMCustomer item in myRecordList.OrderBy(o1 => o1.ResellerName).ThenBy(o => o.TenantNumber))
+                {
+                    dataProvider.RecordList.Add(item);
+                }
+            }
+
+            dataProvider.FromDate = fromDate;
+            dataProvider.ToDate = toDate;
+            return dataProvider;
+        }
+        #endregion
+
+        #region Container Trucking Report
+        [WebMethod]
+        public byte[] LoadContainerTruckingData(byte[] xmlFilters, int tenant)
+        {
+            ContainerTruckingDataProvider dataProviderData = LoadContainerTruckingDataProvider(xmlFilters, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(ContainerTruckingDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataProviderData);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+        private ContainerTruckingDataProvider LoadContainerTruckingDataProvider(byte[] xmlFilters, int tenant)
+        {
+            ContainerTruckingDataProvider totalData = new ContainerTruckingDataProvider();
+            totalData.RecordsList = new List<ContainerTruckingRecord>();
+
+            CustomerRepository customerRep = new CustomerRepository(tenant);
+            AgentRepository agentRep = new AgentRepository(tenant);
+            DirectionRepository directionRep = new DirectionRepository(tenant);
+
+            ShipmentDeliveryQuery query = new ShipmentDeliveryQuery(tenant);
+            List<ShipmentDeliveryPM> deliveries = query.GetShipmentDeliveryByTenant(tenant);
+            deliveries = deliveries.Where(d => d.IsCancelled == false).ToList();
+
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+
+            QueryFilterItem filterItem_CustomerId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomerId").FirstOrDefault();
+            QueryFilterItem filterItem_AgentId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "AgentId").FirstOrDefault();
+            QueryFilterItem filterItem_DirectionId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DirectionId").FirstOrDefault();
+
+            string customerId = null;
+            if (filterItem_CustomerId != null)
+            {
+                if (filterItem_CustomerId.FieldValue != null)
+                {
+                    customerId = filterItem_CustomerId.FieldValue.ToString();
+                }
+            }
+
+            string agentId = null;
+            if (filterItem_AgentId != null)
+            {
+                if (filterItem_AgentId.FieldValue != null)
+                {
+                    agentId = filterItem_AgentId.FieldValue.ToString();
+                }
+            }
+
+            string directionId = null;
+            if (filterItem_DirectionId != null)
+            {
+                if (filterItem_DirectionId.FieldValue != null)
+                {
+                    directionId = filterItem_DirectionId.FieldValue.ToString();
+                }
+            }
+
+            Customer customer = null;
+            if (!string.IsNullOrEmpty(customerId))
+            {
+                deliveries = deliveries.Where(d => d.CustomerId == customerId).ToList();
+                customer = customerRep.GetSingleCustomer(customerId, tenant, true);
+            }
+
+            Agent agent = null;
+            if (!string.IsNullOrEmpty(agentId))
+            {
+                deliveries = deliveries.Where(d => d.AgentId == agentId).ToList();
+                agent = agentRep.GetSingleAgent(tenant, agentId);
+            }
+
+            Direction direction = null;
+            if (!string.IsNullOrEmpty(directionId))
+            {
+                deliveries = deliveries.Where(d => d.DirectionId == directionId).ToList();
+                direction = directionRep.GetSingleDirection(directionId);
+            }
+
+            totalData.CustomerFilter = customer == null ? "All Customers" : customer.Card.EnglishName;
+            totalData.DirectionFilter = direction == null ? "All Directions" : direction.Name;
+            totalData.AgentFilter = agent == null ? "All Agents" : agent.Card.EnglishName;
+
+            foreach (ShipmentDeliveryPM item in deliveries)
+            {
+                if (item.ShipmentPickUpDeliveryPackages.Count > 0)
+                {
+                    ContainerTruckingRecord record = new ContainerTruckingRecord();
+
+                    record.AgentName = item.AgentName;
+                    record.FBLNumber = item.MasterNumber;
+                    record.FileNumber = item.ShipmentNumber;
+                    record.ShippingLine = item.ShippingLine;
+                    record.DeliveryATA = item.ATA;
+                    record.DeliveryATD = item.ATD;
+                    record.DischargePort = item.ToPortName;
+
+                    if (item.ShipmentPickUpDeliveryPackages.Count > 0)
+                    {
+                        foreach (ShipmentPickUpDeliveryPackagePM package in item.ShipmentPickUpDeliveryPackages)
+                        {
+                            record.ContainerNumber += package.ContainerNumber + ", ";
+                            record.TEU += package.PackageTypeTEU + ", ";
+                        }
+
+                        if (!string.IsNullOrEmpty(record.ContainerNumber))
+                        {
+                            record.ContainerNumber = record.ContainerNumber.TrimEnd(' ', ',');
+                        }
+
+                        if (!string.IsNullOrEmpty(record.TEU))
+                        {
+                            record.TEU = record.TEU.TrimEnd(' ', ',');
+                        }
+                    }
+
+                    totalData.RecordsList.Add(record);
+                }
+            }
+
+            return totalData;
+        }
+        #endregion
+
+        #region Container Details by Voyage Report
+        [WebMethod]
+        public byte[] LoadContainerDetailsVoyageData(byte[] xmlFilters, int tenant)
+        {
+            ContainerDetailsVoyageDataProvider dataProviderData = LoadContainerDetailsVoyageDataProvider(xmlFilters, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(ContainerDetailsVoyageDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataProviderData);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+        private ContainerDetailsVoyageDataProvider LoadContainerDetailsVoyageDataProvider(byte[] xmlFilters, int tenant)
+        {
+            ContainerDetailsVoyageDataProvider totalData = new ContainerDetailsVoyageDataProvider();
+
+            CardRepository cardRep = new CardRepository(tenant);
+            DirectionRepository directionRep = new DirectionRepository(tenant);
+            ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+            IQueryable<ShipmentDataView> iQueryable = shipmentRepository.GetShipmentViewsByTenant(tenant);
+            ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+
+            #region Report Filters
+
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+
+            QueryFilterItem filterItem_CustomerId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomerId").FirstOrDefault();
+            QueryFilterItem filterItem_DirectionId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DirectionId").FirstOrDefault();
+            QueryFilterItem filterItem_Voyage = queryOperations.QueryFilterItems.Where(d => d.FieldName == "VoyageNumber").FirstOrDefault();
+            QueryFilterItem filterItem_CreateFrom = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CreateFromDate" && d.Operator == "GreaterThanOrEqual").FirstOrDefault();
+            QueryFilterItem filterItem_CreateTo = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CreateToDate" && d.Operator == "LessThanOrEqual").FirstOrDefault();
+            QueryFilterItem filterItem_SalingFrom = queryOperations.QueryFilterItems.Where(d => d.FieldName == "SalingFromDate" && d.Operator == "GreaterThanOrEqual").FirstOrDefault();
+            QueryFilterItem filterItem_SalingTo = queryOperations.QueryFilterItems.Where(d => d.FieldName == "SalingToDate" && d.Operator == "LessThanOrEqual").FirstOrDefault();
+
+            string customerId = null;
+            string directionId = null;
+            string voyageNumber = null;
+
+            if (filterItem_CustomerId != null)
+            {
+                if (filterItem_CustomerId.FieldValue != null)
+                {
+                    customerId = filterItem_CustomerId.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_DirectionId != null)
+            {
+                if (filterItem_DirectionId.FieldValue != null)
+                {
+                    directionId = filterItem_DirectionId.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_Voyage != null)
+            {
+                if (filterItem_Voyage.FieldValue != null)
+                {
+                    voyageNumber = filterItem_Voyage.FieldValue.ToString();
+                }
+            }
+
+            #endregion
+
+            #region Base Data Filtered
+
+            iQueryable = iQueryable.Where(a => a.TransportModeId == "O" && a.ShipmentTypeId == "FCLD");
+            iQueryable = iQueryable.Where(a => a.IsCancelled == false);
+
+            string customerLable = "All Customers";
+            string directionLable = "All Directions";
+
+            if (!string.IsNullOrEmpty(customerId))
+            {
+                iQueryable = iQueryable.Where(d => d.CustomerId == customerId);
+
+                Card partner = cardRep.GetSingleCard(customerId, tenant);
+                customerLable = partner == null ? "All Customers" : partner.EnglishName;
+            }
+
+            if (!string.IsNullOrEmpty(directionId))
+            {
+                iQueryable = iQueryable.Where(d => d.DirectionId == directionId);
+
+                Direction direction = directionRep.GetSingleDirection(directionId);
+                directionLable = direction == null ? "All Directions" : direction.Name;
+            }
+
+            if (!string.IsNullOrEmpty(voyageNumber))
+            {
+                iQueryable = iQueryable.Where(d => d.MainCarriageCarrierNumber == voyageNumber);
+            }
+
+            totalData.DirectionFilter = directionLable;
+            totalData.CustomerFilter = customerLable;
+            totalData.VoyageNumberFilter = string.IsNullOrEmpty(voyageNumber) ? "All Voyages" : voyageNumber;
+
+            if (filterItem_CreateFrom != null)
+            {
+                DateTime fromDate;
+                DateTime.TryParse(filterItem_CreateFrom.FieldValue.ToString(), out fromDate);
+                if (fromDate != null)
+                {
+                    iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDateTime) >= fromDate.Date);
+                }
+            }
+
+            if (filterItem_CreateTo != null)
+            {
+                DateTime toDate;
+                DateTime.TryParse(filterItem_CreateTo.FieldValue.ToString(), out toDate);
+                if (toDate != null)
+                {
+                    iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDateTime) <= toDate.Date);
+                }
+            }
+
+            if (filterItem_SalingFrom != null)
+            {
+                DateTime fromDate;
+                DateTime.TryParse(filterItem_SalingFrom.FieldValue.ToString(), out fromDate);
+                if (fromDate != null)
+                {
+                    iQueryable = iQueryable.Where(d => d.MainCarriageATD != null && System.Data.Entity.DbFunctions.TruncateTime(d.MainCarriageATD) >= fromDate.Date);
+                }
+            }
+
+            if (filterItem_SalingTo != null)
+            {
+                DateTime toDate;
+                DateTime.TryParse(filterItem_SalingTo.FieldValue.ToString(), out toDate);
+                if (toDate != null)
+                {
+                    iQueryable = iQueryable.Where(d => d.MainCarriageATD != null && System.Data.Entity.DbFunctions.TruncateTime(d.MainCarriageATD) <= toDate.Date);
+                }
+            }
+
+            #endregion
+
+            #region Fill Report Data
+
+            List<ShipmentDataView> allShipments = iQueryable.ToList();
+            List<string> allShipmentsId = allShipments.Select(s => s.Id).ToList();
+
+            ShipmentPackageQuery query = new ShipmentPackageQuery(tenant);
+
+            List<ShipmentPackagePM> containers = query.GetShipmentPackages(allShipmentsId, tenant);
+
+            List<ContainerVoyageDetailsRecord> tempList = new List<ContainerVoyageDetailsRecord>();
+            foreach (ShipmentPackagePM itemContainer in containers)
+            {
+                ContainerVoyageDetailsRecord record = new ContainerVoyageDetailsRecord();
+
+                ShipmentDataView myShipmentDataView = allShipments.Where(d => d.Id == itemContainer.ShipmentId).FirstOrDefault();
+                if (myShipmentDataView != null)
+                {
+                    record.LoadingPortCode = myShipmentDataView.MainCarriageFromPortCode;
+                    record.DischargePortCode = myShipmentDataView.MainCarriageFinalDestinationPortCode;
+                    record.BookingNumber = myShipmentDataView.BookingConfirmationNumber;
+                    record.Master = myShipmentDataView.LongMaster;
+                    record.House = myShipmentDataView.House;
+                    record.VoyageNumber = myShipmentDataView.MainCarriageCarrierNumber;
+                    record.VesselId = myShipmentDataView.MainCarriageVesselId;
+                    record.ShippingLineId = myShipmentDataView.MainCarriageCarrierId;
+                    record.VesselName = myShipmentDataView.MainCarriageVesselName;
+                    record.ShippingLineName = myShipmentDataView.MainCarriageCarrierName;
+                }
+
+                record.ContainerNumber = itemContainer.ContainerNumber;
+                record.ContainerType = string.IsNullOrEmpty(itemContainer.PrintAs) ? itemContainer.PackageTypeCode : itemContainer.PrintAs;
+                record.SealNumber = itemContainer.ShipperSeal;
+                record.InsidePackagesCount = itemContainer.NumberOfInsidePackages;
+                record.DescriptionOfGoods = itemContainer.Description;
+                record.GrossWeight = itemContainer.Weight;
+                record.REEFTemp = itemContainer.Temperature;
+                record.IMO = itemContainer.IsDangerous ? "Yes" : "";
+                record.IMDGNumber = itemContainer.IMDGCode;
+                record.IMOClass = itemContainer.ClassNumber;
+
+                tempList.Add(record);
+            }
+
+            totalData.TotalContainersCount = containers.Count;
+
+            #endregion
+
+            #region Group Data
+            List<ContainerVoyageDetailsGroup> finalResults = (from p in tempList
+                                                              group p by new { p.VoyageNumber, p.VesselId, p.ShippingLineId } into g
+                                                              select new ContainerVoyageDetailsGroup()
+                                                              {
+                                                                  VoyageNumber = g.Key.VoyageNumber,
+                                                                  VesselId = g.Key.VesselId,
+                                                                  ShippingLineId = g.Key.ShippingLineId,
+                                                                  RecordsList = g.ToList(),
+                                                              }).ToList();
+
+            foreach (ContainerVoyageDetailsGroup item in finalResults)
+            {
+                Vessel vessel = commonContext.Vessels.Where(d => d.Id == item.VesselId).FirstOrDefault();
+                Card carrier = commonContext.Cards.Where(d => d.Id == item.ShippingLineId).FirstOrDefault();
+
+                if (vessel != null)
+                {
+                    item.VesselName = vessel.EnglishName;
+                }
+
+                if (carrier != null)
+                {
+                    item.ShippingLineName = carrier.EnglishName;
+                }
+
+                ContainerVoyageDetailsRecord totalRecord = new ContainerVoyageDetailsRecord();
+                totalRecord.ContainerNumber = "Total";
+                totalRecord.ContainerType = item.RecordsList.Count.ToString();
+
+                item.RecordsList.Add(totalRecord);
+            }
+
+            totalData.GroupList = finalResults.OrderBy(d => d.VoyageNumber).ToList();
+            #endregion
+
+            return totalData;
+        }
+        #endregion
+
+        #region Customer Additional Services Report
+        [WebMethod]
+        public byte[] LoadCustomerAdditionalServicesData(byte[] xmlFilters, int tenant)
+        {
+            CustomerAdditionalServicesDataProvider dataProviderData = LoadCustomerAdditionalServicesDataProvider(xmlFilters, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(CustomerAdditionalServicesDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataProviderData);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+        private CustomerAdditionalServicesDataProvider LoadCustomerAdditionalServicesDataProvider(byte[] xmlFilters, int tenant)
+        {
+            CustomerAdditionalServicesDataProvider totalData = new CustomerAdditionalServicesDataProvider();
+            totalData.AdditionalServices = new List<AdditionalServicesDataList>();
+
+            CustomerAdditionalServiceRepository serviceRep = new CustomerAdditionalServiceRepository(tenant);
+            IQueryable<CustomerAdditionalService> allServices = serviceRep.GetAdditionalServicesByTenant(tenant).Include("Customer").Include("Customer.Card").Include("Customer.SalesmanUser").Include("Customer.Card.PrimaryContact").Include("Customer.SalesmanUser.Contact").Include("AdditionalService");
+
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+
+            #region Report Filters
+
+            QueryFilterItem filterItem_BusinessUnitId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "BusinessUnitId").FirstOrDefault();
+            QueryFilterItem filterItem_SalesmanUserId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "SalesmanUserId").FirstOrDefault();
+            QueryFilterItem filterItem_AdditionalServices = queryOperations.QueryFilterItems.Where(d => d.FieldName == "AdditionalServices").FirstOrDefault();
+            QueryFilterItem filterItem_ServiceType = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ServiceType").FirstOrDefault();
+            QueryFilterItem filterItem_CustomerStatus = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomerStatus").FirstOrDefault();
+
+            string businessUnitId = null;
+            string salesmanId = null;
+            string additionalServices = null;
+            string serviceType = null;
+            string customerStatus = null;
+
+            if (filterItem_BusinessUnitId != null)
+            {
+                if (filterItem_BusinessUnitId.FieldValue != null)
+                {
+                    businessUnitId = filterItem_BusinessUnitId.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_SalesmanUserId != null)
+            {
+                if (filterItem_SalesmanUserId.FieldValue != null)
+                {
+                    salesmanId = filterItem_SalesmanUserId.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_AdditionalServices != null)
+            {
+                if (filterItem_AdditionalServices.FieldValue != null)
+                {
+                    additionalServices = filterItem_AdditionalServices.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_ServiceType != null)
+            {
+                if (filterItem_ServiceType.FieldValue != null)
+                {
+                    serviceType = filterItem_ServiceType.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_CustomerStatus != null)
+            {
+                if (filterItem_CustomerStatus.FieldValue != null)
+                {
+                    customerStatus = filterItem_CustomerStatus.FieldValue.ToString();
+                }
+            }
+
+            #endregion
+
+            #region Base Data Filtered
+
+            allServices = allServices.Where(d => d.Customer.ActivityWatch);
+
+            BusinessUnitRepository unitRep = new BusinessUnitRepository(tenant);
+            UserRepository userRep = new UserRepository(tenant);
+            CustomerBusinessUnitFilter myBusinessUnitFilter = new CustomerBusinessUnitFilter(tenant);
+            allServices = myBusinessUnitFilter.RunFilter(allServices);
+
+            if (!string.IsNullOrEmpty(businessUnitId))
+            {
+                allServices = allServices.Where(d => d.Customer.SalesmanUser != null && d.Customer.SalesmanUser.BusinessUnitId == businessUnitId);
+            }
+
+            if (!string.IsNullOrEmpty(salesmanId))
+            {
+                allServices = allServices.Where(d => d.Customer.SalesmanUserId == salesmanId);
+            }
+
+            if (!string.IsNullOrEmpty(customerStatus))
+            {
+                allServices = allServices.Where(d => d.Customer.CustomerStatusCode == customerStatus);
+            }
+
+            if (!string.IsNullOrEmpty(additionalServices))
+            {
+                List<string> myadditionalServicesList = new List<string>();
+
+                additionalServices = additionalServices.Replace(" ", "");
+
+                if (additionalServices.ToLower() == "all")
+                {
+                    AdditionalServiceRepository additionalServiceRepository = new AdditionalServiceRepository(tenant);
+                    IQueryable<AdditionalService> iQueryable = additionalServiceRepository.GetAdditionalServices(tenant);
+                    if (iQueryable.Count() > 0)
+                    {
+                        myadditionalServicesList = iQueryable.Select(s => s.Id).ToList();
+                    }
+                }
+                else
+                {
+                    additionalServices = additionalServices.Trim(',');
+
+                    string[] myServices = additionalServices.Split(',');
+
+                    myadditionalServicesList = myServices.ToList();
+                }
+
+                if (myadditionalServicesList.Count() > 0)
+                {
+                    allServices = allServices.Where(d => myadditionalServicesList.Contains(d.AdditionalServiceId));
+                }
+            }
+
+            if (serviceType == "Potential")
+            {
+                allServices = allServices.Where(d => d.Potential);
+            }
+            else if (serviceType == "In Use")
+            {
+                allServices = allServices.Where(d => !d.Potential);
+            }
+
+            #endregion
+
+            BusinessUnit unit = unitRep.GetSingleBusinessUnit(businessUnitId, tenant);
+            User user = userRep.GetSingleUser(salesmanId, tenant, false);
+
+            totalData.BusinessUnitName = unit == null ? "All business units" : unit.Name;
+            totalData.SalesmanUserName = user == null ? "All users" : user.Contact.EnglishName;
+
+            foreach (CustomerAdditionalService service in allServices.OrderBy(o => o.Customer.Card.EnglishName))
+            {
+                totalData.AdditionalServices.Add(new AdditionalServicesDataList()
+                {
+                    CustomerName = service.Customer.Card.EnglishName,
+                    PrimaryContact = service.Customer.Card.PrimaryContact != null ? service.Customer.Card.PrimaryContact.EnglishName : null,
+                    PrimaryContactEmail = service.Customer.Card.PrimaryContact != null ? service.Customer.Card.PrimaryContact.Email : null,
+                    Salesman = service.Customer.SalesmanUser != null ? service.Customer.SalesmanUser.Contact.EnglishName : null,
+                    ServiceName = service.AdditionalService.Name,
+                    Potential_InUse = service.Potential ? "Potential" : "In Use",
+                    NumberOfShipments = Convert.ToInt32(service.Customer.Field1),
+                    NumberOfShipmentsLabel = tenant == 341 ? "Number of Users" : "Number of Shipments",
+                });
+            }
+
+            return totalData;
+        }
+        #endregion
+
+        #region Customer Potential vs. Actual Report
+        [WebMethod]
+        public byte[] LoadCustomerPotentialActualData(byte[] xmlFilters, int tenant)
+        {
+            CustomerPotentialActualDataProvider dataProviderData = LoadCustomerPotentialActualDataProvider(xmlFilters, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(CustomerPotentialActualDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataProviderData);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+        private CustomerPotentialActualDataProvider LoadCustomerPotentialActualDataProvider(byte[] xmlFilters, int tenant)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+            SecurityUtility.CheckContactFeature("Customer", "READ", tenant);
+
+            CustomerPotentialActualDataProvider myResult = new CustomerPotentialActualDataProvider();
+            myResult.Customers = new List<CustomersData>();
+
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+
+            #region Report Filters
+            QueryFilterItem filterItem_TimeRange = queryOperations.QueryFilterItems.Where(d => d.FieldName == "TimeRange").FirstOrDefault();
+            QueryFilterItem filterItem_DataTypeCode = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DataTypeCode").FirstOrDefault();
+            QueryFilterItem filterItem_ProductsTypes = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ProductsTypes").FirstOrDefault();
+            QueryFilterItem filterItem_OwnerId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "OwnerId").FirstOrDefault();
+            QueryFilterItem filterItem_BusinessUnitId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "BusinessUnitId").FirstOrDefault();
+            QueryFilterItem filterItem_CountryId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CountryId").FirstOrDefault();
+            QueryFilterItem filterItem_ProductCode = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ProductCode").FirstOrDefault();
+
+            string timeRange = null;
+            string dataTypeCode = null;
+            string productsTypes = null;
+            string ownerId = null;
+            string businessUnitId = null;
+            string countryId = null;
+            string productCode = null;
+
+            if (filterItem_TimeRange != null)
+            {
+                if (filterItem_TimeRange.FieldValue != null)
+                {
+                    timeRange = filterItem_TimeRange.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_DataTypeCode != null)
+            {
+                if (filterItem_DataTypeCode.FieldValue != null)
+                {
+                    dataTypeCode = filterItem_DataTypeCode.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_ProductsTypes != null)
+            {
+                if (filterItem_ProductsTypes.FieldValue != null)
+                {
+                    productsTypes = filterItem_ProductsTypes.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_OwnerId != null)
+            {
+                if (filterItem_OwnerId.FieldValue != null)
+                {
+                    ownerId = filterItem_OwnerId.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_BusinessUnitId != null)
+            {
+                if (filterItem_BusinessUnitId.FieldValue != null)
+                {
+                    businessUnitId = filterItem_BusinessUnitId.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_CountryId != null)
+            {
+                if (filterItem_CountryId.FieldValue != null)
+                {
+                    countryId = filterItem_CountryId.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_ProductCode != null)
+            {
+                if (filterItem_ProductCode.FieldValue != null)
+                {
+                    productCode = filterItem_ProductCode.FieldValue.ToString();
+                }
+            }
+            #endregion
+
+            #region Base Data Filtered
+            CustomerBusinessUnitFilter myBusinessUnitFilter = new CustomerBusinessUnitFilter(tenant);
+
+            ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
+
+            CustomerProductRepository customerProductRepository = new CustomerProductRepository(myCommonContext);
+            CustomerProductActualDataRepository customerProductActualDataRepository = new CustomerProductActualDataRepository(myCommonContext);
+            CustomerProductLocationRepository customerProductLocationRepository = new CustomerProductLocationRepository(myCommonContext);
+            CustomerProductLocationActualDataRepository customerProductLocationActualDataRepository = new CustomerProductLocationActualDataRepository(myCommonContext);
+
+            IQueryable<CustomerProduct> iQueryable_1 = customerProductRepository.GetCustomerProducts(tenant).Include("Customer").Include("Customer.Card").Include("Customer.SalesmanUser").Include("Customer.SalesmanUser.Contact").Include("Customer.Card.PrimaryContact");
+            IQueryable<CustomerProductActualData> iQueryable_2 = customerProductActualDataRepository.GetCustomerProductActualDatas(tenant).Include("Customer").Include("Customer.Card").Include("Customer.SalesmanUser").Include("Customer.SalesmanUser.Contact").Include("Customer.Card.PrimaryContact");
+
+            if (!string.IsNullOrEmpty(countryId))
+            {
+                iQueryable_1 = (from myCustomerProduct in myCommonContext.CustomerProducts
+                                join db_CustomerProductLocations in myCommonContext.CustomerProductLocations
+                                on myCustomerProduct.CustomerId equals db_CustomerProductLocations.CustomerId into CustomerProductsLocations
+                                from myCustomerProductLocation in CustomerProductsLocations.DefaultIfEmpty()
+                                where myCustomerProduct.Tenant == tenant
+                                && myCustomerProductLocation.CountryId == countryId
+                                select myCustomerProduct).Include("Customer").Include("Customer.Card").Include("Customer.SalesmanUser").Include("Customer.SalesmanUser.Contact").Include("Customer.Card.PrimaryContact");
+
+                iQueryable_2 = (from myCustomerProduct in myCommonContext.CustomerProductActualDatas
+                                join db_CustomerProductLocations in myCommonContext.CustomerProductLocationActualDatas
+                                on myCustomerProduct.CustomerId equals db_CustomerProductLocations.CustomerId into CustomerProductsLocations
+                                from myCustomerProductLocation in CustomerProductsLocations.DefaultIfEmpty()
+                                where myCustomerProduct.Tenant == tenant
+                                && myCustomerProductLocation.CountryId == countryId
+                                select myCustomerProduct).Include("Customer").Include("Customer.Card").Include("Customer.SalesmanUser").Include("Customer.SalesmanUser.Contact").Include("Customer.Card.PrimaryContact");
+            }
+
+            iQueryable_1 = myBusinessUnitFilter.RunFilter(iQueryable_1);
+            iQueryable_1 = iQueryable_1.Where(d => d.Customer.ActivityWatch);
+            iQueryable_1 = iQueryable_1.Where(d => !d.Customer.Card.InActive);
+
+            iQueryable_2 = myBusinessUnitFilter.RunFilter(iQueryable_2);
+            iQueryable_2 = iQueryable_2.Where(d => d.Customer.ActivityWatch);
+            iQueryable_2 = iQueryable_2.Where(d => !d.Customer.Card.InActive);
+
+            if (!string.IsNullOrEmpty(ownerId))
+            {
+                iQueryable_1 = iQueryable_1.Where(d => d.Customer.SalesmanUserId == ownerId);
+                iQueryable_2 = iQueryable_2.Where(d => d.Customer.SalesmanUserId == ownerId);
+            }
+
+            if (!string.IsNullOrEmpty(businessUnitId))
+            {
+                iQueryable_1 = iQueryable_1.Where(d => d.Customer.SalesmanUser != null && d.Customer.SalesmanUser.BusinessUnitId == businessUnitId);
+                iQueryable_2 = iQueryable_2.Where(d => d.Customer.SalesmanUser != null && d.Customer.SalesmanUser.BusinessUnitId == businessUnitId);
+            }
+
+            if (!string.IsNullOrEmpty(productsTypes))
+            {
+                List<string> myproductsTypesList = new List<string>();
+
+                productsTypes = productsTypes.Replace(" ", "");
+
+                if (productsTypes.ToLower() == "all")
+                {
+                    ProductTypeRepository productTypeRepository = new ProductTypeRepository(tenant);
+                    IQueryable<ProductType> iQueryable = productTypeRepository.GetActiveProductTypes(tenant);
+                    if (iQueryable.Count() > 0)
+                    {
+                        myproductsTypesList = iQueryable.Select(s => s.Code).ToList();
+                    }
+                }
+
+                else
+                {
+                    productsTypes = productsTypes.Trim(',');
+
+                    string[] myProductsTypes = productsTypes.Split(',');
+
+                    myproductsTypesList = myProductsTypes.ToList();
+                }
+
+                if (myproductsTypesList.Count() > 0)
+                {
+                    iQueryable_1 = iQueryable_1.Where(d => myproductsTypesList.Contains(d.ProductTypeCode));
+                    iQueryable_2 = iQueryable_2.Where(d => myproductsTypesList.Contains(d.ProductTypeCode));
+                }
+            }
+
+            #endregion
+
+            #region Build Same DataType
+
+            int indexCounter = 0;
+            List<ProductActualDataHelper> list1 = new List<ProductActualDataHelper>();
+            List<ProductActualDataHelper> list2 = new List<ProductActualDataHelper>();
+
+            if (iQueryable_1.Count() > 0)
+            {
+                indexCounter = 0;
+                foreach (CustomerProduct item in iQueryable_1)
+                {
+                    IQueryable<CustomerProductLocation> locations = customerProductLocationRepository.GetCustomerProductLocations(item.CustomerId, item.ProductTypeCode, tenant);
+
+                    ProductActualDataHelper myRecord = new ProductActualDataHelper()
+                    {
+                        Id = indexCounter,
+                        CustomerId = item.CustomerId,
+                        CustomerName = item.Customer == null ? "" : (item.Customer.Card == null ? "" : item.Customer.Card.EnglishName),
+                        SalesmanId = item.Customer == null ? "" : item.Customer.SalesmanUserId,
+                        SalesmanName = item.Customer == null ? "" : (item.Customer.SalesmanUser == null ? "" : item.Customer.SalesmanUser.Contact.EnglishName),
+                        PrimaryContactName = item.Customer == null ? "" : (item.Customer.Card.PrimaryContact == null ? "" : item.Customer.Card.PrimaryContact.EnglishName),
+                        PrimaryContactEmail = item.Customer == null ? "" : (item.Customer.Card.PrimaryContact == null ? "" : item.Customer.Card.PrimaryContact.EnglishName),
+                        Date = null,
+                        ProductCode = item.ProductTypeCode,
+                        TEU = item.PotentialTEU,
+                        Revenue = item.PotentialRevenue,
+                        NumberOfShipments = item.PotentialNumberOfShipments,
+                        ChargeableWeight = item.PotentialChargeableWeight,
+                        LocationsCount = locations.Count(),
+                    };
+
+                    list1.Add(myRecord);
+                    indexCounter++;
+                }
+            }
+
+            if (iQueryable_2.Count() > 0)
+            {
+                indexCounter = 0;
+                foreach (CustomerProductActualData item in iQueryable_2)
+                {
+                    IQueryable<CustomerProductLocationActualData> locations = customerProductLocationActualDataRepository.GetCustomerProductLocationActualDatas(tenant);
+                    locations = locations.Where(d => d.CustomerId == item.CustomerId && d.ProductTypeCode == item.ProductTypeCode);
+
+                    ProductActualDataHelper myRecord = new ProductActualDataHelper()
+                    {
+                        Id = indexCounter,
+                        CustomerId = item.CustomerId,
+                        CustomerName = item.Customer == null ? "" : (item.Customer.Card == null ? "" : item.Customer.Card.EnglishName),
+                        SalesmanId = item.Customer == null ? "" : item.Customer.SalesmanUserId,
+                        SalesmanName = item.Customer == null ? "" : (item.Customer.SalesmanUser == null ? "" : item.Customer.SalesmanUser.Contact.EnglishName),
+                        PrimaryContactName = item.Customer == null ? "" : (item.Customer.Card.PrimaryContact == null ? "" : item.Customer.Card.PrimaryContact.EnglishName),
+                        PrimaryContactEmail = item.Customer == null ? "" : (item.Customer.Card.PrimaryContact == null ? "" : item.Customer.Card.PrimaryContact.EnglishName),
+                        Date = new DateTime(item.Year, item.Month, 1),
+                        ProductCode = item.ProductTypeCode,
+                        TEU = item.TEU,
+                        Revenue = item.Revenue,
+                        NumberOfShipments = item.NumberOfShipments,
+                        ChargeableWeight = item.ChargeableWeight,
+                        LocationsCount = locations.Count(),
+                    };
+
+                    list2.Add(myRecord);
+                    indexCounter++;
+                }
+            }
+            #endregion
+
+            #region Union
+            DateTime todayDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+            DateTime todayDate = new DateTime(todayDateTime.Year, todayDateTime.Month, 1);
+
+            int numberOfMonths = 1;
+            if (timeRange == "L3M")
+            {
+                numberOfMonths = 3;
+            }
+            else if (timeRange == "L12M")
+            {
+                numberOfMonths = 12;
+            }
+
+            DateTime startDate = todayDate.AddMonths(-1 * numberOfMonths);
+
+            List<CompareDataClass> myList = new List<CompareDataClass>();
+            myList = (
+
+                (from a in list1
+                 group a by new { a.CustomerId, a.CustomerName, a.SalesmanId, a.SalesmanName, a.ProductCode, a.PrimaryContactName, a.PrimaryContactEmail } into g1
+                 select new CompareDataClass()
+                 {
+                     Id = g1.Key.CustomerId,
+                     EntityId = g1.Key.CustomerId,
+                     EntityName = g1.Key.CustomerName,
+                     SalesmanId = g1.Key.SalesmanId,
+                     SalesmanName = g1.Key.SalesmanName,
+                     PrimaryContactName = g1.Key.PrimaryContactName,
+                     PrimaryContactEmail = g1.Key.PrimaryContactEmail,
+                     ProductCode = g1.Key.ProductCode,
+
+                     TEU_Potential = g1.Sum(s => s.TEU),
+                     Revenue_Potential = g1.Sum(s => s.Revenue),
+                     ChargeableWeight_Potential = g1.Sum(s => s.ChargeableWeight),
+                     NumberOfShipments_Potential = g1.Sum(s => s.NumberOfShipments),
+
+                     TEU_Actual = 0,
+                     Revenue_Actual = 0,
+                     ChargeableWeight_Actual = 0,
+                     NumberOfShipments_Actual = 0,
+
+                     LocationsCount_Potential = g1.Sum(s => s.LocationsCount),
+                     LocationsCount_Actual = 0,
+                 })
+
+                 .Union
+
+                 (from b in list2
+                  where b.Date >= startDate && b.Date < todayDate
+                  group b by new { b.CustomerId, b.CustomerName, b.SalesmanId, b.SalesmanName, b.ProductCode, b.PrimaryContactName, b.PrimaryContactEmail } into g2
+                  select new CompareDataClass()
+                  {
+                      Id = g2.Key.CustomerId,
+                      EntityId = g2.Key.CustomerId,
+                      EntityName = g2.Key.CustomerName,
+                      SalesmanId = g2.Key.SalesmanId,
+                      SalesmanName = g2.Key.SalesmanName,
+                      PrimaryContactName = g2.Key.PrimaryContactName,
+                      PrimaryContactEmail = g2.Key.PrimaryContactEmail,
+                      ProductCode = g2.Key.ProductCode,
+
+                      TEU_Potential = 0,
+                      Revenue_Potential = 0,
+                      ChargeableWeight_Potential = 0,
+                      NumberOfShipments_Potential = 0,
+
+                      TEU_Actual = MethodHelper.Round(g2.Sum(s => s.TEU) / numberOfMonths, 2),
+                      Revenue_Actual = MethodHelper.Round(g2.Sum(s => s.Revenue) / numberOfMonths, 2),
+                      ChargeableWeight_Actual = MethodHelper.Round(g2.Sum(s => s.ChargeableWeight) / numberOfMonths, 2),
+                      NumberOfShipments_Actual = MethodHelper.Round(g2.Sum(s => s.NumberOfShipments) / numberOfMonths, 2),
+
+                      LocationsCount_Potential = 0,
+                      LocationsCount_Actual = g2.Sum(s => s.LocationsCount),
+                  })
+                  )
+
+                  .GroupBy(d => new { d.Id, d.EntityName, d.SalesmanId, d.SalesmanName, d.ProductCode, d.PrimaryContactName, d.PrimaryContactEmail })
+
+                  .Select(s => new CompareDataClass()
+                  {
+                      Id = s.Key.Id,
+                      EntityId = s.Key.Id,
+                      EntityName = s.Key.EntityName,
+                      SalesmanId = s.Key.SalesmanId,
+                      SalesmanName = s.Key.SalesmanName,
+                      PrimaryContactName = s.Key.PrimaryContactName,
+                      PrimaryContactEmail = s.Key.PrimaryContactEmail,
+                      ProductCode = s.Key.ProductCode,
+
+                      TEU_Potential = s.Sum(k => k.TEU_Potential),
+                      Revenue_Potential = s.Sum(k => k.Revenue_Potential),
+                      ChargeableWeight_Potential = s.Sum(k => k.ChargeableWeight_Potential),
+                      NumberOfShipments_Potential = s.Sum(k => k.NumberOfShipments_Potential),
+
+                      TEU_Actual = s.Sum(k => k.TEU_Actual),
+                      Revenue_Actual = s.Sum(k => k.Revenue_Actual),
+                      ChargeableWeight_Actual = s.Sum(k => k.ChargeableWeight_Actual),
+                      NumberOfShipments_Actual = s.Sum(k => k.NumberOfShipments_Actual),
+
+                      LocationsCount_Potential = s.Sum(k => k.LocationsCount_Potential),
+                      LocationsCount_Actual = s.Sum(k => k.LocationsCount_Actual),
+                  }).ToList();
+
+            #endregion
+
+            #region Group
+            var myGroup = (from d in myList
+                           group d by new { d.Id, d.EntityName, d.SalesmanName, d.SalesmanId, d.PrimaryContactName, d.PrimaryContactEmail } into go
+                           select new
+                           {
+                               Id = go.Key.Id,
+                               EntityName = go.Key.EntityName,
+                               SalesmanId = go.Key.SalesmanId,
+                               SalesmanName = go.Key.SalesmanName,
+                               PrimaryContactName = go.Key.PrimaryContactName,
+                               PrimaryContactEmail = go.Key.PrimaryContactEmail,
+                               TotalNumberOfShipments = go.Sum(d => d.NumberOfShipments_Potential) + go.Sum(d => d.NumberOfShipments_Actual),
+                               TotalTEU = go.Sum(d => d.TEU_Potential) + go.Sum(d => d.TEU_Actual),
+                               TotalRevenue = go.Sum(d => d.Revenue_Potential) + go.Sum(d => d.Revenue_Actual),
+                               TotalChargeableWeight = go.Sum(d => d.ChargeableWeight_Potential) + go.Sum(d => d.ChargeableWeight_Actual),
+                               TotalLocationsCount = go.Sum(d => d.LocationsCount_Potential) + go.Sum(d => d.LocationsCount_Actual),
+                           });
+            #endregion
+
+            #region Fill Data
+            foreach (var item in myGroup.OrderBy(d => d.EntityName))
+            {
+                CustomersData myRecord = null;
+
+                switch (dataTypeCode)
+                {
+                    case "TEU":
+                        {
+                            myRecord = new CustomersData()
+                            {
+                                CustomerId = item.Id,
+                                CustomerName = item.EntityName,
+                                Salesman = item.SalesmanName,
+                                PrimaryContactName = item.PrimaryContactName,
+                                PrimaryContactEmail = item.PrimaryContactEmail,
+                                LocationsCount = item.TotalLocationsCount,
+                                AD_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "AD").Sum(s => s.TEU_Actual),
+                                AR_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "AR").Sum(s => s.TEU_Actual),
+                                AE_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "AE").Sum(s => s.TEU_Actual),
+                                AI_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "AI").Sum(s => s.TEU_Actual),
+                                ID_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "ID").Sum(s => s.TEU_Actual),
+                                IR_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "IR").Sum(s => s.TEU_Actual),
+                                IE_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "IE").Sum(s => s.TEU_Actual),
+                                II_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "II").Sum(s => s.TEU_Actual),
+                                OD_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "OD").Sum(s => s.TEU_Actual),
+                                OR_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "OR").Sum(s => s.TEU_Actual),
+                                OE_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "OE").Sum(s => s.TEU_Actual),
+                                OI_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "OI").Sum(s => s.TEU_Actual),
+                                CI_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "CI").Sum(s => s.TEU_Actual),
+                                DL_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "DL").Sum(s => s.TEU_Actual),
+                                IN_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "IN").Sum(s => s.TEU_Actual),
+                                AD_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "AD").Sum(s => s.TEU_Potential),
+                                AR_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "AR").Sum(s => s.TEU_Potential),
+                                AE_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "AE").Sum(s => s.TEU_Potential),
+                                AI_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "AI").Sum(s => s.TEU_Potential),
+                                ID_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "ID").Sum(s => s.TEU_Potential),
+                                IR_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "IR").Sum(s => s.TEU_Potential),
+                                IE_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "IE").Sum(s => s.TEU_Potential),
+                                II_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "II").Sum(s => s.TEU_Potential),
+                                OD_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "OD").Sum(s => s.TEU_Potential),
+                                OR_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "OR").Sum(s => s.TEU_Potential),
+                                OE_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "OE").Sum(s => s.TEU_Potential),
+                                OI_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "OI").Sum(s => s.TEU_Potential),
+                                CI_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "CI").Sum(s => s.TEU_Potential),
+                                DL_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "DL").Sum(s => s.TEU_Potential),
+                                IN_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "IN").Sum(s => s.TEU_Potential),
+                            };
+                            break;
+                        }
+
+                    case "REV":
+                        {
+                            myRecord = new CustomersData()
+                            {
+                                CustomerId = item.Id,
+                                CustomerName = item.EntityName,
+                                Salesman = item.SalesmanName,
+                                PrimaryContactName = item.PrimaryContactName,
+                                PrimaryContactEmail = item.PrimaryContactEmail,
+                                LocationsCount = item.TotalLocationsCount,
+                                AD_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "AD").Sum(s => s.Revenue_Actual),
+                                AR_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "AR").Sum(s => s.Revenue_Actual),
+                                AE_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "AE").Sum(s => s.Revenue_Actual),
+                                AI_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "AI").Sum(s => s.Revenue_Actual),
+                                ID_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "ID").Sum(s => s.Revenue_Actual),
+                                IR_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "IR").Sum(s => s.Revenue_Actual),
+                                IE_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "IE").Sum(s => s.Revenue_Actual),
+                                II_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "II").Sum(s => s.Revenue_Actual),
+                                OD_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "OD").Sum(s => s.Revenue_Actual),
+                                OR_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "OR").Sum(s => s.Revenue_Actual),
+                                OE_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "OE").Sum(s => s.Revenue_Actual),
+                                OI_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "OI").Sum(s => s.Revenue_Actual),
+                                CI_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "CI").Sum(s => s.Revenue_Actual),
+                                DL_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "DL").Sum(s => s.Revenue_Actual),
+                                IN_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "IN").Sum(s => s.Revenue_Actual),
+                                AD_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "AD").Sum(s => s.Revenue_Potential),
+                                AR_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "AR").Sum(s => s.Revenue_Potential),
+                                AE_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "AE").Sum(s => s.Revenue_Potential),
+                                AI_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "AI").Sum(s => s.Revenue_Potential),
+                                ID_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "ID").Sum(s => s.Revenue_Potential),
+                                IR_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "IR").Sum(s => s.Revenue_Potential),
+                                IE_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "IE").Sum(s => s.Revenue_Potential),
+                                II_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "II").Sum(s => s.Revenue_Potential),
+                                OD_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "OD").Sum(s => s.Revenue_Potential),
+                                OR_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "OR").Sum(s => s.Revenue_Potential),
+                                OE_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "OE").Sum(s => s.Revenue_Potential),
+                                OI_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "OI").Sum(s => s.Revenue_Potential),
+                                CI_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "CI").Sum(s => s.Revenue_Potential),
+                                DL_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "DL").Sum(s => s.Revenue_Potential),
+                                IN_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "IN").Sum(s => s.Revenue_Potential),
+                            };
+                            break;
+                        }
+
+                    case "NSH":
+                        {
+                            myRecord = new CustomersData()
+                            {
+                                CustomerId = item.Id,
+                                CustomerName = item.EntityName,
+                                Salesman = item.SalesmanName,
+                                PrimaryContactName = item.PrimaryContactName,
+                                PrimaryContactEmail = item.PrimaryContactEmail,
+                                LocationsCount = item.TotalLocationsCount,
+                                AD_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "AD").Sum(s => s.NumberOfShipments_Actual),
+                                AR_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "AR").Sum(s => s.NumberOfShipments_Actual),
+                                AE_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "AE").Sum(s => s.NumberOfShipments_Actual),
+                                AI_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "AI").Sum(s => s.NumberOfShipments_Actual),
+                                ID_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "ID").Sum(s => s.NumberOfShipments_Actual),
+                                IR_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "IR").Sum(s => s.NumberOfShipments_Actual),
+                                IE_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "IE").Sum(s => s.NumberOfShipments_Actual),
+                                II_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "II").Sum(s => s.NumberOfShipments_Actual),
+                                OD_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "OD").Sum(s => s.NumberOfShipments_Actual),
+                                OR_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "OR").Sum(s => s.NumberOfShipments_Actual),
+                                OE_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "OE").Sum(s => s.NumberOfShipments_Actual),
+                                OI_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "OI").Sum(s => s.NumberOfShipments_Actual),
+                                CI_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "CI").Sum(s => s.NumberOfShipments_Actual),
+                                DL_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "DL").Sum(s => s.NumberOfShipments_Actual),
+                                IN_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "IN").Sum(s => s.NumberOfShipments_Actual),
+                                AD_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "AD").Sum(s => s.NumberOfShipments_Potential),
+                                AR_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "AR").Sum(s => s.NumberOfShipments_Potential),
+                                AE_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "AE").Sum(s => s.NumberOfShipments_Potential),
+                                AI_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "AI").Sum(s => s.NumberOfShipments_Potential),
+                                ID_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "ID").Sum(s => s.NumberOfShipments_Potential),
+                                IR_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "IR").Sum(s => s.NumberOfShipments_Potential),
+                                IE_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "IE").Sum(s => s.NumberOfShipments_Potential),
+                                II_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "II").Sum(s => s.NumberOfShipments_Potential),
+                                OD_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "OD").Sum(s => s.NumberOfShipments_Potential),
+                                OR_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "OR").Sum(s => s.NumberOfShipments_Potential),
+                                OE_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "OE").Sum(s => s.NumberOfShipments_Potential),
+                                OI_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "OI").Sum(s => s.NumberOfShipments_Potential),
+                                CI_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "CI").Sum(s => s.NumberOfShipments_Potential),
+                                DL_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "DL").Sum(s => s.NumberOfShipments_Potential),
+                                IN_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "IN").Sum(s => s.NumberOfShipments_Potential),
+                            };
+                            break;
+                        }
+
+                    case "CHW":
+                        {
+                            myRecord = new CustomersData()
+                            {
+                                CustomerId = item.Id,
+                                CustomerName = item.EntityName,
+                                Salesman = item.SalesmanName,
+                                PrimaryContactName = item.PrimaryContactName,
+                                PrimaryContactEmail = item.PrimaryContactEmail,
+                                LocationsCount = item.TotalLocationsCount,
+                                AD_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "AD").Sum(s => s.ChargeableWeight_Actual),
+                                AR_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "AR").Sum(s => s.ChargeableWeight_Actual),
+                                AE_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "AE").Sum(s => s.ChargeableWeight_Actual),
+                                AI_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "AI").Sum(s => s.ChargeableWeight_Actual),
+                                ID_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "ID").Sum(s => s.ChargeableWeight_Actual),
+                                IR_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "IR").Sum(s => s.ChargeableWeight_Actual),
+                                IE_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "IE").Sum(s => s.ChargeableWeight_Actual),
+                                II_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "II").Sum(s => s.ChargeableWeight_Actual),
+                                OD_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "OD").Sum(s => s.ChargeableWeight_Actual),
+                                OR_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "OR").Sum(s => s.ChargeableWeight_Actual),
+                                OE_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "OE").Sum(s => s.ChargeableWeight_Actual),
+                                OI_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "OI").Sum(s => s.ChargeableWeight_Actual),
+                                CI_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "CI").Sum(s => s.ChargeableWeight_Actual),
+                                DL_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "DL").Sum(s => s.ChargeableWeight_Actual),
+                                IN_ACT = myList.Where(d => d.Id == item.Id && d.ProductCode == "IN").Sum(s => s.ChargeableWeight_Actual),
+                                AD_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "AD").Sum(s => s.ChargeableWeight_Potential),
+                                AR_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "AR").Sum(s => s.ChargeableWeight_Potential),
+                                AE_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "AE").Sum(s => s.ChargeableWeight_Potential),
+                                AI_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "AI").Sum(s => s.ChargeableWeight_Potential),
+                                ID_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "ID").Sum(s => s.ChargeableWeight_Potential),
+                                IR_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "IR").Sum(s => s.ChargeableWeight_Potential),
+                                IE_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "IE").Sum(s => s.ChargeableWeight_Potential),
+                                II_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "II").Sum(s => s.ChargeableWeight_Potential),
+                                OD_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "OD").Sum(s => s.ChargeableWeight_Potential),
+                                OR_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "OR").Sum(s => s.ChargeableWeight_Potential),
+                                OE_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "OE").Sum(s => s.ChargeableWeight_Potential),
+                                OI_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "OI").Sum(s => s.ChargeableWeight_Potential),
+                                CI_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "CI").Sum(s => s.ChargeableWeight_Potential),
+                                DL_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "DL").Sum(s => s.ChargeableWeight_Potential),
+                                IN_POT = myList.Where(d => d.Id == item.Id && d.ProductCode == "IN").Sum(s => s.ChargeableWeight_Potential),
+                            };
+                            break;
+                        }
+                }
+
+                if (myRecord != null)
+                {
+                    if (productCode.ToLower() == "all")
+                    {
+                        myResult.Customers.Add(myRecord);
+                    }
+
+                    else
+                    {
+                        decimal? potential = myRecord.AD_POT + myRecord.AR_POT + myRecord.AE_POT + myRecord.AI_POT + myRecord.ID_POT + myRecord.IR_POT + myRecord.IE_POT + myRecord.II_POT
+                            + myRecord.OD_POT + myRecord.OR_POT + myRecord.OE_POT + myRecord.OI_POT + myRecord.CI_POT + myRecord.DL_POT + myRecord.IN_POT;
+
+                        decimal? actual = myRecord.AD_ACT + myRecord.AR_ACT + myRecord.AE_ACT + myRecord.AI_ACT + myRecord.ID_ACT + myRecord.IR_ACT + myRecord.IE_ACT + myRecord.II_ACT
+                           + myRecord.OD_ACT + myRecord.OR_ACT + myRecord.OE_ACT + myRecord.OI_ACT + myRecord.CI_ACT + myRecord.DL_ACT + myRecord.IN_ACT;
+
+                        decimal? none = potential + actual;
+
+                        if (productCode.ToLower() == "pot")
+                        {
+                            if (potential > 0 && actual == 0 && myRecord.LocationsCount > 0)
+                            {
+                                myResult.Customers.Add(myRecord);
+                            }
+                        }
+
+                        else if (productCode.ToLower() == "act" && myRecord.LocationsCount > 0)
+                        {
+                            if (potential == 0 && actual > 0)
+                            {
+                                myResult.Customers.Add(myRecord);
+                            }
+                        }
+
+                        else if (productCode.ToLower() == "non")
+                        {
+                            if (none == 0)
+                            {
+                                myResult.Customers.Add(myRecord);
+                            }
+                        }
+                    }
+                }
+            }
+            #endregion
+
+            return myResult;
+        }
+        #endregion
+
+        #region Opportunities by Additional Services Report
+        #endregion
+
+        #region Approved Opportunities Report
+        #endregion
+
+        #region Statistics by Agent Report
+        [WebMethod]
+        public byte[] LoadStatisticsByAgentData(byte[] xmlFilters, int tenant)
+        {
+            StatisticsByAgentDataProvider dataprovider = LoadStatisticsByAgentProvider(xmlFilters, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(StatisticsByAgentDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+        public StatisticsByAgentDataProvider LoadStatisticsByAgentProvider(byte[] xmlFilters, int tenant)
+        {
+            StatisticsByAgentDataProvider dataProvider = new StatisticsByAgentDataProvider();
+
+            ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+            IQueryable<ShipmentDataView> iQueryable = shipmentRepository.GetShipmentViewsByTenant(tenant);
+
+
+            #region Report Filters
+
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+
+            QueryFilterItem filterItem_IsByCreateDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IsByCreateDate").FirstOrDefault();
+            QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
+            QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
+            QueryFilterItem filterItem_AgentId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "AgentId").FirstOrDefault();
+            QueryFilterItem filterItem_CurrencyCodeType = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CurrencyCodeType").FirstOrDefault();
+            QueryFilterItem filterItem_IncludeOperationalyClosed = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeOperationalyClosed").FirstOrDefault();
+
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+            DateTime myStartDate = todayDate.AddMonths(-1);
+
+            DateTime fromDate = new DateTime(myStartDate.Year, myStartDate.Month, 1);
+            DateTime toDate = new DateTime(todayDate.Year, todayDate.Month, DateTime.DaysInMonth(todayDate.Year, todayDate.Month));
+            string AgentId = null;
+            string CurrencyCodeType = null;
+            bool IncludeOperationalyClosed = false;
+            bool isByCreateDate = true;
+
+            if (filterItem_IsByCreateDate != null)
+            {
+                if (filterItem_IsByCreateDate.FieldValue != null)
+                {
+                    isByCreateDate = (bool)filterItem_IsByCreateDate.FieldValue;
+                }
+            }
+
+            if (filterItem_FromDate != null)
+            {
+                DateTime.TryParse(filterItem_FromDate.FieldValue.ToString(), out fromDate);
+            }
+
+            if (filterItem_ToDate != null)
+            {
+                DateTime.TryParse(filterItem_ToDate.FieldValue.ToString(), out toDate);
+            }
+
+            if (filterItem_AgentId != null)
+            {
+                if (filterItem_AgentId.FieldValue != null)
+                {
+                    AgentId = filterItem_AgentId.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_CurrencyCodeType != null)
+            {
+                if (filterItem_CurrencyCodeType.FieldValue != null)
+                {
+                    CurrencyCodeType = filterItem_CurrencyCodeType.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_IncludeOperationalyClosed != null)
+            {
+                if (filterItem_IncludeOperationalyClosed.FieldValue != null)
+                {
+                    IncludeOperationalyClosed = (bool)filterItem_IncludeOperationalyClosed.FieldValue;
+                }
+            }
+
+            #endregion
+
+            #region Base Data Filtered
+
+            if (isByCreateDate)
+            {
+                if (fromDate != null)
+                {
+                    iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDateTime) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                }
+
+                if (toDate != null)
+                {
+                    iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDateTime) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
+                }
+            }
+
+            else
+            {
+                if (fromDate != null)
+                {
+                    iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.OperationalDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                }
+
+                if (toDate != null)
+                {
+                    iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.OperationalDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
+                }
+            }
+
+            if (!string.IsNullOrEmpty(AgentId))
+            {
+                iQueryable = iQueryable.Where(d => d.AgentId == AgentId);
+
+                Card agent = CardRepository.GetSingleCard(AgentId, tenant, true);
+                dataProvider.Agent = agent.EnglishName;
+            }
+            else
+            {
+                dataProvider.Agent = "All agents";
+            }
+
+            if (!IncludeOperationalyClosed)
+            {
+                iQueryable = iQueryable.Where(d => !d.IsOperationalClosed);
+            }
+
+            #endregion
+
+            #region General Data
+            dataProvider.Name = @"Statistics By Agent";
+            string[] currencyarray = CurrencyCodeType.Split(',');
+            dataProvider.FromPeriod = fromDate;
+            dataProvider.ToPeriod = toDate;
+            dataProvider.Currency = currencyarray[0];
+
+            TenantPM currentTenant = TenantQuery.GetSingleTenantPM(tenant, false);
+
+            if (currentTenant != null)
+            {
+                dataProvider.TenantName = currentTenant.Company;
+                dataProvider.Signature = currentTenant.Signature;
+                dataProvider.Logo = WebFreight.Web.DataProviders.General.GetLogo(currentTenant.Id);
+
+                AddressQuery addressQuery = new AddressQuery(tenant);
+                AddressPM address = addressQuery.GetSingleAddressPM(currentTenant.AddressId, currentTenant.Id, false);
+                if (address != null)
+                {
+                    dataProvider.Address1 = address.Address1;
+                    dataProvider.Address2 = address.Address2;
+                    dataProvider.City = address.City;
+                    dataProvider.Country = address.CountryName;
+                    dataProvider.TenantFax = address.FaxNumber;
+                    dataProvider.TenantPhone = address.PhoneNumber;
+                    dataProvider.State = address.StateEnglishName;
+                    dataProvider.ZipCode = address.ZipCode;
+                }
+            }
+            #endregion
+
+            #region Fill Data
+            List<StatisticsByAgentReport> tempList = new List<StatisticsByAgentReport>();
+
+            if (iQueryable.Count() > 0)
+            {
+                foreach (ShipmentDataView shipment in iQueryable)
+                {
+                    StatisticsByAgentReport record = new StatisticsByAgentReport();
+
+                    record.AgentId = shipment.AgentId;
+                    record.AgentName = shipment.AgentName;
+
+                    record.TransportMode = shipment.TransportModeName;
+                    record.Direction = shipment.DirectionName;
+                    record.TransmodeDirection = shipment.DirectionName + shipment.TransportModeName;
+                    record.GrossWeight = shipment.GrossWeight;
+                    record.Volume = shipment.Volume;
+                    record.TEU = shipment.TEU;
+
+                    if (currencyarray[1] == "profit")
+                    {
+                        record.Payables = shipment.OpenPayablesInProfitCurrency + shipment.AccountedPayablesInProfitCurrency;
+                        record.Receivables = shipment.OpenReceivablesInProfitCurrency + shipment.AccountedReceivablesInProfitCurrency;
+                        record.Profit = shipment.ProfitInProfitCurrency;
+
+                    }
+                    else if (currencyarray[1] == "local")
+                    {
+                        record.Payables = shipment.OpenPayablesInLocalCurrency + shipment.AccountedPayablesInLocalCurrency;
+                        record.Receivables = shipment.OpenReceivablesInLocalCurrency + shipment.AccountedReceivablesInLocalCurrency;
+                        record.Profit = shipment.ProfitInLocalCurrency;
+                    }
+
+                    tempList.Add(record);
+                }
+            }
+            #endregion
+
+            #region Group
+            tempList = tempList.OrderBy(or => or.AgentName).ToList();
+
+            List<StatisticsByAgentGroup> finalResults = (from p in tempList
+                                                         group p by new { p.AgentId, p.AgentName } into g
+                                                         select new StatisticsByAgentGroup()
+                                                         {
+                                                             AgentId = g.Key.AgentId,
+                                                             AgentName = g.Key.AgentName,
+                                                             StatisticsRecordList = g.ToList(),
+                                                         }).ToList();
+
+            dataProvider.StatisticsGroupList = finalResults.OrderBy(d => d.AgentName).ToList();
+
+            foreach (StatisticsByAgentGroup item in dataProvider.StatisticsGroupList)
+            {
+                List<StatisticsByAgentReport> myList = (from a in item.StatisticsRecordList
+                                                        group a by new
+                                                        {
+                                                            a.TransportMode,
+                                                            a.Direction,
+                                                        } into gr
+                                                        orderby gr.Key.TransportMode
+                                                        select new StatisticsByAgentReport()
+                                                        {
+                                                            GrossWeight = gr.Sum(d => d.GrossWeight),
+                                                            TEU = gr.Sum(t => t.TEU),
+                                                            TransmodeDirection = gr.Key.Direction + gr.Key.TransportMode,
+                                                            NumberOfShipments = gr.Count(),
+                                                            Payables = gr.Sum(d => d.Payables),
+                                                            Profit = gr.Sum(d => d.Profit),
+                                                            Receivables = gr.Sum(d => d.Receivables),
+                                                            Volume = gr.Sum(d => d.Volume),
+                                                        }).ToList();
+
+                item.StatisticsRecordList = myList;
+
+                StatisticsByAgentReport totalRecord = new StatisticsByAgentReport();
+                totalRecord.TransmodeDirection = "Total";
+                totalRecord.NumberOfShipments = item.StatisticsRecordList.Sum(d => d.NumberOfShipments);
+                totalRecord.GrossWeight = item.StatisticsRecordList.Sum(d => d.GrossWeight);
+                totalRecord.Volume = item.StatisticsRecordList.Sum(d => d.Volume);
+                totalRecord.TEU = item.StatisticsRecordList.Sum(d => d.TEU);
+                totalRecord.Receivables = item.StatisticsRecordList.Sum(d => d.Receivables);
+                totalRecord.Payables = item.StatisticsRecordList.Sum(d => d.Payables);
+                totalRecord.Profit = item.StatisticsRecordList.Sum(d => d.Profit);
+
+                item.StatisticsRecordList.Add(totalRecord);
+            }
+            #endregion
+
+            return dataProvider;
+        }
+        #endregion
+
+        #region e-Booking Report
+        [WebMethod]
+        public byte[] LoadBookingsData(byte[] xmlFilters, int tenant)
+        {
+            BookingsDataProvider dataprovider = GetBookingsDataProvider(xmlFilters, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(BookingsDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+        public BookingsDataProvider GetBookingsDataProvider(byte[] xmlFilters, int tenant)
+        {
+            BookingsDataProvider totalData = new BookingsDataProvider();
+            totalData.BookingRecordList = new List<BookingRecord>();
+
+            PortRepository portRep = new PortRepository(tenant);
+            ParticipantRepository ParticipantRep = new ParticipantRepository(tenant);
+            TenantRepository tenantRep = new TenantRepository(tenant);
+            AirlineStatisticsRepository statisticsRep = new AirlineStatisticsRepository(tenant);
+
+            IQueryable<AirlineStatistics> iQueryable = statisticsRep.GetAirlineStatistics(tenant).Where(d => d.MessageType == "FFR");
+
+            #region Report Filters
+
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+
+            QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
+            QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
+            QueryFilterItem filterItem_FromPortId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "MainCarriageFromPortId").FirstOrDefault();
+            QueryFilterItem filterItem_FinalDestinationPortId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "MainCarriageFinalDestinationPortId").FirstOrDefault();
+            QueryFilterItem filterItem_CustomerId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomerId").FirstOrDefault();
+
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+            DateTime myStartDate = todayDate.AddMonths(-1);
+
+            DateTime fromDate = new DateTime(myStartDate.Year, myStartDate.Month, 1);
+            DateTime toDate = new DateTime(todayDate.Year, todayDate.Month, DateTime.DaysInMonth(todayDate.Year, todayDate.Month));
+
+            string fromPortId = null;
+            string finalDestinationPortId = null;
+            string customerId = null;
+
+            if (filterItem_FromDate != null)
+            {
+                DateTime.TryParse(filterItem_FromDate.FieldValue.ToString(), out fromDate);
+            }
+
+            if (filterItem_ToDate != null)
+            {
+                DateTime.TryParse(filterItem_ToDate.FieldValue.ToString(), out toDate);
+            }
+
+            if (filterItem_FromPortId != null)
+            {
+                if (filterItem_FromPortId.FieldValue != null)
+                {
+                    fromPortId = filterItem_FromPortId.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_FinalDestinationPortId != null)
+            {
+                if (filterItem_FinalDestinationPortId.FieldValue != null)
+                {
+                    finalDestinationPortId = filterItem_FinalDestinationPortId.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_CustomerId != null)
+            {
+                if (filterItem_CustomerId.FieldValue != null)
+                {
+                    customerId = filterItem_CustomerId.FieldValue.ToString();
+                }
+            }
+
+            #endregion
+
+            #region Base Data Filtered
+
+            iQueryable = iQueryable.Where(d => d.IsCancelled == false);
+
+            if (fromDate != null)
+            {
+                iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.EntitiyCreateDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+            }
+
+            if (toDate != null)
+            {
+                iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.EntitiyCreateDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
+            }
+
+            if (!string.IsNullOrEmpty(fromPortId))
+            {
+                Port port = portRep.GetSinglePort(tenant, fromPortId);
+
+                if (port != null)
+                {
+                    iQueryable = iQueryable.Where(d => d.OriginCode == port.Code);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(finalDestinationPortId))
+            {
+                Port port = portRep.GetSinglePort(tenant, finalDestinationPortId);
+
+                if (port != null)
+                {
+                    iQueryable = iQueryable.Where(d => d.DestinationCode == port.Code);
+                }
+            }
+
+            if (string.IsNullOrEmpty(customerId))
+            {
+                IQueryable<Participant> myParticipants = ParticipantRep.GetParticipants(tenant);
+                List<int> forwarderTennats = new List<int>();
+                foreach (Participant item in myParticipants)
+                {
+                    forwarderTennats.Add(item.ForwarderTenant);
+                }
+
+                iQueryable = iQueryable.Where(d => forwarderTennats.Contains(d.SourceTenant));
+            }
+
+            else
+            {
+                int selectedTenantId = Convert.ToInt32(customerId);
+                iQueryable = iQueryable.Where(d => d.SourceTenant == selectedTenantId);
+            }
+
+            #endregion
+
+            #region Fill Report Data
+
+            totalData.FromDate = fromDate;
+            totalData.ToDate = toDate;
+            totalData.Logo = WebFreight.Web.DataProviders.General.GetLogo(tenant);
+
+            if (!string.IsNullOrEmpty(customerId))
+            {
+                int selectedTenant = Convert.ToInt32(customerId);
+                Tenant selectedCustomer = tenantRep.GetSingleTenant(selectedTenant);
+
+                if (selectedCustomer != null)
+                {
+                    totalData.SelectedCustomerName = selectedCustomer.Company;
+                    totalData.SelectedCustomerLabel = string.IsNullOrEmpty(selectedCustomer.Company) ? "" : "Customer:";
+                }
+            }
+
+            if (iQueryable.Count() > 0)
+            {
+                BookingRecord bookingRecord = null;
+
+                foreach (AirlineStatistics a in iQueryable)
+                {
+                    bookingRecord = new BookingRecord();
+
+                    bookingRecord.CreateDate = a.CreateDate;
+                    bookingRecord.CreatedByUser = a.EntityCreatedByUserName;
+                    bookingRecord.BookingNumber = a.EntityReference;
+                    bookingRecord.CustomerId = a.SourceTenant.ToString();
+                    bookingRecord.CustomerName = a.SourceTenantName;
+                    bookingRecord.Prefix = a.AirlinePrefix;
+                    bookingRecord.AWBNumber = a.AWBNumber;
+                    bookingRecord.Weight = a.GrossWeight;
+                    bookingRecord.Status = a.EntityStatus;
+                    bookingRecord.Product = a.ProductName;
+                    bookingRecord.BookedByUser = a.Sender;
+                    bookingRecord.Origin = a.OriginCode;
+                    bookingRecord.Destination = a.DestinationCode;
+                    bookingRecord.BookedDate = a.LastSentDate;
+
+                    totalData.BookingRecordList.Add(bookingRecord);
+                }
+            }
+
+            #endregion
+
+            totalData.BookingRecordList = totalData.BookingRecordList.OrderBy(d => d.CustomerName).ToList();
+
+            return totalData;
+        }
+        #endregion
+
+        #region e-AWBs Report
+        [WebMethod]
+        public byte[] LoadEAWBsData(byte[] xmlFilters, int tenant)
+        {
+            EAWBsDataProvider dataprovider = GetAwbsDataProvider(xmlFilters, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(EAWBsDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+        private EAWBsDataProvider GetAwbsDataProvider(byte[] xmlFilters, int tenant)
+        {
+            EAWBsDataProvider totalData = new EAWBsDataProvider();
+            totalData.AWBsRecordList = new List<AWBRecord>();
+
+            PortRepository portRep = new PortRepository(tenant);
+            ParticipantRepository ParticipantRep = new ParticipantRepository(tenant);
+            TenantRepository tenantRep = new TenantRepository(tenant);
+            AirlineStatisticsRepository statisticsRep = new AirlineStatisticsRepository(tenant);
+
+            IQueryable<AirlineStatistics> iQueryable = statisticsRep.GetAirlineStatistics(tenant).Where(d => d.MessageType == "FWB");
+
+            #region Report Filters
+
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+
+            QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
+            QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
+            QueryFilterItem filterItem_FromPortId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "MainCarriageFromPortId").FirstOrDefault();
+            QueryFilterItem filterItem_FinalDestinationPortId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "MainCarriageFinalDestinationPortId").FirstOrDefault();
+            QueryFilterItem filterItem_CustomerId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomerId").FirstOrDefault();
+
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+            DateTime myStartDate = todayDate.AddMonths(-1);
+
+            DateTime fromDate = new DateTime(myStartDate.Year, myStartDate.Month, 1);
+            DateTime toDate = new DateTime(todayDate.Year, todayDate.Month, DateTime.DaysInMonth(todayDate.Year, todayDate.Month));
+
+            string fromPortId = null;
+            string finalDestinationPortId = null;
+            string customerId = null;
+
+            if (filterItem_FromDate != null)
+            {
+                DateTime.TryParse(filterItem_FromDate.FieldValue.ToString(), out fromDate);
+            }
+
+            if (filterItem_ToDate != null)
+            {
+                DateTime.TryParse(filterItem_ToDate.FieldValue.ToString(), out toDate);
+            }
+
+            if (filterItem_FromPortId != null)
+            {
+                if (filterItem_FromPortId.FieldValue != null)
+                {
+                    fromPortId = filterItem_FromPortId.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_FinalDestinationPortId != null)
+            {
+                if (filterItem_FinalDestinationPortId.FieldValue != null)
+                {
+                    finalDestinationPortId = filterItem_FinalDestinationPortId.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_CustomerId != null)
+            {
+                if (filterItem_CustomerId.FieldValue != null)
+                {
+                    customerId = filterItem_CustomerId.FieldValue.ToString();
+                }
+            }
+
+            #endregion
+
+            #region Base Data Filtered
+
+            if (fromDate != null)
+            {
+                iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.EntitiyCreateDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+            }
+
+            if (toDate != null)
+            {
+                iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.EntitiyCreateDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
+            }
+
+            if (!string.IsNullOrEmpty(fromPortId))
+            {
+                Port port = portRep.GetSinglePort(tenant, fromPortId);
+
+                if (port != null)
+                {
+                    iQueryable = iQueryable.Where(d => d.OriginCode == port.Code);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(finalDestinationPortId))
+            {
+                Port port = portRep.GetSinglePort(tenant, finalDestinationPortId);
+
+                if (port != null)
+                {
+                    iQueryable = iQueryable.Where(d => d.DestinationCode == port.Code);
+                }
+            }
+
+            if (string.IsNullOrEmpty(customerId))
+            {
+                IQueryable<Participant> myParticipants = ParticipantRep.GetParticipants(tenant);
+                List<int> forwarderTennats = new List<int>();
+                foreach (Participant item in myParticipants)
+                {
+                    forwarderTennats.Add(item.ForwarderTenant);
+                }
+
+                iQueryable = iQueryable.Where(d => forwarderTennats.Contains(d.SourceTenant));
+            }
+
+            else
+            {
+                int selectedTenantId = Convert.ToInt32(customerId);
+                iQueryable = iQueryable.Where(d => d.SourceTenant == selectedTenantId);
+            }
+
+            #endregion
+
+            #region Fill Report Data
+
+            totalData.FromDate = fromDate;
+            totalData.ToDate = toDate;
+            totalData.Logo = WebFreight.Web.DataProviders.General.GetLogo(tenant);
+
+            if (iQueryable.Count() > 0)
+            {
+                AWBRecord awbRecord = null;
+
+                foreach (AirlineStatistics a in iQueryable)
+                {
+                    awbRecord = new AWBRecord();
+
+                    awbRecord.CarrierCode = a.AirlineCode;
+                    awbRecord.MessageType = a.MessageType;
+                    awbRecord.Prefix = a.AirlinePrefix;
+                    awbRecord.AWBNumber = a.AWBNumber;
+                    awbRecord.HouseNumber = a.HWBNumber;
+                    awbRecord.SentDate = a.LastSentDate;
+                    awbRecord.Participant = a.SourceTenantName;
+                    awbRecord.User = a.Sender;
+                    awbRecord.Origin = a.OriginCode;
+                    awbRecord.Destination = a.DestinationCode;
+                    awbRecord.NumberOfPieces = a.NumberOfPackages;
+                    awbRecord.GrossWeight = a.GrossWeight;
+                    awbRecord.ChargeableWeight = a.ChargeableWeight;
+                    awbRecord.WeightUnitCode = a.GrossWeightUnitCode;
+                    awbRecord.Volume = a.Volume;
+                    awbRecord.NatureOfGoods = a.DescriptionOfGoods;
+                    awbRecord.Shipper = a.ShipperName;
+                    awbRecord.Consignee = a.ConsigneeName;
+                    awbRecord.Flight1 = a.Flight1;
+                    awbRecord.FlightDate1 = a.Flight1Date;
+                    awbRecord.Flight2 = a.Flight2;
+                    awbRecord.FlightDate2 = a.Flight2Date;
+                    awbRecord.Flight3 = a.Flight3;
+                    awbRecord.FlightDate3 = a.Flight3Date;
+
+                    totalData.AWBsRecordList.Add(awbRecord);
+                }
+            }
+
+            #endregion
+
+            totalData.AWBsRecordList = totalData.AWBsRecordList.OrderBy(d => d.Participant).ToList();
+
+            return totalData;
+        }
+        #endregion
+
+        #region Flight Booking Report
+        [WebMethod]
+        public byte[] LoadFlightBookingData(byte[] xmlFilters, int tenant)
+        {
+            FlightBookingDataProvider dataprovider = GetFlightBookingDataProvider(xmlFilters, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(FlightBookingDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+        private FlightBookingDataProvider GetFlightBookingDataProvider(byte[] xmlFilters, int tenant)
+        {
+            FlightBookingDataProvider totalData = new FlightBookingDataProvider();
+            totalData.FlightBookingRecordList = new List<FlightBookingRecord>();
+
+            ContactRepository contactRepository = new ContactRepository(tenant);
+            ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+            ShipmentPackageRepository shipmentPackageRepository = new ShipmentPackageRepository(tenant);
+            IQueryable<ShipmentDataView> iQueryable = shipmentRepository.GetShipmentViewsByTenant(tenant);
+            Contact loggedContact = contactRepository.GetSingleContactByEmail(SecurityUtility.GetAuthenticatedUser(), tenant);
+
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+
+            #region Report Filters
+
+            QueryFilterItem filterItem_FlightDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FlightDate").FirstOrDefault();
+            QueryFilterItem filterItem_FlightNumber = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FlightNumber").FirstOrDefault();
+
+            DateTime? flightDate = null;
+            string flightNumber = null;
+
+            if (filterItem_FlightDate != null)
+            {
+                if (filterItem_FlightDate.FieldValue != null)
+                {
+                    flightDate = (DateTime)filterItem_FlightDate.FieldValue;
+                }
+            }
+
+            if (filterItem_FlightNumber != null)
+            {
+                if (filterItem_FlightNumber.FieldValue != null)
+                {
+                    flightNumber = filterItem_FlightNumber.FieldValue.ToString();
+                }
+            }
+
+            #endregion
+
+            #region Base Data Filtered
+
+            iQueryable = iQueryable.Where(d => d.TransportModeId == "A");
+            iQueryable = iQueryable.Where(d => d.ShipmentLevelCode != "H");
+
+            if (flightDate != null)
+            {
+                iQueryable = (from d in iQueryable
+                              where
+                             (d.MainCarriageETD != null && System.Data.Entity.DbFunctions.TruncateTime(d.MainCarriageETD) == System.Data.Entity.DbFunctions.TruncateTime(flightDate))
+                             ||
+                             (d.MainCarriageATD != null && System.Data.Entity.DbFunctions.TruncateTime(d.MainCarriageATD) == System.Data.Entity.DbFunctions.TruncateTime(flightDate))
+                              select d);
+            }
+
+            if (!string.IsNullOrEmpty(flightNumber))
+            {
+                iQueryable = iQueryable.Where(d => (d.MainCarriageCarrierCode + d.MainCarriageCarrierNumber) == flightNumber);
+            }
+
+            #endregion
+
+            #region Fill Report Data
+
+            totalData.Logo = WebFreight.Web.DataProviders.General.GetLogo(tenant);
+            totalData.FlightDateFilter = flightDate;
+
+            if (!string.IsNullOrEmpty(flightNumber))
+            {
+                totalData.FlightNumberFilter = flightNumber;
+
+                if (flightDate != null)
+                {
+                    totalData.FlightNumberFilter = totalData.FlightNumberFilter + " / ";
+                }
+            }
+
+            if (loggedContact != null)
+            {
+                totalData.LoggedUserName = loggedContact.EnglishName;
+            }
+
+            ShipmentDataView singleShipment = iQueryable.FirstOrDefault();
+            if (singleShipment != null)
+            {
+                totalData.FlightTime = singleShipment.MainCarriageETD != null ? singleShipment.MainCarriageETD.Value.ToShortTimeString() : (singleShipment.MainCarriageATD != null ? singleShipment.MainCarriageATD.Value.ToShortTimeString() : "");
+                totalData.Routing = singleShipment.MainCarriageFromPortCode + "-" + singleShipment.MainCarriageFinalDestinationPortCode;
+            }
+
+            if (iQueryable.Count() > 0)
+            {
+                FlightBookingRecord flightBookingRecord = null;
+
+                foreach (ShipmentDataView a in iQueryable)
+                {
+                    IQueryable<ShipmentPackage> packages = shipmentPackageRepository.GetShipmentPackagesForShipmentTenant(a.Id, tenant);
+
+                    flightBookingRecord = new FlightBookingRecord();
+                    flightBookingRecord.AWBNumber = a.AirlinePrefix + "-" + a.Master;
+                    flightBookingRecord.ShipperName = a.ShipperName;
+                    flightBookingRecord.Pieces = a.NumberOfPackages;
+                    flightBookingRecord.GrossWeight = a.GrossWeightInKG;
+                    flightBookingRecord.Volume = a.VolumeInCBM;
+                    flightBookingRecord.DescriptionOfGoods = a.DescriptionOfGoods;
+
+                    if (packages != null && packages.Count() > 0)
+                    {
+                        string str = "";
+
+                        foreach (ShipmentPackage package in packages)
+                        {
+                            if (!string.IsNullOrEmpty(str))
+                            {
+                                str = str + Environment.NewLine;
+                            }
+
+                            str = str + package.Quantity + " pc / " + package.Length + "x" + package.Width + "x" + package.Height + " Cm";
+                        }
+
+                        flightBookingRecord.Dimensions = str;
+                    }
+
+                    totalData.FlightBookingRecordList.Add(flightBookingRecord);
+                }
+            }
+
+            totalData.TotalPieces = totalData.FlightBookingRecordList.Sum(s => s.Pieces);
+            totalData.TotalGrossWeight = totalData.FlightBookingRecordList.Sum(s => s.GrossWeight);
+            totalData.TotalVolume = totalData.FlightBookingRecordList.Sum(s => s.Volume);
+            totalData.TotalAWBs = totalData.FlightBookingRecordList.Count;
+
+            #endregion
+
+            return totalData;
+        }
+        #endregion
+
+        #region Shipment Charges Analysis Report
+        [WebMethod]
+        public byte[] LoadShipmentChargesAnalysisData(byte[] xmlFilters, int tenant)
+        {
+            ShipmentChargesAnalysisDataProvider dataprovider = GetShipmentChargesAnalysisDataProvider(xmlFilters, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(ShipmentChargesAnalysisDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+        private ShipmentChargesAnalysisDataProvider GetShipmentChargesAnalysisDataProvider(byte[] xmlFilters, int tenant)
+        {
+            ShipmentChargesAnalysisDataProvider totalData = new ShipmentChargesAnalysisDataProvider();
+            totalData.ShipmentAnalysisRecordList = new List<ShipmentAnalysisRecord>();
+
+            IShipmentsContext context = ShipmentsContext.GetContext(tenant);
+            ShipmentRepository shipmentRepository = new ShipmentRepository(context);
+            ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
+            IQueryable<ShipmentList> iQueryable = shipmentQuery.GetShipmentListTenant(tenant);
+
+            #region Report Filters
+
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+
+            QueryFilterItem filterItem_CustomerId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomerId").FirstOrDefault();
+            QueryFilterItem filterItem_DateType = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DateType").FirstOrDefault();
+            QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
+            QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
+            QueryFilterItem filterItem_OperationalType = queryOperations.QueryFilterItems.Where(d => d.FieldName == "OperationalType").FirstOrDefault();
+            QueryFilterItem filterItem_AccountingType = queryOperations.QueryFilterItems.Where(d => d.FieldName == "AccountingType").FirstOrDefault();
+
+            QueryFilterItem filterItem_ReceivablesType = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ReceivablesType").FirstOrDefault();
+            QueryFilterItem filterItem_PayablesType = queryOperations.QueryFilterItems.Where(d => d.FieldName == "PayablesType").FirstOrDefault();
+            QueryFilterItem filterItem_ChargesTypeId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ChargesTypeId").FirstOrDefault();
+            QueryFilterItem filterItem_IsProfitCurrecny = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IsProfitCurrecny").FirstOrDefault();
+            QueryFilterItem filterItem_CurrencyCode = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CurrencyCode").FirstOrDefault();
+
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+            DateTime myStartDate = todayDate.AddMonths(-1);
+
+            DateTime fromDate = new DateTime(myStartDate.Year, myStartDate.Month, 1);
+            DateTime toDate = new DateTime(todayDate.Year, todayDate.Month, DateTime.DaysInMonth(todayDate.Year, todayDate.Month));
+
+            string customerId = null;
+            string chargesTypeId = null;
+            string dateType = null;
+            bool isProfitCurrecny = false;
+            string currencyCode = null;
+            string operationalType = null;
+            string accountingType = null;
+            string receivablesType = null;
+            string payablesType = null;
+
+            if (filterItem_DateType != null)
+            {
+                if (filterItem_DateType.FieldValue != null)
+                {
+                    dateType = filterItem_DateType.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_IsProfitCurrecny != null)
+            {
+                if (filterItem_IsProfitCurrecny.FieldValue != null)
+                {
+                    isProfitCurrecny = (bool)filterItem_IsProfitCurrecny.FieldValue;
+                }
+            }
+
+            if (filterItem_CurrencyCode != null)
+            {
+                if (filterItem_CurrencyCode.FieldValue != null)
+                {
+                    currencyCode = filterItem_CurrencyCode.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_ChargesTypeId != null)
+            {
+                if (filterItem_ChargesTypeId.FieldValue != null)
+                {
+                    chargesTypeId = filterItem_ChargesTypeId.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_CustomerId != null)
+            {
+                if (filterItem_CustomerId.FieldValue != null)
+                {
+                    customerId = filterItem_CustomerId.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_FromDate != null)
+            {
+                DateTime.TryParse(filterItem_FromDate.FieldValue.ToString(), out fromDate);
+            }
+
+            if (filterItem_ToDate != null)
+            {
+                DateTime.TryParse(filterItem_ToDate.FieldValue.ToString(), out toDate);
+            }
+
+            if (filterItem_OperationalType != null)
+            {
+                if (filterItem_OperationalType.FieldValue != null)
+                {
+                    operationalType = filterItem_OperationalType.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_AccountingType != null)
+            {
+                if (filterItem_AccountingType.FieldValue != null)
+                {
+                    accountingType = filterItem_AccountingType.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_ReceivablesType != null)
+            {
+                if (filterItem_ReceivablesType.FieldValue != null)
+                {
+                    receivablesType = filterItem_ReceivablesType.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_PayablesType != null)
+            {
+                if (filterItem_PayablesType.FieldValue != null)
+                {
+                    payablesType = filterItem_PayablesType.FieldValue.ToString();
+                }
+            }
+
+            #endregion
+
+            #region Shipment Filtered
+
+            if (!string.IsNullOrEmpty(customerId))
+            {
+                iQueryable = iQueryable.Where(d => d.CustomerId == customerId);
+            }
+
+            #region Date Filter
+
+            switch (dateType)
+            {
+                case "CRT":
+                    {
+                        if (fromDate != null)
+                        {
+                            iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDateTime) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                        }
+
+                        if (toDate != null)
+                        {
+                            iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDateTime) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
+                        }
+
+                        break;
+                    }
+
+                case "ARR":
+                    {
+                        if (fromDate != null)
+                        {
+                            iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.MainCarriageATA) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                        }
+
+                        if (toDate != null)
+                        {
+                            iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.MainCarriageATA) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
+                        }
+
+                        break;
+                    }
+
+                case "DEP":
+                    {
+                        if (fromDate != null)
+                        {
+                            iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.MainCarriageATD) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                        }
+
+                        if (toDate != null)
+                        {
+                            iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.MainCarriageATD) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
+                        }
+
+                        break;
+                    }
+
+                case "OPE":
+                    {
+                        if (fromDate != null)
+                        {
+                            iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.OperationalDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                        }
+
+                        if (toDate != null)
+                        {
+                            iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.OperationalDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
+                        }
+
+                        break;
+                    }
+            }
+
+            #endregion
+
+            #region Operational Filter
+
+            switch (operationalType)
+            {
+                case "All":
+                    {
+                        break;
+                    }
+
+                case "Open":
+                    {
+                        iQueryable = iQueryable.Where(d => !d.IsOperationalClosed);
+                        break;
+                    }
+
+                case "Close":
+                    {
+                        iQueryable = iQueryable.Where(d => d.IsOperationalClosed);
+                        break;
+                    }
+            }
+
+            #endregion
+
+            #region Accounting Filter
+
+            switch (accountingType)
+            {
+                case "All":
+                    {
+                        break;
+                    }
+
+                case "Open":
+                    {
+                        iQueryable = iQueryable.Where(d => !d.IsAccountingClosed);
+                        break;
+                    }
+
+                case "Close":
+                    {
+                        iQueryable = iQueryable.Where(d => d.IsAccountingClosed);
+                        break;
+                    }
+            }
+
+            #endregion
+
+            #endregion
+
+            List<ShipmentsReceivablesPayablesList> myResult = new List<ShipmentsReceivablesPayablesList>();
+
+            IQueryable<ShipmentPayable> allPayables = null;
+            IQueryable<ShipmentReceivable> allReceivables = null;
+
+            if (iQueryable.Count() > 0)
+            {
+                allPayables = context.ShipmentPayables.Where(d => d.Tenant == tenant).Include("ChargesType");
+                allReceivables = context.ShipmentReceivables.Where(d => d.Tenant == tenant).Include("ChargesType");
+
+                myResult = ((from myShipment in iQueryable
+                             join myPayable in allPayables on myShipment.Id equals myPayable.ShipmentId into myShipmentPayable
+                             from myItem in myShipmentPayable.DefaultIfEmpty()
+                             select new ShipmentsReceivablesPayablesList()
+                             {
+                                 Id = myShipment.Id + "P",
+                                 ShipmentId = myShipment.Id,
+                                 CustomerId = myShipment.CustomerId,
+                                 CustomerName = myShipment.CustomerName,
+                                 House = myShipment.House,
+                                 Master = myShipment.Master,
+                                 CreateDateTime = myShipment.CreateDateTime,
+                                 IsAccountingClosed = myShipment.IsAccountingClosed,
+                                 IsOperationalClosed = myShipment.IsOperationalClosed,
+                                 MainCarriageATA = myShipment.MainCarriageATA,
+                                 MainCarriageATD = myShipment.MainCarriageATD,
+                                 ShipmentNumber = myShipment.ShipmentNumber,
+
+                                 OperationalDate = myShipment.OperationalDate,
+                                 Quantity = myShipment.PackagesQuantity,
+                                 GrossWeight = myShipment.GrossWeightInKG,
+                                 ChargeableWeight = myShipment.ChargeableWeightInKG,
+                                 TEU = myShipment.TEU,
+
+                                 ChargeTypeId = myItem.ChargesTypeId,
+                                 ChargeTypeCode = myItem.ChargesType == null ? null : myItem.ChargesType.Code,
+                                 ChargeTypeName = myItem.ChargesType == null ? null : myItem.ChargesType.EnglishName,
+                                 Payables_OPEN = isProfitCurrecny ? myItem.OpenAmountInProfitCurrency : myItem.OpenAmountInLocalCurrency,
+                                 Payables_ACCT = isProfitCurrecny ? myItem.AccountedAmountInProfitCurrency : myItem.AccountedAmountInLocalCurrency,
+                                 Receivables_OPEN = 0,
+                                 Receivables_ACCT = 0,
+                             }).ToList()
+
+                            .Union
+
+                            (from myShipment in iQueryable
+                             join myReceivable in allReceivables on myShipment.Id equals myReceivable.ShipmentId into myShipmentReceivable
+                             from myItem in myShipmentReceivable.DefaultIfEmpty()
+                             select new ShipmentsReceivablesPayablesList()
+                             {
+                                 Id = myShipment.Id + "R",
+                                 ShipmentId = myShipment.Id,
+                                 CustomerId = myShipment.CustomerId,
+                                 CustomerName = myShipment.CustomerName,
+                                 House = myShipment.House,
+                                 Master = myShipment.Master,
+                                 CreateDateTime = myShipment.CreateDateTime,
+                                 IsAccountingClosed = myShipment.IsAccountingClosed,
+                                 IsOperationalClosed = myShipment.IsOperationalClosed,
+                                 MainCarriageATA = myShipment.MainCarriageATA,
+                                 MainCarriageATD = myShipment.MainCarriageATD,
+                                 ShipmentNumber = myShipment.ShipmentNumber,
+
+                                 OperationalDate = myShipment.OperationalDate,
+                                 Quantity = myShipment.PackagesQuantity,
+                                 GrossWeight = myShipment.GrossWeightInKG,
+                                 ChargeableWeight = myShipment.ChargeableWeightInKG,
+                                 TEU = myShipment.TEU,
+
+                                 ChargeTypeId = myItem.ChargesTypeId,
+                                 ChargeTypeCode = myItem.ChargesType == null ? null : myItem.ChargesType.Code,
+                                 ChargeTypeName = myItem.ChargesType == null ? null : myItem.ChargesType.EnglishName,
+                                 Payables_OPEN = 0,
+                                 Payables_ACCT = 0,
+                                 Receivables_OPEN = myItem.ShipmentReceivableLineStatusCode == "OAMT" || myItem.ShipmentReceivableLineStatusCode == "EMPT" ? (isProfitCurrecny ? myItem.AmountInProfitCurrency : myItem.TotalAmountLocal) : 0,
+                                 Receivables_ACCT = myItem.ShipmentReceivableLineStatusCode == "ACCT" || myItem.ShipmentReceivableLineStatusCode == "DRFT" ? (isProfitCurrecny ? myItem.AmountInProfitCurrency : myItem.TotalAmountLocal) : 0,
+                             }).ToList())
+
+                            .GroupBy(d => new
+                            {
+                                d.ShipmentId,
+                                d.CustomerId,
+                                d.CustomerName,
+                                d.House,
+                                d.Master,
+                                d.CreateDateTime,
+                                d.IsAccountingClosed,
+                                d.IsOperationalClosed,
+                                d.MainCarriageATA,
+                                d.MainCarriageATD,
+                                d.ShipmentNumber,
+                                d.ChargeTypeId,
+                                d.ChargeTypeCode,
+                                d.ChargeTypeName,
+                                d.OperationalDate,
+                                d.Quantity,
+                                d.GrossWeight,
+                                d.ChargeableWeight,
+                                d.TEU,
+                            })
+
+                            .Select(s => new ShipmentsReceivablesPayablesList()
+                            {
+                                Id = s.Key.ShipmentId + s.Key.ChargeTypeId,
+                                ShipmentId = s.Key.ShipmentId,
+                                CustomerId = s.Key.CustomerId,
+                                CustomerName = s.Key.CustomerName,
+                                House = s.Key.House,
+                                Master = s.Key.Master,
+                                CreateDateTime = s.Key.CreateDateTime,
+                                IsAccountingClosed = s.Key.IsAccountingClosed,
+                                IsOperationalClosed = s.Key.IsOperationalClosed,
+                                MainCarriageATA = s.Key.MainCarriageATA,
+                                MainCarriageATD = s.Key.MainCarriageATD,
+                                ShipmentNumber = s.Key.ShipmentNumber,
+                                OperationalDate = s.Key.OperationalDate,
+                                Quantity = s.Key.Quantity,
+                                GrossWeight = s.Key.GrossWeight,
+                                ChargeableWeight = s.Key.ChargeableWeight,
+                                TEU = s.Key.TEU,
+                                ChargeTypeId = s.Key.ChargeTypeId,
+                                ChargeTypeCode = s.Key.ChargeTypeCode,
+                                ChargeTypeName = s.Key.ChargeTypeName,
+                                Payables_OPEN = s.Sum(k => k.Payables_OPEN),
+                                Payables_ACCT = s.Sum(k => k.Payables_ACCT),
+                                Receivables_OPEN = s.Sum(k => k.Receivables_OPEN),
+                                Receivables_ACCT = s.Sum(k => k.Receivables_ACCT),
+                            }).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(chargesTypeId))
+            {
+                if (payablesType != "MISS")
+                {
+                    #region Receivables
+                    switch (receivablesType)
+                    {
+                        case "NOFI":
+                            {
+                                myResult = myResult.Where(d => d.ChargeTypeId == chargesTypeId).ToList();
+                                break;
+                            }
+
+                        case "OPEN":
+                            {
+                                myResult = myResult.Where(d => d.ChargeTypeId == chargesTypeId && d.Receivables_OPEN > 0).ToList();
+                                break;
+                            }
+
+                        case "ACCT":
+                            {
+                                myResult = myResult.Where(d => d.ChargeTypeId == chargesTypeId && d.Receivables_ACCT > 0).ToList();
+                                break;
+                            }
+
+                        case "OPAT":
+                            {
+                                myResult = myResult.Where(d => d.ChargeTypeId == chargesTypeId && (d.Receivables_OPEN + d.Receivables_ACCT > 0)).ToList();
+                                break;
+                            }
+
+                        case "MISS":
+                            {
+                                List<ShipmentsReceivablesPayablesList> myList = new List<ShipmentsReceivablesPayablesList>();
+                                List<string> allShipmentsId = (from a in myResult group a by a.ShipmentId into g select g.Key).ToList();
+                                foreach (string id in allShipmentsId)
+                                {
+                                    List<ShipmentsReceivablesPayablesList> shipmentData = myResult.Where(d => d.ShipmentId == id).ToList();
+                                    double? allChargeAmopunt = shipmentData.Where(d => d.ChargeTypeId == chargesTypeId).Sum(s => s.Receivables_OPEN + s.Receivables_ACCT);
+
+                                    if (allChargeAmopunt == 0)
+                                    {
+                                        ShipmentsReceivablesPayablesList myItem = shipmentData.Where(d => d.ShipmentId == id).FirstOrDefault();
+                                        if (myItem != null)
+                                        {
+                                            myList.Add(myItem);
+                                        }
+                                    }
+                                }
+
+                                List<ShipmentPayable> allPayablesList = new List<ShipmentPayable>();
+                                if (myList.Count > 0)
+                                {
+                                    allPayablesList = allPayables.Where(d => allShipmentsId.Contains(d.ShipmentId) && d.ChargesTypeId == chargesTypeId).ToList();
+                                }
+
+                                myResult = new List<ShipmentsReceivablesPayablesList>();
+                                foreach (ShipmentsReceivablesPayablesList a in myList)
+                                {
+                                    double? myPayables_OPEN = 0;
+                                    double? myPayables_ACCT = 0;
+
+                                    if (isProfitCurrecny)
+                                    {
+                                        myPayables_OPEN = allPayablesList.Where(d => d.ShipmentId == a.ShipmentId).Sum(s => s.OpenAmountInProfitCurrency);
+                                        myPayables_ACCT = allPayablesList.Where(d => d.ShipmentId == a.ShipmentId).Sum(s => s.AccountedAmountInProfitCurrency);
+                                    }
+                                    else
+                                    {
+                                        myPayables_OPEN = allPayablesList.Where(d => d.ShipmentId == a.ShipmentId).Sum(s => s.OpenAmountInLocalCurrency);
+                                        myPayables_ACCT = allPayablesList.Where(d => d.ShipmentId == a.ShipmentId).Sum(s => s.AccountedAmountInLocalCurrency);
+                                    }
+
+                                    myResult.Add(new ShipmentsReceivablesPayablesList()
+                                    {
+                                        ShipmentNumber = a.ShipmentNumber,
+                                        CustomerName = a.CustomerName,
+                                        Master = a.Master,
+                                        House = a.House,
+                                        CreateDateTime = a.CreateDateTime,
+                                        MainCarriageATA = a.MainCarriageATA,
+                                        MainCarriageATD = a.MainCarriageATD,
+                                        OperationalDate = a.OperationalDate,
+                                        Quantity = a.Quantity,
+                                        GrossWeight = a.GrossWeight,
+                                        ChargeableWeight = a.ChargeableWeight,
+                                        TEU = a.TEU,
+                                        Receivables_OPEN = 0,
+                                        Receivables_ACCT = 0,
+                                        Payables_OPEN = myPayables_OPEN,
+                                        Payables_ACCT = myPayables_ACCT,
+                                    });
+                                }
+                                break;
+                            }
+                    }
+                    #endregion
+                }
+
+                if (receivablesType != "MISS")
+                {
+                    #region Payables Filter
+                    switch (payablesType)
+                    {
+                        case "NOFI":
+                            {
+                                myResult = myResult.Where(d => d.ChargeTypeId == chargesTypeId).ToList();
+                                break;
+                            }
+
+                        case "OPEN":
+                            {
+                                myResult = myResult.Where(d => d.ChargeTypeId == chargesTypeId && d.Payables_OPEN > 0).ToList();
+                                break;
+                            }
+
+                        case "ACCT":
+                            {
+                                myResult = myResult.Where(d => d.ChargeTypeId == chargesTypeId && d.Payables_ACCT > 0).ToList();
+                                break;
+                            }
+
+                        case "OPAT":
+                            {
+                                myResult = myResult.Where(d => d.ChargeTypeId == chargesTypeId && (d.Payables_OPEN + d.Payables_ACCT > 0)).ToList();
+                                break;
+                            }
+
+                        case "MISS":
+                            {
+                                List<ShipmentsReceivablesPayablesList> myList = new List<ShipmentsReceivablesPayablesList>();
+                                List<string> allShipmentsId = (from a in myResult group a by a.ShipmentId into g select g.Key).ToList();
+                                foreach (string id in allShipmentsId)
+                                {
+                                    List<ShipmentsReceivablesPayablesList> shipmentData = myResult.Where(d => d.ShipmentId == id).ToList();
+                                    double? allChargeAmopunt = shipmentData.Where(d => d.ChargeTypeId == chargesTypeId).Sum(s => s.Payables_OPEN + s.Payables_ACCT);
+
+                                    if (allChargeAmopunt == 0)
+                                    {
+                                        ShipmentsReceivablesPayablesList myItem = shipmentData.Where(d => d.ShipmentId == id).FirstOrDefault();
+                                        if (myItem != null)
+                                        {
+                                            myList.Add(myItem);
+                                        }
+                                    }
+                                }
+
+                                List<ShipmentReceivable> allReceivablesList = new List<ShipmentReceivable>();
+                                if (myList.Count > 0)
+                                {
+                                    allReceivablesList = allReceivables.Where(d => allShipmentsId.Contains(d.ShipmentId) && d.ChargesTypeId == chargesTypeId).ToList();
+                                }
+
+                                myResult = new List<ShipmentsReceivablesPayablesList>();
+                                foreach (ShipmentsReceivablesPayablesList a in myList)
+                                {
+                                    double? myReceivables_OPEN = 0;
+                                    double? myReceivables_ACCT = 0;
+
+                                    if (isProfitCurrecny)
+                                    {
+                                        myReceivables_OPEN = allReceivablesList.Where(d => d.ShipmentId == a.ShipmentId && (d.ShipmentReceivableLineStatusCode == "OAMT" || d.ShipmentReceivableLineStatusCode == "EMPT")).Sum(s => s.AmountInProfitCurrency);
+                                        myReceivables_ACCT = allReceivablesList.Where(d => d.ShipmentId == a.ShipmentId && (d.ShipmentReceivableLineStatusCode == "ACCT" || d.ShipmentReceivableLineStatusCode == "DRFT")).Sum(s => s.AmountInProfitCurrency);
+                                    }
+                                    else
+                                    {
+                                        myReceivables_OPEN = allReceivablesList.Where(d => d.ShipmentId == a.ShipmentId && (d.ShipmentReceivableLineStatusCode == "OAMT" || d.ShipmentReceivableLineStatusCode == "EMPT")).Sum(s => s.TotalAmountLocal);
+                                        myReceivables_ACCT = allReceivablesList.Where(d => d.ShipmentId == a.ShipmentId && (d.ShipmentReceivableLineStatusCode == "ACCT" || d.ShipmentReceivableLineStatusCode == "DRFT")).Sum(s => s.TotalAmountLocal);
+                                    }
+
+                                    myResult.Add(new ShipmentsReceivablesPayablesList()
+                                    {
+                                        ShipmentNumber = a.ShipmentNumber,
+                                        CustomerName = a.CustomerName,
+                                        Master = a.Master,
+                                        House = a.House,
+                                        CreateDateTime = a.CreateDateTime,
+                                        MainCarriageATA = a.MainCarriageATA,
+                                        MainCarriageATD = a.MainCarriageATD,
+                                        OperationalDate = a.OperationalDate,
+                                        Quantity = a.Quantity,
+                                        GrossWeight = a.GrossWeight,
+                                        ChargeableWeight = a.ChargeableWeight,
+                                        TEU = a.TEU,
+                                        Receivables_OPEN = myReceivables_OPEN,
+                                        Receivables_ACCT = myReceivables_ACCT,
+                                        Payables_OPEN = 0,
+                                        Payables_ACCT = 0,
+                                    });
+                                }
+                                break;
+                            }
+                    }
+                    #endregion
+                }
+            }
+
+            else
+            {
+                if ((allPayables != null && allPayables.Count() > 0) || (allReceivables != null && allReceivables.Count() > 0))
+                {
+                    myResult = myResult.Where(d => !string.IsNullOrEmpty(d.ChargeTypeId)).ToList();
+                }
+            }
+
+            #region Fill Report Data
+
+            totalData.FromDate = fromDate;
+            totalData.ToDate = toDate;
+            totalData.SelectedCurrency = currencyCode;
+
+            if (myResult != null && myResult.Count > 0)
+            {
+                ShipmentAnalysisRecord record = null;
+
+                foreach (ShipmentsReceivablesPayablesList a in myResult.OrderBy(d => d.ShipmentNumber))
+                {
+                    record = new ShipmentAnalysisRecord();
+
+                    record.ShipmentNumber = a.ShipmentNumber;
+                    record.CustomerName = a.CustomerName;
+                    record.Master = a.Master;
+                    record.House = a.House;
+
+                    if (dateType == "CRT")
+                    {
+                        record.Date = a.CreateDateTime;
+                        record.SelectedDateLable = "Create Date";
+                    }
+                    else if (dateType == "ARR")
+                    {
+                        record.Date = a.MainCarriageATA == null ? null : a.MainCarriageATA;
+                        record.SelectedDateLable = "Actual Arrival Date";
+                    }
+                    else if (dateType == "DEP")
+                    {
+                        record.Date = a.MainCarriageATD == null ? null : a.MainCarriageATD;
+                        record.SelectedDateLable = "Actual Departure Date";
+                    }
+                    else if (dateType == "OPE")
+                    {
+                        record.Date = a.OperationalDate == null ? null : a.OperationalDate;
+                        record.SelectedDateLable = "Operational Date";
+                    }
+
+                    record.OperationalDate = a.OperationalDate;
+                    record.ChargeTypeCode = a.ChargeTypeCode;
+                    record.ChargeTypeName = a.ChargeTypeName;
+                    record.OpenReceivables = a.Receivables_OPEN;
+                    record.AccountedReceivables = a.Receivables_ACCT;
+                    record.OpenPayables = a.Payables_OPEN;
+                    record.AccountedPayables = a.Payables_ACCT;
+                    record.TotalQuantity = a.Quantity;
+                    record.TotalGrossWeight = a.GrossWeight;
+                    record.TotalChargeableWeight = a.ChargeableWeight;
+                    record.TotalTEU = a.TEU;
+
+                    totalData.ShipmentAnalysisRecordList.Add(record);
+                }
+            }
+
+            totalData.TotalOpenReceivables = totalData.ShipmentAnalysisRecordList.Sum(s => s.OpenReceivables);
+            totalData.TotalAccountedReceivables = totalData.ShipmentAnalysisRecordList.Sum(s => s.AccountedReceivables);
+            totalData.TotalOpenPayables = totalData.ShipmentAnalysisRecordList.Sum(s => s.OpenPayables);
+            totalData.TotalAccountedPayables = totalData.ShipmentAnalysisRecordList.Sum(s => s.AccountedPayables);
+
+            #endregion
+
+            return totalData;
+        }
+
+        #endregion
+
+        #region Participants Users Activities Report
+        [WebMethod]
+        public byte[] LoadParticipantsUsersActivitiesData(byte[] xmlFilters, int tenant)
+        {
+            ParticipantsUsersActivitiesDataProvider dataprovider = GetParticipantsUsersActivitiesDataProvider(xmlFilters, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(ParticipantsUsersActivitiesDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+        private ParticipantsUsersActivitiesDataProvider GetParticipantsUsersActivitiesDataProvider(byte[] xmlFilters, int tenant)
+        {
+            ParticipantsUsersActivitiesDataProvider totalData = new ParticipantsUsersActivitiesDataProvider();
+            totalData.ActiveParticipantsList = new List<ActiveParticipantRecord>();
+
+            UserRepository userRep = new UserRepository(tenant);
+            LogitudeMessagesTransmissionLogRepository messageLogRep = new LogitudeMessagesTransmissionLogRepository(tenant);
+            IQueryable<LogitudeMessagesTransmissionLog> iQueryable = messageLogRep.GetLogitudeMessagesTransmissionLogs(tenant);
+
+            #region Report Filters
+
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+
+            QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
+            QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
+            QueryFilterItem filterItem_ParticipantId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ParticipantId").FirstOrDefault();
+
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+            DateTime myStartDate = todayDate.AddMonths(-1);
+
+            DateTime fromDate = new DateTime(myStartDate.Year, myStartDate.Month, 1);
+            DateTime toDate = new DateTime(todayDate.Year, todayDate.Month, DateTime.DaysInMonth(todayDate.Year, todayDate.Month));
+
+            string participantId = null;
+
+            if (filterItem_FromDate != null)
+            {
+                DateTime.TryParse(filterItem_FromDate.FieldValue.ToString(), out fromDate);
+            }
+
+            if (filterItem_ToDate != null)
+            {
+                DateTime.TryParse(filterItem_ToDate.FieldValue.ToString(), out toDate);
+            }
+
+            if (filterItem_ParticipantId != null)
+            {
+                if (filterItem_ParticipantId.FieldValue != null)
+                {
+                    participantId = filterItem_ParticipantId.FieldValue.ToString();
+                }
+            }
+
+            #endregion
+
+            #region Base Data Filtered
+
+            if (fromDate != null)
+            {
+                iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.SentDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+            }
+
+            if (toDate != null)
+            {
+                iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.SentDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
+            }
+
+            if (!string.IsNullOrEmpty(participantId))
+            {
+                iQueryable = iQueryable.Where(d => d.ParticipantId == participantId);
+            }
+            #endregion
+
+            #region Fill Report Data
+
+            totalData.FromDate = fromDate;
+            totalData.ToDate = toDate;
+            totalData.Logo = WebFreight.Web.DataProviders.General.GetLogo(tenant);
+
+            if (iQueryable.Count() > 0)
+            {
+                List<LogitudeMessagesTransmissionLog> allLogs = iQueryable.ToList();
+
+                List<ActiveParticipantRecord> myList = (from a in allLogs
+                                                        group a by new { a.UserEmail, a.UserName, a.Participant } into g
+                                                        select new ActiveParticipantRecord()
+                                                        {
+                                                            Id = g.Key.UserEmail,
+                                                            UserEmail = g.Key.UserEmail,
+                                                            UserFullName = g.Key.UserName,
+                                                            ParticipantName = g.Key.Participant,
+                                                            TotalTransmissionPerFFR = g.Where(d => d.MessageTypeCode == "FFR").Count(),
+                                                            TotalTransmissionPerFHL = g.Where(d => d.MessageTypeCode == "FHL").Count(),
+                                                            TotalTransmissionPerFSR = g.Where(d => d.MessageTypeCode == "FSR").Count(),
+                                                            TotalTransmissionPerFVR = g.Where(d => d.MessageTypeCode == "FVR").Count(),
+                                                            TotalTransmissionPerFWB = g.Where(d => d.MessageTypeCode == "FWB").Count(),
+                                                        }).ToList();
+
+                foreach (ActiveParticipantRecord item in myList)
+                {
+                    ActiveParticipantRecord record = new ActiveParticipantRecord();
+
+                    if (!string.IsNullOrEmpty(item.UserFullName))
+                    {
+                        string[] names = item.UserFullName.Trim().Split(' ');
+
+                        if (names.Length == 1)
+                        {
+                            record.UserFirstName = names[0];
+                            record.UserLastName = "";
+                        }
+                        else
+                        {
+                            record.UserFirstName = names[0];
+                            record.UserLastName = names[1];
+                        }
+                    }
+
+                    record.Id = item.Id;
+                    record.UserEmail = item.UserEmail;
+                    record.ParticipantName = item.ParticipantName;
+                    record.TotalTransmissionPerFFR = item.TotalTransmissionPerFFR;
+                    record.TotalTransmissionPerFHL = item.TotalTransmissionPerFHL;
+                    record.TotalTransmissionPerFSR = item.TotalTransmissionPerFSR;
+                    record.TotalTransmissionPerFVR = item.TotalTransmissionPerFVR;
+                    record.TotalTransmissionPerFWB = item.TotalTransmissionPerFWB;
+
+                    totalData.ActiveParticipantsList.Add(record);
+                }
+            }
+
+            #endregion
+
+            return totalData;
+        }
+
+        #endregion
+
+        #region AR Invoice Include Vat and Routing Report
+
+        [WebMethod]
+        public byte[] LoadInvoicesVatAndRoutingData(byte[] xmlFilters, int tenant)
+        {
+            ARInvoiceIncludeVATRoutingsDataProvider dataprovider = LoadInvoicesVatAndRoutingDataProvider(xmlFilters, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(ARInvoiceIncludeVATRoutingsDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+        public ARInvoiceIncludeVATRoutingsDataProvider LoadInvoicesVatAndRoutingDataProvider(byte[] xmlFilters, int tenant)
+        {
+            ARInvoiceIncludeVATRoutingsDataProvider totalData = new ARInvoiceIncludeVATRoutingsDataProvider();
+            totalData.ARInvoiceVATRoutingList = new List<ARInvoiceVATRouting>();
+            totalData.InvoiceTotalsList = new List<InvoiceVATRoutingTotals>();
+
+            ARInvoiceTotalVATRepository aRInvoiceToatalVatRepository = new ARInvoiceTotalVATRepository(tenant);
+            ARInvoiceQuery arInvoiceQuery = new ARInvoiceQuery(tenant);
+            ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+            VatTypeRepository vatTypeRepository = new VatTypeRepository(tenant);
+
+            IQueryable<ARInvoiceList> iQueryable_Invoices = arInvoiceQuery.GetInvoiceListByTenant(tenant);
+            iQueryable_Invoices = iQueryable_Invoices.Where(d => !d.IsConstituentInvoice);
+            List<string> shipmentIds = iQueryable_Invoices.Select(s => s.MainEntityId).ToList();
+            IQueryable<Shipment> iQueryable_Shipments = shipmentRepository.GetShipmentsForUnpaidInvoicesReport(shipmentIds);
+            List<VatType> tenantVatTypes = vatTypeRepository.GetVatTypes(tenant).ToList();
+
+            #region Report Filters
+
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+
+            QueryFilterItem filterItem_CustomerId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomerId").FirstOrDefault();
+            QueryFilterItem filterItem_IsByInvoiceDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IsByInvoiceDate").FirstOrDefault();
+            QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
+            QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
+            QueryFilterItem filterItem_IncludeVoidInvoices = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeVoidInvoices").FirstOrDefault();
+            QueryFilterItem filterItem_IncludeDraftInvoices = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeDraftInvoices").FirstOrDefault();
+            QueryFilterItem filterItem_IsLocalCurrency = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IsLocalCurrency").FirstOrDefault();
+            QueryFilterItem filterItem_DirectionCode = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DirectionCode").FirstOrDefault();
+            QueryFilterItem filterItem_TransportModeCode = queryOperations.QueryFilterItems.Where(d => d.FieldName == "TransportModeCode").FirstOrDefault();
+            QueryFilterItem filterItem_InvoiceStatusCode = queryOperations.QueryFilterItems.Where(d => d.FieldName == "InvoiceStatusCode").FirstOrDefault();
+
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+            DateTime myStartDate = todayDate.AddMonths(-1);
+            DateTime fromDate = new DateTime(myStartDate.Year, myStartDate.Month, 1);
+            DateTime toDate = new DateTime(todayDate.Year, todayDate.Month, DateTime.DaysInMonth(todayDate.Year, todayDate.Month));
+
+            string customerId = null;
+            bool isByInvoiceDate = true;
+            bool includeVoidInvoices = true;
+            bool includeDraftInvoices = true;
+            bool isLocalCurrency = true;
+            string directionCode = null;
+            string transportModeCode = null;
+            string invoiceStatusCode = null;
+
+            if (filterItem_CustomerId != null)
+            {
+                if (filterItem_CustomerId.FieldValue != null)
+                {
+                    customerId = filterItem_CustomerId.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_IsByInvoiceDate != null)
+            {
+                if (filterItem_IsByInvoiceDate.FieldValue != null)
+                {
+                    isByInvoiceDate = (bool)filterItem_IsByInvoiceDate.FieldValue;
+                }
+            }
+
+            if (filterItem_FromDate != null)
+            {
+                DateTime.TryParse(filterItem_FromDate.FieldValue.ToString(), out fromDate);
+            }
+
+            if (filterItem_ToDate != null)
+            {
+                DateTime.TryParse(filterItem_ToDate.FieldValue.ToString(), out toDate);
+            }
+
+            if (filterItem_IncludeVoidInvoices != null)
+            {
+                if (filterItem_IncludeVoidInvoices.FieldValue != null)
+                {
+                    includeVoidInvoices = (bool)filterItem_IncludeVoidInvoices.FieldValue;
+                }
+            }
+
+            if (filterItem_IncludeDraftInvoices != null)
+            {
+                if (filterItem_IncludeDraftInvoices.FieldValue != null)
+                {
+                    includeDraftInvoices = (bool)filterItem_IncludeDraftInvoices.FieldValue;
+                }
+            }
+
+            if (filterItem_IsLocalCurrency != null)
+            {
+                if (filterItem_IsLocalCurrency.FieldValue != null)
+                {
+                    isLocalCurrency = (bool)filterItem_IsLocalCurrency.FieldValue;
+                }
+            }
+
+            if (filterItem_DirectionCode != null)
+            {
+                if (filterItem_DirectionCode.FieldValue != null)
+                {
+                    directionCode = filterItem_DirectionCode.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_TransportModeCode != null)
+            {
+                if (filterItem_TransportModeCode.FieldValue != null)
+                {
+                    transportModeCode = filterItem_TransportModeCode.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_InvoiceStatusCode != null)
+            {
+                if (filterItem_InvoiceStatusCode.FieldValue != null)
+                {
+                    invoiceStatusCode = filterItem_InvoiceStatusCode.FieldValue.ToString();
+                }
+            }
+
+            #endregion
+
+            #region Base Data Filtered
+
+            if (!string.IsNullOrEmpty(customerId))
+            {
+                iQueryable_Invoices = iQueryable_Invoices.Where(d => d.BillToId == customerId);
+            }
+
+            if (isByInvoiceDate)
+            {
+                if (fromDate != null)
+                {
+                    iQueryable_Invoices = iQueryable_Invoices.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.InvoiceDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                }
+
+                if (toDate != null)
+                {
+                    iQueryable_Invoices = iQueryable_Invoices.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.InvoiceDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
+                }
+            }
+
+            else
+            {
+                if (fromDate != null)
+                {
+                    iQueryable_Shipments = iQueryable_Shipments.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDateTime) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                }
+
+                if (toDate != null)
+                {
+                    iQueryable_Shipments = iQueryable_Shipments.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDateTime) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
+                }
+
+                List<string> ids = iQueryable_Shipments.Select(s => s.Id).ToList();
+                iQueryable_Invoices = iQueryable_Invoices.Where(d => ids.Contains(d.MainEntityId));
+            }
+
+            if (!includeDraftInvoices)
+            {
+                iQueryable_Invoices = iQueryable_Invoices.Where(d => d.StatusCode != "DR");
+            }
+
+            if (!includeVoidInvoices)
+            {
+                iQueryable_Invoices = iQueryable_Invoices.Where(d => d.StatusCode != "VD");
+            }
+
+            if (!string.IsNullOrEmpty(directionCode))
+            {
+                iQueryable_Shipments = iQueryable_Shipments.Where(d => d.DirectionId == directionCode);
+
+                List<string> ids = iQueryable_Shipments.Select(s => s.Id).ToList();
+                iQueryable_Invoices = iQueryable_Invoices.Where(d => ids.Contains(d.MainEntityId));
+            }
+
+            if (!string.IsNullOrEmpty(transportModeCode))
+            {
+                iQueryable_Shipments = iQueryable_Shipments.Where(d => d.TransportModeId == transportModeCode);
+
+                List<string> ids = iQueryable_Shipments.Select(s => s.Id).ToList();
+                iQueryable_Invoices = iQueryable_Invoices.Where(d => ids.Contains(d.MainEntityId));
+            }
+
+            if (!string.IsNullOrEmpty(invoiceStatusCode))
+            {
+                iQueryable_Invoices = iQueryable_Invoices.Where(d => d.StatusCode == invoiceStatusCode);
+            }
+
+            #endregion
+
+            #region Fill Report Data
+
+            totalData.FromDate = fromDate;
+            totalData.ToDate = toDate;
+            totalData.Logo = WebFreight.Web.DataProviders.General.GetLogo(tenant);
+
+            if (iQueryable_Invoices.Count() > 0)
+            {
+                List<ARInvoiceTotalVAT> totalVats = aRInvoiceToatalVatRepository.GetInvoiceTotalVATsByTenant(tenant).ToList();
+                int counter = 1;
+
+                foreach (ARInvoiceList invoice in iQueryable_Invoices)
+                {
+                    ARInvoiceVATRouting record = new ARInvoiceVATRouting();
+
+                    Shipment shipment = shipmentRepository.GetSingleShipment(invoice.MainEntityId, tenant);
+
+                    List<ARInvoiceTotalVAT> myTotalVats = totalVats.Where(d => d.ARInvoiceId == invoice.Id).ToList();
+                    List<VATClass> myVATS = new List<VATClass>();
+
+                    foreach (ARInvoiceTotalVAT vat in myTotalVats)
+                    {
+                        VATClass item = new VATClass()
+                        {
+                            Index = counter,
+                            Percentage = vat.VatPercent,
+                            VATName = tenantVatTypes.Where(d => d.Id == vat.VatTypeId).FirstOrDefault().EnglishName,
+                            VATCode = tenantVatTypes.Where(d => d.Id == vat.VatTypeId).FirstOrDefault().Code,
+                            InvoiceAmount = vat.InvoiceCurrencyVATAmount,
+                            LocalAmount = vat.LocalVATAmount,
+                        };
+
+                        myVATS.Add(item);
+
+                        counter++;
+                    }
+
+                    foreach (VATClass item in myVATS)
+                    {
+                        //1
+                        if (string.IsNullOrEmpty(totalData.VAT1Code))
+                        {
+                            totalData.VAT1Code = item.VATCode;
+                            totalData.VAT1Header = item.Percentage + "% " + item.VATName;
+                            record.VAT1Amount = isLocalCurrency ? item.LocalAmount : item.InvoiceAmount;
+                            continue;
+                        }
+
+                        else
+                        {
+                            if (totalData.VAT1Code == item.VATCode)
+                            {
+                                totalData.VAT1Code = item.VATCode;
+                                totalData.VAT1Header = item.Percentage + "% " + item.VATName;
+                                record.VAT1Amount = isLocalCurrency ? item.LocalAmount : item.InvoiceAmount;
+                                continue;
+                            }
+                        }
+
+                        //2
+                        if (string.IsNullOrEmpty(totalData.VAT2Code))
+                        {
+                            totalData.VAT2Code = item.VATCode;
+                            totalData.VAT2Header = item.Percentage + "% " + item.VATName;
+                            record.VAT2Amount = isLocalCurrency ? item.LocalAmount : item.InvoiceAmount;
+                            continue;
+                        }
+
+                        else
+                        {
+                            if (totalData.VAT2Code == item.VATCode)
+                            {
+                                totalData.VAT2Code = item.VATCode;
+                                totalData.VAT2Header = item.Percentage + "% " + item.VATName;
+                                record.VAT2Amount = isLocalCurrency ? item.LocalAmount : item.InvoiceAmount;
+                                continue;
+                            }
+                        }
+
+                        //3
+                        if (string.IsNullOrEmpty(totalData.VAT3Code))
+                        {
+                            totalData.VAT3Code = item.VATCode;
+                            totalData.VAT3Header = item.Percentage + "% " + item.VATName;
+                            record.VAT3Amount = isLocalCurrency ? item.LocalAmount : item.InvoiceAmount;
+                            continue;
+                        }
+
+                        else
+                        {
+                            if (totalData.VAT3Code == item.VATCode)
+                            {
+                                totalData.VAT3Code = item.VATCode;
+                                totalData.VAT3Header = item.Percentage + "% " + item.VATName;
+                                record.VAT3Amount = isLocalCurrency ? item.LocalAmount : item.InvoiceAmount;
+                                continue;
+                            }
+                        }
+
+                        //4
+                        if (string.IsNullOrEmpty(totalData.VAT4Code))
+                        {
+                            totalData.VAT4Code = item.VATCode;
+                            totalData.VAT4Header = item.Percentage + "% " + item.VATName;
+                            record.VAT4Amount = isLocalCurrency ? item.LocalAmount : item.InvoiceAmount;
+                            continue;
+                        }
+
+                        else
+                        {
+                            if (totalData.VAT4Code == item.VATCode)
+                            {
+                                totalData.VAT4Code = item.VATCode;
+                                totalData.VAT4Header = item.Percentage + "% " + item.VATName;
+                                record.VAT4Amount = isLocalCurrency ? item.LocalAmount : item.InvoiceAmount;
+                                continue;
+                            }
+                        }
+                    }
+
+                    if (isByInvoiceDate)
+                    {
+                        record.Date = invoice.InvoiceDate;
+                    }
+                    else
+                    {
+                        if (shipment != null)
+                        {
+                            record.Date = shipment.CreateDateTime;
+                        }
+                    }
+
+                    record.InvoiceNumber = invoice.InvoiceNumber;
+                    record.BillToName = invoice.BillToName;
+                    record.OurReference = invoice.MainEntityReference;
+                    record.CustomerReference = invoice.CustomerRef;
+
+                    if (shipment != null)
+                    {
+                        record.Routing = shipment.Routing;
+
+                        if (!string.IsNullOrEmpty(shipment.CustomerReference1))
+                        {
+                            record.CustomerReference = shipment.CustomerReference1;
+                        }
+                    }
+
+                    record.InvoiceStatus = invoice.StatusName;
+
+                    if (isLocalCurrency)
+                    {
+                        record.SubTotal = invoice.SubTotalInLocalCurrency;
+                        record.VAT = myTotalVats.Sum(d => d.LocalVATAmount);
+                        record.GrandTotal = invoice.SubTotalInLocalCurrency + myTotalVats.Sum(d => d.LocalVATAmount);
+                        record.Currency = invoice.LocalCurrencyCode;
+                    }
+                    else
+                    {
+                        record.SubTotal = invoice.SubTotalInInvoiceCurrency;
+                        record.VAT = myTotalVats.Sum(d => d.InvoiceCurrencyVATAmount);
+                        record.GrandTotal = invoice.SubTotalInInvoiceCurrency + myTotalVats.Sum(d => d.InvoiceCurrencyVATAmount);
+                        record.Currency = invoice.InvoiceCurrencyCode;
+                    }
+
+                    totalData.ARInvoiceVATRoutingList.Add(record);
+                }
+
+                if (isLocalCurrency)
+                {
+                    totalData.SubTotal_Sum = totalData.ARInvoiceVATRoutingList.Sum(s => s.SubTotal);
+                    totalData.GrandTotal_Sum = totalData.ARInvoiceVATRoutingList.Sum(s => s.GrandTotal);
+                    totalData.VAT_Sum = totalData.ARInvoiceVATRoutingList.Sum(s => s.VAT);
+
+                    totalData.TotalVats_1 = totalData.ARInvoiceVATRoutingList.Sum(s => s.VAT1Amount);
+                    totalData.TotalVats_2 = totalData.ARInvoiceVATRoutingList.Sum(s => s.VAT2Amount);
+                    totalData.TotalVats_3 = totalData.ARInvoiceVATRoutingList.Sum(s => s.VAT3Amount);
+                    totalData.TotalVats_4 = totalData.ARInvoiceVATRoutingList.Sum(s => s.VAT4Amount);
+                }
+
+                else
+                {
+                    totalData.InvoiceTotalsList = (from b in totalData.ARInvoiceVATRoutingList
+                                                   group b by new { b.Currency } into g
+                                                   select new InvoiceVATRoutingTotals()
+                                                   {
+                                                       Currency = g.Key.Currency,
+                                                       SubTotals_Local = g.Sum(b => b.SubTotal),
+                                                       GrandTotal_Local = g.Sum(b => b.GrandTotal),
+                                                       TotalVats = g.Sum(b => b.VAT).Value,
+                                                       VAT1Amount = g.Sum(b => b.VAT1Amount),
+                                                       VAT2Amount = g.Sum(b => b.VAT2Amount),
+                                                       VAT3Amount = g.Sum(b => b.VAT3Amount),
+                                                       VAT4Amount = g.Sum(b => b.VAT4Amount),
+                                                   }).ToList();
+                }
+            }
+
+            #endregion
+
+            return totalData;
+        }
+
+        #endregion
+
+        #region OceanInsights
+        [WebMethod]
+        public byte[] LoadOceanInsightsData(byte[] xmlFilters, int tenant)
+        {
+            OceanInsightsDataProvider dataprovider = LoadOceanInsightsDataProvider(xmlFilters, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(OceanInsightsDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+        public OceanInsightsDataProvider LoadOceanInsightsDataProvider(byte[] xmlFilters, int tenant)
+        {
+            OceanInsightsDataProvider totalData = new OceanInsightsDataProvider();
+            //totalData.OceanInsightsRecordList = new List<OceanInsightsRecord>();
+
+            //ContactRepository contactRepository = new ContactRepository(tenant);
+            OceanInsightsRequestRepository OceanInsightsRepository = new OceanInsightsRequestRepository(tenant);
+            //ShipmentPackageRepository shipmentPackageRepository = new ShipmentPackageRepository(tenant);
+            IQueryable<OceanInsightsRequest> iQueryable = OceanInsightsRepository.GetOceanInsightsRequests().Where(a => a.FromPushPage == false);
+            //Contact loggedContact = contactRepository.GetSingleContactByEmail(SecurityUtility.GetAuthenticatedUser(), tenant);
+
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+
+            #region Report Filters
+
+            QueryFilterItem filterItem_Tenant = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Tenant").FirstOrDefault();
+            QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
+            QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
+            QueryFilterItem filterItem_Detailed = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Detailed").FirstOrDefault();
+
+            //DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+            //DateTime myStartDate = todayDate.AddMonths(-1);
+            //DateTime fromDate = new DateTime(myStartDate.Year, myStartDate.Month, 1);
+            //DateTime toDate = new DateTime(todayDate.Year, todayDate.Month, DateTime.DaysInMonth(todayDate.Year, todayDate.Month));
+
+
+            //if (filterItem_FromDate != null)
+            //{
+            //    DateTime.TryParse(filterItem_FromDate.FieldValue.ToString(), out fromDate);
+            //}
+
+            //if (filterItem_ToDate != null)
+            //{
+            //    DateTime.TryParse(filterItem_ToDate.FieldValue.ToString(), out toDate);
+            //}
+            DateTime? FromDate = null;
+            DateTime? ToDate = null;
+            int Tenant = -1;
+            bool Detail = false;
+
+            if (filterItem_FromDate != null)
+            {
+                if (filterItem_FromDate.FieldValue != null)
+                {
+                    FromDate = (DateTime)filterItem_FromDate.FieldValue;
+                    totalData.FromDate = (DateTime)FromDate;
+
+                }
+
+            }
+
+            if (filterItem_ToDate != null)
+            {
+                if (filterItem_ToDate.FieldValue != null)
+                {
+                    ToDate = (DateTime)filterItem_ToDate.FieldValue;
+                    totalData.ToDate = (DateTime)ToDate;
+                }
+            }
+
+            if (filterItem_Tenant != null)
+            {
+                if (filterItem_Tenant.FieldValue != null)
+                {
+                    Tenant = (int)filterItem_Tenant.FieldValue;
+                    totalData.Tenant = Tenant;
+                }
+            }
+
+            if (filterItem_Detailed != null)
+            {
+                if (filterItem_Detailed.FieldValue != null)
+                {
+                    Detail = (bool)filterItem_Detailed.FieldValue;
+                    totalData.Detailed = Detail;
+                }
+            }
+
+            #endregion
+
+            #region Base Data Filtered
+
+            if (FromDate != null && ToDate != null)
+            {
+                iQueryable = (from d in iQueryable
+                              where (System.Data.Entity.DbFunctions.TruncateTime(d.CreateDate) >= FromDate && System.Data.Entity.DbFunctions.TruncateTime(d.CreateDate) <= ToDate)
+                              select d);
+            }
+
+            if (Tenant != -1)
+            {
+                iQueryable = iQueryable.Where(d => d.Tenant == Tenant);
+            }
+
+            #endregion
+
+            #region Fill Report Data
+
+            totalData.Logo = WebFreight.Web.DataProviders.General.GetLogo(tenant);
+            if (totalData.OceanInsightsRecordList == null)
+            {
+                totalData.OceanInsightsRecordList = new List<OceanInsightsRecord>();
+            }
+            if (totalData.OceanInsightsRecordGroup == null)
+            {
+                totalData.OceanInsightsRecordGroup = new List<OceanInsightsRecordGrouped>();
+            }
+            if (iQueryable.Count() > 0)
+            {
+                OceanInsightsRecord Record = null;
+                if (Tenant == -1 && Detail == false)
+                {
+                    var temp = iQueryable.GroupBy(a => a.Tenant);
+                    foreach (var item in temp)
+                    {
+                        TenantRepository rep = new TenantRepository(0);
+                        var Name = rep.GetSingleByTenant(item.Key);
+                        totalData.OceanInsightsRecordList.Add(new OceanInsightsRecord() { key = item.Key, Total = item.Count(), TenantName = Name.Company });
+                    }
+                }
+                else
+                {
+                    foreach (OceanInsightsRequest a in iQueryable)
+                    {
+                        Record = new OceanInsightsRecord();
+                        Record.BLNumber = a.BLNumber;
+                        Record.ContainerNumber = a.ContainerNumber;
+                        Record.CreateDate = a.CreateDate;
+                        Record.Id = a.OceanInsigntId;
+                        Record.SCACCode = a.SCACCode;
+                        Record.Tenant = a.Tenant;
+                        totalData.OceanInsightsRecordList.Add(Record);
+                    }
+                }
+
+
+            }
+
+            totalData.Total = totalData.OceanInsightsRecordList.Count;
+
+            #endregion
+
+            return totalData;
+        }
+        #endregion
+
+        #region Accounting Deposit Report
+        [WebMethod]
+        public byte[] LoadARInvoicesDepositReportData(byte[] xmlFilters, int tenant)
+        {
+            ARInvoiceDepositDataProvider dataprovider = LoadARInvoicesDepositReportDataProvider(xmlFilters, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(ARInvoiceDepositDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+        private ARInvoiceDepositDataProvider LoadARInvoicesDepositReportDataProvider(byte[] xmlFilters, int tenant)
+        {
+            ARInvoiceDepositDataProvider myResult = new ARInvoiceDepositDataProvider();
+
+            #region
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+
+            QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
+            QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
+            QueryFilterItem filterItem_BranchId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "BranchId").FirstOrDefault();
+            QueryFilterItem filterItem_LocalCurrency = queryOperations.QueryFilterItems.Where(d => d.FieldName == "LocalCurrency").FirstOrDefault();
+            QueryFilterItem filterItem_CustomerId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomerId").FirstOrDefault();
+
+
+
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+            DateTime myStartDate = todayDate.AddMonths(-1);
+
+            DateTime fromDate = new DateTime(myStartDate.Year, myStartDate.Month, 1);
+            DateTime toDate = new DateTime(todayDate.Year, todayDate.Month, DateTime.DaysInMonth(todayDate.Year, todayDate.Month));
+
+
+            if (filterItem_FromDate != null)
+            {
+                DateTime.TryParse(filterItem_FromDate.FieldValue.ToString(), out fromDate);
+            }
+
+            if (filterItem_ToDate != null)
+            {
+                DateTime.TryParse(filterItem_ToDate.FieldValue.ToString(), out toDate);
+            }
+
+            string branchId = null;
+            if (filterItem_BranchId != null)
+            {
+                if (filterItem_BranchId.FieldValue != null)
+                {
+                    branchId = filterItem_BranchId.FieldValue.ToString();
+                }
+            }
+
+
+            string customerId = null;
+            if (filterItem_CustomerId != null)
+            {
+                if (filterItem_CustomerId.FieldValue != null)
+                {
+                    customerId = filterItem_CustomerId.FieldValue.ToString();
+                }
+            }
+
+
+
+
+            bool isLocalCurrency = true;
+            if (filterItem_LocalCurrency != null)
+            {
+                if (filterItem_LocalCurrency.FieldValue != null)
+                {
+                    isLocalCurrency = (bool)filterItem_LocalCurrency.FieldValue;
+                }
+            }
+            #endregion
+
+            //BranchRepository branchRep = new BranchRepository(tenant);
+            //ParticipantRepository ParticipantRep = new ParticipantRepository(tenant);
+            //TenantRepository tenantRep = new TenantRepository(tenant);
+            //ARPaymentQuery PaymentRep = new ARPaymentQuery(tenant);
+
+
+            //ARPaymentQuery arPaymentQuery = new ARPaymentQuery(tenant);
+            //IQueryable<ARPaymentList> iQueryable = arPaymentQuery.GetARPaymentsList(tenant);
+
+            IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
+
+            IQueryable<ARPayment> iQueryable = (from f in invoiceContext.ARPayments.Include("PaymentCurrency").Include("LocalCurrency").Include("AccountingPaymentMethod").Include("CreatedByUser").Include("CreatedByUser.Contact").Include("BankAccountLite").Include("AccountingPaymentMethod")
+                                                where f.Tenant == tenant
+                                                select f);
+            if (!string.IsNullOrEmpty(branchId))
+            {
+                iQueryable = iQueryable.Where(d => d.BranchId == branchId);
+            }
+            if (!string.IsNullOrEmpty(customerId))
+            {
+                iQueryable = iQueryable.Where(d => d.BillToId == customerId);
+            }
+
+            iQueryable = (from d in iQueryable
+                          where
+                          (d.ValueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) >= fromDate && System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) <= toDate)
+                          ||
+                          (d.RegisterDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.RegisterDate) >= fromDate && System.Data.Entity.DbFunctions.TruncateTime(d.RegisterDate) <= toDate)
+                          select d);
+
+
+
+
+
+
+
+            myResult.FromDate = fromDate;
+            myResult.ToDate = toDate;
+            myResult.Logo = WebFreight.Web.DataProviders.General.GetLogo(tenant);
+
+            myResult.ARPaymentDataList = (from d in iQueryable
+                                          select new ARPaymentDataProvider()
+                                          {
+                                              PaymentId = d.Id,
+                                              ARPaymentNo = d.PaymentNo,
+                                              PaymentRef = d.PaymentNo,
+                                              ValueDate = d.ValueDate,
+                                              PaymentMethodName = d.AccountingPaymentMethod == null ? null : d.AccountingPaymentMethod.Name,
+                                              IssuedByUserName = d.CreatedByUser == null ? null : d.CreatedByUser.Contact.EnglishName,
+                                              PaymentCurrencyCode = isLocalCurrency ? (d.LocalCurrency == null ? null : d.LocalCurrency.Code) : (d.PaymentCurrency == null ? null : d.PaymentCurrency.Code),
+                                              Amount = isLocalCurrency ? d.AmountInLocalCurrency : d.AmountInPaymentCurrency,
+                                              PaymentMethodRef = d.AccountingPaymentMethod.Code == "CH" || d.AccountingPaymentMethod.Code == "BT" || d.AccountingPaymentMethod.Code == "CC" ? d.ChequeOrPaymentRef : d.AccountingPaymentMethod.Code == "CA" ? "Cash" : d.AccountingPaymentMethod.Code == "FS" ? "Offsetting" : "",
+                                              BankCode = d.BankAccountLite != null ? d.BankAccountLite.BankCode : null,
+                                              BankAccountEnglishName = d.BankAccountLite != null ? d.BankAccountLite.EnglishName : null,
+                                              BankAccountLocalName = d.BankAccountLite != null ? d.BankAccountLite.LocalName : null,
+                                              AccountNumber = d.BankAccountLite != null ? d.BankAccountLite.AccountNumber : null,
+                                              BranchNumber = d.BankAccountLite != null ? d.BankAccountLite.BranchNumber : null,
+
+                                          }).OrderBy(o => o.PaymentCurrencyCode).ToList();
+
+
+            foreach (ARPaymentDataProvider item in myResult.ARPaymentDataList)
+            {
+                item.PaidAPInvoicesList = new List<ARPaymentDataProvider.ReportARInvoicePayments>();
+                // item.BankCode=
+                List<ARInvoicePayment> APinvoicePayments = (from a in invoiceContext.ARInvoicePayments where a.ARPaymentId == item.PaymentId && a.Tenant == tenant select a).ToList();
+
+                if (APinvoicePayments.Count == 0)
+                {
+                    WebFreight.Web.DataProviders.ARPaymentDataProvider.ReportARInvoicePayments reportAPIPayment = new WebFreight.Web.DataProviders.ARPaymentDataProvider.ReportARInvoicePayments();
+
+                    reportAPIPayment.Reference = "";
+                    reportAPIPayment.BillTo = "";
+                    reportAPIPayment.InvoiceNumber = "";
+                    reportAPIPayment.AmountPaid = null;
+                    reportAPIPayment.OriginalAmount = null;
+                    item.PaidAPInvoicesList.Add(reportAPIPayment);
+                }
+
+                else
+                {
+                    double amountpaidSum = 0;
+
+                    foreach (ARInvoicePayment apiInvoicePayment in APinvoicePayments)
+                    {
+
+                        WebFreight.Web.DataProviders.ARPaymentDataProvider.ReportARInvoicePayments reportAPIPayment = new WebFreight.Web.DataProviders.ARPaymentDataProvider.ReportARInvoicePayments();
+
+                        ARInvoiceQuery arQuery = new ARInvoiceQuery(tenant);
+                        ARPaymentQuery arPQuery = new ARPaymentQuery(tenant);
+
+                        apiInvoicePayment.ARInvoice = arQuery.GetSingleARInvoice(apiInvoicePayment.ARInvoiceId, tenant);
+
+                        apiInvoicePayment.ARPayment = arPQuery.GetSingleARPayment(apiInvoicePayment.ARPaymentId, tenant);
+
+                        if (apiInvoicePayment.ARInvoice != null && apiInvoicePayment.ARPayment != null)
+                        {
+                            reportAPIPayment.Reference = apiInvoicePayment.ARInvoice.CustomerRef;
+                            reportAPIPayment.BillTo = apiInvoicePayment.ARInvoice.BillTo.LocalName;
+                            reportAPIPayment.InvoiceNumber = apiInvoicePayment.ARInvoice.InvoiceNumber;
+                            if (isLocalCurrency)
+                                reportAPIPayment.OriginalAmount = apiInvoicePayment.ARInvoice.AmountInLocalCurrency;
+                            else
+                                reportAPIPayment.OriginalAmount = apiInvoicePayment.ARInvoice.AmountInInvoiceCurrency;
+
+                            if (isLocalCurrency)
+                                reportAPIPayment.AmountPaid = apiInvoicePayment.LocalAmount;
+
+                            else
+                                reportAPIPayment.AmountPaid = apiInvoicePayment.ForeignAmount;
+
+                            if (reportAPIPayment.AmountPaid != null)
+                                amountpaidSum += (double)reportAPIPayment.AmountPaid;
+
+
+
+                        }
+
+                        reportAPIPayment.ShipmentNumber = apiInvoicePayment.ARInvoice.MainEntityReference != null ? apiInvoicePayment.ARInvoice.MainEntityReference : "";
+                        item.PaidAPInvoicesList.Add(reportAPIPayment);
+                    }
+
+                    item.sumInvoices = amountpaidSum;
+                }
+            }
+
+            //if (iQueryable.Count() > 0)
+            //{
+            //    //iQueryable = iQueryable.OrderBy(d => d.PaymentCurrencyCode);
+            //    foreach (ARPaymentList arPayment in iQueryable)
+            //    {
+
+            //        ARPaymentDataProvider ARPayment = new ARPaymentDataProvider();
+            //        //ARPayment.ARPaymentNo = arPayment.PaymentNo;
+            //        //ARPayment.PaymentRef = arPayment.PaymentNo;
+
+            //        //ARPayment.PaymentCurrencyCode = arPayment.PaymentCurrencyCode;
+            //        //ARPayment.ValueDate = arPayment.ValueDate;
+
+            //        //if (!isLocalCurrency)
+            //        //    ARPayment.PaymentCurrencyCode = arPayment.PaymentCurrencyCode;
+            //        //else
+            //        //{
+            //        //    ARPayment.PaymentCurrencyCode = arPayment.LocalCurrencyCode;
+            //        //}
+
+            //        //ARPayment.PaymentMethodName = arPayment.PaymentMethodName;
+            //        //ARPayment.IssuedByUserName = arPayment.CreatedByUserName;
+            //        //if (isLocalCurrency)
+            //        //    ARPayment.Amount = arPayment.AmountInLocalCurrency;
+
+
+            //        //else
+            //        //    ARPayment.Amount = arPayment.AmountInPaymentCurrency;
+
+
+            //        ARInvoicePaymentRepository paymentRepository = new ARInvoicePaymentRepository(tenant);
+            //        IQueryable<ARInvoicePayment> APinvoicePayments = paymentRepository.GetARInvoicePaymentByPaymentId(arPayment.Id, tenant);
+
+            //        //APInvoicePaymentRepository paymentRepository = new APInvoicePaymentRepository(tenant);
+            //        //IQueryable<APInvoicePayment> APinvoicePayments = paymentRepository.GetAPInvoicePaymentByPaymentId(arPayment.Id, tenant);
+            //        ARPayment.PaidAPInvoicesList = new List<ARPaymentDataProvider.ReportARInvoicePayments>();
+
+            //        if (APinvoicePayments.ToList().Count == 0)
+            //        {
+            //            WebFreight.Web.DataProviders.ARPaymentDataProvider.ReportARInvoicePayments reportAPIPayment = new WebFreight.Web.DataProviders.ARPaymentDataProvider.ReportARInvoicePayments();
+
+            //            reportAPIPayment.Reference = "";
+            //            reportAPIPayment.BillTo = "";
+            //            reportAPIPayment.InvoiceNumber = "";
+            //            reportAPIPayment.AmountPaid = null;
+            //            reportAPIPayment.OriginalAmount = null;
+            //            ARPayment.PaidAPInvoicesList.Add(reportAPIPayment);
+
+
+            //        }
+            //        double amountpaidSum = 0;
+
+            //        foreach (ARInvoicePayment apiInvoicePayment in APinvoicePayments)
+            //        {
+
+            //            WebFreight.Web.DataProviders.ARPaymentDataProvider.ReportARInvoicePayments reportAPIPayment = new WebFreight.Web.DataProviders.ARPaymentDataProvider.ReportARInvoicePayments();
+
+            //            ARInvoiceQuery arQuery = new ARInvoiceQuery(tenant);
+            //            ARPaymentQuery arPQuery = new ARPaymentQuery(tenant);
+
+            //            apiInvoicePayment.ARInvoice = arQuery.GetSingleARInvoice(apiInvoicePayment.ARInvoiceId, tenant);
+            //            apiInvoicePayment.ARPayment = arPQuery.GetSingleARPayment(apiInvoicePayment.ARPaymentId, tenant);
+            //            if (apiInvoicePayment.ARInvoice != null && apiInvoicePayment.ARPayment != null)
+            //            {
+            //                reportAPIPayment.Reference = apiInvoicePayment.ARInvoice.CustomerRef;
+            //                reportAPIPayment.BillTo = apiInvoicePayment.ARInvoice.BillTo.LocalName;
+            //                reportAPIPayment.InvoiceNumber = apiInvoicePayment.ARInvoice.InvoiceNumber;
+            //                if (isLocalCurrency)
+            //                    reportAPIPayment.OriginalAmount = apiInvoicePayment.ARInvoice.AmountInLocalCurrency;
+            //                else
+            //                    reportAPIPayment.OriginalAmount = apiInvoicePayment.ARInvoice.AmountInInvoiceCurrency;
+
+            //                if (isLocalCurrency)
+            //                    reportAPIPayment.AmountPaid = apiInvoicePayment.LocalAmount;
+
+            //                else
+            //                    reportAPIPayment.AmountPaid = apiInvoicePayment.ForeignAmount;
+
+            //                if (reportAPIPayment.AmountPaid != null)
+            //                    amountpaidSum += (double)reportAPIPayment.AmountPaid;
+
+            //            }
+            //            ARPayment.PaidAPInvoicesList.Add(reportAPIPayment);
+
+            //        }
+            //        ARPayment.sumInvoices = amountpaidSum;
+
+
+
+
+            //        totalData.ARPaymentDataList.Add(ARPayment);
+
+
+
+
+
+            //    }
+
+            //}
+
+
+
+
+
+            return myResult;
+
+
+
+
+
+            //TenantQuery tenantQuery = new TenantQuery(tenant);
+            //TenantPM tenantPM = tenantQuery.GetSinglePM(tenant);
+
+            //if (isLocalCurrency)
+            //    totalData.Currency = tenantPM.CurrencyCode;
+
+            //if (toDate != null)
+            //{
+            //    List<ARPaymentList> TempList = new List<ARPaymentList>();
+            //    for (int i = 0; i < iQueryable.ToList().Count; i++)
+            //    {
+            //        if (iQueryable.ToList()[i].ValueDate != null)
+            //        {
+
+            //            if (iQueryable.ToList()[i].ValueDate <= toDate && iQueryable.ToList()[i].ValueDate >= fromDate)
+            //                TempList.Add(iQueryable.ToList()[i]);
+
+            //        }
+            //        else
+            //        {
+            //            if (iQueryable.ToList()[i].RegisterDate <= toDate && iQueryable.ToList()[i].ValueDate >= fromDate)
+            //                TempList.Add(iQueryable.ToList()[i]);
+
+
+            //        }
+
+            //    }
+
+            //    iQueryable = TempList.AsQueryable();
+            //}
+        }
+
+
+        #endregion
+
+        #region CASS Report
+        [WebMethod]
+        public byte[] LoadCASSData(byte[] xmlFilters, int tenant)
+        {
+            CASSDataProvider dataprovider = LoadCASSDataProvider(xmlFilters, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(CASSDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+        private CASSDataProvider LoadCASSDataProvider(byte[] xmlFilters, int tenant)
+        {
+            CASSDataProvider totalData = new CASSDataProvider();
+            totalData.ShipmentsData = new List<ShipmentDataRecord>();
+
+            IShipmentsContext myShipmentsContext = ShipmentsContext.GetContext(tenant);
+            ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
+
+            ShipmentRepository shipmentRepository = new ShipmentRepository(myShipmentsContext);
+            TenantRepository tenantRepository = new TenantRepository(myCommonContext);
+            AddressRepository addressRepository = new AddressRepository(myCommonContext);
+            CurrencyRepository currencyRepository = new CurrencyRepository(myCommonContext);
+            CardRepository cardRepository = new CardRepository(myCommonContext);
+            APPaymentRepository paymentRepository = new APPaymentRepository(tenant);
+
+            IQueryable<ShipmentDataView> allShipments = shipmentRepository.GetShipmentViewsByTenant(tenant);
+            allShipments = allShipments.Where(d => d.ShipmentLevelCode != "H");
+            allShipments = allShipments.Where(d => d.MAWBOBLDate != null);
+
+            #region Report Filters
+
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+
+            QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
+            QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
+            QueryFilterItem filterItem_AirlineId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "AirlineId").FirstOrDefault();
+
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+            DateTime myStartDate = todayDate.AddMonths(-1);
+
+            DateTime fromDate = new DateTime(myStartDate.Year, myStartDate.Month, 1);
+            DateTime toDate = new DateTime(todayDate.Year, todayDate.Month, DateTime.DaysInMonth(todayDate.Year, todayDate.Month));
+
+            string airlineId = null;
+
+            if (filterItem_FromDate != null)
+            {
+                DateTime.TryParse(filterItem_FromDate.FieldValue.ToString(), out fromDate);
+            }
+
+            if (filterItem_ToDate != null)
+            {
+                DateTime.TryParse(filterItem_ToDate.FieldValue.ToString(), out toDate);
+            }
+
+            if (filterItem_AirlineId != null)
+            {
+                if (filterItem_AirlineId.FieldValue != null)
+                {
+                    airlineId = filterItem_AirlineId.FieldValue.ToString();
+                }
+            }
+
+            #endregion
+
+            #region Tenant Data
+
+            Tenant CurrenctTenant = tenantRepository.GetSingleByTenant(tenant);
+            if (CurrenctTenant != null)
+            {
+                totalData.TenantName = CurrenctTenant.Company;
+                totalData.TenantIATACode = CurrenctTenant.IATA;
+                totalData.FromDate = fromDate;
+                totalData.ToDate = toDate;
+                totalData.Logo = WebFreight.Web.DataProviders.General.GetLogo(tenant);
+
+                if (!string.IsNullOrEmpty(CurrenctTenant.AddressId))
+                {
+                    Address tenantAddress = addressRepository.GetSingleAddress(CurrenctTenant.AddressId, tenant);
+
+                    if (tenantAddress != null)
+                    {
+                        totalData.TenantAddress = DataProviders.General.GetAddress(tenantAddress);
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(CurrenctTenant.CurrencyId))
+                {
+                    Currency tenantCurrency = currencyRepository.GetSingleCurrency(CurrenctTenant.CurrencyId, tenant);
+
+                    if (tenantCurrency != null)
+                    {
+                        totalData.TenantLocalCurrencyCode = tenantCurrency.Code;
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(airlineId))
+                {
+                    Card airline = cardRepository.GetSingleCard(airlineId, tenant);
+                    if (airline != null)
+                    {
+                        totalData.AirlineName = airline.EnglishName;
+                    }
+                }
+            }
+
+            #endregion
+
+            #region Base Data Filtered
+
+            if (fromDate != null)
+            {
+                allShipments = allShipments.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.MAWBOBLDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+            }
+
+            if (toDate != null)
+            {
+                allShipments = allShipments.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.MAWBOBLDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
+            }
+
+            if (!string.IsNullOrEmpty(airlineId))
+            {
+                allShipments = allShipments.Where(d => d.MainCarriageCarrierId == airlineId);
+            }
+
+            #endregion
+
+            #region Fill Report Data
+            List<ShipmentDataView> allShipments_ToList = allShipments.ToList();
+
+            if (allShipments_ToList.Count > 0)
+            {
+                List<string> allShipmentsIds = allShipments_ToList.Select(s => s.Id).ToList();
+
+                List<ShipmentPayable> allPayables = (from d in myShipmentsContext.ShipmentPayables.Include("ChargesType").Include("ChargesType.IATACode")
+                                                     where allShipmentsIds.Contains(d.ShipmentId)
+                                                     && d.Tenant == tenant
+                                                     select d).ToList();
+
+                List<ShipmentCommodity> allCommodities = (from d in myShipmentsContext.ShipmentCommodities
+                                                          where allShipmentsIds.Contains(d.ShipmentId)
+                                                          && d.Tenant == tenant && d.IsFirstLine
+                                                          select d).ToList();
+
+                var allVATsAndPercentages = (from a in myCommonContext.VatTypes
+                                             join b in myCommonContext.VatTypePercentages on a.Id equals b.VatTypeId into VatAndPercentages
+                                             from myVatAndPercentages in VatAndPercentages.DefaultIfEmpty()
+                                             where myVatAndPercentages.Tenant == tenant
+                                             && myVatAndPercentages.Percentage != null
+                                             && myVatAndPercentages.Percentage != 0
+                                             select new
+                                             {
+                                                 Id = a.Id,
+                                                 Name = a.EnglishName,
+                                                 FromDate = myVatAndPercentages.FromDate,
+                                                 Percentage = myVatAndPercentages.Percentage,
+                                             }).ToList();
+
+                double? totalDue = 0;
+                double? totalVat = 0;
+
+                foreach (ShipmentDataView a in allShipments_ToList)
+                {
+                    ShipmentCommodity myShipmentCommodity = allCommodities.Where(d => d.ShipmentId == a.Id).FirstOrDefault();
+                    List<ShipmentPayable> myPayables = allPayables.Where(d => d.ShipmentId == a.Id).ToList();
+
+                    if (myPayables.Count > 0)
+                    {
+                        double? freight = 0;
+                        double? commission = 0;
+                        double? due = 0;
+
+                        foreach (ShipmentPayable item in myPayables)
+                        {
+                            if (item.ChargesType.ChargesGroupCode == "FRT")
+                            {
+                                freight += item.OpenAmountInLocalCurrency == null ? 0 : item.OpenAmountInLocalCurrency;
+                                due += item.OpenAmountInLocalCurrency == null ? 0 : item.OpenAmountInLocalCurrency;
+                                totalDue += item.OpenAmountInLocalCurrency == null ? 0 : item.OpenAmountInLocalCurrency;
+                            }
+
+                            if (item.ChargesType.ChargesGroupCode == "COMM")
+                            {
+                                commission += item.OpenAmountInLocalCurrency == null ? 0 : item.OpenAmountInLocalCurrency;
+                                due += item.OpenAmountInLocalCurrency == null ? 0 : item.OpenAmountInLocalCurrency;
+                                totalDue += item.OpenAmountInLocalCurrency == null ? 0 : item.OpenAmountInLocalCurrency;
+                            }
+
+                            if (!string.IsNullOrEmpty(item.ChargesType.VatTypeId))
+                            {
+                                var myVATsAndPercentages = allVATsAndPercentages.Where(d => d.Id == item.ChargesType.VatTypeId).OrderByDescending(o => o.FromDate).FirstOrDefault();
+                                if (myVATsAndPercentages != null)
+                                {
+                                    ShipmentDataRecord shipmentRecord = new ShipmentDataRecord();
+                                    shipmentRecord.Id = a.ShipmentNumber;
+                                    shipmentRecord.AWBNumber = EntityFieldsHelper.GetLongMasterField(a);
+                                    shipmentRecord.ChargeableWeight = a.ChargeableWeight;
+                                    shipmentRecord.DestinationCode = a.MainCarriageFinalDestinationPortCode;
+
+                                    if (myShipmentCommodity != null)
+                                    {
+                                        shipmentRecord.CommodityNumber = myShipmentCommodity.CommodityNumber;
+                                    }
+
+                                    shipmentRecord.PayablesFrieghtRate = myPayables.Where(d => d.ChargesType.ChargesGroupCode == "FRT").Sum(s => s.UnitPrice);
+                                    shipmentRecord.CrossTabHeader = myVATsAndPercentages.Name + " " + myVATsAndPercentages.Percentage + "%";
+                                    shipmentRecord.CrossTabValue = (item.OpenAmountInLocalCurrency == null ? 0 : item.OpenAmountInLocalCurrency) * myVATsAndPercentages.Percentage;
+                                    shipmentRecord.CrossTabIndex = 3;
+                                    totalVat += shipmentRecord.CrossTabValue == null ? 0 : shipmentRecord.CrossTabValue;
+
+                                    totalData.ShipmentsData.Add(shipmentRecord);
+                                }
+                            }
+
+                            if (item.ChargesType.ChargesGroupCode != "FRT" && item.ChargesType.ChargesGroupCode != "COMM")
+                            {
+                                ShipmentDataRecord shipmentRecord = new ShipmentDataRecord();
+                                shipmentRecord.Id = a.ShipmentNumber;
+                                shipmentRecord.AWBNumber = EntityFieldsHelper.GetLongMasterField(a);
+                                shipmentRecord.ChargeableWeight = a.ChargeableWeight;
+                                shipmentRecord.DestinationCode = a.MainCarriageFinalDestinationPortCode;
+
+                                if (myShipmentCommodity != null)
+                                {
+                                    shipmentRecord.CommodityNumber = myShipmentCommodity.CommodityNumber;
+                                }
+
+                                shipmentRecord.PayablesFrieghtRate = myPayables.Where(d => d.ChargesType.ChargesGroupCode == "FRT").Sum(s => s.UnitPrice);
+
+                                string header = "";
+                                if (item.ChargesType.IATACode != null)
+                                {
+                                    header = item.ChargesType.IATACode.Code;
+
+                                    if (!string.IsNullOrEmpty(item.ChargesType.DueTypeCode))
+                                    {
+                                        header = header + item.ChargesType.DueTypeCode.Substring(0, 1);
+                                    }
+                                }
+                                else
+                                {
+                                    header = item.ChargesType.EnglishName;
+                                }
+
+                                shipmentRecord.CrossTabHeader = header;
+                                shipmentRecord.CrossTabValue = item.OpenAmountInLocalCurrency == null ? 0 : item.OpenAmountInLocalCurrency;
+                                shipmentRecord.CrossTabIndex = 4;
+
+                                due += item.OpenAmountInLocalCurrency == null ? 0 : item.OpenAmountInLocalCurrency;
+                                totalDue += item.OpenAmountInLocalCurrency == null ? 0 : item.OpenAmountInLocalCurrency;
+
+                                totalData.ShipmentsData.Add(shipmentRecord);
+                            }
+                        }
+
+                        ShipmentDataRecord shipmentRecord_Freight = new ShipmentDataRecord();
+                        ShipmentDataRecord shipmentRecord_Comm = new ShipmentDataRecord();
+                        ShipmentDataRecord shipmentRecord_due = new ShipmentDataRecord();
+
+                        shipmentRecord_Freight.Id = shipmentRecord_Comm.Id = shipmentRecord_due.Id = a.ShipmentNumber;
+                        shipmentRecord_Freight.AWBNumber = shipmentRecord_Comm.AWBNumber = shipmentRecord_due.AWBNumber = EntityFieldsHelper.GetLongMasterField(a);
+                        shipmentRecord_Freight.ChargeableWeight = shipmentRecord_Comm.ChargeableWeight = shipmentRecord_due.ChargeableWeight = a.ChargeableWeight;
+                        shipmentRecord_Freight.DestinationCode = shipmentRecord_Comm.DestinationCode = shipmentRecord_due.DestinationCode = a.MainCarriageFinalDestinationPortCode;
+                        shipmentRecord_Freight.PayablesFrieghtRate = shipmentRecord_Comm.PayablesFrieghtRate = shipmentRecord_due.PayablesFrieghtRate = myPayables.Where(d => d.ChargesType.ChargesGroupCode == "FRT").Sum(s => s.UnitPrice);
+
+                        if (myShipmentCommodity != null)
+                        {
+                            shipmentRecord_Freight.CommodityNumber = shipmentRecord_Comm.CommodityNumber = shipmentRecord_due.CommodityNumber = myShipmentCommodity.CommodityNumber;
+                        }
+
+                        shipmentRecord_Freight.CrossTabIndex = 1;
+                        shipmentRecord_Freight.CrossTabHeader = "Freight";
+                        shipmentRecord_Freight.CrossTabValue = freight;
+
+                        shipmentRecord_Comm.CrossTabIndex = 2;
+                        shipmentRecord_Comm.CrossTabHeader = "AGENT Comm";
+                        shipmentRecord_Comm.CrossTabValue = commission;
+
+                        shipmentRecord_due.CrossTabIndex = 5;
+                        shipmentRecord_due.CrossTabHeader = "Total Due (local)";
+                        shipmentRecord_due.CrossTabValue = due;
+
+                        totalData.ShipmentsData.Add(shipmentRecord_Freight);
+                        totalData.ShipmentsData.Add(shipmentRecord_Comm);
+                        totalData.ShipmentsData.Add(shipmentRecord_due);
+                    }
+                }
+
+                IQueryable<APPayment> payments = paymentRepository.GetOpenedAPPayments(tenant).Where(d => d.VendorId == airlineId);
+                double? payments_sum = 0;
+                if (payments.Count() > 0)
+                {
+                    payments_sum = payments.Sum(s => s.OpenAmount);
+                }
+
+                totalData.TotalDue = totalDue;
+                totalData.TotalVAT = totalVat;
+                totalData.AdvancedPayment = payments_sum;
+                totalData.FinalPayableNetSale = totalData.TotalDue + totalData.TotalVAT - totalData.AdvancedPayment;
+            }
+
+            #endregion
+
+            totalData.Logo = DataProviders.General.GetLogo(tenant);
+            totalData.ShipmentsData = totalData.ShipmentsData.OrderBy(d => d.CrossTabIndex).ToList();
+            return totalData;
+        }
+        #endregion
+
+        #region InventoryReport
+        public byte[] LoadInventoryData(byte[] xmlFilters, int tenant)
+        {
+            InventoryDataProvider dataprovider = LoadInventoryDataProvider(xmlFilters, tenant);
+
+            XmlSerializer serializer = new XmlSerializer(typeof(InventoryDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+
+        }
+
+        private InventoryDataProvider LoadInventoryDataProvider(byte[] xmlFilters, int tenant)
+        {
+            InventoryDataProvider dataProvider = new InventoryDataProvider();
+            #region Report Filters
+            string customerId = "";
+            string warehouseId = "";
+            string shipperConsigneeId = "";
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+
+            //CustomerId
+            QueryFilterItem queryFilterItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomerId").FirstOrDefault();
+            if (queryFilterItem != null && queryFilterItem.FieldValue != null) customerId = queryFilterItem.FieldValue.ToString();
+
+
+            //WarehouseId
+            queryFilterItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "WarehouseId").FirstOrDefault();
+            if (queryFilterItem != null && queryFilterItem.FieldValue != null) warehouseId = queryFilterItem.FieldValue.ToString();
+
+            //ShipperConsigneeId
+            queryFilterItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ShipperConsigneeId").FirstOrDefault();
+            if (queryFilterItem != null && queryFilterItem.FieldValue != null) shipperConsigneeId = queryFilterItem.FieldValue.ToString();
+
+
+
+            WarehouseEntryPackageQueryService warehouseEntryPackageQueryService = new WarehouseEntryPackageQueryService(tenant);
+            List<WarehouseEntryPackageItem> result = warehouseEntryPackageQueryService.GetWarehouseEntryPackageItemForInventoryReport(customerId, warehouseId, shipperConsigneeId, tenant);
+            dataProvider.WarehouseEntryPackageList = result;
+            dataProvider.PartnerName = string.IsNullOrEmpty(customerId) ? "All" : "";
+            dataProvider.Warehouse = string.IsNullOrEmpty(warehouseId) ? "All" : "";
+            dataProvider.ShipperConsignee = string.IsNullOrEmpty(shipperConsigneeId) ? "All" : "";
+            if (!string.IsNullOrEmpty(customerId))
+            {
+                Card customer = CardRepository.GetSingleCard(customerId, tenant, true);
+                if (customer != null) dataProvider.PartnerName = customer.EnglishName;
+            }
+
+            if (!string.IsNullOrEmpty(warehouseId))
+            {
+                Card warehouseCard = CardRepository.GetSingleCard(warehouseId, tenant, true);
+                if (warehouseCard != null) dataProvider.Warehouse = warehouseCard.EnglishName;
+            }
+
+            if (!string.IsNullOrEmpty(shipperConsigneeId))
+            {
+                Card shipperConsigneeCard = CardRepository.GetSingleCard(shipperConsigneeId, tenant, true);
+                if (shipperConsigneeCard != null) dataProvider.ShipperConsignee = shipperConsigneeCard.EnglishName;
+            }
+
+            List<InventoryDataProvider.InventoryGroup> finalResults = (from a in dataProvider.WarehouseEntryPackageList
+
+                                                                       group a by new { a.WarehouseName, a.WarehouseId, }
+                                                       into g
+                                                                       select new InventoryDataProvider.InventoryGroup()
+                                                                       {
+                                                                           Warehouse = g.Key.WarehouseName,
+                                                                           WarehouseList = g.ToList(),
+                                                                       }).ToList();
+
+            dataProvider.InventoryGroupList = finalResults.OrderBy(d => d.Warehouse).ToList();
+
+            #endregion
+            return dataProvider;
+        }
+
+        #endregion
+
+        #region Employees TimeSheet Report 
+        [WebMethod]
+        public byte[] LoadEmployeeTimeSheetData(byte[] xmlFilters, int tenant)
+        {
+            EmployeeTimeSheetDataProvider dataprovider = GetEmployeeTimeSheetDataProvider(xmlFilters, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(EmployeeTimeSheetDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+        private EmployeeTimeSheetDataProvider GetEmployeeTimeSheetDataProvider(byte[] xmlFilters, int tenant)
+        {
+            EmployeeTimeSheetDataProvider result = new EmployeeTimeSheetDataProvider();
+            result.EmployeeTimeSheetList = new List<EmployeeTimeSheetData>();
+
+            ContactRepository contactRepository = new ContactRepository(tenant);
+            TMEmployeeTimeRepository employeeTimeRepository = new TMEmployeeTimeRepository(tenant);
+            IQueryable<TMEmployeeTime> iQueryable = employeeTimeRepository.GetAll(tenant);
+
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+
+            QueryFilterItem filterItem_EmployeeUserId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "EmployeeUserId").FirstOrDefault();
+            QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
+            QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
+
+            DateTime? fromDate = null;
+            DateTime? toDate = null;
+            string employeeUserId = null;
+
+            if (filterItem_FromDate != null)
+            {
+                if (filterItem_FromDate.FieldValue != null)
+                {
+                    fromDate = (DateTime)filterItem_FromDate.FieldValue;
+                }
+            }
+
+            if (filterItem_ToDate != null)
+            {
+                if (filterItem_ToDate.FieldValue != null)
+                {
+                    toDate = (DateTime)filterItem_ToDate.FieldValue;
+                }
+            }
+
+            if (filterItem_EmployeeUserId != null)
+            {
+                if (filterItem_EmployeeUserId.FieldValue != null)
+                {
+                    employeeUserId = filterItem_EmployeeUserId.FieldValue.ToString();
+                }
+            }
+
+            if (fromDate != null && toDate != null)
+            {
+                iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.DateOfWork) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.DateOfWork) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
+            }
+
+            if (!string.IsNullOrEmpty(employeeUserId))
+            {
+                iQueryable = iQueryable.Where(d => d.EmployeeUserId == employeeUserId);
+                Contact contact = contactRepository.GetSingleContact(employeeUserId, tenant);
+                if (contact != null)
+                {
+                    result.EmployeeUserName = contact.EnglishName;
+                }
+            }
+
+            result.FromDate = fromDate.Value;
+            result.ToDate = toDate.Value;
+            result.EmployeeUserId = employeeUserId;
+
+            // Office Hours 
+            ITimeManagementContext myContext = TimeManagementContext.GetContext(tenant);
+            IQueryable<TMOfficeHour> officeHours = (from a in myContext.TMOfficeHours
+                                                    where !a.Inactive && a.Tenant == tenant && a.UserId == employeeUserId && a.WorkDate != null &&
+                                                    System.Data.Entity.DbFunctions.TruncateTime(a.WorkDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate) &&
+                                                    System.Data.Entity.DbFunctions.TruncateTime(a.WorkDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate)
+                                                    select a);
+
+            EmployeeTimeSheetData timSheetItem = null;
+            double timeFromClock_Total = 0;
+            double timeFromOffice_Total = 0;
+            double timeFromHome_Total = 0;
+            double timeFromClient_Total = 0;
+            double differenceTime_Total = 0;
+            double totalWorkHrs_Total = 0;
+            double overTime_Total = 0;
+
+            var start = fromDate.Value;
+            var end = toDate.Value;
+            var dateList = Enumerable.Range(0, 1 + end.Subtract(start).Days).Select(offset => start.AddDays(offset)).ToList();
+
+            var EmployeeDateList = (from d in iQueryable
+                                    group d by new { d.DateOfWork, d.EmployeeUserId } into g
+                                    select new
+                                    {
+                                        DateOfWork = System.Data.Entity.DbFunctions.TruncateTime(g.Key.DateOfWork),
+                                        EmployeeUserId = g.Key.EmployeeUserId,
+                                    });
+
+            EmployeeDateList = (from d in EmployeeDateList
+                                group d by new { d.DateOfWork, d.EmployeeUserId } into g
+                                select new
+                                {
+                                    DateOfWork = System.Data.Entity.DbFunctions.TruncateTime(g.Key.DateOfWork),
+                                    EmployeeUserId = g.Key.EmployeeUserId,
+                                });
+
+
+            foreach (var dateItem in dateList)
+            {
+
+                List<TMEmployeeTime> itemGrouplist = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.DateOfWork) == System.Data.Entity.DbFunctions.TruncateTime(dateItem) && d.EmployeeUserId == employeeUserId).ToList();
+                timSheetItem = new EmployeeTimeSheetData();
+                timSheetItem.EmployeeName = result.EmployeeUserName;
+                timSheetItem.DayOfWork = dateItem.ToString("dddd");
+                var date = dateItem;
+                if (date != null)
+                {
+                    timSheetItem.DateOfWork = date;
+                }
+                if (timSheetItem.DayOfWork != null && (timSheetItem.DayOfWork.ToLower() == "friday" || timSheetItem.DayOfWork.ToLower() == "saturday"))
+                {
+                    timSheetItem.RequiredWorkHours = 0;
+                }
+                else
+                {
+                    timSheetItem.RequiredWorkHours = 9;
+                }
+
+                timSheetItem.TimeFromClock = "";
+                timSheetItem.TimeFromOffice = "";
+                timSheetItem.TimeFromHome = "";
+                timSheetItem.TimeFromClient = "";
+                timSheetItem.DifferenceTime = "";
+                timSheetItem.TotalWorkHrs = "";
+                timSheetItem.OverTime = "";
+
+                List<TMOfficeHour> officeDays = officeHours.Where(a => System.Data.Entity.DbFunctions.TruncateTime(a.WorkDate) == System.Data.Entity.DbFunctions.TruncateTime(dateItem) && a.UserId == employeeUserId).ToList();
+                double timeFromClock = 0;
+                foreach (var day in officeDays)
+                {
+                    DateTime? entry = day.EntryTime != null ? day.EntryTime : day.RecordedEntryTime;
+                    DateTime? exit = day.ExitTime != null ? day.ExitTime : day.RecordedExitTime;
+                    timeFromClock += Math.Round((exit.Value - entry.Value).TotalHours, 2);
+                }
+                timeFromClock_Total += timeFromClock;
+                timSheetItem.TimeFromClock = DateFormat(timeFromClock);
+
+                var timeFromOffice = Math.Round((itemGrouplist.Where(d => d.LocationCode == "O").Sum(a => a.TimeInMinutes)) / 60.0, 2);
+                timeFromOffice_Total += timeFromOffice;
+                timSheetItem.TimeFromOffice = DateFormat(timeFromOffice);
+
+                var timeFromHome = Math.Round((itemGrouplist.Where(d => d.LocationCode == "H").Sum(a => a.TimeInMinutes)) / 60.0, 2);
+                timeFromHome_Total += timeFromHome;
+                timSheetItem.TimeFromHome = DateFormat(timeFromHome);
+
+                var timeFromClient = Math.Round((itemGrouplist.Where(d => d.LocationCode == "C").Sum(a => a.TimeInMinutes)) / 60.0, 2);
+                timeFromClient_Total += timeFromClient;
+                timSheetItem.TimeFromClient = DateFormat(timeFromClient);
+
+                var differenceTime = Math.Round((timeFromOffice - timeFromClock), 2);
+                differenceTime_Total += differenceTime;
+                timSheetItem.DifferenceTime = DateFormat(differenceTime);
+
+                var totalWorkHrs = Math.Round((timeFromOffice + timeFromClient + timeFromHome), 2);
+                totalWorkHrs_Total += totalWorkHrs;
+                timSheetItem.TotalWorkHrs = DateFormat(totalWorkHrs);
+
+                var overTime = Math.Round((totalWorkHrs - timSheetItem.RequiredWorkHours.Value), 2);
+                overTime_Total += overTime;
+                timSheetItem.OverTime = DateFormat(overTime);
+
+                result.EmployeeTimeSheetList.Add(timSheetItem);
+            }
+
+
+
+            result.Total_RequiredWorkHours = result.EmployeeTimeSheetList.Sum(a => a.RequiredWorkHours);
+            result.Total_TimeFromClock = DateFormat(Math.Round(timeFromClock_Total, 2));
+            result.Total_TimeFromOffice = DateFormat(Math.Round(timeFromOffice_Total, 2));
+            result.Total_DifferenceTime = DateFormat(Math.Round(differenceTime_Total, 2));
+            result.Total_TimeFromHome = DateFormat(Math.Round(timeFromHome_Total, 2));
+            result.Total_TimeFromClient = DateFormat(Math.Round(timeFromClient_Total, 2));
+            result.Total_TotalWorkHrs = DateFormat(Math.Round(totalWorkHrs_Total, 2));
+            result.Total_OverTime = DateFormat(Math.Round(overTime_Total, 2));
+            return result;
+        }
+
+        private string DateFormat(double time)
+        {
+            var result = "";
+            var isMinus = false;
+            if (time != 0)
+            {
+                var ts = TimeSpan.FromHours(time);
+                if(ts.TotalHours < 0)
+                {
+                    isMinus = true;
+                }
+                var h = System.Math.Floor(ts.TotalHours);
+                if (Math.Abs(ts.TotalHours) < 1)
+                {
+                    h = 0;
+                }
+                var m = (ts.TotalHours - h) * 60;
+                if (isMinus)
+                {
+                    m = m * -1;
+                    h = h * -1;
+
+                    result = "- " + h + ":" + m.ToString("00");
+                }
+                else {
+                    result = h + ":" + m.ToString("00");
+                }
+            }
+            return result;
+        }
+        public List<DateTime> GetDates(int year, int month)
+        {
+            return Enumerable.Range(1, DateTime.DaysInMonth(year, month))  // Days: 1, 2 ... 31 etc.
+                             .Select(day => new DateTime(year, month, day)) // Map each day to a date
+                             .ToList(); // Load dates into a list
+        }
+        #endregion
+
+        #region Work Per Hours Project Report 
+        [WebMethod]
+        public byte[] LoadWorkPerHoursProjectData(byte[] xmlFilters, int tenant)
+        {
+            WorkDaysPerProjectDataProvider dataprovider = GetWorkPerHoursProjectDataProvider(xmlFilters, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(WorkDaysPerProjectDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+        private WorkDaysPerProjectDataProvider GetWorkPerHoursProjectDataProvider(byte[] xmlFilters, int tenant)
+        {
+            WorkDaysPerProjectDataProvider result = new WorkDaysPerProjectDataProvider();
+            result.SummarizedWorkHoursPerProjectList = new List<WorkDaysPerProjectData>();
+            result.DetailedWorkHoursPerProjectList = new List<WorkDaysPerProjectData>();
+
+            ContactRepository contactRepository = new ContactRepository(tenant);
+            TMEmployeeTimeRepository employeeTimeRepository = new TMEmployeeTimeRepository(tenant);
+            ITimeManagementContext myContext = TimeManagementContext.GetContext(tenant);
+            IQueryable<TMProject> allProjects = (from d in myContext.TMProjects where d.Tenant == tenant select d);
+            IQueryable<TMEmployeeTime> iQueryable = (from d in myContext.TMEmployeeTimes where d.Tenant == tenant select d);
+            CardRepository cardRep = new CardRepository(tenant);
+
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+
+            QueryFilterItem filterItem_ProjectId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ProjectId").FirstOrDefault();
+            QueryFilterItem filterItem_CustomerId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomerId").FirstOrDefault();
+            QueryFilterItem filterItem_OwnerId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "OwnerId").FirstOrDefault();
+            QueryFilterItem filterItem_IncludeInnerProject = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeInnerProject").FirstOrDefault();
+            QueryFilterItem filterItem_EmployeeUserId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "EmployeeUserId").FirstOrDefault();
+            QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
+            QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
+            QueryFilterItem filterItem_BudgetId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "BudgetId").FirstOrDefault();
+
+            DateTime? fromDate = null;
+            DateTime? toDate = null;
+            string customerId = null;
+            string employeeUserId = null;
+            string budgetId = null;
+            string projectId = null;
+            string ownerId = null;
+            bool IncludeInnerProject;
+
+            if (filterItem_CustomerId != null)
+            {
+                if (filterItem_CustomerId.FieldValue != null)
+                {
+                    customerId = filterItem_CustomerId.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_FromDate != null)
+            {
+                if (filterItem_FromDate.FieldValue != null)
+                {
+                    fromDate = (DateTime)filterItem_FromDate.FieldValue;
+                }
+            }
+
+            if (filterItem_ToDate != null)
+            {
+                if (filterItem_ToDate.FieldValue != null)
+                {
+                    toDate = (DateTime)filterItem_ToDate.FieldValue;
+                }
+            }
+
+            if (filterItem_EmployeeUserId != null)
+            {
+                if (filterItem_EmployeeUserId.FieldValue != null)
+                {
+                    employeeUserId = filterItem_EmployeeUserId.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_BudgetId != null)
+            {
+                if (filterItem_BudgetId.FieldValue != null)
+                {
+                    budgetId = filterItem_BudgetId.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_ProjectId != null)
+            {
+                if (filterItem_ProjectId.FieldValue != null)
+                {
+                    projectId = filterItem_ProjectId.FieldValue.ToString();
+                }
+            }
+
+
+            if (filterItem_OwnerId != null)
+            {
+                if (filterItem_OwnerId.FieldValue != null)
+                {
+                    ownerId = filterItem_OwnerId.FieldValue.ToString();
+                }
+            }
+
+
+            if (filterItem_IncludeInnerProject != null)
+            {
+                if (filterItem_IncludeInnerProject.FieldValue != null)
+                {
+                    IncludeInnerProject = Convert.ToBoolean(filterItem_IncludeInnerProject.FieldValue);
+                }
+            }
+
+            if (customerId != null)
+            {
+                var customerCard = cardRep.GetSingleCard(customerId, tenant);
+                if (customerCard != null)
+                {
+                    result.CustomerName = customerCard.EnglishName;
+                }
+
+                iQueryable = (from myTMEmployeeTime in iQueryable
+                              join db_Projects in allProjects on myTMEmployeeTime.ProjectId  equals db_Projects.Id into joinedData
+                              from myProjct in joinedData
+                              where myTMEmployeeTime.Tenant == tenant
+                              && myProjct.Tenant == tenant
+                              && myProjct.CustomerId == customerId
+                              && myProjct.BudgetId == budgetId
+                              select myTMEmployeeTime);
+            }
+            else
+            {
+                iQueryable = (from myTMEmployeeTime in iQueryable
+                              join db_Projects in allProjects on myTMEmployeeTime.ProjectId equals db_Projects.Id into joinedData
+                              from myProjct in joinedData
+                              where myTMEmployeeTime.Tenant == tenant
+                              && myProjct.Tenant == tenant
+                              && myProjct.BudgetId == budgetId
+                              select myTMEmployeeTime);
+
+            }
+
+            if (fromDate != null && toDate != null)
+            {
+                iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.DateOfWork) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.DateOfWork) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
+            }
+
+            if (!string.IsNullOrEmpty(projectId))
+            {
+                iQueryable = iQueryable.Where(d => d.ProjectId == projectId);
+                TMProject project = allProjects.Where(d => d.Id == projectId).FirstOrDefault();
+                if (project != null)
+                {
+                    result.ProjectName = project.Name;
+                }
+            }
+
+            result.FromDate = fromDate.Value;
+            result.ToDate = toDate.Value;
+            result.EmployeeUserId = employeeUserId;
+            result.ProjectId = projectId;
+            result.CustomerId = customerId;
+            result.BudgetId = budgetId;
+
+            WorkDaysPerProjectData timSheetItem_Detailed = null;
+            WorkDaysPerProjectData timSheetItem = null;
+            double totalWIWorkedDays_Employee = 0;
+            double totalWIWorkedDays = 0;
+
+            if (iQueryable.Count() > 0)
+            {
+                var daysList = (from d in iQueryable
+                                group d by new { d.DateOfWork, d.EmployeeUserId, d.ProjectId, d.WINumber, d.Description } into g
+                                select new
+                                {
+                                    DateOfWork = g.Key.DateOfWork,
+                                    EmployeeUserId = g.Key.EmployeeUserId,
+                                    ProjectId = g.Key.ProjectId,
+                                    WINumber = g.Key.WINumber,
+                                    Description = g.Key.Description,
+                                });
+
+
+                var daysList_Total = (from d in iQueryable
+                                      group d by new { d.ProjectId } into g
+                                      select new
+                                      {
+                                          ProjectId = g.Key.ProjectId,
+                                      });
+
+                foreach (var item in daysList_Total)
+                {
+                    List<TMEmployeeTime> itemGrouplist = iQueryable.Where(d => d.ProjectId == item.ProjectId).ToList();
+                    if (itemGrouplist != null && itemGrouplist.Count() > 0)
+                    {
+                        timSheetItem = new WorkDaysPerProjectData();
+                        TMProject project = allProjects.Where(d => d.Id == item.ProjectId).FirstOrDefault();
+                        if (project != null)
+                        {
+                            timSheetItem.ProjectName = project.Name;
+                            timSheetItem.ProjectNumber = project.ProjectNumber;
+                            var card = cardRep.GetSingleCard(project.CustomerId, tenant);
+                            if (card != null)
+                            {
+                                timSheetItem.CustomerName = card.EnglishName;
+                            }
+                        }
+
+                        var wIWorkedDays = Math.Round((itemGrouplist.Sum(a => a.TimeInMinutes)) / 60.0, 2) / 8;
+                        totalWIWorkedDays += wIWorkedDays;
+                        timSheetItem.TotalWIWorkedDays = DateFormat(wIWorkedDays);
+
+                        result.SummarizedWorkHoursPerProjectList.Add(timSheetItem);
+                    }
+                }
+
+
+                if (!string.IsNullOrEmpty(employeeUserId))
+                {
+                    iQueryable = iQueryable.Where(d => d.EmployeeUserId == employeeUserId);
+                    Contact contact = contactRepository.GetSingleContact(employeeUserId, tenant);
+                    if (contact != null)
+                    {
+                        result.EmployeeName = contact.EnglishName;
+                    }
+                }
+
+                foreach (var item in daysList)
+                {
+                    List<TMEmployeeTime> itemGrouplist = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.DateOfWork) == System.Data.Entity.DbFunctions.TruncateTime(item.DateOfWork) && d.EmployeeUserId == item.EmployeeUserId && d.ProjectId == item.ProjectId && d.WINumber == item.WINumber && d.Description == item.Description).ToList();
+
+                    if (itemGrouplist != null && itemGrouplist.Count() > 0)
+                    {
+                        timSheetItem_Detailed = new WorkDaysPerProjectData();
+
+                        TMProject project = allProjects.Where(d => d.Id == item.ProjectId).FirstOrDefault();
+                        if (project != null)
+                        {
+                            timSheetItem_Detailed.ProjectName = project.Name;
+                            timSheetItem_Detailed.ProjectNumber = project.ProjectNumber;
+                            var card = cardRep.GetSingleCard(project.CustomerId, tenant);
+                            if (card != null)
+                            {
+                                timSheetItem_Detailed.CustomerName = card.EnglishName;
+                            }
+                        }
+
+                        string contact_Name = "";
+                        if (!string.IsNullOrEmpty(result.EmployeeName))
+                        {
+                            contact_Name = result.EmployeeName;
+                        }
+
+                        else
+                        {
+                            Contact contact = contactRepository.GetSingleContact(item.EmployeeUserId, tenant);
+                            if (contact != null)
+                            {
+                                contact_Name = contact.EnglishName;
+                            }
+                        }
+
+                        timSheetItem_Detailed.EmployeeName = contact_Name;
+                        var date = item.DateOfWork.Date;
+                        if (date != null)
+                        {
+                            timSheetItem_Detailed.DateOfWork = date;
+                        }
+
+                        timSheetItem_Detailed.WINumber = item.WINumber;
+                        timSheetItem_Detailed.Description = item.Description;
+
+                        var wIWorkedDays_Employee = Math.Round((itemGrouplist.Sum(a => a.TimeInMinutes)) / 60.0, 2);
+                        totalWIWorkedDays_Employee += wIWorkedDays_Employee;
+                        timSheetItem_Detailed.TotalWIWorkedDays_Employee = DateFormat(wIWorkedDays_Employee);
+
+                        result.DetailedWorkHoursPerProjectList.Add(timSheetItem_Detailed);
+                    }
+                }
+
+                result.Total_TotalWIWorkedHours = DateFormat(Math.Round(totalWIWorkedDays, 2));
+                result.Total_TotalWIWorkedHours_Employee = DateFormat(Math.Round(totalWIWorkedDays_Employee, 2));
+            }
+            return result;
+        }
+        #endregion
+
+        #region AccountingAging
+        public byte[] LoadAccountingAgingDataProvider(byte[] xmlFilters, int tenant)
+        {
+            AccountingAgingDataProvider dataprovider = GetAccountingAgingDataProvider(xmlFilters, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(AccountingAgingDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+        private AccountingAgingDataProvider GetAccountingAgingDataProvider(byte[] xmlFilters, int tenant)
+        {
+            AccountingAgingDataProvider totalData = new DataProviders.AccountingAgingDataProvider();
+            totalData.AgingPeriods = new List<AgingPeriod>();
+
+
+            // GET logged contact, RTL
+            ContactPM contact = GetLoggedContact(tenant);
+            bool showLocals = !contact.DontShowLocal;
+
+            #region Report Filters
+
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+
+            QueryFilterItem filterItem_AgingForDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "AgingForDate").FirstOrDefault();
+            QueryFilterItem filterItem_CustomerId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomerId").FirstOrDefault();
+            QueryFilterItem filterItem_NoOfMonth = queryOperations.QueryFilterItems.Where(d => d.FieldName == "NumberOfMonths").FirstOrDefault();
+            QueryFilterItem filterItem_CategoryIndex = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CategoryIndex").FirstOrDefault();
+            QueryFilterItem filterItem_CategoryValue = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CategoryValue").FirstOrDefault();
+            QueryFilterItem filterItem_CollectorId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CollectoId").FirstOrDefault();
+            QueryFilterItem filterItem_SalesmanId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "SalesmanId").FirstOrDefault();
+            QueryFilterItem filterItem_Detailed = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Detailed").FirstOrDefault();
+
+
+            //agingForDate
+            DateTime? agingForDate = null;
+            if (filterItem_AgingForDate != null)
+            {
+                if (filterItem_AgingForDate.FieldValue != null)
+                {
+                    agingForDate = (DateTime)filterItem_AgingForDate.FieldValue;
+                }
+            }
+
+            //salesmanId
+            string salesmanId = null;
+            if (filterItem_SalesmanId != null)
+            {
+                if (filterItem_SalesmanId.FieldValue != null)
+                {
+                    salesmanId = filterItem_SalesmanId.FieldValue.ToString();
+                }
+            }
+
+            //customerId
+            string customerId = null;
+            if (filterItem_CustomerId != null)
+            {
+                if (filterItem_CustomerId.FieldValue != null)
+                {
+                    customerId = filterItem_CustomerId.FieldValue.ToString();
+                }
+            }
+
+            //collectorId
+            string collectorId = null;
+            if (filterItem_CollectorId != null)
+            {
+                if (filterItem_CollectorId.FieldValue != null)
+                {
+                    collectorId = filterItem_CollectorId.FieldValue.ToString();
+                }
+            }
+
+
+            //numberOfmonthsbackwards
+            string numberOfmonthsbackwards = null;
+            if (filterItem_NoOfMonth != null)
+            {
+                if (filterItem_NoOfMonth.FieldValue != null)
+                {
+                    numberOfmonthsbackwards = filterItem_NoOfMonth.FieldValue.ToString();
+                }
+            }
+
+            //categoryIndex
+            string categoryIndex = null;
+            if (filterItem_CategoryIndex != null)
+            {
+                if (filterItem_CategoryIndex.FieldValue != null)
+                {
+                    categoryIndex = filterItem_CategoryIndex.FieldValue.ToString();
+                }
+            }
+
+            //categoryValue
+            string categoryValue = null;
+            if (filterItem_CategoryValue != null)
+            {
+                if (filterItem_CategoryValue.FieldValue != null)
+                {
+                    categoryValue = filterItem_CategoryValue.FieldValue.ToString();
+                }
+            }
+
+            //currenciesDetailed
+            bool currenciesDetailed = false;
+            if (filterItem_Detailed != null)
+            {
+                if (filterItem_Detailed.FieldValue != null)
+                {
+                    currenciesDetailed = Convert.ToBoolean(filterItem_Detailed.FieldValue);
+                }
+            }
+
+            #endregion
+
+            #region Base Data Filtered
+            string category1Id = null;
+            string category2Id = null;
+            string category3Id = null;
+            string category4Id = null;
+            string category5Id = null;
+
+
+            if (!string.IsNullOrEmpty(categoryIndex))
+            {
+                switch (categoryIndex)
+                {
+                    case "Category1": { category1Id = categoryValue; break; }
+                    case "Category2": { category2Id = categoryValue; break; }
+                    case "Category3": { category3Id = categoryValue; break; }
+                    case "Category4": { category4Id = categoryValue; break; }
+                    case "Category5": { category5Id = categoryValue; break; }
+                }
+            }
+
+            var myAgingReportParam = new AgingReportParam()
+            {
+                Tenant = tenant,
+                AgingForDate = Convert.ToDateTime(agingForDate),
+                NumberOfmonthsbackwards = Convert.ToUInt32(numberOfmonthsbackwards),
+                VendorCustomerId = customerId,
+                Category1Id = category1Id,
+                Category2Id = category2Id,
+                Category3Id = category3Id,
+                Category4Id = category4Id,
+                Category5Id = category5Id,
+                CollectorId = collectorId,
+                SalesmanId = salesmanId,
+                AggregateByGLAccountCurrencies
+         = currenciesDetailed,
+
+                Aging4AccountTypeCode = AgingReportParam.Aging4AccountTypeCodeEnum.Customer2,
+                GroupByDate = AgingReportParam.DateEnum.DueDate,
+                AgingMethod = AgingReportParam.MethodEnum.TotalByMonthFIFOMethod.ToString(),
+
+                AgingMethod_Options = Enum.GetNames(typeof(AgingReportParam.MethodEnum)).ToList().Aggregate((b4, aftr) => string.Concat(b4, ";", aftr)),
+                GroupByDate_Options = Enum.GetNames(typeof(AgingReportParam.DateEnum)).ToList().Aggregate((b4, aftr) => string.Concat(b4, ";", aftr)),
+                Aging4AccountTypeCode_Options = Enum.GetNames(typeof(AgingReportParam.Aging4AccountTypeCodeEnum)).ToList().Aggregate((b4, aftr) => string.Concat(b4, ";", aftr)),
+            };
+
+            var agingReport = new AgingReportService(myAgingReportParam);
+            agingReport.RunReport();
+            List<PeriodMExtended> result = agingReport.MyPeriodExtendedList;
+            #endregion
+
+            #region Fill Report Data
+
+            //month
+            totalData.Month = agingForDate;
+
+            //logged user
+            ContactRepository contactRepo = new ContactRepository(tenant);
+            Contact loggedContact = contactRepo.GetSingleContactByEmail(SecurityUtility.GetAuthenticatedUser(), tenant);
+            totalData.PrintedByUser = showLocals ? loggedContact.LocalName : loggedContact.EnglishName;
+
+            //customerId
+            totalData.CustomerFilterValue = showLocals ? "לקוחות" : "All Customers";
+            if (!string.IsNullOrEmpty(customerId))
+            {
+                GLAccountRepository repo = new GLAccountRepository(tenant);
+                GLAccount customerGLAccount = repo.GetSingle(customerId, tenant);
+                totalData.CustomerFilterValue = customerGLAccount.LocalName;
+            }
+
+            //periods list
+            foreach (PeriodMExtended item in result)
+            {
+                AgingPeriod record = new AgingPeriod();
+
+                record.PeriodName = item.PeriodName;
+                record.AccountEnglishName = item.AccountEnglishName;
+                record.AccountLocalName = item.AccountLocalName;
+                record.Total = item.Total;
+
+                totalData.AgingPeriods.Add(record);
+            }
+
+            // order the list
+            int i = 0;
+            decimal sum = 0;
+
+            Dictionary<PeriodMExtended, decimal> sums = new Dictionary<PeriodMExtended, decimal>();
+            foreach (var period in result)
+            {
+                sums.Add(period, 0);
+            }
+            foreach (var period in result)
+            {
+                sums[period] += period.Total;
+            }
+            foreach (var sumValue in sums)
+            {
+                totalData.AgingPeriods.Add(new AgingPeriod()
+                {
+                    PeriodName = showLocals ? "סה''כ יתרה" : "Total Balance",
+                    Total = sumValue.Value,
+                    AccountEnglishName = sumValue.Key.AccountEnglishName,
+                    AccountLocalName = sumValue.Key.AccountLocalName,
+                });
+            }
+
+
+            foreach (var period in result.OrderBy(d => d.OrderDate).ToList())
+            {
+                i++;
+                sum += period.Total;
+                List<AgingPeriod> items = totalData.AgingPeriods.FindAll(a => a.PeriodName == period.PeriodName);
+                items.ForEach((item) =>
+                {
+                    item.OrderIndex = i;
+                });
+
+            }
+
+            //calculate totals
+            List<GroupedPeriodM> groupedArray =
+                result.GroupBy(l => l.PeriodName)
+                    .Select(cl => new GroupedPeriodM { PeriodName = cl.First().PeriodName, GrandTotal = cl.Sum(c => c.Total), })
+                    .ToList();
+            foreach (var period in groupedArray)
+            {
+                List<AgingPeriod> items = totalData.AgingPeriods.FindAll(a => a.PeriodName == period.PeriodName);
+                items.ForEach((item) =>
+                {
+                    item.GrandTotal = period.GrandTotal;
+                });
+            }
+
+            //fill subarray
+            foreach (var item in totalData.AgingPeriods)
+            {
+                if (item.PeriodName.Contains("b4"))
+                    item.PeriodName = item.PeriodName.Replace("b4", showLocals ? "לפני" : "Before");
+            }
+
+
+            totalData.AgingPeriods[0].Totals = new List<AgingPeriodTotal>();
+            //totalData.AgingPeriods[0].Totals.Add(new AgingPeriodTotal() { TotalCredit = 111, TotalDebit = 222 });
+
+            //totalData.AgingPeriods.Add(new AgingPeriod() { PeriodName = showLocals ? "סה''כ יתרה" : "Total Balance", Total = sum });
+            //totalData.AgingPeriods.Add(new AgingPeriod() { PeriodName = showLocals ? "סה''כ יתרה" : "Total Balance", Total = sum, AccountEnglishName ="USD" });
+
+		    //fill credit / debit labels
+            //bool even = true;
+            //foreach (var item in totalData.AgingPeriods)
+            //{
+            //    if (item.PeriodName.Contains("Before") || item.PeriodName.Contains("Total Balance"))
+            //        continue;
+
+            //    if (even)
+            //    {
+            //        item.CreditOrDebit = "Credit";
+            //        even = false;
+            //    }
+            //    else
+            //    {
+            //        item.CreditOrDebit = "Debit";
+            //        even = true;
+            //    }
+
+            //}
+
+            #endregion
+
+            return totalData;
+        }
+        #endregion
+
+        #region Open Shipments By Customer
+        public byte[] LoadOpenShipmentsByCustomerDataProvider(byte[] xmlFilters, int tenant)
+        {
+            OpenShipmentsByCustomerDataProvider dataprovider = GetOpenShipmentsByCustomerDataProvider(xmlFilters, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(OpenShipmentsByCustomerDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+        private OpenShipmentsByCustomerDataProvider GetOpenShipmentsByCustomerDataProvider(byte[] xmlFilters, int tenant)
+        {
+            OpenShipmentsByCustomerDataProvider totalData = new OpenShipmentsByCustomerDataProvider();
+            totalData.OpenShipmentsRecordList = new List<OpenShipmentsRecord>();
+
+            ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+            AddressRepository addressRepository = new AddressRepository(commonContext);
+            IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
+            ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
+            IQueryable<ShipmentDataView> iQueryable = shipmentRepository.GetShipmentViewsByTenant(tenant);
+
+            #region Report Filters
+
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+
+            QueryFilterItem filterItem_CustomerId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomerId").FirstOrDefault();
+
+            string customerId = null;
+            if (filterItem_CustomerId != null)
+            {
+                if (filterItem_CustomerId.FieldValue != null)
+                {
+                    customerId = filterItem_CustomerId.FieldValue.ToString();
+                }
+            }
+
+            #endregion
+
+            #region Base Data Filtered
+
+            iQueryable = iQueryable.Where(d => !d.IsOperationalClosed);
+            iQueryable = iQueryable.Where(d => d.ShipmentLevelCode != "C");
+
+            if (!string.IsNullOrEmpty(customerId))
+            {
+                iQueryable = iQueryable.Where(d => d.CustomerId == customerId);
+            }
+
+            #endregion
+
+            #region Fill Report Data
+
+            totalData.Logo = WebFreight.Web.DataProviders.General.GetLogo(tenant);
+
+            if (!string.IsNullOrEmpty(customerId))
+            {
+                CardRepository cardRepository = new CardRepository(tenant);
+                Card customerCard = cardRepository.GetSingleCard(customerId, tenant);
+                if (customerCard != null)
+                {
+                    totalData.SelectedCustomerName = customerCard.EnglishName;
+                }
+            }
+
+            List<ShipmentDataView> myData = iQueryable.ToList();
+
+            if (myData.Count > 0)
+            {
+                OpenShipmentsRecord myRecord = null;
+
+                foreach (ShipmentDataView a in myData)
+                {
+                    myRecord = new OpenShipmentsRecord();
+                    myRecord.TransPortModeCode = a.TransportModeId;
+                    myRecord.TransPortModeName = a.TransportModeName;
+                    myRecord.DirectionCode = a.DirectionId;
+                    myRecord.DirectionName = a.DirectionName;
+                    myRecord.ShipmentNumber = a.ShipmentNumber;
+                    myRecord.CreateDate = a.CreateDateTime;
+                    myRecord.CustomerName = a.CustomerName;
+                    myRecord.ShipperName = a.ShipperName;
+                    myRecord.Status = a.StatusName;
+                    myRecord.LastSharedEvent = a.LastSharedEventName;
+                    myRecord.IncotermCode = a.IncotermCode;
+                    myRecord.ETD = a.MainCarriageETD;
+                    myRecord.ExpectedDate = a.MainCarriageETA;
+                    myRecord.AgentName = a.AgentName;
+                    myRecord.CustomerReference1 = a.CustomerReference1;
+                    myRecord.VolumInCBM = a.VolumeInCBM;
+                    myRecord.TEU = a.TEU;
+                    myRecord.GrossWeight = a.GrossWeight;
+                    myRecord.ChargeableWeight = a.ChargeableWeight;
+                    myRecord.DescriptionOfGoods = a.DescriptionOfGoods;
+                    myRecord.Notes = a.Notes;
+                    myRecord.MasterNumber = a.Master;
+                    myRecord.HouseNumber = a.House;
+                    myRecord.NumberOfContainers = a.NumberOfContainers;
+                    myRecord.ETA = a.MainCarriageETA;
+                    myRecord.IsCancelled = a.IsCancelled;
+
+                    myRecord.PortOfLoading = a.MainCarriageFromPortCode;
+                    myRecord.PortOfDischarge = a.MainCarriageFinalDestinationPortCode;
+
+                    myRecord.PortOfLoadingName = a.MainCarriageFromPortName;
+                    myRecord.PortOfDischargeName = a.MainCarriageFinalDestinationPortName;
+
+                    if (!string.IsNullOrEmpty(a.ShipmentTypeId))
+                    {
+                        myRecord.ShipmentType = a.ShipmentTypeId + " " + a.ShipmentLevelName;
+                    }
+
+                    else
+                    {
+                        myRecord.ShipmentType = a.ShipmentLevelName;
+                    }
+
+                    string myRoutingField = null;
+                    if (a.DirectionId == "D" && a.TransportModeId == "I")
+                    {
+                        if (a.MainCarriageFromAddressId != null)
+                        {
+                            Address fromAddress = addressRepository.GetSingleAddress(a.MainCarriageFromAddressId, tenant);
+                            myRoutingField = fromAddress.City;
+                        }
+
+                        if (a.MainCarriageToAddressId != null)
+                        {
+                            Address toAddress = addressRepository.GetSingleAddress(a.MainCarriageToAddressId, tenant);
+                            myRoutingField = myRoutingField + " , " + toAddress.City;
+                        }
+                    }
+
+                    else
+                    {
+                        if (a.ShipmentLevelCode == "H" && a.MasterShipmentDataId == null)
+                        {
+                            PortPM fromPort = PortQuery.GetSinglePort(tenant, a.FromPortId, true);
+                            PortPM toPort = PortQuery.GetSinglePort(tenant, a.ToPortId, true);
+                            myRoutingField = fromPort.Code + " , " + toPort.Code;
+                        }
+
+                        else
+                        {
+                            myRoutingField = a.MainCarriageFromPortCode + " , " + a.MainCarriageFinalDestinationPortCode;
+                        }
+                    }
+
+                    myRecord.Routing = myRoutingField;
+
+                    StringBuilder str = new StringBuilder();
+                    StringBuilder str2 = new StringBuilder();
+                    List<ShipmentPackage> packages = shipmentsContext.ShipmentPackages.Where(d => d.ShipmentId == a.Id && d.Tenant == tenant).ToList();
+
+                    foreach (ShipmentPackage package in packages)
+                    {
+                        List<InsideShipmentPackage> insidePackages = shipmentsContext.InsideShipmentPackages.Where(d => d.ShipmentPackageId == package.Id && d.Tenant == package.Tenant).ToList();
+
+                        PackageType packagetype = (from pa in commonContext.PackageTypes
+                                                   where pa.Id == package.PackageTypeId
+                                                   select pa).FirstOrDefault();
+
+                        if (packagetype != null)
+                        {
+                            if (packagetype.IsContainer && !string.IsNullOrEmpty(package.ContainerNumber))
+                            {
+                                string containerNo = package.ContainerNumber;
+                                str.Append(containerNo);
+                                str.Append(',');
+
+                                string type = !string.IsNullOrEmpty(packagetype.PrintAs) ? packagetype.PrintAs : packagetype.Code;
+
+                                str2.Append(containerNo);
+                                str2.Append(' ');
+                                str2.Append(type);
+                                str2.Append(',');
+                            }
+                        }
+                    }
+
+                    string str_String = str.ToString();
+                    if (!string.IsNullOrEmpty(str_String))
+                    {
+                        str_String = str_String.TrimEnd(',');
+                    }
+
+                    string str2_String = str2.ToString();
+                    if (!string.IsNullOrEmpty(str2_String))
+                    {
+                        str2_String = str2_String.TrimEnd(',');
+                    }
+
+                    myRecord.ContainersNumbersArray = str_String;
+                    myRecord.ContainersNumbersAndTypesArray = str2_String;
+
+                    totalData.OpenShipmentsRecordList.Add(myRecord);
+                }
+            }
+
+            #endregion
+
+            return totalData;
+        }
+        #endregion
+
+        #region Parent Vs Child Tenants
+        public byte[] LoadParentVsChildTenantsDataProvider(byte[] xmlFilters, int tenant)
+        {
+            ParentVsChildTenantsDataProvider dataprovider = GetParentVsChildTenantsDataProvider(xmlFilters, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(ParentVsChildTenantsDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+        private ParentVsChildTenantsDataProvider GetParentVsChildTenantsDataProvider(byte[] xmlFilters, int tenant)
+        {
+            ParentVsChildTenantsDataProvider totalData = new ParentVsChildTenantsDataProvider();
+            totalData.ParentTenantRecordList = new List<ParentTenantRecord>();
+
+            TenantManagementRepository repository = new TenantManagementRepository();
+            UserRepository userRepository = new UserRepository(tenant);
+
+            #region Report Filters
+
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+
+            QueryFilterItem filterItem_ParentTenantId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ParentTenantId").FirstOrDefault();
+
+            string parentTenantId = null;
+            if (filterItem_ParentTenantId != null)
+            {
+                if (filterItem_ParentTenantId.FieldValue != null)
+                {
+                    parentTenantId = filterItem_ParentTenantId.FieldValue.ToString();
+                }
+            }
+
+            #endregion
+
+            IQueryable<TenantManagement> allTenants = repository.GetAllTenants();
+            IQueryable<TenantManagement> parentTenants = allTenants.Where(d => d.IsParentTenant);
+
+            List<int> parentTenantIds = parentTenants.Select(s => s.Id).ToList();
+            List<User> parentTenantUsers = userRepository.GetUsersFromTenantsList(parentTenantIds);
+
+            IQueryable<TenantManagement> childTenants = allTenants.Where(d => (d.FreeUsers != null && d.FreeUsers != 0) && (d.GlobalTenant != null && d.GlobalTenant.IsActive));
+            List<int> childTenantIds = childTenants.Select(s => s.Id).ToList();
+            List<User> childTenantUsers = userRepository.GetUsersFromTenantsList(childTenantIds);
+
+            List<TenantManagement> myData = childTenants.ToList();
+
+            if (!string.IsNullOrEmpty(parentTenantId))
+            {
+                myData = myData.Where(d => d.ParentTenantId.ToString() == parentTenantId).ToList();
+            }
+
+            if (myData.Count > 0)
+            {
+                ParentTenantRecord myRecord = null;
+
+                foreach (TenantManagement a in myData)
+                {
+                    myRecord = new ParentTenantRecord();
+                    List<User> childList = childTenantUsers.Where(d => d.Tenant == a.Id).ToList();
+
+                    myRecord.TenantId = a.Id;
+                    myRecord.TenantName = a.Name;
+                    myRecord.NumberOfUsers = a.NumberOfUsers;
+                    myRecord.FreeUsers = a.FreeUsers;
+                    myRecord.ParentTenantId = a.ParentTenantId;
+
+                    if (a.IsMultiPackage)
+                    {
+                        myRecord.Package = "Multi-package";
+                    }
+                    else
+                    {
+                        myRecord.Package = a.PackageName;
+                    }
+
+                    if (a.ParentTenantId != null)
+                    {
+                        List<User> parentList = parentTenantUsers.Where(d => d.Tenant == a.ParentTenantId).ToList();
+
+                        TenantManagement parentTenant = repository.GetSingleTenantManagement(a.ParentTenantId.Value);
+                        if (parentTenant != null)
+                        {
+                            myRecord.ParentTenantName = parentTenant.Name;
+
+                            if (parentTenant.IsMultiPackage)
+                            {
+                                myRecord.ParentTenantPackage = "Multi-package";
+                            }
+                            else
+                            {
+                                myRecord.ParentTenantPackage = parentTenant.PackageName;
+                            }
+                        }
+
+                        List<string> commonList = parentList.Select(s1 => s1.Contact.Email.ToLower()).Intersect(childList.Select(s2 => s2.Contact.Email.ToLower())).ToList();
+
+                        if (commonList.Count < a.FreeUsers)
+                        {
+                            myRecord.NumberOfInvalidUsers = a.FreeUsers.Value - commonList.Count;
+                        }
+                    }
+
+                    totalData.ParentTenantRecordList.Add(myRecord);
+                }
+            }
+
+            return totalData;
+        }
+        #endregion
+
+        #region Revenue Expense
+        public byte[] LoadRevenueExpenseDataProvider(byte[] xmlFilters, int tenant)
+        {
+            RevenueExpenseDataProvider dataprovider = GetRevenueExpenseDataProvider(xmlFilters, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(RevenueExpenseDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+        private RevenueExpenseDataProvider GetRevenueExpenseDataProvider(byte[] xmlFilters, int tenant)
+        {
+            RevenueExpenseDataProvider totalData = new DataProviders.RevenueExpenseDataProvider();
+
+            #region Report Filters
+
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+
+            QueryFilterItem filterItem_tODate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CreateDate").FirstOrDefault();
+            QueryFilterItem filterItem_level = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Level").FirstOrDefault();
+            QueryFilterItem filterItem_card = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CardFilter").FirstOrDefault();
+            //ToDate
+            DateTime? toDate = null;
+            if (filterItem_tODate != null)
+            {
+                if (filterItem_tODate.FieldValue != null)
+                {
+                    toDate = (DateTime)filterItem_tODate.FieldValue;
+                }
+            }
+
+            //Level
+            string level = null;
+            if (filterItem_level != null)
+            {
+                if (filterItem_level.FieldValue != null)
+                {
+                    level = (string)filterItem_level.FieldValue;
+                }
+            }
+
+            //Level
+            string card = null;
+            if (filterItem_card != null)
+            {
+                if (filterItem_card.FieldValue != null)
+                {
+                    card = (string)filterItem_card.FieldValue;
+                }
+            }
+
+
+            #endregion
+
+
+            var revenueExpenseReportParam = new RevenueExpenseReportParam()
+            {
+                Tenant = tenant,
+                //  MyRevenueExpenseReportLevel = ReportLevel.,
+                ToDate = (DateTime)toDate,
+            };
+
+            switch (level)
+            {
+                //case "ChartOfAccountType":
+                //    {
+                //        revenueExpenseReportParam.MyRevenueExpenseReportLevel = ReportLevel.ChartofaccountType;
+                //        break;
+                //    }
+                case "ChartOfAccount":
+                    {
+                        totalData.Level = " קבוצת מאזן";
+                        //revenueExpenseReportParam.MyRevenueExpenseReportLevel = ReportLevel.Chartofaccount;
+                        break;
+                    }
+                case "GLAccount":
+                    {
+                        totalData.Level = "כרטיס";
+                        // revenueExpenseReportParam.MyRevenueExpenseReportLevel = ReportLevel.GLAccount;
+                        break;
+                    }
+            }
+
+            switch (card)
+            {
+                case "0":
+                    {
+                        revenueExpenseReportParam.MyCardFilter = CardFilterEnum.DoNotShowCardWithZeroBalance;
+                        break;
+                    }
+                case "1":
+                    {
+                        revenueExpenseReportParam.MyCardFilter = CardFilterEnum.ShowCardsWithActivity_EvenBalanceItsZero;
+                        break;
+                    }
+                case "2":
+                    {
+                        revenueExpenseReportParam.MyCardFilter = CardFilterEnum.ShowAllCard;
+                        break;
+                    }
+
+            }
+            totalData.ForDate = toDate;
+            List<RevenueExpenseReportM> result = null;
+            List<string> GLAccountParents = new List<string>();
+
+            totalData.ResultList = new List<ResultList>();
+            if (level == "GLAccount")
+            {
+                RevenueExpenseReportService servce = new RevenueExpenseReportService(revenueExpenseReportParam, 5);
+                revenueExpenseReportParam.MyRevenueExpenseReportLevel = ReportLevel.GLAccount;
+
+
+
+                servce.Execute();
+
+                result = servce.result;
+                servce.Dispose();
+                GLAccountQueryService queryService = new GLAccountQueryService(tenant);
+                ChartOfAccountQueryService chartQuaryService = new ChartOfAccountQueryService(tenant);
+
+
+
+
+                #region Fill Report Data
+
+
+
+                foreach (var item in result)
+                {
+                    ResultList record = new ResultList()
+                    {
+                        Id = item.GLAccountId,
+                        Name = item.GLAccountNumber + "-" + item.GLAccountName,
+
+                        ParentId = item.ChartOfAccountId,
+                        Balance = item.LocalCloseBalance,
+                    };
+
+                    GLAccountParents.Add(record.ParentId);
+                    totalData.ResultList.Add(record);
+
+                }
+            }
+
+
+
+
+
+
+            revenueExpenseReportParam.MyCardFilter = CardFilterEnum.DoNotShowCardWithZeroBalance;
+            RevenueExpenseReportService service = new RevenueExpenseReportService(revenueExpenseReportParam, 5);
+            revenueExpenseReportParam.MyRevenueExpenseReportLevel = ReportLevel.Chartofaccount;
+            var res = service.Execute();
+
+            var bytes = LogitudeXmlSerializer.SerializeObject<List<RevenueExpenseReportM>>(res);
+            var ds = new DataSet();
+
+            ds.ReadXml(new MemoryStream(bytes));
+
+            result = service.result;
+            service.Dispose();
+
+            List<RevenueExpenseReportM> ChartOfAccount5s = result.Where(d => d.ChartOfAcountName5 != "").ToList();
+            if (ChartOfAccount5s.Count > 0)
+            {
+                foreach (var item in ChartOfAccount5s)
+                {
+                    ResultList record = new ResultList()
+                    {
+                        Id = item.ChartOfAcount5,
+                        Name = item.ChartOfAcountCode5 + "-" + item.ChartOfAcountName5,
+                        Number = null,
+                        ParentId = item.ChartOfAcount4,
+                        Balance = item.LocalCloseBalance,
+                    };
+
+
+
+                    var duplicated = totalData.ResultList.Where(d => d.Id == record.Id).FirstOrDefault();
+
+                    if (duplicated == null)
+                    {
+                        totalData.ResultList.Add(record);
+                    }
+
+
+                }
+            }
+
+            List<RevenueExpenseReportM> ChartOfAccount4s = result.Where(d => d.ChartOfAcountName4 != "").ToList();
+            if (ChartOfAccount4s.Count > 0)
+            {
+                foreach (var item in ChartOfAccount4s)
+                {
+                    ResultList record = new ResultList()
+                    {
+                        Id = item.ChartOfAcount4,
+                        Name = item.ChartOfAcountCode4 + "-" + item.ChartOfAcountName4,
+                        Number = null,
+                        ParentId = item.ChartOfAcount3,
+                        Balance = item.LocalCloseBalance,
+                    };
+
+                    if (record.Balance == null)
+                    {
+                        bool exist = GLAccountParents.Contains(record.Id);
+                        if (!exist)
+                        {
+
+                            var child = totalData.ResultList.Where(d => d.ParentId == record.Id).FirstOrDefault();
+                            if (child != null)
+                            {
+                                record.Balance = child.Balance;
+                            }
+                        }
+                    }
+
+                    var duplicated = totalData.ResultList.Where(d => d.Id == record.Id).FirstOrDefault();
+
+                    if (duplicated == null)
+                    {
+                        totalData.ResultList.Add(record);
+                    }
+
+                }
+            }
+
+            List<RevenueExpenseReportM> ChartOfAccount3s = result.Where(d => d.ChartOfAcountName3 != "").ToList();
+            if (ChartOfAccount3s.Count > 0)
+            {
+                foreach (var item in ChartOfAccount3s)
+                {
+                    ResultList record = new ResultList()
+                    {
+                        Id = item.ChartOfAcount3,
+                        Name = item.ChartOfAcountCode3 + "-" + item.ChartOfAcountName3,
+                        Number = null,
+                        ParentId = item.ChartOfAcount2,
+                        Balance = item.LocalCloseBalance,
+                    };
+                    if (record.Balance == null)
+                    {
+                        bool exist = GLAccountParents.Contains(record.Id);
+                        if (!exist)
+                        {
+
+                            var child = totalData.ResultList.Where(d => d.ParentId == record.Id).FirstOrDefault();
+                            if (child != null)
+                            {
+                                record.Balance = child.Balance;
+                            }
+                        }
+                    }
+                    var duplicated = totalData.ResultList.Where(d => d.Id == record.Id).FirstOrDefault();
+
+                    if (duplicated == null)
+                    {
+                        totalData.ResultList.Add(record);
+                    }
+
+
+                }
+            }
+
+            List<RevenueExpenseReportM> ChartOfAccount2s = result.Where(d => d.ChartOfAcountName2 != "").ToList();
+            if (ChartOfAccount2s.Count > 0)
+            {
+                foreach (var item in ChartOfAccount2s)
+                {
+
+                    ResultList record = new ResultList()
+                    {
+                        Id = item.ChartOfAcount2,
+                        Name = item.ChartOfAcountCode2 + "-" + item.ChartOfAcountName2,
+                        Number = null,
+                        ParentId = item.ChartOfAcount1,
+                        Balance = item.LocalCloseBalance,
+                    };
+
+                    if (record.Balance == null)
+                    {
+                        bool exist = GLAccountParents.Contains(record.Id);
+                        if (!exist)
+                        {
+
+                            var child = totalData.ResultList.Where(d => d.ParentId == record.Id).FirstOrDefault();
+                            if (child != null)
+                            {
+                                record.Balance = child.Balance;
+                            }
+                        }
+                    }
+                    var duplicated = totalData.ResultList.Where(d => d.Id == record.Id).FirstOrDefault();
+
+                    if (duplicated == null)
+                    {
+                        totalData.ResultList.Add(record);
+                    }
+
+
+                }
+            }
+
+            List<RevenueExpenseReportM> ChartOfAccount1s = result.Where(d => d.ChartOfAcountName1 != "").ToList();
+            if (ChartOfAccount1s.Count > 0)
+            {
+                foreach (var item in ChartOfAccount1s)
+                {
+                    ResultList record = new ResultList()
+                    {
+                        Id = item.ChartOfAcount1,
+                        Name = item.ChartOfAcountCode1 + "-" + item.ChartOfAcountName1,
+                        Number = null,
+                        ParentId = item.ChartOfAcountType,
+                        Balance = item.LocalCloseBalance,
+                    };
+                    if (record.Balance == null)
+                    {
+                        bool exist = GLAccountParents.Contains(record.Id);
+                        if (!exist)
+                        {
+
+                            var child = totalData.ResultList.Where(d => d.ParentId == record.Id).FirstOrDefault();
+                            if (child != null)
+                            {
+                                record.Balance = child.Balance;
+                            }
+                        }
+                    }
+                    var duplicated = totalData.ResultList.Where(d => d.Id == record.Id).FirstOrDefault();
+
+                    if (duplicated == null)
+                    {
+                        totalData.ResultList.Add(record);
+                    }
+
+                }
+            }
+
+            revenueExpenseReportParam.MyRevenueExpenseReportLevel = ReportLevel.ChartofaccountType;
+            service.Execute();
+
+            result = service.result;
+            service.Dispose();
+            foreach (var item in result)
+            {
+                ResultList record = new ResultList()
+                {
+                    Id = item.ChartOfAcountType,
+                    Name = item.ChartOfAcountType == "1" ? "1-הכנסות" : "2-הוצאות",
+                    Number = null,
+                    ParentId = null,
+                    Balance = item.LocalCloseBalance,
+                };
+
+                totalData.ResultList.Add(record);
+
+            }
+
+
+            totalData.ResultList.OrderBy(d => d.Name);
+            var revenues = result.Where(d => d.ChartOfAcountType == "1").FirstOrDefault().LocalCloseBalance;
+            var expenses = result.Where(d => d.ChartOfAcountType == "2").FirstOrDefault().LocalCloseBalance;
+            totalData.TotalRevenueExpense = (revenues == null ? 0 : revenues) - (expenses == null ? 0 : expenses);
+
+
+            #endregion
+
+            return totalData;
+        }
+
+
+        #endregion
+
+        #region Trail Balance
+        public byte[] LoadTrailBalanceDataProvider(byte[] xmlFilters, int tenant)
+        {
+            RevenueExpenseDataProvider dataprovider = GetTrailBalanceDataProvider(xmlFilters, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(RevenueExpenseDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+        private RevenueExpenseDataProvider GetTrailBalanceDataProvider(byte[] xmlFilters, int tenant)
+        {
+            RevenueExpenseDataProvider totalData = new DataProviders.RevenueExpenseDataProvider();
+
+            #region Report Filters
+
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+
+            QueryFilterItem filterItem_fromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
+            QueryFilterItem filterItem_level = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Level").FirstOrDefault();
+            QueryFilterItem filterItem_toDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
+            QueryFilterItem filterItem_currency = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CurrencyDetailed").FirstOrDefault();
+            QueryFilterItem filterItem_customer = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Customer").FirstOrDefault();
+            QueryFilterItem filterItem_vendor = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Vendor").FirstOrDefault();
+            QueryFilterItem filterItem_Category1 = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Category1").FirstOrDefault();
+            QueryFilterItem filterItem_ChartOfAccountId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ChartOfAccountId").FirstOrDefault();
+            QueryFilterItem filterItem_UseZeroFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "UseBalanceFilter").FirstOrDefault();
+            QueryFilterItem filterItem_Category5 = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Category5").FirstOrDefault();
+
+            //ChartOfAccountId
+            string ChartOfAccountId = null;
+            if (filterItem_UseZeroFilter != null)
+            {
+                if (filterItem_ChartOfAccountId.FieldValue != null)
+                {
+                    ChartOfAccountId = (string)filterItem_ChartOfAccountId.FieldValue;
+                }
+            }
+            //UseBalanceFilter
+            bool useZeroFilter = false;
+            if (filterItem_UseZeroFilter != null)
+            {
+                if (filterItem_UseZeroFilter.FieldValue != null)
+                {
+                    useZeroFilter = (bool)filterItem_UseZeroFilter.FieldValue;
+                }
+            }
+            //category1
+            string category1 = null;
+            if (filterItem_Category1 != null)
+            {
+                if (filterItem_Category1.FieldValue != null)
+                {
+                    category1 = (string)filterItem_Category1.FieldValue;
+                }
+            }
+
+            //category2
+            string category5 = null;
+            if (filterItem_Category5 != null)
+            {
+                if (filterItem_Category5.FieldValue != null)
+                {
+                    category5 = (string)filterItem_Category5.FieldValue;
+                }
+            }
+
+
+            //fromDate
+            DateTime? fromDate = null;
+            if (filterItem_fromDate != null)
+            {
+                if (filterItem_fromDate.FieldValue != null)
+                {
+                    fromDate = (DateTime)filterItem_fromDate.FieldValue;
+                }
+            }
+
+            //currency
+            bool currency = false;
+            if (filterItem_currency != null)
+            {
+                if (filterItem_currency.FieldValue != null)
+                {
+                    currency = (bool)filterItem_currency.FieldValue;
+                    if (currency == true)
+                    {
+                        totalData.CurrencyDetailed = true;
+
+                    }
+                }
+            }
+
+
+            //ToDate
+            DateTime? toDate = null;
+            if (filterItem_toDate != null)
+            {
+                if (filterItem_toDate.FieldValue != null)
+                {
+                    toDate = (DateTime)filterItem_toDate.FieldValue;
+                }
+            }
+
+            //Level
+            string level = null;
+            if (filterItem_level != null)
+            {
+                if (filterItem_level.FieldValue != null)
+                {
+                    level = (string)filterItem_level.FieldValue;
+                }
+            }
+
+            //customer
+            bool customer = false;
+            if (filterItem_customer != null)
+            {
+                if (filterItem_customer.FieldValue != null)
+                {
+                    customer = (bool)filterItem_customer.FieldValue;
+                }
+            }
+            //vendor
+            bool vendor = false;
+            if (filterItem_vendor != null)
+            {
+                if (filterItem_vendor.FieldValue != null)
+                {
+                    vendor = (bool)filterItem_vendor.FieldValue;
+                }
+            }
+
+            #endregion
+
+
+            var trailReportParam = new TrailReportParam()
+            {
+                Tenant = tenant,
+                //    MyRevenueExpenseReportLevel = ReportLevel.,
+                ToDate = (DateTime)toDate,
+                FromDate = (DateTime)fromDate,
+                CurrenciesDetailed = (bool)currency,
+                DetailedControlVendors = vendor,
+                DetailedControlClients = customer,
+                Category1 = category1,
+                Category5 = category5,
+                Suppress_DoNotShowCardWithoutActivity = useZeroFilter,
+                IsRevenueExpenseReport = false,
+                //  Skip = true
+
+
+            };
+
+            switch (level)
+            {
+                case "ChartOfAccountType":
+                    {
+                        totalData.Level = "סוג קבוצת מאזן";
+                        //trailReportParam.MyTrailReportLevel = ReportLevel.ChartofaccountType;
+                        break;
+                    }
+                case "ChartOfAccount":
+                    {
+                        totalData.Level = " קבוצת מאזן";
+                        //revenueExpenseReportParam.MyRevenueExpenseReportLevel = ReportLevel.Chartofaccount;
+                        break;
+                    }
+                case "GLAccount":
+                    {
+                        totalData.Level = "כרטיס";
+                        // revenueExpenseReportParam.MyRevenueExpenseReportLevel = ReportLevel.GLAccount;
+                        break;
+                    }
+            }
+
+            List<TrailReportM> result = null;
+            List<string> GLAccountParents = new List<string>();
+            //  var service = null;// TrailReportFactory.CreateNew(trailReportParam);
+            totalData.ResultList = new List<ResultList>();
+
+
+            IAccountingContext context = AccountingContext.GetContext(tenant);
+            ChartOfAccountsTypeQueryService typeQueryService = new ChartOfAccountsTypeQueryService(context);
+            GLAccountQueryService queryService = new GLAccountQueryService(tenant);
+            ChartOfAccountQueryService chartQuaryService = new ChartOfAccountQueryService(tenant);
+
+            if (level == "GLAccount" || level == "ChartOfAccount" || level == "ChartOfAccountType")
+            {
+                trailReportParam.DetailedControlVendors = false;
+                trailReportParam.DetailedControlClients = false;
+                trailReportParam.CurrenciesDetailed = false;
+                trailReportParam.Suppress_DoNotShowCardWithoutActivity = false;
+                trailReportParam.Category1 = null;
+                trailReportParam.Category5 = null;
+                trailReportParam.MyTrailReportLevel = ReportLevel.ChartofaccountType;
+                var typeservice = TrailReportFactory.CreateNew(trailReportParam);
+                var res1 = typeservice.Execute();
+                typeservice.Dispose();
+              
+
+
+
+
+
+
+                foreach (var item in res1)
+                {
+                    ChartOfAccountsTypePM chartType = null;
+                    string typeName = null;
+                    if (item != null)
+                    {
+                        if (!string.IsNullOrEmpty(item.ChartOfAcountType))
+                        {
+                            chartType = typeQueryService.GetSingle(item.ChartOfAcountType, false, false);
+                            if (chartType != null) { typeName = chartType.LocalName; }
+                        }
+                        ResultList record = new ResultList()
+                        {
+                            Id = item.ChartOfAcountType,
+                            Number = null,
+                            Name = item.ChartOfAcountType + "-" + typeName,
+
+                            ParentId = null,
+                            LocalCloseBalance = item.LocalCloseBalance,
+                            LocalCredit = item.LocalCredit,
+                            LocalDebit = item.LocalDebit,
+                            LocalOpenBalance = item.LocalOpenBalance,
+
+
+                            ForeignCloseBalance = item.ForeignCloseBalance,
+                            ForeignCredit = item.ForeignCredit,
+                            ForeignDebit = item.ForeignDebit,
+                            ForeignOpenBalance = item.ForeignOpenBalance,
+
+
+                        };
+                        
+                        var duplicated = totalData.ResultList.Where(d => d.Id == record.Id).FirstOrDefault();
+                        if (duplicated == null)
+                        {
+                            if (!string.IsNullOrEmpty(record.Id))
+                            {
+
+                                totalData.ResultList.Add(record);
+                            }
+                        }
+
+                    }
+                }
+            }
+
+
+
+            if (level == "GLAccount" || level == "ChartOfAccount")
+            {
+                trailReportParam.DetailedControlVendors = false;
+                trailReportParam.DetailedControlClients = false;
+                trailReportParam.CurrenciesDetailed = false;
+                trailReportParam.Suppress_DoNotShowCardWithoutActivity = false;
+                trailReportParam.Category1 = null;
+                trailReportParam.Category5 = null;
+                trailReportParam.MyTrailReportLevel = ReportLevel.Chartofaccount;
+                var service = TrailReportFactory.CreateNew(trailReportParam);
+                var res = service.Execute();
+                service.Dispose();
+
+
+                List<TrailReportM> ChartOfAccount5s = res.Where(d => !string.IsNullOrEmpty(d != null ? d.ChartOfAcountName5 : null)).ToList();
+                if (ChartOfAccount5s.Count > 0)
+                {
+                    foreach (var item in ChartOfAccount5s)
+                    {
+                        ResultList record = new ResultList()
+                        {
+                            Id = item.ChartOfAcount5,
+                            Name = item.ChartOfAcountCode5 + "-" + item.ChartOfAcountName5,
+                            Number = null,
+                            ParentId = item.ChartOfAcount4,
+                            LocalCloseBalance = item.LocalCloseBalance,
+                            LocalOpenBalance = item.LocalOpenBalance,
+                            LocalDebit = item.LocalDebit,
+                            LocalCredit = item.LocalCredit,
+
+                            ForeignOpenBalance = item.ForeignOpenBalance,
+                            ForeignDebit = item.ForeignDebit,
+                            ForeignCredit = item.ForeignCredit,
+                            ForeignCloseBalance = item.ForeignCloseBalance,
+                            Type="ChartOfAccount"
+                        };
+
+                        ResultList parent = totalData.ResultList.Where(d => d.Id == record.ParentId).FirstOrDefault();
+                        if (parent == null)
+                        {
+                            ChartOfAccountPM chartOfAccount = chartQuaryService.GetSinglePM(record.ParentId, tenant);
+                            string name = null;
+                            string code = null;
+                            if (chartOfAccount != null)
+                            {
+                                name = chartOfAccount.LocalName;
+                                code = chartOfAccount.Code;
+
+                                ResultList parentrecord = new ResultList()
+                                {
+                                    Id = record.ParentId,
+                                    Name = chartOfAccount.Code + "-" + chartOfAccount.LocalName + " ERROR",
+
+                                    ParentId = item.ChartOfAcount3,
+                                    LocalCloseBalance = item.LocalCloseBalance,
+                                    LocalOpenBalance = item.LocalOpenBalance,
+                                    LocalDebit = item.LocalDebit,
+                                    LocalCredit = item.LocalCredit,
+
+                                    ForeignOpenBalance = item.ForeignOpenBalance,
+                                    ForeignDebit = item.ForeignDebit,
+                                    ForeignCredit = item.ForeignCredit,
+                                    ForeignCloseBalance = item.ForeignCloseBalance,
+                                    Type = "ChartOfAccount",
+                                    Error = true,
+
+                                };
+                                totalData.ResultList.Add(parentrecord);
+                            }
+                        }
+
+
+                        var duplicated = totalData.ResultList.Where(d => d.Id == record.Id).FirstOrDefault();
+
+                        if (duplicated == null)
+                        {
+                            if (!string.IsNullOrEmpty(record.Id))
+                            {
+                                totalData.ResultList.Add(record);
+                            }
+                        }
+
+
+                    }
+                }
+                List<TrailReportM> ChartOfAccount4s = res.Where(d => !string.IsNullOrEmpty(d != null ? d.ChartOfAcountName4 : null)).ToList();
+                if (ChartOfAccount4s.Count > 0)
+                {
+                    foreach (var item in ChartOfAccount4s)
+                    {
+                        ResultList record = new ResultList()
+                        {
+                            Id = item.ChartOfAcount4,
+                            Name = item.ChartOfAcountCode4 + "-" + item.ChartOfAcountName4,
+                            Number = null,
+                            ParentId = item.ChartOfAcount3,
+                            LocalCloseBalance = item.LocalCloseBalance,
+                            LocalCredit = item.LocalCredit,
+                            LocalDebit = item.LocalDebit,
+                            LocalOpenBalance = item.LocalOpenBalance,
+
+                            ForeignCloseBalance = item.ForeignCloseBalance,
+                            ForeignCredit = item.ForeignCredit,
+                            ForeignDebit = item.ForeignDebit,
+                            ForeignOpenBalance = item.ForeignOpenBalance,
+                            Type = "ChartOfAccount"
+
+                        };
+
+                        ResultList parent = totalData.ResultList.Where(d => d.Id == record.ParentId).FirstOrDefault();
+                        if (parent == null)
+                        {
+                            ChartOfAccountPM chartOfAccount = chartQuaryService.GetSinglePM(record.ParentId, tenant);
+                            string name = null;
+                            string code = null;
+                            if (chartOfAccount != null)
+                            {
+                                name = chartOfAccount.LocalName;
+                                code = chartOfAccount.Code;
+
+                                ResultList parentrecord = new ResultList()
+                                {
+                                    Id = record.ParentId,
+                                    Name =  chartOfAccount.Code + "-" + chartOfAccount.LocalName + " ERROR",
+
+                                    ParentId = item.ChartOfAcount2,
+                                    LocalCloseBalance = item.LocalCloseBalance,
+                                    LocalOpenBalance = item.LocalOpenBalance,
+                                    LocalDebit = item.LocalDebit,
+                                    LocalCredit = item.LocalCredit,
+
+                                    ForeignOpenBalance = item.ForeignOpenBalance,
+                                    ForeignDebit = item.ForeignDebit,
+                                    ForeignCredit = item.ForeignCredit,
+                                    ForeignCloseBalance = item.ForeignCloseBalance,
+                                    Type = "ChartOfAccount",
+                                    Error = true,
+
+                                };
+                                totalData.ResultList.Add(parentrecord);
+                            }
+                        }
+
+                        if (record.Balance == null)
+                        {
+                            bool exist = GLAccountParents.Contains(record.Id);
+                            if (!exist)
+                            {
+
+                                var child = totalData.ResultList.Where(d => d.ParentId == record.Id).FirstOrDefault();
+                                if (child != null)
+                                {
+                                    record.Balance = child.Balance;
+                                }
+                            }
+                        }
+
+                        var duplicated = totalData.ResultList.Where(d => d.Id == record.Id).FirstOrDefault();
+
+                        if (duplicated == null)
+                        {
+                            totalData.ResultList.Add(record);
+                        }
+
+                    }
+                }
+
+                List<TrailReportM> ChartOfAccount3s = res.Where(d => !string.IsNullOrEmpty(d != null ? d.ChartOfAcountName3 : null)).ToList();
+                if (ChartOfAccount3s.Count > 0)
+                {
+                    foreach (var item in ChartOfAccount3s)
+                    {
+                        ResultList record = new ResultList()
+                        {
+                            Id = item.ChartOfAcount3,
+                            Name = item.ChartOfAcountCode3 + "-" + item.ChartOfAcountName3,
+                            Number = null,
+                            ParentId = item.ChartOfAcount2,
+                            LocalCloseBalance = item.LocalCloseBalance,
+                            LocalOpenBalance = item.LocalOpenBalance,
+                            LocalDebit = item.LocalDebit,
+                            LocalCredit = item.LocalCredit,
+
+                            ForeignOpenBalance = item.ForeignOpenBalance,
+                            ForeignDebit = item.ForeignDebit,
+                            ForeignCredit = item.ForeignCredit,
+                            ForeignCloseBalance = item.ForeignCloseBalance,
+                            Type = "ChartOfAccount"
+                        };
+
+                        ResultList parent = totalData.ResultList.Where(d => d.Id == record.ParentId).FirstOrDefault();
+                        if (parent == null)
+                        {
+                            ChartOfAccountPM chartOfAccount = chartQuaryService.GetSinglePM(record.ParentId, tenant);
+                            string name = null;
+                            string code = null;
+                            if (chartOfAccount != null)
+                            {
+                                name = chartOfAccount.LocalName;
+                                code = chartOfAccount.Code;
+
+                                ResultList parentrecord = new ResultList()
+                                {
+                                    Id = record.ParentId,
+                                    Name =  chartOfAccount.Code + "-" + chartOfAccount.LocalName + " ERROR",
+
+                                    ParentId = item.ChartOfAcount1,
+                                    LocalCloseBalance = item.LocalCloseBalance,
+                                    LocalOpenBalance = item.LocalOpenBalance,
+                                    LocalDebit = item.LocalDebit,
+                                    LocalCredit = item.LocalCredit,
+
+                                    ForeignOpenBalance = item.ForeignOpenBalance,
+                                    ForeignDebit = item.ForeignDebit,
+                                    ForeignCredit = item.ForeignCredit,
+                                    ForeignCloseBalance = item.ForeignCloseBalance,
+                                    Error = true,
+                                    Type = "ChartOfAccount"
+
+                                };
+                                totalData.ResultList.Add(parentrecord);
+                            }
+                        }
+
+                        if (record.Balance == null)
+                        {
+                            bool exist = GLAccountParents.Contains(record.Id);
+                            if (!exist)
+                            {
+
+                                var child = totalData.ResultList.Where(d => d.ParentId == record.Id).FirstOrDefault();
+                                if (child != null)
+                                {
+                                    record.Balance = child.Balance;
+                                }
+                            }
+                        }
+                        var duplicated = totalData.ResultList.Where(d => d.Id == record.Id).FirstOrDefault();
+
+                        if (duplicated == null)
+                        {
+                            totalData.ResultList.Add(record);
+                        }
+
+
+                    }
+                }
+
+
+                List<TrailReportM> ChartOfAccount2s = res.Where(d => !string.IsNullOrEmpty(d != null ? d.ChartOfAcountName2 : null)).ToList();
+                if (ChartOfAccount2s.Count > 0)
+                {
+                    foreach (var item in ChartOfAccount2s)
+                    {
+
+                        ResultList record = new ResultList()
+                        {
+                            Id = item.ChartOfAcount2,
+                            Name = item.ChartOfAcountCode2 + "-" + item.ChartOfAcountName2,
+                            Number = null,
+                            ParentId = item.ChartOfAcount1,
+                            LocalCloseBalance = item.LocalCloseBalance,
+                            LocalCredit = item.LocalCredit,
+                            LocalDebit = item.LocalDebit,
+                            LocalOpenBalance = item.LocalOpenBalance,
+
+                            ForeignCloseBalance = item.ForeignCloseBalance,
+                            ForeignCredit = item.ForeignCredit,
+                            ForeignDebit = item.ForeignDebit,
+                            ForeignOpenBalance = item.ForeignOpenBalance,
+                            Type = "ChartOfAccount"
+                        };
+                        ResultList parent = totalData.ResultList.Where(d => d.Id == record.ParentId).FirstOrDefault();
+                        if (parent == null)
+                        {
+                            ChartOfAccountPM chartOfAccount = chartQuaryService.GetSinglePM(record.ParentId, tenant);
+                            string name = null;
+                            string code = null;
+                            if (chartOfAccount != null)
+                            {
+                                name = chartOfAccount.LocalName;
+                                code = chartOfAccount.Code;
+
+                                ResultList parentrecord = new ResultList()
+                                {
+                                    Id = record.ParentId,
+                                    Name = chartOfAccount.Code + "-" + chartOfAccount.LocalName + " ERROR",
+
+                                    ParentId = item.ChartOfAcountType,
+                                    LocalCloseBalance = item.LocalCloseBalance,
+                                    LocalOpenBalance = item.LocalOpenBalance,
+                                    LocalDebit = item.LocalDebit,
+                                    LocalCredit = item.LocalCredit,
+
+                                    ForeignOpenBalance = item.ForeignOpenBalance,
+                                    ForeignDebit = item.ForeignDebit,
+                                    ForeignCredit = item.ForeignCredit,
+                                    ForeignCloseBalance = item.ForeignCloseBalance,
+                                    Error = true,
+
+                                    Type = "ChartOfAccount"
+                                };
+                                totalData.ResultList.Add(parentrecord);
+                            }
+                        }
+
+                        if (record.Balance == null)
+                        {
+                            bool exist = GLAccountParents.Contains(record.Id);
+                            if (!exist)
+                            {
+
+                                var child = totalData.ResultList.Where(d => d.ParentId == record.Id).FirstOrDefault();
+                                if (child != null)
+                                {
+                                    record.Balance = child.Balance;
+                                }
+                            }
+                        }
+                        var duplicated = totalData.ResultList.Where(d => d.Id == record.Id).FirstOrDefault();
+
+                        if (duplicated == null)
+                        {
+                            totalData.ResultList.Add(record);
+                        }
+
+
+                    }
+                }
+
+
+                List<TrailReportM> ChartOfAccount1s = res.Where(d => !string.IsNullOrEmpty(d != null ? d.ChartOfAcountName1 : null)).ToList();
+                if (ChartOfAccount1s.Count > 0)
+                {
+                    foreach (var item in ChartOfAccount1s)
+                    {
+                        ResultList record = new ResultList()
+                        {
+                            Id = item.ChartOfAcount1,
+                            Name = item.ChartOfAcountCode1 + "-" + item.ChartOfAcountName1,
+                            Number = null,
+                            ParentId = item.ChartOfAcountType,
+                            LocalCloseBalance = item.LocalCloseBalance,
+                            LocalOpenBalance = item.LocalOpenBalance,
+                            LocalDebit = item.LocalDebit,
+                            LocalCredit = item.LocalCredit,
+
+                            ForeignOpenBalance = item.ForeignOpenBalance,
+                            ForeignDebit = item.ForeignDebit,
+                            ForeignCredit = item.ForeignCredit,
+                            ForeignCloseBalance = item.ForeignCloseBalance,
+                            Type = "ChartOfAccount"
+                        };
+
+                        //if (record.ParentId == "6")
+                        //{
+                        //    record.ParentId = "7";
+
+                        //}
+
+                        ResultList parent = totalData.ResultList.Where(d => d.Id == record.ParentId).FirstOrDefault();
+                        if (parent == null)
+                        {
+                            ChartOfAccountsTypePM chartOfAccountType = typeQueryService.GetSingle(item.ChartOfAcountType, false, false);
+
+                            if (chartOfAccountType != null)
+                            {
+
+
+                                ResultList parentrecord = new ResultList()
+                                {
+                                    Id = record.ParentId,
+                                    Name =chartOfAccountType.Code + "-" + chartOfAccountType.LocalName + " ERROR",
+
+                                    ParentId = null,
+                                    LocalCloseBalance = item.LocalCloseBalance,
+
+                                    LocalCredit = item.LocalCredit,
+                                    LocalDebit = item.LocalDebit,
+                                    LocalOpenBalance = item.LocalOpenBalance,
+                                    ForeignCloseBalance = item.ForeignCloseBalance,
+                                    ForeignCredit = item.ForeignCredit,
+                                    ForeignDebit = item.ForeignDebit,
+                                    ForeignOpenBalance = item.ForeignOpenBalance,
+                                    Error = true,
+                                  
+
+                                };
+                                totalData.ResultList.Add(parentrecord);
+                            }
+                        }
+                        var duplicated = totalData.ResultList.Where(d => d.Id == record.Id).FirstOrDefault();
+
+                        if (duplicated == null)
+                        {
+                            if (!string.IsNullOrEmpty(record.Id))
+                            {
+                                totalData.ResultList.Add(record);
+                            }
+                        }
+
+
+                    }
+                }
+
+
+
+
+
+            }
+
+
+
+
+         
+
+            if (level == "GLAccount")
+            {
+
+                trailReportParam.DetailedControlVendors = vendor;
+                trailReportParam.DetailedControlClients = customer;
+                trailReportParam.CurrenciesDetailed = currency;
+                trailReportParam.Category1 = category1;
+                trailReportParam.Category5 = category5;
+                trailReportParam.MyTrailReportLevel = ReportLevel.GLAccount;
+                trailReportParam.Suppress_DoNotShowCardWithoutActivity = useZeroFilter;
+                var servce = TrailReportFactory.CreateNew(trailReportParam);
+
+
+
+                var list = servce.Execute();
+                servce.Dispose();
+
+
+
+
+
+                #region Fill Report Data
+                totalData.ForDate = toDate;
+
+
+                foreach (var item in list)
+                {
+                    if (item != null)
+                    {
+
+                        ResultList record = new ResultList()
+                        {
+                            Id = item.GLAccountId,
+                            Name =  item.GLAccountNumber + "-" + item.GLAccountName,
+
+                            ParentId = item.ChartOfAccountId,
+                            LocalCloseBalance = item.LocalCloseBalance,
+
+                            LocalCredit = item.LocalCredit,
+                            LocalDebit = item.LocalDebit,
+                            LocalOpenBalance = item.LocalOpenBalance,
+                            ForeignCloseBalance = item.ForeignCloseBalance,
+                            ForeignCredit = item.ForeignCredit,
+                            ForeignDebit = item.ForeignDebit,
+                            ForeignOpenBalance = item.ForeignOpenBalance,
+
+
+
+                        };
+                       
+                        GLAccountParents.Add(record.ParentId);
+                        if (!string.IsNullOrEmpty(record.Id))
+                        {
+                            //if (record.ParentId == "1-1331" )
+                            //{
+                                ResultList parent = totalData.ResultList.Where(d => d.Id == record.ParentId).FirstOrDefault();
+                            if (parent == null)
+                            {
+                                ChartOfAccountPM chartOfAccount = chartQuaryService.GetSinglePM(record.ParentId, tenant);
+                                string name = null;
+                                string code = null;
+                                if (chartOfAccount != null)
+                                {
+                                    name = chartOfAccount.LocalName;
+                                    code = chartOfAccount.Code;
+
+                                    ResultList parentrecord = new ResultList()
+                                    {
+                                        Id = record.ParentId,
+                                        Name =  chartOfAccount.Code + "-" + chartOfAccount.LocalName + " ERROR",
+
+                                        ParentId = item.ChartOfAcountType,
+                                        LocalCloseBalance = item.LocalCloseBalance,
+                                        LocalOpenBalance = item.LocalOpenBalance,
+                                        LocalDebit = item.LocalDebit,
+                                        LocalCredit = item.LocalCredit,
+
+                                        ForeignOpenBalance = item.ForeignOpenBalance,
+                                        ForeignDebit = item.ForeignDebit,
+                                        ForeignCredit = item.ForeignCredit,
+                                        ForeignCloseBalance = item.ForeignCloseBalance,
+                                        Error= true,
+
+
+                                    };
+                                    totalData.ResultList.Add(parentrecord);
+                                }
+                            }
+
+                            //}
+                            //if (record.ParentId != "1-1331")
+                            //{
+                                totalData.ResultList.Add(record);
+                            //}
+
+
+                        }
+
+                        //totalData.TotalLocalCloseBalance =+ record.LocalCloseBalance;
+                        //totalData.TotalLocalOpenBalance =+ record.LocalOpenBalance;
+                        //totalData.TotalLocalCredit =+ record.LocalCredit;
+
+                        //totalData.TotalLocalDebit = +record.LocalDebit;
+
+                        //totalData.TotalForeignCloseBalance =+ record.ForeignCloseBalance;
+                        //totalData.TotalForeignCredit =+ record.ForeignCredit;
+                        //totalData.TotalForeignDebit =+ record.ForeignDebit;
+                        //totalData.TotalForeignOpenBalance =+ record.ForeignOpenBalance;
+
+                    }
+
+                }
+            }
+
+
+
+            totalData.TotalLocalCloseBalance = totalData.ResultList.Where(d => d.ParentId == null).Sum(d => d.LocalCloseBalance);
+            totalData.TotalLocalOpenBalance = totalData.ResultList.Where(d => d.ParentId == null).Sum(d => d.LocalOpenBalance);
+            totalData.TotalLocalCredit = totalData.ResultList.Where(d => d.ParentId == null).Sum(d => d.LocalCredit);
+            totalData.TotalLocalDebit = totalData.ResultList.Where(d => d.ParentId == null).Sum(d => d.LocalDebit);
+
+            totalData.TotalForeignCloseBalance = totalData.ResultList.Where(d => d.ParentId == null).Sum(d => d.ForeignCloseBalance);
+            totalData.TotalForeignCredit = totalData.ResultList.Where(d => d.ParentId == null).Sum(d => d.ForeignCredit);
+            totalData.TotalForeignDebit = totalData.ResultList.Where(d => d.ParentId == null).Sum(d => d.ForeignDebit);
+            totalData.TotalForeignOpenBalance = totalData.ResultList.Where(d => d.ParentId == null).Sum(d => d.ForeignOpenBalance);
+
+            //  totalData.ResultList.OrderBy(d => d.Name);
+            //var revenues = result.Where(d => d.ChartOfAcountType == "1").FirstOrDefault().LocalCloseBalance;
+            //var expenses = result.Where(d => d.ChartOfAcountType == "2").FirstOrDefault().LocalCloseBalance;
+            //totalData.TotalRevenueExpense = (revenues == null ? 0 : revenues) - (expenses == null ? 0 : expenses);
+            // service.Dispose();
+
+            #endregion
+
+       
+
+          
+
+       
+
+            return totalData;
+        }
+
+
+        #endregion
+
+        #region Load Users By Tenant 
+        public byte[] LoadUsersByTenantData(byte[] xmlFilters, int tenant)
+        {
+            UsersByTenantDataProviderHelper usersByTenantDataProviderHelper = new UsersByTenantDataProviderHelper();
+            UsersByTenantDataProvider dataprovider = usersByTenantDataProviderHelper.LoadUsersByTenantDataProvider(xmlFilters, tenant);
+
+            XmlSerializer serializer = new XmlSerializer(typeof(UsersByTenantDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+        #endregion
+
+        #region License Management
+        public byte[] LoadLicenseManagementDataProvider(byte[] xmlFilters, int tenant)
+        {
+            LicenseManagementDataProvider dataprovider = GetLicenseManagementDataProvider(xmlFilters, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(LicenseManagementDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+        private LicenseManagementDataProvider GetLicenseManagementDataProvider(byte[] xmlFilters, int tenant)
+        {
+            LicenseManagementDataProvider totalData = new LicenseManagementDataProvider();
+            totalData.LicensedUsers = new List<LicenseManagementDataList>();
+
+            ICommonDataContext myContext = CommonDataContext.GetContext(tenant);
+            UserRepository userRepository = new UserRepository(myContext);
+            UserLicenseRepository myRepository = new UserLicenseRepository(myContext);
+            PackageRepository packageRepository = new PackageRepository(myContext);
+            TenantManagementLicenseRepository myTenantRepository = new TenantManagementLicenseRepository(tenant);
+
+            #region Report Filters
+
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+
+            QueryFilterItem filterItem_UserId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "UserId").FirstOrDefault();
+
+            string userId = null;
+            if (filterItem_UserId != null)
+            {
+                if (filterItem_UserId.FieldValue != null)
+                {
+                    userId = filterItem_UserId.FieldValue.ToString();
+                }
+            }
+
+            #endregion
+
+            IQueryable<TenantManagementLicense> tenantManagementLicenses = myTenantRepository.GetTenantManagementLicenses(tenant);
+            IQueryable<User> usersList = userRepository.GetUsers(tenant);
+            usersList = usersList.Where(d => !d.Contact.InActive);
+
+            if (!string.IsNullOrEmpty(userId))
+            {
+                usersList = usersList.Where(d => d.Id == userId);
+            }
+
+            List<string> Codes = tenantManagementLicenses.Select(s => s.PackageCode).ToList();
+            IQueryable<UserLicense> allLicenses = myRepository.GetUserLicenses(tenant);
+            IQueryable<UserLicense> usersLicenses = (from d in allLicenses
+                                                     where Codes.Contains(d.PackageCode)
+                                                     select d);
+
+            List<UserLicenseClass> totalDataList = new List<UserLicenseClass>();
+            foreach (TenantManagementLicense license in tenantManagementLicenses.OrderBy(o => o.PackageCode))
+            {
+                string packageName = "";
+                Package package = packageRepository.GetSinglePackage(license.PackageCode);
+                if (package != null)
+                {
+                    packageName = package.Name + " (" + allLicenses.Where(d => d.PackageCode == license.PackageCode).Count() + "/" + license.NumberOfUsers + ")";
+                }
+
+                foreach (User user in usersList.OrderBy(o => o.Contact.EnglishName))
+                {
+                    UserLicenseClass myResultItem = new UserLicenseClass()
+                    {
+                        Id = user.Id,
+                        Tenant = user.Tenant,
+                        EnglishName = user.Contact.EnglishName,
+                        Email = user.Contact.Email,
+                        PackageCode = license.PackageCode,
+                        PackageName = packageName,
+                    };
+
+                    UserLicense item = usersLicenses.Where(d => d.PackageCode == license.PackageCode && d.UserId == user.Id).FirstOrDefault();
+                    if (item != null)
+                    {
+                        myResultItem.IsChecked = true;
+                    }
+
+                    totalDataList.Add(myResultItem);
+                }
+            }
+
+            var groupedData = from item in totalDataList
+                              group item by new { item.EnglishName, item.Email, } into g
+                              select new
+                              {
+                                  UserName = g.Key.EnglishName,
+                                  UserEmail = g.Key.Email,
+                                  UserPackageItems = g,
+                              };
+
+            foreach (var item in groupedData.OrderBy(d => d.UserName))
+            {
+                foreach (var item11 in item.UserPackageItems)
+                {
+                    totalData.LicensedUsers.Add(new LicenseManagementDataList()
+                    {
+                        UserName = item11.EnglishName,
+                        UserEmail = item11.Email,
+                        PackageCode = item11.PackageCode,
+                        PackageName = item11.PackageName,
+                        Exists = item11.NumberOfUsers != null ? (item11.PackageUsers + "/" + item11.NumberOfUsers) : (item11.IsChecked ? "1" : "0"),
+                    });
+                }
+            }
+
+            return totalData;
+        }
+        #endregion
+
+        private ContactPM GetLoggedContact(int tenant)
+        {
+            //email
+            string email = "";
+            if (HttpContext.Current != null)
+                email = HttpContext.Current.User.Identity.Name;
+            else
+                email = "system@tenant" + tenant.ToString() + ".com";
+
+            //contact
+            ContactQuery contactQuery = new ContactQuery(tenant);
+            ContactPM contactPM = contactQuery.GetContactByEmailOnly(email, tenant);
+            return contactPM;
+        }
+    }
+
+    public class ProductActualDataHelper
+    {
+        [Key]
+        public int Id { get; set; }
+        public string CustomerId { get; set; }
+        public string CustomerName { get; set; }
+        public string SalesmanId { get; set; }
+        public string SalesmanName { get; set; }
+        public DateTime? Date { get; set; }
+        public string ProductCode { get; set; }
+        public string PrimaryContactName { get; set; }
+        public string PrimaryContactEmail { get; set; }
+
+        public decimal? TEU { get; set; }
+        public decimal? Revenue { get; set; }
+        public decimal? NumberOfShipments { get; set; }
+        public decimal? ChargeableWeight { get; set; }
+
+        public int LocationsCount { get; set; }
+    }
+
+    public class AmountsClass
+    {
+        public string Currency { get; set; }
+        public double Amount { get; set; }
+    }
+
+    public class ShipmentEntityClass
+    {
+        public string ShipmentId { get; set; }
+        public string ShipperName { get; set; }
+        public string ShipperRef1 { get; set; }
+        public string ShipperRef2 { get; set; }
+        public string DescriptionOfGoods { get; set; }
+    }
+
+    public class CardEntityClass
+    {
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public string PaymentTerm { get; set; }
+    }
+
+    public class AgingStatemantDataItem
+    {
+        public string Id { get; set; }
+        public string TypeCode { get; set; }
+        public string EntityName { get; set; }
+
+        public string EntityTypeCode { get; set; }
+        public DateTime? Date { get; set; }
+        public string CardId { get; set; }
+        public double? Amount { get; set; }
+        public double? Debit { get; set; }
+        public double? Credit { get; set; }
+    }
+
+    public class GroupedPeriodM
+    {
+        public string PeriodName { get; set; }
+        public decimal GrandTotal { get; set; }
+    }
+
+    public class VATClass
+    {
+        public int Index { get; set; }
+        public double? Percentage { get; set; }
+        public string VATName { get; set; }
+        public string VATCode { get; set; }
+        public double? LocalAmount { get; set; }
+        public double? InvoiceAmount { get; set; }
+    }
+    
+    public class UserLicenseClass
+    {
+        [Key]
+        public string Id { get; set; }
+        public int Tenant { get; set; }
+        public string EnglishName { get; set; }
+        public string Email { get; set; }
+        public bool IsChecked { get; set; }
+        public string PackageCode { get; set; }
+        public string PackageName { get; set; }
+        public int? NumberOfUsers { get; set; }
+        public int? PackageUsers { get; set; }
+    }
+}

@@ -1,0 +1,84 @@
+﻿
+<table>
+    <tr style="height:30px;">
+        <td style="color:#1B90CB;font-size:14px;"> Filter By: </td>
+    </tr>
+
+    <tr style="height:30px;">
+        <td>
+            <table>
+                <tr>
+                    <td style="width:10px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width:100px;">Create Date</td>
+                    <td style="width:40px;">From:</td>
+                    <td style="width:150px;">
+                        <LogDatePicker [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'FromDate'" [DataContext]="DataContext"></LogDatePicker>
+                    </td>
+
+                    <td style="width:20px">
+                        <div></div>
+                    </td>
+
+                    <td style="width:20px;">To:</td>
+                    <td style="width:150px;">
+                        <LogDatePicker [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'ToDate'" [DataContext]="DataContext"></LogDatePicker>
+                    </td>
+
+                    <td style="width:20px">
+                        <div></div>
+                    </td>
+
+                    <td style="width:50px;">Origin:</td>
+                    <td style="width:185px;">
+                        <LogLov [ObjectFieldName]="'MainCarriageFromPortId'"
+                                [ObjectTableName]="'Booking'"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'Port'"
+                                [DependencyFilter1Value]="'A'"
+                                [DisplayMemberPath]="'EnglishName'">
+                        </LogLov>
+                    </td>
+
+                    <td style="width:10px">
+                        <div></div>
+                    </td>
+
+                    <td style="width:80px;">Destination:</td>
+                    <td style="width:185px;">
+                        <LogLov [ObjectFieldName]="'MainCarriageFinalDestinationPortId'"
+                                [ObjectTableName]="'Booking'"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'Port'"
+                                [DependencyFilter1Value]="'A'"
+                                [DisplayMemberPath]="'EnglishName'">
+                        </LogLov>
+                    </td>
+
+                    <td style="width:10px">
+                        <div></div>
+                    </td>
+
+                    <td style="width:70px;">Customer:</td>
+                    <td style="width:150px;">
+                        <ComboBox [ItemsSource]="TenantsComboList" [SelectedItem]="SelectedItemComboBox" [Binding]="'Name'" (SelectedItemChanged)="SelectedItemComboBox = $event"></ComboBox>
+                    </td>
+
+                    <!--run button-->
+                    <td style="width:25px;">
+                        <div></div>
+                    </td>
+                    <td style="width:80px;">
+                        <button class="GreenButton" (click)="RunReport(true)">Run Report</button>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

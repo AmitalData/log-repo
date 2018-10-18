@@ -1,0 +1,1 @@
+alter table [Customs].[clientsAddressCommunicationTypes] add  Tenant int not null

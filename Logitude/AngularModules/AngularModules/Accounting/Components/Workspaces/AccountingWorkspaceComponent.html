@@ -1,0 +1,46 @@
+﻿
+<table>
+    <!-- Pages Menu -->
+    <tr style="height:21px;">
+        <td>
+            <ul class="PagesMenu">
+                <!--<li [class.SelectedPageMenu]="SelectedItem == 'JORN'" (click)="SelectedItem = 'JORN'">Journals</li>-->
+                <li [style.float]="isRTL ? 'right':'left'" [class.SelectedPageMenu]="SelectedItem == 'GLAC'" (click)="SelectedItem = 'GLAC'">{{ 'Accounting.General.O.Main' | TextCodeTranslationPipe }}</li>
+                <li [style.float]="isRTL ? 'right':'left'" [class.SelectedPageMenu]="SelectedItem == 'RCV'" (click)="SelectedItem = 'RCV'">{{ 'Accounting.General.O.Receivables' | TextCodeTranslationPipe }}</li>
+                <li [style.float]="isRTL ? 'right':'left'" [class.SelectedPageMenu]="SelectedItem == 'PAY'" (click)="SelectedItem = 'PAY'">{{ 'Accounting.General.O.Payables' | TextCodeTranslationPipe }}</li>
+                <li [style.float]="isRTL ? 'right':'left'" [class.SelectedPageMenu]="SelectedItem == 'BNKS'" (click)="SelectedItem = 'BNKS'">{{ 'Accounting.General.O.Banks' | TextCodeTranslationPipe }}</li>
+                <li [style.float]="isRTL ? 'right':'left'" [class.SelectedPageMenu]="SelectedItem == 'MISC'" (click)="SelectedItem = 'MISC'">{{ 'Accounting.General.O.Misc' | TextCodeTranslationPipe }}</li>
+            </ul>
+        </td>
+    </tr>
+
+    <tr style="height:10px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <!-- Pages -->
+    <tr>
+        <td class="CellStretch">
+            <div class="CellContent" [hidden]="SelectedItem != 'GLAC'">
+                <div LocationDirective Code="GLAC"></div>
+            </div>
+            <!--<div class="CellContent" [hidden]="SelectedItem != 'JORN'">
+                <div LocationDirective Code="JORN"></div>
+            </div>-->
+            <div class="CellContent" [hidden]="SelectedItem != 'RCV'">
+                <div LocationDirective Code="RCV"></div>
+            </div>
+            <div class="CellContent" [hidden]="SelectedItem != 'PAY'">
+                <div LocationDirective Code="PAY"></div>
+            </div>
+            <div class="CellContent" [hidden]="SelectedItem != 'BNKS'">
+                <div LocationDirective Code="BNKS"></div>
+            </div>
+            <div class="CellContent" [hidden]="SelectedItem != 'MISC'">
+                <div LocationDirective Code="MISC"></div>
+            </div>
+        </td>
+    </tr>
+</table>

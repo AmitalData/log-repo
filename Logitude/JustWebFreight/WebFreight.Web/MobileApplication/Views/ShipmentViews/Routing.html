@@ -1,0 +1,759 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body><!--Routing-->
+    <div data-role="view"  data-show="onRoutingViewShow">
+ <header data-role="header">
+             
+
+              <div style="height:45px;display:table;width:100% ">
+
+                  <div style="display:table-cell; width:40px; vertical-align:middle; text-align:left">
+                             <div style="width:5px;"></div>
+                             <div><a  data-align="left"  data-role="backbutton" style="width:auto; height:auto;margin-bottom:4px;"> <img style="width:13px; height:26px;" src="images/back.png" ></a></div>
+                  </div>
+
+                       <div style="display:table-cell; width:240px; vertical-align:middle ;margin-bottom:2px; text-align:center">
+                             <div style="text-align:left;" class="HeaderTitil">Routing</div>
+                      </div>
+
+                      <div style="display:table-cell;width:40px; vertical-align:middle ; text-align:right">
+                             <div><button style="background-color:transparent; width:auto; height:auto;margin-bottom:2px; margin-right:9px;"><img style="width:25px; height:24px;" src="images/setting.png" ></button> </div>
+                           
+                      </div>
+
+       
+             </div>
+           
+      </header>
+
+            <!--Area-->
+        
+                    
+
+          <div style="width:100% ;background-color: white ; margin-top:9px;">
+                  
+                          <div style ="margin-left :10px; margin-right:10px; ">
+                                   <div style="height: 55px; display:table;width:100% ;" >
+
+                                                       <div style="display:table-cell; vertical-align:middle; text-align:left; width:270px;">
+						                                            <div  style="display:inline-block; width:26px;margin-top:4px;"><img style="height:23px;  width:26px; padding:0px; margin:0px;" data-bind="attr: { src: DirectionSRC }"/></div>
+                                                                    <div  style="display:inline-block; width:26px;margin-top:4px;"><img style="height:23px;  width:26px; padding:0px; margin:0px;" data-bind="attr: { src: TransportSRC }"/></div>
+										                            <div class="ValueTextStyle TemplateItem" style="display:inline-block;  max-width:200px; margin-top:6px;"  data-bind="text: MyReference"></div>
+		                                                    </div>
+
+                                                            <div style="display:table-cell; vertical-align:middle; text-align:right; width:50px;">
+
+                                                                   <div style="display:inline-block; height:30px;"><img id="companyLogo" src="../../HtmlHelpers/Images/Icons/Logo.png" style="width:38px; margin-top:5px;background-color:white; height:29px; vertical-align:central;"/></div>
+    
+                                                
+                                                           </div>
+                    
+
+                                        </div>
+                         </div>
+             </div>
+  
+  
+             
+          
+               
+               
+         <!--End Area-->
+
+
+   
+ <ul data-role="listview" data-style="inset" data-type="group" style="margin-top:-5px">                
+            <li>                                    
+                <ul id="RoutingListBox"></ul>                
+            </li>
+        </ul>
+      
+        <div style="height:1px ; width:100% ; background-color :white ; border-bottom: 1px solid #E4E5E6;" ></div>
+    </div>
+       
+                             
+    <script type="text/x-kendo-tmpl" id="RoutingListBoxItemDataTemplate">
+       
+        <div style="height:auto; width:100%;  background-color:white">
+
+                   <div style="height:34px; width:100%; background-color:\\#FFE989; vertical-align:middle; display:table; border-bottom: 2px solid \\#E4E5E6;">
+                                 <div style="display:table-cell; vertical-align:middle; text-align:left;">
+                                              <div style="display:inline-block; width:6px;"></div>
+                                               <div class="HederSHDQD2TextStyle" style="display:inline-block; max-width:150px">  ${LegHeader}</div>
+                                   </div>
+                   </div>
+
+    
+
+                           <div style="height:Auto; display:table;width:100% ;" >
+             <div style =" margin-left :10px; margin-right:10px; margin-top:16px; vertical-align:middle;"> 
+                                                             <div style="display:table;width:100% ;" >     
+                                                         <div style="display:table-cell; vertical-align:middle; text-align:left; width:135px;">
+                                                                    
+                                                                      <div  style="display:inline-block;"><img style="height:28px;  width:29px; padding:0px; margin:0px;" src="#= FromFlagSRC #" /></div>
+                                                                      <div class="Value2boldTextStyle TemplateItem" style="display:inline-block ;max-width:97px; margin-top:4px;">${FromPortCode}</div>
+                                                        </div>
+
+                                                          <div style="display:table-cell; vertical-align:middle; text-align:center; width:35px; ">
+                                                                       <div class="LabelTextStyle TemplateItem" style="display:inline-block; height:30px; width:32px;"><img style=" height:23px; width:26px;"   src="#= RoutingImageSRC #" /></div>
+                                                       </div>
+        
+                                                        <div style="display:table-cell; vertical-align:middle; text-align:right; width:135px;">
+                                                                        <div class="Value2boldTextStyle TemplateItem" style="display:inline-block; max-width:97px; margin-top:4px;"> ${ToPortCode}</div>
+                                                                       <div  style="display:inline-block;"><img style="height:28px;  width:29px; padding:0px;" src="#= ToFlagSRC #" /></div>
+                                                                     
+                                                         </div>
+
+        </div>
+        </div>
+                                  </div>
+
+
+
+             <div style="height:Auto; display:inline-block; width:100%; display:table; margin-top:1px;">   
+             
+                  <div style="display:table-cell; vertical-align:middle; text-align:left;">
+         
+                           
+                             <div style="display:inline-block; width:6px;"></div>
+                            <div class="HederSHDQD2TextStyle TemplateItem" style="display:inline-block; width:100px; max-width:150px; ">${FromPortName}</div>
+                            
+                  </div>
+
+                    <div style="display:table-cell; vertical-align:middle; text-align:right;">
+                                <div class="HederSHDQD2TextStyle TemplateItem" style="display:inline-block; max-width:150px;" >${ToPortName}</div>
+                      <div style="display:inline-block; width:6px;"></div>
+                               
+                                
+                                           
+              </div>
+        </div>
+            
+
+
+        
+             <div style="height:Auto; display:inline-block; width:100%; display:table;  margin-top:4px;">    
+                  <div style="display:table-cell; vertical-align:middle; text-align:left;">
+                     
+                             <div   style="display:inline-block; width:6px;"></div>
+                            <div class="HederSHDQD2TextStyle" style="display:inline-block; width:100px; max-width:150px; ">${FromDate}</div>
+                  </div>
+
+                    <div style="display:table-cell; vertical-align:middle; text-align:right;">
+                                <div class="HederSHDQD2TextStyle" style="display:inline-block; max-width:100px;" >${ToDate}</div>
+                                 <div style="display:inline-block; width:6px;"></div>
+                               
+                              
+                    </div> 
+     
+            </div>
+
+
+         
+             <div style="height:Auto; display:inline-block; width:100%; display:table;margin-top:4px; display: #= DisplayAcutalEstimateAera #;">    
+                  <div style="display:table-cell; vertical-align:middle; text-align:left;">
+                     
+                             <div  style="display:inline-block; width:6px;"></div>
+         <span class="HederSHDQD2TextStyle" style="height:20px; display: inline-block; display: #= FromDateTimeVisibility #;">#= FromDateTimeIsActual ? '<span style="margin-left: 10px;">(Acutal)</span>' : '<span style="margin-left: 10px;">(Estimate)</span>' #</span>
+                          
+                  </div>
+
+                    <div style="display:table-cell; vertical-align:middle; text-align:right;">
+                              <span class="HederSHDQD2TextStyle" style="height:20px; display: inline-block; display: #= ToDateTimeVisibility #;">#= ToDateTimeIsActual ? '<span style="margin-left: 10px;">(Acutal)</span>' : '<span style="margin-left: 10px;">(Estimate)</span>' #</span>
+                                 <div style="display:inline-block; width:6px;"></div>
+                               
+                              
+                    </div> 
+     
+            </div>
+
+
+       
+
+        
+       
+                    
+        </div>
+  <div style =" margin-left:10px; margin-right:10px; display: #= DisplayCarrier #;">
+                                <div style ="height:Auto;display:table; width:100% ;margin-top:4px">
+                                         <div style ="width:87px  ; display:table-cell;  vertical-align:middle; text-align:left ;" >
+                                                     <div  style="display:inline-block; width:6px;"></div>
+                                                      <div class="SHDQD1TextStyle" style="max-width:100px; display:inline-block " >${ CarrierName}</div>
+                                                      <div class="HederSHDQD2TextStyle " style="max-width:100px; display:inline-block " >${CarrierNumber}</div>
+                                          </div>
+                                       
+                                   </div>
+
+
+
+                        </div>
+       
+           
+     
+         <div style="height:16px ; width:100% ; background-color :white ;"  ></div>
+        
+
+        </script>
+
+     <script type="text/x-kendo-tmpl" id="RoutingListBoxItemDataTemplate2">
+        <div class="RoutingListBoxItem">
+            <div class="headerDiv" style="height:25px;">
+                <div class="content">
+                    <table cellpadding="0" cellspacing="0" style="width:100%;">
+                        <tr>
+                            <td style="width: 5px;"></td>
+                            <td style="width:20px; vertical-align:central;"><img src="#= RoutingImageSRC #" style="height:23px; width:26px; display:block;"/></td>
+                            <td style="width: 2px;"></td>
+                            <td style="vertical-align: middle;"><span class="HederSHDQD2TextStyle">${LegHeader}</span></td>
+                        </tr>
+                    </table>                                 
+                </div>
+            </div>
+
+            <div class="bodyDiv" style="height:75px;">
+                <table cellpadding="0" cellspacing="0" style="width:100%; height:52px;">
+                    <tr style="height:50px;">
+                                                           
+                        <td style="width:45px;">
+                            <div style="width:45px; height:45px;">
+                                <img style="height:28px;  width:29px" src="${FromFlagSRC}" />
+                            </div>
+                        </td>                        
+
+                        <td style="width:50%; vertical-align:central;">
+                            <div style="margin-left: 8px;">
+                                <div style="height:30px;">
+                                  <span class="Value2boldTextStyle TemplateItem" style="display: inline-block; font-size:16px; white-space: nowrap; max-width:80px; margin-top:4px;">${FromPortCode}</span>
+                                  <span class="HederSHDQD2TextStyle TemplateItem" style="display: inline-block; margin-left:5px; white-space: nowrap;">${FromPortName}</span>
+                                </div>
+
+                                <div style="height:22px;">
+                                                        
+                                  <span class="HederSHDQD2TextStyle"  style="font-size:12px; display: inline-block; width: 80px; color: #= FromDateColor #;">${FromDate}</span>
+                                  <span class="HederSHDQD2TextStyle" style="font-size:12px; display: inline-block; width: 30px; color: \\#282E30;">${FromTime}</span>
+                                  <span class="HederSHDQD2TextStyle" style="height:20px; display: inline-block; display: #= FromDateTimeVisibility #;">#= FromDateTimeIsActual ? '<span style="margin-left: 10px;">(Acutal)</span>' : '<span style="margin-left: 10px;">(Estimate)</span>' #</span>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td style="width:45px;">
+                            <div style="width:45px; height:45px;">
+                                <img src="${ToFlagSRC}" />
+                            </div>
+                        </td>
+
+                        <td style="width:50%; vertical-align:central;">
+                           <div style="margin-left: 8px">
+                               <div style="height:30px;">
+                                  <span class="Value2boldTextStyle TemplateItem" style="display: inline-block; font-size:16px; white-space: nowrap; max-width:80px; margin-top:4px;">${ToPortCode}</span>
+                                  <span class="HederSHDQD2TextStyle TemplateItem" style="display: inline-block; margin-left: 5px; white-space: nowrap;">${ToPortName}</span>
+                               </div>
+
+                               <div style="height:22px;">
+                                                          
+                                  <span class="HederSHDQD2TextStyle" style="font-size:12px; display: inline-block; width: 80px; color: #= ToDateColor #;">${ToDate}</span>
+                                  <span class="HederSHDQD2TextStyle" style="font-size:12px; display: inline-block; width: 30px; color: \\#282E30;">${ToTime}</span>
+                                  <span class="HederSHDQD2TextStyle" style="height:20px; display: inline-block; display: #= ToDateTimeVisibility #;">#= ToDateTimeIsActual ? '<span style="margin-left: 10px;">(Actual)</span>' : '<span style="margin-left: 10px;">(Estimate)</span>' #</span>
+                               </div>                              
+                           </div>
+                        </td>
+
+                        <td style="width:250px; vertical-align:central; text-align:left;">
+                            <div style="width:250px; margin:0; padding:0">
+
+                                <div>
+                                  <span style="display:inline-block; width:40px;">Carrier:</span>
+                                  <span">
+                                    #if(CarrierHasWebSite)
+                                        {
+                                            #<a href="#= CarrierWebSite #" target="_blank" style="font-size: 11px;"><div  class="SHDQD1TextStyle">${Carrier}</div> </a>#
+                                        }
+                                    else
+                                        {
+                                            #
+                                            
+                                            <span class="SHDQD1TextStyle" class="ValueTextStyle" style="font-size: 11px; display:table-cell; vertical-align: central; width:200px; max-width:200px; white-space:nowrap; overflow: hidden; text-overflow: ellipsis">${Carrier}</span>
+                                            
+                                            #
+                                        }#
+                                  </span>
+                                </div>
+
+                                <div>
+                                  <span style="display:inline-block; width:40px;">No:</span>
+                                  <span class="HederSHDQD2TextStyle" style="font-size: 11px">${CarrierNumber}</span>
+                                </div>
+
+                                <div style="visibility: #= MasterVisibility #;">                                  
+                                   <span style="display:inline-block; width:45px;">Master:</span>
+                                   <span class="HederSHDQD2TextStyle" style="font-size: 11px">${Master}</span>                                  
+                                </div>
+
+                                <div style="visibility: #= VisselVisibility #;">
+                                    <span style="display:inline-block; width:40px;">Vessel:</span>
+                                    <span class="HederSHDQD2TextStyle" style="font-size: 11px">${Vissel}</span>
+                                </div>
+
+                            </div>
+                        </td>                    
+                     </tr>
+                  </table>
+                  
+
+
+
+            </div>
+        
+        </div>
+    </script>
+
+
+      <script>
+
+
+
+          function BuildRoutingLegs(shipment) {
+
+              var RoutingLegs = [];
+
+              if (shipment.ShipmentPickUps.length > 0) {
+                  $.each(shipment.ShipmentPickUps, function (index, value) {
+
+                      var leg = new LogitudeRoutingClass();
+                      leg.LegHeader = "Pick Up: " + value.PickUpDeliveryNumber;
+                      leg.MasterVisibility = "collapse";
+                      leg.FromFlagSRC = "../images/Flags/" + ($.trim(value.FromPortCountryCode) != '' ? $.trim(value.FromPortCountryCode) : $.trim(value.FromAddressCountryCode)) + ".png";
+                      leg.FromPortCode = $.trim(value.FromPortCode) != '' ? $.trim(value.FromPortCode) : $.trim(value.FromAddressCity);
+                      leg.FromPortName = $.trim(value.FromPortName) != '' ? $.trim(value.FromPortName) : $.trim(value.FromAddressCountryName);
+                      leg.FromDate = $.trim(value.ATD) != "" ? $.Convert.ToShortDate(value.ATD) : $.Convert.ToShortDate(value.ETD);
+                      leg.FromTime = $.trim(value.ATD) != "" ? $.Convert.ToShortTime(value.ATD) : $.Convert.ToShortTime(value.ETD);
+                      leg.FromDateTimeIsActual = $.trim(value.ATD) != "";
+                      leg.FromDateTimeVisibility = ($.trim(value.ETD) != "" || $.trim(value.ATD) != "") ? " " : "none";
+                      leg.ToFlagSRC = "../images/Flags/" + ($.trim(value.ToPortCountryCode) != '' ? $.trim(value.ToPortCountryCode) : $.trim(value.ToAddressCountryCode)) + ".png";
+                      leg.ToPortCode = $.trim(value.ToPortCode) != '' ? $.trim(value.ToPortCode) : $.trim(value.ToAddressCity);
+                      leg.ToPortName = $.trim(value.ToPortName) != '' ? $.trim(value.ToPortName) : $.trim(value.ToAddressCountryName);
+                      leg.ToDate = $.trim(value.ATA) != "" ? $.Convert.ToShortDate(value.ATA) : $.Convert.ToShortDate(value.ETA);
+                      leg.ToTime = $.trim(value.ATA) != "" ? $.Convert.ToShortTime(value.ATA) : $.Convert.ToShortTime(value.ETA);
+                      leg.ToDateTimeIsActual = $.trim(value.ATA) != "";
+                      leg.ToDateTimeVisibility = ($.trim(value.ETA) != "" || $.trim(value.ATA) != "") ? "" : "none";
+                      leg.Carrier = $.trim($.trim(value.CarrierCode) + " " + $.trim(value.CarrierName));
+                      leg.CarrierNumber = $.trim(value.CarrierNumber);
+                      leg.CarrierWebSite = $.trim(value.CarrierWebSite) == "" ? "" : ($.trim(value.CarrierWebSite).indexOf("http://") == -1 ? "http://" + $.trim(value.CarrierWebSite) : $.trim(value.CarrierWebSite));
+                      leg.CarrierHasWebSite = $.trim(value.CarrierWebSite) != "";
+                      leg.RoutingImageSRC = "images/Routing.I.png";
+
+                      leg.CarrierName = $.trim(value.CarrierName);
+
+                      if ($.trim(leg.FromDate) == "") {
+                          leg.FromDate = "No Date";
+                          leg.FromDateColor = "#6E7172";
+                      }
+
+                      if ($.trim(leg.CarrierName) == "") {
+                          leg.DisplayCarrier = "none";
+                      }
+
+                      if ($.trim(leg.ToDate) == "") {
+                          leg.ToDate = "No Date";
+                          leg.ToDateColor = "#6E7172";
+                      }
+
+                      if ($.trim(leg.FromDate) == "No Date" && $.trim(leg.ToDate) == "No Date") {
+                          leg.DisplayAcutalEstimateAera = "none";
+                      }
+
+                      RoutingLegs.push(leg);
+                  });
+              }
+
+              /* Pre Carriage */
+              if ($.trim(shipment.PreCarriageFromPortId) != '' && $.trim(shipment.PreCarriageToPortId) != '') {
+
+                  var leg = new LogitudeRoutingClass();
+                  leg.LegHeader = "Pre Carriage";
+                  leg.MasterVisibility = "collapse";
+                  leg.FromFlagSRC = "../images/Flags/" + shipment.PreCarriageFromPortCountryCode + ".png";
+                  leg.FromPortCode = $.trim(shipment.PreCarriageFromPortCode);
+                  leg.FromPortName = $.trim(shipment.PreCarriageFromPortName);
+                  leg.FromDate = $.trim(shipment.PreCarriageATD) != "" ? $.Convert.ToShortDate(shipment.PreCarriageATD) : $.Convert.ToShortDate(shipment.PreCarriageETD);
+                  leg.FromTime = $.trim(shipment.PreCarriageATD) != "" ? $.Convert.ToShortTime(shipment.PreCarriageATD) : $.Convert.ToShortTime(shipment.PreCarriageETD);
+                  leg.FromDateTimeIsActual = $.trim(shipment.PreCarriageATD) != "";
+                  leg.ToFlagSRC = "../images/Flags/" + shipment.PreCarriageToPortCountryCode + ".png";
+                  leg.ToPortCode = $.trim(shipment.PreCarriageToPortCode);
+                  leg.ToPortName = $.trim(shipment.PreCarriageToPortName);
+                  leg.ToDate = $.trim(shipment.PreCarriageATA) != "" ? $.Convert.ToShortDate(shipment.PreCarriageATA) : $.Convert.ToShortDate(shipment.PreCarriageETA);
+                  leg.ToTime = $.trim(shipment.PreCarriageATA) != "" ? $.Convert.ToShortTime(shipment.PreCarriageATA) : $.Convert.ToShortTime(shipment.PreCarriageETA);
+                  leg.ToDateTimeIsActual = $.trim(shipment.PreCarriageATA) != "";
+                  leg.Carrier = $.trim($.trim(shipment.PreCarriageCarrierCode) + " " + $.trim(shipment.PreCarriageCarrierName));
+                  leg.CarrierNumber = $.trim(shipment.PreCarriageCarrierNumber);
+                  leg.CarrierWebSite = $.trim(shipment.PreCarriageCarrierWebSite) == "" ? "" : ($.trim(shipment.PreCarriageCarrierWebSite).indexOf("http://") == -1 ? "http://" + $.trim(shipment.PreCarriageCarrierWebSite) : $.trim(shipment.PreCarriageCarrierWebSite));
+                  leg.CarrierHasWebSite = $.trim(shipment.PreCarriageCarrierWebSite) != "";
+                  leg.FromDateTimeVisibility = ($.trim(shipment.PreCarriageETD) != "" || $.trim(shipment.PreCarriageATD) != "") ? " " : "none";
+                  leg.ToDateTimeVisibility = ($.trim(shipment.PreCarriageETA) != "" || $.trim(shipment.PreCarriageATA) != "") ? " " : "none";
+                  leg.Vissel = $.trim(shipment.PreCarriageVesselName);
+                  leg.VisselVisibility = $.trim(shipment.PreCarriageTransportModeId) == "O" ? "visible" : "collapse";
+                  leg.RoutingImageSRC = "images/Routing." + shipment.PreCarriageTransportModeId + ".png";
+                  leg.CarrierName = $.trim(shipment.PreCarriageCarrierName);
+
+
+                  if ($.trim(leg.FromDate) == "") {
+                      leg.FromDate = "No Date";
+                      leg.FromDateColor = "#6E7172";
+                  }
+
+                  if ($.trim(leg.ToDate) == "") {
+                      leg.ToDate = "No Date";
+                      leg.ToDateColor = "#6E7172";
+                  }
+
+                  if ($.trim(leg.CarrierName) == "") {
+                      leg.DisplayCarrier = "none";
+
+
+                  }
+
+                  if ($.trim(leg.FromDate) == "No Date" && $.trim(leg.ToDate) == "No Date") {
+                      leg.DisplayAcutalEstimateAera = "none";
+                  }
+                  RoutingLegs.push(leg);
+              }
+
+              /* Main Carriage */
+              var leg = new LogitudeRoutingClass();
+              leg.LegHeader = "Main Carriage Leg 1";
+              leg.FromFlagSRC = "../images/Flags/" + shipment.MainCarriageFromPortCountryCode + ".png";
+              leg.FromPortCode = $.trim(shipment.MainCarriageFromPortCode);
+              leg.FromPortName = $.trim(shipment.MainCarriageFromPortName);
+              leg.FromDate = $.trim(shipment.MainCarriageATD) != "" ? $.Convert.ToShortDate(shipment.MainCarriageATD) : $.Convert.ToShortDate(shipment.MainCarriageETD);
+              leg.FromTime = $.trim(shipment.MainCarriageATD) != "" ? $.Convert.ToShortTime(shipment.MainCarriageATD) : $.Convert.ToShortTime(shipment.MainCarriageETD);
+              leg.FromDateTimeIsActual = $.trim(shipment.MainCarriageATD) != "";
+              leg.ToFlagSRC = "../images/Flags/" + shipment.MainCarriageToPortCountryCode + ".png";
+              leg.ToPortCode = $.trim(shipment.MainCarriageToPortCode);
+              leg.ToPortName = $.trim(shipment.MainCarriageToPortName);
+              leg.ToDate = $.trim(shipment.MainCarriageATA) != "" ? $.Convert.ToShortDate(shipment.MainCarriageATA) : $.Convert.ToShortDate(shipment.MainCarriageETA);
+              leg.ToTime = $.trim(shipment.MainCarriageATA) != "" ? $.Convert.ToShortTime(shipment.MainCarriageATA) : $.Convert.ToShortTime(shipment.MainCarriageETA);
+              leg.ToDateTimeIsActual = $.trim(shipment.MainCarriageATA) != "";
+              leg.Carrier = $.trim($.trim(shipment.MainCarriageCarrierCode) + " " + $.trim(shipment.MainCarriageCarrierName));
+              leg.CarrierNumber = $.trim(shipment.MainCarriageCarrierNumber);
+              leg.CarrierWebSite = $.trim(shipment.MainCarriageCarrierWebSite) == "" ? "" : ($.trim(shipment.MainCarriageCarrierWebSite).indexOf("http://") == -1 ? "http://" + $.trim(shipment.MainCarriageCarrierWebSite) : $.trim(shipment.MainCarriageCarrierWebSite));
+              leg.CarrierHasWebSite = $.trim(shipment.MainCarriageCarrierWebSite) != "";
+              leg.Master = $.trim(shipment.LongMaster);
+              leg.FromDateTimeVisibility = ($.trim(shipment.MainCarriageETD) != "" || $.trim(shipment.MainCarriageATD) != "") ? " " : "none";
+              leg.ToDateTimeVisibility = ($.trim(shipment.MainCarriageETA) != "" || $.trim(shipment.MainCarriageATA) != "") ? " " : "none";
+              leg.Vissel = $.trim(shipment.MainCarriageVesselName);
+              leg.VisselVisibility = $.trim(shipment.TransportModeId) == "O" ? "visible" : "collapse";
+              leg.RoutingImageSRC = "Images/Routing." + shipment.TransportModeId + ".png";
+              leg.CarrierName = $.trim(shipment.MainCarriageCarrierName);
+              if ($.trim(leg.FromDate) == "") {
+                  leg.FromDate = "No Date";
+                  leg.FromDateColor = "#6E7172";
+              }
+
+              if ($.trim(leg.ToDate) == "") {
+                  leg.ToDate = "No Date";
+                  leg.ToDateColor = "#6E7172";
+              }
+
+
+              if ($.trim(leg.CarrierName) == "") {
+                  leg.DisplayCarrier = "none";
+
+
+              }
+
+
+              if ($.trim(leg.FromDate) == "No Date" && $.trim(leg.ToDate) == "No Date") {
+                  leg.DisplayAcutalEstimateAera = "none";
+              }
+
+              RoutingLegs.push(leg);
+
+              /* Transshipment1 */
+              if ($.trim(shipment.Transshipment1FromPortId) != '' && $.trim(shipment.Transshipment1ToPortId) != '') {
+
+                  var leg = new LogitudeRoutingClass();
+                  leg.LegHeader = "Main Carriage Leg 2";
+                  leg.FromFlagSRC = "../images/Flags/" + shipment.Transshipment1FromPortCountryCode + ".png";
+                  leg.FromPortCode = $.trim(shipment.Transshipment1FromPortCode);
+                  leg.FromPortName = $.trim(shipment.Transshipment1FromPortName);
+                  leg.FromDate = $.trim(shipment.Transshipment1ATD) != "" ? $.Convert.ToShortDate(shipment.Transshipment1ATD) : $.Convert.ToShortDate(shipment.Transshipment1ETD);
+                  leg.FromTime = $.trim(shipment.Transshipment1ATD) != "" ? $.Convert.ToShortTime(shipment.Transshipment1ATD) : $.Convert.ToShortTime(shipment.Transshipment1ETD);
+                  leg.FromDateTimeIsActual = $.trim(shipment.Transshipment1ATD) != "";
+                  leg.ToFlagSRC = "../images/Flags/" + shipment.Transshipment1ToPortCountryCode + ".png";
+                  leg.ToPortCode = $.trim(shipment.Transshipment1ToPortCode);
+                  leg.ToPortName = $.trim(shipment.Transshipment1ToPortName);
+                  leg.ToDate = $.trim(shipment.Transshipment1ATA) != "" ? $.Convert.ToShortDate(shipment.Transshipment1ATA) : $.Convert.ToShortDate(shipment.Transshipment1ETA);
+                  leg.ToTime = $.trim(shipment.Transshipment1ATA) != "" ? $.Convert.ToShortTime(shipment.Transshipment1ATA) : $.Convert.ToShortTime(shipment.Transshipment1ETA);
+                  leg.ToDateTimeIsActual = $.trim(shipment.Transshipment1ATA) != "";
+                  leg.Carrier = $.trim($.trim(shipment.Transshipment1CarrierCode) + " " + $.trim(shipment.Transshipment1CarrierName));
+                  leg.CarrierNumber = $.trim(shipment.Transshipment1CarrierNumber);
+                  leg.Master = $.trim(shipment.Transshipment1AdditionalMAWBOBLBL);
+                  leg.FromDateTimeVisibility = ($.trim(shipment.Transshipment1ETD) != "" || $.trim(shipment.Transshipment1ATD) != "") ? " " : "none";
+                  leg.ToDateTimeVisibility = ($.trim(shipment.Transshipment1ETA) != "" || $.trim(shipment.Transshipment1ATA) != "") ? " " : "none";
+                  leg.Vissel = $.trim(shipment.Transshipment1VesselName);
+                  leg.VisselVisibility = $.trim(shipment.TransportModeId) == "O" ? "visible" : "collapse";
+                  leg.RoutingImageSRC = "images/Routing." + shipment.TransportModeId + ".png";
+                  leg.CarrierName = $.trim(shipment.Transshipment1CarrierName);
+                  if ($.trim(leg.FromDate) == "") {
+                      leg.FromDate = "No Date";
+                      leg.FromDateColor = "#6E7172";
+                  }
+
+                  if ($.trim(leg.ToDate) == "") {
+                      leg.ToDate = "No Date";
+                      leg.ToDateColor = "#6E7172";
+                  }
+
+                  if ($.trim(leg.CarrierName) == "") {
+                      leg.DisplayCarrier = "none";
+
+
+                  }
+
+
+                  if ($.trim(leg.FromDate) == "No Date" && $.trim(leg.ToDate) == "No Date") {
+                      leg.DisplayAcutalEstimateAera = "none";
+                  }
+
+
+                  RoutingLegs.push(leg);
+              }
+
+
+              /* Transshipment2 */
+              if ($.trim(shipment.Transshipment2FromPortId) != '' && $.trim(shipment.Transshipment2ToPortId) != '') {
+
+                  var leg = new LogitudeRoutingClass();
+                  leg.LegHeader = "Main Carriage Leg 3";
+                  leg.FromFlagSRC = "../images/Flags/" + shipment.Transshipment2FromPortCountryCode + ".png";
+                  leg.FromPortCode = $.trim(shipment.Transshipment2FromPortCode);
+                  leg.FromPortName = $.trim(shipment.Transshipment2FromPortName);
+                  leg.FromDate = $.trim(shipment.Transshipment2ATD) != "" ? $.Convert.ToShortDate(shipment.Transshipment2ATD) : $.Convert.ToShortDate(shipment.Transshipment2ETD);
+                  leg.FromTime = $.trim(shipment.Transshipment2ATD) != "" ? $.Convert.ToShortTime(shipment.Transshipment2ATD) : $.Convert.ToShortTime(shipment.Transshipment2ETD);
+                  leg.FromDateTimeIsActual = $.trim(shipment.Transshipment2ATD) != "";
+                  leg.ToFlagSRC = "../images/Flags/" + shipment.Transshipment2ToPortCountryCode + ".png";
+                  leg.ToPortCode = $.trim(shipment.Transshipment2ToPortCode);
+                  leg.ToPortName = $.trim(shipment.Transshipment2ToPortName);
+                  leg.ToDate = $.trim(shipment.Transshipment2ATA) != "" ? $.Convert.ToShortDate(shipment.Transshipment2ATA) : $.Convert.ToShortDate(shipment.Transshipment2ETA);
+                  leg.ToTime = $.trim(shipment.Transshipment2ATA) != "" ? $.Convert.ToShortTime(shipment.Transshipment2ATA) : $.Convert.ToShortTime(shipment.Transshipment2ETA);
+                  leg.ToDateTimeIsActual = $.trim(shipment.Transshipment2ATA) != "";
+                  leg.Carrier = $.trim($.trim(shipment.Transshipment2CarrierCode) + " " + $.trim(shipment.Transshipment2CarrierName));
+                  leg.CarrierNumber = $.trim(shipment.Transshipment2CarrierNumber);
+                  leg.Master = $.trim(shipment.Transshipment2AdditionalMAWBOBLBL);
+                  leg.FromDateTimeVisibility = ($.trim(shipment.Transshipment2ETD) != "" || $.trim(shipment.Transshipment2ATD) != "") ? " " : "none";
+                  leg.ToDateTimeVisibility = ($.trim(shipment.Transshipment2ETA) != "" || $.trim(shipment.Transshipment2ATA) != "") ? " " : "none";
+                  leg.Vissel = $.trim(shipment.Transshipment2VesselName);
+                  leg.VisselVisibility = $.trim(shipment.TransportModeId) == "O" ? "visible" : "collapse";
+                  leg.RoutingImageSRC = "images/Routing." + shipment.TransportModeId + ".png";
+                  leg.CarrierName = $.trim(shipment.Transshipment2CarrierName);
+
+                  if ($.trim(leg.FromDate) == "") {
+                      leg.FromDate = "No Date";
+                      leg.FromDateColor = "#6E7172";
+                  }
+
+                  if ($.trim(leg.ToDate) == "") {
+                      leg.ToDate = "No Date";
+                      leg.ToDateColor = "#6E7172";
+                  }
+
+                  if ($.trim(leg.CarrierName) == "") {
+                      leg.DisplayCarrier = "none";
+
+
+                  }
+
+                  if ($.trim(leg.FromDate) == "No Date" && $.trim(leg.ToDate) == "No Date") {
+                      leg.DisplayAcutalEstimateAera = "none";
+                  }
+
+                  RoutingLegs.push(leg);
+              }
+
+
+              /* Transshipment3 */
+              if ($.trim(shipment.Transshipment3FromPortId) != '' && $.trim(shipment.Transshipment3ToPortId) != '') {
+
+                  var leg = new LogitudeRoutingClass();
+                  leg.LegHeader = "Main Carriage Leg 4";
+                  leg.FromFlagSRC = "../images/Flags/" + shipment.Transshipment3FromPortCountryCode + ".png";
+                  leg.FromPortCode = $.trim(shipment.Transshipment3FromPortCode);
+                  leg.FromPortName = $.trim(shipment.Transshipment3FromPortName);
+                  leg.FromDate = $.trim(shipment.Transshipment3ATD) != "" ? $.Convert.ToShortDate(shipment.Transshipment3ATD) : $.Convert.ToShortDate(shipment.Transshipment3ETD);
+                  leg.FromTime = $.trim(shipment.Transshipment3ATD) != "" ? $.Convert.ToShortTime(shipment.Transshipment3ATD) : $.Convert.ToShortTime(shipment.Transshipment3ETD);
+                  leg.FromDateTimeIsActual = $.trim(shipment.Transshipment3ATD) != "";
+                  leg.ToFlagSRC = "../images/Flags/" + shipment.Transshipment3ToPortCountryCode + ".png";
+                  leg.ToPortCode = $.trim(shipment.Transshipment3ToPortCode);
+                  leg.ToPortName = $.trim(shipment.Transshipment3ToPortName);
+                  leg.ToDate = $.trim(shipment.Transshipment3ATA) != "" ? $.Convert.ToShortDate(shipment.Transshipment3ATA) : $.Convert.ToShortDate(shipment.Transshipment3ETA);
+                  leg.ToTime = $.trim(shipment.Transshipment3ATA) != "" ? $.Convert.ToShortTime(shipment.Transshipment3ATA) : $.Convert.ToShortTime(shipment.Transshipment3ETA);
+                  leg.ToDateTimeIsActual = $.trim(shipment.Transshipment3ATA) != "";
+                  leg.Carrier = $.trim($.trim(shipment.Transshipment3CarrierCode) + " " + $.trim(shipment.Transshipment3CarrierName));
+                  leg.CarrierNumber = $.trim(shipment.Transshipment3CarrierNumber);
+                  leg.Master = $.trim(shipment.Transshipment3AdditionalMAWBOBLBL);
+                  leg.FromDateTimeVisibility = ($.trim(shipment.Transshipment3ETD) != "" || $.trim(shipment.Transshipment3ATD) != "") ? " " : "none";
+                  leg.ToDateTimeVisibility = ($.trim(shipment.Transshipment3ETA) != "" || $.trim(shipment.Transshipment3ATA) != "") ? " " : "none";
+                  leg.Vissel = $.trim(shipment.Transshipment3VesselName);
+                  leg.VisselVisibility = $.trim(shipment.TransportModeId) == "O" ? "visible" : "collapse";
+                  leg.RoutingImageSRC = "images/Routing." + shipment.TransportModeId + ".png";
+                  leg.CarrierName = $.trim(shipment.Transshipment3CarrierName);
+                  if ($.trim(leg.FromDate) == "") {
+                      leg.FromDate = "No Date";
+                      leg.FromDateColor = "#6E7172";
+                  }
+
+                  if ($.trim(leg.ToDate) == "") {
+                      leg.ToDate = "No Date";
+                      leg.ToDateColor = "#6E7172";
+                  }
+
+                  if ($.trim(leg.CarrierName) == "") {
+                      leg.DisplayCarrier = "none";
+
+
+                  }
+
+                  if ($.trim(leg.FromDate) == "No Date" && $.trim(leg.ToDate) == "No Date") {
+                      leg.DisplayAcutalEstimateAera = "none";
+                  }
+
+                  RoutingLegs.push(leg);
+              }
+
+              /* On Carriage */
+              if ($.trim(shipment.OnCarriageFromPortId) != '' && $.trim(shipment.OnCarriageToPortId) != '') {
+
+                  var leg = new LogitudeRoutingClass();
+                  leg.LegHeader = "On Carriage";
+                  leg.MasterVisibility = "collapse";
+                  leg.FromFlagSRC = "../images/Flags/" + shipment.OnCarriageFromPortCountryCode + ".png";
+                  leg.FromPortCode = $.trim(shipment.OnCarriageFromPortCode);
+                  leg.FromPortName = $.trim(shipment.OnCarriageFromPortName);
+                  leg.FromDate = $.trim(shipment.OnCarriageATD) != "" ? $.Convert.ToShortDate(shipment.OnCarriageATD) : $.Convert.ToShortDate(shipment.OnCarriageETD);
+                  leg.FromTime = $.trim(shipment.OnCarriageATD) != "" ? $.Convert.ToShortTime(shipment.OnCarriageATD) : $.Convert.ToShortTime(shipment.OnCarriageETD);
+                  leg.FromDateTimeIsActual = $.trim(shipment.OnCarriageATD) != "";
+                  leg.ToFlagSRC = "../images/Flags/" + shipment.OnCarriageToPortCountryCode + ".png";
+                  leg.ToPortCode = $.trim(shipment.OnCarriageToPortCode);
+                  leg.ToPortName = $.trim(shipment.OnCarriageToPortName);
+                  leg.ToDate = $.trim(shipment.OnCarriageATA) != "" ? $.Convert.ToShortDate(shipment.OnCarriageATA) : $.Convert.ToShortDate(shipment.OnCarriageETA);
+                  leg.ToTime = $.trim(shipment.OnCarriageATA) != "" ? $.Convert.ToShortTime(shipment.OnCarriageATA) : $.Convert.ToShortTime(shipment.OnCarriageETA);
+                  leg.ToDateTimeIsActual = $.trim(shipment.OnCarriageATA) != "";
+                  leg.Carrier = $.trim($.trim(shipment.OnCarriageCarrierCode) + " " + $.trim(shipment.OnCarriageCarrierName));
+                  leg.CarrierNumber = $.trim(shipment.OnCarriageCarrierNumber);
+                  leg.FromDateTimeVisibility = ($.trim(shipment.OnCarriageETD) != "" || $.trim(shipment.OnCarriageATD) != "") ? " " : "none";
+                  leg.ToDateTimeVisibility = ($.trim(shipment.OnCarriageETA) != "" || $.trim(shipment.OnCarriageATA) != "") ? " " : "none";
+                  leg.Vissel = $.trim(shipment.OnCarriageVesselName);
+                  leg.VisselVisibility = $.trim(shipment.OnCarriageTransportModeId) == "O" ? "visible" : "collapse";
+                  leg.RoutingImageSRC = "images/Routing." + shipment.OnCarriageTransportModeId + ".png";
+                  leg.CarrierName = $.trim(shipment.OnCarriageCarrierName);
+                  if ($.trim(leg.FromDate) == "") {
+                      leg.FromDate = "No Date";
+                      leg.FromDateColor = "#6E7172";
+                  }
+
+                  if ($.trim(leg.ToDate) == "") {
+                      leg.ToDate = "No Date";
+                      leg.ToDateColor = "#6E7172";
+                  }
+
+                  if ($.trim(leg.CarrierName) == "") {
+                      leg.DisplayCarrier = "none";
+
+
+                  }
+
+                  if ($.trim(leg.FromDate) == "No Date" && $.trim(leg.ToDate) == "No Date") {
+                      leg.DisplayAcutalEstimateAera = "none";
+                  }
+
+                  RoutingLegs.push(leg);
+              }
+
+              if (shipment.ShipmentDeliveries.length > 0) {
+
+                  $.each(shipment.ShipmentDeliveries, function (index, value) {
+
+                      var leg = new LogitudeRoutingClass();
+                      leg.LegHeader = "Delivery: " + value.PickUpDeliveryNumber;
+                      leg.MasterVisibility = "collapse";
+                      leg.FromFlagSRC = "../images/Flags/" + ($.trim(value.FromPortCountryCode) != '' ? $.trim(value.FromPortCountryCode) : $.trim(value.FromAddressCountryCode)) + ".png";
+                      leg.FromPortCode = $.trim(value.FromPortCode) != '' ? $.trim(value.FromPortCode) : $.trim(value.FromAddressCity);
+                      leg.FromPortName = $.trim(value.FromPortName) != '' ? $.trim(value.FromPortName) : $.trim(value.FromAddressCountryName);
+                      leg.FromDate = $.trim(value.ATD) != "" ? $.Convert.ToShortDate(value.ATD) : $.Convert.ToShortDate(value.ETD);
+                      leg.FromTime = $.trim(value.ATD) != "" ? $.Convert.ToShortTime(value.ATD) : $.Convert.ToShortTime(value.ETD);
+                      leg.FromDateTimeIsActual = $.trim(value.ATD) != "";
+                      leg.FromDateTimeVisibility = ($.trim(value.ETD) != "" || $.trim(value.ATD) != "") ? " " : "none";
+                      leg.ToFlagSRC = "../images/Flags/" + ($.trim(value.ToPortCountryCode) != '' ? $.trim(value.ToPortCountryCode) : $.trim(value.ToAddressCountryCode)) + ".png";
+                      leg.ToPortCode = $.trim(value.ToPortCode) != '' ? $.trim(value.ToPortCode) : $.trim(value.ToAddressCity);
+                      leg.ToPortName = $.trim(value.ToPortName) != '' ? $.trim(value.ToPortName) : $.trim(value.ToAddressCountryName);
+                      leg.ToDate = $.trim(value.ATA) != "" ? $.Convert.ToShortDate(value.ATA) : $.Convert.ToShortDate(value.ETA);
+                      leg.ToTime = $.trim(value.ATA) != "" ? $.Convert.ToShortTime(value.ATA) : $.Convert.ToShortTime(value.ETA);
+                      leg.ToDateTimeIsActual = $.trim(value.ATA) != "";
+                      leg.ToDateTimeVisibility = ($.trim(value.ETA) != "" || $.trim(value.ATA) != "") ? " " : "none";
+                      leg.Carrier = $.trim($.trim(value.CarrierCode) + " " + $.trim(value.CarrierName));
+                      leg.CarrierNumber = $.trim(value.CarrierNumber);
+                      leg.CarrierWebSite = $.trim(value.CarrierWebSite) == "" ? "" : ($.trim(value.CarrierWebSite).indexOf("http://") == -1 ? "http://" + $.trim(value.CarrierWebSite) : $.trim(value.CarrierWebSite));
+                      leg.CarrierHasWebSite = $.trim(value.CarrierWebSite) == "" ? "" : $.trim(value.CarrierWebSite);
+                      leg.RoutingImageSRC = "images/Routing.I.png";
+                      leg.CarrierName = $.trim(value.CarrierName);
+
+                      if ($.trim(leg.FromDate) == "") {
+                          leg.FromDate = "No Date";
+                          leg.FromDateColor = "#6E7172";
+                      }
+
+                      if ($.trim(leg.ToDate) == "") {
+                          leg.ToDate = "No Date";
+                          leg.ToDateColor = "#6E7172";
+                      }
+
+                      if ($.trim(leg.CarrierName) == "") {
+                          leg.DisplayCarrier = "none";
+                      }
+
+                      if ($.trim(leg.FromDate) == "No Date" && $.trim(leg.ToDate) == "No Date") {
+                          leg.DisplayAcutalEstimateAera = "none";
+                      }
+
+                      RoutingLegs.push(leg);
+                  });
+              }
+
+              $("#RoutingListBox").kendoListView(
+              {
+                  dataSource: { data: RoutingLegs },
+                  template: kendo.template($("#RoutingListBoxItemDataTemplate").html())
+              });  
+
+
+
+              //return RoutingLegs;
+          }
+
+          jQuery.BuildRoutingListBox = (function () {
+
+
+
+          });
+
+
+
+          function onRoutingViewShow(e) {
+              $("#companyLogo").attr('src', $.LogoSource);
+              var scroller = e.view.scroller;
+              scroller.reset();
+
+              ko.applyBindings($.CurrentEntityList);
+
+              // $.BuildRoutingListBox();
+
+              BuildRoutingLegs($.CurrentEntityPM);
+          }
+
+          </script>
+
+    </body>
+    </html>

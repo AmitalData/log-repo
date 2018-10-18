@@ -1,0 +1,267 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E177D993-3117-420C-A59B-88F5398019ED}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Logitude.AmitalMessaging</RootNamespace>
+    <AssemblyName>Logitude.AmitalMessaging</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'All Projects|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\All Projects\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|AnyCPU'">
+    <OutputPath>bin\None\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Customs\CustomFile\CargoQueryContext.cs" />
+    <Compile Include="Customs\CustomFile\CellFile\LOGICELLFILE.cs">
+      <DependentUpon>LOGICELLFILE.xsd</DependentUpon>
+      <SubType>code</SubType>
+    </Compile>
+    <Compile Include="Customs\CustomFile\CFIDATA.cs">
+      <DependentUpon>CFIData.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Customs\CustomFile\CFIPACKS.cs">
+      <DependentUpon>CFIPACKS.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Customs\CustomFile\Class1.cs" />
+    <Compile Include="Customs\CustomFile\CommDecFile\LOGICOMMDEC.cs">
+      <DependentUpon>LOGICOMMDEC.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Customs\CustomFile\CustomCertificatesRequest.cs">
+      <DependentUpon>CustomCertificatesRequest.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Customs\CustomFile\CustomCertificatesResponse.cs">
+      <DependentUpon>CustomCertificatesResponse.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Customs\CustomFile\LOGIDOCS.cs">
+      <DependentUpon>LOGIDOCS.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Customs\CustomFile\LOGIPAYHAND.cs">
+      <DependentUpon>LOGIPAYHAND.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Customs\CustomFile\CustomFileCreditRequest.cs">
+      <DependentUpon>CustomFileCreditRequest.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Customs\CustomFile\CustomFileCreditResponse.cs">
+      <DependentUpon>CustomFileCreditResponse.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Customs\CustomFile\CustomsAGTRep.cs">
+      <DependentUpon>CustomsAGTRep.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Customs\CustomFile\LOGICUSTFILE.cs">
+      <DependentUpon>LOGICUSTFILE.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Customs\CustomFile\LOGIENTRY.cs">
+      <DependentUpon>LOGIENTRY.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Customs\CustomFile\LOGISCHEDULER.cs">
+      <DependentUpon>LOGISCHEDULER.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Customs\CustomFile\CourierFile\LOGICOURIER.cs">
+      <DependentUpon>LOGICOURIER.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Customs\CustomFile\Sivug\LOGISIVUG.cs">
+      <DependentUpon>LOGISIVUG.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Customs\CustomFile\LOGITSRUFA.cs">
+      <DependentUpon>LOGITSRUFA.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Customs\CustomFile\Logitudecustomsdraft.cs">
+      <DependentUpon>Logitudecustomsdraft.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Customs\CustomFile\LogitudePaymentOrder.cs">
+      <DependentUpon>LogitudePaymentOrder.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Customs\CustomFile\ReleaseFile\LOGIBONDREL.cs">
+      <DependentUpon>LOGIBONDREL.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Infrastructure\FuStatus\gfusts.cs">
+      <DependentUpon>gfusts.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Infrastructure\SystemTable\Customs_table.cs">
+      <DependentUpon>Customs_table.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Infrastructure\Transmission\GenrateTrasmission.cs" />
+    <Compile Include="Infrastructure\Transmission\Transmission.cs">
+      <DependentUpon>Transmission.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\CachingXmlSerializerFactory.cs" />
+    <Compile Include="Utils\XmlGenericUtil.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Customs\CustomFile\CellFile\LOGICELLFILE.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Customs\CustomFile\CFIDATA.dtd">
+      <SubType>Component</SubType>
+    </None>
+    <None Include="Customs\CustomFile\CFIData.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Customs\CustomFile\CFIPACKS.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Customs\CustomFile\CellFile\LOGICELLFILE.dtd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Customs\CustomFile\CommDecFile\LOGICOMMDEC.dtd" />
+    <None Include="Customs\CustomFile\CommDecFile\LOGICOMMDEC.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Customs\CustomFile\CustomCertificatesRequest.dtd" />
+    <None Include="Customs\CustomFile\CustomCertificatesRequest.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Customs\CustomFile\CustomCertificatesResponse.dtd" />
+    <None Include="Customs\CustomFile\CustomCertificatesResponse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Customs\CustomFile\LOGIDOCS.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Customs\CustomFile\LOGISCHEDULER.dtd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Customs\CustomFile\LOGIPAYHAND.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Customs\CustomFile\LOGIPAYHAND.dtd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Customs\CustomFile\LOGISCHEDULER.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Customs\CustomFile\LOGIDOCS.dtd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Customs\CustomFile\CourierFile\LOGICOURIER.dtd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Customs\CustomFile\CourierFile\LOGICOURIER.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Customs\CustomFile\ReleaseFile\LOGIBONDREL.dtd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Customs\CustomFile\LOGIENTRY.dtd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Customs\CustomFile\CustomsAGTRep.dtd" />
+    <None Include="Customs\CustomFile\CustomsAGTRep.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Customs\CustomFile\LOGIENTRY.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Customs\CustomFile\LOGITSRUFA.dtd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Customs\CustomFile\LOGITSRUFA.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Customs\CustomFile\LogitudePaymentOrder.dtd" />
+    <None Include="Customs\CustomFile\CustomFileCreditRequest.dtd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Customs\CustomFile\CustomFileCreditRequest.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Customs\CustomFile\CustomFileCreditResponse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Customs\CustomFile\LOGICUSTFILE.dtd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Customs\CustomFile\LOGICUSTFILE.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Customs\CustomFile\Sivug\LOGISIVUG.dtd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Customs\CustomFile\Sivug\LOGISIVUG.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Customs\CustomFile\Logitudecustomsdraft.dtd" />
+    <None Include="Customs\CustomFile\Logitudecustomsdraft.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Customs\CustomFile\LogitudePaymentOrder.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Customs\CustomFile\CFIPACKS.dtd" />
+    <None Include="Customs\CustomFile\ReleaseFile\LOGIBONDREL.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Infrastructure\FuStatus\gfusts.dtd" />
+    <None Include="Infrastructure\FuStatus\gfusts.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Infrastructure\SystemTable\Customs_table.dtd" />
+    <None Include="Infrastructure\SystemTable\Customs_table.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Infrastructure\Transmission\Transmission.dtd" />
+    <None Include="Infrastructure\Transmission\Transmission.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Customs\CustomFile\CustomFileCreditResponse.dtd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="HowToBuildCsFromXsd.txt" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

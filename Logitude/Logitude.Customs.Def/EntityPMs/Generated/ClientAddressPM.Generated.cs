@@ -1,0 +1,1006 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Customs.Def.Validators;
+  
+namespace Logitude.Customs.Def.EntityPMs
+{
+   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class ClientAddressPM : EntityPM
+   {
+   	  private string clientId ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ClientId  
+	   {
+	    
+	     get
+		{
+		   return clientId;
+		 }
+		 set
+		 {
+		   if(clientId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ClientId",OldValue=clientId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   clientId=value;
+		   }
+			
+		 }
+	   }
+	  private string addressId ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AddressId  
+	   {
+	    
+	     get
+		{
+		   return addressId;
+		 }
+		 set
+		 {
+		   if(addressId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AddressId",OldValue=addressId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   addressId=value;
+		   }
+			
+		 }
+	   }
+	  private int tenant ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+	  private string contactStateCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContactStateCode  
+	   {
+	    
+	     get
+		{
+		   return contactStateCode;
+		 }
+		 set
+		 {
+		   if(contactStateCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContactStateCode",OldValue=contactStateCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   contactStateCode=value;
+		   }
+			
+		 }
+	   }
+	  private string addressTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AddressTypeCode  
+	   {
+	    
+	     get
+		{
+		   return addressTypeCode;
+		 }
+		 set
+		 {
+		   if(addressTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AddressTypeCode",OldValue=addressTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   addressTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string addressPurposeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AddressPurposeCode  
+	   {
+	    
+	     get
+		{
+		   return addressPurposeCode;
+		 }
+		 set
+		 {
+		   if(addressPurposeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AddressPurposeCode",OldValue=addressPurposeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   addressPurposeCode=value;
+		   }
+			
+		 }
+	   }
+	  private bool isPalestinianCity ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsPalestinianCity  
+	   {
+	    
+	     get
+		{
+		   return isPalestinianCity;
+		 }
+		 set
+		 {
+		   if(isPalestinianCity != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsPalestinianCity",OldValue=isPalestinianCity,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isPalestinianCity=value;
+		   }
+			
+		 }
+	   }
+	  private bool isHebrewAddress ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsHebrewAddress  
+	   {
+	    
+	     get
+		{
+		   return isHebrewAddress;
+		 }
+		 set
+		 {
+		   if(isHebrewAddress != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsHebrewAddress",OldValue=isHebrewAddress,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isHebrewAddress=value;
+		   }
+			
+		 }
+	   }
+	  private string branchName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string BranchName  
+	   {
+	    
+	     get
+		{
+		   return branchName;
+		 }
+		 set
+		 {
+		   if(branchName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BranchName",OldValue=branchName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   branchName=value;
+		   }
+			
+		 }
+	   }
+	  private string contactIdentifier ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContactIdentifier  
+	   {
+	    
+	     get
+		{
+		   return contactIdentifier;
+		 }
+		 set
+		 {
+		   if(contactIdentifier != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContactIdentifier",OldValue=contactIdentifier,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   contactIdentifier=value;
+		   }
+			
+		 }
+	   }
+	  private string contactFirstName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContactFirstName  
+	   {
+	    
+	     get
+		{
+		   return contactFirstName;
+		 }
+		 set
+		 {
+		   if(contactFirstName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContactFirstName",OldValue=contactFirstName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   contactFirstName=value;
+		   }
+			
+		 }
+	   }
+	  private string contactLastName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContactLastName  
+	   {
+	    
+	     get
+		{
+		   return contactLastName;
+		 }
+		 set
+		 {
+		   if(contactLastName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContactLastName",OldValue=contactLastName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   contactLastName=value;
+		   }
+			
+		 }
+	   }
+	  private string contactRoleTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContactRoleTypeCode  
+	   {
+	    
+	     get
+		{
+		   return contactRoleTypeCode;
+		 }
+		 set
+		 {
+		   if(contactRoleTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContactRoleTypeCode",OldValue=contactRoleTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   contactRoleTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string authorizedSignerPermit1 ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AuthorizedSignerPermit1  
+	   {
+	    
+	     get
+		{
+		   return authorizedSignerPermit1;
+		 }
+		 set
+		 {
+		   if(authorizedSignerPermit1 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AuthorizedSignerPermit1",OldValue=authorizedSignerPermit1,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   authorizedSignerPermit1=value;
+		   }
+			
+		 }
+	   }
+	  private string authorizedSignerPermit2 ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AuthorizedSignerPermit2  
+	   {
+	    
+	     get
+		{
+		   return authorizedSignerPermit2;
+		 }
+		 set
+		 {
+		   if(authorizedSignerPermit2 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AuthorizedSignerPermit2",OldValue=authorizedSignerPermit2,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   authorizedSignerPermit2=value;
+		   }
+			
+		 }
+	   }
+	  private string authorizedSignerPermit3 ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AuthorizedSignerPermit3  
+	   {
+	    
+	     get
+		{
+		   return authorizedSignerPermit3;
+		 }
+		 set
+		 {
+		   if(authorizedSignerPermit3 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AuthorizedSignerPermit3",OldValue=authorizedSignerPermit3,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   authorizedSignerPermit3=value;
+		   }
+			
+		 }
+	   }
+	  private string localCityCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LocalCityCode  
+	   {
+	    
+	     get
+		{
+		   return localCityCode;
+		 }
+		 set
+		 {
+		   if(localCityCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LocalCityCode",OldValue=localCityCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   localCityCode=value;
+		   }
+			
+		 }
+	   }
+	  private string localSecondLine ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LocalSecondLine  
+	   {
+	    
+	     get
+		{
+		   return localSecondLine;
+		 }
+		 set
+		 {
+		   if(localSecondLine != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LocalSecondLine",OldValue=localSecondLine,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   localSecondLine=value;
+		   }
+			
+		 }
+	   }
+	  private string localStreetName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LocalStreetName  
+	   {
+	    
+	     get
+		{
+		   return localStreetName;
+		 }
+		 set
+		 {
+		   if(localStreetName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LocalStreetName",OldValue=localStreetName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   localStreetName=value;
+		   }
+			
+		 }
+	   }
+	  private string localHouseLetter ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LocalHouseLetter  
+	   {
+	    
+	     get
+		{
+		   return localHouseLetter;
+		 }
+		 set
+		 {
+		   if(localHouseLetter != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LocalHouseLetter",OldValue=localHouseLetter,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   localHouseLetter=value;
+		   }
+			
+		 }
+	   }
+	  private string localEntrance ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LocalEntrance  
+	   {
+	    
+	     get
+		{
+		   return localEntrance;
+		 }
+		 set
+		 {
+		   if(localEntrance != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LocalEntrance",OldValue=localEntrance,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   localEntrance=value;
+		   }
+			
+		 }
+	   }
+	  private string englishCountryCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string EnglishCountryCode  
+	   {
+	    
+	     get
+		{
+		   return englishCountryCode;
+		 }
+		 set
+		 {
+		   if(englishCountryCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EnglishCountryCode",OldValue=englishCountryCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   englishCountryCode=value;
+		   }
+			
+		 }
+	   }
+	  private string englishSubCountryCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string EnglishSubCountryCode  
+	   {
+	    
+	     get
+		{
+		   return englishSubCountryCode;
+		 }
+		 set
+		 {
+		   if(englishSubCountryCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EnglishSubCountryCode",OldValue=englishSubCountryCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   englishSubCountryCode=value;
+		   }
+			
+		 }
+	   }
+	  private string englishCityName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string EnglishCityName  
+	   {
+	    
+	     get
+		{
+		   return englishCityName;
+		 }
+		 set
+		 {
+		   if(englishCityName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EnglishCityName",OldValue=englishCityName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   englishCityName=value;
+		   }
+			
+		 }
+	   }
+	  private string englishMainAddressLine ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string EnglishMainAddressLine  
+	   {
+	    
+	     get
+		{
+		   return englishMainAddressLine;
+		 }
+		 set
+		 {
+		   if(englishMainAddressLine != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EnglishMainAddressLine",OldValue=englishMainAddressLine,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   englishMainAddressLine=value;
+		   }
+			
+		 }
+	   }
+	  private string englishPostalCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string EnglishPostalCode  
+	   {
+	    
+	     get
+		{
+		   return englishPostalCode;
+		 }
+		 set
+		 {
+		   if(englishPostalCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EnglishPostalCode",OldValue=englishPostalCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   englishPostalCode=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? localApartment ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? LocalApartment  
+	   {
+	    
+	     get
+		{
+		   return localApartment;
+		 }
+		 set
+		 {
+		   if(localApartment != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LocalApartment",OldValue=localApartment,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   localApartment=value;
+		   }
+			
+		 }
+	   }
+	  private string localPOBox ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LocalPOBox  
+	   {
+	    
+	     get
+		{
+		   return localPOBox;
+		 }
+		 set
+		 {
+		   if(localPOBox != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LocalPOBox",OldValue=localPOBox,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   localPOBox=value;
+		   }
+			
+		 }
+	   }
+	  private string localPostalCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LocalPostalCode  
+	   {
+	    
+	     get
+		{
+		   return localPostalCode;
+		 }
+		 set
+		 {
+		   if(localPostalCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LocalPostalCode",OldValue=localPostalCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   localPostalCode=value;
+		   }
+			
+		 }
+	   }
+	  private string localHouseNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LocalHouseNumber  
+	   {
+	    
+	     get
+		{
+		   return localHouseNumber;
+		 }
+		 set
+		 {
+		   if(localHouseNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LocalHouseNumber",OldValue=localHouseNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   localHouseNumber=value;
+		   }
+			
+		 }
+	   }
+
+	   private List<ClientsAddressCommTypePM> clientsAddressCommTypes;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("ClientAddressClientsAddressCommType", "ClientId, AddressId","ClientId, AddressId")]
+	   [DataMember]
+	   public virtual List<ClientsAddressCommTypePM> ClientsAddressCommTypes  
+	   {
+	        get
+             {
+                 if (clientsAddressCommTypes == null)
+                 {
+                     clientsAddressCommTypes = new List<ClientsAddressCommTypePM>();
+                 }
+                 return clientsAddressCommTypes;
+              }
+             set { clientsAddressCommTypes = value; }
+	    }
+		   
+	   private List<ClientsAddressCommTypePM>  deletedClientsAddressCommTypes;
+	   public virtual List<ClientsAddressCommTypePM> DeletedClientsAddressCommTypes  
+	   {
+	        get
+             {
+                 if ( deletedClientsAddressCommTypes == null)
+                 {
+                      deletedClientsAddressCommTypes = new List<ClientsAddressCommTypePM>();
+                 }
+                 return  deletedClientsAddressCommTypes;
+              }
+             set {  deletedClientsAddressCommTypes = value; }
+	    }
+	  	  private string contactStateName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContactStateName  
+	   {
+	    
+	     get
+		{
+		   return contactStateName;
+		 }
+		 set
+		 {
+		   if(contactStateName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContactStateName",OldValue=contactStateName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   contactStateName=value;
+		   }
+			
+		 }
+	   }
+	  private string addressTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AddressTypeName  
+	   {
+	    
+	     get
+		{
+		   return addressTypeName;
+		 }
+		 set
+		 {
+		   if(addressTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AddressTypeName",OldValue=addressTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   addressTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private string addressPurposeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AddressPurposeName  
+	   {
+	    
+	     get
+		{
+		   return addressPurposeName;
+		 }
+		 set
+		 {
+		   if(addressPurposeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AddressPurposeName",OldValue=addressPurposeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   addressPurposeName=value;
+		   }
+			
+		 }
+	   }
+	  private string contactRoleTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContactRoleTypeName  
+	   {
+	    
+	     get
+		{
+		   return contactRoleTypeName;
+		 }
+		 set
+		 {
+		   if(contactRoleTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContactRoleTypeName",OldValue=contactRoleTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   contactRoleTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private string authorizedSignerPermit1Name ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AuthorizedSignerPermit1Name  
+	   {
+	    
+	     get
+		{
+		   return authorizedSignerPermit1Name;
+		 }
+		 set
+		 {
+		   if(authorizedSignerPermit1Name != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AuthorizedSignerPermit1Name",OldValue=authorizedSignerPermit1Name,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   authorizedSignerPermit1Name=value;
+		   }
+			
+		 }
+	   }
+	  private string authorizedSignerPermit2Name ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AuthorizedSignerPermit2Name  
+	   {
+	    
+	     get
+		{
+		   return authorizedSignerPermit2Name;
+		 }
+		 set
+		 {
+		   if(authorizedSignerPermit2Name != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AuthorizedSignerPermit2Name",OldValue=authorizedSignerPermit2Name,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   authorizedSignerPermit2Name=value;
+		   }
+			
+		 }
+	   }
+	  private string authorizedSignerPermit3Name ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AuthorizedSignerPermit3Name  
+	   {
+	    
+	     get
+		{
+		   return authorizedSignerPermit3Name;
+		 }
+		 set
+		 {
+		   if(authorizedSignerPermit3Name != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AuthorizedSignerPermit3Name",OldValue=authorizedSignerPermit3Name,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   authorizedSignerPermit3Name=value;
+		   }
+			
+		 }
+	   }
+	  private string localCityName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LocalCityName  
+	   {
+	    
+	     get
+		{
+		   return localCityName;
+		 }
+		 set
+		 {
+		   if(localCityName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LocalCityName",OldValue=localCityName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   localCityName=value;
+		   }
+			
+		 }
+	   }
+	  private string englishCountryName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string EnglishCountryName  
+	   {
+	    
+	     get
+		{
+		   return englishCountryName;
+		 }
+		 set
+		 {
+		   if(englishCountryName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EnglishCountryName",OldValue=englishCountryName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   englishCountryName=value;
+		   }
+			
+		 }
+	   }
+	  private string englishSubCountryName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string EnglishSubCountryName  
+	   {
+	    
+	     get
+		{
+		   return englishSubCountryName;
+		 }
+		 set
+		 {
+		   if(englishSubCountryName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EnglishSubCountryName",OldValue=englishSubCountryName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   englishSubCountryName=value;
+		   }
+			
+		 }
+	   }
+	  private string customAddressCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomAddressCode  
+	   {
+	    
+	     get
+		{
+		   return customAddressCode;
+		 }
+		 set
+		 {
+		   if(customAddressCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomAddressCode",OldValue=customAddressCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customAddressCode=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

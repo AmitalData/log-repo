@@ -1,0 +1,212 @@
+﻿
+<table>
+    <tr style="height:1px;" *ngIf="ValidationErrorsList && ValidationErrorsList.length > 0">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr style="height: 1px;">
+        <td>
+            <table>
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 1px;">
+                        <button class="Button" (click)="AddPackageClicked()">Add Package</button>
+                    </td>
+
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 5px;">
+        <td></td>
+    </tr>
+
+    <tr>
+        <td>
+            <div class="MediaFill">
+                <div class="SimpleGridView" *ngIf="IsResourcesReady">
+                    <div class="SimpleGridViewHeader">
+                        <table>
+                            <tr>
+                                <td style="width: 20px; min-width: 20px; max-width: 20px;">
+                                    <div></div>
+                                </td>
+                                <td style="width: 95px; min-width: 95px; max-width: 95px;">{{'ShipmentOrderPackage.F.Quantity' | TextCodeTranslationPipe}}</td>
+                                <td style="width: 150px; min-width: 150px; max-width: 150px;" *ngIf="IsPackageTypeVisible">{{'ShipmentOrderPackage.F.PackageTypeId' | TextCodeTranslationPipe}}</td>
+                                <td style="width: 230px; min-width: 230px; max-width: 230px;">Dimensions (L-W-H)</td>
+                                <td style="width: 95px; min-width: 95px; max-width: 95px;">Volume</td>
+                                <td style="width: 120px; min-width: 120px; max-width: 120px;">Volumetric Weight</td>
+                                <td style="width: 95px; min-width: 95px; max-width: 95px;">Gross Weight</td>
+                                <td class="LastChild">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="SimpleGridViewBody">
+                        <table>
+                            <tr class="SimpleGridViewRow" *ngFor="let item of ItemsSource">
+
+                                <!-- Icon -->
+                                <td class="GridViewCell" style="width: 20px; min-width: 20px; max-width: 20px; position: relative;">
+                                    <img src="./Images/CellIcons/Package.png" class="CenterCenter" />
+                                </td>
+
+                                <!-- Quantity -->
+                                <td class="CellStretched" style="width: 95px; min-width: 95px; max-width: 95px;">
+                                    <LogTextBox [ObjectFieldName]="'Quantity'" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true" [Text]="item.Quantity" (HasValue)="item.HasValue($event)"></LogTextBox>
+                                </td>
+
+                                <!-- PackageTypeId -->
+                                <td class="CellStretched" style="width: 150px; min-width: 150px; max-width: 150px;" *ngIf="IsPackageTypeVisible">
+                                    <LogLov [ObjectFieldName]="'PackageTypeId'"
+                                            [SelectedValue]="item.PackageTypeId"
+                                            [ObjectTableName]="item.ObjectTableName"
+                                            [DataContext]="item.DataContext"
+                                            [LookUpTableName]="'PackageType'"
+                                            [DependencyFilter2Value]="false"
+                                            [HideColumns]="true">
+                                    </LogLov>
+                                </td>
+
+                                <!-- Dimensions -->
+                                <td class="CellStretched" style="width: 230px; min-width: 230px; max-width: 230px;">
+                                    <table style="height: 22px;">
+                                        <tr>
+                                            <td>
+                                                <LogTextBox [ObjectFieldName]="'Length'" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true" [Text]="item.Length" [DisableZeroPadding]="true"></LogTextBox>
+                                            </td>
+
+                                            <td style="width: 2px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td>
+                                                <LogTextBox [ObjectFieldName]="'Width'" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true" [Text]="item.Width" [DisableZeroPadding]="true"></LogTextBox>
+                                            </td>
+
+                                            <td style="width: 2px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td>
+                                                <LogTextBox [ObjectFieldName]="'Height'" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true" [Text]="item.Height" [DisableZeroPadding]="true"></LogTextBox>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+
+                                <!-- Volume -->
+                                <td class="CellStretched" style="width: 95px; min-width: 95px; max-width: 95px;">
+                                    <LogTextBox [ObjectFieldName]="'Volume'" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true" [Text]="item.Volume"></LogTextBox>
+                                </td>
+
+                                <!-- VolumetricWeight -->
+                                <td class="CellDisabled" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right;">
+                                    {{item.VolumetricWeight | NumbersPipe:'N3'}}
+                                </td>
+
+                                <!-- GrossWeight -->
+                                <td class="CellStretched" style="width: 95px; min-width: 95px; max-width: 95px;">
+                                    <LogTextBox (LostFocus)="item.OnGrossWeightLostFocus($event)" [ObjectFieldName]="'GrossWeight'" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true" [Text]="item.GrossWeight"></LogTextBox>
+                                </td>
+
+                                <!-- Tools -->
+                                <td class="CellTools">
+                                    <span class="CellSeparator"></span>
+                                    <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeletePackage(item)"></IconButton>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="6">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="TabSummaryRounded" style="height: 80px;">
+        <td style="height: 80px;">
+            <div class="TabSummaryBody">
+                <table>
+                    <tr style="height: 1px;">
+                        <td class="TabSummaryTitle">Summary</td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <table *ngIf="IsResourcesReady">
+                                <tr>
+                                    <td style="width: 1px; padding-left: 20px;">
+                                        <div class="TabSummaryValue">{{BookingNumberOfPackages | NumbersPipe:'N0'}}</div>
+                                        <div class="TabSummaryLabel">{{'Shipment.F.BookingNumberOfPackages.Short' | TextCodeTranslationPipe}}</div>
+                                    </td>
+
+                                    <td style="width: 1px; padding-left: 20px;">
+                                        <div class="TabSummaryValue">{{OrderGrossWeight | NumbersPipe:'N3'}}</div>
+                                        <div class="TabSummaryLabel">{{GrossWeightLabel}}</div>
+                                    </td>
+
+                                    <td style="width: 1px; padding-left: 20px;">
+                                        <div class="TabSummaryValue">{{BookingVolume | NumbersPipe:'N3'}}</div>
+                                        <div class="TabSummaryLabel">{{VolumeLabel}}</div>
+                                    </td>
+
+                                    <td style="width: 1px; padding-left: 20px;">
+                                        <div class="TabSummaryValue">{{OrderVolumetricWeight | NumbersPipe:'N3'}}</div>
+                                        <div class="TabSummaryLabel">{{VolumetricWeightLabel}}</div>
+                                    </td>
+
+                                    <td style="width: 1px; padding-left: 20px;">
+                                        <div class="TabSummaryValue">{{OrderChargeableWeight | NumbersPipe:'N3'}}</div>
+                                        <div class="TabSummaryLabel">{{ChargeableWeightLabel}}</div>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

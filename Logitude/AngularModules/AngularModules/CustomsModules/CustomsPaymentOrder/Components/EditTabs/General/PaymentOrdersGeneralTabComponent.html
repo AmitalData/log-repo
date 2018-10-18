@@ -1,0 +1,622 @@
+﻿<style>
+    .NotesBox {
+        border: 1px solid gray;
+        border-radius: 5px;
+        padding: 2px 10px;
+        margin: 5px;
+        color: gray;
+        font-family: sans-serif;
+    }
+
+    .DisbleBox{
+        display: inline-block;
+        border: 1px solid #ffd800;
+        border-radius: 5px;
+        background: #faf5c0;
+        padding: 2px 10px;
+        margin: 5px;
+        color: gray;
+        font-family: sans-serif;
+     }
+
+</style>
+
+<table *ngIf="isTranslationLoaded">
+    <tr>
+        <td>
+            <fieldset [disabled]="!IsControlEnabled">
+                <div class="TableHolder">
+                    <table>
+                        <!--Disble Alert-->
+                        <tr class="FormFieldRow" *ngIf="IsErrorMessageVisibility">
+                            <td colspan="6">
+                                <table>
+                                    <tr class="FormFieldRow">
+                                        <td>
+                                            <div style="width: 100%; height:22px; text-align:center">
+                                                <div class="DisbleBox">
+                                                    {{'Customs.PaymentOrder.O.ClosedPaymentOrder'| TextCodeTranslationPipe}}
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td><div></div></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <!--General Fields & PaymentOrderLines -->
+                        <tr style="height: 140px;">
+                            <td style="width:600px;">
+                                <div style="width:600px;">
+                                    <table>
+                                        <tr style="height: 32px;">
+                                            <td style="width: 140px; ">
+                                                <LogLabel [ObjectFieldName]="'PaymentOrderTypeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td style="width: 140px;">
+                                                <LogLov [ObjectFieldName]="'PaymentOrderTypeCode'"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'Customs.PaymentOrderType'"
+                                                        [HideColumns]="true"
+                                                        [SelectedValue]="PaymentOrderTypeCode">
+                                                </LogLov>
+                                            </td>
+
+                                            <td><div style="width:10px"></div></td>
+
+                                            <td style="width: 140px;">
+                                                <LogLabel [ObjectFieldName]="'CustomerActivityTypeCode'" [ObjectTableName]="ObjectTableName"
+                                                          [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td style="width: 140px;">
+                                                <LogLov [ObjectFieldName]="'CustomerActivityTypeCode'"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'Customs.CustomerActivityType'"
+                                                        [HideColumns]="true"
+                                                        [SelectedValue]="CustomerActivityTypeCode">
+                                                </LogLov>
+                                            </td>
+                                        </tr>
+
+                                        <tr style="height: 32px;">
+                                            <td style="width: 140px;">
+                                                <LogLabel [ObjectFieldName]="'CustomerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td colspan="2" style="width: 150px;">
+                                                <div *ngIf="IsControlEnabled" style="width: 160px;">
+                                                    <LogLov [ObjectFieldName]="'CustomerId'"
+                                                            [ObjectTableName]="'ObjectTableName'"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'Card'"
+                                                            [SelectedValue]="CustomerId"
+                                                            [HideEdit]="!IsControlEnabled" [HideAdd]="!IsControlEnabled" [HideAddLink]="!IsControlEnabled" [HideColumns]="!IsControlEnabled">
+                                                    </LogLov>
+                                                </div>
+                                                <div *ngIf="!IsControlEnabled" style="width: 140px;">
+                                                    <LogLov [ObjectFieldName]="'CustomerId'"
+                                                            [ObjectTableName]="'ObjectTableName'"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'Card'"
+                                                            [SelectedValue]="CustomerId"
+                                                            [HideEdit]="!IsControlEnabled" [HideAdd]="!IsControlEnabled" [HideAddLink]="!IsControlEnabled" [HideColumns]="!IsControlEnabled">
+                                                    </LogLov>
+                                                </div>
+                                                <div *ngIf="!IsControlEnabled" style="width:10px"></div>
+                                            </td>
+
+                                            <!--<td><div style="width:10px"></div></td>-->
+
+                                            <td style="width: 140px;">
+                                                <LogLabel [ObjectFieldName]="'TotalSumToPay'" [ObjectTableName]="ObjectTableName"
+                                                          [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td style="width: 140px;">
+                                                <LogTextBox [ObjectFieldName]="'TotalSumToPay'" [ObjectTableName]="ObjectTableName"
+                                                            [HideColumns]="true" [DataContext]="DataContext" [AddCommasToNumbers]="true" [Text]="TotalSumToPay"></LogTextBox>
+
+                                            </td>
+                                        </tr>
+
+                                        <tr style="height: 32px;">
+                                            <td style="width: 140px;">
+                                                <LogLabel [ObjectFieldName]="'ImporterId'" [ObjectTableName]="ObjectTableName"
+                                                          [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td style="width: 140px;">
+                                                <LogLov [ObjectFieldName]="'ImporterId'"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'Customs.Client'"
+                                                        [HideColumns]="true"
+                                                        [DisplayMemberPath]="'FullName'"
+                                                        [SelectedValue]="ImporterId">
+                                                </LogLov>
+                                            </td>
+                                            <td><div style="width:10px"></div></td>
+
+                                            <td style="width: 140px;">
+                                                <LogLabel [ObjectFieldName]="'PaymentOrderLeftAmount'" [ObjectTableName]="ObjectTableName"
+                                                          [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td style="width: 140px;">
+                                                <LogTextBox [ObjectFieldName]="'PaymentOrderLeftAmount'" [ObjectTableName]="ObjectTableName"
+                                                            [HideColumns]="true" [DataContext]="DataContext" [AddCommasToNumbers]="true" [Text]="PaymentOrderLeftAmount"></LogTextBox>
+                                            </td>
+                                        </tr>
+
+                                        <tr style="height: 32px;">
+                                            <td style="width: 140px;">
+                                                <LogLabel [ObjectFieldName]="'PaymentProcessCode'" [ObjectTableName]="ObjectTableName"
+                                                          [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td style="width: 140px;">
+                                                <LogLov tabindex="1" [ObjectFieldName]="'PaymentProcessCode'"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'Customs.PaymentProcess'"
+                                                        [HideColumns]="true"
+                                                        [SelectedValue]="PaymentProcessCode">
+                                                </LogLov>
+                                            </td>
+                                            <td><div style="width:10px"></div></td>
+
+                                            <td style="width: 140px;">
+                                                <div style="width:120px; margin:5px">
+                                                    <ComboBox [ItemsSource]="AccountingSelectionFilterList" [Binding]="'Name'" [IsDisabled]="!IsControlEnabled"
+                                                              [SelectedItem]="SelectedAccountingFilter" (SelectedItemChanged)="SelectedAccountingFilter = $event"></ComboBox>
+                                                </div>
+                                            </td>
+
+                                            <td style="width: 140px;" >
+                                                <LogTextBox (LostFocus)="AccountingCustomFileLostFocusMethod($event)" [ObjectFieldName]="'AccountingCustomFile'" [ObjectTableName]="ObjectTableName"
+                                                            [HideColumns]="true" [DataContext]="DataContext" [Text]="AccountingCustomFile"></LogTextBox>
+                                            </td>
+                                            <!--<td style="width: 140px;" *ngIf="PaymentOrderSelectedLabel == 'AccountingCustomFile'" >
+                                                <LogTextBox (LostFocus)="AccountingCustomFileLostFocusMethod($event)" [ObjectFieldName]="'AccountingCustomFile'" [ObjectTableName]="ObjectTableName"
+                                                            [HideColumns]="true" [DataContext]="DataContext" [Text]="AccountingCustomFile" ></LogTextBox>
+                                            </td>-->
+                                            <!--<td style="width: 140px;" *ngIf="PaymentOrderSelectedLabel == 'PaymentOrderAccCard'" >
+                                                <LogTextBox [ObjectFieldName]="'PaymentOrderAccCard'" [ObjectTableName]="ObjectTableName"
+                                                            [HideColumns]="true" [DataContext]="DataContext" [Text]="PaymentOrderAccCard"></LogTextBox>
+                                            </td>-->
+                                            <td style="width: 20px; padding-right: 4px; padding-top: 3px;">
+                                                <div *ngIf="PaymentOrderSelectedLabel == 'AccountingCustomFile'" style="width: 18px; float: left; height:20px;">
+                                                    <img [ngStyle]="imgNgStyle" src="./Images/LOVSearch.png" (click)="OpenCustomFilesScreen()" title="Open Custom Files" />
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+                            </td>
+
+                            <td style="width:20px"><div></div></td>
+
+                            <td style="width:320px; height:140px">
+                                <div style="width:320px;">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <table>
+                                                    <tr style="height:140px">
+                                                        <td style="width:300px;">
+                                                            <div class="CellContent" style="bottom: 5px;padding:5px">
+                                                                <logitude-edit-grid GridWidth="100%"
+                                                                                    GridHeight="100%"
+                                                                                    [IsReadOnly]="true"
+                                                                                    [ItemSource]="LinesList">
+
+                                                                    <!-- ParagraphTypeCode -->
+                                                                    <log-column [header]="'Customs.PaymentOrderLine.F.ParagraphTypeCode' | TextCodeTranslationPipe"
+                                                                                [binding]="'ParagraphTypeCode'" [width]="'70'" [Alignment]="'right'">
+                                                                        <log-cell-template template="let item" #logcelltemplate>
+                                                                            <div class="TextTrimming" style="text-align:right">
+                                                                                <span>{{item.ParagraphTypeCode}}</span>
+                                                                            </div>
+                                                                        </log-cell-template>
+                                                                    </log-column>
+
+                                                                    <!-- ParagraphTypeName -->
+                                                                    <log-column [header]="'Customs.PaymentOrderLine.F.ParagraphTypeName' | TextCodeTranslationPipe"
+                                                                                [binding]="'ParagraphTypeName'" [width]="'110'" [Alignment]="'right'">
+                                                                        <log-cell-template template="let item" #logcelltemplate>
+                                                                            <div class="TextTrimming" style="text-align:right">
+                                                                                <span>{{item.ParagraphTypeName}}</span>
+                                                                            </div>
+                                                                        </log-cell-template>
+                                                                    </log-column>
+
+                                                                    <!-- Amount -->
+                                                                    <log-column [header]="'Customs.PaymentOrderLine.F.Amount' | TextCodeTranslationPipe"
+                                                                                [binding]="'Amount'" [width]="'100'" [Alignment]="'right'">
+                                                                        <log-cell-template template="let item" #logcelltemplate>
+                                                                            <div class="TextTrimming" style="text-align:right">
+                                                                                <span>{{item.Amount | NumbersPipe:'N1'}}</span>
+                                                                            </div>
+                                                                        </log-cell-template>
+                                                                    </log-column>
+
+                                                                </logitude-edit-grid>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+
+                                            </td>
+
+                                            <td><div style="width:10px"></div></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+
+                            <td><div></div></td>
+                        </tr>
+
+                        <tr style="height: 10px;"><td><div style="width: 15px;"></div></td></tr>
+
+                        <!-- PaymentOrderMethods -->
+                        <tr style="height: 180px;">
+                            <td colspan="6">
+                                <div>
+                                    <table>
+                                        <tr style="height: 30px">
+                                            <td class="TabTitleRow" style="width:350px">
+                                                {{'Customs.Declaration.O.PaymentMethod'| TextCodeTranslationPipe}}
+                                            </td>
+
+                                            <td> <div></div> </td>
+
+                                            <td style="height: 20px;padding: 5px;padding-bottom: 0px;">
+                                                <div>
+                                                    <IconButton [IsSmall]="true" [IsEnabled]="IsControlEnabled"
+                                                                [Name]="'Add'"
+                                                                (click)="AddPaymentOrderMethod()"
+                                                                style="float:left;"></IconButton>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr style="height: 150px; overflow: auto;">
+                                            <td colspan="6">
+                                                <div class="CellContent">
+                                                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [FooterTop]="FooterMethods"
+                                                                        [ItemSource]="MethodsList" [IsReadOnly]="!IsControlEnabled">
+                                                        <!-- TypeCode -->
+                                                        <log-column [header]="'Customs.PaymentOrderMethod.F.TypeCode' | TextCodeTranslationPipe"
+                                                                    [width]="'140'" [Alignment]="'right'" [binding]="'TypeCode'">
+                                                            <log-footer>
+                                                                <log-footer-template template="let item">
+                                                                    <div style="font-size: 12px; font-weight: bold; color:#25446C;">{{'Customs.PaymentOrder.O.Total' | TextCodeTranslationPipe}}</div>
+                                                                </log-footer-template>
+                                                            </log-footer>
+                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                    <span>{{item.TypeName}}</span>
+                                                                </div>
+                                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                                    <LogLov [ObjectFieldName]="'TypeCode'"
+                                                                            [ObjectTableName]="'Customs.PaymentOrderMethod'"
+                                                                            [DataContext]="item"
+                                                                            [HideColumns]="true"
+                                                                            [LookUpTableName]="'Customs.PaymentMethodType'"
+                                                                            (SelectedItemChanged)="item.SetLocalName($event,'TypeName')"
+                                                                            [SelectedValue]="item.TypeCode"
+                                                                            [FocusOnMe]="true">
+                                                                    </LogLov>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </log-column>
+
+                                                        <!-- Amount -->
+                                                        <log-column [width]="'110'" [Alignment]="'right'" [binding]="'Amount'"
+                                                                    [header]="'Customs.PaymentOrderMethod.F.Amount' | TextCodeTranslationPipe" >
+                                                            <log-footer>
+                                                                <log-footer-template template="let item">
+                                                                    <div style="font-size: 12px; font-weight: bold; color:#25446C;">{{MethodItemsAmountTotal | NumbersPipe:'N2'}}</div> 
+                                                                </log-footer-template>
+                                                            </log-footer>
+                                                            <log-cell-template template="let item" #logcelltemplate >
+                                                                <div style="width:100%;height:100%;">
+                                                                    <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                        <span>{{item.Amount | NumbersPipe:'N2'}}</span>
+                                                                    </div>
+                                                                    <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsEditMode">
+                                                                        <LogTextBox [ObjectFieldName]="'Amount'" [DataContext]="item" [InputType]="'number'" 
+                                                                                    [FocusOnMe]="true" (dblclick)="item.CalcAmountDifference()"
+                                                                                    [Text]="item.Amount" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                                    </div>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </log-column>
+
+                                                        <!-- BankCode -->
+                                                        <log-column [header]="'Customs.DeclarationPaymentMethod.F.BankCode' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="'right'" [binding]="'BankCode'">
+                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                                <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                    <span>{{item.InternalBankName}}</span>
+                                                                </div>
+                                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                                    <ComboBox [ItemsSource]="item.BanksList"
+                                                                              [SelectedItem]="item.SelectedBank"
+                                                                              (SelectedItemChanged)="item.SelectedBank = $event"
+                                                                              [Binding]="'Name'"></ComboBox>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </log-column>
+
+                                                        <!-- CustomerActivityType -->
+                                                        <log-column [header]="'Customs.PaymentOrderMethod.F.CustomerActivityTypeCode' | TextCodeTranslationPipe" [width]="'140'"
+                                                                    [Alignment]="'right'" [binding]="'CustomerActivityTypeCode'">
+                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                    <span>{{item.CustomerActivityTypeName}}</span>
+                                                                </div>
+                                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                                    <LogLov [ObjectFieldName]="'CustomerActivityTypeCode'"
+                                                                            [ObjectTableName]="'Customs.PaymentOrderMethod'"
+                                                                            [DataContext]="item"
+                                                                            [LookUpTableName]="'Customs.CustomerActivityType'"
+                                                                            (SelectedItemChanged)="item.SetLocalName($event,'CustomerActivityTypeName')"
+                                                                            [HideColumns]="true"
+                                                                            [FocusOnMe]="true"
+                                                                            [SelectedValue]="item.CustomerActivityTypeCode">
+                                                                    </LogLov>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </log-column>
+
+                                                        <!-- PaymentMethodStatus -->
+                                                        <log-column [header]="'Customs.PaymentOrderMethod.F.PaymentMethodStatusCode' | TextCodeTranslationPipe"
+                                                                    [width]="'140'" [Alignment]="'right'" [binding]="'PaymentMethodStatusCode'" [Editable]="false">
+                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                    <span>{{item.PaymentMethodStatusName}}</span>
+                                                                </div>
+                                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                                    <LogLov [ObjectFieldName]="'PaymentMethodStatusCode'"
+                                                                            [ObjectTableName]="'Customs.PaymentMethodStatus'"
+                                                                            [DataContext]="item"
+                                                                            [LookUpTableName]="'Customs.PaymentMethodStatus'"
+                                                                            (SelectedItemChanged)="item.SetLocalName($event,'PaymentMethodStatusName')"
+                                                                            [HideColumns]="true"
+                                                                            [FocusOnMe]="true"
+                                                                            [SelectedValue]="item.PaymentMethodStatusCode">
+                                                                    </LogLov>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </log-column>
+
+                                                        <!-- Delete Button-->
+                                                        <log-column [width]="'30'" [Alignment]="'right'">
+                                                            <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
+                                                                <span class="CellSeparator" style="float: right;"></span>
+                                                                <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteMethodsList(item)"
+                                                                            [IsEnabled]="!IsDisplayOnly"
+                                                                            style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
+                                                            </log-cell-template>
+                                                        </log-column>
+
+                                                    </logitude-edit-grid>
+                                                </div>
+                                            </td>
+
+                                            <td> <div></div> </td>
+                                        </tr>
+
+                                        <tr><td><div></div></td></tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr style="height: 10px;"><td><div style="width: 15px;"></div></td></tr>
+
+                        <!-- PaymentOrderProtestReasons -->
+                        <tr style="height: 180px;">
+                            <td colspan="6">
+                                <div>
+                                    <table>
+                                        <tr style="height: 30px">
+                                            <td class="TabTitleRow" style="width:350px">
+                                                {{'Customs.PaymentOrder.O.Protest'| TextCodeTranslationPipe}}
+                                            </td>
+
+                                            <td> <div></div> </td>
+
+                                            <td style="height: 20px;padding: 5px;padding-bottom: 0px;">
+                                                <div>
+                                                    <IconButton [IsSmall]="true" [IsEnabled]="IsControlEnabled"
+                                                                [Name]="'Add'"
+                                                                (click)="AddPaymentOrderProtestReason()"
+                                                                style="float:left;"></IconButton>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr style="height: 150px; overflow: auto;">
+                                            <td colspan="6">
+                                                <div class="CellContent">
+                                                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ProtestsList"
+                                                                        [FooterTop]="FooterProtests" [IsReadOnly]="!IsControlEnabled">
+                                                        <!-- ProtestType -->
+                                                        <log-column [header]="'Customs.PaymentOrderProtestReason.F.ProtestTypeCode' | TextCodeTranslationPipe"
+                                                                    [width]="'140'" [Alignment]="'right'" [binding]="'ProtestTypeName'">
+                                                            <log-footer>
+                                                                <log-footer-template template="let item">
+                                                                    <div style="font-size: 12px; font-weight: bold; color:#25446C;">{{'Customs.PaymentOrder.O.Total' | TextCodeTranslationPipe}}</div>
+                                                                </log-footer-template>
+                                                            </log-footer>
+                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                    <span>{{item.ProtestTypeName}}</span>
+                                                                </div>
+                                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                                    <LogLov [ObjectFieldName]="'ProtestTypeCode'"
+                                                                            [ObjectTableName]="'Customs.PaymentProtestType'"
+                                                                            [DataContext]="item"
+                                                                            [LookUpTableName]="'Customs.PaymentProtestType'"
+                                                                            (SelectedItemChanged)="SetProtestTypeLocalName(item,$event)"
+                                                                            [HideColumns]="true"
+                                                                            [FocusOnMe]="true"
+                                                                            [SelectedValue]="ProtestTypeCode">
+                                                                    </LogLov>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </log-column>
+
+                                                        <!-- InvoiceNumber -->
+                                                        <log-column [width]="'110'" [binding]="'InvoiceNumber'" [Alignment]="'right'"
+                                                                    [header]="'Customs.PaymentOrderProtestReason.F.InvoiceNumber' | TextCodeTranslationPipe">
+                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                                <div style="width:100%;height:100%;">
+                                                                    <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                        <span>{{item.InvoiceNumber | NumbersPipe:'N3'}}</span>
+                                                                    </div>
+                                                                    <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsEditMode">
+                                                                        <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'InvoiceNumber'" [InputType]="'double'" [DataContext]="item"
+                                                                                    [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                                    </div>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </log-column>
+
+                                                        <!-- GoodsItemClassification -->
+                                                        <log-column [header]="'Customs.PaymentOrderProtestReason.F.GoodsItemClassification' | TextCodeTranslationPipe"
+                                                                    [width]="'120'" [Alignment]="'right'" [binding]="'GoodsItemClassification'">
+                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                    <span>{{item.GoodsItemClassification}}</span>
+                                                                </div>
+                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsEditMode">
+                                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'GoodsItemClassification'" [InputType]="'double'" [DataContext]="item"
+                                                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </log-column>
+
+                                                        <!-- AmountInDispute -->
+                                                        <log-column [width]="'110'" [binding]="'AmountInDispute'" [Alignment]="'right'"
+                                                                    [header]="'Customs.PaymentOrderProtestReason.F.AmountInDispute' | TextCodeTranslationPipe">
+                                                            <log-footer>
+                                                                <log-footer-template template="let item">
+                                                                    <div style="font-size: 12px; font-weight: bold; color:#25446C;">{{AmountInDisputeTotal | NumbersPipe:'N2'}}</div>
+                                                                </log-footer-template>
+                                                            </log-footer>
+                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                                <div style="width:100%;height:100%;">
+                                                                    <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                        <span>{{item.AmountInDispute | NumbersPipe:'N2'}}</span>
+                                                                    </div>
+                                                                    <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsEditMode">
+                                                                        <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'AmountInDispute'" [InputType]="'double'" [DataContext]="item"
+                                                                                    [ObjectTableName]="ObjectTableName" [HideColumns]="true"
+                                                                                    (LostFocus)="CalcProtestItemsTotal($event)"></LogTextBox>
+                                                                    </div>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </log-column>
+
+                                                        <!-- CustomsAgentExplanation -->
+                                                        <log-column [width]="'110'" [Alignment]="'right'" [binding]="'CustomsAgentExplanation'"
+                                                                    [header]="'Customs.PaymentOrderProtestReason.F.CustomsAgentExplanation' | TextCodeTranslationPipe">
+                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                                <div style="width:100%;height:100%;">
+                                                                    <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                        <span>{{item.CustomsAgentExplanation}}</span>
+                                                                    </div>
+                                                                    <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsEditMode">
+                                                                        <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'CustomsAgentExplanation'" [DataContext]="item"
+                                                                                    [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                                    </div>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </log-column>
+
+                                                        <!-- Delete Button-->
+                                                        <log-column [width]="'30'" [Alignment]="'right'">
+                                                            <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
+                                                                <span class="CellSeparator" style="float: right;"></span>
+                                                                <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteProtestsList(item)"
+                                                                            [IsEnabled]="!IsDisplayOnly"
+                                                                            style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
+                                                            </log-cell-template>
+                                                        </log-column>
+
+                                                    </logitude-edit-grid>
+                                                </div>
+                                            </td>
+
+                                            <td> <div></div> </td>
+                                        </tr>
+
+                                        <tr><td><div></div></td></tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr><td><div></div></td></tr>
+
+                        <tr style="height: 15px;"><td><div style="width: 15px;"></div></td></tr>
+
+                        <!--Reason & InternalNotes -->
+                        <tr class="NotesBox" style="height: 90px;">
+                            <td colspan="5">
+                                <div style="width:510px;">
+                                    <table>
+                                        <tr style="height: 22px;">
+                                            <td style="width: 250px;">
+                                                <LogLabel [ObjectFieldName]="'Reason'" [ObjectTableName]="ObjectTableName"
+                                                          [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td><div style="width:5px"></div></td>
+
+                                            <td style="width: 250px;">
+                                                <LogLabel [ObjectFieldName]="'InternalNotes'" [ObjectTableName]="ObjectTableName"
+                                                          [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                        </tr>
+
+                                        <tr style="height: 55px;">
+                                            <td style="width: 250px;">
+                                                <div style="width: 100%; height:95%; text-align:center; border: 1px solid gray; border-radius: 5px;">
+                                                    <textarea [(ngModel)]="Reason" style="box-shadow:none; background: #faf5c0;" readonly="readonly"></textarea>
+                                                </div>
+                                            </td>
+
+                                            <td><div style="width:5px"></div></td>
+
+                                            <td style="width: 250px;">
+                                                <div style="width: 100%; height:95%; text-align:center; border: 1px solid gray; border-radius: 5px;">
+                                                    <textarea [(ngModel)]="InternalNotes" style="box-shadow:none; background: #faf5c0;"></textarea>
+                                                </div>
+                                            </td>
+
+                                        </tr>
+
+                                    </table>
+                                </div>
+                            </td>
+
+                            <td><div></div></td>
+                        </tr>
+
+                    </table>
+                </div>
+            </fieldset>
+        </td>
+    </tr>
+</table>

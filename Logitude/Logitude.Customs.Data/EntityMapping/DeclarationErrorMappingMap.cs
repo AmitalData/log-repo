@@ -1,0 +1,40 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data;
+ 
+namespace Logitude.Customs.Data.EntityMapping
+{
+ 
+    public class DeclarationErrorMappingMap : EntityTypeConfiguration<DeclarationErrorMapping>
+    {
+	    string dbms;
+        public DeclarationErrorMappingMap()
+        { 
+			  this.ToTable("DeclarationErrorMappings", "Customs");
+		
+		    this.HasKey(t => new { t.Id });
+	 
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.DocumentSectionCode).HasColumnName("DocumentSectionCode").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.TagID).HasColumnName("TagID").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Field).HasColumnName("Field").HasMaxLength(50).IsUnicode(false);
+
+            this.Property(t => t.Entity).HasColumnName("Entity").HasMaxLength(50).IsUnicode(false);
+
+            this.Property(t => t.Skip).HasColumnName("Skip");
+        }
+    }
+}
+	 

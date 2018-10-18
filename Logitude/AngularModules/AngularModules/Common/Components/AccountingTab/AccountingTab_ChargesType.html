@@ -1,0 +1,164 @@
+﻿
+<table>
+    <tr>
+        <td style="width: 410px;">
+            <table>
+                <tr style="height: 32px;">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width: 16px;">
+                                    <LogCheckBox [ObjectFieldName]="'AccountingVATSplit'" [Checked]="AccountingVATSplit" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                </td>
+
+                                <td class="Label" style="font-size: 13px; padding-left: 5px;">Split by VAT Type</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr style="height: 105px;">
+                    <td>
+                        <div class="MediaFill">
+                            <SectionBox>
+                                <!--<SectionHead>No Split</SectionHead>-->
+                                <SectionHead>
+                                    <table>
+                                        <tr>
+                                            <td>No Split</td>
+
+                                            <td style="width: 1px;">
+                                                <button *ngIf="IsExternalByProductsVisible" class="Button" (click)="ExternalByProductsClicked()">Advanced</button>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </SectionHead>
+                                <SectionBody>
+                                    <table>
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 170px;">
+                                                <LogLabel [ObjectFieldName]="'PayableDebitAccount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td *ngIf="!IsAccountingActivated">
+                                                <LogTextBox [ObjectFieldName]="'PayableDebitAccount'" [Text]="PayableDebitAccount" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            </td>
+                                            <td *ngIf="IsAccountingActivated">
+                                                <LogLov [ObjectFieldName]="'PayableDebitGLAcountId'"
+                                                        [SelectedValue]="PayableDebitGLAcountId"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'GLAccount'"
+                                                        [DependencyFilter1Value]="false"
+                                                        [DependencyFilter2Value]="'1'"  [QueryFilterItems]="PayableDebitGLAcountFilterItems">
+                                                </LogLov>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'ReceivableCreditAccount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td *ngIf="!IsAccountingActivated">
+                                                <LogTextBox [ObjectFieldName]="'ReceivableCreditAccount'" [Text]="ReceivableCreditAccount" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            </td>
+
+                                            <td *ngIf="IsAccountingActivated">
+                                                <LogLov [ObjectFieldName]="'ReceivableCreditGLAccountId'"
+                                                        [SelectedValue]="ReceivableCreditGLAccountId"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'GLAccount'" 
+                                                        [DependencyFilter1Value]="false"
+                                                        [DependencyFilter2Value]="'1'"  [QueryFilterItems]="ReceivableCreditGLAccountFilterItems">
+                                                </LogLov>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </SectionBody>
+                            </SectionBox>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div class="MediaFill">
+                            <SectionBox>
+                                <SectionHead>Split by VAT Type</SectionHead>
+                                <SectionBody>
+                                    <div class="SimpleGridView">
+                                        <div class="SimpleGridViewHeader">
+                                            <table>
+                                                <tr>
+                                                    <td style="width: 120px; min-width: 120px; max-width: 120px;">VAT Type</td>
+                                                    <td style="width: 130px; min-width: 130px; max-width: 130px;">Payable Debit Account</td>
+                                                    <td>Receivable Credit Account</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+
+                                        <div class="SimpleGridViewBody">
+                                            <table>
+                                                <tr class="SimpleGridViewRow" *ngFor="let item of ItemsSource">
+                                                    <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px;">
+                                                        {{item.VatTypeName}}
+                                                    </td>
+
+                                                    <td *ngIf="!item.IsAccountingActivated" class="GridViewCell" style="width: 130px; min-width: 130px; max-width: 130px;">
+                                                        <LogTextBox [ObjectFieldName]="'PayableDebitAccount'" [Text]="item.PayableDebitAccount" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
+                                                    </td>
+                                                    <td *ngIf="item.IsAccountingActivated" class="GridViewCell" style="width: 130px; min-width: 130px; max-width: 130px;" >
+                                                        <LogLov [ObjectFieldName]="'PayableDebitGLAcountId'"
+                                                                [SelectedValue]="item.PayableDebitGLAcountId"
+                                                                [ObjectTableName]="item.ObjectTableName"
+                                                                [DataContext]="item.DataContext"
+                                                                [LookUpTableName]="'GLAccount'"
+                                                                [DependencyFilter1Value]="'0'"
+                                                                [DependencyFilter2Value]="'1'"
+                                                                [HideColumns]="true">
+                                                        </LogLov>
+                                                    </td>
+                                                    <td *ngIf="!item.IsAccountingActivated" class="GridViewCell">
+                                                        <LogTextBox [ObjectFieldName]="'ReceivableCreditAccount'" [Text]="item.ReceivableCreditAccount" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
+                                                    </td>
+
+                                                    <td *ngIf="item.IsAccountingActivated" class="GridViewCell" >
+                                                        <LogLov [ObjectFieldName]="'ReceivableCreditGLAccountId'"
+                                                                [ObjectTableName]="item.ObjectTableName"
+                                                                [SelectedValue]="item.ReceivableCreditGLAccountId"
+                                                                [DataContext]="item.DataContext"
+                                                                [LookUpTableName]="'GLAccount'"
+                                                                [DependencyFilter1Value]="'0'"
+                                                                [DependencyFilter2Value]="'1'"
+                                                                [HideColumns]="true">
+                                                        </LogLov>
+                                                    </td>
+
+                                                </tr>
+
+                                                <tr>
+                                                    <td colspan="3">
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </SectionBody>
+                            </SectionBox>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+
+        <td>
+            <div></div>
+        </td>
+    </tr>
+</table>
+
+
+

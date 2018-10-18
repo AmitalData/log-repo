@@ -1,0 +1,12 @@
+﻿<!ELEMENT CUSTOMCREDIT_UL (CustomFileCredit*)>
+<!ELEMENT CustomFileCredit (LogitudeFile?, CreditStatus?, ErrorMessage?, BankCode?, PaymentDate?, HasException?, Succeeded?, ExceptionMessage?, BillingTaxAmount?, PaymentTime?)>
+<!ELEMENT LogitudeFile (#PCDATA)>
+<!ELEMENT CreditStatus (#PCDATA)>
+<!ELEMENT ErrorMessage (#PCDATA)>
+<!ELEMENT BankCode (#PCDATA)>
+<!ELEMENT PaymentDate (#PCDATA)>
+<!ELEMENT HasException (#PCDATA)>
+<!ELEMENT Succeeded (#PCDATA)>
+<!ELEMENT ExceptionMessage (#PCDATA)>
+<!ELEMENT BillingTaxAmount (#PCDATA)>
+<!ELEMENT PaymentTime (#PCDATA)>

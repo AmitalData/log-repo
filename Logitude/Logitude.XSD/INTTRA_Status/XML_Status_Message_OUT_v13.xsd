@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2011 sp1 (http://www.altova.com) by End User (free.org) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+		Publication Date: July 16, 2013 (revised from June 28, 2013) 
+		All Schema files in the INTTRA Specification are made available according to the terms defined by the INTTRA Customer XML Status Event IG, Version 1.3,  
+		and are Proprietary and Confidential Copyright (C) 2013 INTTRA, Inc. Version 1.3
+		</xs:documentation>
+	</xs:annotation>
+	<xs:element name="Message" type="MessageType"/>
+	<xs:complexType name="MessageTypeType">
+		<xs:annotation>
+			<xs:documentation>STATUS</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="MessageVersion" use="required">
+					<xs:simpleType>
+						<xs:restriction base="xs:float">
+							<xs:maxInclusive value="10"/>
+							<xs:enumeration value="1.0"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="DateTimeType">
+		<xs:annotation>
+			<xs:documentation>YYMMDDHHMM</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="xs:long">
+				<xs:attribute name="DateType" use="required">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="35"/>
+							<xs:enumeration value="Document"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="DateTimeType1">
+		<xs:annotation>
+			<xs:documentation>YYMMDDHHMM</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="xs:long">
+				<xs:attribute name="DateType" use="required">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="35"/>
+							<xs:enumeration value="StatusChange"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="DateTimeType2">
+		<xs:annotation>
+			<xs:documentation>YYMMDDHHMM</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="xs:long">
+				<xs:attribute name="DateType" use="required">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="35"/>
+							<xs:enumeration value="DepartureActual"/>
+							<xs:enumeration value="DepartureEstimated"/>
+							<xs:enumeration value="ArrivalActual"/>
+							<xs:enumeration value="ArrivalEstimated"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="PartnerIdentifierType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="Agency" use="required">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="35"/>
+							<xs:enumeration value="AssignedBySender"/>
+							<xs:enumeration value="AssignedByRecipient"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="PartnerIdentifierType1">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="Agency" use="required">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="35"/>
+							<xs:enumeration value="AssignedByCarrier"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="PartnerInformationType">
+		<xs:sequence>
+			<xs:element name="PartnerIdentifier" type="PartnerIdentifierType"/>
+		</xs:sequence>
+		<xs:attribute name="PartnerRole" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:maxLength value="35"/>
+					<xs:enumeration value="Sender"/>
+					<xs:enumeration value="Recipient"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="PartnerInformationType1">
+		<xs:sequence>
+			<xs:element name="PartnerIdentifier" type="PartnerIdentifierType1"/>
+		</xs:sequence>
+		<xs:attribute name="PartnerRole" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:maxLength value="35"/>
+					<xs:enumeration value="Carrier"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="PartiesType">
+		<xs:sequence>
+			<xs:element name="PartnerInformation" type="PartnerInformationType" minOccurs="2" maxOccurs="2"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PartiesType1">
+		<xs:sequence>
+			<xs:element name="PartnerInformation" type="PartnerInformationType1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HeaderType">
+		<xs:sequence>
+			<xs:element name="MessageType">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:restriction base="MessageTypeType">
+							<xs:minLength value="1"/>
+							<xs:maxLength value="35"/>
+						</xs:restriction>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="DocumentIdentifier">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="35"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="DateTime">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:restriction base="DateTimeType"/>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Parties" type="PartiesType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LocationCodeType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="Agency" use="required">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="35"/>
+							<xs:enumeration value="UN"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="LocationType">
+		<xs:sequence>
+			<xs:element name="LocationCode" minOccurs="0">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:restriction base="LocationCodeType">
+							<xs:minLength value="1"/>
+							<xs:maxLength value="35"/>
+						</xs:restriction>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="LocationName" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="256"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="LocationCountry" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="25"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="DateTime" minOccurs="0">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:restriction base="DateTimeType1"/>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="LocationType" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:maxLength value="35"/>
+					<xs:enumeration value="ActivityLocation"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="LocationType1">
+		<xs:sequence>
+			<xs:element name="LocationCode" minOccurs="0">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:restriction base="LocationCodeType">
+							<xs:minLength value="1"/>
+							<xs:maxLength value="35"/>
+						</xs:restriction>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="LocationName" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="256"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="LocationCountry" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="25"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="DateTime" minOccurs="0">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:restriction base="DateTimeType2"/>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="LocationType" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:maxLength value="35"/>
+					<xs:enumeration value="IntermediatePort"/>
+					<xs:enumeration value="PlaceOfDelivery"/>
+					<xs:enumeration value="PortOfLoading"/>
+					<xs:enumeration value="PortOfDischarge"/>
+					<xs:enumeration value="PlaceOfReceipt"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="EventLocationType">
+		<xs:sequence>
+			<xs:element name="Location" type="LocationType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReferenceInformationType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="ReferenceType" use="required">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="35"/>
+							<xs:enumeration value="BookingNumber"/>
+							<xs:enumeration value="BillOfLadingNumber"/>
+							<xs:enumeration value="ConsigneeOrderNumber"/>
+							<xs:enumeration value="ContractNumber"/>
+							<xs:enumeration value="ContractPartyReferenceNumber"/>
+							<xs:enumeration value="ConsigneeReferenceNumber"/>
+							<xs:enumeration value="FreightForwarderReference"/>
+							<xs:enumeration value="PurchaseOrderNumber"/>
+							<xs:enumeration value="ShipperIdentifyingNumber"/>
+							<xs:enumeration value="InttraBookingNumber"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="ShipmentCommentsType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="CommentType" use="required">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="70"/>
+							<xs:enumeration value="General"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="InstructionsType">
+		<xs:sequence>
+			<xs:element name="ShipmentComments">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:restriction base="ShipmentCommentsType">
+							<xs:minLength value="1"/>
+							<xs:maxLength value="70"/>
+						</xs:restriction>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TransportIdentificationType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="TransportIdentificationType" use="optional">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="35"/>
+							<xs:enumeration value="LloydsCode"/>
+							<xs:enumeration value="ShipRadioCallSignal"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="ConveyanceInformationType">
+		<xs:sequence>
+			<xs:element name="ConveyanceName" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="35"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="VoyageTripNumber" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="35"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="CarrierSCAC" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="4"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="TransportIdentification" minOccurs="0">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:restriction base="TransportIdentificationType">
+							<xs:minLength value="1"/>
+							<xs:maxLength value="9"/>
+						</xs:restriction>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TransportationDetailsType">
+		<xs:sequence>
+			<xs:element name="ConveyanceInformation" type="ConveyanceInformationType"/>
+			<xs:element name="Location" type="LocationType1" minOccurs="2" maxOccurs="5"/>
+		</xs:sequence>
+		<xs:attribute name="TransportStage" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:maxLength value="35"/>
+					<xs:enumeration value="Main"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="TransportMode">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:maxLength value="35"/>
+					<xs:enumeration value="Maritime"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="MessagePropertiesType">
+		<xs:sequence>
+			<xs:element name="EventCode">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="EventLocation" type="EventLocationType"/>
+			<xs:element name="ReferenceInformation" maxOccurs="30">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:restriction base="ReferenceInformationType">
+							<xs:minLength value="1"/>
+							<xs:maxLength value="35"/>
+						</xs:restriction>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Instructions" type="InstructionsType" minOccurs="0"/>
+			<xs:element name="TransportationDetails" type="TransportationDetailsType" minOccurs="0"/>
+			<xs:element name="Parties" type="PartiesType1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EquipmentIdentifierType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="LoadType" use="required">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="35"/>
+							<xs:enumeration value="Full"/>
+							<xs:enumeration value="Empty"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="EquipmentTypeType">
+		<xs:sequence>
+			<xs:element name="EquipmentTypeCode">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EquipmentDetailsType">
+		<xs:sequence>
+			<xs:element name="LineNumber">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="1"/>
+						<xs:maxInclusive value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="EquipmentIdentifier">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:restriction base="EquipmentIdentifierType">
+							<xs:minLength value="1"/>
+							<xs:maxLength value="17"/>
+						</xs:restriction>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="EquipmentType" type="EquipmentTypeType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageDetailsType">
+		<xs:sequence>
+			<xs:element name="EquipmentDetails" type="EquipmentDetailsType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageBodyType">
+		<xs:sequence>
+			<xs:element name="MessageProperties" type="MessagePropertiesType"/>
+			<xs:element name="MessageDetails" type="MessageDetailsType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageType">
+		<xs:sequence>
+			<xs:element name="Header" type="HeaderType"/>
+			<xs:element name="MessageBody" type="MessageBodyType"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

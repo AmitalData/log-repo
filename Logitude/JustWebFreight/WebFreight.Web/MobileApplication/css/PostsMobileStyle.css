@@ -1,0 +1,70 @@
+﻿
+
+
+.bodypost {
+    width:283px;
+    word-wrap: break-word;
+    font-family:Adventure Subtitles;
+    font-size: 15px;
+    color: #80888E;
+     /*position: absolute;*/
+     /*display: table-footer-group;*/
+    /*font-weight: bold;*/
+}
+
+
+.AreaLikep {
+    width:400px;
+    word-wrap: break-word;
+    font-family:Adventure Subtitles;
+    font-size: 15px;
+    color: #80888E;
+  
+}
+.km-flat li.km-state-active  .km-listview-link:after  {
+    color: #FFB4C9;
+    border-color: #FFB4C9;
+    margin-top: 0px;
+    margin-left: 0px;
+    border-style: solid;
+    border-width: 0px;
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+    width:0px;
+    height: 0px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+
+.LinkPost {
+    font-size: 15px;
+    font-family: "Lucida Sans Unicode";
+    color: #1E4AC0;
+    /*text-decoration:underline;*/
+}
+
+
+.DatePost {
+    /*font-weight: bold;*/
+    font-size: 14px;
+    font-family: "Lucida Sans";
+    color: #B5B6B5;
+}
+.CreatePost {
+    
+    font-size: 15px;
+    font-family: "Lucida Sans Unicode";
+    color: #2984D1;
+
+}
+
+a:active {color:#4cff00;}  /* selected link */
+
+.headerPost{
+    /*background:url("../images/imageheder.png") repeat-x ;*/
+    background-color:#2D83BA;
+}

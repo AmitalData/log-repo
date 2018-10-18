@@ -1,0 +1,555 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Customs.Def.Validators;
+  
+namespace Logitude.Customs.Def.EntityPMs
+{
+   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class InterfaceManagementPM : EntityPM
+   {
+   	  private string code ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Code  
+	   {
+	    
+	     get
+		{
+		   return code;
+		 }
+		 set
+		 {
+		   if(code != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Code",OldValue=code,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   code=value;
+		   }
+			
+		 }
+	   }
+	  private string dcaPrefixName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DcaPrefixName  
+	   {
+	    
+	     get
+		{
+		   return dcaPrefixName;
+		 }
+		 set
+		 {
+		   if(dcaPrefixName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DcaPrefixName",OldValue=dcaPrefixName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   dcaPrefixName=value;
+		   }
+			
+		 }
+	   }
+	  private string description ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Description  
+	   {
+	    
+	     get
+		{
+		   return description;
+		 }
+		 set
+		 {
+		   if(description != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Description",OldValue=description,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   description=value;
+		   }
+			
+		 }
+	   }
+	  private string inOut ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string InOut  
+	   {
+	    
+	     get
+		{
+		   return inOut;
+		 }
+		 set
+		 {
+		   if(inOut != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InOut",OldValue=inOut,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   inOut=value;
+		   }
+			
+		 }
+	   }
+	  private string defaultSendOptionsCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DefaultSendOptionsCode  
+	   {
+	    
+	     get
+		{
+		   return defaultSendOptionsCode;
+		 }
+		 set
+		 {
+		   if(defaultSendOptionsCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DefaultSendOptionsCode",OldValue=defaultSendOptionsCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   defaultSendOptionsCode=value;
+		   }
+			
+		 }
+	   }
+	  private int? defaultPriority ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? DefaultPriority  
+	   {
+	    
+	     get
+		{
+		   return defaultPriority;
+		 }
+		 set
+		 {
+		   if(defaultPriority != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DefaultPriority",OldValue=defaultPriority,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   defaultPriority=value;
+		   }
+			
+		 }
+	   }
+	  private bool allowRestore ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool AllowRestore  
+	   {
+	    
+	     get
+		{
+		   return allowRestore;
+		 }
+		 set
+		 {
+		   if(allowRestore != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AllowRestore",OldValue=allowRestore,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   allowRestore=value;
+		   }
+			
+		 }
+	   }
+	  private string searchFields ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SearchFields  
+	   {
+	    
+	     get
+		{
+		   return searchFields;
+		 }
+		 set
+		 {
+		   if(searchFields != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchFields",OldValue=searchFields,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   searchFields=value;
+		   }
+			
+		 }
+	   }
+	  private bool active ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool Active  
+	   {
+	    
+	     get
+		{
+		   return active;
+		 }
+		 set
+		 {
+		   if(active != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Active",OldValue=active,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   active=value;
+		   }
+			
+		 }
+	   }
+	  private string tenantSendOptionsCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TenantSendOptionsCode  
+	   {
+	    
+	     get
+		{
+		   return tenantSendOptionsCode;
+		 }
+		 set
+		 {
+		   if(tenantSendOptionsCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TenantSendOptionsCode",OldValue=tenantSendOptionsCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   tenantSendOptionsCode=value;
+		   }
+			
+		 }
+	   }
+	  private int? tenantPriority ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? TenantPriority  
+	   {
+	    
+	     get
+		{
+		   return tenantPriority;
+		 }
+		 set
+		 {
+		   if(tenantPriority != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TenantPriority",OldValue=tenantPriority,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   tenantPriority=value;
+		   }
+			
+		 }
+	   }
+	  private bool hasDefinition ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool HasDefinition  
+	   {
+	    
+	     get
+		{
+		   return hasDefinition;
+		 }
+		 set
+		 {
+		   if(hasDefinition != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HasDefinition",OldValue=hasDefinition,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   hasDefinition=value;
+		   }
+			
+		 }
+	   }
+	  private string tenantSendOptionName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TenantSendOptionName  
+	   {
+	    
+	     get
+		{
+		   return tenantSendOptionName;
+		 }
+		 set
+		 {
+		   if(tenantSendOptionName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TenantSendOptionName",OldValue=tenantSendOptionName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   tenantSendOptionName=value;
+		   }
+			
+		 }
+	   }
+	  private string defaultSendOptionName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DefaultSendOptionName  
+	   {
+	    
+	     get
+		{
+		   return defaultSendOptionName;
+		 }
+		 set
+		 {
+		   if(defaultSendOptionName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DefaultSendOptionName",OldValue=defaultSendOptionName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   defaultSendOptionName=value;
+		   }
+			
+		 }
+	   }
+	  private bool sendAsDual ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool SendAsDual  
+	   {
+	    
+	     get
+		{
+		   return sendAsDual;
+		 }
+		 set
+		 {
+		   if(sendAsDual != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SendAsDual",OldValue=sendAsDual,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   sendAsDual=value;
+		   }
+			
+		 }
+	   }
+	  private string responseInterfaceCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ResponseInterfaceCode  
+	   {
+	    
+	     get
+		{
+		   return responseInterfaceCode;
+		 }
+		 set
+		 {
+		   if(responseInterfaceCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ResponseInterfaceCode",OldValue=responseInterfaceCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   responseInterfaceCode=value;
+		   }
+			
+		 }
+	   }
+	  private string signatureTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SignatureTypeCode  
+	   {
+	    
+	     get
+		{
+		   return signatureTypeCode;
+		 }
+		 set
+		 {
+		   if(signatureTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SignatureTypeCode",OldValue=signatureTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   signatureTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string dcaPrefixName2 ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DcaPrefixName2  
+	   {
+	    
+	     get
+		{
+		   return dcaPrefixName2;
+		 }
+		 set
+		 {
+		   if(dcaPrefixName2 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DcaPrefixName2",OldValue=dcaPrefixName2,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   dcaPrefixName2=value;
+		   }
+			
+		 }
+	   }
+	  private string dcaPrefixName3 ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DcaPrefixName3  
+	   {
+	    
+	     get
+		{
+		   return dcaPrefixName3;
+		 }
+		 set
+		 {
+		   if(dcaPrefixName3 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DcaPrefixName3",OldValue=dcaPrefixName3,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   dcaPrefixName3=value;
+		   }
+			
+		 }
+	   }
+	  private string dcaPrefixName4 ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DcaPrefixName4  
+	   {
+	    
+	     get
+		{
+		   return dcaPrefixName4;
+		 }
+		 set
+		 {
+		   if(dcaPrefixName4 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DcaPrefixName4",OldValue=dcaPrefixName4,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   dcaPrefixName4=value;
+		   }
+			
+		 }
+	   }
+	  private string signatureTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SignatureTypeName  
+	   {
+	    
+	     get
+		{
+		   return signatureTypeName;
+		 }
+		 set
+		 {
+		   if(signatureTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SignatureTypeName",OldValue=signatureTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   signatureTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private bool dcaRenameFileEnable ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool DcaRenameFileEnable  
+	   {
+	    
+	     get
+		{
+		   return dcaRenameFileEnable;
+		 }
+		 set
+		 {
+		   if(dcaRenameFileEnable != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DcaRenameFileEnable",OldValue=dcaRenameFileEnable,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   dcaRenameFileEnable=value;
+		   }
+			
+		 }
+	   }
+	  private string dcaRenameFilePrefix ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DcaRenameFilePrefix  
+	   {
+	    
+	     get
+		{
+		   return dcaRenameFilePrefix;
+		 }
+		 set
+		 {
+		   if(dcaRenameFilePrefix != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DcaRenameFilePrefix",OldValue=dcaRenameFilePrefix,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   dcaRenameFilePrefix=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

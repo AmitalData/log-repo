@@ -1,0 +1,332 @@
+﻿
+<style type="text/css">
+    .CellColoredBox {
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        padding: 2px 5px;
+    }
+</style>
+
+<table>
+    <tr>
+        <td>
+            <div class="TabHolder">
+                <table *ngIf="IsResourcesReady">
+                    <tr class="TabTitleRow">
+                        <td>
+                            <table>
+                                <tr>
+                                    <td style="width: 1px;">{{'ARInvoice.TH.ARPayments' | TextCodeTranslationPipe}}</td>
+
+                                    <td style="width: 15px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width: 1px;" *ngIf="!IsConstituentInvoice && ARInvoiceTypeCode == 'CD'">
+                                        <span style="font-size: 11px; color: #E53030">{{'ARInvoice.M.ConnectCredit' | TextCodeTranslationPipe}}</span>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width: 1px;" *ngIf="!IsConstituentInvoice">
+                                        <button class="Button" [disabled]="!AddPaymentButtonIsEnabled" (click)="AddPaymentClicked()">{{'ARInvoice.B.Payments.NewPayment' | TextCodeTranslationPipe}}</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr style="height: 1px;" *ngIf="IsConstituentInvoice">
+                        <td>
+                            <div   class="NoDataTextStyle" style="text-align: center;">{{'ARInvoice.M.ConstituentInvoiceCantBeConnected' | TextCodeTranslationPipe}}</div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="CellStretch">
+                            <div class="CellContent">
+                                <div class="SimpleGridView" *ngIf="!IsConstituentInvoice">
+                                    <div class="SimpleGridViewHeader">
+                                        <table>
+                                            <tr>
+                                                <td style="width: 25px; min-width: 25px; max-width: 25px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width: 25px; min-width: 25px; max-width: 25px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width: 100px; min-width: 100px; max-width: 100px;padding:5px;">{{'ARPayment.CH.PaymentNoListLable' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 120px; min-width: 120px; max-width: 120px;padding:5px;">{{'ARPayment.CH.AmountInPaymentCurrencyListLable' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 100px; min-width: 100px; max-width: 100px;padding:5px;">{{'ARPayment.CH.OpenAmountListLable' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 100px; min-width: 100px; max-width: 100px;padding:5px;">{{'ARPayment.CH.StatusNameListLable' | TextCodeTranslationPipe}}</td>
+                                                <td class="LastChild">
+                                                    <div></div>
+                                                </td>
+
+                                            </tr>
+                                        </table>
+                                    </div>
+
+                                    <div class="SimpleGridViewBody">
+                                        <table>
+
+                                            <!-- Connected  -->
+                                            <tr *ngIf="ItemsSource1.length > 0" style="height: 25px; min-height: 25px; max-height: 25px; background: #E4E4E4;">
+                                                <td style="height: 25px;">
+                                                    <table style="height: 25px;">
+                                                        <tr style="height: 2px;">
+                                                            <td style="width: 25px; min-width: 25px; max-width: 25px;">
+                                                                <div style="height: 2px; width: 100%; border-top: 1px solid #848484; border-bottom: 1px solid white;"></div>
+                                                            </td>
+                                                            <td>
+                                                                <div style="height: 2px; width: 100%; border-top: 1px solid #848484; border-bottom: 1px solid white;"></div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>
+                                                                <img src="./Images/CellIcons/Arrowup.png" class="CenterCenter" style="cursor: pointer;" [hidden]="ItemsSource1Hidden" (click)="ItemsSource1Hidden = true" />
+                                                                <img src="./Images/CellIcons/Arrowdown.png" class="CenterCenter" style="cursor: pointer;" [hidden]="!ItemsSource1Hidden" (click)="ItemsSource1Hidden = false" />
+                                                            </td>
+
+                                                            <td>{{'ARInvoice.S.Payments.Connected' | TextCodeTranslationPipe}}</td>
+                                                        </tr>
+
+                                                        <tr style="height: 2px;">
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td>
+                                                                <div [hidden]="ItemsSource1Hidden" style="height: 2px; width: 100%; border-top: 1px solid white; border-bottom: 1px solid #848484;"></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr class="SimpleGridViewRow CellBorder" style="background: #ECF2F6" *ngFor="let item of ItemsSource1" [hidden]="ItemsSource1Hidden || item == null">
+                                                <td style="height: 25px;">
+                                                    <table style="height: 25px;">
+                                                        <tr>
+                                                            <td style="width: 25px; min-width: 25px; max-width: 25px; background: #E4E4E4; border-bottom: 1px solid #E4E4E4;">
+                                                                <table style="height: 25px;">
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td style="width: 1px; height: 100%;">
+                                                                            <div class="Stretch" style="background: white;"></div>
+                                                                        </td>
+
+                                                                        <td style="width: 1px; height: 100%;">
+                                                                            <div class="Stretch" style="background: #848484;"></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+
+                                                            <td class="GridViewCell" style="width: 25px; min-width: 25px; max-width: 25px;">
+                                                                <div class="NotMatchedButton"></div>
+                                                                <IconButton [Name]="'Disconnect'" [IsSmall]="true" (click)="item.DisconnectClicked()" [IsEnabled]="item.DisconnectButtonIsEnabled"></IconButton>
+                                                            </td>
+
+                                                            <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
+                                                                <span class="hyperlink" (click)="item.ViewEntityClicked()">{{item.PaymentNo}}</span>
+                                                            </td>
+
+                                                            <td [style.text-align]="isRTL ? 'left' : 'right'" class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px;">
+                                                                {{item.ForeignAmount | NumbersPipe:'N2'}}
+
+                                                                <span class="CellColoredBox" style="margin-left: 2px;margin-right:2px;" [ngStyle]="{background: item.ForeignCurrencyCodeBackground, color: item.ForeignCurrencyCodeForeground}">
+                                                                    {{item.ForeignCurrencyCode}}
+                                                                </span>
+                                                            </td>
+
+                                                            <td [style.text-align]="isRTL ? 'left' : 'right'"  class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
+                                                                <span class="CellColoredBox" [ngStyle]="{background: item.OpenAmountBackground, color: item.OpenAmountForeground}">{{item.OpenAmount | NumbersPipe:'N2'}}</span>
+                                                            </td>
+
+                                                            <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;" [ngStyle]="{color: item.Status | StringToColorPipe}">
+                                                                <span>{{item.Status}}</span>
+                                                            </td>
+
+                                                            <td class="LastChild">
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+
+                                            <!-- Not Connected  -->
+                                            <tr *ngIf="ItemsSource2.length > 0" style="height: 25px; min-height: 25px; max-height: 25px; background: #E4E4E4;">
+                                                <td style="height: 25px;">
+                                                    <table style="height: 25px;">
+                                                        <tr style="height: 2px;">
+                                                            <td style="width: 25px; min-width: 25px; max-width: 25px;">
+                                                                <div style="height: 2px; width: 100%; border-top: 1px solid #848484; border-bottom: 1px solid white;"></div>
+                                                            </td>
+                                                            <td>
+                                                                <div style="height: 2px; width: 100%; border-top: 1px solid #848484; border-bottom: 1px solid white;"></div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>
+                                                                <img src="./Images/CellIcons/Arrowup.png" class="CenterCenter" style="cursor: pointer;" [hidden]="ItemsSource2Hidden" (click)="ItemsSource2Hidden = true" />
+                                                                <img src="./Images/CellIcons/Arrowdown.png" class="CenterCenter" style="cursor: pointer;" [hidden]="!ItemsSource2Hidden" (click)="ItemsSource2Hidden = false" />
+                                                            </td>
+
+                                                            <td>{{'ARInvoice.S.Payments.NotConnected' | TextCodeTranslationPipe}}</td>
+                                                        </tr>
+
+                                                        <tr style="height: 2px;">
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                            <td>
+                                                                <div [hidden]="ItemsSource2Hidden" style="height: 2px; width: 100%; border-top: 1px solid white; border-bottom: 1px solid #848484;"></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr class="SimpleGridViewRow CellBorder" style="background: #ECF2F6" *ngFor="let item of ItemsSource2" [hidden]="ItemsSource2Hidden || item == null">
+                                                <td style="height: 25px;">
+                                                    <table style="height: 25px;">
+                                                        <tr>
+                                                            <td style="width: 25px; min-width: 25px; max-width: 25px; background: #E4E4E4; border-bottom: 1px solid #E4E4E4;">
+                                                                <table>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td style="width: 1px; height: 100%;">
+                                                                            <div class="Stretch" style="background: white;"></div>
+                                                                        </td>
+
+                                                                        <td style="width: 1px; height: 100%;">
+                                                                            <div class="Stretch" style="background: #848484;"></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+
+                                                            <td class="GridViewCell" style="width: 25px; min-width: 25px; max-width: 25px;">
+                                                                <img src="./Images/Buttons/NotMatched.png" *ngIf="item.IsNotMatchedVisibile" />
+                                                                <IconButton [Name]="'Connect'" *ngIf="item.IsConnectButtonVisibile" [IsSmall]="true" (click)="item.ConnectClicked()" [IsEnabled]="item.ConnectButtonIsEnabled"></IconButton>
+                                                            </td>
+
+                                                            <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
+                                                                <span class="hyperlink" (click)="item.ViewEntityClicked()">{{item.PaymentNo}}</span>
+                                                            </td>
+
+                                                            <td [style.text-align]="isRTL ? 'left' : 'right'"  class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px;">
+                                                                {{item.ForeignAmount | NumbersPipe:'N2'}}
+
+                                                                <span class="CellColoredBox" style="margin-left: 5px;margin-right:5px;" [ngStyle]="{background: item.ForeignCurrencyCodeBackground, color: item.ForeignCurrencyCodeForeground}">
+                                                                    {{item.ForeignCurrencyCode}}
+                                                                </span>
+                                                            </td>
+
+                                                            <td [style.text-align]="isRTL ? 'left' : 'right'"  class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
+                                                                <span class="CellColoredBox" [ngStyle]="{background: item.OpenAmountBackground, color: item.OpenAmountForeground}">{{item.OpenAmount | NumbersPipe:'N2'}}</span>
+                                                            </td>
+
+                                                            <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;" [ngStyle]="{color: item.Status | StringToColorPipe}">
+                                                                <span>{{item.Status}}</span>
+                                                            </td>
+
+                                                            <td class="LastChild">
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+
+                                            <tr style="height: 1px;" *ngIf="ItemsSource1.length > 0 || ItemsSource2.length > 0">
+                                                <td>
+                                                    <div style="height:1px; width: 100%; background: #848484; margin-top: -1px;"></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 1px;" *ngIf="!IsConstituentInvoice">
+        <td>
+            <TabSummary [Height]="90">
+                <table>
+                    <tr style="height: 1px;">
+                        <td class="TabSummaryTitle">
+                            {{'ARInvoice.S.Payments.Totals' | TextCodeTranslationPipe}}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <table>
+                                <tr>
+                                    <td style="width: 1px; padding-left: 10px;">
+                                        <div class="TabSummaryValue" style="font-size: 24px;">{{InvoiceAmount | NumbersPipe:'N2'}}</div>
+                                        <div class="TabSummaryLabel">{{'ARInvoice.F.AmountInInvoiceCurrency' | TextCodeTranslationPipe}}</div>
+                                    </td>
+
+                                    <td style="width: 1px; padding-left: 10px;">
+                                        <div class="TabSummaryValue" style="font-size: 24px;">-</div>
+                                        <div class="TabSummaryLabel"></div>
+                                    </td>
+
+                                    <td style="width: 1px; padding-left: 10px;">
+                                        <div class="TabSummaryValue" style="font-size: 24px;">{{AmountPaid | NumbersPipe:'N2'}}</div>
+                                        <div class="TabSummaryLabel">{{'ARInvoice.S.Payments.AmountPaid' | TextCodeTranslationPipe}}</div>
+                                    </td>
+
+                                    <td style="width: 1px; padding-left: 10px;">
+                                        <div class="TabSummaryValue" style="font-size: 24px;">=</div>
+                                        <div class="TabSummaryLabel"></div>
+                                    </td>
+
+                                    <td style="width: 1px; padding-left: 10px;">
+                                        <div class="TabSummaryValue" style="font-size: 24px;">{{AmountDue | NumbersPipe:'N2'}}</div>
+
+                                        <div class="TabSummaryLabel" style="margin-top: -4px;">
+                                            {{'ARInvoice.F.AmountDue' | TextCodeTranslationPipe}}
+                                            <span style="margin: 5px; font-size: 14px; color: #282E30;">({{InvoiceCurrencyCode}})</span>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </TabSummary>
+        </td>
+    </tr>
+</table>

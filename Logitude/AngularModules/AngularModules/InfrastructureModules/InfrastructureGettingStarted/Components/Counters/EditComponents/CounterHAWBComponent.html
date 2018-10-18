@@ -1,0 +1,404 @@
+﻿
+<style type="text/css">
+    .CounterItemBackground {
+        background: -moz-linear-gradient(50% 106.14% 90deg,rgba(133, 203, 237, 1) 0%,rgba(150, 211, 240, 1) 22.59%,rgba(196, 231, 248, 1) 67.37%,rgba(232, 247, 255, 1) 100%);
+        background: -webkit-linear-gradient(90deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 100%);
+        background: linear-gradient(0deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 100%);
+    }
+</style>
+
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div class="MediaFill">
+                <table *ngIf="IsResourcesReady">
+                    <tr style="height: 180px;">
+                        <td>
+                            <table>
+                                <tr>
+
+                                    <!-- HAWB:A -->
+                                    <td style="width: 280px; border: 1px solid #D1D1D1;">
+                                        <table>
+                                            <tr style="height: 30px; border-bottom: 1px solid #D1D1D1;" class="CounterItemBackground">
+                                                <td class="Value" style="padding-left: 10px;">HAWB (Air Export/Domestic)</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td style="padding: 10px; padding-top: 5px; padding-bottom: 5px;">
+                                                    <table>
+                                                        <tr style="height: 20px;">
+                                                            <td>
+                                                                <RadioButton [Name]="'HWBRadio'" [IsChecked]="HWBSettingValue == 'None'" (Checked)="HWBSettingValue = 'None'" [Text]="'None'"></RadioButton>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr style="height: 20px;">
+                                                            <td>
+                                                                <RadioButton [Name]="'HWBRadio'" [IsChecked]="HWBSettingValue == 'Shipment'" (Checked)="HWBSettingValue = 'Shipment'" [Text]="'Same as Shipment'"></RadioButton>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr style="height: 20px;">
+                                                            <td>
+                                                                <RadioButton [Name]="'HWBRadio'" [IsChecked]="HWBSettingValue == 'Counter'" (Checked)="HWBSettingValue = 'Counter'" [Text]="'Counter'"></RadioButton>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr style="height: 20px;">
+                                                            <td>
+                                                                <!-- No Stock for Airline -->
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr style="height: 1px;">
+                                                            <td>
+                                                                <table>
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <table *ngIf="HWBSettingValue != 'None' && HWBSettingValue != 'Stock'">
+                                                                                <tr>
+                                                                                    <td style="width: 100px;" class="Label">
+                                                                                        Prefix:
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <LogTextBox [ObjectFieldName]="'HWBPrefix'" [Text]="HWBPrefix" [NoObjectField]="true" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <table *ngIf="HWBSettingValue != 'None' && HWBSettingValue != 'Stock'">
+                                                                                <tr>
+                                                                                    <td style="width: 100px;" class="Label">
+                                                                                        Size:
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <LogTextBox [ObjectFieldName]="'HWBSize'" [Text]="HWBSize" [NoObjectField]="true" [DataContext]="DataContext" [InputType]="'Integer'" [HideColumns]="true"></LogTextBox>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <table *ngIf="HWBSettingValue == 'Counter'">
+                                                                                <tr>
+                                                                                    <td style="width: 100px;" class="Label">
+                                                                                        Start number at:
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <LogTextBox [ObjectFieldName]="'HWBStartNumber'" [Text]="HWBStartNumber" [NoObjectField]="true" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'Integer'"></LogTextBox>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr style="height: 20px;">
+                                                            <td>
+                                                                <CheckBox [IsChecked]="HWBDontIncludeDirects" (Checked)="HWBDontIncludeDirects = $event" [Text]="'Do not Include Direct Shipments'"></CheckBox>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+
+                                    <!-- FBL:O -->
+                                    <td *ngIf="IsFBLVisible" style="width: 290px;">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width: 280px; border: 1px solid #D1D1D1;">
+                                                    <table>
+                                                        <tr style="height: 30px; border-bottom: 1px solid #D1D1D1;" class="CounterItemBackground">
+                                                            <td class="Value" style="padding-left: 10px;">FBL (Ocean Export/Domestic)</td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td style="padding: 10px; padding-top: 5px; padding-bottom: 5px;">
+                                                                <table>
+                                                                    <tr style="height: 20px;">
+                                                                        <td>
+                                                                            <RadioButton [Name]="'FBLRadio'" [IsChecked]="FBLSettingValue == 'None'" (Checked)="FBLSettingValue = 'None'" [Text]="'None'"></RadioButton>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr style="height: 20px;">
+                                                                        <td>
+                                                                            <RadioButton [Name]="'FBLRadio'" [IsChecked]="FBLSettingValue == 'Shipment'" (Checked)="FBLSettingValue = 'Shipment'" [Text]="'Same as Shipment'"></RadioButton>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr style="height: 20px;">
+                                                                        <td>
+                                                                            <RadioButton [Name]="'FBLRadio'" [IsChecked]="FBLSettingValue == 'Counter'" (Checked)="FBLSettingValue = 'Counter'" [Text]="'Counter'"></RadioButton>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr style="height: 20px;">
+                                                                        <td>
+                                                                            <RadioButton [Name]="'FBLRadio'" [IsChecked]="FBLSettingValue == 'Stock'" (Checked)="FBLSettingValue = 'Stock'" [Text]="'Stock'"></RadioButton>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr style="height: 1px;">
+                                                                        <td>
+                                                                            <table>
+                                                                                <tr class="FormFieldRow">
+                                                                                    <td>
+                                                                                        <table *ngIf="FBLSettingValue != 'None' && FBLSettingValue != 'Stock'">
+                                                                                            <tr>
+                                                                                                <td style="width: 100px;" class="Label">
+                                                                                                    Prefix:
+                                                                                                </td>
+
+                                                                                                <td>
+                                                                                                    <LogTextBox [ObjectFieldName]="'FBLPrefix'" [Text]="FBLPrefix" [NoObjectField]="true" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <tr class="FormFieldRow">
+                                                                                    <td>
+                                                                                        <table *ngIf="FBLSettingValue != 'None' && FBLSettingValue != 'Stock'">
+                                                                                            <tr>
+                                                                                                <td style="width: 100px;" class="Label">
+                                                                                                    Size:
+                                                                                                </td>
+
+                                                                                                <td>
+                                                                                                    <LogTextBox [ObjectFieldName]="'FBLSize'" [Text]="FBLSize" [NoObjectField]="true" [DataContext]="DataContext" [InputType]="'Integer'" [HideColumns]="true"></LogTextBox>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <tr class="FormFieldRow">
+                                                                                    <td>
+                                                                                        <table *ngIf="FBLSettingValue == 'Counter'">
+                                                                                            <tr>
+                                                                                                <td style="width: 100px;" class="Label">
+                                                                                                    Start number at:
+                                                                                                </td>
+
+                                                                                                <td>
+                                                                                                    <LogTextBox [ObjectFieldName]="'FBLStartNumber'" [Text]="FBLStartNumber" [NoObjectField]="true" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'Integer'"></LogTextBox>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr style="height: 20px;">
+                                                                        <td>
+                                                                            <CheckBox [IsChecked]="FBLDontIncludeDirects" (Checked)="FBLDontIncludeDirects = $event" [Text]="'Do not Include Direct Shipments'"></CheckBox>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+
+                                    <!-- HBL:I -->
+                                    <td *ngIf="IsFBLVisible" style="width: 290px;">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width: 280px; border: 1px solid #D1D1D1;">
+                                                    <table>
+                                                        <tr style="height: 30px; border-bottom: 1px solid #D1D1D1;" class="CounterItemBackground">
+                                                            <td class="Value" style="padding-left: 10px;">HBL (Inland Export/Domestic)</td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td style="padding: 10px; padding-top: 5px; padding-bottom: 5px;">
+                                                                <table>
+                                                                    <tr style="height: 20px;">
+                                                                        <td>
+                                                                            <RadioButton [Name]="'HBLRadio'" [IsChecked]="HBLSettingValue == 'None'" (Checked)="HBLSettingValue = 'None'" [Text]="'None'"></RadioButton>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr style="height: 20px;">
+                                                                        <td>
+                                                                            <RadioButton [Name]="'HBLRadio'" [IsChecked]="HBLSettingValue == 'Shipment'" (Checked)="HBLSettingValue = 'Shipment'" [Text]="'Same as Shipment'"></RadioButton>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr style="height: 20px;">
+                                                                        <td>
+                                                                            <RadioButton [Name]="'HBLRadio'" [IsChecked]="HBLSettingValue == 'Counter'" (Checked)="HBLSettingValue = 'Counter'" [Text]="'Counter'"></RadioButton>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr style="height: 20px;">
+                                                                        <td>
+                                                                            <!-- No Stock for Inland -->
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr style="height: 1px;">
+                                                                        <td>
+                                                                            <table>
+                                                                                <tr class="FormFieldRow">
+                                                                                    <td>
+                                                                                        <table *ngIf="HBLSettingValue != 'None' && HBLSettingValue != 'Stock'">
+                                                                                            <tr>
+                                                                                                <td style="width: 100px;" class="Label">
+                                                                                                    Prefix:
+                                                                                                </td>
+
+                                                                                                <td>
+                                                                                                    <LogTextBox [ObjectFieldName]="'HBLPrefix'" [Text]="HBLPrefix" [NoObjectField]="true" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <tr class="FormFieldRow">
+                                                                                    <td>
+                                                                                        <table *ngIf="HBLSettingValue != 'None' && HBLSettingValue != 'Stock'">
+                                                                                            <tr>
+                                                                                                <td style="width: 100px;" class="Label">
+                                                                                                    Size:
+                                                                                                </td>
+
+                                                                                                <td>
+                                                                                                    <LogTextBox [ObjectFieldName]="'HBLSize'" [Text]="HBLSize" [NoObjectField]="true" [DataContext]="DataContext" [InputType]="'Integer'" [HideColumns]="true"></LogTextBox>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <tr class="FormFieldRow">
+                                                                                    <td>
+                                                                                        <table *ngIf="HBLSettingValue == 'Counter'">
+                                                                                            <tr>
+                                                                                                <td style="width: 100px;" class="Label">
+                                                                                                    Start number at:
+                                                                                                </td>
+
+                                                                                                <td>
+                                                                                                    <LogTextBox [ObjectFieldName]="'HBLStartNumber'" [Text]="HBLStartNumber" [NoObjectField]="true" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'Integer'"></LogTextBox>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr style="height: 20px;">
+                                                                        <td>
+                                                                            <CheckBox [IsChecked]="HBLDontIncludeDirects" (Checked)="HBLDontIncludeDirects = $event" [Text]="'Do not Include Direct Shipments'"></CheckBox>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

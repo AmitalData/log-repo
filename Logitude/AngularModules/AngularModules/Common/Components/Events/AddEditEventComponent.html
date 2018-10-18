@@ -1,0 +1,109 @@
+﻿
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr class="FormFieldRow">
+                    <td style="width: 100px">
+                        <LogLabel [ObjectFieldName]="'EventTypeId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td style="width: 230px">
+                        <LogLov [ObjectFieldName]="'EventTypeId'"
+                                [SelectedValue]="DataContext.EventTypeId"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'EventType'"
+                                [DependencyFilter1Value]="DataContext.IsManualEntry"
+                                [DependencyFilter2Value]="DataContext.ObjectTableId">
+                        </LogLov>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'EventDateTime'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'TraceEvent.O.Date'"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogDatePicker [ObjectFieldName]="'EventDateTime'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'EventDateTime'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'TraceEvent.O.Time'"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogDatePicker [ObjectFieldName]="'EventDateTime'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [InputType]="'time'"></LogDatePicker>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr class="FormFieldRow" style="height: 100px;">
+                    <td style="height: 100px; vertical-align: top; padding-top: 10px;">
+                        <LogLabel [ObjectFieldName]="'Notes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td style="height: 100px; vertical-align: top;">
+                        <div style="height: 100%; width: 100%;">
+                            <LogTextBox [ObjectFieldName]="'Notes'" [Text]="DataContext.Notes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                        </div>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="3">
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

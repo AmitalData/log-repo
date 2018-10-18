@@ -1,0 +1,49 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Customs.Data.EntityPOCOs
+{
+   
+    public class ClaimsRelatedEntsReasonsExp
+    {
+	 string dbms;
+
+        [Key]
+        [ForeignKey("ClaimsRelatedEntitiesReason")]
+        [Column("ClaimId" ,Order = 1)]
+	    public string ClaimId { get; set; }
+	      
+        public virtual ClaimsRelatedEntitiesReason ClaimsRelatedEntitiesReason { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+     [Key]
+        [ForeignKey("ClaimsRelatedEntitiesReason")]
+        [Column("CounterKey" ,Order = 2)]
+	    public int CounterKey { get; set; }
+     [Key]
+        [ForeignKey("ClaimsRelatedEntitiesReason")]
+        [Column("ReasonLineNo" ,Order = 3)]
+	    public int ReasonLineNo { get; set; }
+     [Key]
+        [Column("LineNo" ,Order = 4)]
+	    public int LineNo { get; set; }
+        [ForeignKey("ClaimExplanationCode")]
+        [Column("ClaimExplanationTypeCode")]
+	    public string ClaimExplanationTypeCode { get; set; }
+	      
+        public virtual ClaimExplanationCode ClaimExplanationCode { get; set; }
+        [Column("ExplanationNote")]
+	    public string ExplanationNote { get; set; }
+    }
+}
+	 

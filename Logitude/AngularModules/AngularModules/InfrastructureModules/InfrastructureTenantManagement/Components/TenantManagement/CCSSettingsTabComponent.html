@@ -1,0 +1,399 @@
+﻿
+<div class="TabHolder">
+    <table>
+        <tr class="TabTitleRow">
+            <td>
+                <table>
+                    <tr>
+                        <td>{{'TenantManagement.TH.CCSSettings' | TextCodeTranslationPipe}}</td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <div class="MediaFill">
+                    <ScrollViewer>
+                        <table>
+                            <tr style="height:200px;">
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td style="width:600px;">
+                                                <table>
+                                                    <tr class="FormFieldRow">
+                                                        <td style="width:140px;">
+                                                            <LogLabel [ObjectFieldName]="'AWBMessagesCCSTypeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td style="width:230px;">
+                                                            <LogLov [ObjectFieldName]="'AWBMessagesCCSTypeCode'"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'AWBMessagesCCSType'">
+                                                            </LogLov>
+                                                        </td>
+
+                                                        <td style="width:20px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td style="width:170px;">
+                                                            <LogLabel [ObjectFieldName]="'IsEAWBOnlyDemo'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td style="width:20px;">
+                                                            <LogCheckBox [ObjectFieldName]="'IsEAWBOnlyDemo'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'TTY'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogTextBox [ObjectFieldName]="'TTY'" [Text]="TTY" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                        </td>
+
+                                                        <td style="width:20px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'IsCargonautEnabled'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogCheckBox [ObjectFieldName]="'IsCargonautEnabled'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'PIMA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogTextBox [ObjectFieldName]="'PIMA'" [Text]="PIMA" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                        </td>
+
+                                                        <td style="width:20px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'IsDEXXConnectionEnabled'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogCheckBox [ObjectFieldName]="'IsDEXXConnectionEnabled'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+
+                                            <td style="width:10px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td style="min-width:500px;">
+                                                <table>
+                                                    <tr class="FormFieldRow">
+                                                        <td style="width:150px;">
+                                                            <LogCheckBox [HideColumns]="true" [IsDisabled]="!IsEditingAllowed" [Text]="RestrictedLabel" [ObjectFieldName]="'IsRestrictedByAirline'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                        </td>
+
+                                                        <td class="Label" style="width:85px;">Allow Airlines:</td>
+
+                                                        <td style="width:200px; float:left;">
+                                                            <QuickSearchTextBox [IsDisabled]="!AllowAirlinesIsEnabled" [AWBMessagesCCSTypeCode]="AWBMessagesCCSTypeCode" [Area]="'TenantManagement.Airline'" [DropDownWidth]="300" [ItemHeight]="40" (DataLoaded)="QuickSearchItems = $event">
+                                                                <ul>
+                                                                    <li class="LogitudeQuickSearchItem" style="height:35px;" *ngFor="let item of QuickSearchItems" (mousedown)="QuickSearchItemClicked(item)">
+                                                                        <table>
+                                                                            <tr>
+                                                                                <td style="font-size:12px; color:#282E30; text-align:left;" class="TextTrimming">
+                                                                                    {{item.Code}}
+                                                                                </td>
+
+                                                                                <td style="width:3px;"><div></div></td>
+
+                                                                                <td style="font-size:11px; color:#6E7172; text-align:left; float:left; min-width:200px;" class="TextTrimming">
+                                                                                    {{item.EnglishName}}
+                                                                                </td>
+
+                                                                                <td><div></div></td>
+                                                                            </tr>
+
+                                                                            <tr>
+                                                                                <td colspan="3" style="font-size: 12px; color: #1B90CB; text-align: left;" class="TextTrimming">
+                                                                                    {{item.Prefix}}
+                                                                                </td>
+
+                                                                                <td><div></div></td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </li>
+                                                                </ul>
+                                                            </QuickSearchTextBox>                                                           
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr style="height:2px;">
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td colspan="4">
+                                                            <div class="MediaFill">
+                                                                <div class="SimpleGridView" *ngIf="IsResourcesReady">
+                                                                    <div class="SimpleGridViewHeader">
+                                                                        <table>
+                                                                            <tr>
+                                                                                <td style="width: 70px; min-width: 70px; max-width: 70px;">{{'Airline.CH.CodeListLable' | TextCodeTranslationPipe}}</td>
+                                                                                <td style="width: 200px; min-width: 200px; max-width: 200px;">{{'Airline.CH.EnglishNameListLable' | TextCodeTranslationPipe}}</td>
+                                                                                <td style="width: 80px; min-width: 80px; max-width: 80px;">{{'Airline.CH.PrefixListLable' | TextCodeTranslationPipe}}</td>
+                                                                                <td class="LastChild">
+                                                                                    <div></div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </div>
+
+                                                                    <div class="SimpleGridViewBody">
+                                                                        <table>
+                                                                            <tr class="SimpleGridViewRow" *ngFor="let item of AllowedAirlinesItemsSource">
+
+                                                                                <td class="CellStretched" style="width: 70px; min-width: 70px; max-width: 70px;">
+                                                                                    {{item.Code}}
+                                                                                </td>
+
+                                                                                <td class="CellStretched" style="width: 200px; min-width: 200px; max-width: 200px;">
+                                                                                    {{item.EnglishName}}
+                                                                                </td>
+
+                                                                                <td class="CellStretched" style="width: 80px; min-width: 80px; max-width: 80px;">
+                                                                                    {{item.Prefix}}
+                                                                                </td>
+
+                                                                                <td class="CellTools">
+                                                                                    <span class="CellSeparator"></span>
+                                                                                    <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteAllowedAirline(item)" [disabled]="!AllowAirlinesIsEnabled"></IconButton>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr>
+                                                                                <td colspan="4">
+                                                                                    <div></div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr style="height:20px;">
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <table>
+                                        <tr class="FormFieldRow">
+                                            <td style="width:110px;">
+                                                <button [disabled]="!IsEditingAllowed" class="Button" (click)="LoadPortsClicked()">Load New Ports</button>
+                                                <input [attr.id]="PortsFileHtmlId" accept=".csv,.CSV" type="file" (change)="UploadFile($event)" style="display:none" class="upload"/>
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width:150px;">
+                                                <SearchBox [IsDisabled]="!IsEditingAllowed" [SearchText]="TenantZeroSearchText" [UseTimer]="true" (TextChanged)="TenantZeroSearchText = $event"></SearchBox>
+                                            </td>
+                                        </tr>
+
+                                        <tr style="height:2px;">
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="3">
+                                                <div class="MediaFill">
+                                                    <div class="SimpleGridView" *ngIf="IsResourcesReady">
+                                                        <div class="SimpleGridViewHeader">
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="width: 70px; min-width: 70px; max-width: 70px;">{{'Airline.CH.CodeListLable' | TextCodeTranslationPipe}}</td>
+                                                                    <td style="width: 200px; min-width: 200px; max-width: 200px;">{{'Airline.CH.EnglishNameListLable' | TextCodeTranslationPipe}}</td>
+                                                                    <td style="width: 80px; min-width: 80px; max-width: 80px;">{{'Airline.CH.PrefixListLable' | TextCodeTranslationPipe}}</td>
+                                                                    <td style="width: 80px; min-width: 80px; max-width: 80px; text-align:center;">Requested</td>
+                                                                    <td style="width: 80px; min-width: 80px; max-width: 80px; text-align:center;">Is Direct</td>
+                                                                    <td style="width: 125px; min-width: 125px; max-width: 125px; text-align:center;">Registered</td>
+                                                                    <td style="width: 120px; min-width: 120px; max-width: 120px;">{{'Airline.F.RegistrationNotes' | TextCodeTranslationPipe}}</td>
+                                                                    <td style="width: 80px; min-width: 80px; max-width: 80px; text-align:center;">Declined</td>
+                                                                    <td style="width: 250px; min-width: 250px; max-width: 250px;">Decline Notes</td>
+                                                                    <td><div></div></td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+
+                                                        <div class="SimpleGridViewBody">
+                                                            <table>
+                                                                <tr class="SimpleGridViewRow" *ngFor="let item of ItemsSource" >
+                                                                    <td class="CellStretched" style="width: 70px; min-width: 70px; max-width: 70px;">
+                                                                        {{item.Code}}
+                                                                    </td>
+
+                                                                    <td class="CellStretched" style="width: 200px; min-width: 200px; max-width: 200px;">
+                                                                        {{item.EnglishName}}
+                                                                    </td>
+
+                                                                    <td class="CellStretched" style="width: 80px; min-width: 80px; max-width: 80px;">
+                                                                        {{item.Prefix}}
+                                                                    </td>
+
+                                                                    <td class="CellStretched" style="width: 80px; min-width: 80px; max-width: 80px;">
+                                                                        <table>
+                                                                            <tr>
+                                                                                <td style="width:40px;">
+                                                                                    <div></div>
+                                                                                </td>
+
+                                                                                <td>
+                                                                                    <CheckBox [IsChecked]="item.IsRequested" (Checked)="item.IsRequested = $event" [IsEnabled]="item.IsRequestedEnabled"></CheckBox>                                                                                                                                    
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>                                                                        
+                                                                    </td>
+
+                                                                    <td class="CellStretched" style="width: 80px; min-width: 80px; max-width: 80px;">
+                                                                        <table>
+                                                                            <tr>
+                                                                                <td style="width:40px;">
+                                                                                    <div></div>
+                                                                                </td>
+
+                                                                                <td>
+                                                                                    <CheckBox [IsChecked]="item.IsDirect" (Checked)="item.IsDirect = $event" [IsEnabled]="item.IsDirectEnabled"></CheckBox>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>                                                                        
+                                                                    </td>
+
+                                                                    <td class="CellStretched" style="width: 125px; min-width: 125px; max-width: 125px; text-align:center;">
+                                                                        <table *ngIf="item.IsRegistrationNeeded">
+                                                                            <tr>
+                                                                                <td style="width:60px;">
+                                                                                    <div></div>
+                                                                                </td>
+
+                                                                                <td>
+                                                                                    <CheckBox [IsChecked]="item.IsRegistered" (Checked)="item.IsRegistered = $event" [IsEnabled]="!item.IsDeclined"></CheckBox>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                        
+                                                                        <label *ngIf="!item.IsRegistrationNeeded" style="font-size:10px; font-family:Arial; font-style:italic; color:gray;">No Registration Needed</label>
+                                                                    </td>
+
+                                                                    <td class="CellStretched" style="width: 120px; min-width: 120px; max-width: 120px;">
+                                                                        <div *ngIf="item.RegistrationNotes" style="width:17px; height:17px; float:left;">
+                                                                            <HelpIcon [Header]="'Registration Notes'" [Text]="item.RegistrationNotes"></HelpIcon>
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <td class="CellStretched" style="width: 80px; min-width: 80px; max-width: 80px;">
+                                                                        <table>
+                                                                            <tr>
+                                                                                <td style="width:40px;">
+                                                                                    <div></div>
+                                                                                </td>
+
+                                                                                <td>
+                                                                                    <CheckBox [IsChecked]="item.IsDeclined" (Checked)="item.IsDeclined = $event" [IsEnabled]="item.IsDeclinedEnabled"></CheckBox>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>                                                                       
+                                                                    </td>
+
+                                                                    <td class="GridViewCell" style="width: 250px; min-width: 250px; max-width: 250px;">
+                                                                        <div style="height:22px;">
+                                                                            <LogTextBox (LostFocus)="item.DeclineNotesLostFocusMethod($event)" [IsMultiline]="false" [ObjectFieldName]="'DeclineNotes'" [ObjectTableName]="'Airline'" [DataContext]="item.DataContext"></LogTextBox>
+                                                                        </div>                                                                        
+                                                                    </td>
+
+                                                                    <td><div></div></td>
+
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td colspan="10">
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </ScrollViewer>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+

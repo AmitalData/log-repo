@@ -1,0 +1,619 @@
+import {Component, ChangeDetectorRef}  from '@angular/core';
+import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
+import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
+import {GLAccountPM} from '../../../EntityPMs/GLAccountPM';
+import { GLAccountMoreDataList } from '../../../EntityLists/GLAccountMoreDataList';
+import {GLAccountValidator} from '../../../Validators/GLAccountValidator';
+import { GLAccountMoreDataListService } from '../../../Services/StandardLists/GLAccountMoreDataListService';
+import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import {AppTool} from '../../../../Infrastructure/Tools';
+import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { GLAccountListService } from '../../../Services/StandardLists/GLAccountListService';
+import { GLAccountExtendedListService } from '../../../Services/ExtendedLists/GLAccountExtendedListService';
+import { LedgerTransactionExtendedListService } from '../../../Services/ExtendedLists/LedgerTransactionExtendedListService';
+import { ReconcileEventManager } from '../../../Utilities/ReconcileEventManager';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { LedgerTransactionList } from '../../../EntityLists/LedgerTransactionList';
+import { GLAccountSummary } from '../../../DataContracts/AccountingSummery';
+import { AgingReportParameters } from '../../../DataContracts/AgingReportParameters';
+import { PeriodM } from '../../../DataContracts/PeriodM';
+import { GLAccountList } from '../../../EntityLists/GLAccountList';
+import { FullAccountingSettingList } from '../../../EntityLists/FullAccountingSettingList';
+declare var makeAmBarChart;
+
+@Component({
+    moduleId: module.id,
+    templateUrl: './GLAccountOverviewComponent.html',
+})
+
+export class GLAccountOverviewComponent extends BaseComponent {
+    public AccountPM: GLAccountPM = null;
+    public GLAccountMoreData: GLAccountMoreDataList = null;
+    public ObjectTableName = "GLAccount";
+    public DataContext = this;
+    txtcode_Amount: string = TextCodeTranslator.Translate("Accounting.General.O.Amount");
+    txtcode_AgingDetails: string = TextCodeTranslator.Translate("GLAccounts.O.AgingDetails");
+
+    public isRTL: boolean = false;
+    _GLAccountMoreDataListService: GLAccountMoreDataListService = new GLAccountMoreDataListService();
+    _LedgerTransactionExtendedListService: LedgerTransactionExtendedListService = new LedgerTransactionExtendedListService();
+    _GLAccountExtendedListService: GLAccountExtendedListService = new GLAccountExtendedListService();
+    constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
+        super();
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+
+        // Set Entity
+        this.AccountPM = entityArgs.EntityPM;
+
+        this.SetUIProperties();
+
+        this.chartId = "CustomerOverview_" + SessionLocator.CurrentSession.GetChartId();
+
+        this.LoadAllData();
+    }
+
+    LoadAllData() {
+        this.GetDefaultValues();
+        this.GetLastTransactions();
+        this.LoadChartData();
+    }
+
+    //#region Properties
+    //get DisplayNumber() { return this.AccountPM.DisplayNumber; }
+    //set DisplayNumber(value: string) {
+    //    if (this.AccountPM.DisplayNumber != value) {
+    //        this.AccountPM.DisplayNumber = value;
+    //    }
+    //}
+    //#endregion
+
+    GetDefaultValues() {
+
+        // Get GLAccountMoreData
+        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this._GLAccountMoreDataListService.getSingle(this.AccountPM.Id).subscribe(myResult => {
+            SessionLocator.CurrentSession.StopBusyIndicator();
+            console.log("_GLAccountMoreDataListService.getSingle", myResult);
+
+            var mm: ServiceResponse = myResult;
+            if (!mm.HasError) {
+                this.GLAccountMoreData = mm.Result; 
+            }
+            else {
+            }
+        });
+
+        // Get GLAccount Open Transactions Count
+        this._GLAccountExtendedListService.GetAccountOpenTransactionsCount(this.AccountPM.Id).subscribe(myResult => {
+            console.log("GetAccountOpenTransactionsCount", myResult);
+            var result: ServiceResponse = myResult;
+            if (!result.HasError)
+            {
+                this.GLAccountOpenTransactionsCount = result.Result;
+            }
+            else {
+            }
+        });
+
+
+    }
+
+    SetUIProperties() {
+        //if (!this.AccountPM || this.DisableGLAccount)
+        //    return;
+
+        //if (this.AccountPM.IsMultiCurrency) {
+        //    this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
+        //}
+        //if (this.AccountPM.ChartOfAccountsTypeCode) {
+        //    this.ChartOfAccountsTypeCode = this.AccountPM.ChartOfAccountsTypeCode;
+        //}
+        //if (this.AccountPM.ChartOfAccountsId) {
+        //    this.ChartOfAccountsId = this.AccountPM.ChartOfAccountsId;
+        //    this.UIProperties.SetValidity("ChartOfAccountsId", this.ObjectTableName, true, "");
+        //}
+        
+    }
+
+    //#region Balance Section
+    GLAccountOpenTransactionsCount: number = 0.0;
+
+
+    DisplayTransactionsLinkClicked() {
+
+        SessionLocator.CurrentSession.CurrentEditComponent.SetSelectedTabByCode("GATR");
+
+        //var editWindow = new LogitudeWindow();
+
+        //editWindow.ShowHeaderButtons = true;
+        ////editWindow.Title = windowTitle;
+        //editWindow.Height = 770;
+        //editWindow.Width = 1500;
+
+        //editWindow.ShowEditComponent(this.AccountPM.Id, "GLAccount", "GATR");
+        //editWindow.WindowClosed.subscribe(res => {
+
+        //});
+
+    }
+    ReconcileLinkClicked() {
+        this.ReconcileButtonClicked();
+    }
+    ReconcileButtonClicked() {
+        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        var screenWidth = this.getScreenWidth();
+        var screenHeight = this.getScreenHeight();
+        this._LedgerTransactionExtendedListService.GetFirstLedgerTransaction(this.AccountPM.Id).subscribe((serviceResponse: ServiceResponse) => {
+            SessionLocator.CurrentSession.StopBusyIndicator();
+
+            if (serviceResponse.Result) {
+                var result = serviceResponse.Result;
+                var transaction = result.Result; // get the data
+                var openAmountCurrency = transaction.OpenAmountCurrencySign;
+
+                // original amount currency
+                var originalAmountCurrency;
+                if (ReconcileEventManager.GLAccountReconcileMethodCode == "0") originalAmountCurrency = SessionLocator.TenantPM.CurrencySign;
+                else if (ReconcileEventManager.GLAccountReconcileMethodCode == "1") originalAmountCurrency = transaction.CurrencySign;
+
+
+                var windowArgs: any = {};
+                windowArgs.GLAccountPM = this.AccountPM;
+                windowArgs.openAmountCurrency = openAmountCurrency;
+                windowArgs.originalAmountCurrency = originalAmountCurrency;
+                var logitudeWindow = new LogitudeWindow();
+                logitudeWindow.Width = (screenWidth > 1024) ? (screenWidth > 1200 ? 1500 : screenWidth - 20) : 900;
+                logitudeWindow.Height = (screenHeight > 768) ? (screenHeight > 800 ? 700 : screenHeight - 70) : screenHeight - 70;
+
+                logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.Reconcile"); //"Reconcile";
+
+                logitudeWindow.WindowArgs = windowArgs;
+                logitudeWindow.Show('./Accounting/Components/Others/ReconcileComponent');
+                logitudeWindow.WindowClosed.subscribe(($event: any) => {
+                    if ($event == 'ok') {
+                        // show alert
+                    }
+
+                });
+
+            }
+        });
+    }
+    getScreenHeight() {
+        if (self.innerHeight) {
+            return self.innerHeight;
+        }
+
+        if (document.documentElement && document.documentElement.clientHeight) {
+            return document.documentElement.clientHeight;
+        }
+
+        if (document.body) {
+            return document.body.clientHeight;
+        }
+    }
+    getScreenWidth() {
+        if (self.innerWidth) {
+            return self.innerWidth;
+        }
+
+        if (document.documentElement && document.documentElement.clientWidth) {
+            return document.documentElement.clientWidth;
+        }
+
+        if (document.body) {
+            return document.body.clientWidth;
+        }
+    }
+    //#endregion
+
+    //#region Last 10 Transactions
+    lastTransactionsList: LedgerTransactionList[];
+    GetAmountLabel() {
+        var msg = this.txtcode_Amount + " (" + SessionLocator.TenantPM.CurrencyCode + ")";
+        return msg;
+    }
+    GetIconText(line: LedgerTransactionList) {
+        var iconTxt = "";
+        var color = "";
+
+        switch (line.SourceTypeCode) {
+
+            // 1-Journal
+            case '1': {
+                iconTxt = "JR";
+                break;
+            }
+
+            // 2-ARInvoice
+            case '2': {
+                iconTxt = "IN";
+                break;
+            }
+
+            // 3-ARPayment
+            case '3': {
+                iconTxt = "PY";
+                break;
+            }
+
+            // 4-APInvoice
+            case '4': {
+                iconTxt = "IN";
+                break;
+            }
+
+            // 5-APPayment
+            case '5': {
+                iconTxt = "PY";
+
+                break;
+            }
+
+            // 6-Cheque Deposit
+            case '6': {
+                iconTxt = "DP";
+
+                break;
+            }
+
+            // 7-Cash Deposit
+            case '7': {
+                iconTxt = "DP";
+
+                break;
+            }
+
+            // 8-Revaluation
+            case '8': {
+                iconTxt = "RV";
+
+                break;
+            }
+
+            // 9-PaymentCheque
+            case '9': {
+                iconTxt = "CH";
+
+                break;
+            }
+        }
+        return iconTxt;
+    }
+    GetReferencesText(transaction: LedgerTransactionList) {
+        var txt="";
+        if (transaction.Reference1) txt += transaction.Reference1;
+        txt += txt ? " / " : "";
+        if (transaction.Reference2) txt += transaction.Reference2;
+        txt += txt ? " / " : "";
+        if (transaction.Reference3) txt += transaction.Reference3;
+
+        return txt;
+    }
+    GetLastTransactions() {
+        this._LedgerTransactionExtendedListService.getLast10TransactionsForAccount(this.AccountPM.Id).subscribe(myResult => {
+
+            var mm: ServiceResponse = myResult;
+            if (!mm.HasError)
+            {
+                this.lastTransactionsList = mm.Result.Result;
+            }
+            else
+            {
+            }
+        });
+
+    }
+    Abs(number: number) {
+        return number < 0 ? number * -1 : number;
+    }
+    OpenSource(transaction: LedgerTransactionList, id: string) {
+
+        // Type:    SourceTypeCode
+        // Id:      SourceId
+        // Display: SourceNumber
+
+        var tableName = "Journal";
+
+        switch (transaction.SourceTypeCode) {
+
+            // 1-Journal
+            case '1': {
+                tableName = "Journal";
+                break;
+            }
+
+            // 2-ARInvoice
+            case '2': {
+                tableName = "ARInvoice";
+                break;
+            }
+
+            // 3-ARPayment
+            case '3': {
+                tableName = "ARPayment";
+
+                break;
+            }
+
+            // 4-APInvoice
+            case '4': {
+                tableName = "APInvoice";
+
+                break;
+            }
+
+            // 5-APPayment
+            case '5': {
+                tableName = "APPayment";
+
+                break;
+            }
+
+            // 6-Cheque Deposit
+            case '6': {
+                tableName = "BankDeposit";
+
+                break;
+            }
+
+            // 7-Cash Deposit
+            case '7': {
+                tableName = "BankDeposit";
+
+                break;
+            }
+
+            // 8-Revaluation
+            case '8': {
+                tableName = "Revaluation";
+
+                break;
+            }
+
+
+            // 9-PaymentCheque
+            case '9': {
+                tableName = "PaymentCheque";
+
+                break;
+            }
+
+        }
+
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({
+                    EntityId: id,
+                    ObjectTableName: tableName
+                });
+            });
+
+    }
+
+    OpenJournal(id) {
+        if (!AppTool.IsNullOrEmpty(id)) {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'Journal' });
+                    cmpRef.instance.BackCompleted.subscribe(bk => {
+                    });
+                });
+        }
+    }
+
+    CalculateOriginalAmount(transaction) {
+        if (!AppTool.IsNullOrEmpty(ReconcileEventManager.GLAccountReconcileMethodCode)) {
+
+            if (ReconcileEventManager.GLAccountReconcileMethodCode == "0") { // 0-local currency
+
+                if (transaction['LocalAmountCredit'] == 0) {
+                    return transaction['LocalAmountDebit'];
+                } else {
+                    return -1 * transaction['LocalAmountCredit'];
+                }
+
+            } else if (ReconcileEventManager.GLAccountReconcileMethodCode == "1") { // 1-foreign currency
+
+                if (transaction['ForeignAmountCredit'] == 0) {
+                    return transaction['ForeignAmountDebit'];
+                } else {
+                    return -1 * transaction['ForeignAmountCredit'];
+                }
+
+            }
+
+        }
+    }
+
+
+    //#endregion
+
+    //#region Aging Details
+    chartId: string = ""; 
+
+    GetAgingHeader() {
+        var txt = this.txtcode_AgingDetails;
+        txt += " (" + SessionLocator.TenantPM.CurrencyCode + ")";
+        return txt;
+    }
+
+    // Filter Methods
+    public FilterSelectedValue: string = '3mo';
+    FilterItemClicked(itemValue: string) {
+        if (this.FilterSelectedValue != itemValue) {
+            this.FilterSelectedValue = itemValue;
+            this.FilterLines();
+        }
+    }
+    FilterLines() {
+        this.LoadChartData();
+    }
+
+    // Filter Methods 
+    public DateFilterSelectedValue: string = 'filter_Collecting';
+    DateFilterItemClicked(itemValue: string) {
+        if (this.DateFilterSelectedValue != itemValue) {
+            this.DateFilterSelectedValue = itemValue;
+            this.FilterLines();
+        }
+    }
+
+    //Chart Code
+    public barChartLabels: string[] = [];
+    public barChartData: any[] = [{ data: [], label: '', scaleShowVerticalLines: false, }];
+    LoadChartData() {
+        //if (AppTool.IsNullOrEmpty(this.accSettings)) return;
+        var numberOfmonthsbackwards = 3;
+        switch (this.FilterSelectedValue) {
+            case '3mo': {
+                numberOfmonthsbackwards = 3;
+                break;
+            }
+            case '6mo': {
+                numberOfmonthsbackwards = 6;
+                break;
+            }
+            case '9mo': {
+                numberOfmonthsbackwards = 9;
+                break;
+            }
+            case '12mo': {
+                numberOfmonthsbackwards = 12;
+                break;
+            } 
+        }
+
+        var args = new AgingReportParameters();
+
+        args.Tenant = SessionLocator.Tenant,
+            args.AgingForDate = new Date();
+        args.NumberOfmonthsbackwards = numberOfmonthsbackwards == null ? 3 : numberOfmonthsbackwards;
+        //args.VendorCustomerId = AppTool.IsNullOrEmpty(this.accSettings) ? "" : this.accSettings.CustomerControlAccountId;
+        args.VendorCustomerId = this.AccountPM.Id;
+        //args.Category1Id = "";
+        //args.Category2Id = "";
+        //args.Category3Id = "";
+        //args.Category4Id = "";
+        //args.Category5Id = "";
+        //args.CollectorId = SessionLocator.LoggedUserId;
+        //args.SalesmanId = "";
+        args.IsCustomer = true;
+        args.GroupByDate = this.DateFilterSelectedValue == "filter_Accounting" ? "AccountingDate" : "DueDate";
+
+        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this._GLAccountExtendedListService.GetAgingReport(args).subscribe((myResponse: ServiceResponse) => {
+            console.log("GetAgingReport: ", periods);
+            SessionLocator.CurrentSession.StopBusyIndicator();
+
+            if (!myResponse.HasError) {
+                var res = myResponse.Result;
+                if (res != null && res.length > 0) {
+                    var periods: PeriodM[];
+                    periods = res;
+                    this.LoadChart(periods);
+                }
+            }
+        });
+
+    }
+    OrganizeData(data: GLAccountList[]) {
+
+        //var oData: any[];
+        //var takeNumber = 5; // Number of columns to show in the graph , execlude "Others" column
+
+        //if (!AppTool.IsNullOrEmpty(data)) {
+
+        //    if (data.length > takeNumber) {
+
+        //         1-Take first section
+        //        oData = data.slice(0, takeNumber);
+
+        //         2-Calculate "Others" Column
+        //        var othersColumn = new GLAccountList();
+        //        othersColumn.TotalAmount = 0;
+        //        othersColumn.GLAccountTypeCode = "-1"; // manual entry "Others"
+        //        for (var i = takeNumber; i < data.length; i++) {
+        //            var amount = data[i].TotalAmount;
+        //            amount = this.ConvertToLocal(amount, data[i].CurrencyId);
+        //            othersColumn.TotalAmount += ((AppTool.IsNullOrEmpty(amount)) ? 0 : amount);
+        //        }
+        //        oData.push(othersColumn);
+        //    } else {
+        //        return data
+        //    }
+        //}
+
+        // 3-Return data
+        //return oData;
+    }
+    LoadChart(data: PeriodM[]) {
+
+        //#region Graph metadata
+        var max = 0;
+        var DataProvider = [];
+        var i = 0;
+        var index = 0;
+        this.barChartData[0].data = [];
+        this.barChartLabels = [];
+        this.barChartData = [{
+            data: [], label: '', scaleShowVerticalLines: false,
+        }];
+
+        //Graph Properties
+        var Graphs = Graphs = [{
+            "balloonText": "Amount: <br>[[value]]",
+            "fillAlphas": 1,
+            "id": "AmGraph-10" + i,
+            "title": "Aging",
+            "type": "column",
+            "valueField": "dataCol",
+            "fillColors": ["#BADFE8", "#7AC2D4", "#73BFD2", "#7AC2D4", "#BADFE8",],
+            "gradientOrientation": "horizontal",
+            "borderAlpha": 0,
+            "lineColor": "#fff",
+            "fixedColumnWidth": 70,
+
+
+        }]
+        //#endregion
+
+        data.forEach(element => {
+            //if (element.Total <= 0) return;
+            this.barChartData[0].label = "Amount";
+
+            // Amount
+            var value = element.Total;// + (Math.floor((Math.random() * 2500) + 1));
+            this.barChartData[0].data[i] = value.toString();
+
+            // Labels
+            var label = element.PeriodName.replace("b4", "Before"); // replace 'b4' with 'Before'
+            label = label.startsWith("Before") ? label.replace("/20", "/") : label; // minimize year in 'Before' Column
+            this.barChartLabels[i] = label;
+
+            // Data
+            DataProvider[i] = { "category": this.barChartLabels[i], "dataCol": this.barChartData[0].data[i] };
+
+            if (value > max)
+                max = value;
+
+
+            i++;
+        });
+
+        var poisition = this.isRTL == true ? "right" : "left";
+        
+        makeAmBarChart(this.chartId, Graphs, DataProvider, max, null, null, null, null, poisition);
+
+    }
+    //
+
+    //#endregion
+
+
+}

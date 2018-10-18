@@ -1,0 +1,176 @@
+﻿
+<div style="height: 80px; width: 100%;">
+    <div class="MediaFillAbsolute" style="overflow-x:auto; overflow-y:hidden;">
+        <table>
+            <tr>
+                <td style="color:#1B90CB; font-size:15px; line-height: 15px;">Filter By:</td>
+            </tr>
+
+            <tr style="height: 52px;">
+                <td>
+
+                    <table>
+                        <tr>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <!-- Customer -->
+                                        <td style="width: 1px; padding-right: 5px;width:80px" class="Label">Customer:</td>
+                                        <td style="width: 200px; min-width: 200px;">
+                                            <div style="width:200px;">
+                                                <LogLov [ObjectFieldName]="'CustomerId'"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'Card'"
+                                                        [DisplayMemberPath]="'EnglishName'"
+                                                        [DependencyFilter1IsList]="'true'"
+                                                        [ShowInActive]="'true'"
+                                                        [DependencyFilter1Value]="''"
+                                                        [HideMaintenanceIcon]="true"
+                                                        [HideAddLink]="true"
+                                                        [HideAdd]="true"
+                                                        [HideEdit]="true"
+                                                        >
+                                                </LogLov>
+                                            </div>
+                                        </td>
+
+                                        <!-- Invoice Date -->
+                                        <td style="width: 100px; min-width: 100px;">
+                                            <div class="RadioButton" style="width:100px">
+                                                <input type="radio" [attr.id]="InvoiceDateId" [attr.name]="ShipmentTypeRadioName" (click)="settingShipmentTypeCode('InvoiceDate')" [checked]="ShipmentTypeRadio == 'InvoiceDate'" style="width:15px" />
+                                                <label [attr.for]="InvoiceDateId">
+                                                    Invoice Date
+                                                </label>
+                                            </div>
+                                        </td>
+
+
+                                        <!-- Shipment Create Date -->
+                                        <td style="width: 180px; min-width: 180px;">
+                                            <div class="RadioButton" style="width:100px">
+                                                <input type="radio" [attr.id]="CreateDateId" [attr.name]="ShipmentTypeRadioName" (click)="settingShipmentTypeCode('CreateDate') " [checked]="ShipmentTypeRadio == 'CreateDate'" style="width:15px" />
+                                                <label [attr.for]="CreateDateId">
+                                                    Shipment Create Date
+                                                </label>
+
+                                            </div>
+                                        </td>
+
+                                        <!-- From Create -->
+                                        <td style="width:30px;" class="Label">From:</td>
+                                        <td style="width:120px;">
+                                            <div style="width:120px;">
+                                                <LogDatePicker [HideColumns]="true" [ObjectFieldName]="'FromDate'" [DataContext]="DataContext"></LogDatePicker>
+                                            </div>
+                                        </td>
+                                        <td style="width:10px;min-width:10px"></td>
+                                        <!-- To Create -->
+                                        <td style="width:20px;" class="Label">To:</td>
+                                        <td style="width:120px;">
+                                            <div style="width:120px;">
+                                                <LogDatePicker [HideColumns]="true" [ObjectFieldName]="'ToDate'" [DataContext]="DataContext"></LogDatePicker>
+                                            </div>
+                                        </td>
+                                        <td style="width:10px;min-width:10px"></td>
+
+                                        <!-- Invoice Status -->
+                                        <td style="width:80px;" class="Label">Invoice Status:</td>
+                                        <td style="width:120px">
+                                            <ComboBox style="width:120px" (SelectedItemChanged)="InvoiceStatusChange($event)" [ItemsSource]="InvoiceStatusComboList" [SelectedItem]="InvoiceStatusSelectedItem" [Binding]="'Name'"></ComboBox>
+                                        </td>
+
+
+
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr style="height:5px">
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td style="width:22px">
+                                            <div style="width:22px">
+                                                <LogCheckBox [ObjectFieldName]="'IncludeWaiting'" [DataContext]="DataContext"></LogCheckBox>
+                                            </div>
+
+                                        </td>
+                                        <td style="width:100px;min-width:100px">
+                                            <label >Include Draft Invoices</label>
+                                        </td>
+
+                                        <td style="width:10px;min-width:10px"></td>
+
+                                        <td style="width:22px">
+                                            <div style="width:22px">
+
+                                                <LogCheckBox [ObjectFieldName]="'IncludeVoidInvoices'" [DataContext]="DataContext"></LogCheckBox>
+
+                                            </div>
+                                        </td> 
+                                        <td style="width:100px;min-width:100px">
+                                            <label>Include Void Invoices</label>
+                                        </td>
+                                        <td style="width:10px;min-width:10px"></td>
+                                        <td style="width:80px;min-width:80px">
+                                            <label>Display in:</label>
+                                        </td>
+
+                                        <td style="width:110px">
+                                            <div class="RadioButton" style="width:110px">
+                                                <input type="radio" [attr.id]="LocalCurrencyId" [attr.name]="LocalCurencyRadio" (click)="ChangeCurrency(true)" [checked]="IsLocalCurrency == true" style="width:15px" />
+                                                <label [attr.for]="LocalCurrencyId">
+                                                    Local Currency
+                                                </label>
+                                            </div>
+
+                                        </td>
+
+                                        <td style="width:10px;min-width:10px"></td>
+                                        <td style="width:110px">
+                                            <div class="RadioButton" style="width:110px">
+                                                <input type="radio" [attr.id]="InvoiceCurrencyId" [attr.name]="LocalCurencyRadio" (click)="ChangeCurrency(false)" [checked]="IsLocalCurrency == false" style="width:15px" />
+                                                <label [attr.for]="InvoiceCurrencyId">
+                                                    Invoice Currency
+                                                </label>
+                                            </div>
+                                        </td>
+
+                                        <td style="width:10px;min-width:10px"></td>
+                                        <td style="width:60px;" class="Label">Direction:</td>
+
+                                        <td style="width:120px">
+                                            <div style="width:150px">
+                                                <DirectionsFilter (SelectedValueChanged)="MySelectedDirectionFilter = $event"></DirectionsFilter>
+                                            </div>
+
+                                        </td>
+                                        <td style="width:20px;min-width:20px"></td>
+                                        <td style="width:100px;" class="Label">Transport Mode:</td>
+                                        <td style="width:120px">
+                                            <div style="width:120px">
+                                                <TransportsFilter (SelectedValueChanged)="MySelectedTransportFilter = $event"></TransportsFilter>
+                                            </div>
+                                        </td>                                       
+
+
+                                        <td style="width: 80px;">
+                                            <button class="GreenButton" (click)="RunReport(true)">Run Report</button>
+                                        </td>
+
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

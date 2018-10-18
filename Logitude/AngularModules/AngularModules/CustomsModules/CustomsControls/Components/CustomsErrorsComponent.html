@@ -1,0 +1,46 @@
+﻿<style>
+    .ErrorsDiv{
+        background:#F7E3E3;
+        border: solid 1px #DA6F6F;
+        width: 100%;
+        
+        border-radius:7px;
+        overflow:auto;
+    }
+</style>
+
+<div class="ErrorsDiv" [style.height]="ComponentHeight">
+    <div style="color:#B02020; margin-top:15px;margin-bottom:15px;margin-right:3px;">
+        {{ErrorsCount}}
+    </div>
+
+   <div *ngFor="let error of Errors">
+       <img src="./Images/ValidationError.png" style="width:17px;margin-right:3px;margin-top:3px;"/>
+       <span style="color: #444444;">{{error}}</span>
+       
+   </div>
+    
+</div>
+
+<table style="float: left; vertical-align: bottom; margin-top: 8px; height:23px;">
+    <tr>
+
+        <td>
+            <div></div>
+        </td>
+        <td *ngIf="CancelButtonVisibility" style="width: 57px;vertical-align: bottom;padding-left:5px">
+            <button class="Button" (click)="CancelButtonClicked()">{{CancelButtonText}}</button>
+        </td>
+
+        <td *ngIf="NoButtonVisibility" style="width: 57px;vertical-align: bottom;padding-left:5px">
+            <button class="Button" (click)="NoButtonClicked()">{{NoButtonText}}</button>
+        </td>
+
+        <td style="width: 57px;vertical-align: bottom; padding-left:5px">
+            <button class="RedButton" (click)="OkButtonClicked()">{{SaveButtonText}}</button>
+        </td>
+       
+
+    </tr>
+</table>
+

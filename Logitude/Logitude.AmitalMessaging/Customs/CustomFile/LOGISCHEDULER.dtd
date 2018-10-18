@@ -1,0 +1,8 @@
+<!ELEMENT LOGISCHEDULER (LogitudeScheduler*)>
+<!ELEMENT LogitudeScheduler (Request_Code?, Start_Date?, End_Date?, Param1?, Param2?, More_Param?)>
+<!ELEMENT Request_Code (#PCDATA)>
+<!ELEMENT Start_Date (#PCDATA)>
+<!ELEMENT End_Date (#PCDATA)>
+<!ELEMENT Param1 (#PCDATA)>
+<!ELEMENT Param2 (#PCDATA)>
+<!ELEMENT More_Param (#PCDATA)>

@@ -1,0 +1,1 @@
+update ObjectTables	set EnableSecurity=1 where Name='User'

@@ -1,0 +1,43 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Customs.Data.EntityPOCOs
+{
+   
+    public class CollateralsRequestFileCond
+    {
+	 string dbms;
+
+        [Key]
+        [ForeignKey("CustomsCollateralsAnswer")]
+        [Column("CustomsCollateralId" ,Order = 1)]
+	    public string CustomsCollateralId { get; set; }
+	      
+        public virtual CustomsCollateralsAnswer CustomsCollateralsAnswer { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+     [Key]
+        [ForeignKey("ReturnCondition")]
+        [Column("ConditionCode" ,Order = 2)]
+	    public string ConditionCode { get; set; }
+	      
+        public virtual ReturnCondition ReturnCondition { get; set; }
+        [Column("RequestedAmount")]
+	    public decimal? RequestedAmount { get; set; }
+     [Key]
+        [ForeignKey("CustomsCollateralsAnswer")]
+        [Column("LineNumber" ,Order = 3)]
+	    public int LineNumber { get; set; }
+    }
+}
+	 

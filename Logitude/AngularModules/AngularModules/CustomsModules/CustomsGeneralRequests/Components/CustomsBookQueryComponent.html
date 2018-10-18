@@ -1,0 +1,69 @@
+﻿
+<div >
+    <!-- CustomsBookQueryComponent  view  -->
+    <custom-message-wrapper>
+
+        <!-- CustomsBookQueryComponent  Request  -->
+        <div class="class-request-content">
+            <!---->
+            <div style="height:80px;width: 570px;">
+                <table *ngIf="RequestParams != null "
+                       style="width: 570px;padding-top: 10px;">
+
+                    <tr class="FormFieldRow">
+                        <td style="width: 200px">
+                            <LogLabel [NoObjectField]="true" [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Customs.CustomsExchangeRate.F.DateFrom'"></LogLabel>
+                        </td>
+                        <td style="width:10px"></td>
+                        <td style="width: 200px; padding-right: 36px;">
+                            <!-- CustomsBookQueryComponent  Request.FromDate-->
+                            <LogDatePicker [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName"
+                                           [InputType]="'date'" [SelectedDateValue]="'FromDate'" [DataContext]="DataContext"
+                                           [HideColumns]="true"></LogDatePicker>
+
+                        </td>
+                        <td><div></div></td>
+                    </tr>
+                    <tr class="FormFieldRow">
+                        <td style="width: 200px">
+                            <LogLabel [NoObjectField]="true" [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Customs.CustomsExchangeRate.F.DateTo'"></LogLabel>
+                        </td>
+                        <td style="width:10px"></td>
+                        <td style="width: 200px; padding-right: 36px;">
+                            <!-- CustomsBookQueryComponent  Request.ToDate-->
+                            <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'ToDate'"
+                                           [ObjectTableName]="ObjectTableName" [InputType]="'date'"
+                                           [DataContext]="DataContext"
+                                           [HideColumns]="true"></LogDatePicker>
+                        </td>
+
+                        <td><div></div></td>
+                    </tr>
+
+
+                    <tr class="FormFieldRow" style="height:1px">
+                        <td><div></div></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="class-response-content">
+            <table style="width: 600px;height: 250px;padding-top: 10px;">
+
+                <tr class="FormFieldRow" style="height:1px">
+                    <!--background-color :aquamarine;-->
+                    <td colspan="5" style="width: 100% ; height : 100%">
+                        <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
+                            <div *ngIf="ResponseData != null">
+                                <object-viewer [MyNgStyleHeight]="'210px'" [MyObject]="_MyResponseObjectToShow"></object-viewer>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+
+    </custom-message-wrapper>
+</div>

@@ -1,0 +1,42 @@
+﻿
+<table *ngIf="IsResourcesReady">
+    <tr style="height:21px;" *ngIf="IsMenuVisible">
+        <td>
+            <ul class="PagesMenu">
+                <li id="{{'BOOK' | IdGeneratorPipe}}" *ngIf="IsBookingItemVisible" [class.SelectedPageMenu]="SelectedItem == 'BOOK'" (click)="SelectedItem = 'BOOK'">Bookings</li>
+
+                <li id="{{'SHIP' | IdGeneratorPipe}}" [class.SelectedPageMenu]="SelectedItem == 'SHIP'" (click)="SelectedItem = 'SHIP'">Shipments</li>
+
+                <li id="{{'SHMA' | IdGeneratorPipe}}"  *ngIf="IsSharedManifestItemVisible" [class.SelectedPageMenu]="SelectedItem == 'SHMA'" (click)="SelectedItem = 'SHMA'">Shared Manifests</li>
+
+                <li id="{{'CNFU' | IdGeneratorPipe}}" *ngIf="IsContainersFUItemVisible" [class.SelectedPageMenu]="SelectedItem == 'CNFU'" (click)="SelectedItem = 'CNFU'">{{'Shipment.Features.ContainersFU' | TextCodeTranslationPipe}}</li>
+            </ul>
+        </td>
+    </tr>
+
+    <tr style="height:10px;" *ngIf="IsMenuVisible">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="CellStretch">
+            <div class="CellContent" [hidden]="SelectedItem != 'BOOK'" style="overflow-x:auto">
+                <div LocationDirective Code="BOOK"></div>
+            </div>
+
+            <div class="CellContent" [hidden]="SelectedItem != 'SHIP'">
+                <div LocationDirective Code="SHIP"></div>
+            </div>
+
+            <div class="CellContent" [hidden]="SelectedItem != 'SHMA'">
+                <div LocationDirective Code="SHMA"></div>
+            </div>
+
+            <div class="CellContent" [hidden]="SelectedItem != 'CNFU'">
+                <div LocationDirective Code="CNFU"></div>
+            </div>
+        </td>
+    </tr>
+</table>

@@ -1,0 +1,183 @@
+﻿
+
+
+
+<h2>General</h2>
+<br />
+<form [ngFormModel]="myForm"
+      (ngSubmit)="onSubmit(myForm)">
+    <!--name="generalForm" #generalForm="ngForm" (ngSubmit)="onSubmit(generalForm)">-->
+    <table style="width:50%;">
+        <tr>
+            <td style="width:120px;">
+                <div *ngIf="notesObjectField != undefined">
+                    <!-- <label>{{notesObjectField.FullNameTextCodeDefaultText}}</label> -->
+                    <!-- <label [logitudeLabel]="notesObjectField.FullNameTextCodeCode"></label> -->
+                    <!-- [style.display]="isVisible ? 'inline' : 'none'" -->
+                    <!-- <logitude-label [fieldname]="'Notes'" [objecttable]="'Shipment'"></logitude-label>-->
+
+                </div>
+            </td>
+            <td style="width:15px;"></td>
+            <td style="width:120px;">
+                <div *ngIf="notesObjectField != undefined">
+                    <!-- <label>{{notesObjectField.FullNameTextCodeDefaultText}}</label> -->
+                    <!-- <label [logitudeLabel]="notesObjectField.FullNameTextCodeCode"></label> -->
+                    <!-- [style.display]="isVisible ? 'inline' : 'none'" -->
+                    <!--<textarea name="{{notesObjectField.FullNameTextCodeCode | textcodeTranslation}}" *ngIf="EntityPM != undefined" [(ngModel)]="EntityPM.Notes"></textarea>-->
+                </div>
+            </td>
+        </tr>
+        <tr style="height:5px;"></tr>
+        <tr>
+            <td style="width:120px;">
+                <div>
+
+                    <logitude-label [fieldname]="'ShipperName'" [objecttable]="'Shipment'" [DataContext]="EntityPM"></logitude-label>
+
+                </div>
+            </td>
+            <td style="width:15px;"></td>
+            <td style="width:120px;">
+                <div>
+
+                    <logitude-text-input [logitudeForm]="myForm" *ngIf="EntityPM != undefined" [objectfieldname]="'ShipperName'" [objecttablename]="'Shipment'" [DataContext]="EntityPM"></logitude-text-input>
+
+                </div>
+            </td>
+        </tr>
+        <tr style="height:5px;"></tr>
+        <tr>
+
+            <td style="width:120px;">
+                <div>
+                    <logitude-label [fieldname]="'ConsigneeName'" [objecttable]="'Shipment'" [DataContext]="context"></logitude-label>
+                </div>
+            </td>
+
+            <td style="width:15px;"></td>
+
+            <td>
+                <div>
+                    <logitude-text-input [logitudeForm]="myForm" *ngIf="EntityPM != undefined" [objectfieldname]="'ConsigneeName'" [objecttablename]="'Shipment'" [DataContext]="context"></logitude-text-input>
+
+                </div>
+            </td>
+        </tr>
+        <tr style="height:5px;"></tr>
+        <tr>
+
+            <td style="width:120px;">
+                <div>
+                    <logitude-label [fieldname]="'MainCarriageETD'" [objecttable]="'Shipment'" [DataContext]="EntityPM"></logitude-label>
+                </div>
+            </td>
+
+            <td style="width:15px;"></td>
+
+            <td>
+                <div>
+                    <logitude-date-input [logitudeForm]="myForm" *ngIf="EntityPM != undefined" [objectfieldname]="'MainCarriageETD'" [objecttablename]="'Shipment'" [DataContext]="EntityPM"></logitude-date-input>
+
+                </div>
+            </td>
+        </tr>
+
+        <tr style="height:5px;"></tr>
+
+        <tr>
+
+            <td style="width:120px;">
+                <div>
+                    <logitude-label [fieldname]="'IsOperationalClosed'" [objecttable]="'Shipment'" [DataContext]="EntityPM"></logitude-label>
+                </div>
+            </td>
+
+            <td style="width:15px;"></td>
+
+            <td>
+                <div>
+                    <logitude-checkbox-input [logitudeForm]="myForm" *ngIf="EntityPM != undefined" [objectfieldname]="'IsOperationalClosed'" [objecttablename]="'Shipment'" [DataContext]="EntityPM"></logitude-checkbox-input>
+
+                </div>
+            </td>
+        </tr>
+
+        <tr style="height:5px;"></tr>
+        <tr>
+
+            <td style="width:120px;">
+                <div>
+                    <logitude-label [fieldname]="'MainCarriageFromPortId'" [objecttable]="'Shipment'" [DataContext]="EntityPM"></logitude-label>
+                </div>
+            </td>
+
+            <td style="width:15px;"></td>
+
+            <td>
+                <div>
+                    <logitude-lov-input [logitudeForm]="myForm" *ngIf="EntityPM != undefined" [objectfieldname]="'MainCarriageFromPortId'" [objecttablename]="'Shipment'" [DataContext]="EntityPM" [lookuptablename]="'Port'"></logitude-lov-input>
+
+                </div>
+            </td>
+        </tr>
+
+        <tr style="height:5px;"></tr>
+        <tr>
+
+            <td style="width:120px;">
+                <div>
+                    <logitude-label [fieldname]="'MainCarriageToPortId'" [objecttable]="'Shipment'" [DataContext]="EntityPM"></logitude-label>
+                </div>
+            </td>
+
+            <td style="width:15px;"></td>
+
+            <td>
+                <div>
+                    <logitude-lov-input [logitudeForm]="myForm" *ngIf="EntityPM != undefined" [objectfieldname]="'MainCarriageToPortId'" [objecttablename]="'Shipment'" [DataContext]="EntityPM" [lookuptablename]="'Port'"></logitude-lov-input>
+
+                </div>
+            </td>
+        </tr>
+
+        <tr style="height:5px;"></tr>
+        <!--<tr>
+
+            <td style="width:120px;">
+                <div>
+                    <logitude-label [fieldname]="'Length'" [objecttable]="'ShipmentPackage'" [DataContext]="EntityPM.ShipmentPackages[0]"></logitude-label>
+                </div>
+            </td>
+
+            <td style="width:15px;"></td>
+
+            <td>
+                <div>
+                    <logitude-text-input [logitudeForm]="myForm" *ngIf="EntityPM != undefined" [objectfieldname]="'Length'" [objecttablename]="'ShipmentPackage'" [DataContext]="EntityPM.ShipmentPackages[0]" ></logitude-text-input>
+
+                </div>
+            </td>
+        </tr>-->
+        <tr>
+            <td>
+                <div>
+                    <button class="Button" type="submit">submit</button>
+
+                    <!--<logitude-date-input *ngIf="EntityPM != undefined" [objectfieldname]="'FlightDate'" [objecttablename]="'Shipment'" [DataContext]="this"></logitude-date-input>-->
+                    <!--<input name="Consignee" type="text" *ngIf="EntityPM != undefined" [(ngModel)]="EntityPM.ConsigneeName" />-->
+                </div>
+            </td>
+            <td>
+                <button class="Button" type="button" (click)="sendFalse()">false!</button>
+                <button class="Button" type="button" (click)="sendTrue()">true!</button>
+            </td>
+        </tr>
+
+
+    </table>
+</form>
+
+<div>
+
+</div>

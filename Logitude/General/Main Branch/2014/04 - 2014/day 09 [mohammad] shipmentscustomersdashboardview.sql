@@ -1,0 +1,1 @@
+--please execute the shipmnetscustomersdashboardview script in simplog.data.shipmentmodel

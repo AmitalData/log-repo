@@ -1,0 +1,69 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.Customs.BL.EntityDataMappings;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Data.EntityKeys;
+using Logitude.Customs.Data;
+using Simplog.Server.Infrastructure;
+namespace Logitude.Customs.BL.EntityQueryServices
+{ 
+   public partial class GuaranteeQueryService: EntityQueryService<Guarantee,GuaranteeKeys,GuaranteePM,object,GuaranteeKeys>
+   {
+   
+        GuaranteeRepository repository;
+		ICustomContext  context;
+        public GuaranteeQueryService(int tenant)
+        {
+		    context = CustomContext.GetContext(tenant);
+            MainContext = context;
+            repository = new GuaranteeRepository(context);
+            Repository = repository;
+            mapping = new GuaranteeDataMapping();
+        }
+
+        public GuaranteeQueryService(GuaranteeRepository repository)
+        {
+            this.repository = repository;
+            Repository = repository;
+            mapping = new GuaranteeDataMapping();
+        }
+
+        public GuaranteeQueryService(ICustomContext context)
+        {
+            this.repository = new GuaranteeRepository(context);
+            this.context = context;
+
+            MainContext = context;
+            Repository = repository;
+            mapping = new GuaranteeDataMapping();
+        }
+		 
+		public  GuaranteePM GetSingle(string id,bool getComposition, bool getFromCache)
+        {
+             EntityKeys = new GuaranteeKeys(){ Id = id };
+
+			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
+        }
+
+       
+	    protected override EntityKeyFields GetKeys(Guarantee entityPOCO)
+        {
+            GuaranteeKeys entityKeys = new GuaranteeKeys() { Id = entityPOCO.Id,  };
+            return entityKeys;
+        }
+     
+	 
+   }
+   
+}
+	 

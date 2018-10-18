@@ -1,0 +1,91 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.EntityKeys;
+using Simplog.Server.Infrastructure;
+
+namespace Logitude.Accounting.Data.Repositories
+{
+   public partial class Category1Repository:IRepository<Category1>
+   {
+   
+        private IAccountingContext currentContext;
+        public Category1Repository(int tenant)
+        {
+            currentContext = AccountingContext.GetContext(tenant);
+        }
+
+        public Category1Repository(IAccountingContext context)
+        {
+            currentContext = context;
+        }
+
+		 
+		
+		public  Category1 GetSingle(string id, int tenant)
+        {
+            return (from a in context.Category1
+                    where a.Id == id && a.Tenant == tenant
+                    select a).FirstOrDefault();
+        }
+
+        public IQueryable<Category1> GetAll(int tenant)
+        {
+            return from a in context.Category1  
+                   where a.Tenant == tenant
+                   select a;
+        }
+				 
+        public Category1 GetSingle(EntityKeyFields entityKeys)
+        {
+            Category1Keys keys = entityKeys as Category1Keys;
+            return (from a in context.Category1
+                    where a.Id == keys.Id
+                    select a).FirstOrDefault();
+        }
+		         
+        partial void onAdd();//Partial Methods Definition in Generated
+        public void Add(Category1 entity)
+        {
+            onAdd();
+            context.Category1.Add(entity);
+        }
+
+        public void Remove(Category1 entity)
+        {
+            context.Category1.Attach(entity);
+            context.Category1.Remove(entity);
+        }
+
+        partial void onUpdate();//Partial Methods Definition in Generated
+        public void Update(Category1 entity)
+        {
+            onUpdate();
+            context.Category1.Attach(entity);
+            context.SetAsModified(entity);
+        }
+
+        public List<Category1> All()
+        {
+            return context.Category1.ToList();
+        }
+
+        private IAccountingContext context
+        {
+            get { return currentContext; }
+        }
+
+        public void SubmitChanges()
+        {
+            context.SaveChanges();
+        }
+	 
+   }
+   }
+	 

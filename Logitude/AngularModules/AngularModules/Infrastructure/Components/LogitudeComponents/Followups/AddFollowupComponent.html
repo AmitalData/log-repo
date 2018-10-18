@@ -1,0 +1,139 @@
+﻿
+<style type="text/css">
+    .NumericButtonDisabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+    .NumericButton:hover {
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(221, 232, 245, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(221, 232, 245, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+    }
+
+    .NumericButton {
+        width: 15px;
+        height: 10px;
+        border: 1px solid #6A8299;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        position: relative;
+    }
+</style>
+
+<table>
+    <tr style="height:1px;" *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <!-- Date -->
+                <tr style="height: 1px;">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'Date'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                </tr>
+                <tr class="FormFieldRow">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="padding-left: 10px;">
+                                    <LogDatePicker [ObjectFieldName]="'Date'" [SelectedDateValue]="Date" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                </td>
+
+                                <td style="width: 15px;">
+                                    <div class="NumericButton" (mousedown)="NumericButtonClicked(true)">
+                                        <img class="CenterCenter" style="height: 3px; width: 5px;" src="./Images/Buttons/Up.png" />
+                                    </div>
+                                    <div class="NumericButton" (mousedown)="NumericButtonClicked(false)">
+                                        <img class="CenterCenter" style="height: 3px; width: 5px;" src="./Images/Buttons/Down.png" />
+                                    </div>
+                                </td>
+
+                                <td style="width: 36px;">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <!-- OwnerUserId -->
+                <tr style="height: 1px;">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'OwnerUserId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                </tr>
+                <tr class="FormFieldRow">
+                    <td style="padding-left: 10px;">
+                        <LogLov [ObjectFieldName]="'OwnerUserId'"
+                                [SelectedValue]="OwnerUserId"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'User'">
+                        </LogLov>
+                    </td>
+                </tr>
+
+                <tr style="height: 5px;">
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- Notes -->
+                <tr style="height: 1px;">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'Notes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                </tr>
+                <tr style="height: 70px;">
+                    <td>
+                        <div class="MediaFill" style="padding-left: 10px;">
+                            <LogTextBox [ObjectFieldName]="'Notes'" [Text]="Notes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true" [DontAllowAutoSelect]="true"></LogTextBox>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td>
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

@@ -1,0 +1,1 @@
+update TenantSettings set Prefix = (Prefix + '-') where Prefix is not null and SettingValue = 'Counter' and ObjectTableId  in (select Id from ObjectTables where Name = 'Shipment') and Prefix not like '%-' 

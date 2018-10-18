@@ -1,0 +1,1 @@
+update customs.SupplierInvoiceItems  set TaxExemptCode = null

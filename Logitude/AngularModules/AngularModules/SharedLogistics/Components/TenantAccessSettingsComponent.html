@@ -1,0 +1,87 @@
+﻿<style>
+    .MessageText {
+        white-space: normal;
+        word-wrap: break-word;
+        overflow-x: hidden;
+        overflow-y: auto;
+        line-height: 18px;
+    }
+</style>
+
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+    <tr class="FormFieldRow">
+        <td>
+            <table>
+                <tr>
+                    <td style="width:50px">
+                        <CheckBox (Checked)="IsCustomerTenantShare = $event" [IsChecked]="IsCustomerTenantShare" [IsEnabled]="IsCustomerTenantShareEnable"></CheckBox>
+                    </td>
+
+                    <td class="Label" style="font-size:medium">
+                        Activate Customer Access
+                    </td>
+
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height:80px" >
+        <td class="MessageText" style="font-size:small">
+            This option will allow your Customers to view specific information about their shipments &amp; Documents Using LogBox. In order to share data with a customer you need to approve his request from Customer Access Management Section.
+        </td>
+    </tr>
+    <tr class="FormFieldRow">
+        <td>
+            <table>
+                <tr class="FormFieldRow">
+                    <td class="Label" style="width:180px;font-size:medium">LogBox Administrator</td>
+                    <td style="width:200px">
+                        <LogLov [ObjectFieldName]="'LogBoxAdminUserId'"
+                                [ObjectTableName]="'Tenant'"
+                                [DataContext]="DataContext"
+                                [DisplayMemberPath]="'EnglishName'"
+                                [LookUpTableName]="'User'"
+                                [HideColumns]="true">
+                        </LogLov>
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+    </tr>
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

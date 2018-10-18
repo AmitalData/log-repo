@@ -1,0 +1,6 @@
+<!ELEMENT LOGIDOCS (LogitudeDocs*)>
+<!ELEMENT LogitudeDocs (Id?, Tenant?, COM_ID?, DOC_ID?)>
+<!ELEMENT Id (#PCDATA)>
+<!ELEMENT Tenant (#PCDATA)>
+<!ELEMENT COM_ID (#PCDATA)>
+<!ELEMENT DOC_ID (#PCDATA)>

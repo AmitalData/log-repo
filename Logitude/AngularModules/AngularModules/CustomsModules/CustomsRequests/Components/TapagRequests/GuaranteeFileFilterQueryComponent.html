@@ -1,0 +1,451 @@
+﻿<!-- GuaranteeFileFilterQueryComponent view  -->
+<div>
+    <custom-message-wrapper [CustomSendOptionsButtonCanForcePersonalSign]="false">
+
+        <!-- Request -->
+        <div class="class-request-content" >
+            <table style="width: 800px;height: 30px;">
+                <!-- Request Fields -->
+                <tr style="height: 30px;">
+                    <td>
+                        <table>
+                            <tr class="FormFieldRow">
+                                <td style="width: 100px;">
+                                    <LogLabel [ObjectFieldName]="'GuranteeType'" [DataContext]="DataContext" [TextCode]="'Customs.GuaranteeFileFilterQuery.F.GuranteeType'"> </LogLabel>
+                                </td>
+                                <td style="width: 150px;">
+                                    <ComboBox [ItemsSource]="GuranteeTypeFilterList" [Binding]="'Name'" [SelectedItem]="SelectedGuranteeTypeFilter" (SelectedItemChanged)="SelectedGuranteeTypeFilter = $event"></ComboBox>
+                                </td>
+
+                                <td style="width: 10px;"><div></div></td>
+
+                                <td style="width: 100px;">
+                                    <LogLabel [ObjectFieldName]="'FileNumber'" [DataContext]="DataContext" [TextCode]="'Customs.GuaranteeFileFilterQuery.F.FileNumber'"> </LogLabel>
+                                </td>
+                                <td style="width: 150px;">
+                                    <LogTextBox [ObjectFieldName]="'FileNumber'"
+                                                [Text]="FileNumber"
+                                                [DataContext]="DataContext"
+                                                [HideColumns]="true">
+                                    </LogTextBox>
+                                </td>
+
+                                <td style="width: 10px;"><div></div></td>
+
+                                <td style="width: 100px;">
+                                    <LogLabel [ObjectFieldName]="'Numeral'" [DataContext]="DataContext" [TextCode]="'Customs.GuaranteeFileFilterQuery.F.Numeral'"> </LogLabel>
+                                </td>
+                                <td style="width: 150px;">
+                                    <LogTextBox [ObjectFieldName]="'Numeral'"
+                                                [Text]="Numeral"
+                                                [DataContext]="DataContext"
+                                                [HideColumns]="true">
+                                    </LogTextBox>
+                                </td>
+
+                                <td><div></div></td>
+                            </tr>
+
+                            <tr><td><div></div></td></tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><div></div></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Response -->
+        <div class="class-response-content" style="width: 850px;height: 450px;" >
+            <div class="ScrollViewer" style="width: 850px;height: 450px;">
+                <div class="ScrollContent" style="width: 850px;height: 450px;">
+                    <table style="width: 850px;height: 450px; ">
+
+                        <!--General Details-->
+                        <!--<tr style="width: 100%">
+                            <td style="width: 200px;height:25px; font-size: 12px; color: #1B90CB;">
+                                {{'Customs.GuaranteeFileFilterQuery.O.GuaranteeFileFilterGeneralResults'| TextCodeTranslationPipe}}
+                            </td>
+                        </tr>-->
+                        <tr style="height: 46px;">
+                            <td>
+                                <fieldset [disabled]="true">
+                                    <table>
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 90px;">
+                                                <LogLabel [ObjectFieldName]="'DisplayFileNumber'" [DataContext]="DataContext" [TextCode]="'Customs.GuaranteeFileFilterQuery.F.DisplayFileNumber'"> </LogLabel>
+                                            </td>
+                                            <td style="width: 150px;">
+                                                <LogTextBox [ObjectFieldName]="'DisplayFileNumber'" [Text]="DisplayFileNumber" 
+                                                            [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                            </td>
+
+                                            <td style="width: 10px;"><div></div></td>
+
+                                            <td style="width: 90px;">
+                                                <LogLabel [ObjectFieldName]="'CustomOfficeName'" [DataContext]="DataContext" [TextCode]="'Customs.GuaranteeFileFilterQuery.F.CustomOfficeName'"> </LogLabel>
+                                            </td>
+                                            <td style="width: 150px;">
+                                                <LogTextBox [ObjectFieldName]="'CustomOfficeName'" [Text]="CustomOfficeName" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                            </td>
+
+                                            <td style="width: 10px;"><div></div></td>
+
+                                            <td style="width: 90px;">
+                                                <LogLabel [ObjectFieldName]="'CreditLimit'" [DataContext]="DataContext" [TextCode]="'Customs.GuaranteeFileFilterQuery.F.CreditLimit'"> </LogLabel>
+                                            </td>
+                                            <td style="width: 150px;">
+                                                <LogTextBox [ObjectFieldName]="'CreditLimit'" [Text]="CreditLimit" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 90px;">
+                                                <LogLabel [ObjectFieldName]="'StatusName'" [DataContext]="DataContext" [TextCode]="'Customs.GuaranteeFileFilterQuery.F.StatusName'"> </LogLabel>
+                                            </td>
+                                            <td style="width: 150px;">
+                                                <LogTextBox [ObjectFieldName]="'StatusName'" [Text]="StatusName" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                            </td>
+
+                                            <td style="width: 10px;"><div></div></td>
+
+                                            <td style="width: 90px;">
+                                                <LogLabel [ObjectFieldName]="'EntityTypeName'" [DataContext]="DataContext" [TextCode]="'Customs.GuaranteeFileFilterQuery.F.EntityTypeName'"> </LogLabel>
+                                            </td>
+                                            <td style="width: 150px;">
+                                                <LogTextBox [ObjectFieldName]="'EntityTypeName'" [Text]="EntityTypeName" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                            </td>
+
+                                            <td style="width: 10px;"><div></div></td>
+
+                                            <td style="width: 90px;">
+                                                <LogLabel [ObjectFieldName]="'CreditBalance'" [DataContext]="DataContext" [TextCode]="'Customs.GuaranteeFileFilterQuery.F.CreditBalance'"> </LogLabel>
+                                            </td>
+                                            <td style="width: 150px;">
+                                                <LogTextBox [ObjectFieldName]="'CreditBalance'" [Text]="CreditBalance" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 90px;">
+                                                <LogLabel [ObjectFieldName]="'GuaranteedName'" [DataContext]="DataContext" [TextCode]="'Customs.GuaranteeFileFilterQuery.F.GuaranteedName'"> </LogLabel>
+                                            </td>
+                                            <td style="width: 150px;">
+                                                <LogTextBox [ObjectFieldName]="'GuaranteedName'" [Text]="GuaranteedName" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                            </td>
+
+                                            <td style="width: 10px;"><div></div></td>
+
+                                            <td style="width: 90px;">
+                                                <LogLabel [ObjectFieldName]="'EntityNumber'" [DataContext]="DataContext" [TextCode]="'Customs.GuaranteeFileFilterQuery.F.GuaranteeEntityID'"> </LogLabel>
+                                            </td>
+                                            <td style="width: 150px;">
+                                                <LogTextBox [ObjectFieldName]="'EntityNumber'" [Text]="EntityNumber" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                            </td>
+
+                                            <td style="width: 10px;"><div></div></td>
+
+                                            <td style="width: 90px;">
+                                                <LogLabel [ObjectFieldName]="'GuaranteeExecutedAmountAdjusted'" [DataContext]="DataContext" [TextCode]="'Customs.GuaranteeFileFilterQuery.F.GuaranteeExecutedAmountAdjusted'"> </LogLabel>
+                                            </td>
+                                            <td style="width: 150px;">
+                                                <LogTextBox [ObjectFieldName]="'GuaranteeExecutedAmountAdjusted'" [Text]="GuaranteeExecutedAmountAdjusted" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 90px;">
+                                                <LogLabel [ObjectFieldName]="'AgentName'" [DataContext]="DataContext" [TextCode]="'Customs.GuaranteeFileFilterQuery.F.AgentName'"> </LogLabel>
+                                            </td>
+                                            <td style="width: 150px;">
+                                                <LogTextBox [ObjectFieldName]="'AgentName'" [Text]="AgentName" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                            </td>
+
+                                            <td style="width: 10px;"><div></div></td>
+
+                                            <td style="width: 90px;">
+                                                <LogLabel [ObjectFieldName]="'Validity'" [DataContext]="DataContext" [TextCode]="'Customs.GuaranteeFileFilterQuery.F.Validity'"> </LogLabel>
+                                            </td>
+                                            <td style="width: 150px;">
+                                                <LogTextBox [ObjectFieldName]="'Validity'" [Text]="Validity" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                            </td>
+
+                                            <td style="width: 10px;"><div></div></td>
+
+                                            <td style="width: 90px;">
+                                                <LogLabel [ObjectFieldName]="'GuaranteeAmount'" [DataContext]="DataContext" [TextCode]="'Customs.GuaranteeFileFilterQuery.F.GuaranteeAmount'"> </LogLabel>
+                                            </td>
+                                            <td style="width: 150px;">
+                                                <LogTextBox [ObjectFieldName]="'GuaranteeAmount'" [Text]="GuaranteeAmount" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                            </td>
+                                        </tr>
+
+                                        <tr><td><div></div></td></tr>
+                                    </table>
+                                </fieldset>
+                            </td>
+                        </tr>
+
+                        <!--GuaranteeLettersList-->
+                        <tr style="width: 100%">
+                            <td style="width: 200px;height:24px; font-size: 12px; color: #1B90CB;">
+                                {{'Customs.GuaranteeFileFilterQuery.O.GuaranteeFileFilterGuaranteeLettersResults'| TextCodeTranslationPipe}}
+                            </td>
+                        </tr>
+                        <tr class="FormFieldRow" style="height:1px">
+                            <td colspan="5" style="width: 100% ; height : 20%">
+                                <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
+                                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="GuaranteeLettersList">
+
+                                        <!-- GuaranteeType -->
+                                        <log-column [width]="'100'" [Alignment]="'right'"
+                                                    [header]="'Customs.GuaranteeFileFilterQuery.F.GuaranteeTypeName' | TextCodeTranslationPipe"
+                                                    [binding]="'GuaranteeTypeName'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="RightCenter">
+                                                    <span>{{item.GuaranteeTypeName}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- CertificateID -->
+                                        <log-column [width]="'100'" [Alignment]="'right'"
+                                                    [header]="'Customs.GuaranteeFileFilterQuery.F.CertificateID' | TextCodeTranslationPipe"
+                                                    [binding]="'CertificateID'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="RightCenter">
+                                                    <span>{{item.CertificateID}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- GuaranteeExternalCertificateNumebr -->
+                                        <log-column [width]="'110'" [Alignment]="'right'"
+                                                    [header]="'Customs.GuaranteeFileFilterQuery.F.GuaranteeExternalCertificateNumebr' | TextCodeTranslationPipe"
+                                                    [binding]="'GuaranteeExternalCertificateNumebr'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="RightCenter">
+                                                    <span>{{item.GuaranteeExternalCertificateNumebr }}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- Guaranator -->
+                                        <log-column [width]="'90'" [Alignment]="'right'"
+                                                    [header]="'Customs.GuaranteeFileFilterQuery.F.GuaranatorName' | TextCodeTranslationPipe"
+                                                    [binding]="'GuaranatorName'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div style="width:100%;height:100%;">
+                                                    <div class="RightCenter">
+                                                        <span>{{item.GuaranatorName }}</span>
+                                                    </div>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- GuaranteeValidityDate -->
+                                        <log-column [width]="'80'" [Alignment]="'right'"
+                                                    [header]="'Customs.GuaranteeFileFilterQuery.F.GuaranteeValidityDate' | TextCodeTranslationPipe"
+                                                    [binding]="'GuaranteeValidityDate'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div style="width:100%;height:100%;">
+                                                    <div class="RightCenter">
+                                                        <span>{{item.GuaranteeValidityDate }}</span>
+                                                    </div>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- CertificateAmount -->
+                                        <log-column [width]="'95'" [Alignment]="'right'"
+                                                    [header]="'Customs.GuaranteeFileFilterQuery.F.CertificateAmount' | TextCodeTranslationPipe"
+                                                    [binding]="'CertificateAmount'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div style="width:100%;height:100%;">
+                                                    <div class="RightCenter">
+                                                        <span>{{item.CertificateAmount }}</span>
+                                                    </div>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- CertificateAllocation -->
+                                        <log-column [width]="'90'" [Alignment]="'right'"
+                                                    [header]="'Customs.GuaranteeFileFilterQuery.F.CertificateAllocation' | TextCodeTranslationPipe"
+                                                    [binding]="'CertificateAllocation'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div style="width:100%;height:100%;">
+                                                    <div class="RightCenter">
+                                                        <span>{{item.CertificateAllocation }}</span>
+                                                    </div>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- AvaliableCertificateAmount -->
+                                        <log-column [width]="'80'" [Alignment]="'right'"
+                                                    [header]="'Customs.GuaranteeFileFilterQuery.F.AvaliableCertificateAmount' | TextCodeTranslationPipe"
+                                                    [binding]="'AvaliableCertificateAmount'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div style="width:100%;height:100%;">
+                                                    <div class="RightCenter">
+                                                        <span>{{item.AvaliableCertificateAmount }}</span>
+                                                    </div>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- GuaranteeStatus -->
+                                        <log-column [width]="'90'" [Alignment]="'right'"
+                                                    [header]="'Customs.GuaranteeFileFilterQuery.F.Status' | TextCodeTranslationPipe"
+                                                    [binding]="'GuaranteeStatusName'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div style="width:100%;height:100%;">
+                                                    <div class="RightCenter">
+                                                        <span>{{item.GuaranteeStatusName }}</span>
+                                                    </div>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                    </logitude-edit-grid>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!--CreditTransactionsList-->
+                        <tr style="width: 100%">
+                            <td style="width: 200px;height:24px; font-size: 12px; color: #1B90CB;">
+                                {{'Customs.GuaranteeFileFilterQuery.O.GuaranteeFileFilterCreditTransactionsResults'| TextCodeTranslationPipe}}
+                            </td>
+                        </tr>
+                        <tr class="FormFieldRow" style="height:1px">
+                            <td colspan="5" style="width: 500px ; height : 15%">
+                                <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
+                                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="CreditTransactionsList">
+
+                                        <!-- CreditTransactionDate -->
+                                        <log-column [width]="'100'" [Alignment]="'right'"
+                                                    [header]="'Customs.GuaranteeFileFilterQuery.F.CreditTransactionDate' | TextCodeTranslationPipe"
+                                                    [binding]="'CreditTransactionDate'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="RightCenter">
+                                                    <span>{{item.CreditTransactionDate}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- CreditTransaction -->
+                                        <log-column [width]="'90'" [Alignment]="'right'"
+                                                    [header]="'Customs.GuaranteeFileFilterQuery.F.CreditTransactionName' | TextCodeTranslationPipe"
+                                                    [binding]="'CreditTransactionName'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="RightCenter">
+                                                    <span>{{item.CreditTransactionName}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- EntityType -->
+                                        <log-column [width]="'100'" [Alignment]="'right'"
+                                                    [header]="'Customs.GuaranteeFileFilterQuery.F.EntityTypeName' | TextCodeTranslationPipe"
+                                                    [binding]="'EntityTypeName'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="RightCenter">
+                                                    <span>{{item.EntityTypeName }}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- EntityNumber -->
+                                        <log-column [width]="'100'" [Alignment]="'right'"
+                                                    [header]="'Customs.GuaranteeFileFilterQuery.F.GuaranteeEntityID' | TextCodeTranslationPipe"
+                                                    [binding]="'EntityNumber'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div style="width:100%;height:100%;">
+                                                    <div class="RightCenter">
+                                                        <span>{{item.EntityNumber }}</span>
+                                                    </div>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- CreditTransactionAmount -->
+                                        <log-column [width]="'100'" [Alignment]="'right'"
+                                                    [header]="'Customs.GuaranteeFileFilterQuery.F.Amount' | TextCodeTranslationPipe"
+                                                    [binding]="'CreditTransactionAmount'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div style="width:100%;height:100%;">
+                                                    <div class="RightCenter">
+                                                        <span>{{item.CreditTransactionAmount }}</span>
+                                                    </div>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                    </logitude-edit-grid>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!--RequireDocumentsList-->
+                        <tr style="width: 100%">
+                            <td style="width: 200px;height:24px; font-size: 12px; color: #1B90CB;">
+                                {{'Customs.GuaranteeFileFilterQuery.O.GuaranteeFileFilterDocumentsResults'| TextCodeTranslationPipe}}
+                            </td>
+                        </tr>
+                        <tr class="FormFieldRow" style="height:1px">
+                            <td colspan="5" style="width: 100% ; height : 10%">
+                                <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
+                                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="RequireDocumentsList">
+
+                                        <!-- Type -->
+                                        <log-column [width]="'100'" [Alignment]="'right'"
+                                                    [header]="'Customs.GuaranteeFileFilterQuery.F.DocumentTypeName' | TextCodeTranslationPipe"
+                                                    [binding]="'TypeName'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="RightCenter">
+                                                    <span>{{item.TypeName}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- DisplayFileNumber -->
+                                        <log-column [width]="'90'" [Alignment]="'right'"
+                                                    [header]="'Customs.GuaranteeFileFilterQuery.F.DisplayFileNumber' | TextCodeTranslationPipe"
+                                                    [binding]="'DisplayFileNumber'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="RightCenter">
+                                                    <span>{{item.DisplayFileNumber}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- DocumentID -->
+                                        <log-column [width]="'100'" [Alignment]="'right'"
+                                                    [header]="'Customs.GuaranteeFileFilterQuery.F.DocumentID' | TextCodeTranslationPipe"
+                                                    [binding]="'DocumentID'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="RightCenter">
+                                                    <span>{{item.DocumentID }}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                    </logitude-edit-grid>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><div></div></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </custom-message-wrapper>
+</div>

@@ -1,0 +1,177 @@
+﻿<style type="text/css">
+    .SectionTitle {
+        height: 20px;
+        line-height: 20px;
+        font-size: 14px;
+        color: #1B90CB;
+        user-select: text;
+        -webkit-user-select: text;
+    }
+</style>
+
+<div class="TabHolder">
+        <table>
+
+            <tr style="height: 1px;">
+                <td>
+                   <table>
+                       <tr class="TabTitleRow">
+                           <td colspan="2">{{'Agent.TH.General' | TextCodeTranslationPipe}}</td>
+                       </tr>
+
+                       <tr>
+                           <td style="width: 310px;">
+
+                               <table>
+                                   <!-- Code -->
+                                   <tr class="FormFieldRow">
+                                       <td style="width: 100px;">
+                                           <LogLabel [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                       </td>
+
+                                       <td>
+                                           <LogTextBox [ObjectFieldName]="'Code'" [Text]="Code" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                       </td>
+                                   </tr>
+
+                                   <!-- EnglishName -->
+                                   <tr class="FormFieldRow">
+                                       <td>
+                                           <LogLabel [ObjectFieldName]="'EnglishName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                       </td>
+
+                                       <td>
+                                           <LogTextBox   [ObjectFieldName]="'EnglishName'" [Text]="EnglishName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                       </td>
+                                   </tr>
+
+                                   <!-- LocalName -->
+                                   <tr class="FormFieldRow">
+                                       <td>
+                                           <LogLabel [ObjectFieldName]="'LocalName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                       </td>
+
+                                       <td>
+                                           <LogTextBox   [ObjectFieldName]="'LocalName'" [Text]="LocalName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                       </td>
+                                   </tr>
+
+                                   <!-- IATACode -->
+                                   <tr class="FormFieldRow">
+                                       <td>
+                                           <LogLabel [ObjectFieldName]="'IATACode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                       </td>
+
+                                       <td>
+                                           <LogTextBox   [ObjectFieldName]="'IATACode'" [Text]="IATACode" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                       </td>
+                                   </tr>
+
+                                   <!-- CASSCode -->
+                                   <tr class="FormFieldRow">
+                                       <td>
+                                           <LogLabel [ObjectFieldName]="'CASSCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                       </td>
+
+                                       <td>
+                                           <LogTextBox   [ObjectFieldName]="'CASSCode'" [Text]="CASSCode" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                       </td>
+                                   </tr>
+
+                                   <!-- RegulatedAgentCode -->
+                                   <tr class="FormFieldRow" *ngIf="isRAFieldsVisibile">
+                                       <td>
+                                           <LogLabel [ObjectFieldName]="'RegulatedAgentCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                       </td>
+
+                                       <td>
+                                           <LogTextBox   [ObjectFieldName]="'RegulatedAgentCode'" [Text]="RegulatedAgentCode" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                       </td>
+                                   </tr>
+
+                                   <!-- Website -->
+                                   <tr class="FormFieldRow">
+                                       <td>
+                                           <LogLabel [ObjectFieldName]="'Website'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                       </td>
+
+                                       <td>
+                                           <LogTextBox   [ObjectFieldName]="'Website'" [Text]="Website" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                       </td>
+                                   </tr>
+
+                                   <!-- InActive -->
+                                   <tr class="FormFieldRow">
+                                       <td>
+                                           <LogLabel [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                       </td>
+
+                                       <td>
+                                           <LogCheckBox   [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                       </td>
+                                   </tr>
+
+                                   <!-- Notes -->
+                                   <tr class="FormFieldRow">
+                                       <td colspan="2">
+                                           <table>
+                                               <tr style="height: 1px;">
+                                                   <td>
+                                                       <LogLabel [ObjectFieldName]="'Notes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                   </td>
+                                               </tr>
+
+                                               <tr style="height: 95px;">
+                                                   <td>
+                                                       <div class="FillParent">
+                                                           <LogTextBox   [ObjectFieldName]="'Notes'" [Text]="Notes" [IsMultiline]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                       </div>
+                                                   </td>
+                                               </tr>
+                                           </table>
+                                       </td>
+                                   </tr>
+
+
+                                   <tr>
+                                       <td></td>
+                                   </tr>
+    
+                               </table>
+
+                           </td>
+
+                           <td>
+                               <div></div>
+                           </td>
+                       </tr>
+                   </table>
+                </td>
+            </tr>
+
+            <tr style="height:10px;">
+                <td>
+                    <div></div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <table>
+                        <tr style="height: 1px;">
+                            <td class="SectionTitle">Additional Fields</td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div class="FillParent">
+                                    <div class="LocationDirective" #Child></div>
+                                </div>                                
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+        </table>
+    </div>

@@ -1,0 +1,135 @@
+﻿<table style="height:100%;vertical-align:top">
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr style="height:100%;vertical-align:top;">
+        <td>
+            <table style="height:100%;vertical-align:top">
+                <tr class="FormFieldRow">
+                    <td [style.width.px]="LabelColumnWidth">
+                        <LogLabel [ObjectFieldName]="'QuestionTypeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:220px">
+                        <!--<select style="width: 220px;padding-left:0px;text-indent:-1.5px;" [(ngModel)]="QuestionTypeCode" (change)="onTypeSelected($event.target.value)">
+                            <option style="width: 150px;margin-left:0px;padding-left:0px" *ngFor="let item of QuestionTypesList" [value]="item.Code">
+                                {{item.Name}}
+                            </option>
+                        </select>-->
+                       <div style="width:220px">
+                        <ComboBox [ItemsSource]="QuestionTypesList" [Binding] ="'Name'" [SelectedItem]="SelectedType" (SelectedItemChanged)="SelectedType = $event"></ComboBox>
+                          </div>
+                        </td>
+                </tr>
+
+                <tr class="FormFieldRow">
+                    <td [style.width.px]="LabelColumnWidth">
+                        <LogLabel [ObjectFieldName]="'Question'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td  style="width:500px;height:80px">
+                        <LogTextBox [ObjectFieldName]="'Question'" [Text]="Question" [IsMultiline]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+                </tr>
+
+                <tr class="FormFieldRow">
+                    <td [style.width.px]="LabelColumnWidth">
+                        <LogLabel [ObjectFieldName]="'IsMandatory'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td style="width:220px">
+                        <LogCheckBox [ObjectFieldName]="'IsMandatory'" [Checked]="IsMandatory" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr class="FormFieldRow" *ngIf="QuestionTypeCode == 'MC' || QuestionTypeCode == 'CB'">
+                    <td [style.width.px]="LabelColumnWidth">
+                        <LogLabel [Text]="'Display Other'" [ObjectFieldName]="'IsAddOther'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td style="width:220px">
+                        <LogCheckBox [ObjectFieldName]="'IsAddOther'" [Checked]="IsAddOther" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr class="FormFieldRow" *ngIf="QuestionTypeCode == 'MC' || QuestionTypeCode == 'CB' || QuestionTypeCode == 'CL'">
+                    <td [style.width.px]="LabelColumnWidth">
+                        <LogLabel [Text]="'Choices'" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                
+                        <table>
+                            <tr>
+                                <td style="width:220px">
+                                    <div style="width:220px">
+                                        <ComboBox [ItemsSource]="CustomPickLists" [SelectedItem]="PickListCode" (SelectedItemChanged)="PickListCode = $event"></ComboBox>
+                                    </div>
+                                </td>
+
+                                <td style="width: 5px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 57px;">
+                                    <button [disabled]="!PickListCode"  class="Button" (click)="AddEditPickListCommand('Edit')">Edit</button>
+                                </td>
+
+                                <td style="width: 5px;">
+                                    <div></div>
+                                </td>
+                                <td style="width: 57px;">
+                                    <button class="Button" (click)="AddEditPickListCommand('Add')">Add</button>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </table>
+
+                       
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

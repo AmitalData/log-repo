@@ -1,0 +1,564 @@
+﻿<div class="TabHolder">
+    <table>
+        <tr class="TabTitleRow">
+            <td>Audit</td>
+            <td style="width: 21px;">
+                <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
+            </td>
+            <td style="width: 2px;"><div style="width:2px"></div></td>
+        </tr>
+
+        <tr style="height:100%">
+
+            <td colspan="3">
+
+
+                <table>
+                    <!--Area 1-->
+                    <tr style="height:48%">
+                        <td>
+
+                            <div class="ScrollViewer">
+                                <div class="ScrollContent">
+
+
+                                    <table>
+                                        <tr style="vertical-align:top;height:100%">
+
+                                            <td  style="vertical-align:central" class="CellStretch">
+                                                <div class="SimpleGridView">
+                                                    <div class="SimpleGridViewHeader">
+                                                        <table>
+                                                            <tr>
+
+                                                                <td style="width: 300px; min-width: 300px">Create By</td>
+                                                                <td style="width: 300px; min-width: 300px;">Has Automation Executed</td>
+                                                                <td style="width: 300px; min-width:300px">Create By</td>
+                                                                <td style="width: 300px; min-width:300px">Check Start Date</td>
+
+                                                                <td style="width: 100%; min-width: 100%">Done Date</td>
+                                                                <td *ngIf="IsCustomerCareUser" style="width: 200px; min-width: 200px">Execution Time</td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+
+                                                    <div class="SimpleGridViewBody">
+                                                        <table>
+                                                            <tr style="height: 1px;">
+                                                                <td>
+                                                                    <table>
+                                                                        <tr class="SimpleGridViewRow RowHover" *ngFor="let item of EntityChangeLists">
+                                                                            <td>
+                                                                                <table>
+                                                                                    <tr style="height:25px;" (click)="EntityChangeListsChangeSelected(item)" [class.RowSelected]="item === EntityChangeListSelected">
+
+
+                                                                                        <!--CreateDate-->
+                                                                                        <td class="GridViewCell" style="width: 300px; min-width: 300px; max-width: 300px; position: relative;">
+
+                                                                                            <div>
+                                                                                                <span>{{item.CreateDate | DateTimeToDatePipe}}</span>
+                                                                                                <span style="margin-left:5px">{{item.CreateDate | DateTimeToTimePipe}}</span>
+
+                                                                                            </div>
+                                                                                        </td>
+                                                                                        <!--HasExecutedRecord-->
+                                                                                        <td class="GridViewCell" style="width: 300px; min-width: 300px; max-width: 300px; position: relative;">
+
+                                                                                            <div style="width:295px">
+                                                                                                <img class="CenterCenter" style="width:20px;height:20px" *ngIf="item.HasExecutedRecord" src="./Images/Icons/MiniGreenTick.png" />
+
+                                                                                            </div>
+
+
+                                                                                        </td>
+                                                                                        <!--CreateByUserName-->
+                                                                                        <td class="GridViewCell" style="width: 300px; min-width: 300px; max-width: 300px; position: relative;">
+
+                                                                                            {{item.CreateByUserName}}
+
+                                                                                        </td>
+
+                                                                                        <!--CheckStartDate-->
+
+                                                                                        <td class="GridViewCell" style="width:300px; min-width:300px; max-width:300px; position: relative;">
+
+                                                                                            <div>
+                                                                                                <span>{{item.CheckStartDate | DateTimeToDatePipe}}</span>
+                                                                                                <span style="margin-left:5px">{{item.CheckStartDate | DateTimeToTimePipe}}</span>
+
+                                                                                            </div>
+
+                                                                                        </td>
+
+                                                                                        <!--DoneDate-->
+                                                                                        <td class="GridViewCell" style="width:100%; min-width:100%; max-width:100%; position: relative;">
+
+                                                                                            <div>
+                                                                                                <span>{{item.DoneDate | DateTimeToDatePipe}}</span>
+                                                                                                <span style="margin-left:5px">{{item.DoneDate | DateTimeToTimePipe}}</span>
+
+                                                                                            </div>
+
+                                                                                        </td>
+                                                                                        <td *ngIf="IsCustomerCareUser" class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px; position: relative;">
+
+                                                                                            {{item.ExecutionTime}} ms 
+
+                                                                                        </td>
+
+                                                                                    </tr>
+                                                                                    <tr><td colspan="6"></td></tr>
+                                                                                </table>
+
+
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                            </td>
+
+
+                                        </tr>
+                                    </table>
+
+                                    <!--abed-->
+
+                                </div>
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+
+
+
+
+                    <!--Area 2-->
+                    <tr style="height:5px">
+                        <td style="height:5px">
+                            <div style="height:5px"></div>
+                        </td>
+                    </tr>
+
+
+                    <!--Area 3-->
+                    <tr style="height:48%">
+
+                        <td>
+                            <div class="CurvedArea" style="height:100%">
+                                <div style="height:100%">
+
+
+                                    <table>
+
+                                        <tr style="height:5px"><td style="height:5px"><div></div></td></tr>
+
+                                        <tr style="height:100%">
+                                            <td>
+                                                <div style="border:0px;" class="TabControl">
+
+                                                    <!--Tab Control Header-->
+                                                    <div style="border:0px;border-bottom:1px solid #E4E3E1;" class="TabControlHead">
+
+                                                        <ul style="margin-left: 2px;">
+
+                                                            <li [class.Selected]="SelectedTabCode == 'FCH'" (click)="SelectedTabCode = 'FCH'" style="margin-left:2px;">
+                                                                <div style="width:100px;text-align:center;font-size:11px;color:#1B90CB" class="InnerChild">
+                                                                    <span>Fields Changes</span>
+                                                                </div>
+                                                            </li>
+
+                                                            <li [class.Selected]="SelectedTabCode == 'AUT'" (click)="SelectedTabCode = 'AUT'">
+                                                                <div class="InnerChild" style="color:#1B90CB;width:80px">
+
+                                                                    <div style="width:80px;text-align:center;font-size:11px;color:#1B90CB" class="InnerChild">
+                                                                        <span>Automation</span>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+
+                                                        </ul>
+
+                                                    </div>
+
+                                                    <!--Tab Control Body-->
+
+                                                    <div style="border:0px;" class="TabControlBody">
+
+                                                        <!-- Tab   1-->
+
+                                                        <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'FCH'">
+                                                            <div class="LocationDirective" LocationDirective Code="FCH">
+
+
+                                                                <div style="margin-left:5px;margin-right:5px;" class="BodyBackground">
+
+                                                                    <div class="ScrollViewer">
+                                                                        <div class="ScrollContent">
+                                                                            <table>
+                                                                                <tr style="height:5px"><td colspan="3" style="height:5px"><div tyle="height:5px"></div></td></tr>
+                                                                                <tr style="vertical-align:central;height:100%">
+
+                                                                                    <td style="width:10px;"><div style="width:10px"></div></td>
+                                                                                    <td style="vertical-align:central" class="CellStretch">
+                                                                                        <div class="SimpleGridView">
+                                                                                            <div class="SimpleGridViewHeader">
+                                                                                                <table>
+                                                                                                    <tr>
+
+                                                                                                        <td style="width: 300px; min-width: 300px">Name</td>
+                                                                                                        <td style="width: 400px; min-width: 400px;">Old Value</td>
+                                                                                                        <td style="width: 400px; min-width:400px">New Value</td>
+
+
+                                                                                                        <td style="width: 100%; min-width: 100%">Update By</td>
+                                                                                                    </tr>
+                                                                                                </table>
+                                                                                            </div>
+
+                                                                                            <div class="SimpleGridViewBody">
+                                                                                                <table>
+                                                                                                    <tr style="height: 1px;">
+                                                                                                        <td>
+                                                                                                            <table>
+                                                                                                                <tr class="SimpleGridViewRow RowHover" *ngFor="let item of ChangeFieldsList">
+                                                                                                                    <td>
+                                                                                                                        <table>
+                                                                                                                            <tr style="height:25px;" (click)="SelectedChangeFieldsList = item" [class.RowSelected]="item === SelectedChangeFieldsList">
+
+
+                                                                                                                                <!--FieldName-->
+                                                                                                                                <td class="GridViewCell" style="width: 300px; min-width: 300px; max-width: 300px; position: relative;">
+
+
+                                                                                                                                    {{item.FieldName}}
+
+
+
+                                                                                                                                </td>
+                                                                                                                                <!--OldValue-->
+                                                                                                                                <td class="GridViewCell" style="width: 400px; min-width: 400px; max-width: 400px; position: relative;">
+                                                                                                                                    {{item.OldValue}}
+
+                                                                                                                                </td>
+
+                                                                                                                                <!--NewValue-->
+                                                                                                                                <td class="GridViewCell" style="width: 400px; min-width: 400px; max-width: 400px; position: relative;">
+
+                                                                                                                                    {{item.NewValue}}
+
+
+                                                                                                                                </td>
+
+
+
+
+                                                                                                                                <!--DoneDate-->
+                                                                                                                                <td class="GridViewCell" style="width:100%; min-width:100%; max-width:100%; position: relative;">
+
+                                                                                                                                    {{item.Via}}
+                                                                                                                                </td>
+
+                                                                                                                            </tr>
+                                                                                                                            <tr><td colspan="4"></td></tr>
+                                                                                                                        </table>
+
+
+                                                                                                                    </td>
+                                                                                                                </tr>
+                                                                                                            </table>
+                                                                                                        </td>
+                                                                                                    </tr>
+
+                                                                                                    <tr>
+                                                                                                        <td>
+                                                                                                            <div></div>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </table>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                    </td>
+                                                                                    <td style="width:10px;"><div style="width:10px"></div></td>
+
+                                                                                </tr>
+                                                                            </table>
+
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Tab   2-->
+                                                        <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'AUT'">
+                                                            <div class="LocationDirective" LocationDirective Code="AUT">
+
+
+                                                                <div style="margin-left:5px;margin-right:5px;" class="BodyBackground">
+
+                                                                    <div class="ScrollViewer">
+                                                                        <div class="ScrollContent">
+                                                                            <table>
+                                                                                <tr style="height:40px">
+                                                                                    <td colspan="3" style="height:40px">
+
+
+                                                                                        <div style="height:40px;vertical-align:central;">
+
+                                                                                            <table>
+                                                                                                <tr>
+                                                                                                    <td><div></div></td>
+
+
+                                                                                                    <td style="width:120px"><div style="width:120px"><span style="vertical-align:central;width:120px;color:#6E7172">Automations Type:</span></div></td>
+                                                                                                    <td style="width:300px">
+
+                                                                                                        <div style="width:300px;vertical-align:central">
+
+                                                                                                            <ul style="height:40px;vertical-align:central;text-align:center" class="FiltersMenu">
+                                                                                                                <li style="width:75px;color:#1B90CB" (click)="AutomationTypeChangedMethod('All')" [class.SelectedFilter]="AutomationTypeFilterSelectedValue === 'All'">
+                                                                                                                    <span *ngIf="AutomationTypeFilterSelectedValue == 'All'" style="color:white;text-align:center">All</span>
+                                                                                                                    <span *ngIf="AutomationTypeFilterSelectedValue != 'All'" style="color:#1B90CB;text-align:center">All</span>
+                                                                                                                </li>
+                                                                                                                <li style="width:75px;color:#1B90CB;vertical-align:central" (click)="AutomationTypeChangedMethod('OnCreate')" [class.SelectedFilter]="AutomationTypeFilterSelectedValue === 'OnCreate'" title="On Create">
+
+                                                                                                                    <span *ngIf="AutomationTypeFilterSelectedValue == 'OnCreate'" style="color:white;text-align:center">On Create</span>
+                                                                                                                    <span *ngIf="AutomationTypeFilterSelectedValue != 'OnCreate'" style="color:#1B90CB;text-align:center">On Create</span>
+                                                                                                                </li>
+                                                                                                                <li style="width:75px;color:#1B90CB" (click)="AutomationTypeChangedMethod('OnUpdate')" [class.SelectedFilter]="AutomationTypeFilterSelectedValue === 'OnUpdate'" title="On Update">
+
+                                                                                                                    <span *ngIf="AutomationTypeFilterSelectedValue == 'OnUpdate'" style="color:white;text-align:center">On Update</span>
+                                                                                                                    <span *ngIf="AutomationTypeFilterSelectedValue != 'OnUpdate'" style="color:#1B90CB;text-align:center">On Update</span>
+                                                                                                                </li>
+                                                                                                                <li style="width:75px;color:#1B90CB" (click)="AutomationTypeChangedMethod('Schedule')" [class.SelectedFilter]="AutomationTypeFilterSelectedValue === 'Schedule'" title="Schedule">
+
+                                                                                                                    <span *ngIf="AutomationTypeFilterSelectedValue == 'Schedule'" style="color:white;text-align:center">Schedule</span>
+                                                                                                                    <span *ngIf="AutomationTypeFilterSelectedValue != 'Schedule'" style="color:#1B90CB;text-align:center">Schedule</span>
+                                                                                                                </li>
+
+
+                                                                                                            </ul>
+
+                                                                                                        </div>
+
+                                                                                                    </td>
+
+                                                                                                    <td style="width:20px"><div style="width:20px;height:30px"></div></td>
+
+                                                                                                    <td style="width:70px"><div style="width:70px"><span style="vertical-align:central;width:80px;color:#6E7172">Condition:</span></div></td>
+                                                                                                    <td style="width:105px">
+                                                                                                        <div style="width:105px;vertical-align:central">
+
+                                                                                                            <ul style="height:30px;vertical-align:central;text-align:center" class="FiltersMenu">
+                                                                                                                <li style="width:35px;color:#1B90CB" (click)="ConditionChangedMethod('All')" [class.SelectedFilter]="ConditionChangedSelectedValue === 'All'">
+                                                                                                                    <span *ngIf="ConditionChangedSelectedValue == 'All'" style="color:white;text-align:center">All</span>
+                                                                                                                    <span *ngIf="ConditionChangedSelectedValue != 'All'" style="color:#1B90CB;text-align:center">All</span>
+                                                                                                                </li>
+                                                                                                                <li style="width:35px;color:#1B90CB;vertical-align:central" (click)="ConditionChangedMethod('true')" [class.SelectedFilter]="ConditionChangedSelectedValue === 'true'" title="">
+
+                                                                                                                    <img style="width:14px;height:12px" class="CenterCenter" src="./Images/CheckBoxIcon.png" />
+                                                                                                                </li>
+                                                                                                                <li style="width:35px;color:#1B90CB" (click)="ConditionChangedMethod('false')" [class.SelectedFilter]="ConditionChangedSelectedValue === 'false'" title="">
+                                                                                                                    <img class="CenterCenter" src="./Images/RedX.png" />
+
+                                                                                                                </li>
+
+
+
+                                                                                                            </ul>
+
+                                                                                                        </div>
+
+
+                                                                                                    </td>
+                                                                                                    <td style="width:13px"><div style="width:13px;height:30px"></div></td>
+                                                                                                </tr>
+                                                                                            </table>
+
+                                                                                        </div>
+
+                                                                                    </td>
+
+                                                                                </tr>
+                                                                                <tr style="vertical-align:central;height:100%">
+
+                                                                                    <td style="width:10px;"><div style="width:10px"></div></td>
+                                                                                    <td style="vertical-align:central" class="CellStretch">
+                                                                                        <div class="SimpleGridView">
+                                                                                            <div class="SimpleGridViewHeader">
+                                                                                                <table>
+                                                                                                    <tr>
+
+                                                                                                        <td style="width: 200px; min-width: 200px">Create Date</td>
+                                                                                                        <td style="width: 100px; min-width: 100px;">Conditions</td>
+                                                                                                        <td style="width: 200px; min-width:200px">Automation Result</td>
+                                                                                                        <td style="width: 200px; min-width:200px">Automation Type</td>
+                                                                                                        <td style="width: 200px; min-width:200px">Automation Name</td>
+                                                                                                        <td style="width: 200px; min-width:200px">Automation Description </td>
+
+                                                                                                        <td style="width: 100%; min-width: 100%">Done Date</td>
+                                                                                                        <td *ngIf="IsCustomerCareUser" style="width: 200px; min-width: 200px">Execution Time</td>
+                                                                                                    </tr>
+                                                                                                </table>
+                                                                                            </div>
+
+                                                                                            <div class="SimpleGridViewBody">
+                                                                                                <table>
+                                                                                                    <tr style="height: 1px;">
+                                                                                                        <td>
+                                                                                                            <table>
+                                                                                                                <tr class="SimpleGridViewRow RowHover" *ngFor="let item of EntityAutomationList">
+                                                                                                                    <td>
+                                                                                                                        <table>
+                                                                                                                            <tr style="height:25px;" (click)="SelectedEntityAutomationList = item" [class.RowSelected]="item === SelectedEntityAutomationList">
+
+
+                                                                                                                                <!--CreateDate-->
+                                                                                                                                <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px; position: relative;">
+
+                                                                                                                                    <div style="text-align:left;width:195px;overflow:hidden;text-overflow: ellipsis;white-space: nowrap;display:inline-block">
+                                                                                                                                        <span>{{item.CreateDate | DateTimeToDatePipe}}</span>
+                                                                                                                                        <span style="margin-left:5px">{{item.CreateDate | DateTimeToTimePipe}}</span>
+                                                                                                                                    </div>
+                                                                                                                                </td>
+
+                                                                                                                                <!--IsConditionTrue-->
+                                                                                                                                <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px; position: relative;">
+
+                                                                                                                                    <div style="width:95px">
+                                                                                                                                        <img class="CenterCenter" style="width:20px;height:20px" *ngIf="item.IsConditionTrue" src="./Images/Icons/MiniGreenTick.png" />
+
+                                                                                                                                        <img *ngIf="item.DoneDate && !item.IsConditionTrue" class="CenterCenter" style="width:14px;height:14px"  src="./Images/RedX.png" />
+                                                                                                                             
+
+
+                                                                                                                                    </div>
+
+
+                                                                                                                                </td>
+
+                                                                                                                                <!--ResultCode-->
+                                                                                                                                <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px; position: relative;">
+
+                                                                                                                                    {{item.ResultCode}}
+                                                                                                                                </td>
+
+                                                                                                                                <!--Automation Type-->
+                                                                                                                                <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px; position: relative;">
+
+                                                                                                                                    {{item.AutomationType}}
+                                                                                                                                </td>
+
+                                                                                                                                <!--Automation Name-->
+                                                                                                                                <td [attr.title]="item.AutomationName" class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px; position: relative;">
+
+                                                                                                                                    {{item.AutomationName}}
+                                                                                                                                </td>
+
+                                                                                                                                <!--Automation Description-->
+                                                                                                                                <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px; position: relative;">
+                                                                                                                                    {{item.AutomationDescription}}
+                                                                                                                                </td>
+
+
+
+                                                                                                                                <!--DoneDate-->
+                                                                                                                                <td class="GridViewCell" style="width:100%; min-width:100%; max-width:100%; position: relative;">
+
+                                                                                                                                    <div>
+                                                                                                                                        <span>{{item.DoneDate | DateTimeToDatePipe}}</span>
+                                                                                                                                        <span style="margin-left:5px">{{item.DoneDate | DateTimeToTimePipe}}</span>
+                                                                                                                                    </div>
+
+                                                                                                                                </td>
+                                                                                                                                <td *ngIf="IsCustomerCareUser" class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px; position: relative;">
+
+                                                                                                                                    {{item.ExecutionTime}} ms 
+
+                                                                                                                                </td>
+
+                                                                                                                            </tr>
+                                                                                                                            <tr><td colspan="8"></td></tr>
+                                                                                                                        </table>
+
+
+                                                                                                                    </td>
+                                                                                                                </tr>
+                                                                                                            </table>
+                                                                                                        </td>
+                                                                                                    </tr>
+
+                                                                                                    <tr>
+                                                                                                        <td>
+                                                                                                            <div></div>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </table>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                    </td>
+                                                                                    <td style="width:10px;"><div style="width:10px"></div></td>
+
+                                                                                </tr>
+                                                                            </table>
+
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                            </td>
+                                        </tr>
+
+
+
+                                        <tr style="height:5px"><td style="height:5px"><div></div></td></tr>
+                                    </table>
+
+
+
+
+
+                                </div>
+
+                            </div>
+                        </td>
+
+                    </tr>
+
+                    <tr style="height:5px;"><td style="height:5px"><div style="height:5px;"></div></td></tr>
+
+
+                </table>
+            </td>
+
+
+
+        </tr>
+    </table>
+
+
+</div>

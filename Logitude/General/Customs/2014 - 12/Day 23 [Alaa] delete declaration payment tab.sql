@@ -1,0 +1,1 @@
+delete from ObjectTableTabs where ObjectTableId = (select id from objecttables where name ='customs.declaration') and Code ='DEPY'

@@ -1,0 +1,1 @@
+update ReportsTemplates set TemplateType = 'R' where TemplateType is null

@@ -1,0 +1,541 @@
+﻿
+<table>
+    <tr>
+        <td>
+            <div class="TabHolder">
+                <table>
+                    <tr class="TabTitleRow">
+                        <td>{{'Shipment.TH.Connections' | TextCodeTranslationPipe}}</td>
+                    </tr>
+
+                    <tr style="height: 20px;" *ngIf="IsNoDataTextVisible">
+                        <td>
+                            <span class="NoDataTextStyle" style="text-align: left;">No Connected Entities</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <table>
+                                <!--Entries-->
+                                <tr *ngIf="IsWarehouseEntryVisible" [style.height.px]="EntriesGridHeight" style="max-height:160px;">
+                                    <td>
+                                        <table>
+                                            <tr style="height:30px;">
+                                                <td style="font-size:14px; color:#1B90CB;">Cross Dock Entries</td>
+
+                                                <td style="width:140px;">
+                                                    <button *ngIf="IsNewWarehouseEntryVisible" class="Button" (click)="NewWarehouseEntryButtonClicked()">New Cross Dock Entry</button>
+                                                </td>
+
+                                            </tr>
+
+                                            <tr>
+                                                <td colspan="2">
+                                                    <div class="MediaFill">
+                                                        <div class="SimpleGridView">
+                                                            <div class="SimpleGridViewHeader">
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width: 27px; max-width:27px; min-width:27px;">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td style="width: 150px; max-width:150px; min-width:150px;">Entry Number</td>
+                                                                        <td style="width: 150px; max-width:150px; min-width:150px;">Status</td>
+                                                                        <td style="width: 200px; max-width:200px; min-width:200px;">Entry Date</td>
+                                                                        <td class="LastChild">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+
+                                                            <div class="SimpleGridViewBody">
+                                                                <table>
+                                                                    <tr class="SimpleGridViewRow RowHover" *ngFor="let item of WarehouseEntriesItemsSource">
+                                                                        <td class="GridViewCell" style="width: 27px; max-width:27px; min-width:27px;">
+                                                                            <img width="24" height="24" src="./Images/CellIcons/Entry.png" class="CenterCenter" />
+                                                                        </td>
+
+                                                                        <td class="GridViewCell TextTrimming" style="width: 150px; max-width:150px; min-width:150px;">
+                                                                            {{item.EntityNumber}}
+                                                                        </td>
+
+                                                                        <td class="GridViewCell TextTrimming" style="width: 150px; max-width:150px; min-width:150px;">
+                                                                            {{item.EntityStatus}}
+                                                                        </td>
+
+                                                                        <td class="GridViewCell" [ngStyle]="{color: item.Foreground}" style="width: 200px; max-width:200px; min-width:200px;">
+                                                                            {{item.EntityDate | DateTimeToDatePipe}} {{item.DateType}}
+                                                                        </td>
+
+                                                                        <td class="CellTools">
+                                                                            <div>
+                                                                                <span class="hyperlink" (click)="ViewEntity(item)">View</span>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td colspan="5">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                                <tr style="height:10px;" *ngIf="IsWarehouseReleaseVisible">
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <!--Releases-->
+                                <tr *ngIf="IsWarehouseReleaseVisible" [style.height.px]="ReleasesGridHeight" style="max-height:160px;">
+                                    <td>
+                                        <table>
+                                            <tr style="height:30px;">
+                                                <td style="font-size:14px; color:#1B90CB;">Cross Dock Releases</td>
+
+                                                <td style="width:140px;">
+                                                    <button *ngIf="IsNewWarehouseReleaseVisible" class="Button" (click)="NewWarehouseReleaseButtonClicked()">New Cross Dock Release</button>
+                                                </td>
+
+                                            </tr>
+
+                                            <tr>
+                                                <td colspan="2">
+                                                    <div class="MediaFill">
+                                                        <div class="SimpleGridView">
+                                                            <div class="SimpleGridViewHeader">
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width: 27px; max-width:27px; min-width:27px;">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td style="width: 150px; max-width:150px; min-width:150px;">Release Number</td>
+                                                                        <td style="width: 150px; max-width:150px; min-width:150px;">Status</td>
+                                                                        <td style="width: 200px; max-width:200px; min-width:200px;">Release Date</td>
+                                                                        <td class="LastChild">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+
+                                                            <div class="SimpleGridViewBody">
+                                                                <table>
+                                                                    <tr class="SimpleGridViewRow RowHover" *ngFor="let item of WarehouseReleasesItemsSource">
+                                                                        <td class="GridViewCell" style="width: 27px; max-width:27px; min-width:27px;">
+                                                                            <img width="24" height="24" src="./Images/CellIcons/Release.png" class="CenterCenter" />
+                                                                        </td>
+
+                                                                        <td class="GridViewCell TextTrimming" style="width: 150px; max-width:150px; min-width:150px;">
+                                                                            {{item.EntityNumber}}
+                                                                        </td>
+
+                                                                        <td class="GridViewCell TextTrimming" style="width: 150px; max-width:150px; min-width:150px;">
+                                                                            {{item.EntityStatus}}
+                                                                        </td>
+
+                                                                        <td class="GridViewCell" [ngStyle]="{color: item.Foreground}" style="width: 200px; max-width:200px; min-width:200px;">
+                                                                            {{item.EntityDate | DateTimeToDatePipe}} {{item.DateType}}
+                                                                        </td>
+
+                                                                        <td class="CellTools">
+                                                                            <div style="padding-left:5px;">
+                                                                                <span class="hyperlink" (click)="ViewEntity(item)">View</span>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td colspan="5">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                                <tr style="height:10px;" *ngIf="IsAssembliesVisivle">
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <!--Assemblies-->
+                                <tr *ngIf="IsAssembliesVisivle" [style.height.px]="AssembliesGridHeight" style="max-height:160px;">
+                                    <td>
+                                        <table>
+                                            <tr style="height:30px;">
+                                                <td style="font-size:14px; color:#1B90CB;">Assemblies</td>
+
+                                                <td style="width:140px;">
+                                                    <button class="Button" (click)="AddAssembly()">New Assembly</button>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td colspan="2">
+                                                    <div class="MediaFill">
+                                                        <div class="SimpleGridView">
+                                                            <div class="SimpleGridViewHeader">
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width: 300px; max-width:300px; min-width:300px;">{{'ShipmentAssembly.F.ShipperName' | TextCodeTranslationPipe}}</td>
+                                                                        <td style="width: 200px; max-width:200px; min-width:200px;">{{'ShipmentAssembly.F.House' | TextCodeTranslationPipe}}</td>
+                                                                        <td class="LastChild">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+
+                                                            <div class="SimpleGridViewBody">
+                                                                <table>
+                                                                    <tr class="SimpleGridViewRow RowHover" *ngFor="let item of AssembliesItemsSource">
+                                                                        <td class="GridViewCell TextTrimming" style="width: 300px; max-width:300px; min-width:300px;">
+                                                                            {{item.ShipperName}}
+                                                                        </td>
+
+                                                                        <td class="GridViewCell" style="width: 200px; max-width:200px; min-width:200px;">
+                                                                            {{item.House}}
+                                                                        </td>
+
+                                                                        <td class="CellTools">
+                                                                            <span class="CellSeparator"></span>
+                                                                            <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditAssembly(item)"></IconButton>
+                                                                            <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteAssembly(item)"></IconButton>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td colspan="3">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                                <tr style="height:10px;" *ngIf="IsTicketsGridVisible">
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <!--Tickets-->
+                                <tr *ngIf="IsTicketsGridVisible" [style.height.px]="TicketsGridHeight" style="max-height:160px;">
+                                    <td>
+                                        <table>
+                                            <tr style="height:30px;">
+                                                <td style="font-size:14px; color:#1B90CB;">Tickets</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <div class="MediaFill">
+                                                        <div class="SimpleGridView">
+                                                            <div class="SimpleGridViewHeader">
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width: 150px; max-width:150px; min-width:150px;">Ticket Number</td>
+                                                                        <td style="width: 150px; max-width:150px; min-width:150px;">Status</td>
+                                                                        <td class="LastChild">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+
+                                                            <div class="SimpleGridViewBody">
+                                                                <table>
+                                                                    <tr class="SimpleGridViewRow RowHover" *ngFor="let item of TicketsItemsSource">
+                                                                        <td class="GridViewCell TextTrimming" style="width: 150px; max-width:150px; min-width:150px;">
+                                                                            {{item.EntityNumber}}
+                                                                        </td>
+
+                                                                        <td class="GridViewCell TextTrimming" style="width: 150px; max-width:150px; min-width:150px;">
+                                                                            {{item.EntityStatus}}
+                                                                        </td>
+
+                                                                        <td class="CellTools">
+                                                                            <div>
+                                                                                <span class="hyperlink" (click)="ViewEntity(item)">View</span>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td colspan="3">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                                <tr style="height:10px;" *ngIf="IsQuoteGridVisible">
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <!--Quote-->
+                                <tr *ngIf="IsQuoteGridVisible" style="height:90px; max-height:90px;">
+                                    <td>
+                                        <table>
+                                            <tr style="height:30px;">
+                                                <td style="font-size:14px; color:#1B90CB;">Quote</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <div class="MediaFill">
+                                                        <div class="SimpleGridView">
+                                                            <div class="SimpleGridViewHeader">
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width: 27px; max-width:27px; min-width:27px;">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td style="width: 150px; max-width:150px; min-width:150px;">Quote Number</td>
+                                                                        <td style="width: 150px; max-width:150px; min-width:150px;">Status</td>
+                                                                        <td style="width: 150px; max-width:150px; min-width:150px;">Open Date</td>
+                                                                        <td style="width: 150px; max-width:150px; min-width:150px;">Accepted Date</td>
+                                                                        <td style="width: 150px; max-width:150px; min-width:150px;">Salesman</td>
+                                                                        <td class="LastChild">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+
+                                                            <div class="SimpleGridViewBody">
+                                                                <table>
+                                                                    <tr class="SimpleGridViewRow RowHover" *ngFor="let item of QuotesItemsSource">
+                                                                        <td class="GridViewCell" style="width: 27px; max-width:27px; min-width:27px;">
+                                                                            <img width="20" height="23" src="./Images/CellIcons/Quote.png" class="CenterCenter" />
+                                                                        </td>
+
+                                                                        <td class="GridViewCell TextTrimming" style="width: 150px; max-width:150px; min-width:150px;">
+                                                                            {{item.EntityNumber}}
+                                                                        </td>
+
+                                                                        <td class="GridViewCell TextTrimming" style="width: 150px; max-width:150px; min-width:150px;">
+                                                                            {{item.EntityStatus}}
+                                                                        </td>
+
+                                                                        <td class="GridViewCell TextTrimming" style="width: 150px; max-width:150px; min-width:150px;">
+                                                                            {{item.OpenDate | DateTimeToDatePipe}}
+                                                                        </td>
+
+                                                                        <td class="GridViewCell TextTrimming" style="width: 150px; max-width:150px; min-width:150px;">
+                                                                            {{item.AcceptedDate | DateTimeToDatePipe}}
+                                                                        </td>
+
+                                                                        <td class="GridViewCell TextTrimming" style="width: 150px; max-width:150px; min-width:150px;">
+                                                                            {{item.Salesman}}
+                                                                        </td>
+
+                                                                        <td class="CellTools">
+                                                                            <div>
+                                                                                <span *ngIf="IsDisconnectQuoteVisible" class="hyperlink" (click)="DisconnectQuote()" style="padding-left:5px;">Disconnect</span>
+                                                                                <span class="hyperlink" (click)="ViewEntity(item)" style="padding-left:5px;">View</span>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td colspan="7">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                                <tr style="height:10px;" *ngIf="IsMasterGridVisible">
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <!--Master-->
+                                <tr *ngIf="IsMasterGridVisible" style="height:90px; max-height:90px;">
+                                    <td>
+                                        <table>
+                                            <tr style="height:30px;">
+                                                <td style="font-size:14px; color:#1B90CB;">Master</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <div class="MediaFill">
+                                                        <div class="SimpleGridView">
+                                                            <div class="SimpleGridViewHeader">
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width: 27px; max-width:27px; min-width:27px;">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td style="width: 150px; max-width:150px; min-width:150px;">Master Number</td>
+                                                                        <td style="width: 150px; max-width:150px; min-width:150px;">Status</td>
+                                                                        <td class="LastChild">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+
+                                                            <div class="SimpleGridViewBody">
+                                                                <table>
+                                                                    <tr class="SimpleGridViewRow RowHover" *ngFor="let item of MastersItemsSource">
+                                                                        <td class="GridViewCell" style="width: 27px; max-width:27px; min-width:27px;">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td class="GridViewCell TextTrimming" style="width: 150px; max-width:150px; min-width:150px;">
+                                                                            {{item.EntityNumber}}
+                                                                        </td>
+
+                                                                        <td class="GridViewCell TextTrimming" style="width: 150px; max-width:150px; min-width:150px;">
+                                                                            {{item.EntityStatus}}
+                                                                        </td>
+
+                                                                        <td class="CellTools">
+                                                                            <div style="padding-left:5px;">
+                                                                                <span class="hyperlink" (click)="ViewEntity(item)">View</span>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td colspan="4">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                                <tr style="height:10px;" *ngIf="IsCustomFileGridVisible">
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <!--Custom File-->
+                                <tr *ngIf="IsCustomFileGridVisible" style="height:90px; max-height:90px;">
+                                    <td>
+                                        <table>
+                                            <tr style="height:30px;">
+                                                <td style="font-size:14px; color:#1B90CB;">Custom File</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <div class="MediaFill">
+                                                        <div class="SimpleGridView">
+                                                            <div class="SimpleGridViewHeader">
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width: 150px; max-width:150px; min-width:150px;">Custom File Number</td>
+                                                                        <td style="width: 150px; max-width:150px; min-width:150px;">Status</td>
+                                                                        <td class="LastChild">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+
+                                                            <div class="SimpleGridViewBody">
+                                                                <table>
+                                                                    <tr class="SimpleGridViewRow RowHover" *ngFor="let item of CustomFilesItemsSource">
+                                                                        <td class="GridViewCell TextTrimming" style="width: 150px; max-width:150px; min-width:150px;">
+                                                                            {{item.EntityNumber}}
+                                                                        </td>
+
+                                                                        <td class="GridViewCell TextTrimming" style="width: 150px; max-width:150px; min-width:150px;">
+                                                                            {{item.EntityStatus}}
+                                                                        </td>
+
+                                                                        <td class="CellTools">
+                                                                            <div style="padding-left:5px;">
+                                                                                <span class="hyperlink" (click)="ViewEntity(item)">View</span>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td colspan="3">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>

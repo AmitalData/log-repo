@@ -1,0 +1,2 @@
+﻿ delete from ScreenFields where ObjectFieldId in (select id from ObjectFields where (FieldName = 'PaymentMethodCode') and ObjectTableId in (select Id from ObjectTables where name='agent' or name='airline'
+ or name='customagent' or name='customer' or name='shippingagent' or name='shippingline' or name='trucker' or name='vendor'  or name='warehouse'))

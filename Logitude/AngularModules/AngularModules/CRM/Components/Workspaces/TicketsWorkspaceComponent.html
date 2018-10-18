@@ -1,0 +1,48 @@
+﻿<style>
+    .circle {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        font-size: 11px;
+        color: white;
+        line-height: 20px;
+        text-align: center;
+        background: red;
+    }
+</style>
+
+<table>
+    <tr style="height:1px;" *ngIf="IsMenuVisible">
+        <td>
+            <table>
+                <tr>
+                    <td colspan="2">
+                        <ul class="PagesMenu">
+                            <li [class.SelectedPageMenu]="SelectedItem == 'TIW'" (click)="SelectedItem = 'TIW'">Tickets</li>
+                            <li *ngIf="IsTicketDashboardVisible" [class.SelectedPageMenu]="SelectedItem == 'DBW'" (click)="SelectedItem = 'DBW'">Dashboard</li>                     
+                        </ul>
+                    </td>
+
+                </tr>              
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height:15px;" *ngIf="IsMenuVisible">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div class="MediaFill" [hidden]="SelectedItem != 'TIW'">
+                <div LocationDirective Code="TIW"></div>
+            </div>
+
+            <div class="MediaFill" [hidden]="SelectedItem != 'DBW'">
+                <div LocationDirective Code="DBW"></div>
+            </div>        
+        </td>
+    </tr>
+</table>

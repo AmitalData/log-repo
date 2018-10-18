@@ -1,0 +1,323 @@
+﻿<style type="text/css">
+    .SearchBox input::-webkit-input-placeholder {
+        font-family: Arial;
+        font-size: 11px;
+        color: #8F9293;
+        font-style: italic;
+    }
+    #SearchBoxPartnersHeader {
+        background: grey; /* For browsers that do not support gradients */
+        background: -webkit-linear-gradient(#dcdcdc, #bababa);
+        background: -o-linear-gradient(#dcdcdc, #bababa); /* For Opera 11.1 to 12.0 */
+        background: -moz-linear-gradient(#dcdcdc, #bababa); /* For Firefox 3.6 to 15 */
+        background: linear-gradient(#dcdcdc, #bababa); /* Standard syntax (must be last) */
+        height: 20px;
+        font-weight: bold;
+    }
+    .SearchBox input:-moz-placeholder {
+        font-family: Arial;
+        font-size: 11px;
+        color: #8F9293;
+        font-style: italic;
+    }
+    .SearchBox input::-moz-placeholder {
+        font-family: Arial;
+        font-size: 11px;
+        color: #8F9293;
+        font-style: italic;
+    }
+    .SearchBox input:-ms-input-placeholder {
+        font-family: Arial;
+        font-size: 11px;
+        color: #8F9293;
+        font-style: italic;
+    }
+    .SearchBox input:focus::-webkit-input-placeholder {
+        color: transparent;
+    }
+    .SearchBox input:focus:-moz-placeholder {
+        color: transparent;
+    }
+    .SearchBox input:focus::-moz-placeholder {
+        color: transparent;
+    }
+    .SearchBox input:focus:-ms-input-placeholder {
+        color: transparent;
+    }
+    .SearchBox .DeleteIcon {
+        position: absolute;
+        right: 4px;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        cursor: pointer;
+    }
+    .SearchBox .SearchIcon {
+        position: absolute;
+        right: 2px;
+        top: 1px;
+        bottom: 0;
+        margin: auto;
+    }
+    .SearchBox {
+        height: 22px;
+        width: 100%;
+        position: relative;
+    }
+    .QuickSearchDropDown .ListBoxItem:hover {
+        background: #f4f9ff; /* Old browsers */
+        background: -moz-linear-gradient(top, #f4f9ff 0%, #bcdff2 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #f4f9ff 0%,#bcdff2 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #f4f9ff 0%,#bcdff2 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4f9ff', endColorstr='#bcdff2',GradientType=0 ); /* IE6-9 */
+    }
+    .QuickSearchDropDown .ListBoxItem {
+        height: 22px;
+        min-height: 22px;
+        line-height: 22px;
+        width: 100%;
+        border-bottom: 1px solid #AAAAAA;
+        /*margin-top: 1px;*/
+        text-align: left;
+        padding-left: 2px;
+        padding-right: 2px;
+        cursor: pointer;
+    }
+    .QuickSearchDropDown {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 23px;
+        bottom: 0;
+        background: white;
+        border: 1px solid #b2b2b2;
+        box-shadow: 0px 4px 2px 0 #e8e8e8;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        z-index: 1;
+        overflow: hidden;
+        padding-top: 0px;
+    }
+     .customtrclass td {
+        text-align: left;
+        font-size: 11px;
+        color: #6E7172;
+    }
+    .customtrclass {
+        height: 22px;
+    }
+</style>
+
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr style="height: 5px;">
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="ScrollViewer">
+                            <div class="ScrollContent">
+                                <table>
+
+                                    <!-- To -->
+                                    <tr class="customtrclass" *ngIf="ToVisibility">
+                                        <td style="width:90px;">
+                                            <label> To: </label>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                <EmailSearchTextBox [EmailsText]="ContactEmail" [IsDisabled]="'true'"></EmailSearchTextBox>
+                                            </div>
+                                        </td>
+                                        <td style="width:10px;">
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <tr style="height:2px;"><td><div></div></td></tr>
+
+                                    <!-- Cc -->
+                                    <tr class="customtrclass" *ngIf="CcVisibility">
+                                        <td style="width:90px;">
+                                            <label> CCs: </label>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                <EmailSearchTextBox [EmailsText]="CCs" (EmailsTextChanged)="CCs = $event" (ValidationErrorsListChanged)="ValidateEmails($event)"></EmailSearchTextBox>
+                                            </div>
+                                        </td>
+                                    
+                                        <td style="width:10px;">
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <tr style="height:2px;"><td><div></div></td></tr>
+
+                                    <!-- Internal User -->
+                                    <tr class="customtrclass">
+                                        <td style="width:90px;">
+                                            <label> Notify Internal: </label>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                <EmailSearchTextBox [EmailsText]="InternalUsers" [IsUsersList]="true" (EmailsTextChanged)="InternalUsers = $event"></EmailSearchTextBox>
+                                            </div>
+                                        </td>
+                                       
+                                        <td style="width:10px;">
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <tr style="height:2px;"><td><div></div></td></tr>
+
+                                    <!-- Attachments -->
+                                    <tr class="customtrclass" *ngIf="AttachmentsVisibility">
+                                        <td style="width:80px;">
+                                            <label> Attachments: </label>
+                                        </td>
+
+                                        <td>
+                                            <ul style="display:inline;">
+                                                <li *ngFor="let attach of AttachmentsList" style="display:inline;">
+                                                    <img [src]="attach.FileExtension | AttatchmentIconPipe" style="width:20px;height:20px;margin-left:5px;cursor:pointer;" />
+                                                    <span class="hyperlink" (click)="attach.ViewAttachment()" style="font-size:10px"> {{attach.FileName}}</span>
+                                                </li>
+                                            </ul>
+                                        </td>
+
+                                        <td style="width:10px;">
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <tr style="height:2px;"><td><div></div></td></tr>
+
+                                    <tr class="FormFieldRow">
+                                        <td colspan="3">
+                                            <table>
+                                                <tr>
+                                                    <td style="width:210px;text-align:left;">
+                                                        <table>
+                                                            <tr>
+                                                                <td style="width:80px">
+                                                                    <LogCheckBox [NoObjectField]="true"  [ObjectFieldName]="'NotifyMe'" [Text]="'Notify Me'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                </td>
+                                                                <td width="10px;"><div></div></td>
+                                                                <td style="width:100px" *ngIf="NotifyOwnerVisibility">
+                                                                    <LogCheckBox [NoObjectField]="true"  [ObjectFieldName]="'NotifyOwner'" [Text]="'Notify Owner'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                </td>
+                                                                <td><div></div></td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                    <td><div></div></td>
+                                                    
+                                                    <td style="text-align:center;width:50px;">
+                                                        <table>
+                                                            <tr *ngIf="TextAlignRegionVisibility">
+                                                                <td style="width: 20px;height: 25px;" [ngStyle]="{background:BackgroundAlignLeft}">
+                                                                    <img src="./Images/Align-left-icon.png" style="width: 16px;height: 22px;" (click)="AlignLeftClicked()" />
+                                                                </td>
+                                                                <td width="10px;"><div></div></td>
+                                                                <td style="width: 20px;height: 25px;" [ngStyle]="{background: BackgroundAlignRight}">
+                                                                    <img src="./Images/Align-right-icon.png" style="width: 16px;height: 22px;" (click)="AlignRightClicked()" />
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+
+                                                    <td><div></div></td>
+
+                                                    <td style="width:190px; text-align:right;">
+                                                        <table>
+                                                            <tr>
+                                                                <td> <span class="hyperlink" (click)="AttachInternalFile()">Attach Internal File</span></td>
+                                                                <td style="width:5px;"></td>
+                                                                <td><span class="hyperlink" (click)="AttachExternalFile()">Attach External File</span></td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="3">
+                                            <div style="height: 100%; width: 100%;">
+                                                <LogTextBox [NoObjectField]="true"  [ngStyle]="{direction: FlowDirection}" [IsMultiline]="true" [HideColumns]="true" [ObjectFieldName]="'CorrespondenceLine'" [Text]="CorrespondenceLine" [DataContext]="DataContext"></LogTextBox>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr style="height:5px"><td colspan="3"><div></div></td></tr>
+                                </table>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr style="height: 5px;">
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 5px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px; vertical-align: middle">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width:5px">
+                        <div></div>
+                    </td>
+
+                    <!--<td style="width:250px; vertical-align: middle">
+                        <div class="styled-select">
+                            <label>
+                                <select (change)="TicketStageSelected($event.target.value)">
+                                    <option *ngFor="let item of StagesList" [value]="item.Code">
+                                        {{item.Name}}
+                                    </option>
+                                </select>
+                            </label>
+                        </div>
+                    </td>-->
+
+                    <td style="width:250px;vertical-align: bottom;">
+                        <!--<ComboBox style="width:250px;" [ItemsSource]="StagesList" (SelectedItemChanged)="TicketStageSelected($event)" [IsGreenButton]="true" [SelectedItem]="StageButtonContent" [Binding]="'Name'"></ComboBox>-->
+                        <SendButton [ItemsSource]="StagesList" (SelectedItemChanged)="TicketStageSelected($event)" [SelectedItem]="StageButtonContent" [Binding]="'Name'"></SendButton>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

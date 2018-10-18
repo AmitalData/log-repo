@@ -1,0 +1,339 @@
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs; 
+using Logitude.Customs.Data;
+
+namespace Logitude.Customs.BL.EntityDataMappings
+{
+   
+   public partial class DepositDataMapping: IMapping<DepositPM, Deposit>,IMappingEncodeBase64NVARCHARFields<DepositPM>
+   {
+          public enum POCOPropertyNames
+          { 
+		     None,  
+	         Id, 
+	         Tenant, 
+	         TapagID, 
+	         DepositEssenceTypeCode, 
+	         DepositAmount, 
+	         RequestValidityDate, 
+	         DepositValidityDate, 
+	         EntityTypeCode, 
+	         EntityNumber, 
+	         PaymentNumber, 
+	         TradeMarkNumber, 
+	         LawyerNumber, 
+	         VehicleChassisNumber, 
+	         EngineNumber, 
+	         BirthDate,
+	      }
+
+
+	      public enum PMPropertyNames
+          { 
+		     None,  
+	         Id, 
+	         Tenant, 
+	         TapagID, 
+	         DepositEssenceTypeCode, 
+	         DepositAmount, 
+	         RequestValidityDate, 
+	         DepositValidityDate, 
+	         EntityTypeCode, 
+	         EntityNumber, 
+	         PaymentNumber, 
+	         TradeMarkNumber, 
+	         LawyerNumber, 
+	         VehicleChassisNumber, 
+	         EngineNumber, 
+	         BirthDate, 
+	         TapagNumber, 
+	         LeadingFileNumber, 
+	         TapagTypeCode, 
+	         TapagTypeName, 
+	         CustomerId, 
+	         CustomerName, 
+	         ImporterId, 
+	         ImporterName, 
+	         CustomsBranchCode, 
+	         CustomsBranchName, 
+	         ProfessionUnitTypeCode, 
+	         ProfessionUnitTypeName, 
+	         SpecializationTypeCode, 
+	         SpecializationTypeName, 
+	         CreateDate, 
+	         FollowDate, 
+	         ValidityDate, 
+	         IsClosed, 
+	         EntityTypeName, 
+	         DepositConditionCode,
+	      }
+
+		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
+        List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
+    
+	    public void PMToPOCO(DepositPM entityPM, Deposit entityPOCO)
+        {
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TapagID))
+            {
+				entityPOCO.TapagID = entityPM.TapagID;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DepositEssenceTypeCode))
+            {
+				entityPOCO.DepositEssenceTypeCode = entityPM.DepositEssenceTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DepositAmount))
+            {
+				entityPOCO.DepositAmount = entityPM.DepositAmount;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RequestValidityDate))
+            {
+				entityPOCO.RequestValidityDate = entityPM.RequestValidityDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DepositValidityDate))
+            {
+				entityPOCO.DepositValidityDate = entityPM.DepositValidityDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntityTypeCode))
+            {
+				entityPOCO.EntityTypeCode = entityPM.EntityTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntityNumber))
+            {
+				entityPOCO.EntityNumber = entityPM.EntityNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PaymentNumber))
+            {
+				entityPOCO.PaymentNumber = entityPM.PaymentNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TradeMarkNumber))
+            {
+				entityPOCO.TradeMarkNumber = entityPM.TradeMarkNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LawyerNumber))
+            {
+				entityPOCO.LawyerNumber = entityPM.LawyerNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VehicleChassisNumber))
+            {
+				entityPOCO.VehicleChassisNumber = entityPM.VehicleChassisNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EngineNumber))
+            {
+				entityPOCO.EngineNumber = entityPM.EngineNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BirthDate))
+            {
+				entityPOCO.BirthDate = entityPM.BirthDate;
+			}
+			}
+
+		public void POCOToPM(DepositPM entityPM, Deposit entityPOCO)
+        {
+			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
+            {
+					entityPM.Id = entityPOCO.Id;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
+            {
+					entityPM.Tenant = entityPOCO.Tenant;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TapagID))
+            {
+					entityPM.TapagID = entityPOCO.TapagID;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DepositEssenceTypeCode))
+            {
+					entityPM.DepositEssenceTypeCode = entityPOCO.DepositEssenceTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DepositAmount))
+            {
+					entityPM.DepositAmount = entityPOCO.DepositAmount;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.RequestValidityDate))
+            {
+					entityPM.RequestValidityDate = entityPOCO.RequestValidityDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DepositValidityDate))
+            {
+					entityPM.DepositValidityDate = entityPOCO.DepositValidityDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EntityTypeCode))
+            {
+					entityPM.EntityTypeCode = entityPOCO.EntityTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EntityNumber))
+            {
+					entityPM.EntityNumber = entityPOCO.EntityNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PaymentNumber))
+            {
+					entityPM.PaymentNumber = entityPOCO.PaymentNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TradeMarkNumber))
+            {
+					entityPM.TradeMarkNumber = entityPOCO.TradeMarkNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LawyerNumber))
+            {
+					entityPM.LawyerNumber = entityPOCO.LawyerNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.VehicleChassisNumber))
+            {
+					entityPM.VehicleChassisNumber = entityPOCO.VehicleChassisNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EngineNumber))
+            {
+					entityPM.EngineNumber = entityPOCO.EngineNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.BirthDate))
+            {
+					entityPM.BirthDate = entityPOCO.BirthDate;
+            }
+
+		}
+
+		public void PMToOldPM(DepositPM entityPM, DepositPM oldEntityPM)
+        {
+		     oldEntityPM.ChangedProperties.Clear();
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+                oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TapagID))
+            {
+                oldEntityPM.TapagID = entityPM.TapagID;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DepositEssenceTypeCode))
+            {
+                oldEntityPM.DepositEssenceTypeCode = entityPM.DepositEssenceTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DepositAmount))
+            {
+                oldEntityPM.DepositAmount = entityPM.DepositAmount;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RequestValidityDate))
+            {
+                oldEntityPM.RequestValidityDate = entityPM.RequestValidityDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DepositValidityDate))
+            {
+                oldEntityPM.DepositValidityDate = entityPM.DepositValidityDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntityTypeCode))
+            {
+                oldEntityPM.EntityTypeCode = entityPM.EntityTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntityNumber))
+            {
+                oldEntityPM.EntityNumber = entityPM.EntityNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PaymentNumber))
+            {
+                oldEntityPM.PaymentNumber = entityPM.PaymentNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TradeMarkNumber))
+            {
+                oldEntityPM.TradeMarkNumber = entityPM.TradeMarkNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LawyerNumber))
+            {
+                oldEntityPM.LawyerNumber = entityPM.LawyerNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VehicleChassisNumber))
+            {
+                oldEntityPM.VehicleChassisNumber = entityPM.VehicleChassisNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EngineNumber))
+            {
+                oldEntityPM.EngineNumber = entityPM.EngineNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BirthDate))
+            {
+                oldEntityPM.BirthDate = entityPM.BirthDate;
+            }
+			
+		}
+
+	    public void EncodeBase64NVARCHARFields(DepositPM entityPM)
+        {
+            if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
+            {
+                return;
+
+            }
+            entityPM.EncodeBase64NVARCHARFieldsBy=null;
+		}
+
+
+	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
+        {
+            CustomMappedPOCOProperties.Add(pocoPropertyName);
+        }
+
+        public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
+        {
+            CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+			  
+   }
+}
+	 

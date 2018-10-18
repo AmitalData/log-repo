@@ -1,0 +1,185 @@
+﻿
+<table style="height:100%;vertical-align:top" *ngIf="IsResourcesReady">
+
+        <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+            <td>
+                <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+            </td>
+        </tr>
+
+        <tr  style="height:100%;vertical-align:top;">
+            <td>
+                <table>
+                    <tr style="height:55px;" class="FormFieldRow">
+                        <td style="width:50px">
+                            <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+                         <td  style="width:150px">
+                             <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name"  [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                         </td>
+
+                        <td> <div></div></td>
+                        <td> <div></div></td>
+                        <td> <div></div></td>
+                        <td style="width:80px;"><button  class="Button" (click)="OnAddEditQuestion(null,'Add')">Add Question</button></td>
+
+                    </tr>
+
+                    <tr style="height:55px;" class="FormFieldRow">
+                        <td colspan="4">
+                            <table>
+                                <tr>
+                                    <td style="width:120px">
+                                        <LogLabel [ObjectFieldName]="'RightToLeft'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td style="width:30px">
+                                        <LogCheckBox [ObjectFieldName]="'RightToLeft'" [Checked]="RightToLeft" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                    </td>
+
+                                    <td style="width:10px"></td>
+
+                                    <td style="width:120px">
+                                        <LogLabel [ObjectFieldName]="'HasTwoColumn'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td style="width:50px">
+                                        <LogCheckBox [ObjectFieldName]="'HasTwoColumn'" [Checked]="HasTwoColumn" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                    </td>
+
+
+                                    <td style="width:60px" *ngIf="!IsNewEntity">
+                                        <LogLabel [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td style="width:30px" *ngIf="!IsNewEntity">
+                                        <LogCheckBox [ObjectFieldName]="'InActive'" [Checked]="InActive" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                    </td>
+
+                                    <td> <div></div></td>
+                                </tr>
+                            </table>
+                        </td>
+                     
+                    </tr>
+
+                    <tr>
+                        <td colspan="7">
+                            <ScrollViewer>
+                                <div class="SimpleGridView">
+                                    <div class="SimpleGridViewHeader">
+                                        <table>
+                                            <tr>
+
+                                                <td style="width: 400px; min-width: 400px;">Question</td>
+                                                <td style="width: 120px; min-width: 120px;">Question Type</td>
+                                                <td style="width: 100px; min-width:100px">Is Mandetory</td>
+                                                <td style="width: 30px; min-width: 30px"></td>
+                                                <td style="width: 30px; min-width: 30px"></td>
+                                                <td style="width: 100%; min-width: 100%"></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+
+                                    <div class="SimpleGridViewBody">
+                                        <table>
+                                            <tr class="SimpleGridViewRow RowHover" *ngFor="let item of ItemsSource.Collection">
+                                                <td>
+                                                    <table>
+                                                        <tr style="height:25px;" (click)="OnQuestionSelected(item)" [class.RowSelected]="item === SelectedQuestion">
+
+
+
+                                                            <td class="GridViewCell" style="width: 400px; min-width: 400px; max-width: 400px; position: relative;">
+
+                                                                {{item.Question}}
+                                                            </td>
+
+                                                            <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; position: relative;">
+
+                                                                {{item.QuestionTypeName}}
+
+                                                            </td>
+ 
+
+
+                                                            <td class="CellStretched" style="width:100px; min-width:100px; max-width:100px; position: relative;">
+                                                                <div style="width:50px">
+                                                                    <img class="CenterCenter" style="width:20px;height:20px" *ngIf="item.IsMandatory" src="./Images/Icons/MiniGreenTick.png" />
+
+                                                                </div>
+
+                                                            </td>
+
+                                                            <td class="CellStretched" style="width:30px; min-width:30px; max-width:30px; position: relative;">
+                                                                <div class="EditButton" (click)="OnAddEditQuestion(item ,'Edit')" style="display:inline;width:18px;">
+                                                                    <IconButton [Name]="'Edit'" [IsSmall]="true" style="display: block;margin-left:7px"></IconButton>
+                                                                </div>
+
+                                                            </td>
+
+                                                            <td class="CellStretched" style="width:30px; min-width:30px; max-width:30px; position: relative;">
+                                                                <div class="EditButton" (click)="DeleteQuestion(item)" style="display:inline;width:18px;">
+                                                                    <IconButton [Name]="'Delete'" [IsSmall]="true" style="display: block;margin-left:7px"></IconButton>
+                                                                </div>
+
+                                                            </td>
+
+                                                            <td class="CellStretched" style="width:100%;min-width:100%;max-width:100%;position:relative">
+                                                                <div *ngIf="item.IsShowArrowUpDown" class="CenterCenter" style="width:100%;vertical-align:middle;">
+
+
+                                                                    <img (click)="ArrowUpButtonClicked(item)" [attr.title]="'Up'" style="width:20px;height:20px;margin-left:7px" src="./Images/arrow-up-n.png" />
+
+                                                                    <img (click)="ArrowDownButtonClicked(item)" [attr.title]="'View'" style="width:20px;height:20px;margin-left:-10px" src="./Images/arrow-down-n.png" />
+                                                                </div>
+
+
+
+                                                            </td>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="11"></td>
+                                                        </tr>
+                                                    </table>
+
+
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ScrollViewer>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr style="height: 32px;">
+            <td style="vertical-align: bottom">
+                <table style="height: 22px;">
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+
+                        <td style="width: 57px;">
+                            <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                        </td>
+
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 57px;">
+                            <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+    </table>
+ 

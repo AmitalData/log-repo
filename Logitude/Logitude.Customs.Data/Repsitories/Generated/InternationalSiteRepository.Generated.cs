@@ -1,0 +1,90 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.EntityKeys;
+using Simplog.Server.Infrastructure;
+
+namespace Logitude.Customs.Data.Repsitories
+{
+   public partial class InternationalSiteRepository:IRepository<InternationalSite>
+   {
+   
+        private ICustomContext currentContext;
+        public InternationalSiteRepository(int tenant)
+        {
+            currentContext = CustomContext.GetContext(tenant);
+        }
+
+        public InternationalSiteRepository(ICustomContext context)
+        {
+            currentContext = context;
+        }
+
+		 
+		
+		public  InternationalSite GetSingle(string code)
+        {
+            return (from a in context.InternationalSites
+                    where a.Code == code 
+                    select a).FirstOrDefault();
+        }
+
+        public IQueryable<InternationalSite> GetAll()
+        {
+            return from a in context.InternationalSites  
+                   select a;
+        }
+				 
+        public InternationalSite GetSingle(EntityKeyFields entityKeys)
+        {
+            InternationalSiteKeys keys = entityKeys as InternationalSiteKeys;
+            return (from a in context.InternationalSites
+                    where a.Code == keys.Code
+                    select a).FirstOrDefault();
+        }
+		         
+        partial void onAdd();//Partial Methods Definition in Generated
+        public void Add(InternationalSite entity)
+        {
+            onAdd();
+            context.InternationalSites.Add(entity);
+        }
+
+        public void Remove(InternationalSite entity)
+        {
+            context.InternationalSites.Attach(entity);
+            context.InternationalSites.Remove(entity);
+        }
+
+        partial void onUpdate();//Partial Methods Definition in Generated
+        public void Update(InternationalSite entity)
+        {
+            onUpdate();
+            context.InternationalSites.Attach(entity);
+            context.SetAsModified(entity);
+        }
+
+        public List<InternationalSite> All()
+        {
+            return context.InternationalSites.ToList();
+        }
+
+        private ICustomContext context
+        {
+            get { return currentContext; }
+        }
+
+        public void SubmitChanges()
+        {
+            context.SaveChanges();
+        }
+	 
+   }
+   }
+	 

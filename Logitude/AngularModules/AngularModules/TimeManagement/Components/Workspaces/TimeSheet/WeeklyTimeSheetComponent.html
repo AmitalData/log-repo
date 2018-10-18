@@ -1,0 +1,371 @@
+﻿
+<style type="text/css">
+    .ItemBox {
+        height: 40px;
+        border: 1px solid #D1D1D1;
+        margin: 2px;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        overflow-x: hidden;
+    }
+
+    .ToolsButton {
+        display: none;
+    }
+
+    .ItemBox:hover .ToolsButton {
+        display: block;
+    }
+
+    .ItemBox:hover .ToolsButtonDisabled {
+        display: block;
+    }
+
+    .SaveTMButton {
+        background: #349BDB;
+        height: 30px;
+        color: white;
+        border-radius: 2px;
+        cursor: pointer;
+    }
+
+    .SaveTMButtonHasChanges {
+        background: Orange;
+        height: 30px;
+        color: white;
+        border-radius: 2px;
+        cursor: pointer;
+    }
+</style>
+
+<table>
+    <tr>
+        <td style="width:10px;">
+            <div></div>
+        </td>
+
+        <td>
+            <table>
+                <tr style="height:40px;">
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr style="height:22px;">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:70px;">
+                                    <LogLabel [Text]="'Employee'" [DataContext]="DataContext" [NoObjectField]="true"></LogLabel>
+                                </td>
+
+                                <td style="width:120px;">
+                                    <LogLov [NoObjectField]="true"
+                                            [ObjectFieldName]="'EmployeeUserId'"
+                                            [DataContext]="DataContext"
+                                            [SelectedValue]="EmployeeUserId"
+                                            [LookUpTableName]="'User'"
+                                            [HideColumns]="true">
+                                    </LogLov>
+                                </td>
+
+                                <td style="width:10px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:70px;">
+                                    <LogLabel [Text]="'Location'" [DataContext]="DataContext" [NoObjectField]="true"></LogLabel>
+                                </td>
+                                <!-- Filters -->
+                                <td style="width:170px;">
+                                    <div class="MediaFill">
+                                        <LocationsFilter (SelectedValueChanged)="SelectedLocationFilter = $event" [SelectedValue]="SelectedLocationFilter"></LocationsFilter>
+                                    </div>
+                                </td>
+
+                                <td style="width:10px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:120px;">
+                                    <LogLabel [Text]="'Period Start Date'" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td style="width:120px;">
+                                    <LogDatePicker [InputType]="'date'" [HideColumns]="true" [NoObjectField]="true" [ObjectFieldName]="'PeriodStartDate'" [SelectedDateValue]="PeriodStartDate" [DataContext]="DataContext"></LogDatePicker>
+                                </td>
+
+                                <td style="width:10px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:70px;">
+                                    <button class="Button" (click)="GetProjectsClicked()">Get Projects</button>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr style="height: 15px;">
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr style="height:50px;">
+                    <td>
+                        <div style="height:50px;border:1px solid #E9E9E9; background: #E9E9E9; color:#1B90CB;margin:2px;border-radius:3px;">
+                            <table>
+                                <tr>
+                                    <td style="width: 150px;min-width:150px;max-width:150px;text-align: left;padding-left:3px;font-size:12px;">{{'TMEmployeeTime.F.ProjectName' | TextCodeTranslationPipe}}</td>
+                                    <td style="width: 250px;min-width:250px;max-width:250px;text-align: left;font-size:12px;">{{'TMEmployeeTime.F.Description' | TextCodeTranslationPipe}}</td>
+                                    <td style="width: 80px;min-width:80px;max-width:80px;text-align: left;font-size:12px;">{{'TMEmployeeTime.F.WINumber' | TextCodeTranslationPipe}}</td>
+                                    <td style="width:70px;min-width:70px;max-width:70px;text-align: center;font-size:12px;">
+                                        <div style="font-size:12px;">Sun</div>
+                                        <div style="font-size:12px;">{{PeriodStartDate | DateTimePipe:'TIMM' }}</div>
+                                    </td>
+                                    <td style="width:70px;min-width:70px;max-width:70px;text-align: center;">
+                                        <div style="font-size:12px;">Mon</div>
+                                        <div style="font-size:12px;">{{MonDate | DateTimePipe:'TIMM' }}</div>
+                                    </td>
+                                    <td style="width:70px;min-width:70px;max-width:70px;text-align: center;">
+                                        <div style="font-size:12px;">Tue</div>
+                                        <div style="font-size:12px;">{{TueDate | DateTimePipe:'TIMM' }}</div>
+                                    </td>
+                                    <td style="width:70px;min-width:70px;max-width:70px;text-align: center;">
+                                        <div style="font-size:12px;">Wed</div>
+                                        <div style="font-size:12px;">{{WedDate | DateTimePipe:'TIMM' }}</div>
+                                    </td>
+                                    <td style="width:70px;min-width:70px;max-width:70px;text-align: center;">
+                                        <div style="font-size:12px;">Thu</div>
+                                        <div style="font-size:12px;">{{ThuDate | DateTimePipe:'TIMM' }}</div>
+                                    </td>
+                                    <td style="width:70px;min-width:70px;max-width:70px;text-align: center;">
+                                        <div style="font-size:12px;">Sat</div>
+                                        <div style="font-size:12px;">{{SatDate | DateTimePipe:'TIMM' }}</div>
+                                    </td>
+                                    <td style="width:70px;min-width:70px;max-width:70px;text-align: center;">
+                                        <div style="font-size:12px;">Fri</div>
+                                        <div style="font-size:12px;">{{FriDate | DateTimePipe:'TIMM' }}</div>
+                                    </td>
+                                    <td style="width: 100px;min-width:100px;max-width:100px;text-align: center;font-size:12px;">
+                                        <div style="font-size:16px;">Totals</div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr style="vertical-align:top;">
+                    <td>
+                        <div class="MediaFill">
+                            <ScrollViewer [Small]="true">
+                                <ul>
+                                    <li class="ItemBox" *ngFor="let item of ItemSource" style="position: relative;" [style.background]="(item.Index) % 2 === 0  ? '#E9E9E9' : 'transparent'">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr style="height:22px;">
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width:150px;min-width:150px;max-width:150px;text-align: left;padding-left:5px;">
+                                                                <div style="width:150px;" class="TextTrimming">{{item.ProjectName}} </div>
+                                                            </td>
+
+                                                            <td style="width:250px;min-width:250px;max-width:250px;text-align: left;">
+                                                                <div style="width:250px;" class="TextTrimming">{{item.Description}} </div>
+                                                            </td>
+
+                                                            <td style="width:80px;min-width:80px;max-width:80px;text-align: left;">
+                                                                <div class="TextTrimming">
+                                                                    <Hyperlink class="TextTrimming" [FontSize]="14" (click)="item.ViewWI(item.WINumber)" [Text]="item.WINumber"></Hyperlink>
+                                                                </div>
+                                                            </td>
+
+                                                            <td style="width:70px;min-width:70px;max-width:70px;text-align: center;">
+                                                                {{item.Day1DateFormat}}
+                                                            </td>
+
+                                                            <td style="width:70px;min-width:70px;max-width:70px;text-align: center;">
+                                                                {{item.Day2DateFormat}}
+                                                            </td>
+
+                                                            <td style="width:70px;min-width:70px;max-width:70px;text-align: center;">
+                                                                {{item.Day3DateFormat}}
+                                                            </td>
+
+                                                            <td style="width:70px;min-width:70px;max-width:70px;text-align: center;">
+                                                                {{item.Day4DateFormat}}
+                                                            </td>
+
+                                                            <td style="width:70px;min-width:70px;max-width:70px;text-align: center;">
+                                                                {{item.Day5DateFormat}}
+                                                            </td>
+
+                                                            <td style="width:70px;min-width:70px;max-width:70px;background:#9ba2e5;padding-bottom:3px;text-align: center;">
+                                                                {{item.Day6DateFormat}}
+                                                            </td>
+
+                                                            <td style="width:70px;min-width:70px;max-width:70px;background:#9ba2e5;padding-bottom:3px;text-align: center;">
+                                                                {{item.Day7DateFormat}}
+                                                            </td>
+
+                                                            <td style="width:100px;min-width:100px;max-width:100px;text-align:center; font-size: 16px;">
+                                                                {{item.TotalMinutes | TimeToHoursMinutesPipe}}
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                        <!--<div style="position: absolute; top: 3px; right: 3px;">
+                                            <table>
+                                                <tr>
+                                                    <td style="width:18px;">
+                                                        <div class="ToolsButton" style="width: 18px; height: 18px;">
+                                                            <IconButton [Name]="'copy'" [IsSmall]="true" (click)="CopyLineClicked(item)"></IconButton>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:2px;">
+                                                        <div></div>
+                                                    </td>
+                                                    <td style="width:18px;">
+                                                        <div class="ToolsButton" style="width: 18px; height: 18px;">
+                                                            <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteLineClicked(item)"></IconButton>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>-->
+
+                                    </li>
+                                </ul>
+                            </ScrollViewer>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr style="height:50px;">
+                    <td>
+                        <div style="height:50px;border:1px solid #E9E9E9; background: #E9E9E9; color:#1B90CB;margin:2px;border-radius:3px;">
+                            <table>
+                                <tr>
+                                    <td style="width:480px;min-width:480px;max-width:480px;">
+                                        <div style="color:#1B90CB;text-align:left;margin-left:10px;">Totals</div>
+                                    </td>
+                                    <td style="width:70px;min-width:70px;max-width:70px;text-align:center; font-size: 16px;">
+                                        {{TotalSunDayHours | TimeToHoursMinutesPipe}}
+                                        <span *ngIf="TotalSunDayClockHours != null && SelectedLocationFilter=='O'" style="font-size: 16px;">|<span style="font-size: 16px;color:black;">{{TotalSunDayClockHours}} </span></span>
+                                    </td>
+                                    <td style="width:70px;min-width:70px;max-width:70px;text-align:center; font-size: 16px;">
+                                        {{TotalMonDayHours| TimeToHoursMinutesPipe}}
+                                        <span *ngIf="TotalMonDayClockHours != null && SelectedLocationFilter=='O'" style="font-size: 16px;">|<span style="font-size: 16px;color:black;">{{TotalMonDayClockHours}}</span> </span>
+                                    </td>
+                                    <td style="width:70px;min-width:70px;max-width:70px;text-align:center; font-size: 16px;">
+                                        {{TotalTueDayHours| TimeToHoursMinutesPipe}}
+                                        <span *ngIf="TotalTueDayClockHours != null && SelectedLocationFilter=='O'" style="font-size: 16px;">|<span style="font-size: 16px;color:black;">{{TotalTueDayClockHours}}</span> </span>
+                                    </td>
+                                    <td style="width:70px;min-width:70px;max-width:70px;text-align:center; font-size: 16px;">
+                                        {{TotalWedDayHours| TimeToHoursMinutesPipe}}
+                                        <span *ngIf="TotalWedDayClockHours != null && SelectedLocationFilter=='O'" style="font-size: 16px;">|<span style="font-size: 16px;color:black;"> {{TotalWedDayClockHours}}</span> </span>
+                                    </td>
+                                    <td style="width:70px;min-width:70px;max-width:70px;text-align:center; font-size: 16px;">
+                                        {{TotalThuDayHours| TimeToHoursMinutesPipe}}
+                                        <span *ngIf="TotalThuDayClockHours != null && SelectedLocationFilter=='O'" style="font-size: 16px;">|<span style="font-size: 16px;color:black;">{{TotalThuDayClockHours}} </span></span>
+                                    </td>
+                                    <td style="width:70px;min-width:70px;max-width:70px;text-align:center; font-size: 16px;">
+                                        {{TotalFriDayHours| TimeToHoursMinutesPipe}}
+                                        <span *ngIf="TotalFriDayClockHours != null && SelectedLocationFilter=='O'" style="font-size: 16px;">|<span style="font-size: 16px;color:black;">{{TotalFriDayClockHours}} </span></span>
+                                    </td>
+                                    <td style="width:70px;min-width:70px;max-width:70px;text-align:center; font-size: 16px;">
+                                        {{TotalSatDayHours| TimeToHoursMinutesPipe}}
+                                        <span *ngIf="TotalSatDayClockHours != null && SelectedLocationFilter=='O'" style="font-size: 16px;">|<span style="font-size: 16px;color:black;">{{TotalSatDayClockHours}} </span></span>
+                                    </td>
+                                    <td style="width:100px;min-width:100px;max-width:100px;text-align:center; font-size: 16px;">
+                                        {{TotalWeekHours| TimeToHoursMinutesPipe}}
+                                        <span *ngIf="TotalWeekClockHours != null && SelectedLocationFilter=='O'" style="font-size: 16px;">|<span style="font-size: 16px;color:black;">{{TotalWeekClockHours}} </span></span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr style="height: 50px;">
+                    <td style="vertical-align: bottom">
+                        <div style="height:50px;border:1px solid #E9E9E9; background: #E9E9E9; color:#1B90CB;border-radius:3px;vertical-align:central;">
+                            <table>
+                                <tr style="height: 32px;">
+                                    <td style="width: 10px;">
+                                        <div></div>
+                                    </td>
+
+                                    <!--<td style="width: 90px;">
+                                        <button class="Button" style="height:30px;" (click)="AddLineClicked()">
+                                            <img class="LeftCenter" style="width:17px;height:12px;padding-left:2px;padding-right:2px;" src="./Images/Buttons/AddGreenSolid.png" />
+                                                Add Line
+                                        </button>
+                                    </td>-->
+                                    <!--<td style="width: 5px;">
+                                        <div></div>
+                                    </td>-->
+
+                                    <td style="width: 145px;">
+                                        <button class="Button" style="height:30px;" (click)="PrintPreviewClicked()">
+                                            <img class="LeftCenter" style="width:17px;height:12px;padding-left:2px;padding-right:2px;" src="./Images/FileIcons/File-pdf-48.png" />
+                                            Print Preview (PDF)
+                                        </button>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+
+                                    <!--<td style="width: 180px;">
+                                        <button class="SaveTMButton" [class.SaveTMButtonHasChanges]="HasChanges === true" (click)="SaveWeeklyClicked()">
+                                                Save Weekly TimesSheet
+                                        </button>
+                                    </td>-->
+
+                                    <td style="width: 5px;">
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+                <tr style="height: 15px;">
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+
+        <td style="width:10px;">
+            <div></div>
+        </td>
+    </tr>
+
+</table>

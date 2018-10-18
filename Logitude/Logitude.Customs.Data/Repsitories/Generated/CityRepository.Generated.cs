@@ -1,0 +1,90 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.EntityKeys;
+using Simplog.Server.Infrastructure;
+
+namespace Logitude.Customs.Data.Repsitories
+{
+   public partial class CityRepository:IRepository<City>
+   {
+   
+        private ICustomContext currentContext;
+        public CityRepository(int tenant)
+        {
+            currentContext = CustomContext.GetContext(tenant);
+        }
+
+        public CityRepository(ICustomContext context)
+        {
+            currentContext = context;
+        }
+
+		 
+		
+		public  City GetSingle(string code)
+        {
+            return (from a in context.Cities
+                    where a.Code == code 
+                    select a).FirstOrDefault();
+        }
+
+        public IQueryable<City> GetAll()
+        {
+            return from a in context.Cities  
+                   select a;
+        }
+				 
+        public City GetSingle(EntityKeyFields entityKeys)
+        {
+            CityKeys keys = entityKeys as CityKeys;
+            return (from a in context.Cities
+                    where a.Code == keys.Code
+                    select a).FirstOrDefault();
+        }
+		         
+        partial void onAdd();//Partial Methods Definition in Generated
+        public void Add(City entity)
+        {
+            onAdd();
+            context.Cities.Add(entity);
+        }
+
+        public void Remove(City entity)
+        {
+            context.Cities.Attach(entity);
+            context.Cities.Remove(entity);
+        }
+
+        partial void onUpdate();//Partial Methods Definition in Generated
+        public void Update(City entity)
+        {
+            onUpdate();
+            context.Cities.Attach(entity);
+            context.SetAsModified(entity);
+        }
+
+        public List<City> All()
+        {
+            return context.Cities.ToList();
+        }
+
+        private ICustomContext context
+        {
+            get { return currentContext; }
+        }
+
+        public void SubmitChanges()
+        {
+            context.SaveChanges();
+        }
+	 
+   }
+   }
+	 

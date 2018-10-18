@@ -1,0 +1,110 @@
+﻿<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="FixedTable">
+
+                <!-- HolidayName -->
+                <tr class="FormFieldRow">
+                    <td style="width:110px;">
+                        <LogLabel [ObjectFieldName]="'HolidayName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:230px;">
+                        <LogTextBox [ObjectFieldName]="'HolidayName'" [Text]="DataContext.HolidayName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                    </td>
+                    <td><div></div></td>
+                </tr>
+              
+                <!-- IsRecurring -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'IsRecurring'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogCheckBox [ObjectFieldName]="'IsRecurring'" [Checked]="DataContext.IsRecurring" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                    </td>
+                    <td><div></div></td>
+                </tr>
+
+                <!-- Date -->
+                <tr *ngIf="DataContext.DatePickerVisibility" class="FormFieldRow">
+                    <td>
+                        <LogLabel [Text]="'Date'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogDatePicker [ObjectFieldName]="'CreateDatePicker'" [NoObjectField]="true" [SelectedDateValue]="DataContext.CreateDatePicker" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                    </td>
+                    <td><div></div></td>
+                </tr>
+
+                <tr *ngIf="DataContext.DayMonthVisibility" class="FormFieldRow">
+                    <td colspan="2">
+                        <table>
+                            <tr>
+                                <td style="width:50px;">
+                                    <LogLabel [ObjectFieldName]="'Day'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td style="width:70px;">
+                                    <LogTextBox [ObjectFieldName]="'Day'" [Text]="DataContext.Day" [ObjectTableName]="DataContext.ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                </td>
+                                <td style="width:10px;"> <div></div></td>
+
+                                <td style="width:55px;">
+                                    <LogLabel [ObjectFieldName]="'Month'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td style="width:70px;">
+                                    <LogTextBox [ObjectFieldName]="'Month'" [Text]="DataContext.Month" [ObjectTableName]="DataContext.ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                </td>
+
+                                <td><div></div></td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td><div></div></td>
+                </tr>
+
+                <!-- Inactive -->
+                <tr *ngIf="DataContext.IsInActiveVisibility" class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'Inactive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogCheckBox [ObjectFieldName]="'Inactive'" [Checked]="DataContext.Inactive" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                    </td>
+                    <td><div></div></td>
+                </tr>
+
+                <tr><td><div></div></td></tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom" colspan="4">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Add</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

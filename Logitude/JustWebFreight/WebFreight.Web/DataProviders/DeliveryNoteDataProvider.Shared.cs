@@ -1,0 +1,137 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace WebFreight.Web.DataProviders
+{
+    public class DeliveryNoteDataProvider
+    {
+        public string To { get; set; }
+        public string Address { get; set; }
+        public string Attention { get; set; }
+        public string OurReferenceNumber { get; set; }
+        public string DateSent { get; set; }
+        public DateTime DateSent_New { get; set; }
+        public string ClientReferenceNumber { get; set; }
+        public string Salesman { get; set; }
+        public string Telephone { get; set; }
+        public string SpecialInstructions { get; set; }
+
+        //Pickup From
+        public string PickupCompanyName { get; set; }
+        public string PickupAddress { get; set; }
+        public string PickupContactName { get; set; }
+        public string PickupContactPhone { get; set; }
+        public string PickupDate { get; set; }
+        public string PickupTime { get; set; }
+        public DateTime? PickupTime_DateTime_New { get; set; }
+
+        //Delivery To
+        public string DeliveryCompanyName { get; set; }
+        public string DeliveryAddress { get; set; }
+        public string DeliveryContactName { get; set; }
+        public string DeliveryContactPhone { get; set; }
+        public string DeliveryDate { get; set; }        
+        public string DeliveryTime { get; set; }
+        public DateTime? DeliveryTime_DateTime_New { get; set; }
+        public string TruckNumber { get; set; }
+        public string TruckerNumber { get; set; }
+        public string ForwarderAgentCode { get; set; }
+        public string ForwarderAgentAddress { get; set; }
+
+        public List<PackageLine> PackagesLines { get; set; }
+        public List<PackageLine> AttachmentList { get; set; }
+
+        public double VerticalShift { get; set; }
+        public double HorizontalShift { get; set; }
+
+        public string DescriptionOfGoods { get; set; }
+        public string ContainersNumbersArray { get; set; }
+
+        public bool InServerSide { get; set; }
+
+        public string TenantName { get; set; }
+        public string Signature { get; set; }
+
+        public string ShipmentField1 { get; set; }
+        public string ShipmentField2 { get; set; }
+        public string ShipmentField3 { get; set; }
+        public string ShipmentField4 { get; set; }
+        public string ShipmentField5 { get; set; }
+        public string ShipmentField6 { get; set; }
+        public string ShipmentField7 { get; set; }
+        public string ShipmentField8 { get; set; }
+        public string ShipmentField9 { get; set; }
+        public string ShipmentField10 { get; set; }
+        public string ShipmentField11 { get; set; }
+        public string ShipmentField12 { get; set; }
+        public string ShipmentField13 { get; set; }
+        public string ShipmentField14 { get; set; }
+        public string ShipmentField15 { get; set; }
+        public string ShipmentField16 { get; set; }
+        public string ShipmentField17 { get; set; }
+        public string ShipmentField18 { get; set; }
+        public string ShipmentField19 { get; set; }
+        public string ShipmentField20 { get; set; }
+        public string MoveTypeCode { get; set; }
+        public string MoveTypeName { get; set; }
+        public string HAWB { get; set; }
+
+        public string BookingNumber { get; set; }
+        public string ConsigneeName { get; set; }
+        public string ConsigneeAddress { get; set; }
+        public string CutOffDate { get; set; }
+        public string MainCarriageETD { get; set; }
+        public string MainCarriageETA { get; set; }
+        public string MainCarriageCarrierName { get; set; }
+        public string MainCarriageVesselName { get; set; }
+
+        public string DeliveryCompanyLocalName { get; set; }
+        public string DeliveryCompanyContactLocalName { get; set; }
+        public string DeliveryCompanyContactPhone { get; set; }
+        public string MasterNumber { get; set; }
+        public string ConsigneeRef1 { get; set; }
+        public string ShipmentNotes { get; set; }
+        public string ShipperName { get; set; }
+        public string ShipperAddress { get; set; }
+        public int? TotalNumberOfPackages { get; set; }
+        public double? TotalGrossWeight { get; set; }
+        public double? TotalVolume { get; set; }
+
+        public DateTime? DeliveryETATime { get; set; } //( the time ) 
+        public DateTime? DeliveryETADate { get; set; } //( the date )
+
+        public string LongMaster { get; set; }
+
+        public string LastMainCarriageVesselNameAndNumber { get; set; } 
+        public string LoadingPortName { get; set; } 
+        public string DischargePortName { get; set; }
+        public DateTime? MainCarriageETD_DateTime { get; set; } 
+        public DateTime? MainCarriageETA_DateTime { get; set; }
+        public DateTime? MainCarriageATA_DateTime { get; set; }
+
+        public string OriginCountry { get; set; }
+
+        public List<InsidePackageLine> InsidePackagesLines { get; set; }
+
+        public string EmptyContainer { get; set; }
+        public string EmptyContainerRef { get; set; }
+        public string EmptyContainerReturn { get; set; }
+        public string EmptyContainerReturnRef { get; set; }
+
+        public DateTime? CutOffDateAsDate { get; set; }
+        public TimeSpan? CutOffTime { get; set; }
+
+        public string UserName { get; set; }
+        public string IssuingCarrierAgentName { get; set; }
+        public string IssuingCarrierAgentAddress { get; set; }
+        public string ShipperReference2 { get; set; }
+        public string ConsigneeReference2 { get; set; }
+        public string TransportMode { get; set; }
+        public string ShipmentSalesman { get; set; }
+
+        public string Reference1 { get; set; }
+        public string Reference2 { get; set; }
+        public string Reference3 { get; set; }
+        public string Reference4 { get; set; }
+    }
+}

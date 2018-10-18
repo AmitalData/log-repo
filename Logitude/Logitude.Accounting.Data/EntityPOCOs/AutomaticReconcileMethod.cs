@@ -1,0 +1,49 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Accounting.Data.EntityPOCOs
+{
+   
+    public class AutomaticReconcileMethod
+    {
+	 string dbms;
+
+        [Key]
+        [Column("Id")]
+	    public string Id { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+        [Column("Code")]
+	    public string Code { get; set; }
+        [ForeignKey("AutomaticReconcileField1")]
+        [Column("AutomaticReconcile1")]
+	    public string AutomaticReconcile1 { get; set; }
+	      
+        public virtual AutomaticReconcile AutomaticReconcileField1 { get; set; }
+        [ForeignKey("AutomaticReconcileField2")]
+        [Column("AutomaticReconcile2")]
+	    public string AutomaticReconcile2 { get; set; }
+	      
+        public virtual AutomaticReconcile AutomaticReconcileField2 { get; set; }
+        [ForeignKey("AutomaticReconcileField3")]
+        [Column("AutomaticReconcile3")]
+	    public string AutomaticReconcile3 { get; set; }
+	      
+        public virtual AutomaticReconcile AutomaticReconcileField3 { get; set; }
+        [Column("Inactive")]
+	    public bool Inactive { get; set; }
+        [Column("SearchFields")]
+	    public string SearchFields { get; set; }
+    }
+}
+	 

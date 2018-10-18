@@ -1,0 +1,1 @@
+delete from ObjectTableTabs where Code = 'YTRN' and ObjectTableId = (select Id from ObjectTables where Name='GLAccount')

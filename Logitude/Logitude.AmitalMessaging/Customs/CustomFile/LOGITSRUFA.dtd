@@ -1,0 +1,4 @@
+<!ELEMENT LOGITSRUFA (LogitudeTsrufa*)>
+<!ELEMENT LogitudeTsrufa (Id?, Tenant?)>
+<!ELEMENT Id (#PCDATA)>
+<!ELEMENT Tenant (#PCDATA)>

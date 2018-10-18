@@ -1,0 +1,531 @@
+﻿
+<style>
+    .HeaderBorder {
+        border-top: solid 1px #CCCCCC;
+        border-right: solid 1px #CCCCCC;
+        border-left: solid 1px #CCCCCC;
+        border-bottom: none;
+        border-top-right-radius: 7px;
+        border-top-left-radius: 7px;
+        -webkit-border-top-left-radius: 7px;
+        -webkit-border-top-right-radius: 7px;
+        width: 100%;
+        height: 24px;
+        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#efefef+0,efefef+50,cccccc+100 */
+        background: #efefef; /* Old browsers */
+        background: -moz-linear-gradient(top, #efefef 0%, #efefef 50%, #cccccc 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #efefef 0%,#efefef 50%,#cccccc 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #efefef 0%,#efefef 50%,#cccccc 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#efefef', endColorstr='#cccccc',GradientType=0 ); /* IE6-9 */
+        color: #1B90CB !important;
+        font-size: 14px !important;
+        padding-right: 7px;
+        padding-top: 2px;
+    }
+
+    .BodyBorder {
+        border: solid 1px #CCCCCC;
+        width: 100%;
+        height: calc(100% - 28px);
+        overflow: auto;
+    }
+
+    .DisbleBox {
+        display: inline-block;
+        border: 1px solid #ffd800;
+        border-radius: 5px;
+        background: #faf5c0;
+        padding: 2px 10px;
+        margin: 5px;
+        color: gray;
+        font-family: sans-serif;
+    }
+
+    .LogLovContainer {
+        height: 100%;
+        width: 100%;
+        background: white;
+        font-size: 11px;
+        color: #45494A;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        position: relative;
+    }
+
+    .LogLOVControl {
+        display: block;
+        height: 22px;
+        min-height: 22px;
+        max-height: 22px;
+        line-height: 22px;
+        width: 100%;
+        position: relative;
+    }
+
+    .LogLovInputDiv {
+        height: 100%;
+        width: 100%;
+        line-height: 22px;
+        width: 100%;
+        border: 1px solid #AAAAAA;
+        outline: none;
+        font-size: 11px;
+        color: #45494A;
+        background: white;
+        border-radius: 3px;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        -moz-box-shadow: inset 0 0 3px #AAAAAA;
+        -webkit-box-shadow: inset 0 0 3px #AAAAAA;
+        box-shadow: inset 0 0 3px #AAAAAA;
+        text-decoration: none;
+        vertical-align: middle;
+    }
+
+        .LogLovInputDiv:disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .LogLovInputDiv:hover:not(:disabled), .LogLovInputDiv:focus:not(:disabled) {
+            border: 1px solid #3BB3E2;
+        }
+
+    .TabCloseIcon:hover {
+        background: url('./Images/Tab.X.Blue.png') no-repeat;
+    }
+
+    .TabCloseIcon {
+        background: url('./Images/Tab.X.Gray.png') no-repeat;
+    }
+
+    /* HOVER */
+    .LogTabControl .TabControlHead li:not(.Selected):not(.NewTabItem):hover .InnerChild {
+        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,ffffff+18,b3d2f2+94,ffffff+95,ffffff+100 */
+        background: #ffffff; /* Old browsers */
+        background: -moz-linear-gradient(top, #ffffff 0%, #ffffff 18%, #b3d2f2 94%, #ffffff 95%, #ffffff 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #ffffff 0%,#ffffff 18%,#b3d2f2 94%,#ffffff 95%,#ffffff 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #ffffff 0%,#ffffff 18%,#b3d2f2 94%,#ffffff 95%,#ffffff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+    }
+
+    /* ACTIVE */
+    .LogTabControl .TabControlHead li:not(.Selected):not(.NewTabItem):active .InnerChild {
+        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#c2d7ed+0,eff2f4+16,b4d0ed+94,ffffff+95,ffffff+100 */
+        background: #c2d7ed; /* Old browsers */
+        background: -moz-linear-gradient(top, #c2d7ed 0%, #eff2f4 16%, #b4d0ed 94%, #ffffff 95%, #ffffff 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #c2d7ed 0%,#eff2f4 16%,#b4d0ed 94%,#ffffff 95%,#ffffff 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #c2d7ed 0%,#eff2f4 16%,#b4d0ed 94%,#ffffff 95%,#ffffff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c2d7ed', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+    }
+
+    .LogTabControl .TabControlHead li:not(.Selected):not(.NewTabItem):hover {
+        background: #448DCA;
+    }
+
+    .LogTabControl .TabControlHead li:not(.NewTabItem) .InnerChild {
+        height: 100%;
+        width: 100%;
+        color: black;
+        font-size: 13px;
+        text-align: left;
+        padding-left: 5px;
+        padding-right: 3px;
+        background: transparent;
+    }
+
+    .LogTabControl .TabControlHead li:not(.NewTabItem) {
+        height: 23px;
+        width: 95px;
+        line-height: 23px;
+        border: 1px solid #b1b1b1;
+        display: inline-block;
+        float: left;
+        cursor: default;
+        overflow: hidden;
+        border-radius: 4px 4px 0px 0px;
+        -moz-border-radius: 4px 4px 0px 0px;
+        -webkit-border-radius: 4px 4px 0px 0px;
+        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,ffffff+21,e2e2e2+94,e2e2e2+94,ffffff+95,ffffff+100 */
+        background: #ffffff; /* Old browsers */
+        background: -moz-linear-gradient(top, #ffffff 0%, #ffffff 21%, #e2e2e2 94%, #e2e2e2 94%, #ffffff 95%, #ffffff 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #ffffff 0%,#ffffff 21%,#e2e2e2 94%,#e2e2e2 94%,#ffffff 95%,#ffffff 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #ffffff 0%,#ffffff 21%,#e2e2e2 94%,#e2e2e2 94%,#ffffff 95%,#ffffff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+    }
+
+    .LogTabControl .TabControlHead li:not(.Selected) {
+        height: 23px;
+        margin-top: 2px;
+        border-bottom: 1px solid #b9b9b9;
+    }
+
+    .LogTabControl .TabControlHead li.Selected {
+        pointer-events: none;
+        height: 25px;
+        line-height: 25px;
+        margin-bottom: -1px;
+        background: white;
+        border: 1px solid #6dbdd1;
+        border-bottom: 1px solid white;
+        transition: margin 0.2s;
+    }
+
+    .LogTabControl .TabControlBody {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 25px;
+        bottom: 0;
+        background: white;
+        border: 1px solid #b9b9b9;
+        border-top: none;
+    }
+
+    .LogTabControl .TabControlHead ul {
+        width: 100%;
+        height: 100%;
+        padding-left: 8px;
+        padding-right: 0px;
+    }
+
+    .LogTabControl .TabControlHead {
+        width: 100%;
+        height: 25px;
+        position: relative;
+        border-bottom: 1px solid #a3aeb9;
+    }
+
+    .LogTabControl {
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+
+    .ReadOnlyTextArea {
+        height: 100%;
+        border: 1px solid darkgrey;
+        box-shadow: inset 1px 1px 3px -1px #929292;
+        padding: 5px;
+        width: 100%;
+        word-break: break-all;
+        white-space: normal;
+        height: 65px;
+        overflow: auto;
+    }
+</style>
+
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td colspan="4">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr style="height:23px;">
+        <td colspan="3">
+            <div style="width:100%;text-align:center;margin:0 auto; height:22px;">
+                <div class="DisbleBox" *ngIf="ViewDisableMessageVisibility">
+                    {{DisplayOnlyMessage}}
+                </div>
+
+                <div tabindex="0" class="ToggleButton" style="display:inline-block;left:0;position:absolute;width:100px;margin:0 auto; height: 22px; direction:rtl;">
+
+                    <label style="float:right">{{'Customs.Declaration.B.Actions' | TextCodeTranslationPipe}}</label>
+                    <img src="./Images/ToggleIcon.png" style="float:left" />
+
+                    <div class="ToggleButtonMenu" style="width: 110px;top:21px;text-align:right;direction:ltr;right:initial;left:0px;">
+                        <button [disabled]="!IsActionButtonsEnabled" (click)="NewVersion()">צור גרסה חדשה</button>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </td>
+
+
+    </tr>
+    <tr>
+
+
+        <td style="width: 50%; padding-right: 15px;">
+            <!--style="height: 130px;"-->
+            <div style="height: 100%;">
+                <table>
+
+                    <tr [ngStyle]="UpperHeight">
+                        <td>
+
+                            <table>
+
+                                <tr style="height:28px;">
+                                    <td style="width: 100px;">
+                                        <div class="Label" style="text-align:right;">
+                                            {{'Customs.CustomsDocument.F.DocumentTypeCode' | TextCodeTranslationPipe}}
+                                        </div>
+
+                                    </td>
+                                    <td style="width: 200px;">
+                                        <LogLov [ObjectFieldName]="'DocumentTypeCode'"
+                                                [ObjectTableName]="'Customs.CustomsDocument'"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Customs.CustomDocumentType'"
+                                                [HideColumns]="true">
+                                        </LogLov>
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                                <tr style="height:28px;" *ngIf="ChildrenComboBoxVisibility">
+                                    <td style="width: 100px; ">
+                                        <div class="Label" style="text-align:right;">
+                                            {{'Customs.CustomsDocument.ConnectTo' | TextCodeTranslationPipe}}
+                                        </div>
+                                    </td>
+
+                                    <td style="width: 200px;">
+                                        <select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width: 200px; cursor:pointer;" #selectControl (change)="ConnectedItemSelectionChanged(selectControl.value)">
+                                            <option *ngFor="let c of ConnectedToItems" [value]="c.Id" [selected]="c.Id==SelectedIndex">{{c.Name}}</option>
+                                        </select>
+                                    </td>
+                                </tr>
+
+                                <tr *ngIf="ChildrenComboBoxVisibility" style="height:28px;">
+                                    <td>
+                                        <div class="Label" style="text-align:right;">
+                                            {{RelatedEntityLable}}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="width:150px;" class="TextTrimming">
+                                            {{DisplayConnectedEntityNumber}}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="float: right; margin-right: 15px;">
+                                            <IconButton [Name]="'Edit'" (click)="ShowSelectionComponent()"></IconButton>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr *ngIf="SecondChildVisibility" style="height:28px;">
+                                    <td>
+                                        <div class="Label" style="text-align:right;">
+                                            {{'Customs.CustomsDocument.SupplierInvoiceItem' | TextCodeTranslationPipe}}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            {{SupplierInvoiceItemNumber}}
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </table>
+
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+
+                            <div class="HeaderBorder">
+                                {{'Customs.Declaration.O.DocumentMetaData' | TextCodeTranslationPipe}}
+                            </div>
+
+                            <div class="BodyBorder">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <div style="overflow:auto;position: absolute; top: 0; bottom: 0;width: 100%;">
+                                                <table style="direction:rtl; table-layout:fixed;overflow-y:auto; ">
+                                                    <tr *ngFor="let metaDataViewModel of MetaDataViewModels" style="height:35px;">
+                                                        <!--label td-->
+                                                        <td style="width:15px;">
+                                                            <div style="margin-right:7px;  width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;" *ngIf="metaDataViewModel.MetaDataType.Mandatory && (!metaDataViewModel.MetaDataValue.MetaDataValue || metaDataViewModel.MetaDataValue.MetaDataValue =='')"></div>
+                                                        </td>
+
+                                                        <td style="width:170px;">
+                                                            <div class="Label TextTrimming" style="text-align: right; margin-right:7px;">
+                                                                {{metaDataViewModel.MetaDataType.MetaDataTypeName}}
+                                                            </div>
+                                                        </td>
+                                                        <td style="width:10px;">
+                                                            <div> </div>
+                                                        </td>
+                                                        <!--value td-->
+                                                        <td style="width:180px; margin-right:7px; ">
+                                                            <div *ngIf="metaDataViewModel.controlType == 'logtextbox'" style="height:23px; width:120px;" [style.opacity]="IsMetaDataEditEnabled?'1':'0.5'" [style.pointer-events]="IsMetaDataEditEnabled?'all':'none'">
+                                                                <LogTextBox [ObjectFieldName]="'MetaDataValue'" [ObjectTableName]="'Customs.CustomsDocumentMetaDataValue'"
+                                                                            [HideColumns]="true" [DataContext]="metaDataViewModel.MetaDataValue"></LogTextBox>
+                                                            </div>
+
+                                                            <div *ngIf="metaDataViewModel.controlType == 'loglov'" style="height:23px; width:120px;" [style.opacity]="IsMetaDataEditEnabled?'1':'0.5'" [style.pointer-events]="IsMetaDataEditEnabled?'all':'none'">
+                                                                <LogLov [ObjectFieldName]="'MetaDataValue'"
+                                                                        [ObjectTableName]="'Customs.CustomsDocumentMetaDataValue'"
+                                                                        [DataContext]="metaDataViewModel.MetaDataValue"
+                                                                        [LookUpTableName]="metaDataViewModel.ValuesTableName"
+                                                                        [HideColumns]="true">
+                                                                </LogLov>
+                                                            </div>
+
+                                                            <div *ngIf="metaDataViewModel.controlType == 'logtextboxint'" style="height:23px; width:120px;" [style.opacity]="IsMetaDataEditEnabled?'1':'0.5'" [style.pointer-events]="IsMetaDataEditEnabled?'all':'none'">
+                                                                <LogTextBox [ObjectFieldName]="'MetaDataValue'" [ObjectTableName]="'Customs.CustomsDocumentMetaDataValue'"
+                                                                            [HideColumns]="true" [DataContext]="metaDataViewModel.MetaDataValue" [InputType]="'integer'"></LogTextBox>
+                                                            </div>
+
+                                                            <div *ngIf="metaDataViewModel.controlType == 'datepicker'" style="height:23px; width:120px;" [style.opacity]="IsMetaDataEditEnabled?'1':'0.5'" [style.pointer-events]="IsMetaDataEditEnabled?'all':'none'">
+                                                                <LogDatePicker [HideColumns]="true" [ObjectFieldName]="'DateMetaDataValue'" [ObjectTableName]="'Customs.CustomsDocumentMetaDataValue'" [InputType]="'date'" [DataContext]="metaDataViewModel"></LogDatePicker>
+                                                            </div>
+
+                                                            <div *ngIf="metaDataViewModel.controlType == 'boolean'" style="height:23px; width:120px;" [style.opacity]="IsMetaDataEditEnabled?'1':'0.5'" [style.pointer-events]="IsMetaDataEditEnabled?'all':'none'">
+                                                                <LogBoolean [Width]="'120px'" [ObjectFieldName]="'MetaDataValue'" [ObjectTableName]="'Customs.CustomsDocumentMetaDataValue'"
+                                                                            [DataContext]="metaDataViewModel.MetaDataValue"></LogBoolean>
+                                                            </div>
+
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr style="height:120px;">
+                                        <td>
+                                            <div style="position: absolute; top: 0;" class="LogTabControl">
+
+                                                <!-- Tab Header-->
+                                                <div class="TabControlHead">
+                                                    <ul>
+                                                        <li *ngFor="let tab of TabsSource" style="width: auto; min-width: 48px;" [class.Selected]="tab.isSelected" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" (click)="SelectionChanged(tab)">
+
+                                                            <div style="position: relative; width: 100%;" class="InnerChild"
+                                                                 [style.text-align]="'center'">
+                                                                <div class="TextTrimming" style="font-size: 11px;">{{tab.Header}}</div>
+                                                            </div>
+
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                                <!-- Tab Body -->
+                                                <div class="TabControlBody" style="background: white;">
+                                                    <div class="MediaFillAbsolute">
+                                                        <div style="height: 100%;padding: 15px;" [ngSwitch]="SelectedTab">
+
+                                                            <!--#region CustomsDocumentRemarks TAB-->
+                                                            <div *ngSwitchCase="'CustomsDocumentRemarks'" style="height: 100%;">
+                                                                <div class="ReadOnlyTextArea">
+                                                                    {{Remarks}}
+                                                                </div>
+                                                                <!--<textarea  [(ngModel)]="Remarks" style="height:100%;width:100%;"></textarea>-->
+                                                            </div>
+                                                            <!-- #endregion -->
+                                                            <!-- #region VerificationRemarks Tab -->
+
+                                                            <div *ngSwitchCase="'VerificationRemarks'" style="height: 100%;">
+                                                                <!--<textarea [(ngModel)]="VerificationRemarks" style="height:100%;width:100%;"></textarea>-->
+                                                                <div class="ReadOnlyTextArea">
+                                                                    {{VerificationRemarks}}
+                                                                </div>
+                                                            </div>
+                                                            <!-- #endregion -->
+                                                            <!-- #region UserRemarks Tab -->
+                                                            <div *ngSwitchCase="'UserRemarks'" style="height: 100%;">
+                                                                <textarea [(ngModel)]="UserRemarks" style="height:100%;width:100%;"></textarea>
+                                                            </div>
+                                                            <!-- #endregion -->
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+
+
+                        </td>
+                    </tr>
+
+                    <tr style="height: 30px;">
+                        <td style="text-align: right;">
+                            <div *ngIf="CustomsDocument">
+                                <!-- sign mark -->
+                                <img *ngIf="CustomsDocument.IsDigitallySigned"
+                                     style="width: 30px;"
+                                     src="./Images/medalicon.png"
+                                     [attr.title]="CustomsDocument.SignersList" />
+                                <span [attr.title]="CustomsDocument.SignersList"
+                                      class="TextTrimming"
+                                      style="font-size: 14px;display: inline-block;width: 700px;position: absolute;top: 7px;">
+                                    {{CustomsDocument.SignersList}}
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+
+        <td style="width: 50%; padding-right: 15px;">
+
+            <div style="height: 100%;">
+                <table>
+                    <tr style="height: 32px;">
+                        <td colspan="4">
+                            <button style="width: 100px; float: left; " class="GreenButton" (click)="SendButtonClicked()" [disabled]="!IsSendDocumentEnabled">{{ 'Customs.Declaration.O.SendDocument' |TextCodeTranslationPipe }}</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+
+                            <div class="HeaderBorder">
+                                {{ 'Customs.Declaration.O.DocumentPreview' |TextCodeTranslationPipe }}
+                            </div>
+
+                            <!-- [ngStyle]="{'background-image': 'url(' + base64Image + ')'}" -->
+                            <div class="BodyBorder" style="text-align: center;">
+                                <img style="max-width: 100%;max-height: 100%;"
+                                     [attr.src]="base64Image"
+                                     draggable="false" />
+                            </div>
+
+                        </td>
+                    </tr>
+                    <tr style="height: 30px;">
+                        <td>
+                            <div></div>
+                        </td>
+
+                        <td style="width: 57px;">
+                            <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel' |TextCodeTranslationPipe}}</button>
+                        </td>
+
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 57px;">
+                            <button class="RedButton" [disabled]="!IsEditEnabled" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>

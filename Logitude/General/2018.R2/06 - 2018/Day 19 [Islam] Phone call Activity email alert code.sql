@@ -1,0 +1,1 @@
+update EmailAlertSettings set Code = 'GAPC' where Code = 'GATP'

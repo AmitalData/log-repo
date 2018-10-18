@@ -1,0 +1,220 @@
+﻿import {Component, OnInit} from '@angular/core';
+import {Validator} from '../../../../Infrastructure/Validators/Validator';
+import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
+import {AddressPM} from '../../../../Common/EntityPMs/AddressPM';
+import {AddressItemClass} from '../EditTabs/AddressesTabComponent';
+import {AppTool} from '../../../../Infrastructure/Tools';
+import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import {AddressValidator} from '../../../../Infrastructure/Validators/AddressValidator';
+import {PartnersDomainService, PartnerServicePM} from '../../../../Common/Services/PartnersDomainService';
+import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
+
+@Component({
+    moduleId: module.id,
+    templateUrl: './AddEditAddressComponent.html',
+})
+
+export class AddEditAddressComponent implements OnInit {
+    public ObjectTableName: string;
+    public EntityPM: AddressPM = null;
+    public DataContext: AddressItemClass;
+    public ValidationErrorsList: string[] = [];
+    public DomainService: PartnersDomainService;
+    constructor() {
+
+    }
+
+    ngOnInit() {
+        if (this.DataContext != null) {
+            this.DataContext.SetUIProperties();
+        }
+    }
+
+    SetDataContext(dataContext: AddressItemClass) {
+        this.DataContext = dataContext;
+        this.EntityPM = dataContext.EntityPM;
+        this.ObjectTableName = dataContext.ObjectTableName;
+        this.DomainService = dataContext.fatherComponent.DomainService;
+
+        this.Clone();
+
+        if (dataContext.IsNewEntity) {
+            dataContext.Name = dataContext.fatherComponent.EntityPM.EnglishName;
+        }
+
+        if (dataContext.IsCopyMainAddress) {
+            dataContext.CopyMainAddress();
+        }
+    }
+
+    CancelButtonClicked() {
+        this.RejectChanges();
+        SessionLocator.CurrentSession.CloseCurrentWindow();
+    }
+
+    OkButtonClicked() {
+        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+
+        var isValid = this.Validate();
+        if (!isValid) {
+            SessionLocator.CurrentSession.StopBusyIndicator();
+        }
+
+        else {
+            if (!this.EntityPM.IsDirty) {
+                SessionLocator.CurrentSession.CloseCurrentWindow();
+            }
+
+            else {
+                this.Save();
+            }
+        }
+    }
+
+    private Validate() {
+        var isValid = true;
+        var errors: string[] = [];
+
+        if (this.EntityPM != null) {
+            var msg: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+            
+            Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
+
+            var isLanguageValid = AddressValidator.IsMainAddressEnglishCharacters(this.EntityPM);
+            if (!isLanguageValid) {
+                errors.push("Main address does not allow non-english characters");
+            }
+
+            if (this.EntityPM.AddressTypeId == "O") {
+                if (AppTool.IsNullOrEmpty(this.EntityPM.Description)) {
+                    errors.push(msg.replace("%FieldName", "Description"));
+                }
+            }
+
+            if (this.DataContext.Country != null) {
+                if (this.DataContext.State == null) {
+                    if (this.DataContext.Country.IsStateRequired) {
+                        errors.push(msg.replace("%FieldName", "State"));
+                    }
+                }
+            }
+
+            if (this.DataContext.fatherComponent.Customer != null) {
+                if (this.DataContext.fatherComponent.Customer.IsCustomer) {
+                    if (this.DataContext.fatherComponent.Customer.PartnerTypeId == "CS") {
+                        if (SessionLocator.TenantPM.IsCustomerTelRequired) {
+                            if (AppTool.IsNullOrEmpty(this.EntityPM.PhoneNumber)) {
+                                errors.push("Phone Number is required");
+                            }
+                        }
+
+                        if (SessionLocator.TenantPM.IsCustomerFaxRequired) {
+                            if (AppTool.IsNullOrEmpty(this.EntityPM.FaxNumber)) {
+                                errors.push("Fax Number is required");
+                            }
+                        }
+                    }
+
+                    else if (this.DataContext.fatherComponent.Customer.PartnerTypeId == "PO") {
+                        if (SessionLocator.TenantPM.IsPotentialTelRequired) {
+                            if (AppTool.IsNullOrEmpty(this.EntityPM.PhoneNumber)) {
+                                errors.push("Phone Number is required");
+                            }
+                        }
+
+                        if (SessionLocator.TenantPM.IsPotentialFaxRequired) {
+                            if (AppTool.IsNullOrEmpty(this.EntityPM.FaxNumber)) {
+                                errors.push("Fax Number is required");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        isValid = errors.length == 0 ? true : false;
+        this.ValidationErrorsList = errors;
+        return isValid;
+    }
+
+    private LoadCompletedEvent: any = null;
+    private Save() {
+        var args = new PartnerServicePM();
+        args.Tenant = this.EntityPM.Tenant;
+        args.AddressId = this.EntityPM.Id;
+        args.PartnerId = this.EntityPM.CardId;
+        args.Address = this.EntityPM;
+        args.IsAddressDirty = this.EntityPM.IsDirty;
+
+        if (this.DataContext.fatherComponent) {
+            args.IsPartnerDirty = this.DataContext.fatherComponent.EntityPM.IsDirty;
+            args.PartnerTypeId = this.DataContext.fatherComponent.PartnerTypeId;
+        }
+
+        this.DomainService.SetPartner(args, this.DataContext.fatherComponent.EntityPM);
+
+        this.DomainService.PostPartnerAddress(args).subscribe((myResponse: ServiceResponse) => {
+
+            SessionLocator.CurrentSession.StopBusyIndicator();
+
+            if (myResponse.HasError) {
+                this.ValidationErrorsList = myResponse.ErrorsArray;
+            }
+
+            else {
+                this.DataContext.EntityPM = myResponse.Result.Address;
+
+                if (!this.LoadCompletedEvent) {
+                    this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isSuccess: boolean) => {
+
+                        AppTool.KillEventEmitter(this.LoadCompletedEvent);
+                        this.LoadCompletedEvent = null;
+
+                        if (isSuccess == false) {
+                            SessionLocator.CurrentSession.StopBusyIndicator();
+                        }
+
+                        else {
+                            if (this.DataContext.IsNewEntity) {
+                                this.DataContext.fatherComponent.DomainService.GetAllAddressesPMsbyCardId(this.EntityPM.CardId).subscribe((myResult: any) => {
+                                    this.DataContext.fatherComponent.AllAddresses = myResult;
+                                    this.DataContext.fatherComponent.BuildItemsSource();
+                                    SessionLocator.CurrentSession.CloseCurrentWindow();
+                                });
+                            }
+
+                            else {
+                                this.DataContext.fatherComponent.BuildItemsSource();
+                                SessionLocator.CurrentSession.CloseCurrentWindow();
+                            }
+                        }                       
+                    });
+
+                    SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                }
+            }            
+        });
+    }
+
+    private myCloner: Cloner;
+    private Clone() {
+        this.myCloner = new Cloner(this.DataContext);
+        this.myCloner.AddField('Description');
+        this.myCloner.AddField('Name');
+        this.myCloner.AddField('Address1');
+        this.myCloner.AddField('Address2');
+        this.myCloner.AddField('City');
+        this.myCloner.AddField('StateId');
+        this.myCloner.AddField('CountryId');
+        this.myCloner.AddField('ZipCode');
+        this.myCloner.AddField('PhoneNumber');
+        this.myCloner.AddField('FaxNumber');
+        this.myCloner.AddField('ATTN');
+        this.myCloner.AddField('InActive');
+        this.myCloner.AddEntity(this.EntityPM);
+    }
+    private RejectChanges() {
+        this.myCloner.RejectChanges();
+    }
+}

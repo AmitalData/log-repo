@@ -1,0 +1,242 @@
+﻿
+.SimpleGridView .CellSeparator {
+    width: 1px;
+    height: 20px;
+    background: #DADADA;
+    display: block;
+    float: left;
+}
+
+.SimpleGridView .SimpleGridViewBody .RowSelected {
+    cursor: default;
+    background: rgba(232, 247, 255, 1);
+    background: -moz-linear-gradient(50% 106.14% 90deg,rgba(133, 203, 237, 1) 0%,rgba(150, 211, 240, 1) 22.59%,rgba(196, 231, 248, 1) 67.37%,rgba(232, 247, 255, 1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 100%);
+    background: -o-linear-gradient(90deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 100%);
+    background: linear-gradient(0deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 100%);
+}
+
+.SimpleGridView .SimpleGridViewBody .RowHover:not(.RowSelected):hover {
+    cursor: default;
+    background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(221, 232, 245, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(221, 232, 245, 1) ));
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+}
+
+.SimpleGridView .SimpleGridViewRow.CellBorder .GridViewCellCustom,
+.SimpleGridView .SimpleGridViewRow.CellBorder .GridViewCell,
+.SimpleGridView .SimpleGridViewRow.CellBorder .CellDisabled,
+.SimpleGridView .SimpleGridViewRow.CellBorder .CellStretched,
+.SimpleGridView .SimpleGridViewRow.CellBorder .CellTools,
+.SimpleGridView .SimpleGridViewRow.CellBorder .LastChild {
+    border-bottom: 1px solid #DDDDDD;
+}
+
+.SimpleGridView .SimpleGridViewRow .CellTools {
+    padding-left: 1px;
+    padding-right: 0px;
+    vertical-align: middle;
+}
+
+.SimpleGridView .SimpleGridViewRow .CellStretched {
+    padding-left: 1px;
+    padding-right: 1px;
+    vertical-align: middle;
+}
+
+.SimpleGridView .SimpleGridViewRow .CellDisabled div {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+}
+
+.SimpleGridView .SimpleGridViewRow .CellDisabled {
+    color: #6E7172;
+    background: rgba(230, 231, 232, 0.5);
+    padding-left: 4px;
+    padding-right: 2px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+}
+
+.SimpleGridView .SimpleGridViewRow .GridViewCell div {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    color: #282E30;
+}
+
+.SimpleGridView .SimpleGridViewRow .GridViewCell {
+    padding-left: 4px;
+    padding-right: 2px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    color: #282E30;
+}
+
+.SimpleGridView .SimpleGridViewRow .GridViewCellCustom div {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    color: #282E30;
+}
+
+.SimpleGridView .SimpleGridViewRow .GridViewCellCustom {
+    padding-left: 4px;
+    padding-right: 2px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    color: #282E30;
+}
+
+.SimpleGridView .SimpleGridViewRow:not(.CellBorder) {
+    border-bottom: 1px solid #DDDDDD;
+}
+
+.SimpleGridView .SimpleGridViewRow {
+    height: 26px;
+    min-height: 26px;
+    max-height:26px;
+    background: white;
+}
+
+.SimpleGridView .SimpleGridViewRow .CellInActive {
+    background: rgba(229, 48, 48, 0.2);
+    padding-left: 1px;
+    padding-right: 1px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+}
+
+.SimpleGridView .SimpleGridViewHeader td:not(.LastChild):hover {
+    cursor: default;
+    color: #282E30;
+    background: -moz-linear-gradient(50% 17.31% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    background: -webkit-gradient(linear,50% 17.31%,50% 105.85%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
+    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+}
+
+.SimpleGridView .SimpleGridViewHeader td:not(:last-child) {
+    border-right: 1px solid #D1D3D4;
+}
+
+.SimpleGridView .SimpleGridViewHeader td {
+    color: #1B90CB;
+    font-size: 11px;
+    padding-left: 4px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.SimpleGridView .SimpleGridViewHeader {
+    height: 24px;
+    min-height: 24px;
+    min-width: 100%;
+    position: absolute;
+    border: 1px solid #DADADA;
+    border-radius: 3px 3px 0 0;
+    -moz-border-radius: 3px 3px 0 0;
+    -webkit-border-radius: 3px 3px 0 0;
+    background: -moz-linear-gradient(50% 0% -90deg,rgba(247, 247, 247, 1) 0%,rgba(245, 245, 245, 1) 52.38%,rgba(238, 238, 238, 1) 72.96%,rgba(226, 226, 226, 1) 87.88%,rgba(209, 209, 209, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 52.38%, rgba(238, 238, 238, 1) 72.96%, rgba(226, 226, 226, 1) 87.88%, rgba(209, 209, 209, 1) 100%);
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(247, 247, 247, 1) ),color-stop(0.5238,rgba(245, 245, 245, 1) ),color-stop(0.7296,rgba(238, 238, 238, 1) ),color-stop(0.8788,rgba(226, 226, 226, 1) ),color-stop(1,rgba(209, 209, 209, 1) ));
+    background: -o-linear-gradient(-90deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 52.38%, rgba(238, 238, 238, 1) 72.96%, rgba(226, 226, 226, 1) 87.88%, rgba(209, 209, 209, 1) 100%);
+    background: linear-gradient(180deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 52.38%, rgba(238, 238, 238, 1) 72.96%, rgba(226, 226, 226, 1) 87.88%, rgba(209, 209, 209, 1) 100%);
+}
+
+.SimpleGridView .SimpleGridViewHeaderDark td:not(.LastChild):hover {
+    cursor: default;
+    color: #282E30;
+    background: -moz-linear-gradient(50% 17.31% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    background: -webkit-gradient(linear,50% 17.31%,50% 105.85%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
+    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+}
+
+.SimpleGridView .SimpleGridViewHeaderDark td:not(:last-child) {
+    border-right: 1px solid #D1D3D4;
+}
+
+.SimpleGridView .SimpleGridViewHeaderDark td {
+    color: white;
+    font-size: 11px;
+    padding-left: 4px;
+}
+
+.SimpleGridView .SimpleGridViewHeaderDark {
+    height: 24px;
+    min-width: 100%;
+    position: absolute;
+    border: 1px solid #DADADA;
+    border-radius: 3px 3px 0 0;
+    -moz-border-radius: 3px 3px 0 0;
+    -webkit-border-radius: 3px 3px 0 0;
+    background: -moz-linear-gradient(50% 100% 90deg,rgba(112, 112, 112, 1) 0%,rgba(168, 168, 168, 1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(112, 112, 112, 1) 0%, rgba(168, 168, 168, 1) 100%);
+    background: -webkit-gradient(linear,50% 100%,50% 0%,color-stop(0,rgba(112, 112, 112, 1) ),color-stop(1,rgba(168, 168, 168, 1) ));
+    background: -o-linear-gradient(90deg, rgba(112, 112, 112, 1) 0%, rgba(168, 168, 168, 1) 100%);
+    background: linear-gradient(0deg, rgba(112, 112, 112, 1) 0%, rgba(168, 168, 168, 1) 100%);
+}
+
+.SimpleGridView .SimpleGridViewBody > table {
+    height: unset;
+}
+
+.SimpleGridView .SimpleGridViewBody {
+    min-width: 100%;
+    position: absolute;
+    top: 25px;
+    bottom: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.SimpleGridView {
+    height: 100%;
+    width: 100%;
+    min-width: 100%;
+    background: white;
+    position: relative;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.CellNotMatchBox {
+    height: 18px;
+    line-height: 18px;
+    width: 100%;
+    text-align: center;
+    border-radius: 2px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    color: #FF5E00 !important;
+    background: rgba(255, 171, 3, 0.6);   
+}
+
+.CellNotMatchBoxWidthPadding {
+    height: 18px;
+    line-height: 18px;
+    width: 100%;
+    text-align: center;
+    border-radius: 2px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    color: #FF5E00 !important;
+    background: rgba(255, 171, 3, 0.6);   
+    padding-left: 3px;
+    padding-right: 3px;
+}

@@ -1,0 +1,173 @@
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Def.EntityPMs; 
+using Logitude.Accounting.Data;
+
+namespace Logitude.Accounting.BL.EntityDataMappings
+{
+   
+   public partial class JournalReconcileDataMapping: IMapping<JournalReconcilePM, JournalReconcile>,IMappingEncodeBase64NVARCHARFields<JournalReconcilePM>
+   {
+          public enum POCOPropertyNames
+          { 
+		     None,  
+	         JournalId, 
+	         Tenant, 
+	         LedgerTransactionId, 
+	         Line, 
+	         CurrencyId, 
+	         ReconciliationAmount, 
+	         IsPartial,
+	      }
+
+
+	      public enum PMPropertyNames
+          { 
+		     None,  
+	         JournalId, 
+	         Tenant, 
+	         LedgerTransactionId, 
+	         Line, 
+	         CurrencyId, 
+	         ReconciliationAmount, 
+	         IsPartial,
+	      }
+
+		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
+        List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
+    
+	    public void PMToPOCO(JournalReconcilePM entityPM, JournalReconcile entityPOCO)
+        {
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Line))
+            {
+				entityPOCO.Line = entityPM.Line;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CurrencyId))
+            {
+				entityPOCO.CurrencyId = entityPM.CurrencyId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReconciliationAmount))
+            {
+				entityPOCO.ReconciliationAmount = entityPM.ReconciliationAmount;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsPartial))
+            {
+				entityPOCO.IsPartial = entityPM.IsPartial;
+			}
+			}
+
+		public void POCOToPM(JournalReconcilePM entityPM, JournalReconcile entityPOCO)
+        {
+			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.JournalId))
+            {
+					entityPM.JournalId = entityPOCO.JournalId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
+            {
+					entityPM.Tenant = entityPOCO.Tenant;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LedgerTransactionId))
+            {
+					entityPM.LedgerTransactionId = entityPOCO.LedgerTransactionId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Line))
+            {
+					entityPM.Line = entityPOCO.Line;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CurrencyId))
+            {
+					entityPM.CurrencyId = entityPOCO.CurrencyId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ReconciliationAmount))
+            {
+					entityPM.ReconciliationAmount = entityPOCO.ReconciliationAmount;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsPartial))
+            {
+					entityPM.IsPartial = entityPOCO.IsPartial;
+            }
+
+		}
+
+		public void PMToOldPM(JournalReconcilePM entityPM, JournalReconcilePM oldEntityPM)
+        {
+		     oldEntityPM.ChangedProperties.Clear();
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+                oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Line))
+            {
+                oldEntityPM.Line = entityPM.Line;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CurrencyId))
+            {
+                oldEntityPM.CurrencyId = entityPM.CurrencyId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReconciliationAmount))
+            {
+                oldEntityPM.ReconciliationAmount = entityPM.ReconciliationAmount;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsPartial))
+            {
+                oldEntityPM.IsPartial = entityPM.IsPartial;
+            }
+			
+		}
+
+	    public void EncodeBase64NVARCHARFields(JournalReconcilePM entityPM)
+        {
+            if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
+            {
+                return;
+
+            }
+            entityPM.EncodeBase64NVARCHARFieldsBy=null;
+		}
+
+
+	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
+        {
+            CustomMappedPOCOProperties.Add(pocoPropertyName);
+        }
+
+        public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
+        {
+            CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+			  
+   }
+}
+	 

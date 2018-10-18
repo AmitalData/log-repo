@@ -1,0 +1,1 @@
+update WarehouseEntryPackages set IsConnectedToShipment = 1 

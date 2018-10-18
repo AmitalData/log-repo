@@ -1,0 +1,4 @@
+update ObjectTables set AllowedForComputingPartners = 1 where Name IN('country', 'user', 'port', 'customer', 'agent', 'Currency','Incoterm', 'PaymentTerm', 'VATType', 'ChargesType', 'CreditCardType', 'Measurement', 'ChargesGroup', 'WeightUnit', 'VolumeUnit','Packagetype', 'Vessel')
+update ObjectTables set CodeField='Code' where Name IN('country', 'customer', 'agent', 'Currency','Incoterm', 'PaymentTerm', 'VATType', 'ChargesType', 'CreditCardType','Measurement', 'ChargesGroup', 'WeightUnit', 'VolumeUnit','Packagetype', 'Vessel')
+update ObjectTables set CodeField='Email' where Name='user'
+update ObjectTables set CodeField='CombinedCode' where Name='port'  

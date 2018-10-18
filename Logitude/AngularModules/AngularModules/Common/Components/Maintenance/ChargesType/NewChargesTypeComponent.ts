@@ -1,0 +1,309 @@
+﻿import {Component} from '@angular/core';
+import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
+import {CachedDataManager} from '../../../../Infrastructure/Utilities/CachedDataManager';
+import {AppTool} from '../../../../Infrastructure/Tools';
+import {ChargesTypePM} from '../../../EntityPMs/ChargesTypePM';
+import {ChargesTypePMService} from '../../../../Common/Services/StandardPMs/ChargesTypePMService';
+import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import {Validator} from '../../../../Infrastructure/Validators/Validator';
+import {ChargesGroupListService} from '../../../../Infrastructure/Services/StandardLists/ChargesGroupListService';
+import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
+import {VatTypeList} from '../../../EntityLists/VatTypeList';
+import {VatTypeListService} from '../../../Services/StandardLists/VatTypeListService';
+
+@Component({
+    moduleId: module.id,
+    templateUrl: './NewChargesTypeComponent.html',
+})
+
+export class NewChargesTypeComponent extends BaseComponent {
+    public DataContext: NewChargesTypeComponent = this;
+    public ObjectTableName: string = "ChargesType";
+    public EntityPM: ChargesTypePM;
+    constructor() {
+        super();
+
+        this.EntityPM = new ChargesTypePM();
+        this.EntityPM.Tenant = SessionLocator.Tenant;
+        this.EntityPM.AddedManually = true;
+        this.IsAir = true;
+        this.IsInland = true;
+        this.IsOcean = true;
+        this.AWBPrintDescription = true;
+        this.ViewOrder = 100;
+
+        if (SessionLocator.TenantPM.TenantVATManagement == false) {
+            var myService = new VatTypeListService();
+            myService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    var allVats: VatTypeList[] = myResponse.Result;
+                    if (allVats) {
+                        var myZEROVat = allVats.filter(f => f.Code == "ZERO")[0];
+                        if (myZEROVat) {
+                            this.EntityPM.VatTypeId = myZEROVat.Id;
+                        }
+                    }
+                }
+            });
+        }
+
+        this.SetUIProperties();
+    }
+
+    public CustomsFieldsIsVisible: boolean = false;
+    private SetUIProperties() {
+        this.UIProperties.SetRequired("MeasurementId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.MeasurementId));
+        this.UIProperties.SetEnabled("DueTypeCode", this.ObjectTableName, this.IsAir);
+        this.UIProperties.SetEnabled("IATACodeId", this.ObjectTableName, this.IsAir);
+        this.UIProperties.SetEnabled("AWBPrintDescription", this.ObjectTableName, this.IsAir);
+
+        if (ObjectsLocator.CustomsInterfaceSettingPM != null) {
+            if (ObjectsLocator.CustomsInterfaceSettingPM.ActivateCustomsManagementInShipments) {
+                this.CustomsFieldsIsVisible = true;
+            }
+        }
+    }
+
+    // Properties
+    get Code() { return this.EntityPM.Code; }
+    set Code(newValue: string) {
+        if (this.EntityPM.Code != newValue) {
+            this.EntityPM.Code = newValue;
+        }
+    }
+
+    get EnglishName() { return this.EntityPM.EnglishName; }
+    set EnglishName(newValue: string) {
+        if (this.EntityPM.EnglishName != newValue) {
+            this.EntityPM.EnglishName = newValue;
+        }
+    }
+
+    get LocalName() { return this.EntityPM.LocalName; }
+    set LocalName(newValue: string) {
+        if (this.EntityPM.LocalName != newValue) {
+            this.EntityPM.LocalName = newValue;
+        }
+    }
+
+    get ChargesGroupCode() { return this.EntityPM.ChargesGroupCode; }
+    set ChargesGroupCode(newValue: string) {
+        if (this.EntityPM.ChargesGroupCode != newValue) {
+            this.EntityPM.ChargesGroupCode = newValue;
+        }
+    }
+
+    get ChargesGroupId() { return this.EntityPM.ChargesGroupId; }
+    set ChargesGroupId(newValue: string) {
+        if (this.EntityPM.ChargesGroupId != newValue) {
+            this.EntityPM.ChargesGroupId = newValue;
+            if (!AppTool.IsNullOrEmpty(newValue)) {
+                var myService: ChargesGroupListService = new ChargesGroupListService();
+                myService.getSingleFromCache(this.EntityPM.ChargesGroupId).subscribe((myResponse: ServiceResponse) => {
+
+                    if (!myResponse.HasError && myResponse.Result) {
+                        this.ChargesGroupCode = myResponse.Result.Code;
+                    }
+                });
+            }
+            else this.ChargesGroupCode = newValue;
+            
+        }
+    }
+    
+    get MeasurementId() { return this.EntityPM.MeasurementId; }
+    set MeasurementId(newValue: string) {
+        if (this.EntityPM.MeasurementId != newValue) {
+            this.EntityPM.MeasurementId = newValue;
+            
+            this.SetUIProperties();
+        }
+    }
+
+    get ContainerMeasurementId() { return this.EntityPM.ContainerMeasurementId; }
+    set ContainerMeasurementId(newValue: string) {
+        if (this.EntityPM.ContainerMeasurementId != newValue) {
+            this.EntityPM.ContainerMeasurementId = newValue;
+        }
+    }
+
+    get IsAir() { return this.EntityPM.IsAir; }
+    set IsAir(newValue: boolean) {
+        if (this.EntityPM.IsAir != newValue) {
+            this.EntityPM.IsAir = newValue;
+
+            this.SetUIProperties();
+        }
+    }
+
+    get IsInland() { return this.EntityPM.IsInland; }
+    set IsInland(newValue: boolean) {
+        if (this.EntityPM.IsInland != newValue) {
+            this.EntityPM.IsInland = newValue;
+        }
+    }
+
+    get IsOcean() { return this.EntityPM.IsOcean; }
+    set IsOcean(newValue: boolean) {
+        if (this.EntityPM.IsOcean != newValue) {
+            this.EntityPM.IsOcean = newValue;
+        }
+    }
+
+    get IsAutoDisplayInQuote() { return this.EntityPM.IsAutoDisplayInQuote; }
+    set IsAutoDisplayInQuote(newValue: boolean) {
+        if (this.EntityPM.IsAutoDisplayInQuote != newValue) {
+            this.EntityPM.IsAutoDisplayInQuote = newValue;
+        }
+    }
+
+    get IsAutoDisplayInShipment() { return this.EntityPM.IsAutoDisplayInShipment; }
+    set IsAutoDisplayInShipment(newValue: boolean) {
+        if (this.EntityPM.IsAutoDisplayInShipment != newValue) {
+            this.EntityPM.IsAutoDisplayInShipment = newValue;
+        }
+    }
+
+    get IsAutoDisplayInConsolidation() { return this.EntityPM.IsAutoDisplayInConsolidation; }
+    set IsAutoDisplayInConsolidation(newValue: boolean) {
+        if (this.EntityPM.IsAutoDisplayInConsolidation != newValue) {
+            this.EntityPM.IsAutoDisplayInConsolidation = newValue;
+        }
+    }
+
+    get IsAutoDisplayInCustoms() { return this.EntityPM.IsAutoDisplayInCustoms; }
+    set IsAutoDisplayInCustoms(newValue: boolean) {
+        if (this.EntityPM.IsAutoDisplayInCustoms != newValue) {
+            this.EntityPM.IsAutoDisplayInCustoms = newValue;
+        }
+    }
+
+    get DueTypeCode() { return this.EntityPM.DueTypeCode; }
+    set DueTypeCode(newValue: string) {
+        if (this.EntityPM.DueTypeCode != newValue) {
+            this.EntityPM.DueTypeCode = newValue;
+        }
+    }
+
+    get IATACodeId() { return this.EntityPM.IATACodeId; }
+    set IATACodeId(newValue: string) {
+        if (this.EntityPM.IATACodeId != newValue) {
+            this.EntityPM.IATACodeId = newValue;
+        }
+    }
+
+    get AWBPrintDescription() { return this.EntityPM.AWBPrintDescription; }
+    set AWBPrintDescription(newValue: boolean) {
+        if (this.EntityPM.AWBPrintDescription != newValue) {
+            this.EntityPM.AWBPrintDescription = newValue;
+        }
+    }
+
+    get VatTypeId() { return this.EntityPM.VatTypeId; }
+    set VatTypeId(newValue: string) {
+        if (this.EntityPM.VatTypeId != newValue) {
+            this.EntityPM.VatTypeId = newValue;
+        }
+    }
+
+    get ViewOrder() { return this.EntityPM.ViewOrder; }
+    set ViewOrder(newValue: number) {
+        if (this.EntityPM.ViewOrder != newValue) {
+            this.EntityPM.ViewOrder = newValue;
+        }
+    }
+
+    // Pages Properties
+    public Page1Hidden: boolean = false;
+    public Page2Hidden: boolean = true;
+    public Page3Hidden: boolean = true;
+
+    public IsPreviousEnabled: boolean = false;
+    public IsNextEnabled: boolean = true;
+    public IsFinishEnabled: boolean = false;
+
+    // Commands
+    PreviousButtonClicked() {
+        this.IsFinishEnabled = true;
+
+        if (!this.Page2Hidden) {
+            this.IsPreviousEnabled = false;
+            this.IsNextEnabled = true;
+
+            this.Page1Hidden = false;
+            this.Page2Hidden = true;
+            this.Page3Hidden = true;
+        }
+
+        else if (!this.Page3Hidden) {
+            this.IsPreviousEnabled = true;
+            this.IsNextEnabled = true;
+
+            this.Page1Hidden = true;
+            this.Page2Hidden = false;
+            this.Page3Hidden = true;
+        }
+    }
+
+    NextButtonClicked() {
+        this.IsFinishEnabled = true;
+
+        if (!this.Page1Hidden) {
+            this.IsNextEnabled = true;
+            this.IsPreviousEnabled = true;
+
+            this.Page1Hidden = true;
+            this.Page2Hidden = false;
+        }
+
+        else if (!this.Page2Hidden) {
+            this.IsPreviousEnabled = true;
+            this.IsNextEnabled = false;
+
+            this.Page1Hidden = true;
+            this.Page2Hidden = true;
+            this.Page3Hidden = false;
+        }
+
+        else if (!this.Page3Hidden) {
+            this.IsPreviousEnabled = true;
+            this.IsNextEnabled = false;
+        }
+    }
+
+    public ValidationErrorsList: string[];
+    FinishButtonClicked() {
+        var errors: string[] = [];
+        Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);        
+        
+        this.ValidationErrorsList = errors;
+
+        if (this.ValidationErrorsList.length == 0) {
+            this.EntityPM.IsReceivable = true;
+            this.EntityPM.IsPayable = true;
+
+            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            
+            var myService: ChargesTypePMService = new ChargesTypePMService();
+            myService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
+
+                SessionLocator.CurrentSession.StopBusyIndicator();
+
+                if (!myResponse.HasError) {
+                    CachedDataManager.RefreshTableData(this.ObjectTableName, true);
+
+                    SessionLocator.CurrentSession.CloseCurrentWindowEmit(this.EntityPM.Id);
+                }
+
+                else {
+                    this.ValidationErrorsList = myResponse.ErrorsArray;
+                }
+            });
+        }
+    }
+
+    CancelButtonClicked() {
+        SessionLocator.CurrentSession.CloseCurrentWindow();
+    }
+}

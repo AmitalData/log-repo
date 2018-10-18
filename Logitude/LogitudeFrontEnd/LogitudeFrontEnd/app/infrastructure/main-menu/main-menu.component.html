@@ -1,0 +1,133 @@
+﻿
+<style>
+    #MainFollowupsList li {
+        background: #FFFFFF;
+        background: rgba(255, 255, 255, 1);
+        border-style: Solid;
+        border-color: #A7A9AC;
+        border-color: rgba(167, 169, 172, 1);
+        border-width: 1px;
+        height: 68px;
+        border-radius: 2px;
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px;
+        margin: 0 5px 3px 5px;
+    }
+
+    #MainFollowupsList .Red {
+        background: #F7E3E3;
+        background: rgba(247, 227, 227, 1);
+    }
+
+    #MainFollowupsList .Blue {
+        background: -webkit-linear-gradient(90deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 99.68%);
+        background: -webkit-gradient(linear,50% 106.14%,50% -10.13%,color-stop(0,rgba(133, 203, 237, 1) ),color-stop(0.2259,rgba(150, 211, 240, 1) ),color-stop(0.6737,rgba(196, 231, 248, 1) ),color-stop(0.9968,rgba(232, 247, 255, 1) ));
+        background: -o-linear-gradient(90deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 99.68%);
+        background: linear-gradient(0deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 99.68%);
+    }
+</style>
+
+
+<table>
+    <tr style="height: 10px;">
+        <td>
+            <div #myModal></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+               <tr>
+                   <td style="width:10px;">
+                       <div></div>
+                   </td>
+
+                   <td style="height:100%;">
+                       <div id="PageContent">
+                           <table>
+                               <tr>
+                                   <td class="MainMenuTD">
+                                       <div style="background: rgba(212, 212, 212, 0.5); margin-top: 20px;">
+                                           <div style="height:1px; background: #CCCCCC;"></div>
+                                           <div style="height: 26px; line-height: 26px; font-size: 13px; text-indent: 10px; color: #464A4B;">{{'General.O.Menu' | textcodeTranslation}}</div>
+                                           <ul>
+                                               <li class="DefaultMenuItem" *ngFor="#item of MainMenuItems"
+                                                   (click)="OpenView(item)"
+                                                   [class.SelectedMenuItem]="item === selectedMenu">
+                                                   
+                                                   <!--<SVGPath [Name]="item.TextCode" [IsSelected]="item === selectedMenu"></SVGPath>-->                                                       
+                                                   <!--<img style="position:absolute; left: 10px; top:0; bottom:0; margin:auto;" [attr.src]="item === selectedMenu? item.IconSelectedSource : item.IconSource" />-->
+
+                                                   <img *ngIf="item != selectedMenu" style="position:absolute; left: 10px; top:0; bottom:0; margin:auto;" [attr.src]="item.IconSource" />                                                   
+                                                   <img *ngIf="item == selectedMenu" style="position:absolute; left: 11px; top:0; bottom:0; margin:auto;" [attr.src]="item.IconSelectedSource" />
+                                                   <div style="position:absolute; left: 25px; top:0; bottom:0; margin:auto; height: 22px; line-height: 22px;">{{item.TextCode | textcodeTranslation}}</div>
+                                                   <img *ngIf="item == selectedMenu" class="ImageRightCenter" src="images/SelectedMenuArrow.png" style="margin-right: -1px;" />
+                                               </li>
+                                           </ul>
+                                       </div>
+
+                                       <div style="height:1px; background: #CCCCCC;"></div>
+
+                                       <div *ngIf="ShowFollowUps">
+                                           <div style="height: 26px; line-height: 26px; font-size: 13px; text-indent: 10px; color: #464A4B;">{{'General.O.FollowUps' | textcodeTranslation}}</div>
+
+                                           <ul id="MainFollowupsList">
+                                               <li class="Red"></li>
+                                               <li class="Blue"></li>
+                                               <li></li>
+                                           </ul>
+
+                                           <div style="height:1px; margin:0px; padding:0px; background: #D1D1D1;"></div>
+                                       </div>
+                                   </td>
+
+                                   <td>
+                                       <table>
+                                           <tr style="height: 10px;">
+                                               <td></td>
+                                           </tr>
+
+                                           <tr>
+                                               <td>
+                                                   <table>
+                                                       <tr>
+                                                           <td style="width:15px;"></td>
+
+                                                           <td style="height:100%;">
+                                                               <div style="height:100%;">
+                                                                   <router-outlet></router-outlet>
+                                                               </div>
+                                                           </td>
+
+                                                           <td style="width:15px;"></td>
+                                                       </tr>
+                                                   </table>
+                                               </td>
+                                           </tr>
+
+                                           <tr style="height: 10px;">
+                                               <td></td>
+                                           </tr>
+                                       </table>
+                                   </td>
+                               </tr>
+                           </table>
+                       </div>
+                   </td>
+
+                   <td style="width:10px;">
+                       <div></div>
+                   </td>
+               </tr> 
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 10px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+</table>
+

@@ -1,0 +1,1 @@
+alter table [Customs].[vendors] alter column CityName varchar(35) null

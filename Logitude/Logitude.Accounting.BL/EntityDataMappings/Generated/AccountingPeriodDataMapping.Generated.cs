@@ -1,0 +1,167 @@
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Def.EntityPMs; 
+using Logitude.Accounting.Data;
+
+namespace Logitude.Accounting.BL.EntityDataMappings
+{
+   
+   public partial class AccountingPeriodDataMapping: IMapping<AccountingPeriodPM, AccountingPeriod>,IMappingEncodeBase64NVARCHARFields<AccountingPeriodPM>
+   {
+          public enum POCOPropertyNames
+          { 
+		     None,  
+	         Id, 
+	         Tenant, 
+	         Year, 
+	         PeriodTypeCode, 
+	         OpenMonth, 
+	         ClosedMonth,
+	      }
+
+
+	      public enum PMPropertyNames
+          { 
+		     None,  
+	         Id, 
+	         Tenant, 
+	         Year, 
+	         PeriodTypeCode, 
+	         PeriodTypeName, 
+	         OpenMonth, 
+	         ClosedMonth,
+	      }
+
+		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
+        List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
+    
+	    public void PMToPOCO(AccountingPeriodPM entityPM, AccountingPeriod entityPOCO)
+        {
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Year))
+            {
+				entityPOCO.Year = entityPM.Year;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PeriodTypeCode))
+            {
+				entityPOCO.PeriodTypeCode = entityPM.PeriodTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OpenMonth))
+            {
+				entityPOCO.OpenMonth = entityPM.OpenMonth;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClosedMonth))
+            {
+				entityPOCO.ClosedMonth = entityPM.ClosedMonth;
+			}
+			}
+
+		public void POCOToPM(AccountingPeriodPM entityPM, AccountingPeriod entityPOCO)
+        {
+			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
+            {
+					entityPM.Id = entityPOCO.Id;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
+            {
+					entityPM.Tenant = entityPOCO.Tenant;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Year))
+            {
+					entityPM.Year = entityPOCO.Year;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PeriodTypeCode))
+            {
+					entityPM.PeriodTypeCode = entityPOCO.PeriodTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.OpenMonth))
+            {
+					entityPM.OpenMonth = entityPOCO.OpenMonth;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ClosedMonth))
+            {
+					entityPM.ClosedMonth = entityPOCO.ClosedMonth;
+            }
+
+		}
+
+		public void PMToOldPM(AccountingPeriodPM entityPM, AccountingPeriodPM oldEntityPM)
+        {
+		     oldEntityPM.ChangedProperties.Clear();
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+                oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Year))
+            {
+                oldEntityPM.Year = entityPM.Year;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PeriodTypeCode))
+            {
+                oldEntityPM.PeriodTypeCode = entityPM.PeriodTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OpenMonth))
+            {
+                oldEntityPM.OpenMonth = entityPM.OpenMonth;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClosedMonth))
+            {
+                oldEntityPM.ClosedMonth = entityPM.ClosedMonth;
+            }
+			
+		}
+
+	    public void EncodeBase64NVARCHARFields(AccountingPeriodPM entityPM)
+        {
+            if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
+            {
+                return;
+
+            }
+            entityPM.EncodeBase64NVARCHARFieldsBy=null;
+		}
+
+
+	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
+        {
+            CustomMappedPOCOProperties.Add(pocoPropertyName);
+        }
+
+        public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
+        {
+            CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+			  
+   }
+}
+	 

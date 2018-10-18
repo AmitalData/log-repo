@@ -1,0 +1,1 @@
+update CommunicationLogs set Objecttableid ='1-1' , createdbyuserid ='1-1'

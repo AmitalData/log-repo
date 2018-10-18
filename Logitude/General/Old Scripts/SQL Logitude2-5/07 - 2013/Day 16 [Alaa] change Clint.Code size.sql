@@ -1,0 +1,1 @@
+alter table [Customs].[Clients] alter column code varchar(15)

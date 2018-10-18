@@ -1,0 +1,1 @@
+update customs.Deficits set NotificationTypeCode = null  

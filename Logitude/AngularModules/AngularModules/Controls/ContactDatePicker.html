@@ -1,0 +1,24 @@
+﻿
+<table style="height: 22px">
+    <tr>
+        <td style="width: 50px;">
+            <ComboBox [IsBlueBox]="true" [WaterMark]="'Day'" [ItemsSource]="Days" [SelectedItem]="Day" (SelectedItemChanged)="Day=$event"></ComboBox>
+        </td>
+
+        <td style="width: 2px;">
+            <div></div>
+        </td>
+
+        <td style="width: 70px;">
+            <ComboBox [IsBlueBox]="true" [WaterMark]="'Month'" [ItemsSource]="Months" [SelectedItem]="Month" (SelectedItemChanged)="Month=$event"></ComboBox>
+        </td>
+
+        <td style="width: 2px;">
+            <div></div>
+        </td>
+
+        <td>
+            <ComboBox [IsBlueBox]="true" [WaterMark]="'Year'" [ItemsSource]="Years" [SelectedItem]="Year" (SelectedItemChanged)="Year=$event"></ComboBox>
+        </td>
+    </tr>
+</table>

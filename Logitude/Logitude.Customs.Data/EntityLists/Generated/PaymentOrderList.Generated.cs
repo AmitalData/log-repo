@@ -1,0 +1,86 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization; 
+
+namespace Logitude.Customs.Data.EntityLists
+{
+   [DataContract]
+   public partial class PaymentOrderList
+   {
+   
+       [Key]
+       [DataMember]
+       public string Id  { get; set; }
+       [DataMember]
+       public int Tenant  { get; set; }
+       [DataMember]
+       public string PaymentNumber  { get; set; }
+       [DataMember]
+       public decimal? TotalSumToPay  { get; set; }
+       [DataMember]
+       public DateTime? LastPayDate  { get; set; }
+       [DataMember]
+       public string Reason  { get; set; }
+       [DataMember]
+       public string CustomerActivityTypeCode  { get; set; }
+       [DataMember]
+       public string PaymentOrderTypeCode  { get; set; }
+       [DataMember]
+       public string PaymentProcessCode  { get; set; }
+       [DataMember]
+       public string PaymentStatusCode  { get; set; }
+       [DataMember]
+       public string CustomsHouseCode  { get; set; }
+       [DataMember]
+       public DateTime? ActualPayDate  { get; set; }
+       [DataMember]
+       public string InternalNotes  { get; set; }
+       [DataMember]
+       public DateTime? CreateDate  { get; set; }
+       [DataMember]
+       public DateTime? UpdateDate  { get; set; }
+       [DataMember]
+       public string SearchFields  { get; set; }
+       [DataMember]
+       public string CustomerName  { get; set; }
+       [DataMember]
+       public string PaymentStatusName  { get; set; }
+       [DataMember]
+       public string PaymentOrderTypeName  { get; set; }
+       [DataMember]
+       public string PaymentProcessName  { get; set; }
+       [DataMember]
+       public string CustomsEntityTypeCode  { get; set; }
+       [DataMember]
+       public string FirstEntityID  { get; set; }
+       [DataMember]
+       public string SecondEntityID  { get; set; }
+       [DataMember]
+       public string ThirdEntityID  { get; set; }
+       [DataMember]
+       public string ImporterName  { get; set; }
+       [DataMember]
+       public bool IsClosed  { get; set; }
+       [DataMember]
+       public string CustomerActivityTypeName  { get; set; }
+       [DataMember]
+       public string CustomsEntityTypeName  { get; set; }
+       [DataMember]
+       public string CustomsHouseName  { get; set; }
+       [DataMember]
+       public string AccountingCustomFile  { get; set; }
+       [DataMember]
+       public string CustomFiles  { get; set; }
+       [DataMember]
+       public decimal? PaymentOrderLeftAmount  { get; set; }
+       [DataMember]
+       public string DocumentPaymentId  { get; set; }
+   }
+
+}
+	 

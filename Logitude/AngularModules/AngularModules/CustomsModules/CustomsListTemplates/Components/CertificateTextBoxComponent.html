@@ -1,0 +1,9 @@
+﻿<div  (click)="clicked()"   style="padding-top:2px;text-align:right;direction:rtl;">
+    <div *ngIf="cellClicked">
+        <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'CatalogNumber'" [ObjectTableName]="'Customs.SupplierInvoiceItem'"
+                    [HideColumns]="true" [DataContext]="DataContext" [Text]="CatalogNumber" (LostFocus)="onBlur()" ></LogTextBox>
+    </div>
+
+    <span *ngIf="!cellClicked" style="text-align:right">{{CatalogNumber}}</span>
+    <span style="opacity:0;position:absolute;">   321321321321     </span>
+</div>

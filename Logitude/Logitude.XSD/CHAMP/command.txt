@@ -1,0 +1,3 @@
+﻿first goto visual studio command promot
+
+c:\Logitude2-3\JustWebFreight\WebFreight.Web\ChampCargoXML>xsd CargoXML.xsd /classes /namespace:ChampCargoXML

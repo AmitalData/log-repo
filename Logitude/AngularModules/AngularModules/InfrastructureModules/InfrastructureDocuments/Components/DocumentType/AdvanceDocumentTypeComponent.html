@@ -1,0 +1,193 @@
+﻿
+<table style="vertical-align:top;">
+
+
+    <tr style="vertical-align:top;">
+        <td>
+            <div style="height:130px; vertical-align:top;  border-right:2px solid #E4E3E1;border-left:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-radius:5px">
+
+                <table style="border :none;height:130px">
+
+                    <tr> 
+                        <td>
+
+                            <div style="background-color:#EDEDED;height:25px;width:100%;border-top:2px solid #E4E3E1;border-bottom:0px solid gray;border-bottom-left-radius:0px;color:black">
+
+                                <p style="font-size:14px;margin-left:5px;margin-top:2px;color:#000000;float: left;">Transport Mode</p>
+
+                                 
+
+                                 
+
+                            </div>
+
+
+                        </td>
+                    </tr>
+
+                    <tr>
+
+                        <td>
+                            <div style="overflow:auto; height:100px;max-height:100px;">
+                                <table>
+                                    <tr>
+                                        <td style="width:20px"></td>
+                                        <td style="width:100px"> Air</td>
+                                        <td style="text-align:left">
+                                            <CheckBox [IsChecked]="IsAir" (Checked)="IsAir = $event" ></CheckBox>
+                                      
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td style="width:20px"></td>
+                                        <td style="width:100px"> Ocean</td>
+                                       
+                                        <td style="text-align:left">
+                                            <CheckBox [IsChecked]="IsOcean" (Checked)="IsOcean = $event"></CheckBox>
+
+                                        </td>
+                                        
+                                         
+                                    </tr>
+
+
+                                    <tr>
+                                        <td style="width:20px"></td>
+                                        <td style="width:100px"> Inland</td>
+                                        <td style="text-align:left"><CheckBox [IsChecked]="IsInland" (Checked)="IsInland = $event"></CheckBox> </td>
+                                   
+                                    
+                                     </tr>
+                                </table>
+
+
+                            </div>
+                        </td>
+                    </tr>
+
+
+                </table>
+
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height:10px;vertical-align:top">
+        <td></td>
+    </tr>
+
+
+    <tr style="vertical-align:top">
+        <td>
+
+            <div  style="height:130px;vertical-align:top;">
+                <div *ngIf="ShowDeflut" style="height:130px;vertical-align:top;  border-right:2px solid #E4E3E1;border-left:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-radius:5px">
+
+                    <table style="border :none;height:130px">
+
+                        <tr>
+                            <td>
+
+                                <div style="background-color:#EDEDED;height:25px;width:100%;border-top:2px solid #E4E3E1;border-bottom:0px solid gray;border-bottom-left-radius:0px;color:black">
+
+                                    <p style="font-size:14px;margin-left:5px;margin-top:2px;color:#000000;float: left;">Shipment Level</p>
+
+                                </div>
+
+
+                            </td>
+                        </tr>
+
+                        <tr>
+
+                            <td>
+                                <div style="overflow:auto; height:100px;max-height:100px;">
+                                    <table>
+                                        <tr>
+                                            <td style="width:20px"></td>
+                                            <td style="width:100px"> Master</td>
+                                            <td style="text-align:left"><CheckBox [IsChecked]="IsMaster" (Checked)="IsMaster = $event"></CheckBox> </td>
+
+
+                                          
+                                        </tr>
+
+                                        <tr>
+                                            <td style="width:20px"></td>
+                                            <td style="width:100px"> Direct</td>
+                                            <td style="text-align:left"><CheckBox [IsChecked]="IsDirect" (Checked)="IsDirect = $event"></CheckBox> </td>
+                                       
+                                        </tr>
+
+
+                                        <tr>
+                                            <td style="width:20px"></td>
+                                            <td style="width:100px">House</td>
+                                            <td style="text-align:left"><CheckBox [IsChecked]="IsHouse" (Checked)="IsHouse = $event"></CheckBox> </td>
+                                     
+                                        </tr>
+                                    </table>
+
+
+
+
+                                </div>
+                            </td>
+                        </tr>
+
+
+                    </table>
+
+                </div>
+            </div>
+        </td>
+    </tr>
+
+
+    <tr>
+        <td></td>
+    </tr>
+
+
+
+ 
+    <tr style="height: 32px;">
+        <td colspan="3" style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+                 
+                    <td style="width: 57px;">
+                        <div>
+                            <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
+                        </div>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="SaveButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+
+</table>
+
+
+
+
+
+
+
+
+
+
+

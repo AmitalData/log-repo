@@ -1,0 +1,20 @@
+﻿<!ELEMENT CUSTOMCERTIFICATES_UL (CUSTOMCERTIFICATES_UL.AMITAL*)>
+<!ELEMENT CUSTOMCERTIFICATES_UL.AMITAL (DeclarationId?, Message?, CertificateGroupResponse*, HasException?, Succeeded?)>
+<!ELEMENT DeclarationId (#PCDATA)>
+<!ELEMENT Message (#PCDATA)>
+<!ELEMENT CertificateGroupResponse (ClassificationCode?, ItemCode?, OriginCountryCode?, CertificateDetails*, VendorNumber?)>
+<!ELEMENT ClassificationCode (#PCDATA)>
+<!ELEMENT ItemCode (#PCDATA)>
+<!ELEMENT OriginCountryCode (#PCDATA)>
+<!ELEMENT CertificateDetails (ResponseConfirmationTypeCode?, CertificateNumber?, CertificateExemptionTypeCode?, AttachmentTypeCode?, RequestConfirmationTypeCode?, CustomsAttachmentID?, ExternalCertificatCode?)>
+<!ELEMENT ResponseConfirmationTypeCode (#PCDATA)>
+<!ELEMENT CertificateNumber (#PCDATA)>
+<!ELEMENT CertificateExemptionTypeCode (#PCDATA)>
+<!ELEMENT AttachmentTypeCode (#PCDATA)>
+<!ELEMENT RequestConfirmationTypeCode (#PCDATA)>
+<!ELEMENT CustomsAttachmentID (#PCDATA)>
+<!ELEMENT ExternalCertificatCode (#PCDATA)>
+<!ELEMENT VendorNumber (#PCDATA)>
+<!ELEMENT HasException (#PCDATA)>
+<!ELEMENT Succeeded (#PCDATA)>
+

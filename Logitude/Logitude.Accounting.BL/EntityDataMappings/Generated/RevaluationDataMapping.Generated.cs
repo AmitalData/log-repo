@@ -1,0 +1,306 @@
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Def.EntityPMs; 
+using Logitude.Accounting.Data;
+
+namespace Logitude.Accounting.BL.EntityDataMappings
+{
+   
+   public partial class RevaluationDataMapping: IMapping<RevaluationPM, Revaluation>,IMappingEncodeBase64NVARCHARFields<RevaluationPM>
+   {
+          public enum POCOPropertyNames
+          { 
+		     None,  
+	         Id, 
+	         Tenant, 
+	         CreateDate, 
+	         CreatedByUserId, 
+	         SearchFields, 
+	         RevaluationNumber, 
+	         RevaluationDate, 
+	         ChartOfAccountsId, 
+	         GLAccountId, 
+	         RevaluationEnabled, 
+	         Status, 
+	         Message, 
+	         RevaluationsGLAccountId,
+	      }
+
+
+	      public enum PMPropertyNames
+          { 
+		     None,  
+	         Id, 
+	         Tenant, 
+	         CreateDate, 
+	         CreatedByUserId, 
+	         SearchFields, 
+	         RevaluationNumber, 
+	         RevaluationDate, 
+	         ChartOfAccountsId, 
+	         ChartOfAccountsName, 
+	         GLAccountId, 
+	         GLAccountName, 
+	         GLAccountNumber, 
+	         RevaluationEnabled, 
+	         CreatedByUserName, 
+	         Status, 
+	         Message, 
+	         RevaluationsGLAccountId, 
+	         RevaluationsGLAccountName, 
+	         StatusName,
+	      }
+
+		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
+        List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
+    
+	    public void PMToPOCO(RevaluationPM entityPM, Revaluation entityPOCO)
+        {
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateDate))
+            {
+				entityPOCO.CreateDate = entityPM.CreateDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreatedByUserId))
+            {
+				entityPOCO.CreatedByUserId = entityPM.CreatedByUserId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
+            {
+				entityPOCO.SearchFields = entityPM.SearchFields;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RevaluationNumber))
+            {
+				entityPOCO.RevaluationNumber = entityPM.RevaluationNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RevaluationDate))
+            {
+				entityPOCO.RevaluationDate = entityPM.RevaluationDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChartOfAccountsId))
+            {
+				entityPOCO.ChartOfAccountsId = entityPM.ChartOfAccountsId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GLAccountId))
+            {
+				entityPOCO.GLAccountId = entityPM.GLAccountId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RevaluationEnabled))
+            {
+				entityPOCO.RevaluationEnabled = entityPM.RevaluationEnabled;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Status))
+            {
+				entityPOCO.Status = entityPM.Status;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Message))
+            {
+				entityPOCO.Message = entityPM.Message;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RevaluationsGLAccountId))
+            {
+				entityPOCO.RevaluationsGLAccountId = entityPM.RevaluationsGLAccountId;
+			}
+			
+				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
+		  }
+
+		public void POCOToPM(RevaluationPM entityPM, Revaluation entityPOCO)
+        {
+			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
+            {
+					entityPM.Id = entityPOCO.Id;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
+            {
+					entityPM.Tenant = entityPOCO.Tenant;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CreateDate))
+            {
+					entityPM.CreateDate = entityPOCO.CreateDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CreatedByUserId))
+            {
+					entityPM.CreatedByUserId = entityPOCO.CreatedByUserId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SearchFields))
+            {
+					entityPM.SearchFields = entityPOCO.SearchFields;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.RevaluationNumber))
+            {
+					entityPM.RevaluationNumber = entityPOCO.RevaluationNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.RevaluationDate))
+            {
+					entityPM.RevaluationDate = entityPOCO.RevaluationDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ChartOfAccountsId))
+            {
+					entityPM.ChartOfAccountsId = entityPOCO.ChartOfAccountsId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.GLAccountId))
+            {
+					entityPM.GLAccountId = entityPOCO.GLAccountId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.RevaluationEnabled))
+            {
+					entityPM.RevaluationEnabled = entityPOCO.RevaluationEnabled;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Status))
+            {
+					entityPM.Status = entityPOCO.Status;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Message))
+            {
+					entityPM.Message = entityPOCO.Message;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.RevaluationsGLAccountId))
+            {
+					entityPM.RevaluationsGLAccountId = entityPOCO.RevaluationsGLAccountId;
+            }
+
+		}
+
+		public void PMToOldPM(RevaluationPM entityPM, RevaluationPM oldEntityPM)
+        {
+		     oldEntityPM.ChangedProperties.Clear();
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+                oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateDate))
+            {
+                oldEntityPM.CreateDate = entityPM.CreateDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreatedByUserId))
+            {
+                oldEntityPM.CreatedByUserId = entityPM.CreatedByUserId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
+            {
+                oldEntityPM.SearchFields = entityPM.SearchFields;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RevaluationNumber))
+            {
+                oldEntityPM.RevaluationNumber = entityPM.RevaluationNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RevaluationDate))
+            {
+                oldEntityPM.RevaluationDate = entityPM.RevaluationDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChartOfAccountsId))
+            {
+                oldEntityPM.ChartOfAccountsId = entityPM.ChartOfAccountsId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GLAccountId))
+            {
+                oldEntityPM.GLAccountId = entityPM.GLAccountId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RevaluationEnabled))
+            {
+                oldEntityPM.RevaluationEnabled = entityPM.RevaluationEnabled;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Status))
+            {
+                oldEntityPM.Status = entityPM.Status;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Message))
+            {
+                oldEntityPM.Message = entityPM.Message;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RevaluationsGLAccountId))
+            {
+                oldEntityPM.RevaluationsGLAccountId = entityPM.RevaluationsGLAccountId;
+            }
+			
+		}
+
+	    public void EncodeBase64NVARCHARFields(RevaluationPM entityPM)
+        {
+            if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
+            {
+                return;
+
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.SearchFields)) //T4 find type == nText 
+            {
+                entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
+            }
+            entityPM.EncodeBase64NVARCHARFieldsBy=null;
+		}
+
+
+	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
+        {
+            CustomMappedPOCOProperties.Add(pocoPropertyName);
+        }
+
+        public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
+        {
+            CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+		
+		private void BuildSearchFieldsGenerated(RevaluationPM entityPM, Revaluation entityPOCO, bool isNewEntity)
+        {
+            string mySearchFields = "";
+			
+           
+            entityPM.SearchFields += mySearchFields;
+            entityPOCO.SearchFields += mySearchFields;
+        }
+			  
+   }
+}
+	 

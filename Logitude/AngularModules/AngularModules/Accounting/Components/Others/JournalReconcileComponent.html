@@ -1,0 +1,138 @@
+
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="TableHolder">
+                <table>
+
+
+                   
+                    
+
+                    <tr class="FormFieldRow">
+                        <td style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                            <!--<LogLabel [ObjectFieldName]="'GLAccountId'" [ObjectTableName]="ObjectTableName"
+
+        [TextCode]="'JournalLine.F.AccountName'"
+        [DataContext]="DataContext"></LogLabel>-->
+                        {{'Reconciliation.F.AccountName' | TextCodeTranslationPipe}}
+                        </td>
+
+                        <td style="width: 180px;">
+                            <!--[HideColumns]="false"-->
+                            <LogLov [ObjectFieldName]="'GLAccountId'"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'GLAccount'"
+                                    [DependencyFilter2Value]="'1'"
+                                    [QueryFilterItems]="GLAccountsFilterItems"
+                                    (SelectedItemChanged)="GLAccount = $event"
+                                    [SelectedValue]="GLAccountId"
+                                    >
+                            </LogLov>
+                        </td>
+                        <td><div></div></td>
+                    </tr>
+
+
+                    <!-- header -->
+                    <tr class="FormFieldRow">
+                        <td style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">{{'Accounting.General.O.AccountingDate' | TextCodeTranslationPipe}}</td>
+
+                        <td style="width: 180px;">
+                            <LogDatePicker [ObjectFieldName]="'AccountingDate'" [ObjectTableName]="ObjectTableName"
+                                           [DataContext]="DataContext" [HideColumns]="true" [ForceFocus]="forceFocus"></LogDatePicker>
+                        </td>
+                        <td><div></div></td>
+                    </tr>
+
+
+
+                    <!-- References -->
+                    <tr class="FormFieldRow">
+                        <td style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">{{txt_Reference}}  1</td>
+                        <td style="width: 180px">
+                            <LogTextBox [ObjectFieldName]="'Reference1'" [InputType]="'ntext'" [DataContext]="DataContext"
+                                        [Placeholder]="txt_Reference+ ' 1'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                        </td>
+                        <td><div></div></td>
+                    </tr>
+
+                    <tr class="FormFieldRow">
+                        <td style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">{{txt_Reference}}  2</td>
+                        <td>
+                            <LogTextBox [ObjectFieldName]="'Reference2'" [InputType]="'ntext'" [DataContext]="DataContext"
+                                        [Placeholder]="txt_Reference+' 2'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                        </td>
+                        <td><div></div></td>
+                    </tr>
+
+                    <tr class="FormFieldRow">
+                        <td style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">{{txt_Reference}}  3</td>
+                        <td>
+                            <LogTextBox [ObjectFieldName]="'Reference3'" [InputType]="'ntext'" [DataContext]="DataContext"
+                                        [Placeholder]="txt_Reference+' 3'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                        </td>
+                        <td><div></div></td>
+                    </tr>
+
+                    <!-- Notes -->
+                    <tr class="FormFieldRow">
+                        <td style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">{{'Accounting.General.O.Notes' | TextCodeTranslationPipe}}</td>
+                        <td style="width: 200px;">
+                            <LogTextBox [ObjectFieldName]="'Notes'" [InputType]="'ntext'" [DataContext]="DataContext"
+                                        [Placeholder]="'Accounting.General.O.Notes' | TextCodeTranslationPipe" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                        </td>
+                        <td><div></div></td>
+                    </tr>
+
+
+                    <tr><td><div></div></td></tr>
+                    <tr>
+                        <td>
+                            <a *ngIf="_NewJournalPM"
+                               href="javascript:;" (click)="OpenJournal()">
+                                Adjust Journal have created :{{ _NewJournalPM['JournalNumber'] }}
+                            </a>
+                        </td>
+                    </tr>
+
+
+                    <tr><td><div></div></td></tr>
+
+
+
+                </table>
+            </div>
+        </td>
+    </tr>
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button [disabled]="_NewJournalPM != null"  class="RedButton" (click)="OkButtonClicked()">{{'Accounting.General.B.Adjust' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+

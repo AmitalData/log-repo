@@ -1,0 +1,166 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Customs.Def.Validators;
+  
+namespace Logitude.Customs.Def.EntityPMs
+{
+   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class TapagConnectionTablePM : EntityPM
+   {
+   	  private string tapagId ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TapagId  
+	   {
+	    
+	     get
+		{
+		   return tapagId;
+		 }
+		 set
+		 {
+		   if(tapagId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TapagId",OldValue=tapagId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   tapagId=value;
+		   }
+			
+		 }
+	   }
+	  private string declarationId ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DeclarationId  
+	   {
+	    
+	     get
+		{
+		   return declarationId;
+		 }
+		 set
+		 {
+		   if(declarationId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeclarationId",OldValue=declarationId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   declarationId=value;
+		   }
+			
+		 }
+	   }
+	  private int tenant ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+	  private string customsTapagFile ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomsTapagFile  
+	   {
+	    
+	     get
+		{
+		   return customsTapagFile;
+		 }
+		 set
+		 {
+		   if(customsTapagFile != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsTapagFile",OldValue=customsTapagFile,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customsTapagFile=value;
+		   }
+			
+		 }
+	   }
+	  private int? customsNumeral ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? CustomsNumeral  
+	   {
+	    
+	     get
+		{
+		   return customsNumeral;
+		 }
+		 set
+		 {
+		   if(customsNumeral != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsNumeral",OldValue=customsNumeral,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   customsNumeral=value;
+		   }
+			
+		 }
+	   }
+	  private string requestFileNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string RequestFileNumber  
+	   {
+	    
+	     get
+		{
+		   return requestFileNumber;
+		 }
+		 set
+		 {
+		   if(requestFileNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RequestFileNumber",OldValue=requestFileNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   requestFileNumber=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

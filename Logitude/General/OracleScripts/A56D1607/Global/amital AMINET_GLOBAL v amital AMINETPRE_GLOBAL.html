@@ -1,0 +1,1995 @@
+<html xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:redgate="http://red-gate.com/"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Schema Compare for Oracle Report: </title><style type="text/css">
+          
+body
+{
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+}
+.HeaderLeftCell {
+}
+.DatabaseNameText {
+    font-family: Tahoma, Arial, sans-serif;
+    font-size: 15px;
+    font-weight: normal;
+}
+.ArrowImage {
+position:absolute;
+background-color:#f0f0f0;
+top:0px; 
+left:0;
+width:64px;
+height:64px;
+z-index:2
+}
+
+.DBBack
+{
+position:absolute;
+background-color:#f0f0f0;
+top:0px; 
+left:0px;
+width:10px; 
+height:50px;
+}
+
+.DatabaseImage {
+position:absolute; 
+top:12px; 
+left:0px;
+width:32px;
+height:32px;
+z-index:2;
+}
+
+.TitleBar {
+    position:absolute;
+    top:50px;
+    left:0px;
+    width:100%;
+    height:20px;
+    background-color:#ebeadb;
+    z-index:3;
+    font-family: Tahoma, Arial, sans-serif;
+    font-size: 6pt;
+}
+
+.TitleBarTable
+{
+    background-color:#ebeadb;
+    border: thin solid #dcdac0;
+    font-family: Tahoma, Arial, sans-serif;
+    font-size: 8.25pt;
+}
+
+.DifferenceBar
+{
+position:relative;
+width:100%;
+height:50px;
+left:0;
+top:70px;
+}
+
+.OnlyHereBar
+{
+position:absolute;
+width:100%;
+height:50px;
+left:0;
+top:120px;
+}
+
+.icon
+{
+width:32;
+height:32;
+top:79;
+left:20;
+position:absolute;
+}
+
+.OnlyHereIcon
+{
+width:32;
+height:32;
+top:129;
+left:20;
+position:absolute;
+}
+
+.dataRow
+{
+height:18px;
+}
+
+.DifferenceTable
+{
+position:absolute;
+left:0;
+top:100px;
+}
+
+.DifferentNum {
+    font-family: Tahoma, Arial, sans-serif;
+    font-size: 8.25pt;
+    font-weight:bold;
+    position:absolute;
+    z-index:8;
+}
+
+.DifferentText {
+    font-family: Tahoma, Arial, sans-serif;
+    font-size: 8.25pt;
+    font-weight:bold;
+    position:absolute;
+    z-index:1;
+}
+
+.SQL
+{
+    font-family: Tahoma, Arial, sans-serif;
+    font-size: 8.25pt;
+    font-weight:bold;
+}
+
+.SQLDiv{
+    position:absolute;
+    border: none;   
+}
+.dataTable{
+    font-family: Tahoma, Arial, sans-serif;
+    font-size: 8.25pt;
+}
+
+.TypeDataRow{
+    text-align:right;
+    vertical-align:top;
+    border-top: 1px solid #ebeadb;
+    border-right: 1px none #ebeadb;
+    border-bottom: 1px solid #ebeadb;
+    border-left: 1px solid #ebeadb;
+    }
+
+
+.MidDiffCell{
+    text-align:center;
+    vertical-align:top;
+}
+
+.TypeImageDataRow{
+    text-align:left;
+    vertical-align:top;
+    border-top: 1px solid #ebeadb;
+    border-right: 1px solid #ebeadb;
+    border-bottom: 1px solid #ebeadb;
+    border-left: 1px none #ebeadb;
+}
+.OwnerDataRow{  
+    border: 1px solid #ebeadb;
+    text-align:right;
+}
+.LObjNameDataRow{   
+    border: 1px solid #ebeadb;
+    text-align:right;
+}
+.IncDataRow{    
+    border: 1px solid #ebeadb;
+    text-align:center;
+}
+
+.RObjNameDataRow{   
+    border: 1px solid #ebeadb;
+}
+.ROwnerDataRow{ 
+    border: 1px solid #ebeadb;
+}
+.SQLViewTitleBar{
+    position:relative;
+    width:100%;
+    height:20px;
+    background:#7a96df;
+    font-family: Tahoma, Arial, sans-serif;
+    font-size: 8.25pt;
+    font-weight:bold;
+    color: #FFFFFF;
+}
+
+        </style><script type="text/javascript">
+<!--
+  var reportFileName = "amital AMINET_GLOBAL v amital AMINETPRE_GLOBAL";
+          
+  var includeidenticals = "false";
+          
+  var imagesdir = "http://www.red-gate.com/scimages/";
+          
+  var direction = "1to2";
+  var timestamp = "17 יול 2016 1:04 PM";var identifier1 = "Snapshot of univ56(amital)"
+  var schemas1 = "AMINET_GLOBAL"
+  var identifier2 = "Snapshot of univ56(amital)"
+  var schemas2 = "AMINETPRE_GLOBAL"
+  var differenceRows  = new Array(
+      new Array(1, "AMINET_GLOBAL", "ANALYZEQUEUES", "ANALYZEQUEUES", "AMINETPRE_GLOBAL"),
+      new Array(1, "AMINET_GLOBAL", "APICREDINTIALS", "APICREDINTIALS", "AMINETPRE_GLOBAL"),
+      new Array(1, "AMINET_GLOBAL", "BATCHSERVICESDEFINITIONS", "BATCHSERVICESDEFINITIONS", "AMINETPRE_GLOBAL"),
+      new Array(1, "AMINET_GLOBAL", "LOGITUDELEADS", "LOGITUDELEADS", "AMINETPRE_GLOBAL"),
+      new Array(1, "AMINET_GLOBAL", "MONITORSERVICELASTUPDATES", "MONITORSERVICELASTUPDATES", "AMINETPRE_GLOBAL"),
+      new Array(1, "AMINET_GLOBAL", "PERFORMANCELOGS", "PERFORMANCELOGS", "AMINETPRE_GLOBAL"),
+      new Array(1, "AMINET_GLOBAL", "TENANTMANAGEMENTLICENSES", "TENANTMANAGEMENTLICENSES", "AMINETPRE_GLOBAL"),
+      new Array(1, "AMINET_GLOBAL", "TENANTMANAGEMENTS", "TENANTMANAGEMENTS", "AMINETPRE_GLOBAL")
+      );
+  var onlyInOneRows  = new Array(
+      new Array(1, "AMINET_GLOBAL", "BATCHSERVICESDEFINITIONMODS", "", ""),
+      new Array(1, "AMINET_GLOBAL", "TENANTADDONS", "", "")
+      );
+  var onlyInTwoRows  = new Array(
+      new Array(1, "", "", "ZZZCONTACTPASSWORDS", "AMINETPRE_GLOBAL")
+      );
+  var identRows  = new Array(
+      );
+  var differencesql  = new Array(new Array(new Array(0, "Error, No SQL Availible"))
+  ,new Array (  new Array(1,"-- Creation", "-- Creation"),
+    new Array(0,"", ""),
+    new Array(1,"CREATE TABLE aminet_global.analyzequeues (", "CREATE TABLE aminetpre_global.analyzequeues ("),
+    new Array(0,"\"ID\" VARCHAR2(15 CHAR) NOT NULL,", "\"ID\" VARCHAR2(15 CHAR) NOT NULL,"),
+    new Array(0,"messagebody BLOB NOT NULL,", "messagebody BLOB NOT NULL,"),
+    new Array(0,"tenant NUMBER(10) NOT NULL,", "tenant NUMBER(10) NOT NULL,"),
+    new Array(0,"from_ VARCHAR2(40 CHAR) NOT NULL,", "from_ VARCHAR2(40 CHAR) NOT NULL,"),
+    new Array(0,"createdate TIMESTAMP(7) NOT NULL,", "createdate TIMESTAMP(7) NOT NULL,"),
+    new Array(0,"filesize NUMBER NOT NULL,", "filesize NUMBER NOT NULL,"),
+    new Array(0,"status VARCHAR2(4 CHAR) NOT NULL,", "status VARCHAR2(4 CHAR) NOT NULL,"),
+    new Array(0,"errormessage CLOB,", "errormessage CLOB,"),
+    new Array(0,"communicationlogid VARCHAR2(15 CHAR),", "communicationlogid VARCHAR2(15 CHAR),"),
+    new Array(0,"subject VARCHAR2(40 CHAR),", "subject VARCHAR2(40 CHAR),"),
+    new Array(0,"connectedtotenant NUMBER(1) NOT NULL,", "connectedtotenant NUMBER(1) NOT NULL,"),
+    new Array(0,"connectedtoentity NUMBER(1) NOT NULL,", "connectedtoentity NUMBER(1) NOT NULL,"),
+    new Array(0,"retries NUMBER(10) NOT NULL,", "retries NUMBER(10) NOT NULL,"),
+    new Array(0,"entityreference VARCHAR2(15 CHAR),", "entityreference VARCHAR2(15 CHAR),"),
+    new Array(0,"searchfields NVARCHAR2(1000),", "searchfields NVARCHAR2(1000),"),
+    new Array(0,"objecttablename VARCHAR2(25 CHAR),", "objecttablename VARCHAR2(25 CHAR),"),
+    new Array(0,"stacktrace CLOB,", "stacktrace CLOB,"),
+    new Array(0,"awbnumber VARCHAR2(20 CHAR),", "awbnumber VARCHAR2(20 CHAR),"),
+    new Array(0,"ackreason VARCHAR2(256 CHAR),", "ackreason VARCHAR2(256 CHAR),"),
+    new Array(1,"donedate TIMESTAMP(7),", " "),
+    new Array(0,"PRIMARY KEY (\"ID\"),", "PRIMARY KEY (\"ID\"),"),
+    new Array(1,"CONSTRAINT fk_n1867856879 FOREIGN KEY (tenant) REFERENCES aminet_global.tenantmanagements (\"ID\") ON DELETE CASCADE,", "CONSTRAINT fk_n1867856879 FOREIGN KEY (tenant) REFERENCES aminetpre_global.tenantmanagements (\"ID\") ON DELETE CASCADE,"),
+    new Array(1,"CONSTRAINT fk_n964638774 FOREIGN KEY (status) REFERENCES aminet_global.analyzequeuestatus (code) ON DELETE CASCADE", "CONSTRAINT fk_n964638774 FOREIGN KEY (status) REFERENCES aminetpre_global.analyzequeuestatus (code) ON DELETE CASCADE"),
+    new Array(0,");", ");"),
+  new Array(0, "", "")),
+      new Array (  new Array(1,"-- Creation", "-- Creation"),
+    new Array(0,"", ""),
+    new Array(1,"CREATE TABLE aminet_global.apicredintials (", "CREATE TABLE aminetpre_global.apicredintials ("),
+    new Array(1,"\"ID\" VARCHAR2(15 CHAR) NOT NULL,", "\"ID\" NVARCHAR2(128) NOT NULL,"),
+    new Array(0,"tenant NUMBER(10) NOT NULL,", "tenant NUMBER(10) NOT NULL,"),
+    new Array(0,"usedfor NCLOB,", "usedfor NCLOB,"),
+    new Array(0,"hashedprimaryaccesskey NCLOB,", "hashedprimaryaccesskey NCLOB,"),
+    new Array(0,"hashedseconderyaccesskey NCLOB,", "hashedseconderyaccesskey NCLOB,"),
+    new Array(0,"createdate TIMESTAMP(7) NOT NULL,", "createdate TIMESTAMP(7) NOT NULL,"),
+    new Array(0,"updatedate TIMESTAMP(7) NOT NULL,", "updatedate TIMESTAMP(7) NOT NULL,"),
+    new Array(0,"allowedips NCLOB,", "allowedips NCLOB,"),
+    new Array(0,"createdby NCLOB,", "createdby NCLOB,"),
+    new Array(0,"updatedby NCLOB,", "updatedby NCLOB,"),
+    new Array(0,"maskedprimaryaccesskey NCLOB,", "maskedprimaryaccesskey NCLOB,"),
+    new Array(0,"maskedseconderyaccesskey NCLOB,", "maskedseconderyaccesskey NCLOB,"),
+    new Array(1,"CONSTRAINT pk_apicredintials PRIMARY KEY (\"ID\")", "PRIMARY KEY (\"ID\")"),
+    new Array(0,");", ");"),
+  new Array(0, "", "")),
+      new Array (  new Array(1,"-- Creation", "-- Creation"),
+    new Array(0,"", ""),
+    new Array(1,"CREATE TABLE aminet_global.batchservicesdefinitions (", "CREATE TABLE aminetpre_global.batchservicesdefinitions ("),
+    new Array(0,"code NVARCHAR2(128) NOT NULL,", "code NVARCHAR2(128) NOT NULL,"),
+    new Array(1,"classname NCLOB,", " "),
+    new Array(1,"parameter1 NCLOB,", "\"INACTIVE\" NUMBER(1) NOT NULL,"),
+    new Array(1,"parameter2 NCLOB,", "numberofthreads NUMBER(10),"),
+    new Array(0,"PRIMARY KEY (code)", "PRIMARY KEY (code)"),
+    new Array(0,");", ");"),
+  new Array(0, "", "")),
+      new Array (  new Array(1,"-- Creation", "-- Creation"),
+    new Array(0,"", ""),
+    new Array(1,"CREATE TABLE aminet_global.logitudeleads (", "CREATE TABLE aminetpre_global.logitudeleads ("),
+    new Array(0,"\"ID\" VARCHAR2(40 CHAR) NOT NULL,", "\"ID\" VARCHAR2(40 CHAR) NOT NULL,"),
+    new Array(0,"phonenumber VARCHAR2(40 CHAR),", "phonenumber VARCHAR2(40 CHAR),"),
+    new Array(0,"createdate TIMESTAMP(7) NOT NULL,", "createdate TIMESTAMP(7) NOT NULL,"),
+    new Array(0,"companyname NVARCHAR2(100) NOT NULL,", "companyname NVARCHAR2(100) NOT NULL,"),
+    new Array(0,"contactname NVARCHAR2(40) NOT NULL,", "contactname NVARCHAR2(40) NOT NULL,"),
+    new Array(0,"numberofbranches NUMBER(10) NOT NULL,", "numberofbranches NUMBER(10) NOT NULL,"),
+    new Array(0,"country VARCHAR2(120 CHAR) NOT NULL,", "country VARCHAR2(120 CHAR) NOT NULL,"),
+    new Array(0,"email VARCHAR2(70 CHAR) NOT NULL,", "email VARCHAR2(70 CHAR) NOT NULL,"),
+    new Array(0,"numberofusers NUMBER(10) NOT NULL,", "numberofusers NUMBER(10) NOT NULL,"),
+    new Array(0,"comments VARCHAR2(500 CHAR),", "comments VARCHAR2(500 CHAR),"),
+    new Array(0,"requesttype VARCHAR2(20 CHAR),", "requesttype VARCHAR2(20 CHAR),"),
+    new Array(0,"isemailverified NUMBER(1) NOT NULL,", "isemailverified NUMBER(1) NOT NULL,"),
+    new Array(0,"tenantnumber NUMBER(10) NOT NULL,", "tenantnumber NUMBER(10) NOT NULL,"),
+    new Array(0,"lastupdatedate TIMESTAMP(7) NOT NULL,", "lastupdatedate TIMESTAMP(7) NOT NULL,"),
+    new Array(0,"issenttocustomer NUMBER(1) NOT NULL,", "issenttocustomer NUMBER(1) NOT NULL,"),
+    new Array(0,"statuscode VARCHAR2(20 CHAR),", "statuscode VARCHAR2(20 CHAR),"),
+    new Array(0,"isuseropened NUMBER(1) NOT NULL,", "isuseropened NUMBER(1) NOT NULL,"),
+    new Array(0,"customerid NVARCHAR2(15),", "customerid NVARCHAR2(15),"),
+    new Array(0,"opportunityid NVARCHAR2(15),", "opportunityid NVARCHAR2(15),"),
+    new Array(0,"searchfields NVARCHAR2(1000),", "searchfields NVARCHAR2(1000),"),
+    new Array(0,"leadsource VARCHAR2(60 CHAR),", "leadsource VARCHAR2(60 CHAR),"),
+    new Array(0,"iatacode VARCHAR2(7 CHAR),", "iatacode VARCHAR2(7 CHAR),"),
+    new Array(0,"casscode VARCHAR2(4 CHAR),", "casscode VARCHAR2(4 CHAR),"),
+    new Array(1,"packagecode VARCHAR2(5 CHAR),", "packagecode VARCHAR2(4 CHAR),"),
+    new Array(0,"\"STATE\" VARCHAR2(40 CHAR),", "\"STATE\" VARCHAR2(40 CHAR),"),
+    new Array(0,"city VARCHAR2(25 CHAR),", "city VARCHAR2(25 CHAR),"),
+    new Array(0,"zipcode VARCHAR2(15 CHAR),", "zipcode VARCHAR2(15 CHAR),"),
+    new Array(0,"street VARCHAR2(65 CHAR),", "street VARCHAR2(65 CHAR),"),
+    new Array(0,"vatnumber VARCHAR2(20 CHAR),", "vatnumber VARCHAR2(20 CHAR),"),
+    new Array(0,"PRIMARY KEY (\"ID\")", "PRIMARY KEY (\"ID\")"),
+    new Array(0,");", ");"),
+  new Array(0, "", "")),
+      new Array (  new Array(1,"-- Creation", "-- Creation"),
+    new Array(0,"", ""),
+    new Array(1,"CREATE TABLE aminet_global.monitorservicelastupdates (", "CREATE TABLE aminetpre_global.monitorservicelastupdates ("),
+    new Array(1,"code VARCHAR2(15 CHAR) NOT NULL,", "code NVARCHAR2(128) NOT NULL,"),
+    new Array(0,"\"NAME\" NCLOB,", "\"NAME\" NCLOB,"),
+    new Array(0,"lastupdate TIMESTAMP(7) NOT NULL,", "lastupdate TIMESTAMP(7) NOT NULL,"),
+    new Array(0,"searchfields NCLOB,", "searchfields NCLOB,"),
+    new Array(1,"CONSTRAINT pk_monitorservicelastupdates PRIMARY KEY (code)", "PRIMARY KEY (code)"),
+    new Array(0,");", ");"),
+  new Array(0, "", "")),
+      new Array (  new Array(1,"-- Creation", "-- Creation"),
+    new Array(0,"", ""),
+    new Array(1,"CREATE TABLE aminet_global.performancelogs (", "CREATE TABLE aminetpre_global.performancelogs ("),
+    new Array(0,"\"ID\" VARCHAR2(40 CHAR) NOT NULL,", "\"ID\" VARCHAR2(40 CHAR) NOT NULL,"),
+    new Array(0,"logdatetimegmt TIMESTAMP(7) NOT NULL,", "logdatetimegmt TIMESTAMP(7) NOT NULL,"),
+    new Array(0,"logdatetimelocal TIMESTAMP(7) NOT NULL,", "logdatetimelocal TIMESTAMP(7) NOT NULL,"),
+    new Array(0,"email VARCHAR2(50 CHAR) NOT NULL,", "email VARCHAR2(50 CHAR) NOT NULL,"),
+    new Array(0,"modelname VARCHAR2(40 CHAR) NOT NULL,", "modelname VARCHAR2(40 CHAR) NOT NULL,"),
+    new Array(0,"methodname VARCHAR2(65 CHAR) NOT NULL,", "methodname VARCHAR2(65 CHAR) NOT NULL,"),
+    new Array(0,"monitoringservice NUMBER(1) NOT NULL,", "monitoringservice NUMBER(1) NOT NULL,"),
+    new Array(0,"executiontime NUMBER(10) NOT NULL,", "executiontime NUMBER(10) NOT NULL,"),
+    new Array(0,"userip VARCHAR2(15 CHAR) NOT NULL,", "userip VARCHAR2(15 CHAR) NOT NULL,"),
+    new Array(1,"methodparameters VARCHAR2(500 CHAR),", "methodparameters VARCHAR2(100 CHAR),"),
+    new Array(0,"tenant NUMBER(10) NOT NULL,", "tenant NUMBER(10) NOT NULL,"),
+    new Array(0,"servertime NUMBER(10) DEFAULT 0 NOT NULL,", "servertime NUMBER(10) DEFAULT 0 NOT NULL,"),
+    new Array(0,"PRIMARY KEY (\"ID\")", "PRIMARY KEY (\"ID\")"),
+    new Array(0,");", ");"),
+  new Array(0, "", "")),
+      new Array (  new Array(1,"-- Creation", "-- Creation"),
+    new Array(0,"", ""),
+    new Array(1,"CREATE TABLE aminet_global.tenantmanagementlicenses (", "CREATE TABLE aminetpre_global.tenantmanagementlicenses ("),
+    new Array(1,"\"ID\" VARCHAR2(15 CHAR) NOT NULL,", "\"ID\" NVARCHAR2(128) NOT NULL,"),
+    new Array(0,"tenant NUMBER(10) NOT NULL,", "tenant NUMBER(10) NOT NULL,"),
+    new Array(0,"packagecode NCLOB,", "packagecode NCLOB,"),
+    new Array(0,"numberofusers NUMBER(10),", "numberofusers NUMBER(10),"),
+    new Array(1,"CONSTRAINT pk_tenantmanagementlicenses PRIMARY KEY (\"ID\")", "PRIMARY KEY (\"ID\")"),
+    new Array(0,");", ");"),
+  new Array(0, "", "")),
+      new Array (  new Array(1,"-- Creation", "-- Creation"),
+    new Array(0,"", ""),
+    new Array(1,"CREATE TABLE aminet_global.tenantmanagements (", "CREATE TABLE aminetpre_global.tenantmanagements ("),
+    new Array(0,"\"ID\" NUMBER(10) NOT NULL,", "\"ID\" NUMBER(10) NOT NULL,"),
+    new Array(0,"\"NAME\" NVARCHAR2(100) NOT NULL,", "\"NAME\" NVARCHAR2(100) NOT NULL,"),
+    new Array(1,"packagecode VARCHAR2(5 CHAR),", "packagecode VARCHAR2(4 CHAR),"),
+    new Array(0,"trialstartdate TIMESTAMP(7),", "trialstartdate TIMESTAMP(7),"),
+    new Array(0,"trialenddate TIMESTAMP(7),", "trialenddate TIMESTAMP(7),"),
+    new Array(0,"firstpaymentdate TIMESTAMP(7),", "firstpaymentdate TIMESTAMP(7),"),
+    new Array(0,"paiduntildate TIMESTAMP(7),", "paiduntildate TIMESTAMP(7),"),
+    new Array(0,"istrial NUMBER(1) NOT NULL,", "istrial NUMBER(1) NOT NULL,"),
+    new Array(0,"numberofusers NUMBER(10) NOT NULL,", "numberofusers NUMBER(10) NOT NULL,"),
+    new Array(0,"searchfields NVARCHAR2(1000),", "searchfields NVARCHAR2(1000),"),
+    new Array(0,"freeusers NUMBER(10),", "freeusers NUMBER(10),"),
+    new Array(0,"isrecurring NUMBER(1) NOT NULL,", "isrecurring NUMBER(1) NOT NULL,"),
+    new Array(0,"recurringperiodcode NVARCHAR2(2),", "recurringperiodcode NVARCHAR2(2),"),
+    new Array(0,"createdate TIMESTAMP(7) NOT NULL,", "createdate TIMESTAMP(7) NOT NULL,"),
+    new Array(0,"updatedate TIMESTAMP(7),", "updatedate TIMESTAMP(7),"),
+    new Array(0,"bluesnapaccount NVARCHAR2(25),", "bluesnapaccount NVARCHAR2(25),"),
+    new Array(0,"maincontract NVARCHAR2(25),", "maincontract NVARCHAR2(25),"),
+    new Array(1,"temporalpackagecode NVARCHAR2(5),", "temporalpackagecode NVARCHAR2(4),"),
+    new Array(0,"temporalstartdate TIMESTAMP(7),", "temporalstartdate TIMESTAMP(7),"),
+    new Array(0,"temporalenddate TIMESTAMP(7),", "temporalenddate TIMESTAMP(7),"),
+    new Array(0,"paymentmethodcode VARCHAR2(2 CHAR),", "paymentmethodcode VARCHAR2(2 CHAR),"),
+    new Array(0,"paymentchannelcode VARCHAR2(2 CHAR),", "paymentchannelcode VARCHAR2(2 CHAR),"),
+    new Array(0,"licenseprice NUMBER,", "licenseprice NUMBER,"),
+    new Array(0,"notes NVARCHAR2(250),", "notes NVARCHAR2(250),"),
+    new Array(0,"tty NCLOB,", "tty NCLOB,"),
+    new Array(0,"lastfwbsentdate TIMESTAMP(7),", "lastfwbsentdate TIMESTAMP(7),"),
+    new Array(0,"lastfhlsentdate TIMESTAMP(7),", "lastfhlsentdate TIMESTAMP(7),"),
+    new Array(0,"statisticsupdatedate TIMESTAMP(7),", "statisticsupdatedate TIMESTAMP(7),"),
+    new Array(0,"shipmentlastdate TIMESTAMP(7),", "shipmentlastdate TIMESTAMP(7),"),
+    new Array(0,"shipmenttotallastweek NUMBER(10) NOT NULL,", "shipmenttotallastweek NUMBER(10) NOT NULL,"),
+    new Array(0,"shipmenttotallastmonth NUMBER(10) NOT NULL,", "shipmenttotallastmonth NUMBER(10) NOT NULL,"),
+    new Array(0,"quotelastdate TIMESTAMP(7),", "quotelastdate TIMESTAMP(7),"),
+    new Array(0,"quotetotallastweek NUMBER(10) NOT NULL,", "quotetotallastweek NUMBER(10) NOT NULL,"),
+    new Array(0,"quotetotallastmonth NUMBER(10) NOT NULL,", "quotetotallastmonth NUMBER(10) NOT NULL,"),
+    new Array(0,"arinvoicelastdate TIMESTAMP(7),", "arinvoicelastdate TIMESTAMP(7),"),
+    new Array(0,"arinvoicetotallastweek NUMBER(10) NOT NULL,", "arinvoicetotallastweek NUMBER(10) NOT NULL,"),
+    new Array(0,"arinvoicetotallastmonth NUMBER(10) NOT NULL,", "arinvoicetotallastmonth NUMBER(10) NOT NULL,"),
+    new Array(0,"apinvoicelastdate TIMESTAMP(7),", "apinvoicelastdate TIMESTAMP(7),"),
+    new Array(0,"apinvoicetotallastweek NUMBER(10) NOT NULL,", "apinvoicetotallastweek NUMBER(10) NOT NULL,"),
+    new Array(0,"apinvoicetotallastmonth NUMBER(10) NOT NULL,", "apinvoicetotallastmonth NUMBER(10) NOT NULL,"),
+    new Array(0,"customerlastdate TIMESTAMP(7),", "customerlastdate TIMESTAMP(7),"),
+    new Array(0,"customertotallastweek NUMBER(10) NOT NULL,", "customertotallastweek NUMBER(10) NOT NULL,"),
+    new Array(0,"customertotallastmonth NUMBER(10) NOT NULL,", "customertotallastmonth NUMBER(10) NOT NULL,"),
+    new Array(0,"countryname NCLOB,", "countryname NCLOB,"),
+    new Array(0,"lastlogindatetime TIMESTAMP(7),", "lastlogindatetime TIMESTAMP(7),"),
+    new Array(0,"paymentcurrencycode VARCHAR2(3 CHAR),", "paymentcurrencycode VARCHAR2(3 CHAR),"),
+    new Array(0,"issystemsupportenabled NUMBER(1) NOT NULL,", "issystemsupportenabled NUMBER(1) NOT NULL,"),
+    new Array(0,"isdistributorsupportenabled NUMBER(1) NOT NULL,", "isdistributorsupportenabled NUMBER(1) NOT NULL,"),
+    new Array(0,"distributorcode VARCHAR2(15 CHAR),", "distributorcode VARCHAR2(15 CHAR),"),
+    new Array(0,"isawbstockprepaid NUMBER(1) NOT NULL,", "isawbstockprepaid NUMBER(1) NOT NULL,"),
+    new Array(0,"fwbversion VARCHAR2(3 CHAR),", "fwbversion VARCHAR2(3 CHAR),"),
+    new Array(0,"fhlversion VARCHAR2(3 CHAR),", "fhlversion VARCHAR2(3 CHAR),"),
+    new Array(0,"managelicencesperuser NUMBER(1) NOT NULL,", "managelicencesperuser NUMBER(1) NOT NULL,"),
+    new Array(0,"iscargonautenabled NUMBER(1) NOT NULL,", "iscargonautenabled NUMBER(1) NOT NULL,"),
+    new Array(0,"isdexxconnectionenabled NUMBER(1) NOT NULL,", "isdexxconnectionenabled NUMBER(1) NOT NULL,"),
+    new Array(0,"lastfwbcargonautsentdate TIMESTAMP(7),", "lastfwbcargonautsentdate TIMESTAMP(7),"),
+    new Array(0,"lastfhlcargonautsentdate TIMESTAMP(7),", "lastfhlcargonautsentdate TIMESTAMP(7),"),
+    new Array(0,"paymentfailure NUMBER(1) NOT NULL,", "paymentfailure NUMBER(1) NOT NULL,"),
+    new Array(0,"suspenddate TIMESTAMP(7),", "suspenddate TIMESTAMP(7),"),
+    new Array(0,"internalnotes NVARCHAR2(250),", "internalnotes NVARCHAR2(250),"),
+    new Array(0,"bluesnapcontractcode VARCHAR2(10 CHAR),", "bluesnapcontractcode VARCHAR2(10 CHAR),"),
+    new Array(0,"awbmessagesccstypecode VARCHAR2(10 CHAR),", "awbmessagesccstypecode VARCHAR2(10 CHAR),"),
+    new Array(0,"pima VARCHAR2(25 CHAR),", "pima VARCHAR2(25 CHAR),"),
+    new Array(0,"iseawbonlydemo NUMBER(1) NOT NULL,", "iseawbonlydemo NUMBER(1) NOT NULL,"),
+    new Array(0,"isrestrictedbyairline NUMBER(1) NOT NULL,", "isrestrictedbyairline NUMBER(1) NOT NULL,"),
+    new Array(0,"lastffrsentdate TIMESTAMP(7),", "lastffrsentdate TIMESTAMP(7),"),
+    new Array(0,"managesregisteredagent NUMBER(1) NOT NULL,", "managesregisteredagent NUMBER(1) NOT NULL,"),
+    new Array(0,"activitylastdate TIMESTAMP(7),", "activitylastdate TIMESTAMP(7),"),
+    new Array(0,"activitytotallastweek NUMBER(10) DEFAULT 0 NOT NULL,", "activitytotallastweek NUMBER(10) DEFAULT 0 NOT NULL,"),
+    new Array(0,"activitytotallastmonth NUMBER(10) DEFAULT 0 NOT NULL,", "activitytotallastmonth NUMBER(10) DEFAULT 0 NOT NULL,"),
+    new Array(0,"opportunitylastdate TIMESTAMP(7),", "opportunitylastdate TIMESTAMP(7),"),
+    new Array(0,"opportunitytotallastweek NUMBER(10) DEFAULT 0 NOT NULL,", "opportunitytotallastweek NUMBER(10) DEFAULT 0 NOT NULL,"),
+    new Array(0,"opportunitytotallastmonth NUMBER(10) DEFAULT 0 NOT NULL,", "opportunitytotallastmonth NUMBER(10) DEFAULT 0 NOT NULL,"),
+    new Array(0,"fsulastreceiveddate TIMESTAMP(7),", "fsulastreceiveddate TIMESTAMP(7),"),
+    new Array(0,"fsalastreceiveddate TIMESTAMP(7),", "fsalastreceiveddate TIMESTAMP(7),"),
+    new Array(0,"fsrlastsentdate TIMESTAMP(7),", "fsrlastsentdate TIMESTAMP(7),"),
+    new Array(0,"billingbylogitude NUMBER(1) DEFAULT 0 NOT NULL,", "billingbylogitude NUMBER(1) DEFAULT 0 NOT NULL,"),
+    new Array(0,"resellercommission NUMBER(10),", "resellercommission NUMBER(10),"),
+    new Array(0,"tenanttypecode VARCHAR2(3 CHAR),", "tenanttypecode VARCHAR2(3 CHAR),"),
+    new Array(0,"tenantconnectedtoairlinecode VARCHAR2(2 CHAR),", "tenantconnectedtoairlinecode VARCHAR2(2 CHAR),"),
+    new Array(0,"signuprequestrecipients VARCHAR2(500 CHAR),", "signuprequestrecipients VARCHAR2(500 CHAR),"),
+    new Array(0,"loginpagenotes NVARCHAR2(1000),", "loginpagenotes NVARCHAR2(1000),"),
+    new Array(0,"supportemail VARCHAR2(100 CHAR),", "supportemail VARCHAR2(100 CHAR),"),
+    new Array(0,"supportactivated NUMBER(1) DEFAULT 0 NOT NULL,", "supportactivated NUMBER(1) DEFAULT 0 NOT NULL,"),
+    new Array(0,"ismultipackage NUMBER(1) DEFAULT 0 NOT NULL,", "ismultipackage NUMBER(1) DEFAULT 0 NOT NULL,"),
+    new Array(0,"PRIMARY KEY (\"ID\"),", "PRIMARY KEY (\"ID\"),"),
+    new Array(1,"CONSTRAINT fk_n1266234505 FOREIGN KEY (tenanttypecode) REFERENCES aminet_global.tenanttypes (code),", "CONSTRAINT fk_n1266234505 FOREIGN KEY (tenanttypecode) REFERENCES aminetpre_global.tenanttypes (code),"),
+    new Array(1,"CONSTRAINT fk_n1361064064 FOREIGN KEY (recurringperiodcode) REFERENCES aminet_global.recurringperiods (code),", "CONSTRAINT fk_n1361064064 FOREIGN KEY (recurringperiodcode) REFERENCES aminetpre_global.recurringperiods (code),"),
+    new Array(1,"CONSTRAINT fk_n1487150909 FOREIGN KEY (paymentchannelcode) REFERENCES aminet_global.paymentchannels (code),", "CONSTRAINT fk_n1487150909 FOREIGN KEY (paymentchannelcode) REFERENCES aminetpre_global.paymentchannels (code),"),
+    new Array(1,"CONSTRAINT fk_n534316155 FOREIGN KEY (paymentcurrencycode) REFERENCES aminet_global.paymentcurrencies (code),", "CONSTRAINT fk_n534316155 FOREIGN KEY (paymentcurrencycode) REFERENCES aminetpre_global.paymentcurrencies (code),"),
+    new Array(1,"CONSTRAINT fk_1051857982 FOREIGN KEY (bluesnapcontractcode) REFERENCES aminet_global.bluesnapcontracts (code),", "CONSTRAINT fk_1051857982 FOREIGN KEY (bluesnapcontractcode) REFERENCES aminetpre_global.bluesnapcontracts (code),"),
+    new Array(1,"CONSTRAINT fk_1717379753 FOREIGN KEY (paymentmethodcode) REFERENCES aminet_global.paymentmethods (code),", "CONSTRAINT fk_1717379753 FOREIGN KEY (paymentmethodcode) REFERENCES aminetpre_global.paymentmethods (code),"),
+    new Array(1,"CONSTRAINT fk_1856712624 FOREIGN KEY (\"ID\") REFERENCES aminet_global.globaltenants (\"ID\"),", "CONSTRAINT fk_1856712624 FOREIGN KEY (\"ID\") REFERENCES aminetpre_global.globaltenants (\"ID\"),"),
+    new Array(1,"CONSTRAINT fk_758316066 FOREIGN KEY (awbmessagesccstypecode) REFERENCES aminet_global.awbmessagesccstypes (code)", "CONSTRAINT fk_758316066 FOREIGN KEY (awbmessagesccstypecode) REFERENCES aminetpre_global.awbmessagesccstypes (code)"),
+    new Array(0,");", ");"),
+  new Array(0, "", ""))
+      );var createsql  = new Array(new Array(new Array(0, "Error, No SQL Availible")),new Array (  new Array(0,"-- Creation", " "),
+    new Array(0,"", ""),
+    new Array(1,"CREATE TABLE aminet_global.batchservicesdefinitionmods (", " "),
+    new Array(1,"code NVARCHAR2(128) NOT NULL,", " "),
+    new Array(1,"\"INACTIVE\" NUMBER(1) NOT NULL,", " "),
+    new Array(1,"numberofthreads NUMBER(10),", " "),
+    new Array(1,"PRIMARY KEY (code),", " "),
+    new Array(1,"CONSTRAINT fk_n1485992339 FOREIGN KEY (code) REFERENCES aminet_global.batchservicesdefinitions (code)", " "),
+    new Array(1,");", " "),
+  new Array(0, "", "")),
+      new Array (  new Array(0,"-- Creation", " "),
+    new Array(0,"", ""),
+    new Array(1,"CREATE TABLE aminet_global.tenantaddons (", " "),
+    new Array(1,"\"ID\" VARCHAR2(15 CHAR) NOT NULL,", " "),
+    new Array(1,"tenant NUMBER(10) NOT NULL,", " "),
+    new Array(1,"packagecode VARCHAR2(5 CHAR) NOT NULL,", " "),
+    new Array(1,"PRIMARY KEY (\"ID\")", " "),
+    new Array(1,");", " "),
+  new Array(0, "", ""))
+      );var dropsql  = new Array(new Array(new Array(0, "Error, No SQL Availible")),new Array (  new Array(0," ", "-- Creation"),
+    new Array(0,"", ""),
+    new Array(1," ", "CREATE TABLE aminetpre_global.zzzcontactpasswords ("),
+    new Array(1," ", "email VARCHAR2(70 CHAR) NOT NULL,"),
+    new Array(1," ", "\"PASSWORD\" VARCHAR2(40 CHAR) NOT NULL,"),
+    new Array(1," ", "mustchangepassword NUMBER(1) NOT NULL,"),
+    new Array(1," ", "islocked NUMBER(1) NOT NULL,"),
+    new Array(1," ", "numberofretries NUMBER(10) NOT NULL,"),
+    new Array(1," ", "lockdatetime TIMESTAMP(7),"),
+    new Array(1," ", "mobilealertforfollowedshipment NUMBER(1) NOT NULL,"),
+    new Array(1," ", "mobileappalertonexceptions NUMBER(1) NOT NULL,"),
+    new Array(1," ", "issendnotificationformobile NUMBER(1) NOT NULL"),
+    new Array(1," ", ");"),
+  new Array(0, "", ""))
+      );var identsql  = new Array(new Array(new Array(0, "Error, No SQL Availible")),new Array(new Array(0, "", "")));
+
+          
+// Program Segment
+
+var Cache = new Array(
+        new Array(), // DIfference Cache
+        new Array(), // Left Hand only Cache
+        new Array(), // Right Hand only Cache
+        new Array());
+
+var CurrentSelectedRow;
+
+function getPageWidth()
+{
+    return document.body.clientWidth;
+}
+
+function IsImageOk(img)
+{
+    if (!img.complete)
+        return false;
+
+    if (typeof img.naturalWidth != "undefined" && img.naturalWidth == 0)
+        return false;
+
+    return true;
+}
+
+
+var ReservedWords = Array(
+"ADD",
+"ALL",
+"ALTER",
+"AND",
+"ANY",
+"AS",
+"ASC",
+"AUTHORIZATION",
+"AVG",
+"BACKUP",
+"BEGIN",
+"BETWEEN",
+"BREAK",
+"BROWSE",
+"BULK",
+"BY",
+"CASCADE",
+"CASE",
+"CHECK",
+"CHECKPOINT",
+"CLOSE",
+"CLUSTERED",
+"COALESCE",
+"COLUMN",
+"COLLATE",
+"COMMIT",
+"COMMITTED",
+"COMPUTE",
+"CONFIRM",
+"CONSTRAINT",
+"CONTAINS",
+"CONTAINSTABLE",
+"CONTINUE",
+"CONTROLROW",
+"CONVERT",
+"COUNT",
+"CREATE",
+"CROSS",
+"CURRENT",
+"CURRENT_DATE",
+"CURRENT_TIME",
+"CURRENT_TIMESTAMP",
+"CURRENT_USER",
+"CURSOR",
+"DATABASE",
+"DBCC",
+"DEALLOCATE",
+"DECLARE",
+"DEFAULT",
+"DELETE",
+"DENY",
+"DESC",
+"DISK",
+"DISTINCT",
+"DISTRIBUTED",
+"DOUBLE",
+"DROP",
+"DUMMY",
+"DUMP",
+"ELSE",
+"END",
+"ERRLVL",
+"ERROREXIT",
+"ESCAPE",
+"EXCEPT",
+"EXEC",
+"EXECUTE",
+"EXISTS",
+"EXIT",
+"FETCH",
+"FILE",
+"FILLFACTOR",
+"FLOPPY",
+"FOR",
+"FOREIGN",
+"FREETEXT",
+"FREETEXTTABLE",
+"FROM",
+"FULL",
+"GO",   
+"GOTO",
+"GRANT",
+"GROUP",
+"HAVING",
+"HOLDLOCK",
+"IDENTITY",
+"IDENTITY_INSERT",
+"IDENTITYCOL",
+"IF",
+"IN",
+"INDEX",
+"INNER",
+"INSERT",
+"INTERSECT",
+"INTO",
+"IS",
+"ISOLATION",
+"JOIN",
+"KEY",
+"KILL",
+"LEFT",
+"LEVEL",
+"LIKE",
+"LINENO",
+"LOAD",
+"MAX",
+"MIN",
+"MIRROREXIT",
+"NATIONAL",
+"NOCHECK",
+"NONCLUSTERED",
+"NOT",
+"NULL",
+"NULLIF",
+"OF",
+"OFF",
+"OFFSETS",
+"ON",
+"ONCE",
+"ONLY",
+"OPEN",
+"OPENDATASOURCE",
+"OPENQUERY",
+"OPENROWSET",
+"OPTION",
+"OR",
+"ORDER",
+"OUTER",
+"OVER",
+"PERCENT",
+"PERM",
+"PERMANENT",
+"PIPE",
+"PLAN",
+"PRECISION",
+"PREPARE",
+"PRIMARY",
+"PRINT",
+"PRIVILEGES",
+"PROC",
+"PROCEDURE",
+"PROCESSEXIT",
+"PUBLIC",
+"RAISERROR",
+"READ",
+"READTEXT",
+"RECONFIGURE",
+"REFERENCES",
+"REPEATABLE",
+"REPLICATION",
+"RESTORE",
+"RESTRICT",
+"RETURN",
+"REVOKE",
+"RIGHT",
+"ROLLBACK",
+"ROWCOUNT",
+"ROWGUIDCOL",
+"RULE",
+"SAVE",
+"SCHEMA",
+"SELECT",
+"SERIALIZABLE",
+"SESSION_USER",
+"SET",
+"SETUSER",
+"SHUTDOWN",
+"SOME",
+"STATISTICS",
+"SUM",
+"SYSTEM_USER",
+"TABLE",
+"TAPE",
+"TEMP",
+"TEMPORARY",
+"TEXTSIZE",
+"THEN",
+"TO",
+"TOP",
+"TRAN",
+"TRANSACTION",
+"TRIGGER",
+"TRUNCATE",
+"TSEQUAL",
+"UNCOMMITTED",
+"UNION",
+"UNIQUE",
+"UPDATE",
+"UPDATETEXT",
+"USE",
+"USER",
+"VALUES",
+"VARYING",
+"VIEW",
+"WAITFOR",
+"WHEN",
+"WHERE",
+"WHILE",
+"WITH",
+"WORK",
+"WRITETEXT");
+
+function isReservedWord(word)
+{
+    if(word.indexOf(",") > 0)
+    {
+        word = word.split(",")[0];
+    }
+
+    for(var i = 0; i < ReservedWords.length; i++)   
+    {
+    if(word == ReservedWords[i])
+            return true;
+    }
+
+    return false;
+}
+
+function deleteRow(parent, child)
+{
+    parent.removeChild(child);
+}
+var wait;
+
+function loadSQL(type, index)
+{
+    if(wait == true)
+        return;
+
+    if(type == 0)
+    {
+        sqlar = differencesql;
+    }
+    else if(type == 1)
+    {
+        sqlar = createsql;
+    }
+    else if(type == 2)
+    {
+        sqlar = dropsql;
+    }
+    else if(type == 3)
+    {
+        sqlar = identsql;
+    }
+
+    wait = true;
+    var textArray;
+    try
+    {
+        CurrentSelectedRow.style.background = "#FFFFFF";
+    }
+    catch(x)
+    {}
+
+    if(index > sqlar.length - 2)
+    {
+        textArray = sqlar[0];
+    }
+    else
+    {
+        textArray = sqlar[index + 1];
+    }
+
+    // Clear current comparison
+    try
+    {
+        if(trsql.hasChildNodes() == true)
+        {
+            for(var p = trsql.childNodes.length - 1; p >= 0; p--)
+            {   
+
+                if (navigator.appName == "Microsoft Internet Explorer")
+                {
+                    trsql.childNodes[p].style.display = "none";
+                }
+                else
+                {
+                    trsql.removeChild(trsql.childNodes[p]);
+                }
+            }
+        }
+    }
+    catch(x)
+    {
+    }
+
+    if(type == 0)
+    {
+        CurrentSelectedRow = difftable.rows[index];
+        CurrentSelectedRow.style.background = "#fbef6b";
+    }
+    else if(type == 1)
+    {
+        CurrentSelectedRow = createtable.rows[index];
+        CurrentSelectedRow.style.background = "#fbef6b";
+    }
+    else if(type == 2)
+    {
+        CurrentSelectedRow = droptable.rows[index];
+        CurrentSelectedRow.style.background = "#fbef6b";
+    }
+    else if(type == 3)
+    {
+        CurrentSelectedRow = identtable.rows[index];
+        CurrentSelectedRow.style.background = "#fbef6b";
+    }
+
+
+    if (navigator.appName == "Microsoft Internet Explorer")
+    {
+        if(Cache[type][index] != null )
+        {
+            Cache[type][index].style.display = "inline";
+            Cache[type][index].top = 0;
+            Cache[type][index].left = 0;
+            wait = false;
+            return;
+        }
+    }
+    
+    tablebod = document.createElement("TBODY");
+
+    if (navigator.appName == "Microsoft Internet Explorer")
+    {
+
+        Cache[type][index] = tablebod;
+    }
+
+    // Iterate over lines of text
+    for(var j = 0; j < textArray.length; j++)
+    {
+        currentRow = document.createElement("TR");
+        currentLine = textArray[j];
+    
+        if(currentLine[0] == 0)
+        {
+            // Lines are the same
+            var tokens = currentLine[1].split(" ");
+            currentCell = document.createElement("TD");
+            
+            for(var k = 0; k < tokens.length; k++)
+            {
+                word = tokens[k];
+
+                if(isReservedWord(word) == true)
+                {
+                    fontnode = document.createElement("FONT");
+                    fontnode.color = "#0000FF";
+                    textnode = document.createTextNode(word + " ");
+                    fontnode.appendChild(textnode);
+                    currentCell.appendChild(fontnode);
+                }
+                else
+                {
+                    childnode = document.createTextNode(word + " ");
+                    currentCell.appendChild(childnode);
+                }
+            }
+            currentRow.appendChild(currentCell);
+
+            currentCell = document.createElement("TD");
+            currentCell.className = "MidDiffCell";
+            childnode = document.createTextNode("&nbsp;");
+            currentRow.appendChild(currentCell);
+    
+
+            currentCell = document.createElement("TD");
+
+            
+            for(var k = 0; k < tokens.length; k++)
+            {
+                word = tokens[k];
+
+                if(isReservedWord(word) == true)
+                {
+                    fontnode = document.createElement("FONT");
+                    fontnode.color = "#0000FF";
+                    textnode = document.createTextNode(word + " ");
+                    fontnode.appendChild(textnode);
+                    currentCell.appendChild(fontnode);
+                }
+                else
+                {
+                    childnode = document.createTextNode(word + " ");
+                    currentCell.appendChild(childnode);
+                }
+            }
+            currentRow.appendChild(currentCell);
+    
+            
+        }
+        else if(currentLine[0] == 1)
+        {
+            // Lines are the same
+            var tokens = currentLine[1].split(" ");
+            var othertokens = currentLine[2].split(" ");
+            
+            currentCell = document.createElement("TD");
+    
+            for(var k = 0; k < tokens.length; k++)
+            {
+                word = tokens[k];
+                otherword = othertokens[k];
+                if(word == otherword)
+                {
+                    if(isReservedWord(word) == true)
+                    {
+                        fontnode = document.createElement("SPAN");
+                        fontnode.style.color = "#0000FF";
+                        textnode = document.createTextNode(word + " ");
+                        fontnode.appendChild(textnode);
+                        currentCell.appendChild(fontnode);
+                    }
+                    else
+                    {
+                        childnode = document.createTextNode(word + " ");
+                        currentCell.appendChild(childnode);
+                    }
+                }
+                else
+                {
+                    if(isReservedWord(word) == true)
+                    {
+                        fontnode = document.createElement("SPAN");
+                        fontnode.style.color = "#0000FF";
+                        fontnode.style.background = "#99FF99";
+                        textnode = document.createTextNode(word + " ");
+                        fontnode.appendChild(textnode);
+                        currentCell.appendChild(fontnode);
+                    }
+                    else
+                    {
+                        fontnode = document.createElement("SPAN");
+                        fontnode.style.background = "#99FF99";
+                        textnode = document.createTextNode(word + " ");
+                        fontnode.appendChild(textnode);
+                        currentCell.appendChild(fontnode);
+                    }
+                    
+                }
+            }
+            currentRow.appendChild(currentCell);
+
+            currentCell = document.createElement("TD");
+            currentCell.className = "MidDiffCell";
+            imageNode = document.createElement("IMG");
+            imageNode.src = imagesdir + "NotEquals16.gif";
+            currentCell.appendChild(imageNode);
+            currentRow.appendChild(currentCell);
+    
+
+            var tokens = currentLine[2].split(" ");
+            var othertokens = currentLine[1].split(" ");
+
+            currentCell = document.createElement("TD");
+            
+            for(var k = 0; k < tokens.length; k++)
+            {
+                word = tokens[k];
+                otherword = othertokens[k];
+                if(word == otherword)
+                {
+                    if(isReservedWord(word) == true)
+                    {
+                        fontnode = document.createElement("SPAN");
+                        fontnode.style.color = "#0000FF";
+                        textnode = document.createTextNode(word + " ");
+                        fontnode.appendChild(textnode);
+                        currentCell.appendChild(fontnode);
+                    }
+                    else
+                    {
+                        childnode = document.createTextNode(word + " ");
+                        currentCell.appendChild(childnode);
+                    }
+                }
+                else
+                {
+                    if(isReservedWord(word) == true)
+                    {
+                        fontnode = document.createElement("SPAN");
+                        fontnode.style.color = "#0000FF";
+                        fontnode.style.background = "#99FF99";
+                        textnode = document.createTextNode(word + " ");
+                        fontnode.appendChild(textnode);
+                        currentCell.appendChild(fontnode);
+                    }
+                    else
+                    {
+                        fontnode = document.createElement("SPAN");
+                        fontnode.style.background = "#99FF99";
+                        textnode = document.createTextNode(word + " ");
+                        fontnode.appendChild(textnode);
+                        currentCell.appendChild(fontnode);
+                    }
+                    
+                }
+            }
+            currentRow.appendChild(currentCell);
+
+        }
+
+        tablebod.appendChild(currentRow);
+    }
+
+    trsql.appendChild(tablebod);
+
+    doLayout();
+    wait = false;
+}
+
+function swapImage(barname)
+{
+    if(barname == "diff")
+    {
+        if(difftable.style.display == 'none')
+        {
+            differenceexpandbuttonimage.src = imagesdir + "Contract32.gif";
+            difftable.style.display = 'block';
+        }
+        else
+        {
+            differenceexpandbuttonimage.src = imagesdir + "Expand32.gif";
+            difftable.style.display = 'none';       
+        }
+        
+        
+        doLayout();
+    }
+    else if(barname == "create")
+    {
+        
+        if(createtable.style.display == 'none')
+        {
+            onlyhereexpandbuttonimage.src = imagesdir + "Contract32.gif";
+            createtable.style.display = 'block';
+        }
+        else
+        {
+            onlyhereexpandbuttonimage.src = imagesdir + "Expand32.gif";
+            createtable.style.display = 'none';     
+        }
+        
+        
+        doLayout();
+    }
+    else if(barname == "drop")
+    {
+        
+        if(droptable.style.display == 'none')
+        {
+            dropexpandbuttonimage.src = imagesdir + "Contract32.gif";
+            droptable.style.display = 'block';
+        }
+        else
+        {
+            dropexpandbuttonimage.src = imagesdir + "Expand32.gif";
+            droptable.style.display = 'none';       
+        }
+        
+        
+        doLayout();
+    }
+    else if(barname == "ident")
+    {
+        
+        if(identtable.style.display == 'none')
+        {
+            identexpandbuttonimage.src = imagesdir + "Contract32.gif";
+            identtable.style.display = 'block';
+        }
+        else
+        {
+            identexpandbuttonimage.src = imagesdir + "Expand32.gif";
+            identtable.style.display = 'none';      
+        }
+        
+        
+        doLayout();
+    }
+
+    doLayout();
+
+
+}
+
+function getPageHeight()
+{
+    return document.body.clientHeight;
+}
+
+function createTables()
+{
+    arrimg.src = imagesdir+"RightArrow48.gif";
+    dbimgimg.src = imagesdir + "LeftDatabase32.gif";
+    dbrimgimg.src = imagesdir + "RightDatabase32.gif";
+    difftitleimg.src = imagesdir + "wbgrad.gif";
+    differenceexpandbuttonimage.src = imagesdir + "Expand32.gif";
+    onlyhereexpandbuttonimage.src = imagesdir + "Expand32.gif";
+    dropexpandbuttonimage.src = imagesdir + "Expand32.gif";
+    identexpandbuttonimage.src = imagesdir + "Expand32.gif";
+
+    datetimetext = document.createTextNode("Schema Compare for Oracle Report: " + timestamp);
+    datetime.appendChild(datetimetext);
+
+    if(includeidenticals != "true")
+    {
+        identtext.style.display = "none";
+        identnum.style.display = "none";
+        identtab.style.display = "none";
+        identtitlebar.style.display = "none";
+        identexpandbutton.style.display = "none";
+    }
+
+    dbIdentifier1.appendChild(document.createTextNode(identifier1));
+    dbSchemas1.appendChild(document.createTextNode(schemas1));
+    dbIdentifier2.appendChild(document.createTextNode(identifier2));
+    dbSchemas2.appendChild(document.createTextNode(schemas2));
+
+    if(direction == "2to1")
+    {
+        // Swap colors of create a drop
+        onlyheretitlebarimg.src = imagesdir + "wpgradient.gif";
+        droptitlebarimg.src = imagesdir + "wggrad.gif";
+        createTxt = document.createTextNode("Create");
+        dropTxt= document.createTextNode("Drop");
+        createtext.appendChild(dropTxt);
+        droptext.appendChild(createTxt);
+        arrimg.src = imagesdir + "LeftArrow48.gif"; 
+    }
+    else
+    {
+        onlyheretitlebarimg.src = imagesdir + "wggrad.gif";
+        droptitlebarimg.src = imagesdir + "wpgradient.gif";
+        createTxt = document.createTextNode("Create");
+        dropTxt= document.createTextNode("Drop");
+        createtext.appendChild(createTxt);
+        droptext.appendChild(dropTxt);
+    }
+    
+    // Creates the drop down tables from the data segment
+    // DIFFERENCE TABLE VARIABLE IS difftable
+
+    differentcounttext = document.createTextNode(differenceRows.length);
+    differentnum.appendChild(differentcounttext);
+
+    // Difference TABLE 
+    mytablebody = document.createElement("TBODY");
+    for(j=0; j < differenceRows.length; j++) 
+    {
+            row=document.createElement("TR");
+
+        row.index = j;
+        row.onmouseover = function()
+        {   
+            var numDiffRows = difftable.rows.length;
+            for(var i = 0; i < numDiffRows; i++)
+            {
+                if(difftable.rows[i] != CurrentSelectedRow)
+                    difftable.rows[i].style.background="#FFFFFF";           
+            }
+
+            if(difftable.rows[this.index] != CurrentSelectedRow)
+                difftable.rows[this.index].style.background="#fff9c5";
+        };
+
+        row.onmouseout = function()
+        {
+            var numDiffRows = difftable.rows.length;
+            for(var i = 0; i < numDiffRows; i++)
+            {
+                if(difftable.rows[i] != CurrentSelectedRow)
+                    difftable.rows[i].style.background="#FFFFFF";           
+            }
+
+        };
+
+        row.onclick = function(){loadSQL(0, this.index);};
+        row.className = "dataRow";
+
+        typecell = document.createElement("TD");
+        typecell.className = "TypeDataRow";
+
+        typetext = getTextFromObjectID(differenceRows[j][0]);
+
+        typetextnode = document.createTextNode(typetext);
+        typecell.appendChild(typetextnode);
+        row.appendChild(typecell);
+
+        typeimagecell = document.createElement("TD");
+        typeimagecell.className =  "TypeImageDataRow";
+        typeimageimage = document.createElement("IMG");
+        tableimgsrc = imagesdir + getImageFromObjectID(differenceRows[j][0]);
+        typeimageimage.setAttribute("src", tableimgsrc);
+        typeimagecell.appendChild(typeimageimage);
+        row.appendChild(typeimagecell);
+
+            lownerdatarowcell = document.createElement("TD");
+        lownerdatarowcell.className =  "OwnerDataRow";
+        lownerdatarowtext = document.createTextNode(differenceRows[j][1]);
+        lownerdatarowcell.appendChild(lownerdatarowtext);
+        row.appendChild(lownerdatarowcell);
+
+        lobjnamecell = document.createElement("TD");
+        lobjnamecell.className = "LObjNameDataRow";
+        lobjnamecell.style["text-align"]="right";
+        lobjnametext = document.createTextNode(differenceRows[j][2]);
+        lobjnamecell.appendChild(lobjnametext);
+        row.appendChild(lobjnamecell);
+
+        inccell = document.createElement("TD");
+        inccell.className =  "IncDataRow";
+        inccell.style["text-align"]="center";
+        inccellimg = document.createElement("IMG");
+        inccellimg.setAttribute("src", imagesdir + "NotEquals16.gif");
+        inccell.appendChild(inccellimg);
+        row.appendChild(inccell);
+
+        robjnamecell = document.createElement("TD");
+        robjnamecell.className =  "RObjNameDataRow";
+        robjnametext = document.createTextNode(differenceRows[j][3]);
+        robjnamecell.appendChild(robjnametext);
+        row.appendChild(robjnamecell);
+
+            rownerdatarowcell = document.createElement("TD");
+        rownerdatarowcell.className = "ROwnerDataRow";
+        rownerdatarowtext = document.createTextNode(differenceRows[j][4]);
+        rownerdatarowcell.appendChild(rownerdatarowtext);
+        row.appendChild(rownerdatarowcell);
+
+        mytablebody.appendChild(row);
+    }
+                        
+    difftable.appendChild(mytablebody);
+
+
+    createcounttext = document.createTextNode(onlyInOneRows.length);
+    createnum.appendChild(createcounttext);
+
+    mytablebody = document.createElement("TBODY");
+    for(j=0; j < onlyInOneRows.length; j++) 
+    {
+            row=document.createElement("TR");
+
+        row.index = j;
+        row.onmouseover = function()
+        {   
+            var numDiffRows = createtable.rows.length;
+            for(var i = 0; i < numDiffRows; i++)
+            {
+                if(createtable.rows[i] != CurrentSelectedRow)
+                    createtable.rows[i].style.background="#FFFFFF";         
+            }
+
+            if(createtable.rows[this.index] != CurrentSelectedRow)
+                createtable.rows[this.index].style.background="#fff9c5";
+        };
+
+        row.onmouseout = function()
+        {
+            var numDiffRows = createtable.rows.length;
+            for(var i = 0; i < numDiffRows; i++)
+            {
+                if(createtable.rows[i] != CurrentSelectedRow)
+                    createtable.rows[i].style.background="#FFFFFF";         
+            }
+
+        };
+
+        row.onclick = function(){loadSQL(1, this.index);};
+        row.className = "dataRow";
+
+        typecell = document.createElement("TD");
+        typecell.className = "TypeDataRow";
+
+        typetext = getTextFromObjectID(onlyInOneRows[j][0]);
+
+        typetextnode = document.createTextNode(typetext);
+        typecell.appendChild(typetextnode);
+        row.appendChild(typecell);
+
+        typeimagecell = document.createElement("TD");
+        typeimagecell.className =  "TypeImageDataRow";
+        typeimageimage = document.createElement("IMG");
+        typeimageimage.setAttribute("src", imagesdir + getImageFromObjectID(onlyInOneRows[j][0]));
+        typeimagecell.appendChild(typeimageimage);
+        row.appendChild(typeimagecell);
+
+            lownerdatarowcell = document.createElement("TD");
+        lownerdatarowcell.className =  "OwnerDataRow";
+        lownerdatarowtext = document.createTextNode(onlyInOneRows[j][1]);
+        lownerdatarowcell.appendChild(lownerdatarowtext);
+        row.appendChild(lownerdatarowcell);
+
+        lobjnamecell = document.createElement("TD");
+        lobjnamecell.className = "LObjNameDataRow";
+        lobjnamecell.style["text-align"]="right";
+        lobjnametext = document.createTextNode(onlyInOneRows[j][2]);
+        lobjnamecell.appendChild(lobjnametext);
+        row.appendChild(lobjnamecell);
+
+        inccell = document.createElement("TD");
+        inccell.className =  "IncDataRow";
+        inccell.style["text-align"]="center";
+        inccellimg = document.createElement("IMG");
+        if(direction == "2to1")
+        {
+            inccellimg.setAttribute("src", imagesdir + "drop.gif");
+        }
+        else
+        {
+            inccellimg.setAttribute("src", imagesdir + "RightArrow16.gif");
+        }
+        inccell.appendChild(inccellimg);
+        row.appendChild(inccell);
+
+        robjnamecell = document.createElement("TD");
+        robjnamecell.className =  "RObjNameDataRow";
+        robjnametext = document.createTextNode(onlyInOneRows[j][4]);
+        robjnamecell.appendChild(robjnametext);
+        row.appendChild(robjnamecell);
+
+            rownerdatarowcell = document.createElement("TD");
+        rownerdatarowcell.className = "ROwnerDataRow";
+        rownerdatarowtext = document.createTextNode(onlyInOneRows[j][4]);
+        rownerdatarowcell.appendChild(rownerdatarowtext);
+        row.appendChild(rownerdatarowcell);
+
+        mytablebody.appendChild(row);
+    }
+
+    createtable.appendChild(mytablebody);
+
+    dropcounttext = document.createTextNode(onlyInTwoRows.length);
+    dropnum.appendChild(dropcounttext);
+
+    mytablebody = document.createElement("TBODY");
+    for(j=0; j < onlyInTwoRows.length; j++) 
+    {
+            row=document.createElement("TR");
+
+        row.index = j;
+        row.onmouseover = function()
+        {   
+            var numDiffRows = droptable.rows.length;
+            for(var i = 0; i < numDiffRows; i++)
+            {
+                if(droptable.rows[i] != CurrentSelectedRow)
+                    droptable.rows[i].style.background="#FFFFFF";           
+            }
+
+            if(droptable.rows[this.index] != CurrentSelectedRow)
+                droptable.rows[this.index].style.background="#fff9c5";
+        };
+
+        row.onmouseout = function()
+        {
+            var numDiffRows = droptable.rows.length;
+            for(var i = 0; i < numDiffRows; i++)
+            {
+                if(droptable.rows[i] != CurrentSelectedRow)
+                    droptable.rows[i].style.background="#FFFFFF";           
+            }
+
+        };
+
+        row.onclick = function(){loadSQL(2, this.index);};
+        row.className = "dataRow";
+
+        typecell = document.createElement("TD");
+        typecell.className = "TypeDataRow";
+
+        typetext = getTextFromObjectID(onlyInTwoRows[j][0]);
+        
+
+        typetextnode = document.createTextNode(typetext);
+        typecell.appendChild(typetextnode);
+        row.appendChild(typecell);
+
+        typeimagecell = document.createElement("TD");
+        typeimagecell.className =  "TypeImageDataRow";
+        typeimageimage = document.createElement("IMG");
+        typeimageimage.setAttribute("src", imagesdir + getImageFromObjectID(onlyInTwoRows[j][0]));
+        typeimagecell.appendChild(typeimageimage);
+        row.appendChild(typeimagecell);
+
+            lownerdatarowcell = document.createElement("TD");
+        lownerdatarowcell.className =  "OwnerDataRow";
+        lownerdatarowtext = document.createTextNode(onlyInTwoRows[j][1]);
+        lownerdatarowcell.appendChild(lownerdatarowtext);
+        row.appendChild(lownerdatarowcell);
+
+        lobjnamecell = document.createElement("TD");
+        lobjnamecell.className = "LObjNameDataRow";
+        lobjnamecell.style["text-align"]="right";
+        lobjnametext = document.createTextNode(onlyInTwoRows[j][2]);
+        lobjnamecell.appendChild(lobjnametext);
+        row.appendChild(lobjnamecell);
+
+        inccell = document.createElement("TD");
+        inccell.className =  "IncDataRow";
+        inccell.style["text-align"]="center";
+        inccellimg = document.createElement("IMG");
+        if(direction == "2to1")
+        {
+            inccellimg.setAttribute("src", imagesdir + "LeftArrow16.gif");
+        }
+        else
+        {
+            inccellimg.setAttribute("src", imagesdir + "drop.gif");
+        }
+        
+        inccell.appendChild(inccellimg);
+        row.appendChild(inccell);
+
+        robjnamecell = document.createElement("TD");
+        robjnamecell.className =  "RObjNameDataRow";
+        robjnametext = document.createTextNode(onlyInTwoRows[j][3]);
+        robjnamecell.appendChild(robjnametext);
+        row.appendChild(robjnamecell);
+
+            rownerdatarowcell = document.createElement("TD");
+        rownerdatarowcell.className = "ROwnerDataRow";
+        rownerdatarowtext = document.createTextNode(onlyInTwoRows[j][4]);
+        rownerdatarowcell.appendChild(rownerdatarowtext);
+        row.appendChild(rownerdatarowcell);
+
+        mytablebody.appendChild(row);
+    }
+
+    droptable.appendChild(mytablebody);
+
+    identcounttext = document.createTextNode(identRows.length);
+    identnum.appendChild(identcounttext);
+
+    mytablebody = document.createElement("TBODY");
+    for(j=0; j < identRows.length; j++) 
+    {
+            row=document.createElement("TR");
+
+        row.index = j;
+        row.onmouseover = function()
+        {   
+            var numDiffRows = identtable.rows.length;
+            for(var i = 0; i < numDiffRows; i++)
+            {
+                if(identtable.rows[i] != CurrentSelectedRow)
+                    identtable.rows[i].style.background="#FFFFFF";          
+            }
+
+            if(identtable.rows[this.index] != CurrentSelectedRow)
+                identtable.rows[this.index].style.background="#fff9c5";
+        };
+
+        row.onmouseout = function()
+        {
+            var numDiffRows = identtable.rows.length;
+            for(var i = 0; i < numDiffRows; i++)
+            {
+                if(identtable.rows[i] != CurrentSelectedRow)
+                    identtable.rows[i].style.background="#FFFFFF";          
+            }
+
+        };
+
+        row.onclick = function(){loadSQL(3, this.index);};
+        row.className = "dataRow";
+
+        typecell = document.createElement("TD");
+        typecell.className = "TypeDataRow";
+
+        typetext = getTextFromObjectID(identRows[j][0]);
+
+        typetextnode = document.createTextNode(typetext);
+        typecell.appendChild(typetextnode);
+        row.appendChild(typecell);
+
+        typeimagecell = document.createElement("TD");
+        typeimagecell.className =  "TypeImageDataRow";
+        typeimageimage = document.createElement("IMG");
+        typeimageimage.setAttribute("src", imagesdir + getImageFromObjectID(identRows[j][0]));
+        typeimagecell.appendChild(typeimageimage);
+        row.appendChild(typeimagecell);
+
+            lownerdatarowcell = document.createElement("TD");
+        lownerdatarowcell.className =  "OwnerDataRow";
+        lownerdatarowtext = document.createTextNode(identRows[j][1]);
+        lownerdatarowcell.appendChild(lownerdatarowtext);
+        row.appendChild(lownerdatarowcell);
+
+        lobjnamecell = document.createElement("TD");
+        lobjnamecell.className = "LObjNameDataRow";
+        lobjnamecell.style["text-align"]="right";
+        lobjnametext = document.createTextNode(identRows[j][2]);
+        lobjnamecell.appendChild(lobjnametext);
+        row.appendChild(lobjnamecell);
+
+        inccell = document.createElement("TD");
+        inccell.className =  "IncDataRow";
+        inccell.style["text-align"]="center";
+        inccellimg = document.createElement("IMG");
+        inccellimg.setAttribute("src", imagesdir + "Equals.gif");
+        inccell.appendChild(inccellimg);
+        row.appendChild(inccell);
+
+        robjnamecell = document.createElement("TD");
+        robjnamecell.className =  "RObjNameDataRow";
+        robjnametext = document.createTextNode(identRows[j][3]);
+        robjnamecell.appendChild(robjnametext);
+        row.appendChild(robjnamecell);
+
+            rownerdatarowcell = document.createElement("TD");
+        rownerdatarowcell.className = "ROwnerDataRow";
+        rownerdatarowtext = document.createTextNode(identRows[j][4]);
+        rownerdatarowcell.appendChild(rownerdatarowtext);
+        row.appendChild(rownerdatarowcell);
+
+        mytablebody.appendChild(row);
+    }
+
+    identtable.appendChild(mytablebody);
+
+    difftitleimg.src = imagesdir + "wbgrad.gif";
+    onlyheretitlebarimg.src = imagesdir + "wggrad.gif";
+    droptitlebarimg.src = imagesdir + "wpgradient.gif";
+    identtitlebarimg.src = imagesdir + "wggradient.gif";
+
+    
+}
+
+function pageInit()
+{
+    SetupImagesDir();
+    createTables();
+    doLayout();
+    initPanels();
+}
+
+function initPanels() {
+    var pageHeight = getPageHeight();
+    var toppanelHeight = pageHeight - 350;
+    var toppanelTop = parseInt(toppanel.style.top);
+    var splitterTop = toppanelTop + toppanelHeight + 1;
+
+    toppanel.style.height = toppanelHeight;
+
+    splitter.style.top = splitterTop;
+
+    var sqldivTop = splitterTop + parseInt(splitter.style.height) + 1
+
+    sqldiv.style.top = sqldivTop;
+    sqldiv.style.height = pageHeight - sqldivTop;
+
+    sqlcontent.style.height = pageHeight - sqldivTop - parseInt(sqldivtitlebar.style.height);
+}
+function SetupImagesDir()
+{
+    imagesdir = reportFileName + "_images\\";
+}
+
+function doLayout()
+{
+    var pageHeight = getPageHeight();
+    var pageWidth = getPageWidth();
+    var centrePoint = pageWidth/2;
+
+    // Arrow Image
+    arimg.style.left = centrePoint - 32;
+    
+    // Blue to white background
+    dbbg.style.width = centrePoint-20;
+    
+    // white to red background
+    dbrbg.style.left = centrePoint + 20;
+    dbrbg.style.width = centrePoint-20;
+    
+    // left hand server name
+    dbIdentifier1.style.left = 0;
+    dbIdentifier1.style.width = centrePoint - 74;
+    
+    // left hand name
+    dbSchemas1.style.left = 0;
+    dbSchemas1.style.width = centrePoint - 74;
+    
+    // left hand server image
+    dbimg.style.left = centrePoint - 74;
+    
+    // Right hand server name
+    dbIdentifier2.style.left = centrePoint + 72;
+    dbIdentifier2.style.width = centrePoint - 72;
+    
+    // Right hand database name
+    dbSchemas2.style.left = centrePoint + 72;
+    dbSchemas2.style.width = centrePoint - 72;
+    
+    // Right hand image
+    dbrimg.style.left = centrePoint + 32;
+    
+    // Header table row
+    typehdr.style.width = 100;
+    lownerhdr.style.width = 100;
+    lobjnamehdr.style.width = centrePoint - 250;
+    inchdr.style.width = 70;
+    robjnamehdr.style.width = centrePoint - 230;
+    rownerhdr.style.width = 200;
+
+    differencetitlebar.style.top = 0;
+    differenceexpandbutton.style.top = 9;
+    
+    // Text which appears in different header
+    differenttext.style.top = 10;
+    differenttext.style.left = centrePoint - 30;
+    differenttext.style.width = 70;
+    differenttext.style["text-align"] = 'center';
+    differentnum.style.top = 30;
+    differentnum.style.left = centrePoint - 10;
+    
+    // Position of top of different table
+    difftab.style.top = 50;
+    
+    // Used to compute offsets for other tabs
+    var offset = 0;
+
+    if(difftable.style.display == 'block')
+    {
+        var numDiffRows = difftable.rows.length;
+
+        offset = (22 * numDiffRows);
+
+        for(var i = 0; i < numDiffRows; i++)
+        {
+            switch(differenceRows[i][0])
+            {
+                case 2:
+                case 5:
+                case 6:
+                case 10:
+                case 15:
+                case 16:
+                case 21:
+                case 22:
+                case 23:
+                case 27:
+                case 31:
+                    offset = offset + 10;           
+            }
+            difftable.rows[i].cells[0].style.width = 80;
+            difftable.rows[i].cells[1].style.width = 16;
+            difftable.rows[i].cells[2].style.width = 100;
+            difftable.rows[i].cells[3].style.width = centrePoint - 250;
+            difftable.rows[i].cells[4].style.width = 70;
+            difftable.rows[i].cells[5].style.width = centrePoint - 230;
+            difftable.rows[i].cells[6].style.width = 200;
+        }
+    }
+
+    onlyheretitlebar.style.top = 50 + offset;
+    onlyhereexpandbutton.style.top = 59 + offset;
+    
+    // Text which appears in different header
+    createtext.style.top = 60 + offset;
+    if(direction == "2to1")
+    {
+        createtext.style.left = centrePoint - 20;
+    }
+    else
+    {
+        createtext.style.left = centrePoint - 22;
+    }
+    createtext.style.width = 70;
+    createtext.style.align = 'center';
+    createtext.style["text-align"] = 'right';
+    createnum.style.top = 80 + offset;
+    createnum.style.left = centrePoint - 10;
+    
+    // Position of top of different table
+    createtab.style.top = 100 + offset;
+    
+    // Used to compute offsets for other tabs
+
+    if(createtable.style.display == 'block')
+    {
+        var numDiffRows = createtable.rows.length;
+
+        offset = offset + (22 * numDiffRows);
+
+        for(var i = 0; i < numDiffRows; i++)
+        {
+            switch(onlyInOneRows[i][0])
+            {
+                case 2:
+                case 5:
+                case 6:
+                case 10:
+                case 15:
+                case 16:
+                case 21:
+                case 22:
+                case 23:
+                case 27:
+                case 31:
+                    offset = offset + 10;           
+            }
+            createtable.rows[i].cells[0].style.width = 80;
+            createtable.rows[i].cells[1].style.width = 16;
+            createtable.rows[i].cells[2].style.width = 100;
+            createtable.rows[i].cells[3].style.width = centrePoint - 250;
+            createtable.rows[i].cells[4].style.width = 70;
+            createtable.rows[i].cells[5].style.width = centrePoint - 230;
+            createtable.rows[i].cells[6].style.width = 200;
+        }
+    }
+
+    droptitlebar.style.top = 100 + offset;
+    dropexpandbutton.style.top = 109 + offset;
+
+    droptext.style.top = 110 + offset;
+    droptext.style.left = centrePoint - 30;
+    dropnum.style.top = 130 + offset;
+    dropnum.style.left = centrePoint - 10;
+    if(direction == "2to1")
+    {
+        droptext.style.left = centrePoint - 22;
+    }
+    else
+    {
+        droptext.style.left = centrePoint - 20;
+    }
+
+    droptab.style.top = 150 + offset;
+
+    if(droptable.style.display == 'block')
+    {
+        var numDiffRows = droptable.rows.length;
+
+        offset = offset + (22 * numDiffRows);
+
+        for(var i = 0; i < numDiffRows; i++)
+        {
+            switch(onlyInTwoRows[i][0])
+            {
+                case 2:
+                case 5:
+                case 6:
+                case 10:
+                case 15:
+                case 16:
+                case 21:
+                case 22:
+                case 23:
+                case 27:
+                case 31:
+                    offset = offset + 10;           
+            }
+            droptable.rows[i].cells[0].style.width = 80;
+            droptable.rows[i].cells[1].style.width = 16;
+            droptable.rows[i].cells[2].style.width = 100;
+            droptable.rows[i].cells[3].style.width = centrePoint - 250;
+            droptable.rows[i].cells[4].style.width = 70;
+            droptable.rows[i].cells[5].style.width = centrePoint - 230;
+            droptable.rows[i].cells[6].style.width = 200;
+        }
+    }
+
+    identtitlebar.style.top = 150 + offset;
+    identexpandbutton.style.top = 159 + offset;
+
+    identtext.style.top = 160 + offset;
+    identtext.style.left = centrePoint - 30;
+    
+    identnum.style.top = 180 + offset;
+    identnum.style.left = centrePoint - 10;
+    
+    identtab.style.top = 200 + offset;
+
+    if(identtable.style.display == 'block')
+    {
+        var numDiffRows = identtable.rows.length;
+
+        offset = offset + (22 * numDiffRows);
+
+        for(var i = 0; i < numDiffRows; i++)
+        {
+            switch(identRows[i][0])
+            {
+                case 2:
+                case 5:
+                case 6:
+                case 10:
+                case 15:
+                case 16:
+                case 21:
+                case 22:
+                case 23:
+                case 27:
+                case 31:
+                    offset = offset + 10;
+                    break;
+            }
+            identtable.rows[i].cells[0].style.width = 80;
+            identtable.rows[i].cells[1].style.width = 16;
+            identtable.rows[i].cells[2].style.width = 100;
+            identtable.rows[i].cells[3].style.width = centrePoint - 250;
+            identtable.rows[i].cells[4].style.width = 70;
+            identtable.rows[i].cells[5].style.width = centrePoint - 230;
+            identtable.rows[i].cells[6].style.width = 200;
+        }
+    }
+    
+    
+    for(var j = 0; j < trsql.rows.length; j++)
+    {
+        trsql.rows[j].cells[0].style.width = centrePoint - 10;
+        trsql.rows[j].cells[1].style.width = 70;
+        trsql.rows[j].cells[2].style.width = centrePoint - 35;
+    }
+}
+
+function getTextFromObjectID(id)
+{
+    switch(id)
+    {
+        case 1:
+            return "Table";
+            break;
+        case 2:
+            return "Index";
+            break;
+        case 3:
+            return "Procedure";
+            break;
+        case 4:
+            return "Function";
+            break;
+        case 5:
+            return "Type";
+            break;
+        case 6:
+            return "Package";
+            break;
+        case 7:
+            return "View";
+            break;
+        case 8:
+            return "Trigger";
+            break;
+        case 9:
+            return "Sequence";
+            break;
+        case 10:
+            return "Synonym";
+            break;
+        case 11:
+            return "Grant";
+            break;
+        case 12:
+            return "Materialized view log";
+            break;
+        case 13:
+            return "Materialized view";
+            break;
+        case 14:
+            return "Package body";
+            break;
+        case 15:
+            return "Public synonym";
+            break;
+    }
+}
+
+function getImageFromObjectID(id)
+{
+    switch(id)
+    {
+        case 1:
+        case 12:
+            return "Tables.gif";
+            break;
+        case 2:
+            return "Indexes.gif";
+            break;
+        case 3:
+            return "Procedures.gif";
+            break;
+        case 4:
+            return "Functions.gif";
+            break;
+        case 5:
+            return "Types.gif";
+            break;
+        case 6:
+        case 14:
+            return "Packages.gif";
+            break;
+        case 7:
+        case 13:
+            return "Views.gif";
+            break;
+        case 8:
+            return "Triggers.gif";
+            break;
+        case 9:
+            return "Sequences.gif";
+            break;
+        case 10:
+        case 15:
+            return "Synonyms.gif";
+            break;
+        case 11:
+            return "Grants.png";
+            break;
+    }
+}
+
+var dragStart = -1;
+var tmpOnselectstart;
+var tmpOnmousedown;
+
+function disableSelect() {
+    tmpOnselectstart = document.onselectstart;
+    tmpOnmousedown = document.onmousedown;
+    document.onselectstart = function() { return false; } // ie
+    document.onmousedown = function() { return false; } // mozilla
+}
+
+function reenableSelect() {
+    	document.onselectstart = tmpOnselectstart;
+    	document.onmousedown = tmpOnmousedown;
+}
+
+function startDrag(e) {
+    disableSelect();
+    document.body.style.cursor = 'n-resize';
+    dragStart = e.screenY;
+}
+
+function stopDrag(e) {
+    document.body.style.cursor = 'auto';
+    dragStart = -1;
+    reenableSelect();
+}
+
+function dragSqlDiv(e) {
+    if (dragStart > -1) {
+
+        var yDrag = e.screenY - dragStart;
+        var toppanelTop = parseInt(toppanel.style.top);
+        var splitterTop = parseInt(splitter.style.top);
+        var pageHeight = getPageHeight();
+        var newSplitterTop = splitterTop + yDrag;
+        var sqlDivTop = newSplitterTop + 5;
+
+        if (newSplitterTop <= toppanelTop) {
+            newSplitterTop = toppanelTop;
+        }
+
+        splitter.style.top = newSplitterTop;
+        toppanel.style.height = newSplitterTop - toppanelTop - 1;
+        sqldiv.style.top = sqlDivTop;
+        sqldiv.style.height = pageHeight - sqlDivTop;
+        sqlcontent.style.height = pageHeight - sqlDivTop - 20;
+
+        dragStart = e.screenY;
+    }
+}
+
+//-->
+    
+    
+        </script><noscript><div style="position:absolute; left:0px; top:0px; width:100%; height:100%; z-index:20">Please enable javascript</div></noscript></head><body onLoad="pageInit()" onResize="doLayout()" style="padding: 0; margin: 0; overflow: hidden;" onmousemove="dragSqlDiv(event)" onmouseup="stopDrag(event)"><div id="datetime" class="DatabaseNameText" style="position:absolute; border-bottom: 1px solid #ebeadb;text-align:center; font-weight:bold; left:0px; top:0px; z-index:8; width:100%; height:24;"></div><div style="position:absolute;top:25;width:100%"><div id="arimg" class="ArrowImage"><img id="arrimg" src="images/RightArrow48.gif"></div><div id="dbbg" class="DBBack"></div><div id="dbrbg" class="DBBack"></div><div id="dbIdentifier1" class="DatabaseNameText" style="position:absolute; top:8px; left:0px; width:44%; text-align:right"></div><div id="dbSchemas1" class="DatabaseNameText" style="position:absolute; font-weight:bold; top:30px; left:0px; width:44%; text-align:right"></div><div id="dbimg" class="DatabaseImage"><img id="dbimgimg" style="width:100%; height:100%" src="images/LeftDatabase32.gif"></div><div id="dbIdentifier2" class="DatabaseNameText" style="position:absolute; top:8px; left:55%; width:44%; text-align:left"></div><div id="dbSchemas2" class="DatabaseNameText" style="position:absolute; font-weight:bold; top:30px; left:55%; width:44%; text-align:left"></div><div id="dbrimg" class="DatabaseImage"><img id="dbrimgimg" style="height:34px; width:32px" src="images/RightDatabase32.gif"></div><div id="titlebar" class="TitleBar"><table cellpadding="2" cellspacing="0" style="width:100%; height:20px;"><tr><td id="typehdr" class="TitleBarTable">Type</td><td id="lownerhdr" class="TitleBarTable" style="text-align:right">Owner</td><td id="lobjnamehdr" style="text-align:right" class="TitleBarTable">Object Name</td><td id="inchdr" style="text-align:center" class="TitleBarTable">
+    &nbsp;
+    </td><td id="robjnamehdr" class="TitleBarTable">Object Name</td><td id="rownerhdr" class="TitleBarTable">Owner</td></tr></table></div></div><div id="toppanel" style="overflow: auto; top:95; width: 100%; position: absolute;"><div id="differencetitlebar" class="DifferenceBar"><img id="difftitleimg" style="width:100%; height:100%" src="images/wbgrad.gif"></div><div id="differenceexpandbutton" class="icon"><img id="differenceexpandbuttonimage" onClick="swapImage('diff')" style="width:100%;height:100%" src="images/Expand32.gif"></div><div id="onlyheretitlebar" class="OnlyHereBar"><img id="onlyheretitlebarimg" style="width:100%; height:100%" src="images/wggrad.gif"></div><div id="onlyhereexpandbutton" class="OnlyHereIcon"><img style="width:100%;height:100%" id="onlyhereexpandbuttonimage" onClick="swapImage('create')" src="images/Expand32.gif"></div><div id="droptitlebar" class="OnlyHereBar"><img id="droptitlebarimg" style="width:100%; height:100%" src="images/wpgradient.gif"></div><div id="dropexpandbutton" class="OnlyHereIcon"><img style="width:100%;height:100%" id="dropexpandbuttonimage" onClick="swapImage('drop')" src="images/Expand32.gif"></div><div id="identtitlebar" class="OnlyHereBar"><img id="identtitlebarimg" style="width:100%; height:100%" src="images/wggradient.gif"></div><div id="identexpandbutton" class="OnlyHereIcon"><img style="width:100%;height:100%" id="identexpandbuttonimage" onClick="swapImage('ident')" src="images/Expand32.gif"></div><div id="differenttext" class="DifferentText">Different</div><div id="differentnum" class="DifferentNum"></div><div id="createtext" class="DifferentText"></div><div id="createnum" class="DifferentNum"></div><div id="droptext" class="DifferentText"></div><div id="dropnum" class="DifferentNum"></div><div id="identtext" class="DifferentText">Identical</div><div id="identnum" class="DifferentNum"></div><div id="difftab" class="DifferenceTable"><table class="dataTable" style="display:none;width:100%;" id="difftable" cellpadding="2" cellspacing="0"></table></div><div id="createtab" class="DifferenceTable"><table class="dataTable" style="display:none;width:100%;" id="createtable" cellpadding="2" cellspacing="0"></table></div><div id="droptab" class="DifferenceTable"><table class="dataTable" style="display:none;width:100%;" id="droptable" cellpadding="2" cellspacing="0"></table></div><div id="identtab" class="DifferenceTable"><table class="dataTable" style="display:none;width:100%;" id="identtable" cellpadding="2" cellspacing="0"></table></div></div><div id="splitter" style="position: absolute; width: 100%; height: 3; background-color: gray; cursor: n-resize;" onmousedown="startDrag(event)"></div><div id="sqldiv" style="position: absolute; width: 100%; height: 250; overflow: hidden;" class="SQLDiv"><div id="sqldivtitlebar" class="SQLViewTitleBar" style="position:relative;width:100%;height:20px;background:#7a96df;font-family:Tahoma, Arial, sans-serif;  font-size: 8.25pt;  font-weight:bold;   color: #FFFFFF;">SQL View</div><div id="sqlcontent" style="position: relative; width: 100%; overflow: auto;"><div id="tr1sql" class="SQL" style="position:absolute; top:0; left:0;width:100%"><table id="trsql" class="SQL" width="100%"></table></div></div></div></body></html>

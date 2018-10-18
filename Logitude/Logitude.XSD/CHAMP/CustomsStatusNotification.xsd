@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<xs:schema
+    attributeFormDefault="unqualified"
+	elementFormDefault="qualified"
+    xmlns:GCCSCargoImp="http://www.champ.aero/GCCS/CargoXML"
+	targetNamespace="http://www.champ.aero/GCCS/CargoXML"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    version="2.0"
+>
+	<xs:include schemaLocation="common.xsd"/>
+
+   <xs:complexType name="CustomsStatusNotification">
+        <xs:sequence>
+            <xs:element name="StandardMessageIdentification" type="GCCSCargoImp:StandardMessageIdentification"/>
+            <xs:element name="WaybillIdentification" type="GCCSCargoImp:WaybillIdentification"/>
+            <xs:element name="FlightInformation" type="GCCSCargoImp:FlightInformation"/>
+            <xs:element name="CustomsActionNotification" type="GCCSCargoImp:CustomsActionNotification"/>
+            <xs:element name="DateTimeOfNotification" type="GCCSCargoImp:DateTimeOfNotification"/>
+            <xs:element name="CustomsNotificationDetails" type="GCCSCargoImp:CustomsNotificationDetails"/>
+            <xs:element minOccurs="0" name="CargoControlLocation" type="GCCSCargoImp:CargoControlLocation"/>
+            <xs:element minOccurs="0" name="NominatedAgent" type="GCCSCargoImp:NominatedAgent"/>
+        </xs:sequence>
+    </xs:complexType>
+   
+    <xs:complexType name="MasterAWBIndication">
+        <xs:attribute name="MasterAWBIndicator" type="GCCSCargoImp:MasterAWBIndicator"/>
+    </xs:complexType>
+    <xs:complexType name="HWBIdentification">
+        <xs:attribute name="HWBSerialNumber" type="GCCSCargoImp:HWBSerialNumber"/>
+    </xs:complexType>
+    <xs:complexType name="WaybillIdentification">
+        <xs:sequence>
+            <xs:element name="AWBIdentification" type="GCCSCargoImp:AWBIdentification"/>
+            <xs:element minOccurs="0" name="MasterAWBIndication" type="GCCSCargoImp:MasterAWBIndication"/>
+            <xs:element minOccurs="0" name="HWBIdentification" type="GCCSCargoImp:HWBIdentification"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="FlightDetails">
+        <xs:attribute name="AirportCodeOfLoading" type="GCCSCargoImp:AirportCode"/>
+        <xs:attribute name="AirportCodeOfUnloading" type="GCCSCargoImp:AirportCode"/>
+        <xs:attribute name="DayOfScheduledArrival" type="GCCSCargoImp:DayOfMonth"/>
+        <xs:attribute name="MonthOfScheduledArrival" type="GCCSCargoImp:Month"/>
+        <xs:attribute name="AirportCodeOfFirstEntry" type="GCCSCargoImp:AirportCode" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="FlightInformation">
+        <xs:sequence>
+            <xs:element name="FlightIdentification" type="GCCSCargoImp:FlightIdentification"/>
+            <xs:element name="FlightDetails" type="GCCSCargoImp:FlightDetails"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="CustomsActionDetail">
+        <xs:attribute name="CustomsStatusCode" type="GCCSCargoImp:CustomsStatusCode"/>
+        <xs:attribute name="CustomsNotification" type="GCCSCargoImp:CustomsNotification"/>
+        <xs:attribute name="CustomsActionCode" type="GCCSCargoImp:CustomsActionCode"/>
+    </xs:complexType>
+    <xs:complexType name="CustomsActionNotification">
+        <xs:sequence>
+            <xs:element name="CustomsActionDetail" type="GCCSCargoImp:CustomsActionDetail"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="DateTimeOfNotification">
+        <xs:attribute name="Day" type="GCCSCargoImp:DayOfMonth"/>
+        <xs:attribute name="Month" type="GCCSCargoImp:Month"/>
+        <xs:attribute name="Time" type="GCCSCargoImp:Time"/>
+    </xs:complexType>
+    <xs:complexType name="CustomsNotificationDetails">
+        <xs:attribute name="CustomsEntryNumber" type="GCCSCargoImp:CustomsEntryNumber"/>
+        <xs:attribute name="NumberOfPiecesActioned" type="GCCSCargoImp:NumberOfPieces"/>
+    </xs:complexType>
+    <xs:complexType name="CargoControlLocation">
+        <xs:attribute name="BondedPremisesIdentification" type="GCCSCargoImp:BondedPremisesIdentification"/>
+    </xs:complexType>
+    <xs:complexType name="NominatedAgent">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="ParticipantIdentification" type="GCCSCargoImp:ParticipantIdentification"/>
+        </xs:sequence>
+        <xs:attribute name="Name" type="GCCSCargoImp:Name" use="optional"/>
+    </xs:complexType>
+</xs:schema>

@@ -1,0 +1,11 @@
+
+
+
+
+INSERT INTO "PHYSICALCHECKOPERATIONS" (CODE, LOCALNAME, ENGLISHNAME, SEARCHFIELDS, INACTIVE) VALUES ('7', 'בדיקה נסגרה', 'Check closed', '7,Check closed,בדיקה נסגרה', '0') ;
+
+/
+
+Commit ;
+
+/

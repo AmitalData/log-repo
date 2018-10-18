@@ -1,0 +1,74 @@
+﻿
+/****** Object:  StoredProcedure [dbo].[usp_CopyDocumentTypeMetaDatas]    Script Date: 05/30/2016 09:26:21 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Ahmad Rabaia
+-- Create date: 30/05/2016
+-- Description:	Copy DocumentTypeMetaDatas From Source Tenant To Destanation Tenant
+-- =============================================
+Create PROCEDURE [dbo].[usp_CopyDocumentTypeMetaDatas] 
+@SourceTenant int,
+@DestanationTenant int
+AS
+BEGIN
+declare @Tenant as int
+declare @Id as varchar(15)
+declare @Code as varchar(15)
+declare @DocTypeCode as varchar(15)
+declare @DocumentsMetaDataTypeId as varchar(15)
+declare @DocumentTypeId as varchar(15) 
+declare @DestDocumentTypeId as varchar(15)
+declare @SourceCode as varchar(15) 
+declare @DestDocumentsMetaDataTypeId as varchar(15) 
+declare @DestId as varchar(15)  
+
+BEGIN 
+		DECLARE eventsCursor CURSOR READ_ONLY
+		FOR
+		SELECT Id,DocumentsMetaDataTypeId,DocumentTypeId
+		FROM dbo.DocumentTypeMetaDatas where Tenant = @SourceTenant
+    	OPEN eventsCursor FETCH NEXT FROM eventsCursor INTO @Id,@DocumentsMetaDataTypeId,@DocumentTypeId
+		WHILE @@FETCH_STATUS = 0
+			BEGIN 
+			               
+               set @Code = null
+	           SELECT @Code = Code 
+               FROM [dbo].[DocumentsMetaDataTypes] where [Id] = @DocumentsMetaDataTypeId and Tenant = @SourceTenant
+               print '@DocumentsMetaDataTypeId: ' + @DocumentsMetaDataTypeId
+               print '@Code: ' + @Code
+               
+               set @DestDocumentsMetaDataTypeId = null
+               SELECT @DestDocumentsMetaDataTypeId = Id 
+               FROM [dbo].[DocumentsMetaDataTypes] where [Code] = @Code and Tenant = @DestanationTenant
+               print '@@DestDocumentsMetaDataTypeId: ' + @DestDocumentsMetaDataTypeId
+               set @DocTypeCode = null
+	           SELECT @DocTypeCode = Code 
+               FROM [dbo].DocumentTypes where [Id] = @DocumentTypeId and Tenant = @SourceTenant
+                 print '@DocTypeCode: ' + @DocTypeCode
+               
+               set @DestDocumentTypeId = null
+               SELECT @DestDocumentTypeId = Id 
+               FROM [dbo].DocumentTypes where [Code] = @DocTypeCode and Tenant = @DestanationTenant
+               print '@@DestDocumentTypeId: ' + @DestDocumentTypeId
+               
+               print 'innnnnn'
+                 EXEC   [dbo].[usp_GetNextTableIdValue]
+		                @pLastNumber = @DestId OUTPUT,
+		                @pTableName = N'DocumentTypeMetaData'          
+		       print '@DestId : ' + @DestId        
+                  INSERT INTO [dbo].DocumentTypeMetaDatas([Id],DocumentTypeId,DocumentsMetaDataTypeId,Tenant,Mandatory)
+                  ( select @DestId,@DestDocumentTypeId,@DestDocumentsMetaDataTypeId,@DestanationTenant,Mandatory
+                    from [dbo].DocumentTypeMetaDatas where Id = @Id and Tenant = @SourceTenant)
+               
+               
+               
+               
+		   FETCH NEXT FROM eventsCursor INTO @Id,@DocumentsMetaDataTypeId,@DocumentTypeId			
+			END
+		CLOSE eventsCursor
+		DEALLOCATE eventsCursor
+END
+END

@@ -1,0 +1,100 @@
+﻿<style>
+    .SendRequestButton {
+        width: 100px;
+        height: 30px;
+        background-color: #ffffff;
+        background-image:-moz-linear-gradient(top, #ffffff -20%, #008553 100%);
+         background-image:-webkit-linear-gradient(top, #ffffff -20%, #008553 100%);
+         background-image:-ms-linear-gradient(top, #ffffff -20%, #008553 100%);
+         background-image:linear-gradient(top, #ffffff -20%, #008553 100%);
+         background-image:-o-linear-gradient(top, #ffffff -20%, #008553 100%);
+         background-image:-webkit-gradient(linear, right top, right bottom, color-stop(-20%,#ffffff), color-stop(100%,#008553));
+         border:solid 1px #006C53;
+         color:white;
+    }
+    .SendRequestButton:hover{
+        opacity:0.8;
+    }
+</style>
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+        </td>
+    </tr>
+    <tr style="height:1px;">
+        <td>
+            <table>
+                <tr>
+                    <td><span style="color:#1B90CB;font-size:16px;text-align:left;">Activation Wizard - Request Data From Forwarder</span></td>
+                    <td style="width:40px;"><IconButton [Name]="'Refresh'" (click)="RefreshBtnClick()"></IconButton></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr style="height:1px;">
+        <td>
+            <span style="font-size:12px;text-align:left;">The Activation Wizard allows you to simply request data from the forwarders you are working with.<br />Once the forwarder approves the request , you will start receving Shipments and Documents Data.<br />Here's a list of our partners you can request data from.</span>
+        </td>
+    </tr>
+    <tr style="height:8px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+    <tr style="height:35%;">
+        <td style="vertical-align: top;">
+            <!--*ngFor="let item of allhybridPartnerList let i = index"-->
+            <div class="ScrollViewer">
+                <div class="ScrollContent">
+                    <div *ngFor="let item of hybridPartnerList let i = index" style="height: 90px;width: 400px;border: solid #DADADA 1px;border-radius: 5px;float:left;margin:10px;">
+                        <table>
+                            <tr>
+                                <td style="width:220px;text-align: center;">
+                                    <!--<img *ngIf="Source" style="height:25px;width: 80px;" src="{{Source}}" title="{{rowData['PartnerName']}}" />-->
+                                    <img *ngIf="item.Source" src="{{item.Source}}" style="height:80px;width:220px;" />
+                                </td>
+                                <td style="width:5px;"><div></div></td>
+                                <td style="width:150px;text-align: center;">
+                                    <button *ngIf="item.ButtonVisibility" (click)="SendRequest(item)" class="SendRequestButton">Send Request</button>
+                                    <span *ngIf="item.StatusVisibility" [style.color]="item.StatusName | LogBoxStatusForegroundPipe" style="font-size:12px;">{{item.StatusName}}</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+    <tr style="height:1px;" *ngIf="AddPartnerToWizard">
+        <td>
+            <span style="color:#1B90CB;font-size:16px;text-align:left;">Add Partners For Wizard</span>
+        </td>
+    </tr>
+    <tr style="height:35%;" *ngIf="AddPartnerToWizard">
+        <td style="vertical-align: top;">
+            <!--*ngFor="let item of item1.value let i = index"-->
+            
+                <div class="ScrollViewer">
+                    <div class="ScrollContent">
+                        <div *ngFor="let item of allhybridPartnerList let i = index" style="height: 90px;width: 400px;border: solid #DADADA 1px;border-radius: 5px;float:left;margin:10px;">
+                            <table>
+                                <tr>
+                                    <td style="width:220px;text-align: center;">
+                                        <img *ngIf="item.Source" src="{{item.Source}}" style="height:80px;width:220px;" />
+                                    </td>
+                                    <td style="width:5px;"><div></div></td>
+                                    <td style="width:150px;text-align: center;">
+                                        <button (click)="AddRequest(item)" class="SendRequestButton">Add</button>
+                                        <!--<span *ngIf="item.StatusVisibility" [style.color]="item.StatusName | LogBoxStatusForegroundPipe" style="font-size:12px;">{{item.StatusName}}</span>-->
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div> 
+        </td>
+    </tr>
+    <tr><td><div></div></td></tr>
+</table>
+<!--<BusyIndicator [Text]="BusyIndicatorText" [IsBusy]="ShowBusyIndicator"></BusyIndicator>-->

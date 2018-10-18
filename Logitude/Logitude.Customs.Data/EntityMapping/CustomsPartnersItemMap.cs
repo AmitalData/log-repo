@@ -1,0 +1,44 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data;
+ 
+namespace Logitude.Customs.Data.EntityMapping
+{
+ 
+    public class CustomsPartnersItemMap : EntityTypeConfiguration<CustomsPartnersItem>
+    {
+	    string dbms;
+        public CustomsPartnersItemMap()
+        { 
+			  this.ToTable("CustomsPartnersItems", "Customs");
+		
+		    this.HasKey(t => new { t.Id });
+	 
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
+
+            this.Property(t => t.ItemCode).HasColumnName("ItemCode").HasMaxLength(30).IsUnicode(false);
+
+            this.Property(t => t.ClassificationCode).HasColumnName("ClassificationCode").HasMaxLength(18).IsUnicode(false);
+
+            this.Property(t => t.Name).HasColumnName("Name").HasMaxLength(30).IsUnicode(true);
+
+            this.Property(t => t.SearchFields).HasColumnName("SearchFields").HasMaxLength(1000).IsUnicode(true);
+
+            this.Property(t => t.CustomerId).HasColumnName("CustomerId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.VendorId).HasColumnName("VendorId").HasMaxLength(15).IsUnicode(false);
+        }
+    }
+}
+	 

@@ -1,0 +1,192 @@
+
+-- Update-Database -Script -SourceMigration 201512011711128_newmigration20151201 -TargetMigration 201602221133202_CustomMerge160222Tk3
+
+CREATE OR REPLACE PROCEDURE "USP_GETNEXTTABLECODEVALUE" 
+  (    v_pLastNumber OUT NUMBER,    v_pTableName IN VARCHAR2,    v_pTenant    IN NUMBER )
+AS
+  v_COUNTER NUMBER(10);
+  v_Current NUMBER(10);
+  v_temp    NUMBER(1) := 0;
+BEGIN
+  v_COUNTER := 1000 ;
+  NULL;
+
+  BEGIN
+    SELECT 1
+    INTO v_temp
+    FROM DUAL
+    WHERE NOT EXISTS
+      (SELECT TableName
+      FROM COUNTERLASTNUMBERS
+      WHERE TableName = v_pTableName
+      AND Tenant      = v_pTenant
+      );
+  EXCEPTION
+  WHEN OTHERS THEN
+    NULL;
+  END;
+  IF v_temp = 1 THEN
+    BEGIN
+      IF ( v_pTableName = 'Tenant' ) THEN
+        BEGIN
+          v_COUNTER := 0 ;
+          INSERT
+          INTO COUNTERLASTNUMBERS
+            (
+              TableName,
+              Tenant,
+              LastNumber
+            )
+            VALUES
+            (
+              v_pTableName,
+              v_pTenant,
+              v_COUNTER
+            );
+          v_Current := 0 ;
+        END;
+      ELSE
+        BEGIN
+          v_COUNTER        := 1000 ;
+          IF ( v_pTableName = 'Agent' ) THEN
+            BEGIN
+              v_COUNTER := 10000 ;
+            END;
+          END IF;
+          IF ( v_pTableName = 'CustomAgent' ) THEN
+            BEGIN
+              v_COUNTER := 20000 ;
+            END;
+          END IF;
+          IF ( v_pTableName = 'ShippingAgent' ) THEN
+            BEGIN
+              v_COUNTER := 30000 ;
+            END;
+          END IF;
+          IF ( v_pTableName = 'Customer' ) THEN
+            BEGIN
+              v_COUNTER := 70000 ;
+            END;
+          END IF;
+          INSERT
+          INTO COUNTERLASTNUMBERS
+            (
+              TableName,
+              Tenant,
+              LastNumber
+            )
+            VALUES
+            (
+              v_pTableName,
+              v_pTenant,
+              v_COUNTER
+            );
+          v_Current := v_COUNTER ;
+        END;
+      END IF;
+    END;
+  ELSE
+    BEGIN
+      SELECT LastNumber
+      INTO v_Current
+      FROM COUNTERLASTNUMBERS
+      WHERE TableName = v_pTableName
+      AND Tenant      = v_pTenant
+      FOR UPDATE ; -- 20160211  ora-0001 ----no need     skip locked good for gggq select 1 row from alot ;;
+      v_Current      := v_Current + 1 ;
+      UPDATE COUNTERLASTNUMBERS
+      SET LastNumber  = v_Current
+      WHERE TableName = v_pTableName
+      AND Tenant      = v_pTenant;
+    END;
+  END IF;
+  v_pLastNumber := v_Current ;
+END;
+/
+
+CREATE OR REPLACE PROCEDURE "USP_GETNEXTTABLEIDVALUE" 
+  --drop procedure [dbo].[usp_GetNextTableIdValue]
+  (
+    v_pLastNumber OUT VARCHAR2,
+    v_pTableName IN VARCHAR2 )
+AS
+  v_COUNTER          NUMBER(10,0);
+  v_Current          NUMBER(10,0);
+  v_DataBaseNumber   NUMBER(10,0);
+  v_DBStringNumber   VARCHAR2(50);
+  v_CurrentStrNumber VARCHAR2(50);
+  v_temp             NUMBER(1, 0) := 0;
+BEGIN
+  v_COUNTER := 1 ;
+  SELECT DataBaseNumber
+  INTO v_DataBaseNumber
+  FROM DataBaseProperties
+  WHERE ROWNUM     <= 1;
+   
+  v_DBStringNumber := CAST (v_DataBaseNumber as varchar2);
+  BEGIN
+    SELECT 1
+    INTO v_temp
+    FROM DUAL
+    WHERE NOT EXISTS
+      ( SELECT TableName FROM DBIdCounters WHERE TableName = v_pTableName
+      );
+  EXCEPTION
+  WHEN OTHERS THEN
+    NULL;
+  END;
+  IF v_temp = 1 THEN
+    BEGIN
+      v_COUNTER := 1 ;
+      INSERT
+      INTO DBIdCounters
+        (
+          TableName,
+          LastIdNumber
+        )
+        VALUES
+        (
+          v_pTableName,
+          v_COUNTER
+        );
+      v_Current := 1 ;
+    END;
+  ELSE
+    BEGIN
+      SELECT LastIdNumber
+      INTO v_Current
+      FROM DBIdCounters
+      WHERE TableName = v_pTableName 
+      FOR UPDATE ; -- 20160211  ora-0001 ----no need     skip locked good for gggq select 1 row from alot ;;
+      v_Current      := v_Current + 1 ;
+      UPDATE DBIdCounters
+      SET LastIdNumber = v_Current
+      WHERE TableName  = v_pTableName;
+    END;
+  END IF;
+  Begin
+  v_CurrentStrNumber := CAST (v_Current as varchar2);
+  v_pLastNumber      := v_DBStringNumber || '-' || v_CurrentStrNumber ;
+  end;
+END;
+/
+
+
+
+----------- <<itzik !!!!
+
+
+
+  CREATE TABLE "CONTINUOUSMESSAGESTYPECODES" 
+   (	"CODE" VARCHAR2(9 CHAR) DEFAULT NULL NOT NULL ENABLE, 
+	"ENGLISHNAME" VARCHAR2(100 CHAR) DEFAULT NULL, 
+	"LOCALNAME" NVARCHAR2(100) DEFAULT NULL, 
+	"SEARCHFIELDS" NVARCHAR2(500) DEFAULT NULL, 
+	"INACTIVE" NUMBER(1,0) NOT NULL ENABLE, 
+	 PRIMARY KEY ("CODE")
+
+   ) 
+/
+----------- <<itzik !!!!  --- >>>
+
+

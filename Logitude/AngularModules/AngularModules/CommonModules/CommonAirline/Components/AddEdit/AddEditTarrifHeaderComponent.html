@@ -1,0 +1,345 @@
+﻿
+<table>
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr style="height: 120px;">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="min-width:200px;max-width:350px;width:350px">
+                                    <fieldset class="MediaFill GroupBox">
+                                        <legend>
+                                            <span>{{'TarrifHeader.O.ActiveDates' | TextCodeTranslationPipe}}</span>
+                                        </legend>
+
+                                        <div style="height: 165px; width: 100%; margin-top: -5px;">
+                                            <table>
+                                                <tr>
+                                                    <td style="vertical-align:top;margin-top:5px">
+                                                        <table style="margin-top:5px">
+                                                            <tr style="height:1px">
+                                                                <td style="width: 50px;">
+                                                                    <LogLabel [ObjectFieldName]="'FromDate'" [Text]="'From'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                </td>
+
+                                                                <td>
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td style="width:80%">
+                                                                                <LogDatePicker [ObjectFieldName]="'FromDate'" [SelectedDateValue]="DataContext.FromDateInDate" [ObjectTableName]="ObjectTableName" [InputType]="'date'" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+
+                                                                            </td>
+
+                                                                            <td>
+                                                                                <div *ngIf="DataContext.NewDatesIsChecked">
+                                                                                    <table style="min-width:120px;max-width:120px;width:120px">
+                                                                                        <tr>
+                                                                                            <td style="width:10px">
+                                                                                                <div style="width:10px"> </div>
+                                                                                            </td>
+                                                                                            <td style="font-size:x-small;">
+                                                                                                {{OldFromDate}}
+
+                                                                                            </td>
+
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </div>
+
+
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+
+                                                                </td>
+                                                            </tr>
+                                                            <tr style="height:10px">
+                                                                <td colspan="2"></td>
+                                                            </tr>
+                                                            <tr style="height:1px">
+                                                                <td style="width: 50px;">
+                                                                    <LogLabel [ObjectFieldName]="'ToDate'" [Text]="'To'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                </td>
+
+                                                                <td>
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td style="width:80%">
+                                                                                <LogDatePicker [ObjectFieldName]="'ToDate'" [SelectedDateValue]="DataContext.ToDateInDate" [ObjectTableName]="ObjectTableName" [InputType]="'date'" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+
+                                                                            </td>
+                                                                            <td>
+                                                                                <div *ngIf="DataContext.NewDatesIsChecked">
+                                                                                    <table style="min-width:120px;max-width:120px">
+                                                                                        <tr>
+                                                                                            <td style="width:10px">
+                                                                                                <div style="width:10px"> </div>
+                                                                                            </td>
+                                                                                            <td style="font-size:x-small;">
+                                                                                                {{OldToDate}}
+
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </div>
+
+
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                            <tr style="height:10px">
+                                                                <td colspan="2"></td>
+                                                            </tr>
+
+                                                            <tr style="height:1px">
+                                                                <td></td>
+
+                                                                <td>
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <div class="CheckBox" style="float:left">
+                                                                                    <input class="CenterCenter" style="text-align:center" id="NewDatesCheckBox" [(ngModel)]="NewDatesIsChecked" (change)="NewDateIsClicked()" type="checkbox" [disabled]="!NewDatesIsCheckedIsEnabled" />
+                                                                                    <label class="CenterCenter" style="font-size:12px;color:#1B90CB;" for="NewDatesCheckBox">{{'TarrifHeader.O.NewDates'|TextCodeTranslationPipe}}</label>
+
+                                                                                </div>
+                                                                            </td>
+                                                                            <td></td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td colspan="2"></td>
+                                                            </tr>
+
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </fieldset>
+                                </td>
+
+                                <td style="width: 10px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="min-width:200px;max-width:350px;width:350px">
+                                    <fieldset class="MediaFill GroupBox">
+                                        <legend>
+                                            <span>{{'TarrifHeader.O.From' | TextCodeTranslationPipe}}</span>
+                                        </legend>
+
+                                        <div style="height: 165px; width: 100%; margin-top: -5px;">
+                                            <table>
+                                                <tr>
+                                                    <td style="vertical-align:top">
+                                                        <div style="margin-top:5px">
+                                                            <div style="position: relative;">
+                                                                <div *ngFor="let radio of FromToTypeList">
+                                                                    <div class="RadioButton">
+                                                                        <input [id]="TariffRadio" type="radio" [attr.name]="TariffRadio" [checked]="radio.TypeIsEnabled" [disabled]="!radio.TypeIsEnabled" />
+                                                                        <label [attr.for]="TariffRadio" style="font-size: 12px">
+                                                                            {{radio.Name}}
+                                                                        </label>
+                                                                    </div>
+                                                                    <div style="height:5px"></div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </fieldset>
+                                </td>
+
+
+                                <td style="width: 10px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="min-width:200px;max-width:350px;width:350px">
+                                    <fieldset class="MediaFill GroupBox">
+                                        <legend>
+                                            <span>{{'TarrifHeader.O.To' | TextCodeTranslationPipe}}</span>
+                                        </legend>
+
+                                        <div style="height: 165px; width: 100%; margin-top: -5px;">
+                                            <table>
+                                                <tr>
+                                                    <td style="vertical-align:top">
+
+                                                        <div *ngFor="let radio of FromToTypeList">
+                                                            <div class="RadioButton">
+                                                                <input [id]="TariffRadioTo" type="radio" [attr.name]="TariffRadioTo" [checked]="radio.TypeIsEnabled" [disabled]="!radio.TypeIsEnabled" />
+                                                                <label [attr.for]="TariffRadioTo" style="font-size: 12px">
+                                                                    {{radio.Name}}
+                                                                </label>
+                                                            </div>
+                                                            <div style="height:5px"></div>
+                                                        </div>
+
+
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </fieldset>
+                                </td>
+
+                               
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr style="height:10px">
+                    <td style="height:10px"></td>
+                </tr>
+                <tr style="height:1px;">
+                    <td>
+                        <table>
+                            <tr>
+                                <td> </td>
+                                <td style="width: 1px;">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <button class="Button" (click)="AddTarrifCharge()">{{AddTarrifChargeString}}</button>
+                                            </td>
+                                            <td style="width: 5px;">
+                                                <div style="width: 5px;"></div>
+                                            </td>
+                                            <td>
+                                                <button class="Button" [disabled]="!DeleteTarrifChargeIsEnabled" (click)="DeleteTarrifCharge()">{{DeleteTarrifChargeString}}</button>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr style="height: 5px;">
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div class="SimpleGridView">
+                            <div class="SimpleGridViewHeader">
+                                <table>
+                                    <tr>
+                                        <td style="width: 150px; min-width: 150px;max-width:150px">ChargeType</td>
+                                        <td style="width: 100px; min-width: 100px;max-width:100px">MeasurementCode</td>
+                                        <td style="width: 100px; min-width: 100px;max-width:100px">CurrencyCode</td>
+                                        <td style="width: 100px; min-width: 100px;max-width:100px">Unit Price</td>
+                                        <td style="width: 80px; max-width:80px;max-width:80px">Min</td>
+                                        <td style="width: 80px; max-width:80px;max-width:80px">Max</td>
+                                        <td style="width:25px;max-width:25px;min-width:25px">
+                                            <div></div>
+                                        </td>
+                                        <td class="LastChild"></td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div class="SimpleGridViewBody">
+
+                                <table>
+                                    <tr class="SimpleGridViewRow RowHover" *ngFor="let item of TarrifChargesObsList" (click)="SelectedItem = item;DeleteTarrifChargeIsEnabled=true;" [class.RowSelected]="item === SelectedItem">
+                                        <td class="GridViewCell" style="width: 150px; min-width: 150px;max-width:150px">
+                                            {{item.ChargeType}}
+                                        </td>
+                                        <td class="GridViewCell" style="width: 100px; min-width: 100px;max-width:100px">
+                                            {{item.MeasurementCode}}
+                                        </td>
+                                        <td class="GridViewCell" style="width: 100px; min-width: 100px;max-width:100px">
+                                            {{item.CurrencyCode}}
+                                        </td>
+                                        <td class="GridViewCell" style="width: 100px; min-width: 100px;max-width:100px">
+                                            {{item.UnitPrice | NumbersPipe:'N3'}}
+                                        </td>
+                                        <td class="GridViewCell" style="width: 80px; min-width: 80px;max-width:80px"></td>
+                                        <td class="GridViewCell" style="width: 80px; min-width: 80px;max-width:80px">
+                                            {{item.MaxPrice | NumbersPipe:'N3'}}
+                                        </td>
+                                        <td class="CellTools" style="width:25px;max-width:25px;min-width:25px">
+                                            <span class="CellSeparator"></span>
+                                            <IconButton [Left]="3" [Name]="'Edit'" [IsSmall]="true" (click)="EditCharge(item)"></IconButton>
+                                        </td>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="8">
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </div>
+                        </div>
+
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td style="width:100px">
+                        <div class="CheckBox" style="float:left" *ngIf="!IsNew">
+                            <input class="CenterCenter" style="text-align:center" [id]="InActiveCheck" [attr.name]="InActiveCheck" (change)="InActiveClick()" [(ngModel)]="InActive" type="checkbox" [disabled]="InActive" />
+                            <label class="CenterCenter" [attr.for]="InActiveCheck">Make InActive</label>
+                        </div>
+
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

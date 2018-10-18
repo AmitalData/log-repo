@@ -1,0 +1,258 @@
+﻿
+<style type="text/css">
+    .BoxItem:hover .DateButton {
+        visibility: visible;
+    }
+
+    .BoxItem .DateButton {
+        visibility: collapse;
+    }
+
+    .BoxItem td {
+        vertical-align: middle;
+    }
+
+    .BoxItem {
+        display: block;
+        background: rgba(235, 235, 235, 0.5);
+        border: 1px solid #BABABA;
+        margin-bottom: 5px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+</style>
+
+<table>
+    <tr style="height:5px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <td style="width:15px;">
+                        <div></div>
+                    </td>
+
+                    <td>
+                        <table>
+                            <tr class="TabTitleRow">
+                                <td>{{'Shipment.TH.Routings' | textcodeTranslation}}</td>
+
+                                <td style="width: 80px;">
+                                    <div tabindex="0" class="ToggleButton">
+                                        <div class="LeftCenter" style="margin-left: 3px;">{{'Shipment.B.Routings.AddRoute' | textcodeTranslation}}</div>
+                                        <img class="RightCenter" style="margin-right: 3px;" src="images/ToggleIcon.png" />
+
+                                        <div class="ToggleButtonMenu">
+                                            <button>{{'Shipment.O.Routings.Pickup' | textcodeTranslation}}</button>
+                                            <button>{{'Shipment.O.Routings.PreCarriage' | textcodeTranslation}}</button>
+                                            <button>{{'Shipment.O.Routings.OnCarriage' | textcodeTranslation}}</button>
+                                            <button>{{'Shipment.O.Routings.Delivery' | textcodeTranslation}}</button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="height:100%;" colspan="2">
+
+                                    <div class="ScrollViewer" *ngIf="IsDataLoaded">
+
+                                        <ul class="ScrollContent" *ngIf="!IsInlandDomestic">
+                                            <li class="BoxItem" *ngFor="#item of ItemsCollection">
+                                                <table [style.height.px]="item.LegHeight">
+                                                    <tr style="height: 5px;">
+                                                        <td colspan="3">
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td style="width: 5px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td>
+                                                            <table>
+                                                                <tr style="height: 18px;">
+                                                                    <td>
+                                                                        <table>
+                                                                            <tr>
+                                                                                <td style="font-size: 13px; color: #1B90CB;">
+                                                                                    <div>{{item.LegNameTranslated}}</div>
+                                                                                </td>
+
+                                                                                <td style="width:18px; vertical-align:middle;" *ngIf="item.IsAddButtonVisible">
+                                                                                    <IconButton [Name]="'Add'" [IsSmall]="true"></IconButton>
+                                                                                </td>
+
+                                                                                <td style="width:18px; vertical-align:middle;" *ngIf="item.IsEditButtonVisible">
+                                                                                    <IconButton [Name]="'Edit'" [IsSmall]="true"></IconButton>
+                                                                                </td>
+
+                                                                                <td style="width: 21px; vertical-align: middle;" *ngIf="item.IsDeleteButtonVisible">
+                                                                                    <IconButton [Name]="'Delete'" [IsSmall]="true" style="float: right;"></IconButton>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td>
+                                                                        <div *ngIf="!item.IsLegExists" style="width: 100%; text-align: center; font-size: 12px; color: #6E7172;">{{item.NoLegTextCode | textcodeTranslation}}</div>
+
+                                                                        <table *ngIf="item.IsLegExists">
+                                                                            <tr style="height: 10px;">
+                                                                                <td>
+                                                                                    <div></div>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <table>
+                                                                                        <tr>
+                                                                                            <td style="width: 55px; text-align: center;">
+                                                                                                <img style="width: 40px; height: 35px;" [attr.src]="item.ImageSource" />
+                                                                                            </td>
+
+                                                                                            <td style="width: 5px;">
+                                                                                                <div></div>
+                                                                                            </td>
+
+                                                                                            <td>
+                                                                                                <table style="table-layout: fixed;">
+                                                                                                    <tr>
+                                                                                                        <td style="width: 40px;" class="Label">{{'Shipment.O.Routings.From' | textcodeTranslation}}:</td>
+                                                                                                        <td>
+                                                                                                            <img style="float: left; width: 16px; height: 16px;" [attr.src]="item.FromCountryCode | CountryFlagPipe" [attr.title]="item.FromCountryName"/>
+                                                                                                            <div style="float: left; margin-left: 3px;" class="Value">{{item.FromCountryText}}</div>
+                                                                                                        </td>
+
+                                                                                                        <td style="width: 75px;">
+                                                                                                            <div *ngIf="item.IsSetActualDepartureVisible" class="Button DateButton" style="height: 15px; line-height: 15px; font-size: 10px;">Set as Actual</div>
+                                                                                                        </td>
+                                                                                                        <td style="width: 3px;">
+                                                                                                            <div></div>
+                                                                                                        </td>
+                                                                                                        <td style="width: 65px;" class="Label">{{'Shipment.O.Routings.Departure' | textcodeTranslation}}:</td>
+                                                                                                        <td style="width: 60px; font-size: 10px;" [ngStyle]="{color: item.DepartureColor}">{{item.DepartureDate | DateTimeToDatePipe}}</td>
+                                                                                                        <td style="width: 30px; font-size: 10px; text-align: right;" [ngStyle]="{color: item.DepartureColor}">{{item.DepartureDate | DateTimeToTimePipe}}</td>
+                                                                                                        <!--<td style="width: 18px; text-align: right;">
+                                                                                                            <img src="images/Followup.png" />
+                                                                                                        </td>-->
+                                                                                                    </tr>
+
+                                                                                                    <tr>
+                                                                                                        <td style="width: 40px;" class="Label">{{'Shipment.O.Routings.To' | textcodeTranslation}}:</td>
+                                                                                                        <td>
+                                                                                                            <img style="float: left; width: 16px; height: 16px;" [attr.src]="item.ToCountryCode | CountryFlagPipe" [attr.title]="item.ToCountryName" />
+                                                                                                            <div style="float: left; margin-left: 3px;" class="Value">{{item.ToCountryText}}</div>
+                                                                                                        </td>
+
+                                                                                                        <td style="width: 75px;">
+                                                                                                            <div *ngIf="item.IsSetActualArrivalVisible" class="Button DateButton" style="height: 15px; line-height: 15px; font-size: 10px;">Set as Actual</div>
+                                                                                                        </td>
+                                                                                                        <td style="width: 3px;">
+                                                                                                            <div></div>
+                                                                                                        </td>
+                                                                                                        <td style="width: 65px;" class="Label">{{'Shipment.O.Routings.Arrival' | textcodeTranslation}}:</td>
+                                                                                                        <td style="width: 60px; font-size: 10px;" [ngStyle]="{color: item.ArrivalColor}">{{item.ArrivalDate | DateTimeToDatePipe}}</td>
+                                                                                                        <td style="width: 30px; font-size: 10px; text-align: right;" [ngStyle]="{color: item.ArrivalColor}">{{item.ArrivalDate | DateTimeToTimePipe}}</td>
+                                                                                                        <!--<td style="width: 18px; text-align: right;">
+                                                                                                            <img src="images/Followup.png" />
+                                                                                                        </td>-->
+                                                                                                    </tr>
+                                                                                                </table>
+                                                                                            </td>
+
+                                                                                            <td style="width: 5px;">
+                                                                                                <div></div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr style="height: 10px;">
+                                                                                <td>
+                                                                                    <div></div>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr style="height: 15px;">
+                                                                                <td style="vertical-align: middle;">
+
+                                                                                    <div style="float: left;" *ngIf="item.IsBookingConfirmationVisible">
+                                                                                        <img src="images/GreenTick.png" title="Shipment Booked"/>
+                                                                                        <span style="display: inline-block; width:3px; height:3px; "></span>
+                                                                                    </div>
+
+                                                                                    <div style="float: left;">
+                                                                                        <span class="Label" style="float: left;">{{'Shipment.O.Routings.Carrier' | textcodeTranslation}}:</span>
+                                                                                        <span *ngIf="item.IsCarrierTextVisible" class="Value" style="float: left; margin-left: 3px;">{{item.CarrierText}}</span>
+                                                                                        <span *ngIf="item.IsCarrierSiteVisible" style="float: left; margin-left: 3px;"><a [attr.href]="item.CarrierSite" target="_blank">{{item.CarrierText}}</a></span>
+                                                                                    </div>
+
+                                                                                    <div style="float: left; margin-left: 10px;">
+                                                                                        <span class="Label" style="float: left;">{{'Shipment.O.Routings.No' | textcodeTranslation}}:</span>
+                                                                                        <span class="Value" style="float: left; margin-left: 3px;">{{item.CarrierNumber}}</span>
+                                                                                    </div>
+
+
+                                                                                    <div style="float: left; margin-left: 10px;" *ngIf="item.IsVesselVisible">
+                                                                                        <span class="Label" style="float: left;">{{'Shipment.O.Routings.Vessel' | textcodeTranslation}}:</span>
+                                                                                        <span class="Value" style="float: left; margin-left: 3px;">{{item.VesselName}}</span>
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+
+                                                            </table>
+                                                        </td>
+
+                                                        <td style="width: 5px;">
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr style="height: 5px;">
+                                                        <td colspan="3">
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </li>
+                                        </ul>
+
+                                        <div class="ScrollContent" *ngIf="IsInlandDomestic" style="font-size: 36px; text-align: center; margin-top: 100px;">Inland Domestic</div>
+                                    </div>
+                                    
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td style="width:15px;">
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height:5px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+</table>

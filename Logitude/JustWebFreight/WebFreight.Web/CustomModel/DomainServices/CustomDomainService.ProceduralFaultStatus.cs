@@ -1,0 +1,75 @@
+﻿using Logitude.Customs.Def.EntityPMs;
+using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.Data;
+using Logitude.Customs.Data.EntityListQueryServices;
+using Logitude.Customs.Data.EntityLists;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using WebFreight.Web.Helpers;
+using WebFreight.Web.Security;
+
+namespace WebFreight.Web.CustomModel.DomainServices
+{
+    public partial class CustomDomainService
+    {
+
+        public ProceduralFaultStatusPM GetSingleProceduralFaultStatusPM(string code, int tenant)
+        {
+            customContext = CustomContext.GetContext(tenant);
+            proceduralFaultStatusQuery = new ProceduralFaultStatusQueryService(customContext);
+            ProceduralFaultStatusPM ProceduralFaultStatus = proceduralFaultStatusQuery.GetSingle(code, false, false);
+            return ProceduralFaultStatus;
+        }
+
+        public ProceduralFaultStatusList GetSingleProceduralFaultStatusList(string code, int tenant)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+            //SecurityUtility.CheckContactFeature("Customs.ProceduralFaultStatus", "READ", tenant);
+
+            if (customContext == null)
+            {
+                customContext = CustomContext.GetContext(tenant);
+            }
+            customContext = CustomContext.GetContext(tenant);
+            ProceduralFaultStatusListQueryService listService = new ProceduralFaultStatusListQueryService(customContext);
+            return listService.GetSingle(code);
+        }
+
+        public List<ProceduralFaultStatusList> GetProceduralFaultStatusLists(int tenant)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+            //SecurityUtility.CheckContactFeature("Customs.ProceduralFaultStatus", "READ", tenant);
+            customContext = CustomContext.GetContext(tenant);
+            ProceduralFaultStatusListQueryService listService = new ProceduralFaultStatusListQueryService(customContext);
+            return listService.GetList(tenant);
+        }
+
+
+        public List<ProceduralFaultStatusList> GetProceduralFaultStatusFilters(byte[] xmlFilters, int tenant)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+            //SecurityUtility.CheckContactFeature("Customs.ProceduralFaultStatus", "READ", tenant);
+            customContext = CustomContext.GetContext(tenant);
+            ProceduralFaultStatusListQueryService listService = new ProceduralFaultStatusListQueryService(customContext);
+            QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
+            return listService.GetList(queryOperations, tenant);
+
+        }
+
+        public int GetProceduralFaultStatusFiltersCount(byte[] xmlFilters, int tenant)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+            //SecurityUtility.CheckContactFeature("Customs.ProceduralFaultStatus", "READ", tenant);
+            customContext = CustomContext.GetContext(tenant);
+            ProceduralFaultStatusListQueryService queryService = new ProceduralFaultStatusListQueryService(customContext);
+            QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
+            return queryService.GetListCount(queryOperations);
+
+        }
+
+    }
+}

@@ -1,0 +1,68 @@
+﻿
+<table>
+    <tr>
+        <td>
+            <div class="MediaFill">
+                <div class="SimpleGridView">
+                    <div class="SimpleGridViewHeader">
+                        <table>
+                            <tr>
+                                <td style="width: 350px; min-width: 350px; max-width: 350px;">Name</td>
+                                <td style="width: 200px; min-width: 200px; max-width: 200px;">Object Table</td>
+                                <td style="width: 150px; min-width: 150px; max-width: 150px;">Type</td>
+
+                                <td class="LastChild">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="SimpleGridViewBody">
+                        <table>
+                            <tr class="SimpleGridViewRow" *ngFor="let item of ItemsSource">
+                                <td class="GridViewCell" style="width: 350px; min-width: 350px; max-width: 350px;">
+                                    {{item.NameTextCodeCode | TextCodeTranslationPipe}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px;">
+                                    {{item.ObjectTableName | TextCodeTranslationPipe}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px;">
+                                    {{item.FeatureTypeName}}
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="4">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CloseButtonClicked()">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
+                    </td>                    
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

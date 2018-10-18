@@ -1,0 +1,79 @@
+﻿
+<style>
+    .SendRequestButton {
+        width: 100px;
+        height: 30px;
+        background-color: #ffffff;
+        background-image: -moz-linear-gradient(top, #ffffff -20%, #008553 100%);
+        background-image: -webkit-linear-gradient(top, #ffffff -20%, #008553 100%);
+        background-image: -ms-linear-gradient(top, #ffffff -20%, #008553 100%);
+        background-image: linear-gradient(top, #ffffff -20%, #008553 100%);
+        background-image: -o-linear-gradient(top, #ffffff -20%, #008553 100%);
+        background-image: -webkit-gradient(linear, right top, right bottom, color-stop(-20%,#ffffff), color-stop(100%,#008553));
+        border: solid 1px #006C53;
+        color: white;
+    }
+
+        .SendRequestButton:hover {
+            opacity: 0.8;
+        }
+</style>
+<table style="margin-left: 17px;">
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+        </td>
+    </tr>
+    <tr style="height:25px;">
+        <td>
+            <table>
+                <tr>
+                    <td><span style="font-size:12px;text-align:left;">Folder Name </span></td>
+                    <td><div style="width:7px;"></div></td>
+                    <td><span style="font-size:12px;text-align:left;">File Name </span></td>
+                    <td><div style="width:7px;"></div></td>
+                    <td><span style="font-size:12px;text-align:left;">Object Table </span></td>
+                </tr>
+                <tr>
+                    <td><LogTextBox [ObjectFieldName]="'FolderName'" [DataContext]="DataContext" [Text]="FolderName"></LogTextBox>
+                    <td><div style="width:7px;"></div></td>
+                    <td><LogTextBox [ObjectFieldName]="'FileName'" [DataContext]="DataContext" [Text]="FileName"></LogTextBox></td>
+                    <td><div style="width:7px;"></div></td>
+                    <td style="padding-right: 34px;">
+                        <LogLov [ObjectFieldName]="'ObjectTableId'"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'ObjectTable'"
+                                (SelectedItemChanged)="$event ? ObjectTableId = $event.Id : ObjectTableId = null"
+                                [HideColumns]="true">
+                        </LogLov>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table>
+                <tr style="height:25px;">
+                    <td><span style="font-size:12px;text-align:left;">File Text</span></td>
+                </tr>
+                <tr style="height:370px;">
+                    <td><LogTextBox style="position: absolute;height: 370px;top:0;" [ObjectFieldName]="'FileText'" [IsMultiline]="true" [DataContext]="DataContext" [Text]="FileText"></LogTextBox>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr style="height:1px;">
+        <td>
+            <div style="margin-right: 35px;margin-top:4px;float:right;">
+                <button class="RedButton" (click)="CloseBtnClicked()" style="width:57px;float: left;margin-left: 7px;margin-right: 7px;">Close</button>
+                <button class="Button" (click)="SendTestFile()" style="width:90px;float: left;margin-left: 7px;margin-right: 7px;">Send Test File</button>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+    </tr>
+   
+</table>
+<!--<BusyIndicator [Text]="BusyIndicatorText" [IsBusy]="ShowBusyIndicator"></BusyIndicator>-->

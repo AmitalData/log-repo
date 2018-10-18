@@ -1,0 +1,42 @@
+﻿<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td colspan="4">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+  
+      
+    <tr>
+        <td style="width:80px">
+    <LogLabel [ObjectFieldName]="'CancellationRemarks'" [ObjectTableName]="ObjectTableName"
+              [DataContext]="DataContext"></LogLabel>
+      </td>
+        <td style="width:340px;left:20px">
+            <LogTextBox [IsFreeText]="true" [ObjectTableName]="'PaymentCheque'" [IsMultiline]="true" [ObjectFieldName]="'CancellationRemarks'" [DataContext]="DataContext"></LogTextBox>
+        </td>
+        <td><div></div></td>
+     </tr>
+    <tr style="height: 32px;">
+        <td colspan="4" style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'Accounting.General.B.OK' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    </table>

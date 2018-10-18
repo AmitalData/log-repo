@@ -1,0 +1,68 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization; 
+
+namespace Logitude.Customs.Data.EntityLists
+{
+   [DataContract]
+   public partial class CustomsRequestsSheetList
+   {
+   
+       [Key]
+       [DataMember]
+       public string Id  { get; set; }
+       [DataMember]
+       public int Tenant  { get; set; }
+       [DataMember]
+       public string ObjectTableId1  { get; set; }
+       [DataMember]
+       public string EntityId1  { get; set; }
+       [DataMember]
+       public string ObjectTableId2  { get; set; }
+       [DataMember]
+       public string EntityId2  { get; set; }
+       [DataMember]
+       public string RequestStatusCode  { get; set; }
+       [DataMember]
+       public DateTime? RequestCreateDate  { get; set; }
+       [DataMember]
+       public DateTime? AnswerCreateDate  { get; set; }
+       [DataMember]
+       public string RequestOwnerId  { get; set; }
+       [DataMember]
+       public string RequestComminicationId  { get; set; }
+       [DataMember]
+       public string RequestDescription  { get; set; }
+       [DataMember]
+       public string InterfaceTypeCode  { get; set; }
+       [DataMember]
+       public string EntityReference  { get; set; }
+       [DataMember]
+       public string CustomFileNo  { get; set; }
+       [DataMember]
+       public string CorrelationId  { get; set; }
+       [DataMember]
+       public bool IsDCA  { get; set; }
+       [DataMember]
+       public string SearchFields  { get; set; }
+       [DataMember]
+       public string InterfaceTypeName  { get; set; }
+       [DataMember]
+       public string RequestOwnerName  { get; set; }
+       [DataMember]
+       public string RequestStatusName  { get; set; }
+       [DataMember]
+       public bool IsRestored  { get; set; }
+       [DataMember]
+       public string AnalyzeDcaAggregateKey  { get; set; }
+       [DataMember]
+       public DateTime? FutureSendDateTime  { get; set; }
+   }
+
+}
+	 

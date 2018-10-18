@@ -1,0 +1,1 @@
+alter table shipmentcarrierstatuses alter column eventdate datetime null

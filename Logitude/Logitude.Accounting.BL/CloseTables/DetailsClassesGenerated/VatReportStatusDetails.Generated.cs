@@ -1,0 +1,89 @@
+
+   
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.CloseTablesClasses;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Def.EntityPMs; 
+using Logitude.Accounting.Data;
+
+namespace Logitude.Accounting.BL
+{
+   public class VatReportStatusDetails : VatReportStatus, ICloseTable<VatReportStatus, VatReportStatusDetails>
+   {
+       public List<VatReportStatusDetails> GetAll()
+       {
+		    var all = new List<VatReportStatusDetails>();  
+            all.Add(new VatReportStatusDetails()
+            {    
+                Code = "D", 
+                EnglishName = "Draft", 
+                LocalName = "טיוטה", 
+                SearchFields = "D,Draft,טיוטה", 
+			});
+			 
+            all.Add(new VatReportStatusDetails()
+            {    
+                Code = "A", 
+                EnglishName = "Approved", 
+                LocalName = "מאושר", 
+                SearchFields = "A,Approved,מאושר", 
+			});
+			 
+            all.Add(new VatReportStatusDetails()
+            {    
+                Code = "C", 
+                EnglishName = "Cancelled", 
+                LocalName = "מבוטל", 
+                SearchFields = "C,Cancelled,מבוטל", 
+			});
+			 
+            all.Add(new VatReportStatusDetails()
+            {    
+                Code = "T", 
+                EnglishName = "Transmitted", 
+                LocalName = "שודר", 
+                SearchFields = "T,Transmitted,שודר", 
+			});
+			 
+            all.Add(new VatReportStatusDetails()
+            {    
+                Code = "E", 
+                EnglishName = "Error", 
+                LocalName = "לא מוכן לשידור- מכיל טעויות", 
+                SearchFields = "E,Error,לא מוכן לשידור- מכיל טעויות", 
+			});
+			 
+            all.Add(new VatReportStatusDetails()
+            {    
+                Code = "P", 
+                EnglishName = "In Progress", 
+                LocalName = "בתהליך בניה", 
+                SearchFields = "P,In Progress,בתהליך בניה", 
+			});
+			
+            return all;
+       }
+
+	    public void MapPoco(VatReportStatus newPoco)
+        {   
+		    newPoco.Code = this.Code;  
+		    newPoco.EnglishName = this.EnglishName;  
+		    newPoco.LocalName = this.LocalName;  
+			newPoco.SearchFields = GetSearchFields(this);    
+        }
+
+		public string GetSearchFields(VatReportStatus rec)
+        {   
+           return String.Concat(rec.Code,",",rec.EnglishName,",",rec.LocalName,",");
+        }
+   }
+}
+

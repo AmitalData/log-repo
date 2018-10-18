@@ -1,0 +1,71 @@
+
+   
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.CloseTablesClasses;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Def.EntityPMs; 
+using Logitude.Accounting.Data;
+
+namespace Logitude.Accounting.BL
+{
+   public class JournalTypeDetails : JournalType, ICloseTable<JournalType, JournalTypeDetails>
+   {
+       public List<JournalTypeDetails> GetAll()
+       {
+		    var all = new List<JournalTypeDetails>();  
+            all.Add(new JournalTypeDetails()
+            {    
+                JournalTypeID = "0", 
+                LocalName = "רגיל", 
+                SearchFields = "0,Regular,רגיל", 
+                Inactive = false, 
+                EnglishName = "Regular", 
+			});
+			 
+            all.Add(new JournalTypeDetails()
+            {    
+                JournalTypeID = "1", 
+                LocalName = "תבנית", 
+                SearchFields = "1,Template ,תבנית", 
+                Inactive = false, 
+                EnglishName = "Template ", 
+			});
+			
+            return all;
+       }
+
+	    public void MapPoco(JournalType newPoco)
+        {   
+		    newPoco.JournalTypeID = this.JournalTypeID;  
+		    newPoco.LocalName = this.LocalName;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.EnglishName = this.EnglishName;   
+        }
+
+		public string GetSearchFields(JournalType rec)
+        {   
+           return String.Concat(rec.JournalTypeID,",",rec.LocalName,",",rec.Inactive,",",rec.EnglishName,",");
+        }
+		public string Code
+        {
+            get
+            {
+                return JournalTypeID;//throw new NotImplementedException();
+            }
+            set
+            {
+                JournalTypeID = value;//throw new NotImplementedException();
+            }
+        }
+   }
+}
+

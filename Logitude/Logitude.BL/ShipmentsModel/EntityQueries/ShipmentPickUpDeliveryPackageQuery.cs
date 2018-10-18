@@ -1,0 +1,84 @@
+﻿using System.Collections.Generic;
+using System.Linq;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.ShipmentsModel.Repositories;
+using Simplog.Server.Infrastructure.Helpers;
+
+using Logitude.BL.ShipmentsModel.EntityPMs;
+
+namespace Logitude.BL.ShipmentsModel.EntityQueries
+{
+    public class ShipmentPickUpDeliveryPackageQuery
+    {
+        ShipmentPickUpDeliveryPackageRepository repository;
+         
+        public ShipmentPickUpDeliveryPackageQuery(int tenant)
+        {
+            repository = new ShipmentPickUpDeliveryPackageRepository(tenant);
+        }
+
+        public ShipmentPickUpDeliveryPackageQuery(ShipmentPickUpDeliveryPackageRepository repository)
+        {
+            this.repository = repository;
+        }
+
+        public List<ShipmentPickUpDeliveryPackagePM> GetShipmentPickUpDeliveryPackages(string deliveryId, int tenant)
+        {
+            List<ShipmentPickUpDeliveryPackagePM> packages = (from a in repository.context.ShipmentPickUpDeliveryPackages
+                                                              where a.Tenant == tenant && a.ShipmentPickUpDeliveryId == deliveryId
+                                                              select new ShipmentPickUpDeliveryPackagePM()
+                                                              {
+                                                                  ContainerNumber = a.ContainerNumber,
+                                                                  Description = a.Description,
+                                                                  Id = a.Id,
+                                                                  PackageTypeId = a.PackageTypeId,
+                                                                  Quantity = a.Quantity,
+                                                                  Tenant = a.Tenant,
+                                                                  ShipmentPickUpDeliveryId = a.ShipmentPickUpDeliveryId,
+                                                                  Volume = a.Volume,
+                                                                  Weight = a.Weight,
+                                                                  ShipperSeal = a.ShipperSeal,
+                                                                  Harmonize = a.Harmonize,
+                                                                  Width = a.Width,
+                                                                  Height = a.Height,
+                                                                  Length = a.Length,
+                                                                  OriginalShipmentPackageId = a.OriginalShipmentPackageId,
+                                                              }).ToList();
+
+            foreach (ShipmentPickUpDeliveryPackagePM package in packages)
+            {
+                PackageType packageType = PackageTypeRepository.GetSinglePackageType(package.PackageTypeId, package.Tenant, true);
+                package.PackageTypeName = packageType != null ? packageType.EnglishName : null;
+                package.PackageTypeTEU = packageType != null ? packageType.TEU : 0;
+            }
+            return packages;
+        }
+
+        public ShipmentPickUpDeliveryPackagePM GetSingleShipmentPickUpDeliveryPackagePM(string id)
+        {
+            return (from a in repository.context.ShipmentPickUpDeliveryPackages.Include("PackageType")
+                    where a.Id == id
+                    select new ShipmentPickUpDeliveryPackagePM()
+                    {
+                        ContainerNumber = a.ContainerNumber,
+                        Description = a.Description,
+                        Id = a.Id,
+                        PackageTypeId = a.PackageTypeId,
+                        PackageTypeName = a.PackageType == null ? null : a.PackageType.EnglishName,
+                        PackageTypeTEU = a.PackageType == null ? 0 : a.PackageType.TEU,
+                        Quantity = a.Quantity,
+                        Tenant = a.Tenant,
+                        ShipmentPickUpDeliveryId = a.ShipmentPickUpDeliveryId,
+                        Volume = a.Volume,
+                        Weight = a.Weight,
+                        ShipperSeal = a.ShipperSeal,
+                        Harmonize = a.Harmonize,
+                        Width = a.Width,
+                        Height = a.Height,
+                        Length = a.Length,
+                        OriginalShipmentPackageId = a.OriginalShipmentPackageId,
+                    }).FirstOrDefault();
+        }
+    }
+}

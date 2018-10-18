@@ -1,0 +1,161 @@
+﻿
+<style type="text/css">
+    .LoadSampleDataRow {
+        height: 28px;
+    }
+</style>
+
+<table>
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <td>
+                        <table>
+                            <tr class="LoadSampleDataRow">
+                                <td class="Label">
+                                    Number of Shipments to be added in your system?:
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 230px;">
+                        <table>
+                            <tr class="LoadSampleDataRow">
+                                <td>
+                                    <ComboBox [ItemsSource]="ShipmentNumbersList" [SelectedItem]="SelectedShipmentsNumber" (SelectedItemChanged)="SelectedShipmentsNumber = $event"></ComboBox>
+                                </td>
+                            </tr>
+
+                            <tr class="LoadSampleDataRow">
+                                <td>
+                                    <button class="Button" (click)="ButtonClicked('UpdateTenantZero')">Update Tenant Zero</button>
+                                </td>
+                            </tr>
+
+                            <tr class="LoadSampleDataRow">
+                                <td>
+                                    <button class="Button" (click)="ButtonClicked('customs')">Update Customs</button>
+                                </td>
+                            </tr>
+
+                            <tr class="LoadSampleDataRow">
+                                <td>
+                                    <button class="Button" (click)="ButtonClicked('CRM')">Update CRM</button>
+                                </td>
+                            </tr>
+
+                            <tr class="LoadSampleDataRow">
+                                <td>
+                                    <button class="Button" (click)="ButtonClicked('social')">Update Social</button>
+                                </td>
+                            </tr>
+
+                            <tr class="LoadSampleDataRow">
+                                <td>
+                                    <button class="Button" (click)="ButtonClicked('Booking')">Update Booking</button>
+                                </td>
+                            </tr>
+
+                            <tr class="LoadSampleDataRow">
+                                <td>
+                                    <button class="Button" (click)="ButtonClicked('all')">Update All</button>
+                                </td>
+                            </tr>
+
+                            <tr class="LoadSampleDataRow">
+                                <td>
+                                    <button class="Button" (click)="ButtonClicked('accounting')">Update Accounting</button>
+                                </td>
+                            </tr>
+
+                            <tr class="LoadSampleDataRow">
+                                <td>
+                                    <button class="Button" (click)="ButtonClicked('buildzipfiles')">Build Zip files</button>
+                                </td>
+                            </tr>
+
+                            <tr class="LoadSampleDataRow">
+                                <td>
+                                    <button class="Button" (click)="ButtonClicked('warehouse')">Update Warehouse</button>
+                                </td>
+                            </tr>
+
+                            <tr class="LoadSampleDataRow">
+                                <td>
+                                    <button class="Button" (click)="ButtonClicked('converttemplatefromxmaltohtml')">Build Document Templates Html</button>
+                                </td>
+                            </tr>
+
+                            <tr class="LoadSampleDataRow">
+                                <td>
+                                    <button class="Button" (click)="ButtonClicked('convertsignaturefromxmaltohtml')">Build Contacts Signature Html</button>
+                                </td>
+                            </tr>
+
+                            <!--<tr class="LoadSampleDataRow">
+                                <td>
+                                    <button class="Button" (click)="ButtonClicked('copyreportonalltenant')">Copy Report</button>
+                                </td>
+                            </tr>-->
+
+                            <tr class="LoadSampleDataRow">
+                                <td>
+                                    <button class="Button" (click)="ButtonClicked('encryptiondocument')">Encryption Document</button>
+                                </td>
+                            </tr>
+
+
+                            <tr class="LoadSampleDataRow">
+                                <td>
+                                    <button class="Button" (click)="ButtonClicked('timemanagement')">Update Time Management</button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td class="ColorRed">
+                        {{ErrorsMessage}}
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

@@ -1,0 +1,230 @@
+﻿<style type="text/css">
+    .container {
+        text-align: right;
+        height: 23px;
+        /*direction: rtl;*/
+    }
+    
+    .x-split-button {
+        position: relative;
+        display: inline-block;
+        text-align: left;
+        /*margin-top: 20px;*/
+    }
+    
+    .x-button {
+        width:initial !important;
+        position: relative;
+        margin: 0;
+        height: 22px;
+        float: left;
+        outline: none;
+        line-height: 21px;
+        /*background: #F2F2F2;
+      border: 1px solid  #00b300;*/
+        box-shadow: 1px 1px 2px #45494A;
+        border: 1px solid  #6A8299;
+        background: -moz-linear-gradient(50% 0% -90deg, rgba(255, 255, 255, 1) 0%, rgba(0, 145, 97, 0.6) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(0, 145, 97, 0.6) 100%);
+        background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0, rgba(255, 255, 255, 1)), color-stop(1, rgba(0, 145, 97, 0.6)));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(0, 145, 97, 0.6) 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(0, 145, 97, 0.6) 100%);
+    }
+    
+    .x-button:disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+    
+    .x-button:hover {
+        cursor: pointer;
+        /*background:  #00b300;*/
+        background: -moz-linear-gradient(50% 0% -90deg, rgba(255, 255, 255, 1) 0%, rgba(0, 145, 97, 0.3) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(0, 145, 97, 0.3) 100%);
+        background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0, rgba(255, 255, 255, 1)), color-stop(1, rgba(0, 145, 97, 0.6)));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(0, 145, 97, 0.3) 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(0, 145, 97, 0.3) 100%);
+    }
+    
+    .x-button:active {
+        background: #F2F2F2;
+    }
+    
+    .x-button.x-button-drop {
+        border-right: 0;
+        height: 22px;
+        
+    }
+    /*.open > .x-button-drop-menu {
+      display: block;
+    }*/
+    
+    .x-button-drop-menu {
+        position: absolute;
+        top: 22px;
+        right: 0;
+        z-index: 1000;
+        /*display: none;*/
+        text-align: right;
+        float: left;
+        min-width: 160px;
+        /*padding: 5px 0;
+        margin: 2px 0 0;*/
+        font-size: 15px;
+        list-style: none;
+        background-color: #F2F2F2;
+        background-clip: padding-box;
+        border: .5px solid  #45494A;
+        box-shadow: .5px .5px 2px #6A8299;
+
+
+                
+        
+    }
+    
+    .x-button-drop-menu li span {
+        display: block;
+        padding: 3px 20px;
+        clear: both;
+        font-family: arial;
+        color: #444;
+        text-decoration: none;
+        height: 22px;
+    }
+    
+    .x-button-drop-menu li span:hover {
+        background: #D3D3D3;
+        cursor: pointer;
+    }
+
+
+        /** Send button design  **/
+
+    /* Abdullah: the use of 'deep' is removing angular encabsulation of css selectors */
+    * /deep/ .x-button::shadow  {
+        box-shadow: 2px 2px 0 rgba(171, 174, 175, 0.52) !important;
+        color: #676767 !important;
+
+        /* 1 - Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#eafff8+0,6abfa3+100 */
+        background: #eafff8; /* Old browsers */
+        background: -moz-linear-gradient(top, #eafff8 0%, #6abfa3 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #eafff8 0%,#6abfa3 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #eafff8 0%,#6abfa3 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eafff8', endColorstr='#6abfa3',GradientType=0 ); /* IE6-9 */
+
+        /* 2 -  Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#7ad6ba+6,199e7a+100 */
+        color: #fff !important;
+        background: #7ad6ba; /* Old browsers */
+        background: -moz-linear-gradient(top, #7ad6ba 6%, #199e7a 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #7ad6ba 6%,#199e7a 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #7ad6ba 6%,#199e7a 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7ad6ba', endColorstr='#199e7a',GradientType=0 ); /* IE6-9 */
+
+        /* 3- */
+        color: #fff !important;
+        border: 1px solid #529267;
+        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#7ad6ba+0,a2e5cd+7,7ad6ba+9,199e7a+100 */
+        background: #7ad6ba; /* Old browsers */
+        background: -moz-linear-gradient(top, #7ad6ba 0%, #a2e5cd 7%, #7ad6ba 9%, #199e7a 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #7ad6ba 0%,#a2e5cd 7%,#7ad6ba 9%,#199e7a 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #7ad6ba 0%,#a2e5cd 7%,#7ad6ba 9%,#199e7a 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7ad6ba', endColorstr='#199e7a',GradientType=0 ); /* IE6-9 */
+
+    }
+    * /deep/ .x-button:hover::shadow  {
+        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#7ad6ba+0,a2e5cd+7,7ad6ba+9,45d3b2+55,1cb28a+100 */
+        background: #7ad6ba; /* Old browsers */
+        background: -moz-linear-gradient(top, #7ad6ba 0%, #a2e5cd 7%, #7ad6ba 9%, #45d3b2 55%, #1cb28a 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #7ad6ba 0%,#a2e5cd 7%,#7ad6ba 9%,#45d3b2 55%,#1cb28a 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #7ad6ba 0%,#a2e5cd 7%,#7ad6ba 9%,#45d3b2 55%,#1cb28a 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7ad6ba', endColorstr='#1cb28a',GradientType=0 ); /* IE6-9 */
+    }
+    * /deep/ .x-button:active::shadow  {
+        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#7ad6ba+0,74bf9c+7,7ad6ba+9,1aa580+81,189b69+100 */
+        background: #7ad6ba; /* Old browsers */
+        background: -moz-linear-gradient(top, #7ad6ba 0%, #74bf9c 7%, #7ad6ba 9%, #1aa580 81%, #189b69 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #7ad6ba 0%,#74bf9c 7%,#7ad6ba 9%,#1aa580 81%,#189b69 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #7ad6ba 0%,#74bf9c 7%,#7ad6ba 9%,#1aa580 81%,#189b69 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7ad6ba', endColorstr='#189b69',GradientType=0 ); /* IE6-9 */
+    }
+
+    /* end: send button design */
+
+    .x-button-checkbox{
+        border: 0 !important;
+        box-shadow: none !important;
+    }
+
+    .disabled{
+        pointer-events: none;
+        opacity: 0.7;
+        cursor: default;
+    }
+</style>
+
+
+
+<div class="container" 
+     *ngIf="_IsLoaded"
+     [class.disabled]="IsDisabled || IsDisabledTimeout"
+      >
+    <span class="x-split-button">
+
+        <button [disabled]="IsDisabled || IsDisabledTimeout"
+                class="x-button x-button-drop"
+                style="min-width: 10px;border-radius: 5px 0px 0px 5px;"
+                (click)="dropdowndisplayToggle()">
+            &#9660;
+        </button>
+       
+        <button 
+                [attr.id]="_CustomSendOptionsComponentId"
+                [disabled]="IsDisabled || IsDisabledTimeout"
+                (click)="SendDefault()"
+                class="x-button x-button-main"
+                style="min-width: 80px; border-radius: 0px 5px 5px 0px;">
+            &nbsp;{{ButtonText}}
+        </button>
+        <div 
+             [attr.id]="_CustomSendOptionsComponentMenuId"
+             [ngStyle]="{'display': _DropdownDisplay  }"
+             style="position: fixed;z-index: 1;background-color : aquamarine;">
+            <ul class="x-button-drop-menu" >
+                <li>
+                    <span style="cursor:default;" *ngIf="CustomSendOptionsButtonCanForcePersonalSign">
+                        <!---->
+                        <table style="margin-right: -22px; cursor:default;">
+                            <tr>
+                                <td style="width: 15px;" >
+                                    <input *ngIf="IsCheckBoxVisibile" class="x-button-checkbox" type="checkbox" [(ngModel)]="ForcePersonalSign" />
+                                </td>
+                                <td style="width: 2px;">
+                                    <div></div>
+                                </td>
+                                <td style="width: 18px;" (click)="ForcePersonalSignToggle()">
+                                    <div style="margin-top:-6px; margin-right: 6px;">
+                                        חתימה אישית
+                                    </div>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+                        </table>
+
+                    </span>
+
+                </li>
+                <li>
+                    <span (click)="SendWI()">אינטרקטיבי</span>
+                </li>
+                <li>
+                    <span (click)="SendWB()">שליחה ברקע</span>
+                </li>
+                <li>
+                    <span (click)="SendD()">כספת</span>
+                </li>
+            </ul>
+
+
+        </div>
+    </span>
+</div>

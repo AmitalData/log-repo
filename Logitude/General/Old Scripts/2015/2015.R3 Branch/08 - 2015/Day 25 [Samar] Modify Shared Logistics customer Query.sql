@@ -1,0 +1,1 @@
+delete from AdvancedQueryFilters where QueryId = (select Id from Queries where Code = 'Shared Logistics Customers')

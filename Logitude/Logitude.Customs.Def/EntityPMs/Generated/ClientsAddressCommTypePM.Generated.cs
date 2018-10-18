@@ -1,0 +1,191 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Customs.Def.Validators;
+  
+namespace Logitude.Customs.Def.EntityPMs
+{
+   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class ClientsAddressCommTypePM : EntityPM
+   {
+   	  private string clientId ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ClientId  
+	   {
+	    
+	     get
+		{
+		   return clientId;
+		 }
+		 set
+		 {
+		   if(clientId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ClientId",OldValue=clientId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   clientId=value;
+		   }
+			
+		 }
+	   }
+	  private string addressId ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AddressId  
+	   {
+	    
+	     get
+		{
+		   return addressId;
+		 }
+		 set
+		 {
+		   if(addressId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AddressId",OldValue=addressId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   addressId=value;
+		   }
+			
+		 }
+	   }
+	  private int line ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Line  
+	   {
+	    
+	     get
+		{
+		   return line;
+		 }
+		 set
+		 {
+		   if(line != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Line",OldValue=line,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   line=value;
+		   }
+			
+		 }
+	   }
+	  private string communicationTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CommunicationTypeCode  
+	   {
+	    
+	     get
+		{
+		   return communicationTypeCode;
+		 }
+		 set
+		 {
+		   if(communicationTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CommunicationTypeCode",OldValue=communicationTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   communicationTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string communicationAddress ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CommunicationAddress  
+	   {
+	    
+	     get
+		{
+		   return communicationAddress;
+		 }
+		 set
+		 {
+		   if(communicationAddress != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CommunicationAddress",OldValue=communicationAddress,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   communicationAddress=value;
+		   }
+			
+		 }
+	   }
+	  private int tenant ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+	  private string communicationTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CommunicationTypeName  
+	   {
+	    
+	     get
+		{
+		   return communicationTypeName;
+		 }
+		 set
+		 {
+		   if(communicationTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CommunicationTypeName",OldValue=communicationTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   communicationTypeName=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

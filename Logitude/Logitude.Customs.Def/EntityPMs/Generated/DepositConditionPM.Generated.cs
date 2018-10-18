@@ -1,0 +1,143 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Customs.Def.Validators;
+  
+namespace Logitude.Customs.Def.EntityPMs
+{
+   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class DepositConditionPM : EntityPM
+   {
+   	  private string depositId ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DepositId  
+	   {
+	    
+	     get
+		{
+		   return depositId;
+		 }
+		 set
+		 {
+		   if(depositId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DepositId",OldValue=depositId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   depositId=value;
+		   }
+			
+		 }
+	   }
+	  private int tenant ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+	  private string depositConditionCode ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DepositConditionCode  
+	   {
+	    
+	     get
+		{
+		   return depositConditionCode;
+		 }
+		 set
+		 {
+		   if(depositConditionCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DepositConditionCode",OldValue=depositConditionCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   depositConditionCode=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? depositAmount ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? DepositAmount  
+	   {
+	    
+	     get
+		{
+		   return depositAmount;
+		 }
+		 set
+		 {
+		   if(depositAmount != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DepositAmount",OldValue=depositAmount,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   depositAmount=value;
+		   }
+			
+		 }
+	   }
+	  private string depositConditionName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DepositConditionName  
+	   {
+	    
+	     get
+		{
+		   return depositConditionName;
+		 }
+		 set
+		 {
+		   if(depositConditionName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DepositConditionName",OldValue=depositConditionName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   depositConditionName=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

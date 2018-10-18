@@ -1,0 +1,83 @@
+﻿<div>
+
+    <custom-message-wrapper [CustomSendOptionsButtonCanForcePersonalSign]="false"
+                            [IsShowCustomResponseContent]="false">
+
+        <!-- Request -->
+        <div class="class-request-content">
+            <table style="width: 320px;height: 160px;padding-top: 10px;">
+                <!-- Request Fields -->
+                
+                <tr>
+                    <td style="width: 320px; padding-top: 10px;">
+                        <table>
+                            <tr>
+                                <td>
+                                    <table>
+
+                                        <!-- PaymentNumber -->
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 120px">
+                                                <LogLabel [ObjectFieldName]="'PaymentNumber'" [ObjectTableName]="ObjectTableName"
+                                                          [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td style="width: 180px; ">
+                                                <LogTextBox [ObjectFieldName]="'PaymentNumber'" [InputType]="'number'" [DataContext]="DataContext"
+                                                            [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                            </td>
+                                            <td><div></div></td>
+                                        </tr>
+
+                                        <!-- ImporterId -->
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 120px">
+                                                <LogLabel [ObjectFieldName]="'ImporterId'" [ObjectTableName]="ObjectTableName"
+                                                          [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td style="width: 180px;">
+                                                <LogLov [ObjectFieldName]="'ImporterId'"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'Customs.Client'"
+                                                        [DisplayMemberPath]="'FullName'"
+                                                        [HideLastColumn]="true"
+                                                        [HideColumns]="true"
+                                                        [SelectedValue]="ImporterId">
+                                                </LogLov>
+                                            </td>
+                                            <td><div></div></td>
+                                        </tr>
+
+                                        <tr><td><div></div></td></tr>
+                                    </table>
+
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td><div></div></td>
+
+
+                </tr>
+
+                <tr> <td><div></div></td> </tr>
+            </table>
+        </div>
+
+        <!-- Response -->
+        <div class="class-response-content">
+            <table style="width: 0px;height: 0px;">
+                <!--<tr class="FormFieldRow" style="width: 50% ; height : 5%" *ngIf="ResponseMessage != null">
+                    <td style="width: 100px;">
+                        <LogLabel [ObjectFieldName]="'ResultTitle'" [DataContext]="DataContext" [TextCode]="'Customs.Declaration.O.PrintRequest'"></LogLabel>
+                    </td>
+
+                    <td><div></div></td>
+                </tr>-->
+            </table>
+        </div>
+
+    </custom-message-wrapper>
+</div>
+

@@ -1,0 +1,323 @@
+
+IF OBJECT_ID('[dbo].[usp_UpdateShipmentProfitFunction]', 'P') IS NOT NULL
+drop PROCEDURE [dbo].[usp_UpdateShipmentProfitFunction]
+GO
+
+Create PROCEDURE [dbo].[usp_UpdateShipmentProfitFunction]
+(
+	@Tenant int,	
+	@ShipmentId varchar(15),
+	@IsConsoleShipment bit
+)
+AS
+
+if (@ShipmentId is not null)
+BEGIN
+		
+		declare @ProrateReceivables as bit
+		if (@IsConsoleShipment = 1)
+		begin
+			set @ProrateReceivables = (select ProrateReceivables from ShipmentMasterDatas where Tenant = @Tenant AND Id = @ShipmentId)
+		end
+
+		-- Variables
+		BEGIN
+			declare @ProfitInLocalCurrency as float
+			declare @ProfitInProfitCurrency as float
+			declare @AllPayablesInLocalCurrency as float
+			declare @AllPayablesInProfitCurrency as float
+			declare @AllReceivablesInLocalCurrency as float
+			declare @AllReceivablesInProfitCurrency as float
+			declare @OpenPayablesInLocalCurrency as float
+			declare @OpenPayablesInProfitCurrency as float
+			declare @AccountedPayablesInLocalCurrency as float
+			declare @AccountedPayablesInProfitCurrency as float
+			declare @OpenReceivablesInLocalCurrency as float
+			declare @OpenReceivablesInProfitCurrency as float
+			declare @AccountedReceivablesInLocalCurrency as float	
+			declare @AccountedReceivablesInProfitCurrency as float
+			declare @ShipmentPayableStatusCode AS varchar(4)
+			declare @ShipmentReceivableStatusCode AS varchar(4)
+			declare @ARInvoiceIssued as bit
+			declare @CreditNoteIssued as bit
+		END
+
+		-- Reset Variables
+		BEGIN
+			set @ProfitInLocalCurrency = 0
+			set @ProfitInProfitCurrency = 0
+			set @AllPayablesInLocalCurrency = 0
+			set @AllPayablesInProfitCurrency = 0
+			set @AllReceivablesInLocalCurrency = 0
+			set @AllReceivablesInProfitCurrency = 0
+			set @OpenPayablesInLocalCurrency = 0
+			set @OpenPayablesInProfitCurrency = 0
+			set @AccountedPayablesInLocalCurrency = 0
+			set @AccountedPayablesInProfitCurrency = 0
+			set @OpenReceivablesInLocalCurrency = 0
+			set @OpenReceivablesInProfitCurrency = 0
+			set @AccountedReceivablesInLocalCurrency = 0
+			set @AccountedReceivablesInProfitCurrency = 0
+			set @ShipmentPayableStatusCode = 'NOPA'
+			set @ShipmentReceivableStatusCode = 'NORE'
+			set @ARInvoiceIssued = 0
+			set @CreditNoteIssued = 0
+		END
+
+		-- Get Payables Data
+		BEGIN
+			if (@IsConsoleShipment = 1)
+			begin
+				if exists (select * from Shipments where Tenant = @Tenant AND ShipmentLevelCode = 'H' AND MasterShipmentDataId = @ShipmentId)
+				begin
+					select
+					@OpenPayablesInLocalCurrency = sum(isnull(OpenAmountInLocalCurrency,0)),
+					@OpenPayablesInProfitCurrency = sum(isnull(OpenAmountInProfitCurrency,0)),
+					@AccountedPayablesInLocalCurrency = sum(isnull(AccountedAmountInLocalCurrency,0)),
+					@AccountedPayablesInProfitCurrency = sum(isnull(AccountedAmountInProfitCurrency,0))
+					from ShipmentPayables
+					where
+					Tenant = @Tenant
+					AND (ShipmentId in (select Id from Shipments where ShipmentLevelCode = 'H' AND MasterShipmentDataId = @ShipmentId))
+				end
+
+				else
+				begin
+					select
+					@OpenPayablesInLocalCurrency = sum(isnull(OpenAmountInLocalCurrency,0)),
+					@OpenPayablesInProfitCurrency = sum(isnull(OpenAmountInProfitCurrency,0)),
+					@AccountedPayablesInLocalCurrency = sum(isnull(AccountedAmountInLocalCurrency,0)),
+					@AccountedPayablesInProfitCurrency = sum(isnull(AccountedAmountInProfitCurrency,0))
+					from ShipmentPayables
+					where
+					Tenant = @Tenant
+					AND ShipmentId = @ShipmentId
+				end
+			end
+
+			else
+			begin
+				select
+				@OpenPayablesInLocalCurrency = sum(isnull(OpenAmountInLocalCurrency,0)),
+				@OpenPayablesInProfitCurrency = sum(isnull(OpenAmountInProfitCurrency,0)),
+				@AccountedPayablesInLocalCurrency = sum(isnull(AccountedAmountInLocalCurrency,0)),
+				@AccountedPayablesInProfitCurrency = sum(isnull(AccountedAmountInProfitCurrency,0))
+				from ShipmentPayables
+				where
+				Tenant = @Tenant
+				AND ShipmentId = @ShipmentId
+			end
+		END
+
+		-- Get Receivables Data
+		BEGIN
+			if (@IsConsoleShipment = 1)
+			begin
+
+				if (@ProrateReceivables = 1)
+				BEGIN
+					if exists (select * from Shipments where Tenant = @Tenant AND ShipmentLevelCode = 'H' AND MasterShipmentDataId = @ShipmentId)
+					begin
+					select
+						@OpenReceivablesInLocalCurrency = sum(isnull(TotalAmountLocal,0)),
+						@OpenReceivablesInProfitCurrency = sum(isnull(AmountInProfitCurrency,0))
+						from ShipmentReceivables
+						where
+						Tenant = @Tenant
+						AND (ShipmentId in (select Id from Shipments where ShipmentLevelCode = 'H' AND MasterShipmentDataId = @ShipmentId))
+						AND (ShipmentReceivableLineStatusCode = 'OAMT' OR ShipmentReceivableLineStatusCode = 'DRFT')
+	
+						select
+						@AccountedReceivablesInLocalCurrency = sum(isnull(TotalAmountLocal,0)),
+						@AccountedReceivablesInProfitCurrency = sum(isnull(AmountInProfitCurrency,0))
+						from ShipmentReceivables
+						where
+						Tenant = @Tenant
+						AND (ShipmentId in (select Id from Shipments where ShipmentLevelCode = 'H' AND MasterShipmentDataId = @ShipmentId))
+						AND ShipmentReceivableLineStatusCode = 'ACCT'
+					end
+
+					else
+					begin
+						select
+						@OpenReceivablesInLocalCurrency = sum(isnull(TotalAmountLocal,0)),
+						@OpenReceivablesInProfitCurrency = sum(isnull(AmountInProfitCurrency,0))
+						from ShipmentReceivables
+						where
+						Tenant = @Tenant
+						AND ShipmentId = @ShipmentId
+						AND (ShipmentReceivableLineStatusCode = 'OAMT' OR ShipmentReceivableLineStatusCode = 'DRFT')
+	
+						select
+						@AccountedReceivablesInLocalCurrency = sum(isnull(TotalAmountLocal,0)),
+						@AccountedReceivablesInProfitCurrency = sum(isnull(AmountInProfitCurrency,0))
+						from ShipmentReceivables
+						where
+						Tenant = @Tenant
+						AND ShipmentId = @ShipmentId
+						AND ShipmentReceivableLineStatusCode = 'ACCT'
+					end
+				END
+
+				else
+				BEGIN
+				select
+						@OpenReceivablesInLocalCurrency = sum(isnull(TotalAmountLocal,0)),
+						@OpenReceivablesInProfitCurrency = sum(isnull(AmountInProfitCurrency,0))
+						from ShipmentReceivables
+						where
+						Tenant = @Tenant
+						AND (ShipmentId = @ShipmentId OR ShipmentId in (select Id from Shipments where ShipmentLevelCode = 'H' AND MasterShipmentDataId = @ShipmentId))
+						AND (ShipmentReceivableLineStatusCode = 'OAMT' OR ShipmentReceivableLineStatusCode = 'DRFT')
+	
+						select
+						@AccountedReceivablesInLocalCurrency = sum(isnull(TotalAmountLocal,0)),
+						@AccountedReceivablesInProfitCurrency = sum(isnull(AmountInProfitCurrency,0))
+						from ShipmentReceivables
+						where
+						Tenant = @Tenant
+						AND (ShipmentId = @ShipmentId OR ShipmentId in (select Id from Shipments where ShipmentLevelCode = 'H' AND MasterShipmentDataId = @ShipmentId))
+						AND ShipmentReceivableLineStatusCode = 'ACCT'
+				END
+			end
+
+			else
+			begin
+				select
+				@OpenReceivablesInLocalCurrency = sum(isnull(TotalAmountLocal,0)),
+				@OpenReceivablesInProfitCurrency = sum(isnull(AmountInProfitCurrency,0))
+				from ShipmentReceivables
+				where
+				Tenant = @Tenant
+				AND ShipmentId = @ShipmentId
+				AND (ShipmentReceivableLineStatusCode = 'OAMT' OR ShipmentReceivableLineStatusCode = 'DRFT')
+	
+				select
+				@AccountedReceivablesInLocalCurrency = sum(isnull(TotalAmountLocal,0)),
+				@AccountedReceivablesInProfitCurrency = sum(isnull(AmountInProfitCurrency,0))
+				from ShipmentReceivables
+				where
+				Tenant = @Tenant
+				AND ShipmentId = @ShipmentId
+				AND ShipmentReceivableLineStatusCode = 'ACCT'
+			end
+		END
+
+		-- FIX NULL Variables
+		BEGIN
+			set @OpenPayablesInLocalCurrency = isnull(@OpenPayablesInLocalCurrency,0)
+			set @OpenPayablesInProfitCurrency = isnull(@OpenPayablesInProfitCurrency,0)
+			set @AccountedPayablesInLocalCurrency = isnull(@AccountedPayablesInLocalCurrency,0)
+			set @AccountedPayablesInProfitCurrency = isnull(@AccountedPayablesInProfitCurrency,0)
+			set @OpenReceivablesInLocalCurrency = isnull(@OpenReceivablesInLocalCurrency,0)
+			set @OpenReceivablesInProfitCurrency = isnull(@OpenReceivablesInProfitCurrency,0)
+			set @AccountedReceivablesInLocalCurrency = isnull(@AccountedReceivablesInLocalCurrency,0)
+			set @AccountedReceivablesInProfitCurrency = isnull(@AccountedReceivablesInProfitCurrency,0)
+		END
+
+		-- Compute Profit Fields
+		BEGIN
+			set @AllPayablesInLocalCurrency = @OpenPayablesInLocalCurrency + @AccountedPayablesInLocalCurrency
+			set @AllPayablesInProfitCurrency = @OpenPayablesInProfitCurrency + @AccountedPayablesInProfitCurrency
+			set @AllReceivablesInLocalCurrency = @OpenReceivablesInLocalCurrency + @AccountedReceivablesInLocalCurrency
+			set @AllReceivablesInProfitCurrency = @OpenReceivablesInProfitCurrency + @AccountedReceivablesInProfitCurrency
+
+			-- New Design
+			set @ProfitInLocalCurrency = @AllReceivablesInLocalCurrency - @AllPayablesInLocalCurrency 
+			set @ProfitInProfitCurrency = @AllReceivablesInProfitCurrency - @AllPayablesInProfitCurrency
+
+			-- Old Design
+			--if (@AllReceivablesInLocalCurrency <> 0)
+			--BEGIN
+			--	set @ProfitInLocalCurrency = @AllReceivablesInLocalCurrency - @AllPayablesInLocalCurrency 
+			--	set @ProfitInProfitCurrency = @AllReceivablesInProfitCurrency - @AllPayablesInProfitCurrency
+			--END
+		END
+
+		-- Compute Payables Status
+		BEGIN
+			
+			if (@OpenPayablesInLocalCurrency is null)
+			set @OpenPayablesInLocalCurrency = 0
+
+			if (@AccountedPayablesInLocalCurrency is null)
+			set @AccountedPayablesInLocalCurrency = 0
+
+			if (@OpenPayablesInLocalCurrency = 0 AND @AccountedPayablesInLocalCurrency = 0)
+			begin
+			set @ShipmentPayableStatusCode = 'NOPA'
+			end
+
+			else if (@OpenPayablesInLocalCurrency = 0 AND @AccountedPayablesInLocalCurrency <> 0)
+			begin
+			set @ShipmentPayableStatusCode = 'CLSD'
+			end
+
+			else
+			begin
+			set @ShipmentPayableStatusCode = 'OPEN'
+			end
+		END
+
+		-- Compute Receivables Status
+		BEGIN
+
+			if (@OpenReceivablesInLocalCurrency is null)
+			set @OpenReceivablesInLocalCurrency = 0
+
+			if (@AccountedReceivablesInLocalCurrency is null)
+			set @AccountedReceivablesInLocalCurrency = 0
+
+			if (@OpenReceivablesInLocalCurrency = 0 AND @AccountedReceivablesInLocalCurrency = 0)
+			begin
+			set @ShipmentReceivableStatusCode = 'NORE'
+			end
+
+			else if (@OpenReceivablesInLocalCurrency = 0 AND @AccountedReceivablesInLocalCurrency <> 0)
+			begin
+			set @ShipmentReceivableStatusCode = 'CLSD'
+			end
+
+			else
+			begin
+			set @ShipmentReceivableStatusCode = 'OPEN'
+			end
+
+		END
+
+		-- Compute Invoice Fields
+		BEGIN
+			if exists (select * from ARInvoiceEntities join ARInvoices on ARInvoiceEntities.ARInvoiceId = ARInvoices.Id
+			where ARInvoiceEntities.EntityId = @ShipmentId AND ARInvoices.ARInvoiceTypeCode = 'CD')
+			begin
+			set @CreditNoteIssued = 1
+			end
+
+			if exists (select * from ARInvoiceEntities join ARInvoices on ARInvoiceEntities.ARInvoiceId = ARInvoices.Id
+			where ARInvoiceEntities.EntityId = @ShipmentId AND ARInvoices.ARInvoiceTypeCode != 'CD')
+			begin
+			set @ARInvoiceIssued = 1
+			end
+		END
+
+		-- Update Shipment
+		BEGIN
+			Update Shipments
+			set 
+			OpenPayablesInLocalCurrency = round(@OpenPayablesInLocalCurrency,2),	 
+			OpenPayablesInProfitCurrency = round(@OpenPayablesInProfitCurrency,2),
+			AccountedPayablesInLocalCurrency = round(@AccountedPayablesInLocalCurrency,2),
+			AccountedPayablesInProfitCurrency = round(@AccountedPayablesInProfitCurrency,2),
+			OpenReceivablesInLocalCurrency = round(@OpenReceivablesInLocalCurrency,2),
+			OpenReceivablesInProfitCurrency = round(@OpenReceivablesInProfitCurrency,2),
+			AccountedReceivablesInLocalCurrency = round(@AccountedReceivablesInLocalCurrency,2),
+			AccountedReceivablesInProfitCurrency = round(@AccountedReceivablesInProfitCurrency,2),
+			ProfitInLocalCurrency = round(@ProfitInLocalCurrency,2),
+			ProfitInProfitCurrency = round(@ProfitInProfitCurrency,2),
+			ShipmentPayableStatusCode = @ShipmentPayableStatusCode,
+			ShipmentReceivableStatusCode = @ShipmentReceivableStatusCode,
+			ARInvoiceIssued = @ARInvoiceIssued,
+			CreditNoteIssued = @CreditNoteIssued
+			Where Id = @ShipmentId AND Tenant = @Tenant
+		END
+END

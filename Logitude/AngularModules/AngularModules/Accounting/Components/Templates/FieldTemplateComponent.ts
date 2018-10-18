@@ -1,0 +1,236 @@
+﻿import {Component} from '@angular/core';
+import {AppTool} from '../../../Infrastructure/Tools';
+import {JournalPM} from '../../EntityPMs/JournalPM';
+import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
+import {JournalExtendedListService} from '../../Services/ExtendedLists/JournalExtendedListService';
+import {ARPaymentExtendedListService} from '../../../Invoice/Services/ExtendedLists/ARPaymentExtendedListService';
+import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
+import {JournalList} from '../../EntityLists/JournalList';
+import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
+import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
+
+@Component({
+    moduleId: module.id,
+    templateUrl: './FieldTemplateComponent.html',
+})
+
+export class FieldTemplateComponent {
+    public Entity: any = null;
+    public FieldName: string = null;
+    public FieldValue: any = null;
+    public ObjectTableName: string = null;
+    public IsHeaderScreenTemplate: boolean = false;
+    public SpotlightDataTemplate: string = null;
+    public IsSpotLightTemplate: boolean = false;
+    public TenantCurrencySign: string;
+
+    public fontColor: string;
+    public textColor: string;
+    public _JournalExtendedListService = new JournalExtendedListService();
+    public _ARPaymentExtendedListService = new ARPaymentExtendedListService();
+
+    public isRTL: boolean = false;
+    public showLocal: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
+    public tenantCurrency: string = "";
+
+    constructor() {
+        this.TenantCurrencySign = SessionLocator.TenantPM.CurrencySign;
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+        this.tenantCurrency = SessionLocator.TenantPM.CurrencyCode;
+
+    }
+
+    public Run(args: any) {
+        this.Entity = args['Entity'];
+        this.FieldName = args['FieldName'];
+        this.ObjectTableName = args['ObjectTableName'];
+        this.IsHeaderScreenTemplate = args['IsHeaderScreenTemplate'];
+        this.IsSpotLightTemplate = args['IsSpotLightTemplate'];
+        this.SpotlightDataTemplate = args['SpotlightDataTemplate']; 
+
+        if (this.Entity != null && this.FieldName != null) {
+            this.FieldValue = this.Entity[this.FieldName];
+        }
+        if (this.ObjectTableName == "Revaluation" && this.FieldName == "Status")
+        {
+            if (this.FieldValue == "Done") { this.fontColor = "green"; }
+            else if (this.FieldValue == "In Progress") { this.fontColor = "orange"; }
+            else this.fontColor = "black";
+        }
+
+        if (this.ObjectTableName == "PaymentCheque" && this.FieldName == "PaymentChequeStatusCode") {
+            if (this.FieldValue == "1") {
+                this.textColor = "orange";
+            }
+            else if (this.FieldValue == "2") {
+                this.textColor = "green";
+            }
+            else if (this.FieldValue == "4") {
+                this.textColor = "red";
+            }
+        }
+
+        if (this.ObjectTableName == "PaymentCheque" && this.FieldName == "PaymentChequeStatusName") {
+            if (this.Entity.PaymentChequeStatusCode == "1") {
+                this.textColor = "orange";
+            }
+            else if (this.Entity.PaymentChequeStatusCode == "2") {
+                this.textColor = "green";
+            }
+            else if (this.Entity.PaymentChequeStatusCode == "4") {
+                this.textColor = "red";
+            }
+        }
+        if (this.ObjectTableName == "PaymentCheque" && this.FieldName == "PaymentChequeStatusName") {
+
+            if (SessionLocator.LoggedUserPM.DontShowLocal) {
+                this.FieldValue = this.Entity.StatusEnglishName;
+            }
+            else {
+                this.FieldValue = this.Entity.PaymentChequeStatusName;
+            }
+        }
+    }
+
+    Abs(num: number) {
+        if (!AppTool.IsNullOrEmpty(num)) {
+            return num > 0 ? num : num * -1;  
+        }
+    }
+
+    OpenCashBook(id) {
+        if (!AppTool.IsNullOrEmpty(id)){
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'CashBook' });
+                    cmpRef.instance.BackCompleted.subscribe(bk => {
+                    });
+                });
+        }
+    }
+
+    OpenJournal(id) {
+        if (!AppTool.IsNullOrEmpty(id)){
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'Journal' });
+                    cmpRef.instance.BackCompleted.subscribe(bk => {
+                    });
+                });
+        }
+    }
+
+    OpenSource(id: string) {
+
+        // Type:    AccountingEntityCode
+        // Id:      AccountingEntityId
+        // Display: AccountingEntityReference
+
+        var tableName = "Journal";
+
+        switch (this.Entity.AccountingEntityCode) {
+
+            // 1-Journal
+            case '1': {
+                return;
+            }
+
+            // 2-ARInvoice
+            case '2': {
+                tableName = "ARInvoice";
+                break;
+            }
+
+            // 3-ARPayment
+            case '3': { 
+                tableName = "ARPayment";
+
+                break;
+    }
+
+            // 4-APInvoice
+            case '4': { 
+                tableName = "APInvoice";
+
+                break;
+            }
+
+            // 5-APPayment
+            case '5': { 
+                tableName = "APPayment";
+
+                break;
+            }
+
+            // 6-Cheque Deposit
+            case '6': { 
+                tableName = "BankDeposit";
+
+                break;
+            }
+
+            // 7-Cash Deposit
+            case '7': { 
+                tableName = "BankDeposit";
+
+                break;
+            }
+
+            // 8-Revaluation
+            case '8': { 
+                tableName = "Revaluation";
+
+                break;
+            }
+
+            // 9-PaymentCheque
+            case '9': {
+                tableName = "PaymentCheque";
+
+                break;
+            }
+        }
+        
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({
+                    EntityId: id,
+                    ObjectTableName: tableName,
+                    BackButtonLabel: TextCodeTranslator.Translate("Accounting.General.O.SourceJournal"),
+                });
+            });
+
+    }
+
+    OpenGLAccount(id) {
+        if (!AppTool.IsNullOrEmpty(id)) {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'GLAccount' });
+                    cmpRef.instance.BackCompleted.subscribe(bk => {
+                        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM(); 
+                    });
+                });
+        }
+    }
+
+    OpenBankAccount(id) {
+        if (!AppTool.IsNullOrEmpty(id)) {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'BankAccount', BackButtonLabel: 'Deposit' });
+                    cmpRef.instance.BackCompleted.subscribe(bk => {
+                    });
+                });
+        }
+    }
+
+    VatNumberClicked() {
+
+    }
+}

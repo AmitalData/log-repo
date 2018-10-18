@@ -1,0 +1,315 @@
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs; 
+using Logitude.Customs.Data;
+
+namespace Logitude.Customs.BL.EntityDataMappings
+{
+   
+   public partial class CustomBankDataMapping: IMapping<CustomBankPM, CustomBank>,IMappingEncodeBase64NVARCHARFields<CustomBankPM>
+   {
+          public enum POCOPropertyNames
+          { 
+		     None,  
+	         Id, 
+	         Tenant, 
+	         InternalCode, 
+	         BankCode, 
+	         BranchCode, 
+	         AccountNumber, 
+	         LocalName, 
+	         EnglishName, 
+	         InActive, 
+	         PayerTypeCode, 
+	         BankAddress, 
+	         SearchFields, 
+	         CustomsBranchId,
+	      }
+
+
+	      public enum PMPropertyNames
+          { 
+		     None,  
+	         Id, 
+	         Tenant, 
+	         InternalCode, 
+	         BankCode, 
+	         BranchCode, 
+	         AccountNumber, 
+	         LocalName, 
+	         EnglishName, 
+	         InActive, 
+	         PayerTypeCode, 
+	         BankAddress, 
+	         PayerTypeName, 
+	         ClientBank, 
+	         CardId, 
+	         SearchFields, 
+	         BankName, 
+	         BranchName, 
+	         InvalidInternalCode, 
+	         CustomsBranchId, 
+	         Name,
+	      }
+
+		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
+        List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
+    
+	    public void PMToPOCO(CustomBankPM entityPM, CustomBank entityPOCO)
+        {
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InternalCode))
+            {
+				entityPOCO.InternalCode = entityPM.InternalCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BankCode))
+            {
+				entityPOCO.BankCode = entityPM.BankCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BranchCode))
+            {
+				entityPOCO.BranchCode = entityPM.BranchCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AccountNumber))
+            {
+				entityPOCO.AccountNumber = entityPM.AccountNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LocalName))
+            {
+				entityPOCO.LocalName = entityPM.LocalName;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EnglishName))
+            {
+				entityPOCO.EnglishName = entityPM.EnglishName;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InActive))
+            {
+				entityPOCO.InActive = entityPM.InActive;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PayerTypeCode))
+            {
+				entityPOCO.PayerTypeCode = entityPM.PayerTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BankAddress))
+            {
+				entityPOCO.BankAddress = entityPM.BankAddress;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
+            {
+				entityPOCO.SearchFields = entityPM.SearchFields;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsBranchId))
+            {
+				entityPOCO.CustomsBranchId = entityPM.CustomsBranchId;
+			}
+			
+				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
+		  }
+
+		public void POCOToPM(CustomBankPM entityPM, CustomBank entityPOCO)
+        {
+			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
+            {
+					entityPM.Id = entityPOCO.Id;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
+            {
+					entityPM.Tenant = entityPOCO.Tenant;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.InternalCode))
+            {
+					entityPM.InternalCode = entityPOCO.InternalCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.BankCode))
+            {
+					entityPM.BankCode = entityPOCO.BankCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.BranchCode))
+            {
+					entityPM.BranchCode = entityPOCO.BranchCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AccountNumber))
+            {
+					entityPM.AccountNumber = entityPOCO.AccountNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LocalName))
+            {
+					entityPM.LocalName = entityPOCO.LocalName;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EnglishName))
+            {
+					entityPM.EnglishName = entityPOCO.EnglishName;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.InActive))
+            {
+					entityPM.InActive = entityPOCO.InActive;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PayerTypeCode))
+            {
+					entityPM.PayerTypeCode = entityPOCO.PayerTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.BankAddress))
+            {
+					entityPM.BankAddress = entityPOCO.BankAddress;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SearchFields))
+            {
+					entityPM.SearchFields = entityPOCO.SearchFields;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomsBranchId))
+            {
+					entityPM.CustomsBranchId = entityPOCO.CustomsBranchId;
+            }
+
+		}
+
+		public void PMToOldPM(CustomBankPM entityPM, CustomBankPM oldEntityPM)
+        {
+		     oldEntityPM.ChangedProperties.Clear();
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+                oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InternalCode))
+            {
+                oldEntityPM.InternalCode = entityPM.InternalCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BankCode))
+            {
+                oldEntityPM.BankCode = entityPM.BankCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BranchCode))
+            {
+                oldEntityPM.BranchCode = entityPM.BranchCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AccountNumber))
+            {
+                oldEntityPM.AccountNumber = entityPM.AccountNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LocalName))
+            {
+                oldEntityPM.LocalName = entityPM.LocalName;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EnglishName))
+            {
+                oldEntityPM.EnglishName = entityPM.EnglishName;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InActive))
+            {
+                oldEntityPM.InActive = entityPM.InActive;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PayerTypeCode))
+            {
+                oldEntityPM.PayerTypeCode = entityPM.PayerTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BankAddress))
+            {
+                oldEntityPM.BankAddress = entityPM.BankAddress;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
+            {
+                oldEntityPM.SearchFields = entityPM.SearchFields;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsBranchId))
+            {
+                oldEntityPM.CustomsBranchId = entityPM.CustomsBranchId;
+            }
+			
+		}
+
+	    public void EncodeBase64NVARCHARFields(CustomBankPM entityPM)
+        {
+            if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
+            {
+                return;
+
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.LocalName)) //T4 find type == nText 
+            {
+                entityPM.LocalName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.LocalName));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.BankAddress)) //T4 find type == nText 
+            {
+                entityPM.BankAddress = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.BankAddress));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.SearchFields)) //T4 find type == nText 
+            {
+                entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
+            }
+            entityPM.EncodeBase64NVARCHARFieldsBy=null;
+		}
+
+
+	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
+        {
+            CustomMappedPOCOProperties.Add(pocoPropertyName);
+        }
+
+        public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
+        {
+            CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+		
+		private void BuildSearchFieldsGenerated(CustomBankPM entityPM, CustomBank entityPOCO, bool isNewEntity)
+        {
+            string mySearchFields = "";
+			
+           
+            entityPM.SearchFields += mySearchFields;
+            entityPOCO.SearchFields += mySearchFields;
+        }
+			  
+   }
+}
+	 

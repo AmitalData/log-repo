@@ -1,0 +1,48 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Customs.Data.EntityPOCOs
+{
+   
+    public class DeclarationPayment
+    {
+	 string dbms;
+
+        [Key]
+        [ForeignKey("Declaration")]
+        [Column("DeclarationId")]
+	    public string DeclarationId { get; set; }
+	      
+        public virtual Declaration Declaration { get; set; }
+        [Column("PaymentDate")]
+	    public DateTime? PaymentDate { get; set; }
+        [ForeignKey("User")]
+        [Column("CreatedByUserId")]
+	    public string CreatedByUserId { get; set; }
+	      
+        public virtual User User { get; set; }
+        [Column("SignatoryIdentification")]
+	    public string SignatoryIdentification { get; set; }
+        [Column("IsProcessA")]
+	    public bool IsProcessA { get; set; }
+        [Column("ProcessADescription")]
+	    public string ProcessADescription { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+        [Column("ConcurrencyGUID")]
+	    public string ConcurrencyGUID { get; set; }
+        [Column("FuturePaymentDateTime")]
+	    public DateTime? FuturePaymentDateTime { get; set; }
+    }
+}
+	 

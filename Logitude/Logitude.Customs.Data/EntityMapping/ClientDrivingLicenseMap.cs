@@ -1,0 +1,40 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data;
+ 
+namespace Logitude.Customs.Data.EntityMapping
+{
+ 
+    public class ClientDrivingLicenseMap : EntityTypeConfiguration<ClientDrivingLicense>
+    {
+	    string dbms;
+        public ClientDrivingLicenseMap()
+        { 
+			  this.ToTable("ClientDrivingLicenses", "Customs");
+		
+		    this.HasKey(t => new { t.ClientId, t.Line });
+	 
+            this.Property(t => t.ClientId).HasColumnName("ClientId").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
+
+            this.Property(t => t.Line).HasColumnName("Line").IsRequired().HasDatabaseGeneratedOption(null);
+
+            this.Property(t => t.DrivingLicenseNumber).HasColumnName("DrivingLicenseNumber").HasMaxLength(20).IsUnicode(false);
+
+            this.Property(t => t.DriverLicenseValidityDate).HasColumnName("DriverLicenseValidityDate");
+
+            this.Property(t => t.DrivingLicenseCountryID).HasColumnName("DrivingLicenseCountryID").HasMaxLength(2).IsUnicode(false);
+        }
+    }
+}
+	 

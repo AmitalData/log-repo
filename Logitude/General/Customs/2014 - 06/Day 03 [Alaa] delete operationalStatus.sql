@@ -1,0 +1,1 @@
+delete from QueryColumns where ObjectFieldId = ( select id from ObjectFields where FieldName = 'OperationalStatusName' and objecttableid = (select id from ObjectTables where name ='customs.paymentorder'))

@@ -1,0 +1,175 @@
+﻿
+<style type="text/css">
+    .SystemDefaultsBox {
+        width: 100%;
+        height: 100%;
+        border: 1px solid #BABABA;
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        overflow: hidden;
+    }
+
+    .SystemDefaultsBoxHeader {
+        height: 20px;
+        font-size: 12px;
+        color: #1B90CB;
+        text-indent: 5px;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(245, 245, 245, 1) 0%,rgba(243, 243, 243, 1) 50.24%,rgba(236, 236, 236, 1) 69.98%,rgba(224, 224, 224, 1) 84.35%,rgba(207, 207, 207, 1) 96.04%,rgba(199, 199, 199, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(245, 245, 245, 1) ),color-stop(0.5024,rgba(243, 243, 243, 1) ),color-stop(0.6998,rgba(236, 236, 236, 1) ),color-stop(0.8435,rgba(224, 224, 224, 1) ),color-stop(0.9604,rgba(207, 207, 207, 1) ),color-stop(1,rgba(199, 199, 199, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
+        -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#F5F5F5', endColorstr='#C7C7C7' ,GradientType=0)";
+        background: linear-gradient(180deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
+    }
+</style>
+
+<table *ngIf="IsVisibile">
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div class="ScrollViewer">
+                <div class="ScrollContent">
+                    <div style="padding-top: 5px;">
+                        <table>
+                            <!-- CustomerId -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td style="width: 109px;">
+                                                <LogLabel [ObjectFieldName]="'CustomerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td style="width:10px;"></td>
+                                            <td style="width:250px;">
+                                                <LogLov [ObjectFieldName]="'CustomerId'"
+                                                        [ObjectTableName]="'Tenant'"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'Card'"
+                                                        [DependencyFilter1Value]="'CS'"
+                                                        [SelectedValue]="CustomerId">
+                                                </LogLov>
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td style="width: 100px;">
+                                                <label style="margin-left: 10px;color: rgb(110, 113, 114);">Stock Type Code</label>
+                                            </td>
+                                            <td style="width:10px;"></td>
+                                            <td style="width:250px;">
+                                                <ComboBox style="width:150px;margin-right:5px;"
+                                                          (SelectedItemChanged)="StockTypeValueChanged($event)"
+                                                          [ItemsSource]="StockTypes" [SelectedItem]="StockType"
+                                                          [Binding]="'Name'" disabled></ComboBox>
+
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+                                </td>
+
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td style="width: 200px;">
+                                                <label style="margin-left: 10px;color: rgb(110, 113, 114);">Allow Share Documents Automatically</label>
+                                            </td>
+                                            <td style="width:10px;"></td>
+                                            <td>
+                                                <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'DocumentShareAsDefault'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            
+
+                            <!-- IsCustomerTenantShare -->
+                            <!--<tr class="FormFieldRow" *ngIf="IsCustomerTenantShareVisible">
+                                <td colspan="2">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 200px;">
+                                                <LogLabel [ObjectFieldName]="'IsCustomerTenantShare'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td>
+                                                <LogCheckBox [ObjectFieldName]="'IsCustomerTenantShare'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                </td>
+                            </tr>-->
+
+                            <!-- CustomerTenantShareImportFile -->
+                            <!--<tr class="FormFieldRow" *ngIf="CustomerTenantShareImportFileVisible">
+                                <td colspan="2">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 200px;">
+                                                <LogLabel [ObjectFieldName]="'CustomerTenantShareImportFile'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td>
+                                                <LogCheckBox [ObjectFieldName]="'CustomerTenantShareImportFile'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>-->
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>
+
+
+

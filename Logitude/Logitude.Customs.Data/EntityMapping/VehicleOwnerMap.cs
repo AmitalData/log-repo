@@ -1,0 +1,48 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data;
+ 
+namespace Logitude.Customs.Data.EntityMapping
+{
+ 
+    public class VehicleOwnerMap : EntityTypeConfiguration<VehicleOwner>
+    {
+	    string dbms;
+        public VehicleOwnerMap()
+        { 
+			  this.ToTable("VehicleOwners", "Customs");
+		
+		    this.HasKey(t => new { t.VehicleId, t.LineNumber });
+	 
+            this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
+
+            this.Property(t => t.VehicleId).HasColumnName("VehicleId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.LineNumber).HasColumnName("LineNumber").HasDatabaseGeneratedOption(null);
+
+            this.Property(t => t.ClientId).HasColumnName("ClientId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.LastNameOrCorporationName).HasColumnName("LastNameOrCorporationName").HasMaxLength(22).IsUnicode(true);
+
+            this.Property(t => t.FirstName).HasColumnName("FirstName").HasMaxLength(15).IsUnicode(true);
+
+            this.Property(t => t.IsMain).HasColumnName("IsMain");
+
+            this.Property(t => t.PassportNumber).HasColumnName("PassportNumber").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.PassCountryCode).HasColumnName("PassCountryCode").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.ImporterPassportTypeCode).HasColumnName("ImporterPassportTypeCode").HasMaxLength(2).IsUnicode(false);
+        }
+    }
+}
+	 

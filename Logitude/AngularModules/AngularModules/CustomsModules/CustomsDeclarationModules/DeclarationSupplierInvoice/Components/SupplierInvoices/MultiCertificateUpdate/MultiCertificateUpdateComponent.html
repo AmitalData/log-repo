@@ -1,0 +1,350 @@
+﻿
+<style>
+    .DisbleBox {
+        display: inline-block;
+        border: 1px solid #ffd800;
+        border-radius: 5px;
+        background: #faf5c0;/*fbebbc*/
+        padding: 4px 10px;
+        color: gray;
+        font-family: sans-serif;
+        max-width: 660px;
+        white-space: normal;
+    }
+    .DescriptionBox{
+        border: 1px solid #9cc5e8;
+        border-radius: 5px;
+        padding: 7px;
+        background: aliceblue;
+        color: #5b6873;
+    }
+    .subtitle{
+        color: #1B90CB;
+        font-size: 14px;
+    }
+    .row{
+        height: 32px;
+    }
+</style>
+<table>
+    <!-- Validation -->
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td colspan="4">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+        </td>
+    </tr>
+ 
+    <!-- Description -->
+    <tr style="height:32px">
+        <td colspan="4">
+            <div class="DescriptionBox">
+                {{ 'Customs.Declaration.O.MultiCertificateUpdateDescription' | TextCodeTranslationPipe }}
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 10px;">
+        <td><div></div></td>
+    </tr>
+
+    <!-- Subtitles -->
+    <tr style="height: 40px;">
+        <td style="width: 260px;"><span class="subtitle">{{ 'Customs.Declaration.O.SearchBy' | TextCodeTranslationPipe }}</span></td>
+        <td style="width: 60px;"></td>
+        <td style="width: 250px;"><span class="subtitle">{{ 'Customs.Declaration.O.UpdateCertificateSubTitle' | TextCodeTranslationPipe }}</span></td>
+        <td></td>
+    </tr>
+
+    <!-- Fields vertically tabs -->
+    <tr>
+        <td style="width: 260px;">
+            <table style="table-layout: fixed;">
+
+                <!-- ExternalRequestTypeCode -->
+                <tr class="row">
+                    <td style="width: 120px;">
+                        <LogLabel [ObjectFieldName]="'ExternalRequestTypeCode'" [ObjectTableName]="CertTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width: 140px;">
+                        <LogTextBox [ObjectFieldName]="'ExternalRequestTypeCode'" [DataContext]="DataContext" [ObjectTableName]="CertTableName"
+                                    [FocusOnMe]="true" [InputType]="'text'" [HideColumns]="true"></LogTextBox>
+                    </td>
+                </tr>
+
+                <!-- ApprovalRequestNumber -->
+                <tr class="row">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'ApprovalRequestNumber'" [ObjectTableName]="CertTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'ApprovalRequestNumber'" [ObjectTableName]="CertTableName" [DataContext]="DataContext"
+                                    [InputType]="'text'" [HideColumns]="true"></LogTextBox>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td></td>
+                </tr>
+
+            </table>
+        </td>
+        <td style="width: 60px;"></td>
+        <td style="width: 275px;">
+            <table style="table-layout: fixed;">
+
+                <!-- ReqConfirmationTypeCode -->
+                <tr class="row">
+                    <td style="width: 135px;">
+                        <LogLabel [ObjectFieldName]="'ReqConfirmationTypeCode'" [ObjectTableName]="CertTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width: 140px;">
+                        <LogLov [ObjectFieldName]="'ReqConfirmationTypeCode'"
+                                [ObjectTableName]="CertTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'Customs.ConfirmationType'"
+                                [HideColumns]="true">
+                        </LogLov>
+                    </td>
+                </tr>
+
+                <!-- AttachmentTypeCode -->
+                <tr class="row">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'AttachmentTypeCode'" [ObjectTableName]="CertTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogLov [ObjectFieldName]="'AttachmentTypeCode'"
+                                [ObjectTableName]="CertTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'Customs.AttachmentType'"
+                                [HideColumns]="true">
+                        </LogLov>
+                    </td>
+                </tr>
+
+                <!-- CertificateNumber -->
+                <tr class="row">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'CertificateNumber'" [ObjectTableName]="CertTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'CertificateNumber'" [DataContext]="DataContext" [ObjectTableName]="CertTableName"
+                                    [InputType]="'text'" [HideColumns]="true"></LogTextBox>
+                    </td>
+                </tr>
+
+                <!-- CertificateExemptionTypeCode -->
+                <tr class="row">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'CertificateExemptionTypeCode'" [ObjectTableName]="CertTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogLov [ObjectFieldName]="'CertificateExemptionTypeCode'"
+                                [ObjectTableName]="CertTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'Customs.CertificateExemptionType'"
+                                [HideColumns]="true">
+                        </LogLov>
+                    </td>
+                </tr>
+
+                <!-- ResConfirmationTypeCode -->
+                <tr class="row">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'ResConfirmationTypeCode'" [ObjectTableName]="CertTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogLov [ObjectFieldName]="'ResConfirmationTypeCode'"
+                                [ObjectTableName]="CertTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'Customs.ConfirmationType'"
+                                [HideColumns]="true">
+                        </LogLov>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td></td>
+                </tr>
+
+            </table>
+        </td>
+        <td></td>
+    </tr>
+
+    <!-- Fields -->
+    <tr *ngIf="0">
+        <td colspan="4" style="vertical-align: top;">
+            <div>
+                <table style="table-layout: fixed;">
+                    <tr class="row">
+
+                        <!-- ExternalRequestTypeCode -->
+                        <td style="width: 120px;">
+                            <LogLabel [ObjectFieldName]="'ExternalRequestTypeCode'" [ObjectTableName]="CertTableName"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 140px;">
+                            <LogTextBox [ObjectFieldName]="'ExternalRequestTypeCode'" [DataContext]="DataContext" [ObjectTableName]="CertTableName"
+                                        [FocusOnMe]="true" [InputType]="'text'" [HideColumns]="true" ></LogTextBox>
+                        </td>
+                        <td style="width: 60px;"></td>
+
+                        <!-- ReqConfirmationTypeCode -->
+                        <td style="width: 135px;">
+                            <LogLabel [ObjectFieldName]="'ReqConfirmationTypeCode'" [ObjectTableName]="CertTableName"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 140px;">
+                            <LogLov [ObjectFieldName]="'ReqConfirmationTypeCode'"
+                                    [ObjectTableName]="CertTableName"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'Customs.ConfirmationType'"
+                                    [HideColumns]="true"
+                                    >
+                            </LogLov>
+                        </td>
+                        <td></td>
+                    </tr>
+
+                    <tr class="row">
+
+                        <!-- ApprovalRequestNumber -->
+                        <td>
+                            <LogLabel [ObjectFieldName]="'ApprovalRequestNumber'" [ObjectTableName]="CertTableName"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td>
+                            <LogTextBox [ObjectFieldName]="'ApprovalRequestNumber'" [ObjectTableName]="CertTableName" [DataContext]="DataContext"
+                                         [InputType]="'text'" [HideColumns]="true"></LogTextBox>
+                        </td>
+                        <td></td>
+
+                        <!-- AttachmentTypeCode -->
+                        <td>
+                            <LogLabel [ObjectFieldName]="'AttachmentTypeCode'" [ObjectTableName]="CertTableName"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td>
+                            <LogLov [ObjectFieldName]="'AttachmentTypeCode'"
+                                    [ObjectTableName]="CertTableName"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'Customs.AttachmentType'"
+                                    [HideColumns]="true"
+                                    >
+                            </LogLov>
+                        </td>
+                        <td></td>
+                    </tr>
+
+                    <tr class="row">
+
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td></td>
+
+                        <!-- CertificateNumber -->
+                        <td>
+                            <LogLabel [ObjectFieldName]="'CertificateNumber'" [ObjectTableName]="CertTableName"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td>
+                            <LogTextBox [ObjectFieldName]="'CertificateNumber'" [DataContext]="DataContext" [ObjectTableName]="CertTableName"
+                                         [InputType]="'text'" [HideColumns]="true"></LogTextBox>
+                        </td>
+                        <td></td>
+                    </tr>
+
+                    <tr class="row">
+
+                        <td></td>
+                        <td></td>
+                        <td></td>
+
+                        <!-- CertificateExemptionTypeCode -->
+                        <td>
+                            <LogLabel [ObjectFieldName]="'CertificateExemptionTypeCode'" [ObjectTableName]="CertTableName"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td>
+                            <LogLov [ObjectFieldName]="'CertificateExemptionTypeCode'"
+                                    [ObjectTableName]="CertTableName"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'Customs.CertificateExemptionType'"
+                                    [HideColumns]="true">
+                            </LogLov>
+                        </td>
+                        <td></td>
+                    </tr>
+
+                    <tr class="row">
+
+                        <td></td>
+                        <td></td>
+                        <td></td>
+
+                        <!-- ResConfirmationTypeCode -->
+                        <td style="width: 135px;">
+                            <LogLabel [ObjectFieldName]="'ResConfirmationTypeCode'" [ObjectTableName]="CertTableName"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 140px;">
+                            <LogLov [ObjectFieldName]="'ResConfirmationTypeCode'"
+                                    [ObjectTableName]="CertTableName"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'Customs.ConfirmationType'"
+                                    [HideColumns]="true">
+                            </LogLov>
+                        </td>
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                    </tr>
+
+                </table>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+
+        <td colspan="4" style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()" >{{'Customs.Declaration.O.CancelButton' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="IsDisplayOnly">{{'Customs.Declaration.O.Update' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

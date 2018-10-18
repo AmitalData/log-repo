@@ -1,0 +1,69 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.Customs.BL.EntityDataMappings;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Data.EntityKeys;
+using Logitude.Customs.Data;
+using Simplog.Server.Infrastructure;
+namespace Logitude.Customs.BL.EntityQueryServices
+{ 
+   public partial class PaymentOrderProtestReasonQueryService: EntityQueryService<PaymentOrderProtestReason,PaymentOrderProtestReasonKeys,PaymentOrderProtestReasonPM,PaymentOrderPM,PaymentOrderKeys>
+   {
+   
+        PaymentOrderProtestReasonRepository repository;
+		ICustomContext  context;
+        public PaymentOrderProtestReasonQueryService(int tenant)
+        {
+		    context = CustomContext.GetContext(tenant);
+            MainContext = context;
+            repository = new PaymentOrderProtestReasonRepository(context);
+            Repository = repository;
+            mapping = new PaymentOrderProtestReasonDataMapping();
+        }
+
+        public PaymentOrderProtestReasonQueryService(PaymentOrderProtestReasonRepository repository)
+        {
+            this.repository = repository;
+            Repository = repository;
+            mapping = new PaymentOrderProtestReasonDataMapping();
+        }
+
+        public PaymentOrderProtestReasonQueryService(ICustomContext context)
+        {
+            this.repository = new PaymentOrderProtestReasonRepository(context);
+            this.context = context;
+
+            MainContext = context;
+            Repository = repository;
+            mapping = new PaymentOrderProtestReasonDataMapping();
+        }
+		 
+		public  PaymentOrderProtestReasonPM GetSingle(string paymentorderid, int line,bool getComposition, bool getFromCache)
+        {
+             EntityKeys = new PaymentOrderProtestReasonKeys(){ PaymentOrderId = paymentorderid, Line = line };
+
+			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
+        }
+
+       
+	    protected override EntityKeyFields GetKeys(PaymentOrderProtestReason entityPOCO)
+        {
+            PaymentOrderProtestReasonKeys entityKeys = new PaymentOrderProtestReasonKeys() { PaymentOrderId = entityPOCO.PaymentOrderId, Line = entityPOCO.Line,  };
+            return entityKeys;
+        }
+     
+	 
+   }
+   
+}
+	 

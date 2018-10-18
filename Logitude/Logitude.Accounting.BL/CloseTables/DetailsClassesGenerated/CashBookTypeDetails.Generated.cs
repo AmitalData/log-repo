@@ -1,0 +1,60 @@
+
+   
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.CloseTablesClasses;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Def.EntityPMs; 
+using Logitude.Accounting.Data;
+
+namespace Logitude.Accounting.BL
+{
+   public class CashBookTypeDetails : CashBookType, ICloseTable<CashBookType, CashBookTypeDetails>
+   {
+       public List<CashBookTypeDetails> GetAll()
+       {
+		    var all = new List<CashBookTypeDetails>();  
+            all.Add(new CashBookTypeDetails()
+            {    
+                Code = "1", 
+                SearchFields = "1,Cash,מזומן,False,", 
+                Inactive = false, 
+                EnglishName = "Cash", 
+                LocalName = "מזומן", 
+			});
+			 
+            all.Add(new CashBookTypeDetails()
+            {    
+                Code = "2", 
+                SearchFields = "2,Cheques,המחאות,False,", 
+                Inactive = false, 
+                EnglishName = "Cheques", 
+                LocalName = "המחאות", 
+			});
+			
+            return all;
+       }
+
+	    public void MapPoco(CashBookType newPoco)
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.EnglishName = this.EnglishName;  
+		    newPoco.LocalName = this.LocalName;   
+        }
+
+		public string GetSearchFields(CashBookType rec)
+        {   
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.EnglishName,",",rec.LocalName,",");
+        }
+   }
+}
+

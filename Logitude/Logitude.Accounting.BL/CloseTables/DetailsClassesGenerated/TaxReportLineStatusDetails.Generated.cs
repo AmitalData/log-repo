@@ -1,0 +1,81 @@
+
+   
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.CloseTablesClasses;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Def.EntityPMs; 
+using Logitude.Accounting.Data;
+
+namespace Logitude.Accounting.BL
+{
+   public class TaxReportLineStatusDetails : TaxReportLineStatus, ICloseTable<TaxReportLineStatus, TaxReportLineStatusDetails>
+   {
+       public List<TaxReportLineStatusDetails> GetAll()
+       {
+		    var all = new List<TaxReportLineStatusDetails>();  
+            all.Add(new TaxReportLineStatusDetails()
+            {    
+                Code = "1", 
+                EnglishName = "Missing Vat No.", 
+                SearchFields = "1,Missing Vat No.,ערך ח.פ/ע.מ חסר", 
+                LocalName = "ערך ח.פ/ע.מ חסר", 
+			});
+			 
+            all.Add(new TaxReportLineStatusDetails()
+            {    
+                Code = "3", 
+                EnglishName = "Invoice number is not valid", 
+                SearchFields = "3,Invoice number is not valid,מספר חשבונית לא תקין", 
+                LocalName = "מספר חשבונית לא תקין", 
+			});
+			 
+            all.Add(new TaxReportLineStatusDetails()
+            {    
+                Code = "4", 
+                EnglishName = "Invoice amount is not valid", 
+                SearchFields = "4,Invoice amount is not valid.סכום חשבונית לא תקין", 
+                LocalName = "סכום חשבונית לא תקין", 
+			});
+			 
+            all.Add(new TaxReportLineStatusDetails()
+            {    
+                Code = "5", 
+                EnglishName = "Duplicate: There is another transaction with the same VAT No. and Reference", 
+                SearchFields = "5,כפילות-קיימות שתי תנועות עם ח.פ/ע.מ ומספר חשבונית זהה,Duplicate: There is another transaction with the same VAT No. and Reference", 
+                LocalName = "כפילות-קיימות שתי תנועות עם ח.פ/ע.מ ומספר חשבונית זהה", 
+			});
+			 
+            all.Add(new TaxReportLineStatusDetails()
+            {    
+                Code = "6", 
+                EnglishName = "Ready for transmit", 
+                SearchFields = "6,Ready for transmit,מוכן לשידור", 
+                LocalName = "מוכן לשידור", 
+			});
+			
+            return all;
+       }
+
+	    public void MapPoco(TaxReportLineStatus newPoco)
+        {   
+		    newPoco.Code = this.Code;  
+		    newPoco.EnglishName = this.EnglishName;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.LocalName = this.LocalName;   
+        }
+
+		public string GetSearchFields(TaxReportLineStatus rec)
+        {   
+           return String.Concat(rec.Code,",",rec.EnglishName,",",rec.LocalName,",");
+        }
+   }
+}
+

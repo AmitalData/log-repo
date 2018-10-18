@@ -1,0 +1,178 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Customs.Def.Validators;
+  
+namespace Logitude.Customs.Def.EntityPMs
+{
+   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class ClaimImporterDeclarsPage3PM : EntityPM
+   {
+   	  private string claimId ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ClaimId  
+	   {
+	    
+	     get
+		{
+		   return claimId;
+		 }
+		 set
+		 {
+		   if(claimId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ClaimId",OldValue=claimId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   claimId=value;
+		   }
+			
+		 }
+	   }
+	  private int tenant ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+	  private int lineNo ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int LineNo  
+	   {
+	    
+	     get
+		{
+		   return lineNo;
+		 }
+		 set
+		 {
+		   if(lineNo != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LineNo",OldValue=lineNo,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   lineNo=value;
+		   }
+			
+		 }
+	   }
+	  private string importerLoiDeclarationTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ImporterLoiDeclarationTypeCode  
+	   {
+	    
+	     get
+		{
+		   return importerLoiDeclarationTypeCode;
+		 }
+		 set
+		 {
+		   if(importerLoiDeclarationTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ImporterLoiDeclarationTypeCode",OldValue=importerLoiDeclarationTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   importerLoiDeclarationTypeCode=value;
+		   }
+			
+		 }
+	   }
+
+	   private List<ClaimImporterDeclarsP3LoiPM> claimImporterDeclarsP3Loi;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("ClaimImporterDeclarsP3Loi", "ClaimId,LineNo","ClaimId,CounterKey")]
+	   [DataMember]
+	   public virtual List<ClaimImporterDeclarsP3LoiPM> ClaimImporterDeclarsP3Loi  
+	   {
+	        get
+             {
+                 if (claimImporterDeclarsP3Loi == null)
+                 {
+                     claimImporterDeclarsP3Loi = new List<ClaimImporterDeclarsP3LoiPM>();
+                 }
+                 return claimImporterDeclarsP3Loi;
+              }
+             set { claimImporterDeclarsP3Loi = value; }
+	    }
+		   
+	   private List<ClaimImporterDeclarsP3LoiPM>  deletedClaimImporterDeclarsP3Loi;
+	   public virtual List<ClaimImporterDeclarsP3LoiPM> DeletedClaimImporterDeclarsP3Loi  
+	   {
+	        get
+             {
+                 if ( deletedClaimImporterDeclarsP3Loi == null)
+                 {
+                      deletedClaimImporterDeclarsP3Loi = new List<ClaimImporterDeclarsP3LoiPM>();
+                 }
+                 return  deletedClaimImporterDeclarsP3Loi;
+              }
+             set {  deletedClaimImporterDeclarsP3Loi = value; }
+	    }
+	  	  private string importerDeclarationTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ImporterDeclarationTypeName  
+	   {
+	    
+	     get
+		{
+		   return importerDeclarationTypeName;
+		 }
+		 set
+		 {
+		   if(importerDeclarationTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ImporterDeclarationTypeName",OldValue=importerDeclarationTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   importerDeclarationTypeName=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

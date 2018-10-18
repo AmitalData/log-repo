@@ -1,0 +1,1 @@
+alter table [Customs].[Declarations] add  FileState varchar(2)

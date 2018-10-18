@@ -1,0 +1,201 @@
+
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.CloseTablesClasses;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Logitude.BL.CommonDataModel.EntityPMs; 
+using Simplog.Data.CommonDataModel;
+
+namespace Logitude.BL.CommonDataModel
+{
+   public class AccountingSystemDetails : AccountingSystem, ICloseTable<AccountingSystem, AccountingSystemDetails>
+   {
+       public List<AccountingSystemDetails> GetAll()
+       {
+		    var all = new List<AccountingSystemDetails>();  
+            all.Add(new AccountingSystemDetails()
+            {    
+                Code = "HV", 
+                SearchFields = "HV,Hashavshevet", 
+                IsExternalCodesFromTable = false, 
+                IsExternalCodesSyncEnabled = false, 
+                IsSingleTaxPerInvoice = false, 
+                IsSingleCurrencyAccount = false, 
+                AllowManuallyDueDate = true, 
+                IsJournalMode = true, 
+                IsTaxItemManaged = false, 
+                AllowMinusInvoiceLines = true, 
+                ShowDownloadScreen = true, 
+                AllowARInvoicesTransfer = true, 
+                AllowAPInvoicesTransfer = true, 
+                AllowPositiveAmountsInTheCreditNote = false, 
+                InActive = false, 
+                AllowAPPaymentsTransfer = false, 
+                IsExternalCodesFromAPI = false, 
+                AllowARPaymentsTransfer = false, 
+                CanTransferToDropbox = false, 
+                Name = "Hashavshevet", 
+			});
+			 
+            all.Add(new AccountingSystemDetails()
+            {    
+                Code = "AI", 
+                SearchFields = "AI,Logitude Advanced Generic Interface", 
+                IsExternalCodesFromTable = false, 
+                IsExternalCodesSyncEnabled = false, 
+                IsSingleTaxPerInvoice = true, 
+                IsSingleCurrencyAccount = false, 
+                AllowManuallyDueDate = true, 
+                IsJournalMode = false, 
+                IsTaxItemManaged = false, 
+                AllowMinusInvoiceLines = true, 
+                ShowDownloadScreen = true, 
+                AllowARInvoicesTransfer = false, 
+                AllowAPInvoicesTransfer = false, 
+                AllowPositiveAmountsInTheCreditNote = false, 
+                InActive = false, 
+                AllowAPPaymentsTransfer = false, 
+                IsExternalCodesFromAPI = false, 
+                AllowARPaymentsTransfer = false, 
+                CanTransferToDropbox = false, 
+                Name = "Logitude Advanced Generic Interface", 
+			});
+			 
+            all.Add(new AccountingSystemDetails()
+            {    
+                Code = "GI", 
+                SearchFields = "GI,Logitude Generic Interface", 
+                IsExternalCodesFromTable = false, 
+                IsExternalCodesSyncEnabled = false, 
+                IsSingleTaxPerInvoice = true, 
+                IsSingleCurrencyAccount = false, 
+                AllowManuallyDueDate = true, 
+                IsJournalMode = false, 
+                IsTaxItemManaged = false, 
+                AllowMinusInvoiceLines = true, 
+                ShowDownloadScreen = true, 
+                AllowARInvoicesTransfer = true, 
+                AllowAPInvoicesTransfer = true, 
+                AllowPositiveAmountsInTheCreditNote = false, 
+                InActive = false, 
+                AllowAPPaymentsTransfer = false, 
+                IsExternalCodesFromAPI = false, 
+                AllowARPaymentsTransfer = false, 
+                CanTransferToDropbox = false, 
+                Name = "Logitude Generic Interface", 
+			});
+			 
+            all.Add(new AccountingSystemDetails()
+            {    
+                Code = "NO", 
+                SearchFields = "NO,None", 
+                IsExternalCodesFromTable = false, 
+                IsExternalCodesSyncEnabled = false, 
+                IsSingleTaxPerInvoice = false, 
+                IsSingleCurrencyAccount = false, 
+                AllowManuallyDueDate = true, 
+                IsJournalMode = true, 
+                IsTaxItemManaged = false, 
+                AllowMinusInvoiceLines = true, 
+                ShowDownloadScreen = true, 
+                AllowARInvoicesTransfer = false, 
+                AllowAPInvoicesTransfer = false, 
+                AllowPositiveAmountsInTheCreditNote = false, 
+                InActive = false, 
+                AllowAPPaymentsTransfer = false, 
+                IsExternalCodesFromAPI = false, 
+                AllowARPaymentsTransfer = false, 
+                CanTransferToDropbox = false, 
+                Name = "None", 
+			});
+			 
+            all.Add(new AccountingSystemDetails()
+            {    
+                Code = "QB", 
+                SearchFields = "QB,Quick Books", 
+                IsExternalCodesFromTable = true, 
+                IsExternalCodesSyncEnabled = false, 
+                IsSingleTaxPerInvoice = true, 
+                IsSingleCurrencyAccount = true, 
+                AllowManuallyDueDate = false, 
+                IsJournalMode = false, 
+                IsTaxItemManaged = true, 
+                AllowMinusInvoiceLines = false, 
+                ShowDownloadScreen = false, 
+                AllowARInvoicesTransfer = true, 
+                AllowAPInvoicesTransfer = false, 
+                AllowPositiveAmountsInTheCreditNote = false, 
+                InActive = false, 
+                AllowAPPaymentsTransfer = false, 
+                IsExternalCodesFromAPI = false, 
+                AllowARPaymentsTransfer = false, 
+                CanTransferToDropbox = false, 
+                Name = "Quick Books", 
+			});
+			 
+            all.Add(new AccountingSystemDetails()
+            {    
+                Code = "RH", 
+                SearchFields = "RH,Rivheet", 
+                IsExternalCodesFromTable = false, 
+                IsExternalCodesSyncEnabled = false, 
+                IsSingleTaxPerInvoice = false, 
+                IsSingleCurrencyAccount = false, 
+                AllowManuallyDueDate = true, 
+                IsJournalMode = true, 
+                IsTaxItemManaged = false, 
+                AllowMinusInvoiceLines = true, 
+                ShowDownloadScreen = true, 
+                AllowARInvoicesTransfer = true, 
+                AllowAPInvoicesTransfer = true, 
+                AllowPositiveAmountsInTheCreditNote = false, 
+                InActive = false, 
+                AllowAPPaymentsTransfer = false, 
+                IsExternalCodesFromAPI = false, 
+                AllowARPaymentsTransfer = false, 
+                CanTransferToDropbox = false, 
+                Name = "Rivheet", 
+			});
+			
+            return all;
+       }
+
+	    public void MapPoco(AccountingSystem newPoco)
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.IsExternalCodesFromTable = this.IsExternalCodesFromTable;  
+		    newPoco.IsExternalCodesSyncEnabled = this.IsExternalCodesSyncEnabled;  
+		    newPoco.IsSingleTaxPerInvoice = this.IsSingleTaxPerInvoice;  
+		    newPoco.IsSingleCurrencyAccount = this.IsSingleCurrencyAccount;  
+		    newPoco.AllowManuallyDueDate = this.AllowManuallyDueDate;  
+		    newPoco.IsJournalMode = this.IsJournalMode;  
+		    newPoco.IsTaxItemManaged = this.IsTaxItemManaged;  
+		    newPoco.AllowMinusInvoiceLines = this.AllowMinusInvoiceLines;  
+		    newPoco.ShowDownloadScreen = this.ShowDownloadScreen;  
+		    newPoco.AllowARInvoicesTransfer = this.AllowARInvoicesTransfer;  
+		    newPoco.AllowAPInvoicesTransfer = this.AllowAPInvoicesTransfer;  
+		    newPoco.AllowPositiveAmountsInTheCreditNote = this.AllowPositiveAmountsInTheCreditNote;  
+		    newPoco.InActive = this.InActive;  
+		    newPoco.AllowAPPaymentsTransfer = this.AllowAPPaymentsTransfer;  
+		    newPoco.IsExternalCodesFromAPI = this.IsExternalCodesFromAPI;  
+		    newPoco.AllowARPaymentsTransfer = this.AllowARPaymentsTransfer;  
+		    newPoco.CanTransferToDropbox = this.CanTransferToDropbox;  
+		    newPoco.Name = this.Name;   
+        }
+
+		public string GetSearchFields(AccountingSystem rec)
+        {   
+           return String.Concat(rec.Code,",",rec.IsExternalCodesFromTable,",",rec.IsExternalCodesSyncEnabled,",",rec.IsSingleTaxPerInvoice,",",rec.IsSingleCurrencyAccount,",",rec.AllowManuallyDueDate,",",rec.IsJournalMode,",",rec.IsTaxItemManaged,",",rec.AllowMinusInvoiceLines,",",rec.ShowDownloadScreen,",",rec.AllowARInvoicesTransfer,",",rec.AllowAPInvoicesTransfer,",",rec.AllowPositiveAmountsInTheCreditNote,",",rec.InActive,",",rec.AllowAPPaymentsTransfer,",",rec.IsExternalCodesFromAPI,",",rec.AllowARPaymentsTransfer,",",rec.CanTransferToDropbox,",",rec.Name,",");
+        }
+   }
+}
+

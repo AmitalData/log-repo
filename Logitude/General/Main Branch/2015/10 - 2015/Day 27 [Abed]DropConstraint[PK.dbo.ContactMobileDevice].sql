@@ -1,0 +1,1 @@
+alter table dbo.ContactMobileDevices Drop constraint [PK_dbo.ContactMobileDevices] 

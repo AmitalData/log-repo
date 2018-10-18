@@ -1,0 +1,210 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Customs.Def.Validators;
+  
+namespace Logitude.Customs.Def.EntityPMs
+{
+   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class ProceduralFaultsConnEntityPM : EntityPM
+   {
+   	  private string id ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Id  
+	   {
+	    
+	     get
+		{
+		   return id;
+		 }
+		 set
+		 {
+		   if(id != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   id=value;
+		   }
+			
+		 }
+	   }
+	  private int tenant ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+	  private string proceduralFaultId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ProceduralFaultId  
+	   {
+	    
+	     get
+		{
+		   return proceduralFaultId;
+		 }
+		 set
+		 {
+		   if(proceduralFaultId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ProceduralFaultId",OldValue=proceduralFaultId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   proceduralFaultId=value;
+		   }
+			
+		 }
+	   }
+	  private string entityType ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string EntityType  
+	   {
+	    
+	     get
+		{
+		   return entityType;
+		 }
+		 set
+		 {
+		   if(entityType != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EntityType",OldValue=entityType,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   entityType=value;
+		   }
+			
+		 }
+	   }
+	  private string entityIdKey1 ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string EntityIdKey1  
+	   {
+	    
+	     get
+		{
+		   return entityIdKey1;
+		 }
+		 set
+		 {
+		   if(entityIdKey1 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EntityIdKey1",OldValue=entityIdKey1,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   entityIdKey1=value;
+		   }
+			
+		 }
+	   }
+	  private string entityIdKey2 ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string EntityIdKey2  
+	   {
+	    
+	     get
+		{
+		   return entityIdKey2;
+		 }
+		 set
+		 {
+		   if(entityIdKey2 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EntityIdKey2",OldValue=entityIdKey2,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   entityIdKey2=value;
+		   }
+			
+		 }
+	   }
+	  private string entityIdKey3 ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string EntityIdKey3  
+	   {
+	    
+	     get
+		{
+		   return entityIdKey3;
+		 }
+		 set
+		 {
+		   if(entityIdKey3 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EntityIdKey3",OldValue=entityIdKey3,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   entityIdKey3=value;
+		   }
+			
+		 }
+	   }
+	  private string entityPath ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string EntityPath  
+	   {
+	    
+	     get
+		{
+		   return entityPath;
+		 }
+		 set
+		 {
+		   if(entityPath != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EntityPath",OldValue=entityPath,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   entityPath=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

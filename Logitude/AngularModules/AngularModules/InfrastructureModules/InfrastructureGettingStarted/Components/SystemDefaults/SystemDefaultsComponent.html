@@ -1,0 +1,863 @@
+﻿
+<style type="text/css">
+    .SystemDefaultsBox {
+        width: 100%;
+        height: 100%;
+        border: 1px solid #BABABA;
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        overflow: hidden;
+    }
+
+    .SystemDefaultsBoxHeader {
+        height: 20px;
+        font-size: 12px;
+        color: #1B90CB;
+        text-indent: 5px;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(245, 245, 245, 1) 0%,rgba(243, 243, 243, 1) 50.24%,rgba(236, 236, 236, 1) 69.98%,rgba(224, 224, 224, 1) 84.35%,rgba(207, 207, 207, 1) 96.04%,rgba(199, 199, 199, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(245, 245, 245, 1) ),color-stop(0.5024,rgba(243, 243, 243, 1) ),color-stop(0.6998,rgba(236, 236, 236, 1) ),color-stop(0.8435,rgba(224, 224, 224, 1) ),color-stop(0.9604,rgba(207, 207, 207, 1) ),color-stop(1,rgba(199, 199, 199, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
+        -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#F5F5F5', endColorstr='#C7C7C7' ,GradientType=0)";
+        background: linear-gradient(180deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
+    }
+</style>
+
+<table *ngIf="IsVisibile">
+
+    <tr *ngIf="DemoMessageVisibility" style="height:1px;">
+        <td>
+            <div style="margin:1px">
+                <label style="margin: 2px 0px 0px 5px">This is a demo tenant, therefore you can't edit the system settings </label>
+            </div>
+        </td>
+    </tr>
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div class="ScrollViewer">
+                <div class="ScrollContent">
+                    <div class="TableHolder" style="padding-top: 5px;">
+                        <table>
+
+                            <tr>
+                                <!-- Prepaid & VAT-->
+                                <td>
+                                    <table>
+
+                                        <!-- Prepaid -->
+                                        <tr style="height:1px;">
+                                            <td>
+                                                <table>
+                                                    <tr>
+                                                        <td style="height: 100%">
+                                                            <div class="SystemDefaultsBox">
+                                                                <table>
+                                                                    <tr class="SystemDefaultsBoxHeader">
+                                                                        <td>Prepaid | Collect</td>
+                                                                    </tr>
+
+                                                                    <!-- Help Text-->
+                                                                    <tr style="height:1px;">
+                                                                        <td style="width: 155px;">
+                                                                            <div style="margin-top:5px;margin-left:5px;">
+                                                                                <Label style="width: 155px;font-family:Arial; font-size:11px;color:gray; white-space: pre-line; word-wrap: break-word; text-wrap: normal;text-overflow: ellipsis;"> {{'Tenant.PrepaidCollectHelpText' | TextCodeTranslationPipe}}</Label>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td style="padding-left: 5px; padding-right: 5px;">
+                                                                            <table class="FixedTable">
+
+                                                                                <!-- ExportFreightPrepaidCollectId -->
+                                                                                <tr class="FormFieldRow">
+                                                                                    <td style="width: 155px;">
+                                                                                        <LogLabel [ObjectFieldName]="'ExportFreightPrepaidCollectId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <LogLov [ObjectFieldName]="'ExportFreightPrepaidCollectId'"
+                                                                                                [ObjectTableName]="'Tenant'"
+                                                                                                [DataContext]="DataContext"
+                                                                                                [LookUpTableName]="'PrepaidCollect'"
+                                                                                                [DependencyFilter1Value]="'true'"
+                                                                                                [SelectedValue]="ExportFreightPrepaidCollectId">
+                                                                                        </LogLov>
+
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <!-- ImportFreightPrepaidCollectId -->
+                                                                                <tr class="FormFieldRow">
+                                                                                    <td>
+                                                                                        <LogLabel [ObjectFieldName]="'ImportFreightPrepaidCollectId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <LogLov [ObjectFieldName]="'ImportFreightPrepaidCollectId'"
+                                                                                                [ObjectTableName]="'Tenant'"
+                                                                                                [DataContext]="DataContext"
+                                                                                                [LookUpTableName]="'PrepaidCollect'"
+                                                                                                [DependencyFilter1Value]="'true'"
+                                                                                                [SelectedValue]="ImportFreightPrepaidCollectId">
+                                                                                        </LogLov>
+
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <!-- ExportOtherPrepaidCollectId -->
+                                                                                <tr class="FormFieldRow">
+                                                                                    <td>
+                                                                                        <LogLabel [ObjectFieldName]="'ExportOtherPrepaidCollectId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <LogLov [ObjectFieldName]="'ExportOtherPrepaidCollectId'"
+                                                                                                [ObjectTableName]="'Tenant'"
+                                                                                                [DataContext]="DataContext"
+                                                                                                [LookUpTableName]="'PrepaidCollect'"
+                                                                                                [DependencyFilter1Value]="'true'"
+                                                                                                [SelectedValue]="ExportOtherPrepaidCollectId">
+                                                                                        </LogLov>
+
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <!-- ImportOtherPrepaidCollectId -->
+                                                                                <tr class="FormFieldRow">
+                                                                                    <td>
+                                                                                        <LogLabel [ObjectFieldName]="'ImportOtherPrepaidCollectId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <LogLov [ObjectFieldName]="'ImportOtherPrepaidCollectId'"
+                                                                                                [ObjectTableName]="'Tenant'"
+                                                                                                [DataContext]="DataContext"
+                                                                                                [LookUpTableName]="'PrepaidCollect'"
+                                                                                                [DependencyFilter1Value]="'true'"
+                                                                                                [SelectedValue]="ImportOtherPrepaidCollectId">
+                                                                                        </LogLov>
+
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <!-- MasterExportFreightPrepaidCollectId -->
+                                                                                <tr class="FormFieldRow">
+                                                                                    <td>
+                                                                                        <LogLabel [ObjectFieldName]="'MasterExportFreightPrepaidCollectId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <LogLov [ObjectFieldName]="'MasterExportFreightPrepaidCollectId'"
+                                                                                                [ObjectTableName]="'Tenant'"
+                                                                                                [DataContext]="DataContext"
+                                                                                                [LookUpTableName]="'PrepaidCollect'"
+                                                                                                [DependencyFilter1Value]="'true'"
+                                                                                                [SelectedValue]="MasterExportFreightPrepaidCollectId">
+                                                                                        </LogLov>
+
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <!-- MasterImportFreightPrepaidCollectId -->
+                                                                                <tr class="FormFieldRow">
+                                                                                    <td>
+                                                                                        <LogLabel [ObjectFieldName]="'MasterImportFreightPrepaidCollectId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <LogLov [ObjectFieldName]="'MasterImportFreightPrepaidCollectId'"
+                                                                                                [ObjectTableName]="'Tenant'"
+                                                                                                [DataContext]="DataContext"
+                                                                                                [LookUpTableName]="'PrepaidCollect'"
+                                                                                                [DependencyFilter1Value]="'true'"
+                                                                                                [SelectedValue]="MasterImportFreightPrepaidCollectId">
+                                                                                        </LogLov>
+
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <!-- MasterExportOtherPrepaidCollectId -->
+                                                                                <tr class="FormFieldRow">
+                                                                                    <td>
+                                                                                        <LogLabel [ObjectFieldName]="'MasterExportOtherPrepaidCollectId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <LogLov [ObjectFieldName]="'MasterExportOtherPrepaidCollectId'"
+                                                                                                [ObjectTableName]="'Tenant'"
+                                                                                                [DataContext]="DataContext"
+                                                                                                [LookUpTableName]="'PrepaidCollect'"
+                                                                                                [DependencyFilter1Value]="'true'"
+                                                                                                [SelectedValue]="MasterExportOtherPrepaidCollectId">
+                                                                                        </LogLov>
+
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <!-- MasterImportOtherPrepaidCollectId -->
+                                                                                <tr class="FormFieldRow">
+                                                                                    <td>
+                                                                                        <LogLabel [ObjectFieldName]="'MasterImportOtherPrepaidCollectId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <LogLov [ObjectFieldName]="'MasterImportOtherPrepaidCollectId'"
+                                                                                                [ObjectTableName]="'Tenant'"
+                                                                                                [DataContext]="DataContext"
+                                                                                                [LookUpTableName]="'PrepaidCollect'"
+                                                                                                [DependencyFilter1Value]="'true'"
+                                                                                                [SelectedValue]="MasterImportOtherPrepaidCollectId">
+                                                                                        </LogLov>
+
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <tr>
+                                                                                    <td colspan="2">
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                            </table>
+                                                                        </td>
+
+                                                                    </tr>
+
+                                                                </table>
+                                                            </div>
+                                                        </td>
+
+                                                        <td style="width: 4px;">
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+
+                                        <tr style="margin-top:10px">
+                                            <td colspan="2"> </td>
+                                        </tr>
+
+                                        <!-- VAT-->
+                                        <tr style="width:1px;">
+                                            <td>
+                                                <table>
+                                                    <tr>
+                                                        <td style="height: 100%">
+                                                            <div class="SystemDefaultsBox">
+                                                                <table>
+                                                                    <tr class="SystemDefaultsBoxHeader">
+                                                                        <td>VAT Number Settings - Authorized dealer number</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td style="padding-left: 5px; padding-right: 5px;">
+                                                                            <table class="FixedTable">
+
+                                                                                <!-- VatMandatoryTypeCode -->
+                                                                                <tr class="FormFieldRow">
+                                                                                    <td style="width: 155px;">
+                                                                                        <LogLabel [ObjectFieldName]="'VatMandatoryTypeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <LogLov [ObjectFieldName]="'VatMandatoryTypeCode'"
+                                                                                                [ObjectTableName]="'Tenant'"
+                                                                                                [DataContext]="DataContext"
+                                                                                                [LookUpTableName]="'VatMandatoryType'"
+                                                                                                [SelectedValue]="VatMandatoryTypeCode">
+                                                                                        </LogLov>
+
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <!-- VatMandatoryCountryId -->
+                                                                                <tr class="FormFieldRow">
+                                                                                    <td>
+                                                                                        <LogLabel [ObjectFieldName]="'VatMandatoryCountryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <LogLov [ObjectFieldName]="'VatMandatoryCountryId'"
+                                                                                                [ObjectTableName]="'Tenant'"
+                                                                                                [DataContext]="DataContext"
+                                                                                                [LookUpTableName]="'Country'"
+                                                                                                [SelectedValue]="VatMandatoryCountryId">
+                                                                                        </LogLov>
+
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <!-- VatMandatoryForPotentialCustomers -->
+                                                                                <tr class="FormFieldRow">
+                                                                                    <td colspan="2">
+                                                                                        <table>
+                                                                                            <tr>
+                                                                                                <td style="width: 220px;">
+                                                                                                    <LogLabel [ObjectFieldName]="'VatMandatoryForPotentialCustomers'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                                </td>
+
+                                                                                                <td>
+                                                                                                    <LogCheckBox [ObjectFieldName]="'VatMandatoryForPotentialCustomers'" [Value]="VatMandatoryForPotentialCustomers" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsDisabled]="!IsVatMandatoryForPotentialCustomers"></LogCheckBox>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <!-- VatUniqueTypeCode -->
+                                                                                <tr class="FormFieldRow">
+                                                                                    <td style="width: 155px;">
+                                                                                        <LogLabel [ObjectFieldName]="'VatUniqueTypeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <LogLov [ObjectFieldName]="'VatUniqueTypeCode'"
+                                                                                                [ObjectTableName]="'Tenant'"
+                                                                                                [DataContext]="DataContext"
+                                                                                                [LookUpTableName]="'VatUniqueType'"
+                                                                                                [SelectedValue]="VatUniqueTypeCode">
+                                                                                        </LogLov>
+
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <!-- VatUniqueCountryId -->
+                                                                                <tr class="FormFieldRow">
+                                                                                    <td style="width: 155px;">
+                                                                                        <LogLabel [ObjectFieldName]="'VatUniqueCountryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <LogLov [ObjectFieldName]="'VatUniqueCountryId'"
+                                                                                                [ObjectTableName]="'Tenant'"
+                                                                                                [DataContext]="DataContext"
+                                                                                                [LookUpTableName]="'Country'"
+                                                                                                [SelectedValue]="VatUniqueCountryId">
+                                                                                        </LogLov>
+
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <tr>
+                                                                                    <td colspan="2">
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                            </table>
+
+                                                                        </td>
+
+                                                                    </tr>
+
+                                                                </table>
+
+                                                            </div>
+
+                                                        </td>
+
+                                                        <td style="width: 4px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                    </tr>
+                                                </table>
+
+                                            </td>
+
+                                        </tr>
+
+                                    </table>
+                                </td>
+
+                                <td style="width:15px">
+                                    <div></div>
+                                </td>
+
+                                <!-- Default Units & Others-->
+                                <td>
+                                    <table>
+
+                                        <!-- Default Units -->
+                                        <tr style="height:1px;">
+                                            <td>
+                                                <table>
+                                                    <tr>
+                                                        <td style="height: 100%">
+                                                            <div class="SystemDefaultsBox">
+                                                                <table>
+                                                                    <tr class="SystemDefaultsBoxHeader">
+                                                                        <td>Default Units</td>
+                                                                    </tr>
+
+                                                                    <!-- Help Text-->
+                                                                    <tr style="height:1px;">
+                                                                        <td style="width: 155px;">
+                                                                            <div style="margin-top:5px;margin-left:5px;">
+                                                                                <Label style="width: 155px; font-family:Arial; font-size:11px;color:gray; white-space: pre-line; word-wrap: break-word; text-wrap: normal;text-overflow: ellipsis;"> {{'Tenant.DefaultUnitsHelpText' | TextCodeTranslationPipe}}</Label>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td style="padding-left: 5px; padding-right: 5px;">
+                                                                            <table class="FixedTable">
+
+                                                                                <!-- VolumeUnitCode -->
+                                                                                <tr class="FormFieldRow">
+                                                                                    <td style="width: 155px;">
+                                                                                        <LogLabel [ObjectFieldName]="'VolumeUnitCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <LogLov [ObjectFieldName]="'VolumeUnitCode'"
+                                                                                                [ObjectTableName]="'Tenant'"
+                                                                                                [DataContext]="DataContext"
+                                                                                                [LookUpTableName]="'VolumeUnit'"
+                                                                                                [SelectedValue]="VolumeUnitCode">
+                                                                                        </LogLov>
+
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <!-- DimensionsUnitCode -->
+                                                                                <tr class="FormFieldRow">
+                                                                                    <td style="width: 155px;">
+                                                                                        <LogLabel [ObjectFieldName]="'DimensionsUnitCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <LogLov [ObjectFieldName]="'DimensionsUnitCode'"
+                                                                                                [ObjectTableName]="'Tenant'"
+                                                                                                [DataContext]="DataContext"
+                                                                                                [LookUpTableName]="'DimensionsUnit'"
+                                                                                                [SelectedValue]="DimensionsUnitCode"
+                                                                                                [DependencyFilter1Value]="DimensionsDependencyProperty1"
+                                                                                                [DependencyFilter1IsList]="DimensionsDependencyProperty1IsList">
+                                                                                        </LogLov>
+
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <!-- GrossWeightUnitCode -->
+                                                                                <tr class="FormFieldRow">
+                                                                                    <td style="width: 155px;">
+                                                                                        <LogLabel [ObjectFieldName]="'GrossWeightUnitCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <LogLov [ObjectFieldName]="'GrossWeightUnitCode'"
+                                                                                                [ObjectTableName]="'Tenant'"
+                                                                                                [DataContext]="DataContext"
+                                                                                                [LookUpTableName]="'WeightUnit'"
+                                                                                                [SelectedValue]="GrossWeightUnitCode">
+                                                                                        </LogLov>
+
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <!-- ChargeableWeightUnitCode -->
+                                                                                <tr class="FormFieldRow">
+                                                                                    <td style="width: 155px;">
+                                                                                        <LogLabel [ObjectFieldName]="'ChargeableWeightUnitCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <LogLov [ObjectFieldName]="'ChargeableWeightUnitCode'"
+                                                                                                [ObjectTableName]="'Tenant'"
+                                                                                                [DataContext]="DataContext"
+                                                                                                [LookUpTableName]="'WeightUnit'"
+                                                                                                [SelectedValue]="ChargeableWeightUnitCode">
+                                                                                        </LogLov>
+
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <!-- WeightMeasurementUnitCode -->
+                                                                                <tr class="FormFieldRow">
+                                                                                    <td style="width: 155px;">
+                                                                                        <LogLabel [ObjectFieldName]="'WeightMeasurementUnitCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <LogLov [ObjectFieldName]="'WeightMeasurementUnitCode'"
+                                                                                                [ObjectTableName]="'Tenant'"
+                                                                                                [DataContext]="DataContext"
+                                                                                                [LookUpTableName]="'WeightUnit'"
+                                                                                                [SelectedValue]="WeightMeasurementUnitCode">
+                                                                                        </LogLov>
+
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <!-- TemperatureUnitCode -->
+                                                                                <tr class="FormFieldRow">
+                                                                                    <td style="width: 155px;">
+                                                                                        <LogLabel [ObjectFieldName]="'TemperatureUnitCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <LogLov [ObjectFieldName]="'TemperatureUnitCode'"
+                                                                                                [ObjectTableName]="'Tenant'"
+                                                                                                [DataContext]="DataContext"
+                                                                                                [LookUpTableName]="'TemperatureUnit'"
+                                                                                                [SelectedValue]="TemperatureUnitCode">
+                                                                                        </LogLov>
+
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <tr>
+                                                                                    <td colspan="2">
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                            </table>
+                                                                        </td>
+
+                                                                    </tr>
+
+                                                                </table>
+
+                                                            </div>
+
+                                                        </td>
+
+                                                        <td style="width: 4px;">
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+
+                                        <tr style="height: 10px">
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <!-- Others -->
+                                        <tr style="height:1px;">
+                                            <td>
+                                                <table>
+                                                    <tr>
+                                                        <td style="height: 100%">
+                                                            <div class="SystemDefaultsBox">
+                                                                <table>
+                                                                    <tr class="SystemDefaultsBoxHeader">
+                                                                        <td>Others</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td style="padding-left: 5px; padding-right: 5px;">
+                                                                            <table class="FixedTable">
+
+                                                                                <!-- IATA -->
+                                                                                <tr class="FormFieldRow">
+                                                                                    <td style="width: 200px;">
+                                                                                        <LogLabel [ObjectFieldName]="'IATA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <LogTextBox [ObjectFieldName]="'IATA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <!-- CASSCode -->
+                                                                                <tr class="FormFieldRow">
+                                                                                    <td style="width: 200px;">
+                                                                                        <LogLabel [ObjectFieldName]="'CASSCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <LogTextBox [ObjectFieldName]="'CASSCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <!-- SCACCode -->
+                                                                                <tr class="FormFieldRow">
+                                                                                    <td style="width: 200px;">
+                                                                                        <LogLabel [ObjectFieldName]="'SCACCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <LogTextBox [ObjectFieldName]="'SCACCode'" [Text]="SCACCode" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <!-- FMCNumber -->
+                                                                                <tr class="FormFieldRow" *ngIf="IsTenantUS">
+                                                                                    <td style="width: 200px;">
+                                                                                        <LogLabel [ObjectFieldName]="'FMCNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <LogTextBox [ObjectFieldName]="'FMCNumber'" [Text]="FMCNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <!-- LocalCustomsCode -->
+                                                                                <tr class="FormFieldRow">
+                                                                                    <td style="width: 200px;">
+                                                                                        <LogLabel [ObjectFieldName]="'LocalCustomsCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <LogTextBox [ObjectFieldName]="'LocalCustomsCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <!-- AgentId -->
+                                                                                <tr class="FormFieldRow" *ngIf="AgentIdVisibility">
+                                                                                    <td style="width: 200px;">
+                                                                                        <LogLabel [ObjectFieldName]="'AgentId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <LogLov [ObjectFieldName]="'AgentId'"
+                                                                                                [ObjectTableName]="'Tenant'"
+                                                                                                [DataContext]="DataContext"
+                                                                                                [LookUpTableName]="'Card'"
+                                                                                                [SelectedValue]="AgentId"
+                                                                                                [DependencyFilter1Value]="'AG'">
+                                                                                        </LogLov>
+
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <!-- CustomerId -->
+                                                                                <!--<tr class="FormFieldRow" *ngIf="CustomerIdVisibility">
+                                                                                    <td style="width: 200px;">
+                                                                                        <LogLabel [ObjectFieldName]="'CustomerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <LogLov [ObjectFieldName]="'CustomerId'"
+                                                                                                [ObjectTableName]="'Tenant'"
+                                                                                                [DataContext]="DataContext"
+                                                                                                [LookUpTableName]="'Card'"
+                                                                                                [DependencyFilter1Value]="'CS'"
+                                                                                                [SelectedValue]="CustomerId">
+                                                                                        </LogLov>
+                                                                                    </td>
+                                                                                </tr>-->
+                                                                                <!-- IsCustomerTenantShare -->
+                                                                                <tr class="FormFieldRow" *ngIf="IsCustomerTenantShareVisible">
+                                                                                    <td colspan="2">
+                                                                                        <table>
+                                                                                            <tr>
+                                                                                                <td style="width: 280px;">
+                                                                                                    <LogLabel [ObjectFieldName]="'IsCustomerTenantShare'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                                </td>
+
+                                                                                                <td>
+                                                                                                    <LogCheckBox [ObjectFieldName]="'IsCustomerTenantShare'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <!-- CustomerTenantShareImportFile -->
+                                                                                <tr class="FormFieldRow" *ngIf="CustomerTenantShareImportFileVisible">
+                                                                                    <td colspan="2">
+                                                                                        <table>
+                                                                                            <tr>
+                                                                                                <td style="width: 280px;">
+                                                                                                    <LogLabel [ObjectFieldName]="'CustomerTenantShareImportFile'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                                </td>
+
+                                                                                                <td>
+                                                                                                    <LogCheckBox [ObjectFieldName]="'CustomerTenantShareImportFile'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </td>
+                                                                                </tr>
+
+
+                                                                                <!-- IsNotesRightToLeftEnabled -->
+                                                                                <tr class="FormFieldRow" *ngIf="NotesRightToLeftVisible">
+                                                                                    <td colspan="2">
+                                                                                        <table>
+                                                                                            <tr>
+                                                                                                <td style="width: 280px;">
+                                                                                                    <LogLabel [ObjectFieldName]="'IsNotesRightToLeftEnabled'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                                </td>
+
+                                                                                                <td>
+                                                                                                    <LogCheckBox [ObjectFieldName]="'IsNotesRightToLeftEnabled'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <!-- AllowAgentInCustomersLOV -->
+                                                                                <tr class="FormFieldRow" *ngIf="AllowAgentInCustomersLOVVisible">
+                                                                                    <td colspan="2">
+                                                                                        <table>
+                                                                                            <tr>
+                                                                                                <td style="width: 280px;">
+                                                                                                    <LogLabel [ObjectFieldName]="'AllowAgentInCustomersLOV'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                                </td>
+
+                                                                                                <td>
+                                                                                                    <LogCheckBox [ObjectFieldName]="'AllowAgentInCustomersLOV'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <tr>
+                                                                                    <td colspan="2">
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                            </table>
+                                                                        </td>
+
+                                                                    </tr>
+
+                                                                </table>
+                                                            </div>
+                                                        </td>
+
+                                                        <td style="width: 4px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+
+                                        <tr style="height: 10px">
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <!-- Regulated Agent -->
+                                        <tr style="height:1px;" *ngIf="RegulatedAgentVisibility">
+                                            <td>
+                                                <table>
+                                                    <tr>
+                                                        <td style="height: 100%">
+                                                            <div class="SystemDefaultsBox">
+                                                                <table>
+                                                                    <tr class="SystemDefaultsBoxHeader">
+                                                                        <td>Regulated Agent</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td style="padding-left: 5px; padding-right: 5px;">
+                                                                            <table class="FixedTable">
+
+                                                                                <!-- RegulatedAgentRegimeActivated -->
+                                                                                <tr class="FormFieldRow">
+                                                                                    <td colspan="2">
+                                                                                        <table>
+                                                                                            <tr>
+                                                                                                <td style="width: 200px;">
+                                                                                                    <LogLabel [ObjectFieldName]="'RegulatedAgentRegimeActivated'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                                </td>
+
+                                                                                                <td>
+                                                                                                    <CheckBox [IsChecked]="RegulatedAgentRegimeActivated" (Checked)="RegulatedAgentRegimeActivated = $event"></CheckBox>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <!-- RegulatedAgentNumber -->
+                                                                                <tr class="FormFieldRow">
+                                                                                    <td style="width: 120px;">
+                                                                                        <LogLabel [ObjectFieldName]="'RegulatedAgentNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <LogTextBox [ObjectFieldName]="'RegulatedAgentNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                            </table>
+                                                                        </td>
+
+                                                                    </tr>
+
+                                                                </table>
+
+                                                            </div>
+
+                                                        </td>
+
+                                                        <td style="width: 4px;">
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>
+
+
+

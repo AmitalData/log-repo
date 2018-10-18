@@ -1,0 +1,330 @@
+﻿
+<table>
+    <tr style="height:5px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <td style="width:15px;">
+                        <div></div>
+                    </td>
+
+                    <td>
+                        <table>
+                            <tr class="TabTitleRow">
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td>{{'Shipment.TH.Packages' | textcodeTranslation}}</td>
+                                            <td style="width: 90px">
+                                                <div class="Button" (click)="AddNewItem()">Add Package</div>
+
+                                                <wj-popup class="col-md-6 modal-content" #addPackageForm>
+                                                    <frm-log-in-cmp (submit)="addPackageForm.hide()" (createAccount)="showDialog(frmCreateAccount)"></frm-log-in-cmp>
+                                                </wj-popup>
+
+                                            </td>
+
+                                            <td style="width:5px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width: 21px">
+                                                <IconButton [Name]="'Settings'"></IconButton>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <wj-flex-grid #flex
+                                                  style="max-height:400px"
+                                                  [itemsSource]="data"
+                                                  (selectionChanged)="selectionChanged(s,e)">
+                                        <wj-flex-grid-column [header]="'Pieces'" [binding]="'NumberOfPackages'"></wj-flex-grid-column>
+                                        <wj-flex-grid-column [header]="'Dimensions'" [binding]="'Dimensions'"></wj-flex-grid-column>
+                                        <wj-flex-grid-column [header]="'Volume'" [binding]="'Volume'"></wj-flex-grid-column>
+                                        <wj-flex-grid-column [header]="'VolumetricWeight'" [binding]="'VolumetricWeight'"></wj-flex-grid-column>
+                                        <wj-flex-grid-column [header]="'GrossWeight'" [binding]="'GrossWeight'"></wj-flex-grid-column>
+
+                                    </wj-flex-grid>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td style="width:15px;">
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height:10px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr class="TabSummaryArea" [style.height.px]="TransportModeId == 'A' ? 150 : 105">
+        <td>
+            <table>
+                <tr style="height: 5px;">
+                    <td colspan="3">
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="width: 10px;">
+                        <div></div>
+                    </td>
+
+                    <td>
+                        <table *ngIf="TransportModeId == 'A'">
+                            <tr>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td style="width: 250px;">
+                                                <table>
+                                                    <tr style="height: 20px;">
+                                                        <td colspan="3" class="BlueTitle">{{'Shipment.S.Packages.Details' | textcodeTranslation}}</td>
+                                                    </tr>
+
+                                                    <tr style="height: 32px;">
+                                                        <td style="width: 10px;">
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="width: 135px; vertical-align: middle;" class="Label">{{GrossWeightLabel}}:</td>
+                                                        <td style="vertical-align: middle;">
+                                                            <input type="text" [(ngModel)]="GrossWeight"/>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr style="height: 32px;">
+                                                        <td style="width: 10px;">
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="width: 135px; vertical-align: middle;" class="Label">{{ChargeableWeightLabel}}:</td>
+                                                        <td style="vertical-align: middle;">
+                                                            <input type="text" [(ngModel)]="ChargeableWeight"/>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr style="height: 32px;">
+                                                        <td style="width: 10px;">
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="width: 135px; vertical-align: middle;" class="Label">{{'Shipment.F.AWBCommodityItemNumber' | textcodeTranslation}}:</td>
+                                                        <td style="vertical-align: middle;">
+                                                            <input type="text" [(ngModel)]="AWBCommodityItemNumber"/>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr style="height: 32px;">
+                                                        <td style="width: 10px;">
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="width: 135px; vertical-align: middle;" class="Label">{{'Shipment.F.IsDangerous' | textcodeTranslation}}</td>
+                                                        <td style="vertical-align: middle;">
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="width: 20px; vertical-align: middle;"><input type="checkbox" [(ngModel)]="IsDangerous"/></td>
+                                                                    <td style="width: 3px;"><div></div></td>
+                                                                    <td style="width:16px; vertical-align: middle; line-height: 32px;"><img src="images/Help.png" style="width: 16px; height: 16px;" /></td>
+
+                                                                    <td><div></div></td>
+
+                                                                    <td style="width:16px; vertical-align: middle;"><img src="images/Nuke.png" style="width: 16px; height: 16px;" *ngIf="IsDangerous"/></td>
+                                                                    <td style="width: 3px;"><div></div></td>
+                                                                    <td style="width: 35px; vertical-align: middle;" class="hyperlink">{{'Shipment.B.Packages.DangerouseGoodsDetails' | textcodeTranslation}}</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr style="background: green;">
+                                                        <td colspan="3">
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+
+                                            <td style="width: 20px;"><div></div></td>
+
+                                            <td style="width: 205px;">
+                                                <table>
+                                                    <tr style="height: 25px;">
+                                                        <td class="Label" style="vertical-align:bottom;">{{'Shipment.F.DescriptionOfGoods' | textcodeTranslation}}:</td>
+                                                    </tr>
+
+                                                    <tr style="height: 87px;">
+                                                        <td>
+                                                            <input type="text" style="height: 100%; max-height:100%;" [(ngModel)]="DescriptionOfGoods"/>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+
+                                            <td style="width: 25px; vertical-align: middle;">
+                                                <div style="height: calc(100% - 10px); width: 1px; background: #DADADA; margin: auto;"></div>
+                                            </td>
+
+                                            <td>
+                                                <table>
+                                                    <tr style="height: 20px;">
+                                                        <td colspan="2" class="BlueTitle">{{'Shipment.S.Packages.Summary' | textcodeTranslation}}</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td style="width: 10px;">
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="vertical-align: middle;">
+
+                                                            <div style="display:block; float: left; text-align:center;">
+                                                                <div style="font-size: 20px;">{{NumberOfPackages | number:'1.0-0'}}</div>
+                                                                <div class="Label">{{'Shipment.F.NumberOfPackages' | textcodeTranslation}}</div>
+                                                            </div>
+
+                                                            <div style="display:block; float: left; text-align:center; margin-left: 25px;">
+                                                                <div style="font-size: 20px;">{{Volume | number:'1.3-3'}}</div>
+                                                                <div class="Label">{{VolumeLabel}}</div>
+                                                            </div>
+
+                                                            <div style="display:block; float: left; text-align:center; margin-left: 25px;">
+                                                                <div style="font-size: 20px;">{{VolumetricWeight | number:'1.3-3'}}</div>
+                                                                <div class="Label">{{VolumetricWeightLabel}}</div>
+                                                            </div>
+
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table *ngIf="TransportModeId != 'A'">
+                            <tr>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td style="width: 250px;">
+                                                <table>
+                                                    <tr style="height: 20px;">
+                                                        <td colspan="3" class="BlueTitle">{{'Shipment.S.Packages.Details' | textcodeTranslation}}</td>
+                                                    </tr>
+
+                                                    <tr style="height: 32px;">
+                                                        <td style="width: 10px;">
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="width: 110px; vertical-align: middle;" class="Label">{{GrossWeightLabel}}:</td>
+                                                        <td style="vertical-align: middle;">
+                                                            <input type="text" [(ngModel)]="GrossWeight"/>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr style="height: 32px;">
+                                                        <td style="width: 10px;">
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="width: 110px; vertical-align: middle;" class="Label">{{ChargeableWeightLabel}}:</td>
+                                                        <td style="vertical-align: middle;">
+                                                            <input type="text" [(ngModel)]="ChargeableWeight"/>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td colspan="3">
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+
+                                            <td style="width: 25px; vertical-align: middle;">
+                                                <div style="height: calc(100% - 10px); width: 1px; background: #DADADA; margin: auto;"></div>
+                                            </td>
+
+                                            <td>
+                                                <table>
+                                                    <tr style="height: 20px;">
+                                                        <td colspan="2" class="BlueTitle">{{'Shipment.S.Packages.Summary' | textcodeTranslation}}</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td style="width: 10px;">
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="vertical-align: middle;">
+
+                                                            <div style="display:block; float: left; text-align:center;">
+                                                                <div style="font-size: 20px;">{{NumberOfPackages | number:'1.0-0'}}</div>
+                                                                <div class="Label">{{QuantityLabel}}</div>
+                                                            </div>
+
+                                                            <div style="display:block; float: left; text-align:center; margin-left: 25px;">
+                                                                <div style="font-size: 20px;">{{GrossWeight | number:'1.3-3'}}</div>
+                                                                <div class="Label">{{GrossWeightLabel}}</div>
+                                                            </div>
+
+                                                            <div style="display:block; float: left; text-align:center; margin-left: 25px;">
+                                                                <div style="font-size: 20px;">{{Volume | number:'1.3-3'}}</div>
+                                                                <div class="Label">{{VolumeLabel}}</div>
+                                                            </div>
+
+                                                            <div style="display:block; float: left; text-align:center; margin-left: 25px;">
+                                                                <div style="font-size: 20px;">{{VolumetricWeight | number:'1.3-3'}}</div>
+                                                                <div class="Label">{{VolumetricWeightLabel}}</div>
+                                                            </div>
+
+                                                            <div style="display:block; float: left; text-align:center; margin-left: 25px;">
+                                                                <div style="font-size: 20px;">{{ChargeableWeight | number:'1.3-3'}}</div>
+                                                                <div class="Label">{{ChargeableWeightLabel}}</div>
+                                                            </div>
+                                   
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td style="width: 10px;">
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr style="height: 5px;">
+                    <td colspan="3">
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

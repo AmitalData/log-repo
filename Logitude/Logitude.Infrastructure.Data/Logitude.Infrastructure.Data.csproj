@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B02E4D92-9226-4F3F-990F-66C7F66E9316}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Logitude.Infrastructure.Data</RootNamespace>
+    <AssemblyName>Logitude.Infrastructure.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Devart.Data">
+      <HintPath>..\General\Dlls\Devart\Devart.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Linq">
+      <HintPath>..\General\Dlls\Devart\Devart.Data.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle.Entity">
+      <HintPath>..\General\Dlls\Devart\Devart.Data.Oracle.Entity.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle.Entity.Spatials">
+      <HintPath>..\General\Dlls\Devart\Devart.Data.Oracle.Entity.Spatials.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CustomFilters\TeamCustomFilter.cs" />
+    <Compile Include="EntityKeys\BatchTaskExecutionKeys.cs" />
+    <Compile Include="EntityKeys\BatchTaskExecutionStatusKeys.cs" />
+    <Compile Include="EntityKeys\BusinessProcessQueueKeys.cs" />
+    <Compile Include="EntityKeys\BusinessRoleKeys.cs" />
+    <Compile Include="EntityKeys\LBPTeamMemberKeys.cs" />
+    <Compile Include="EntityKeys\SharedLogisticsSettingKeys.cs" />
+    <Compile Include="EntityKeys\TeamKeys.cs" />
+    <Compile Include="EntityKeys\TeamMemberBusinessRoleKeys.cs" />
+    <Compile Include="EntityListQueryServices\BatchTaskExecutionListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\BatchTaskExecutionStatusListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\BusinessProcessQueueListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\BusinessRoleListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\Generated\BatchTaskExecutionListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\BatchTaskExecutionStatusListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\BusinessProcessQueueListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\BusinessRoleListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\LBPTeamMemberListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\SharedLogisticsSettingListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\TeamListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\TeamMemberBusinessRoleListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\LBPTeamMemberListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\SharedLogisticsSettingListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\TeamListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\TeamMemberBusinessRoleListQueryService.cs" />
+    <Compile Include="EntityLists\Generated\BatchTaskExecutionList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\BatchTaskExecutionStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\BusinessProcessQueueList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\BusinessRoleList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\LBPTeamMemberList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\SharedLogisticsSettingList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\TeamList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\TeamMemberBusinessRoleList.Generated.cs" />
+    <Compile Include="EntityMapping\BatchTaskExecutionMap.cs" />
+    <Compile Include="EntityMapping\BatchTaskExecutionStatusMap.cs" />
+    <Compile Include="EntityMapping\BusinessProcessQueueMap.cs" />
+    <Compile Include="EntityMapping\BusinessRoleMap.cs" />
+    <Compile Include="EntityMapping\LBPTeamMemberMap.cs" />
+    <Compile Include="EntityMapping\SharedLogisticsSettingMap.cs" />
+    <Compile Include="EntityMapping\TeamMap.cs" />
+    <Compile Include="EntityMapping\TeamMemberBusinessRoleMap.cs" />
+    <Compile Include="EntityPOCOs\BatchTaskExecution.cs" />
+    <Compile Include="EntityPOCOs\BatchTaskExecutionStatus.cs" />
+    <Compile Include="EntityPOCOs\BusinessProcessQueue.cs" />
+    <Compile Include="EntityPOCOs\BusinessRole.cs" />
+    <Compile Include="EntityPOCOs\LBPTeamMember.cs" />
+    <Compile Include="EntityPOCOs\SharedLogisticsSetting.cs" />
+    <Compile Include="EntityPOCOs\Team.cs" />
+    <Compile Include="EntityPOCOs\TeamMemberBusinessRole.cs" />
+    <Compile Include="IInfrastructureContext.cs" />
+    <Compile Include="InfrastructureContext.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repsitories\BatchTaskExecutionRepository.cs" />
+    <Compile Include="Repsitories\BatchTaskExecutionStatusRepository.cs" />
+    <Compile Include="Repsitories\BusinessProcessQueueRepository.cs" />
+    <Compile Include="Repsitories\BusinessRoleRepository.cs" />
+    <Compile Include="Repsitories\Generated\BatchTaskExecutionRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\BatchTaskExecutionStatusRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\BusinessProcessQueueRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\BusinessRoleRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\LBPTeamMemberRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\SharedLogisticsSettingRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\TeamMemberBusinessRoleRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\TeamRepository.Generated.cs" />
+    <Compile Include="Repsitories\LBPTeamMemberRepository.cs" />
+    <Compile Include="Repsitories\SharedLogisticsSettingRepository.cs" />
+    <Compile Include="Repsitories\TeamMemberBusinessRoleRepository.cs" />
+    <Compile Include="Repsitories\TeamRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
+      <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
+      <Name>Simplog.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Global.Data.csproj">
+      <Project>{6D7FFAD2-35B6-4133-8700-CF73E58D0C85}</Project>
+      <Name>Simplog.Global.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
+      <Project>{ACC2EA9E-E150-4099-8AA1-66326AB14BE8}</Project>
+      <Name>Simplog.Server.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

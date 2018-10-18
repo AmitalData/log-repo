@@ -1,0 +1,120 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data;
+ 
+namespace Logitude.Customs.Data.EntityMapping
+{
+ 
+    public class SupplierInvoiceItemMap : EntityTypeConfiguration<SupplierInvoiceItem>
+    {
+	    string dbms;
+        public SupplierInvoiceItemMap()
+        { 
+			  this.ToTable("SupplierInvoiceItems", "Customs");
+		
+		    this.HasKey(t => new { t.DeclarationId, t.CounterKey, t.LineNumber });
+	 
+            this.Property(t => t.DeclarationId).HasColumnName("DeclarationId").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.CounterKey).HasColumnName("CounterKey").IsRequired().HasDatabaseGeneratedOption(null);
+
+            this.Property(t => t.LineNumber).HasColumnName("LineNumber").IsRequired().HasDatabaseGeneratedOption(null);
+
+            this.Property(t => t.ItemCode).HasColumnName("ItemCode").HasMaxLength(30).IsUnicode(false);
+
+            this.Property(t => t.OriginCountryCode).HasColumnName("OriginCountryCode").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.ClassificationCode).HasColumnName("ClassificationCode").HasMaxLength(11).IsUnicode(false);
+
+            this.Property(t => t.DangerousClassificationCode).HasColumnName("DangerousClassificationCode").HasMaxLength(11).IsUnicode(false);
+
+            this.Property(t => t.DangerousPackingGroupTypeCode).HasColumnName("DangerousPackingGroupTypeCode").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.ItemPrice).HasColumnName("ItemPrice").HasPrecision(16, 2);
+
+            this.Property(t => t.NonCustomsItemPrice).HasColumnName("NonCustomsItemPrice").HasPrecision(16, 2);
+
+            this.Property(t => t.WholeSaleItemPrice).HasColumnName("WholeSaleItemPrice").HasPrecision(16, 2);
+
+            this.Property(t => t.ManufactureIdentifier).HasColumnName("ManufactureIdentifier").HasMaxLength(17).IsUnicode(false);
+
+            this.Property(t => t.CustomsBookTypeCode).HasColumnName("CustomsBookTypeCode").HasMaxLength(4).IsUnicode(false);
+
+            this.Property(t => t.TaxExemptCode).HasColumnName("TaxExemptCode").HasMaxLength(15).IsUnicode(true);
+
+            this.Property(t => t.OptionalTamaPercentage).HasColumnName("OptionalTamaPercentage");
+
+            this.Property(t => t.SalesTaxExemptionTypeCode).HasColumnName("SalesTaxExemptionTypeCode").HasMaxLength(4).IsUnicode(false);
+
+            this.Property(t => t.Tenant).HasColumnName("Tenant");
+
+            this.Property(t => t.SequenceNumeric).HasColumnName("SequenceNumeric");
+
+            this.Property(t => t.ItemPriceCurrencyCode).HasColumnName("ItemPriceCurrencyCode").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.NonCustomsItemPriceCurCode).HasColumnName("NonCustomsItemPriceCurCode").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.WholeSaleItemPriceCurrencyCode).HasColumnName("WholeSaleItemPriceCurrencyCode").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.ActualInvoiceLines).HasColumnName("ActualInvoiceLines").HasMaxLength(512).IsUnicode(false);
+
+            this.Property(t => t.TradeAgreementCode).HasColumnName("TradeAgreementCode").HasMaxLength(8).IsUnicode(false);
+
+            this.Property(t => t.StatisticQuantity).HasColumnName("StatisticQuantity").HasPrecision(14, 3);
+
+            this.Property(t => t.InvoiceQuantity).HasColumnName("InvoiceQuantity").HasPrecision(14, 3);
+
+            this.Property(t => t.AdditionalQuantity).HasColumnName("AdditionalQuantity").HasPrecision(14, 3);
+
+            this.Property(t => t.InvoiceQuantityType).HasColumnName("InvoiceQuantityType").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.StatisticQuantityType).HasColumnName("StatisticQuantityType").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.AdditionalQuantityType).HasColumnName("AdditionalQuantityType").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.PreferenceDocumentNumber).HasColumnName("PreferenceDocumentNumber").HasMaxLength(35).IsUnicode(false);
+
+            this.Property(t => t.ItemDescription).HasColumnName("ItemDescription").HasMaxLength(30).IsUnicode(true);
+
+            this.Property(t => t.CertificatesStatusCode).HasColumnName("CertificatesStatusCode").HasMaxLength(1).IsUnicode(false);
+
+            this.Property(t => t.IsUsed).HasColumnName("IsUsed");
+
+            this.Property(t => t.DeferredCustomsTax).HasColumnName("DeferredCustomsTax").HasPrecision(5, 2);
+
+            this.Property(t => t.DeferredPurchaseTax).HasColumnName("DeferredPurchaseTax").HasPrecision(5, 2);
+
+            this.Property(t => t.VehicleStatus).HasColumnName("VehicleStatus");
+
+            this.Property(t => t.ItemAdditionalStatus).HasColumnName("ItemAdditionalStatus");
+
+            this.Property(t => t.ItemHash).HasColumnName("ItemHash").HasMaxLength(36).IsUnicode(false);
+
+            this.Property(t => t.ParentLineNumber).HasColumnName("ParentLineNumber");
+
+            this.Property(t => t.NotForAccumaltion).HasColumnName("NotForAccumaltion");
+
+            this.Property(t => t.IsParent).HasColumnName("IsParent");
+
+            this.Property(t => t.UnfInvoiceLine).HasColumnName("UnfInvoiceLine");
+
+            this.Property(t => t.OrderByLineNo).HasColumnName("OrderByLineNo").HasMaxLength(3000).IsUnicode(false);
+
+            this.Property(t => t.LastCopyFromOrderNo).HasColumnName("LastCopyFromOrderNo").HasMaxLength(3000).IsUnicode(false);
+
+            this.Property(t => t.ClasifiedRemarks).HasColumnName("ClasifiedRemarks").HasMaxLength(1024).IsUnicode(true);
+
+            this.Property(t => t.SearchFields).HasColumnName("SearchFields").HasMaxLength(1000).IsUnicode(true);
+        }
+    }
+}
+	 

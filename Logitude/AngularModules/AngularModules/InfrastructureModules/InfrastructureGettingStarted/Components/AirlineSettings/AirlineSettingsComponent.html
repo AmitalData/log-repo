@@ -1,0 +1,71 @@
+﻿<table>
+
+    <tr style="height:10px;">
+        <td><div></div></td>
+    </tr>
+
+    <tr>
+        <td>
+            <table class="FixedTable">
+
+                <tr class="FormFieldRow" style="height:100px;">
+                    <td style="height: 100px; vertical-align: top;width: 160px;">
+                        <LogLabel [ObjectFieldName]="'SignupRequestRecipients'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td style="width: 400px;height: 100px; vertical-align: top;">
+                        <div style="height: 100%; width: 100%;">
+                            <LogTextBox [IsMultiline]="true" [ObjectFieldName]="'SignupRequestRecipients'" [Text]="SignupRequestRecipients"  [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                        </div>
+                    </td>
+                    <td><div></div></td>
+                </tr>
+
+                <tr style="height:5px;">
+                    <td colspan="3"><div></div></td>
+                </tr>
+
+                <tr class="FormFieldRow" style="height:100px;">
+                    <td style="height: 100px; vertical-align: top;width: 160px;">
+                        <LogLabel [ObjectFieldName]="'LoginPageNotes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td style="height: 100px; vertical-align: top;">
+                        <div style="height: 100%; width: 100%;">
+                            <LogTextBox [IsMultiline]="true" [ObjectFieldName]="'LoginPageNotes'" [Text]="LoginPageNotes"  [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                        </div>
+                    </td>
+                    <td><div></div></td>
+                </tr>
+
+                <tr> <td colspan="3"> <div></div></td></tr>
+
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

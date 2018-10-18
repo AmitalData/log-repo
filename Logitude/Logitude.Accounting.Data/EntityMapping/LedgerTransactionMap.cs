@@ -1,0 +1,99 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data;
+ 
+namespace Logitude.Accounting.Data.EntityMapping
+{
+ 
+    public class LedgerTransactionMap : EntityTypeConfiguration<LedgerTransaction>
+    {
+	    string dbms;
+        public LedgerTransactionMap()
+        { 
+				this.ToTable("LedgerTransactions");
+		
+		    this.HasKey(t => new { t.Id });
+	 
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Tenant).HasColumnName("Tenant");
+
+            this.Property(t => t.JournalId).HasColumnName("JournalId").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.JournalLineNumber).HasColumnName("JournalLineNumber").IsRequired();
+
+            this.Property(t => t.CreateDate).HasColumnName("CreateDate");
+
+            this.Property(t => t.ControlAccountId).HasColumnName("ControlAccountId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.AccountId).HasColumnName("AccountId").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.AccountingDate).HasColumnName("AccountingDate").IsRequired();
+
+            this.Property(t => t.DocumentDate).HasColumnName("DocumentDate").IsRequired();
+
+            this.Property(t => t.DueDate).HasColumnName("DueDate");
+
+            this.Property(t => t.LocalAmountDebit).HasColumnName("LocalAmountDebit").HasPrecision(16, 2);
+
+            this.Property(t => t.LocalAmountCredit).HasColumnName("LocalAmountCredit").HasPrecision(16, 2);
+
+            this.Property(t => t.CurrencyId).HasColumnName("CurrencyId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.ForeignAmountDebit).HasColumnName("ForeignAmountDebit").HasPrecision(16, 2);
+
+            this.Property(t => t.ForeignAmountCredit).HasColumnName("ForeignAmountCredit").HasPrecision(16, 2);
+
+            this.Property(t => t.ExchangeRate).HasColumnName("ExchangeRate").HasPrecision(16, 5);
+
+            this.Property(t => t.Reference1).HasColumnName("Reference1").HasMaxLength(30).IsUnicode(false);
+
+            this.Property(t => t.Reference2).HasColumnName("Reference2").HasMaxLength(30).IsUnicode(false);
+
+            this.Property(t => t.Reference3).HasColumnName("Reference3").HasMaxLength(30).IsUnicode(false);
+
+            this.Property(t => t.OpenAmount).HasColumnName("OpenAmount").HasPrecision(16, 2);
+
+            this.Property(t => t.OppositeAccountId).HasColumnName("OppositeAccountId").HasMaxLength(15).IsUnicode(false);
+
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.SearchFields).HasMaxLength(2000);
+			}
+            else
+            {
+              this.Property(t => t.SearchFields).HasMaxLength(4000);
+			}
+
+
+            this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsUnicode(true);
+
+            this.Property(t => t.OpenAmountCurrencyId).HasColumnName("OpenAmountCurrencyId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Notes).HasColumnName("Notes").HasMaxLength(150).IsUnicode(true);
+
+            this.Property(t => t.AmountToReconcile).HasColumnName("AmountToReconcile").HasPrecision(16, 2);
+
+            this.Property(t => t.Mark).HasColumnName("Mark");
+
+            this.Property(t => t.IsReconciled).HasColumnName("IsReconciled");
+
+            this.Property(t => t.IsExternalReconcile).HasColumnName("IsExternalReconcile");
+
+            this.Property(t => t.InReconcileProgress).HasColumnName("InReconcileProgress");
+
+            this.Property(t => t.ReconcileRemarks).HasColumnName("ReconcileRemarks").HasMaxLength(400).IsUnicode(true);
+        }
+    }
+}
+	 

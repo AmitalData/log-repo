@@ -1,0 +1,385 @@
+<style>
+    .subTitle{
+        color: #1b90cb;
+        font-size: 16px;
+    }
+</style>
+<table>
+    <tr>
+        <td>
+            <div class="TableHolder">
+                <table>
+                    <tr class="TabTitleRow">
+                        <td>{{'GLAccount.TH.General' | TextCodeTranslationPipe}}</td>
+                    </tr>
+                    <tr style="height: 15px;"><td><div style="width: 15px;"></div></td></tr>
+                    <tr>
+                        <!-- General -->
+                        <td style="width: 400px">
+                            <table>
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <table>
+                                            <!-- ChartOfAccountsType -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 250px;">
+                                                    <LogLabel [ObjectFieldName]="'ChartOfAccountsTypeCode'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 200px;">
+                                                    <LogLov [ObjectFieldName]="'ChartOfAccountsTypeCode'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'ChartOfAccountsType'"
+                                                            (SelectedItemChanged)="OnLovItemChanged($event)"
+                                                            [QueryFilterItems]="ChartOfAccountTypeFilterItems"
+                                                            [HideColumns]="true">
+                                                    </LogLov>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                            <!-- ChartOfAccounts -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'ChartOfAccountsId'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'ChartOfAccountsId'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'ChartOfAccount'"
+                                                            [SelectedValue]="ChartOfAccountsId"
+                                                            [DependencyFilter1Value]="null"
+                                                            [DependencyFilter2Value]="IsCustomerAccount ? '3' : ChartOfAccountsTypeCode"
+                                                            [HideColumns]="true">
+                                                    </LogLov>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                            <!-- DisplayNumber -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'DisplayNumber'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogTextBox [ObjectFieldName]="'DisplayNumber'" [InputType]="'text'" [DataContext]="DataContext"
+                                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                            <!-- LocalName -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'LocalName'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogTextBox [ObjectFieldName]="'LocalName'" [InputType]="'ntext'" [DataContext]="DataContext"
+                                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                            <!-- EnglishName -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'EnglishName'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogTextBox [ObjectFieldName]="'EnglishName'" [InputType]="'text'" [DataContext]="DataContext"
+                                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                            <!-- IsMultiCurrency -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'IsMultiCurrency'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <CheckBox [IsChecked]="IsMultiCurrency" (Checked)="IsMultiCurrency = $event" [IsEnabled]="!DisableGLAccount"></CheckBox>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                            <!-- CurrencyId -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'CurrencyId'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [SelectedValue]="CurrencyId"
+                                                            [LookUpTableName]="'Currency'"
+                                                            [HideColumns]="true">
+                                                    </LogLov>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                            <!-- ReconcileMethodCode -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'ReconcileMethodCode'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'ReconcileMethodCode'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'ReconcileMethod'"
+                                                            [SelectedValue]="ReconcileMethodCode"
+                                                            [DisplayMemberPath]="'LocalName'"
+                                                            [HideColumns]="true">
+                                                    </LogLov>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                            <!-- AutomaticReconcileId -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'AutomaticReconcileId'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'AutomaticReconcileId'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [DisplayMemberPath]="'LocalName'"
+                                                            [LookUpTableName]="'AutomaticReconcileMethod'"
+                                                            [HideColumns]="true"
+                                                            [SelectedValue]="AutomaticReconcileId">
+                                                    </LogLov>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                            <!-- RevenueExpenseType -->
+                                            <tr *ngIf="!IsCustomerAccount" class="FormFieldRow">
+                                                <td style="width: 150px;">
+                                                    <LogLabel [ObjectFieldName]="'RevenueExpenseType'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 200px;">
+                                                    <LogLov [ObjectFieldName]="'RevenueExpenseType'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [DisplayMemberPath]="'LocalName'"
+                                                            [SelectedValue]="RevenueExpenseType"
+                                                            [LookUpTableName]="'RevenueExpenseType'"
+                                                            [HideColumns]="true">
+                                                    </LogLov>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                            <tr><td><div></div></td></tr>
+                                        </table>
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td style="width: 80px;"><div></div></td>
+
+                        <!-- Card: Categories + ParentAccountId -->
+                        <td>
+                            <table>     
+                                
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <table>
+
+                                            <!-- ParentAccountId -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 150px;">
+                                                    <LogLabel [ObjectFieldName]="'ParentAccountId'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 220px;">
+                                                    <LogLov [ObjectFieldName]="'ParentAccountId'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [DependencyFilter1Value]="false"
+                                                            [QueryFilterItems]="ParentsFilterItems"
+                                                            [LookUpTableName]="'GLAccount'"
+                                                            [HideColumns]="false">
+                                                    </LogLov>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                            <!-- Category1Id -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 150px;">
+                                                    <LogLabel [ObjectFieldName]="'Category1Id'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 200px;" [style.padding-right]="isRTL ? 'initial' : '36px'" [style.padding-left]="isRTL ? '36px' : 'initial'">
+                                                    <LogLov [ObjectFieldName]="'Category1Id'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [DisplayMemberPath]="'LocalName'"
+                                                            [LookUpTableName]="'Category1'"
+                                                            [HideColumns]="true">
+                                                    </LogLov>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                            <!-- Category2Id -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 150px;">
+                                                    <LogLabel [ObjectFieldName]="'Category2Id'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 200px;" [style.padding-right]="isRTL ? 'initial' : '36px'" [style.padding-left]="isRTL ? '36px' : 'initial'">
+                                                    <LogLov [ObjectFieldName]="'Category2Id'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DisplayMemberPath]="'LocalName'"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'Category2'"
+                                                            [HideColumns]="true">
+                                                    </LogLov>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                            <!-- Category3Id -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 150px;">
+                                                    <LogLabel [ObjectFieldName]="'Category3Id'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 200px;" [style.padding-right]="isRTL ? 'initial' : '36px'" [style.padding-left]="isRTL ? '36px' : 'initial'">
+                                                    <LogLov [ObjectFieldName]="'Category3Id'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DisplayMemberPath]="'LocalName'"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'Category3'"
+                                                            [HideColumns]="true">
+                                                    </LogLov>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                            <!-- Category4Id -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 150px;">
+                                                    <LogLabel [ObjectFieldName]="'Category4Id'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 200px;" [style.padding-right]="isRTL ? 'initial' : '36px'" [style.padding-left]="isRTL ? '36px' : 'initial'">
+                                                    <LogLov [ObjectFieldName]="'Category4Id'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [DisplayMemberPath]="'LocalName'"
+                                                            [LookUpTableName]="'Category4'"
+                                                            [HideColumns]="true">
+                                                    </LogLov>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                            <!-- Category5Id -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 150px;">
+                                                    <LogLabel [ObjectFieldName]="'Category5Id'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 200px;" [style.padding-right]="isRTL ? 'initial' : '36px'" [style.padding-left]="isRTL ? '36px' : 'initial'">
+                                                    <LogLov [ObjectFieldName]="'Category5Id'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [DisplayMemberPath]="'LocalName'"
+                                                            [LookUpTableName]="'Category5'"
+                                                            [HideColumns]="true">
+                                                    </LogLov>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+                                            <!-- RevaluationEnabled -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 150px;">
+                                                    <LogLabel [ObjectFieldName]="'RevaluationEnabled'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td>
+                                                    <CheckBox [IsChecked]="RevaluationEnabled" (Checked)="RevaluationEnabled = $event"></CheckBox>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                            <!-- IsEquipmentVendor -->
+                                            <tr class="FormFieldRow" *ngIf="IsVendor">
+                                                <td style="width: 150px;">
+                                                    <LogLabel [ObjectFieldName]="'IsEquipmentVendor'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td>
+                                                    <CheckBox [IsChecked]="IsEquipmentVendor" (Checked)="IsEquipmentVendor = $event"></CheckBox>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+
+                                            <!-- IsPartOfDeductionReport -->
+                                            <tr class="FormFieldRow" *ngIf="IsVendor">
+                                                <td style="width: 150px;">
+                                                    <LogLabel [ObjectFieldName]="'IsPartOfDeductionReport'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td>
+                                                    <CheckBox [IsChecked]="IsPartOfDeductionReport" (Checked)="IsPartOfDeductionReport = $event"></CheckBox>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+                                            <tr><td><div></div></td></tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                                <tr><td><div></div></td></tr>
+
+
+                            </table>
+                        </td>
+
+
+
+                    </tr>
+
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>

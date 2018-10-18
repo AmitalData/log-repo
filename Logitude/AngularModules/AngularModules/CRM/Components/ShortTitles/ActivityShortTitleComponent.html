@@ -1,0 +1,33 @@
+﻿<table style="height: 24px;">
+    <tr>
+        <td>
+            <div class="ShortTitleMainControl" style="float: left;vertical-align:central;">
+
+                <div class="ShortTitleDiv" style="width:20px;vertical-align:top;">
+                    <img style="width:20px;height:20px;vertical-align:top;" [title]="ActivityTypeName" [attr.src]="ImageSrc"/>
+                </div>
+
+                <div class="ShortTitleDiv" style="padding-left: 3px; color:#333333;font-size:20px;font-weight:bold;max-width:150px;vertical-align:central;">
+                    {{ActivityTypeName}}
+                </div>
+
+                <div class="ShortTitleDiv" style="display:inline-block;width:10px;vertical-align:central;">&nbsp; </div>
+
+                <div class="ShortTitleDiv TextTrimming" style="padding-left: 3px;font-family: Arial; font-size: 18px; font-weight: bold; color: #1B90CB;vertical-align:central;">
+                    <span style="font-family: Arial; font-size: 18px; font-weight: bold;text-decoration:none;" class="hyperlink" (click)="ViewCustomerMethod()">{{CustomerName}}</span>
+                </div>
+                <div class="ShortTitleDiv" style="display:inline-block;width:5px;vertical-align:central;">&nbsp; </div>
+
+                <div class="ShortTitleDiv" *ngIf="IsCustomerBlockedBusinessUnit" style="padding-left: 10px;width:20px;vertical-align:central;">
+                    <img style="width:20px;height:20px;" src="./Images/Activities/blocked.png" />
+                </div>
+                <div class="ShortTitleDiv" style="display:inline-block;width:10px;vertical-align:central;">&nbsp; </div>
+
+                <div *ngIf="CancelledVisibility" class="ShortTitleControl" style="float:left; background: red; color: white; margin-left: 5px;vertical-align:central;" >
+                    Cancelled
+                </div>
+
+            </div>
+        </td>
+    </tr>
+</table>

@@ -1,0 +1,460 @@
+﻿<!-- PaymentOrderQueryComponent view  -->
+<div>
+    <custom-message-wrapper [CustomSendOptionsButtonCanForcePersonalSign]="false">
+
+        <!-- Request -->
+        <div class="class-request-content" *ngIf="RequestParams">
+            <table style="width: 860px;height: 46px;padding-top: 10px;">
+                <!-- Request Fields -->
+                <tr style="height: 46px;">
+                    <td>
+                        <table>
+                            <tr class="FormFieldRow">
+                                <!-- Agent Code -->
+                                <td style="width: 140px;">
+                                    <LogLabel [NoObjectField]="true" [ObjectFieldName]="'AgentVat'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'ח.פ/מס סוכן'"></LogLabel>
+                                </td>
+                                <td style="width: 100px;">
+                                    <LogTextBox [ObjectFieldName]="'AgentExternalId'" [Text]="AgentExternalId" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                </td>
+                                <td style="width: 1px;"><div></div></td>
+                                <td style="width: 79px;">
+                                    <LogTextBox [ObjectFieldName]="'AgentID'" [Text]="AgentID" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                </td>
+
+                                <td style="width: 3px;"><div></div></td>
+
+                                <!-- Custom File No -->
+                                <td style="width: 100px">
+                                    <LogLabel [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td style="width: 150px;">
+                                    <LogTextBox [ObjectFieldName]="'CustomFileNo'" [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                                [HideColumns]="true"
+                                                (LostFocus)="CustomFileNoTextChanged($event)"
+                                                [Text]="CustomFileNo"></LogTextBox>
+                                </td>
+
+                                <td style="width: 3px;"><div></div></td>
+
+                                <!-- Payment Date From -->
+                                <td style="width: 120px;">
+                                    <LogLabel [ObjectFieldName]="'PaymentDateFrom'"
+                                              [DataContext]="DataContext"
+                                              [TextCode]="'Customs.PaymentQuery.O.paymentDateFrom'">
+                                    </LogLabel>
+                                </td>
+                                <td style="width: 150px;">
+                                    <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'PaymentDateFrom'" [ObjectTableName]="ObjectTableName"
+                                                   [InputType]="'date'" [DataContext]="DataContext"
+                                                   [HideColumns]="true"></LogDatePicker>
+                                </td>
+
+                                <td style="width: 3px;"><div></div></td>
+
+                                <!-- Payment Order Method Code -->
+                                <td style="width: 100px;">
+                                    <!--<LogLabel [ObjectFieldName]="'PaymentMethodType'"
+                                              [DataContext]="DataContext"
+                                              [TextCode]="'Customs.PaymentMethodType.Q.PaymentMethodTypeQuery'">
+                                    </LogLabel>-->
+                                    <LogLabel [NoObjectField]="true" [ObjectFieldName]="'PaymentMethodType'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'אמצעי תשלום'"></LogLabel>
+                                </td>
+                                <td style="width: 150px;">
+                                    <LogLov [ObjectFieldName]="'PaymentMethodType'"
+                                            [ObjectTableName]="'Customs.PaymentMethodType'"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Customs.PaymentMethodType'"
+                                            [HideLastColumn]="true"
+                                            [HideColumns]="true">
+                                    </LogLov>
+                                </td>
+
+                                <td><div></div></td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <!-- Client -->
+                                <td style="width: 140px;">
+                                    <LogLabel [ObjectFieldName]="'ClientId'"
+                                              [DataContext]="DataContext"
+                                              [TextCode]="'Customs.Client.Q.ClientQuery'">
+                                    </LogLabel>
+                                </td>
+                                <td colspan="3" style="width: 180px;">
+                                    <LogLov [ObjectFieldName]="'ClientId'"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Customs.Client'"
+                                            [DisplayMemberPath]="'FullName'"
+                                            [HideLastColumn]="true"
+                                            [HideColumns]="true"
+                                            [SelectedValue]="ClientId">
+                                    </LogLov>
+                                </td>
+
+                                <td style="width: 3px;"><div></div></td>
+
+                                <!-- Entity Type Lookup -->
+                                <td style="width: 100px;">
+                                    <LogLabel [ObjectFieldName]="'EntityType'" [DataContext]="DataContext" [TextCode]="'Customs.PaymentQuery.O.EntityType'"></LogLabel>
+                                </td>
+                                <td style="width: 150px;">
+                                    <LogLov [ObjectFieldName]="'EntityType'"
+                                            [SelectedValue]="EntityType"
+                                            [ObjectTableName]="'Customs.EntityTypeLookup'"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Customs.EntityTypeLookup'"
+                                            [HideLastColumn]="true"
+                                            [HideColumns]="true">
+                                    </LogLov>
+                                </td>
+
+                                <td style="width: 3px;"><div></div></td>
+
+                                <!-- Payment Date To -->
+                                <td style="width: 120px;">
+                                    <LogLabel [ObjectFieldName]="'PaymentDateTo'"
+                                              [DataContext]="DataContext"
+                                              [TextCode]="'Customs.PaymentQuery.O.paymentDateTo'">
+                                    </LogLabel>
+                                </td>
+                                <td style="width: 150px;">
+                                    <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'PaymentDateTo'" [ObjectTableName]="ObjectTableName"
+                                                   [InputType]="'date'" [DataContext]="DataContext"
+                                                   [HideColumns]="true"></LogDatePicker>
+                                </td>
+
+                                <td style="width: 3px;"><div></div></td>
+
+                                <!-- Customs Bank Code (InternalBankId) -->
+                                <td style="width: 100px;">
+                                    <LogLabel [ObjectFieldName]="'CustomBankId'" [DataContext]="DataContext" [TextCode]="'Customs.PaymentQuery.O.InternalBankId'"></LogLabel>
+                                </td>
+                                <td style="width: 150px;">
+                                    <LogLov [ObjectFieldName]="'CustomBankId'"
+                                            [ObjectTableName]="'Customs.CustomBank'"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Customs.CustomBank'"
+                                            [HideLastColumn]="true"
+                                            [HideColumns]="true">
+                                    </LogLov>
+                                </td>
+
+                                <td><div></div></td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <!-- ExternalID -->
+                                <td style="width: 140px;">
+                                    <LogLabel [ObjectFieldName]="'ImporterCode'" [DataContext]="DataContext" [TextCode]="'Customs.PaymentQuery.O.ImporterVat'"></LogLabel>
+                                </td>
+                                <td colspan="3" style="width: 180px;">
+                                    <SearchBox [ObjectTableName]="'Customs.Client'"
+                                               [IsQuickSearch]="true"
+                                               [DropDownWidth]="143"
+                                               [DisplayText]="ImporterCode"
+                                               [DisplayMember]="'Code'"
+                                               [IsDisabled]="IsImporerCodeEnabled"
+                                               [ItemHeight]="33"
+                                               [HideIcons]="true"
+                                               [Watermark]="''"
+                                               (TextChanged)="ImporterTextChanged('Importer', $event)"
+                                               (ItemClicked)="ImporterClicked('Importer',$event)"></SearchBox>
+                                </td>
+
+                                <td style="width: 3px;"><div></div></td>
+
+                                <!-- Entity External ID -->
+                                <td style="width: 100px;">
+                                    <LogLabel [ObjectFieldName]="'EntityExternalID'" [DataContext]="DataContext" [TextCode]="'Customs.PaymentQuery.O.EntityExternalID'"></LogLabel>
+                                </td>
+                                <td style="width: 150px;">
+                                    <LogTextBox [ObjectFieldName]="'EntityExternalID'" [Text]="EntityExternalID" [InputType]="'number'" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                </td>
+
+                                <td style="width: 3px;"><div></div></td>
+
+                                <!-- Effective Date From -->
+                                <td style="width: 120px;">
+                                    <LogLabel [ObjectFieldName]="'EffectiveDateFrom'"
+                                              [DataContext]="DataContext"
+                                              [TextCode]="'Customs.PaymentQuery.O.EffectiveDateFrom'">
+                                    </LogLabel>
+                                </td>
+                                <td style="width: 150px;">
+                                    <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'EffectiveDateFrom'" [ObjectTableName]="ObjectTableName"
+                                                   [InputType]="'date'" [DataContext]="DataContext"
+                                                   [HideColumns]="true"></LogDatePicker>
+                                </td>
+
+                                <td style="width: 3px;"><div></div></td>
+
+                                <!-- Bank Code -->
+                                <td style="width: 100px;">
+                                    <LogLabel [ObjectFieldName]="'BankID'" [DataContext]="DataContext" [TextCode]="'Customs.PaymentQuery.O.BankId'"></LogLabel>
+                                </td>
+                                <td style="width: 150px;">
+                                    <LogLov [ObjectFieldName]="'BankID'"
+                                            [ObjectTableName]="'Customs.Bank'"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Customs.Bank'"
+                                            [SelectedValue]="BankID"
+                                            [HideLastColumn]="true"
+                                            [HideColumns]="true">
+                                    </LogLov>
+                                </td>
+
+                                <td><div></div></td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <!-- PaymentID -->
+                                <td style="width: 140px;">
+                                    <LogLabel [ObjectFieldName]="'PaymentID'" [DataContext]="DataContext" [TextCode]="'Customs.PaymentQuery.O.PaymentID'"></LogLabel>
+                                </td>
+                                <td colspan="3" style="width: 180px;">
+                                    <LogTextBox [ObjectFieldName]="'PaymentID'" [Text]="PaymentID" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                </td>
+
+                                <td style="width: 3px;"><div></div></td>
+
+                                <!-- Payment Status Code -->
+                                <td style="width: 100px;">
+                                    <LogLabel [ObjectFieldName]="'PaymentOrderStatus'" [DataContext]="DataContext" [TextCode]="'Customs.PaymentQuery.O.PaymentOrderStatus'"></LogLabel>
+                                </td>
+                                <td style="width: 150px;">
+                                    <LogLov [ObjectFieldName]="'PaymentOrderStatus'"
+                                            [ObjectTableName]="'Customs.PaymentOrderStatus'"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Customs.PaymentOrderStatus'"
+                                            [HideLastColumn]="true"
+                                            [HideColumns]="true">
+                                    </LogLov>
+                                </td>
+
+                                <td style="width: 3px;"><div></div></td>
+
+                                <!-- Effective Date To -->
+                                <td style="width: 120px;">
+                                    <LogLabel [ObjectFieldName]="'EffectiveDateTo'"
+                                              [DataContext]="DataContext"
+                                              [TextCode]="'Customs.PaymentQuery.O.EffectiveDateTo'">
+                                    </LogLabel>
+                                </td>
+                                <td style="width: 150px;">
+                                    <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'EffectiveDateTo'" [ObjectTableName]="ObjectTableName"
+                                                   [InputType]="'date'" [DataContext]="DataContext"
+                                                   [HideColumns]="true"></LogDatePicker>
+                                </td>
+
+                                <td style="width: 3px;"><div></div></td>
+
+                                <!-- Branch ID -->
+                                <td style="width: 100px;">
+                                    <LogLabel [ObjectFieldName]="'BranchID'" [DataContext]="DataContext" [TextCode]="'Customs.PaymentQuery.O.BranchId'"></LogLabel>
+                                </td>
+                                <td style="width: 150px;">
+                                    <LogLov [ObjectFieldName]="'BranchID'"
+                                            [SelectedValue]="BranchID"
+                                            [ObjectTableName]="'Customs.CustomsBranch'"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Customs.CustomsBranch'"
+                                            [HideLastColumn]="true"
+                                            [HideColumns]="true">
+                                    </LogLov>
+                                </td>
+
+                                <td><div></div></td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <!-- Payment Order Type  -->
+                                <td style="width: 140px;">
+                                    <LogLabel [ObjectFieldName]="'PaymentType'" [DataContext]="DataContext" [TextCode]="'Customs.PaymentQuery.O.PaymentOrderType'"></LogLabel>
+                                </td>
+                                <td colspan="3" style="width: 180px;">
+                                    <LogLov [ObjectFieldName]="'PaymentType'"
+                                            [ObjectTableName]="'Customs.PaymentOrderType'"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Customs.PaymentOrderType'"
+                                            [HideLastColumn]="true"
+                                            [HideColumns]="true">
+                                    </LogLov>
+                                </td>
+
+                                <td style="width: 3px;"><div></div></td>
+
+                                <!-- Payment Process -->
+                                <td style="width: 100px;">
+                                    <LogLabel [ObjectFieldName]="'PaymentProcess'" [DataContext]="DataContext" [TextCode]="'Customs.PaymentQuery.O.PaymentProcess'"></LogLabel>
+                                </td>
+                                <td style="width: 150px;">
+                                    <LogLov [ObjectFieldName]="'PaymentProcess'"
+                                            [ObjectTableName]="'Customs.PaymentProcess'"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Customs.PaymentProcess'"
+                                            [HideLastColumn]="true"
+                                            [HideColumns]="true">
+                                    </LogLov>
+                                </td>
+
+                                <td style="width: 3px;"><div></div></td>
+
+                                <!-- Payment Amount -->
+                                <td style="width: 120px;">
+                                    <LogLabel [ObjectFieldName]="'PaymentAmount'"
+                                              [DataContext]="DataContext"
+                                              [TextCode]="'Customs.PaymentQuery.O.PaymentAmount'">
+                                    </LogLabel>
+                                </td>
+                                <td style="width: 150px;">
+                                    <LogTextBox [ObjectFieldName]="'PaymentAmount'" [Text]="PaymentAmount" [InputType]="'number'" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                </td>
+
+                                <td style="width: 3px;"><div></div></td>
+
+                                <!-- Bank Account -->
+                                <td style="width: 100px;">
+                                    <LogLabel [ObjectFieldName]="'BankAccount'" [DataContext]="DataContext" [TextCode]="'Customs.PaymentQuery.O.BankAccount'"></LogLabel>
+                                </td>
+                                <td style="width: 150px;">
+                                    <LogTextBox [ObjectFieldName]="'BankAccount'" [Text]="BankAccount" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                </td>
+
+                                <td><div></div></td>
+                            </tr>
+
+                            <tr><td><div></div></td></tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><div></div></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Response -->
+        <div class="class-response-content">
+            <table style="width: 880px;height: 300px;padding-top: 10px;">
+
+                <!--Payment Query Results-->
+                <tr class="FormFieldRow" style="height:1px">
+                    <td colspan="5" style="width: 100% ; height : 100%">
+                        <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
+                            <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="PaymentsDetailsList">
+
+                                <!-- PaymentID -->
+                                <log-column [width]="'110'" [Alignment]="'right'"
+                                            [header]="'Customs.PaymentQuery.O.PaymentID' | TextCodeTranslationPipe"
+                                            [binding]="'PaymentID'" [Editable]="false">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div class="RightCenter">
+                                            <span>{{item.PaymentID}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
+                                <!-- PaymentType -->
+                                <log-column [width]="'80'" [Alignment]="'right'"
+                                            [header]="'Customs.PaymentQuery.O.PaymentType' | TextCodeTranslationPipe"
+                                            [binding]="'PaymentType'" [Editable]="false">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div class="RightCenter">
+                                            <span>{{item.PaymentType}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
+                                <!-- PaymentAmount -->
+                                <log-column [width]="'90'" [Alignment]="'right'"
+                                            [header]="'Customs.PaymentQuery.O.PaymentAmount' | TextCodeTranslationPipe"
+                                            [binding]="'PaymentAmount'" [Editable]="false">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div class="RightCenter">
+                                            <span>{{item.PaymentAmount | NumbersPipe:'n0'}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
+                                <!-- Importer -->
+                                <log-column [width]="'220'" [Alignment]="'right'"
+                                            [header]="'Customs.PaymentQuery.O.Importer' | TextCodeTranslationPipe"
+                                            [binding]="'Importer'" [Editable]="false">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div style="width:100%;height:100%;">
+                                            <div class="RightCenter">
+                                                <span>{{item.Importer }}</span>
+                                            </div>
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
+                                <!-- Agent -->
+                                <!--<log-column [width]="'250'" [Alignment]="'right'"
+                                            [header]="'Customs.PaymentQuery.O.Agent' | TextCodeTranslationPipe"
+                                            [binding]="'Agent'" [Editable]="false">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div style="width:100%;height:100%;">
+                                            <div class="RightCenter">
+                                                <span>{{item.Agent }}</span>
+                                            </div>
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>-->
+
+                                <!-- EntityExternalId -->
+                                <log-column [width]="'120'" [Alignment]="'right'"
+                                            [header]="'Customs.PaymentQuery.O.EntityExternalID' | TextCodeTranslationPipe"
+                                            [binding]="'Agent'" [Editable]="false">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div style="width:100%;height:100%;">
+                                            <div class="RightCenter">
+                                                <span>{{item.EntityExternalID}}</span>
+                                            </div>
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
+                                <!-- PaymentMethodType -->
+                                <log-column [width]="'90'" [Alignment]="'right'"
+                                            [header]="'Customs.PaymentQuery.O.PaymentMethodType' | TextCodeTranslationPipe"
+                                            [binding]="'PaymentMethodType'" [Editable]="false">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div style="width:100%;height:100%;">
+                                            <div class="RightCenter">
+                                                <span>{{item.PaymentMethodType }}</span>
+                                            </div>
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
+                                <!-- PaymentStatus -->
+                                <log-column [width]="'90'" [Alignment]="'right'"
+                                            [header]="'Customs.PaymentQuery.O.PaymentOrderStatus' | TextCodeTranslationPipe"
+                                            [binding]="'PaymentStatus'" [Editable]="false">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div style="width:100%;height:100%;">
+                                            <div class="RightCenter">
+                                                <span>{{item.PaymentStatus }}</span>
+                                            </div>
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
+                            </logitude-edit-grid>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><div></div></td>
+                </tr>
+            </table>
+
+        </div>
+
+    </custom-message-wrapper>
+</div>

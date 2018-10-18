@@ -1,0 +1,248 @@
+
+<style>
+    .iwanttohover:hover {
+        background: #DDE6F0;
+    }
+
+    GridView th, .GridView td, .GridView td div {
+        text-align: left;
+        text-indent: 5px;
+        /*height: 24px;*/
+        line-height: 17px;
+        vertical-align: middle;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+     .FormFieldRow{
+        height: 30px;
+    }
+
+</style>
+
+
+
+
+
+
+
+    <table style="height:100%;vertical-align:top">
+
+
+
+
+        <tr style="height:10px"><td colspan="3"><div></div></td></tr>
+
+
+        <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+            <td colspan="3">
+                <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+            </td>
+        </tr>
+
+        <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:5px;">
+            <td colspan="3">
+                <div style="height:5px"></div>
+            </td>
+        </tr>
+
+
+
+
+
+        <!--Fields Grid-->
+
+
+        <tr style="height:100%;vertical-align:top;">
+
+
+            <td style="width:400px">
+                <table style="vertical-align:top">
+                    <tr style="vertical-align:top;height:30px">
+                        <td style="width:5px"><div></div></td>
+                        <td style="width:120px;">  <LogLabel [ObjectFieldName]="'Code'" [ObjectTableName]="'DocumentType'" [DataContext]="NewDocumentTypePM"></LogLabel></td>
+                        <td style="width:230px"><LogTextBox style="width:230px"  [IsNewEntityCall]="IsNewEntityCall" (LostFocus)="CodeLostFocusMethod(NewDocumentTypePM.Code)" [LogitudeForm]="myForm" [ObjectFieldName]="'Code'" [ObjectTableName]="'DocumentType'" [DataContext]="NewDocumentTypePM"></LogTextBox></td>
+                        <td><div></div></td>
+                    </tr>
+
+
+
+
+
+                    <tr style="vertical-align:top;height:30px">
+                        <td style="width:5px"><div></div></td>
+                        <td style="width:120px;">  <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="'DocumentType'" [DataContext]="NewDocumentTypePM"></LogLabel></td>
+                        <td style="width:230px"><LogTextBox style="width:230px" [LogitudeForm]="myForm" [ObjectFieldName]="'Name'" [ObjectTableName]="'DocumentType'" [DataContext]="NewDocumentTypePM"></LogTextBox></td>
+                        <td><div></div></td>
+                    </tr>
+
+                    <tr style="vertical-align:top;height:30px">
+                        <td style="width:5px"><div></div></td>
+                        <td style="width:120px;">  <LogLabel [ObjectFieldName]="'ObjectTableId'" [ObjectTableName]="'DocumentType'" [DataContext]="NewDocumentTypePM"></LogLabel></td>
+
+                        <td colspan="2">
+                            <table>
+
+                                <tr>
+
+                                    <td style="width:193px"><ComboBox style="width:193px;" (SelectedItemChanged)="ObjectTableValueChanged($event)" [ItemsSource]="ObjectTablesList" [SelectedItem]="SelectedObjectTable" [Binding]="'Name'"></ComboBox></td>
+                                    <td><div style="text-align:left"><a *ngIf="IsShowAdvanceLink" style="margin-left:12px;color:#0094ff;font-size:12px;" (click)="AdvanceLinkMethod()">Advance</a></div></td>
+                                </tr>
+                            </table>
+                        </td>
+
+
+
+                    </tr>
+
+
+
+                    <tr style="vertical-align:top;height:30px">
+                        <td style="width:5px"><div></div></td>
+                        <td style="width:120px;"><LogLabel [ObjectFieldName]="'IsDocIn'" [ObjectTableName]="'DocumentType'" [DataContext]="NewDocumentTypePM"></LogLabel></td>
+                        <td style="width:230px;text-align:left"><LogCheckBox [LogitudeForm]="myForm" [ObjectFieldName]="'IsDocIn'" [ObjectTableName]="'DocumentType'" [DataContext]="NewDocumentTypePM"></LogCheckBox></td>
+                        <td><div></div></td>
+                    </tr>
+
+
+                    <!--<tr style="vertical-align:top;height:30px">
+                        <td style="width:5px"><div></div></td>
+                        <td style="width:120px;"><LogLabel [ObjectFieldName]="'IsDocOut'" [ObjectTableName]="'DocumentType'" [DataContext]="NewDocumentTypePM"></LogLabel></td>
+                        <td style="width:230px;text-align:left"><div class="CheckBox"><input style="text-align:center" [(ngModel)]="NewDocumentTypePM.IsDocOut" (change)="CheckIsDocOutClick()" id="docout" type="checkbox" /><label for="docout"></label>  </div></td>
+
+                        
+                        <td><div></div></td>
+                    </tr>-->
+                    <tr style="vertical-align:top;height:30px">
+                        <td style="width:5px"><div></div></td>
+                        <td style="width:120px;"><LogLabel [ObjectFieldName]="'IsDocOut'" [ObjectTableName]="'DocumentType'" [DataContext]="NewDocumentTypePM"></LogLabel></td>
+                        <td style="width:230px;text-align:left"><LogCheckBox (ValueChanged)="IsDocOutChange($event)"  [LogitudeForm]="myForm" [ObjectFieldName]="'IsDocOut'" [ObjectTableName]="'DocumentType'" [DataContext]="NewDocumentTypePM"></LogCheckBox></td>
+                        <td><div></div></td>
+                    </tr>
+
+
+                    <tr style="vertical-align:top;height:30px">
+                        <td style="width:5px"><div></div></td>
+                        <td style="width:120px;"><LogLabel [ObjectFieldName]="'TemplateFormatCode'" [ObjectTableName]="'DocumentType'" [DataContext]="NewDocumentTypePM"></LogLabel></td>
+
+
+
+
+                        <td colspan="2">
+                            <table>
+
+                                <tr>
+
+                                    <td style="width:193px"><ComboBox [IsDisabled]="!IsEnableFormat" style="width:193px;" (SelectedItemChanged)="FormatValueChanged($event)" [ItemsSource]="FormatList" [SelectedItem]="TemplateFormatCode"></ComboBox></td>
+                                    <td><div></div></td>
+                                </tr>
+                            </table>
+                        </td>
+
+
+
+                    </tr>
+                    <tr  class="FormFieldRow" *ngIf="ShowFeildTenant0" style="vertical-align:top;" >
+                        <td style="width:5px"><div></div></td>
+                        <td style="width:120px;"><LogLabel [ObjectFieldName]="'CountryCode'" [ObjectTableName]="'DocumentType'" [DataContext]="NewDocumentTypePM"></LogLabel></td>
+                        <td style="width:230px"><LogLov style="width:230px" [LogitudeForm]="myForm" [ObjectFieldName]="'CountryCode'" [SelectedValuePath]="'Code'" [ObjectTableName]="'DocumentType'" [DataContext]="NewDocumentTypePM" [LookUpTableName]="'Country'"></LogLov></td>
+                        <td><div></div></td>
+                    </tr>
+
+
+                    <tr *ngIf="ShowFeildTenant0" style="vertical-align:top;height:30px">
+                        <td style="width:5px"><div></div></td>
+                        <td style="width:120px;"><LogLabel [ObjectFieldName]="'IsEnabledForCustomers'" [ObjectTableName]="'DocumentType'" [DataContext]="NewDocumentTypePM"></LogLabel></td>
+                        <td style="width:230px;text-align:left"><LogCheckBox [LogitudeForm]="myForm" [ObjectFieldName]="'IsEnabledForCustomers'" [ObjectTableName]="'DocumentType'" [DataContext]="NewDocumentTypePM"></LogCheckBox></td>
+                        <td><div></div></td>
+                    </tr>
+
+                    <tr *ngIf="ShowFeildTenant0" style="vertical-align:top;height:30px">
+                        <td style="width:5px"><div></div></td>
+                        <td style="width:120px;"><LogLabel [ObjectFieldName]="'IsCopiedAtSignup'" [ObjectTableName]="'DocumentType'" [DataContext]="NewDocumentTypePM"></LogLabel></td>
+                        <td style="width:230px;text-align:left"><LogCheckBox [LogitudeForm]="myForm" [ObjectFieldName]="'IsCopiedAtSignup'" [ObjectTableName]="'DocumentType'" [DataContext]="NewDocumentTypePM"></LogCheckBox></td>
+                        <td><div></div></td>
+                    </tr>
+
+                    <tr style="vertical-align:top;height:30px">
+                        <td style="width:5px"><div></div></td>
+                        <td style="width:120px;"><LogLabel [ObjectFieldName]="'InActive'" [ObjectTableName]="'DocumentType'" [DataContext]="NewDocumentTypePM"></LogLabel></td>
+                        <td style="width:230px;text-align:left"><LogCheckBox [LogitudeForm]="myForm" [ObjectFieldName]="'InActive'" [ObjectTableName]="'DocumentType'" [DataContext]="NewDocumentTypePM"></LogCheckBox></td>
+                        <td><div></div></td>
+                    </tr>
+
+
+                    <tr  class="FormFieldRow" style="vertical-align:top">
+                        <td style="width:5px"><div></div></td>
+                        <td style="width:120px;">  <LogLabel [ObjectFieldName]="'DocumentTypeCategoryCode'" [Text]="'Category'" [ObjectTableName]="'DocumentType'" [DataContext]="NewDocumentTypePM"></LogLabel></td>
+                        <td style="width:230px"><LogLov style="width:230px" [LogitudeForm]="myForm" [ObjectFieldName]="'DocumentTypeCategoryCode'" [ObjectTableName]="'DocumentType'" [DataContext]="NewDocumentTypePM" [LookUpTableName]="'DocumentTypeCategory'"></LogLov></td>
+                        <td><div></div></td>
+                    </tr>
+
+
+                    <tr class="FormFieldRow" style="vertical-align:top;height:33px">
+                        <td style="width:5px"><div></div></td>
+                        <td style="width:120px;">  <LogLabel [ObjectFieldName]="'FileName'" [ObjectTableName]="'DocumentType'" [DataContext]="NewDocumentTypePM"></LogLabel></td>
+                        <td colspan="2">
+                            <table>
+
+                                <tr>
+
+                                    <td style="width:230px"><LogTextBox style="width:230px" [ObjectFieldName]="'FileName'" (InputIdGenerated)="InputFileNameIdGenerated($event)" [ObjectTableName]="'DocumentType'" [DataContext]="NewDocumentTypePM"></LogTextBox></td>
+                                    <td><div style="text-align:left"><button [class.HyperlinkDisabled]="!NewDocumentTypePM.ObjectTableId" (click)="AddDataField()" style="width:100px;background-color:#E6E6E6;height:22px;margin-left:-13px" class="Button">Add Data Field</button></div></td>
+                                </tr>
+                            </table>
+                        </td>
+
+
+
+                    </tr>
+
+
+                    <tr><td></td></tr>
+
+                </table>
+
+
+
+            </td>
+
+
+
+            <td><div></div></td>
+
+        </tr>
+
+
+
+
+
+        <tr style="height: 32px;">
+            <td colspan="3" style="vertical-align: bottom">
+                <table style="height: 22px;">
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+
+                        <td style="width: 57px;">
+                            <div>
+                                <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
+                            </div>
+                        </td>
+
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 57px;">
+                            <button class="RedButton" (click)="SaveButtonClicked()">Ok</button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+    </table>
+

@@ -1,0 +1,331 @@
+﻿
+
+<style>
+    .iwanttohover:hover {
+        background: #DDE6F0;
+    }
+
+       .SectionItem:not(.SelectedSectionItem):hover {
+   
+    width: 100%;
+    /*border: 1px solid #BDBEC0;*/
+    cursor: pointer;
+    position: relative;
+    background: -moz-linear-gradient(50% 17.31% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    background: -webkit-gradient(linear,50% 17.31%,50% 105.85%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
+    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+}
+
+
+    .SectionItem {
+        width: 100%;
+        cursor: pointer;
+        height: 29px;
+        position: relative;
+    }
+
+        
+.SelectedSectionItem {
+    width: 100%;
+    cursor: pointer;
+    background: -moz-linear-gradient(50% 106.14% 90deg,rgba(133, 203, 237, 1) 0%,rgba(150, 211, 240, 1) 22.59%,rgba(196, 231, 248, 1) 67.37%,rgba(232, 247, 255, 1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 100%);
+    background: linear-gradient(0deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 100%);
+    position: relative;
+}
+
+
+
+
+    .Link:hover {
+        cursor: pointer;
+        color: #1C59FC;
+    }
+
+    .Link {
+        cursor: pointer;
+        font-size: 13px;
+        color: #0094ff;
+        height: 21px;
+        white-space: nowrap;
+    }
+</style>
+
+
+
+<table>
+
+
+
+
+    <tr>
+
+        <td style="height:100%">
+            <div style="height:100%">
+
+                <div style="height:5px;"></div>
+
+                <div *ngIf="LastBuildDateVisible" style="height:30px;border-radius:5px;width:100%;background-color:#FFF9A8;border:2px solid #FFDEA1">
+                    <table>
+                        <tr>
+                            <td style="width:150px;"><div style="margin-top:1px;margin-left:5px; font-size:13px;color:black">Document Last Update</div></td>
+                            <td style="width:100px">
+                                <div style="font-size:11px;margin-left:10px;margin-top:1px;color:gray">
+                                    {{LastBuildDate | DateTimePipe:'DT'}}
+                                </div>
+
+                            </td>
+                            <td style="text-align:right;width:100%">
+
+
+
+                                <button [class.HyperlinkDisabled]="!BuildButtonIsEnabled" (click)="UpdateDocument()" class="GreenButton" style="width:110px;margin-right:5px;height:22px;float: right;">
+                                    Update Document
+
+                                </button>
+                            <td>
+
+
+                        </tr>
+                    </table>
+                </div>
+
+                <div *ngIf="LastBuildDateVisible" style="height:10px;"></div>
+
+                <div *ngIf="!IsQuotationDocument">
+                    <table style="height:25px">
+                        <tr>
+                            <td style="width:15px"><div></div></td>
+                            <td style="width:70px">Template</td>
+                            <td style="width:150px"><ComboBox style="width:150px;height:22px;display:inline" (SelectedItemChanged)="alertselected($event)" [ItemsSource]="DocumentTypeTemplateLists" [SelectedItem]="CurrentDocumentTypeTemplateList" [Binding]="'Description'"></ComboBox></td>
+                            <td style="width:100px"><a class="Link" [class.HyperlinkDisabled]="isAWBWizard" style="margin-left:10px;font-size:13px;" (click)="showDialog('ManageTemplate')">Manage Template</a></td>
+                            <td style="width:100px"><a class="Link" style="margin-left:10px;font-size:13px;" (click)="showDialog('EditDocument')">Edit Document</a></td>
+                            <td><div></div></td>
+                        </tr>
+                    </table>
+
+
+                </div>
+
+                <div  *ngIf="!IsQuotationDocument" style="height:12px;"></div>
+
+
+                <div style="height:175px;width:100%;border-right:1px solid #E4E3E1;border-left:1px solid #E4E3E1;border-bottom:1px solid #E4E3E1;border-radius:6px;vertical-align:top">
+                    <table style="border :none;height:142px;vertical-align:top;">
+
+                        <tr style="height:25px"><td><div style="background-color:#EDEDED;height:25px;border-top:1px solid #E4E3E1;border-top-Right-radius:6px; border-top-left-radius:6px;color:black"><p style="font-size:14px;margin-left:5px;margin-top:2px;color:#000000">Document Copies</p> </div></td></tr>
+                        <tr style="vertical-align:top">
+
+                            <td style="vertical-align:top">
+
+
+
+                                <div style="overflow:auto;height:122px;vertical-align:top;">
+                                    <table style="vertical-align:top;">
+
+                                        <!--<tr (click)="OnSelectTemplateChange(item)" [class.SelectedSectionItem]="item === SelectedDocumentTypeTemplateViewModel" class="SectionItem" style="text-align:left;vertical-align:top;" *ngFor="let item of ReportTemplates">-->
+                                        <tr [class.SelectedSectionItem]="item === documentCopieViewModelSelected" class="SectionItem" (click)="documentCopieViewModelSelected=item"    style="text-align:left;vertical-align:top;" (mouseleave)="OnmMouseleave(item)" (mouseover)="OnmMouseOver(item)" *ngFor="let item of Items">
+
+                                            <td style="width:10px; min-width: 10px; max-width: 10px;"><div></div></td>
+
+                                            <td *ngIf="item.IsCheckBoxesVisible" style="width:25px;height:29px ;margin-right:3px;border-bottom:1px solid #E4E3E1;min-width: 25px;margin-top:0px">
+
+                                                <!--<div class="CheckBox">
+                                                    <input class="CenterCenter" style="text-align:center" (change)="DocumentCopySelectedChange(item)" [attr.id]="item.Key" type="checkbox" [(ngModel)]="item.IsSelected" [disabled]="item.IsDiableSelctedDocumentTypeCopy" />
+                                                    <label class="CenterCenter" [attr.for]="item.Key"></label>
+                                                </div>-->
+                                                <div class="MediaFill">
+                                                    <div class="MediaFillRelative">
+                                                        <div class="CenterCenter" style="width: 16px;">
+                                                            <CheckBox [IsEnabled]="!item.IsDiableSelctedDocumentTypeCopy" [IsChecked]="item.IsSelected" (Checked)="DocumentCopySelectedChange(item, $event)"></CheckBox>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </td>
+                                            <!---->
+
+
+                                            <td class="GridViewCell" style="width: 165px;border-bottom:1px solid #E4E3E1; min-width: 165px; max-width: 165px; position: relative;">
+
+                                                <div style="text-align:left;width:160px;margin-left:3px;margin-right:3px; min-width: 160px;margin-top:5px;overflow:hidden;text-overflow: ellipsis;white-space: nowrap;display:inline-block">{{item.Name}}</div>
+                                            </td>
+
+
+                                            <td class="GridViewCell" style="width: 10px;border-bottom:1px solid #E4E3E1; min-width: 10px; max-width: 10px; position: relative;">
+                                                <div></div>
+
+                                            </td>
+
+
+
+                                            <td style="width:60px;max-width:60px;margin-left:3px;margin-right:3px; min-width:60px;border-bottom:1px solid #E4E3E1;">
+
+                                                <button [disabled]="!item.IsPrintButtonEnabled" *ngIf="item.IsButtonsStackPanelVisible" id="Printbutton" class="Button" style="margin-top:1px;height:25px;width:55px" (click)="PrintMethod(item)">
+                                                    <table>
+                                                        <tr>
+                                                            <td><img style="width:17px;height:17px;margin-bottom:1px;margin-left:-2px" src="./Images/SimplogIcons/File-pdf-48.png" /></td>
+                                                            <td style="margin-left:2px">Print</td>
+                                                        </tr>
+                                                    </table>
+                                                </button>
+
+
+                                            </td>
+
+
+                                            <td style="margin-left:3px;margin-right:3px; min-width:60px;width:60px;max-width:60px;border-bottom:1px solid #E4E3E1;">
+
+                                                <button [disabled]="!item.IsPrintButtonEnabled" *ngIf="item.IsButtonsStackPanelVisible" class="Button" style="margin-top:1px;height:25px;width:55px" (click)="showSendControlDialog(item)">
+                                                    <table>
+                                                        <tr>
+                                                           
+                                                            <td><img style="width:20px;height:24px;margin-bottom:0px;margin-left:-4px" src="./Images/DoumentIcon/SendIcon.png" /></td>
+                                                            <td style="margin-top:-2px;">Send</td>
+                                                        </tr>
+                                                    </table>
+                                                </button>
+
+
+                                            </td>
+
+                                            <td style="width:15px; min-width: 15px; max-width: 15px;"><div></div></td>
+
+
+
+                                            <td class="GridViewCell" style="border-bottom:1px solid #E4E3E1; position: relative;">
+
+                                                <div [attr.title]="item.PrintedByMessage" style="text-align:left;width:370px; min-width: 370px;margin-top:5px;overflow:hidden;font-size:11px;text-overflow: ellipsis;white-space: nowrap;display:inline-block;color:black">
+                                                    {{item.PrintedByMessage}}
+                                                   
+                                                </div>
+                                            </td>
+
+
+
+
+                                        </tr>
+
+
+
+                                        <tr>
+                                            <td colspan="8">
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+
+                                    </table>
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>
+
+                    </table>
+                    <!--PrintAllCopies-->
+                    <!--SaveSelectedAsDefault-->
+
+                    <div style="height:10px;vertical-align:bottom"><span></span></div>
+
+                    <div style="height:20px;vertical-align:bottom">
+                        <a class="Link" [class.HyperlinkDisabled]="PrintAllCopiesBtnDisable" *ngIf="PrintAllCopiesBtnVisible" style="margin-left:5px;font-size:12px;" (click)="PrintAllCopiesBtnClick()">Print All Copies</a>
+                        <a class="Link" *ngIf="SelectedAsDefaultBtnVisible" style="margin-left:10px;font-size:12px;" (click)="SetSelectedAsDefaultBtnClick()">Save Select As Default</a>
+                    </div>
+
+                </div>
+
+
+                <!--test-->
+                <div *ngIf="IsShowDocumentCustomFields" style="height:15px;"></div>
+
+                <div *ngIf="IsShowDocumentCustomFields" style="height:180px;width:100%;border-right:1px solid #E4E3E1;border-left:1px solid #E4E3E1;border-bottom:1px solid #E4E3E1;border-radius:6px;vertical-align:top">
+                    <table style="border :none;height:180px">
+
+
+                        <tr style="height:25px">
+                            <td>
+
+                                <div style="background-color:#EDEDED;height:25px;border-top:1px solid #E4E3E1;border-top-Right-radius:6px; border-top-left-radius:6px;color:black">
+
+                                    <p style="font-size:14px;margin-left:5px;margin-top:2px;color:#000000;float: left;">Additional Printing Fields</p>
+
+                                    <a class="Link" style="font-size:14px;float:right;margin-top:0px;margin-right:10px" (click)="showDialog('AdditionalPrintingFields')">Edit Printing Fields</a>
+
+                                </div>
+
+                            </td>
+
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                <div style="overflow:auto; height:150px;max-height:150px">
+
+                                    <GeneratedDocumentCustomFieldComponent *ngIf="IsSystemAdditionalPrintingFields" style="text-align:center" [DocumentCustomArgs]="DocumentCustomFieldsArgs"></GeneratedDocumentCustomFieldComponent>
+                                    <DocumentCustomFields *ngIf="!IsSystemAdditionalPrintingFields" style="text-align:center" [DocumentCustomArgs]="DocumentCustomFieldsArgs"></DocumentCustomFields>
+
+                                </div>
+                            </td>
+                        </tr>
+
+
+                    </table>
+
+
+
+                </div>
+
+                <!--endtest-->
+
+                <div style="background-color:red"></div>
+            </div>
+
+
+        </td>
+
+
+
+
+    </tr>
+
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <!--<button class="Button" (click)="CloseButtonClicked()">Cancel</button>-->
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CloseButtonClicked()">Close</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+
+</table>
+

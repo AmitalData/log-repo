@@ -1,0 +1,15 @@
+﻿<!ELEMENT LOGIPAYORD (LogitudePaymentOrder*)>
+<!ELEMENT LogitudePaymentOrder (Type?, Primary?, AccountingCard?, NIS_Amount?, Value_Date?, Partner?, Reference?, PaymentProcessCode?, PaymentMethods*)>
+<!ELEMENT Type (#PCDATA)>
+<!ELEMENT Primary (#PCDATA)>
+<!ELEMENT AccountingCard (#PCDATA)>
+<!ELEMENT NIS_Amount (#PCDATA)>
+<!ELEMENT Value_Date (#PCDATA)>
+<!ELEMENT Partner (#PCDATA)>
+<!ELEMENT Reference (#PCDATA)>
+<!ELEMENT PaymentProcessCode (#PCDATA)>
+<!ELEMENT PaymentMethods (BankCode?, PaymentMethod?, Amount?, CustomerActivityType?)>
+<!ELEMENT BankCode (#PCDATA)>
+<!ELEMENT PaymentMethod (#PCDATA)>
+<!ELEMENT Amount (#PCDATA)>
+<!ELEMENT CustomerActivityType (#PCDATA)>

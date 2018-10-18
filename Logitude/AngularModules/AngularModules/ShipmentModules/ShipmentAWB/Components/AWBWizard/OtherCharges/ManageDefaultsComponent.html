@@ -1,0 +1,251 @@
+﻿
+<style type="text/css">
+    .ListSection {
+        width: 100%;
+        height: 100%;
+        border: 1px solid #BABABA;
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        overflow: hidden;
+    }
+
+    .ListBody {
+        background: #F2F8FF;
+    }
+
+    .ListBoxItem:hover .EditButton {
+        display: block;
+    }
+
+    .EditButton {
+        display: none;
+    }
+
+    .ListBoxItem:not(.Selected):hover {
+        background: -moz-linear-gradient(50% 17.31% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        background: -webkit-gradient(linear,50% 17.31%,50% 105.85%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    }
+
+    .ListBoxItem {
+        cursor: default;
+        width: 100%;
+        height: 22px;
+        /*line-height: 22px;*/
+    }
+
+    .Selected {
+        background: rgba(232, 247, 255, 1);
+        background: -moz-linear-gradient(50% 106.14% 90deg,rgba(133, 203, 237, 1) 0%,rgba(150, 211, 240, 1) 22.59%,rgba(196, 231, 248, 1) 67.37%,rgba(232, 247, 255, 1) 99.68%);
+        background: -webkit-linear-gradient(90deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 99.68%);
+        background: -webkit-gradient(linear,50% 106.14%,50% -10.13%,color-stop(0,rgba(133, 203, 237, 1) ),color-stop(0.2259,rgba(150, 211, 240, 1) ),color-stop(0.6737,rgba(196, 231, 248, 1) ),color-stop(0.9968,rgba(232, 247, 255, 1) ));
+        background: -o-linear-gradient(90deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 99.68%);
+        background: linear-gradient(0deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 99.68%);
+    }
+</style>
+
+<table>
+
+    <tr style="height: 20px;">
+        <td style="font-size: 11px; font-style: italic; font-family: Arial; color: #6E7172">charges marked as auto display will be displayed by default in the {{ObjectTableName}}</td>
+    </tr>
+
+    <tr>
+        <td>
+            <table class="FixedTable">
+                <tr>
+                    <td style="height: 100%;">
+                        <div class="ListSection">
+                            <table>
+                                <tr class="SectionHeader" style="height: 25px;">
+                                    <td>
+                                        <label>{{AllChargesHeader}}</label>
+                                    </td>
+                                </tr>
+
+                                <tr class="ListBody">
+                                    <td style="padding: 1px;">
+                                        <table>
+                                            <tr style="height: 23px;">
+                                                <td>
+                                                    <SearchBox [ObjectTableName]="'ChargesType'" (TextChanged)="SearchText = $event" [UseTimer]="true"></SearchBox>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <div class="ScrollViewer">
+                                                        <div class="ScrollContent">
+                                                            <ul>
+                                                                <li class="ListBoxItem" *ngFor="let item of AllChargesList" (click)="SelectedAllChargesItem = item" [class.Selected]="item === SelectedAllChargesItem">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td style="width: 3px;">
+                                                                                <div></div>
+                                                                            </td>
+
+                                                                            <td style="width: 60px; font-size: 13px; color: #1B90CB">{{item.Code}}</td>
+
+                                                                            <td style="font-size: 12px; color: #282E30">
+                                                                                <div>
+                                                                                    {{item.Name}}
+                                                                                </div>
+                                                                            </td>
+
+                                                                            <td style="width: 18px;">
+                                                                                <div>
+                                                                                    <div class="EditButton">
+                                                                                        <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditChargeType(item)"></IconButton>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+
+                    <td style="width: 100px">
+                        <table>
+                            <tr>
+                                <td style="width: 5px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="vertical-align: middle">
+                                    <button class="Button" [disabled]="!SelectedAllChargesItem" (click)="AddClicked()">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width: 1px; vertical-align: middle;">Add</td>
+                                                <td style="width: 5px;">
+                                                    <div></div>
+                                                </td>
+                                                <td style="width: 20px; position: relative">
+                                                    <img src="./Images/Icons/ArrowRight.png" class="CenterCenter" style="height: 17px; width: 20px;" />
+                                                </td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </button>
+
+                                    <div style="height: 5px;"></div>
+
+                                    <button class="Button" [disabled]="!SelectedAutoDisplayItem" (click)="RemoveClicked()">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width: 20px; position: relative">
+                                                    <img src="./Images/Icons/ArrowLeft.png" class="CenterCenter" style="height: 17px; width: 20px;" />
+                                                </td>
+
+                                                <td style="width: 5px;">
+                                                    <div></div>
+                                                </td>
+                                                <td style="width: 1px; vertical-align: middle;">Remove</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </button>
+                                </td>
+
+                                <td style="width: 5px;">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td style="height: 100%;">
+                        <div class="ListSection">
+                            <table>
+                                <tr class="SectionHeader" style="height: 25px;">
+                                    <td>
+                                        <label>{{AutoDisplayHeader}}</label>
+                                    </td>
+                                </tr>
+
+                                <tr class="ListBody">
+                                    <td style="padding: 1px;">
+                                        <div class="ScrollViewer">
+                                            <div class="ScrollContent">
+                                                <ul>
+                                                    <li class="ListBoxItem" *ngFor="let item of AutoDisplaylist" (click)="SelectedAutoDisplayItem = item" [class.Selected]="item === SelectedAutoDisplayItem">
+                                                        <table>
+                                                            <tr>
+                                                                <td style="width: 3px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="width: 60px; font-size: 13px; color: #1B90CB">{{item.Code}}</td>
+
+                                                                <td style="font-size: 12px; color: #282E30">
+                                                                    <div>
+                                                                        {{item.Name}}
+                                                                    </div>
+                                                                </td>
+
+                                                                <td style="width: 18px;">
+                                                                    <div>
+                                                                        <div class="EditButton">
+                                                                            <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditChargeType(item)" style="display: block; float: left;"></IconButton>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CloseButtonClicked()">Close</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

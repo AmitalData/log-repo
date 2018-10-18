@@ -1,0 +1,273 @@
+﻿<style>
+    .subTitle {
+        color: #1b90cb;
+        font-size: 16px;
+    }
+</style>
+<table *ngIf="visible">
+    <tr>
+        <td>
+            <div class="TableHolder">
+                <table>
+                    <tr class="TabTitleRow">
+                        <td>{{ 'ChartOfAccount.TH.General' | TextCodeTranslationPipe}} </td>
+                    </tr>
+
+                    <tr style="height: 15px;"><td><div style="width: 15px;"></div></td></tr>
+
+                    <tr>
+                        <td style="width: 400px">
+                            <table>
+                                <tr >
+                                    <td>
+                                        <table>
+                                          
+                                            <!-- PayToGlAccountId -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'PayToGLAccountId'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td >
+                                                    <LogLov [ObjectFieldName]="'PayToGLAccountId'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'GLAccount'"
+                                                    
+                                                            [QueryFilterItems]="filterAgrs"
+                                                            (SelectedItemChanged)="Account = $event"
+                                                            [HideColumns]="true">
+                                                    </LogLov> </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                            <!-- PayToName -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 180px;">
+                                                    <LogLabel [ObjectFieldName]="'PayToName'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 180px;">
+                                                    <LogTextBox [ObjectFieldName]="'PayToName'" [InputType]="'ntext'" [DataContext]="DataContext"
+                                                                [ObjectTableName]="ObjectTableName" [Text]="PayToName" [HideColumns]="true"></LogTextBox>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                          
+                                            <!-- Bank Account -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'BankAccountId'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'BankAccountId'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'BankAccount'"
+                                                            [DisplayMemberPath]="BankName"
+                                                            (SelectedItemChanged)="BankAccount = $event"
+                                                            [HideColumns]="true">
+                                                    </LogLov>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                            <tr ><td><div></div></td></tr>
+                                        </table>
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td style="width: 80px;"><div></div></td>
+
+                        <td>
+                            <table>
+                                <tr >
+                                    <td>
+                                        <table>
+                                            <!-- CurrencyId -->
+                                            <!--<tr class="FormFieldRow">
+                                                <td width="170px;">
+                                                    <LogLabel [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td width="180px;">
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <LogLov [ObjectFieldName]="'CurrencyId'"
+                                                                        [SelectedValue]="CurrencyId"
+                                                                        [ObjectTableName]="ObjectTableName"
+                                                                        [DataContext]="DataContext"
+                                                                        [LookUpTableName]="'Currency'"
+                                                                        [HideColumns]="true">
+                                                                </LogLov>
+                                                            </td>
+
+                                                            <td style="width: 10px;">
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td style="width: 45px;" ><LogLabel [ObjectFieldName]="'ExchangeRate'" [ObjectTableName]="ObjectTableName"
+                                                          [DataContext]="DataContext"></LogLabel>
+</td>
+
+                                                            <td style="width: 65px;">
+                                                                <LogTextBox [ObjectFieldName]="'ExchangeRate'" [Text]="ExchangeRate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [DigitsAfterPoint]="5"></LogTextBox>
+                                                            </td>
+
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                    </table>     </td>
+                                                <td><div></div></td>
+                                            </tr>-->
+
+                                            <!-- LocalAmount -->
+                                            <tr class="FormFieldRow">
+                                                <td  width="170px;">
+                                                <table>
+                                                    <tr>
+                                                
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'LocalAmount'" [ObjectTableName]="ObjectTableName"
+                                                                      [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+                                                 </tr>
+                                                    </table>
+                                                </td>
+                                              
+                                                <td width="180px;">
+                                                    <LogTextBox [ObjectFieldName]="'LocalAmount'" [InputType]="'double'" [DataContext]="DataContext" [Text]="LocalAmount"
+                                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                            <!-- ValueDate -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'ValueDate'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td >
+                                                    <LogDatePicker [ObjectFieldName]="'ValueDate'" [ObjectTableName]="ObjectTableName"
+                                                                   [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+  </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                           
+                                            <tr ><td><div></div></td></tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+
+
+                        </td>
+                        <td><div></div></td>
+                    </tr>
+
+
+                    <tr style="height:70%">
+                        <td colspan="3">
+                            <table>
+                                <tr>
+                                    <td style="width: 25px;height: 20px;padding: 5px;padding-bottom: 3px;">
+                                        <div><IconButton [IsSmall]="true" [Name]="'Add'" (click)="Add()" [IsEnabled]="AddLineEnabled" style="float:left;"></IconButton></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="CellContent" style="">
+                                            <logitude-edit-grid GridWidth="100%"
+                                                                GridHeight="100%"
+                                                                [IsReadOnly]="!AddLineEnabled"
+                                                                [ItemSource]="Lines">
+
+                                                <log-column [header]="'#'" [width]="'30'" [Editable]="false" [Alignment]="'right'">
+
+                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right">
+                                                            <span>{{item.SequenceNumeric}}</span>
+                                                        </div>
+
+                                                    </log-cell-template>
+                                                </log-column>
+
+
+                                                <log-column [header]="'PaymentChequeLine.F.Notes' | TextCodeTranslationPipe" [width]="'110'" [Editable]="true" [Alignment]="'center'">
+
+                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right">
+                                                            <span>{{item.Note}}</span>
+                                                        </div>
+                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                            <LogTextBox [ObjectFieldName]="'Note'" [DataContext]="item" [FocusOnMe]="true" [InputType]="'ntext'"
+                                                                        [Text]="item.Note" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+
+
+
+                                                        </div>
+                                                    </log-cell-template>
+                                                </log-column>
+
+
+
+
+                                                <log-column [header]="AmountHeader" [binding]="'Amount'" [width]="'110'" [Editable]="true" [Alignment]="'center'">
+
+                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right">
+                                                            <span>{{item.Amount | NumbersPipe:'N2'}}</span>
+                                                        </div>
+                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                            <LogTextBox [ObjectFieldName]="'Amount'" [DataContext]="item" [FocusOnMe]="true" [InputType]="'double'"
+                                                                        [Text]="item.Amount" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+
+
+
+                                                        </div>
+                                                    </log-cell-template>
+                                                </log-column>
+
+                                                <log-column [width]="'22'" [Editable]="true" [Alignment]="'right'" [visibility]="'visibile'">
+                                                    <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                                                        <div style="width: 18px; float: left; height:20px; padding-top: 2px;">
+                                                            <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="item.DeleteButtonClicked()" [IsEnabled]="AddLineEnabled"></IconButton>
+                                                        </div>
+
+
+
+                                                    </log-cell-template>
+                                                </log-column>
+
+
+                                            </logitude-edit-grid>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </td>
+
+
+                    </tr>
+
+                </table>
+            </div>
+        </td>
+    </tr>
+
+ 
+
+</table>

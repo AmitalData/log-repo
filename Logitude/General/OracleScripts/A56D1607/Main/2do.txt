@@ -1,0 +1,245 @@
+ix_624428485 (10 items)
+	Drop index ix_624428485
+	Drop index ix_866452815
+	Drop index ix_n370408663
+	Drop index ix_876134226
+	Drop index ix_730412180
+	Drop table automationconditions
+	Drop index ix_tenantaddons_packagecode
+	Drop table tenantaddons
+	Drop table entitychangesautomations
+	Drop procedure zz_updatequeuecommunicationlo
+accountingtransferheaders (1 item)
+	Create column notes on table accountingtransferheaders
+airlinemessagingrules (1 item)
+	Create table airlinemessagingrules
+airlines (1 item)
+	Create columns scheduledays,noavailabilityinfvamessages on table airlines
+apinvoices (1 item)
+	Create column operationaldate on table apinvoices
+arinvoices (4 items)
+	Create columns creditedbyarinvoiceid,operationaldate on table arinvoices
+	Drop foreign key constraint fk_428970592 from table arinvoices
+	Create foreign key constraint fk_n1188848658 on table arinvoices
+	Create foreign key constraint fk_428970592 on table arinvoices
+automationhistorys (1 item)
+	Create table automationhistorys
+automationlastupdates (1 item)
+	Create table automationlastupdates
+automationresultemailrecips (2 items)
+	Create columns recipienttype,recipientvalue on table automationresultemailrecips
+	Drop columns entitycontactvariable,userid on table automationresultemailrecips
+automations (4 items)
+	Create columns documenttypeid,"VERSION",automationxml,from1,fromemail,executionorder on table automations
+	Modify columns templateid,createdbyuserid on table automations
+	Create foreign key constraint fk_n1145306470 on table automations
+	Create foreign key constraint fk_863195738 on table automations
+awbdescriptionofgoods (1 item)
+	Create column istemperaturesensitive on table awbdescriptionofgoods
+awbstockusagehistories (4 items)
+	Create columns firstactionbyuserid,lastactionbyuserid,actiontype,firstactiondate,lastactiondate on table awbstockusagehistories
+	Drop columns firstsenddate,lastsenddate,firstsenderid,lastsenderid on table awbstockusagehistories
+	Create foreign key constraint fk_363646558 on table awbstockusagehistories
+	Create foreign key constraint fk_668163641 on table awbstockusagehistories
+bookings (2 items)
+	Create columns accountnumber,istemperaturesensitive on table bookings
+	Drop column ffrlastsendingdate on table bookings
+claimimporterdeclarsp3lois (7 items)
+	Drop foreign key constraint fk_1638544082 from table claimimporterdeclarsp3lois
+	Create columns counterkey,lineno on table claimimporterdeclarsp3lois
+	Drop index constraint sys_c00110256 from table claimimporterdeclarsp3lois
+	Drop foreign key constraint fk_1638544082 from table claimimporterdeclarsp3lois
+	Drop column importerloideclarationtypecode on table claimimporterdeclarsp3lois
+	Modify column declarationnumber on table claimimporterdeclarsp3lois
+	Create index constraint sys_c00135492 on table claimimporterdeclarsp3lois
+claimimporterdeclarspage3as (2 items)
+	Drop index constraint sys_c00110203 from table claimimporterdeclarspage3as
+	Create column lineno on table claimimporterdeclarspage3as
+claimimporterdeclarspage3bs (1 item)
+	Rebuild table claimimporterdeclarspage3bs
+claimimporterdeclarspage3s (2 items)
+	Drop index constraint sys_c00107994 from table claimimporterdeclarspage3s
+	Create column lineno on table claimimporterdeclarspage3s
+claimsrelatedentitiesreasons (6 items)
+	Drop foreign key constraint fk_n470555016 from table claimsrelatedentitiesreasons
+	Drop foreign key constraint fk_n961361905 from table claimsrelatedentitiesreasons
+	Create column lineno on table claimsrelatedentitiesreasons
+	Modify column reasonlisttypecode on table claimsrelatedentitiesreasons
+	Drop index constraint sys_c00107230 from table claimsrelatedentitiesreasons
+	Create index constraint sys_c00135497 on table claimsrelatedentitiesreasons
+claimsrelatedentsreasonsexps (8 items)
+	Drop foreign key constraint fk_n1422415057 from table claimsrelatedentsreasonsexps
+	Drop foreign key constraint fk_n2063305696 from table claimsrelatedentsreasonsexps
+	Create columns reasonlineno,lineno on table claimsrelatedentsreasonsexps
+	Drop index constraint sys_c00107238 from table claimsrelatedentsreasonsexps
+	Drop foreign key constraint fk_n1422415057 from table claimsrelatedentsreasonsexps
+	Drop column reasonlisttypecode on table claimsrelatedentsreasonsexps
+	Modify column claimexplanationtypecode on table claimsrelatedentsreasonsexps
+	Create index constraint sys_c00135503 on table claimsrelatedentsreasonsexps
+consignmentpackages (4 items)
+	Drop foreign key constraint fk_n853024624 from table consignmentpackages
+	Drop foreign key constraint fk_918667578 from table consignmentpackages
+	Create foreign key constraint fk_n853024624 on table consignmentpackages
+	Create foreign key constraint fk_918667578 on table consignmentpackages
+customeradditionalservices (1 item)
+	Create column notes on table customeradditionalservices
+customerproducts (2 items)
+	Create column prepaidcollectid on table customerproducts
+	Create foreign key constraint fk_1416916274 on table customerproducts
+documentsfilings (1 item)
+	Create column lastversion on table documentsfilings
+documenttypetemplates (1 item)
+	Create columns from1,replyto on table documenttypetemplates
+employeegroups (3 items)
+	Create columns manageruserid,escalationnotify on table employeegroups
+	Drop column escalationuserid on table employeegroups
+	Create foreign key constraint fk_n1637418196 on table employeegroups
+entitycasualdata (1 item)
+	Create table entitycasualdata
+entitychanges (4 items)
+	Create columns automationconditionfieldsxml,changesfieldsxml,changesautomationfieldsxml,setautomationssucceedxml,emailautomationssucceedxml,setautomationfailedxml,emailautomationfailedxml on table entitychanges
+	Drop columns oldentity,currententity on table entitychanges
+	Modify column createbyuserid on table entitychanges
+	Create foreign key constraint fk_2045978974 on table entitychanges
+flightsschedulesresponses (2 items)
+	Create columns fromportcode,fromportname,toportcode,toportname,missingport on table flightsschedulesresponses
+	Modify columns fromportid,toportid on table flightsschedulesresponses
+hybridpartners (1 item)
+	Create column "INACTIVE" on table hybridpartners
+inboundemaillines (2 items)
+	Create column htmlfullbody on table inboundemaillines
+	Modify columns ccs,internalusers on table inboundemaillines
+inboundemails (1 item)
+	Create column analyzequeueid on table inboundemails
+ix_1289860281 (1 item)
+	Create index ix_1289860281
+ix_1292319833 (1 item)
+	Create index ix_1292319833
+ix_1822660010 (1 item)
+	Create index ix_1822660010
+ix_18623159 (1 item)
+	Create index ix_18623159
+ix_410647628 (1 item)
+	Create index ix_410647628
+ix_591782138 (1 item)
+	Create index ix_591782138
+ix_836460380 (1 item)
+	Create index ix_836460380
+ix_automations_createdbyuserid (1 item)
+	Create index ix_automations_createdbyuserid
+ix_automations_updatedbyuserid (1 item)
+	Create index ix_automations_updatedbyuserid
+ix_crs_dcaaggrkey (1 item)
+	Create index ix_crs_dcaaggrkey
+ix_n1065836496 (1 item)
+	Create index ix_n1065836496
+ix_n1239001948 (1 item)
+	Create index ix_n1239001948
+ix_n1285744811 (2 items)
+	Drop index ix_n1285744811
+	Create index ix_n1285744811
+ix_n1313665179 (1 item)
+	Create index ix_n1313665179
+ix_n1666276523 (2 items)
+	Drop index ix_n1666276523
+	Create index ix_n1666276523
+ix_n192688320 (2 items)
+	Drop index ix_n192688320
+	Create index ix_n192688320
+ix_n2074643273 (2 items)
+	Drop index ix_n2074643273
+	Create index ix_n2074643273
+ix_n744866354 (1 item)
+	Create index ix_n744866354
+ix_notifications_customerid (1 item)
+	Create index ix_notifications_customerid
+ix_taskschedulerhistory_taskid (1 item)
+	Create index ix_taskschedulerhistory_taskid
+logitudemessagestranslogs (1 item)
+	Rebuild table logitudemessagestranslogs
+measurmentunits (1 item)
+	Rebuild table measurmentunits
+newpaymentorders (1 item)
+	Create table newpaymentorders
+newsupplierinvitemcers (1 item)
+	Create table newsupplierinvitemcers
+newsupplieritemvehicle (1 item)
+	Create table newsupplieritemvehicle
+notifications (2 items)
+	Create column customerid on table notifications
+	Create foreign key constraint fk_n571768919 on table notifications
+objectfields (1 item)
+	Create columns canautomatesetvalue,allowedinairlinemessaging on table objectfields
+opportunityadditionalservices (1 item)
+	Create column notes on table opportunityadditionalservices
+opportunityproducts (2 items)
+	Create column prepaidcollectid on table opportunityproducts
+	Create foreign key constraint fk_n1051270192 on table opportunityproducts
+packageconnectedpackages (3 items)
+	Modify columns packagecode,connectedpackagecode on table packageconnectedpackages
+	Create foreign key constraint fk_1587032357 on table packageconnectedpackages
+	Create foreign key constraint fk_2073396079 on table packageconnectedpackages
+packagefeatures (1 item)
+	Modify column packagecode on table packagefeatures
+"PACKAGES" (1 item)
+	Modify column code on table "PACKAGES"
+participants (1 item)
+	Create column registrationdate on table participants
+paymentorders (1 item)
+	Create column paymentorderleftamount on table paymentorders
+paymenttermdatetypes (1 item)
+	Create table paymenttermdatetypes
+paymentterms (2 items)
+	Create columns currentmonth,fromdatetypecode on table paymentterms
+	Create foreign key constraint fk_n1299164935 on table paymentterms
+queue_delaymessage (1 item)
+	Create procedure queue_delaymessage
+queue_enqueue (1 item)
+	Create procedure queue_enqueue
+queue_peek (1 item)
+	Create procedure queue_peek
+queue_returnmessage (1 item)
+	Create procedure queue_returnmessage
+queue_setstatus (1 item)
+	Create procedure queue_setstatus
+queuemessages_ins_trg (1 item)
+	Modify trigger queuemessages_ins_trg
+queuemessages_seq1 (1 item)
+	Create sequence queuemessages_seq1
+queuemessages_trg (1 item)
+	Create trigger queuemessages_trg
+shipments (1 item)
+	Create column exceptionresolveddescription on table shipments
+supplierinvoiceitems (6 items)
+	Drop foreign key constraint fk_n1081347333 from table supplierinvoiceitems
+	Drop foreign key constraint fk_n924589980 from table supplierinvoiceitems
+	Drop foreign key constraint fk_2112399992 from table supplierinvoiceitems
+	Create foreign key constraint fk_n1081347333 on table supplierinvoiceitems
+	Create foreign key constraint fk_n924589980 on table supplierinvoiceitems
+	Create foreign key constraint fk_2112399992 on table supplierinvoiceitems
+supplierinvoiceitemscondeclars (2 items)
+	Drop foreign key constraint fk_771081895 from table supplierinvoiceitemscondeclars
+	Create foreign key constraint fk_771081895 on table supplierinvoiceitemscondeclars
+supplierinvoiceitemstaxes (4 items)
+	Drop foreign key constraint fk_338262327 from table supplierinvoiceitemstaxes
+	Drop foreign key constraint fk_508763502 from table supplierinvoiceitemstaxes
+	Create foreign key constraint fk_338262327 on table supplierinvoiceitemstaxes
+	Create foreign key constraint fk_508763502 on table supplierinvoiceitemstaxes
+taskschedulerhistory (1 item)
+	Create table taskschedulerhistory
+tasksscheduler (1 item)
+	Create table tasksscheduler
+ticketclassifications (3 items)
+	Create columns manageruserid,escalationnotify on table ticketclassifications
+	Drop column escalationuserid on table ticketclassifications
+	Create foreign key constraint fk_270676564 on table ticketclassifications
+tickets (3 items)
+	Create column fullresolvedtime on table tickets
+	Drop column resolvetime on table tickets
+	Modify columns ccs,internalusers on table tickets
+tt_v_memorytable3 (1 item)
+	Create table tt_v_memorytable3
+userlicenses (1 item)
+	Modify column packagecode on table userlicenses
+usp_updateinvoiceitemssequence (1 item)
+	Create procedure usp_updateinvoiceitemssequence

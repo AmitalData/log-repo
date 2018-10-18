@@ -1,0 +1,452 @@
+﻿using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.BL.Utils;
+using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityListQueryServices;
+using Logitude.Accounting.Data.EntityLists;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+//using Logitude.BL.Security;
+using Logitude.Server.Tools;
+using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Server.Infrastructure;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Logitude.Accounting.BL.CoreBL;
+using System.Transactions;
+using Simplog.Server.Infrastructure.Helpers;
+using Logitude.Accounting.BL.EntityDataMappings;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Accounting.BL.Validators;
+using Simplog.Data.InfrastructureModel.Repositories;
+using System.Web;
+using Logitude.Server.Tools.QueueService;
+//using Microsoft.Practices.Unity.UnityContainerExtensions;
+using Microsoft.Practices.Unity;
+using Logitude.Accounting.Data.Repositories;
+using Logitude.Accounting.Def.EntityUpdateServicesExt;
+
+namespace Logitude.Accounting.BL.EntityUpdateServices
+{
+    public partial class JournalUpdateService : EntityUpdateService<Journal, JournalPM, EntityPM>
+        , IJournalUpdateService
+    {
+
+        class JournalLineUpdateServicePriv : JournalLineUpdateService
+        {
+            public JournalLineUpdateServicePriv(IContext mainContext, Dictionary<string, IContext> additionalContexts, int tenant)
+                : base(mainContext, additionalContexts, tenant)
+            { }
+        }
+        
+        string localAccountingCurrencyId;
+        protected StornoOverrideM _StornoOverrideM;
+        
+        
+ 
+        protected override void OnCreating(JournalPM entityPM, EntityPM entityParentPM)
+        {
+            var JournalUpdateOnCreatingFactory = new JournalUpdateOnCreating.Factory();
+            var JournalUpdateInsert = JournalUpdateOnCreatingFactory.Create(this.MainContext as IAccountingContext);
+            JournalUpdateInsert.OnCreating(entityPM, entityParentPM);
+        }
+
+
+
+
+
+
+
+        protected override void UpdateComposition(JournalPM entityPM)
+        {
+            
+                                          /// 
+             var JournalLineUpdateServicePriv = new JournalLineUpdateServicePriv
+            //JournalLineUpdateService journalLineUpdateService = new JournalLineUpdateService
+            (MainContext, new Dictionary<string, IContext>(), Tenant);
+            
+            JournalLineUpdateServicePriv.UpdateMulti(entityPM.JournalLines, entityPM.DeletedJournalLines, entityPM, true);
+            //base.UpdateComposition(entityPM);
+            //while insert do once insert JournalReconciles +  Update ledgerTrasaction to  InReconcileProgress !!!!
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
+            {
+                var journalReconcileUpdateService = new JournalReconcileUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+                journalReconcileUpdateService.UpdateMulti(entityPM.JournalReconciles, entityPM.DeletedJournalReconciles, entityPM, true);
+
+
+                var listTransactionId = entityPM.JournalReconciles.Select(r => r.LedgerTransactionId).ToList();
+                if (listTransactionId.Count > 0)
+                {
+                    var ledgerTransactionUpdateService = new LedgerTransactionUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
+                    ledgerTransactionUpdateService.UpdateInReconcileProgress(listTransactionId, Tenant,true);
+                }
+            }
+
+        }
+
+    
+
+
+        protected override void OnUpdating(JournalPM entityPM, Journal entityPOCO)
+        {
+            var journalUpdate = GetJournalOnUpdtatingObject();
+            
+            journalUpdate.OnUpdating(entityPM, entityPOCO, ChangeTrackingEntityPM);
+        }
+
+        public virtual JournalUpdateOnUpdating GetJournalOnUpdtatingObject()
+        {
+            var journalUpdate = new JournalUpdateOnUpdating(this.MainContext as IAccountingContext);
+          
+            return journalUpdate;
+        }
+
+   
+        protected override void Trace(JournalPM entityPM, Journal entityPOCO, string changesXml)
+        {
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
+            {
+                //create trace event with created type.
+                ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
+                string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
+                Contact contact = contactRep.GetSingleContactByEmail(resolveLoggingUserId, entityPM.Tenant);
+                // ContactPM loggedContact = LoggedContact(entityPM.Tenant);
+                EventTracerArgs eventTracerArgs = new EventTracerArgs()
+                {
+                    EntityId = entityPM.Id,
+                    Tenant = entityPM.Tenant,
+                    UserId = contact.Id,
+                    ObjectTableName = "Journal",
+                    IsAddedManually = false,
+                    EventTypeCode = "JCR",
+
+                };
+                EventTracer.CreateTraceEvent(eventTracerArgs);
+
+
+
+                if (entityPM.StatusCode == "1") //Saved
+                {
+
+                    String notes = "Changed to: " + TraceIt_JournalStatusName(entityPM.StatusCode, entityPM.Tenant);
+
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        EntityId = entityPM.Id,
+                        Tenant = entityPM.Tenant,
+                        UserId = contact.Id,
+                        ObjectTableName = "Journal",
+                        IsAddedManually = false,
+                        EventTypeCode = "JSV",
+
+                    });
+                }
+                else if (entityPM.StatusCode == "2") //Approved
+                {
+
+                    String notes = "Changed to: " + TraceIt_JournalStatusName(entityPM.StatusCode, entityPM.Tenant);
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        EntityId = entityPM.Id,
+                        Tenant = entityPM.Tenant,
+                        UserId = contact.Id,
+                        ObjectTableName = "Journal",
+                        IsAddedManually = false,
+                        EventTypeCode = "JAP",
+
+                    });
+                }
+            }
+            else if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
+            {
+                if (entityPM.StatusCode != entityPOCO.StatusCode)
+                {
+                    if (entityPM.StatusCode == "1") //Save
+                    {
+                        ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
+                        string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
+                        Contact contact = contactRep.GetSingleContactByEmail(resolveLoggingUserId, entityPM.Tenant);
+                        // ContactPM loggedContact = LoggedContact(entityPM.Tenant);
+                        String notes = "Previous status code: " + TraceIt_JournalStatusName(entityPOCO.StatusCode, entityPM.Tenant) + ", Changed to: " + TraceIt_JournalStatusName(entityPM.StatusCode, entityPM.Tenant);
+                        EventTracer.CreateTraceEvent(new EventTracerArgs()
+                        {
+                            EntityId = entityPM.Id,
+                            Tenant = entityPM.Tenant,
+                            UserId = contact.Id,
+                            ObjectTableName = "Journal",
+                            IsAddedManually = false,
+                            EventTypeCode = "JSV",
+                            Notes = notes,
+                        });
+
+                    }
+                    else if (entityPM.StatusCode == "2")  //Approved
+                    {
+                        ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
+                        string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
+                        Contact contact = contactRep.GetSingleContactByEmail(resolveLoggingUserId, entityPM.Tenant);
+                        // ContactPM loggedContact = LoggedContact(entityPM.Tenant);
+                        String notes = "Previous status code: " + TraceIt_JournalStatusName(entityPOCO.StatusCode, entityPM.Tenant) + ", Changed to: " + TraceIt_JournalStatusName(entityPM.StatusCode, entityPM.Tenant);
+                        EventTracer.CreateTraceEvent(new EventTracerArgs()
+                        {
+                            EntityId = entityPM.Id,
+                            Tenant = entityPM.Tenant,
+                            UserId = contact.Id,
+                            ObjectTableName = "Journal",
+                            IsAddedManually = false,
+                            EventTypeCode = "JAP",
+                            Notes = notes,
+
+                        });
+
+                    }
+                    else if (entityPM.StatusCode == "3")  //Approved
+                    {
+                        ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
+                        string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
+                        Contact contact = contactRep.GetSingleContactByEmail(resolveLoggingUserId, entityPM.Tenant);
+                        // ContactPM loggedContact = LoggedContact(entityPM.Tenant);
+                        String notes = "Previous status code: " + TraceIt_JournalStatusName(entityPOCO.StatusCode, entityPM.Tenant) + ", Changed to: " + TraceIt_JournalStatusName(entityPM.StatusCode, entityPM.Tenant);
+                        EventTracer.CreateTraceEvent(new EventTracerArgs()
+                        {
+                            EntityId = entityPM.Id,
+                            Tenant = entityPM.Tenant,
+                            UserId = contact.Id,
+                            ObjectTableName = "Journal",
+                            IsAddedManually = false,
+                            EventTypeCode = "JVD",
+                            Notes = notes,
+
+                        });
+
+                    }
+
+                }
+                else
+                {
+
+                    ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
+                    string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
+                    Contact contact = contactRep.GetSingleContactByEmail(resolveLoggingUserId, entityPM.Tenant);
+                    // ContactPM loggedContact = LoggedContact(entityPM.Tenant);
+                    String notes = "Journal Updated";
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        EntityId = entityPM.Id,
+                        Tenant = entityPM.Tenant,
+                        UserId = contact.Id,
+                        ObjectTableName = "Journal",
+                        IsAddedManually = false,
+                        EventTypeCode = "JUP",
+                        Notes = notes,
+
+                    });
+
+
+                }
+
+
+            }
+            base.Trace(entityPM, entityPOCO, changesXml);
+        }
+
+
+
+        private string TraceIt_JournalStatusName(string statusCode, int tenant)
+        {
+
+            JournalStatusTypeQueryService journalStatusTypeQueryService = new JournalStatusTypeQueryService(tenant);
+            JournalStatusTypePM type = journalStatusTypeQueryService.GetSingle(statusCode, false, false);
+            return type.EnglishName;
+
+        }
+
+       
+        public string oldsJournalStatus()
+        {
+
+
+
+            if (EntityPOCO != null)
+            {
+                if (!string.IsNullOrWhiteSpace(EntityPOCO.StatusCode))
+                {
+                    return EntityPOCO.StatusCode;
+                }
+            }
+
+            return "0";
+
+
+        }
+
+        
+     
+        
+
+         
+
+
+        protected override void AfterUpdating(JournalPM entityPM, EntityPM entityParentPM)
+        {
+            string journalOldStatusCode = oldsJournalStatus();
+
+            try
+            {
+
+
+                if (entityPM.StatusCodeEnum == JournalStatusTypePM.StatusCodeEnum.Approved  //== "2") //Pending Approval  
+                    && string.IsNullOrWhiteSpace(entityPM.QueueId))
+                {
+
+//                    if (LogitudeSettings.QueueServiceMode != "db")
+//                    {
+//                        throw new Exception(@"I talked with Ihab he said it's about time to change all environment to DB QUEUE mode 
+//Especially in Accounting ,By This our transaction will be include Opening the QUEUE (in AZURE Mode its possible only with DTC Server  )
+//");
+//                    }
+
+                    ReCheckFromDBThrowIfNotValid(entityPM);
+
+                    JournalApproveService.EnqueueDB(entityPM);        
+            
+
+                }
+            }
+            catch (Exception) // return to old values 
+            {
+                entityPM.StatusCode = journalOldStatusCode;
+                throw;
+            }
+
+
+        }
+
+        protected void ReCheckFromDBThrowIfNotValid(JournalPM entityPM)
+        {
+            var qs= new JournalQueryService(entityPM.Tenant);
+            var aftreUpdateGetFromDBPm = qs.GetSingle(entityPM.Id, true, false);
+            Validate(aftreUpdateGetFromDBPm);
+        }
+        
+        protected override void Validate(JournalPM entityPM)
+        {
+
+            bool SuppressCheckGLAccountIsMultiCurrencyWI40640 = false;
+            ValidationContext validContext = AccountingValidationContextServiceProvider.NewJournalValidatorContextByAContext(MainContext as IAccountingContext, entityPM, SuppressCheckGLAccountIsMultiCurrencyWI40640);
+            
+            
+            
+            ValidationResult result = JournalValidator.IsJournalValid(entityPM, validContext);
+            if (result != null)
+            {
+                throw new ApplicationException(result.ErrorMessage);
+            }
+            base.Validate(entityPM);
+        }
+
+
+
+
+      
+    }
+
+    public partial class JournalVoidUpdateService : JournalUpdateService
+    {
+        private JournalPM _JornalPmSource;
+        public JournalVoidUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
+        {
+
+        }
+        public override JournalUpdateOnUpdating GetJournalOnUpdtatingObject()
+        {
+            var newAccountingContextDueCreatedJournal = AccountingContext.GetContext(_JornalPmSource.Tenant);
+            var _journalUpdateService = new JournalUpdateService(newAccountingContextDueCreatedJournal, new Dictionary<string, IContext>(), _JornalPmSource.Tenant);
+            var myJournalStornoService = new JournalStornoService();
+            IJournalStornoPrepareJReconcileService journalStornoPrepareJReconcileService = new JournalStornoPrepareJReconcileService();
+            journalStornoPrepareJReconcileService.MustInitialize(newAccountingContextDueCreatedJournal, _JornalPmSource);
+            myJournalStornoService.Init(_JornalPmSource, _StornoOverrideM, _journalUpdateService, journalStornoPrepareJReconcileService);
+            var journalUpdate = new JournalUpdateOnUpdating(this.MainContext as IAccountingContext, myJournalStornoService);
+            //if (this.GetType().Name == "JournalVoidUpdateService")//
+            return journalUpdate;
+        }
+        public JournalPM VoidJournal(string JournalId, int requestTenant,
+           StornoOverrideM stornoOverrideM
+           ) //Call from JournalOpController
+        {
+
+            using (TransactionScope scope = TransactionFactory.GetTransaction())
+            {
+                _StornoOverrideM = stornoOverrideM;
+                var qs = new JournalQueryService(this.MainContext as IAccountingContext);
+                _JornalPmSource = qs.GetSingle(JournalId, true, false);
+                if (_JornalPmSource == null)
+                {
+                    throw new Exception("Journal id couldn't find in db" + JournalId);
+                }
+                if (_JornalPmSource.Tenant != requestTenant)
+                {
+                    throw new Exception("(Journal.Tenant!= requestTenant)");
+                }
+                if (String.IsNullOrWhiteSpace( _JornalPmSource.QueueId ))
+                {
+                    throw new Exception("I must/Need??? Ledger to Reconcile - but journal did not Stream yet ...");
+                }
+
+                _JornalPmSource.ChangeSetOp = ChangeSetOperation.Update;
+                _JornalPmSource.StatusCodeEnum = JournalStatusTypePM.StatusCodeEnum.Voided;
+                this.Update(_JornalPmSource, true);
+                scope.Complete();
+                return _JornalPmSource;
+            }
+            
+        }
+
+        protected override void AfterUpdating(JournalPM entityPM, EntityPM entityParentPM)
+        {
+            if (CanIMatchVoidReconciliation())
+            {
+            }
+            else
+            {
+                base.AfterUpdating(entityPM, entityParentPM);
+            }
+            
+        }
+
+        private bool CanIMatchVoidReconciliation()
+        {
+
+            bool meanWhileDoOnBatch = true;
+            if (meanWhileDoOnBatch)
+            {
+                return false;
+            }
+
+            //var repo = new LedgerTransactionRepository(this.MainContext as IAccountingContext);
+            //repo.GetByJournalId(_JornalPmSource.Id, _JornalPmSource.Tenant);
+            return true;
+        }
+        
+    }
+
+    public interface IJournalUpdateService 
+    {
+        void Update(JournalPM entityPM, bool commit);
+    }
+    
+}
+
+
+    
+    
+

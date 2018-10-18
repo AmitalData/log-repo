@@ -1,0 +1,28 @@
+﻿
+
+<style>
+
+       .Hyperlink:hover:not(:disabled), .HyperlinkQueryButtonControl:focus:not(:disabled) {
+        color: #1E8DC4;
+    }
+
+
+      .Hyperlink {
+        height: 21px !important;
+        width: auto !important;
+        line-height: 21px !important;
+        background: none !important;
+        border: none !important;
+        padding: 0 !important;
+        color: #1E4AC4;
+        font-size: 13px;
+        cursor: pointer;
+        white-space: nowrap;
+       text-decoration:underline;
+    }
+</style>
+
+
+<span (click)="ViewPostUserFeedsButtonClick(rowData)" class="Hyperlink" >
+    {{UserName}}
+</span>

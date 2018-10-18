@@ -1,0 +1,123 @@
+﻿
+<table>
+    <tr style="height:1px;" *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr style="height:22px">
+                    <td style="color:#1B90CB;font-size:14px;">Filter By:</td>
+                </tr>
+                <tr style="height:7px;"><td style="height:7px;"></td></tr>
+                <tr style="height:28px;">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:10px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:85px;">Distributor:</td>
+                                <td style="width:200px;">
+
+                                    <LogLov [ObjectFieldName]="'DistributorCode'"
+                                            [DataContext]="DataContext"
+                                            [SelectedValuePath]="'Code'"
+                                            [LookUpTableName]="'Distributor'">
+                                    </LogLov>
+
+
+                                </td>
+
+
+                                <td style="width:40px"></td>
+
+                                <td style="width:70px;">Package:</td>
+                                <td style="width:200px;">
+
+                                    <LogLov [ObjectFieldName]="'PackageCode'"
+                                            [DataContext]="DataContext"
+                                            [DependencyFilter1Value]="'PK'"
+                                            [LookUpTableName]="'Package'">
+                                    </LogLov>
+
+
+                                </td>
+
+                                <td style="width:40px"></td>
+
+                                <td style="width:65px;">Add on:</td>
+                                <td style="width:200px;">
+
+                                    <LogLov [ObjectFieldName]="'AddOnPackageCode'"
+                                            [DataContext]="DataContext"
+                                            [DependencyFilter1Value]="'AD'"
+                                            [LookUpTableName]="'Package'">
+                                    </LogLov>
+
+
+                                </td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr style="height:25px;">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:10px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:22px">
+                                    <LogCheckBox [NoObjectField]="true" [ObjectFieldName]="'IncludeInactiveTenants'" [DataContext]="DataContext"></LogCheckBox>
+                                </td>
+                                <td style="width:200px;">Include Inactive Tenants</td>
+                               
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr style="height:25px;">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:10px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:22px">
+                                    <LogCheckBox [NoObjectField]="true" [ObjectFieldName]="'IncludeInactiveUsers'" [DataContext]="DataContext"></LogCheckBox>
+                                </td>
+                                <td style="width:200px;">Include Inactive User</td>
+                                <td width="480"></td>
+                                <td style="width:90px;">
+                                    <button (click)="RunButtonClicked(true)" class="GreenButton" style="width:90px;height:22px;">Run Report</button>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+</table>
+
+

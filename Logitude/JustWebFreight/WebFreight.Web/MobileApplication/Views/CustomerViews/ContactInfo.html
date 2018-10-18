@@ -1,0 +1,288 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+
+<body>
+    <div data-role="view"  data-transition="slide" data-show="onContactShow">
+          <header data-role="header">
+          <div style="height:55px;display:table;width:100% ">
+
+                  <div style="display:table-cell; width:auto; vertical-align:middle;margin-top:-15px;">
+                             <a data-role="backbutton" data-align="left" style="margin-left:5px;margin-bottom:10px;width:90px;height:30px;font-size:11px;position:relative;"><span style="position:absolute;top:7px;left:8px;">< Details</span></a>
+                          
+                  </div>
+             </div>
+           
+           
+      </header>
+
+                   <div style="width:100% ;background-color: white ; ">
+                        <div style ="margin-left :10px; margin-right:10px; background-color: white;">
+                                    <div style="display:table;width:100% ; height: 55px; border-bottom:1px solid #EEF0F1  ;" >
+                                                                  
+                                                         <div style="display:table-cell; vertical-align:middle; text-align:left; width:320px;">
+                                                                     <div class="HeaderNameCustomer TemplateItem" style="display:inline-block;   margin-top:4px; max-width:270px;"  data-bind="text: EnglishName"></div>
+
+                                                                 <div id="Rank11111" style="display:none; width:19px;margin-top:4px;"><img style="width: 18px; height:18px; padding:0px; margin:0px;" <img src="images/Rank.png"/></div>
+                                                                    <div id="Rank22222"  style="display:none; width:19px;margin-top:4px;"><img style="width: 18px; height:18px; padding:0px; margin:0px;" <img src="images/Rank.png" /></div>
+										                                  <div id="Rank33333"  style="display:none; width:19px;margin-top:4px;"><img style="width: 18px; height:18px; padding:0px; margin:0px;" <img src="images/Rank.png" /></div>
+                                                              
+                                                                    
+                                                        </div>
+
+
+
+
+                                    </div>
+                        </div>
+
+           </div>
+
+            <ul data-role="listview" data-style="inset" data-type="group" style="margin-top: -10px;">
+            <li>
+
+                <ul id="ContactListBox"></ul>
+            </li>
+        </ul>
+
+        <div class="Nofound"  id="NoContact" style="height: auto; width: 100%; display:none;background-color: white; vertical-align:bottom;  text-align:left; margin-left:7px;">No Contact</div>
+
+   </div>
+
+
+        <script type="text/x-kendo-tmpl" id="ContactTemplate">
+          <div style="height:10px;"></div>
+                  <div style="height:auto; border:1px solid \\#94C0D2; background: \\#F5F5F5; margin:5px;">
+             <table style="border-collapse:collapse; text-space-collapse:collapse; border:none; width:100%; height:100%;">
+
+            <tr style="height:5px;">
+            </tr>
+             <tr style="height:20px;">
+                    <td class="HeaderAdressTextStyle" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;font-size:14px;text-align:left;text-indent:10px;">${EnglishName}</td>
+                    <td style="width:5px;"></td>
+                </tr>
+
+                 <tr style="height:20px;">
+                    <td style="font-size:11px;text-align:left;text-indent:10px;">Name: </td>
+                    <td style="font-size:11px;text-align:left;margin-left:-60px;">${LocalName}</td>      
+                    <td style="width:150px;"></td>              
+                </tr>
+
+                   <tr style="height:20px;">
+                    <td style="font-size:11px;text-align:left;text-indent:10px;">Email:</td> 
+                    <td style="font-size:11px;text-align:left;">${Email}</td>      
+                    <td style="width:5px;"></td>              
+                </tr>
+
+
+                   <tr style="height:20px;">
+                    <td style="font-size:11px;text-align:left;text-indent:10px;">Position:</td> 
+                    <td style="font-size:11px;text-align:left;">${Position}</td>      
+                    <td style="width:5px;"></td>              
+                </tr>
+
+                <tr style="height:20px;">
+                    <td style="font-size:11px;text-align:left;text-indent:10px;">Tel:</td> 
+                    <td style="font-size:11px;text-align:left;">${BusinessPhone}</td>  
+                     <td class="HederSHDQD2TextStyle33" style="font-size:13px;text-align:left; display: #= DisplayCallBusinessPhoneContact #;"><a href="tel:${BusinessPhone}">Call</a></td>
+                     <td style="width:200px;"></td> 
+                                 
+                </tr>
+
+              <tr style="height:20px;">
+                    <td style="font-size:11px;text-align:left;text-indent:10px;">Mobile:</td> 
+                    <td style="font-size:11px;text-align:left;">${Mobile}</td>
+                    <td class="HederSHDQD2TextStyle33" style="font-size:13px;text-align:left; display: #= DisplayCallMobileContact #;"><a href="tel:${Mobile}">Call</a></td>
+                  
+                    <td style="width:200px;"></td>              
+                </tr>
+
+              <tr style="height:15px;">
+                    <td style="font-size:11px;text-align:left;text-indent:10px;">Fax:</td> 
+                    <td style="font-size:11px;text-align:left;">${Fax}</td>      
+                    <td style="width:5px;"></td>              
+                </tr>
+            
+            <tr style="height:5px;">
+            </tr>
+             </table>
+          
+        </div>
+
+
+        </script>
+
+    <script>
+
+
+
+
+        var ContactClass = function () {
+       
+            this.EnglishName = "";
+            this.LocalName = "";
+            this.Email = "";
+            this.Position = "";
+            this.BusinessPhone = "";
+            this.Mobile = "";
+            this.Fax = "";
+            this.DisplayCallBusinessPhoneContact = " ";
+
+            this.DisplayCallMobileContact = "";
+        }
+
+
+        jQuery.BuildContactsList = (function (list) {
+
+            var ContactsList = [];
+
+           
+
+
+            $.each(list, function (index, contact) {
+
+
+                var item = new ContactClass();
+                item.ContactsList = contact;
+
+                item.EnglishName = $.trim(contact.EnglishName);
+                item.LocalName = $.trim(contact.LocalName);
+                item.Email = $.trim(contact.Email);
+                item.Position = $.trim(contact.Position);
+                item.BusinessPhone = $.trim(contact.BusinessPhone);
+                item.Mobile = $.trim(contact.Mobile);
+                item.Fax = $.trim(contact.Fax);
+            
+
+
+
+                if ($.trim(contact.Mobile) == "") {
+                    item.DisplayCallMobileContact = "none";
+                }
+
+
+                if ($.trim(contact.BusinessPhone) == "") {
+                    item.DisplayCallBusinessPhoneContact = "none";
+                }
+
+
+                ContactsList.push(item);
+            });
+
+
+
+
+            return ContactsList;
+
+        });
+
+
+
+
+        jQuery.LoadCantactData = (function () {
+
+            $.Application.showLoading();
+
+            var url = "../api/CustomersData?contactsCustomerId=" + $.CurrentEntityId + "&tenant=" + $.CurrentTenant;
+
+            $.ajax({
+                url: url,
+                type: 'GET',
+                contentType: 'application/json',
+
+                success: function (result) {
+                    if (result.length > 0) {
+                    
+                        document.getElementById('NoContact').style.display = "none";
+                       
+
+                    }
+                    else {
+                     
+                        document.getElementById('NoContact').style.display = "block";
+                      
+                    }
+
+                    var dataSource = new kendo.data.DataSource({
+                        data: $.BuildContactsList(result)
+                    });
+
+
+                    $("#ContactListBox").kendoMobileListView(
+                    {
+                        dataSource: dataSource,
+                        template: kendo.template($("#ContactTemplate").html()),
+
+                    });
+
+
+                    $.Application.hideLoading();
+                },
+
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $.Application.hideLoading();
+
+                }
+            });
+
+        });
+        jQuery.LoadRankContact = (function () {
+
+      
+            switch ($.CurrentEntityList.RankCode) {
+
+                case "1": {
+
+                    document.getElementById('Rank11111').style.display = "inline-block";
+                    document.getElementById('Rank22222').style.display = "none";
+                    document.getElementById('Rank33333').style.display = "none";
+
+                    break;
+                }
+
+                case "2": {
+                    document.getElementById('Rank11111').style.display = "inline-block";
+                    document.getElementById('Rank22222').style.display = "inline-block";
+                    document.getElementById('Rank33333').style.display = "none";
+                    break;
+                }
+
+                case "3": {
+                    document.getElementById('Rank11111').style.display = "inline-block";
+                    document.getElementById('Rank22222').style.display = "inline-block";
+                    document.getElementById('Rank33333').style.display = "inline-block";
+                    break;
+                }
+                default: {
+                    document.getElementById('Rank11111').style.display = "none";
+                    document.getElementById('Rank22222').style.display = "none";
+                    document.getElementById('Rank33333').style.display = "none";
+                }
+
+            }
+
+        });
+  
+		
+        function onContactShow(e) {
+
+            var scroller = e.view.scroller;
+            scroller.reset();
+
+            ko.applyBindings($.CurrentEntityList);
+
+            $.LoadCantactData();
+            $.LoadRankContact();
+        }
+
+
+
+    </script>
+
+    
+
+
+</body>
+</html>

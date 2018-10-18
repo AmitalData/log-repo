@@ -1,0 +1,487 @@
+﻿
+<style type="text/css">
+    .StatusBoxItem {
+        padding: 5px;
+        margin-bottom: 5px;
+        border: 1px solid #D1D1D1;
+        background: rgba(235, 235, 235, 0.5);
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+    }
+</style>
+
+<table>
+    <tr>
+        <td>
+            <div class="MediaFill">
+                <div class="MarginAbsolute10">
+                    <table>
+                        <tr>
+                            <td style="width: 230px; max-width: 230px;">
+                                <table>
+
+                                    <!-- Messaging Status -->
+                                    <tr>
+                                        <td>
+                                            <table>
+                                                <tr style="height: 20px;">
+                                                    <td>
+                                                        <label style="font-size: 14px; color: #1B90CB">Messaging Status</label>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>
+
+                                                        <table>
+
+                                                            <!-- FWB Status -->
+                                                            <tr style="height: 20px;">
+                                                                <td>
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td style="width: 80px; font-size: 10px;" class="Label">FWB Status:</td>
+
+                                                                            <td style="font-size: 11px;" class="Value" [ngStyle]="{color: FWBStatusName | StringToColorPipe}">{{FWBStatusName}}</td>
+
+                                                                            <td style="width: 1px; font-size: 10px;" class="Value">{{FWBStatusDate | DateTimeToDatePipe}}</td>
+
+                                                                            <td style="width: 5px;">
+                                                                                <div></div>
+                                                                            </td>
+
+                                                                            <td style="width: 1px; font-size: 10px;" class="Label">{{FWBStatusDate | DateTimeToTimePipe}}</td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+
+                                                            <!-- FHL Status -->
+                                                            <tr style="height: 20px;" *ngIf="IsFHLStatusVisible">
+                                                                <td>
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td style="width: 80px; font-size: 10px;" class="Label">FHL Status:</td>
+
+                                                                            <td style="font-size: 11px;" class="Value" [ngStyle]="{color: FHLStatusName | StringToColorPipe}">{{FHLStatusName}}</td>
+
+                                                                            <td style="width: 1px; font-size: 10px;" class="Value">{{FHLStatusDate | DateTimeToDatePipe}}</td>
+
+                                                                            <td style="width: 5px;">
+                                                                                <div></div>
+                                                                            </td>
+
+                                                                            <td style="width: 1px; font-size: 10px;" class="Label">{{FHLStatusDate | DateTimeToTimePipe}}</td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+
+                                                            <!-- Cargonaut FWB Status -->
+                                                            <tr style="height: 20px;" *ngIf="IsCargonautFWBStatusVisible">
+                                                                <td>
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td style="width: 80px; font-size: 10px;" class="Label">{{CargonautDEXXFWBLabel}}:</td>
+
+                                                                            <td style="font-size: 11px;" class="Value" [ngStyle]="{color: CargonautFWBStatusName | StringToColorPipe}">{{CargonautFWBStatusName}}</td>
+
+                                                                            <td style="width: 1px; font-size: 10px;" class="Value">{{CargonautFWBStatusDate | DateTimeToDatePipe}}</td>
+
+                                                                            <td style="width: 5px;">
+                                                                                <div></div>
+                                                                            </td>
+
+                                                                            <td style="width: 1px; font-size: 10px;" class="Label">{{CargonautFWBStatusDate | DateTimeToTimePipe}}</td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+
+                                                            <!-- Cargonaut FHL Status -->
+                                                            <tr style="height: 20px;" *ngIf="IsCargonautFHLStatusVisible">
+                                                                <td>
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td style="width: 80px; font-size: 10px;" class="Label">{{CargonautDEXXFHLLabel}}:</td>
+
+                                                                            <td style="font-size: 11px;" class="Value" [ngStyle]="{color: CargonautFHLStatusName | StringToColorPipe}">{{CargonautFHLStatusName}}</td>
+
+                                                                            <td style="width: 1px; font-size: 10px;" class="Value">{{CargonautFHLStatusDate | DateTimeToDatePipe}}</td>
+
+                                                                            <td style="width: 5px;">
+                                                                                <div></div>
+                                                                            </td>
+
+                                                                            <td style="width: 1px; font-size: 10px;" class="Label">{{CargonautFHLStatusDate | DateTimeToTimePipe}}</td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+
+                                                            <!-- Last Status -->
+                                                            <tr style="height: 20px;">
+                                                                <td>
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td style="width: 80px; font-size: 10px;" class="Label">Last Status:</td>
+
+                                                                            <td style="font-size: 11px;" class="Value" [ngStyle]="{color: CarrierLastStatusName | StringToColorPipe}">{{CarrierLastStatusCode}}</td>
+
+                                                                            <td style="width: 1px; font-size: 10px;" class="Value">{{CarrierLastStatusDate | DateTimeToDatePipe}}</td>
+
+                                                                            <td style="width: 5px;">
+                                                                                <div></div>
+                                                                            </td>
+
+                                                                            <td style="width: 1px; font-size: 10px;" class="Label">{{CarrierLastStatusDate | DateTimeToTimePipe}}</td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+
+                                                            <!-- FNA Reason -->
+                                                            <tr style="height: 20px;" *ngIf="IsFNAReasonStatusVisible">
+                                                                <td>
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td style="width: 80px; font-size: 10px;" class="Label">FNA Reason:</td>
+                                                                            <td>
+                                                                                <div class="MultiLinesText" style="color: #E53030;">
+                                                                                    {{FNAReason}}
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+
+                                                            <!-- DemoTenant -->
+                                                            <tr style="height: 20px;" *ngIf="IsDemoTenantStatusVisible">
+                                                                <td>
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td style="width: 80px; font-size: 10px;" class="Label">Not activated:</td>
+                                                                            <td>
+                                                                                <div class="MultiLinesText">
+                                                                                    The messages will not be transmitted to airlines
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr style="height: 15px;">
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+
+                                                            <!-- Connected to Booking -->
+                                                            <tr style="height: 20px;" *ngIf="IsBookingStatusVisible">
+                                                                <td>
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <span style="color: #6E7172; font-size: 11px;">Connected to Booking: </span>
+                                                                                <span class="hyperlink" (click)="OpenBooking()">{{BookingNumber}}</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+
+                                                        </table>
+
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Cargo Information -->
+                                    <tr style="height: 130px;">
+                                        <td>
+                                            <table>
+                                                <tr style="height: 20px;">
+                                                    <td>
+                                                        <label style="font-size: 14px; color: #1B90CB">{{'Shipment.O.Overview.CargoInformation' | TextCodeTranslationPipe}}</label>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>
+                                                        <table class="FixedTable">
+                                                            <tr style="height: 50%;">
+                                                                <td style="vertical-align: middle;">
+                                                                    <div class="Value" style="text-align: center; font-size: 20px;">
+                                                                        {{GrossWeight | NumbersPipe:'N3'}}
+                                                                        <span class="Label">{{GrossWeightUnitCode}}</span>
+                                                                    </div>
+                                                                    <div class="Label" style="text-align: center;">{{'Shipment.O.Overview.GrossWeight' | TextCodeTranslationPipe}}</div>
+                                                                </td>
+
+                                                                <td style="vertical-align: middle;">
+                                                                    <div class="Value" style="text-align: center; font-size: 20px;">
+                                                                        {{Volume | NumbersPipe:'N3'}}
+                                                                        <span class="Label">{{VolumeUnitCode}}</span>
+                                                                    </div>
+                                                                    <div class="Label" style="text-align: center;">{{'Shipment.O.Overview.Volume' | TextCodeTranslationPipe}}</div>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr style="height: 50%;">
+                                                                <td style="vertical-align: middle;">
+                                                                    <div class="Value" style="text-align: center; font-size: 20px;">
+                                                                        {{ChargeableWeight | NumbersPipe:'N3'}}
+                                                                        <span class="Label">{{ChargeableWeightUnitCode}}</span>
+                                                                    </div>
+                                                                    <div class="Label" style="text-align: center;">{{'Shipment.O.Overview.ChargeableWeight' | TextCodeTranslationPipe}}</div>
+                                                                </td>
+
+                                                                <td style="vertical-align: middle;">
+                                                                    <div class="Value" style="text-align: center; font-size: 20px;">{{Quantity | NumbersPipe:'N0'}}</div>
+                                                                    <div class="Label" style="text-align: center;">{{'ShipmentPackage.F.Quantity' | TextCodeTranslationPipe}}</div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+
+                            <td style="width: 10px">
+                                <div></div>
+                            </td>
+
+                            <td>
+                                <div class="TabControl">
+                                    <div class="TabControlHead">
+                                        <ul>
+                                            <li [class.Selected]="SelectedTabCode == 'ST'" (click)="SelectedTabCode = 'ST'">
+                                                <div class="InnerChild" style="color: #282E30;">
+                                                    {{'Shipment.TH.StatusReceived' | TextCodeTranslationPipe}}
+                                                </div>
+                                            </li>
+
+                                            <li [class.Selected]="SelectedTabCode == 'CM'" (click)="SelectedTabCode = 'CM'">
+                                                <div class="InnerChild" style="color: #282E30;">
+                                                    {{'Shipment.TH.Communications' | TextCodeTranslationPipe}}
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="TabControlBody">
+
+                                        <!-- Status -->
+                                        <div class="FillContent" [hidden]="SelectedTabCode != 'ST'">
+                                            <div class="TableHolder">
+                                                <table>
+                                                    <tr style="height: 22px;">
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
+
+                                                                    <td style="width: 1px;" *ngIf="EntityPM.IsFSRSent">
+                                                                        <div class="OrangeInfo">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>Last FSR sent at</td>
+                                                                                    <td style="width: 1px; text-indent: 5px;">{{EntityPM.LastFSRStatusRequestDate | DateTimeToDatePipe}}</td>
+                                                                                    <td style="width: 1px; text-indent: 5px;">{{EntityPM.LastFSRStatusRequestDate | DateTimeToTimePipe}}</td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <td style="width: 5px;">
+                                                                        <div></div>
+                                                                    </td>
+
+                                                                    <td style="width: 110px;" *ngIf="IsFSRButtonVisible">
+                                                                        <button  id="{{'FSRRequestBtn' | IdGeneratorPipe}}" class="Button" [disabled]="!IsFSRButtonEnabled" (click)="SendFSRClicked()">FSR Status Request</button>
+                                                                    </td>
+
+                                                                    <td style="width: 5px;">
+                                                                        <div></div>
+                                                                    </td>
+
+                                                                    <td style="width: 21px; vertical-align:middle;">
+                                                                        <IconButton [Name]="'Refresh'" (click)="RefreshClicked()"></IconButton>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr style="height: 5px;">
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            <div class="ScrollViewer">
+                                                                <ul class="ScrollContent">
+                                                                    <li class="StatusBoxItem" *ngFor="let item of ItemsSource">
+                                                                        <table [style.height.px]="item.LegHeight">
+                                                                            <tr>
+                                                                                <td style="width: 95px; max-width: 95px; text-align: center;">
+                                                                                    <div class="ColorBlue" style="font-size: 22px; position: relative;">
+                                                                                        {{item.Status}}
+
+                                                                                        <div class="RightCenter" style="width: 18px; height: 18px;" *ngIf="item.Status == 'OSI'">
+                                                                                            <HelpIcon [Header]="'Details'" [Text]="item.Details"></HelpIcon>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="TextBlock" style="font-size: 10px" [attr.title]="item.StatusName">{{item.StatusName}}</div>
+                                                                                </td>
+
+                                                                                <td style="width: 3px">
+                                                                                    <div></div>
+                                                                                </td>
+
+                                                                                <td style="width: 200px;">
+                                                                                    <table>
+                                                                                        <tr>
+                                                                                            <td class="Label" style="width: 80px; font-size: 10px;">Event Date:</td>
+                                                                                            <td class="Value ColorBlue" style="width: 85px">{{item.EventDate | DateTimeToDatePipe}}</td>
+                                                                                            <td class="Label" style="text-align: right;">{{item.EventDate | DateTimeToTimePipe}}</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class="Label" style="width: 80px; font-size: 10px;">Receiving Date:</td>
+                                                                                            <td class="Value" style="width: 85px">{{item.ReceivingDate | DateTimeToDatePipe}}</td>
+                                                                                            <td class="Label" style="text-align: right;">{{item.ReceivingDate | DateTimeToTimePipe}}</td>
+                                                                                        </tr>
+
+                                                                                        <tr style="height: 25px;" *ngIf="item.IsDatesRowVisible">
+                                                                                            <td colspan="3">
+
+                                                                                                <div *ngIf="item.DepartureDate">
+                                                                                                    <span class="Label" style="font-size: 10px;">{{item.DepartureLabel}}</span>
+                                                                                                    <span class="Value" style="font-size: 11px;">{{item.DepartureDate | DateTimeToDatePipe}}</span>
+                                                                                                    <span class="Label" style="font-size: 10px; margin-left: 3px;">{{item.DepartureDate | DateTimeToTimePipe}}</span>
+                                                                                                </div>
+
+                                                                                                <div *ngIf="!item.DepartureDate">
+                                                                                                    <div>
+                                                                                                        <span class="Label" style="font-size: 10px;">{{item.ArrivalLabel}}</span>
+                                                                                                        <span class="Value" style="font-size: 11px;">{{item.ArrivalDate | DateTimeToDatePipe}}</span>
+                                                                                                        <span class="Label" style="font-size: 10px; margin-left: 3px;">{{item.ArrivalDate | DateTimeToTimePipe}}</span>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </td>
+
+                                                                                <td style="width: 3px">
+                                                                                    <div></div>
+                                                                                </td>
+
+                                                                                <td>
+                                                                                    <table>
+                                                                                        <tr>
+                                                                                            <td style="width: 105px;" class="Value">
+                                                                                                {{item.Weight}}
+                                                                                                <b class="Label">KG</b>
+                                                                                            </td>
+
+                                                                                            <td style="width: 3px">
+                                                                                                <div></div>
+                                                                                            </td>
+
+                                                                                            <td class="Value" style="font-size: 10px;" [attr.title]="item.AirlineName">{{item.AirlineName}}</td>
+                                                                                        </tr>
+
+                                                                                        <tr>
+                                                                                            <td style="width: 105px;">
+                                                                                                <span class="Value">{{item.Pieces}}</span>
+                                                                                                <span class="Label" style="font-size: 10px"> Pieces</span>
+                                                                                                <span class="ColorRed" style="font-size: 10px" *ngIf="item.Partial"> (Partial)</span>
+                                                                                            </td>
+
+                                                                                            <td style="width: 3px">
+                                                                                                <div></div>
+                                                                                            </td>
+
+                                                                                            <td class="Label" style="font-size: 10px;">
+                                                                                                Flight #:
+                                                                                                <b class="Value" style="font-size: 10px">{{item.FlightNumber}}</b>
+                                                                                            </td>
+                                                                                        </tr>
+
+                                                                                        <tr style="height: 25px;" *ngIf="item.IsDatesRowVisible">
+                                                                                            <td colspan="3">
+                                                                                                <div>
+                                                                                                    <div *ngIf="item.DepartureDate && item.ArrivalDate">
+                                                                                                        <div>
+                                                                                                            <span class="Label" style="font-size: 10px;">{{item.ArrivalLabel}}</span>
+                                                                                                            <span class="Value" style="font-size: 11px;">{{item.ArrivalDate | DateTimeToDatePipe}}</span>
+                                                                                                            <span class="Label" style="font-size: 10px; margin-left: 3px;">{{item.ArrivalDate | DateTimeToTimePipe}}</span>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </td>
+
+                                                                                <td style="width: 10px">
+                                                                                    <div class="VerticalLine"></div>
+                                                                                </td>
+
+                                                                                <td style="width: 120px; max-width: 120px; text-align: center;">
+                                                                                    <div class="ColorBlack" style="font-size: 22px;">{{item.LocationCode}}</div>
+                                                                                    <div class="TextBlock" style="font-size: 10px" [attr.title]="item.LocationName">{{item.LocationName}}</div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </li>
+                                                                </ul>
+
+                                                                <div *ngIf="IsNoStatus" class="NoDataText" style="font-size: 17px;">No Status</div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                        <!-- Communications -->
+                                        <div style="height: 100%; min-width: 100%; position: relative;" [hidden]="SelectedTabCode != 'CM'">
+                                            <div class="LocationDirective" LocationDirective Code="CM"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>            
+        </td>
+    </tr>
+</table>

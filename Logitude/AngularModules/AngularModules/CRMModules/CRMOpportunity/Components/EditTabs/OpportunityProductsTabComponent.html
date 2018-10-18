@@ -1,0 +1,240 @@
+﻿<div class="TabHolder" style="overflow-x:auto;overflow-y:auto;height:100%;width:100%;">
+    <table style="min-width:1150px;" *ngIf="LoadedData && LoadedActualData">
+        <tr class="TabTitleRow">
+            <td>
+                <table>
+                    <tr>
+                        <td style="float:left;">
+                            Products Potential
+                            <span style="font-style:italic;padding-left:5px;color:gray"> (Values are inserted per month)</span>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                        <td style="width:100px;float:right;">
+                            <LogCheckBox [ObjectFieldName]="'IsShowAccount'" [Text]="'Show Account'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                        </td>
+                        <td style="width:20px;">
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr style="height:66%;">
+            <td style="vertical-align:top">
+                <div class="MediaFill">
+                    <logitude-edit-grid GridWidth="100%" [HeaderHeight]="25" GridHeight="100%" [EnableGridViewRowBackground]="true" [ItemSource]="ItemsSource" (SelectedItemChanged)="rowChanged($event)" [SelectedRow]="ProductsSelectedItem">
+
+                        <!-- IsChecked -->
+                        <log-column [width]="'25'">
+                            <log-cell-template template="let item" #logcelltemplate>
+                                <div style="width: 100%; height: 100%; position: relative;">
+                                    <div class="CenterCenter">
+                                        <CheckBox *ngIf="item.CheckBoxVisibility" [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event" [IsEnabled]="item.IsFieldsEnabled"></CheckBox>
+                                    </div>
+                                </div>
+                            </log-cell-template>
+                        </log-column>
+
+                        <!-- Product Type -->
+                        <log-column [width]="'150'" [header]="'Product Type'">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="true">
+                                <table>
+                                    <tr>
+                                        <td *ngIf="item.EstimatedVisibility" style="width:20px">
+                                            <div style="width: 100%; height: 100%;">
+                                                <img class="LeftCenter" *ngIf="item.DirectionId == 'D'" src="./Images/Directions/D.png" />
+                                                <img class="LeftCenter" *ngIf="item.DirectionId == 'R'" src="./Images/Directions/R.png" />
+                                                <img class="LeftCenter" *ngIf="item.DirectionId == 'C'" src="./Images/Directions/C.png" />
+                                                <img class="LeftCenter" *ngIf="item.DirectionId == 'E'" src="./Images/Directions/E.png" />
+                                                <img class="LeftCenter" *ngIf="item.DirectionId == 'I'" src="./Images/Directions/I.png" />
+                                            </div>
+                                        </td>
+                                        <td *ngIf="item.EstimatedVisibility" style="width:20px">
+                                            <div style="width: 100%; height: 100%;">
+                                                <img class="LeftCenter" *ngIf="item.TransportModeId == 'A'" src="./Images/Icons/A.png" />
+                                                <img class="LeftCenter" *ngIf="item.TransportModeId == 'O'" src="./Images/Icons/O.png" />
+                                                <img class="LeftCenter" *ngIf="item.TransportModeId == 'I'" src="./Images/Icons/I.png" />
+                                            </div>
+                                        </td>
+                                        <td style="font-size:12px;color:#282E30;float:left;"> {{item.ProductTypeName}}</td>
+                                    </tr>
+                                </table>
+                            </log-cell-template>
+                        </log-column>
+
+                        <!-- NumberOfShipments -->
+                        <log-column [width]="'120'" [header]="'OpportunityProduct.F.NumberOfShipments' | TextCodeTranslationPipe ">
+
+                            <log-cell-template template="let item" #logcelltemplate>
+                                <div style="width: 100%; text-align: right;" *ngIf="logcelltemplate.IsDisplayMode">
+                                    {{item.NumberOfShipments|NumbersPipe:'N0'}}
+                                </div>
+                                <div style="width: 100%; text-align: center;" *ngIf="logcelltemplate.IsEditMode && item.GridViewCellEditControlVisibility">
+                                    <LogTextBox [FocusOnMe]="'true'" [InputType]="'integer'" [ObjectFieldName]="'NumberOfShipments'" [Text]="item.NumberOfShipments" [DataContext]="item" [ObjectTableName]="'OpportunityProduct'" [HideColumns]="true"></LogTextBox>
+                                </div>
+                            </log-cell-template>
+                        </log-column>
+
+                        <!-- ChargeableWeight -->
+                        <log-column [width]="'150'" [header]="'OpportunityProduct.F.ChargeableWeight' | TextCodeTranslationPipe " [Alignment]="'left'">
+                            <log-cell-template template="let item" #logcelltemplate>
+                                <div style="width: 100%; text-align: right;" *ngIf="logcelltemplate.IsDisplayMode">
+                                    {{item.ChargeableWeight | NumbersPipe:'N2'}}
+                                </div>
+
+                                <div style="width: 100%; text-align: center;" *ngIf="logcelltemplate.IsEditMode && item.GridViewCellEditControlVisibility">
+                                    <LogTextBox [FocusOnMe]="'true'" [InputType]="'double'" [ObjectFieldName]="'ChargeableWeight'" [Text]="item.ChargeableWeight" [DataContext]="item" [ObjectTableName]="'OpportunityProduct'" [HideColumns]="true"></LogTextBox>
+                                </div>
+                            </log-cell-template>
+                        </log-column>
+
+                        <!-- Revenue -->
+                        <log-column [width]="'90'" [header]="PotentialRevenueHeader" [Alignment]="'left'">
+                            <log-cell-template template="let item" #logcelltemplate>
+                                <div style="width: 100%; text-align: right;" *ngIf="logcelltemplate.IsDisplayMode">
+                                    {{item.Revenue | NumbersPipe:'N2' }}
+                                </div>
+
+                                <div style="width: 100%; text-align: center;" *ngIf="logcelltemplate.IsEditMode && item.GridViewCellEditControlVisibility">
+                                    <LogTextBox [FocusOnMe]="'true'" [InputType]="'double'" [ObjectFieldName]="'Revenue'" [Text]="item.Revenue" [DataContext]="item" [ObjectTableName]="'OpportunityProduct'" [HideColumns]="true"></LogTextBox>
+                                </div>
+                            </log-cell-template>
+                        </log-column>
+
+                        <!-- TEU -->
+                        <log-column [width]="'90'" [header]="'OpportunityProduct.F.TEU' | TextCodeTranslationPipe" [Alignment]="'left'">
+                            <log-cell-template template="let item" #logcelltemplate>
+                                <div style="width: 100%; text-align: right;" *ngIf="logcelltemplate.IsDisplayMode">
+                                    {{item.TEU | NumbersPipe:'N2' }}
+                                </div>
+
+                                <div style="width: 100%; text-align: center;" *ngIf="logcelltemplate.IsEditMode && item.GridViewCellEditControlVisibility">
+                                    <LogTextBox [FocusOnMe]="'true'" [InputType]="'double'" [ObjectFieldName]="'TEU'" [Text]="item.TEU" [ObjectTableName]="'OpportunityProduct'" [HideColumns]="true"></LogTextBox>
+                                </div>
+                            </log-cell-template>
+                        </log-column>
+
+                        <!-- Locations -->
+                        <log-column [width]="'250'">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="true">
+                                <div *ngIf="item.EstimatedVisibility">
+                                    <table>
+                                        <tr>
+                                            <td *ngFor="let flag of item.CellProductLocations" style="padding-left:2px;width:18px;max-width:18px;min-width:18px">
+                                                <!--<img [attr.title]="flag.CountryName" style="height:16px;width:16px" src="{{flag.CountryCode | CountryFlagPipe}}" />-->
+                                                <Image  [Title]="flag.CountryName" [Src]="flag.src"></Image>
+                                             </td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </log-cell-template>
+                        </log-column>
+
+                        <!-- Tools -->
+                        <log-column [width]="'30'" [Alignment]="'left'">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="true" [TabIndex]="-1">
+                                <div style="width: 100%; height: 100%; position: relative;">
+                                    <div class="CenterCenter" style="height: 20px;">
+                                        <span class="CellSeparator"></span>
+                                        <span style="width:5px;"></span>
+                                        <IconButton style="vertical-align:central;" *ngIf="item.EstimatedVisibility" [Left]="3" [Name]="'Edit'" [IsSmall]="true" (click)="item.EditProduct(item)"></IconButton>
+                                    </div>
+                                </div>
+                            </log-cell-template>
+                        </log-column>
+
+                    </logitude-edit-grid>
+                </div>
+            </td>
+        </tr>
+
+        <tr style="height:15px;">
+            <td>
+                <div></div>
+            </td>
+        </tr>
+
+        <tr style="height:32px">
+            <td class="TabTitleRow">{{HistoryTitle}}</td>
+        </tr>
+
+        <tr style="vertical-align:top;height:33%">
+            <td>
+                <div class="MediaFill">
+                    <logitude-edit-grid GridWidth="100%" [HeaderHeight]="25" GridHeight="100%" [ItemSource]="HistoryObsList" (SelectedItemChanged)="actualRowSelected($event)" [SelectedRow]="ActualSelectedItem">
+
+                        <log-column [width]="'50'" [header]="'CustomerProductActualData.F.Month' | TextCodeTranslationPipe" [SortFieldName]="'MonthCode'">
+                            <log-cell-template template="let item" #logcelltemplate>
+                                <div> {{item.MonthCode}} </div>
+                            </log-cell-template>
+                        </log-column>
+
+                        <log-column [width]="'50'" [header]="'CustomerProductActualData.F.Year' | TextCodeTranslationPipe" [SortFieldName]="'Year'">
+                            <log-cell-template template="let item" #logcelltemplate>
+                                <div> {{item.Year}} </div>
+                            </log-cell-template>
+                        </log-column>
+
+                        <log-column [width]="'130'" [header]="'CustomerProductActualData.F.NumberOfShipments' | TextCodeTranslationPipe" [SortFieldName]="'NumberOfShipments'">
+                            <log-cell-template template="let item" #logcelltemplate>
+                                <div style="float:right;">
+                                    {{item.NumberOfShipments}}
+                                </div>
+                            </log-cell-template>
+                        </log-column>
+
+                        <log-column [width]="'150'" [header]="'CustomerProductActualData.F.ChargeableWeight' | TextCodeTranslationPipe" [SortFieldName]="'ChargeableWeight'">
+                            <log-cell-template template="let item" #logcelltemplate>
+                                <div style="float:right">{{item.ChargeableWeight | NumbersPipe:'N2'}}</div>
+                            </log-cell-template>
+                        </log-column>
+
+                        <log-column [width]="'100'" [header]="RevenueActualHeader" [SortFieldName]="'Revenue'">
+                            <log-cell-template template="let item" #logcelltemplate>
+                                <div style="float:right">{{item.Revenue | NumbersPipe:'N2'}}</div>
+                            </log-cell-template>
+                        </log-column>
+
+                        <log-column *ngIf="TEUActualVisibile" [width]="'90'" [header]="'CustomerProductActualData.F.TEU'| TextCodeTranslationPipe" [SortFieldName]="'TEU'">
+                            <log-cell-template template="let item" #logcelltemplate>
+                                <div style="float:right">{{item.TEU | NumbersPipe:'N2'}}</div>
+                            </log-cell-template>
+                        </log-column>
+
+                        <log-column [width]="'380'" [SortFieldName]="'CountryCode'">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="true">
+                                <div>
+                                    <table>
+                                        <tr>
+                                            <td *ngFor="let flag of item.ProductLocations" style="padding-left:2px;width:18px;max-width:18px;min-width:18px">
+                                                <!--<img [attr.title]="flag.CountryName" style="height:16px;width:16px" src="{{flag.CountryCode | CountryFlagPipe}}" />-->
+                                                <Image [Title]="flag.CountryName" [Src]="flag.src"></Image>
+
+                                             </td>
+                                            <td style="float:right;width:80px;">
+                                                <div style="float:right;">
+                                                    <span class="hyperlink" style="float:right;text-align:left;" (click)="item.ViewDetails()">View Locations</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </log-cell-template>
+                        </log-column>
+                    </logitude-edit-grid>
+                </div>
+            </td>
+        </tr>
+
+        <tr style="height:10px;">
+            <td>
+                <div></div>
+            </td>
+        </tr>
+
+    </table>
+</div>

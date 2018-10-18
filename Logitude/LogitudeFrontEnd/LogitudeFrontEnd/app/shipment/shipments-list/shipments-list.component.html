@@ -1,0 +1,158 @@
+﻿<style>
+    .simple-element {
+    position: relative;
+    display:block;
+    background-color: transparent;
+    height: 100%;
+}
+</style>
+
+<table>
+
+    <tr style="height: 21px;">
+        <td style="height: 21px;">
+            <table>
+                <tr>
+                    <td style="vertical-align: middle;">
+                        <span></span>
+                        <span style="font-size: 18px; color: #1B90CB;">123 Shipments</span>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 10px;">
+        <td style="height: 10px;">
+            <div></div>
+            <!--<sample-element style="height:500px;" class="jumbotron simple-element"></sample-element>-->
+        </td>
+    </tr>
+
+    <tr style="height: 21px;">
+        <td style="height: 21px; vertical-align:middle;">
+            <table>
+                <tr>
+                    <td style="width: 21px; vertical-align: middle;">
+                        <IconButton [Name]="'Refresh'"></IconButton>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 96px; vertical-align: middle;">
+                        <div class="Button" (click)="AddNewShipment('inElement')">New Shipment</div>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 22px; vertical-align: middle;">
+                        <div class="Button"></div>
+                    </td>
+
+                    <td style="width: 35px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 30px; vertical-align: middle; font-size: 11px; color:  #45494A;">
+                        View:
+                    </td>
+
+                    <td style="width: 150px; vertical-align: middle;">
+                        <input />
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 250px; vertical-align: middle;">
+                        <input type="text" placeholder="{{SearchText}}" />
+                    </td>
+
+                    <td style="width: 10px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 17px; vertical-align: middle; position:relative;">
+                        <img src="images/Filter.png" style="cursor: pointer;" class="CenterCenter" />
+                    </td>
+
+                    <td style="width: 3px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 12px; vertical-align: middle; position:relative;">
+                        <img *ngIf="IsAdvancedSearchOpened == false" src="images/FiltersOpen.png" style="cursor: pointer;" (click)="onOpenFilterAreaClick()" class="CenterCenter"/>
+                        <img *ngIf="IsAdvancedSearchOpened == true" src="images/FiltersClose.png" style="cursor: pointer;" (click)="onCloseFilterAreaClick()" class="CenterCenter"/>
+                    </td>
+
+                    <td style="width: 10px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 1px; vertical-align: middle;">
+                        <div style="height: 100%; background: #DADADA;"></div>
+                    </td>
+
+                    <td style="width: 10px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 15px; vertical-align: middle; position:relative;">
+                        <img src="images/Columns.png" style="cursor: pointer;" class="CenterCenter"/>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 10px;">
+        <td style="height: 10px;">
+            <div></div>
+        </td>
+    </tr>
+
+    <tr *ngIf="IsAdvancedSearchOpened" style="height:210px;">
+        <td>
+            <div style="background:#FFFADC; border:1px solid #BABABA; border-radius:3px; -webkit-border-radius:3px; width:calc(100%-2px); height:205px;"></div>
+            <div style="height:5px; width:100%;"></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td style="position:relative;">
+            <ag-grid-ng2 class="GeneratedGrid" style="position:absolute; top:0; left:0; width: calc(100% - 2px); height: 100%;"
+                         [gridOptions]="gridOptions"
+                         [columnDefs]="columnDefs"
+                         [rowData]="rowData"
+                         enableColResize
+                         enableSorting
+                         debug
+                         rowHeight="35"
+                         rowSelection="single"
+                         virtualPaging="true"
+                         (rowSelected)="onRowSelected($event)" (ready)="onReady($event)" (rowClicked)="onRowClicked($event)">
+            </ag-grid-ng2>
+            <sample-element *ngIf="ShowModalWindow" class="jumbotron simple-element"></sample-element>
+        </td>
+    </tr>
+</table>
+
+
+<!--<ul style="">
+    <li *ngFor="#pm of ShipmentsList" (click)="EditShipment(pm.Id)">
+        <span>Id: </span><span>{{pm.Id}}</span><br />
+        <span>Notes: </span><span>{{pm.Notes}}</span><br />
+        <span>Shipper Name: </span><span>{{pm.ShipperName}}</span><br />
+        <span>Consignee Name: </span><span>{{pm.ConsigneeName}}</span><br />
+        <span>Routing: </span><span>{{pm.Routing}}</span><br />
+    </li>
+</ul>-->

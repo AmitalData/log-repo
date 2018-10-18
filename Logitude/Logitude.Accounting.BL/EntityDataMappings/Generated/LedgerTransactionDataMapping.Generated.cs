@@ -1,0 +1,611 @@
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Def.EntityPMs; 
+using Logitude.Accounting.Data;
+
+namespace Logitude.Accounting.BL.EntityDataMappings
+{
+   
+   public partial class LedgerTransactionDataMapping: IMapping<LedgerTransactionPM, LedgerTransaction>,IMappingEncodeBase64NVARCHARFields<LedgerTransactionPM>
+   {
+          public enum POCOPropertyNames
+          { 
+		     None,  
+	         Id, 
+	         Tenant, 
+	         JournalId, 
+	         JournalLineNumber, 
+	         CreateDate, 
+	         ControlAccountId, 
+	         AccountId, 
+	         AccountingDate, 
+	         DocumentDate, 
+	         DueDate, 
+	         LocalAmountDebit, 
+	         LocalAmountCredit, 
+	         CurrencyId, 
+	         ForeignAmountDebit, 
+	         ForeignAmountCredit, 
+	         ExchangeRate, 
+	         Reference1, 
+	         Reference2, 
+	         Reference3, 
+	         OpenAmount, 
+	         OppositeAccountId, 
+	         SearchFields, 
+	         OpenAmountCurrencyId, 
+	         Notes, 
+	         AmountToReconcile, 
+	         Mark, 
+	         IsReconciled, 
+	         IsExternalReconcile, 
+	         InReconcileProgress, 
+	         ReconcileRemarks,
+	      }
+
+
+	      public enum PMPropertyNames
+          { 
+		     None,  
+	         Id, 
+	         Tenant, 
+	         JournalId, 
+	         JournalLineNumber, 
+	         CreateDate, 
+	         ControlAccountId, 
+	         AccountId, 
+	         AccountingDate, 
+	         DocumentDate, 
+	         DueDate, 
+	         LocalAmountDebit, 
+	         LocalAmountCredit, 
+	         CurrencyId, 
+	         ForeignAmountDebit, 
+	         ForeignAmountCredit, 
+	         ExchangeRate, 
+	         Reference1, 
+	         Reference2, 
+	         Reference3, 
+	         OpenAmount, 
+	         OppositeAccountId, 
+	         SearchFields, 
+	         JournalNumber, 
+	         CurrencyCode, 
+	         Source, 
+	         SourceType, 
+	         OpenAmountCurrencyId, 
+	         Notes, 
+	         CumulativeLocalAmount, 
+	         CumulativeForeignAmount, 
+	         AmountToReconcile, 
+	         Mark, 
+	         OpenAmountCurrencyCode, 
+	         IsReconciled, 
+	         SourceId, 
+	         SourceNumber, 
+	         SourceTypeCode, 
+	         CurrencySign, 
+	         OpenAmountCurrencySign, 
+	         GroupHash, 
+	         IsExternalReconcile, 
+	         InReconcileProgress, 
+	         ForeignAmount, 
+	         ReconcileRemarks,
+	      }
+
+		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
+        List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
+    
+	    public void PMToPOCO(LedgerTransactionPM entityPM, LedgerTransaction entityPOCO)
+        {
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.JournalId))
+            {
+				entityPOCO.JournalId = entityPM.JournalId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.JournalLineNumber))
+            {
+				entityPOCO.JournalLineNumber = entityPM.JournalLineNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateDate))
+            {
+				entityPOCO.CreateDate = entityPM.CreateDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ControlAccountId))
+            {
+				entityPOCO.ControlAccountId = entityPM.ControlAccountId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AccountId))
+            {
+				entityPOCO.AccountId = entityPM.AccountId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AccountingDate))
+            {
+				entityPOCO.AccountingDate = entityPM.AccountingDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DocumentDate))
+            {
+				entityPOCO.DocumentDate = entityPM.DocumentDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DueDate))
+            {
+				entityPOCO.DueDate = entityPM.DueDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LocalAmountDebit))
+            {
+				entityPOCO.LocalAmountDebit = entityPM.LocalAmountDebit;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LocalAmountCredit))
+            {
+				entityPOCO.LocalAmountCredit = entityPM.LocalAmountCredit;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CurrencyId))
+            {
+				entityPOCO.CurrencyId = entityPM.CurrencyId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForeignAmountDebit))
+            {
+				entityPOCO.ForeignAmountDebit = entityPM.ForeignAmountDebit;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForeignAmountCredit))
+            {
+				entityPOCO.ForeignAmountCredit = entityPM.ForeignAmountCredit;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExchangeRate))
+            {
+				entityPOCO.ExchangeRate = entityPM.ExchangeRate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Reference1))
+            {
+				entityPOCO.Reference1 = entityPM.Reference1;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Reference2))
+            {
+				entityPOCO.Reference2 = entityPM.Reference2;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Reference3))
+            {
+				entityPOCO.Reference3 = entityPM.Reference3;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OpenAmount))
+            {
+				entityPOCO.OpenAmount = entityPM.OpenAmount;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OppositeAccountId))
+            {
+				entityPOCO.OppositeAccountId = entityPM.OppositeAccountId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
+            {
+				entityPOCO.SearchFields = entityPM.SearchFields;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OpenAmountCurrencyId))
+            {
+				entityPOCO.OpenAmountCurrencyId = entityPM.OpenAmountCurrencyId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Notes))
+            {
+				entityPOCO.Notes = entityPM.Notes;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmountToReconcile))
+            {
+				entityPOCO.AmountToReconcile = entityPM.AmountToReconcile;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Mark))
+            {
+				entityPOCO.Mark = entityPM.Mark;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsReconciled))
+            {
+				entityPOCO.IsReconciled = entityPM.IsReconciled;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsExternalReconcile))
+            {
+				entityPOCO.IsExternalReconcile = entityPM.IsExternalReconcile;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InReconcileProgress))
+            {
+				entityPOCO.InReconcileProgress = entityPM.InReconcileProgress;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReconcileRemarks))
+            {
+				entityPOCO.ReconcileRemarks = entityPM.ReconcileRemarks;
+			}
+			
+				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
+		  }
+
+		public void POCOToPM(LedgerTransactionPM entityPM, LedgerTransaction entityPOCO)
+        {
+			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
+            {
+					entityPM.Id = entityPOCO.Id;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
+            {
+					entityPM.Tenant = entityPOCO.Tenant;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.JournalId))
+            {
+					entityPM.JournalId = entityPOCO.JournalId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.JournalLineNumber))
+            {
+					entityPM.JournalLineNumber = entityPOCO.JournalLineNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CreateDate))
+            {
+					entityPM.CreateDate = entityPOCO.CreateDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ControlAccountId))
+            {
+					entityPM.ControlAccountId = entityPOCO.ControlAccountId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AccountId))
+            {
+					entityPM.AccountId = entityPOCO.AccountId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AccountingDate))
+            {
+					entityPM.AccountingDate = entityPOCO.AccountingDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DocumentDate))
+            {
+					entityPM.DocumentDate = entityPOCO.DocumentDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DueDate))
+            {
+					entityPM.DueDate = entityPOCO.DueDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LocalAmountDebit))
+            {
+					entityPM.LocalAmountDebit = entityPOCO.LocalAmountDebit;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LocalAmountCredit))
+            {
+					entityPM.LocalAmountCredit = entityPOCO.LocalAmountCredit;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CurrencyId))
+            {
+					entityPM.CurrencyId = entityPOCO.CurrencyId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ForeignAmountDebit))
+            {
+					entityPM.ForeignAmountDebit = entityPOCO.ForeignAmountDebit;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ForeignAmountCredit))
+            {
+					entityPM.ForeignAmountCredit = entityPOCO.ForeignAmountCredit;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExchangeRate))
+            {
+					entityPM.ExchangeRate = entityPOCO.ExchangeRate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Reference1))
+            {
+					entityPM.Reference1 = entityPOCO.Reference1;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Reference2))
+            {
+					entityPM.Reference2 = entityPOCO.Reference2;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Reference3))
+            {
+					entityPM.Reference3 = entityPOCO.Reference3;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.OpenAmount))
+            {
+					entityPM.OpenAmount = entityPOCO.OpenAmount;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.OppositeAccountId))
+            {
+					entityPM.OppositeAccountId = entityPOCO.OppositeAccountId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SearchFields))
+            {
+					entityPM.SearchFields = entityPOCO.SearchFields;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.OpenAmountCurrencyId))
+            {
+					entityPM.OpenAmountCurrencyId = entityPOCO.OpenAmountCurrencyId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Notes))
+            {
+					entityPM.Notes = entityPOCO.Notes;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AmountToReconcile))
+            {
+					entityPM.AmountToReconcile = entityPOCO.AmountToReconcile;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Mark))
+            {
+					entityPM.Mark = entityPOCO.Mark;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsReconciled))
+            {
+					entityPM.IsReconciled = entityPOCO.IsReconciled;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsExternalReconcile))
+            {
+					entityPM.IsExternalReconcile = entityPOCO.IsExternalReconcile;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.InReconcileProgress))
+            {
+					entityPM.InReconcileProgress = entityPOCO.InReconcileProgress;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ReconcileRemarks))
+            {
+					entityPM.ReconcileRemarks = entityPOCO.ReconcileRemarks;
+            }
+
+		}
+
+		public void PMToOldPM(LedgerTransactionPM entityPM, LedgerTransactionPM oldEntityPM)
+        {
+		     oldEntityPM.ChangedProperties.Clear();
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+                oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.JournalId))
+            {
+                oldEntityPM.JournalId = entityPM.JournalId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.JournalLineNumber))
+            {
+                oldEntityPM.JournalLineNumber = entityPM.JournalLineNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateDate))
+            {
+                oldEntityPM.CreateDate = entityPM.CreateDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ControlAccountId))
+            {
+                oldEntityPM.ControlAccountId = entityPM.ControlAccountId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AccountId))
+            {
+                oldEntityPM.AccountId = entityPM.AccountId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AccountingDate))
+            {
+                oldEntityPM.AccountingDate = entityPM.AccountingDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DocumentDate))
+            {
+                oldEntityPM.DocumentDate = entityPM.DocumentDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DueDate))
+            {
+                oldEntityPM.DueDate = entityPM.DueDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LocalAmountDebit))
+            {
+                oldEntityPM.LocalAmountDebit = entityPM.LocalAmountDebit;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LocalAmountCredit))
+            {
+                oldEntityPM.LocalAmountCredit = entityPM.LocalAmountCredit;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CurrencyId))
+            {
+                oldEntityPM.CurrencyId = entityPM.CurrencyId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForeignAmountDebit))
+            {
+                oldEntityPM.ForeignAmountDebit = entityPM.ForeignAmountDebit;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForeignAmountCredit))
+            {
+                oldEntityPM.ForeignAmountCredit = entityPM.ForeignAmountCredit;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExchangeRate))
+            {
+                oldEntityPM.ExchangeRate = entityPM.ExchangeRate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Reference1))
+            {
+                oldEntityPM.Reference1 = entityPM.Reference1;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Reference2))
+            {
+                oldEntityPM.Reference2 = entityPM.Reference2;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Reference3))
+            {
+                oldEntityPM.Reference3 = entityPM.Reference3;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OpenAmount))
+            {
+                oldEntityPM.OpenAmount = entityPM.OpenAmount;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OppositeAccountId))
+            {
+                oldEntityPM.OppositeAccountId = entityPM.OppositeAccountId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
+            {
+                oldEntityPM.SearchFields = entityPM.SearchFields;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OpenAmountCurrencyId))
+            {
+                oldEntityPM.OpenAmountCurrencyId = entityPM.OpenAmountCurrencyId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Notes))
+            {
+                oldEntityPM.Notes = entityPM.Notes;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmountToReconcile))
+            {
+                oldEntityPM.AmountToReconcile = entityPM.AmountToReconcile;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Mark))
+            {
+                oldEntityPM.Mark = entityPM.Mark;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsReconciled))
+            {
+                oldEntityPM.IsReconciled = entityPM.IsReconciled;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsExternalReconcile))
+            {
+                oldEntityPM.IsExternalReconcile = entityPM.IsExternalReconcile;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InReconcileProgress))
+            {
+                oldEntityPM.InReconcileProgress = entityPM.InReconcileProgress;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReconcileRemarks))
+            {
+                oldEntityPM.ReconcileRemarks = entityPM.ReconcileRemarks;
+            }
+			
+		}
+
+	    public void EncodeBase64NVARCHARFields(LedgerTransactionPM entityPM)
+        {
+            if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
+            {
+                return;
+
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.SearchFields)) //T4 find type == nText 
+            {
+                entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.Notes)) //T4 find type == nText 
+            {
+                entityPM.Notes = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Notes));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.ReconcileRemarks)) //T4 find type == nText 
+            {
+                entityPM.ReconcileRemarks = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ReconcileRemarks));
+            }
+            entityPM.EncodeBase64NVARCHARFieldsBy=null;
+		}
+
+
+	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
+        {
+            CustomMappedPOCOProperties.Add(pocoPropertyName);
+        }
+
+        public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
+        {
+            CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+		
+		private void BuildSearchFieldsGenerated(LedgerTransactionPM entityPM, LedgerTransaction entityPOCO, bool isNewEntity)
+        {
+            string mySearchFields = "";
+			
+           
+            entityPM.SearchFields += mySearchFields;
+            entityPOCO.SearchFields += mySearchFields;
+        }
+			  
+   }
+}
+	 

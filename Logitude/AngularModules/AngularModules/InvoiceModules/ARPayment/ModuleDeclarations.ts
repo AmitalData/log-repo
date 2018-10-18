@@ -1,0 +1,40 @@
+﻿import {NewARPaymentComponent} from './Components/NewEntity/NewARPaymentComponent';
+import {ARPaymentDetailsTabComponent} from './Components/EditTabs/ARPaymentDetailsTabComponent';
+import {ARPaymentDocsInTabComponent} from './Components/EditTabs/ARPaymentDocsInTabComponent';
+import {ARPaymentDocsOutTabComponent} from './Components/EditTabs/ARPaymentDocsOutTabComponent';
+import {ARPaymentTransferTabComponent} from './Components/EditTabs/ARPaymentTransferTabComponent';
+import {ARPaymentTransferTemplate} from './Components/NewEntity/ARPaymentTransferTemplate';
+import {EditMultiCurrency} from './Components/EditTabs/EditMultiCurrency';
+import {ARPaymentGeneralTabComponent} from './Components/EditTabs/ARPaymentGeneralTabComponent';
+
+export const Components =
+    [
+        NewARPaymentComponent,
+        ARPaymentDetailsTabComponent,
+        ARPaymentDocsInTabComponent,
+        ARPaymentDocsOutTabComponent,
+        ARPaymentTransferTabComponent,
+        ARPaymentTransferTemplate,
+        EditMultiCurrency,
+        ARPaymentGeneralTabComponent,
+    ];
+
+export class ModuleDeclarations {
+    public static Get(name: string) {
+
+        var myResult: any = null;
+
+        switch (name) {
+            case "NewARPaymentComponent": { myResult = NewARPaymentComponent; break; }
+            case "ARPaymentDetailsTabComponent": { myResult = ARPaymentDetailsTabComponent; break; }
+            case "ARPaymentDocsInTabComponent": { myResult = ARPaymentDocsInTabComponent; break; }
+            case "ARPaymentDocsOutTabComponent": { myResult = ARPaymentDocsOutTabComponent; break; }
+            case "ARPaymentTransferTabComponent": { myResult = ARPaymentTransferTabComponent; break; }
+            case "ARPaymentTransferTemplate": { myResult = ARPaymentTransferTemplate; break; }
+            case "EditMultiCurrency": { myResult = EditMultiCurrency; break; }
+            case "ARPaymentGeneralTabComponent": { myResult = ARPaymentGeneralTabComponent; break; } 
+        }
+
+        return myResult;
+    }
+}

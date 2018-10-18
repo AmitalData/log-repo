@@ -1,0 +1,136 @@
+﻿<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+    <tr style="height:10px;"><td><div></div></td></tr>
+    <tr>
+        <td>
+            <table>
+                <tr style="height:32px;">
+                    <td>
+                        <div style="font-size:16px;color:#1B90CB;vertical-align:middle;">Time</div>
+                    </td>
+                </tr>
+
+                <tr style="height:32px;">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:95px;">
+                                    <LogLov [ObjectFieldName]="'EscalationActionTimeIndicator'"
+                                            [SelectedValue]="DataContext.EscalationActionTimeIndicator"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'EscalationActionTimeIndicator'"
+                                            [HideColumns]="true">
+                                    </LogLov>
+                                </td>
+                                <td style="width:5px;"><div></div></td>
+                                <td style="width:95px;">
+                                    <LogTextBox [HideColumns]="true" [ObjectFieldName]="'EscalationTime'" [NoObjectField]="true"  [Text]="DataContext.EscalationTime" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                                <td style="width:5px;"><div></div></td>
+                                <td style="width:95px;">
+                                    <LogLov [ObjectFieldName]="'EscalationTimeUnit'"
+                                            [SelectedValue]="DataContext.EscalationTimeUnit"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'TimeUnit'"
+                                            [HideColumns]="true">
+                                    </LogLov>
+                                </td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr  style="height:auto;vertical-align:top;">
+                    <td>
+                        <table>
+                            <tr style="height:22px;">
+                                <td colspan="2">
+                                    <div style="font-size:16px;color:#1B90CB;vertical-align:middle;">Recipients</div>
+                                </td>
+                            </tr>
+                            <tr style="vertical-align:top">
+                                <td style="width:10px;"><div></div></td>
+                                <td>
+                                    <!--<div class="SimpleGridView"  style="vertical-align:top;">
+            <div style="top:5px;" class="SimpleGridViewBody">-->
+                                    <div class="MediaFill">
+                                        <ScrollViewer>
+                                            <table>
+                                                <tr style="height:22px;" *ngFor="let item of DataContext.PreDefinitionList">
+
+                                                    <td style="width: 30px;min-width:30px; max-width:30px;float:left;">
+                                                        <LogCheckBox [ObjectFieldName]="'IsChecked'" [NoObjectField]="true" [Checked]="item.IsChecked" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext"></LogCheckBox>
+                                                    </td>
+
+                                                    <td style="width: 300px;min-width:300px; max-width: 300px;float:left;">
+                                                        {{item.Name}}
+                                                    </td>
+
+                                                    <td><div></div></td>
+                                                </tr>
+                                            </table>
+                                            <!--</div>
+                                                
+                </div>-->
+                                            </ScrollViewer>
+                                        </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr style="height:10px;"><td><div></div></td></tr>
+                <tr style="height:32px;">
+                    <td style="vertical-align:top;">
+                        <table>
+                            <tr>
+                                <td style="width:10px;"><div></div></td>
+                                <td style="width:50px;"><div style="font-size:11px;color:#6E7172;">Users: </div></td>
+                                <td>
+                                        <EmailSearchTextBox [EmailsText]="DataContext.Users" [Watermark]="'Add Users'" [IsUsersList]="true" (EmailsTextChanged)="DataContext.Users = $event" (SelectedListChanged)="DataContext.UserSelectedList = $event"></EmailSearchTextBox>
+                                </td>
+                                <td style="width:10px;"><div></div></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+            </table>
+        </td> 
+    </tr>
+
+    <tr> <td><div></div></td></tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom" colspan="4">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Add' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

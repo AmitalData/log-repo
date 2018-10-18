@@ -1,0 +1,85 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Customs.Data.EntityPOCOs
+{
+   
+    public class Consignment
+    {
+	 string dbms;
+
+        [Key]
+        [ForeignKey("Declaration")]
+        [Column("DeclarationId" ,Order = 1)]
+	    public string DeclarationId { get; set; }
+	      
+        public virtual Declaration Declaration { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+     [Key]
+        [Column("ConsignmentNumber" ,Order = 2)]
+	    public int? ConsignmentNumber { get; set; }
+        [Column("SequenceNumeric")]
+	    public int? SequenceNumeric { get; set; }
+        [ForeignKey("CargoType")]
+        [Column("CargoTypeCode")]
+	    public string CargoTypeCode { get; set; }
+	      
+        public virtual CargoIdentifireType CargoType { get; set; }
+        [Column("ManifestDate")]
+	    public DateTime? ManifestDate { get; set; }
+        [Column("ManifestNumber")]
+	    public string ManifestNumber { get; set; }
+        [Column("SecondCargoID")]
+	    public string SecondCargoID { get; set; }
+        [Column("ThirdCargoID")]
+	    public string ThirdCargoID { get; set; }
+        [Column("UnloadDate")]
+	    public DateTime? UnloadDate { get; set; }
+        [ForeignKey("UnloadPort")]
+        [Column("UnloadPortCode")]
+	    public string UnloadPortCode { get; set; }
+	      
+        public virtual UnloadingSiteType UnloadPort { get; set; }
+        [Column("CargoDescription")]
+	    public string CargoDescription { get; set; }
+        [ForeignKey("LastReleaseFromWarehouse")]
+        [Column("IsLastReleaseFromWarehous")]
+	    public string IsLastReleaseFromWarehous { get; set; }
+	      
+        public virtual LastReleaseFromWarehouse LastReleaseFromWarehouse { get; set; }
+        [ForeignKey("InternationalSite")]
+        [Column("LoadingPortCode")]
+	    public string LoadingPortCode { get; set; }
+	      
+        public virtual InternationalSite InternationalSite { get; set; }
+        [ForeignKey("OriginCountry")]
+        [Column("OriginCountryCode")]
+	    public string OriginCountryCode { get; set; }
+	      
+        public virtual CustomsCountry OriginCountry { get; set; }
+        [ForeignKey("DeliverySiteType")]
+        [Column("StorageSiteCode")]
+	    public string StorageSiteCode { get; set; }
+	      
+        public virtual DeliverySiteType DeliverySiteType { get; set; }
+        [ForeignKey("RegisteredWarehouseSiteType")]
+        [Column("ReceiverWarehouseCode")]
+	    public string ReceiverWarehouseCode { get; set; }
+	      
+        public virtual RegisteredWarehouseSiteType RegisteredWarehouseSiteType { get; set; }
+        [Column("DeliveryPlaceName")]
+	    public string DeliveryPlaceName { get; set; }
+    }
+}
+	 

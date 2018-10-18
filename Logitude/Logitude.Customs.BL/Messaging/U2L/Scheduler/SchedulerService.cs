@@ -1,0 +1,588 @@
+﻿using Logitude.AmitalMessaging.Customs.CustomFile.ReleaseFile;
+using Logitude.AmitalMessaging.Infrastructure;
+using Logitude.AmitalMessaging.Utils;
+using Logitude.Customs.Def.Contracts;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.BL.EntityUpdateServices;
+using Logitude.Customs.BL.Messaging.Customs;
+using Logitude.Customs.BL.Messaging.U2L.ImportDeclaration;
+using Logitude.Customs.Data;
+using Logitude.Customs.Data.EntityLists;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.CustomsMessaging.Common.RequestParams;
+using Logitude.Server.Tools.Contracts;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.Models;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
+using System.Linq;
+using Simplog.Server.Infrastructure.Helpers;
+using System.Transactions;
+using Unifreight.BL.EntityPMs;
+using Unifreight.BL.EntityQueryServices;
+using Unifreight.BL.EntityUpdateServices;
+using Unifreight.Data.AmitalModel;
+
+
+namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
+{
+    public class SchedulerService : UnifreightGenericService
+    {
+        private LOGISCHEDULER _LOGISCHEDULER;
+        private LogitudeScheduler _LogitudeScheduler;
+        private ICustomContext _context;
+
+        public const string UpsertActionConst = "Logitude.Customs.BL.Messaging.U2L.Scheduler.SchedulerService.Upsert()";
+        private DeclarationPM _MyDeclarationPM;
+        private Stopwatch _Stopwatch;
+        public Boolean forcePersonalSign;
+        public Boolean changeDraftDate;
+
+        public SchedulerService()
+            : base(
+            "1.000.000001",
+            System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Name,
+            true
+            )
+        {
+
+        }
+
+        public override void ProccessGenericRequest(
+              string xmlLOGISCHEDULER,
+              ref string MoreParams,
+              out string MessageOut)
+        {
+            MessageOut = "";
+            _Stopwatch = Stopwatch.StartNew();  
+            MyCommunicationsParams.Subject = "SchedulerService ";
+
+            DeserilazeObject(xmlLOGISCHEDULER);
+            AppendLogLine("DeserilazeObject:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart(); 
+            
+            CheckIntegrity();
+            AppendLogLine("CheckIntegrity:Took:" + _Stopwatch.Elapsed.ToString());_Stopwatch.Restart(); 
+            MyGenericResponseObj.Stage = "GetContext";
+            _context = CustomContext.GetContext(ResolvedTenant());
+            AppendLogLine("GetContext:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+
+            MyGenericResponseObj.Stage = "Send Request " + _LogitudeScheduler.Request_Code;
+
+            if (_LogitudeScheduler.Param2 == "SIGN") forcePersonalSign = true;
+            if (_LogitudeScheduler.More_Param == "CHANGE_DATE") changeDraftDate = true;
+
+            switch (_LogitudeScheduler.Request_Code)
+            {
+                case "8347":
+                    SendCurrencyRateRequest();
+                    break;
+                case "8361":
+                    SendCustomsBookUpdateRequest();
+                    break;
+                case "8302":
+                    SendDeclarationPrintRequest();
+                    break;
+                case "8240":
+                    SendCargoQueryRequest();
+                    break;
+                case "8250":
+                    SendDeclarationStatusRequest();
+                    break;
+                case "TEST":
+                    SendGenericRequest();
+                    break;
+                default:
+                    SendGenericRequest(); // moran 31.7.16 - AMI-57751 - unifreight use of interface 2750 for sending declaration to customs
+                    break;
+            }
+
+            AppendLogLine("send request:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+            MyGenericResponseObj.Stage = "Done All ";
+            MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
+
+        }
+
+        private void SendDeclarationStatusRequest()
+        {
+            string user = this.MyCommunicationsParams.LoggingUserId;
+            if (String.IsNullOrWhiteSpace(user)) user = AuthenticationUtil.ResolveUserId(ResolvedTenant());
+
+            if (!String.IsNullOrWhiteSpace(_LogitudeScheduler.Param1))
+            {
+                GetDeclarationPM(_LogitudeScheduler.Param1);
+                if (_MyDeclarationPM == null)
+                {
+                    throw new BusinessErrorException("Declaration with ID " + _LogitudeScheduler.Param1 + " Doesn't exist");
+                }
+            }
+            else
+            {
+                throw new BusinessErrorException("Declaration ID is missing");
+            }
+
+            var requestParams = new DeclarationStatusRequestParams()
+            {
+                LoggingEnabled = true,
+                IsFakeResponse = true,
+                InterfaceTypeCode = _LogitudeScheduler.Request_Code,
+                CustomFileNo = _MyDeclarationPM.CustomFileNo,
+                DeclarationNumber = _MyDeclarationPM.DeclarationNumber,
+                Tenant = ResolvedTenant(),
+                RequestName = "Declaration Status Search",
+                ResponseName = "Declaration Status Search",
+                CargoRadio = false,
+                DeclarationRadio = true,
+                OldReshimonRadio = false,
+                OldReshimonNumber = null,
+                LoggingEntityId = _MyDeclarationPM.Id,
+                RequestVIA = SendRequestVIA.WebServiceBatch,
+                SuppressSplitWR = true
+            };
+
+            MyGenericResponseObj.ApplicationId =
+            SBQMessageService.CreateSheetSBQMessage<DeclarationStatusRequestParams>(requestParams, false);
+        }
+
+        private void SendCargoQueryRequest()
+        {
+
+            string CargoTypeCode = null;
+            string ManifestNumber = null;
+            string SecondCargoID = null;
+            string ThirdCargoID = null;
+            string user = this.MyCommunicationsParams.LoggingUserId;
+            if (String.IsNullOrWhiteSpace(user)) user = AuthenticationUtil.ResolveUserId(ResolvedTenant());
+
+            if (!String.IsNullOrWhiteSpace(_LogitudeScheduler.Param1))
+            {
+                GetDeclarationPM(_LogitudeScheduler.Param1);
+                if (_MyDeclarationPM == null)
+                {
+                    throw new BusinessErrorException("Declaration with ID " + _LogitudeScheduler.Param1 + " Doesn't exist");
+                }
+            }
+
+            if(_MyDeclarationPM.Consignments != null && _MyDeclarationPM.Consignments.Count() > 0)
+            {
+                CargoTypeCode = _MyDeclarationPM.Consignments[0].CargoTypeCode;
+                ManifestNumber = _MyDeclarationPM.Consignments[0].ManifestNumber;
+                SecondCargoID = _MyDeclarationPM.Consignments[0].SecondCargoID;
+                ThirdCargoID = _MyDeclarationPM.Consignments[0].ThirdCargoID;
+            }
+            
+            if (string.IsNullOrEmpty(CargoTypeCode) || string.IsNullOrEmpty(ManifestNumber))
+            {
+                string error = TranslateTextsClass.Translate("Customs.Declaration.O.CargoDataMissing", _MyDeclarationPM.Tenant);
+                throw new BusinessErrorException(error);
+            }
+
+            CargoQueryRequestParams requestParams = new CargoQueryRequestParams()
+            {
+                Tenant = ResolvedTenant(),
+                IsFakeResponse = true,
+                LoggingEnabled = true,
+                InterfaceTypeCode = _LogitudeScheduler.Request_Code,
+                LoggingUserId = user,
+                RequestVIA = SendRequestVIA.WebServiceBatch,
+                CustomsFile = _MyDeclarationPM.CustomFileNo,
+                DeclarationNumber = _MyDeclarationPM.DeclarationNumber,
+                DeclarationId = _MyDeclarationPM.Id,
+                CargoTypeCode = CargoTypeCode,
+                ManifestNumber = ManifestNumber,
+                SecondCargoID = SecondCargoID,
+                ThirdCargoID = ThirdCargoID,
+                RequestName = "Manifest Status Query",
+                ResponseName = "Manifest Status Query",
+                AutoSend = true,
+            };
+            MyGenericResponseObj.ApplicationId =
+            SBQMessageService.CreateSheetSBQMessage<CargoQueryRequestParams>(requestParams, false);
+        }
+
+        private void SendDeclarationPrintRequest()
+        {
+            string user = this.MyCommunicationsParams.LoggingUserId;
+            if (String.IsNullOrWhiteSpace(user)) user = AuthenticationUtil.ResolveUserId(ResolvedTenant());
+
+            DF_NG_8302_Web03_DeclarationPrintRequestParams requestParams = new DF_NG_8302_Web03_DeclarationPrintRequestParams()
+            {
+                IsFakeResponse = true,
+                LoggingEnabled = false,
+                RequestName = "בקשה לטופס הצהרה",
+                ResponseName = "בקשה לטופס הצהרה",
+                Tenant = ResolvedTenant(),
+                IsSearchByDeclarationRadio = true,
+                IsSearchByCargoRadio = false,
+                InterfaceTypeCode = _LogitudeScheduler.Request_Code,
+                LoggingUserId = user,
+                RequestVIA = SendRequestVIA.WebServiceBatch,
+            };
+            if (!string.IsNullOrWhiteSpace(_LogitudeScheduler.Param1))
+            {
+                var declarationNumber = _LogitudeScheduler.Param1;
+                requestParams.DeclarationNumber = new List<string>();
+                requestParams.DeclarationNumber.Add(declarationNumber);
+            }
+
+            MyGenericResponseObj.ApplicationId =
+            SBQMessageService.CreateSheetSBQMessage<DF_NG_8302_Web03_DeclarationPrintRequestParams>(requestParams, false);
+        }
+
+        private void SendCustomsBookUpdateRequest()
+        {
+            string user = this.MyCommunicationsParams.LoggingUserId;
+            if (String.IsNullOrWhiteSpace(user)) user = AuthenticationUtil.ResolveUserId(ResolvedTenant());
+
+
+
+            var logContext = CustomContext.GetContext(ResolvedTenant());
+            var customsBookQueryService = new CustomsBookQueryService(logContext);
+            CustomsBookPM dbCustomsBookPM = customsBookQueryService.GetCustomsBookData();
+            DateTime fromDate = DateTime.Now.AddDays(-30);
+            if (dbCustomsBookPM != null)
+            {
+                fromDate = (DateTime)dbCustomsBookPM.LastUpdateDate == null ? DateTime.Now.AddDays(-30) : (DateTime)dbCustomsBookPM.LastUpdateDate;
+            }
+            DateTime toDate = fromDate.AddDays(29);
+            string fromDateString = fromDate.ToString("yyyyMMdd");
+            string toDateString = toDate.ToString("yyyyMMdd");
+
+            CustomsBookInRequestParams requestParams = new CustomsBookInRequestParams()
+            {
+                IsFakeResponse = true,
+                LoggingEnabled = false,
+                RequestName = "עדכון ספר סיווג",
+                ResponseName = "עדכון ספר סיווג",
+                Tenant = ResolvedTenant(),
+                isGetHistoricalData = false,
+                //fromDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeScheduler.Start_Date, "_LogitudeScheduler.Start_Date"),
+                fromDate = AmitalConvertUtil.GetUnifreightFormatedDate(fromDateString, "fromDateString"),
+                fromDateSpecified = true,
+                //toDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeScheduler.End_Date, "_LogitudeScheduler.End_Date"),
+                toDate = AmitalConvertUtil.GetUnifreightFormatedDate(toDateString, "toDateString"),
+                toDateSpecified = true,
+                InterfaceTypeCode = _LogitudeScheduler.Request_Code,
+                LoggingUserId = user,
+                RequestVIA = SendRequestVIA.DCABatch,
+            };
+            MyGenericResponseObj.ApplicationId =
+            SBQMessageService.CreateSheetSBQMessage<CustomsBookInRequestParams>(requestParams, false);
+        }
+
+
+        private void SendCurrencyRateRequest()
+        {
+           
+            string user = this.MyCommunicationsParams.LoggingUserId;
+            if (String.IsNullOrWhiteSpace(user)) user = AuthenticationUtil.ResolveUserId(ResolvedTenant());
+
+            CD_NG_8347_Web01_CurrencyRateSearchRequestParams requestParams = new CD_NG_8347_Web01_CurrencyRateSearchRequestParams()
+            {
+                Tenant = ResolvedTenant(),
+                IsFakeResponse = true,
+                RequestName = "Send Currency Rate Request",
+                ResponseName = "Send Currency Rate Response",
+                CurrencyTypeId = _LogitudeScheduler.Param1,
+                FromDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeScheduler.Start_Date, "_LogitudeScheduler.Start_Date"),
+                ToDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeScheduler.End_Date, "_LogitudeScheduler.End_Date"),
+                LoggingEnabled = true,
+                InterfaceTypeCode = _LogitudeScheduler.Request_Code,
+                LoggingUserId = user,
+                RequestVIA = SendRequestVIA.WebServiceBatch,
+
+            };
+            MyGenericResponseObj.ApplicationId =
+            SBQMessageService.CreateSheetSBQMessage<CD_NG_8347_Web01_CurrencyRateSearchRequestParams>(requestParams, false);
+        }
+
+        private void SendGenericRequest()
+        {
+            string id = null;
+            string tableId = null;
+            string declarationNumber = null;
+            string requestName = "Send Generic Request";
+            string responseName = "Send Generic Response";
+
+            if (String.IsNullOrWhiteSpace(_LogitudeScheduler.Request_Code))
+            {
+                throw new BusinessErrorException("Request code is missing");
+            }
+
+            if (_LogitudeScheduler.Request_Code == "2750") 
+            {
+                requestName = "Declaration Request";
+                responseName = "Declaration Response";
+            }
+            if (!String.IsNullOrWhiteSpace(_LogitudeScheduler.Param1))
+            {
+                GetDeclarationPM(_LogitudeScheduler.Param1);
+                if (_MyDeclarationPM != null)
+                {
+                    id = _MyDeclarationPM.Id;
+                    tableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+                    declarationNumber = _MyDeclarationPM.DeclarationNumber;
+                }
+            }
+
+            if (_LogitudeScheduler.Request_Code == "2750" && this._MyDeclarationPM != null && !String.IsNullOrWhiteSpace(this._MyDeclarationPM.CustomFileNo))
+            {
+                ClearCCUFILEMdraftStatus();
+                if(changeDraftDate == true)
+                {
+                    this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                    this._MyDeclarationPM.TaxationDateTime = DateTime.Now;
+                }
+                if(this._MyDeclarationPM.ChangeSetOp == ChangeSetOperation.Update)
+                {
+                    UpdateDeclaration();
+                }
+            }
+            string user = this.MyCommunicationsParams.LoggingUserId;
+            if (String.IsNullOrWhiteSpace(user)) user = AuthenticationUtil.ResolveUserId(ResolvedTenant());
+
+            GenericRequestParams requestParams = new GenericRequestParams()
+            {
+                Tenant = ResolvedTenant(),
+                IsFakeResponse = true,
+                RequestName = requestName,
+                ResponseName = responseName,
+                LoggingEnabled = true,
+                LoggingEntityId = id,
+                AppicationId = id,
+                InterfaceTypeCode = _LogitudeScheduler.Request_Code,
+                LoggingObjectTableId = tableId,
+                LoggingEntityReference = declarationNumber,
+                LoggingUserId = user,
+                RequestVIA = SendRequestVIA.WebServiceBatch,
+                ForcePersonalSign = forcePersonalSign,
+            };
+            MyGenericResponseObj.ApplicationId =
+            SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams, false);
+            AppendLogLine(requestName + " Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+        }
+
+        private void UpdateDeclaration()
+        {
+            
+            MyGenericResponseObj.Stage = "Update Declaration";
+            
+            TransactionScope scope = null;
+            ICustomContext context;
+
+            if (this._MyDeclarationPM == null)
+            {
+                throw new BusinessErrorException("Declaration is missing");
+            }
+            if (String.IsNullOrWhiteSpace(this._MyDeclarationPM.CustomFileNo))
+            {
+                throw new BusinessErrorException("Declaration Customs File No. is missing");
+            }
+
+            if (!DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn)
+            {
+                scope = TransactionFactory.GetNewOracleReadCommittedTransaction();
+            }
+            try
+            {
+                context = CustomContext.GetContext(ResolvedTenant());
+                var myDeclarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), ResolvedTenant());
+                if (this._MyDeclarationPM.ChangeSetOp != ChangeSetOperation.Update) this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+
+                using (var logger = (context as DbContextBase).CreateLogger())
+                {
+                    try
+                    {
+                        myDeclarationUpdateService.Update(this._MyDeclarationPM, true);
+                    }
+                    catch (Exception eUpdate)
+                    {
+                        LogMessagingUtil.Instance.Append("DeclarationUpdateService.Update:");
+                        LogMessagingUtil.Instance.AppendLine(logger.ToString(2040));
+                        throw;
+                    }
+                    AppendLogLine("DeclarationUpdateService.Update:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                }
+            }
+
+            finally
+            {
+                if (scope != null)
+                {
+                    scope.Dispose();
+                }
+            }
+        }
+
+        private void ClearCCUFILEMdraftStatus()
+        {
+            MyGenericResponseObj.Stage = "CCUFILEMUpdate (Clear MEHESDRAFTSTATUS) ";
+            CCUFILEMPM _CCUFILEMPM;
+            long lCUSTOMFILENO;
+            AmitalContext _AmitalContext;
+            if (!long.TryParse(this._MyDeclarationPM.CustomFileNo, out lCUSTOMFILENO))
+            {
+                throw new BusinessErrorException("dirtyDeclarationPM.CustomFileNo could not convert to long ");
+            }
+            TransactionScope scope = null;
+
+            if (!DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn)
+            {
+                scope = TransactionFactory.GetNewOracleReadCommittedTransaction();
+            }
+            try
+            {
+                using (_AmitalContext = AmitalContext.GetContext(this._MyDeclarationPM.Tenant))
+                {
+
+                    var myCCUFILEMQueryService = new CCUFILEMQueryService(_AmitalContext);
+                    var myCCUFILEMUpdateService = new CCUFILEMUpdateService(_AmitalContext);
+                    myCCUFILEMUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
+
+                    int? FILENO = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO);
+                    if (FILENO.HasValue)
+                    {
+                        int? FILENO1 = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO_forUpdateNOWAIT(lCUSTOMFILENO);
+
+                        //do not need the composite due we delete all down entities !!!_CCUFILEMPM = myCCUFILEMQueryService.GetSingle(FILENO.Value, true, false);
+                        _CCUFILEMPM = myCCUFILEMQueryService.GetSingle(FILENO.Value, false, false);
+                        _CCUFILEMPM.ChangeSetOp = ChangeSetOperation.Update;
+                        _CCUFILEMPM.MEHESDRAFTSTATUS = null;
+                        using (var logger = (_AmitalContext as DbContextBase).CreateLogger())
+                        {
+                            try
+                            {
+                                myCCUFILEMUpdateService.Update(_CCUFILEMPM, true);
+                            }
+                            catch (Exception eUpdate)
+                            {
+                                LogMessagingUtil.Instance.Append("CCUFILEMUpdateService.Update:");
+                                LogMessagingUtil.Instance.AppendLine(logger.ToString(2040));
+                                throw;
+                            }
+                            AppendLogLine("CCUFILEMUpdateService.Update:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                        }
+                    }
+                }
+            }
+            finally
+            {
+                if (scope != null)
+                {
+                    scope.Dispose();
+                }
+            }
+        }
+
+        private void GetDeclarationPM(string logitudeFile)
+        {
+
+            if (String.IsNullOrWhiteSpace(logitudeFile))
+            {
+                throw new BusinessErrorException("LOGITUDE FILE is missing");
+            }
+            var myQueryService = new DeclarationQueryService(_context);
+            
+            MyGenericResponseObj.Stage = "GetSingle";
+            this._MyDeclarationPM = myQueryService.GetSingle(logitudeFile, true, false);
+            if (this._MyDeclarationPM == null)
+            {
+                throw new BusinessErrorException("LOGITUDE FILE is " + logitudeFile + " but not found");
+            }
+            AppendLogLine("GetSingle:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+            
+        }
+        
+        void DeserilazeObject(string xmlLOGISCHEDULER)
+        {
+
+            MyGenericResponseObj.Stage = "Initalize ProccessRequest";
+            AppendLogLine("SchedulerService.ProccessRequest");
+
+            AppendLogLine("Deserialize(DataIn1) ..");
+
+
+            if (string.IsNullOrWhiteSpace(xmlLOGISCHEDULER))
+            {
+                throw new BusinessErrorException("DataIn1 is missing");
+            }
+            if (xmlLOGISCHEDULER.Length > 1000)
+            {
+                AppendLogLine("XmlIn=" + xmlLOGISCHEDULER.Substring(0, 1000));
+                AppendLogLine(".Substring(0, 1000)");
+            }
+            else
+            {
+                AppendLogLine("XmlIn=" + xmlLOGISCHEDULER);
+            }
+
+
+            AppendLogLine("Tring DeserilazeObject");
+            MyGenericResponseObj.Stage = "Trying DeserilazeObject";
+            this._LOGISCHEDULER = XmlGenericUtil<LOGISCHEDULER>.DeSerializeObject(xmlLOGISCHEDULER);
+
+            if (_LOGISCHEDULER.LogitudeScheduler == null || _LOGISCHEDULER.LogitudeScheduler.Length != 1)
+            {
+                throw new BusinessErrorException("_LOGISCHEDULER.Scheduler.Length != 1");
+            }
+            this._LogitudeScheduler = _LOGISCHEDULER.LogitudeScheduler[0];
+        }
+
+        private void CheckIntegrity()
+        {
+            MyGenericResponseObj.Stage = "Check integrity ";
+
+            if (String.IsNullOrWhiteSpace(this._LogitudeScheduler.Request_Code))
+            {
+                throw new BusinessErrorException("Request Code is missing");
+            }
+            AppendLogLine("Request Code = " + this._LogitudeScheduler.Request_Code);
+
+        }
+
+        
+
+        public override string GetAssemblyQualifiedName()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string GetExampleDataIn1()
+        {
+            return "";
+        }
+
+        public override string GetExampleDataIn2()
+        {
+            return "";
+        }
+
+        public override string GetExampleDataout1()
+        {
+            return "";
+        }
+
+        public override string GetExampleDataout2()
+        {
+            return "";
+        }
+
+        public override void ProccessRequest(string DataIn1, string DataIn2, out string DataOut1, out string DataOut2, out string SUCCESS, ref string MoreParams, out string MessageOut)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void ProccessBASE64Request(string BASE64DataIn1, string BASE64DataIn2, string BASE64DataIn3, out string BASE64DataOut1, out string BASE64DataOut2, out string BASE64DataOut3, out string SUCCESS, ref string MoreParams, out string MessageOut)
+        {
+            throw new NotImplementedException();
+        }
+
+
+    }
+}
+

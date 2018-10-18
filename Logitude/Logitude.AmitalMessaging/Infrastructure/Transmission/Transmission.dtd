@@ -1,0 +1,42 @@
+<!ELEMENT transmission (transmission_details*, data*)>
+<!ELEMENT transmission_details (sender, receiver, subject, transmission_type, email*, fax*, special_instructions*, ftp_file*, partner_com_id, filename?, forward_interface?, forward_partner?)>
+<!ELEMENT sender (#PCDATA)>
+<!ATTLIST sender valerr CDATA #IMPLIED>
+<!ELEMENT receiver (#PCDATA)>
+<!ATTLIST receiver valerr CDATA #IMPLIED>
+<!ELEMENT subject (#PCDATA)>
+<!ATTLIST subject valerr CDATA #IMPLIED>
+<!ELEMENT transmission_type (#PCDATA)>
+<!ATTLIST transmission_type valerr CDATA #IMPLIED>
+<!ELEMENT email (to, cc)>
+<!ELEMENT to (#PCDATA)>
+<!ATTLIST to valerr CDATA #IMPLIED>
+<!ELEMENT cc (#PCDATA)>
+<!ATTLIST cc valerr CDATA #IMPLIED>
+<!ELEMENT fax (fax_number)>
+<!ELEMENT fax_number (#PCDATA)>
+<!ATTLIST fax_number valerr CDATA #IMPLIED>
+<!ELEMENT special_instructions (internal, uworkj, convert, flat_file, prefix, more_params, separate_analyze, split)>
+<!ELEMENT internal (#PCDATA)>
+<!ATTLIST internal valerr CDATA #IMPLIED>
+<!ELEMENT uworkj (#PCDATA)>
+<!ATTLIST uworkj valerr CDATA #IMPLIED>
+<!ELEMENT convert (#PCDATA)>
+<!ATTLIST convert valerr CDATA #IMPLIED>
+<!ELEMENT flat_file (#PCDATA)>
+<!ELEMENT prefix (#PCDATA)>
+<!ELEMENT more_params (#PCDATA)>
+<!ELEMENT separate_analyze (#PCDATA)>
+<!ELEMENT split (#PCDATA)>
+<!ELEMENT ftp_file (ftp_server, username, password, directory, get_file_name_by_execute)>
+<!ELEMENT ftp_server (#PCDATA)>
+<!ELEMENT username (#PCDATA)>
+<!ELEMENT password (#PCDATA)>
+<!ELEMENT directory (#PCDATA)>
+<!ELEMENT get_file_name_by_execute (#PCDATA)>
+<!ELEMENT partner_com_id (#PCDATA)>
+<!ELEMENT filename (#PCDATA)>
+<!ELEMENT forward_interface (#PCDATA)>
+<!ELEMENT forward_partner (#PCDATA)>
+<!ELEMENT data (entity)>
+<!ELEMENT entity (#PCDATA)>

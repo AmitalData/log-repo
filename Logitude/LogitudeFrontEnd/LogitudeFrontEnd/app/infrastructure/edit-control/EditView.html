@@ -1,0 +1,227 @@
+﻿
+<style type="text/css">
+    .give-opacity {
+        opacity: 0.5;
+        filter: alpha(opacity=40); /* For IE8 and earlier */
+    }
+
+    #PageContentArea {
+        height: 100%;
+        width: calc(100% - 2px);
+        border: 1px solid #DADADA;
+        box-shadow: 1px -1px 5px #D1D1D1;
+        border-radius: 10px 10px 8px 8px;
+        -moz-border-radius: 10px 10px 8px 8px;
+        -webkit-border-radius: 10px 10px 8px 8px;
+        overflow: hidden;
+    }
+
+    #HeaderScreen tr, #HeaderScreen tr td, #HeaderScreen tr td span{
+        line-height: 22px;
+        white-space: nowrap;
+    }
+</style>
+
+<table>
+    <tr style="height: 10px;">
+        <td></td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <td style="width: 10px;">
+                        <div></div>
+                    </td>
+
+                    <td style="height:100%;">
+                        <div style="position: relative; height: 100%;">
+
+                            <div [hidden]="hideBusyIndicator" style="position:absolute; height:100%; width:100%; z-index:99;">
+                                <div style="position:relative; height:100%; width:100%;">
+                                    <img style="position:absolute;left:0;top:0; bottom:0; right:0; margin:auto; width:128px; height: 128px;" src="images/LoginScreen/indicator.gif" alt="Loading..." />
+                                </div>
+                            </div>
+
+                            <div [ngClass]="{ 'give-opacity': hideBusyIndicator == false }" style="height: 100%;">
+                                <table style="table-layout: auto;">
+                                    <tr style="height:24px;">
+                                        <td>
+                                            <table>
+                                                <tr>
+                                                    <td style="width: 70px; vertical-align:middle;">
+                                                        <div class="Button" (click)="GoBackToList()">Shipments</div>
+                                                    </td>
+
+                                                    <td style="width: 5px;">
+                                                        <div></div>
+                                                    </td>
+
+                                                    <td style="width: 1px;">
+                                                        <div #ShortTitle></div>
+                                                    </td>
+
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+
+                                                    <td style="width: 5px;">
+                                                        <div></div>
+                                                    </td>
+
+                                                    <td style="width: 52px; vertical-align:middle;">
+                                                        <div class="Button" (click)="SaveAndClose(false)" style="position:relative;">
+                                                            <img *ngIf="!EntityPM" class="LeftCenter" style="margin-left: 2px;" src="images/Buttons/Save.png"/>
+                                                            <img *ngIf="EntityPM && !EntityPM.IsDirty" class="LeftCenter" style="margin-left: 2px;" src="images/Buttons/Save.png" />
+                                                            <img *ngIf="EntityPM && EntityPM.IsDirty" class="LeftCenter" style="margin-left: 2px;" src="images/Buttons/Save.Orange.png" />
+                                                            <span style="line-height: 19px; margin-left: 20px;">Save</span>                                                            
+                                                        </div>
+                                                    </td>
+
+                                                    <td style="width: 5px;">
+                                                        <div></div>
+                                                    </td>
+
+                                                    <td style="width: 20px; vertical-align:middle;">
+                                                        <div class="Button" (click)="SaveAndClose(true)">    
+                                                            <img *ngIf="!EntityPM" class="CenterCenter" src="images/Buttons/Save.png" />                                                       
+                                                            <img *ngIf="EntityPM && !EntityPM.IsDirty" class="CenterCenter" src="images/Buttons/Save.png" />
+                                                            <img *ngIf="EntityPM && EntityPM.IsDirty" class="CenterCenter" src="images/Buttons/Save.Orange.png" />
+                                                        </div>
+                                                    </td>
+
+                                                    <td style="width: 15px; vertical-align: middle;">
+                                                        <div style="width: 1px; height: 20px; margin: auto; background: #D1D1D1"></div>
+                                                    </td>
+
+                                                    <td style="width: 50px; vertical-align:middle;">
+                                                        <div tabindex="0" class="ToggleButton">
+                                                            <div class="LeftCenter" style="margin-left: 3px;">More</div>
+                                                            <img class="RightCenter" style="margin-right: 3px;" src="images/ToggleIcon.png" />
+
+                                                            <div class="ToggleButtonMenu">
+                                                                <button>Operational Close Shipment</button>
+                                                                <button>Accounting Close Shipment</button>
+                                                                <button>Operational Reopen Shipment</button>
+                                                                <button>Accounting Reopen Shipment</button>
+                                                                <div class="ToggleButtonSeparator"></div>
+                                                                <button>Convert From House To Direct</button>
+                                                                <button>Convert From Direct To House</button>
+                                                                <button>Copy Shipment</button>
+                                                                <div class="ToggleButtonSeparator"></div>
+                                                                <button>Send Respose</button>
+                                                                <div class="ToggleButtonSeparator"></div>
+                                                                <button>Cancel Shipment</button>
+                                                                <button>Reactivate Shipment</button>
+                                                                <button>Exception Resolved</button>
+                                                                <button>Convert To Custom File</button>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+                                    <tr style="height:5px;">
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <tr style="height:75px;">
+                                        <td style="height:75px;">
+                                            <div class="HeaderScreen">
+                                                <table>
+                                                    <tr style="height:10px;">
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                                            <table id="HeaderScreen" style="table-layout:fixed;">
+                                                                                <tr *ngFor="#row of ScreenFields">
+                                                                                    <td *ngFor="#r of row" class="HeaderScreenCell">
+                                                                                        <span class="HeaderScreenLable">{{r.FullNameTextCodeCode | textcodeTranslation}}: </span>
+                                                                                        <!--<span class="HeaderScreenValue" *ngIf="EntityPM != undefined">{{EntityPM[r.FieldName]}}</span>-->
+                                                                                        <header-screen-value *ngIf="EntityPM && entityArgs" 
+                                                                                                             [entityArgs]="entityArgs" 
+                                                                                                             [entityPM]="EntityPM" 
+                                                                                                             [fieldName]="r.FieldName" 
+                                                                                                             [htmlHeaderComponentName]="r.HtmlHeaderComponentName" [htmlHeaderComponentUrl]="r.HtmlHeaderComponentUrl">
+                                                                                        </header-screen-value>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr style="height:20px;">
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td style="height: 100%;">
+
+                                            <div id="PageContentArea" style="margin-top:-10px; background:white;">
+                                                <table>
+                                                    <tr>
+                                                        <td class="TabsTD">
+                                                            <div>
+                                                                <table>
+                                                                    <tr style="height:5px;">
+                                                                        <td style="height:5px;"></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <ul>
+                                                                                <li class="DefaultMenuItem" *ngFor="#item of ObjectTableTabs" (click)="onSelect(item)" [class.SelectedMenuItem]="item === SelectedTab">
+                                                                                    <div>{{item.TabNameTextCodeCode | textcodeTranslation}}</div>
+                                                                                    <img class="ImageRightCenter" *ngIf="item == SelectedTab" src="images/SelectedMenuArrow.png" style="margin-right: -1px;" />
+                                                                                </li>
+                                                                            </ul>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </td>
+
+                                                        <td style="height: 100%;">
+                                                            <div style="height:100%;">
+                                                                <div class="ScrollViewer">
+                                                                    <div class="ScrollContent">
+                                                                        <!--<router-outlet></router-outlet>-->
+                                                                        <div #TabView></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+
+                                                    </tr>
+                                                </table>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </td>
+
+                    <td style="width: 10px;">
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

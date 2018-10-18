@@ -1,0 +1,49 @@
+﻿.GridHeaderCellTemplate td div {
+    line-height: 15px;
+}
+
+.GridHeaderCellTemplate {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 5px;
+    right: 3px;
+    margin: auto;
+    padding: 0;
+    text-indent: 0;
+}
+
+.GridHeaderCellTemplateFilled {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    padding: 0;
+    text-indent: 0;
+}
+
+.ListCellImage {
+    vertical-align: middle;
+    display: block;
+    margin: auto;
+}
+
+.TemplateTrimming {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+.TemplateTrimmingChild {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}

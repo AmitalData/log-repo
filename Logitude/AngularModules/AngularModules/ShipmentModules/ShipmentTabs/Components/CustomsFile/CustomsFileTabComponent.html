@@ -1,0 +1,28 @@
+﻿<div class="TabHolder">
+    <table>
+        <tr class="TabTitleRow">
+            <td>{{'Shipment.TH.CustomsFile' | TextCodeTranslationPipe}}</td>
+        </tr>
+
+        <tr>
+            <td>
+                <table>
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+
+                        <td style="width: 1px;">
+                            <button class="Button" style="width: 110px; margin: auto;" [disabled]="!IsButtonEnabled" (click)="ButtonClicked()">{{'Shipment.B.CustomsFile.ViewCustomsFile' | TextCodeTranslationPipe}}</button>
+                            <div class="NoDataTextStyle" style="text-align: center;">{{InfoMessage}}</div>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>

@@ -1,0 +1,148 @@
+﻿<style>
+    .subTitle{
+        color: #1b90cb;
+        font-size: 16px;
+    }
+</style>
+<table>
+    <tr>
+        <td>
+            <div class="TableHolder">
+                <table>
+                    <tr class="TabTitleRow">
+                        <td>General </td>
+                    </tr>
+                    
+                    <tr style="height: 15px;"><td><div style="width: 15px;"></div></td></tr>
+                    
+                    <tr>
+                        <td style="width: 400px">
+                            <table>
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <table>
+                                            <!-- Code -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 110px;">
+                                                    <LogLabel [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 200px;">
+                                                    <LogTextBox [ObjectFieldName]="'Code'" [InputType]="'text'" [DataContext]="DataContext"
+                                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                            <!-- EnglishName -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'EnglishName'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogTextBox [ObjectFieldName]="'EnglishName'" [InputType]="'text'" [DataContext]="DataContext"
+                                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                            <!-- LocalName -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'LocalName'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogTextBox [ObjectFieldName]="'LocalName'" [InputType]="'ntext'" [DataContext]="DataContext"
+                                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+
+                                            <tr><td><div></div></td></tr>
+                                        </table>
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td style="width: 80px;"><div></div></td>
+
+                        <td>
+                            <table>
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <table>
+                                            <!-- TypeCode -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 85px;">
+                                                    <LogLabel [ObjectFieldName]="'TypeCode'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 200px;">
+                                                    <LogLov [ObjectFieldName]="'TypeCode'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'ChartOfAccountsType'"
+                                                            [HideColumns]="true">
+                                                    </LogLov>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                            <!-- ParentId -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'ParentId'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'ParentId'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'ChartOfAccount'"
+                                                            [SelectedValue]="ParentId"
+                                                            [DependencyFilter2Value]="TypeCode"
+                                                            [QueryFilterItems]="ParentsFilterItems"
+                                                            [HideColumns]="true">
+                                                    </LogLov>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                            <!-- InActive -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'Inactive'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <CheckBox [IsChecked]="Inactive" (Checked)="Inactive = $event"></CheckBox>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                            <tr><td><div></div></td></tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+
+
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>

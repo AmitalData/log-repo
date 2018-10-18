@@ -1,0 +1,117 @@
+﻿
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td style="color:#1B90CB; font-size:15px; line-height: 15px;">Filter By:</td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td>
+            <table>
+                <tr>
+
+                    <!-- Customer -->
+                    <td style="width: 65px;" class="Label">Customer:</td>
+                    <td style="width: 180px;">
+                        <LogLov [NoObjectField]="true"
+                                [ObjectFieldName]="'CustomerId'"
+                                [SelectedValue]="CustomerId"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'Card'"
+                                [DependencyFilter1Value]="'CS'">
+                        </LogLov>
+                    </td>
+
+                    <!-- Salesman -->
+                    <td style="width: 65px;" class="Label">Salesman:</td>
+                    <td style="width: 180px;">
+                        <LogLov [NoObjectField]="true"
+                                [ObjectFieldName]="'SalesmanUserId'"
+                                [SelectedValue]="SalesmanUserId"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'User'">
+                        </LogLov>
+                    </td>
+
+                    <!-- From Date -->
+                    <td style="width: 1px; padding-right: 5px;" class="Label">From Date:</td>
+                    <td style="width: 180px;">
+                        <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'FromDate'" [SelectedDateValue]="FromDate" [DataContext]="DataContext"></LogDatePicker>
+                    </td>
+
+                    <!-- To Date -->
+                    <td style="width: 1px; padding-right: 5px;" class="Label">To Date:</td>
+                    <td style="width: 180px;">
+                        <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'ToDate'" [SelectedDateValue]="ToDate" [DataContext]="DataContext"></LogDatePicker>
+                    </td>
+                   
+                    <td style="width: 80px;">
+                        <button class="GreenButton" (click)="RunButtonClicked()">Run Report</button>
+                    </td>
+                    <td><div></div></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td>
+            <table>
+                <tr>
+
+                    <!-- Display In -->
+                    <td style="width: 65px;" class="Label">Display In:</td>
+                    <td style="width: 180px;">
+                        <table>
+                            <tr>
+                                <td style="width: 66px;">
+                                    <ul class="FiltersMenu">
+                                        <li (click)="SelectedCurrencyCode = LocalCurrencyCode" [class.SelectedFilter]="SelectedCurrencyCode === LocalCurrencyCode" style="width:33px;">
+                                            {{LocalCurrencyCode}}
+                                        </li>
+                                        <li (click)="SelectedCurrencyCode = ProfitCurrencyCode" [class.SelectedFilter]="SelectedCurrencyCode === ProfitCurrencyCode" style="width:33px;">
+                                            {{ProfitCurrencyCode}}
+                                        </li>
+                                    </ul>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <!-- Shipments -->
+                    <td style="width: 65px;" class="Label">Shipments:</td>
+                    <td style="width: 1px;">
+                        <table>
+                            <tr>
+                                <td>
+                                    <RadioButton [Name]="'ShipmentsRadio'" [IsChecked]="ShipmentsTypeCode == 'A'" (Checked)="ShipmentsTypeCode = 'A'" [Text]="'All Shipments'"></RadioButton>
+                                </td>
+
+                                <td style="width: 10px; min-width: 10px;">
+                                    <div></div>
+                                </td>
+
+                                <td>
+                                    <RadioButton [Name]="'ShipmentsRadio'" [IsChecked]="ShipmentsTypeCode == 'C'" (Checked)="ShipmentsTypeCode = 'C'" [Text]="'Connected to spot rate quotes'"></RadioButton>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

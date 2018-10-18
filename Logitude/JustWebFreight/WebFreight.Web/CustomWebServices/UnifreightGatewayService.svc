@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="WebFreight.Web.CustomWebServices.UnifreightGatewayService" CodeBehind="UnifreightGatewayService.svc.cs" %>

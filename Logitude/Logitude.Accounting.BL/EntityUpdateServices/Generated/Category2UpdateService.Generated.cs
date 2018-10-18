@@ -1,0 +1,76 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools;
+using Simplog.Data.Helpers;
+using Logitude.Server.Tools.Counters;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System.Web;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Accounting.BL.EntityDataMappings;
+using Logitude.Accounting.Data.Repositories;
+using Logitude.Accounting.Data.EntityKeys;
+using Logitude.Accounting.Data;
+
+namespace Logitude.Accounting.BL.EntityUpdateServices
+{ 
+   public partial class Category2UpdateService:EntityUpdateService<Category2,Category2PM,EntityPM>
+   {
+   
+        Category2Repository entityRepository;
+        public Category2UpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
+        {
+            IAccountingContext  context = mainContext as AccountingContext;
+            context = context ??mainContext as IAccountingContext ; //Up line is A BUG -and i need it 4 Fakes
+            Mapping = new Category2DataMapping();
+            Repository = new Category2Repository(context);
+        }
+
+       
+        private IAccountingContext currentContext;
+        public Category2UpdateService(int tenant)
+        {
+            currentContext = AccountingContext.GetContext(tenant);
+        }
+
+        public Category2UpdateService(IAccountingContext context)
+        {
+            currentContext = context;
+        }
+
+		
+		protected override EntityKeyFields GetKeys(Category2PM entityPM)
+        {
+            Category2Keys entityKeys = new Category2Keys() { Id = entityPM.Id };
+            return entityKeys;
+        }
+
+		
+		protected override void FillDefaultValuesOnCreate(Category2PM entityPM)
+        {     
+  
+		
+		    entityPM.Id = IdCounter.GetNumber("Category2", entityPM.Tenant); 
+					
+	    }
+        
+		protected override void FillDefaultValuesOnUpdate(Category2PM entityPM)
+        {       
+           
+        }
+		  
+		 
+	 
+   }
+   
+}
+	 

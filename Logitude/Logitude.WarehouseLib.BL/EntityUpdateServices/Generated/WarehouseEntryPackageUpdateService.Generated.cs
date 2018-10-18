@@ -1,0 +1,112 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools;
+using Simplog.Data.Helpers;
+using Logitude.Server.Tools.Counters;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System.Web;
+using Logitude.WarehouseLib.Data.EntityPOCOs;
+using Logitude.WarehouseLib.BL.EntityPMs;
+using Logitude.WarehouseLib.BL.EntityDataMappings;
+using Logitude.WarehouseLib.Data.Repositories;
+using Logitude.WarehouseLib.Data.EntityKeys;
+using Logitude.WarehouseLib.Data;
+
+namespace Logitude.WarehouseLib.BL.EntityUpdateServices
+{ 
+   public partial class WarehouseEntryPackageUpdateService:EntityUpdateService<WarehouseEntryPackage,WarehouseEntryPackagePM,WarehouseEntryPM>
+   {
+   
+        WarehouseEntryPackageRepository entityRepository;
+        public WarehouseEntryPackageUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
+        {
+            IWarehouseContext  context = mainContext as WarehouseContext;
+            context = context ??mainContext as IWarehouseContext ; //Up line is A BUG -and i need it 4 Fakes
+            Mapping = new WarehouseEntryPackageDataMapping();
+            Repository = new WarehouseEntryPackageRepository(context);
+        }
+
+       
+        private IWarehouseContext currentContext;
+        public WarehouseEntryPackageUpdateService(int tenant)
+        {
+            currentContext = WarehouseContext.GetContext(tenant);
+        }
+
+        public WarehouseEntryPackageUpdateService(IWarehouseContext context)
+        {
+            currentContext = context;
+        }
+
+		
+		protected override EntityKeyFields GetKeys(WarehouseEntryPackagePM entityPM)
+        {
+            WarehouseEntryPackageKeys entityKeys = new WarehouseEntryPackageKeys() { Id = entityPM.Id };
+            return entityKeys;
+        }
+
+		
+		protected override void FillDefaultValuesOnCreate(WarehouseEntryPackagePM entityPM)
+        {     
+  
+		
+		    entityPM.Id = IdCounter.GetNumber("WarehouseEntryPackage", entityPM.Tenant); 
+					
+			DateTime myDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+							
+		    entityPM.CreateDate =  myDate;
+					 
+			string email = HttpContext.Current.User.Identity.Name;
+            ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
+            Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
+							 
+
+			if (loggedContact != null)
+            {
+		        entityPM.CreatedByUserId = loggedContact.Id;
+		    }
+					 
+
+		    entityPM.UpdateDate =  myDate;
+                      
+
+			if (loggedContact != null)
+            {
+		        entityPM.UpdatedByUserId = loggedContact.Id;
+		    }
+                        
+					
+	    }
+
+		protected override void FillDefaultValuesOnUpdate(WarehouseEntryPackagePM entityPM)
+        {       
+           
+		    DateTime myDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+			entityPM.UpdateDate =  myDate;
+					 
+		    string email = HttpContext.Current.User.Identity.Name;
+            ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
+            Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
+			if (loggedContact != null)
+            {
+		        entityPM.UpdatedByUserId = loggedContact.Id;
+		    }
+                        
+					
+        }
+		  
+		 
+	 
+   }
+   
+}
+	 

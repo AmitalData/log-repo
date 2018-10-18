@@ -1,0 +1,15 @@
+﻿
+
+<table *ngIf="Entity">
+    <tr>
+        <td>
+            <div class="MediaFill">
+                          
+                <div *ngIf="ObjectTableName == 'CustomerTenantAccess' && FieldName == 'Status'">
+                    <span style="font-weight: bold;" [ngStyle]="{color: StringToColorPipe}">{{FieldValue}}</span>
+                </div>
+                            
+            </div>
+        </td>
+    </tr>
+</table>

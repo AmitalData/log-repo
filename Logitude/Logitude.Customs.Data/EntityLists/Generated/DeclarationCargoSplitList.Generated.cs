@@ -1,0 +1,60 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization; 
+
+namespace Logitude.Customs.Data.EntityLists
+{
+   [DataContract]
+   public partial class DeclarationCargoSplitList
+   {
+   
+       [Key]
+       [DataMember]
+       public string Id  { get; set; }
+       [DataMember]
+       public int Tenant  { get; set; }
+       [DataMember]
+       public DateTime RequestDate  { get; set; }
+       [DataMember]
+       public string SearchFields  { get; set; }
+       [DataMember]
+       public string ActionTypeCode  { get; set; }
+       [DataMember]
+       public string RequestReason  { get; set; }
+       [DataMember]
+       public string RequestNumber  { get; set; }
+       [DataMember]
+       public string ActionTypeName  { get; set; }
+       [DataMember]
+       public string RequestReasonName  { get; set; }
+       [DataMember]
+       public string RequestRemarks  { get; set; }
+       [DataMember]
+       public string CargoTypeCode  { get; set; }
+       [DataMember]
+       public string CargoTypeName  { get; set; }
+       [DataMember]
+       public string ManifestNumber  { get; set; }
+       [DataMember]
+       public string SecondCargoID  { get; set; }
+       [DataMember]
+       public string ThirdCargoID  { get; set; }
+       [DataMember]
+       public string DeclarationId  { get; set; }
+       [DataMember]
+       public bool IsClosed  { get; set; }
+       [DataMember]
+       public string ResponseStatusCode  { get; set; }
+       [DataMember]
+       public string ResponseStatusName  { get; set; }
+       [DataMember]
+       public string CustomFileNo  { get; set; }
+   }
+
+}
+	 

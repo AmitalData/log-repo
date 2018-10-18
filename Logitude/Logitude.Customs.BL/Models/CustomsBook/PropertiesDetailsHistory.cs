@@ -1,0 +1,41 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Logitude.Customs.BL.Models.CustomsBook
+{
+    public partial class PropertiesDetailsHistory
+    {
+        public int ID { get; set; }
+        public Nullable<System.DateTime> CreateDate { get; set; }
+        public Nullable<System.DateTime> UpdateDate { get; set; }
+        public Nullable<int> CustomsItemID { get; set; }
+        public Nullable<System.DateTime> StartDate { get; set; }
+        public Nullable<System.DateTime> EndDate { get; set; }
+        public Nullable<int> EntityStatusID { get; set; }
+        public Nullable<int> ChangeRequestTypePriority { get; set; }
+        public Nullable<byte> IsCarItem { get; set; }
+        public Nullable<byte> IsConditionalExemptionItem { get; set; }
+        public Nullable<byte> IsCustomsItemDiscount { get; set; }
+        public Nullable<byte> IsEntitlementDiscount { get; set; }
+        public Nullable<byte> IsGreenIndex { get; set; }
+        public Nullable<byte> IsImporterDiscount { get; set; }
+        public Nullable<byte> IsIndexedLinked { get; set; }
+        public Nullable<byte> IsNotAutonomiaUpdate { get; set; }
+        public Nullable<byte> IsRawMaterial { get; set; }
+        public Nullable<byte> IsWholesalePrice { get; set; }
+        public string VatDiscountReason { get; set; }
+        public Nullable<int> MaxSupervisionPeriod { get; set; }
+        public Nullable<int> MeasurementUnitID { get; set; }
+        public Nullable<int> ConditionalExemptionTypeID { get; set; }
+        public Nullable<int> FuelTypeID { get; set; }
+        public Nullable<int> CarEngineVolumeID { get; set; }
+        public Nullable<int> CarWeightID { get; set; }
+        public Nullable<decimal> VatDiscountRate { get; set; }
+        public Nullable<int> Discount_CustomsItemGroupTypeID { get; set; }
+        public Nullable<byte> IsCarDiscount { get; set; }
+        public Nullable<int> VehicleTecnologyTypeID { get; set; }
+    }
+}

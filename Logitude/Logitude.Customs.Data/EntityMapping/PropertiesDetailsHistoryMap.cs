@@ -1,0 +1,40 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data;
+ 
+namespace Logitude.Customs.Data.EntityMapping
+{
+ 
+    public class PropertiesDetailsHistoryMap : EntityTypeConfiguration<PropertiesDetailsHistory>
+    {
+	    string dbms;
+        public PropertiesDetailsHistoryMap()
+        { 
+			  this.ToTable("PropertiesDetailsHistorys", "Customs");
+		
+		    this.HasKey(t => new { t.ID });
+	 
+            this.Property(t => t.CustomsItemID).HasColumnName("CustomsItemID").HasMaxLength(9).IsUnicode(false);
+
+            this.Property(t => t.ID).HasColumnName("ID").HasMaxLength(9).IsUnicode(false);
+
+            this.Property(t => t.StartDate).HasColumnName("StartDate");
+
+            this.Property(t => t.EndDate).HasColumnName("EndDate");
+
+            this.Property(t => t.EntityStatusID).HasColumnName("EntityStatusID");
+
+            this.Property(t => t.MeasurementUnitID).HasColumnName("MeasurementUnitID");
+        }
+    }
+}
+	 

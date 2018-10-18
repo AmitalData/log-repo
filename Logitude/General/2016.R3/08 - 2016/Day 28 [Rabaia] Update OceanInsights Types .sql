@@ -1,0 +1,1 @@
+﻿    update OceanInsightsRequests set [Type] = 'c_id'

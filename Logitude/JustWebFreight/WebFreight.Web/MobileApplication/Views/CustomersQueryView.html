@@ -1,0 +1,691 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style type="text/css">
+
+
+
+     
+        /*#SearchTextBox{
+            margin: 0px;
+            height: 20px;
+            border: 1px solid #D1D1D1;
+            outline-style: solid;
+            outline-width: 0px;
+            font: 11px "Lucida Sans Unicode";
+            color: #45494A;
+            border-radius: 3px;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            -moz-box-shadow: inset 0 0 10px #D1D1D1;
+            -webkit-box-shadow: inset 0 0 10px #D1D1D1;
+            box-shadow: inset 0 0 10px #D1D1D1;
+            background: white;
+}
+
+.km-flat input[type=text]:hover, .km-input:focus {
+            outline-style: solid;
+            outline-width: 0px;
+            border: 1px solid #3BB3E2;
+        }
+
+    .km-flat    .km-input[type=text]::-ms-clear {
+            display: none;
+        }*/
+
+        
+
+        .SearchIcon {
+            width: 15px;
+            height: 15px;
+            z-index: 1;
+            background: url('../../CustomersHTML/images/Search.png') no-repeat;
+            background-size: 14px 14px;
+            position: absolute;
+            /*margin-top: -18px;
+            margin-left: 190px;*/
+        }
+
+        /*.SearchDeleteButton {
+            width: 11px;
+            height: 11px;
+            z-index: 2;
+            background: url('images/x.png') no-repeat;
+            background-size: 11px 11px;
+            position: absolute;
+            margin-top: -18px;
+            margin-left: 195px;
+            cursor: pointer;
+        }*/
+
+        input.watermark {
+            font-family: Arial;
+            color: #8F9293;
+            font-size: 11px;
+            font-style: italic;
+        }
+
+       
+
+
+
+
+     
+</style>
+</head>
+<body>
+
+    <div data-role="view" data-transition="fade" data-init="onCustomerViewInit" id="listview-home">
+        <header data-role="header">
+
+
+            <div style="height: 55px; display: table;">
+                <div style="display: table-cell; width: 105px;">
+                </div>
+
+                <div style="display: table-cell; width: 180px; vertical-align: middle">
+                    <div class="HeaderTitil">Customers</div>
+                </div>
+
+                <div style="display: table-cell;width:40px;"></div>
+
+            </div>
+
+       
+
+        </header>
+
+           
+      <div style="background-color:transparent; border-top:1px solid #B0B7BB">
+          
+             <div style="width:100%;padding-top:10px;padding-bottom:10px;padding-left:15px;padding-right:15px;background-color:#B0B7BB;">
+
+               <div >
+               
+                    
+                      <input class="SearchBox" id="SearchTextBox" type="text" 
+     style="width: 100%;text-indent:3px;
+            height: 35px;
+            border: 1px solid #D1D1D1;
+            outline-style: solid;
+            outline-width: 0px;
+           
+            color: #45494A;
+            border-radius: 0px;
+            -webkit-border-radius: 0px;
+            -moz-border-radius: 0px;
+            -moz-box-shadow: inset 0 0 10px #D1D1D1;
+            -webkit-box-shadow: inset 0 0 10px #D1D1D1;
+            box-shadow: inset 0 0 10px #D1D1D1;
+            background: white;
+            font-family:'Lucida Sans Unicode';
+            font-size:12px;
+            "  
+                      oninput="onSearchChanged()" placeholder=" Search..."/>
+
+                     <!--<input id="searchButton" type="image" src="../../CustomersHTML/images/Search.png" style="height:25px;width:25px;float:right; position: absolute;"/>
+               -->
+               </div>
+             
+                 
+                   
+                  
+               
+            </div>
+         <ul id="CustomersListBox" data-role="listview"></ul>
+      </div>
+
+
+    </div>
+    
+    <script type="text/x-kendo-tmpl" id="CustomersItemTemplate">
+          <a id="#= CustomerId #" OnClick="ViewCustomer(id)" style="height:55px; display:inline-block; width:100%; border-bottom:1px solid \\#B0B7BB;">
+       
+      
+            <div style="height:55px; display:inline-block; width:100%; display:table; border-top:0px solid \\#B0B7BB;background-color:transparent;vertical-align:middle;"> 
+                 
+           
+          <div style="display:table;width:100% ;background-color:transparent;vertical-align:middle;border-top:0px solid \\#B0B7BB;margin-top:3px;margin-left:15px;" >
+                                                 <div style="display:table-cell; vertical-align:middle; text-align:right; width:70px;text-align:left;background-color:transparent; ">
+                                                              <div style="display: #=DisplayRank1 #; margin-top:5px;background-color:transparent;"><img style=" height:19px; width:20px;text-align:left"   src="images/Rank.png" /></div>
+                                                             <div style="display: #= DisplayNoRank2 #; margin-top:5px;background-color:transparent;"><img style=" height:19px; width:20px;text-align:left;opacity:0.4"   src="images/NoRank.png" /></div>
+                                                             <div style="display: #= DisplayNoRank3 #; margin-top:5px;background-color:transparent;"><img style=" height:19px; width:20px;text-align:left;opacity:0.4"   src="images/NoRank.png" /></div>  
+
+                                                          <div style="display: #= DisplayRank4 #; margin-top:5px;background-color:transparent;"><img style=" height:19px; width:20px;text-align:left"   src="images/Rank.png" /></div>
+                                                             <div style="display: #= DisplayRank5 #; margin-top:5px;background-color:transparent;"><img style=" height:19px; width:20px;text-align:left"   src="images/Rank.png" /></div>
+                                                             <div style="display: #= DisplayNoRank6 #; margin-top:5px;background-color:transparent;"><img style=" height:19px; width:20px;text-align:left;opacity:0.4"   src="images/NoRank.png" /></div> 
+         
+                                                             <div style="display: #= DisplayRank7 #; margin-top:5px;background-color:transparent;"><img style=" height:19px; width:20px;text-align:left"   src="images/Rank.png" /></div>
+                                                             <div style="display: #= DisplayRank8 #; margin-top:5px;background-color:transparent;"><img style=" height:19px; width:20px;text-align:left"   src="images/Rank.png" /></div>
+                                                             <div style="display: #= DisplayRank9 #; margin-top:5px;background-color:transparent;"><img style=" height:19px; width:20px;text-align:left"   src="images/Rank.png" /></div> 
+
+                                                              <div style="display: #= DisplayNoRank10 #; margin-top:5px;background-color:transparent;"><img style=" height:19px; width:20px;text-align:left;opacity:0.4"   src="images/NoRank.png" /></div>
+                                                              <div style="display: #= DisplayNoRank11 #; margin-top:5px;background-color:transparent;"><img style=" height:19px; width:20px;text-align:left;opacity:0.4"   src="images/NoRank.png" /></div>
+                                                             <div style="display: #= DisplayNoRank12 #; margin-top:5px;background-color:transparent;"><img style=" height:19px; width:20px;text-align:left;opacity:0.4"   src="images/NoRank.png" /></div> 
+                                                       </div>
+
+                                                        <div style="display:table-cell; vertical-align:middle; text-align:center;background-color:transparent;">
+                                                              
+        
+                                                                      <div class="HeaderNameCustomer TemplateItem"  style="display:inline-block; background-color:transparent;vertical-align:middle; margin-top:0px; text-align:left;width:160px;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"> ${EnglishName} </div>
+                                                        </div>
+
+                                                        
+                                           
+          </div>
+         
+
+              </div>
+       
+           
+      
+         </a>
+            
+
+            
+    </script>
+
+
+
+    <script>
+        jQuery.SearchText = null;
+        //jQuery.SearchTimer_CUS = null;
+        //jQuery.watermark_CUS = "Search ..";
+        //jQuery.SelectedQuery_CUS = null;
+
+        var CustomerListClass = function () {
+            this.EnglishName = "";
+
+            this.SalesmanUserEnglishName = "";
+            this.CityName = "";
+            this.StartWorkingDate = "";
+            this.BillToName = "";
+            this.CustomerId = "";
+            this.AccountManagerUserEnglishName = "";
+            this.ClassifierName = "";
+            this.CollectorName = "";
+            this.RankCode = "";
+            this.Code = "";
+            this.IndustryName = "";
+            this.LastShipmentDate = "";
+            this.RankName = "";
+
+            this.DisplayRank1 = " ";
+            this.DisplayNoRank2 = " ";
+            this.DisplayNoRank3 = " ";
+
+            this.DisplayRank4 = " ";
+            this.DisplayRank5 = " ";
+            this.DisplayNoRank6 = " ";
+
+            this.DisplayRank7 = " ";
+            this.DisplayRank8 = " ";
+            this.DisplayRank9 = " ";
+
+            this.DisplayNoRank10 = " ";
+            this.DisplayNoRank11 = " ";
+            this.DisplayNoRank12 = " ";
+            this.PhoneNumber = "";
+        }
+
+        jQuery.BuilCustomersList = (function (list) {
+            var isColored = false;
+            var CustomersList = [];
+
+            $.CurrentCustomersList = CustomersList;
+
+
+            $.each(list, function (index, customer) {
+                isColored = !isColored;
+
+                var item = new CustomerListClass();
+                item.CustomersList = customer;
+
+
+                if (item.ItemBackground = isColored) {
+                    item.ItemBackground = " #EFF5F5";
+
+
+                }
+                else {
+
+                    item.ItemBackground = " #FFFFFF";
+                }
+
+                item.AccountManagerUserEnglishName = $.trim(customer.AccountManagerUserEnglishName);
+
+
+
+                item.RankName = $.trim(customer.RankName);
+
+
+                item.ClassifierName = $.trim(customer.ClassifierName);
+                item.CollectorName = $.trim(customer.CollectorName);
+
+                item.IndustryName = $.trim(customer.IndustryName);
+
+                item.CustomerId = customer.Id;
+
+                //item.StartWorkingDate = $.Convert.ToShortDate(customer.StartWorkingDate);
+                item.EnglishName = $.trim(customer.EnglishName);
+                item.Code = $.trim(customer.Code);
+                item.BillToName = $.trim(customer.BillToName);
+                item.CityName = $.trim(customer.CityName);
+                item.SalesmanUserEnglishName = $.trim(customer.SalesmanUserEnglishName);
+
+                item.PhoneNumber = $.trim(customer.PhoneNumber);
+
+
+
+                //item.LastShipmentDate = $.Convert.ToShortDate(customer.LastShipmentDate);
+
+
+
+                item.RankCode = $.trim(customer.RankCode);
+                if ($.trim(customer.RankCode) == "1") {
+                    item.DisplayRank1 = "inline-block";
+                    item.DisplayNoRank2 = "inline-block";
+                    item.DisplayNoRank3 = "inline-block";
+
+                    item.DisplayRank4 = "none";
+                    item.DisplayRank5 = "none";
+                    item.DisplayNoRank6 = "none";
+
+                    item.DisplayRank7 = "none";
+                    item.DisplayRank8 = "none";
+                    item.DisplayRank9 = "none";
+
+                    item.DisplayNoRank10 = "none";
+                    item.DisplayNoRank11 = "none";
+                    item.DisplayNoRank12 = "none";
+                }
+                else {
+                    if ($.trim(customer.RankCode) == "2") {
+                        item.DisplayRank1 = "none";
+                        item.DisplayNoRank2 = "none";
+                        item.DisplayNoRank3 = "none";
+
+                        item.DisplayRank4 = "inline-block";
+                        item.DisplayRank5 = "inline-block";
+                        item.DisplayNoRank6 = "inline-block";
+
+                        item.DisplayRank7 = "none";
+                        item.DisplayRank8 = "none";
+                        item.DisplayRank9 = "none";
+
+                        item.DisplayNoRank10 = "none";
+                        item.DisplayNoRank11 = "none";
+                        item.DisplayNoRank12 = "none";
+                    }
+                    else {
+                        if ($.trim(customer.RankCode) == "3") {
+                            item.DisplayRank1 = "none";
+                            item.DisplayNoRank2 = "none";
+                            item.DisplayNoRank3 = "none";
+
+                            item.DisplayRank4 = "none";
+                            item.DisplayRank5 = "none";
+                            item.DisplayNoRank6 = "none";
+
+                            item.DisplayRank7 = "inline-block";
+                            item.DisplayRank8 = "inline-block";
+                            item.DisplayRank9 = "inline-block";
+
+                            item.DisplayNoRank10 = "none";
+                            item.DisplayNoRank11 = "none";
+                            item.DisplayNoRank12 = "none";
+                        }
+                        else {
+                            item.DisplayRank1 = "none";
+                            item.DisplayNoRank2 = "none";
+                            item.DisplayNoRank3 = "none";
+
+                            item.DisplayRank4 = "none";
+                            item.DisplayRank5 = "none";
+                            item.DisplayNoRank6 = "none";
+
+                            item.DisplayRank7 = "none";
+                            item.DisplayRank8 = "none";
+                            item.DisplayRank9 = "none";
+
+                            item.DisplayNoRank10 = "inline-block";
+                            item.DisplayNoRank11 = "inline-block";
+                            item.DisplayNoRank12 = "inline-block";
+                        }
+
+                    }
+                }
+                //start working
+                var days;
+                var tv1 = Date.parse(customer.StartWorkingDate);
+                var tv2 = Date.parse(new Date());
+
+                days = (tv2 - tv1) / 1000 / 86400;
+                days = Math.round(days - 0.5);
+                if (days < 0) {
+                    days = days * -1;
+                }
+
+
+                if (days == 0) {
+                    item.StartWorkingDate = "Today";
+                }
+
+                if (days == 1) {
+                    item.StartWorkingDate = "Yesterday";
+                }
+
+                if (days > 1 && days < 31) {
+                    item.StartWorkingDate = days + " Days";
+                }
+
+                if (days > 31 && days < 1095) {
+                    var months = days / 31;
+                    months = Math.round(months - 0.5);
+
+                    if (months == 1) {
+                        item.StartWorkingDate = months + " Month";
+                    }
+
+                    else {
+                        item.StartWorkingDate = months + " Months";
+                    }
+                }
+
+                if (days > 1095) {
+                    var years = days / 365;
+                    years = Math.round(years - 0.5);
+
+                    if (years == 1) {
+                        item.startDate = years + " Year";
+                    }
+
+                    else {
+                        item.startDate = years + " Years";
+                    }
+                }
+
+
+
+
+                //lastData
+
+                var days2;
+                var tv11 = Date.parse(customer.LastShipmentDate);
+                var tv22 = Date.parse(new Date());
+
+                days2 = (tv22 - tv11) / 1000 / 86400;
+                days2 = Math.round(days2 - 0.5);
+                if (days2 < 0) {
+                    days2 = days2 * -1;
+                }
+
+
+                if (days2 == 0) {
+                    item.LastShipmentDate = "Today";
+                }
+
+                if (days2 == 1) {
+                    item.LastShipmentDate = "Yesterday";
+                }
+
+                if (days2 > 1 && days2 < 31) {
+                    item.LastShipmentDate = days2 + " Days";
+                }
+
+                if (days2 > 31 && days2 < 1095) {
+                    var months2 = days2 / 31;
+                    months2 = Math.round(months - 0.5);
+
+                    if (months2 == 1) {
+                        item.LastShipmentDate = months2 + " Month";
+                    }
+
+                    else {
+                        item.LastShipmentDate = months2 + " Months";
+                    }
+                }
+
+                if (days2 > 1095) {
+                    var years2 = days2 / 365;
+                    years2 = Math.round(years2 - 0.5);
+
+                    if (years2 == 1) {
+                        item.LastShipmentDate = years2 + " Year";
+                    }
+
+                    else {
+                        item.LastShipmentDate = years2 + " Years";
+                    }
+                }
+
+                item.Code = $.trim(customer.Code);
+
+
+
+                CustomersList.push(item);
+            });
+
+
+
+            $.CurrentCustomersList = CustomersList;
+
+            return CustomersList;
+
+        });
+
+        jQuery.LoadCustomers = (function () {
+
+            $.Application.showLoading();
+
+            function CustomerFilters() {
+                 
+                this.SearchField = null;
+                this.PartnerId = $.CurrentCardId;
+                this.PartnerType = $.CurrentCardType;
+                this.Take = 20;
+                //this.SearchField = ($.trim($.SearchText_CUS) == "" || $.trim($.SearchText_CUS) == $.watermark_CUS) ? null : $.trim($.SearchText_CUS);
+                this.SearchField = $.SearchText;
+                //if ($.trim($.SelectedQuery_INV) == "Query_PRG_INV") {
+
+                //    this.FilterName = "UnpaidInvoices";
+                //}
+
+                //else {
+
+                //    this.FilterName = null;
+                //}
+            };
+
+            var filters = new CustomerFilters();
+
+            var url = "../api/CustomersData?tenant=" + $.CurrentTenant;
+
+            $.ajax({
+                url: url,
+                data: JSON.stringify(filters),
+                type: 'POST',
+                contentType: 'application/json',
+                success: function (result) {
+
+                    var dataSource = new kendo.data.DataSource({
+                        //  pageSize: 20, //defines page size. Required by the "Endless scrolling"
+                        data: $.BuilCustomersList(result)
+                    });
+
+
+                    $("#CustomersListBox").kendoMobileListView(
+                    {
+                        dataSource: dataSource,
+                        template: kendo.template($("#CustomersItemTemplate").html()),
+                        filter:({
+                            field: "SearchFields",
+                            operator: function(item, value){
+                              debugger
+                            },
+                            value: 12
+                        }),
+                        //endlessScroll: true,
+                        //filterable: {
+                        //    //onFiltering(e),
+                        //    //field: "SearchFields",
+                        //    //operator: "startswith",
+                             
+                        //},
+
+                    });
+
+
+                    $.Application.hideLoading();
+                },
+
+                error: function (jqXHR, textStatus, errorThrown) {
+                     
+                    $.Application.hideLoading();
+                    //$("#CustomersQueryCount").html("(0)");
+                    //$("#CustomersBusyIndicator").hide();
+                    //$.CheckException(jqXHR);
+                }
+            });
+
+        });
+
+        function onFiltering(e) {
+        
+        }
+
+        function onCustomerViewInit(e) {
+            //var scroller = e.view.scroller;
+            //scroller.reset();
+
+            $.LoadCustomers();
+        }
+
+
+        function ViewCustomer(id) {
+            for (var i = 0, m = null; i < $.CurrentCustomersList.length; ++i) {
+                if ($.CurrentCustomersList[i].CustomerId == id) {
+                    $.CurrentEntityList = $.CurrentCustomersList[i];
+                    break;
+                }
+            }
+
+            $.CurrentEntityId = id;
+            $.Application.navigate("Views/CustomerView.html");
+        }
+
+
+
+         
+
+        ////////////////////////////////////////////////////////////////////islam
+
+
+        function onSearchChanged()
+        {
+             
+            $.SearchText = $("#SearchTextBox").val();
+            $.LoadCustomers();
+        }
+       
+
+        //jQuery.SearchTextChanged = (function (id) {
+        //    debugger
+        //    switch (id) {
+
+        //        case "SearchBox_CUS":
+        //            {
+
+        //                if ($("#SearchBox_CUS").val().length == 0 || $("#SearchBox_CUS").val() == $.watermark_CUS) {
+        //                    $('#SearchDeleteButton_CUS').hide();
+        //                }
+
+        //                else {
+        //                    $('#SearchDeleteButton_CUS').show();
+        //                }
+
+        //                $.SearchText_CUS = $("#SearchBox_CUS").val();
+        //                $('#SavedSearchText_CUS').attr("value", $.SearchText_CUS);
+
+        //                if ($.SearchTimer_CUS != null) {
+        //                    clearTimeout($.SearchTimer_CUS);
+        //                }
+                        
+        //                $.SearchTimer_CUS = setTimeout(function () { $.LoadCustomers() }, 500);
+
+        //                break;
+        //            }
+        //    }
+        //});
+
+
+        //$('.SearchDeleteButton').hide();
+        //$('#SearchBox_CUS').val($.watermark_CUS).addClass('watermark');
+        //$('.SearchBox').blur(function () {
+
+        //    var id = $(this).attr('id');
+
+        //    switch (id) {
+
+        //        case "SearchBox_CUS":
+        //            {
+
+        //                if ($(this).val().length == 0) {
+        //                    $(this).val($.watermark_CUS).addClass('watermark');
+        //                    $('#SearchIcon_CUS').show();
+        //                    $('#SearchDeleteButton_CUS').hide();
+        //                }
+        //            }
+        //    }
+        //});
+        //$('.SearchBox').focus(function () {
+
+        //    var id = $(this).attr('id');
+
+        //    switch (id) {
+
+        //        case "SearchBox_CUS":
+        //            {
+
+        //                if ($(this).val() == $.watermark_CUS) {
+        //                    $(this).val('').removeClass('watermark');
+        //                    $('#SearchIcon_CUS').hide();
+        //                }
+        //            }
+        //    }
+        //});
+
+        //$('.SearchBox').keyup(function () {
+        //    debugger
+        //    $.SearchTextChanged($(this).attr('id'));
+        //});
+
+        //$(".SearchDeleteButton").click(function () {
+        //    debugger
+        //    var id = $(this).attr('id');
+
+        //    switch (id) {
+
+        //        case "SearchDeleteButton_CUS":
+        //            {
+        //                $('#SearchIcon_CUS').show();
+        //                $('#SearchBox_CUS').attr("value", "");
+        //                $('#SearchBox_CUS').val($.watermark_CUS).addClass('watermark');
+        //                $.SearchTextChanged("SearchBox_CUS");
+        //            }
+        //    }
+        //});
+
+
+
+
+
+
+
+    </script>
+
+
+
+</body>
+</html>

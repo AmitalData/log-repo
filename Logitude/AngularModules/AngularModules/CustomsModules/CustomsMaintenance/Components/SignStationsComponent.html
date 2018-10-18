@@ -1,0 +1,83 @@
+﻿<style>
+
+</style>
+
+<table  *ngIf="_TranslationLoaded ||  false" style="padding-top: 10px;width:100%">
+
+    
+    <tr >
+        <td>
+            <table style="padding-top: 10px;" >
+
+
+                <tr class="FormFieldRow">
+                    <td style="width:420px;">
+
+
+                        <ul class="FiltersMenu" >
+                            <li (click)="_SelectedStatusValue =''; this.RefreshBtnClick() ;" style="width:55px;" [class.SelectedFilter]="_SelectedStatusValue == ''">
+                                הכל {{_All}}
+                            </li>
+                            <li (click)="_SelectedStatusValue ='Waitingtoenterapassword'; this.RefreshBtnClick() ; " style="width:155px;" [class.SelectedFilter]="_SelectedStatusValue === 'Waitingtoenterapassword'">
+                                ממתין להזנת סיסמא {{_Waitingtoenterapassword}}
+                            </li>
+                            <li (click)="_SelectedStatusValue ='Incorrectcard'; this.RefreshBtnClick() ; " style="width:155px;" [class.SelectedFilter]="_SelectedStatusValue === 'Incorrectcard'">
+                                 כרטיס שגוי {{_Incorrectcard}} 
+                            </li>
+                            
+                            
+                            <li (click)="_SelectedStatusValue ='OK'; this.RefreshBtnClick() ;" style="width:55px;" [class.SelectedFilter]="_SelectedStatusValue === 'OK'">
+                                תקין {{_OK}}
+                            </li>
+                        </ul>
+
+
+
+
+                    </td>
+                    <td style="width:5px;"> </td>
+                    <td style="width:400px;">
+                        <SearchBox [Watermark]="'חותם/מכונה/משתמש'" (TextChanged)="TextChanged($event)"></SearchBox>
+                    </td>
+                    <td style="width:30px">
+                        <IconButton [Name]="'Refresh'" (click)="RefreshBtnClick()"></IconButton>
+                    </td>
+                    <td></td>
+                </tr>
+
+                
+        
+            </table>
+        </td>
+
+    </tr>
+
+
+
+
+  
+    <tr>
+        <td colspan="7" style="height: 100%;width:100%; padding: 5px;">
+
+
+            <div class="GeneratedGridContainer" style="padding:5px">
+               
+                <!--(FirstRowSelected)="OnFirstRowSelected"-->
+                <!--(rowSelectedEvent)="OnrowSelectedEvent"
+                (ColumnResisedevent)="OnColumnResisedevent"
+                (AfterViewInitCompleted)="ViewInitCompleted($event)"-->
+                <logitude-grid GridWidth="100%" GridHeight="100%"
+                               [ObjectTable]="ObjectTableName"
+                               [dataSource]="DataSource"
+                               [MenuHeaderchangeevent]="MenuHeaderchangeevent"
+                               [columns]="columns"
+                               [QueryChangeEvent]="onQueryChangeEvent"
+                               [IsCustomTemplate]="true">
+                </logitude-grid>
+            </div>
+
+        </td>
+
+    </tr>
+
+</table>

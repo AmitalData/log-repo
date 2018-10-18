@@ -1,0 +1,188 @@
+﻿
+<table>
+    <tr style="height: 1px;">
+        <td>
+            <table>
+                <tr>
+                    <td style="width: 21px; vertical-align:middle;">
+                        <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
+                    </td>
+
+                    <td style="width: 15px; vertical-align:middle;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 45px; vertical-align:middle; font-size:11px; color : #6E7172;">Search:</td>
+
+                    <td style="width: 300px;">
+                        <QuickSearchTextBox [ObjectTableName]="'Contact'" [DropDownWidth]="300" [ItemHeight]="35" (DataLoaded)="QuickSearchItems = $event">
+                            <ul>
+                                <li class="LogitudeQuickSearchItem" style="height:35px;" *ngFor="let item of QuickSearchItems" (mousedown)="EditContact(item)">
+                                    <table>
+                                        <tr>
+                                            <td style="width:3px">
+                                                <div style="width:5px"></div>
+                                            </td>
+                                            <td style="width: 100px; max-width:100px;" class="TextTrimming">
+                                                <div style="width: 100px;font-size: 10px; color: #1B90CB;">{{item.EnglishName}}</div>
+                                            </td>
+                                            <td style="width:3px">
+                                                <div style="width:5px"></div>
+                                            </td>
+                                            <td style="width: 120px; max-width:120px;" class="TextTrimming">
+                                                <div style="width: 120px;font-size: 10px; color:#282E30;">{{item.Email}}</div>
+                                            </td>
+                                            <td style="width:3px">
+                                                <div style="width:5px"></div>
+                                            </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                            <td style="width:120px">
+                                                <div style="width: 120px;font-size: 10px; color:#282E30;">{{item.Birthday | DateTimeToDatePipe}}</div>
+                                            </td>
+                                            <td style="width:3px">
+                                                <div style="width:5px"></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </li>
+                            </ul>
+                        </QuickSearchTextBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 5px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <td style="width:250px;">
+                        <div class="MediaFill">
+                            <SectionBox [Scrolling]="true">
+                                <SectionHead>Contacts Queries</SectionHead>
+                                <SectionBody>
+                                    <div class="QueriesSection">
+                                        <div>Views</div>
+                                        <div>
+                                            <p class="QueryLink" (click)="ViewContactQuery('reminders')">Contacts Without Reminders ({{WithoutRemindersCount}})</p>
+                                            <p class="QueryLink" (click)="ViewContactQuery('all')">All Contacts</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="QueriesSection">
+                                        <div>My Views</div>
+                                        <div style="height:80px;">
+                                            <UsersQueryList [ReloadUserQueries]="ReloadUserQueries" [ObjectTableName]="'Contact'" [BackButtonTitle]="'Contacts'" (BackCompletedEvent)="onUserQueriesBackComplete($event)"></UsersQueryList>
+                                        </div>
+                                    </div>
+                                </SectionBody>
+                            </SectionBox>
+                        </div>
+                    </td>
+
+                    <td style="width:10px;">
+                        <div></div>
+                    </td>
+
+                    <td>
+                        <div class="MediaFill">
+                            <SectionBox [Scrolling]="true">
+                                <SectionHead>
+                                    <table>
+                                        <tr>
+                                            <td style="color: #45494A; font-size: 14px;">
+                                                {{UpcomingBirthdaysListCount}} Upcoming Birthdays
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+
+                                            <td class="Label" style="width:20px; font-size:11px;">View by:</td>
+
+                                            <td style="width:10px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width:140px;">
+                                                <ComboBox [ItemsSource]="ViewByFilterList" [Binding]="'Name'" [SelectedItem]="SelectedViewByItem" (SelectedItemChanged)="SelectedViewByItem = $event"></ComboBox>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </SectionHead>
+                                <SectionBody>
+                                    <ul>
+                                        <li class="RecentEntityItem" *ngFor="let item of UpcomingBirthdaysList" (click)="EditContact(item)">
+                                            <table>
+                                                <tr>
+                                                    <td style="width:20px;"></td>
+
+                                                    <td style="width:120px;min-width:120px;margin:0;padding:0; position: relative;">
+                                                        <div style="width:120px;min-width:120px;font-size:11px;color:#1B90CB;text-align:left;" class="TextTrimming">{{item.EnglishName}}</div>
+                                                        <div style="width:120px;min-width:120px;font-size:10px;color:#282E30;text-align:left;" class="TextTrimming">{{item.Email}}</div>
+                                                    </td>
+
+                                                    <td style="width:3px;"></td>
+
+                                                    <td style="width:200px;min-width:200px;margin:0;padding:0; position: relative;">
+                                                        <div style="width:200px;min-width:200px;font-size:11px;color:#282E30;text-align:left;" class="TextTrimming">{{item.Birthday | DateTimeToDatePipe}} ( {{item.Birthday | DateTimePipe:'AGE'}} years old )</div>
+                                                        <div style="width:200px;min-width:200px;font-size:10px;color:#282E30;text-align:left;" class="TextTrimming">{{item.Birthday | DateTimePipe:'DOW'}}</div>
+                                                    </td>
+
+                                                    <td style="width:3px;"></td>
+
+                                                    <td style="width:120px;min-width:120px;margin:0;padding:0; position: relative;">
+                                                        <div *ngIf="item.BusinessPhone" style="width:120px;min-width:120px;font-size:10px;color:#6E7172;text-align:left;">Phone: {{item.BusinessPhone}}</div>
+                                                        <div *ngIf="!item.BusinessPhone" style="width:120px;min-width:120px;line-height:12px;width:80px; min-height: 1px;display:inline-block">&nbsp; </div>
+                                                        <div *ngIf="item.Mobile" style="width:120px;min-width:120px;font-size:10px;color:#6E7172;text-align:left;">Mobile: {{item.Mobile}}</div>
+                                                        <div *ngIf="!item.Mobile" style="width:120px;min-width:120px;line-height:12px;width:80px; min-height: 1px;display:inline-block">&nbsp; </div>
+                                                    </td>
+
+                                                    <td style="width:3px;"></td>
+
+                                                    <td style="width:120px;min-width:120px;margin:0;padding:0; position: relative;">
+                                                        <div *ngIf="item.Position" style="width:120px;min-width:120px;font-size:10px;color:#6E7172;text-align:left;">Position: {{item.Position}}</div>
+                                                        <div style="line-height:12px;width:80px; min-height: 1px;display:inline-block">&nbsp; </div>
+                                                    </td>
+
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+
+                                                    <td style="width:120px;">
+                                                        <div style="width:120px; float: right;">
+                                                            <button class="Button" [disabled]="true">Say Happy Birthday</button>
+                                                        </div>
+                                                    </td>
+
+                                                    <td style="width:3px;"></td>
+                                                </tr>
+                                            </table>
+                                        </li>
+                                    </ul>
+
+                                    <div *ngIf="UpcomingBirthdaysList == null || UpcomingBirthdaysList.length == 0" class="NoDataText" style="top:5px;">No Upcoming Birthdays</div>
+                                </SectionBody>
+                            </SectionBox>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>
+

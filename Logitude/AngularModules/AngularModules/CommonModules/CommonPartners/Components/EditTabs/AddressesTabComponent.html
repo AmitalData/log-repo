@@ -1,0 +1,188 @@
+﻿
+<style type="text/css">
+    .BoxItemRow td span {
+        color: #0B3861;
+        font-size: 10px;
+    }
+
+    .BoxItemRow td {
+        color: #0B3861;
+        font-size: 10px;
+    }
+
+    .BoxItemRow {
+        height: 15px;
+        color: #0B3861;
+        font-size: 10px;
+    }
+
+    .TemplateBoxItem:hover .Tools {
+        visibility: visible;
+    }
+
+    .TemplateBoxItem .Tools {
+        visibility: collapse;
+        vertical-align: top;
+    }
+
+    .TemplateBoxItem {
+        float: left;
+        width: 500px;
+        width: calc(33.33% - 3px);
+        height: 140px;
+        min-height: 135px;
+        margin-left: 3px;
+        margin-bottom: 3px;
+        padding: 5px;
+        display: block;
+        background: rgba(235, 235, 235, 0.5);
+        border: 1px solid #BABABA;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+    }
+
+</style>
+
+<div class="TabHolder">
+    <table *ngIf="IsVisibile">
+        <tr class="TabTitleRow">
+            <td>
+                <table>
+                    <tr>
+                        <td>{{'Address.O.Addresses' | TextCodeTranslationPipe}}</td>
+
+                        <td style="width: 16px;">
+                            <CheckBox [IsChecked]="ShowInactive" (Checked)="ShowInactive = $event"></CheckBox>
+                        </td>
+
+                        <td style="width: 3px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 1px; font-size: 11px; color: #6E7172;">Show Inactive Addresses</td>
+
+                        <td style="width: 15px;">
+                            <div class="VerticalLine" style="height: 25px;"></div>
+                        </td>
+
+                        <td style="width: 1px;">
+                            <button class="Button" (click)="AddAddressClicked()" [disabled]="!IsEditingEnabled">{{'Address.B.NewAddress' | TextCodeTranslationPipe}}</button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr style="height: 1px;" *ngIf="IsBlockingUnifreightCustomer">
+            <td>
+                <div class="OrangeInfo" style="margin: 5px;">
+                    <label class="Value">Customer connected to uni-freight, updates allowed from Unifreight only</label>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <div class="ScrollViewer">
+          
+                        <ul class="ScrollContent">
+                            <li class="TemplateBoxItem" *ngFor="let item of ItemsSource">
+                                <table>
+                                    <tr style="height: 22px;">
+                                        <td>
+                                            <table>
+                                                <tr>
+                                                    <td style="vertical-align: top; width: 1px;">
+                                                        <div>
+                                                            <span class="ColorBlue" style="font-size: 12px;">{{item.Header}}</span>
+                                                            <span class="ColorRed" style="font-size: 11px; padding-left: 5px;" *ngIf="item.InActive == true && item.AddressTypeId != 'O'">Inactive</span>
+                                                        </div>
+                                                    </td>
+
+                                                    <td class="Tools" style="width: 5px; min-width: 5px;" *ngIf="item.AddressTypeId == 'P'">
+                                                        <div></div>
+                                                    </td>
+
+                                                    <td>
+                                                        <div class="MediaFill Tools TextTrimming" *ngIf="item.AddressTypeId == 'P'">
+                                                            <span class="hyperlink" (click)="item.CopyMainAddressClicked(true)">Copy from main address</span>
+                                                        </div>
+                                                    </td>
+
+                                                    <td class="Tools" style="width: 5px; min-width: 5px;" *ngIf="item.AddressTypeId == 'P'">
+                                                        <div></div>
+                                                    </td>
+
+                                                    <td class="Tools" style="width: 1px;">
+                                                        <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditAddressClicked(item)"></IconButton>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <table>
+                                                <tr class="BoxItemRow">
+                                                    <td>{{item.Name}}</td>
+                                                </tr>
+
+                                                <tr class="BoxItemRow" *ngIf="item.Address1">
+                                                    <td>{{item.Address1}}</td>
+                                                </tr>
+
+                                                <tr class="BoxItemRow" *ngIf="item.Address2">
+                                                    <td>{{item.Address2}}</td>
+                                                </tr>
+
+                                                <tr class="BoxItemRow">
+                                                    <td>{{item.CityLineText}}</td>
+                                                </tr>
+
+                                                <tr class="BoxItemRow">
+                                                    <td>{{item.CountryName}}</td>
+                                                </tr>
+
+                                                <tr class="BoxItemRow" *ngIf="item.PhoneNumber">
+                                                    <td>
+                                                        <span style="font-weight: bold; color: #282E30">Tel: </span>
+                                                        <span>{{item.PhoneNumber}}</span>
+                                                    </td>
+                                                </tr>
+
+                                                <tr class="BoxItemRow" *ngIf="item.FaxNumber">
+                                                    <td>
+                                                        <span style="font-weight: bold; color: #282E30">Fax: </span>
+                                                        <span>{{item.FaxNumber}}</span>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>
+                                                        <div> </div>
+                                                    </td>
+                                                </tr>
+
+                                            </table>
+
+                                            <!--<img style="position: absolute; right:0px; top:0px; width: 45px; height: 45px;" [attr.src]="item.CountryCode | CountryFlagPipe" />-->
+                                            <div style="position: absolute; right:0px; top:0px; width: 45px; height: 45px;">
+                                                <Image [Width]="45" [Height]="45" [Src]="item.Src"></Image>
+
+                                            </div>
+
+                                        </td>
+                                    </tr>
+
+
+                                </table>
+                            </li>
+                        </ul>
+                
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>

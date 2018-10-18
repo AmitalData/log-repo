@@ -1,0 +1,90 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.EntityKeys;
+using Simplog.Server.Infrastructure;
+
+namespace Logitude.Customs.Data.Repsitories
+{
+   public partial class PackageMeasureQualifierRepository:IRepository<PackageMeasureQualifier>
+   {
+   
+        private ICustomContext currentContext;
+        public PackageMeasureQualifierRepository(int tenant)
+        {
+            currentContext = CustomContext.GetContext(tenant);
+        }
+
+        public PackageMeasureQualifierRepository(ICustomContext context)
+        {
+            currentContext = context;
+        }
+
+		 
+		
+		public  PackageMeasureQualifier GetSingle(string code)
+        {
+            return (from a in context.PackageMeasureQualifiers
+                    where a.Code == code 
+                    select a).FirstOrDefault();
+        }
+
+        public IQueryable<PackageMeasureQualifier> GetAll()
+        {
+            return from a in context.PackageMeasureQualifiers  
+                   select a;
+        }
+				 
+        public PackageMeasureQualifier GetSingle(EntityKeyFields entityKeys)
+        {
+            PackageMeasureQualifierKeys keys = entityKeys as PackageMeasureQualifierKeys;
+            return (from a in context.PackageMeasureQualifiers
+                    where a.Code == keys.Code
+                    select a).FirstOrDefault();
+        }
+		         
+        partial void onAdd();//Partial Methods Definition in Generated
+        public void Add(PackageMeasureQualifier entity)
+        {
+            onAdd();
+            context.PackageMeasureQualifiers.Add(entity);
+        }
+
+        public void Remove(PackageMeasureQualifier entity)
+        {
+            context.PackageMeasureQualifiers.Attach(entity);
+            context.PackageMeasureQualifiers.Remove(entity);
+        }
+
+        partial void onUpdate();//Partial Methods Definition in Generated
+        public void Update(PackageMeasureQualifier entity)
+        {
+            onUpdate();
+            context.PackageMeasureQualifiers.Attach(entity);
+            context.SetAsModified(entity);
+        }
+
+        public List<PackageMeasureQualifier> All()
+        {
+            return context.PackageMeasureQualifiers.ToList();
+        }
+
+        private ICustomContext context
+        {
+            get { return currentContext; }
+        }
+
+        public void SubmitChanges()
+        {
+            context.SaveChanges();
+        }
+	 
+   }
+   }
+	 

@@ -1,0 +1,1 @@
+alter table [Customs].[supplierInvoiceItems] add ActualInvoiceLines varchar(4096) null

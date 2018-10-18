@@ -1,0 +1,1 @@
+update Settings set ABMProductId = 'CWAPIEXTERNAL'

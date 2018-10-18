@@ -1,0 +1,235 @@
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs; 
+using Logitude.Customs.Data;
+
+namespace Logitude.Customs.BL.EntityDataMappings
+{
+   
+   public partial class VehicleOwnerDataMapping: IMapping<VehicleOwnerPM, VehicleOwner>,IMappingEncodeBase64NVARCHARFields<VehicleOwnerPM>
+   {
+          public enum POCOPropertyNames
+          { 
+		     None,  
+	         Tenant, 
+	         VehicleId, 
+	         LineNumber, 
+	         ClientId, 
+	         LastNameOrCorporationName, 
+	         FirstName, 
+	         IsMain, 
+	         PassportNumber, 
+	         PassCountryCode, 
+	         ImporterPassportTypeCode,
+	      }
+
+
+	      public enum PMPropertyNames
+          { 
+		     None,  
+	         Tenant, 
+	         VehicleId, 
+	         LineNumber, 
+	         ClientId, 
+	         LastNameOrCorporationName, 
+	         FirstName, 
+	         IsMain, 
+	         ClientName, 
+	         PassportNumber, 
+	         PassCountryCode, 
+	         PassCountryName, 
+	         ImporterPassportTypeCode, 
+	         ImporterPassportTypeName,
+	      }
+
+		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
+        List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
+    
+	    public void PMToPOCO(VehicleOwnerPM entityPM, VehicleOwner entityPOCO)
+        {
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClientId))
+            {
+				entityPOCO.ClientId = entityPM.ClientId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastNameOrCorporationName))
+            {
+				entityPOCO.LastNameOrCorporationName = entityPM.LastNameOrCorporationName;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FirstName))
+            {
+				entityPOCO.FirstName = entityPM.FirstName;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsMain))
+            {
+				entityPOCO.IsMain = entityPM.IsMain;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PassportNumber))
+            {
+				entityPOCO.PassportNumber = entityPM.PassportNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PassCountryCode))
+            {
+				entityPOCO.PassCountryCode = entityPM.PassCountryCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ImporterPassportTypeCode))
+            {
+				entityPOCO.ImporterPassportTypeCode = entityPM.ImporterPassportTypeCode;
+			}
+			}
+
+		public void POCOToPM(VehicleOwnerPM entityPM, VehicleOwner entityPOCO)
+        {
+			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
+            {
+					entityPM.Tenant = entityPOCO.Tenant;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.VehicleId))
+            {
+					entityPM.VehicleId = entityPOCO.VehicleId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LineNumber))
+            {
+					entityPM.LineNumber = entityPOCO.LineNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ClientId))
+            {
+					entityPM.ClientId = entityPOCO.ClientId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastNameOrCorporationName))
+            {
+					entityPM.LastNameOrCorporationName = entityPOCO.LastNameOrCorporationName;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FirstName))
+            {
+					entityPM.FirstName = entityPOCO.FirstName;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsMain))
+            {
+					entityPM.IsMain = entityPOCO.IsMain;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PassportNumber))
+            {
+					entityPM.PassportNumber = entityPOCO.PassportNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PassCountryCode))
+            {
+					entityPM.PassCountryCode = entityPOCO.PassCountryCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ImporterPassportTypeCode))
+            {
+					entityPM.ImporterPassportTypeCode = entityPOCO.ImporterPassportTypeCode;
+            }
+
+		}
+
+		public void PMToOldPM(VehicleOwnerPM entityPM, VehicleOwnerPM oldEntityPM)
+        {
+		     oldEntityPM.ChangedProperties.Clear();
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+                oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClientId))
+            {
+                oldEntityPM.ClientId = entityPM.ClientId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastNameOrCorporationName))
+            {
+                oldEntityPM.LastNameOrCorporationName = entityPM.LastNameOrCorporationName;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FirstName))
+            {
+                oldEntityPM.FirstName = entityPM.FirstName;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsMain))
+            {
+                oldEntityPM.IsMain = entityPM.IsMain;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PassportNumber))
+            {
+                oldEntityPM.PassportNumber = entityPM.PassportNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PassCountryCode))
+            {
+                oldEntityPM.PassCountryCode = entityPM.PassCountryCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ImporterPassportTypeCode))
+            {
+                oldEntityPM.ImporterPassportTypeCode = entityPM.ImporterPassportTypeCode;
+            }
+			
+		}
+
+	    public void EncodeBase64NVARCHARFields(VehicleOwnerPM entityPM)
+        {
+            if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
+            {
+                return;
+
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.LastNameOrCorporationName)) //T4 find type == nText 
+            {
+                entityPM.LastNameOrCorporationName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.LastNameOrCorporationName));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.FirstName)) //T4 find type == nText 
+            {
+                entityPM.FirstName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.FirstName));
+            }
+            entityPM.EncodeBase64NVARCHARFieldsBy=null;
+		}
+
+
+	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
+        {
+            CustomMappedPOCOProperties.Add(pocoPropertyName);
+        }
+
+        public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
+        {
+            CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+			  
+   }
+}
+	 

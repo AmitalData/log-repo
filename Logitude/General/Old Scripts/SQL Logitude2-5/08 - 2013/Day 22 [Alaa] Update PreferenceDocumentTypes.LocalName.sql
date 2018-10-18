@@ -1,0 +1,1 @@
+alter table [Customs].[PreferenceDocumentTypes] alter column LocalName nvarchar (100)

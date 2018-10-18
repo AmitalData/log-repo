@@ -1,0 +1,97 @@
+﻿
+<style>
+    .Disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+</style>
+
+<div tabindex="0" [id]="ControlId" class="ToggleButton" (focus)="ToggleButtonFocus()" style="height:18px;">
+    <img style="left:-8px;" src="./Images/CalenderBlue.png" width="13" height="13" />
+    <img src="./Images/ToggleIcon.png" />
+    <div [id]="DropdownId" class="ToggleButtonMenu CustomButton" style="left: 0px;width:415px;border-radius:7px;">
+        <table (mouseover)="onMouseOver()" (mouseout)="onMouseOut()">
+
+            <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+                <td>
+                    <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+                </td>
+            </tr>
+
+            <tr style="height: 12%;">
+                <td style="width: 1px; font-size: 14px; color: #1B90CB;">
+                    Date and Time
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <table style="margin-left:5px;">
+                        <tr>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <LogCheckBox [ObjectFieldName]="'ExpectedDepartedDateIsChecked'" [Text]="'Set Expected Date'" [DataContext]="DataContext" style="float:left;"></LogCheckBox>
+                                        </td>
+                                    </tr>
+                                    <tr style="height:5px;">
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td [class.Disabled]="ExpectedDepartedDateIsChecked == false">
+                                            <LogCalendar style="float:left;margin-right:15px;" [ToggleOpened]="'true'" [SelectedDate]="DepartedDate_Estimate" (SelectedDateChanged)="OnSelectedDepartedDate_EstimateChanged($event)"></LogCalendar>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <LogCheckBox [ObjectFieldName]="'ActualDepartedDateIsChecked'" [Text]="'Set Actual Date'" [DataContext]="DataContext" style="float:left;"></LogCheckBox>
+                                        </td>
+                                    </tr>
+                                    <tr style="height:5px;">
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td [class.Disabled]="ActualDepartedDateIsChecked == false">
+                                            <LogCalendar style="float:left;margin-right:15px;" [ToggleOpened]="'true'" [SelectedDate]="DepartedDate_Actual" (SelectedDateChanged)="OnSelectedDepartedDate_ActualChanged($event)"></LogCalendar>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr style="height:5px;">
+                <td></td>
+            </tr>
+            <tr>
+                <td>
+                    <table style="margin-left:5px;">
+                        <tr>
+                            <td [class.Disabled]="ExpectedDepartedDateIsChecked == false">
+                                <LogDatePicker style="float:left;width:187px;" [SelectedDateValue]="DepartedDate_Estimate" [ObjectFieldName]="'DepartedDate_Estimate'" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                            </td>
+                            <td [class.Disabled]="ActualDepartedDateIsChecked == false">
+                                <LogDatePicker style="float:left;width:187px;" [SelectedDateValue]="DepartedDate_Actual" [ObjectFieldName]="'DepartedDate_Actual'" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                            </td>
+
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr style="height:30px;">
+                <td>
+                    <div style="margin-top: 7px;margin-bottom: 7px;float:right;">
+                        <button class="RedButton CustomButton" (click)="onOKBtnClick()" style="width:57px;float: right;margin-left: 7px;margin-right: 7px;">OK</button>
+                        <button class="Button CustomButton" (click)="onCancelBtnClick()" style="width:57px;float: right;">Cancel</button>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div> 

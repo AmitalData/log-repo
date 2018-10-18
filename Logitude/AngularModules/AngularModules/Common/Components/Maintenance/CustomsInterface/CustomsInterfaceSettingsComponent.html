@@ -1,0 +1,156 @@
+﻿
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table *ngIf="IsResourcesReady">
+                <tr class="FormFieldRow">
+                    <td style="width:260px;">
+                        <LogLabel [ObjectFieldName]="'ActivateCustomsManagementInShipments'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td style="width:250px;">
+                        <LogCheckBox [ObjectFieldName]="'ActivateCustomsManagementInShipments'" [Checked]="ActivateCustomsManagementInShipments" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                    </td>
+
+                    <td style="width:40px;"><div></div></td>
+
+                    <td style="width:20px;"><div></div></td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'LocalCustomsInterfaceCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogLov [ObjectFieldName]="'LocalCustomsInterfaceCode'"
+                                [SelectedValue]="LocalCustomsInterfaceCode"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'CustomsInterface'"
+                                [DependencyFilter1Value]="'NO,LO'"
+                                [DependencyFilter1IsList]="true"
+                                [HideLastColumn]="true">
+                        </LogLov>
+                    </td>
+
+                    <td>
+                        <div style="width:1px;">
+                            <span class="hyperlink" [class.HyperlinkDisabled]="!IsLocalDetailsEnabled" (click)="DetailsClicked('Local')">Details</span>
+                        </div>
+                    </td>
+
+                    <td>
+                        <img *ngIf="IsLocalTickVisible" width="20" height="20" style="vertical-align: middle;" src="./Images/Icons/MiniGreenTick.png" />
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'ImportToUSAInterfaceCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogLov [ObjectFieldName]="'ImportToUSAInterfaceCode'"
+                                [SelectedValue]="ImportToUSAInterfaceCode"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'CustomsInterface'"
+                                [DependencyFilter1Value]="'NO,IM'"
+                                [DependencyFilter1IsList]="true"
+                                [HideLastColumn]="true">
+                        </LogLov>
+                    </td>
+
+                    <td>
+                        <div style="width:1px;">
+                            <span class="hyperlink" [class.HyperlinkDisabled]="!IsImportDetailsEnabled" (click)="DetailsClicked('Import')">Details</span>
+                        </div>
+                    </td>
+
+                    <td>
+                        <img *ngIf="IsImportTickVisible" width="20" height="20" style="vertical-align: middle;" src="./Images/Icons/MiniGreenTick.png" />
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'ExportFromUSAInterfaceCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogLov [ObjectFieldName]="'ExportFromUSAInterfaceCode'"
+                                [SelectedValue]="ExportFromUSAInterfaceCode"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'CustomsInterface'"
+                                [DependencyFilter1Value]="'NO,EX'"
+                                [DependencyFilter1IsList]="true"
+                                [HideLastColumn]="true">
+                        </LogLov>
+                    </td>
+
+                    <td>
+                        <div style="width:1px;">
+                            <span class="hyperlink" [class.HyperlinkDisabled]="!IsExportDetailsEnabled" (click)="DetailsClicked('Export')">Details</span>
+                        </div>
+                    </td>
+
+                    <td>
+                        <img *ngIf="IsExportTickVisible" width="20" height="20" style="vertical-align: middle;" src="./Images/Icons/MiniGreenTick.png" />
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><div></div></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

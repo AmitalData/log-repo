@@ -1,0 +1,217 @@
+﻿<style>
+    .subTitle {
+        color: #4b90cb;
+        font-size: 14px;
+    }
+
+    .FormFieldRow {
+        height: 35px !important;
+    }
+
+    .GrayBox {
+        width: 100%;
+        min-height: 50px;
+        margin: 0 auto;
+        background: #ebf1f1;
+        border: 1px solid #cacaca;
+        vertical-align: middle;
+        margin-bottom: 15px;
+        color: #747474;
+        padding: 15px;
+        word-wrap: break-word;
+        white-space: normal;
+        line-height: 1.5;
+    }
+
+    .noselect {
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none; /* Chrome/Safari/Opera */
+        -khtml-user-select: none; /* Konqueror */
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+        user-select: none; /* Non-prefixed version, currently
+                                  not supported by any browser */
+    }
+
+    /* Others */
+    .hidden {
+        opacity: 0;
+        visibility: collapse;
+    }
+</style>
+<table>
+
+    <!-- Gray Box -->
+    <tr style="/*min-height: 65px;*/height: 0;">
+        <td style="vertical-align: top;">
+            <div class="GrayBox">
+                {{DeclarationError.Description}}
+            </div>
+        </td>
+    </tr>
+
+    <!-- Fields -->
+    <tr style="height: 120px;">
+        <td>
+            <table style="height: 120px;">
+
+                <tr>
+                    <!-- ConstraintStatusName -->
+                    <td style="width: 90px;">
+                        <LogLabel [ObjectFieldName]="'ConstraintStatusName'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width: 150px; padding-left: 5px; color: #d89d0c;">
+                        {{ConstraintPM.ConstraintStatusName}}
+                    </td>
+
+                    <td style="width: 10px;"><div></div></td>
+
+                    <!-- EntityName -->
+                    <td style="width: 100px; color: #6e7172;">
+                        {{'Customs.DeclarationConstraint.O.EntityName' | TextCodeTranslationPipe}}
+                    </td>
+                    <td>
+                        {{ DeclarationError.TableNameTextCode | TextCodeTranslationPipe }}
+                    </td>
+
+                </tr>
+
+                <tr>
+                    <!-- ConstraintNumber -->
+                    <td style="">
+                        <LogLabel [ObjectFieldName]="'ConstraintNumber'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="padding-left: 5px;">
+                        {{ConstraintPM.ConstraintNumber}}
+                    </td>
+
+                    <td style=""><div></div></td>
+
+                    <!-- FieldName -->
+                    <td style="color: #6e7172;">
+                        {{'Customs.DeclarationConstraint.O.FieldName' | TextCodeTranslationPipe}}
+                    </td>
+                    <td>
+                        {{ DeclarationError.FieldNameTextCode | TextCodeTranslationPipe }}
+                    </td>
+
+
+
+                </tr>
+
+                <tr>
+                    <!-- ConstraintTypeName -->
+                    <td style="">
+                        <LogLabel [ObjectFieldName]="'ConstraintTypeName'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="padding-left: 5px;">
+                        {{ConstraintPM.ConstraintTypeName}}
+                    </td>
+
+                    <td style=""><div></div></td>
+
+                    <!-- ApprovalDecisionName -->
+                    <td style=" color: #6e7172;">
+                        {{'Customs.DeclarationConstraint.O.ApprovalDecision' | TextCodeTranslationPipe}}
+                    </td>
+                    <td>
+                        {{ ConstraintPM.ApprovalDecisionName }}
+                    </td>
+
+
+
+                </tr>
+
+                <tr>
+                    <!-- ApprovalUserName -->
+                    <td style="">
+                        <LogLabel [ObjectFieldName]="'ApprovalUserName'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="padding-left: 5px;">
+                        {{ConstraintPM.ApprovalUserName}}
+                    </td>
+
+                    <td style=""><div></div></td>
+
+                    <!-- ApprovalDecisionName -->
+                    <td style=""></td>
+                    <td></td>
+
+
+
+                </tr>
+
+                <tr style="height: 7px;"><td><div></div></td></tr>
+
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 30px;" *ngIf="ConstraintPM.AgentExplanation">
+        <td>
+            <div class="subTitle">
+                {{'Customs.DeclarationConstraint.F.AgentExplanation' | TextCodeTranslationPipe}}
+            </div>
+        </td>
+    </tr>
+    <tr style="height: 0;">
+        <td *ngIf="ConstraintPM.AgentExplanation" style="padding-right: 5px;vertical-align: top;height: 0;">
+            <div style="white-space: normal; max-height: 100px;" class="TextTrimming">{{ConstraintPM.AgentExplanation}}</div>
+        </td>
+    </tr>
+
+    <tr style="height: 22px;">
+        <td></td>
+    </tr>
+
+    <tr style="height: 30px;" *ngIf="ConstraintPM.ApprovalNote">
+        <td>
+            <div class="subTitle">
+                {{ ApprovalDenaialTitle }}
+            </div>
+        </td>
+    </tr>
+    <tr style="height: 0;">
+        <td *ngIf="ConstraintPM.ApprovalNote" style="padding-right: 5px;vertical-align: top;">
+            <div style="white-space: normal; max-height: 100px;" class="TextTrimming">{{ConstraintPM.ApprovalNote}}</div>
+        </td>
+    </tr>
+
+    <tr *ngIf="!ConstraintPM.AgentExplanation" style="height: 100%;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td></td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Close' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td *ngIf="IsAgentObjectionButtonVisibile" style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td *ngIf="IsAgentObjectionButtonVisibile" style="width: 57px;">
+                        <button class="Button" (click)="AgentButtonClicked()">{{'Customs.CustomsCollateral.O.AgentObjection' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

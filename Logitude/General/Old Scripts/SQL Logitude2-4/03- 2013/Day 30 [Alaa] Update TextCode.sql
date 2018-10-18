@@ -1,0 +1,1 @@
+update  TextCodes set  DefaultText='Payables'  where code='Shipment.CH.PayablesInLocalCurrencyListLable'

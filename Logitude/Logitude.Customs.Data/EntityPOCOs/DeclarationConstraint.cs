@@ -1,0 +1,64 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Customs.Data.EntityPOCOs
+{
+   
+    public class DeclarationConstraint
+    {
+	 string dbms;
+
+        [Key]
+        [ForeignKey("Declaration")]
+        [Column("DeclarationID" ,Order = 1)]
+	    public string DeclarationID { get; set; }
+	      
+        public virtual Declaration Declaration { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+     [Key]
+        [Column("ConstraintNumber" ,Order = 2)]
+	    public string ConstraintNumber { get; set; }
+        [ForeignKey("ConstraintProcessType")]
+        [Column("ConstraintTypeCode")]
+	    public string ConstraintTypeCode { get; set; }
+	      
+        public virtual ConstraintProcessType ConstraintProcessType { get; set; }
+        [ForeignKey("ConstraintStatus")]
+        [Column("ConstraintStatusCode")]
+	    public string ConstraintStatusCode { get; set; }
+	      
+        public virtual ConstraintStatus ConstraintStatus { get; set; }
+        [Column("AgentExplanation")]
+	    public string AgentExplanation { get; set; }
+        [Column("ApprovalNote")]
+	    public string ApprovalNote { get; set; }
+        [Column("ApprovalAuthorityDate")]
+	    public DateTime? ApprovalAuthorityDate { get; set; }
+        [Column("ApprovalUserName")]
+	    public string ApprovalUserName { get; set; }
+        [ForeignKey("ConstraintApprovalDecision")]
+        [Column("ApprovalDecision")]
+	    public string ApprovalDecision { get; set; }
+	      
+        public virtual ConstraintApprovalDecision ConstraintApprovalDecision { get; set; }
+        [ForeignKey("CustomsCollateral")]
+        [Column("CustomsCollateralId")]
+	    public string CustomsCollateralId { get; set; }
+	      
+        public virtual CustomsCollateral CustomsCollateral { get; set; }
+        [Column("AgentObjection")]
+	    public string AgentObjection { get; set; }
+    }
+}
+	 

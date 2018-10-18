@@ -1,0 +1,187 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Customs.Def.Validators;
+  
+namespace Logitude.Customs.Def.EntityPMs
+{
+   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class CustomsExchangeRatePM : EntityPM
+   {
+   	  private string id ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Id  
+	   {
+	    
+	     get
+		{
+		   return id;
+		 }
+		 set
+		 {
+		   if(id != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   id=value;
+		   }
+			
+		 }
+	   }
+	  private int tenant ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+	  private string currencyTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CurrencyTypeCode  
+	   {
+	    
+	     get
+		{
+		   return currencyTypeCode;
+		 }
+		 set
+		 {
+		   if(currencyTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CurrencyTypeCode",OldValue=currencyTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   currencyTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? exchangeRate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? ExchangeRate  
+	   {
+	    
+	     get
+		{
+		   return exchangeRate;
+		 }
+		 set
+		 {
+		   if(exchangeRate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExchangeRate",OldValue=exchangeRate,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   exchangeRate=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? rateDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? RateDate  
+	   {
+	    
+	     get
+		{
+		   return rateDate;
+		 }
+		 set
+		 {
+		   if(rateDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RateDate",OldValue=rateDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   rateDate=value;
+		   }
+			
+		 }
+	   }
+	  private string currencyTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CurrencyTypeName  
+	   {
+	    
+	     get
+		{
+		   return currencyTypeName;
+		 }
+		 set
+		 {
+		   if(currencyTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CurrencyTypeName",OldValue=currencyTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   currencyTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? updateDateTime ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? UpdateDateTime  
+	   {
+	    
+	     get
+		{
+		   return updateDateTime;
+		 }
+		 set
+		 {
+		   if(updateDateTime != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdateDateTime",OldValue=updateDateTime,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   updateDateTime=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

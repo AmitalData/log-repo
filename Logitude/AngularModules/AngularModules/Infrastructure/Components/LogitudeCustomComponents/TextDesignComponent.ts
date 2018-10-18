@@ -1,0 +1,239 @@
+
+import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
+import {Component, ElementRef, OnInit, AfterViewInit, EventEmitter, Output, ChangeDetectorRef} from '@angular/core';
+import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
+import {QuoteTemplateTextDesignPM} from '../../../Quote/EntityPMs/QuoteTemplateTextDesignPM';
+import {QuoteTemplateTableDesignPM} from '../../../Quote/EntityPMs/QuoteTemplateTableDesignPM';
+declare var window: any;
+import {AppTool, DateTool} from '../../../Infrastructure/Tools';
+import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
+import {Guid} from '../../../Infrastructure/Utilities/Guid';
+declare var insertAtSubject : any;
+@Component({
+    moduleId: module.id,
+    selector: 'TextDesignComponent',
+    templateUrl: './TextDesignComponent.html',
+    inputs: ['QuoteTemplateTextDesignPM', 'QuoteTemplateTableDesignPM',]
+})
+
+export class TextDesignComponent implements OnInit {
+    elementRef: ElementRef;
+    public QuoteTemplateTextDesignPM: QuoteTemplateTextDesignPM;
+    QuoteTemplateTableDesignPM: QuoteTemplateTableDesignPM;
+    FontStyle: string;
+    TextDecoration: string;
+    FontFamilyLists: string[] = [];
+    FontSizeLists: number[] = [];
+    SelectFonteSize: string = "";
+    BorderTypesSelected: BorderType;
+    BorderTypes: BorderType[] = [];
+   private _entityResourceService: EntityResourceService = new EntityResourceService();
+    constructor(elementRef: ElementRef, private cd: ChangeDetectorRef) {
+        this.elementRef = elementRef;
+    }
+    ngOnInit() {
+        if (this.QuoteTemplateTextDesignPM) {
+            var fontFamilyString = "Arial,Arial Black,Calibri,Comic Sans MS,Courier New,Georgia,Lucida Sans Unicode,Times New Roman,Trebuchet MS,Verdana";
+            var fontSizeString = "8,9,10,11,12,14,16,18,20,22,24,26,28,36,48,72";
+            fontSizeString.split(',').forEach((fontsize) => { this.FontSizeLists.push(Number(fontsize)); });
+            this.FontFamilyLists = fontFamilyString.split(',');
+
+            this.SetFonteSize();
+            this.SetFontStyle();
+            this.SetTextDecoration();
+        }
+
+        this.FullBorderTypesLists();
+    }
+
+
+    FullBorderTypesLists() {
+
+        if (this.QuoteTemplateTableDesignPM) {
+            this.BorderTypes = [];
+            this.BorderTypes.push(new BorderType("None", "NONE"));
+            this.BorderTypes.push(new BorderType("All", "ALL"));
+            this.BorderTypes.push(new BorderType("Box", "BOX"));
+            this.BorderTypes.push(new BorderType("Horizontal Only", "HORIZONTALLINES"));
+            this.BorderTypes.push(new BorderType("Vertical Only", "VERTICALLINES"));
+
+            this.BorderTypesSelected = this.BorderTypes.filter(d => d.Code == this.QuoteTemplateTableDesignPM.BorderTypeCode)[0];
+        }
+    }
+   
+    get TextColor() {
+        var textColor: string = "";
+        if (this.QuoteTemplateTextDesignPM) {
+            textColor = this.GetColorFromOrginal(this.QuoteTemplateTextDesignPM.TextColor);
+        }
+        return textColor;
+    }
+    set TextColor(value: string) {
+        if (this.QuoteTemplateTextDesignPM) {
+            this.QuoteTemplateTextDesignPM.TextColor = this.GetOrginalFromColor(value);
+        }
+        
+    }
+
+
+    get BackgroundColor() {
+        var backgroundColor: string = "";
+        if (this.QuoteTemplateTextDesignPM) {
+            backgroundColor = this.GetColorFromOrginal(this.QuoteTemplateTextDesignPM.BackgroundColor);
+        }
+        return backgroundColor;
+    }
+    set BackgroundColor(value: string) {
+        if (this.QuoteTemplateTextDesignPM) {
+            this.QuoteTemplateTextDesignPM.BackgroundColor = this.GetOrginalFromColor(value);
+        }
+
+    }
+
+
+    get BorderColor() {
+        var borderColor: string = "";
+        if (this.QuoteTemplateTableDesignPM) {
+            borderColor = this.GetColorFromOrginal(this.QuoteTemplateTableDesignPM.BorderColor);
+        }
+        return borderColor;
+    }
+    set BorderColor(value: string) {
+        if (this.QuoteTemplateTableDesignPM) {
+            this.QuoteTemplateTableDesignPM.BorderColor = this.GetOrginalFromColor(value);
+        }
+
+    }
+    
+
+
+ 
+    //UnDerLineButton
+    QuoteTemplateTextDesignButtonClick(type: string) {
+        if (type == "BoldButton") {
+            this.QuoteTemplateTextDesignPM.FontWeight = this.QuoteTemplateTextDesignPM.FontWeight == "bold" ? this.QuoteTemplateTextDesignPM.FontWeight = "normal" : this.QuoteTemplateTextDesignPM.FontWeight = "bold";
+        }
+        else if (type == "ItalicButton") {
+            this.QuoteTemplateTextDesignPM.Italic = this.QuoteTemplateTextDesignPM.Italic ? false : true;
+            this.SetFontStyle();
+        }
+        else if (type == "UnDerLineButton") {
+            this.QuoteTemplateTextDesignPM.UnDerLine = this.QuoteTemplateTextDesignPM.UnDerLine ? false : true;
+            this.SetTextDecoration();
+        }
+    }
+
+    AlignmentButtonClick(alignment:string) {
+        if (this.QuoteTemplateTextDesignPM) {
+            if (alignment != this.QuoteTemplateTextDesignPM.Alignment) {
+                this.QuoteTemplateTextDesignPM.Alignment = alignment;
+            } else this.QuoteTemplateTextDesignPM.Alignment = "";
+        }
+    }
+
+    FontSizeSelectedChange(fontsize: number) {
+        this.QuoteTemplateTextDesignPM.FontSize = fontsize;
+        this.SetFonteSize();
+    }
+
+    SetFontStyle() {
+        if (this.QuoteTemplateTextDesignPM) {
+            this.FontStyle = this.QuoteTemplateTextDesignPM.Italic ? "italic" : "normal";
+        }
+    }
+
+    SetTextDecoration() {
+        if (this.QuoteTemplateTextDesignPM) {
+            this.TextDecoration = this.QuoteTemplateTextDesignPM.UnDerLine ? "underline" : "none";
+        }
+    }
+
+    SetFonteSize() {
+        if (this.QuoteTemplateTextDesignPM && this.QuoteTemplateTextDesignPM.FontSize) {
+            this.SelectFonteSize = this.QuoteTemplateTextDesignPM.FontSize.toString() + "px";
+        }
+
+
+    }
+    
+    GetOrginalFromColor(color: string) {
+        var result = "";
+        if (!AppTool.IsNullOrEmpty(color)) {
+            result = color;
+            var colors: string[] = color.split('#');
+            if (colors.length > 1) {
+                result = ("#" + "FF" + colors[1]);
+            }
+        }
+        return result;
+    }
+    GetColorFromOrginal(color:string) {
+        var result = "";
+        if (!AppTool.IsNullOrEmpty(color)) {
+            result = color;
+            if (color && color.length > 7) {
+                var colors: string[] = color.split('#');
+                if (colors.length > 1) {
+                    result = "#" + colors[1].substring(2, 8);
+                }
+            }
+        }
+        return result;
+    }
+
+    BorderTypesSelectedChanged(border: BorderType) {
+        if (this.QuoteTemplateTableDesignPM) {
+            this.QuoteTemplateTableDesignPM.BorderTypeCode = border.Code;
+        }
+    }
+    QuoteTextAreaInputId: string = Guid.newGuid();
+
+    AddDataField() {
+
+        var tableId: string = "";
+        var table = window.ObjectTables.filter(d => d.Name == "Quote")[0];
+        if (table) tableId = table.Id;
+
+        this._entityResourceService.getEntityResourceByTableName("SystemData").subscribe(response => {
+
+            this._entityResourceService.getEntityResourceByTableName("Quote").subscribe(response => {
+                var windowArgs: any = {};
+                windowArgs.ObjectTableId = tableId;
+
+                var logWindow = new LogitudeWindow();
+                logWindow.Width = 500;
+                logWindow.Height = 600;
+                windowArgs.InSertDataFieldType = "TextArea";
+                logWindow.Title = "Insert Data Field";
+                logWindow.WindowArgs = windowArgs;
+                logWindow.Show('./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocumentObjectFieldsComponent');
+                logWindow.WindowClosed.subscribe(($event: any) => {
+
+                    if ($event) {
+                        if (this.QuoteTemplateTextDesignPM) {
+                            this.QuoteTemplateTextDesignPM.TextValue = insertAtSubject(this.QuoteTextAreaInputId, $event);
+                        }
+                    }
+
+                });
+            });
+
+
+        });
+
+    }
+
+}
+
+
+
+
+export class BorderType   {
+
+    Code: string;
+    Name: string;
+    constructor(name: string, code: string) {
+        this.Name = name;
+        this.Code = code;
+    }
+}

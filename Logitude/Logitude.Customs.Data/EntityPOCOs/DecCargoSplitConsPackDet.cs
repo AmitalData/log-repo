@@ -1,0 +1,55 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Customs.Data.EntityPOCOs
+{
+   
+    public class DecCargoSplitConsPackDet
+    {
+	 string dbms;
+
+        [Key]
+        [ForeignKey("DecCargoSplitConsItem")]
+        [Column("DeclarationCargoSplitId" ,Order = 1)]
+	    public string DeclarationCargoSplitId { get; set; }
+	      
+        public virtual DecCargoSplitConsItem DecCargoSplitConsItem { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+     [Key]
+        [ForeignKey("DecCargoSplitConsItem")]
+        [Column("DecCargoSplitConsLineNo" ,Order = 2)]
+	    public int? DecCargoSplitConsLineNo { get; set; }
+     [Key]
+        [ForeignKey("DecCargoSplitConsItem")]
+        [Column("DecCargoSplitConsItemLine" ,Order = 3)]
+	    public int DecCargoSplitConsItemLine { get; set; }
+     [Key]
+        [Column("PackageLine" ,Order = 4)]
+	    public int PackageLine { get; set; }
+        [Column("PackageQuantity")]
+	    public int? PackageQuantity { get; set; }
+        [Column("GrossMassMeasure")]
+	    public decimal? GrossMassMeasure { get; set; }
+        [ForeignKey("PackingType")]
+        [Column("PackageTypeCode")]
+	    public string PackageTypeCode { get; set; }
+	      
+        public virtual PackingType PackingType { get; set; }
+        [Column("MarksNumbers")]
+	    public string MarksNumbers { get; set; }
+        [Column("ManifestNumber")]
+	    public string ManifestNumber { get; set; }
+    }
+}
+	 

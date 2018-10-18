@@ -1,0 +1,288 @@
+﻿<style type="text/css">
+    .NoteItemBox {
+        height: 100px;
+        padding: 5px;
+        margin-bottom: 5px;
+        border: 1px solid #D1D1D1;
+        background: #FFFADC;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        overflow-x: hidden;
+    }
+
+    .NotesTextArea {
+        padding: 2px;
+        padding-left: 4px;
+        font-size: 12px;
+        color: #45494A;
+        background: #FFFADC;
+        border: hidden;
+        overflow: auto;
+        outline: none;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+    }
+
+    .ToolsButton {
+        display: none;
+    }
+
+    .NoteItemBox:hover .ToolsButton {
+        display: block;
+    }
+
+    .NoteItemBox:hover .ToolsButtonDisabled {
+        display: block;
+    }
+</style>
+
+<div class="TabHolder" style="overflow:auto; height:100%;width:100%">
+    <table style="min-width:1150px;">
+        <tr class="TabTitleRow">
+            <td>
+                <table>
+                    <tr>
+                        <td style="float:left;">{{'Activity.TH.General' | TextCodeTranslationPipe}}</td>
+                        <td *ngIf="CommunicationLogVisibility" style="width:100px;float:right;">
+                            <button class="Button" (click)="ViewCommunicationLogClicked()">View Document</button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <table>
+                    <tr>
+                        <td style="width:750px;">
+                            <div class="MediaFill">
+                                <div class="LocationDirective" #Child></div>
+                            </div>
+                        </td>
+
+                        <td style="width:10px;"><div></div></td>
+
+                        <!-- Activity Notes -->
+                        <td *ngIf="ActivityNotesVisibility" style="width:350px;">
+                            <div class="MediaFill">
+                                <table>
+                                    <tr class="SectionHeader">
+                                        <td colspan="2">
+                                            <table>
+                                                <tr>
+                                                    <td style="float:left;">
+                                                        <label>Notes</label>
+                                                    </td>
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                    <td style="float:right;width:20px;padding-top:2px;padding-bottom:2px; vertical-align:central;">
+                                                        <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddNote()"></IconButton>
+                                                    </td>
+                                                    <td style="width:2px;"><div></div></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr style="height:5px;">
+                                        <td colspan="2">
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td *ngIf="NoNotesVisibility">
+                                            <div class="NoDataText" style="vertical-align:top;">No Notes</div>
+                                        </td>
+                                        <td>
+                                            <ScrollViewer>
+                                                <ul>
+                                                    <li class="NoteItemBox" style="position: relative;" *ngFor="let item of ActivityNotesObslist; let i=index;">
+                                                        <table>
+                                                            <tr style="vertical-align:top;">
+                                                                <td>
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <div class="MediaFill">
+                                                                                    <textarea class="NotesTextArea"
+                                                                                              [(ngModel)]="item.Notes"
+                                                                                              [readonly]="true"></textarea>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                            <!--<tr style="vertical-align:top;">
+                                                                <td style="width:350px;">
+                                                                    <div class="MediaFill">
+                                                                        <textarea class="NotesTextArea"
+                                                                                  [(ngModel)]="item.Notes"
+                                                                                  [readonly]="true"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>-->
+                                                            <tr style="height:2px;"><td><div></div></td></tr>
+                                                            <tr style="height:22px;vertical-align:bottom;">
+                                                                <td>
+                                                                    <span style="font-size:10px;color:#6E7172;"> {{item.DateLabel}} </span>
+                                                                    <span style="font-size:10px;color:#1B90CB;padding-left:5px;"> {{item.UpdatedByUserName}} </span>
+                                                                    <span style="font-size:10px;color:#6E7172;padding-left:5px;"> {{item.UpdateDate| DateTimePipe}} </span>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+
+                                                        <div style="position: absolute; top: 3px; right: 3px;">
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="width:18px;">
+                                                                        <div class="ToolsButton" style="width: 18px; height: 18px;">
+                                                                            <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditNoteClicked(item)"></IconButton>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td style="width:2px;"><div></div></td>
+                                                                    <td style="width:18px;">
+                                                                        <div class="ToolsButton" style="width: 18px; height: 18px;">
+                                                                            <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteNoteClicked(item)"></IconButton>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+
+                                                    </li>
+                                                </ul>
+                                            </ScrollViewer>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+
+                        <!-- Email Controls -->
+                        <td *ngIf="EmailControlsVisibility" style="width:350px;">
+                            <div class="MediaFill">
+                                <table>
+                                    <!-- Customer -->
+                                    <tr class="FormFieldRow" *ngIf="ViewCustomerVisibility">
+                                        <td style="width:120px;">
+                                            <LogLabel [ObjectFieldName]="'CustomerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td style="width:250px;">
+                                            <LogTextBox [ObjectFieldName]="'CustomerName'" [Text]="CustomerName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                        </td>
+                                        <td width="5px;"> <div> </div> </td>
+                                        <td style="width:95px;" *ngIf="OnEditModeVisibility">
+                                            <Hyperlink (click)="ViewEntityClicked('CUS')" [Text]="'View Customer'"></Hyperlink>
+                                        </td>
+                                        <!--<td>
+                                            <table>
+                                                <tr>
+                                                    <td style="width:250px;">
+                                                        <LogTextBox [ObjectFieldName]="'CustomerName'" [Text]="CustomerName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                    </td>
+                                                    <td width="5px;"> <div> </div> </td>
+                                                    <td style="width:95px;" *ngIf="OnEditModeVisibility">
+                                                        <Hyperlink (click)="ViewEntityClicked('CUS')" [Text]="'View Customer'"></Hyperlink>
+                                                    </td>
+                                                    <td> <div> </div> </td>
+                                                </tr>
+                                            </table>
+                                        </td>-->
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                    <!-- Opportunity -->
+                                    <tr class="FormFieldRow" *ngIf="ViewOpportunityVisibility">
+                                        <td style="width:120px;">
+                                            <LogLabel [ObjectFieldName]="'OpportunityId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td style="width:250px;">
+                                            <LogTextBox [ObjectFieldName]="'OpportunitySubject'" [Text]="OpportunitySubject" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                        </td>
+
+                                        <td width="5px;"> <div> </div> </td>
+                                        <td style="width:95px;" *ngIf="OnEditModeVisibility">
+                                            <Hyperlink (click)="ViewEntityClicked('OPP')" [Text]="'View Opportunity'"></Hyperlink>
+                                        </td>
+
+                                        <!--<td>
+                                            <table>
+                                                <tr>
+                                                    <td style="width:250px;">
+                                                        <LogTextBox [ObjectFieldName]="'OpportunitySubject'" [Text]="OpportunitySubject" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                    </td>
+
+                                                    <td width="5px;"> <div> </div> </td>
+                                                    <td style="width:95px;" *ngIf="OnEditModeVisibility">
+                                                        <Hyperlink (click)="ViewEntityClicked('OPP')" [Text]="'View Opportunity'"></Hyperlink>
+                                                    </td>
+                                                    <td> <div> </div> </td>
+                                                </tr>
+                                            </table>
+                                        </td>-->
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                    <!-- Quote -->
+                                    <tr class="FormFieldRow" *ngIf="ViewQuoteVisibility">
+                                        <td style="width:120px;">
+                                            <LogLabel [ObjectFieldName]="'QuoteId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td style="width:250px;">
+                                            <LogTextBox [ObjectFieldName]="'QuoteNumber'" [Text]="QuoteNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                        </td>
+
+                                        <td width="5px;"> <div> </div> </td>
+
+                                        <td style="width:95px;" *ngIf="OnEditModeVisibility">
+                                            <Hyperlink (click)="ViewEntityClicked('QUT')" [Text]="'View Quote'"></Hyperlink>
+                                        </td>
+
+                                        <!--<td>
+                                            <table>
+                                                <tr>
+                                                    <td style="width:250px;">
+                                                        <LogTextBox [ObjectFieldName]="'QuoteNumber'" [Text]="QuoteNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                    </td>
+
+                                                    <td width="5px;"> <div> </div> </td>
+
+                                                    <td style="width:95px;" *ngIf="OnEditModeVisibility">
+                                                        <Hyperlink (click)="ViewEntityClicked('QUT')" [Text]="'View Quote'"></Hyperlink>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>-->
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+
+                        <td><div></div></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+

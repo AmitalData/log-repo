@@ -1,0 +1,1 @@
+delete from loginpolicies where code = 'ENABLED' or code = 'DISABLED' or code = 'ENFEXIPO'

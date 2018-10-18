@@ -1,0 +1,499 @@
+﻿
+
+<style>
+    .iwanttohover:hover {
+        background: #DDE6F0;
+    }
+
+    
+   .SectionItem:not(.SelectedSectionItem):hover {
+   
+    width: 100%;
+    /*border: 1px solid #BDBEC0;*/
+    cursor: pointer;
+    position: relative;
+    background: -moz-linear-gradient(50% 17.31% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    background: -webkit-gradient(linear,50% 17.31%,50% 105.85%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
+    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+}
+
+
+    .SectionItem {
+        width: 100%;
+        cursor: pointer;
+        height: 29px;
+        position: relative;
+    }
+
+        
+.SelectedSectionItem {
+    width: 100%;
+    cursor: pointer;
+    background: -moz-linear-gradient(50% 106.14% 90deg,rgba(133, 203, 237, 1) 0%,rgba(150, 211, 240, 1) 22.59%,rgba(196, 231, 248, 1) 67.37%,rgba(232, 247, 255, 1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 100%);
+    background: linear-gradient(0deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 100%);
+    position: relative;
+}
+</style>
+
+
+
+
+
+    <table>
+
+        <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+            <td colspan="4">
+                <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+            </td>
+        </tr>
+        <tr style="height:100%">
+            <td>
+                <ScrollViewer>
+                    <div class="TableHolder" style="padding-top: 5px;">
+                        <table style="vertical-align:top;">
+
+
+                            <!--Add template from library-->
+
+                            <tr *ngIf="IsShowTemplateList">
+                                <td style="width:100%;height:40px" colspan="3">
+                                    <div style="background-color:#F1F1F1;">
+
+                                        <div style="display:inline-block;margin:5px">
+                                            <a [class.HyperlinkDisabled]="IsDisableAddTemplateFromLibrary" (click)="AddTemplateFromLibrary()" style="font-size:12px;color:#0094ff">Add template from library</a>
+                                            <span style="font-size:10px;margin-left:5px;color:gray">(find more templates for this document)</span>
+
+
+                                        </div>
+
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr *ngIf="IsAdditionalPrintingStimula">
+                                <td style="width:100%;height:5px" colspan="3">
+                                    <div style="height:5px">
+
+
+                                    </div>
+                                </td>
+                            </tr>
+
+
+
+                            <tr *ngIf="IsEditHtml" style="height:40px;">
+
+                                <td colspan="3" style="width:100%;">
+
+                                    <div style="border:1px solid #E4E3E1;height:40px;border-radius:3px;margin:5px;vertical-align:central">
+
+                                        <table style="height:auto;width:100%;margin-top:10px">
+                                            <tr>
+                                                <td style="width:8px"><div></div></td>
+
+                                                <td style="width:50px"><div>Subject:</div></td>
+                                                <td style="width:5px"><div></div></td>
+                                                <td><input type="text" [(ngModel)]="Subject" style="height:22px;border-radius:3px;border:1px solid #ccc9c9;width:100%;" /></td>
+
+                                                <td style="width:5px"><div></div></td>
+                                                <td style="width:50px;height:22px;text-align:left"><button [disabled]="!IsManageHtml" (click)="AddDataField('Subject')" style="width:100px;background-color:#E6E6E6;height:22px;" class="Button">Add Data Field</button></td>
+                                                <td style="width:10px"><div></div></td>
+                                            </tr>
+
+                                        </table>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                            <tr *ngIf="IsEditHtml" style="height:25px;">
+                                <td colspan="3" style="width:100%;">
+
+                                    <table>
+                                        <tr style="height:22px;">
+                                            <!--<td style="width:10px"><div style="width:10px"></div></td>-->
+                                            <td style="width:50px;">
+                                                <div style="width:50px;height:22px;top:0px;float:left;position:relative;text-align:left;margin-left:6px;"><button (click)="ViewHeaderAndFooter('Header')" style="width:auto;background-color:#E6E6E6;height:22px;" class="Button">Header</button></div>
+                                            </td>
+                                            <td style="width:5px"><div style="width:10px"></div></td>
+                                            <td style="width:50px">
+                                                <div style="width:50px;height:22px;top:0px;float:left;position:relative;text-align:left;"><button (click)="ViewHeaderAndFooter('Footer')" style="width:auto;background-color:#E6E6E6;height:22px;" class="Button">Footer</button></div>
+                                            </td>
+                                            <td style="width:100%"><div></div></td>
+                                        </tr>
+
+                                    </table>
+
+                                </td>
+
+
+                            </tr>
+
+
+
+
+                            <tr *ngIf="IsEditHtml" style="height:6px;">
+                                <td colspan="3" style="width:100%;">
+                                    <div></div>
+                                </td>
+                            </tr>
+
+
+                            <tr *ngIf="IsShowNoEditAllow" style="height:auto;margin-top:-10px;">
+                                <td colspan="3" style="width:100%;">
+                                    <div style="color:Gray;font-size:13px">Editing is not allowed here</div>
+                                </td>
+                            </tr>
+
+
+                            <tr *ngIf="IsShowNoEditAllow" style="height:10px;">
+                                <td colspan="3" style="width:100%;">
+                                    <div></div>
+                                </td>
+                            </tr>
+                            <!--End Edit Header-->
+
+
+
+
+                            <tr>
+
+
+                                <!--abed-->
+                                <td *ngIf="IsShowTemplateList" style="position: relative;vertical-align:top">
+
+
+                                    <div style="height:360px;position: relative;width:350px;margin-top:2px;  border-right:1px solid #E4E3E1;border-left:1px solid #E4E3E1;border-bottom:1px solid #E4E3E1;border-radius:5px;vertical-align:top">
+                                        <table style="border :none;height:320px;vertical-align:top;">
+
+                                            <tr style="height:25px"><td><div style="background-color:#EDEDED;height:25px;border-top:1px solid #E4E3E1;border-bottom:0px solid gray;border-bottom-left-radius:0px;color:black"><p style="font-size:14px;margin-left:5px;margin-top:2px;color:#000000">{{TitleList}}</p> </div></td></tr>
+                                            <tr style="vertical-align:top">
+
+                                                <td style="vertical-align:top;">
+                                                    <div id="my_div1" style="max-height:300px;height:300px;overflow:auto;max-width:350px;vertical-align:top;">
+                                                        <table style="vertical-align:top;">
+
+
+
+
+                                                            <tr [class.SelectedSectionItem]="item === SelectedDocumentTypeTemplateViewModel" class="SectionItem" style="text-align:left;vertical-align:top;" *ngFor="let item of ReportTemplates">
+
+                                                                <td (click)="OnSelectTemplateChange(item)" style="width:5px"><div></div></td>
+
+                                                                <td (click)="OnSelectTemplateChange(item)" style="width:auto;border-bottom:1px solid #E4E3E1;vertical-align:central;width:100%;margin-left:3px;margin-right:3px;margin-top:5px">
+                                                                    <div style="margin-top:0.5px">
+
+
+                                                                        <table>
+                                                                            <tr>
+                                                                                <td style="width:5px"><div style="width:10px"></div></td>
+                                                                                <td class="TextTrimming" [style.width]="item.IsDefault|| item.InActive?'241px':'282px'" style="display:inline-block;text-align:left;width:195px;vertical-align:central">
+                                                                                    {{item.Description}}
+                                                                                </td>
+
+                                                                                <td *ngIf="item.IsDefault" style="display:inline-block;font-size:11px;font-style:italic;color:gray;text-align:left;vertical-align:central;"> (Default)</td>
+                                                                                <td *ngIf="item.InActive" style="display:inline-block;font-size:11px;font-style:italic;color:gray;text-align:left;vertical-align:central;"> (inactive)</td>
+
+                                                                            </tr>
+                                                                        </table>
+                                                                    </div>
+
+                                                                </td>
+
+                                                                <td style="width:100px;">
+
+
+
+                                                                    <div style="margin-top:3px;margin-right:0px;border:0px;width:0px" tabindex="0" class="ToggleButton">
+
+                                                                        <img style="margin-right:5px;margin-top:0px;border:0px;background-color:transparent;height:14px;width:13px" src="./Images/SimplogIcons/ArrowDown.png" />
+
+
+                                                                        <div class="ToggleButtonMenu">
+                                                                            <button (click)="SetTemplateAsDeflut(item)">Set as Default</button>
+                                                                            <button (click)="SetTemplateAsInactive(item)"> {{item.LableSetactive}} </button>
+
+                                                                            <button *ngIf="IsShowEditHtml" (click)="ShowHtmlDocumentPreview(item)">Edit</button>
+                                                                            <button *ngIf="IsShowEditStimual" (click)="ShowEditStimaul(item)">Edit</button>
+
+                                                                        </div>
+
+                                                                    </div>
+
+
+                                                                </td>
+
+                                                                <td style="width:10px;">
+                                                                    <div>
+
+                                                                    </div>
+                                                                </td>
+
+
+                                                            </tr>
+
+
+
+                                                            <tr>
+                                                                <td colspan="7">
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+
+
+                                                        </table>
+                                                    </div>
+                                                </td>
+
+                                                <!--<td style="vertical-align:top;">
+                                        <div id="my_div1"  style="max-height:300px;height:300px;overflow:auto;max-width:350px;vertical-align:top;">
+                                            <table style="vertical-align:top;">
+
+
+                                                    <tr [style.background]="item.DivSelectBackgroud" class="iwanttohover" style="text-align:left;height:29px;max-height:29px;vertical-align:top;" *ngFor="let item of ReportTemplates">
+
+                                                        <td style="width:5px"><div></div></td>
+
+                                                        <td (click)="OnSelectTemplateChange(item)" style="width:auto;border-bottom:1px solid #E4E3E1;width:100%;margin-left:3px;margin-right:3px;margin-top:5px">
+                                                            <div style="margin-top:5px;color:black;margin-left:10px;display:inline-block;">
+                                                                <p style="display:inline-block">{{item.Description}}</p>
+                                                                <p *ngIf="item.IsDefault" style="display:inline-block;font-size:11px;font-style:italic;color:gray">(Default)</p>
+                                                                <p *ngIf="item.InActive" style="display:inline-block;font-size:11px;font-style:italic;color:gray">(inactive)</p>
+
+
+                                                            </div>
+                                                        </td>
+
+                                                        <td   style="width:100px;">
+
+
+
+                                                                 <div   style="margin-top:3px;margin-right:0px;border:0px;width:0px" tabindex="0" class="ToggleButton">
+
+                                                                <img  style="margin-right:5px;margin-top:0px;border:0px;background-color:transparent;height:14px;width:13px" src="./Images/SimplogIcons/ArrowDown.png" />
+
+
+                                                                         <div  class="ToggleButtonMenu" >
+                                                                             <button (click)="SetTemplateAsDeflut(item)">Set as Default</button>
+                                                                             <button (click)="SetTemplateAsInactive(item)"> {{item.LableSetactive}} </button>
+
+                                                                             <button  *ngIf="IsShowEditHtml" (click)="ShowHtmlDocumentPreview(item)">Edit</button>
+                                                                             <button  *ngIf="IsShowEditStimual" (click)="ShowEditStimaul(item)">Edit</button>
+                                                                         </div>
+
+                                                                     </div>
+
+
+                                                        </td>
+
+                                                        <td style="width:10px;">
+                                                            <div>
+
+                                                            </div>
+                                                        </td>
+
+
+                                                    </tr>
+
+
+
+                                                    <tr>
+                                                        <td colspan="7">
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+
+                                            </table>
+                                        </div>
+                                    </td>-->
+
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                        </table>
+
+                                        <div style="height:30px;margin-top:13px">
+                                            <div style="margin-left:10px" class="CheckBox">
+                                                <input class="LeftCenter" style="text-align:center" (change)="CheckboxClick()" [attr.id]="ShowInactiveCheckBoxKey" type="checkbox" />
+                                                <label class="LeftCenter" [attr.for]="ShowInactiveCheckBoxKey">Show inactive</label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </td>
+
+                                <!--ebdabed-->
+
+
+
+                                <td *ngIf="IsAdditionalPrintingStimula" style="vertical-align:top;">
+
+                                    <div [style.height]="AdditionalPrintingAFieldsreaHeight" style="overflow-y:auto;overflow-x:hidden;vertical-align:top">
+
+
+                                        <!--test-->
+
+                                        <div style="vertical-align:top; position: relative;margin-top:-2px; width:337px;border-top:2px solid #E4E3E1;border-right:1px solid #E4E3E1;border-left:1px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-radius:6px">
+                                            <table style="border:none;text-align:center;vertical-align:top;">
+
+                                                <tr>
+                                                    <td>
+
+                                                        <div style="background-color:#EDEDED;height:27px;width:100%;border-bottom:0px solid gray;border-bottom-left-radius:0px;color:black;vertical-align:top">
+
+                                                            <p style="font-size:14px;margin-left:5px;margin-top:2px;color:#000000;float: left;">Additional Printing Fields</p>
+
+                                                        </div>
+
+
+                                                    </td>
+                                                </tr>
+
+
+                                                <tr style="vertical-align:top">
+
+                                                    <td>
+                                                        <div style="vertical-align:top;min-height:300px">
+
+                                                            <div style="width:337px;">
+                                                             
+
+                                                                <GeneratedDocumentCustomFieldComponent  *ngIf="IsSystemAdditionalPrintingFields"  #Child style="text-align:center" [DocumentCustomArgs]="DocumentCustomFieldsArgs"> </GeneratedDocumentCustomFieldComponent>
+                                                                <DocumentCustomFields  *ngIf="!IsSystemAdditionalPrintingFields" #Child style="text-align:center" [DocumentCustomArgs]="DocumentCustomFieldsArgs"> </DocumentCustomFields>
+                                                            </div>
+                                                            <div style="height:5px"></div>
+
+                                                        </div>
+
+                                                    </td>
+                                                </tr>
+
+
+                                                <tr>
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+
+                                            </table>
+
+
+
+                                        </div>
+
+                                        <!--endtest-->
+
+
+                                    </div>
+
+
+
+                                </td>
+
+                                <td *ngIf="IsAdditionalPrintingStimula"><div style="width:10px;"></div></td>
+
+
+
+                                <td *ngIf="IsShowTemplateList"><div style="width:5px"></div></td>
+
+
+
+                                <td style="width:100%;vertical-align:top;height:100%;">
+                                    <div style="height:100%;width:100%;vertical-align:top;">
+
+                                        <div style="height:100%;width:100%;word-wrap:break-word;vertical-align:top;">
+
+                                            <div *ngIf="IsShowStimulReportView" align="center" style="height:auto;text-align:center;">
+                                                <table class="center" style="text-align:center;">
+                                                    <tr>
+                                                        <td><div></div></td>
+                                                        <td>
+                                                            <StimulsoftViewer style="text-align:center;" [StimulsoftArgData]="stimulsoftArg"></StimulsoftViewer>
+
+                                                        </td>
+                                                        <td><div></div></td>
+                                                    </tr>
+
+                                                </table>
+
+
+                                            </div>
+
+
+                                            <div *ngIf="IsShowFroalaEditor" style="margin-left:5px;text-align:center;vertical-align:top;height:100%;">
+                                                <FroalaEditor style="text-align:center;vertical-align:top;height:100%;margin-top:-5px" [EditorfroalaSetting]="froalaEditorSetting"></FroalaEditor>
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+                                </td>
+
+                            </tr>
+
+
+
+
+                        </table>
+                    </div>
+                </ScrollViewer>
+            </td>
+
+
+        </tr>
+
+ 
+
+
+
+
+
+       <tr *ngIf="IsShowSaveAndCancelButton"  style="height:auto;">
+            <td style="vertical-align: bottom">
+                <table style="height: auto;">
+                    <tr style="height:32px">
+
+                        <td *ngIf="IsEditHtml" style="width: 80px;">
+                            <button class="Button" (click)="DownloadButtonClicked()">Export Template</button>
+                        </td>
+                        <td *ngIf="IsEditHtml" style="width: 7px;"></td>
+
+
+                        <td *ngIf="IsEditHtml" style="width: 80px;">
+                            <input [attr.id]="DocumentTemplateFileId"  accept=".xml,.XML" type="file" (change)="UpLoadTemplateFileMethod($event)" style="display:none" class="upload" />
+                            <button class="Button" (click)="UploadButtonClicked()">Import Template</button>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+
+                        <td style="width: 57px;">
+
+                            <button class="Button" style="margin-top:5px;" (click)="CancelButtonClicked()">Close</button>
+                        </td>
+
+                        <td style="width: 7px;"></td>
+
+                        <td style="width: 57px;">
+                            <button class="RedButton" style="margin-top:5px;" (click)="SaveButtonClicked()">Save</button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+
+    </table>

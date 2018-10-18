@@ -1,0 +1,1 @@
+delete from ScreenFields where ObjectFieldId = (select id from ObjectFields where FieldName = 'Name' and ObjectTableId = (select id from ObjectTables where Name ='Customs.CustomsHouseTypeAdditional')) and ScreenId = (select id from Screens where Code = 'Customs.CustomsHouseTypeAdditional.GeneralTabScreen')

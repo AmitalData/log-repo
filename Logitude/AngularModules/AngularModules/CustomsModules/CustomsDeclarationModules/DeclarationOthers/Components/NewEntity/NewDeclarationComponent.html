@@ -1,0 +1,128 @@
+﻿    <table dir="rtl">
+        <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+            <td colspan="4">
+                <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+            </td>
+        </tr>
+
+        <tr>
+            <td style="width: 370px; padding-top: 10px;">
+                <table>
+                    <tr>
+                        <td>
+                            <table>
+
+                                <!-- CustomFileNo -->
+                                <tr class="FormFieldRow">
+                                    <td style="width: 120px">
+                                        <LogLabel [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td><div></div></td>
+                                    <td style="width: 200px; padding-left: 36px;">
+                                        <LogTextBox [ObjectFieldName]="'CustomFileNo'" [InputType]="'integertext'" [DataContext]="DataContext"
+                                                    [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                    </td>
+                                    <td><div></div></td>
+                                </tr>
+
+                                <!-- CustomerId -->
+                                <tr class="FormFieldRow">
+                                    <td style="width: 120px">
+                                        <LogLabel [ObjectFieldName]="'CustomerId'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td style="width: 25px; padding-right: 5px;">
+                                        <IconButton [Name]="'Add'" (click)="AddCustomerClicked()" [IsIconOnly]="true"></IconButton>
+                                    </td>
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'CustomerId'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [SelectedValue]="CustomerId"
+                                                [DependencyFilter1Value]="'CS'"
+                                                [HideAddLink]="true"
+                                                [LookUpTableName]="'Card'"
+                                                [DisplayFieldsFromList]="'Code,LocalName'">
+                                        </LogLov>
+                                    </td>
+                                    <td><div></div></td>
+                                </tr>
+
+                                <!-- DeclarationOfficeCode -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'DeclarationOfficeCode'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td><div></div></td>
+
+                                    <td style="padding-left: 36px;">
+                                        <LogLov [ObjectFieldName]="'DeclarationOfficeCode'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Customs.CustomsHouseType'"
+                                                [HideColumns]="true">
+                                        </LogLov>
+                                    </td>
+                                    <td><div></div></td>
+                                </tr>
+
+                                <!-- TransportModeId -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'TransportModeId'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td><div></div></td>
+
+                                    <td style="padding-left: 36px;">
+                                        <LogLov [ObjectFieldName]="'TransportModeId'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [SelectedValue]="TransportModeId"
+                                                [LookUpTableName]="'Customs.CustomsTransportMode'"
+                                                [HideColumns]="true">
+                                        </LogLov>
+                                    </td>
+                                    <td><div></div></td>
+                                </tr>
+
+                                <tr><td><div></div></td></tr>
+                            </table>
+
+                        </td>
+                    </tr>
+                </table>
+            </td>
+
+            <td><div></div></td>
+
+            
+        </tr>
+
+        <tr style="height: 32px;">
+            <td colspan="4" style="vertical-align: bottom">
+                <table style="height: 22px;">
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+
+                        <td style="width: 57px;">
+                            <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                        </td>
+
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 57px;">
+                            <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+    </table>

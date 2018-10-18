@@ -1,0 +1,152 @@
+﻿
+<table>
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+
+                <!-- Project Id -->
+                <tr class="FormFieldRow">
+                    <td style="width:120px;">
+                        <LogLabel [ObjectFieldName]="'ProjectId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:370px;">
+                        <LogLov [ObjectFieldName]="'ProjectId'"
+                                [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableName"
+                                [SelectedValue]="ProjectId"
+                                [LookUpTableName]="'TMProject'"
+                                [HideColumns]="true">
+                        </LogLov>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- WINumber -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'WINumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'WINumber'" [Text]="WINumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- Description -->
+                <tr class="FormFieldRow">
+                    <td style="vertical-align:top;">
+                        <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:370px;height:85px;">
+                                    <div class="MediaFill">
+                                        <LogTextBox [ObjectFieldName]="'Description'" [Text]="Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true" [HideColumns]="true"></LogTextBox>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- Sprint Id -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'SprintId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogLov [ObjectFieldName]="'SprintId'"
+                                [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableName"
+                                [SelectedValue]="SprintId"
+                                [LookUpTableName]="'Sprint'"
+                                [HideColumns]="true">
+                        </LogLov>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- Date -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'DateOfWork'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogDatePicker [ObjectFieldName]="'DateOfWork'" [SelectedDateValue]="DateOfWork" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- Time -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [NoObjectField]="true"  [ObjectFieldName]="'Time'" [Text]="'Time'" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <div class="MediaFill" style="width:100px;max-width:100px;float:left;margin-left:-5px;">
+                            <TimeInput [TextAlign]="'left'" [TotalMinutes]="DateOfWorkMinutes" (TotalMinutesChanged)="DateOfWorkMinutes = $event" [InputValue]="DateOfWorkDateFormat" [IsNew]="true" [DisplayValue]="DateOfWorkDateFormat" (Changed)="DateOfWorkDateFormat = $event" [IsShowText]="false"></TimeInput>
+                        </div>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="3">
+                        <div></div>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Create</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

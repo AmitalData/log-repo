@@ -1,0 +1,234 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CB2702FC-5D52-44F2-A1D2-B760B07BDB91}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Logitude.BookingLib.BL</RootNamespace>
+    <AssemblyName>Logitude.BookingLib.BL</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'All Projects|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\All Projects\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|AnyCPU'">
+    <OutputPath>bin\None\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\General\Dlls\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\General\Dlls\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CloseTables\DetailsClassesGenerated\BookingAnswerStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\BookingLevelDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\BookingProductDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\BookingSpaceAllocationDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\BookingStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\FFRStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\FlightsSchedulesRequestStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\BookingAnswerStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\BookingLevelStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\BookingProductStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\BookingSpaceAllocationStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\BookingStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\FFRStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\FlightsSchedulesRequestStatusStruct.Generated.cs" />
+    <Compile Include="DataContracts\BookingChartingClass.cs" />
+    <Compile Include="EntityDataMappings\BookingAnswerDataMapping.cs" />
+    <Compile Include="EntityDataMappings\BookingAnswerStatusDataMapping.cs" />
+    <Compile Include="EntityDataMappings\BookingDataMapping.cs" />
+    <Compile Include="EntityDataMappings\BookingLastRequestDataMapping.cs" />
+    <Compile Include="EntityDataMappings\BookingLevelDataMapping.cs" />
+    <Compile Include="EntityDataMappings\BookingPackageDataMapping.cs" />
+    <Compile Include="EntityDataMappings\BookingProductDataMapping.cs" />
+    <Compile Include="EntityDataMappings\BookingSpaceAllocationDataMapping.cs" />
+    <Compile Include="EntityDataMappings\BookingStatusDataMapping.cs" />
+    <Compile Include="EntityDataMappings\FFRStatusDataMapping.cs" />
+    <Compile Include="EntityDataMappings\FlightsSchedulesRequestDataMapping.cs" />
+    <Compile Include="EntityDataMappings\FlightsSchedulesRequestStatusDataMapping.cs" />
+    <Compile Include="EntityDataMappings\FlightsSchedulesResponseDataMapping.cs" />
+    <Compile Include="EntityDataMappings\Generated\BookingAnswerDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\BookingAnswerStatusDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\BookingDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\BookingLastRequestDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\BookingLevelDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\BookingPackageDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\BookingProductDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\BookingSpaceAllocationDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\BookingStatusDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\FFRStatusDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\FlightsSchedulesRequestDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\FlightsSchedulesRequestStatusDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\FlightsSchedulesResponseDataMapping.Generated.cs" />
+    <Compile Include="EntityPMs\BookingAnswerPM.cs" />
+    <Compile Include="EntityPMs\BookingPackagePM.cs" />
+    <Compile Include="EntityPMs\BookingPM.cs" />
+    <Compile Include="EntityPMs\Generated\BookingAnswerPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\BookingAnswerStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\BookingLastRequestPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\BookingLevelPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\BookingPackagePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\BookingPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\BookingProductPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\BookingSpaceAllocationPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\BookingStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\FFRStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\FlightsSchedulesRequestPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\FlightsSchedulesRequestStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\FlightsSchedulesResponsePM.Generated.cs" />
+    <Compile Include="EntityQueryServices\BookingQueryService.cs" />
+    <Compile Include="EntityQueryServices\FlightsSchedulesRequestQueryService.cs" />
+    <Compile Include="EntityQueryServices\Generated\BookingAnswerQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\BookingAnswerStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\BookingLastRequestQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\BookingLevelQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\BookingPackageQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\BookingProductQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\BookingQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\BookingSpaceAllocationQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\BookingStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\FFRStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\FlightsSchedulesRequestQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\FlightsSchedulesRequestStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\FlightsSchedulesResponseQueryService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\BookingAnswerUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\BookingPackageUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\BookingProductUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\BookingUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\Generated\BookingAnswerStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\BookingAnswerUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\BookingLastRequestUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\BookingLevelUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\BookingPackageUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\BookingProductUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\BookingSpaceAllocationUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\BookingStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\BookingUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\FFRStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\FlightsSchedulesRequestStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\FlightsSchedulesRequestUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\FlightsSchedulesResponseUpdateService.Generated.cs" />
+    <Compile Include="Helpers\BookingEmailAlertsHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TraceEvents\BookingTracing.cs" />
+    <Compile Include="Validators\BookingClassLevelValidator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Validators\BookingClassLevelValidator.Shared.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Validators\BookingTranslateTextsClass.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Validators\BookingValidationClass.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Validators\BookingValidationClass.Shared.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
+      <Project>{a663e7ef-b858-4bb6-bc33-e473f51b8e56}</Project>
+      <Name>Logitude.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.BookingLib.Data\Logitude.BookingLib.Data.csproj">
+      <Project>{147a706d-221a-4fd1-8f27-c12e4ab276cf}</Project>
+      <Name>Logitude.BookingLib.Data</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
+      <Project>{9b477a08-8ee2-4457-88fe-17e8a6ec4d00}</Project>
+      <Name>Logitude.Server.Tools</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
+      <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
+      <Name>Simplog.Data</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Global.Data.csproj">
+      <Project>{6d7ffad2-35b6-4133-8700-cf73e58d0c85}</Project>
+      <Name>Simplog.Global.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
+      <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
+      <Name>Simplog.Server.Infrastructure</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="APIDataContract\QueryService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

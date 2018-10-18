@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<xs:schema
+    attributeFormDefault="unqualified"
+	elementFormDefault="qualified"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:GCCSCargoImp="http://www.champ.aero/GCCS/CargoXML"
+	targetNamespace="http://www.champ.aero/GCCS/CargoXML"
+    version="2.0"
+>
+	<xs:include schemaLocation="common.xsd"/>
+        <xs:include schemaLocation="common_waybill.xsd"/>
+
+    <xs:complexType name="AirWaybillData">
+        <xs:sequence>
+            <xs:element name="StandardMessageIdentification" type="GCCSCargoImp:StandardMessageIdentification"/>
+            <xs:element name="AWBConsignmentDetails" type="GCCSCargoImp:AWBConsignmentDetails"/>
+            <xs:element minOccurs="0" name="FlightBookings" type="GCCSCargoImp:FlightBookings"/>
+            <xs:element name="Routing" type="GCCSCargoImp:Routing"/>
+            <xs:element name="Shipper" type="GCCSCargoImp:Account"/>
+            <xs:element name="Consignee" type="GCCSCargoImp:Account"/>
+            <xs:element minOccurs="0" name="Agent" type="GCCSCargoImp:Agent"/>
+            <xs:element minOccurs="0" name="SpecialServiceRequest" type="GCCSCargoImp:SpecialServiceRequest"/>
+            <xs:element minOccurs="0" name="AlsoNotify" type="GCCSCargoImp:Contact"/>
+            <xs:element minOccurs="0" name="AccountingInformation" type="GCCSCargoImp:AccountingInformation"/>
+            <xs:element name="ChargeDeclarations" type="GCCSCargoImp:FWBChargeDeclarations"/>
+            <xs:element name="RateDescription" type="GCCSCargoImp:RateDescription"/>
+            <xs:element minOccurs="0" name="OtherCharges" type="GCCSCargoImp:OtherCharges"/>
+            <xs:element minOccurs="0" name="PrepaidChargeSummary" type="GCCSCargoImp:ChargeSummary"/>
+            <xs:element minOccurs="0" name="CollectChargeSummary" type="GCCSCargoImp:ChargeSummary"/>
+            <xs:element minOccurs="0" name="ShippersCertification" type="GCCSCargoImp:ShippersCertification"/>
+            <xs:element name="CarriersExecution" type="GCCSCargoImp:CarriersExecution"/>
+            <xs:element minOccurs="0" name="OtherServiceInformation" type="GCCSCargoImp:FWBOtherServiceInformation"/>
+            <xs:element minOccurs="0" name="CCChargesInDestinationCurrency" type="GCCSCargoImp:CCChargesInDestinationCurrency"/>
+            <xs:element name="SenderReference" type="GCCSCargoImp:SenderReference"/>
+            <xs:element minOccurs="0" name="CustomsOrigin" type="GCCSCargoImp:CustomsOrigin"/>
+            <xs:element minOccurs="0" name="CommissionInformation" type="GCCSCargoImp:CommissionInformation"/>
+            <xs:element minOccurs="0" name="SalesIncentiveInformation" type="GCCSCargoImp:SalesIncentiveInformation"/>
+            <xs:element minOccurs="0" name="AgentReferenceData" type="GCCSCargoImp:AgentReferenceData"/>
+            <xs:element minOccurs="0" name="SpecialHandlingDetails" type="GCCSCargoImp:SpecialHandlingDetails"/>
+            <xs:element minOccurs="0" name="NominatedHandlingParty" type="GCCSCargoImp:NominatedHandlingParty"/>
+            <xs:element minOccurs="0" name="ShipmentReferenceInformation" type="GCCSCargoImp:ShipmentReferenceInformation"/>
+            <xs:element minOccurs="0" name="OtherParticipantInformation" type="GCCSCargoImp:OtherParticipantInformation"/>
+            <xs:element minOccurs="0" maxOccurs="99" name="OtherCustomsInformation" type="GCCSCargoImp:OtherCustomsInformation"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
+
+

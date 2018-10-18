@@ -1,0 +1,234 @@
+﻿using Logitude.Customs.Def.EntityPMs;
+using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.BL.EntityUpdateServices;
+using Logitude.Customs.BL.Models;
+using Logitude.Customs.Data;
+using Logitude.CustomsMessaging.Helpers;
+using Logitude.CustomsMessaging.Common.RequestParams;
+using Logitude.CustomsMessaging.Common.ResponseData;
+using Logitude.Server.Tools.Helpers;
+///using Logitude.CustomsMessaging.Utils;
+using Simplog.Server.Infrastructure;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using UnifreightIIG.Common.MessageLib.DeclarationDeal;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Logitude.Server.Tools.Utils;
+using System.Configuration;
+
+namespace Logitude.CustomsMessaging.ResponseServices
+{
+    public class DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageResponseService
+        : ResponseServiceBase<ReleaseGoodsResponseData, DF_NG_2470_DF_MSG16001_ReleaseGoodsMessage, GenericRequestParams>
+    {
+        private bool _LockResponseService2470Feature;
+
+        public override ReleaseGoodsResponseData GetResponse(DF_NG_2470_DF_MSG16001_ReleaseGoodsMessage customResponse, GenericRequestParams requestParams)
+        {
+            return this.MyResponseData;
+        }
+
+        public override void Update(DF_NG_2470_DF_MSG16001_ReleaseGoodsMessage customResponse, GenericRequestParams requestParams)
+        {
+            //Analyzing Message 2470 -Release Goods Message (Hatara)
+            
+            var declarationNumber = customResponse.GeneralData.declarationID;
+            IDisposable disposableToken = null;
+            try
+            {
+                _LockResponseService2470Feature = true;//ConfigurationManager.AppSettings["20180121.LockResponseService2470"] == "1";
+
+                if (_LockResponseService2470Feature)
+                {
+                   
+                   string key = ProcessLockTableUtil.Instance.GetKey4Declaration(declarationNumber, requestParams.Tenant);
+                    //using (disposableToken = ProcessLockUtil.Instance.InsertKey(key, "2470ResponseService.Update"))
+                    disposableToken = ProcessLockTableUtil.Instance.LockItAndGetReleaseToken(key, "2470ResponseService.Update");
+                }
+                {
+
+                    DateTime? hataraDate = null;
+                    ICustomContext dbContext = CustomContext.GetContext(requestParams.Tenant);
+                    DeclarationQueryService declarationQueryService = new DeclarationQueryService(requestParams.Tenant);
+                    DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
+
+
+                    LogMessagingUtil.Instance.AppendLine("DeclarationNumber=" + declarationNumber);
+
+                    this.MyRequestSheetParam = new RequestSheetParam();
+                    MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+                    MyRequestSheetParam.RequestDescription = "התרה לתיק- מספר הצהרה: " + declarationNumber;
+
+                    DeclarationPM declarationPM = declarationUpdateService.GetSertByConvertedDeclarationNumber(declarationNumber, requestParams.Tenant);
+                    if (declarationPM == null || string.IsNullOrWhiteSpace(declarationPM.Id))
+                    {
+                        var errMess = "DeclarationPM not found: DeclarationNumber=" + declarationNumber;
+                        this.MyResponseData = new ReleaseGoodsResponseData();
+                        this.MyResponseData.Succeeded = true;
+                        this.MyResponseData.HasException = true;
+                        this.MyResponseData.UserMessage = errMess;
+                        LogMessagingUtil.Instance.AppendLine(errMess);
+                        return;
+                    }
+
+                    var myEventContextTagModel = new EventContextTagModel()
+                    {
+                        CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageResponseServiceUpdate,
+                    };
+
+                    DateTime statusDateTime = customResponse.GeneralData.releaseDate;
+                    if (statusDateTime == null)
+                    {
+                        statusDateTime = customResponse.RequestContentHeader.TransmitionDateTime;
+                    }
+                    switch (customResponse.GeneralData.ReleaseMessageCode)
+                    {
+                        case 1: // released
+                            LogMessagingUtil.Instance.AppendLine("released");
+                            //hataraDate = customResponse.GeneralData.releaseDate;
+                            declarationPM.HatraDate = customResponse.GeneralData.releaseDate; //Yuval Chalup 17.01.2018 - Update date from response
+                            myEventContextTagModel.EventCode = "RSG";
+                            myEventContextTagModel.StatusDateTime = statusDateTime;
+                            declarationPM.DeclarationStatusTypeCode = "7";
+                            declarationPM.CourierCustomStatusCode = "1";
+                            MyRequestSheetParam.RequestDescription = "התרה לתיק. מספר הצהרה: " + declarationNumber;//eitan h 26/2/15 task 11525
+                            break;
+                        case 5: // released cancelled
+                            LogMessagingUtil.Instance.AppendLine("released cancelled");
+                            myEventContextTagModel.EventCode = "RSC";
+                            myEventContextTagModel.StatusDateTime = statusDateTime;
+                            declarationPM.DeclarationStatusTypeCode = "6";
+                            declarationPM.HatraDate = null; //Yuval Chalup 17.01.2018 - Delete date
+                            MyRequestSheetParam.RequestDescription = "ביטול התרה. תיק מספר: " + declarationPM.CustomFileNo;//eitan h 26/2/15 task 11525
+                            break;
+                        case 9: // Pre clearance
+                            LogMessagingUtil.Instance.AppendLine("Pre clearence");
+                            myEventContextTagModel.EventCode = "PRS";
+                            myEventContextTagModel.StatusDateTime = statusDateTime;
+                            //hataraDate = declarationPM.HatraDate; Yuval Chalup 17.01.2018 Remarked - Do NOT change date
+                            MyRequestSheetParam.RequestDescription = "הודעה מוקדמת לסוכן מכס: " + declarationPM.CustomFileNo;
+                            declarationPM.CourierCustomStatusCode = "1";
+                            break;
+                        case 14: // Release When Arrived
+                            LogMessagingUtil.Instance.AppendLine("Release When Arrived");
+                            myEventContextTagModel.EventCode = "PRA";
+                            myEventContextTagModel.StatusDateTime = statusDateTime;
+                            MyRequestSheetParam.RequestDescription = "תיק מאושר להתרה לאחר הגשת טובין: " + declarationPM.CustomFileNo;
+                            //hataraDate = declarationPM.HatraDate; Yuval Chalup 17.01.2018 Remarked - Do NOT change date
+                            break;
+                        default:
+                            var errMess = "Undeveloped- ReleaseMessageCode=" + customResponse.GeneralData.ReleaseMessageCode;
+                            this.MyResponseData = new ReleaseGoodsResponseData();
+                            this.MyResponseData.Succeeded = true;
+                            this.MyResponseData.HasException = true;
+                            this.MyResponseData.UserMessage = errMess;
+                            LogMessagingUtil.Instance.AppendLine(errMess);
+                            return;
+                    }
+                    //declarationPM.HatraDate = hataraDate; - Yuval Chalup 17.01.2018 Remarked (Init in each case above)
+                    LogMessagingUtil.Instance.AppendLine("declarationPM.HatraDate" + (declarationPM.HatraDate.HasValue ? declarationPM.HatraDate.Value.ToString() : ""));
+
+                    declarationPM.CurrentContextTag = myEventContextTagModel;
+
+                    declarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                    declarationUpdateService.Update(declarationPM, true);
+                    LogMessagingUtil.Instance.AppendLine("declarationUpdateService.UpdateD");
+
+                    MyRequestSheetParam.EntityId1 = declarationPM.Id;
+                    if (declarationPM.IsConvertedDeclaration)
+                    {
+                        MyRequestSheetParam.RequestDescription = string.Concat(MyRequestSheetParam.RequestDescription, "\n", declarationPM.UserNotes);
+                    }
+                    requestParams.LoggingEntityId = declarationPM.Id;
+                    this.MyResponseData = new ReleaseGoodsResponseData()
+                    {
+                        Succeeded = true,
+                        HasException = false,
+                        DeclarationNumber = declarationPM.Id,
+                        UserMessage = MyRequestSheetParam.RequestDescription,
+                    };
+                    GetResponseData(this.MyResponseData,customResponse, declarationPM);
+                }
+            }
+            catch (ProcessLockException processLockException)
+            {
+                LogMessagingUtil.Instance.AppendLine("processLockException wait a minute!! ,the worker Role is proccesing anther response of the same Declaration  ");
+                throw;
+            }
+            finally
+            {
+                if (disposableToken != null)
+                {
+                    disposableToken.Dispose();
+                }
+            }
+        }
+
+        private void GetResponseData(ReleaseGoodsResponseData myResponseData, DF_NG_2470_DF_MSG16001_ReleaseGoodsMessage customResponse, DeclarationPM declarationPM)
+        {
+            if(declarationPM != null)
+            {
+                DeclarationQueryService declarationQueryService = new DeclarationQueryService(declarationPM.Tenant);
+                DeclarationPM fullDeclarationPM = declarationQueryService.GetSingle(declarationPM.Id, true, false);
+                MyResponseData.FileNumber = fullDeclarationPM.CustomFileNo;
+                if(fullDeclarationPM.SupplierInvoices != null && fullDeclarationPM.SupplierInvoices.Count() > 0)
+                {
+                    MyResponseData.GoodsItemsList = new List<GoodsItems>();
+                    foreach (var supplierInvoice in fullDeclarationPM.SupplierInvoices)
+                    {
+                        foreach (var supplierInvoiceItem in supplierInvoice.SupplierInvoiceItems.OrderBy(rec => rec.OrderByLineNo))
+                        {
+                            GoodsItems goodsItems = new GoodsItems();
+                            goodsItems.SupplierInvoice = supplierInvoice.InvoiceNumber;
+                            goodsItems.GoodsItemPath = supplierInvoiceItem.LineNumber.ToString();
+                            goodsItems.CustomItemID = supplierInvoiceItem.ClassificationCode;
+                            MyResponseData.GoodsItemsList.Add(goodsItems);
+                        }
+                    }
+                }
+                if(declarationPM.TaxationDateTime.HasValue)MyResponseData.TaxationDate = declarationPM.TaxationDateTime.Value.Date.ToString("dd/MM/yyyy");
+            }
+            if(customResponse != null)
+            {
+                if(customResponse.GeneralData != null)
+                {
+                    MyResponseData.governmentProcedureType = customResponse.GeneralData.governmentProcedureType.ToString();
+                    MyResponseData.releaseDate = customResponse.GeneralData.releaseDate.Date.ToString("dd/MM/yyyy");
+                    //if (customResponse.GeneralData.releaseDate.TimeOfDay.Hours != 0)
+                    //{
+                    //    MyResponseData.releaseDate = customResponse.GeneralData.releaseDate.TimeOfDay.ToString("hh:mm") + "   " + MyResponseData.releaseDate;
+                    //}
+                    if(customResponse.GeneralData.dealValueNISSpecified)MyResponseData.dealValueNIS = customResponse.GeneralData.dealValueNIS.ToString();
+                }
+                if (customResponse.Consignment != null && customResponse.Consignment[0] != null)
+                {
+                    MyResponseData.cargoDescription = customResponse.Consignment[0].cargoDescription;
+                    MyResponseData.cargoIdentifierType = customResponse.Consignment[0].cargoIdentifier.cargoIdentifierType.ToString();
+                    MyResponseData.cargoIdentifierKey1 = customResponse.Consignment[0].cargoIdentifier.cargoIdentifierKey1;
+                    MyResponseData.cargoIdentifierKey2 = customResponse.Consignment[0].cargoIdentifier.cargoIdentifierKey2;
+                }
+                if (customResponse.Customers != null)
+                {
+                    if (customResponse.Customers.importerExpoterExternalIDSpecified) MyResponseData.importerExpoterExternalID = customResponse.Customers.importerExpoterExternalID.ToString();
+                }
+                if (customResponse.PackagesInDeliverySite != null && customResponse.PackagesInDeliverySite[0] != null)
+                {
+                    MyResponseData.packageType = customResponse.PackagesInDeliverySite[0].packageType;
+                    MyResponseData.packageQuantity = customResponse.PackagesInDeliverySite[0].packageQuantity;
+                    if (customResponse.PackagesInDeliverySite[0].packagesWeightSpecified) MyResponseData.packagesWeight = customResponse.PackagesInDeliverySite[0].packagesWeight.ToString();
+                }
+                if (customResponse.Sites != null)
+                {
+                    MyResponseData.loadingPort = customResponse.Sites.loadingSiteNumber;
+                    MyResponseData.storageSiteNumber = customResponse.Sites.storingSiteNumber;
+                    MyResponseData.unloadingSiteNumber = customResponse.Sites.unloadingSiteNumber;
+                }
+                    
+            }
+            
+        }
+    }
+}

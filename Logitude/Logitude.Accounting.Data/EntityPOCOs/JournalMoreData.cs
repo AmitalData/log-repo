@@ -1,0 +1,36 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Accounting.Data.EntityPOCOs
+{
+   
+    public class JournalMoreData
+    {
+	 string dbms;
+
+        [Key]
+        [ForeignKey("Journal")]
+        [Column("JournalId" ,Order = 1)]
+	    public string JournalId { get; set; }
+	      
+        public virtual Journal Journal { get; set; }
+     [Key]
+        [Column("Line" ,Order = 2)]
+	    public int Line { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+        [Column("GeneralData")]
+	    public string GeneralData { get; set; }
+    }
+}
+	 

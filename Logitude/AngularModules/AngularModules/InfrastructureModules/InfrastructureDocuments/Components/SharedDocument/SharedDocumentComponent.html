@@ -1,0 +1,217 @@
+﻿<table>
+  
+
+    <tr style="height:30px;vertical-align:top">
+
+        <td>
+            <div>
+                <table>
+                    <tr>
+                        <td style="width:5px"><div style="width:5px"></div></td>
+                        <td style="width:55px"><div style="color:#6E7172;font-size:12px;width:55px">Agent:</div> </td>
+                        <td style="width:150px;">
+                            <div class="TextTrimming" style="width:150px;">{{AgentName}} </div>
+                        </td>
+                        <td style="width:55px"><div style="color:#6E7172;font-size:12px;width:55px">Master:</div> </td>
+                        <td style="width:200px;">
+                            <div class="TextTrimming" style="width:200px;">{{Master}} </div>
+                        </td>
+                        <td><div></div></td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+
+
+    </tr>
+
+    <tr style="height:100%;vertical-align:top">
+
+        <td>
+            <div style="border:1px solid lightGray;height:100%">
+                <table>
+                    <tr style="height:5px;"><td colspan="3"></td></tr>
+                    <tr style="height:100%">
+
+                        <td style="width:5px"><div style="width:5px"></div></td>
+                        <td>
+
+                            <table>
+                                <tr style="height:100%">
+                                    <td style="width:5px;"></td>
+
+                                    <td>
+
+                                        <div class="SimpleGridView">
+                                            <div class="SimpleGridViewHeader">
+                                                <table>
+                                                    <tr>
+                                                        <td style="width: 80px; min-width: 80px;">To be Shared</td>
+                                                        <td style="width: 150px; min-width: 150px;">Document Name</td>
+
+                                                        <td style="width: 170px; min-width: 170px;">File Name</td>
+
+                                                        <td style="width: 90px; min-width: 90px;">Ready</td>
+                                                        <td style="width: 150px; min-width: 150px;">Last Update</td>
+                                                        <td style="width:150px; min-width:150px; ">Last Share</td>
+                                                        <td style="width: 130px; min-width: 130px;">Actions</td>
+                                                        <td><div style="width:100%;min-width:100%"></div></td>
+
+                                                    </tr>
+                                                </table>
+                                            </div>
+
+                                            <div  *ngIf="IsShowMessageNoDocument" class="SimpleGridViewBody" style="vertical-align:top;text-align:center;margin-top:5px;height:50px;"><span style="font-size:15px;color:gray;margin-top:10px">No Data Found</span></div>
+                                            <div *ngIf="!IsShowMessageNoDocument" class="SimpleGridViewBody">
+                                                <table>
+                                                    <tr style="height: 1px;">
+                                                        <td>
+                                                            <table>
+                                                                <tr *ngFor="let shipmentShareDocumentsData of ShipmentShareDocumentsDataLists">
+                                                                    <td>
+                                                                        <table>
+                                                                            <tr style="height:30px;background-color:#E8F7FF;border-bottom:1px solid lightgray">
+
+                                                                                <td style="width:10px"><div style="width:10px"></div></td>
+                                                                                <td style="width:1px">
+                                                                                    <div style="font-size:13px;">{{shipmentShareDocumentsData.ShipmentLevelName}}  Shipment#  {{shipmentShareDocumentsData.ShipmentNumber}}    </div>
+
+                                                                                </td>
+                                                                                <td><div><span *ngIf="!shipmentShareDocumentsData.AgentSharedManifestRef" style="margin-left:3px;font-style:italic;color:gray">(Can't share these documents because this house is not being shared)</span> </div></td>
+                                                                            </tr>
+
+
+                                                                            <tr class="SimpleGridViewRow RowHover" *ngFor="let item of shipmentShareDocumentsData.ShareDocuments" (mouseleave)="OnmMouseleave(item)" (mouseover)="OnmMouseOver(item)">
+                                                                                <td colspan="3">
+                                                                                    <table>
+                                                                                   
+                                                                                        <tr style="height:25px;" (click)="ShareDocumentSelected=item" [class.RowSelected]="item === ShareDocumentSelected">
+
+                                                                                            <td class="GridViewCell" style="width: 80px; min-width: 80px; max-width: 80px;">
+                                                                                                <div class="MediaFill">
+                                                                                                    <div class="MediaFillRelative">
+                                                                                                        <div class="CenterCenter" style="width: 16px;">
+                                                                                                            <CheckBox [IsChecked]="item.Included"  (Checked)="item.Included = $event" [IsEnabled]="item.IsReady && shipmentShareDocumentsData.AgentSharedManifestRef"></CheckBox>
+                                                                                                        </div>
+                                                                                                    </div> 
+                                                                                                </div>
+                                                                                            </td>
+
+                                                                                            <td [attr.title]="item.DocumentTypeName" class="GridViewCell" style="width:150px; min-width: 150px; max-width:150px; position: relative;">
+
+
+                                                                                                {{item.DocumentTypeName}}
+                                                                                            </td>
+
+
+                                                                                            <td [attr.title]="item.FileName" class="GridViewCell" style="width:170px; min-width: 170px; max-width:170px; position: relative;">
+
+
+                                                                                                {{item.FileName}}
+                                                                                            </td>
+
+                                                                                            <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width:90px; position: relative;">
+                                                                                                
+                                                                                                <img *ngIf="item.IsReady" style="margin-right: 3px;width:20px;height:20px;" src="./Images/SimplogIcons/tick.png" />
+                                                                                 
+                                                                                            </td>
+
+                                                                                            <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px;">
+
+                                                                                                {{item.LastUpdateDate | DateTimeToDatePipe}} {{item.LastUpdateDate | DateTimeToTimePipe}}
+
+                                                                                            </td>
+
+
+                                                                                            <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px;">
+
+                                                                                                {{item.LastShareDate | DateTimeToDatePipe}} {{item.LastShareDate | DateTimeToTimePipe}}
+                                                                                            </td>
+
+
+                                                                                            <td class="CellStretched" style="width: 140px; min-width: 140px; max-width: 140px; position: relative;">
+
+                                                                                                <button id="{{item.DocumentTypeCode+'-S-DocsOut' | IdGeneratorPipe}}" *ngIf="item.VisibleViewButton" style="width: 40px;display:inline" class="Button" (click)="ViewButtonClick(item)">View</button>
+
+                                                                                                <button id="{{item.DocumentTypeCode+'-P-DocsOut' | IdGeneratorPipe}}" *ngIf="item.VisibleBliudDocumentButton" style="width: 75px;display:inline" class="Button" (click)="BuildButtonClick(item)">{{item.ActionButtonLabel}}</button>
+                                                                                                <button id="{{item.DocumentTypeCode+'-P-DocsOut' | IdGeneratorPipe}}" *ngIf="item.VisibleUploadButton" style="width: 75px;display:inline" class="Button" (click)="UploadButtonClick(item,shipmentShareDocumentsData)">{{item.ActionButtonLabel}}</button>
+                                                                                            
+                                                                                             </td>
+
+
+                                                                                            <td class="GridViewCell" style="width: 100%; min-width: 100%; max-width: 100%; position: relative;"><div></div></td>
+                                                                                        </tr>
+                                                                                        <tr><td colspan="6"><div></div></td></tr>
+                                                                                    </table>
+
+
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="width:5px;"></td>
+                                </tr>
+                            </table>
+
+                        </td>
+                        <td style="width:5px"><div style="width:5px"></div></td>
+
+                    </tr>
+                    <tr style="height:5px;"><td colspan="3"></td></tr>
+                </table>
+
+
+
+
+            </div>
+
+        </td>
+
+
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div>
+
+
+                        </div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <div>
+                            <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
+                        </div>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="SaveButtonClicked()">{{OkButtonLable}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

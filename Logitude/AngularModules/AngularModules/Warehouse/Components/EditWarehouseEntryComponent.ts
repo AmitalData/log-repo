@@ -1,0 +1,316 @@
+﻿declare var System: any;
+declare var window: any;
+
+import {ConfirmWindow} from '../../Controls/Windows/ConfirmWindow';
+import {Component, OnInit, ViewChildren, QueryList} from '@angular/core';
+import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
+import {EntityResourceService} from '../../Infrastructure/Services/EntityResourceService';
+import {EntityArgs} from '../../Infrastructure/DataContracts/EntityArgs';
+import {WarehouseEntryPM} from '../../Warehouse/EntityPMs/WarehouseEntryPM';
+import {BaseComponent} from '../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {AppTool, DateTool, FormatTool} from '../../Infrastructure/Tools';
+import {EventTypeArgs} from '../../Infrastructure/DataContracts/EventTypeArgs';
+import {LogitudeWindow} from '../../Controls/Windows/LogitudeWindow';
+import {TraceEventExtendedPMService } from '../../Infrastructure/Services/ExtendedPMs/TraceEventExtendedPMService';
+import { ServiceResponse } from '../../Infrastructure/DataContracts/ServiceResponse';
+import {EventTypeClass} from '../../Infrastructure/DataContracts/EventTypeArgs';
+import {LocationDirective} from '../../Infrastructure/Utilities/LocationDirective';
+import {CardListService} from '../../Common/Services/StandardLists/CardListService';
+
+@Component({
+    moduleId: module.id,
+    selector: 'EditWarehouseEntryComponent',
+    templateUrl: './EditWarehouseEntryComponent.html',
+    providers: [TraceEventExtendedPMService],
+})
+
+
+export class EditWarehouseEntryComponent extends BaseComponent implements OnInit {
+    public ValidationErrorsList: string[];
+    private _entityResourceService: EntityResourceService = new EntityResourceService();
+    DataContext: any = this;
+    EventTypeCodeList: EventTypeClass[];
+
+    warehouseEntryPM: WarehouseEntryPM;
+    private myCardListService: CardListService;
+
+    IsLoadPage: boolean = false;
+    ObjectTableId: string;
+    IsContainerShipment: boolean = false;
+    ObjectTableName: string;
+    ActualEntryDateOldValue: Date;
+    ExpectedEntryDateOldValue: Date;
+
+
+    constructor(public entityArgs: EntityArgs, public _traceEventExtendedPMService: TraceEventExtendedPMService ) {
+        super();
+        this.warehouseEntryPM = this.entityArgs.EntityPM;
+        if (AppTool.IsNullOrEmpty(this.warehouseEntryPM.ReceivedBy)) {
+            this.warehouseEntryPM.ReceivedBy = SessionLocator.LoggedUserPM.EnglishName;
+            this.warehouseEntryPM.IsDirty = false;
+        }
+
+
+        this.ObjectTableName = this.entityArgs.ObjectTableName;
+        this.Listen();
+       // this.RunComponent();
+        this.myCardListService = new CardListService();
+        this.warehouseEntryPM.UIProperties.SetEnabled("CreatedByUserId", "WarehouseEntry", false);
+
+
+
+        var table = window.ObjectTables.filter(d=> d.Name == this.ObjectTableName)[0];
+        if (table) {
+            this.ObjectTableId = table.Id;
+        }
+
+
+
+    }
+
+    ngOnInit(
+
+    ) {
+
+        this._entityResourceService.getEntityResourceByTableName("WarehouseEntry", 0).subscribe(response => {
+            this.InitializeEditWarehouseEntry();
+        });
+
+
+    }
+
+    SaveCompletedEvent: any;
+    LoadCompletedEvent: any;
+    
+
+    Listen() {
+
+
+        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+
+            if (this.SaveCompletedEvent == null) {
+                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        this.EventTypeCodeList = [];
+                        this.warehouseEntryPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+
+                        //if (this.WarehouseEntryPackagesDetailsComponent) {
+                        //    var windowArgs: any = { WarehouseEntryPM: this.warehouseEntryPM, ViewModelTrigger: this, IsFromShipment: true, IsEditMode: true };
+                        //    this.WarehouseEntryPackagesDetailsComponent.ReloadComponent(windowArgs);
+                        //}
+
+                        this.EventTypeCodeList.push(new EventTypeClass("UPEN", null));
+
+                        if (this.warehouseEntryPM.ExpectedEntryDate != this.ExpectedEntryDateOldValue) {
+                            this.ExpectedEntryDateOldValue = this.warehouseEntryPM.ExpectedEntryDate;
+                            this.EventTypeCodeList.push(new EventTypeClass("EXEN", this.warehouseEntryPM.ExpectedEntryDate));
+                        }
+
+                        if (this.warehouseEntryPM.ActualEntryDate != this.ActualEntryDateOldValue) {
+                            this.ActualEntryDateOldValue = this.warehouseEntryPM.ActualEntryDate;
+                            this.EventTypeCodeList.push(new EventTypeClass("ENEN", this.warehouseEntryPM.ActualEntryDate));
+                        }
+
+
+                        this.UpdateEventType();
+                    }
+
+                });
+            }
+
+            if (this.LoadCompletedEvent == null) {
+                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                    if (isLoadSuccess) {
+                        this.warehouseEntryPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    }
+                });
+            }
+        }
+
+    }
+
+
+
+    ngOnDestroy() {
+        AppTool.KillEventEmitter(this.SaveCompletedEvent);
+        AppTool.KillEventEmitter(this.LoadCompletedEvent);
+
+    }
+
+
+    IsLCLEntity: boolean;
+
+    InitializeEditWarehouseEntry() {
+
+        if (this.warehouseEntryPM)
+        {
+           
+
+            this.IsLCLEntity = AppTool.IsLCLEntity(this.warehouseEntryPM.TransportModeId, this.warehouseEntryPM.ShipmentTypeId);
+            this.IsContainerShipment = !this.IsLCLEntity;
+     
+            this.ExpectedEntryDateOldValue = this.warehouseEntryPM.ExpectedEntryDate;
+            this.ActualEntryDateOldValue = this.warehouseEntryPM.ActualEntryDate;
+            this.SetUIProperties();
+            this.IsLoadPage = true;
+        }
+
+      
+    }
+
+
+
+
+    //@ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
+    //private timerToken: any;
+    //private Retries: number = 0;
+    //private GeneratedComponent: any;
+
+    //RunComponent() {
+    //    if (this.AllLocations) {
+
+    //        if (this.AllLocations.length == 0) {
+    //            this.RunComponentTimer();
+    //        }
+
+    //        else {
+    //            this.LoadChildComponent();
+    //        }
+    //    }
+
+    //    else {
+    //        this.RunComponentTimer();
+    //    }
+    //}
+
+
+    //RunComponentTimer() {
+    //    this.Retries++;
+
+    //    if (this.timerToken) {
+    //        clearTimeout(this.timerToken);
+    //    }
+
+    //    if (this.Retries < 3) {
+    //        this.timerToken = setTimeout(() => this.RunComponent(), 1);
+    //    }
+    //}
+
+
+    //WarehouseEntryPackagesDetailsComponent: any;
+    //LoadChildComponent() {
+
+    //    let warehouseEntryPackagesDetailsComponenttLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == "WEPD")[0];
+    //    if (warehouseEntryPackagesDetailsComponenttLocation != null) {
+    //        SessionLocator.DynamicLoader.Load('./Warehouse/Components/WarehouseEntryPackagesDetailsComponent', warehouseEntryPackagesDetailsComponenttLocation.viewContainerRef)
+    //            .then(cmpRef => {
+
+    //                this.WarehouseEntryPackagesDetailsComponent = cmpRef.instance;
+    //                var windowArgs: any = { WarehouseEntryPM: this.warehouseEntryPM, ViewModelTrigger: this, IsFromShipment: true, IsEditMode:true };
+    //                cmpRef.instance.SetWindowArgs(windowArgs);
+
+    //            });
+
+    //    }
+
+
+
+    //}
+
+
+    get WarehouseId() {
+        var warehouseId: string = null;
+        if (this.warehouseEntryPM) warehouseId = this.warehouseEntryPM.WarehouseId;
+        return warehouseId;
+    }
+    set WarehouseId(newValue: string) {
+        if (this.warehouseEntryPM.WarehouseId != newValue) {
+            this.warehouseEntryPM.WarehouseId = newValue;
+            if (AppTool.IsNullOrEmpty(newValue)) {
+                this.warehouseEntryPM.WarehouseName = null;
+   
+            }
+            
+            else {
+                this.myCardListService.getSingle(newValue).subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
+                        var myCardList: any = myResponse.Result;
+                        if (myCardList) {
+
+                            this.warehouseEntryPM.WarehouseName = myCardList.EnglishName;
+              
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+
+
+    SetUIProperties() {
+        this.warehouseEntryPM.UIProperties.SetEnabled("CustomerId", "WarehouseEntry", false);
+        //this.warehouseEntryPM.UIProperties.SetEnabled("WarehouseId", "WarehouseEntry", false);
+
+    }
+
+ 
+
+
+
+    UpdateEventType() {
+        if (this.EventTypeCodeList && this.EventTypeCodeList.length != 0) {
+            var traceEventArgs: EventTypeArgs = new EventTypeArgs();
+            traceEventArgs.EventTypeList = this.EventTypeCodeList;
+            traceEventArgs.Tenant = SessionLocator.Tenant;
+            traceEventArgs.ObjectTableId = this.ObjectTableId;
+            traceEventArgs.EntityId = this.warehouseEntryPM.Id;
+            traceEventArgs.LoggedContactId = SessionLocator.LoggedUserId;
+            this._traceEventExtendedPMService.PutTraceEventGroup(traceEventArgs).subscribe(res => {
+                SessionLocator.CurrentSession.FireEvent("LoadEventTabData");
+            });
+        }      
+    }
+
+    
+    get ActualEntryDate() {
+    var actualEntryDate: Date = null;
+    if (this.warehouseEntryPM) actualEntryDate = this.warehouseEntryPM.ActualEntryDate;
+        return actualEntryDate;
+    }
+    set ActualEntryDate(value: Date) {
+        if (this.warehouseEntryPM != null) {
+            if (value != this.warehouseEntryPM.ActualEntryDate) {
+                this.warehouseEntryPM.ActualEntryDate = value;
+                this.OnActualEntryDateDatePickerChange(value);
+            }
+        }
+    }
+
+    
+
+    OnActualEntryDateDatePickerChange(value) {
+
+        this.warehouseEntryPM.UIProperties.SetValidity("ActualEntryDate", "WarehouseEntry", true, null);
+
+        if (value) {
+            if (!DateTool.IsActualDateValid(value)) {
+                var errorMessage = DateTool.ActualDateMessage.replace("Field", "Actual Entry Date");
+                this.warehouseEntryPM.UIProperties.SetValidity("ActualEntryDate", "WarehouseEntry", false, errorMessage);
+            }
+
+            else {
+                if (this.warehouseEntryPM.StatusCode != "ENTE") this.warehouseEntryPM.StatusCode = "ENTE";
+            }
+        } else {
+            if (!this.warehouseEntryPM.ActualEntryDate) {
+                this.warehouseEntryPM.StatusCode = "CREA";
+            } 
+        }
+    }
+    
+
+    SetActualDateClicked(fieldName: string) {
+        this.ActualEntryDate = DateTool.GetDateParts(this.warehouseEntryPM.ExpectedEntryDate).DateObject;
+    }
+}

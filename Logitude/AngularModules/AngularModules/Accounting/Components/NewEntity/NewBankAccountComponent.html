@@ -1,0 +1,208 @@
+﻿
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td colspan="4">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td style="width: 450px">
+            <table>
+                <tr class="FormFieldRow">
+                    <td>
+                        <table>
+
+                            <!-- BankId -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'BankId'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td style="" [style.padding-right]="isRTL ? 'initial' : '36px'" [style.padding-left]="isRTL ? '36px' : 'initial'">
+                                    <LogLov [ObjectFieldName]="'BankId'"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'BankCode'"
+                                            [HideColumns]="true">
+                                    </LogLov>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+
+                            <!-- BranchNumber -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'BranchNumber'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td style="" [style.padding-right]="isRTL ? 'initial' : '36px'" [style.padding-left]="isRTL ? '36px' : 'initial'">
+                                    <LogTextBox [ObjectFieldName]="'BranchNumber'" [InputType]="'integer'" [DataContext]="DataContext"
+                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+
+                            <!-- AccountNumber -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 180px;">
+                                    <LogLabel [ObjectFieldName]="'AccountNumber'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td style="width: 200px;" [style.padding-right]="isRTL ? 'initial' : '36px'" [style.padding-left]="isRTL ? '36px' : 'initial'">
+                                    <LogTextBox [ObjectFieldName]="'AccountNumber'" [InputType]="'text'" [DataContext]="DataContext"
+                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+
+                            <!-- LocalName -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 180px;">
+                                    <LogLabel [ObjectFieldName]="'LocalName'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td style="width: 200px;" [style.padding-right]="isRTL ? 'initial' : '36px'" [style.padding-left]="isRTL ? '36px' : 'initial'">
+                                    <LogTextBox [ObjectFieldName]="'LocalName'" [InputType]="'ntext'" [DataContext]="DataContext"
+                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+
+                            <!-- EnglishName -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 180px;">
+                                    <LogLabel [ObjectFieldName]="'EnglishName'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td style="width: 200px;" [style.padding-right]="isRTL ? 'initial' : '36px'" [style.padding-left]="isRTL ? '36px' : 'initial'">
+                                    <LogTextBox [ObjectFieldName]="'EnglishName'" [InputType]="'text'" [DataContext]="DataContext"
+                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+
+                            <!-- GLAccountId -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'GLAccountId'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogLov [ObjectFieldName]="'GLAccountId'"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'GLAccount'"
+                                            [DependencyFilter2Value]="'1'"
+                                            [QueryFilterItems]="GLAccountsFilterItems"
+                                            (SelectedItemChanged)="GLAccount = $event"
+                                            [ForceShowAddLink]="true"
+                                            [HideColumns]="false">
+                                    </LogLov>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+
+                            <!-- DeferredGLAccountId -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'DeferredGLAccountId'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogLov [ObjectFieldName]="'DeferredGLAccountId'"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'GLAccount'"
+                                            [DependencyFilter2Value]="'1'"
+                                            [QueryFilterItems]="GLAccountsFilterItems"
+                                            [SelectedValue]="DeferredGLAccountId"
+                                            (SelectedItemChanged)="DeferredGLAccount = $event"
+                                            [ForceShowAddLink]="true"
+                                            [HideColumns]="false">
+                                    </LogLov>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+
+                            <!-- TransferGLAcccountId -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'TransferGLAcccountId'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogLov [ObjectFieldName]="'TransferGLAcccountId'"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'GLAccount'"
+                                            [DependencyFilter2Value]="'1'"
+                                            [QueryFilterItems]="GLAccountsFilterItems"
+                                            [SelectedValue]="TransferGLAcccountId"
+                                            (SelectedItemChanged)="TransferGLAcccount = $event"
+                                            [ForceShowAddLink]="true"
+                                            [HideColumns]="false">
+                                    </LogLov>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+
+                            <tr><td><div></div></td></tr>
+                        </table>
+
+                    </td>
+                </tr>
+            </table>
+        </td>
+
+        <td><div></div></td>
+
+        <!--<td>
+            <table>
+                <tr class="FormFieldRow">
+                    <td>
+                        <table>
+
+                            <tr><td><div></div></td></tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>-->
+
+    </tr>
+
+    <tr style="height: 32px;">
+        <td colspan="4" style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'Accounting.General.B.OK' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>
+

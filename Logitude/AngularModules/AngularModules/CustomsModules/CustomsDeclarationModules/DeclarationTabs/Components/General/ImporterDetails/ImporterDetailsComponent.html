@@ -1,0 +1,322 @@
+﻿<table style="margin:5px">
+
+   
+
+    <tr  style="height:32px" class="FormFieldRow">
+       
+       
+        <td style="width: 150px;" *ngIf="ImporterVisibility">
+            <LogLabel [ObjectFieldName]="'ImporterTypeCode'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+
+        <td style="width: 150px;" *ngIf="EntitleVisibility">
+            <LogLabel [ObjectFieldName]="'EntitleImporterTypeCode'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+
+        <td style="width: 150px;" *ngIf="TransferVisibility">
+            <LogLabel [ObjectFieldName]="'TransferImporterTypeCode'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+
+
+
+        <td style="width: 160px;" *ngIf="ImporterVisibility">
+            <LogLov [ObjectFieldName]="'ImporterTypeCode'"
+                    [ObjectTableName]="ObjectTableName"
+                    [DataContext]="DataContext"
+                    [LookUpTableName]="'Customs.CustomerIdentifyType'"
+                      [DisplayMemberPath]="'LocalName'"
+                     (SelectedItemChanged)="CustomerIdentifyType = $event"
+                [SelectedValue]="ImporterTypeCode"
+                    [HideColumns]="true">
+            </LogLov>
+        </td>
+
+        <td style="width: 160px;" *ngIf="EntitleVisibility">
+            <LogLov [ObjectFieldName]="'EntitleImporterTypeCode'"
+                    [ObjectTableName]="ObjectTableName"
+                    [DataContext]="DataContext"
+                        (SelectedItemChanged)="EntitleCustomerIdentifyType = $event"
+                    [LookUpTableName]="'Customs.CustomerIdentifyType'"
+                       [DisplayMemberPath]="'LocalName'"
+
+                [SelectedValue]="EntitleImporterTypeCode"
+                    [HideColumns]="true">
+            </LogLov>
+        </td>
+        <td style="width: 160px;" *ngIf="TransferVisibility">
+            <LogLov [ObjectFieldName]="'TransferImporterTypeCode'"
+                    [ObjectTableName]="ObjectTableName"
+                    [DataContext]="DataContext"
+                        (SelectedItemChanged)="TransferCustomerIdentifyType = $event"
+                    [LookUpTableName]="'Customs.CustomerIdentifyType'"
+                     [DisplayMemberPath]="'LocalName'"
+
+                [SelectedValue]="TransferImporterTypeCode"
+                    [HideColumns]="true">
+            </LogLov>
+        </td>
+
+        <td style="width:40px"><div></div></td>
+        <td><div></div></td>
+    </tr>
+    <tr  style="height:32px" class="FormFieldRow">
+       
+       
+        <td *ngIf="ImporterVisibility">
+            <LogLabel [ObjectFieldName]="'ImporterPassportNumber'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+
+        <td *ngIf="EntitleVisibility">
+            <LogLabel [ObjectFieldName]="'EntitlePassportNumber'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+        <td *ngIf="TransferVisibility">
+            <LogLabel [ObjectFieldName]="'TransferPassportNumber'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+
+        <td *ngIf="ImporterVisibility">
+            <!--<LogTextBox [ObjectFieldName]="'ImporterPassportNumber'" [ObjectTableName]="ObjectTableName"
+                        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>-->
+            <SearchBox [ObjectTableName]="'Customs.Client'"
+                       [IsQuickSearch]="true"
+                       [DropDownWidth]="143"
+                       [DisplayMember]="'PassportNumber'"
+                       [DisplayText]="ImporterPassportNumber"
+                       [Watermark]="''"
+                       [UseTimer]="false"
+                       [IsImporterDetails]="true"
+                       [IsDisabled]="!IsImporterEnabled"
+                       [ItemHeight]="36"
+                       [HideIcons]="true"
+                       [HasFilters]="true"
+                       (LostFocus)="ImporterLostFocus('Importer', $event)"
+                       (TextChanged)="ImporterNumberTextChanged('Importer',$event)"
+                       (ItemClicked)="ImporterClicked('Importer',$event)"></SearchBox>
+        </td>
+        <td *ngIf="EntitleVisibility">
+            <!--<LogTextBox [ObjectFieldName]="'EntitlePassportNumber'" [ObjectTableName]="ObjectTableName"
+                        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>-->
+            <SearchBox [ObjectTableName]="'Client'"
+                       [IsQuickSearch]="true"
+                       [DropDownWidth]="143"
+                       [DisplayMember]="'PassportNumber'"
+                       [DisplayText]="EntitlePassportNumber"
+                       [Watermark]="''"
+                       [UseTimer]="false"
+                       [IsDisabled]="!IsEntitleImporterEnabled"
+                       [IsImporterDetails]="true"
+                       [ItemHeight]="36"
+                       [HideIcons]="true"
+                       [HasFilters]="true"
+                       (LostFocus)="ImporterLostFocus('Entitle', $event)"
+                       (TextChanged)="ImporterNumberTextChanged('Entitle',$event)"
+                       (ItemClicked)="ImporterClicked('Entitle',$event)"></SearchBox>
+        </td>
+        <td *ngIf="TransferVisibility">
+            <!--<LogTextBox [ObjectFieldName]="'TransferPassportNumber'" [ObjectTableName]="ObjectTableName"
+                        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>-->
+            <SearchBox [ObjectTableName]="'Client'"
+                       [IsQuickSearch]="true"
+                       [DropDownWidth]="143"
+                       [DisplayMember]="'PassportNumber'"
+                       [DisplayText]="TransferPassportNumber"
+                       [Watermark]="''"
+                       [UseTimer]="false"
+                       [IsImporterDetails]="true"
+                       [IsDisabled]="!IsTransferImporterEnabled"
+                       [ItemHeight]="36"
+                       [HideIcons]="true"
+                       [HasFilters]="true"
+                       (LostFocus)="ImporterLostFocus('Transfer', $event)"
+                       (TextChanged)="ImporterNumberTextChanged('Transfer',$event)"
+                       (ItemClicked)="ImporterClicked('Transfer',$event)"></SearchBox>
+        </td>
+        <td><div></div></td>
+        <td><div></div></td>
+    </tr >
+    <tr  style="height:32px" class="FormFieldRow">
+       
+      
+       
+        <td *ngIf="ImporterVisibility">
+            <LogLabel [ObjectFieldName]="'ImporterPassCountryCode'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+        <td *ngIf="EntitleVisibility">
+            <LogLabel [ObjectFieldName]="'EntitleImporterCountryCode'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+        <td *ngIf="TransferVisibility">
+            <LogLabel [ObjectFieldName]="'TransferImporterCountryCode'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+
+
+        <td *ngIf="ImporterVisibility">
+            <LogLov [ObjectFieldName]="'ImporterPassCountryCode'"
+                    [ObjectTableName]="ObjectTableName"
+                    [DataContext]="DataContext"
+                    [LookUpTableName]="'Customs.CustomsCountry'"
+                    [HideColumns]="true"
+                     [SelectedValue]="ImporterPassCountryCode">
+            </LogLov>
+        </td>
+        <td *ngIf="EntitleVisibility">
+            <LogLov [ObjectFieldName]="'EntitleImporterCountryCode'"
+                    [ObjectTableName]="ObjectTableName"
+                    [DataContext]="DataContext"
+                    [LookUpTableName]="'Customs.CustomsCountry'"
+                    [HideColumns]="true"
+                    [SelectedValue]="EntitleImporterCountryCode">
+            </LogLov>
+        </td>
+        <td *ngIf="TransferVisibility">
+            <LogLov [ObjectFieldName]="'TransferImporterCountryCode'"
+                    [ObjectTableName]="ObjectTableName"
+                    [DataContext]="DataContext"
+                    [LookUpTableName]="'Customs.CustomsCountry'"
+                    [HideColumns]="true"
+                    [SelectedValue]="TransferImporterCountryCode"
+                    >
+            </LogLov>
+        </td>
+        <td><div></div></td>
+        <td><div></div></td>
+    </tr>
+    <tr  style="height:32px"  class="FormFieldRow">
+       
+      
+        <td *ngIf="ImporterVisibility">
+            <LogLabel [ObjectFieldName]="'MainImporterEntitlemntTypeCode'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+        <td *ngIf="EntitleVisibility">
+            <LogLabel [ObjectFieldName]="'ImporterEntitlementTypeCode'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+        <td *ngIf="TransferVisibility">
+            <LogLabel [ObjectFieldName]="'TransImporterEntitleTypeCode'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+        <td *ngIf="ImporterVisibility">
+            <LogLov [ObjectFieldName]="'MainImporterEntitlemntTypeCode'"
+                    [ObjectTableName]="ObjectTableName"
+                    [DataContext]="DataContext"
+                    [LookUpTableName]="'Customs.EntitlementType'"
+                    [HideColumns]="true"
+                    [SelectedValue]="MainImporterEntitlemntTypeCode">
+            </LogLov>
+        </td>
+        <td *ngIf="EntitleVisibility">
+            <LogLov [ObjectFieldName]="'ImporterEntitlementTypeCode'"
+                    [ObjectTableName]="ObjectTableName"
+                    [DataContext]="DataContext"
+                    [LookUpTableName]="'Customs.EntitlementType'"
+                    [HideColumns]="true"
+                    [SelectedValue]="ImporterEntitlementTypeCode">
+            </LogLov>
+        </td>
+        <td *ngIf="TransferVisibility">
+            <LogLov [ObjectFieldName]="'TransImporterEntitleTypeCode'"
+                    [ObjectTableName]="ObjectTableName"
+                    [DataContext]="DataContext"
+                    [LookUpTableName]="'Customs.EntitlementType'"
+                    [HideColumns]="true"
+                    [SelectedValue]="TransImporterEntitleTypeCode">
+            </LogLov>
+        </td>
+        <td><div></div></td>
+        <td><div></div></td>
+    </tr>
+    <tr  style="height:32px" class="FormFieldRow">
+      
+     
+       
+        <td *ngIf="ImporterVisibility">
+            <LogLabel [ObjectFieldName]="'ImporterName'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+        <td *ngIf="EntitleVisibility">
+            <LogLabel [ObjectFieldName]="'EntitleImporterName'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+        <td *ngIf="TransferVisibility">
+            <LogLabel [ObjectFieldName]="'TransferImporterName'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+        <td  colspan="2" *ngIf="ImporterVisibility">
+            <LogTextBox [ObjectFieldName]="'ImporterName'" [ObjectTableName]="ObjectTableName" [Text]="ImporterName"
+                        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+        </td>
+        <td colspan="2" *ngIf="EntitleVisibility">
+            <LogTextBox [ObjectFieldName]="'EntitleImporterName'" [ObjectTableName]="ObjectTableName" [Text]="EntitleImporterName"
+                        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+        </td>
+        <td colspan="2" *ngIf="TransferVisibility">
+            <LogTextBox [ObjectFieldName]="'TransferImporterName'" [ObjectTableName]="ObjectTableName" [Text]="TransferImporterName"
+                        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+        </td>
+      
+    </tr>
+    <tr  style="height:32px" class="FormFieldRow">
+        
+       
+        <td *ngIf="ImporterVisibility">
+            <LogLabel [ObjectFieldName]="'ImporterAddress'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+        <td *ngIf="EntitleVisibility">
+            <LogLabel [ObjectFieldName]="'EntitleImporterAddress'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+        <td *ngIf="TransferVisibility">
+            <LogLabel [ObjectFieldName]="'TransferImporterAddress'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+        <td  colspan="2" *ngIf="ImporterVisibility">
+            <LogTextBox [ObjectFieldName]="'ImporterAddress'" [ObjectTableName]="ObjectTableName" [Text]="ImporterAddress"
+                        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+        </td>
+        <td colspan="2" *ngIf="EntitleVisibility">
+            <LogTextBox [ObjectFieldName]="'EntitleImporterAddress'" [ObjectTableName]="ObjectTableName" [Text]="EntitleImporterAddress"
+                        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+        </td>
+        <td colspan="2" *ngIf="TransferVisibility">
+            <LogTextBox [ObjectFieldName]="'TransferImporterAddress'" [ObjectTableName]="ObjectTableName" [Text]="TransferImporterAddress"
+                        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+        </td>
+       
+    </tr>
+    <tr><td><div></div></td></tr>
+  
+    <tr style="height: 32px;">
+        <td colspan="4" style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+ 
+</table>

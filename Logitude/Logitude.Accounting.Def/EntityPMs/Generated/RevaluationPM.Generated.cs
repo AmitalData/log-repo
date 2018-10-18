@@ -1,0 +1,463 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Accounting.Def.Validators;
+  
+namespace Logitude.Accounting.Def.EntityPMs
+{
+   [CustomValidation(typeof(AccountingClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class RevaluationPM : EntityPM
+   {
+   	  private string id ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Id  
+	   {
+	    
+	     get
+		{
+		   return id;
+		 }
+		 set
+		 {
+		   if(id != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   id=value;
+		   }
+			
+		 }
+	   }
+	  private int tenant ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime createDate ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime CreateDate  
+	   {
+	    
+	     get
+		{
+		   return createDate;
+		 }
+		 set
+		 {
+		   if(createDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreateDate",OldValue=createDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChanged(values);
+		   createDate=value;
+		   }
+			
+		 }
+	   }
+	  private string createdByUserId ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CreatedByUserId  
+	   {
+	    
+	     get
+		{
+		   return createdByUserId;
+		 }
+		 set
+		 {
+		   if(createdByUserId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUserId",OldValue=createdByUserId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   createdByUserId=value;
+		   }
+			
+		 }
+	   }
+	  private string searchFields ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SearchFields  
+	   {
+	    
+	     get
+		{
+		   return searchFields;
+		 }
+		 set
+		 {
+		   if(searchFields != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchFields",OldValue=searchFields,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   searchFields=value;
+		   }
+			
+		 }
+	   }
+	  private int revaluationNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int RevaluationNumber  
+	   {
+	    
+	     get
+		{
+		   return revaluationNumber;
+		 }
+		 set
+		 {
+		   if(revaluationNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RevaluationNumber",OldValue=revaluationNumber,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   revaluationNumber=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime revaluationDate ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime RevaluationDate  
+	   {
+	    
+	     get
+		{
+		   return revaluationDate;
+		 }
+		 set
+		 {
+		   if(revaluationDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RevaluationDate",OldValue=revaluationDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChanged(values);
+		   revaluationDate=value;
+		   }
+			
+		 }
+	   }
+	  private string chartOfAccountsId ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ChartOfAccountsId  
+	   {
+	    
+	     get
+		{
+		   return chartOfAccountsId;
+		 }
+		 set
+		 {
+		   if(chartOfAccountsId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChartOfAccountsId",OldValue=chartOfAccountsId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   chartOfAccountsId=value;
+		   }
+			
+		 }
+	   }
+	  private string chartOfAccountsName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ChartOfAccountsName  
+	   {
+	    
+	     get
+		{
+		   return chartOfAccountsName;
+		 }
+		 set
+		 {
+		   if(chartOfAccountsName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChartOfAccountsName",OldValue=chartOfAccountsName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   chartOfAccountsName=value;
+		   }
+			
+		 }
+	   }
+	  private string gLAccountId ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string GLAccountId  
+	   {
+	    
+	     get
+		{
+		   return gLAccountId;
+		 }
+		 set
+		 {
+		   if(gLAccountId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GLAccountId",OldValue=gLAccountId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   gLAccountId=value;
+		   }
+			
+		 }
+	   }
+	  private string gLAccountName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string GLAccountName  
+	   {
+	    
+	     get
+		{
+		   return gLAccountName;
+		 }
+		 set
+		 {
+		   if(gLAccountName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GLAccountName",OldValue=gLAccountName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   gLAccountName=value;
+		   }
+			
+		 }
+	   }
+	  private string gLAccountNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string GLAccountNumber  
+	   {
+	    
+	     get
+		{
+		   return gLAccountNumber;
+		 }
+		 set
+		 {
+		   if(gLAccountNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GLAccountNumber",OldValue=gLAccountNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   gLAccountNumber=value;
+		   }
+			
+		 }
+	   }
+	  private bool? revaluationEnabled ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? RevaluationEnabled  
+	   {
+	    
+	     get
+		{
+		   return revaluationEnabled;
+		 }
+		 set
+		 {
+		   if(revaluationEnabled != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RevaluationEnabled",OldValue=revaluationEnabled,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   revaluationEnabled=value;
+		   }
+			
+		 }
+	   }
+	  private string createdByUserName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CreatedByUserName  
+	   {
+	    
+	     get
+		{
+		   return createdByUserName;
+		 }
+		 set
+		 {
+		   if(createdByUserName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUserName",OldValue=createdByUserName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   createdByUserName=value;
+		   }
+			
+		 }
+	   }
+	  private string status ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Status  
+	   {
+	    
+	     get
+		{
+		   return status;
+		 }
+		 set
+		 {
+		   if(status != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Status",OldValue=status,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   status=value;
+		   }
+			
+		 }
+	   }
+	  private string message ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Message  
+	   {
+	    
+	     get
+		{
+		   return message;
+		 }
+		 set
+		 {
+		   if(message != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Message",OldValue=message,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   message=value;
+		   }
+			
+		 }
+	   }
+	  private string revaluationsGLAccountId ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string RevaluationsGLAccountId  
+	   {
+	    
+	     get
+		{
+		   return revaluationsGLAccountId;
+		 }
+		 set
+		 {
+		   if(revaluationsGLAccountId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RevaluationsGLAccountId",OldValue=revaluationsGLAccountId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   revaluationsGLAccountId=value;
+		   }
+			
+		 }
+	   }
+	  private string revaluationsGLAccountName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string RevaluationsGLAccountName  
+	   {
+	    
+	     get
+		{
+		   return revaluationsGLAccountName;
+		 }
+		 set
+		 {
+		   if(revaluationsGLAccountName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RevaluationsGLAccountName",OldValue=revaluationsGLAccountName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   revaluationsGLAccountName=value;
+		   }
+			
+		 }
+	   }
+	  private string statusName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string StatusName  
+	   {
+	    
+	     get
+		{
+		   return statusName;
+		 }
+		 set
+		 {
+		   if(statusName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatusName",OldValue=statusName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   statusName=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

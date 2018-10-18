@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://tempuri.org/LogitudePaymentOrder" elementFormDefault="qualified" targetNamespace="http://tempuri.org/LogitudePaymentOrder" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="LOGIPAYORD">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="LogitudePaymentOrder" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LogitudePaymentOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="Type" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Primary" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="AccountingCard" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="NIS_Amount" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Value_Date" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Partner" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Reference" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="PaymentProcessCode" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Type" type="xs:string" />
+  <xs:element name="Primary" type="xs:string" />
+  <xs:element name="AccountingCard" type="xs:string" />
+  <xs:element name="NIS_Amount" type="xs:string" />
+  <xs:element name="Value_Date" type="xs:string" />
+  <xs:element name="Partner" type="xs:string" />
+  <xs:element name="Reference" type="xs:string" />
+  <xs:element name="PaymentProcessCode" type="xs:string" />
+</xs:schema>

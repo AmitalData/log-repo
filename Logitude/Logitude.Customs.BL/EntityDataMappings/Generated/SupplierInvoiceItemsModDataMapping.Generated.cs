@@ -1,0 +1,172 @@
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs; 
+using Logitude.Customs.Data;
+
+namespace Logitude.Customs.BL.EntityDataMappings
+{
+   
+   public partial class SupplierInvoiceItemsModDataMapping: IMapping<SupplierInvoiceItemsModPM, SupplierInvoiceItemsMod>,IMappingEncodeBase64NVARCHARFields<SupplierInvoiceItemsModPM>
+   {
+          public enum POCOPropertyNames
+          { 
+		     None,  
+	         DeclarationId, 
+	         InvoiceCounterKey, 
+	         LineNumber, 
+	         TypeCode, 
+	         Tenant, 
+	         CurrencyTypeCode, 
+	         Amount, 
+	         ModificationCounterKey,
+	      }
+
+
+	      public enum PMPropertyNames
+          { 
+		     None,  
+	         DeclarationId, 
+	         InvoiceCounterKey, 
+	         LineNumber, 
+	         TypeCode, 
+	         Tenant, 
+	         CurrencyTypeCode, 
+	         Amount, 
+	         TypeName, 
+	         CurrencyTypeName, 
+	         ModificationCounterKey,
+	      }
+
+		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
+        List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
+    
+	    public void PMToPOCO(SupplierInvoiceItemsModPM entityPM, SupplierInvoiceItemsMod entityPOCO)
+        {
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TypeCode))
+            {
+				entityPOCO.TypeCode = entityPM.TypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CurrencyTypeCode))
+            {
+				entityPOCO.CurrencyTypeCode = entityPM.CurrencyTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Amount))
+            {
+				entityPOCO.Amount = entityPM.Amount;
+			}
+			}
+
+		public void POCOToPM(SupplierInvoiceItemsModPM entityPM, SupplierInvoiceItemsMod entityPOCO)
+        {
+			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DeclarationId))
+            {
+					entityPM.DeclarationId = entityPOCO.DeclarationId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.InvoiceCounterKey))
+            {
+					entityPM.InvoiceCounterKey = entityPOCO.InvoiceCounterKey;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LineNumber))
+            {
+					entityPM.LineNumber = entityPOCO.LineNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TypeCode))
+            {
+					entityPM.TypeCode = entityPOCO.TypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
+            {
+					entityPM.Tenant = entityPOCO.Tenant;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CurrencyTypeCode))
+            {
+					entityPM.CurrencyTypeCode = entityPOCO.CurrencyTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Amount))
+            {
+					entityPM.Amount = entityPOCO.Amount;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ModificationCounterKey))
+            {
+					entityPM.ModificationCounterKey = entityPOCO.ModificationCounterKey;
+            }
+
+		}
+
+		public void PMToOldPM(SupplierInvoiceItemsModPM entityPM, SupplierInvoiceItemsModPM oldEntityPM)
+        {
+		     oldEntityPM.ChangedProperties.Clear();
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TypeCode))
+            {
+                oldEntityPM.TypeCode = entityPM.TypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+                oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CurrencyTypeCode))
+            {
+                oldEntityPM.CurrencyTypeCode = entityPM.CurrencyTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Amount))
+            {
+                oldEntityPM.Amount = entityPM.Amount;
+            }
+			
+		}
+
+	    public void EncodeBase64NVARCHARFields(SupplierInvoiceItemsModPM entityPM)
+        {
+            if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
+            {
+                return;
+
+            }
+            entityPM.EncodeBase64NVARCHARFieldsBy=null;
+		}
+
+
+	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
+        {
+            CustomMappedPOCOProperties.Add(pocoPropertyName);
+        }
+
+        public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
+        {
+            CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+			  
+   }
+}
+	 

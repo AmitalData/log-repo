@@ -1,0 +1,168 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization; 
+
+namespace Logitude.Accounting.Data.EntityLists
+{
+   [DataContract]
+   public partial class GLAccountList
+   {
+   
+       [Key]
+       [DataMember]
+       public string Id  { get; set; }
+       [DataMember]
+       public int Tenant  { get; set; }
+       [DataMember]
+       public string InternalNumber  { get; set; }
+       [DataMember]
+       public string AccountTypeCode  { get; set; }
+       [DataMember]
+       public string DisplayNumber  { get; set; }
+       [DataMember]
+       public string LocalName  { get; set; }
+       [DataMember]
+       public string EnglishName  { get; set; }
+       [DataMember]
+       public string SearchFields  { get; set; }
+       [DataMember]
+       public bool? IsMultiCurrency  { get; set; }
+       [DataMember]
+       public string CurrencyId  { get; set; }
+       [DataMember]
+       public string RevenueExpenseType  { get; set; }
+       [DataMember]
+       public bool? IsControlAccount  { get; set; }
+       [DataMember]
+       public string ChartOfAccountsId  { get; set; }
+       [DataMember]
+       public bool? Inactive  { get; set; }
+       [DataMember]
+       public string AccountTypeName  { get; set; }
+       [DataMember]
+       public string CurrencyName  { get; set; }
+       [DataMember]
+       public string RevenueExpenseName  { get; set; }
+       [DataMember]
+       public string ChartOfAccountsName  { get; set; }
+       [DataMember]
+       public string ChartOfAccountsTypeCode  { get; set; }
+       [DataMember]
+       public string ChartOfAccountsTypeName  { get; set; }
+       [DataMember]
+       public string CurrencyCode  { get; set; }
+       [DataMember]
+       public string ReconcileMethodCode  { get; set; }
+       [DataMember]
+       public string ReconcileMethodName  { get; set; }
+       [DataMember]
+       public string ControlAccountId  { get; set; }
+       [DataMember]
+       public string ControlAccountName  { get; set; }
+       [DataMember]
+       public string ControlAccountNumber  { get; set; }
+       [DataMember]
+       public string ActiveStatusName  { get; set; }
+       [DataMember]
+       public string AutomaticReconcileId  { get; set; }
+       [DataMember]
+       public string AutomaticReconcileName  { get; set; }
+       [DataMember]
+       public string PreviousEnglishName  { get; set; }
+       [DataMember]
+       public DateTime? PreviousEnglishNameChangeDate  { get; set; }
+       [DataMember]
+       public string PreviousLocalName  { get; set; }
+       [DataMember]
+       public DateTime? PreviousLocalNameChangeDate  { get; set; }
+       [DataMember]
+       public string PreviousNumber  { get; set; }
+       [DataMember]
+       public DateTime? PreviousNumberChangeDate  { get; set; }
+       [DataMember]
+       public string PreviousChartOfAccountsId  { get; set; }
+       [DataMember]
+       public DateTime? PreviousChartOfAccountsChangeDate  { get; set; }
+       [DataMember]
+       public string CustomerGLAccountId  { get; set; }
+       [DataMember]
+       public string CustomerGLAccountName  { get; set; }
+       [DataMember]
+       public string CustomerGLAccountNumber  { get; set; }
+       [DataMember]
+       public decimal? BalanceInLocalCurrency  { get; set; }
+       [DataMember]
+       public bool? RevaluationEnabled  { get; set; }
+       [DataMember]
+       public string ParentAccountId  { get; set; }
+       [DataMember]
+       public string ParentAccountName  { get; set; }
+       [DataMember]
+       public string ParentAccountNumber  { get; set; }
+       [DataMember]
+       public string Category1Id  { get; set; }
+       [DataMember]
+       public string Category1Name  { get; set; }
+       [DataMember]
+       public string Category2Id  { get; set; }
+       [DataMember]
+       public string Category2Name  { get; set; }
+       [DataMember]
+       public string Category3Id  { get; set; }
+       [DataMember]
+       public string Category3Name  { get; set; }
+       [DataMember]
+       public string Category4Id  { get; set; }
+       [DataMember]
+       public string Category4Name  { get; set; }
+       [DataMember]
+       public string Category5Id  { get; set; }
+       [DataMember]
+       public string Category5Name  { get; set; }
+       [DataMember]
+       public bool? IsVATExempt  { get; set; }
+       [DataMember]
+       public DateTime? LastActivityDate  { get; set; }
+       [DataMember]
+       public string LastActivityTypeName  { get; set; }
+       [DataMember]
+       public string LastActivityByUserName  { get; set; }
+       [DataMember]
+       public string VatNumber  { get; set; }
+       [DataMember]
+       public string PaymentTermId  { get; set; }
+       [DataMember]
+       public string SalesmanUserId  { get; set; }
+       [DataMember]
+       public string NewGLAccountCardId  { get; set; }
+       [DataMember]
+       public decimal? LocalBalanceInDue  { get; set; }
+       [DataMember]
+       public DateTime? NextDueDate  { get; set; }
+       [DataMember]
+       public string CurrencySign  { get; set; }
+       [DataMember]
+       public string DeductionFileTypeId  { get; set; }
+       [DataMember]
+       public string DeductionFileNumber  { get; set; }
+       [DataMember]
+       public string AssessingOfficeCode  { get; set; }
+       [DataMember]
+       public string Occupation  { get; set; }
+       [DataMember]
+       public string DeductionTypeId  { get; set; }
+       [DataMember]
+       public string ConsolidationVat  { get; set; }
+       [DataMember]
+       public bool IsEquipmentVendor  { get; set; }
+       [DataMember]
+       public bool IsPartOfDeductionReport  { get; set; }
+   }
+
+}
+	 

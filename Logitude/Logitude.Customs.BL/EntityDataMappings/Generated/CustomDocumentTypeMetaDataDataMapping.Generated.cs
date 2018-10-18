@@ -1,0 +1,175 @@
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs; 
+using Logitude.Customs.Data;
+
+namespace Logitude.Customs.BL.EntityDataMappings
+{
+   
+   public partial class CustomDocumentTypeMetaDataDataMapping: IMapping<CustomDocumentTypeMetaDataPM, CustomDocumentTypeMetaData>,IMappingEncodeBase64NVARCHARFields<CustomDocumentTypeMetaDataPM>
+   {
+          public enum POCOPropertyNames
+          { 
+		     None,  
+	         MetaDataTypeCode, 
+	         Mandatory, 
+	         Format, 
+	         DocumentTypeCode, 
+	         ValuesTable, 
+	         IsLeading, 
+	         Inactive,
+	      }
+
+
+	      public enum PMPropertyNames
+          { 
+		     None,  
+	         MetaDataTypeCode, 
+	         Mandatory, 
+	         Format, 
+	         DocumentTypeCode, 
+	         ValuesTable, 
+	         MetaDataTypeName, 
+	         DocumentTypeName, 
+	         IsLeading, 
+	         Inactive,
+	      }
+
+		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
+        List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
+    
+	    public void PMToPOCO(CustomDocumentTypeMetaDataPM entityPM, CustomDocumentTypeMetaData entityPOCO)
+        {
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Mandatory))
+            {
+				entityPOCO.Mandatory = entityPM.Mandatory;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Format))
+            {
+				entityPOCO.Format = entityPM.Format;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ValuesTable))
+            {
+				entityPOCO.ValuesTable = entityPM.ValuesTable;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsLeading))
+            {
+				entityPOCO.IsLeading = entityPM.IsLeading;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Inactive))
+            {
+				entityPOCO.Inactive = entityPM.Inactive;
+			}
+			}
+
+		public void POCOToPM(CustomDocumentTypeMetaDataPM entityPM, CustomDocumentTypeMetaData entityPOCO)
+        {
+			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MetaDataTypeCode))
+            {
+					entityPM.MetaDataTypeCode = entityPOCO.MetaDataTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Mandatory))
+            {
+					entityPM.Mandatory = entityPOCO.Mandatory;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Format))
+            {
+					entityPM.Format = entityPOCO.Format;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DocumentTypeCode))
+            {
+					entityPM.DocumentTypeCode = entityPOCO.DocumentTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ValuesTable))
+            {
+					entityPM.ValuesTable = entityPOCO.ValuesTable;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsLeading))
+            {
+					entityPM.IsLeading = entityPOCO.IsLeading;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Inactive))
+            {
+					entityPM.Inactive = entityPOCO.Inactive;
+            }
+
+		}
+
+		public void PMToOldPM(CustomDocumentTypeMetaDataPM entityPM, CustomDocumentTypeMetaDataPM oldEntityPM)
+        {
+		     oldEntityPM.ChangedProperties.Clear();
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Mandatory))
+            {
+                oldEntityPM.Mandatory = entityPM.Mandatory;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Format))
+            {
+                oldEntityPM.Format = entityPM.Format;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ValuesTable))
+            {
+                oldEntityPM.ValuesTable = entityPM.ValuesTable;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsLeading))
+            {
+                oldEntityPM.IsLeading = entityPM.IsLeading;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Inactive))
+            {
+                oldEntityPM.Inactive = entityPM.Inactive;
+            }
+			
+		}
+
+	    public void EncodeBase64NVARCHARFields(CustomDocumentTypeMetaDataPM entityPM)
+        {
+            if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
+            {
+                return;
+
+            }
+            entityPM.EncodeBase64NVARCHARFieldsBy=null;
+		}
+
+
+	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
+        {
+            CustomMappedPOCOProperties.Add(pocoPropertyName);
+        }
+
+        public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
+        {
+            CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+			  
+   }
+}
+	 

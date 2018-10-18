@@ -1,0 +1,276 @@
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Def.EntityPMs; 
+using Logitude.Accounting.Data;
+
+namespace Logitude.Accounting.BL.EntityDataMappings
+{
+   
+   public partial class ReconcileExternalPageLineDataMapping: IMapping<ReconcileExternalPageLinePM, ReconcileExternalPageLine>,IMappingEncodeBase64NVARCHARFields<ReconcileExternalPageLinePM>
+   {
+          public enum POCOPropertyNames
+          { 
+		     None,  
+	         ReconcileExternalPageId, 
+	         LineNumber, 
+	         Tenant, 
+	         Amount, 
+	         ReferenceDate, 
+	         Reference, 
+	         Notes, 
+	         IsReconciled, 
+	         SearchFields, 
+	         Id, 
+	         ReconcileRemarks,
+	      }
+
+
+	      public enum PMPropertyNames
+          { 
+		     None,  
+	         ReconcileExternalPageId, 
+	         LineNumber, 
+	         Tenant, 
+	         Amount, 
+	         ReferenceDate, 
+	         Reference, 
+	         Notes, 
+	         IsReconciled, 
+	         SearchFields, 
+	         Id, 
+	         ReconcileRemarks, 
+	         GroupHash, 
+	         ReconciliationNumber,
+	      }
+
+		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
+        List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
+    
+	    public void PMToPOCO(ReconcileExternalPageLinePM entityPM, ReconcileExternalPageLine entityPOCO)
+        {
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReconcileExternalPageId))
+            {
+				entityPOCO.ReconcileExternalPageId = entityPM.ReconcileExternalPageId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LineNumber))
+            {
+				entityPOCO.LineNumber = entityPM.LineNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Amount))
+            {
+				entityPOCO.Amount = entityPM.Amount;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReferenceDate))
+            {
+				entityPOCO.ReferenceDate = entityPM.ReferenceDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Reference))
+            {
+				entityPOCO.Reference = entityPM.Reference;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Notes))
+            {
+				entityPOCO.Notes = entityPM.Notes;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsReconciled))
+            {
+				entityPOCO.IsReconciled = entityPM.IsReconciled;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
+            {
+				entityPOCO.SearchFields = entityPM.SearchFields;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReconcileRemarks))
+            {
+				entityPOCO.ReconcileRemarks = entityPM.ReconcileRemarks;
+			}
+			
+				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
+		  }
+
+		public void POCOToPM(ReconcileExternalPageLinePM entityPM, ReconcileExternalPageLine entityPOCO)
+        {
+			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ReconcileExternalPageId))
+            {
+					entityPM.ReconcileExternalPageId = entityPOCO.ReconcileExternalPageId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LineNumber))
+            {
+					entityPM.LineNumber = entityPOCO.LineNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
+            {
+					entityPM.Tenant = entityPOCO.Tenant;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Amount))
+            {
+					entityPM.Amount = entityPOCO.Amount;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ReferenceDate))
+            {
+					entityPM.ReferenceDate = entityPOCO.ReferenceDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Reference))
+            {
+					entityPM.Reference = entityPOCO.Reference;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Notes))
+            {
+					entityPM.Notes = entityPOCO.Notes;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsReconciled))
+            {
+					entityPM.IsReconciled = entityPOCO.IsReconciled;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SearchFields))
+            {
+					entityPM.SearchFields = entityPOCO.SearchFields;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
+            {
+					entityPM.Id = entityPOCO.Id;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ReconcileRemarks))
+            {
+					entityPM.ReconcileRemarks = entityPOCO.ReconcileRemarks;
+            }
+
+		}
+
+		public void PMToOldPM(ReconcileExternalPageLinePM entityPM, ReconcileExternalPageLinePM oldEntityPM)
+        {
+		     oldEntityPM.ChangedProperties.Clear();
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReconcileExternalPageId))
+            {
+                oldEntityPM.ReconcileExternalPageId = entityPM.ReconcileExternalPageId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LineNumber))
+            {
+                oldEntityPM.LineNumber = entityPM.LineNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+                oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Amount))
+            {
+                oldEntityPM.Amount = entityPM.Amount;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReferenceDate))
+            {
+                oldEntityPM.ReferenceDate = entityPM.ReferenceDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Reference))
+            {
+                oldEntityPM.Reference = entityPM.Reference;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Notes))
+            {
+                oldEntityPM.Notes = entityPM.Notes;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsReconciled))
+            {
+                oldEntityPM.IsReconciled = entityPM.IsReconciled;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
+            {
+                oldEntityPM.SearchFields = entityPM.SearchFields;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReconcileRemarks))
+            {
+                oldEntityPM.ReconcileRemarks = entityPM.ReconcileRemarks;
+            }
+			
+		}
+
+	    public void EncodeBase64NVARCHARFields(ReconcileExternalPageLinePM entityPM)
+        {
+            if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
+            {
+                return;
+
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.Notes)) //T4 find type == nText 
+            {
+                entityPM.Notes = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Notes));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.SearchFields)) //T4 find type == nText 
+            {
+                entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.ReconcileRemarks)) //T4 find type == nText 
+            {
+                entityPM.ReconcileRemarks = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ReconcileRemarks));
+            }
+            entityPM.EncodeBase64NVARCHARFieldsBy=null;
+		}
+
+
+	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
+        {
+            CustomMappedPOCOProperties.Add(pocoPropertyName);
+        }
+
+        public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
+        {
+            CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+		
+		private void BuildSearchFieldsGenerated(ReconcileExternalPageLinePM entityPM, ReconcileExternalPageLine entityPOCO, bool isNewEntity)
+        {
+            string mySearchFields = "";
+			
+           
+            entityPM.SearchFields += mySearchFields;
+            entityPOCO.SearchFields += mySearchFields;
+        }
+			  
+   }
+}
+	 

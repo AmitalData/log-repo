@@ -1,0 +1,373 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.EntityKeys;
+using Simplog.Server.Infrastructure;
+using System.Data.Entity.Core.Objects;
+using System.Diagnostics;
+using System.Data.Entity;
+
+namespace Logitude.Accounting.Data.Repositories
+{
+    public partial class JournalRepository : IRepository<Journal>
+    {
+
+        public void LockNoWaitUpdateQueueId(int tenant, string journalId, string QueueId)
+        {
+            if (string.IsNullOrWhiteSpace(QueueId))
+            {
+                throw new Exception("QueueId is must");
+            }
+            var myList = LockByJournal_forUpdateNOWAIT(journalId, tenant);// lock it !!!!
+            if (!myList.Any())
+            {
+                var mess =("JournalApproveService:Failed ... LockByJournal_forUpdateNOWAIT");
+                throw new Exception(mess);
+            }
+            var poco = myList.First();
+            if (poco.QueueId != null)
+            {
+                throw new Exception("JournalApproveService:Failed(poco.QueueId != null) already Streamed !!!");
+            }
+            
+            poco.QueueId = QueueId;
+
+            this.Update(poco);
+        }
+
+
+        public void UpdateWhileStreaming(int tenant, string journalId,Action<Journal> updatePoco)
+        {
+            var myList = LockByJournal_forUpdateNOWAIT(journalId, tenant);// lock it !!!!
+            if (!myList.Any())
+            {
+                var mess = ("JournalApproveService:Failed ... LockByJournal_forUpdateNOWAIT");
+                throw new Exception(mess);
+            }
+            var poco = myList.First();
+            //if (poco.QueueId != null)
+            //{
+            //    throw new Exception("JournalApproveService:Failed(poco.QueueId != null) already Streamed !!!");
+            //}
+            updatePoco(poco);
+            //poco.QueueId = QueueId;
+
+            this.Update(poco);
+        }
+        public List<Journal> GetMulti(EntityKeyFields entityKeys)
+        {
+
+            throw new NotImplementedException();
+        }
+        public List<Journal> LockByJournal_forUpdateNOWAIT(string id, int tenant)
+        {
+            var list = (context as DbContext)
+                //.FirstOrDefaultFUNOWAITWhere
+                .GetListNOWAITWhere
+                <Journal>(a => a.Id == id && a.Tenant == tenant);
+            return list;
+        }
+        
+        partial void onUpdate()//Partial Methods
+        {
+            InsureUsingOnlyByUpdateService();
+        }
+
+        partial void onAdd()//Partial Methods
+        {
+            InsureUsingOnlyByUpdateService();
+        }
+        private  void InsureUsingOnlyByUpdateService()
+        {
+            ///return;//mohammad temp fix until itzik is back
+            int iFrame = 3;
+            var mth = new StackTrace().GetFrame(iFrame).GetMethod();
+            var cls = mth.ReflectedType.Name;
+            if (IsClassValid(mth, cls))
+            {
+                return;
+            }
+            iFrame = 4;
+            mth = new StackTrace().GetFrame(iFrame).GetMethod();
+            cls = mth.ReflectedType.Name;
+            if (IsClassValid(mth, cls))
+            {
+                return;
+            }
+
+            AmitalDebuggerUtil.Break(AmitalDebuggerLevel.Critical);
+            
+            var checkInsureUsingOnlyByUpdateService = System.Configuration.ConfigurationManager.AppSettings.Get("InsureUsingOnlyByUpdateService");
+            if (!string.IsNullOrWhiteSpace(checkInsureUsingOnlyByUpdateService))
+            {
+                throw new Exception("InsureUsingOnlyByUpdateService");
+            }
+
+        }
+
+        private bool IsClassValid(System.Reflection.MethodBase mth, string cls)
+        {
+            if (cls == "JournalUpdateService") //never happen 
+            {
+                return true;
+            }
+            if (cls == "JournalApproveService")
+            {
+                return true;
+            }
+
+            if (cls == "EntityUpdateService`3" && mth.Name == "PerformUpdate")
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public string GetJournalMaxNumber(string JournalId, int tenant)
+        {
+
+            var Journals = (from a in context.Journals
+                            where a.Tenant == tenant
+                            select a);
+
+
+            var maxValue = Journals.Max(x => x.JournalNumber);
+            var result = Journals.First(x => x.JournalNumber == maxValue);
+
+
+
+
+            return maxValue;
+
+        }
+
+        public string GetJournalMaxNumber(int tenant)
+        {
+
+            var Journals = (from a in context.Journals
+                            where a.Tenant == tenant
+                            select a);
+
+
+            var maxValue = Journals.Max(x => x.JournalNumber);
+            var result = Journals.First(x => x.JournalNumber == maxValue);
+
+
+
+
+            return maxValue;
+
+        }
+
+
+        public Journal GetSinglePendingApproved(int tenant)
+        {
+            var q = GetQueryablePending2ApproveOrdered(tenant);
+            return q.FirstOrDefault();
+        }
+
+        
+            public IQueryable<Journal> GetJournalWhileStreamingHadError(int tenant)
+        {
+            var q = (from a in context.Journals
+                     where a.Tenant == tenant
+                     where a.QueueId == null
+                     where (a.StatusCode == "4" )//  4== error while streaming
+                     //3 voided 
+                     //2	Approved	מאושר	2,Approved,מאושר	0
+                     //to be continue ... a new field have to create !!!
+                     //where IsNull( a.Transaction)
+                     orderby a.ApproveDate, a.AccountingDate descending
+                     select a);
+            return q;
+        }
+        public IQueryable<Journal> GetQueryablePending2ApproveOrdered(int tenant)
+        {
+            var q = (from a in context.Journals
+                     where a.Tenant == tenant
+                     where a.QueueId == null
+                     where (a.StatusCode == "2" || a.StatusCode == "3")
+                     //3 voided 
+                     //2	Approved	מאושר	2,Approved,מאושר	0
+                     //to be continue ... a new field have to create !!!
+                     //where IsNull( a.Transaction)
+                     orderby a.ApproveDate, a.AccountingDate descending
+                     select a);
+            return q;
+        }
+        public IQueryable<Journal> GetQueryablesApprovedStreamed(int tenant)
+        {
+            var q = (from a in context.Journals
+                     where a.Tenant == tenant
+                     where a.QueueId == null
+                     where (a.StatusCode == "2" || a.StatusCode == "3")
+                     
+                     //2	Approved	מאושר	2,Approved,מאושר	0
+                     //to be continue ... a new field have to create !!!
+                     //where !IsNull( a.Transaction)
+
+                     select a);
+            return q;
+        }
+
+        public IQueryable<Journal> GetQueryableApprovedBetween(int tenant, DateTime fromTruncateTime, DateTime toTruncateTime)
+        {
+            var q = (from a in context.Journals
+                     where a.Tenant == tenant
+                     //where (a.StatusCode == "2" || a.StatusCode == "3")
+                     //where !String.IsNullOrWhiteSpace(a.QueueId)
+                     where  !(a.QueueId == null || a.QueueId.Trim() == string.Empty)
+                     where EntityFunctions.TruncateTime(a.AccountingDate) >= fromTruncateTime && EntityFunctions.TruncateTime(a.AccountingDate) <= toTruncateTime
+                     //2	Approved	מאושר	2,Approved,מאושר	0
+                     //to be continue ... a new field have to create !!!
+                     //where !IsNull( a.Transaction)
+
+                     select a);
+            return q;
+        }
+        public List<Journal> GetJournalByJournalNumber(string number, int tenant)
+        {
+            if (string.IsNullOrWhiteSpace(number))
+            {
+                return null;
+            }
+
+            List<Journal> Journal = (from a in context.Journals
+                                     where a.JournalNumber == number && a.Tenant == tenant
+                                     select a).ToList();
+            return Journal;
+        }
+
+
+
+        public bool CheckIfExternalNoAndSystemExist(string externalNo, string externalSystem, out string journalNumber, int tenant)
+        {
+            bool exist;
+            journalNumber = "";
+            if (String.IsNullOrWhiteSpace(externalNo) || String.IsNullOrWhiteSpace(externalSystem))
+            {
+                //exist = false;
+            }
+            else
+            {
+                IQueryable<Journal> x = (from a in context.Journals
+                                         where a.ExternalNo == externalNo && a.Tenant == tenant && a.ExternalSystem == externalSystem
+                                         select a);
+                //exist = x.Any();
+                //if (exist)
+                {
+                    Journal journal = x.FirstOrDefault<Journal>();
+                    if (journal != null)
+                    {
+                        journalNumber = journal.JournalNumber;
+                    }
+                }
+            }
+            return !String.IsNullOrWhiteSpace(journalNumber);
+        }
+
+
+        public JournalEntity GetJournalByAccountingEntityId(string entityId, int tenant)
+        {
+            var entity = (from a in context.Journals
+                          where a.Tenant == tenant
+                          where a.AccountingEntityId == entityId
+                          select new JournalEntity
+                          {
+                              JournalId = a.Id,
+                              JournalNumber = a.JournalNumber,
+
+                          }).FirstOrDefault();
+
+            return entity;
+        }
+
+        public Journal GetByAccountingEntityId(string entityId, int tenant)
+        {
+            var entity = (from a in context.Journals
+                          where a.Tenant == tenant
+                          where a.AccountingEntityId == entityId
+                          select a).FirstOrDefault();
+
+            return entity;
+        }
+
+        public IQueryable<Journal> GetByJournalsAccountingEntityId(string entityId, int tenant)
+        {
+            var journals = (from a in context.Journals.Include("JournalStatusType")
+                          where a.Tenant == tenant
+                          where a.AccountingEntityId == entityId  
+                          select a);
+
+            return journals;
+        }
+        public IQueryable<Journal> GetByJournalsAccountingEntityIds(List<string> entityIdS, int tenant)
+        {
+            var journals = (from a in context.Journals.Include("JournalStatusType")
+                            where a.Tenant == tenant
+                            where entityIdS.Contains(a.AccountingEntityId)
+                            select a);
+
+            return journals;
+        }
+        public IQueryable<Journal> GetByJournalsAccountingEntityIdAndCode(string entityId, string entityCode, int tenant)
+        {
+            var journals = (from a in context.Journals.Include("JournalStatusType")
+                            where a.Tenant == tenant
+                            where a.AccountingEntityId == entityId && a.AccountingEntityCode == entityCode
+                            select a);
+
+            return journals;
+        }
+        public bool CheckIfThereNonTranslatedJournalsByMonth(int year, int month, int tenant)
+        {
+            return (from record in context.Journals
+                    where
+                        record.Tenant == tenant
+                        && record.AccountingDate.Year == year
+                        && record.AccountingDate.Month == month
+                        && record.QueueId == null
+                    select record).Any();
+        }
+
+        public List<Journal> GetARInvoiceJournals(DateTime? taxReportMonth, int tenant)
+        {
+            return (from a in context.Journals
+                    join r in context.JournalLines on a.Id equals r.JournalId
+                    where a.AccountingEntityCode == "2" && a.TaxReportStatusCode == "3" && a.Tenant== tenant
+                    && r.DocumentDate <= taxReportMonth
+
+                    select a).ToList();
+
+
+        }
+
+        public Journal GetJournalByIdAndTenant(string id, int tenant)
+        {
+            return (from a in context.Journals
+
+                    where a.Id == id && a.Tenant == tenant
+
+
+                    select a).FirstOrDefault();
+        }
+
+    }
+
+
+   
+
+}
+
+
+public class JournalEntity
+{
+    public string JournalId  { get; set; }
+    public string JournalNumber { get; set; }
+}

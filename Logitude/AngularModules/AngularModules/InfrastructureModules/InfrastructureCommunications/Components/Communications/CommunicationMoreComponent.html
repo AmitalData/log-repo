@@ -1,0 +1,164 @@
+﻿
+<style>
+    .CustomMultiLinesText {
+        width: 800px;
+        max-height: 700px;
+        height: 300px;
+        white-space: normal;
+        word-wrap: break-word;
+        overflow-x: hidden;
+        overflow-y: auto;
+        font-size: 16px;
+        border: 1px solid LightGray;
+        border-radius: 3px;
+        background-color: #EBEBEB;
+    }
+
+        .CustomMultiLinesText:hover {
+            border: 1px solid #3BB3E2;
+        }
+</style>
+
+
+
+
+
+
+
+<!--<fieldset disabled>-->
+<fieldset>
+
+    <table style="height:100%;width:100%">
+
+        <tr><td style="text-align:left;height:10px"><div></div></td> </tr>
+
+        <tr class="FormFieldRow">
+            <td style="width: 100px;width:120px;">
+                <!--[TextCode]="'CommunicationLog.O.CorrelationID'"-->
+                <LogLabel [NoObjectField]="true"
+                          [ObjectFieldName]="'CorrelationID'"
+                          [ObjectTableName]="ObjectTableName"
+                          [DataContext]="DataContext"
+                          [Text]="'מתאם - קורלציה'">
+
+                </LogLabel>
+
+            </td>
+            <td style="width:10px"></td>
+            <td style="width: 200px; padding-right: 10px;">
+                <!--<LogTextBox [NoObjectField]="true"
+                            [ObjectFieldName]="'CorrelationID'"
+                            [InputType]="ntext"
+                            [DataContext]="DataContext"
+                            [ObjectTableName]="ObjectTableName"
+                            [HideColumns]="true">
+
+                </LogTextBox>-->
+                <div></div>
+                <div>
+                    <table>
+                        <tr>
+                            <td><div style="margin:10px;text-align:right;width:360px;height:27px" class="CustomMultiLinesText">{{CorrelationID}}</div></td>
+                            <td></td>
+                            <td><button class="Button" title="Copy to clipboard" (click)="Copy2Clipboard('CorrelationID')" style="width:50px;float:left;margin-left:100px;">העתק</button></td>
+                            <td></td>
+                        </tr>
+                    </table>
+
+
+                    <input type="text" [id]="_input2CopyToClipboardId" [(ngModel)]="CorrelationID" style="width:20px;position: absolute; left: -1000px; top: -1000px;">
+
+
+                </div>
+            </td>
+
+            <td><div></div></td>
+
+        </tr>
+
+
+        <tr class="FormFieldRow">
+            <td style="width: 100px">
+                <!--[TextCode]="'CommunicationLog.O.CorrelationID'"-->
+                <LogLabel [NoObjectField]="true"
+                          [ObjectFieldName]="'CorrelationID'"
+                          [ObjectTableName]="ObjectTableName"
+                          [DataContext]="DataContext"
+                          [Text]="'מזהה חיצוני - External ID'">
+
+                </LogLabel>
+
+            </td>
+            <td style="width:10px"></td>
+            <td style="width: 200px; padding-right: 10px;">
+
+                <div></div>
+                <div>
+                    <table>
+                        <tr>
+                            <td><div style="margin:10px;text-align:right;width:360px;height:27px" class="CustomMultiLinesText">{{ExternalID}}</div></td>
+                            <td></td>
+                            <td><button class="Button" title="Copy to clipboard" (click)="Copy2Clipboard('ExternalID')" style="width:50px;float:left;margin-left:100px;">העתק</button></td>
+                            <td></td>
+                        </tr>
+                    </table>
+
+
+
+
+                </div>
+            </td>
+
+            <td><div></div></td>
+
+        </tr>
+
+        <tr><td style="text-align:left;height:10px"><div></div></td> </tr>
+
+        <tr><td style="text-align:left;height:10px"><div style="float:right">{{'CommunicationLog.O.Logs' | TextCodeTranslationPipe}}</div></td> </tr>
+
+        <tr style="vertical-align:top;">
+            <td style="margin-left:5px;" colspan="4">
+
+                <div>
+                    <button class="Button" title="Copy to clipboard" (click)="Copy2Clipboard('Logs')" style="width:50px;float:left;margin-left:90px;">העתק</button>
+                    <div style="margin:10px;vertical-align:top;" class="CustomMultiLinesText">
+
+
+                        <div style="font-family:'Lucida Sans Unicode'; white-space: normal;word-wrap: break-word;;margin-top:5px;margin-bottom:5px; margin-left:10px;margin-right:10px;font-size:15px">
+                            {{Logs}}
+                        </div>
+                    </div>
+                </div>
+
+
+            </td>
+        </tr>
+
+
+        <tr><td style="text-align:left;height:10px"><div></div></td> </tr>
+
+        <tr><td style="text-align:left;height:10px"><div style="float:right">{{'CommunicationLog.O.Error' | TextCodeTranslationPipe}}</div></td> </tr>
+
+        <tr style="vertical-align:top;">
+            <td style="margin-left:5px;" colspan="4">
+                <div>
+                    <button class="Button" title="Copy to clipboard" (click)="Copy2Clipboard('ExceptionMessage')" style="width:50px;float:left;margin-left:90px;">העתק</button>
+                    <div style="margin:10px;vertical-align:top;" class="CustomMultiLinesText">
+
+
+
+                        <div style="font-family:'Lucida Sans Unicode'; white-space: normal;word-wrap: break-word;;margin-top:5px;margin-bottom:5px; margin-left:10px;margin-right:10px;font-size:15px">
+                            {{ExceptionMessage}}
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </td>
+        </tr>
+
+        <tr style="height:100%"><td><div></div></td> </tr>
+    </table>
+</fieldset>

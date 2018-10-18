@@ -1,0 +1,395 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Customs.Def.Validators;
+  
+namespace Logitude.Customs.Def.EntityPMs
+{
+   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class DeclarationPaymentPM : EntityPM
+   {
+   	  private string declarationId ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DeclarationId  
+	   {
+	    
+	     get
+		{
+		   return declarationId;
+		 }
+		 set
+		 {
+		   if(declarationId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeclarationId",OldValue=declarationId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   declarationId=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? paymentDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? PaymentDate  
+	   {
+	    
+	     get
+		{
+		   return paymentDate;
+		 }
+		 set
+		 {
+		   if(paymentDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PaymentDate",OldValue=paymentDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   paymentDate=value;
+		   }
+			
+		 }
+	   }
+	  private string createdByUserId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CreatedByUserId  
+	   {
+	    
+	     get
+		{
+		   return createdByUserId;
+		 }
+		 set
+		 {
+		   if(createdByUserId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUserId",OldValue=createdByUserId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   createdByUserId=value;
+		   }
+			
+		 }
+	   }
+	  private string signatoryIdentification ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SignatoryIdentification  
+	   {
+	    
+	     get
+		{
+		   return signatoryIdentification;
+		 }
+		 set
+		 {
+		   if(signatoryIdentification != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SignatoryIdentification",OldValue=signatoryIdentification,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   signatoryIdentification=value;
+		   }
+			
+		 }
+	   }
+	  private bool isProcessA ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsProcessA  
+	   {
+	    
+	     get
+		{
+		   return isProcessA;
+		 }
+		 set
+		 {
+		   if(isProcessA != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsProcessA",OldValue=isProcessA,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isProcessA=value;
+		   }
+			
+		 }
+	   }
+	  private string processADescription ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ProcessADescription  
+	   {
+	    
+	     get
+		{
+		   return processADescription;
+		 }
+		 set
+		 {
+		   if(processADescription != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ProcessADescription",OldValue=processADescription,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   processADescription=value;
+		   }
+			
+		 }
+	   }
+
+	   private List<DeclarationPaymentProtestPM> declarationPaymentProtests;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("DeclarationPaymentDeclarationPaymentProtest", "DeclarationId","DeclarationId")]
+	   [DataMember]
+	   public virtual List<DeclarationPaymentProtestPM> DeclarationPaymentProtests  
+	   {
+	        get
+             {
+                 if (declarationPaymentProtests == null)
+                 {
+                     declarationPaymentProtests = new List<DeclarationPaymentProtestPM>();
+                 }
+                 return declarationPaymentProtests;
+              }
+             set { declarationPaymentProtests = value; }
+	    }
+		   
+	   private List<DeclarationPaymentProtestPM>  deletedDeclarationPaymentProtests;
+	   public virtual List<DeclarationPaymentProtestPM> DeletedDeclarationPaymentProtests  
+	   {
+	        get
+             {
+                 if ( deletedDeclarationPaymentProtests == null)
+                 {
+                      deletedDeclarationPaymentProtests = new List<DeclarationPaymentProtestPM>();
+                 }
+                 return  deletedDeclarationPaymentProtests;
+              }
+             set {  deletedDeclarationPaymentProtests = value; }
+	    }
+	  
+	   private List<DeclarationPaymentMethodPM> declarationPaymentMethods;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("DeclarationPaymentDeclarationPaymentMethods", "DeclarationId","DeclarationId")]
+	   [DataMember]
+	   public virtual List<DeclarationPaymentMethodPM> DeclarationPaymentMethods  
+	   {
+	        get
+             {
+                 if (declarationPaymentMethods == null)
+                 {
+                     declarationPaymentMethods = new List<DeclarationPaymentMethodPM>();
+                 }
+                 return declarationPaymentMethods;
+              }
+             set { declarationPaymentMethods = value; }
+	    }
+		   
+	   private List<DeclarationPaymentMethodPM>  deletedDeclarationPaymentMethods;
+	   public virtual List<DeclarationPaymentMethodPM> DeletedDeclarationPaymentMethods  
+	   {
+	        get
+             {
+                 if ( deletedDeclarationPaymentMethods == null)
+                 {
+                      deletedDeclarationPaymentMethods = new List<DeclarationPaymentMethodPM>();
+                 }
+                 return  deletedDeclarationPaymentMethods;
+              }
+             set {  deletedDeclarationPaymentMethods = value; }
+	    }
+	  	  private int tenant ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+	  private int paymentMethodLastLineNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int PaymentMethodLastLineNumber  
+	   {
+	    
+	     get
+		{
+		   return paymentMethodLastLineNumber;
+		 }
+		 set
+		 {
+		   if(paymentMethodLastLineNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PaymentMethodLastLineNumber",OldValue=paymentMethodLastLineNumber,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   paymentMethodLastLineNumber=value;
+		   }
+			
+		 }
+	   }
+	  private int paymentProtestLastLineNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int PaymentProtestLastLineNumber  
+	   {
+	    
+	     get
+		{
+		   return paymentProtestLastLineNumber;
+		 }
+		 set
+		 {
+		   if(paymentProtestLastLineNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PaymentProtestLastLineNumber",OldValue=paymentProtestLastLineNumber,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   paymentProtestLastLineNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string concurrencyGUID ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ConcurrencyGUID  
+	   {
+	    
+	     get
+		{
+		   return concurrencyGUID;
+		 }
+		 set
+		 {
+		   if(concurrencyGUID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ConcurrencyGUID",OldValue=concurrencyGUID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   concurrencyGUID=value;
+		   }
+			
+		 }
+	   }
+	  private string newConcurrencyGUID ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string NewConcurrencyGUID  
+	   {
+	    
+	     get
+		{
+		   return newConcurrencyGUID;
+		 }
+		 set
+		 {
+		   if(newConcurrencyGUID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NewConcurrencyGUID",OldValue=newConcurrencyGUID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   newConcurrencyGUID=value;
+		   }
+			
+		 }
+	   }
+	  private string customsAgentExplanationDefault ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomsAgentExplanationDefault  
+	   {
+	    
+	     get
+		{
+		   return customsAgentExplanationDefault;
+		 }
+		 set
+		 {
+		   if(customsAgentExplanationDefault != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsAgentExplanationDefault",OldValue=customsAgentExplanationDefault,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customsAgentExplanationDefault=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? futurePaymentDateTime ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? FuturePaymentDateTime  
+	   {
+	    
+	     get
+		{
+		   return futurePaymentDateTime;
+		 }
+		 set
+		 {
+		   if(futurePaymentDateTime != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FuturePaymentDateTime",OldValue=futurePaymentDateTime,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   futurePaymentDateTime=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

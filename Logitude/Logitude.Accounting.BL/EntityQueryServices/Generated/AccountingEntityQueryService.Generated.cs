@@ -1,0 +1,69 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Accounting.BL.EntityDataMappings;
+using Logitude.Accounting.Data.Repositories;
+using Logitude.Accounting.Data.EntityKeys;
+using Logitude.Accounting.Data;
+using Simplog.Server.Infrastructure;
+namespace Logitude.Accounting.BL.EntityQueryServices
+{ 
+   public partial class AccountingEntityQueryService: EntityQueryService<AccountingEntity,AccountingEntityKeys,AccountingEntityPM,object,AccountingEntityKeys>
+   {
+   
+        AccountingEntityRepository repository;
+		IAccountingContext  context;
+        public AccountingEntityQueryService(int tenant)
+        {
+		    context = AccountingContext.GetContext(tenant);
+            MainContext = context;
+            repository = new AccountingEntityRepository(context);
+            Repository = repository;
+            mapping = new AccountingEntityDataMapping();
+        }
+
+        public AccountingEntityQueryService(AccountingEntityRepository repository)
+        {
+            this.repository = repository;
+            Repository = repository;
+            mapping = new AccountingEntityDataMapping();
+        }
+
+        public AccountingEntityQueryService(IAccountingContext context)
+        {
+            this.repository = new AccountingEntityRepository(context);
+            this.context = context;
+
+            MainContext = context;
+            Repository = repository;
+            mapping = new AccountingEntityDataMapping();
+        }
+		 
+		public  AccountingEntityPM GetSingle(string code,bool getComposition, bool getFromCache)
+        {
+             EntityKeys = new AccountingEntityKeys(){ Code = code };
+
+			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
+        }
+
+       
+	    protected override EntityKeyFields GetKeys(AccountingEntity entityPOCO)
+        {
+            AccountingEntityKeys entityKeys = new AccountingEntityKeys() { Code = entityPOCO.Code,  };
+            return entityKeys;
+        }
+     
+	 
+   }
+   
+}
+	 

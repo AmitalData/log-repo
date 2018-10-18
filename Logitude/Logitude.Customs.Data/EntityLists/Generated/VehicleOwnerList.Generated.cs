@@ -1,0 +1,48 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization; 
+
+namespace Logitude.Customs.Data.EntityLists
+{
+   [DataContract]
+   public partial class VehicleOwnerList
+   {
+          [DataMember]
+       public int Tenant  { get; set; }
+
+       [Key]
+       [DataMember]
+       public string VehicleId  { get; set; }
+
+       [Key]
+       [DataMember]
+       public int LineNumber  { get; set; }
+       [DataMember]
+       public string ClientId  { get; set; }
+       [DataMember]
+       public string LastNameOrCorporationName  { get; set; }
+       [DataMember]
+       public string FirstName  { get; set; }
+       [DataMember]
+       public bool IsMain  { get; set; }
+       [DataMember]
+       public string ClientName  { get; set; }
+       [DataMember]
+       public string PassportNumber  { get; set; }
+       [DataMember]
+       public string PassCountryCode  { get; set; }
+       [DataMember]
+       public string PassCountryName  { get; set; }
+       [DataMember]
+       public string ImporterPassportTypeCode  { get; set; }
+       [DataMember]
+       public string ImporterPassportTypeName  { get; set; }
+   }
+
+}
+	 

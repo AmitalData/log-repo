@@ -1,0 +1,41 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace WebFreight.Web.DataProviders
+{
+    public class EmployeeTimeSheetDataProvider
+    {
+        public string EmployeeUserId { get; set; }
+        public string EmployeeUserName { get; set; }
+        public DateTime FromDate { get; set; }
+        public DateTime ToDate { get; set; }
+        public DateTime? Today_DateTime { get; set; }
+        public List<EmployeeTimeSheetData> EmployeeTimeSheetList { get; set; }
+
+        public int? Total_RequiredWorkHours { get; set; }
+        public string Total_TimeFromClock { get; set; }
+        public string Total_TimeFromOffice { get; set; }
+        public string Total_DifferenceTime { get; set; }
+        public string Total_TimeFromHome { get; set; }
+        public string Total_TimeFromClient { get; set; }
+        public string Total_TotalWorkHrs { get; set; }
+        public string Total_OverTime { get; set; }
+    }
+
+    public class EmployeeTimeSheetData
+    {
+        public string EmployeeName { get; set; }
+        public string DayOfWork { get; set; }
+        public DateTime? DateOfWork { get; set; }
+        public int? RequiredWorkHours { get; set; }
+        public string TimeFromClock { get; set; }
+        public string TimeFromOffice { get; set; }
+        public string DifferenceTime { get; set; }
+        public string TimeFromHome { get; set; }
+        public string TimeFromClient { get; set; }
+        public string TotalWorkHrs { get; set; }
+        public string OverTime { get; set; }
+    }
+}

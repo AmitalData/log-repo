@@ -1,0 +1,87 @@
+﻿
+<table>
+    <tr style="height: 1px;">
+        <td>
+            <table>
+                <tr>
+                    <td style="width: 230px;">
+                        <SearchBox [UseTimer]="true" (TextChanged)="SearchText = $event"></SearchBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 5px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr class="SectionHeader" style="height: 22px; border: 1px solid #AAAAAA; border-bottom:0;">
+                    <td style="font-size: 12px; padding-left: 10px;">My Contacts ({{MyContactsCount}})</td>
+                </tr>
+
+                <tr style="border: 1px solid #AAAAAA; border-top:0;">
+                    <td>
+                        <div class="MediaFill">
+                            <div class="SimpleGridView">
+                                <div class="SimpleGridViewHeaderDark">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 300px; min-width: 300px; max-width: 300px;">English Name</td>
+                                            <td>Email</td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div class="SimpleGridViewBody">
+                                    <table>
+                                        <tr class="SimpleGridViewRow RowHover" *ngFor="let item of ItemsSource" (click)="Selecting(item)">
+                                            <td class="GridViewCell" style="width: 300px; min-width: 300px; max-width: 300px;">
+                                                {{item.EnglishName}}
+                                            </td>
+
+                                            <td class="GridViewCell">
+                                                {{item.Email}}
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="2">
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>                        
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CloseButtonClicked()">Close</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

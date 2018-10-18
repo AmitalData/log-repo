@@ -1,0 +1,89 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Customs.Data.EntityPOCOs
+{
+   
+    public class CustomsCollateral
+    {
+	 string dbms;
+
+        [Key]
+        [Column("Id")]
+	    public string Id { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+        [Column("CollateralRequestNumber")]
+	    public string CollateralRequestNumber { get; set; }
+        [Column("RequestValidityDate")]
+	    public DateTime? RequestValidityDate { get; set; }
+        [Column("CollateralValidityDate")]
+	    public DateTime? CollateralValidityDate { get; set; }
+        [ForeignKey("CollateralRequestStatus")]
+        [Column("CollateralRequestStatusCode")]
+	    public string CollateralRequestStatusCode { get; set; }
+	      
+        public virtual CollateralRequestStatus CollateralRequestStatus { get; set; }
+        [ForeignKey("RequestedCollateralType")]
+        [Column("RequestedCollateralTypeCode")]
+	    public string RequestedCollateralTypeCode { get; set; }
+	      
+        public virtual CollateralType RequestedCollateralType { get; set; }
+        [ForeignKey("OrganizationUnitType")]
+        [Column("OrganizationUnitTypeCode")]
+	    public string OrganizationUnitTypeCode { get; set; }
+	      
+        public virtual OrganizationUnitType OrganizationUnitType { get; set; }
+        [ForeignKey("CustomsHouseType")]
+        [Column("CustomsHouseTypeCode")]
+	    public string CustomsHouseTypeCode { get; set; }
+	      
+        public virtual CustomsHouseType CustomsHouseType { get; set; }
+        [Column("WorkerName")]
+	    public string WorkerName { get; set; }
+        [Column("Remarks")]
+	    public string Remarks { get; set; }
+        [Column("FileNo")]
+	    public string FileNo { get; set; }
+        [ForeignKey("EntityTypeLookup")]
+        [Column("CustomsEntityTypeCode")]
+	    public string CustomsEntityTypeCode { get; set; }
+	      
+        public virtual EntityTypeLookup EntityTypeLookup { get; set; }
+        [Column("EntityIdKey1")]
+	    public string EntityIdKey1 { get; set; }
+        [Column("EntityIdKey2")]
+	    public string EntityIdKey2 { get; set; }
+        [Column("EntityIdKey3")]
+	    public string EntityIdKey3 { get; set; }
+        [Column("IncludingThirdPartyGuarantee")]
+	    public bool IncludingThirdPartyGuarantee { get; set; }
+        [ForeignKey("Declaration")]
+        [Column("DeclarationId")]
+	    public string DeclarationId { get; set; }
+	      
+        public virtual Declaration Declaration { get; set; }
+        [Column("SearchFields")]
+	    public string SearchFields { get; set; }
+        [Column("CreateDateTime")]
+	    public DateTime? CreateDateTime { get; set; }
+        [Column("IsClosed")]
+	    public bool IsClosed { get; set; }
+        [ForeignKey("Customer")]
+        [Column("CustomerId")]
+	    public string CustomerId { get; set; }
+	      
+        public virtual Customer Customer { get; set; }
+    }
+}
+	 

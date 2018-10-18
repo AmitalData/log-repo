@@ -1,0 +1,235 @@
+﻿<style>
+    img {
+        position:absolute;
+        top: 25%;
+        left: 50%;
+        width: 12px;
+        height: 12px;
+    }
+</style>
+<div>
+    <!-- CustomItemLegalDemandsQueryComponent  view  -->
+    <custom-message-wrapper>
+
+        <!-- CustomItemLegalDemandsQueryComponent  Request  -->
+        <div class="class-request-content">
+            <table style="width: 570px;padding-top: 10px;">
+                <tr class="FormFieldRow"><!-- CustomsBookType -->
+                    <td style="width: 200px">
+                        <LogLabel [NoObjectField]="true" [ObjectFieldName]="'CustomsBookType'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Customs.CustomItemLegalDemandsQuery.O.CustomsBookType'"></LogLabel>
+                    </td>
+                    <td style="width:10px"></td>
+
+                    <td style="width: 200px; padding-right: 36px;">
+                        <!-- CustomItemLegalDemandsQueryComponent  Request.CustomsBookType-->
+                        <LogLov [ObjectFieldName]="'CustomsBookType'"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [HideColumns]="true"
+                                [LookUpTableName]="'Customs.CustomsBookType'"
+                                [DisplayMemberPath]="'LocalName'">
+                        </LogLov>
+                    </td>
+
+                    <td><div></div></td>
+                    <td style="width: 200px"></td>
+                    <td style="width:10px"></td>
+
+                    <td style="width: 200px; padding-right: 36px;"></td>
+
+                    <td><div></div></td>
+                </tr>
+
+                <tr class="FormFieldRow"><!--ClassificationCode-->
+                    <!-- ClassificationCode -->
+                    <td style="width: 200px">
+                        <LogLabel [NoObjectField]="true" [ObjectFieldName]="'ClassificationCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Customs.CustomItemLegalDemandsQuery.O.ClassificationCode'"></LogLabel>
+                    </td>
+                    <td style="width:10px"></td>
+
+                    <td style="width: 200px; padding-right: 36px;">
+                        <!-- CustomItemLegalDemandsQueryComponent  Request.ClassificationCode-->
+                        <LogTextBox #CustomsItemTextBox [NoObjectField]="true"
+                                    [ObjectFieldName]="'ClassificationCode'" 
+                                    [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                    (LostFocus)="OnCustomsItemLostFocus(CustomsItemTextBox)"
+                                    [Text]="ClassificationCode"
+                                    [HideColumns]="true"></LogTextBox>
+                    </td>
+
+                    <td><div></div></td>
+                    <td style="width: 200px"></td>
+                    <td style="width:10px"></td>
+
+                    <td style="width: 200px; padding-right: 36px;"></td>
+
+                    <td><div></div></td>
+                </tr>
+
+                <tr class="FormFieldRow">
+                    <!--ValidToDate -->
+                    <td style="width: 200px">
+                        <LogLabel [NoObjectField]="true" [ObjectFieldName]="'ValidToDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Customs.CustomItemLegalDemandsQuery.O.ValidToDate'"></LogLabel>
+                    </td>
+                    <td style="width:10px"></td>
+
+                    <td style="width: 200px; padding-right: 36px;">
+                        <!-- CustomItemLegalDemandsQueryComponent  Request.ValidToDate-->
+
+                        <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'ValidToDate'" [ObjectTableName]="ObjectTableName"
+                                       [InputType]="'date'" [DataContext]="DataContext"
+                                       [HideColumns]="true"></LogDatePicker>
+
+                    </td>
+                    <td><div></div></td>
+                </tr>
+                
+                <tr class="FormFieldRow" style="height:1px">
+                    <td><div></div></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- CustomItemLegalDemandsQueryComponent  Response  -->
+        <div class="class-response-content">
+            <table style="width: 920px;height: 200px;padding-top: 10px;">
+                <tr style="width: 100%">
+                    <td style="width: 200px;height:25px; font-size: 12px; color: #1B90CB;">
+                        {{'Customs.CustomItemLegalDemandsQuery.O.IllegalImportData'| TextCodeTranslationPipe}}
+                    </td>
+                </tr>
+                <tr class="FormFieldRow" style="height:1px">
+                    <!--background-color :aquamarine;-->
+                    <td colspan="5" style="width: 100% ; height : 100%">
+                        <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
+                            <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="CustomItemLegalDemandsQueryObservableList">
+
+                                <!-- RequirementSourceName -->
+                                <log-column [header]="'Customs.CustomItemLegalDemandsQuery.O.RequirementSource' | TextCodeTranslationPipe"
+                                            [binding]="'RequirementSourceName'"
+                                            [width]="'100'" [Alignment]="'right'">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div class="RightCenter">
+                                            <span>{{item.RequirementSourceName}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
+                                <!-- FullClassification -->
+                                <log-column [header]="'Customs.CustomItemLegalDemandsQuery.O.FullClassification' | TextCodeTranslationPipe"
+                                            [width]="'100'" [Alignment]="'right'"
+                                            [binding]="'FullClassification'">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div class="RightCenter">
+                                            <span>{{item.FullClassification}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
+                                <!-- RequirementGoodsDescription -->
+                                <log-column [header]="'Customs.CustomItemLegalDemandsQuery.O.RequirementGoodsDescription' | TextCodeTranslationPipe"
+                                            [binding]="'RequirementGoodsDescription'"
+                                            [width]="'180'" [Alignment]="'right'">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div class="RightCenter">
+                                            <span>{{item.RequirementGoodsDescription}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
+                                <!-- AuthoritiyName -->
+                                <log-column [header]="'Customs.CustomItemLegalDemandsQuery.O.AuthoritiyName' | TextCodeTranslationPipe"
+                                            [width]="'100'" [Alignment]="'right'" [binding]="'AuthoritiyName'">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div class="RightCenter">
+                                            <span>{{item.AuthoritiyName }}</span>
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
+                                <!-- CertificateTypeName -->
+                                <log-column [header]="'Customs.CustomItemLegalDemandsQuery.O.CertificateTypeName' | TextCodeTranslationPipe"
+                                            [width]="'100'" [Alignment]="'right'" [binding]="'CertificateTypeName'">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div class="RightCenter">
+                                            <span>{{item.CertificateTypeName }}</span>
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
+                                <!-- TextualCondition -->
+                                <log-column [header]="'Customs.CustomItemLegalDemandsQuery.O.TextualCondition' | TextCodeTranslationPipe"
+                                            [width]="'90'" [Alignment]="'right'" [binding]="'TextualCondition'">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div class="RightCenter">
+                                            <span>{{item.TextualCondition }}</span>
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
+                                <!-- InterConditionsRelationshipName -->
+                                <log-column [header]="'Customs.CustomItemLegalDemandsQuery.O.InterConditionsRelationshipName' | TextCodeTranslationPipe"
+                                            [width]="'70'" [Alignment]="'right'" [binding]="'InterConditionsRelationshipName'">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div class="RightCenter">
+                                            <span>{{item.InterConditionsRelationshipName }}</span>
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
+                                <!-- IsPersonalImportIncluded -->
+                                <log-column [header]="'Customs.CustomItemLegalDemandsQuery.O.IsPersonalImportIncluded' | TextCodeTranslationPipe"
+                                            [width]="'80'" [Alignment]="'right'" [binding]="'IsPersonalImportIncluded'">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div>
+                                            <img *ngIf="item.IsPersonalImportIncluded=='Visible'" title="Yes" src="./Images/CheckBoxIcon.png" />
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
+                                <!-- IsCarnetIncluded -->
+                                <log-column [header]="'Customs.CustomItemLegalDemandsQuery.O.IsCarnetIncluded' | TextCodeTranslationPipe"
+                                            [width]="'70'" [Alignment]="'right'" [binding]="'IsCarnetIncluded'">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div class="RightCenter">
+                                            <img *ngIf="item.IsCarnetIncluded=='Visible'" title="Yes" src="./Images/CheckBoxIcon.png" />
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
+                            </logitude-edit-grid>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <table style="width: 300px;height: 150px;padding-top: 10px;">
+                <tr style="width: 100%">
+                    <td style="width: 200px;height:25px; font-size: 12px; color: #1B90CB;">
+                        {{'Customs.CustomItemLegalDemandsQuery.O.ExclusionOfCountries'| TextCodeTranslationPipe}}
+                    </td>
+                </tr>
+                <tr class="FormFieldRow" style="height:1px">
+                    <!--background-color :aquamarine;-->
+                    <td colspan="5" style="width: 100% ; height : 100%">
+                        <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
+                            <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="CountriesExclusionListObservableList">
+
+                                <!-- CountryName -->
+                                <log-column [header]="'Customs.CustomItemLegalDemandsQuery.O.CountryName' | TextCodeTranslationPipe"
+                                            [binding]="'CountryName'"
+                                            [width]="'150'" [Alignment]="'right'">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div class="RightCenter">
+                                            <span>{{item.CountryName}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+                            </logitude-edit-grid>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+    </custom-message-wrapper>
+</div>

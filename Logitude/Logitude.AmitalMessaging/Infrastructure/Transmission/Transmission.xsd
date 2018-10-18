@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://tempuri.org/Transmission" elementFormDefault="qualified" targetNamespace="http://tempuri.org/Transmission" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+ <xs:element name="transmission">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="transmission_details" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="data" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="transmission_details">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element ref="sender" />
+    <xs:element ref="receiver" />
+    <xs:element ref="subject" />
+    <xs:element ref="transmission_type" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="email" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="fax" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="special_instructions" />
+    <xs:element minOccurs="0" maxOccurs="unbounded" ref="ftp_file" />
+    <xs:element ref="partner_com_id" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="filename" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="forward_interface" />
+    <xs:element minOccurs="0" maxOccurs="1" ref="forward_partner" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="sender">
+  <xs:complexType>
+   <xs:simpleContent>
+    <xs:extension base="xs:string">
+     <xs:attribute name="valerr" type="xs:string" />
+    </xs:extension>
+   </xs:simpleContent>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="receiver">
+  <xs:complexType>
+   <xs:simpleContent>
+    <xs:extension base="xs:string">
+     <xs:attribute name="valerr" type="xs:string" />
+    </xs:extension>
+   </xs:simpleContent>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="subject">
+  <xs:complexType>
+   <xs:simpleContent>
+    <xs:extension base="xs:string">
+     <xs:attribute name="valerr" type="xs:string" />
+    </xs:extension>
+   </xs:simpleContent>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="transmission_type">
+  <xs:complexType>
+   <xs:simpleContent>
+    <xs:extension base="xs:string">
+     <xs:attribute name="valerr" type="xs:string" />
+    </xs:extension>
+   </xs:simpleContent>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="email">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element ref="to" />
+    <xs:element ref="cc" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="to">
+  <xs:complexType>
+   <xs:simpleContent>
+    <xs:extension base="xs:string">
+     <xs:attribute name="valerr" type="xs:string" />
+    </xs:extension>
+   </xs:simpleContent>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="cc">
+  <xs:complexType>
+   <xs:simpleContent>
+    <xs:extension base="xs:string">
+     <xs:attribute name="valerr" type="xs:string" />
+    </xs:extension>
+   </xs:simpleContent>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="fax">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element ref="fax_number" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="fax_number">
+  <xs:complexType>
+   <xs:simpleContent>
+    <xs:extension base="xs:string">
+     <xs:attribute name="valerr" type="xs:string" />
+    </xs:extension>
+   </xs:simpleContent>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="special_instructions">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element ref="internal" />
+    <xs:element ref="uworkj" />
+    <xs:element ref="convert" />
+    <xs:element ref="flat_file" />
+    <xs:element ref="prefix" />
+    <xs:element ref="more_params" />
+    <xs:element ref="separate_analyze" />
+    <xs:element ref="split" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="internal">
+  <xs:complexType>
+   <xs:simpleContent>
+    <xs:extension base="xs:string">
+     <xs:attribute name="valerr" type="xs:string" />
+    </xs:extension>
+   </xs:simpleContent>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="uworkj">
+  <xs:complexType>
+   <xs:simpleContent>
+    <xs:extension base="xs:string">
+     <xs:attribute name="valerr" type="xs:string" />
+    </xs:extension>
+   </xs:simpleContent>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="convert">
+  <xs:complexType>
+   <xs:simpleContent>
+    <xs:extension base="xs:string">
+     <xs:attribute name="valerr" type="xs:string" />
+    </xs:extension>
+   </xs:simpleContent>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="flat_file" type="xs:string" />
+ <xs:element name="prefix" type="xs:string" />
+ <xs:element name="more_params" type="xs:string" />
+ <xs:element name="separate_analyze" type="xs:string" />
+ <xs:element name="split" type="xs:string" />
+ <xs:element name="ftp_file">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element ref="ftp_server" />
+    <xs:element ref="username" />
+    <xs:element ref="password" />
+    <xs:element ref="directory" />
+    <xs:element ref="get_file_name_by_execute" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="ftp_server" type="xs:string" />
+ <xs:element name="username" type="xs:string" />
+ <xs:element name="password" type="xs:string" />
+ <xs:element name="directory" type="xs:string" />
+ <xs:element name="get_file_name_by_execute" type="xs:string" />
+ <xs:element name="partner_com_id" type="xs:string" />
+ <xs:element name="filename" type="xs:string" />
+ <xs:element name="forward_interface" type="xs:string" />
+ <xs:element name="forward_partner" type="xs:string" />
+ <xs:element name="data">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element ref="entity" />
+   </xs:sequence>
+  </xs:complexType>
+ </xs:element>
+ <xs:element name="entity" type="xs:string" />
+</xs:schema>

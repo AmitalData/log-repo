@@ -1,0 +1,38 @@
+﻿<div class="TabHolder">
+    <div class="TabControl" style="position: absolute; height: calc(100% - 20px);width: calc(100% - 20px)">
+        <div class="TabControlHead">
+            <ul>
+                <li [class.Selected]="SelectedTabCode == 'BOT'" (click)="SelectedTabCode = 'BOT'">
+                    <div class="InnerChild">
+                        Opened Tickets
+                    </div>
+                </li>
+
+                <li [class.Selected]="SelectedTabCode == 'BFR'" (click)="SelectedTabCode = 'BFR'">
+                    <div class="InnerChild">
+                       Closed Tickets
+                        <div class="TabSquareIcon"></div>
+                    </div>
+                </li>
+
+              
+            </ul>
+        </div>
+
+        <div class="TabControlBody" >
+
+            <!-- ByOpenedTickets -->
+            <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'BOT'">
+                <div class="LocationDirective" LocationDirective Code="BOT"></div>
+            </div>
+
+            <!--ByFirstResolveDate-->
+            <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'BFR'">
+                <div class="LocationDirective" LocationDirective Code="BFR"></div>
+            </div>
+
+        </div>
+    </div>
+
+
+</div>

@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://tempuri.org/CustomTable" elementFormDefault="qualified" targetNamespace="http://tempuri.org/CustomTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="CUSTOMS_TABLE">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="TABLECODE" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TABLECODE">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="TABLECODE_ID" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="TABLEDATA" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TABLECODE_ID" type="xs:string" />
+  <xs:element name="TABLEDATA">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="TABLEDATA_ID" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="TABLEDATA_NAME_HEB" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="TABLEDATA_NAME_ENG" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="TABLEDATA_BLOCKED" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="TABLEDATA_ADDITIONALCODE1" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="TABLEDATA_ADDITIONALCODE2" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="TABLEDATA_REMARKS" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="TABLEDATA_UNF_TABLE" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TABLEDATA_ID" type="xs:string" />
+  <xs:element name="TABLEDATA_NAME_HEB" type="xs:string" />
+  <xs:element name="TABLEDATA_NAME_ENG" type="xs:string" />
+  <xs:element name="TABLEDATA_BLOCKED" type="xs:string" />
+  <xs:element name="TABLEDATA_ADDITIONALCODE1" type="xs:string" />
+  <xs:element name="TABLEDATA_ADDITIONALCODE2" type="xs:string" />
+  <xs:element name="TABLEDATA_REMARKS" type="xs:string" />
+  <xs:element name="TABLEDATA_UNF_TABLE" type="xs:string" />
+</xs:schema>

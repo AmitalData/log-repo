@@ -1,0 +1,240 @@
+﻿
+<style type="text/css">
+    .HelpSection .SectionHeader {
+        height: 27px;
+        line-height: 27px;
+        font-size: 14px;
+        color: #282E30;
+        width: 100%;
+    }
+
+    .HelpSection {
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+        height: 100%;
+        overflow: hidden;
+    }
+</style>
+
+
+<div style="overflow-x:auto;height:100%;width:100%">
+    <table style="min-width:1150px">
+        <tr>
+            <td>
+                <ScrollViewer>
+                    <table>
+                        <tr style="height: 235px;">
+                            <td>
+                                <table class="FixedTable">
+                                    <tr>
+                                        <!-- Video Tutorials -->
+                                        <td style="height: 235px;">
+                                            <div class="HelpSection" style="background:rgba(199,228,255,0.5);">
+                                                <div class="SectionHeader" style="background:#C7E4FF;">
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width:25px; padding-left: 0px;">
+                                                                <img style="vertical-align: middle; float: left; width: 22px; height: 22px;" src="./Images/video.png" />
+                                                            </td>
+
+                                                            <td style="font-size: 13px;">Video Tutorials</td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+
+                                                <div class="MediaFill" style="position:relative;">
+                                                    <div *ngIf="!HasVedios" style="font-size:11px;color:gray;font-family:Arial;font-style:italic;"> No Video tutorials available for you! </div>
+                                                    <div *ngIf="HasVedios">
+                                                        <ul style="display:inline;">
+                                                            <li *ngFor="let item of VideosObslist" style="display:inline;">
+                                                                <p (click)="item.NafigateToURL()" class="QueryLink">{{item.VideoContent}}</p>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td style="width: 10px">
+                                            <div></div>
+                                        </td>
+
+                                        <!-- How To -->
+                                        <td style="height: 235px;">
+                                            <div class="HelpSection" style="background:rgba(199,229,163,0.5);">
+                                                <div class="SectionHeader" style="background: #C7E5A3;">
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width:25px; padding-left: 5px;">
+                                                                <img style="vertical-align: middle; float: left;" src="./Images/HelpBlack.png" />
+                                                            </td>
+
+                                                            <td style="font-size: 13px;">How To</td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+
+                                                <div class="MediaFill" style="position:relative;">
+                                                    <div *ngIf="!HasHowTos" style="font-size:11px;color:gray;font-family:Arial;font-style:italic;"> No How To tutorials available for you!</div>
+                                                    <div *ngIf="HasHowTos">
+                                                        <ul style="display:inline;">
+                                                            <li *ngFor="let item of HowToObslist" style="display:inline;">
+                                                                <table>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <span (click)="item.HowToMethod()" class="QueryLink">{{item.HowToContent}}</span>
+                                                                            <span *ngIf="item.IsNew" style="font-size:9px;color:orange;padding-left:10px;">New </span>
+                                                                            <span *ngIf="item.IsNew" style="font-size:9px;padding-left:10px;color:#6E7172;">September 2018</span>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </li>
+                                                        </ul>
+                                                        <p *ngIf="HasHowTos" (click)="ViewAllResources()" class="QueryLink" style="position:absolute; right:0px; bottom:0px; margin-right:8px; color: #1B90CB; width:auto;">View All</p>
+                                                    </div>
+                                                    <div style="height:10px;"></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <tr style="height: 10px;">
+                            <td></td>
+                        </tr>
+
+                        <tr style="height: 310px;">
+                            <td>
+                                <table class="FixedTable">
+                                    <tr>
+                                        <!-- Customize Logitude -->
+                                        <td style="height: 310px;">
+                                            <div class="HelpSection" style="background:rgba(246,190,171,0.5);">
+                                                <div class="SectionHeader" style="background:#F6BEAB;">
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width:25px; padding-left: 5px;">
+                                                                <img style="vertical-align: middle; float: left;" src="./Images/Menu/Maintenance.Black.png" />
+                                                            </td>
+
+                                                            <td style="font-size: 13px;">Customize Logitude</td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+
+                                                <div class="MediaFill" style="position:relative;">
+                                                    <div class="QueriesSection" style="padding-bottom: 5px; padding-left: 5px;" *ngIf="SystemSettingsVisibility">
+                                                        <div>System Settings</div>
+                                                        <div>
+                                                            <p *ngIf="CompanyAddressVisibility" (click)="CompanyAddressClick()" class="QueryLink">Company Address Settings</p>
+                                                            <p *ngIf="SystemDefaultsVisibility" (click)="SystemDefaultsClick()" class="QueryLink">System Defaults</p>
+                                                            <p *ngIf="CountersVisibility" (click)="CompanyCountersClick()" class="QueryLink">Counters</p>
+                                                            <p *ngIf="CompanyLogoVisibility" (click)="CompanyLogoClick()" class="QueryLink">Company Logo</p>
+                                                            <p *ngIf="SystemCurrenciesVisibility" (click)="SystemCurrenciesClick()" class="QueryLink">System Currencies and Daily Exchange Rates</p>
+                                                            <p *ngIf="AccountingSettingsVisibility" (click)="AccountingSettingsClick()" class="QueryLink">Accounting Settings</p>
+                                                            <p *ngIf="LocalSettingsVisibility" (click)="LocalSettingsClick()" class="QueryLink">Local Settings</p>
+                                                            <p *ngIf="InvoiceSettingsVisibility" (click)="InvoiceSettingsClick()" class="QueryLink">Invoice Settings</p>
+                                                            <p *ngIf="AirlineSettingsVisibility" (click)="AirlineSettingsClick()" class="QueryLink">Airline Settings</p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="QueriesSection" style="padding-bottom: 5px; padding-left: 5px;" *ngIf="PersonalSettingsVisibility">
+                                                        <div>Personal Settings</div>
+                                                        <div>
+                                                            <p *ngIf="SignatureVisibility" (click)="SignatureClick()" class="QueryLink">Signature</p>
+                                                            <p *ngIf="ChangePasswordVisibility" (click)="ChangePasswordClick()" class="QueryLink">Change Password</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td style="width: 10px">
+                                            <div></div>
+                                        </td>
+
+                                        <!-- Data Management -->
+                                        <td style="height: 310px;">
+                                            <div class="HelpSection" style="background:rgba(255,229,194,0.5);">
+                                                <div class="SectionHeader" style="background: #FFE5C2;">
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width:25px; padding-left: 5px;">
+                                                                <img style="vertical-align: middle; float: left;" src="./Images/Buttons/SettingsBlack.png" />
+                                                            </td>
+
+                                                            <td style="font-size: 13px;">Data Management</td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+
+                                                <div class="MediaFill" style="position:relative;">
+                                                    <div class="QueriesSection" style="padding-bottom: 5px; padding-left: 5px;">
+                                                        <div>Master Data</div>
+                                                        <div>
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="width: 150px;">
+                                                                        <p *ngIf="CustomerInfoVisibility" (click)="ViewList('Customer')" class="QueryLink">Customers ({{CustomersCount}})</p>
+                                                                        <p *ngIf="AgentInfoVisibility" (click)="ViewList('Agent')" class="QueryLink">Agents ({{AgentsCount}})</p>
+                                                                        <p *ngIf="UserInfoVisibility" (click)="ViewList('User')" class="QueryLink">Users ({{UsersCount}})</p>
+                                                                        <p *ngIf="PortInfoVisibility" (click)="ViewList('Port')" class="QueryLink">Ports ({{PortsCount}})</p>
+                                                                        <p *ngIf="AirlineInfoVisibility" (click)="ViewList('Airline')" class="QueryLink">Airlines ({{AirlinesCount}})</p>
+                                                                        <p *ngIf="ShippingLineInfoVisibility" (click)="ViewList('ShippingLine')" class="QueryLink">Shipping Lines ({{ShippinglinesCount}})</p>
+                                                                    </td>
+
+                                                                    <td style="width: 15px;">
+                                                                        <p class="QueryLink" style="font-weight:bolder; color:green; line-height:20px">+</p>
+                                                                        <p class="QueryLink" style="font-weight:bolder; color:green; line-height:20px">+</p>
+                                                                        <p class="QueryLink" style="font-weight:bolder; color:green; line-height:20px">+</p>
+                                                                        <p class="QueryLink" style="font-weight:bolder; color:green; line-height:20px">+</p>
+                                                                        <p class="QueryLink" style="font-weight:bolder; color:green; line-height:20px">+</p>
+                                                                        <p class="QueryLink" style="font-weight:bolder; color:green; line-height:20px">+</p>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <p *ngIf="AddCustomerVisibility" (click)="New('Customer')" class="QueryLink">New</p>
+                                                                        <p *ngIf="AddAgentVisibility" (click)="New('Agent')" class="QueryLink">New</p>
+                                                                        <p *ngIf="AddUserVisibility" (click)="New('User')" class="QueryLink">New</p>
+                                                                        <p *ngIf="AddPortVisibility" (click)="New('Port')" class="QueryLink">Add</p>
+                                                                        <p *ngIf="AddAirlineVisibility" (click)="New('Airline')" class="QueryLink">Add</p>
+                                                                        <p *ngIf="AddShippingLineVisibility" (click)="New('ShippingLine')" class="QueryLink">Add</p>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="QueriesSection" style="padding-bottom: 5px; padding-left: 5px;">
+                                                        <div>System Info</div>
+                                                        <div>
+                                                            <p (click)="SystemInfoClicked()" class="QueryLink">System Info</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><div></div></td>
+                        </tr>
+
+                        <tr style="vertical-align: bottom;height:22px;">
+                            <td>
+                                <CheckBox (Checked)="IsDisplayGetStartedChecked = $event" [IsChecked]="IsDisplayGetStartedChecked" [IsEnabled]="CheckBoxIsEnabled" [Text]="'Show this at login'"></CheckBox>
+                            </td>
+                        </tr>
+                    </table>
+
+                </ScrollViewer>
+            </td>
+        </tr>
+    </table>
+</div>

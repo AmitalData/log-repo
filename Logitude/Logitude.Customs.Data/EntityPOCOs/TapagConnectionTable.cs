@@ -1,0 +1,43 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Customs.Data.EntityPOCOs
+{
+   
+    public class TapagConnectionTable
+    {
+	 string dbms;
+
+        [Key]
+        [ForeignKey("Tapag")]
+        [Column("TapagId" ,Order = 1)]
+	    public string TapagId { get; set; }
+	      
+        public virtual Tapag Tapag { get; set; }
+     [Key]
+        [ForeignKey("Declaration")]
+        [Column("DeclarationId" ,Order = 2)]
+	    public string DeclarationId { get; set; }
+	      
+        public virtual Declaration Declaration { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+        [Column("CustomsTapagFile")]
+	    public string CustomsTapagFile { get; set; }
+        [Column("CustomsNumeral")]
+	    public int? CustomsNumeral { get; set; }
+        [Column("RequestFileNumber")]
+	    public string RequestFileNumber { get; set; }
+    }
+}
+	 

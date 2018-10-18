@@ -1,0 +1,1 @@
+update  TextCodes set LocalDefaultText = '?????? ?????' where code ='Customs.PaymentOrder.F.PaymentStatusCode'

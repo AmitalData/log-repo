@@ -1,0 +1,94 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization; 
+
+namespace Logitude.Accounting.Data.EntityLists
+{
+   [DataContract]
+   public partial class PaymentChequeList
+   {
+   
+       [Key]
+       [DataMember]
+       public string Id  { get; set; }
+       [DataMember]
+       public int Tenant  { get; set; }
+       [DataMember]
+       public DateTime CreateDate  { get; set; }
+       [DataMember]
+       public string CreatedByUserId  { get; set; }
+       [DataMember]
+       public DateTime UpdateDate  { get; set; }
+       [DataMember]
+       public string UpdatedByUserId  { get; set; }
+       [DataMember]
+       public string SearchFields  { get; set; }
+       [DataMember]
+       public string InternalNumber  { get; set; }
+       [DataMember]
+       public string ChequeNumber  { get; set; }
+       [DataMember]
+       public string PayToGLAccountId  { get; set; }
+       [DataMember]
+       public string PayToName  { get; set; }
+       [DataMember]
+       public string BankAccountId  { get; set; }
+       [DataMember]
+       public string BankAccountGLAccountId  { get; set; }
+       [DataMember]
+       public decimal? LocalAmount  { get; set; }
+       [DataMember]
+       public string CurrencyId  { get; set; }
+       [DataMember]
+       public decimal? ForeignAmount  { get; set; }
+       [DataMember]
+       public decimal? ExchangeRate  { get; set; }
+       [DataMember]
+       public DateTime? ValueDate  { get; set; }
+       [DataMember]
+       public DateTime? PrintDate  { get; set; }
+       [DataMember]
+       public DateTime? ApproveDate  { get; set; }
+       [DataMember]
+       public string ApprovedByUserId  { get; set; }
+       [DataMember]
+       public bool IsCancelled  { get; set; }
+       [DataMember]
+       public string CancelledByUserId  { get; set; }
+       [DataMember]
+       public DateTime? CancelledDate  { get; set; }
+       [DataMember]
+       public string CancellationRemarks  { get; set; }
+       [DataMember]
+       public string PaymentChequeStatusCode  { get; set; }
+       [DataMember]
+       public string EntityId  { get; set; }
+       [DataMember]
+       public string ObjectTableId  { get; set; }
+       [DataMember]
+       public string GLAccountNumber  { get; set; }
+       [DataMember]
+       public string BankAccountName  { get; set; }
+       [DataMember]
+       public string PaymentChequeStatusName  { get; set; }
+       [DataMember]
+       public string BankAccountCode  { get; set; }
+       [DataMember]
+       public string Notes  { get; set; }
+       [DataMember]
+       public string GLAccountName  { get; set; }
+       [DataMember]
+       public string JournalNumber  { get; set; }
+       [DataMember]
+       public string JournalId  { get; set; }
+       [DataMember]
+       public string StatusEnglishName  { get; set; }
+   }
+
+}
+	 

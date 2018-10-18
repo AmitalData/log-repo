@@ -1,0 +1,231 @@
+﻿<style>
+    .Disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+</style>
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table>
+                <tr style="height: 10px;">
+                    <td style="height: 10px;">
+                        <div></div>
+                    </td>
+                    <td style="height: 10px;">
+                        <div></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:112px;">
+                        <table>
+                            <tr style="height: 30px;">
+                                <td style="height: 22px;">
+                                    <table>
+                                        <tr>
+                                            <td style="width:10px;">
+                                                <div style="width: 7px; height: 7px; background: transparent; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
+                                            </td>
+                                            <td>
+                                                <label style="padding-left:10px;color: rgb(110, 113, 114);font-weight:bold;">
+                                                   Name  
+                                                </label>
+                                            </td>
+                                        </tr>
+                                    </table> 
+                                </td>
+                            </tr>
+                            <tr style="height: 30px;">
+                                <td style="height: 22px;">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <div style="width: 7px; height: 7px; background: transparent; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
+                                            </td>
+                                            <td>
+                                                <label style="padding-left:10px;color: rgb(110, 113, 114);font-weight:bold;">
+                                                    Local Name
+                                                </label>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr style="height: 30px;">
+                                <td style="height: 22px;">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <div style="width: 7px; height: 7px; background: transparent; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
+                                            </td>
+                                            <td>
+                                                <label style="padding-left:10px;color: rgb(110, 113, 114);font-weight:bold;">
+                                                    Partner Tenant
+                                                </label>
+                                            </td>
+                                        </tr>
+                                    </table> 
+                                </td>
+                            </tr>
+                            <tr style="height: 30px;">
+                                <td style="height: 22px;">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <div style="width: 7px; height: 7px; background: transparent; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
+                                            </td>
+                                            <td>
+                                                <label style="padding-left:10px;color: rgb(110, 113, 114);font-weight:bold;">
+                                                    Is Mislaka Activated
+                                                </label>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr> 
+                            <tr style="height: 30px;">
+                                <td style="height: 22px;">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <div style="width: 7px; height: 7px; background: transparent; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
+                                            </td>
+                                            <td>
+                                                <label style="padding-left:10px;color: rgb(110, 113, 114);font-weight:bold;">
+                                                    Is External Partner
+                                                </label>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr style="height: 30px;">
+                                <td style="height: 22px;">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <div style="width: 7px; height: 7px; background: transparent; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
+                                            </td>
+                                            <td>
+                                                <label style="padding-left:10px;color: rgb(110, 113, 114);font-weight:bold;">
+                                                    Receive All Statuses
+                                                </label>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr> 
+                            <tr style="height: 30px;">
+                                <td style="height: 22px;">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <div style="width: 7px; height: 7px; background: transparent; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
+                                            </td>
+                                            <td>
+                                                <label style="padding-left:10px;color: rgb(110, 113, 114);font-weight:bold;">
+                                                    Sending Docs to Agent
+                                                </label>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr> 
+                            <tr>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="width:6px;">
+                        <div></div>
+                    </td>
+                    <td style="width:230px;">
+                        <table style="width:230px;">
+                            <tr style="height: 30px;">
+                                <td style="height: 22px;"> 
+                                    <LogTextBox [ObjectFieldName]="'Name'" [DataContext]="DataContext"></LogTextBox> 
+                                </td>
+                            </tr>
+                            <tr style="height: 30px;">
+                                <td style="height: 22px;">
+                                    <LogTextBox [ObjectFieldName]="'LocalName'" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                            </tr>
+                            <tr style="height: 30px;">
+                                <td style="height: 22px;">
+                                    <LogTextBox [ObjectFieldName]="'PartnerTenant'" [DataContext]="DataContext"></LogTextBox>
+                                     
+                                </td> 
+                            </tr> 
+                            <tr style="height: 30px;">
+                                <td style="height: 22px;">
+                                    <LogCheckBox (ValueChanged)="onIsMislakaActivated($event)" [ObjectFieldName]="'IsMislakaActivated'" [DataContext]="DataContext"></LogCheckBox>
+                                </td>
+                            </tr> 
+                            <tr style="height: 30px;">
+                                <td style="height: 22px;">
+                                    <LogCheckBox (ValueChanged)="onIsExternalPartner($event)" [ObjectFieldName]="'IsExternalPartner'" [DataContext]="DataContext"></LogCheckBox>
+                                </td>
+                            </tr>
+                            <tr style="height: 30px;">
+                                <td style="height: 22px;">
+                                    <LogCheckBox (ValueChanged)="onReceiveAllStatuses($event)" [ObjectFieldName]="'ReceiveAllStatuses'" [DataContext]="DataContext"></LogCheckBox>
+                                </td>
+                            </tr> 
+                            <tr style="height: 30px;">
+                                <td style="height: 22px;">
+                                    <LogCheckBox (ValueChanged)="onAllowSendingDocsToAgent($event)" [ObjectFieldName]="'AllowSendingDocsToAgent'" [DataContext]="DataContext"></LogCheckBox>
+                                </td>
+                            </tr> 
+                            <tr>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="width:15px;">
+                        <div></div>
+                    </td>
+                    <td style="width:230px;"> 
+                        <table style="width:150px">
+                            <tr style="height:115px;"> 
+                                <td style="width:25px;vertical-align: top;">
+                                    <label style="color: rgb(110, 113, 114);font-weight:bold;">
+                                        Logo
+                                    </label> 
+                                </td> 
+                                <td style="width:5px;">
+                                 <div></div>
+                                </td> 
+                                <td style="width:115px;"> 
+                                    <div (click)="OpenUpLoadLogo()" style="position:absolute;top:0;text-align:center;background-color:#F2F8FF;height:100%;width:100%;border-radius:5px;border:1px solid #808080;">
+                                        <div style="vertical-align:central" >
+                                            <!--<input [attr.id]="ImageFileHtmlId" accept=".jpg,.jpeg,.JPG,.JPEG" type="file" [(ngModel)]="DataImage" (change)="UploadogoFile($event)" style="display:none" class="upload" />-->
+                                            <img *ngIf="Source" class="CenterCenter" style="vertical-align:central;background-color:white;border:0px solid #ffffff;width: 113px;border-radius: 5px;" src="{{Source}}" [attr.id]="'ImageKey'" />
+                                            <!--<span [attr.id]="ProgressDownloadId" style="position:absolute;top:0;bottom:0;left:0;right:0;width:100%;height:100%;display:none"><img class="CenterCenter" src="Images/progressDownload.gif" /></span>-->
+                                        </div>
+                                    </div>
+                                </td> 
+                            </tr>
+                            <tr>
+                                <td><div></div></td>
+                            </tr>
+                        </table> 
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

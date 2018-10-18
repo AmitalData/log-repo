@@ -1,0 +1,90 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization; 
+
+namespace Logitude.Accounting.Data.EntityLists
+{
+   [DataContract]
+   public partial class JournalLineList
+   {
+   
+       [Key]
+       [DataMember]
+       public string JournalId  { get; set; }
+       [DataMember]
+       public int Tenant  { get; set; }
+
+       [Key]
+       [DataMember]
+       public int Line  { get; set; }
+       [DataMember]
+       public string ActionCode  { get; set; }
+       [DataMember]
+       public string DebitControlAccountId  { get; set; }
+       [DataMember]
+       public string DebitAccountId  { get; set; }
+       [DataMember]
+       public string CreditControlAccountId  { get; set; }
+       [DataMember]
+       public string CreditAccountId  { get; set; }
+       [DataMember]
+       public DateTime DocumentDate  { get; set; }
+       [DataMember]
+       public DateTime AccountingDate  { get; set; }
+       [DataMember]
+       public DateTime DueDate  { get; set; }
+       [DataMember]
+       public decimal LocalAmount  { get; set; }
+       [DataMember]
+       public string CurrencyId  { get; set; }
+       [DataMember]
+       public decimal ForeignAmount  { get; set; }
+       [DataMember]
+       public decimal? ExchangeRate  { get; set; }
+       [DataMember]
+       public string Reference1  { get; set; }
+       [DataMember]
+       public string Reference2  { get; set; }
+       [DataMember]
+       public string Reference3  { get; set; }
+       [DataMember]
+       public string ActionName  { get; set; }
+       [DataMember]
+       public string DebitControlAccountName  { get; set; }
+       [DataMember]
+       public string CreditAccountName  { get; set; }
+       [DataMember]
+       public string DebitAccountName  { get; set; }
+       [DataMember]
+       public string CreditControlAccountName  { get; set; }
+       [DataMember]
+       public string CreditControlAccountNumber  { get; set; }
+       [DataMember]
+       public string DebitControlAccountNumber  { get; set; }
+       [DataMember]
+       public string CreditAccountNumber  { get; set; }
+       [DataMember]
+       public string DebitAccountNumber  { get; set; }
+       [DataMember]
+       public string CurrencyName  { get; set; }
+       [DataMember]
+       public string Notes  { get; set; }
+       [DataMember]
+       public string CurrencyCode  { get; set; }
+       [DataMember]
+       public string ActionTypeCode  { get; set; }
+       [DataMember]
+       public decimal? ExternalOpenAmount  { get; set; }
+       [DataMember]
+       public bool? IsCreditAccountMulti  { get; set; }
+       [DataMember]
+       public bool? IsDebitAccountMulti  { get; set; }
+   }
+
+}
+	 

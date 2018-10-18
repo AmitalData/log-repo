@@ -1,0 +1,339 @@
+﻿
+<table>
+    <tr style="height:5px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <td style="width:15px;">
+                        <div></div>
+                    </td>
+
+                    <td>
+                        <table>
+                            <tr class="TabTitleRow">
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td>{{'Shipment.TH.Receivables' | textcodeTranslation}}</td>
+                                            <td style="width: 21px">
+                                                <IconButton [Name]="'Add'"></IconButton>
+                                            </td>
+
+                                            <td style="width:15px;">
+                                                <div style="width:1px; height: 22px; background: #DADADA; margin:auto;"></div>
+                                            </td>
+
+                                            <td style="width: 90px">
+                                                <div class="Button">{{'Shipment.B.Receivables.NewInvoice' | textcodeTranslation}}</div>
+                                            </td>
+                                            <td style="width:5px;">
+                                                <div></div>
+                                            </td>
+                                            <td style="width: 100px">
+                                                <div class="Button">{{'Shipment.B.Receivables.NewCreditNote' | textcodeTranslation}}</div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="height: 100%; position: relative;">
+
+                                    <div class="GridView">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 25px; min-width: 25px;">
+                                                        <div></div>
+                                                    </th>
+                                                    <th style="width: 150px; min-width: 150px;">{{'Shipment.O.Receivables.ChargeType'| textcodeTranslation}}</th>
+                                                    <th style="width: 30px; min-width: 30px;">{{'Shipment.O.Receivables.PC' | textcodeTranslation}}</th>
+                                                    <th style="width: 70px; min-width: 70px;">{{'Shipment.O.Receivables.Quantity' | textcodeTranslation}}</th>
+                                                    <th style="width: 50px; min-width: 50px;">{{'Shipment.O.Receivables.UOM' | textcodeTranslation}}</th>
+                                                    <th style="width: 35px; min-width: 35px;">{{'Shipment.O.Receivables.Currency' | textcodeTranslation}}</th>
+                                                    <th style="width: 70px; min-width: 70px;">{{'Shipment.O.Receivables.UnitPrice' | textcodeTranslation}}</th>
+                                                    <th style="width: 110px; min-width: 110px;">{{'Shipment.O.Receivables.Amount' | textcodeTranslation}}</th>
+                                                    <th style="width: 110px; min-width: 110px;">{{'Shipment.O.Receivables.Amount' | textcodeTranslation}} (NIS)</th>
+                                                    <th style="width: 90px; min-width: 90px;">{{'Shipment.O.Receivables.InvoiceNo' | textcodeTranslation}}</th>
+                                                    <th class="LastChild">
+                                                        <div></div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                <tr *ngFor="#item of ItemsSource">
+                                                    <td style="width: 25px; min-width: 25px;">
+                                                        <div></div>
+                                                    </td>
+                                                    <td style="width: 150px; min-width: 150px;">
+                                                        {{item.ChargesTypeName}}
+                                                    </td>
+                                                    <td style="width: 30px; min-width: 30px; text-align:center;">
+                                                        {{item.PrepaidCollectId}}
+                                                    </td>
+                                                    <td style="width: 70px; min-width: 70px; text-align:right;">
+                                                        {{item.Quantity | number:'1.3-3'}}
+                                                    </td>
+                                                    <td style="width: 50px; min-width: 50px; text-align:center;">
+                                                        {{item.MeasurementCode}}
+                                                    </td>
+                                                    <td style="width: 35px; min-width: 35px; text-align:center;">
+                                                        {{item.CurrencyCode}}
+                                                    </td>
+                                                    <td style="width: 70px; min-width: 70px; text-align:right;">
+                                                        {{item.UnitPrice | number:'1.3-3'}}
+                                                    </td>
+                                                    <td style="width: 110px; min-width: 110px; text-align:right;">
+                                                        {{item.TotalAmount | number:'1.2-2'}} {{item.CurrencyCode}}
+                                                    </td>
+                                                    <td style="width: 110px; min-width: 110px; text-align:right;">
+                                                        {{item.TotalAmountLocal | number:'1.2-2'}}
+                                                    </td>
+                                                    <td style="width: 90px; min-width: 90px;">
+                                                        <span class="hyperlink">{{item.InvoiceNumber}}</span>
+                                                        <span style="margin-left: 5px;" [ngStyle]="{color: item.InvoiceStatus | StringToColorPipe}">{{item.InvoiceStatus}}</span>
+                                                    </td>
+
+                                                    <td>
+                                                        <span class="CellSeparator" style="margin-left: 3px;"></span>
+                                                        <IconButton [Name]="'Edit'" [IsSmall]="true" style="display: block; float: left; margin-left:3px;"></IconButton>
+                                                        <IconButton [Name]="'Delete'" [IsSmall]="true" style="display: block; float: left; margin-left:3px;"></IconButton>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td colspan="20">
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <table *ngIf="IsGenerateButtonsVisible" style="position: absolute; top:0; bottom:0; margin: auto;">
+                                        <tr>
+                                            <td colspan="3">
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <tr style="height: 1px;">
+                                            <td>
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width: 1px;">
+                                                <div class="hyperlink" style="font-size: 14px;">Generate Auto Display</div>
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="3">
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td style="width:15px;">
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height:10px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr class="TabSummaryArea">
+        <td>
+            <table>
+                <tr style="height: 5px;">
+                    <td colspan="3">
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="width: 10px;">
+                        <div></div>
+                    </td>
+
+                    <td>
+                        <table style="background: orange;">
+                            <tr>
+                                <td>
+                                    <table>
+                                        <tr style="height: 20px;">
+                                            <td colspan="3" class="BlueTitle">{{'Shipment.O.Receivables.Summary' | textcodeTranslation}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td style="width: 10px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td style="vertical-align: middle;">
+                                                <div style="display:block; float: left; text-align:center;">
+                                                    <div style="font-size: 26px;">{{OpenReceivablesCount}}</div>
+                                                    <div class="Label">{{'Shipment.O.Receivables.Open' | textcodeTranslation}}</div>
+                                                    <div class="Label">{{'Shipment.O.Receivables.Receivables' | textcodeTranslation}}</div>
+                                                </div>
+
+                                                <div style="display:block; float: left; text-align:center; margin-left: 25px;">
+                                                    <div style="font-size: 26px;">{{InvoicesCount}}</div>
+                                                    <div class="Label">{{'Shipment.O.Receivables.Invoices' | textcodeTranslation}}</div>
+                                                </div>
+
+                                                <div style="display:block; float: left; text-align:center; margin-left: 25px;">
+                                                    <div style="font-size: 26px;">{{CreditNotesCount}}</div>
+                                                    <div class="Label">{{'Shipment.O.Receivables.CreditNotes' | textcodeTranslation}}</div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+
+                                <td style="width: 25px; vertical-align: middle;">
+                                    <div style="height: calc(100% - 10px); width: 1px; background: #DADADA; margin: auto;"></div>
+                                </td>
+
+                                <td style="width: 550px;">
+                                    <table>
+                                        <tr style="height: 20px;">
+                                            <td colspan="2" class="BlueTitle">
+                                                {{'Shipment.O.Receivables.Profit' | textcodeTranslation}}
+
+                                                <div style="float: right; width: 69px; background: red;">
+                                                    <ul class="FiltersMenu">
+                                                        <li (click)="onSelectCurrency('USD')" [class.SelectedFilter]="SelectedCurrencyCode === 'USD'" style="width:33px;">
+                                                            USD
+                                                        </li>
+                                                        <li (click)="onSelectCurrency('NIS')" [class.SelectedFilter]="SelectedCurrencyCode === 'NIS'" style="width:33px;">
+                                                            NIS
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td style="width: 10px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td>
+                                                <table class="CenterTableCells">
+                                                    <tr>
+                                                        <td style="width: 80px;" class="Label">{{'Shipment.O.Receivables.Receivables' | textcodeTranslation}}:</td>
+                                                        <td style="width: 200px; text-align: right;">
+                                                            <span class="Value" style="font-size: 14px;">{{ReceivablesInSelectedCurrencyText}}</span>
+                                                            <span class="Label" style="font-size: 11px;">({{SelectedCurrencyCode}})</span>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="width: 95px;" class="Label">{{'Shipment.O.Receivables.EstimateProfit' | textcodeTranslation}}:</td>
+                                                        <td style="width: 120px;">
+                                                            <input type="text" [(ngModel)]="EstimateProfitInSelectedCurrency" />
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td style="width: 80px;" class="Label">{{'Shipment.O.Receivables.Payables' | textcodeTranslation}}:</td>
+                                                        <td style="width: 200px; text-align: right;">
+                                                            <span class="Value" style="font-size: 14px;">{{PayablesInSelectedCurrencyText}}</span>
+                                                            <span class="Label" style="font-size: 11px;">({{SelectedCurrencyCode}})</span>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="width: 95px;" class="Label">{{'Shipment.O.Receivables.Difference' | textcodeTranslation}}:</td>
+                                                        <td style="width: 120px;" [ngStyle]="{color: DefferenceColor}">{{DefferenceInSelectedCurrencyText}}</td>
+                                                    </tr>
+
+                                                    <tr style="height: 1px;">
+                                                        <td style="width: 80px;" class="Label"></td>
+                                                        <td style="width: 200px; text-align: right;">
+                                                            <div style="height: 1px; background: #DADADA;"></div>
+                                                        </td>
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="width: 95px;" class="Label"></td>
+                                                        <td style="width: 120px;"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td style="width: 80px;" class="Label">{{'Shipment.O.Receivables.Profit' | textcodeTranslation}}:</td>
+                                                        <td style="width: 200px; text-align: right;">
+                                                            <span class="Value" style="font-size: 14px;" [ngStyle]="{color: ProfitColor}">{{ProfitInSelectedCurrencyText}}</span>
+                                                            <span class="Label" style="font-size: 11px;">({{SelectedCurrencyCode}})</span>
+                                                        </td>
+                                                        <td colspan="3">
+                                                            <table>
+                                                                <tr>
+
+                                                                    <td style="width: 10px;">
+                                                                        <div></div>
+                                                                    </td>
+
+                                                                    <td style="width: 1px; font-size: 11px; color: #1B90CB; vertical-align: middle;">Rate: {{ProfitRate}}</td>
+
+                                                                    <td style="width: 5px;">
+                                                                        <div></div>
+                                                                    </td>
+
+                                                                    <td style="vertical-align: middle;">
+                                                                        <IconButton [Name]="'Edit'" [IsSmall]="true" [attr.title]="'Shipment.B.Receivables.FillExchangeRate' | textcodeTranslation"></IconButton>
+                                                                    </td>
+
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td style="width: 10px;">
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr style="height: 5px;">
+                    <td colspan="3">
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

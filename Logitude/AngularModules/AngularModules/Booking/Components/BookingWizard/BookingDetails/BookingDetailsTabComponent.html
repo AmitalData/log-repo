@@ -1,0 +1,773 @@
+﻿
+<style type="text/css">
+    .LegSection {
+        padding: 5px;
+        min-height: 135px;
+        border: 1px solid #AAAAAA;
+        border-radius: 8px;
+        -moz-border-radius: 8px;
+        -webkit-border-radius: 8px;
+        box-shadow: 0px 0px 2px 2px #DADADA;
+        -moz-box-shadow: 0px 0px 2px 2px #DADADA;
+        -webkit-box-shadow: 0px 0px 2px 2px #DADADA;
+    }
+
+    .ToTextStyle {
+        padding-left: 10px;
+        padding-right: 10px;
+        text-align: center;
+        font-weight: bold;
+        font-family: Arial;
+        color: black;
+        font-size: 12px;
+    }
+</style>
+
+<div class="TableHolder">
+    <table>
+        <tr style="height: 10px;">
+            <td>
+                <div></div>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <table>
+                    <tr>
+
+                        <!-- Left Side -->
+                        <td style="width: 290px;">
+                            <table>
+
+                                <!-- Carrier -->
+                                <tr class="FormFieldRow">
+                                    <td style="width: 80px;">
+                                        <LogLabel [ObjectFieldName]="'MainCarriageCarrierId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Airline'"></LogLabel>
+                                    </td>
+
+                                    <td style="width:180px;">
+                                        <LogLov [ObjectFieldName]="'MainCarriageCarrierId'"
+                                                [SelectedValue]="MainCarriageCarrierId"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Carrier'"
+                                                [DependencyFilter1Value]="'AL'">
+                                        </LogLov>
+                                    </td>
+
+                                    <td>
+                                        <div style="margin-left: -10px; width:1px;">
+                                            <span class="hyperlink" *ngIf="IsAddStockVisible_Mn" (click)="AddStockClicked(MainCarriageCarrierId)">Add Stock</span>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- Interline -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <div>
+                                            <span *ngIf="IsInterlineAdded">
+                                                <LogLabel [ObjectFieldName]="'InterlineId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </span>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <span *ngIf="!IsInterlineAdded" class="hyperlink" [class.HyperlinkDisabled]="!IsAddInterlineEnabled" (click)="AddInterlineClicked()">Add Interline</span>
+                                        <span *ngIf="IsInterlineAdded">
+                                            <LogLov [ObjectFieldName]="'InterlineId'"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"
+                                                    [LookUpTableName]="'Carrier'"
+                                                    [DependencyFilter1Value]="'AL'"
+                                                    (LostFocus)="OnInterlineLostFocus($event)">
+                                            </LogLov>
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        <div style="margin-left: -10px; width:1px;">
+                                            <span class="hyperlink" *ngIf="IsAddStockVisible_In" (click)="AddStockClicked(InterlineId)">Add Stock</span>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- Carrier Number -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'Master'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'MAWB'" [ShowWarning]="ShowWarning_Master"></LogLabel>
+                                    </td>
+
+                                    <td colspan="2">
+                                        <table>
+                                            <tr>
+                                                <td style="width: 45px;">
+                                                    <LogTextBox [ObjectFieldName]="'AirlinePrefix'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="AirlinePrefix" [HideColumns]="true"></LogTextBox>
+                                                </td>
+
+                                                <td style="width: 100px;">
+                                                    <LogTextBox [ObjectFieldName]="'Master'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="Master" [HideColumns]="true" (LostFocus)="MasterLostFocus($event)"></LogTextBox>
+                                                </td>
+
+                                                <td style="width: 2px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width: 1px;">
+                                                    <button class="Button" *ngIf="IsFromStockVisible" [disabled]="!IsFromStockEnabled" (click)="GetStockClicked()" title="Get from stock">Stock</button>
+                                                    <button class="Button" *ngIf="IsReturnStockVisible" [disabled]="!IsReturnStockEnabled" (click)="ReturnStockClicked()" title="Return to stock">Stock</button>
+                                                </td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                                <!-- Ports -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'MainCarriageFromPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Departure'" [ShowWarning]="ShowWarning_FromPort"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'MainCarriageFromPortId'"
+                                                [SelectedValue]="MainCarriageFromPortId"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Port'"
+                                                [DependencyFilter1Value]="'A'">
+                                        </LogLov>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'Transshipment1FromPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Via 1'"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'Transshipment1FromPortId'"
+                                                [SelectedValue]="Transshipment1FromPortId"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Port'"
+                                                [DependencyFilter1Value]="'A'">
+                                        </LogLov>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'Transshipment2FromPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Via 2'"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'Transshipment2FromPortId'"
+                                                [SelectedValue]="Transshipment2FromPortId"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Port'"
+                                                [DependencyFilter1Value]="'A'">
+                                        </LogLov>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'MainCarriageFinalDestinationPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Destination'" [ShowWarning]="ShowWarning_FinalPort"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'MainCarriageFinalDestinationPortId'"
+                                                [SelectedValue]="MainCarriageFinalDestinationPortId"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Port'"
+                                                [DependencyFilter1Value]="'A'">
+                                        </LogLov>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="3">
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <!-- Margin -->
+                        <td style="width: 15px;">
+                            <div></div>
+                        </td>
+
+                        <!-- Right Side -->
+                        <td>
+                            <div class="ScrollViewer">
+                                <div class="ScrollContent" style="padding-right: 5px;">
+
+                                    <!-- Space Allocation -->
+                                    <div>
+                                        <table>
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width: 110px;">
+                                                    <LogLabel [ObjectFieldName]="'SpaceAllocationCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 150px;">
+                                                    <LogLov [ObjectFieldName]="'SpaceAllocationCode'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'BookingSpaceAllocation'"
+                                                            [DependencyFilter1Value]="true">
+                                                    </LogLov>
+                                                </td>
+
+                                                <td style="width: 70px;">
+                                                    <div>
+                                                        <button class="Button" (click)="ApplyAllClicked()" [disabled]="!IsApplyAllEnabled">Apply All</button>
+                                                    </div>
+                                                </td>
+
+                                                <td style="width: 5px;">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+
+                                    <div style="height: 5px;"></div>
+
+                                    <!-- main carriage -->
+                                    <div class="LegSection">
+                                        <table>
+
+                                            <!--header-->
+                                            <tr style="height: 20px;">
+                                                <td>
+                                                    <div class="MediaFill" style="overflow: hidden;">
+                                                        <span class="BlueTitle">{{'Booking.S.Routings.MainCarriageLeg1' | TextCodeTranslationPipe}}:</span>
+                                                        <img style="margin-bottom: -4px; width: 16px; height: 16px;" [attr.src]="EntityPM.MainFromPortCountryCode | CountryFlagPipe" [attr.title]="EntityPM.MainFromPortCountryName" />
+                                                        <span class="Value">{{EntityPM.MainFromPortCode}}</span>
+                                                        <span class="Label">{{EntityPM.MainFromPortName}}</span>
+                                                        <span class="ToTextStyle">{{'Booking.S.Routings.To' | TextCodeTranslationPipe}}</span>
+                                                        <img style="margin-bottom: -4px; width: 16px; height: 16px;" [attr.src]="EntityPM.MainToPortCountryCode | CountryFlagPipe" [attr.title]="EntityPM.MainToPortCountryName" />
+                                                        <span class="Value">{{EntityPM.MainToPortCode}}</span>
+                                                        <span class="Label">{{EntityPM.MainToPortName}}</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width:3px;">
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td style="width: 295px;">
+                                                                <table>
+
+                                                                    <!-- Carrier Number -->
+                                                                    <tr class="FormFieldRow">
+                                                                        <td style="width: 85px;">
+                                                                            <LogLabel [ObjectFieldName]="'MainCarriageCarrierNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Booking.S.Routings.FlightNo'" [ShowWarning]="ShowWarning_CarrierNumber"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td style="width: 70px;">
+                                                                                        <LogTextBox [ObjectFieldName]="'MainCarriageCarrierPrefix'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="MainCarriageCarrierPrefix" [HideColumns]="true"></LogTextBox>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <LogTextBox [ObjectFieldName]="'MainCarriageCarrierNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="MainCarriageCarrierNumber" [HideLastColumn]="true"></LogTextBox>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <!-- ETD -->
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'MainCarriageETD'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [ShowWarning]="ShowWarning_ETD"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <LogDatePicker [ObjectFieldName]="'MainCarriageETD'" [SelectedDateValue]="MainCarriageETD" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                                                    </td>
+
+                                                                                    <td style="width: 2px;">
+                                                                                        <div></div>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <LogDatePicker [ObjectFieldName]="'MainCarriageETD'" [SelectedDateValue]="MainCarriageETD" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideLastColumn]="true" [InputType]="'time'"></LogDatePicker>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+
+                                                                    </tr>
+
+                                                                    <tr *ngIf="IsManualDataEntryVisible">
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <div style="padding-left: 5px;">
+                                                                                <span class="hyperlink" (click)="AllowManualDataEntry('M')">Manual Data Entry</span>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <!-- Account Number -->
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'AccountNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Account No.'"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogTextBox [ObjectFieldName]="'AccountNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="AccountNumber" [HideLastColumn]="true"></LogTextBox>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                </table>
+                                                            </td>
+
+                                                            <td style="width:3px;">
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td style="vertical-align:top;">
+                                                                <div *ngIf="IsFlightSchedulesVisible">
+                                                                    <button class="GreenButton" *ngIf="!Transshipment1FromPortId || !InterlineId" [disabled]="!IsFlightSchedulesEnabled" style="height:50px; width:60px; margin-top:5px;" (click)="FindFlightsClicked(true)">
+                                                                        <div>Find</div>
+                                                                        <div>Flights</div>
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+
+                                                            <td style="width:3px;">
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td style="width:220px">
+                                                                <table>
+                                                                    <tr class="FormFieldRow">
+                                                                        <td style="width: 120px;">
+                                                                            <LogLabel [ObjectFieldName]="'MainCarriageSpaceAllocationCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [ShowWarning]="ShowWarning_MainAllocation"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogLov [ObjectFieldName]="'MainCarriageSpaceAllocationCode'"
+                                                                                    [SelectedValue]="MainCarriageSpaceAllocationCode"
+                                                                                    [ObjectTableName]="ObjectTableName"
+                                                                                    [DataContext]="DataContext"
+                                                                                    [HideColumns]="true"
+                                                                                    [LookUpTableName]="'BookingSpaceAllocation'"
+                                                                                    [DependencyFilter1Value]="true">
+                                                                            </LogLov>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'MainCarriageAllotmentIdentification'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Allotment Identi.'" [ShowWarning]="ShowWarning_MainAllotment"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'MainCarriageAllotmentIdentification'" [Text]="MainCarriageAllotmentIdentification" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td colspan="2">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+
+                                                            <td style="width:3px;">
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+
+                                    <div style="height: 5px;"></div>
+
+                                    <!-- transshipment 1 -->
+                                    <div class="LegSection" *ngIf="Transshipment1FromPortId">
+                                        <table>
+
+                                            <tr style="height: 20px;">
+                                                <td>
+                                                    <div class="MediaFill" style="overflow: hidden;">
+                                                        <span class="BlueTitle">{{'Booking.S.Routings.MainCarriageLeg2' | TextCodeTranslationPipe}}:</span>
+                                                        <img style="margin-bottom: -4px; width: 16px; height: 16px;" [attr.src]="EntityPM.Trans1FromPortCountryCode | CountryFlagPipe" [attr.title]="EntityPM.Trans1FromPortCountryName" />
+                                                        <span class="Value">{{EntityPM.Trans1FromPortCode}}</span>
+                                                        <span class="Label">{{EntityPM.Trans1FromPortName}}</span>
+                                                        <span class="ToTextStyle">{{'Booking.S.Routings.To' | TextCodeTranslationPipe}}</span>
+                                                        <img style="margin-bottom: -4px; width: 16px; height: 16px;" [attr.src]="EntityPM.Trans1ToPortCountryCode | CountryFlagPipe" [attr.title]="EntityPM.Trans1ToPortCountryName" />
+                                                        <span class="Value">{{EntityPM.Trans1ToPortCode}}</span>
+                                                        <span class="Label">{{EntityPM.Trans1ToPortName}}</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width:3px;">
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td style="width: 295px;">
+                                                                <table>
+                                                                    <!-- Airline -->
+                                                                    <tr class="FormFieldRow">
+                                                                        <td style="width: 85px;">
+                                                                            <LogLabel [ObjectFieldName]="'Transshipment1CarrierId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Airline'" [ShowWarning]="ShowWarning_Trans1CarrierId"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogLov [ObjectFieldName]="'Transshipment1CarrierId'"
+                                                                                    [SelectedValue]="Transshipment1CarrierId"
+                                                                                    [ObjectTableName]="ObjectTableName"
+                                                                                    [DataContext]="DataContext"
+                                                                                    [LookUpTableName]="'Carrier'"
+                                                                                    [DependencyFilter1Value]="'AL'"
+                                                                                    [HideLastColumn]="true">
+                                                                            </LogLov>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <!-- Carrier Number -->
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'Transshipment1CarrierNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Booking.S.Routings.FlightNo'" [ShowWarning]="ShowWarning_Trans1CarrierNumber"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td style="width: 70px;">
+                                                                                        <LogTextBox [ObjectFieldName]="'Transshipment1CarrierPrefix'" [Text]="Transshipment1CarrierPrefix" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <LogTextBox [ObjectFieldName]="'Transshipment1CarrierNumber'" [Text]="Transshipment1CarrierNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideLastColumn]="true"></LogTextBox>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <!-- ETD -->
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'Transshipment1ETD'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [ShowWarning]="ShowWarning_Trans1ETD"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <LogDatePicker [ObjectFieldName]="'Transshipment1ETD'" [SelectedDateValue]="Transshipment1ETD" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                                                    </td>
+
+                                                                                    <td style="width: 2px;">
+                                                                                        <div></div>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <LogDatePicker [ObjectFieldName]="'Transshipment1ETD'" [SelectedDateValue]="Transshipment1ETD" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideLastColumn]="true" [InputType]="'time'"></LogDatePicker>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr *ngIf="IsManualDataEntryVisible_Via1">
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <div style="padding-left: 5px;">
+                                                                                <span class="hyperlink" (click)="AllowManualDataEntry('V')">Manual Data Entry</span>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                </table>
+                                                            </td>
+
+                                                            <td style="width:3px;">
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td style="vertical-align:top;">
+                                                                <div *ngIf="IsFlightSchedulesVisible">
+                                                                    <button class="GreenButton" *ngIf="InterlineId" [disabled]="!IsFlightSchedulesEnabled" style="height:50px; width:60px; margin-top: 5px;" (click)="FindFlightsClicked(false)">
+                                                                        <div>Find</div>
+                                                                        <div>Flights</div>
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+
+                                                            <td style="width:3px;">
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td style="width:220px">
+                                                                <table>
+                                                                    <tr class="FormFieldRow">
+                                                                        <td style="width: 120px;">
+                                                                            <LogLabel [ObjectFieldName]="'Transshipment1SpaceAllocationCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [ShowWarning]="ShowWarning_Trans1Allocation"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogLov [ObjectFieldName]="'Transshipment1SpaceAllocationCode'"
+                                                                                    [SelectedValue]="Transshipment1SpaceAllocationCode"
+                                                                                    [ObjectTableName]="ObjectTableName"
+                                                                                    [DataContext]="DataContext"
+                                                                                    [HideColumns]="true"
+                                                                                    [LookUpTableName]="'BookingSpaceAllocation'"
+                                                                                    [DependencyFilter1Value]="true">
+                                                                            </LogLov>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'Transshipment1AllotmentIdentification'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Allotment Identi.'" [ShowWarning]="ShowWarning_Trans1Allotment"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Transshipment1AllotmentIdentification'" [Text]="Transshipment1AllotmentIdentification" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td colspan="2">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+
+                                                            <td style="width:3px;">
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+
+                                    <div style="height: 5px;"></div>
+
+                                    <!-- transshipment 2 -->
+                                    <div class="LegSection" *ngIf="Transshipment2FromPortId">
+                                        <table>
+
+                                            <tr style="height: 20px;">
+                                                <td>
+                                                    <div class="MediaFill" style="overflow: hidden;">
+                                                        <span class="BlueTitle">{{'Booking.S.Routings.MainCarriageLeg3' | TextCodeTranslationPipe}}:</span>
+                                                        <img style="margin-bottom: -4px; width: 16px; height: 16px;" [attr.src]="EntityPM.Trans2FromPortCountryCode | CountryFlagPipe" [attr.title]="EntityPM.Trans2FromPortCountryName" />
+                                                        <span class="Value">{{EntityPM.Trans2FromPortCode}}</span>
+                                                        <span class="Label">{{EntityPM.Trans2FromPortName}}</span>
+                                                        <span class="ToTextStyle">{{'Booking.S.Routings.To' | TextCodeTranslationPipe}}</span>
+                                                        <img style="margin-bottom: -4px; width: 16px; height: 16px;" [attr.src]="EntityPM.Trans1ToPortCountryCode | CountryFlagPipe" [attr.title]="EntityPM.Trans2ToPortCountryName" />
+                                                        <span class="Value">{{EntityPM.Trans2ToPortCode}}</span>
+                                                        <span class="Label">{{EntityPM.Trans2ToPortName}}</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width:3px;">
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td style="width:295px;">
+                                                                <table>
+                                                                    <!-- Airline -->
+                                                                    <tr class="FormFieldRow">
+                                                                        <td style="width: 85px;">
+                                                                            <LogLabel [ObjectFieldName]="'Transshipment2CarrierId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Airline'" [ShowWarning]="ShowWarning_Trans2CarrierId"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogLov [ObjectFieldName]="'Transshipment2CarrierId'"
+                                                                                    [SelectedValue]="Transshipment2CarrierId"
+                                                                                    [ObjectTableName]="ObjectTableName"
+                                                                                    [DataContext]="DataContext"
+                                                                                    [LookUpTableName]="'Carrier'"
+                                                                                    [DependencyFilter1Value]="'AL'"
+                                                                                    [HideLastColumn]="true">
+                                                                            </LogLov>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <!-- Carrier Number -->
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'Transshipment2CarrierNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Booking.S.Routings.FlightNo'" [ShowWarning]="ShowWarning_Trans2CarrierNumber"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td style="width: 70px;">
+                                                                                        <LogTextBox [ObjectFieldName]="'Transshipment2CarrierPrefix'" [Text]="Transshipment2CarrierPrefix" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <LogTextBox [ObjectFieldName]="'Transshipment2CarrierNumber'" [Text]="Transshipment2CarrierNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideLastColumn]="true"></LogTextBox>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <!-- ETD -->
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'Transshipment2ETD'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [ShowWarning]="ShowWarning_Trans2ETD"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <LogDatePicker [ObjectFieldName]="'Transshipment2ETD'" [SelectedDateValue]="Transshipment2ETD" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                                                    </td>
+
+                                                                                    <td style="width: 2px;">
+                                                                                        <div></div>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <LogDatePicker [ObjectFieldName]="'Transshipment2ETD'" [SelectedDateValue]="Transshipment2ETD" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideLastColumn]="true" [InputType]="'time'"></LogDatePicker>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                </table>
+                                                            </td>
+
+                                                            <td style="width:3px;">
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td style="width:3px;">
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td style="width:220px">
+                                                                <table>
+                                                                    <tr class="FormFieldRow">
+                                                                        <td style="width: 120px;">
+                                                                            <LogLabel [ObjectFieldName]="'Transshipment2SpaceAllocationCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [ShowWarning]="ShowWarning_Trans2Allocation"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogLov [ObjectFieldName]="'Transshipment2SpaceAllocationCode'"
+                                                                                    [SelectedValue]="Transshipment2SpaceAllocationCode"
+                                                                                    [ObjectTableName]="ObjectTableName"
+                                                                                    [DataContext]="DataContext"
+                                                                                    [HideColumns]="true"
+                                                                                    [LookUpTableName]="'BookingSpaceAllocation'"
+                                                                                    [DependencyFilter1Value]="true">
+                                                                            </LogLov>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'Transshipment2AllotmentIdentification'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Allotment Identi.'" [ShowWarning]="ShowWarning_Trans2Allotment"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Transshipment2AllotmentIdentification'" [Text]="Transshipment2AllotmentIdentification" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td colspan="2">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+
+                                                            <td style="width:3px;">
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </td>
+
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr style="height: 10px;">
+            <td>
+                <div></div>
+            </td>
+        </tr>
+    </table>
+</div>

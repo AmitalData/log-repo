@@ -1,0 +1,101 @@
+﻿.LogitudeQuickSearchTextBox input::-webkit-input-placeholder {
+    font-family: Arial;
+    font-size: 11px;
+    color: #8F9293;
+    font-style: italic;
+}
+
+.LogitudeQuickSearchTextBox input:-moz-placeholder {
+    font-family: Arial;
+    font-size: 11px;
+    color: #8F9293;
+    font-style: italic;
+}
+
+.LogitudeQuickSearchTextBox input::-moz-placeholder {
+    font-family: Arial;
+    font-size: 11px;
+    color: #8F9293;
+    font-style: italic;
+}
+
+.LogitudeQuickSearchTextBox input:-ms-input-placeholder {
+    font-family: Arial;
+    font-size: 11px;
+    color: #8F9293;
+    font-style: italic;
+}
+
+.LogitudeQuickSearchTextBox input:focus::-webkit-input-placeholder {
+    color: transparent;
+}
+
+.LogitudeQuickSearchTextBox input:focus:-moz-placeholder {
+    color: transparent;
+}
+
+.LogitudeQuickSearchTextBox input:focus::-moz-placeholder {
+    color: transparent;
+}
+
+.LogitudeQuickSearchTextBox input:focus:-ms-input-placeholder {
+    color: transparent;
+}
+
+.LogitudeQuickSearchTextBox .LogitudeQuickSearchDeleteIcon {
+    position: absolute;
+    right: 4px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    cursor: pointer;
+}
+
+.LogitudeQuickSearchTextBox .LogitudeQuickSearchSearchIcon {
+    position: absolute;
+    right: 2px;
+    top: 1px;
+    bottom: 0;
+    margin: auto;
+}
+
+.LogitudeQuickSearchTextBox {
+    height: 22px;
+    width: 100%;
+    position: relative;
+}
+
+.LogitudeQuickSearchDropDown .LogitudeQuickSearchItem:hover {
+    background: #f4f9ff; /* Old browsers */
+    background: -moz-linear-gradient(top, #f4f9ff 0%, #bcdff2 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, #f4f9ff 0%,#bcdff2 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, #f4f9ff 0%,#bcdff2 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4f9ff', endColorstr='#bcdff2',GradientType=0 ); /* IE6-9 */
+}
+
+.LogitudeQuickSearchDropDown .LogitudeQuickSearchItem {
+    width: 100%;
+    border-bottom: 1px solid #AAAAAA;
+    text-align: left;
+    padding-left: 2px;
+    padding-right: 2px;
+    cursor: pointer;
+}
+
+.LogitudeQuickSearchDropDown {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 22px;
+    bottom: 0;
+    min-height: 75px;
+    background: white;
+    border: 1px solid #b2b2b2;
+    box-shadow: 0px 4px 2px 0 #e8e8e8;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    z-index: 1;
+    overflow: hidden;
+    padding-top: 0px;
+}

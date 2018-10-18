@@ -1,0 +1,129 @@
+﻿<style>
+    .sm{
+        width: 22px;
+        height: 18px;
+    }
+</style>
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td colspan="4">
+            <ValidationSummary [SingleLine]="true" [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td *ngIf="EntityPM" style="width: 400px">
+            <table>
+
+                <tr style="height: 25px;"><td><div></div></td></tr>
+
+                <!-- Year -->
+                <tr class="FormFieldRow">
+                    <td style="width: 100px;">
+                        <LogLabel [ObjectFieldName]="'Year'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td style="width: 70px;">
+                        <LogTextBox [ObjectFieldName]="'Year'" [InputType]="'text'" [DataContext]="DataContext"
+                                    [ObjectTableName]="ObjectTableName" [HideColumns]="true" [Text]="Year" ></LogTextBox>
+                    </td>
+                    <td><div></div></td>
+                </tr>
+
+                <!-- PeriodTypeCode -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'PeriodTypeCode'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'PeriodTypeCode'" [InputType]="'text'" [DataContext]="DataContext"
+                                    [ObjectTableName]="ObjectTableName" [HideColumns]="true" [Text]="PeriodTypeCode"></LogTextBox>
+                    </td>
+                    <td><div></div></td>
+                </tr>
+
+                <!-- OpenMonth -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'OpenMonth'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'OpenMonth'" [InputType]="'text'" [DataContext]="DataContext"
+                                    [ObjectTableName]="ObjectTableName" [HideColumns]="true" [Text]="OpenMonth"></LogTextBox>
+                    </td>
+
+                    <td style="width: 25px; padding: 0px 6px 0px 25px;">
+                        <button class="Button sm" (click)="DecrementOpen()"> - </button>
+                    </td>
+
+                    <td style="width: 25px;">
+                        <button class="Button sm" (click)="IncrementOpen()" > + </button> 
+                    </td>
+
+                    <td><div></div></td>
+                </tr>
+
+                <!-- ClosedMonth -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'ClosedMonth'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'ClosedMonth'" [InputType]="'text'" [DataContext]="DataContext"
+                                    [ObjectTableName]="ObjectTableName" [HideColumns]="true" [Text]="ClosedMonth"></LogTextBox>
+                    </td>
+
+                    <td style="width: 25px; padding: 0px 6px 0px 25px;">
+                        <button class="Button sm" (click)="DecrementClosed()"> - </button>
+                    </td>
+
+                    <td style="width: 25px;">
+                        <button class="Button sm" (click)="IncrementClosed()"> + </button>
+                    </td>
+
+                    <td><div></div></td>
+                </tr>
+
+
+                <tr><td><div></div></td></tr>
+            </table>
+        </td>
+
+        <td><div></div></td>
+
+
+    </tr>
+
+    <tr style="height: 32px;">
+        <td colspan="4" style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Cancel' |TextCodeTranslationPipe }}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'Accounting.General.B.OK' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>
+

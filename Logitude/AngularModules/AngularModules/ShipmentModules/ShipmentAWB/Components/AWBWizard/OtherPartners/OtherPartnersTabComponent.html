@@ -1,0 +1,224 @@
+﻿
+<table>
+    <tr>
+        <td>
+            <div class="MediaFill">
+                <div class="MarginAbsolute10">
+                    <table>
+                        <tr style="height: 20px;">
+                            <td style="color: #1B90CB; font-size: 14px;">{{'Shipment.F.NominatedHandlingPartyId' | TextCodeTranslationPipe}}</td>
+                        </tr>
+
+                        <tr style="height: 32px;">
+                            <td>
+                                <table>
+                                    <tr class="FormFieldRow">
+                                        <td style="width: 100px;">
+                                            <LogLabel [ObjectFieldName]="'NominatedHandlingPartyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Name'" [ShowWarning]="ShowWarning_NominatedHandlingPartyId"></LogLabel>
+                                        </td>
+
+                                        <td style="width: 249px;">
+                                            <LogLov [ObjectFieldName]="'NominatedHandlingPartyId'"
+                                                    [SelectedValue]="NominatedHandlingPartyId"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"
+                                                    [LookUpTableName]="'Card'"
+                                                    [HideMaintenanceIcon]="true"
+                                                    [HideAddLink]="true">
+                                            </LogLov>
+                                        </td>
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <tr style="height: 20px;">
+                            <td style="vertical-align: middle;">
+                                <div style="height: 1px; width: calc(100% - 20px); margin-left: 10px; background: #999999; opacity:0.3;"></div>
+                            </td>
+                        </tr>
+
+                        <tr style="height: 20px;">
+                            <td style="color: #1B90CB; font-size: 14px;">Other Participant Information</td>
+                        </tr>
+
+                        <tr style="height: 1px;">
+                            <td>
+                                <table>
+                                    <tr class="Label">
+                                        <td style="width: 100px;">
+                                            <div></div>
+                                        </td>
+                                        <td style="width: 70px;">
+                                            <div>Id</div>
+                                        </td>
+                                        <td style="width: 3px;">
+                                            <div></div>
+                                        </td>
+                                        <td style="width: 150px;">
+                                            <div>Code</div>
+                                        </td>
+                                        <td style="width: 3px;">
+                                            <div></div>
+                                        </td>
+                                        <td style="width: 300px;">
+                                            <div>Name</div>
+                                        </td>
+                                        <td style="width: 3px;">
+                                            <div></div>
+                                        </td>
+                                        <td style="width: 60px;">
+                                            <div>Port/City</div>
+                                        </td>
+                                        <td style="width: 3px;">
+                                            <div></div>
+                                        </td>
+                                        <td style="width: 140px;">
+                                            <div>Reference</div>
+                                        </td>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                    <tr class="FormFieldRow">
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'OtherParticipantInformationReference1'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Participant1'" [ShowWarning]="ShowWarning_Participant1"></LogLabel>
+                                        </td>
+                                        <td>
+                                            <LogLov [HideColumns]="true"
+                                                    [ObjectFieldName]="'OtherParticipantIdCode1'"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"
+                                                    [LookUpTableName]="'OtherParticipantId'">
+                                            </LogLov>
+                                        </td>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                        <td>
+                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'OtherParticipantInformationCode1'" [Text]="OtherParticipantInformationCode1" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                        <td>
+                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'OtherParticipantInformationName1'" [Text]="OtherParticipantInformationName1" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                        <td>
+                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'OtherParticipantInformationPortCode1'" [Text]="OtherParticipantInformationPortCode1" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                        <td>
+                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'OtherParticipantInformationReference1'" [Text]="OtherParticipantInformationReference1" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                    <tr class="FormFieldRow">
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'OtherParticipantInformationReference2'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Participant2'" [ShowWarning]="ShowWarning_Participant2"></LogLabel>
+                                        </td>
+                                        <td>
+                                            <LogLov [HideColumns]="true"
+                                                    [ObjectFieldName]="'OtherParticipantIdCode2'"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"
+                                                    [LookUpTableName]="'OtherParticipantId'">
+                                            </LogLov>
+                                        </td>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                        <td>
+                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'OtherParticipantInformationCode2'" [Text]="OtherParticipantInformationCode2" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                        <td>
+                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'OtherParticipantInformationName2'" [Text]="OtherParticipantInformationName2" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                        <td>
+                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'OtherParticipantInformationPortCode2'" [Text]="OtherParticipantInformationPortCode2" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                        <td>
+                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'OtherParticipantInformationReference2'" [Text]="OtherParticipantInformationReference2" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                    <tr class="FormFieldRow">
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'OtherParticipantInformationReference1'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Participant3'" [ShowWarning]="ShowWarning_Participant3"></LogLabel>
+                                        </td>
+                                        <td>
+                                            <LogLov [HideColumns]="true"
+                                                    [ObjectFieldName]="'OtherParticipantIdCode3'"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"
+                                                    [LookUpTableName]="'OtherParticipantId'">
+                                            </LogLov>
+                                        </td>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                        <td>
+                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'OtherParticipantInformationCode3'" [Text]="OtherParticipantInformationCode3" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                        <td>
+                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'OtherParticipantInformationName3'" [Text]="OtherParticipantInformationName3" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                        <td>
+                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'OtherParticipantInformationPortCode3'" [Text]="OtherParticipantInformationPortCode3" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                        <td>
+                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'OtherParticipantInformationReference3'" [Text]="OtherParticipantInformationReference3" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+
+

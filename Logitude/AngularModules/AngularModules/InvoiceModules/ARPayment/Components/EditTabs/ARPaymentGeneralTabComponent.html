@@ -1,0 +1,164 @@
+<style type="text/css">
+    .SectionTitle {
+        height: 20px;
+        line-height: 20px;
+        font-size: 14px;
+        color: #1B90CB;
+        user-select: text;
+        -webkit-user-select: text;
+    }
+</style>
+
+<div class="TabHolder">
+    <table>
+
+        <tr class="TabTitleRow">
+            <td>{{'General.O.General' | TextCodeTranslationPipe}}</td>
+        </tr>
+
+        <tr style="height: 1px;">
+            <td>
+                <div style="width: 100%; position: relative;">
+                    <div #Child></div>
+                </div>
+            </td>
+        </tr>
+
+        <tr style="height: 1px;vertical-align:top" *ngIf="DisplaySATSettings">
+            <td>
+                <table>
+                    <tr class="TabTitleRow">
+                        <td colspan="2">SAT</td>
+                    </tr>
+
+                    <tr>
+                        <td style="width: 380px;">
+
+                            <table>
+
+                                <tr class="FormFieldRow">
+                                    <td style="width: 160px;">
+                                        <LogLabel [ObjectFieldName]="'MetodoPagoCode'" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'MetodoPagoCode'"
+                                                [SelectedValue]="MetodoPagoCode"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="EntityPM"
+                                                [LookUpTableName]="'MetodoPago'">
+                                        </LogLov>
+                                    </td>
+                                </tr>
+
+                                <!-- Code -->
+                                <tr class="FormFieldRow">
+                                    <td style="width: 160px;">
+                                        <LogLabel [ObjectFieldName]="'SATPaymentMethodCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'SATPaymentMethodCode'"
+                                                [SelectedValue]="SATPaymentMethodCode"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'SATPaymentMethod'">
+                                        </LogLov>
+                                    </td>
+                                </tr>
+
+
+                                <!-- TipoCadenaPago -->
+                                <tr class="FormFieldRow">
+                                    <td style="width: 160px;">
+                                        <LogLabel [ObjectFieldName]="'TipoCadenaPago'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <div style="width: calc(100% - 36px); float: left;">
+                                            <ComboBox [ItemsSource]="TipoCadenaPagoList" [Binding]="'Name'" [SelectedItem]="SelectedTipoCadenaPago" (SelectedItemChanged)="SelectedTipoCadenaPago = $event"></ComboBox>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+
+                                </tr>
+
+
+
+                                <!-- CadPago -->
+                                <tr class="FormFieldRow">
+                                    <td style="width: 160px;">
+                                        <LogLabel [ObjectFieldName]="'CadPago'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'CadPago'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+
+                                </tr>
+
+                                <!-- CertPago -->
+                                <tr class="FormFieldRow">
+                                    <td style="width: 160px;">
+                                        <LogLabel [ObjectFieldName]="'CertPago'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'CertPago'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+
+                                </tr>
+
+                                <!-- SelloPago -->
+                                <tr class="FormFieldRow">
+                                    <td style="width: 160px;">
+                                        <LogLabel [ObjectFieldName]="'SelloPago'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'SelloPago'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+                                    <td></td>
+                                </tr>
+
+                            </table>
+
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    
+
+        <tr>
+            <td>
+                <div></div>
+            </td>
+        </tr>
+
+    </table>
+</div>

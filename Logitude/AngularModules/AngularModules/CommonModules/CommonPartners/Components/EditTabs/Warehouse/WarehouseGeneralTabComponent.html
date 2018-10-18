@@ -1,0 +1,187 @@
+﻿
+<style type="text/css">
+    .SectionTitle {
+        height: 20px;
+        line-height: 20px;
+        font-size: 14px;
+        color: #1B90CB;
+        user-select: text;
+        -webkit-user-select: text;
+    }
+</style>
+
+<div class="TabHolder">
+    <table>
+
+        <tr class="TabTitleRow">
+            <td colspan="4">{{'Warehouse.TH.Stack' | TextCodeTranslationPipe}}</td>
+        </tr>
+
+        <tr style="height:1px;">
+            <td style="width: 340px;">
+                <table>
+                    <!-- Code -->
+                    <tr class="FormFieldRow">
+                        <td style="width: 120px;">
+                            <LogLabel [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td style="width: 200px;">
+                            <LogTextBox [ObjectFieldName]="'Code'" [Text]="Code" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <!-- EnglishName -->
+                    <tr class="FormFieldRow">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'EnglishName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogTextBox [ObjectFieldName]="'EnglishName'" [Text]="EnglishName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <!-- LocalName -->
+                    <tr class="FormFieldRow">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'LocalName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogTextBox [ObjectFieldName]="'LocalName'" [Text]="LocalName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <!-- TypeCode -->
+                    <tr class="FormFieldRow">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'TypeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogLov [ObjectFieldName]="'TypeCode'"
+                                    [SelectedValue]="TypeCode"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'WarehouseType'">
+                            </LogLov>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <!-- FirmCode -->
+                    <tr class="FormFieldRow">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'FirmCode'" [ObjectTableName]="'Warehouse'" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td colspan="2">
+                            <table class="FixedTable">
+                                <tr>
+                                    <td style="width: 165px;">
+                                        <LogTextBox [ObjectFieldName]="'FirmCode'" [HideColumns]="true" [Text]="FirmCode" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+
+                                    <td style="width: 2px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td *ngIf="IsWarehouseFirmCodeVisible" style="width: 18px;vertical-align:central;">
+                                        <HelpIcon style="width: 18px;height:18px;" [HideHeader]="true" [Text]="'Firm Code in the US'"></HelpIcon>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                    </tr>
+
+                    <!-- MyWarehouse -->
+                    <tr class="FormFieldRow">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'MyWarehouse'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogCheckBox [ObjectFieldName]="'MyWarehouse'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <!-- InActive -->
+                    <tr class="FormFieldRow">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogCheckBox [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                </table>
+            </td>
+            <td style="width:20px;">
+                <div></div>
+            </td>
+            <td style="width: 330px;">
+                <table>
+                    <!-- Notes -->
+                    <tr class="FormFieldRow">
+                        <td>
+                            <table>
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'Notes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                </tr>
+
+                                <tr class="FormFieldRow" style="height: 80px;width:330px;">
+                                    <td>
+                                        <div class="FillParent">
+                                            <LogTextBox [ObjectFieldName]="'Notes'" [Text]="Notes" [IsMultiline]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td>
+                <div></div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <div></div>
+            </td>
+        </tr>
+    </table>
+</div>

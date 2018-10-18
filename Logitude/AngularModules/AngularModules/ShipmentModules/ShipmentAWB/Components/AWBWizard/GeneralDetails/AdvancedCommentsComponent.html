@@ -1,0 +1,95 @@
+﻿
+<table>
+    <tr style="height:1px;" *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+
+                <!-- AWB Comments -->
+                <tr style="height: 1px;">
+                    <td>
+                        <table>
+                            <tr style="height: 1px;">
+                                <td>
+                                    <span class="Value">{{'Shipment.F.AWBComments.Short' | TextCodeTranslationPipe}}</span>
+                                    <span class="Label" style="font-style: italic;">(for sending in the FWB/FHL)</span>
+                                </td>
+                            </tr>
+
+                            <tr style="height: 80px;">
+                                <td>
+                                    <div class="MediaFill">
+                                        <LogTextBox [ObjectFieldName]="'AWBComments'" [Text]="AWBComments" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr style="height: 10px; min-height: 10px;">
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- AWBPrintingComments -->
+                <tr style="height: 1px;">
+                    <td>
+                        <table>
+                            <tr style="height: 1px;">
+                                <td>
+                                    <span class="Value">Additional Comments</span>
+                                    <span class="Label"  style="font-style: italic;">(printed on the AWB/HAWB)</span>
+                                </td>
+                            </tr>
+
+                            <tr style="height: 80px;">
+                                <td>
+                                    <div class="MediaFill">
+                                        <LogTextBox [ObjectFieldName]="'AWBPrintingComments'" [Text]="AWBPrintingComments" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button id="{{'CancelAdvanceCommandBtn' | IdGeneratorPipe}}" class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button id="{{'OKAdvanceCommandBtn' | IdGeneratorPipe}}" class="RedButton" (click)="OkButtonClicked()" [disabled]="!IsEditingEnabled">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

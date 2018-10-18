@@ -1,0 +1,46 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Customs.Data.EntityPOCOs
+{
+   
+    public class InterfaceTenantDefinition
+    {
+	 string dbms;
+
+        [Key]
+        [Column("Id")]
+	    public string Id { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+        [ForeignKey("InterfaceManagement")]
+        [Column("Code")]
+	    public string Code { get; set; }
+	      
+        public virtual InterfaceManagement InterfaceManagement { get; set; }
+        [ForeignKey("InterfaceSendOption")]
+        [Column("TenantSendOptionsCode")]
+	    public string TenantSendOptionsCode { get; set; }
+	      
+        public virtual InterfaceSendOption InterfaceSendOption { get; set; }
+        [Column("TenantPriority")]
+	    public int? TenantPriority { get; set; }
+        [Column("Active")]
+	    public bool Active { get; set; }
+        [Column("DcaRenameFileEnable")]
+	    public bool DcaRenameFileEnable { get; set; }
+        [Column("DcaRenameFilePrefix")]
+	    public string DcaRenameFilePrefix { get; set; }
+    }
+}
+	 

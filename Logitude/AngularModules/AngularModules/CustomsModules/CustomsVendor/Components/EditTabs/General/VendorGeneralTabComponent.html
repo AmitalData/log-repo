@@ -1,0 +1,293 @@
+﻿<style> 
+     .FormFieldRow{
+        height: 30px;
+    }
+    .subTitle{
+        color: #1b90cb;
+        font-size: 15px;
+        padding-top: 10px;
+        padding-bottom: 2px;
+    }
+</style>
+<table>
+
+    <tr>
+        <td>
+            <div class="TableHolder">
+                <table>
+
+                    <!-- header -->
+                    <tr style="height: 28px;">
+                        <td colspan="3" class="subTitle">
+                            <custom-send-options style="float: left;"
+                                                 #MyCustomSendOptionsComponent
+                                                 (SendButtonClicked)="SendButtonClicked($event)">
+                            </custom-send-options>
+                        </td>
+                    </tr>
+
+                    <!-- Filters Fields -->
+                    <tr>
+                        <td colspan="2" style="width: 700px;">
+                            <table style="table-layout: fixed;" *ngIf="EntityPM">
+                                <tr class="FormFieldRow">
+                                    <!-- VendorTypeCode -->
+                                    <td style="width: 120px;">
+                                        <LogLabel [ObjectFieldName]="'VendorTypeCode'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td style="width: 160px;">
+                                        <LogLov tabindex="1" [ObjectFieldName]="'VendorTypeCode'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Customs.VendorType'"
+                                                 [HideColumns]="true">
+                                        </LogLov>
+                                    </td>
+
+                                    <td style="width: 95px;"><div></div></td>
+
+                                    <!-- VendorName -->
+                                    <td style="width: 120px;">
+                                        <LogLabel [ObjectFieldName]="'VendorName'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td style="width: 160px;" tabindex="2">
+                                        <LogTextBox [ObjectFieldName]="'VendorName'" [ObjectTableName]="ObjectTableName" 
+                                                    [DataContext]="DataContext"  [HideColumns]="true"></LogTextBox>
+
+                                    </td>
+
+                                    <td></td>
+                                </tr>
+                                <tr class="FormFieldRow">
+                                    <!-- CountryCode -->
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'CountryCode'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'CountryCode'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Customs.CustomsCountry'"
+                                                 [HideColumns]="true">
+                                        </LogLov>
+                                    </td>
+
+                                    <td style="width: 95px;"><div></div></td>
+
+                                    <!-- Customs.SubCountry -->
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'SubCountryCode'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'SubCountryCode'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [SelectedValue]="SubCountryCode"
+                                                [DependencyFilter1Value]="CountryCode"
+                                                [LookUpTableName]="'Customs.SubCountry'"
+                                                 [HideColumns]="true">
+                                        </LogLov>
+                                    </td>
+
+                                    <td></td>
+
+                                </tr>
+                                <tr class="FormFieldRow">
+                                    <!-- CityName -->
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'CityName'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'CityName'" [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext" [HideColumns]="true" ></LogTextBox>
+                                    </td>
+
+                                    <td style="width: 95px;"><div></div></td>
+
+                                    <!-- MainAddressLine -->
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'MainAddressLine'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'MainAddressLine'" [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext" [HideColumns]="true" ></LogTextBox>
+                                    </td>
+
+                                    <td></td>
+
+                                </tr>
+                                <tr class="FormFieldRow">
+                                    <!-- PostalCode -->
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'PostalCode'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'PostalCode'" [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext" [HideColumns]="true" ></LogTextBox>
+                                    </td>
+
+                                    <td style="width: 95px;"><div></div></td>
+
+                                    <!-- DunsNumber -->
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'DunsNumber'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'DunsNumber'" [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext" [HideColumns]="true" ></LogTextBox>
+                                    </td>
+
+                                    <td></td>
+
+                                </tr>
+                                <tr class="FormFieldRow">
+                                    <!-- VATNumber -->
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'VATNumber'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'VATNumber'" [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext" [HideColumns]="true" ></LogTextBox>
+
+                                    </td>
+
+                                    <td style="width: 95px;"><div></div></td>
+
+                                    <!-- TransactionTypeID -->
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'TransactionTypeID'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td>
+                                        <LogLov tabindex="1" [ObjectFieldName]="'TransactionTypeID'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Customs.VendorTransactionType'"
+                                                 [HideColumns]="true">
+                                        </LogLov>
+                                    </td>
+
+                                    <td></td>
+
+                                    
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <!-- Toolbar-->
+                    <tr>
+                        <td colspan="2">
+                            <div class="subTitle">{{'Customs.Vendor.O.Communications' | TextCodeTranslationPipe}}</div>
+                        </td>
+                        <td style="width: 30px;">
+                            <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddButonClicked()" ></IconButton>
+                        </td>
+                    </tr>
+
+                    <!-- Grid -->
+                    <tr>
+                        <td colspan="3" style="height: 100%;">
+
+                            <div style="height: 100%;">
+
+                                <table style="height: 100%;">
+                                    <tr>
+                                        <td>
+                                            <!-- Grid -->
+                                            <table>
+
+                                                <tr>
+                                                    <td colspan="2" style="height: 100%;">
+                                                        <div class="CellContent">
+                                                            <logitude-edit-grid GridWidth="100%" 
+                                                                                GridHeight="100%" 
+                                                                                [ItemSource]="CommunicationsList">
+
+                                                                <!-- CommunicationTypeCode -->
+                                                                <log-column [header]="'Customs.VendorCommunication.F.CommunicationTypeCode' | TextCodeTranslationPipe" [width]="'130'" [Alignment]="'right'" [binding]="'CommunicationTypeCode'">
+                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                        <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.CommunicationTypeName}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogLov [ObjectFieldName]="'CommunicationTypeCode'"
+                                                                                    [ObjectTableName]="'Customs.CustomsVendor'"
+                                                                                    [DataContext]="item"
+                                                                                    [HideColumns]="true"
+                                                                                    [LookUpTableName]="'Customs.CommunicationType'"
+                                                                                    (SelectedItemChanged)="item.SetLocalName($event, 'CommunicationTypeName')"
+                                                                                    [FocusOnMe]="true">
+                                                                            </LogLov>
+
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </log-column>
+
+                                                                <!-- CommunicationAddress -->
+                                                                <log-column [header]="'Customs.VendorCommunication.F.CommunicationAddress' | TextCodeTranslationPipe" [width]="'180'" [Alignment]="'right'" [binding]="'CommunicationAddress'">
+                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                        <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                            <span>{{item.CommunicationAddress}}</span>
+                                                                        </div>
+                                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                                            <LogTextBox [ObjectFieldName]="'CommunicationAddress'" [InputType]="'ntext'" [DataContext]="item"
+                                                                                        [ObjectTableName]="'Customs.CustomsVendor'" [HideColumns]="true" [FocusOnMe]="true"></LogTextBox>
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </log-column>
+
+                                                                <!-- Buttons -->
+                                                                <log-column [width]="'40'" [Alignment]="'right'">
+                                                                    <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
+                                                                        <span class="CellSeparator" [style.float]="'right'"></span>
+                                                                        <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="RemoveRow(item)"
+                                                                                    style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
+                                                                    </log-cell-template>
+                                                                </log-column>
+
+                                                            </logitude-edit-grid>
+                                                        </div>
+
+                                                    </td>
+                                                </tr>
+
+                                            </table>
+
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- footer -->
+                    <tr style="height: 28px;">
+                        <td colspan="3" style="width: 100px;">
+                            <custom-send-options *ngIf="!IsNewEntity" style="float: right;"
+                                                 #MyCustomSendOptionsComponent 
+                                                 (SendButtonClicked)="DeleteButtonClicked(false,$event)"
+                                                 [ButtonText]="'Customs.Vendor.O.Delete' | TextCodeTranslationPipe">
+                            </custom-send-options>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </td>
+    </tr>
+
+</table>

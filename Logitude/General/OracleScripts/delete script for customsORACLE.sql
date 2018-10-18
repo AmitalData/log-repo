@@ -1,0 +1,74 @@
+BEGIN
+truncate table SUPPLIERINVOICEITEMVEHICLEADDS ;
+DELETE DeclarationTaxes ;
+DELETE DeficitConnFileParagraphTypes ;
+DELETE TapagConnectionTables  ;
+DELETE SupplierInvoiceItemsTaxes; 
+DELETE SupplierInvoiceItemsSerialNums;
+DELETE SupplierInvoiceItemsLevies; 
+DELETE SupplierInvioceItemCertificats; 
+DELETE SupplierInvoiceItemsConDeclars ;
+DELETE SupplierInvoiceItemsDescripts ;
+DELETE SupplierInvoiceItemsMods ;
+DELETE SupplierInvoiceItemProcesTypes ;
+DELETE SupplierInvoiceItemsProdIdents ;
+DELETE SupplierInvoiceItemVehicleMods ;
+DELETE SupplierInvoiceItemVehicles ;
+DELETE SupplierInvoiceItemModVehicles ;
+DELETE SupplierInvoiceItems ;
+DELETE SupplierInvoiceFreightAmounts ;
+DELETE SupplierInvoiceModifications ;
+DELETE SupplierInvoices ;
+DELETE SupplierInvoiceItemVehicleMods;
+DELETE SupplierInvoiceItemVehicles;
+DELETE VehicleOwners ;
+DELETE VehicleSafetyAccessories ;
+DELETE Vehicles ;
+DELETE DeclarationPaymentMethods ;
+DELETE DeclarationPaymentProtests ;
+DELETE DeclarationConstraints ;
+DELETE CustomsCollateralsConditions ;
+DELETE CollateralsRequestFileConds ;
+DELETE CustomsCollateralsAnswers ;
+DELETE CustomsCollaterals ;
+DELETE DeclarationPaymentProtests ;
+DELETE DeclarationPaymentMethods ;
+DELETE DeclarationPayments ;
+DELETE DeclarationConstraints ;
+DELETE ConsignmentInternalTransitions ;
+DELETE ConsignmentPackages ;
+DELETE Consignments ;
+DELETE ProceduralFaultsConnEntities ;
+DELETE ProceduralFaults ;
+DELETE PhysicalChecks ;
+DELETE declarations ;
+DELETE PaymentOrderMethods ;
+DELETE PaymentOrderConnectionTables ;
+DELETE PaymentOrderLines ;
+DELETE PaymentOrderProtestReasons ;
+DELETE PaymentOrders ;
+DELETE ImporterDespositions ;
+DELETE VendorCommunications ;
+DELETE CustomsPartnersItems ;
+DELETE CustomsVendors ;
+DELETE Deficits ;
+DELETE GuaranteeConditions ;
+DELETE RequiredGuaranteeTypes ;
+DELETE Guarantees ;
+DELETE DepositConditions ;
+DELETE Deposits ;
+DELETE Tapags ;
+DELETE CustomsDocumentMetaDataValues ;
+DELETE CustomsDocuments ;
+DELETE CustomsDocumentPointers ;
+DELETE CustomsDocumentsTickets ;
+DELETE Notifications ;
+DELETE CustomsRequestsSheets ;
+DELETE ProceduralFaultsConnEntities ;
+DELETE ProceduralFaults ;
+END ;
+
+
+
+
+

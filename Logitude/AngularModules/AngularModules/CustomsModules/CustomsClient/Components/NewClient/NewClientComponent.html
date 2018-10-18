@@ -1,0 +1,185 @@
+﻿
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td colspan="4">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+      
+       <td>
+           <table>
+               <tr>
+                   <td style="width:10px">
+
+                       <RadioButton [Name]="'ExternalId'" [IsChecked]="IsExternalId" (Checked)="UseExternalId()"></RadioButton>
+
+                   </td>
+                   <td>
+                       <label>{{'Customs.Vendor.O.ExternalId' | TextCodeTranslationPipe }}</label>
+                   </td>
+               </tr>
+           </table>
+       </td>
+
+      
+    
+    </tr>
+
+    <tr>
+
+        <td>
+            <table style="width:730px">
+                <tr>
+                    <td style="width:200px">
+                        <LogLabel [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td style="width:150px">
+
+                        <LogTextBox [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName"
+                                    [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+
+                    </td>
+                    <td ><div ></div></td>
+
+
+                    <!--<td style="width:150px">
+                        <LogLabel [ObjectFieldName]="'FullName'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td style="width:170px">
+
+                        <LogTextBox [ObjectFieldName]="'FullName'" [ObjectTableName]="ObjectTableName"
+                                    [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+
+                    </td>-->
+                </tr>
+            </table>
+        </td>
+
+     
+
+
+   
+
+    </tr>
+
+    <tr>
+
+        <td>
+            <table>
+                <tr>
+                    <td style="width:10px">
+
+                        <RadioButton [Name]="'PassportRadio'" [IsChecked]="IsPassport" (Checked)="UsePassportRadio()"></RadioButton>
+
+                    </td>
+                    <td>
+                        <label>{{'Customs.Vendor.O.PassportNumber' | TextCodeTranslationPipe }}</label>
+                    </td>
+                </tr>
+            </table>
+
+
+        </td>
+       
+    </tr>
+
+    <tr>
+        <td>
+            <table style="width:350px">
+                <tr style="height:32px">
+                    <td style="width:200px">
+                        <LogLabel [ObjectFieldName]="'PassportTypeCode'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+
+                        <LogLov [ObjectFieldName]="'PassportTypeCode'"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'Customs.PassportType'"
+                                [HideColumns]="true">
+                        </LogLov>
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <LogLabel [ObjectFieldName]="'PassportNumber'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+
+                        <LogTextBox [ObjectFieldName]="'PassportNumber'" [ObjectTableName]="ObjectTableName"
+                                    [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <LogLabel [ObjectFieldName]="'PassportCountryCode'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+
+                        <LogLov [ObjectFieldName]="'PassportCountryCode'"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'Customs.CustomsCountry'"
+                                [HideColumns]="true">
+                        </LogLov>
+
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div class="class-response-content">
+                <div style="height:210px;margin-top:1em;margin-bottom:1em;font-weight: bold;">
+                    <div *ngIf="ResponseData != null">
+                        <object-viewer [MyNgStyleHeight]="'210px'" [MyObject]="_MyResponseObjectToShow"></object-viewer>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+    <tr style="height: 30px;">
+
+        <td>
+            <table>
+                <tr>
+                 
+                    <td>
+                        <div></div>
+                    </td>
+                    <td style="width: 57px;vertical-align: bottom;padding-left:5px">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel' |TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 57px;vertical-align: bottom; padding-left:5px">
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
+                    </td>
+                    <td style="width:110px;  vertical-align: bottom;padding-left:5px">
+                        <custom-send-options #MyCustomSendOptionsComponent
+                         (SendButtonClicked)="OnCustomSendOptionsButtonClick($event)"></custom-send-options>
+                    </td>
+                   
+                </tr>
+            </table>
+        </td>
+
+    </tr>
+</table>

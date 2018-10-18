@@ -1,0 +1,1 @@
+alter table [Customs].[SupplierInvoiceItemsQuantities] Drop constraint [SupplierInvoiceItemsQuantity_PackageMeasureQualifier] 

@@ -1,0 +1,214 @@
+﻿
+
+<div *ngIf="!DocumentCustomArgs.EditCustomField" style="margin:5px">
+    <table>
+
+        <tr style="margin-top:20px" *ngFor="let item of DocumentTypeCustomFieldLists">
+            <td style="width:150px;height:32px;vertical-align:top">
+
+                <div style="width:150px;text-align:left;float: left;vertical-align:top">
+
+                    <p style="font-size:12px;margin-left:5px;color:gray;float: left;width:150px;margin-top:3px">{{item.Name}} :</p>
+                   
+                </div>
+
+
+            </td>
+            <td><div style="width:10px"></div></td> 
+            <td style="height:32px;">
+
+                <div *ngIf="item.FieldDataTypeCode == 'Text' || item.FieldDataTypeCode == 'nText'" style="text-align:left;float:left;">
+
+
+                    <input [(ngModel)]="item.FieldValue" *ngIf="!item.MultiLine" disabled="disabled" type="text" style="height:22px;opacity:1;width:200px;float:left;color:gray;margin-left:5px;font-size:12px;border-radius:3px;border:1px solid #a8a8a8;">
+                   
+                    
+
+                    <div *ngIf="item.MultiLine" style="height:70px;vertical-align:central">
+                        <textarea [(ngModel)]="item.FieldValue" disabled="disabled" type="text" style="height:60px;max-height:60px;opacity:1;width:200px;float:left;color:gray;margin-left:5px;margin-top:4px;font-size:11px;border-radius:3px;border:1px solid #a8a8a8;resize:none;overflow:auto"></textarea>
+                    </div>
+                    
+                    
+                </div>
+
+
+
+                <div *ngIf="item.FieldDataTypeCode != 'Text' && item.FieldDataTypeCode != 'nText'" style="text-align:left;float:left;">
+                     
+
+                    <input disabled="disabled" type="text" [(ngModel)]="item.FieldValue" style="height:22px;border-radius:3px;border:1px solid #a8a8a8;width:200px;float:left;color:gray;opacity:1;margin-left:5px;font-size:12px;">
+
+                </div>
+
+
+            </td>
+
+        </tr>
+
+
+    </table>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+<!--<form *ngIf="DocumentCustomArgs.EditCustomField"  [formModel]="myForm" style="width:337px;">-->
+
+    <div *ngIf="DocumentCustomArgs.EditCustomField"  style="width:300px;">
+    
+        <table style="text-align:left;">
+
+            <tr *ngFor="let item of DocumentTypeCustomFieldLists">
+
+              <td>
+                 <table>
+
+                     <tr>
+                         <td style="width:10px;">
+                             <div style="width:10px"></div>
+                         </td>
+
+                         <td>
+
+                             <div style="display:block;width:100%;height:20px;margin-top:10px"><p style="font-size:12px;color:gray;width:100px">{{item.Name}} :</p></div>
+                             <div style="display:block;width:100%" [ngSwitch]="item.FieldDataTypeCode">
+
+
+                                 <div style="vertical-align:top;width:300px;text-align:left" *ngSwitchCase="'Boolean'">
+
+                                     <div class="RadioButton">
+                                         <!--<input [attr.id]="item.Id" class="LeftCenter" style="text-align:center" type="checkbox" (change)="EditCustomField(item)" />
+                                         <label class="LeftCenter" [attr.for]="item.Id"></label>-->
+                                    
+                                         <input [attr.id]="item.keyYes" type="radio"  (change)="EditCustomField(item)" [checked]="item.FieldValue"   [attr.name]="item.keyYes"  />
+                                         <label  [attr.for]="item.keyYes" style="font-size: 12px">
+                                             Yes
+                                         </label>
+                                     
+                                      </div>
+                                     <div style="height:5px"></div>
+
+                                     <div  class="RadioButton">
+                                         <input [attr.id]="item.keyNo" type="radio" (change)="EditCustomField(item)" [checked]="!item.FieldValue"   [attr.name]="item.keyYes"  />
+                                         <label [attr.for]="item.keyNo" style="font-size: 12px">
+                                             No
+                                         </label>
+                                     </div>
+
+
+                                 </div>
+
+                                 <div style="vertical-align:top;width:317px" *ngSwitchCase="'Text'">
+
+                                     <input *ngIf="!item.MultiLine" (change)="EditCustomField(item)" (focus)="SetCustomFieldItem(item);" type="text" [(ngModel)]="item.FieldValue" style="height:22px;border-radius:3px;border:1px solid #a8a8a8;float:left;color:gray;opacity:1;font-size:12px;overflow:auto">
+                                     <div *ngIf="item.MultiLine" style="height:70px">
+                                         <textarea [(ngModel)]="item.FieldValue"   (focus)="SetCustomFieldItem(item);" (change)="EditCustomField(item)" type="text" style="float:left;opacity:1;width:317px;height:70px;background-color:white;border:1px solid #E4E3E1;font-size:12px;border-radius:0px;color:gray;resize:none;overflow:auto"></textarea>
+                                   
+                                     </div>
+                                 </div>
+
+
+                                 <div style="vertical-align:top;width:317px" *ngSwitchCase="'nText'">
+                                     <input *ngIf="!item.MultiLine"   (focus)="SetCustomFieldItem(item);" (change)="EditCustomField(item)" type="text" [(ngModel)]="item.FieldValue" style="height:22px;border-radius:3px;border:1px solid #a8a8a8;float:left;color:gray;opacity:1;font-size:12px;overflow:auto">
+
+                                     <div *ngIf="item.MultiLine" style="height:70px">
+                                         <textarea [(ngModel)]="item.FieldValue"  (focus)="SetCustomFieldItem(item);" (change)="EditCustomField(item)" type="text" style="float:left;opacity:1;width:317px;height:70px;max-height:70px;background-color:white;border:1px solid #a8a8a8;font-size:12px;border-radius:0px;color:gray;resize:none;overflow:auto"></textarea>
+                                
+                                     </div>
+
+
+                                 </div>
+
+                                 <div style="vertical-align:top;width:317px" *ngSwitchCase="'UnsInteger'">
+                                     <input (change)="EditCustomField(item)" (focus)="SetCustomFieldItem(item)" type="number" [(ngModel)]="item.FieldValue" style="height:22px;border-radius:3px;border:1px solid #a8a8a8;float:left;color:gray;opacity:1;font-size:12px;overflow:auto">
+
+                                 </div>
+
+                                 <div style="vertical-align:top;width:317px" *ngSwitchCase="'UnsDecimal'">
+
+                                     <input (change)="EditCustomField(item)" (focus)="SetCustomFieldItem(item)" type="number" [(ngModel)]="item.FieldValue" style="height:22px;border-radius:3px;border:1px solid #a8a8a8;float:left;color:gray;opacity:1;font-size:12px;overflow:auto">
+
+
+                                 </div>
+
+
+
+                                 <div style="vertical-align:top;width:317px" *ngSwitchCase="'SigDouble'">
+
+                                     <input (change)="EditCustomField(item)" (focus)="SetCustomFieldItem(item)" type="number" [(ngModel)]="item.FieldValue" style="height:22px;border-radius:3px;border:1px solid #a8a8a8;float:left;color:gray;opacity:1;font-size:12px;overflow:auto">
+                                 </div>
+
+
+                                 <div style="vertical-align:top;width:317px" *ngSwitchDefault>
+                                     <input (change)="EditCustomField(item)" (focus)="SetCustomFieldItem(item)" type="text" [(ngModel)]="item.FieldValue" style="height:22px;border-radius:3px;border:1px solid #a8a8a8;float:left;color:gray;opacity:1;font-size:12px;overflow:auto">
+                                 </div>
+
+                                <div style="vertical-align:top;width:317px" *ngSwitchCase="'Date'">
+                                    <!--(ValueChanged)="ValueDateChange($event,item)"-->
+
+                                     <LogDatePicker (ValueChanged)="ValueDateChange($event,item)" [HideColumns]="true" *ngIf="item.IsLoad" [LogitudeForm]="myForm" [ObjectFieldName]="'FieldValue'" [DataContext]="item"></LogDatePicker>
+
+                                 </div>
+
+                                 <div style="vertical-align:top;width:317px;" *ngSwitchCase="'DateTime'">
+
+                                     <LogDatePicker [HideColumns]="true" (ValueChanged)="ValueDateChange($event,item)" *ngIf="item.IsLoad" [LogitudeForm]="myForm" [ObjectFieldName]="'FieldValue'" [DataContext]="item"></LogDatePicker>
+
+                                  
+                                 </div>
+
+                                
+
+
+                             </div>
+
+
+
+                         </td>
+                         <td style="width:10px;">
+                             <div style="width:10px"></div>
+                         </td>
+
+                     </tr>
+                 </table>
+
+              </td>
+
+              
+
+            </tr>
+        </table>
+
+    </div>
+
+
+<!--</form>-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

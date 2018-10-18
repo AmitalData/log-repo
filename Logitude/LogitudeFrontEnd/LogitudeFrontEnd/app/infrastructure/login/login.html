@@ -1,0 +1,379 @@
+﻿
+<style type="text/css">
+    .Label {
+        font-size: 13px;
+        text-align: left;
+    }
+
+    input {
+        width: 280px;
+        height: 30px;
+        min-height: 30px;
+        font-size: 13px;
+        font-family: tahoma, arial, sans-serif;
+        background: #dbdbdb;
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2RiZGJkYiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjI4JSIgc3RvcC1jb2xvcj0iI2YyZjJmMiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjQxJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top, #dbdbdb 0%, #f2f2f2 28%, #ffffff 41%, #ffffff 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#dbdbdb), color-stop(28%,#f2f2f2), color-stop(41%,#ffffff), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top, #dbdbdb 0%,#f2f2f2 28%,#ffffff 41%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top, #dbdbdb 0%,#f2f2f2 28%,#ffffff 41%,#ffffff 100%); /* Opera 11.10+ */
+        background: linear-gradient(to bottom, #dbdbdb 0%,#f2f2f2 28%,#ffffff 41%,#ffffff 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', endColorstr='#ffffff',GradientType=0 ); /* IE6-8 */
+    }
+
+    #LoginButton:active {
+        position: relative;
+        top: 1px;
+    }
+
+    #LoginButton:hover {
+        background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #cc0029), color-stop(1, #fe1a00) );
+        background: -moz-linear-gradient( center top, #cc0029 5%, #fe1a00 100% );
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#cc0029', endColorstr='#fe1a00');
+        background-color: #cc0029;
+        cursor:pointer;
+    }
+
+    #LoginButton {
+        cursor:default;
+        -moz-box-shadow: inset 0px 1px 0px 0px #f29c93;
+        -webkit-box-shadow: inset 0px 1px 0px 0px #f29c93;
+        box-shadow: inset 0px 1px 0px 0px #f29c93;
+        background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #fe1a00), color-stop(1, #ce0100) );
+        background: -moz-linear-gradient( center top, #fe1a00 5%, #ce0100 100% );
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fe1a00', endColorstr='#ce0100');
+        background-color: #fe1a00;
+        -moz-border-radius: 6px;
+        -webkit-border-radius: 6px;
+        border-radius: 6px;
+        border: 1px solid #d83526;
+        display: inline-block;
+        color: #ffffff;
+        font-family: Arial;
+        font-size: 15px;
+        font-weight: bold;
+        font-style: normal;
+        height: 30px;
+        line-height: 30px;
+        width: 80px;
+        text-decoration: none;
+        text-align: center;
+        text-shadow: 1px 1px 0px #b23e35;
+    }
+
+    #LoginButtonGreen:hover {
+        background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #5cb811), color-stop(1, #77d42a) );
+        background: -moz-linear-gradient( center top, #5cb811 5%, #77d42a 100% );
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#5cb811', endColorstr='#77d42a');
+        background-color: #5cb811;
+    }
+
+    #LoginButtonGreen:active {
+        position: relative;
+        top: 1px;
+    }
+
+    #LoginButtonGreen {
+        -moz-box-shadow: inset 0px 1px 0px 0px #caefab;
+        -webkit-box-shadow: inset 0px 1px 0px 0px #caefab;
+        box-shadow: inset 0px 1px 0px 0px #caefab;
+        background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #77d42a), color-stop(1, #5cb811) );
+        background: -moz-linear-gradient( center top, #77d42a 5%, #5cb811 100% );
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#77d42a', endColorstr='#5cb811');
+        background-color: #77d42a;
+        -moz-border-radius: 6px;
+        -webkit-border-radius: 6px;
+        border-radius: 6px;
+        border: 1px solid #268a16;
+        display: inline-block;
+        color: #ffffff;
+        font-family: arial;
+        font-size: 15px;
+        font-weight: bold;
+        padding: 6px 24px;
+        text-decoration: none;
+        text-shadow: 1px 1px 0px #aade7c;
+        width: 100px;
+        margin-top: 2px;
+    }
+</style>
+
+<table>
+
+    <tr style="height:114px;">
+        <td>
+            <div></div>
+        </td>
+
+        <td style="width:1024px; text-align:center; vertical-align:top;">
+            <a id="imglink" target="_blank">
+                <img src="images/LoginScreen/header.jpg" id="loginlogo" style="margin-top:50px; width:290px; height:114px;" />
+            </a>
+        </td>
+
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr style="height:20px;">
+        <td colspan="3"></td>
+    </tr>
+
+    <tr style="height: 466px;">
+        <td>
+            <div></div>
+        </td>
+
+        <td style="width: 980px; background-image: url('images/LoginScreen/map.png'); background-size: 907px 466px; background-position: center; background-repeat: no-repeat;">
+            <table>
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr style="height: 16px;">
+                    <td>
+                        <div style="height: 16px; width:100%; opacity: 0.7; background-image: url('images/LoginScreen/shadow1.png'); background-repeat: no-repeat;"></div>
+                    </td>
+                </tr>
+
+                <tr style="height: 260px; background:white;">
+                    <td>
+                        <table>
+
+                            <tr [hidden]="ShowLoginBusyIndicator">
+                                <td>
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 300px;">
+                                    <div id="myform" style="height:100%;">
+
+                                        <form style="height:100%;" #LoginForm="ngForm" name="LoginForm" id="LoginForm" (ngSubmit)="Login(LoginForm, LoginForm.value)" novalidate [hidden]="HideLoginForm">
+                                            <div>
+                                                <div style="height: 25px;"></div>
+
+                                                <div>
+                                                    <div class="Label">e-mail:</div>
+                                                    <input autocomplete="on" size="10" class="auto-style1" [(ngModel)]="Email" ngControl="emailF" #emailF="ngForm" required type="email" />
+                                                    <div [hidden]="!LoginForm.form.valid">
+                                                        <div class="label label-sm label-danger" [hidden]="emailF.valid">Email is Required!</div>
+                                                        <!--<div class="label label-sm label-danger" [hidden]="LoginForm.Email.$error.pattern">Email Format is Invalid!</div>-->
+                                                    </div>
+                                                </div>
+
+                                                <div style="height: 10px;"></div>
+
+                                                <div>
+                                                    <div>Password:</div>
+                                                    <input class="auto-style1" [(ngModel)]="Password" ngControl="passwordF" #passwordF="ngForm" required type="password" />
+
+                                                    <div [hidden]="!LoginForm.form.valid">
+                                                        <div class="label label-sm label-danger" [hidden]="passwordF.valid">Password is Required!</div>
+                                                    </div>
+                                                </div>
+
+                                                <div style="height: 10px;"></div>
+
+                                                <div id="divMayus" style="visibility:hidden">
+                                                    <img width="15" height="15" src="images/SimplogIcons/warning.png" /> Caps Lock is on.
+                                                </div>
+
+                                                <a id="LoginButton" (click)="Login()" value="Login">Login</a>
+
+                                            </div>
+
+                                            <table id="loginForm" style="display:none;">
+
+                                                <tr style="height: 25px;">
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr style="height: auto;">
+                                                    <td class="column1">
+                                                        e-mail:
+                                                        <br />
+                                                        <input autocomplete="on" size="10" class="auto-style1" [(ngModel)]="Email" ngControl="emailF" #emailF="ngForm" required type="email" />
+
+                                                        <!--<img id="busyIndicator" [hidden]="PendingLoading" style="height:25px;width:25px;vertical-align:bottom;" src="/Images/LoginScreen/indicator.gif" alt='loading' />-->
+
+                                                        <div [hidden]="!LoginForm.form.valid">
+                                                            <div class="label label-sm label-danger" [hidden]="emailF.valid">Email is Required!</div>
+                                                            <!--<div class="label label-sm label-danger" [hidden]="LoginForm.Email.$error.pattern">Email Format is Invalid!</div>-->
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr style="height: unset">
+                                                    <td class="column1">
+                                                        Password:
+                                                        <br />
+                                                        <input class="auto-style1" [(ngModel)]="Password" ngControl="passwordF" #passwordF="ngForm" required type="password" />
+
+                                                        <div [hidden]="!LoginForm.form.valid">
+                                                            <div class="label label-sm label-danger" [hidden]="passwordF.valid">Password is Required!</div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td class="column1">
+
+                                                        <div id="divMayus" style="visibility:hidden">
+                                                            <img width="15" height="15" src="images/SimplogIcons/warning.png" /> Caps Lock is on.
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <!--<td class="column1">
+                                                        <input class="loginButton111" type="submit" (click)="Login()" [disabled]="HidePendingLoading" value="Login >" id="cmdLogin" />
+                                                    </td>-->
+                                                    <td class="column1">
+                                                        <a id="cmdLogin" (click)="Login()" value="Login >">Login</a>
+                                                    </td>
+                                                </tr>
+
+                                                <tr [hidden]="!LoginFailed">
+                                                    <td class="column1">
+                                                        <span style="background-color:red">
+                                                            <p style="color:white;text-align:left;background-color:red;margin-top:3px;width:268px" id="errorsList">
+                                                                Login failed! invalid e-mail or password.
+                                                            </p>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+
+                                                <tr style="height:50px;width:50px" [hidden]="HidePendingLoading">
+                                                    <td>
+                                                        <div>
+                                                            <img width="50" height="50" src="images/LoginScreen/indicator.gif" alt='loading' />
+                                                        </div>
+                                                    </td>
+
+                                                    <td></td>
+                                                </tr>
+
+                                            </table>
+                                        </form>
+
+                                        <form #TenantForm="ngForm" name="TenantForm" [hidden]="HideTenantForm" (ngSubmit)="ChooseTenant(TenantForm, TenantForm.value)" novalidate>
+                                            <table id="comboForm" style="margin-right:20px">
+
+                                                <tr>
+                                                    <td style="text-align:left;width:300px;font-family:Myriad Pro;font-size:14px;color:teal;">
+                                                        You have more than one account, please choose which one you want to log in.
+                                                    </td>
+
+
+                                                </tr>
+                                                <tr>
+                                                    <td class="column1">
+                                                        <div style="margin-top:5px">
+                                                            <!--<input ng-required="true" [(ngModel)]="Tenant" class="k-dropdown" id="cmbTenants" runat="server" style="display:normal;width:250px;margin-top:0px" />-->
+                                                            <div class="col-sm-6 col-md-6">
+                                                                <!--<select class="input select form-control input-sm"
+                                                                        id="cmbTenants"
+                                                                        ng-control="Tenant"
+                                                                        [(ngModel)]="Tenant"
+                                                                        ng-options="option.Tenant as option.CompanyName for option in TenantList"
+                                                                        ng-required="true">
+                                                                </select>-->
+                                                                <select class="form-control" required
+                                                                        [(ngModel)]="Tenant"
+                                                                        ngControl="tenantF" #tenantF="ngForm">
+                                                                    <option *ngFor="#p of TenantList" [value]="p.Tenant">{{p.CompanyName}}</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <img id="busyIndicator" [hidden]="HidePendingLoading" style="height:25px;width:25px;vertical-align:bottom;" src="images/LoginScreen/indicator.gif" alt='loading' />
+                                                        <div [hidden]="!TenantForm.form.valid">
+                                                            <div class="label label-sm label-danger" [hidden]="tenantF.valid">You must choose a Tenant!</div>
+                                                        </div>
+                                                    </td>
+
+
+                                                </tr>
+
+                                                <tr>
+                                                    <td class="column1">
+
+                                                        <input style="width:120px;height:35px;margin-left:0px;" class="cmdSubmit" type="submit" [disabled]="HidePendingLoading" value="Continue >" runat="server" id="cmdContinue" data-bind="click: continueMethod" />
+
+                                                        <a style="margin-left:15px;margin-top:50px;color:#4B4A4A;font-size:12px;font-family:Arial;vertical-align:central" href="login.aspx">Back to login page</a>
+
+
+                                                    </td>
+
+
+                                                </tr>
+
+                                                <tr style="height:50px;width:50px" [hidden]="HidePendingLoading">
+                                                    <td>
+                                                        <div>
+                                                            <img width="50" height="50" src="images/LoginScreen/indicator.gif" alt='loading' />
+                                                        </div>
+                                                    </td>
+
+                                                    <td></td>
+                                                </tr>
+
+                                            </table>
+                                        </form>
+
+                                    </div>
+                                </td>
+
+                                <td style="width:650px; height: 100%;">
+                                    <img style="height: 100%; width: 100%" src="images/LoginScreen/Layer.png" />
+                                </td>
+
+                            </tr>
+
+                            <tr [hidden]="!ShowLoginBusyIndicator">
+                                <td>
+                                    <div></div>
+                                </td>
+
+                                <td style="height:100%; width:980px;">
+                                    <div style="height:100%; width:100%; background:url(images/LoginScreen/Layer.png) no-repeat; background-size: 100% 100%;">
+                                        <div style="width: 100%; height: 100%; position:relative;">
+                                            <img class="CenterCenter" width="128" height="128" src="images/LoginScreen/indicator.gif" alt='loading' />
+                                        </div>
+                                    </div>
+                                </td>
+
+                            </tr>
+
+                        </table>
+                    </td>
+                </tr>
+
+                <tr style="height: 16px;">
+                    <td>
+                        <div style="height: 16px; width:100%; opacity: 0.7; background-image: url('images/LoginScreen/shadow2.png'); background-repeat: no-repeat;"></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="3"></td>
+    </tr>
+
+</table>

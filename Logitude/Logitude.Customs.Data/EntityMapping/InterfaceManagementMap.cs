@@ -1,0 +1,58 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data;
+ 
+namespace Logitude.Customs.Data.EntityMapping
+{
+ 
+    public class InterfaceManagementMap : EntityTypeConfiguration<InterfaceManagement>
+    {
+	    string dbms;
+        public InterfaceManagementMap()
+        { 
+			  this.ToTable("InterfaceManagements", "Customs");
+		
+		    this.HasKey(t => new { t.Code });
+	 
+            this.Property(t => t.Code).HasColumnName("Code").IsRequired().HasMaxLength(32).IsUnicode(false);
+
+            this.Property(t => t.DcaPrefixName).HasColumnName("DcaPrefixName").HasMaxLength(256).IsUnicode(false);
+
+            this.Property(t => t.Description).HasColumnName("Description").HasMaxLength(256).IsUnicode(true);
+
+            this.Property(t => t.InOut).HasColumnName("InOut").HasMaxLength(1).IsUnicode(false);
+
+            this.Property(t => t.DefaultSendOptionsCode).HasColumnName("DefaultSendOptionsCode").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.DefaultPriority).HasColumnName("DefaultPriority");
+
+            this.Property(t => t.AllowRestore).HasColumnName("AllowRestore");
+
+            this.Property(t => t.SearchFields).HasColumnName("SearchFields").HasMaxLength(1000).IsUnicode(true);
+
+            this.Property(t => t.Active).HasColumnName("Active");
+
+            this.Property(t => t.SendAsDual).HasColumnName("SendAsDual");
+
+            this.Property(t => t.ResponseInterfaceCode).HasColumnName("ResponseInterfaceCode").HasMaxLength(32).IsUnicode(false);
+
+            this.Property(t => t.SignatureTypeCode).HasColumnName("SignatureTypeCode").HasMaxLength(1).IsUnicode(false);
+
+            this.Property(t => t.DcaPrefixName2).HasColumnName("DcaPrefixName2").HasMaxLength(256).IsUnicode(false);
+
+            this.Property(t => t.DcaPrefixName3).HasColumnName("DcaPrefixName3").HasMaxLength(256).IsUnicode(false);
+
+            this.Property(t => t.DcaPrefixName4).HasColumnName("DcaPrefixName4").HasMaxLength(256).IsUnicode(false);
+        }
+    }
+}
+	 

@@ -1,0 +1,1 @@
+alter table supplierinvoiceitems add  ClasifiedRemarks  NVARCHAR2(1024)   NULL

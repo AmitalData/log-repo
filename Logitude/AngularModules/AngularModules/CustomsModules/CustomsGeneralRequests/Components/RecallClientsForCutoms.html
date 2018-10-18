@@ -1,0 +1,54 @@
+﻿<!-- PrintRequestComponent view  -->
+<style>
+    .MessageBox {
+        width: 200px;
+        height: 30px;
+        padding: 2px 10px;
+        margin: 5px;
+        color: green;
+        font-family: sans-serif;
+        font-size: 12px;
+        text-align: center;
+    }
+</style>
+
+<div>
+    <custom-message-wrapper [CustomSendOptionsButtonCanForcePersonalSign]="false"
+                            [IsShowCustomResponseContent]="false">
+
+        <!-- Request -->
+        <div class="class-request-content">
+            <table style="width: 350px;height: 270px;padding-top: 10px;">
+                <tr class="FormFieldRow" style="width: 50% ; height : 5%" *ngIf="ResponseMessage != null">
+                    <td style="width: 100px;">
+                        <div class="TextTrimming RightCenter">
+                            <span>{{Message}}</span>
+                        </div>
+                    </td>
+
+                    <td><div></div></td>
+                </tr>
+
+                <tr>
+                    <td><div></div></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Response -->
+        <div class="class-response-content">
+            <table style="width: 0px;height: 0px;">
+                <tr class="FormFieldRow" style="width: 50% ; height : 5%" *ngIf="ResponseMessage != null">
+                    <td style="width: 100px;">
+                        <div class="TextTrimming RightCenter" >
+                            <span>{{Message}}</span>
+                        </div>
+                    </td>
+
+                    <td><div></div></td>
+                </tr>
+            </table>
+        </div>
+
+    </custom-message-wrapper>
+</div>

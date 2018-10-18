@@ -1,0 +1,87 @@
+﻿
+<div class="TabHolder">
+    <table>
+        <tr class="TabTitleRow">
+            <td>
+                <table>
+                    <tr>
+                        <td>{{'TenantManagement.TH.AWBMessagingStock' | TextCodeTranslationPipe}}</td>
+
+                        <td style="width: 23px;">
+                            <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddStockClicked()" [disabled]="!IsEditingAllowed" title="New AWB Messaging Stock"></IconButton>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr style="height:5px;">
+            <td><div></div></td>
+        </tr>
+
+        <tr>
+            <td>
+                <div class="MediaFill">
+                    <div class="SimpleGridView">
+                        <div class="SimpleGridViewHeader">
+                            <table>
+                                <tr>
+                                    <td style="width: 155px; min-width:155px; max-width:155px;">Start Date</td>
+                                    <td style="width: 155px; min-width:155px; max-width:155px;">End Date</td>
+                                    <td style="width: 155px; min-width:155px; max-width:155px;">Amount</td>
+                                    <td style="width: 155px; min-width:155px; max-width:155px;">Status</td>
+                                    <td style="width: 250px; min-width:250px; max-width:250px;">Notes</td>
+                                    <td style="width: 100px; min-width:100px; max-width:100px;">Total Price</td>
+                                    <td class="LastChild" style="min-width:30px;">
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="SimpleGridViewBody">
+                            <table>
+                                <tr class="SimpleGridViewRow" *ngFor="let item of ItemsSource">
+                                    <td class="CellStretched" style="width: 155px; min-width:155px; max-width:155px;">
+                                        {{item.StartDate | DateTimeToDatePipe}}
+                                    </td>
+
+                                    <td class="CellStretched" style="width: 155px; min-width:155px; max-width:155px;">
+                                        {{item.EndDate | DateTimeToDatePipe}}
+                                    </td>
+
+                                    <td class="CellStretched" style="width: 155px; min-width:155px; max-width:155px;">
+                                        {{item.Amount}}
+                                    </td>
+
+                                    <td class="CellStretched" style="width: 155px; min-width:155px; max-width:155px;" [ngStyle]="{color: item.Status | StringToColorPipe: 'AWBMessagingStock'}">
+                                        {{item.Status}}
+                                    </td>
+
+                                    <td class="CellStretched" style="width: 250px; min-width:250px; max-width:250px;">
+                                        {{item.Notes}}
+                                    </td>
+
+                                    <td class="CellStretched" style="width: 100px; min-width:100px; max-width:100px;">
+                                        {{item.TotalPrice}}
+                                    </td>
+
+                                    <td class="CellTools" style="min-width:30px;">
+                                        <span class="CellSeparator"></span>
+                                        <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditStockClicked(item)"></IconButton>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="7">
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>

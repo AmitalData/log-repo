@@ -1,0 +1,44 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data;
+ 
+namespace Logitude.Customs.Data.EntityMapping
+{
+ 
+    public class DecCargoSplitConsItemMap : EntityTypeConfiguration<DecCargoSplitConsItem>
+    {
+	    string dbms;
+        public DecCargoSplitConsItemMap()
+        { 
+			  this.ToTable("DecCargoSplitConsItems", "Customs");
+		
+		    this.HasKey(t => new { t.DeclarationCargoSplitId, t.DecCargoSplitConsLineNo, t.ItemLine });
+	 
+            this.Property(t => t.DeclarationCargoSplitId).HasColumnName("DeclarationCargoSplitId").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Tenant).HasColumnName("Tenant");
+
+            this.Property(t => t.DecCargoSplitConsLineNo).HasColumnName("DecCargoSplitConsLineNo").IsRequired().HasDatabaseGeneratedOption(null);
+
+            this.Property(t => t.ItemLine).HasColumnName("ItemLine").IsRequired().HasDatabaseGeneratedOption(null);
+
+            this.Property(t => t.GrossMassMeasure).HasColumnName("GrossMassMeasure");
+
+            this.Property(t => t.CargoDescription).HasColumnName("CargoDescription").IsRequired().HasMaxLength(255).IsUnicode(true);
+
+            this.Property(t => t.RequestReasonCode).HasColumnName("RequestReasonCode").IsRequired().HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.ParentCargoConsinmentItem).HasColumnName("ParentCargoConsinmentItem").IsRequired().HasMaxLength(3).IsUnicode(false);
+        }
+    }
+}
+	 

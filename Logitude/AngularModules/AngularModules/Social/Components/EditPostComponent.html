@@ -1,0 +1,134 @@
+﻿
+<style>
+    .PostButton {
+ border:1px solid gray;
+ color:white;
+  border-radius:3px;
+background: #a3d0ea; /* Old browsers */
+background: -moz-linear-gradient(top, #a3d0ea 0%, #2693ca 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, #a3d0ea 0%,#2693ca 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, #a3d0ea 0%,#2693ca 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a3d0ea', endColorstr='#2693ca',GradientType=0 ); /* IE6-9 */
+} 
+
+
+.PostButton:hover:not(:disabled) {
+
+background: #2693ca; /* Old browsers */
+background: -moz-linear-gradient(top, #2693ca 0%, #a3d0ea 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, #2693ca 0%,#a3d0ea 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, #2693ca 0%,#a3d0ea 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2693ca', endColorstr='#a3d0ea',GradientType=0 ); /* IE6-9 */
+}
+       .InputDiv {
+
+        width: 100%;
+        vertical-align:top;
+        border: 1px solid #AAAAAA;
+        outline: none;
+        font-size: 11px;
+        color: #45494A;
+        background: white;
+        /*text-indent: 5px;*/
+        /*border-top-left-radius: 3px;
+        border-top-right-radius: 3px;*/
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        -moz-box-shadow: inset 0 0 3px #AAAAAA;
+        -webkit-box-shadow: inset 0 0 3px #AAAAAA;
+        box-shadow: inset 0 0 3px #AAAAAA;
+    }
+
+        .InputDiv:hover {
+            border: 1px solid #3BB3E2;
+        }
+
+    .InputDivDisabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+</style>
+<table style="vertical-align:central;vertical-align:top;">
+
+
+    <tr style="height:6px;vertical-align:top">
+        <td style="width:100%;">
+            <div></div>
+        </td>
+    </tr>
+
+
+    
+   
+    <tr>
+
+        <td style="width:100%;">
+            <table>
+                <tr style="height:110px">
+              
+                    <td>
+                        <div class="InputDiv"  style="max-height:unset;height:110px">
+                            <textarea wrap="hard"
+                                      [(ngModel)]="BodyText"
+                                      style="box-shadow:none;border:1px solid transparent;text-indent:10px;font-size:13px" ondrop="return false">
+
+                            </textarea>
+
+                        </div>
+                    </td>
+
+                </tr>
+
+                <tr style="border-left:1px solid  #AAAAAA;border-right:1px solid  #AAAAAA; border-bottom:1px solid  #AAAAAA; border-radius: 3px;background-color:#F2F2F2;">
+                    <td style="vertical-align: central">
+                        <table style="height: 22px;">
+                            <tr>
+                                <td>
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 57px;">
+
+                                    <button style="width:57px;" class="Button" (click)="CloseButtonClicked()">Cancel</button>
+                                </td>
+
+                                <td style="width: 7px;"></td>
+
+                                <td style="width: 57px;">
+
+                                    <button (click)="SaveButtonClick()" style="float:right;width:57px;" class="PostButton">Save</button>
+                                </td>
+                                <td style="width: 5px;"></td>
+
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+
+            </table>
+        </td>
+
+
+
+    </tr>
+
+ 
+
+
+  
+
+
+</table>
+
+
+
+
+
+
+
+
+
+
+

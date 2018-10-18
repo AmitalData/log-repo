@@ -1,0 +1,98 @@
+﻿
+<table>
+    <tr style="height: 1px;" *ngIf="!IsEditingEnabled">
+        <td>
+            <div class="OrangeInfo" style="margin: 5px;">
+                {{'General.O.DemoEnvironmentMsg' | TextCodeTranslationPipe}}
+            </div>
+        </td>
+    </tr>
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr *ngIf="WarningErrorsList != null && WarningErrorsList.length > 0" style="height:1px;">
+        <td>
+            <WarningSummary [ItemsSource]="WarningErrorsList"></WarningSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table *ngIf="IsResourcesReady">
+                <tr class="FormFieldRow">
+                    <td style="width: 60px; text-indent: 10px;" >
+                        <div [style.text-align]="isRTL ? 'right' : 'left'" class="Label">{{'RatesTable.F.CurrencyCode.Short' | TextCodeTranslationPipe}}</div>
+                    </td>
+
+                    <td>
+                        <div [style.text-align]="isRTL ? 'right' : 'left'" class="Value">{{CurrencyCode}}</div>
+                    </td>
+                </tr>
+
+                <tr class="FormFieldRow">
+                    <td style="text-indent: 10px;">
+                        <div [style.text-align]="isRTL ? 'right' : 'left'" class="Label">{{'RatesTable.F.Date.Short' | TextCodeTranslationPipe}}</div>
+                    </td>
+
+                    <td>
+                        <div [style.text-align]="isRTL ? 'right' : 'left'" class="Value">{{'General.O.Today'| TextCodeTranslationPipe}}</div>
+                    </td>
+                </tr>
+
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'Rate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width: 136px;">
+                                    <LogTextBox [ObjectFieldName]="'Rate'" [Text]="Rate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [DigitsAfterPoint]="5"></LogTextBox>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2">
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;" *ngIf="IsEditingEnabled">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;" *ngIf="IsEditingEnabled">
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

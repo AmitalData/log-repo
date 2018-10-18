@@ -1,0 +1,596 @@
+﻿<style>
+
+</style>
+<div>
+    <!-- ClaimFileFilterComponent  view  -->
+    <custom-message-wrapper>
+
+        <!-- ClaimFileFilterComponent  Request  -->
+        <div class="class-request-content">
+            <!---->
+            <table style="width: 520px;padding-top: 10px;">
+                <!--<tr>
+                    <td>
+                        <div style="width: 120px;height:25px; font-size: 12px; color: #1B90CB;">
+                            {{'Customs.General.O.ClaimFileFilterQuery'| TextCodeTranslationPipe}}
+                        </div>
+                    </td>
+
+                    <td><div></div></td>
+                </tr>-->
+
+                <tr class="FormFieldRow">
+                    <td style="width: 100px">
+                        <LogLabel [NoObjectField]="true"
+                                  [ObjectFieldName]="'FileNumber'"
+                                  [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"
+                                  [TextCode]="'Customs.ClaimFileFilter.O.FileNumber'"></LogLabel>
+                    </td>
+                    <td style="width: 150px; ">
+                        <LogTextBox [ObjectFieldName]="'FileNumber'"
+                                    [Text]="FileNumber"
+                                    [NoObjectField]="true"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext"
+                                    [HideColumns]="true"
+                                    [InputType]="'text'"></LogTextBox>
+                    </td>
+
+                    <td style="width:20px"></td>
+
+                    <td style="width: 100px">
+                        <LogLabel [NoObjectField]="true"
+                                  [ObjectFieldName]="'Numeral'"
+                                  [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"
+                                  [TextCode]="'Customs.ClaimFileFilter.O.Numeral'"></LogLabel>
+                    </td>
+                    <td style="width: 150px; ">
+                        <!-- ClaimFileFilterComponent  Request.ToDate-->
+                        <LogTextBox [ObjectFieldName]="'Numeral'"
+                                    [Text]="Numeral"
+                                    [NoObjectField]="true"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext"
+                                    [HideColumns]="true"
+                                    [InputType]="'text'"></LogTextBox>
+
+                    </td>
+
+                    <td><div></div></td>
+                </tr>
+
+                <tr>
+                    <td><div></div></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="class-response-content">
+            <div style="width: 820px;height: 510px;padding-top: 10px;">
+                <table>
+                    <!--Gen Data-->
+                    <tr>
+                        <td>
+                            <div style="width: 200px;height:25px; font-size: 12px; color: #1B90CB;">
+                                {{'Customs.ClaimFileFilter.O.ClaimFileFilterGeneralData'| TextCodeTranslationPipe}}
+                            </div>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>
+                            <fieldset disabled>
+                                <table>
+                                    <tr class="FormFieldRow">
+                                        <td style="width: 60px;">
+                                            <LogLabel [NoObjectField]="true"
+                                                      [ObjectFieldName]="'ExternalId'"
+                                                      [ObjectTableName]="ObjectTableName"
+                                                      [DataContext]="DataContext"
+                                                      [TextCode]="'Customs.ClaimFileFilter.O.ExternalId'"></LogLabel>
+                                        </td>
+
+                                        <td style="width: 150px; ">
+                                            <LogTextBox [ObjectFieldName]="'ExternalId'"
+                                                        [Text]="ExternalId"
+                                                        [NoObjectField]="true"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [HideColumns]="true"
+                                                        [InputType]="'text'"></LogTextBox>
+                                        </td>
+
+                                        <td style="width: 80px;">
+                                            <LogLabel [NoObjectField]="true"
+                                                      [ObjectFieldName]="'CustomOfficeName'"
+                                                      [ObjectTableName]="ObjectTableName"
+                                                      [DataContext]="DataContext"
+                                                      [TextCode]="'Customs.ClaimFileFilter.O.CustomOfficeName'"></LogLabel>
+                                        </td>
+
+                                        <td style="width: 150px; ">
+                                            <LogTextBox [ObjectFieldName]="'CustomOfficeName'"
+                                                        [Text]="CustomOfficeName"
+                                                        [NoObjectField]="true"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [HideColumns]="true"
+                                                        [InputType]="'text'"></LogTextBox>
+                                        </td>
+
+
+                                        <td style="width: 100px">
+                                            <LogLabel [NoObjectField]="true"
+                                                      [ObjectFieldName]="'OpenFileCounter'"
+                                                      [ObjectTableName]="ObjectTableName"
+                                                      [DataContext]="DataContext"
+                                                      [TextCode]="'Customs.ClaimFileFilter.O.OpenFileCounter'"></LogLabel>
+                                        </td>
+
+                                        <td style="width: 120px; ">
+                                            <LogTextBox [ObjectFieldName]="'OpenFileCounter'"
+                                                        [Text]="OpenFileCounter"
+                                                        [NoObjectField]="true"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [HideColumns]="true"
+                                                        [InputType]="'text'"></LogTextBox>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="FormFieldRow">
+                                        <td style="width: 60px;">
+                                            <LogLabel [NoObjectField]="true"
+                                                      [ObjectFieldName]="'ExternalName'"
+                                                      [ObjectTableName]="ObjectTableName"
+                                                      [DataContext]="DataContext"
+                                                      [TextCode]="'Customs.ClaimFileFilter.O.ExternalName'"></LogLabel>
+                                        </td>
+
+                                        <td style="width: 150px; ">
+
+                                            <LogTextBox [ObjectFieldName]="'ExternalName'"
+                                                        [Text]="ExternalName"
+                                                        [NoObjectField]="true"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [HideColumns]="true"
+                                                        [InputType]="'text'"></LogTextBox>
+
+                                        </td>
+
+                                        <td style="width: 80px;">
+                                            <LogLabel [NoObjectField]="true"
+                                                      [ObjectFieldName]="'AgentName'"
+                                                      [ObjectTableName]="ObjectTableName"
+                                                      [DataContext]="DataContext"
+                                                      [TextCode]="'Customs.ClaimFileFilter.O.AgentName'"></LogLabel>
+                                        </td>
+
+                                        <td style="width: 150px; ">
+
+                                            <LogTextBox [ObjectFieldName]="'AgentName'"
+                                                        [Text]="AgentName"
+                                                        [NoObjectField]="true"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [HideColumns]="true"
+                                                        [InputType]="'text'"></LogTextBox>
+
+                                        </td>
+
+
+                                        <td style="width: 100px">
+                                            <LogLabel [NoObjectField]="true"
+                                                      [ObjectFieldName]="'CloseFileCounter'"
+                                                      [ObjectTableName]="ObjectTableName"
+                                                      [DataContext]="DataContext"
+                                                      [TextCode]="'Customs.ClaimFileFilter.O.CloseFileCounter'"></LogLabel>
+                                        </td>
+
+                                        <td style="width: 120px; ">
+                                            <LogTextBox [ObjectFieldName]="'CloseFileCounter'"
+                                                        [Text]="CloseFileCounter"
+                                                        [NoObjectField]="true"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [HideColumns]="true"
+                                                        [InputType]="'text'"></LogTextBox>
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </fieldset>
+                        </td>
+                    </tr>
+                    <!--Open Files-->
+                    <tr>
+                        <td>
+                            <div style="width: 200px;height:25px; font-size: 12px; color: #1B90CB;">
+                                {{'Customs.ClaimFileFilter.O.ClaimFileFilterOpenFiles'| TextCodeTranslationPipe}}
+                            </div>
+                        </td>
+
+                    </tr>
+                    <tr style="height:70px;">
+                        <td style="width: 100% ; height : 100%">
+                            <div class="GeneratedGridContainer"
+                                 style="width: 100% ;height:100%;">
+                                <div style="height:70px;">
+                                    <logitude-edit-grid GridWidth="100%"
+                                                        GridHeight="100%"
+                                                        [ItemSource]="OpenFilesCollapsList">
+
+                                        <!-- ExternalName -->
+                                        <log-column [header]="'Customs.ClaimFileFilter.O.ExternalName' | TextCodeTranslationPipe"
+                                                    [width]="'140'" [Alignment]="'right'"
+                                                    [binding]="'ExternalName'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="TextTrimming RightCenter">
+                                                    <span>{{item.ExternalName}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+
+
+
+                                        <!-- DisplayFileNumber -->
+                                        <log-column [header]="'Customs.ClaimFileFilter.O.DisplayFileNumber' | TextCodeTranslationPipe"
+                                                    [binding]="'DisplayFileNumber'"
+                                                    [width]="'120'" [Alignment]="'right'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="RightCenter">
+                                                    <span>{{item.DisplayFileNumber}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- EntityTypeName -->
+                                        <log-column [header]="'Customs.ClaimFileFilter.O.EntityTypeName' | TextCodeTranslationPipe"
+                                                    [binding]="'EntityTypeName'"
+                                                    [width]="'85'" [Alignment]="'right'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="RightCenter">
+                                                    <span>{{item.EntityTypeName}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+
+                                        <!-- ClaimEntityID -->
+                                        <log-column [header]="'Customs.ClaimFileFilter.O.ClaimEntityID' | TextCodeTranslationPipe"
+                                                    [binding]="'ClaimEntityID'"
+                                                    [width]="'120'" [Alignment]="'right'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="RightCenter">
+                                                    <span>{{item.ClaimEntityID}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+
+                                        <!-- CreateDate -->
+                                        <log-column [header]="'Customs.ClaimFileFilter.O.CreateDate' | TextCodeTranslationPipe"
+                                                    [binding]="'CreateDate'"
+                                                    [width]="'90'" [Alignment]="'right'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="RightCenter">
+                                                    <span>{{item.CreateDate}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+
+
+                                        <!-- ClaimAmount -->
+                                        <log-column [header]="'Customs.ClaimFileFilter.O.ClaimAmount' | TextCodeTranslationPipe"
+                                                    [binding]="'ClaimAmount'"
+                                                    [width]="'90'" [Alignment]="'right'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="RightCenter">
+                                                    <span>{{item.ClaimAmount}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- StatusName -->
+                                        <log-column [header]="'Customs.ClaimFileFilter.O.StatusName' | TextCodeTranslationPipe"
+                                                    [binding]="'StatusName'"
+                                                    [width]="'120'" [Alignment]="'right'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="RightCenter">
+                                                    <span>{{item.StatusName}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+
+                                    </logitude-edit-grid>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!--Closed Files-->
+                    <tr>
+                        <td>
+                            <div style="width: 200px;height:25px; font-size: 12px; color: #1B90CB;">
+                                {{'Customs.ClaimFileFilter.O.ClaimFileFilterClosedFiles'| TextCodeTranslationPipe}}
+                            </div>
+                        </td>
+
+                    </tr>
+                    <tr class="FormFieldRow" style="height:1px">
+                        <td style="width: 100% ; height : 100%">
+                            <div class="GeneratedGridContainer"
+                                 style="width: 100% ;height:70px;">
+                                <logitude-edit-grid GridWidth="100%"
+                                                    GridHeight="100%"
+                                                    [ItemSource]="CloseFilesCollapsList">
+
+                                    <!-- ExternalName -->
+                                    <log-column [header]="'Customs.ClaimFileFilter.O.ExternalName' | TextCodeTranslationPipe"
+                                                [width]="'120'" [Alignment]="'right'"
+                                                [binding]="'ExternalName'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming RightCenter">
+                                                <span>{{item.ExternalName}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <!-- DisplayFileNumber -->
+                                    <log-column [header]="'Customs.ClaimFileFilter.O.DisplayFileNumber' | TextCodeTranslationPipe"
+                                                [binding]="'DisplayFileNumber'"
+                                                [width]="'110'" [Alignment]="'right'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="RightCenter">
+                                                <span>{{item.DisplayFileNumber}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <!-- EntityTypeName -->
+                                    <log-column [header]="'Customs.ClaimFileFilter.O.EntityTypeName' | TextCodeTranslationPipe"
+                                                [binding]="'EntityTypeName'"
+                                                [width]="'80'" [Alignment]="'right'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="RightCenter">
+                                                <span>{{item.EntityTypeName}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+
+                                    <!-- ClaimEntityID -->
+                                    <log-column [header]="'Customs.ClaimFileFilter.O.ClaimEntityID' | TextCodeTranslationPipe"
+                                                [binding]="'ClaimEntityID'"
+                                                [width]="'100'" [Alignment]="'right'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="RightCenter">
+                                                <span>{{item.ClaimEntityID}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+
+                                    <!-- TotalComponentAmount -->
+                                    <log-column [header]="'Customs.ClaimFileFilter.O.TotalComponentAmount' | TextCodeTranslationPipe"
+                                                [binding]="'TotalComponentAmount'"
+                                                [width]="'90'" [Alignment]="'right'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="RightCenter">
+                                                <span>{{item.TotalComponentAmount}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <!-- TotalRefundAmount -->
+                                    <log-column [header]="'Customs.ClaimFileFilter.O.TotalRefundAmount' | TextCodeTranslationPipe"
+                                                [binding]="'TotalRefundAmount'"
+                                                [width]="'110'" [Alignment]="'right'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="RightCenter">
+                                                <span>{{item.TotalRefundAmount}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <!-- CloseDate -->
+                                    <log-column [header]="'Customs.ClaimFileFilter.O.CloseDate' | TextCodeTranslationPipe"
+                                                [binding]="'CloseDate'"
+                                                [width]="'80'" [Alignment]="'right'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="RightCenter">
+                                                <span>{{item.CloseDate}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <!-- SecondaryStatus -->
+                                    <log-column [header]="'Customs.ClaimFileFilter.O.SecondaryStatus' | TextCodeTranslationPipe"
+                                                [binding]="'SecondaryStatus'"
+                                                [width]="'100'" [Alignment]="'right'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="RightCenter">
+                                                <span>{{item.SecondaryStatus}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+
+                                </logitude-edit-grid>
+
+                            </div>
+                        </td>
+                    </tr>
+
+
+                    <!--Refund List-->
+                    <tr>
+                        <td>
+                            <div style="width: 200px;height:25px; font-size: 12px; color: #1B90CB;">
+                                {{'Customs.ClaimFileFilter.O.ClaimFileFilterRefundList'| TextCodeTranslationPipe}}
+                            </div>
+                        </td>
+
+                    </tr>
+                    <tr class="FormFieldRow" style="height:1px">
+
+                        <td style="width: 100% ; height : 100%">
+                            <div class="GeneratedGridContainer"
+                                 style="width: 100% ;height:70px;">
+                                <!--(RowDataLoaded)="OnRowLoaded($event)"-->
+                                <logitude-edit-grid GridWidth="100%"
+                                                    GridHeight="100%"
+                                                    [ItemSource]="RefundOrderList">
+
+                                    <!-- ExternalName -->
+                                    <log-column [header]="'Customs.ClaimFileFilter.O.ExternalName' | TextCodeTranslationPipe"
+                                                [width]="'140'" [Alignment]="'right'"
+                                                [binding]="'ExternalName'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming RightCenter">
+                                                <span>{{item.ExternalName}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <!-- PaymentOrderID -->
+                                    <log-column [header]="'Customs.ClaimFileFilter.O.PaymentOrderID' | TextCodeTranslationPipe"
+                                                [binding]="'PaymentOrderID'"
+                                                [width]="'120'" [Alignment]="'right'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="RightCenter">
+                                                <span>{{item.PaymentOrderID}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <!-- PaymentProcessName -->
+                                    <log-column [header]="'Customs.ClaimFileFilter.O.PaymentProcessName' | TextCodeTranslationPipe"
+                                                [binding]="'PaymentProcessName'"
+                                                [width]="'120'" [Alignment]="'right'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="RightCenter">
+                                                <span>{{item.PaymentProcessName}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+
+                                    <!-- AmountSum -->
+                                    <log-column [header]="'Customs.ClaimFileFilter.O.AmountSum' | TextCodeTranslationPipe"
+                                                [binding]="'AmountSum'"
+                                                [width]="'90'" [Alignment]="'right'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="RightCenter">
+                                                <span>{{item.AmountSum}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+
+                                    <!-- ValidityDateTo -->
+                                    <log-column [header]="'Customs.ClaimFileFilter.O.ValidityDateTo' | TextCodeTranslationPipe"
+                                                [binding]="'ValidityDateTo'"
+                                                [width]="'90'" [Alignment]="'right'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="RightCenter">
+                                                <span>{{item.ValidityDateTo}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+
+
+                                    <!-- PaymentOrderStatusName -->
+                                    <log-column [header]="'Customs.ClaimFileFilter.O.PaymentOrderStatusName' | TextCodeTranslationPipe"
+                                                [binding]="'PaymentOrderStatusName'"
+                                                [width]="'130'" [Alignment]="'right'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="RightCenter">
+                                                <span>{{item.PaymentOrderStatusName}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+
+
+                                </logitude-edit-grid>
+
+                            </div>
+                        </td>
+                    </tr>
+
+
+                    <!-- Require Documents List -->
+                    <tr>
+                        <td>
+                            <div style="width: 200px;height:25px; font-size: 12px; color: #1B90CB;">
+                                {{'Customs.ClaimFileFilter.O.ClaimFileFilterRequiredDocuments'| TextCodeTranslationPipe}}
+                            </div>
+                        </td>
+
+                    </tr>
+                    <tr class="FormFieldRow" style="height:1px">
+
+                        <td style="width: 100% ; height : 100%">
+                            <div class="GeneratedGridContainer"
+                                 style="width: 100% ;height:70px;">
+                                <!--(RowDataLoaded)="OnRowLoaded($event)"-->
+                                <logitude-edit-grid GridWidth="100%"
+                                                    GridHeight="100%"
+                                                    [ItemSource]="RequireDocumentsList">
+
+                                    <!-- TypeName -->
+                                    <log-column [header]="'Customs.ClaimFileFilter.O.TypeName' | TextCodeTranslationPipe"
+                                                [width]="'140'" [Alignment]="'right'"
+                                                [binding]="'TypeName'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="TextTrimming RightCenter">
+                                                <span>{{item.TypeName}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+
+
+
+                                    <!-- DisplayFileNumber -->
+                                    <log-column [header]="'Customs.ClaimFileFilter.O.DisplayFileNumber' | TextCodeTranslationPipe"
+                                                [binding]="'DisplayFileNumber'"
+                                                [width]="'130'" [Alignment]="'right'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="RightCenter">
+                                                <span>{{item.DisplayFileNumber}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <!-- DocumentID -->
+                                    <log-column [header]="'Customs.ClaimFileFilter.O.DocumentID' | TextCodeTranslationPipe"
+                                                [binding]="'DocumentID'"
+                                                [width]="'130'" [Alignment]="'right'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div class="RightCenter">
+                                                <span>{{item.DocumentID}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                </logitude-edit-grid>
+
+                            </div>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+
+    </custom-message-wrapper>
+</div>

@@ -1,0 +1,425 @@
+﻿
+<style type="text/css">
+    .PartnerBoxHeader td {
+        vertical-align: middle;
+    }
+
+    .PartnerBox {
+        width: 100%;
+        height: 100%;
+        border: 1px solid #BABABA;
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        overflow: hidden;
+    }
+
+    .PartnerBoxHeader {
+        height: 20px;
+        font-size: 12px;
+        color: #1B90CB;
+        text-indent: 5px;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(245, 245, 245, 1) 0%,rgba(243, 243, 243, 1) 50.24%,rgba(236, 236, 236, 1) 69.98%,rgba(224, 224, 224, 1) 84.35%,rgba(207, 207, 207, 1) 96.04%,rgba(199, 199, 199, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(245, 245, 245, 1) ),color-stop(0.5024,rgba(243, 243, 243, 1) ),color-stop(0.6998,rgba(236, 236, 236, 1) ),color-stop(0.8435,rgba(224, 224, 224, 1) ),color-stop(0.9604,rgba(207, 207, 207, 1) ),color-stop(1,rgba(199, 199, 199, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
+        -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#F5F5F5', endColorstr='#C7C7C7' ,GradientType=0)";
+        background: linear-gradient(180deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
+    }
+
+    .WarningText {
+        font-size: 12px;
+        color: #D8770E;
+        max-width: 450px;
+        white-space: pre-wrap;
+        text-indent: 5px;
+    }
+</style>
+
+<div class="ScrollViewer">
+    <div class="ScrollContent">
+        <table>
+            <tr style="height: 10px;">
+                <td colspan="3">
+                    <div></div>
+                </td>
+            </tr>
+
+            <tr>
+                <td style="width: 10px;">
+                    <div></div>
+                </td>
+
+                <td>
+                    <table class="FixedTable">
+                        <tr>
+                            <td>
+                                <!-- Shipper -->
+                                <div class="PartnerBox">
+                                    <table>
+                                        <tr class="PartnerBoxHeader">
+                                            <td>{{'Booking.F.ShipperId' | TextCodeTranslationPipe}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding-left: 5px; padding-right: 5px;">
+                                                <table class="FixedTable">
+                                                    <tr class="FormFieldRow">
+                                                        <td [style.width.px]="LabelColumnWidth">
+                                                            <LogLabel [ObjectFieldName]="'ShipperId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Name'" [ShowWarning]="ShowWarningShipperId"></LogLabel>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogLov [ObjectFieldName]="'ShipperId'"
+                                                                    [SelectedValue]="ShipperId"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'Card'"
+                                                                    [DependencyFilter1Value]="PartnerDependencyProperty1"
+                                                                    [DependencyFilter1IsList]="PartnerDependencyProperty1IsList"
+                                                                    [HideMaintenanceIcon]="true">
+                                                            </LogLov>
+                                                        </td>
+
+                                                        <td style="width: 23px; padding-left: 5px;">
+                                                            <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="Edit('SHI')" [disabled]="!IsEditSHIEnabled"></IconButton>
+                                                        </td>
+
+                                                        <td style="width: 20px; padding-left: 2px;">
+                                                            <IconButton [Name]="'Add'" [IsSmall]="true" (click)="Add('SHI')" [disabled]="!IsEditingEnabled"></IconButton>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr class="FormFieldRow">
+                                                        <td [style.width.px]="LabelColumnWidth">
+                                                            <LogLabel [ObjectFieldName]="'ShipperAddressId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogLov [ObjectFieldName]="'ShipperAddressId'"
+                                                                    [SelectedValue]="ShipperAddressId"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'Address'"
+                                                                    [DependencyFilter1Value]="ShipperId"
+                                                                    [HideMaintenanceIcon]="true">
+                                                            </LogLov>
+                                                        </td>
+
+                                                    </tr>
+
+                                                    <tr style="height: 80px;">
+                                                        <td [style.width.px]="LabelColumnWidth" style="padding-top: 5px;"> </td>
+
+                                                        <td>
+                                                            <AddressTemplate [Address]="ShipperAddressList" [Right]="36"></AddressTemplate>
+                                                        </td>
+
+                                                        <td colspan="2">
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr class="FormFieldRow">
+                                                        <td [style.width.px]="LabelColumnWidth">
+                                                            <LogLabel [ObjectFieldName]="'ShipperReference'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogTextBox [ObjectFieldName]="'ShipperReference'" [Text]="ShipperReference" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                        </td>
+
+                                                        <td colspan="2">
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td colspan="4">
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="width: 10px;">
+                                                                        <div></div>
+                                                                    </td>
+
+                                                                    <td style="width: 15px">
+                                                                        <img *ngIf="ShipperWarning" src="Images/WarningIcon.png" />
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <div class="WarningText">{{ShipperWarning}}</div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+
+                            <td style="width: 10px;">
+                                <div>
+                                </div>
+                            </td>
+
+                            <td>
+                                <!-- Consignee -->
+                                <div class="PartnerBox">
+                                    <table>
+                                        <tr class="PartnerBoxHeader">
+                                            <td>{{'Booking.F.ConsigneeId' | TextCodeTranslationPipe}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding-left: 5px; padding-right: 5px;">
+                                                <table>
+                                                    <tr class="FormFieldRow">
+                                                        <td [style.width.px]="LabelColumnWidth">
+                                                            <LogLabel [ObjectFieldName]="'ConsigneeId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Name'" [ShowWarning]="ShowWarningConsigneeId"></LogLabel>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogLov [ObjectFieldName]="'ConsigneeId'"
+                                                                    [SelectedValue]="ConsigneeId"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'Card'"
+                                                                    [DependencyFilter1Value]="PartnerDependencyProperty1"
+                                                                    [DependencyFilter1IsList]="PartnerDependencyProperty1IsList"
+                                                                    [HideMaintenanceIcon]="true">
+                                                            </LogLov>
+                                                        </td>
+
+                                                        <td style="width: 23px; padding-left: 5px;">
+                                                            <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="Edit('CON')" [disabled]="!IsEditCONEnabled"></IconButton>
+                                                        </td>
+
+                                                        <td style="width: 20px; padding-left: 2px;">
+                                                            <IconButton [Name]="'Add'" [IsSmall]="true" (click)="Add('CON')" [disabled]="!IsEditingEnabled"></IconButton>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr class="FormFieldRow">
+                                                        <td [style.width.px]="LabelColumnWidth">
+                                                            <LogLabel [ObjectFieldName]="'ConsigneeAddressId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogLov [ObjectFieldName]="'ConsigneeAddressId'"
+                                                                    [SelectedValue]="ConsigneeAddressId"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'Address'"
+                                                                    [DependencyFilter1Value]="ConsigneeId"
+                                                                    [HideMaintenanceIcon]="true">
+                                                            </LogLov>
+                                                        </td>
+
+                                                    </tr>
+
+                                                    <tr style="height: 80px;">
+                                                        <td [style.width.px]="LabelColumnWidth" style="padding-top: 5px;"></td>
+
+                                                        <td>
+                                                            <AddressTemplate [Address]="ConsigneeAddressList" [Right]="36"></AddressTemplate>                                                            
+                                                        </td>
+
+                                                        <td colspan="2">
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr class="FormFieldRow">
+                                                        <td [style.width.px]="LabelColumnWidth">
+                                                            <LogLabel [ObjectFieldName]="'ConsigneeReference'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogTextBox [ObjectFieldName]="'ConsigneeReference'" [Text]="ConsigneeReference" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                        </td>
+
+                                                        <td colspan="2">
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td colspan="4">
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="width: 10px;">
+                                                                        <div></div>
+                                                                    </td>
+
+                                                                    <td style="width: 15px">
+                                                                        <img *ngIf="ConsigneeWarning" src="Images/WarningIcon.png" />
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <div class="WarningText">{{ConsigneeWarning}}</div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr style="height: 8px;">
+                            <td colspan="3">
+                                <div></div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <!-- IssuingCarrier -->
+                                <div class="PartnerBox">
+                                    <table>
+                                        <tr class="PartnerBoxHeader">
+                                            <td>{{'Booking.F.IssuingCarrierAgentId' | TextCodeTranslationPipe}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding-left: 5px; padding-right: 5px;">
+                                                <table>
+                                                    <tr class="FormFieldRow">
+                                                        <td [style.width.px]="LabelColumnWidth">
+                                                            <LogLabel [ObjectFieldName]="'IssuingCarrierAgentId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Name'" [ShowWarning]="ShowWarningAgentId"></LogLabel>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogLov [ObjectFieldName]="'IssuingCarrierAgentId'"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'Card'"
+                                                                    [DependencyFilter1Value]="'AG'"
+                                                                    [HideMaintenanceIcon]="true">
+                                                            </LogLov>
+                                                        </td>
+
+                                                        <td style="width: 23px; padding-left: 5px;">
+                                                            <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="Edit('AGT')" [disabled]="!IsEditAGTEnabled"></IconButton>
+                                                        </td>
+
+                                                        <td style="width: 20px; padding-left: 2px;">
+                                                            <IconButton [Name]="'Add'" [IsSmall]="true" (click)="Add('AGT')" [disabled]="!IsEditingEnabled"></IconButton>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr class="FormFieldRow">
+                                                        <td [style.width.px]="LabelColumnWidth">
+                                                            <LogLabel [ObjectFieldName]="'IssuingCarrierAddressId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogLov [ObjectFieldName]="'IssuingCarrierAddressId'"
+                                                                    [SelectedValue]="IssuingCarrierAddressId"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'Address'"
+                                                                    [DependencyFilter1Value]="IssuingCarrierAgentId"
+                                                                    [HideMaintenanceIcon]="true">
+                                                            </LogLov>
+                                                        </td>
+
+                                                        <td style="width: 20px; padding-left: 2px;">
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr style="height: 80px;">
+                                                        <td [style.width.px]="LabelColumnWidth" style="padding-top: 5px;"></td>
+
+                                                        <td>
+                                                            <AddressTemplate [Address]="IssuingCarrierAddressList" [Right]="36"></AddressTemplate>                                                            
+                                                        </td>
+
+                                                        <td colspan="2">
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr class="FormFieldRow">
+                                                        <td [style.width.px]="LabelColumnWidth">
+                                                            <LogLabel [ObjectFieldName]="'IssuingCarrierIATACode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [ShowWarning]="ShowWarningAgentIATA"></LogLabel>
+                                                        </td>
+
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td>
+                                                                        <LogTextBox [ObjectFieldName]="'IssuingCarrierIATACode'" [Text]="IssuingCarrierIATACode" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                    </td>
+
+                                                                    <td style="width: 80px;">
+                                                                        <LogLabel [ObjectFieldName]="'CASSCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [ShowWarning]="ShowWarningAgentCASS"></LogLabel>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <LogTextBox [ObjectFieldName]="'CASSCode'" [Text]="CASSCode" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+
+                                                        <td colspan="2">
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td colspan="4">
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="width: 10px;">
+                                                                        <div></div>
+                                                                    </td>
+
+                                                                    <td style="width: 15px">
+                                                                        <img *ngIf="AgentWarning" src="Images/WarningIcon.png" />
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <div class="WarningText">{{AgentWarning}}</div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+
+                            <td style="width: 10px;">
+                                <div></div>
+                            </td>
+
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+
+                <td style="width: 10px;">
+                    <div></div>
+                </td>
+            </tr>
+
+            <tr style="height: 10px;">
+                <td colspan="3">
+                    <div></div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

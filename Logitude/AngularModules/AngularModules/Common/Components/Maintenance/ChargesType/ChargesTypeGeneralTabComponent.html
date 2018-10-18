@@ -1,0 +1,553 @@
+﻿
+<div class="TabHolder">
+    <table>
+        <tr class="TabTitleRow">
+            <td>{{'General.O.General' | TextCodeTranslationPipe}}</td>
+        </tr>
+
+        <tr style="height: 5px;">
+            <td>
+                <div></div>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <table>
+                    <tr>
+                        <td style="width: 370px;">
+                            <table>
+                                <tr class="SectionHeader">
+                                    <td style="padding-left:10px; font-size:13px;">Details</td>
+                                </tr>
+
+                                <tr style="height: 5px;">
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <table>
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 130px;">
+                                                    <LogLabel [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width:230px;">
+                                                    <LogTextBox [ObjectFieldName]="'Code'" [Text]="Code" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'EnglishName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogTextBox [ObjectFieldName]="'EnglishName'" [Text]="EnglishName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'LocalName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogTextBox [ObjectFieldName]="'LocalName'" [Text]="LocalName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'ChargesGroupId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'ChargesGroupId'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'ChargesGroup'">
+                                                    </LogLov>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'MeasurementId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="padding-right:18px;">
+                                                    <LogLov [ObjectFieldName]="'MeasurementId'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'Measurement'"
+                                                            [DependencyFilter2Value]="false"
+                                                            [HideLastColumn]="true">
+                                                    </LogLov>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'ContainerMeasurementId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'ContainerMeasurementId'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'Measurement'">
+                                                    </LogLov>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'VatTypeId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'VatTypeId'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'VatType'"
+                                                            >
+                                                    </LogLov>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'ViewOrder'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogTextBox [ObjectFieldName]="'ViewOrder'" [Text]="ViewOrder" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="height: 96px; vertical-align: top;">
+                                                    <div style="height: 100%; width: 100%;">
+                                                        <LogTextBox [IsMultiline]="true" [ObjectFieldName]="'Description'" [Text]="Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'IsReceivable'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogCheckBox [ObjectFieldName]="'IsReceivable'" [Value]="IsReceivable"  [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'IsPayable'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogCheckBox [ObjectFieldName]="'IsPayable'" [Value]="IsPayable" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow" *ngIf="CustomsFieldsIsVisible">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'IsCustoms'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogCheckBox [ObjectFieldName]="'IsCustoms'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                </td>
+                                            </tr>
+
+                                            <!--<tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'IsBackToBack'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogCheckBox [ObjectFieldName]="'IsBackToBack'"[Value]="IsBackToBack"  [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                </td>
+                                            </tr>-->
+
+
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'IsExpense'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogCheckBox [ObjectFieldName]="'IsExpense'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogCheckBox [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td style="width:20px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 400px;">
+                            <table>
+                                 
+                                <tr>
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td style="width:195px;">
+                                                    <table>
+                                                        <tr class="SectionHeader">
+                                                            <td style="padding-left:10px; font-size:13px;">{{'ChargesType.O.Transport' | TextCodeTranslationPipe}}</td>
+                                                        </tr>
+
+                                                        <tr style="height:5px;">
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td style="padding-left:5px;">
+                                                                <table>
+                                                                    <tr class="FormFieldRow">
+                                                                        <td style="width:20px;">
+                                                                            <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsAir'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                        </td>
+
+                                                                        <td style="width:10px;"><div></div></td>
+
+                                                                        <td style="width:25px;">
+                                                                            <img width="18" height="16" style="vertical-align: middle;margin-left: -7px;" src="./Images/TransportModes/A.png" />
+                                                                        </td>
+
+                                                                        <td style="width:50px;">
+                                                                            <label class="Label" >{{'ChargesType.F.IsAir' | TextCodeTranslationPipe}}</label>
+                                                                        </td>
+
+                                                                        <td><div></div></td>
+                                                                    </tr>
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsInland'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                        </td>
+
+                                                                        <td style="width:10px;"><div></div></td>
+
+                                                                        <td>
+                                                                            <img width="18" height="16" style="vertical-align: middle;margin-left: -7px;" src="./Images/TransportModes/I.png" />
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <label class="Label">{{'ChargesType.F.IsInland' | TextCodeTranslationPipe}}</label>
+                                                                        </td>
+
+                                                                        <td><div></div></td>
+                                                                    </tr>
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsOcean'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                        </td>
+
+                                                                        <td style="width:10px;"><div></div></td>
+
+                                                                        <td>
+                                                                            <img width="18" height="16" style="vertical-align: middle;margin-left: -7px;" src="./Images/TransportModes/O.png" />
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <label class="Label">{{'ChargesType.F.IsOcean' | TextCodeTranslationPipe}}</label>
+                                                                        </td>
+
+                                                                        <td><div></div></td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+
+                                                    </table>
+                                                </td>
+
+                                                <td style="width:10px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td>
+                                                    <table>
+                                                        <tr class="SectionHeader">
+                                                            <td style="padding-left:10px; font-size:13px;">{{'ChargesType.O.AutoDisplay' | TextCodeTranslationPipe}}</td>
+                                                        </tr>
+
+                                                        <tr style="height:5px;">
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td style="padding-left:5px;">
+                                                                <table>
+                                                                    <tr class="FormFieldRow">
+                                                                        <td style="width:20px;">
+                                                                            <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsAutoDisplayInQuote'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                        </td>
+
+                                                                        <td style="width:5px;"><div></div></td>
+
+                                                                        <td style="width:70px;">
+                                                                            <label class="Label">{{'ChargesType.F.IsAutoDisplayInQuote.Short' | TextCodeTranslationPipe}}</label>
+                                                                        </td>
+
+                                                                        <td><div></div></td>
+                                                                    </tr>
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsAutoDisplayInShipment'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                        </td>
+
+                                                                        <td style="width:5px;"><div></div></td>
+
+                                                                        <td>
+                                                                            <label class="Label">{{'ChargesType.F.IsAutoDisplayInShipment.Short' | TextCodeTranslationPipe}}</label>
+                                                                        </td>
+
+                                                                        <td><div></div></td>
+                                                                    </tr>
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsAutoDisplayInConsolidation'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                        </td>
+
+                                                                        <td style="width:5px;"><div></div></td>
+
+                                                                        <td>
+                                                                            <label class="Label">{{'ChargesType.F.IsAutoDisplayInConsolidation.Short' | TextCodeTranslationPipe}}</label>
+                                                                        </td>
+
+                                                                        <td><div></div></td>
+                                                                    </tr>
+
+                                                                    <tr class="FormFieldRow" *ngIf="CustomsFieldsIsVisible">
+                                                                        <td>
+                                                                            <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsAutoDisplayInCustoms'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                        </td>
+
+                                                                        <td style="width:5px;"><div></div></td>
+
+                                                                        <td>
+                                                                            <label class="Label">{{'ChargesType.F.IsAutoDisplayInCustoms.Short' | TextCodeTranslationPipe}}</label>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                                <tr style="height:15px;">
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <table>
+                                            <tr class="SectionHeader">
+                                                <td style="padding-left:10px; font-size:13px;">{{'ChargesType.O.AWBSettings' | TextCodeTranslationPipe}}</td>
+                                            </tr>
+
+                                            <tr style="height:5px;">
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr *ngIf="ValidationWarningsList != null && ValidationWarningsList.length > 0" style="height:1px;">
+                                                <td>
+                                                    <WarningSummary [ItemsSource]="ValidationWarningsList" [SingleLine]="true" [HideHeader]="true"></WarningSummary>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td style="padding-left:10px; color:#6E7172">{{'ChargesType.M.AWBDefaults' | TextCodeTranslationPipe}}</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <table>
+                                                        <tr class="FormFieldRow">
+                                                            <td style="width:110px;">
+                                                                <LogLabel [ObjectFieldName]="'DueTypeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                            </td>
+
+                                                            <td style="width:230px; padding-right:18px;">
+                                                                <LogLov [ObjectFieldName]="'DueTypeCode'"
+                                                                        [ObjectTableName]="ObjectTableName"
+                                                                        [DataContext]="DataContext"
+                                                                        [LookUpTableName]="'DueType'"
+                                                                        [HideLastColumn]="true">
+                                                                </LogLov>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr class="FormFieldRow">
+                                                            <td>
+                                                                <LogLabel [ObjectFieldName]="'IATACodeId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                            </td>
+
+                                                            <td style="padding-right:18px;">
+                                                                <LogLov [ObjectFieldName]="'IATACodeId'"
+                                                                        [ObjectTableName]="ObjectTableName"
+                                                                        [DataContext]="DataContext"
+                                                                        [LookUpTableName]="'IATACode'"
+                                                                        [HideLastColumn]="true">
+                                                                </LogLov>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr class="FormFieldRow">
+                                                            <td>
+                                                                <LogLabel [ObjectFieldName]="'AWBPrintDescription'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                            </td>
+
+                                                            <td>
+                                                                <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'AWBPrintDescription'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+
+                                                    </table>
+                                                </td>
+                                            </tr>
+
+                                        </table>
+                                    </td>
+                                </tr>
+
+                                <tr *ngIf="DisplaySATSettings">
+                                    <td>
+                                        <table>
+                                            <tr class="SectionHeader">
+                                                <td style="padding-left:10px; font-size:13px;">SAT Settings</td>
+                                            </tr>
+
+                                            <tr style="height:5px;">
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                           
+
+                                            <tr>
+                                                <td>
+                                                    <table>
+                                                        <tr class="FormFieldRow">
+                                                            <td style="width:110px;">
+                                                                <LogLabel [ObjectFieldName]="'SATExternalId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                            </td>
+
+                                                            <td style="width:230px; padding-right:18px;">
+                                                                <LogTextBox [ObjectFieldName]="'SATExternalId'" [Text]="SATExternalId" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                            </td>
+                                                        </tr>
+
+                                                        
+
+                                                        <tr>
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+
+                                                    </table>
+                                                </td>
+                                            </tr>
+
+                                        </table>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="4">
+                            <div></div>
+                        </td>
+                    </tr>
+
+                </table>
+            </td>
+        </tr>
+
+    </table>
+</div>

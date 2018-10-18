@@ -1,0 +1,36 @@
+
+declare @Id as varchar(15)
+declare @Tenant as int
+declare @MainCarriageCarrierId as varchar(15)
+declare @InterlineId as varchar(15)
+declare @Prefix as varchar(3)
+
+BEGIN
+	DECLARE DataCursor CURSOR READ_ONLY
+	FOR
+	SELECT Id, Tenant, MainCarriageCarrierId, InterlineId
+	FROM Bookings	
+	WHERE TransportModeCode = 'A'
+	OPEN DataCursor FETCH NEXT FROM DataCursor INTO @Id, @Tenant, @MainCarriageCarrierId, @InterlineId
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+
+	set @Prefix = null
+
+	if (@InterlineId is not null)
+	begin
+		set @Prefix = (select Prefix from Airlines where Id = @InterlineId AND Tenant = @Tenant)
+	end
+
+	else if (@MainCarriageCarrierId is not null)
+	begin
+		set @Prefix = (select Prefix from Airlines where Id = @MainCarriageCarrierId AND Tenant = @Tenant)
+	end
+
+	update Bookings set AirlinePrefix = @Prefix where Id = @Id AND Tenant = @Tenant
+
+	FETCH NEXT FROM DataCursor INTO  @Id, @Tenant, @MainCarriageCarrierId, @InterlineId
+	END
+	CLOSE DataCursor
+	DEALLOCATE DataCursor
+END

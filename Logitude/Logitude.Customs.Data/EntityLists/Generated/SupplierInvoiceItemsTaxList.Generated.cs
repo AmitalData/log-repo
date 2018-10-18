@@ -1,0 +1,76 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization; 
+
+namespace Logitude.Customs.Data.EntityLists
+{
+   [DataContract]
+   public partial class SupplierInvoiceItemsTaxList
+   {
+   
+       [Key]
+       [DataMember]
+       public string DeclarationId  { get; set; }
+
+       [Key]
+       [DataMember]
+       public int InvoiceCounterKey  { get; set; }
+
+       [Key]
+       [DataMember]
+       public int LineNumber  { get; set; }
+
+       [Key]
+       [DataMember]
+       public string TaxTypeCode  { get; set; }
+       [DataMember]
+       public int Tenant  { get; set; }
+       [DataMember]
+       public string TradeAgreementTypeCode  { get; set; }
+       [DataMember]
+       public decimal? TaxRate  { get; set; }
+       [DataMember]
+       public decimal? TaxBaseAmount  { get; set; }
+       [DataMember]
+       public decimal? TaxAmount  { get; set; }
+       [DataMember]
+       public decimal? DeferedTaxAmount  { get; set; }
+       [DataMember]
+       public decimal? DefinedPerUnitMeasure  { get; set; }
+       [DataMember]
+       public decimal? AlternateDefinedPerUnitMeasure  { get; set; }
+       [DataMember]
+       public decimal? DefinedPerUnitQuantity  { get; set; }
+       [DataMember]
+       public decimal? AlternateDefinedPerUnitQuant  { get; set; }
+       [DataMember]
+       public string MeasurementUnitCode  { get; set; }
+       [DataMember]
+       public string AlternateMeasurementUnitCode  { get; set; }
+       [DataMember]
+       public string TradeLevyNumber  { get; set; }
+       [DataMember]
+       public decimal? TotalBtlCoverageNIS  { get; set; }
+       [DataMember]
+       public decimal? AlternateRate  { get; set; }
+       [DataMember]
+       public string TaxTypeName  { get; set; }
+       [DataMember]
+       public string TradeAgreementTypeName  { get; set; }
+       [DataMember]
+       public string MeasurementUnitName  { get; set; }
+       [DataMember]
+       public string AlternateMeasurementUnitName  { get; set; }
+       [DataMember]
+       public string InvoiceNumber  { get; set; }
+       [DataMember]
+       public string ClassificationCode  { get; set; }
+   }
+
+}
+	 

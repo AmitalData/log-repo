@@ -1,0 +1,48 @@
+﻿<table>
+    <tr class="FormFieldRow">
+        <td>
+            <table>
+                <tr>
+                    <td style="width:110px"><LogLabel [ObjectFieldName]="'StatusTypeCode'" [Text]="'Status Type'" [ObjectTableName]="ObjectTableName"
+          [DataContext]="DataContext"></LogLabel>
+</td>
+                    <td style="width:150px">
+                        <ComboBox style="width:150px;" [ItemsSource]="StatusList" (SelectedItemChanged)="StatusSelectedItem=$event" [SelectedItem]="StatusSelectedItem" [Binding]="'EnglishName'"></ComboBox>
+</td>
+
+                    <td></td>
+                </tr>
+            </table>
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+
+        </td>
+    </tr>
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">OK</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

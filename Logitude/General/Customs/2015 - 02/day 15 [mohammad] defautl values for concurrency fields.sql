@@ -1,0 +1,5 @@
+update customs.PhysicalChecks set ConcurrencyGUID=NEWID()
+update customs.DeclarationPayments set ConcurrencyGUID=NEWID()
+update customs.PaymentOrders set ConcurrencyGUID=NEWID()
+update customs.CustomsVendors set ConcurrencyGUID=NEWID()
+update customs.Clients set ConcurrencyGUID=NEWID()

@@ -1,0 +1,77 @@
+﻿<table>
+    <tr>
+        <td style="width:10px"></td>        
+        <td>
+            <table>
+                <tr style="height:10px">            
+                    <td></td>
+                </tr>
+                <tr class="FormFieldRow" *ngIf="DataLoaded">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:100px" class="Label">
+                                    Failed Threshold
+                                </td>
+                                <td style="width:10px"></td>
+                                <td style="width:90px">
+                                    <LogTextBox [InputType]="'integer'" [NoObjectField]="true" [ObjectFieldName]="'FailedThresold'"
+                                                [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </td>                  
+                </tr>
+
+                <tr class="FormFieldRow" *ngIf="DataLoaded">
+                        <td>
+                            <table>
+                                <tr>
+                                    <td style="width:100px;" class="Label">
+                                        Waiting Threshold
+
+                                    </td>
+                                    <td style="width:10px"></td>
+                                    <td style="width:90px">
+                                        <LogTextBox [InputType]="'integer'" [NoObjectField]="true" [ObjectFieldName]="'WaitingThresold'"
+                                                    [DataContext]="DataContext"></LogTextBox>
+
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </td>
+                </tr>
+
+                <tr>
+                    <td></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom" colspan="2">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+                    <td style="width: 57px;">
+                        <div>
+                            <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
+                        </div>
+                    </td>
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="SaveButtonClicked()">OK</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

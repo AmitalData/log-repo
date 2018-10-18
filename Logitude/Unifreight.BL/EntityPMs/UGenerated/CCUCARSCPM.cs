@@ -1,0 +1,39 @@
+﻿using Logitude.Server.Tools;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Unifreight.BL.EntityPMs
+{
+    public partial class CCUCARSCPM : EntityPM
+    {
+        public int FILENO { get; set; }
+
+        public int LINENO { get; set; }
+
+        public int COUNTER { get; set; }
+
+        public string VEHICLEFILE { get; set; }
+
+        public string CARMODEL { get; set; }
+
+        public string CHASSISNO { get; set; }
+
+        public string ENGINENO { get; set; }
+
+        public string WINDOWNO { get; set; }
+
+        public double? FOB { get; set; }
+
+        public double? GENERALTAX { get; set; }
+
+        public double? BUYTAX { get; set; }
+
+        public double? VATRESHIMON { get; set; }
+
+        public string EXEMPTTYPE { get; set; }
+
+    }
+}

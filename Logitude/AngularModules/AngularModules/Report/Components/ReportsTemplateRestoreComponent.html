@@ -1,0 +1,116 @@
+﻿
+
+
+
+<table>
+
+    <tr *ngIf="IsVisibile">
+        <td class="CellStretch">
+            <div class="SimpleGridView">
+                <div class="SimpleGridViewHeader">
+                    <table>
+
+
+                        <tr>
+
+                      
+                       
+                            <td style="width: 120px; min-width: 120px;max-width:120px">Version</td>
+                            <td style="width: 150px; min-width: 150px;max-width:150px">Last Update</td>
+                            <td style="width: 150px; min-width: 150px;max-width:150px">{{'ReportsTemplate.F.UpdatedByUserId' | TextCodeTranslationPipe}}</td>
+                            <td style="width: 70px; min-width: 70px;max-width:70px">Restored</td>
+                            <td style="width: 100%; min-width: 100%;"></td>
+
+                        </tr>
+
+
+
+
+                    </table>
+                </div>
+
+                <div class="SimpleGridViewBody">
+                    <table>
+
+                        <tr class="SimpleGridViewRow RowHover" *ngFor="let item of ReportsTemplatesVersionLists">
+                            <td>
+                                <table>
+                                    <tr [class.RowSelected]="item === CurrentReportsTemplatesVersionList" (mouseleave)="OnmMouseleave(item)" (mouseover)="OnmMouseOver(item)">
+                                    
+                                        <td class="GridViewCell" style="width: 120px; min-width: 120px;max-width:120px">
+
+                                            {{item.Version}}
+
+
+                                        </td>
+                                        <td class="GridViewCell" style="width: 150px; min-width: 150px;max-width:150px ">
+
+
+                                            {{item.UpdateDate | DateTimeToDatePipe}} {{item.UpdateDate | DateTimeToTimePipe}}
+                                        </td>
+
+                                        <td class="GridViewCell" style="width: 150px; min-width: 150px;max-width:150px ">
+                                            {{item.UpdateByUserName}}
+
+                                        </td>
+
+                                        <td class="CellStretched" style="width: 70px; min-width: 70px; max-width: 70px; position: relative;">
+                                            <img class="CenterCenter" *ngIf="item.IsRestored" style="width:20px;height:20px;" src="./Images/SimplogIcons/tick.png" />
+
+                                        </td>
+
+                                        <td class="GridViewCell" style="position: relative;width:100%">
+                                            <div>
+                                                <div style="text-align:left;display:inline;float: left;vertical-align:middle">
+                                                    <span *ngIf="item.VisibleRestoredViewButton"><button class="Button" style="width:55px;height:22px;display:inline;" (click)="PreviewButtonClicked(item)">View</button></span>
+                                                  
+                                                      <span  *ngIf="item.VisibleRestoredViewButton"><button *ngIf="!item.IsCurrentVersion"  class="GreenButton" style="width:90px;height:22px;display:inline;" (click)="RestoreButtonClicked(item)">Restore</button></span>
+                                                      <span  *ngIf="item.VisibleRestoredViewButton"><button [disabled]="true"  *ngIf="item.IsCurrentVersion" class="GreenButton" style="width:90px;height:22px;display:inline;" (click)="RestoreButtonClicked(item)">Current Version</button></span>
+
+
+                                                    <span style="width:5px"></span>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                    <tr><td colspan="4"></td></tr>
+                                </table>
+
+
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+        <tr style="height: 32px;">
+                    <td style="vertical-align: bottom">
+                        <table style="height: 22px;margin-right:5px">
+                            <tr>
+                                <td>
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 57px;">
+                                    <button class="RedButton" (click)="CloseButtonClicked()">Close</button>
+                                </td>
+
+
+                                <td style="width: 5px;">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+ </table>

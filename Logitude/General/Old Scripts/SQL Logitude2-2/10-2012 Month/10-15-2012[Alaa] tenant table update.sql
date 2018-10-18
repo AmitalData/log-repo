@@ -1,0 +1,1 @@
+Update Tenants set  invoiceSection2 = Company;

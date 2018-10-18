@@ -1,0 +1,424 @@
+﻿
+<table>
+    <tr style="height: 1px;">
+        <td>
+            <table>
+                <tr>
+                    <td style="width: 21px;">
+                        <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
+                    </td>
+
+                    <td style="width: 15px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 45px; vertical-align:middle; font-size:11px; color : #6E7172;">Search:</td>
+
+                    <td style="width: 300px;">
+                        <QuickSearchTextBox [Area]="'CRM.Customers'" [ObjectTableName]="'Card'" [DropDownWidth]="600" [ItemHeight]="35" (DataLoaded)="QuickSearchItems = $event" (DataLoadedCount)="QuickSearchItemsCount = $event">
+                            <div *ngIf="QuickSearchItemsCount > 10" style="height: 40px; position: relative; border-bottom: 1px solid #AAAAAA;">
+                                <div class="MarginAbsolute5" style="line-height: 30px; background: #FFFBDA; border: 1px solid Orange; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; color: #D8770E; font-size: 12px; padding-left: 10px;">
+                                    Your search returned a large number of results. Please refine your search
+                                </div>
+                            </div>
+
+                            <ul>
+                                <li class="LogitudeQuickSearchItem" style="height:35px;" *ngFor="let item of QuickSearchItems" (mousedown)="EditCustomerList(item)">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 5px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td>
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="MediaFill TextTrimming" style="font-size: 14px; color: #1B90CB;">
+                                                                {{item.EnglishName}}
+                                                            </div>
+                                                        </td>
+
+                                                        <td style="width: 5px;"></td>
+
+                                                        <td style="width: 150px;">
+                                                            <div class="MediaFill" style="font-size: 11px;" [ngStyle]="{color: item.CustomerStatusCode | StringToColorPipe:'CustomerStatusCode'}">
+                                                                {{item.CustomerStatusName}}
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            <div class="MediaFill TextTrimming" style="font-size: 11px; color: #282E30;" title="Salesman">
+                                                                {{item.SalesmanUserEnglishName}}
+                                                            </div>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+
+                                            <td style="width: 30px;">
+                                                <div class="MediaFill" *ngIf="item.IsBlockedQuickSearch">
+                                                    <div class="MediaFillRelative">
+                                                        <img class="CenterCenter" style="width:20px;height:20px;" src="./Images/Activities/blocked.png" />
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </li>
+                            </ul>
+                        </QuickSearchTextBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <!--<td style="width:150px;">
+                        <ComboBox [ItemsSource]="RecordsTypesFilterList" [Binding]="'Name'" [SelectedItem]="SelectedRecordsTypeFilter" (SelectedItemChanged)="SelectedRecordsTypeFilter = $event"></ComboBox>
+                    </td>
+
+                    <td style="width:2px;">
+                        <div></div>
+                    </td>-->
+
+                    <td style="width: 1px;">
+
+                        <!-- Salesmen -->
+                        <table>
+                            <tr>
+                                <td style="width:150px; min-width: 150px;">
+                                    <ComboBox [ItemsSource]="BusinessUnitFilterList" [Binding]="'Name'" [SelectedItem]="SelectedBusinessUnitFilter" (SelectedItemChanged)="SelectedBusinessUnitFilter = $event"></ComboBox>
+                                </td>
+
+                                <td style="width:2px; min-width: 2px;">
+                                    <div></div>
+                                </td>
+
+
+                                <td style="width: 200px; min-width: 200px;">
+                                    <ComboBox *ngIf="IsBusinessUnitUsers" [ItemsSource]="BusinessUnitUsersFilterList" [Binding]="'Name'" [SelectedItem]="SelectedUserFilter" (SelectedItemChanged)="SelectedUserFilter = $event"></ComboBox>
+                                    <LogLov *ngIf="!IsBusinessUnitUsers"
+                                            [ObjectTableName]="'CRM_UsersFilter'"
+                                            [ObjectFieldName]="'ListOfValuesUserId'"
+                                            [SelectedValue]="ListOfValuesUserId"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'User'"
+                                            [HideColumns]="true"
+                                            [NoObjectField]="true">
+                                    </LogLov>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- Creator -->
+                        <!--<table *ngIf="RecordsTypeFilterCode == 'C'">
+                            <tr>
+                                <td style="width:150px; min-width: 150px;">
+                                    <ComboBox [ItemsSource]="CreatedByTypesFilterList" [Binding]="'Name'" [SelectedItem]="SelectedCreatedByTypeFilter" (SelectedItemChanged)="SelectedCreatedByTypeFilter = $event"></ComboBox>
+                                </td>
+
+                                <td style="width:2px; min-width: 2px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 200px; min-width: 200px;">
+                                    <LogLov [ObjectTableName]="'CRM_UsersFilter'"
+                                            [ObjectFieldName]="'ListOfValuesUserId'"
+                                            [SelectedValue]="ListOfValuesUserId"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'User'"
+                                            [HideColumns]="true"
+                                            [NoObjectField]="true">
+                                    </LogLov>
+                                </td>
+                            </tr>
+                        </table>-->
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 5px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <td style="width:280px;">
+                        <div class="MediaFill">
+                            <SectionBox [Scrolling]="true">
+                                <SectionHead>Customers Queries</SectionHead>
+                                <SectionBody>
+                                    <div class="QueriesSection">
+                                        <div>Views</div>
+                                        <div style="height:22px; width: 57px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px; right:2px;">
+                                            <button class="Button" (click)="NewCustomerClicked()">New</button>
+                                        </div>
+                                        <div>
+                                            <p class="QueryLink" (click)="ViewCustomerQuery('My')">My Customers (as Salesman) ({{Customers_My}})</p>
+                                            <p class="QueryLink" (click)="ViewCustomerQuery('AccontManager')">My Customers (as Account Manager) ({{Customers_AccontManager}})</p>
+                                            <p class="QueryLink" (click)="ViewCustomerQuery('ReadyCustomers')">Waiting for Activation ({{Customers_Waiting}})</p>
+                                            <p class="QueryLink" (click)="ViewCustomerQuery('PotentialCustomers')">Potential Customers ({{Customers_Potential}})</p>
+                                            <p class="QueryLink" (click)="ViewCustomerQuery('ActiveCustomers')">Active Customers ({{Customers_Active}})</p>
+                                            <p class="QueryLink" (click)="ViewCustomerQuery('InactiveCustomers')">Inactive Customers ({{Customers_Inactive}})</p>
+                                            <p class="QueryLink" (click)="ViewCustomerQuery('All')">All Customers</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="QueriesSection">
+                                        <div>My Views</div>
+                                        <div style="height:80px;">
+                                            <UsersQueryList [ReloadUserQueries]="ReloadUserQueries" [ObjectTableName]="'Customer'" [BackButtonTitle]="'Customers'" (BackCompletedEvent)="onUserQueriesBackComplete($event)"></UsersQueryList>
+                                        </div>
+                                    </div>
+                                </SectionBody>
+                            </SectionBox>
+                        </div>
+                    </td>
+
+                    <td style="width:10px;">
+                        <div></div>
+                    </td>
+
+                    <td>
+                        <table>
+
+                            <!-- Recent Customers -->
+                            <tr>
+                                <td>
+                                    <div class="MediaFill">
+                                        <SectionBox [Scrolling]="true">
+                                            <SectionHead>{{RecentCustomersCount}} Recent Customers</SectionHead>
+                                            <SectionBody>
+                                                <ul>
+                                                    <li class="RecentEntityItem" *ngFor="let item of RecentCustomersList" (click)="EditCustomer(item.Id)">
+                                                        <table>
+                                                            <tr>
+                                                                <td rowspan="2" style="width:10px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="width:80px; position: relative;" rowspan="2">
+                                                                    <div style="position: absolute; left: 3px; top: 3px; width: 20px; height: 20px;" title="{{item.LastActivityTypeName}}">
+                                                                        <div *ngIf="item.LastActivityTypeName == 'New'" style="width: 20px; height: 20px; background: url('Images/RecentEntity/Added.png') center center no-repeat; background-size: contain;"></div>
+                                                                        <div *ngIf="item.LastActivityTypeName == 'View'" style="width: 20px; height: 20px; background: url('Images/RecentEntity/Viewed.png') center center no-repeat; background-size: contain;"></div>
+                                                                        <div *ngIf="item.LastActivityTypeName == 'Update'" style="width: 20px; height: 20px; background: url('Images/RecentEntity/Edited.png') center center no-repeat; background-size: contain;"></div>
+                                                                    </div>
+
+                                                                    <div style="position: absolute; left: 3px; bottom: 1px; color: #282E30;">{{item.LastActivityDate | DateTimeToDatePipe}}</div>
+                                                                </td>
+
+                                                                <td style="width: 5px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="width:70px; position: relative;" rowspan="2">
+                                                                    <div style="position: absolute; top:5px;">
+                                                                        <span><img style="width: 20px; height: 20px; margin:0; vertical-align:middle; margin-left: -0px;" [attr.src]="item.RankSource1" [attr.title]="item.RankName" /></span>
+                                                                        <span><img style="width: 20px; height: 20px; margin:0; vertical-align:middle; margin-left: -3px;" [attr.src]="item.RankSource2" [attr.title]="item.RankName" /></span>
+                                                                        <span><img style="width: 20px; height: 20px; margin:0; vertical-align:middle; margin-left: -3px;" [attr.src]="item.RankSource3" [attr.title]="item.RankName" /></span>
+                                                                    </div>
+                                                                </td>
+
+                                                                <td style="width:240px; position: relative;" rowspan="2">
+                                                                    <div style="position: absolute; top: 3px; font-size:14px; color:#1B90CB; max-width:240px;" class="TextTrimming">{{item.EnglishName}}</div>
+                                                                    <div style="position: absolute; bottom: 1px; color:#282E30" [ngStyle]="{color: item.CustomerStatusCode | StringToColorPipe:'CustomerStatusCode'}">{{item.CustomerStatusName}}</div>
+                                                                </td>
+
+                                                                <td style="width: 5px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="width:200px;">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td style="width:90px;">Salesman:</td>
+
+                                                                            <td style="width: 3px;">
+                                                                                <div></div>
+                                                                            </td>
+
+                                                                            <td style="color:#282E30;">{{item.SalesmanUserEnglishName}}</td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td style="width: 5px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="width: 5px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="width:200px;">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td style="width:90px;">Account Manager:</td>
+
+                                                                            <td style="width: 3px;">
+                                                                                <div></div>
+                                                                            </td>
+
+                                                                            <td style="color:#282E30;">{{item.AccountManagerUserEnglishName}}</td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </li>
+                                                </ul>
+
+                                                <div *ngIf="RecentCustomersList == null || RecentCustomersList.length == 0" class="NoDataText" style="top:5px;">No Recent Customers</div>
+                                            </SectionBody>
+                                        </SectionBox>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr style="height: 10px;">
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <!-- Decreased Shipments -->
+                            <tr>
+                                <td>
+                                    <div class="MediaFill">
+                                        <SectionBox [Scrolling]="true">
+                                            <SectionHead>
+                                                <table>
+                                                    <tr>
+                                                        <td style="color: #45494A; font-size: 14px;">
+                                                            Top (20) Customers with Decreased Activities
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td class="Label" style="width: 1px;">View:</td>
+
+                                                        <td style="width:5px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td style="width:120px;">
+                                                            <ComboBox [ItemsSource]="DecreasedShipmentsDataTypeList" [Binding]="'Name'" [SelectedItem]="DecreasedShipmentsDataTypeSelectedItem" (SelectedItemChanged)="DecreasedShipmentsDataTypeSelectedItem = $event"></ComboBox>
+                                                        </td>
+
+                                                        <td style="width:5px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td style="width:300px;">
+                                                            <ComboBox [ItemsSource]="DecreasedShipmentsTimeRangeList" [Binding]="'Name'" [SelectedItem]="DecreasedShipmentsTimeRangeSelectedItem" (SelectedItemChanged)="DecreasedShipmentsTimeRangeSelectedItem = $event"></ComboBox>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </SectionHead>
+                                            <SectionBody>
+                                                <ul>
+                                                    <li class="RecentEntityItem" *ngFor="let item of ShipmentsDataList" (click)="EditCustomer(item.Id)">
+                                                        <table>
+                                                            <tr>
+                                                                <td style="width:10px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="width:70px;">
+                                                                    <div style="top:5px;">
+                                                                        <span><img style="width: 20px; height: 20px; margin:0; vertical-align:middle; margin-left: -0px;" [attr.src]="item.RankSource1" [attr.title]="item.RankName" /></span>
+                                                                        <span><img style="width: 20px; height: 20px; margin:0; vertical-align:middle; margin-left: -3px;" [attr.src]="item.RankSource2" [attr.title]="item.RankName" /></span>
+                                                                        <span><img style="width: 20px; height: 20px; margin:0; vertical-align:middle; margin-left: -3px;" [attr.src]="item.RankSource3" [attr.title]="item.RankName" /></span>
+                                                                    </div>
+                                                                </td>
+
+                                                                <td>
+                                                                    <div class="MediaFill TextTrimming" style="font-size:15px; color:#1B90CB; line-height: 40px;">
+                                                                        {{item.CustomerName}}
+                                                                    </div>
+                                                                </td>
+
+                                                                <td style="width: 5px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="width:230px;">
+                                                                    <div class="MediaFill">
+                                                                        <table>
+                                                                            <tr>
+                                                                                <td style="width:1px; font-size:10px; color:#6E7172; padding-right: 3px;">Prior Period (</td>
+                                                                                <td *ngIf="item.filterCode != 'S'" style="width:1px; font-size:11px; color:#282E30; text-align:center;">{{item.Value1 | NumbersPipe:'N2'}}</td>
+                                                                                <td *ngIf="item.filterCode == 'S'" style="width:1px; font-size:11px; color:#282E30; text-align:center;">{{item.Value1}}</td>
+                                                                                <td style="width:1px; font-size:10px; color:#6E7172; padding-left: 3px; padding-right: 3px;">)  -  Actual Period (</td>
+                                                                                <td *ngIf="item.filterCode != 'S'" style="width:1px; font-size:11px; color:#282E30; text-align:center;">{{item.Value2 | NumbersPipe:'N2'}}</td>
+                                                                                <td *ngIf="item.filterCode == 'S'" style="width:1px; font-size:11px; color:#282E30; text-align:center;">{{item.Value2}}</td>
+                                                                                <td style="width:1px; font-size:10px; color:#6E7172; padding-left: 3px;">)</td>
+                                                                                <td>
+                                                                                    <div></div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </div>
+                                                                </td>
+
+                                                                <td style="width: 5px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td [style.width.px]="DecreasedQuantityWidth">
+                                                                    <div class="MediaFill">
+                                                                        <div style="text-align:right; font-size:15px;" [ngStyle]="{color: item.PercentForeground}">{{item.Quantity | NumbersPipe:'N2'}}</div>
+                                                                        <div style="text-align:right; font-size:10px; color:#282E30;">{{item.Percent}}</div>
+                                                                    </div>
+                                                                </td>
+
+                                                                <td style="width:10px;">
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </li>
+                                                </ul>
+
+                                                <div *ngIf="ShipmentsDataList == null || ShipmentsDataList.length == 0" class="NoDataText" style="top:5px;">No Customers with decreased activities</div>
+                                            </SectionBody>
+                                        </SectionBox>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

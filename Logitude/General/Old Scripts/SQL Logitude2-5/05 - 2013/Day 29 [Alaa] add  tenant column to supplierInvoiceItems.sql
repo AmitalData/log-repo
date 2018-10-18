@@ -1,0 +1,1 @@
+alter table [Customs].[SupplierInvoiceItems] add Tenant int not null

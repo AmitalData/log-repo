@@ -1,0 +1,663 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+<!--    Opportunities-->
+   <div data-role="view" data-show="onActionItemsViewShow">
+         <header data-role="header">
+
+
+           <div style="height:55px;display:table;width:100% ">
+
+                  <div style="display:table-cell; width:auto; vertical-align:middle;margin-top:-15px;">
+                             <a data-role="backbutton" data-align="left" style="margin-left:5px;margin-bottom:10px;width:90px;height:30px;font-size:11px;position:relative;"><span style="position:absolute;top:7px;left:8px;">< Details</span></a>
+                          
+                  </div>
+             </div>
+           
+           
+           
+      </header>
+
+               <div style="width:100% ;background-color: white ;">
+                        <div style ="margin-left :10px; margin-right:10px; background-color: white;">
+                                    <div style="display:table;width:100% ; height: 55px; border-bottom:1px solid #EEF0F1;" >
+                                                                  
+                                                         <div style="display:table-cell; vertical-align:middle; text-align:left; width:320px;">
+                                                                     <div class="HeaderNameCustomer TemplateItem" style="display:inline-block;   margin-top:4px; max-width:270px;"  data-bind="text: EnglishName"></div>
+
+                                                                 <div id="Rank11" style="display:none; width:19px;margin-top:4px;"><img style="width: 18px; height:18px; padding:0px; margin:0px;" <img src="images/Rank.png"/></div>
+                                                                    <div id="Rank22"  style="display:none; width:19px;margin-top:4px;"><img style="width: 18px; height:18px; padding:0px; margin:0px;" <img src="images/Rank.png" /></div>
+										                                  <div id="Rank33"  style="display:none; width:19px;margin-top:4px;"><img style="width: 18px; height:18px; padding:0px; margin:0px;" <img src="images/Rank.png" /></div>
+                                                              
+                                                                    
+                                                        </div>
+
+
+
+
+                                    </div>
+                        </div>
+
+           </div>
+          <div style="height: 20px; width: 100%; background-color: white;"></div>
+
+
+
+
+
+   <!--Opportunities-->
+        <div class="HeaderNameCustomer"  id="headerOpportunities" style="height: auto; width: 100%; display:none;background-color: white; vertical-align:bottom;  text-align:left; margin-left:7px;">Opportunities</div>
+       <ul data-role="listview" data-style="inset" data-type="group" style ="margin-top:-10px;margin-left:5px;margin-right:5px;">
+           <li>
+               <ul id="OpportunitiesListBox"></ul>
+           </li>
+       </ul>
+       <!--<div id="endlineOPP" style="height: 1px; width: 100%; background-color: white; display: none; border-bottom: 1px solid #B0B7BB"></div>-->
+       <div class="Nofound"  id="OppNo" style="height: auto; width: 100%; display:none;background-color: white; vertical-align:bottom;  text-align:left; margin-left:7px;">No Opportunities</div>
+
+        <!--//Opportunities//-->
+
+
+
+
+       <!--Activities-->
+       <div style="height: 20px; width: 100%; background-color: white;"></div>
+
+        <div class="HeaderNameCustomer"  id="headerActivities" style="height: auto; display:none; width: 100%; background-color: white; vertical-align:bottom;  text-align:left;margin-left:7px;">Activities</div>
+                 <ul data-role="listview" data-style="inset" data-type="group" style="margin-top:-10px;margin-left:5px;margin-right:5px;">                 
+            <li>                                    
+                <ul id="ActivitiesListBox"></ul>                
+            </li>
+           </ul>
+             <!--<div id="endline2" style="height: 1px; width: 100%; display:none; background-color: white; border-bottom:1px solid #B0B7BB" ></div>-->
+        <div   class="Nofound" id="NoAct" style="height: auto; width: 100%; display:none;background-color: white; vertical-align:bottom;  text-align:left; margin-left:7px;">No Activities </div>
+
+
+          <!--/////////Activities//////-->
+       
+
+
+       <!--Quotes-->
+        <div style="height: 20px; width: 100%; background-color: white;"></div>
+
+        <div class="HeaderNameCustomer"  id="headerQuotes" style="height: auto;width: 100%; background-color: white; display:none; vertical-align:bottom;  text-align:left;margin-left:7px;">Quotes</div>
+                  <ul data-role="listview" data-style="inset" data-type="group" style="margin-top:-10px;margin-left:5px;margin-right:5px;">                 
+            <li>                                    
+                <ul id="QuotesListBox"></ul>                
+            </li>
+           </ul>
+         <!--<div id="endlineQuo" style="height: 1px; width: 100%; background-color: white; display:none; border-bottom:1px solid #B0B7BB" ></div>-->
+       <div class="Nofound"  id="QuoteQuo" style="height: auto; width: 100%; display:none;background-color: white; vertical-align:bottom;  text-align:left; margin-left:7px;">No Quotes</div>
+
+       <!--////////Quotes//////-->
+
+
+   </div>
+
+
+
+
+    <script type="text/x-kendo-tmpl" id="OpportunitiesItemTemplate">
+               <div class="ListBoxItemTemplate" style="height:45px; border:1px solid \\#94C0D2;  background-color:white; margin-bottom:2px;">
+             <table style="border-collapse:collapse; text-space-collapse:collapse; border:none; width:100%; height:100%;">
+                <tr style="height:20px;">
+                    <td style="width:5px; background: #= RatingColor #;"></td>
+                    <td style="width:5px;"></td>
+                    <td style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;font-size:14px; color:rgb(51, 51, 51);">${Topic}</td>
+                    <td rowspan="2" style="width:150px; font-size:16px; color: rgb(51, 51, 51);font-size:14px; text-align:right;">${Shipments}</td>
+                    <td style="width:5px;"></td>
+                </tr>
+                <tr style="height:20px;">
+                    <td style="width:5px;  background: #= RatingColor #;"></td>
+                    <td style="width:5px;"></td>
+                    <td style="font-size:11px; color: rgb(153, 153, 153);">${StageName}</td>      
+                    <td style="width:5px;"></td>              
+                </tr>
+             </table>
+        </div>
+        
+    </script>
+
+
+      <script type="text/x-kendo-tmpl" id="ActivitiesItemTemplate">
+
+              <div class="ListBoxItemTemplate" style="height:40px; border:1px solid \\#94C0D2;  background-color:white; margin-bottom:2px;">
+             <table style="border-collapse:collapse; text-space-collapse:collapse; border:none; width:100%; height:100%;">
+                <tr style="height:20px;">
+                    <td style="width:5px;"></td>
+                    <td style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color:rgb(51, 51, 51);font-size:14px;">${Subject}</td>
+                    <td rowspan="2" style="width:50px; text-align:center;font-size:14px;"> <img style=" height:20px; width:13px;"   src="#= ActivityTypeSRC  #" /></td>
+
+            
+        
+                    <td style="width:5px;"></td>
+                </tr>
+                <tr style="height:20px;">
+                    <td style="width:5px;"></td>
+                    <td style="font-size:11px; color: rgb(153, 153, 153);">
+                        <span>${ATDDate}</span>
+                        <span style="margin-left:5px;">${ATDTime}</span>
+                    </td>      
+                    <td style="width:5px;"></td>              
+                </tr>
+             </table>
+        </div>
+    
+
+        </script>
+
+       
+    <script type="text/x-kendo-tmpl" id="QuotesItemTemplate">
+        
+             
+                <div class="ListBoxItemTemplate" style="height:45px; border:1px solid \\#94C0D2; background:white; margin-bottom:2px;">
+             <table style="border-collapse:collapse; text-space-collapse:collapse; border:none; width:100%; height:100%;">
+                <tr style="height:20px;width:100%">
+                    <td style="width:5px;"></td>
+                    <td style="width:30px; text-align:center;"><img style="height:20px; width:22px; padding:0px; margin:0px;" src="#= FromCountySRC #"/></td>
+                    <td style="width:110px; text-align:left; vertical-align:top;"><div style="width:80px; color:rgb(51, 51, 51); white-space: nowrap;font-size:14px; overflow: hidden; text-overflow: ellipsis;">${FromPortName}</div></td>
+                    <td style="width:5px;"></td>
+                    <td style="width:30px; text-align:center;"><img style="height:20px; width:22px; padding:0px; margin:0px;" src="#= ToCountySRC #"/></td>
+                    <td style="width:110px; text-align:left; vertical-align:top;"><div style="width:80px; color:rgb(51, 51, 51); white-space: nowrap;font-size:14px; overflow: hidden; text-overflow: ellipsis;">${ToPortName}</div></td>
+                   
+                    <td rowspan="2" style="width:25px; text-align:top; vertical-align:middle;"><img style="height:20px; width:20px; vertical-align:middle;" src="#= DirectionSRC #" /></td>
+                    <td rowspan="2" style="width:25px;  text-align:center; vertical-align:middle;"><img style="height:20px; width:20px; vertical-align:middle;" src="#= TransportSRC #"/></td>
+                    <td style="width:5px;"></td>
+                </tr>
+                <tr style="height:20px;">
+                    <td style="width:5px;"></td>
+                    <td colspan="5" style="vertical-align:top; font-size:11px; color: rgb(153, 153, 153);">${OpenDate}</td>     
+                    <td style="width:5px;"></td>              
+                </tr>
+             </table>              
+        </div>
+
+
+        </script>
+
+    <script>
+
+        var opportunityListClass = function () {
+            this.RatingName = "";
+            this.RatingColor = "";
+            this.StageName = "";
+            this.CreateDate = "";
+            this.Revenue = "";
+            this.Topic = "";
+            this.Shipments = "";
+            //this.LastShipmentDate = "";
+            //this.StartWorkingDate = "";
+            //this.BillToId = "";
+
+        }
+        jQuery.BuilOpportunitiesList = (function (list) {
+
+            var OpportunitiesList = [];
+    
+            $.CurrentOpportunitiesList = OpportunitiesList;
+
+
+            $.each(list, function (index, opportunity) {
+
+
+                var item = new opportunityListClass();
+                item.OpportunitiesList = opportunity;
+
+                switch (opportunity.RatingCode) {
+                    case "H": { item.RatingColor = "rgb(206, 17, 17)"; break; }
+                    case "C": { item.RatingColor = "rgb(39, 114, 208)"; break; }
+                    case "W": { item.RatingColor = "rgb(255, 137, 59)"; break; }
+                    default: { item.RatingColor = "rgb(153, 153, 153)"; break; }
+                }
+
+
+                item.RatingName = $.trim(opportunity.RatingName);
+                item.StageName = $.trim(opportunity.StageName);
+                item.Revenue = $.trim(opportunity.Revenue);
+                item.Topic = $.trim(opportunity.Topic);
+                item.CreateDate = $.Convert.ToShortDate(opportunity.CreateDate);
+                item.Shipments = $.trim(opportunity.NumberOfShipments) == "" ? "0" : $.trim(opportunity.NumberOfShipments),
+                OpportunitiesList.push(item);
+            });
+
+
+
+            $.CurrentOpportunitiesList = OpportunitiesList;
+
+            return OpportunitiesList;
+
+        });
+        jQuery.LoadOpportunities = (function () {
+
+            $.Application.showLoading();
+
+            function OpportunityFilters() {
+
+
+                //this.CustomerId = $.CurrentCardId;
+                this.CustomerId = $.CurrentEntityId;
+
+
+
+                this.IsClosed = "false";
+
+            };
+
+            var filters = new OpportunityFilters();
+
+            var url = "../api/Opportunities?tenant=" + $.CurrentTenant;
+
+            $.ajax({
+                url: url,
+                data: JSON.stringify(filters),
+                type: 'POST',
+                contentType: 'application/json',
+                success: function (result) {
+                    if (result.length > 0) {
+                        //document.getElementById('endlineOPP').style.display = "none";
+                        document.getElementById('OppNo').style.display = "none";
+                        document.getElementById('headerOpportunities').style.display = "block";
+                       
+
+
+                    }
+                    else {
+                        //document.getElementById('endlineOPP').style.display = "none";
+                        document.getElementById('OppNo').style.display = "block";
+                        document.getElementById('headerOpportunities').style.display = "block";
+                    }
+
+                    var dataSource = new kendo.data.DataSource({
+                        data: $.BuilOpportunitiesList(result)
+                    });
+
+
+                    $("#OpportunitiesListBox").kendoMobileListView(
+                    {
+                        dataSource: dataSource,
+                        template: kendo.template($("#OpportunitiesItemTemplate").html()),
+
+                    });
+
+
+                    $.Application.hideLoading();
+
+                },
+
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $.Application.hideLoading();
+
+                }
+            });
+
+        });
+
+
+
+        var ActivityListClass = function () {
+            this.Subject = "";
+            this.StageName = "";
+            this.ATDDate = "";
+            this.ATDTime = "";
+            this.ActivityTypeCode = "";
+            this.ActivityTypeSRC = "";
+            this.description = "";
+            this.Owner = "";
+            this.Priority = "";
+            this.ActivityTypeName = "";
+            this.DisplayDateTime = " ";
+            this.Displaydescription = " ";
+
+        }
+        jQuery.BuilActivitiesList = (function (list) {
+
+            var ActivitiesList = [];
+
+            $.CurrentActivitiesList = ActivitiesList;
+
+
+            $.each(list, function (index, Activity) {
+
+
+                var item = new ActivityListClass();
+                item.ActivitiesList = Activity;
+
+
+                item.Subject = $.trim(Activity.Subject);
+                item.ATDDate = $.Convert.ToShortDate(Activity.DueDate);
+                item.ActivityTypeName = $.trim(Activity.ActivityTypeName);
+                item.ATDTime = $.Convert.ToShortTime(Activity.DueDate);
+                item.description = $.trim(Activity.Description);
+                item.Owner = $.trim(Activity.OwnerName);
+                item.Priority = $.trim(Activity.PriorityName);
+                item.ActivityTypeCode = $.trim(Activity.ActivityTypeCode);
+
+                if ($.trim(Activity.Description) == "") {
+                    item.Displaydescription = "none";
+
+                }
+
+                if ($.trim(Activity.DueDate) == "") {
+                    item.DisplayDateTime = "none";
+                }
+                switch (Activity.ActivityTypeCode) {
+
+                    case "AP": {
+                        item.ActivityTypeSRC = "images/AP.png";
+
+                        break;
+                    }
+
+                    case "CL": {
+                        item.ActivityTypeSRC = "images/CL.png";
+
+                        break;
+                    }
+
+                    case "TS": {
+                        item.ActivityTypeSRC = "images/TS.png";
+                        break;
+                    }
+                }
+
+
+
+
+                ActivitiesList.push(item);
+            });
+
+
+
+            $.CurrentActivitiesList = ActivitiesList;
+
+            return ActivitiesList;
+
+        });
+
+        jQuery.LoadActivities = (function () {
+
+            $.Application.showLoading();
+
+            function ActivityFilters() {
+
+
+                this.EntityId = $.CurrentEntityId;
+                this.IsOpen = "true";
+
+
+
+            };
+
+            var filters = new ActivityFilters();
+
+            var url = "../api/Activities?tenant=" + $.CurrentTenant;
+
+            $.ajax({
+                url: url,
+                data: JSON.stringify(filters),
+                type: 'POST',
+                contentType: 'application/json',
+                success: function (result) {
+                    if (result.length > 0) {
+                        //document.getElementById('endline2').style.display = "none";
+                        document.getElementById('NoAct').style.display = "none";
+                        document.getElementById('headerActivities').style.display = "block";
+                    }
+                    else {
+
+                        //document.getElementById('endline2').style.display = "none";
+                        document.getElementById('NoAct').style.display = "block";
+                        document.getElementById('headerActivities').style.display = "block";
+                    }
+                    var dataSource = new kendo.data.DataSource({
+                        data: $.BuilActivitiesList(result)
+                    });
+
+
+                    $("#ActivitiesListBox").kendoMobileListView(
+                    {
+                        dataSource: dataSource,
+                        template: kendo.template($("#ActivitiesItemTemplate").html()),
+
+                    });
+
+
+                    $.Application.hideLoading();
+                },
+
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $.Application.hideLoading();
+
+                }
+            });
+
+        });
+
+
+        var quoteListClass = function () {
+            this.DirectionName = "";
+            this.MainCarriageCarrierName = "";
+            this.TransportModeName = "";
+            this.DirectionSRC = "";
+            this.TransportSRC = "";
+            this.QuoteNumber = "";
+            this.FromPort = "";
+            this.ToPort = "";
+            this.Customer = "";
+            this.EntityStatusName = "";
+            this.MainCarriageCarrierName = "";
+            this.FromCountySRC = "";
+            this.ToCountySRC = "";
+            this.FromPortName = "";
+            this.ToPortName = "";
+            this.OpenDate = "";
+
+
+
+
+
+
+            //this.LastShipmentDate = "";
+            //this.StartWorkingDate = "";
+            //this.BillToId = "";
+
+
+        }
+        jQuery.BuildQuotesList = (function (list) {
+
+            var QuotesList = [];
+
+            $.CurrentQuotesList = QuotesList;
+
+
+            $.each(list, function (index, quote) {
+
+
+                var item = new quoteListClass();
+                item.QuotesList = quote;
+                item.QuoteNumber = $.trim(quote.QuoteNumber);
+                item.DirectionName = $.trim(quote.DirectionName);
+                item.FromPort = $.trim(quote.FromPort);
+                item.ToPort = $.trim(quote.ToPort);
+                item.Customer = $.trim(quote.Customer);
+                item.MainCarriageCarrierName = $.trim(quote.MainCarriageCarrierName);
+                item.TransportModeName = $.trim(quote.TransportModeName);
+                item.EntityStatusName = $.trim(quote.EntityStatusName);
+                item.MainCarriageCarrierName = $.trim(quote.MainCarriageCarrierName);
+
+
+
+                item.FromPortName = $.trim(quote.FromPortName);
+                item.ToPortName = $.trim(quote.ToPortName);
+                item.OpenDate = $.trim(quote.OpenDate) == "" ? "" : $.Convert.ToShortDate(quote.OpenDate);
+
+                item.FromCountySRC = "../images/Flags/" + quote.FromCountryCode + ".png";
+                item.ToCountySRC = "../images/Flags/" + quote.ToCountryCode + ".png";
+
+
+
+                switch (quote.DirectionId) {
+
+                    case "E": {
+                        item.DirectionSRC = "../HtmlHelpers/Images/Icons/Export.png";
+                        break;
+                    }
+
+                    case "I": {
+                        item.DirectionSRC = "../HtmlHelpers/Images/Icons/Import.png";
+                        break;
+                    }
+
+                    case "D": {
+                        item.DirectionSRC = "../HtmlHelpers/Images/Icons/Domestic.png";
+                        break;
+                    }
+                }
+
+
+                switch (quote.TransportModeId) {
+
+                    case "A": {
+                        item.TransportSRC = "../HtmlHelpers/Images/Icons/Air.png";
+
+                        break;
+                    }
+
+                    case "I": {
+                        item.TransportSRC = "../HtmlHelpers/Images/Icons/Inland-Moblie.png";
+
+                        break;
+                    }
+
+                    case "O": {
+                        item.TransportSRC = "../HtmlHelpers/Images/Icons/Ocean-Moblie.png";
+
+                        break;
+                    }
+                }
+
+
+
+                QuotesList.push(item);
+            });
+
+
+
+
+
+            return QuotesList;
+
+        });
+        jQuery.LoadQuotes = (function () {
+
+            $.Application.showLoading();
+
+            function QuoteFilters() {
+
+
+                //this.CustomerId = $.CurrentCardId;
+                this.CustomerId = $.CurrentEntityId;
+            };
+
+            var filters = new QuoteFilters();
+            var url = "../api/QuotesMobile?tenant=" + $.CurrentTenant;
+
+            $.ajax({
+                url: url,
+                data: JSON.stringify(filters),
+                type: 'POST',
+                contentType: 'application/json',
+                success: function (result) {
+                    if (result.length > 0) {
+                        //document.getElementById('endlineQuo').style.display = "none";
+                        document.getElementById('QuoteQuo').style.display = "none";
+                        document.getElementById('headerQuotes').style.display = "block";
+                
+                    }
+                    else {
+                        //document.getElementById('endlineQuo').style.display = "none";
+                        document.getElementById('QuoteQuo').style.display = "block";
+                        document.getElementById('headerQuotes').style.display = "block";
+                    }
+
+                    var dataSource = new kendo.data.DataSource({
+                        data: $.BuildQuotesList(result)
+                    });
+
+
+                    $("#QuotesListBox").kendoMobileListView(
+                    {
+                        dataSource: dataSource,
+                        template: kendo.template($("#QuotesItemTemplate").html()),
+
+                    });
+
+
+                    $.Application.hideLoading();
+                },
+
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $.Application.hideLoading();
+
+                }
+            });
+
+        });
+
+
+        jQuery.LoadRankActionItem = (function () {
+
+           
+            switch ($.CurrentEntityList.RankCode) {
+
+                case "1": {
+
+                    document.getElementById('Rank11').style.display = "inline-block";
+                    document.getElementById('Rank22').style.display = "none";
+                    document.getElementById('Rank33').style.display = "none";
+
+                    break;
+                }
+
+                case "2": {
+                    document.getElementById('Rank11').style.display = "inline-block";
+                    document.getElementById('Rank22').style.display = "inline-block";
+                    document.getElementById('Rank33').style.display = "none";
+                    break;
+                }
+
+                case "3": {
+                    document.getElementById('Rank11').style.display = "inline-block";
+                    document.getElementById('Rank22').style.display = "inline-block";
+                    document.getElementById('Rank33').style.display = "inline-block";
+                    break;
+                }
+                default: {
+                    document.getElementById('Rank11').style.display = "none";
+                    document.getElementById('Rank22').style.display = "none";
+                    document.getElementById('Rank33').style.display = "none";
+                }
+
+            }
+
+        });
+
+
+        function onActionItemsViewShow(e) {
+
+            var scroller = e.view.scroller;
+            scroller.reset();
+
+            ko.applyBindings($.CurrentEntityList);
+            $.LoadActivities();
+            $.LoadOpportunities();
+            $.LoadQuotes();
+            $.LoadRankActionItem();
+
+        }
+    </script>
+</body>
+</html>

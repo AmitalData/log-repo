@@ -1,0 +1,52 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization; 
+
+namespace Logitude.Customs.Data.EntityLists
+{
+   [DataContract]
+   public partial class DeclarationConstraintList
+   {
+   
+       [Key]
+       [DataMember]
+       public string DeclarationID  { get; set; }
+       [DataMember]
+       public int Tenant  { get; set; }
+
+       [Key]
+       [DataMember]
+       public string ConstraintNumber  { get; set; }
+       [DataMember]
+       public string ConstraintTypeCode  { get; set; }
+       [DataMember]
+       public string ConstraintStatusCode  { get; set; }
+       [DataMember]
+       public string AgentExplanation  { get; set; }
+       [DataMember]
+       public string ApprovalNote  { get; set; }
+       [DataMember]
+       public DateTime? ApprovalAuthorityDate  { get; set; }
+       [DataMember]
+       public string ApprovalUserName  { get; set; }
+       [DataMember]
+       public string ApprovalDecision  { get; set; }
+       [DataMember]
+       public string ConstraintTypeName  { get; set; }
+       [DataMember]
+       public string ConstraintStatusName  { get; set; }
+       [DataMember]
+       public string CustomsCollateralId  { get; set; }
+       [DataMember]
+       public string ApprovalDecisionName  { get; set; }
+       [DataMember]
+       public string AgentObjection  { get; set; }
+   }
+
+}
+	 

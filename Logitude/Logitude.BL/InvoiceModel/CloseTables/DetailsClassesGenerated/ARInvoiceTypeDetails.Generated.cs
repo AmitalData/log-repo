@@ -1,0 +1,89 @@
+
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.CloseTablesClasses;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Logitude.BL.InvoiceModel.EntityPMs; 
+using Simplog.Data.InvoiceModel;
+
+namespace Logitude.BL.InvoiceModel
+{
+   public class ARInvoiceTypeDetails : ARInvoiceType, ICloseTable<ARInvoiceType, ARInvoiceTypeDetails>
+   {
+       public List<ARInvoiceTypeDetails> GetAll()
+       {
+		    var all = new List<ARInvoiceTypeDetails>();  
+            all.Add(new ARInvoiceTypeDetails()
+            {    
+                SearchFields = "CA,Customs Invoice", 
+                Code = "CA", 
+                Name = "Customs Invoice", 
+			});
+			 
+            all.Add(new ARInvoiceTypeDetails()
+            {    
+                SearchFields = "CC,Customs Credit Note", 
+                Code = "CC", 
+                Name = "Customs Credit Note", 
+			});
+			 
+            all.Add(new ARInvoiceTypeDetails()
+            {    
+                SearchFields = "CD,Credit Note", 
+                Code = "CD", 
+                Name = "Credit Note", 
+			});
+			 
+            all.Add(new ARInvoiceTypeDetails()
+            {    
+                SearchFields = "CI,Customs Invoice", 
+                Code = "CI", 
+                Name = "Customs Invoice", 
+			});
+			 
+            all.Add(new ARInvoiceTypeDetails()
+            {    
+                SearchFields = "IN,Invoice", 
+                Code = "IN", 
+                Name = "Invoice", 
+			});
+			 
+            all.Add(new ARInvoiceTypeDetails()
+            {    
+                SearchFields = "MN,Manifest Invoice", 
+                Code = "MN", 
+                Name = "Manifest Invoice", 
+			});
+			 
+            all.Add(new ARInvoiceTypeDetails()
+            {    
+                SearchFields = "TX,Tax Invoice", 
+                Code = "TX", 
+                Name = "Tax Invoice", 
+			});
+			
+            return all;
+       }
+
+	    public void MapPoco(ARInvoiceType newPoco)
+        {   
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Code = this.Code;  
+		    newPoco.Name = this.Name;   
+        }
+
+		public string GetSearchFields(ARInvoiceType rec)
+        {   
+           return String.Concat(rec.Code,",",rec.Name,",");
+        }
+   }
+}
+

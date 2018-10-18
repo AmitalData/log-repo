@@ -1,0 +1,1 @@
+alter table [Customs].[Declarations] add constraint [Declaration_CustomerCard] foreign key ([CustomerId]) references [dbo].[Cards]([Id]);

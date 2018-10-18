@@ -1,0 +1,195 @@
+﻿
+<style type="text/css">
+    .LogitudeSalesNotes {
+        position: relative;
+        width: 24px;
+        height: 24px;
+        padding: 0 !important;
+        display: block;
+        
+    }
+
+    .LogitudeSalesNotesHeadOpened {
+        background: #FFFADC;
+        border: 1px solid #AAAAAA;
+        border-radius: 4px 4px 0 0;
+        -moz-border-radius: 4px 4px 0 0;
+        -webkit-border-radius: 4px 4px 0 0;
+        box-shadow: 0px 0px 2px 2px #DADADA;
+        -moz-box-shadow: 0px 0px 2px 2px #DADADA;
+        -webkit-box-shadow: 0px 0px 2px 2px #DADADA;
+    }
+
+    .LogitudeSalesNotesBody {
+        position: fixed;
+        visibility: hidden;
+        z-index: 1;
+        top: 24px;
+        background: #FFFADC;
+        border: 1px solid #AAAAAA;
+        border-radius: 0 0 4px 4px;
+        -moz-border-radius: 0 0 4px 4px;
+        -webkit-border-radius: 0 0 4px 4px;
+        box-shadow: 0px 2px 3px 2px #DADADA;
+        -moz-box-shadow: 0px 2px 3px 2px #DADADA;
+        -webkit-box-shadow: 0px 2px 3px 2px #DADADA;
+    }
+
+    .LogitudeSalesNotesItemBox {
+        border: 1px solid #D1D1D1;
+        border-radius: 2px;
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px;
+    }
+
+    .LogitudeSalesNotesItemTextBox {
+        padding: 2px;
+        padding-left: 4px;
+        background: transparent !important;
+        border: 0 !important;
+        outline: none !important;
+        text-indent: 0px;
+        font-size: 12px;
+        color: #45494A;
+        float: left;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+        user-select:all !important;
+        -webkit-user-select:auto !important;
+        -moz-user-select:all !important;
+    }
+</style>
+
+<div [attr.id]="ComponentId" class="LogitudeSalesNotes">
+
+    <!-- Head -->
+    <div class="MediaFillAbsolute" [class.LogitudeSalesNotesHeadOpened]="IsOpened">
+        <div class="CenterCenter" style="width: 16px; height: 13px;">
+            <button [attr.id]="ComponentButtonId"
+                    class="MediaFillRelative"
+                    [ngStyle]="{'background': IconPath, 'opacity': IconOpacity}"
+                    (click)="OnButtonClicked()"
+                    (blur)="OnButtonLostFocus()"
+                    (mouseover)="IsMouseOverButton = true;"
+                    (mouseleave)="IsMouseOverButton = false;"
+                    style="cursor: pointer; padding:0;"></button>
+        </div>
+    </div>
+
+    <!-- Body -->
+    <div class="LogitudeSalesNotesBody"
+         [attr.id]="ComponentContentId"
+         [style.width.px]="Width"
+         [style.height.px]="Height"
+         (mouseover)="IsMouseOver = true;"
+         (mouseleave)="IsMouseOver = false;">
+
+        <div class="MediaFillRelative">
+            <div style="height: 6px; width: 22px; background: #FFFADC; position: absolute; top:-4px; right:0; z-index: 2;"></div>
+
+            <div class="MarginAbsolute5" style="top: 0px;">
+                <div class="MediaFillRelative">
+                    <table>
+
+                        <tr style="height: 25px;">
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td style="line-height: 25px; color: #D99000; font-size: 14px; padding-left: 5px;">
+                                            {{Title}}
+                                        </td>
+
+                                        <td style="width: 18px">
+                                            <IconButton [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsEditingEnabled" (click)="AddButtonClicked()"></IconButton>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <tr *ngIf="NotesList">
+                            <td>
+                                <div class="MediaFill">
+                                    <ScrollViewer [Small]="true">
+                                        <div *ngFor="let item of NotesList" style="height: 80px; position: relative;">
+                                            <div class="MediaFill" (mouseover)="item.IsButtonsHidden = false;" (mouseleave)="item.IsButtonsHidden = true;">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="MediaFill LogitudeSalesNotesItemBox">
+                                                                <div class="MediaFillRelative">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <div class="MediaFill">
+                                                                                    <textarea class="LogitudeSalesNotesItemTextBox" [readonly]="true">{{item.Notes}}</textarea>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+
+                                                                        <tr style="height: 10px;">
+                                                                            <td>
+                                                                                <table>
+                                                                                    <tr>
+                                                                                        <td [style.width.px]="item.UpdateLabelWidth" style="font-size: 10px; padding-left: 5px; color: #6E7172;">
+                                                                                            {{item.UpdateLabel}}
+                                                                                        </td>
+
+                                                                                        <td [style.width.px]="item.UpdateByUserWidth" style="font-size: 10px; padding-left: 5px; color: #1B90CB;" [style.max-width.px]="item.UpdateByUserWidth" class="TextTrimming">
+                                                                                            {{item.UpdateByUser}}
+                                                                                        </td>
+
+                                                                                        <td [style.width.px]="item.UpdateDateStringWidth" style="font-size: 10px; padding-left: 5px; color: #6E7172;">
+                                                                                            {{item.UpdateDateString}}
+                                                                                        </td>
+
+                                                                                        <td>
+                                                                                            <div></div>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+
+                                                                    <div [hidden]="item.IsButtonsHidden" style="height: 18px; width: 38px; position: absolute; top: 1px; right: 1px;">
+                                                                        <table>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <IconButton [Name]="'Edit'" [IsSmall]="true" [IsEnabled]="IsEditingEnabled" (click)="EditButtonClicked(item)"></IconButton>
+                                                                                </td>
+
+                                                                                <td style="width: 2px;">
+                                                                                    <div></div>
+                                                                                </td>
+
+                                                                                <td>
+                                                                                    <IconButton [Name]="'Delete'" [IsSmall]="true" [IsEnabled]="IsEditingEnabled" (click)="DeleteButtonClicked(item)"></IconButton>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr style="height: 3px;">
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </ScrollViewer>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

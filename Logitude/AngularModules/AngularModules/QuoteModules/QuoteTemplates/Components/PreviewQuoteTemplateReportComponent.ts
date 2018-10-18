@@ -1,0 +1,78 @@
+﻿import {Component, OnInit, ViewChild, ViewContainerRef, AfterViewInit} from '@angular/core';
+import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import {AppTool} from '../../../Infrastructure/Tools';
+import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
+import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
+import {QuoteTemplateSectionExtendedPMService} from '../../../Quote/Services/ExtendedPMs/QuoteTemplateSectionExtendedPMService';
+import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
+import {Guid} from '../../../Infrastructure/Utilities/Guid';
+
+@Component({
+    selector: 'PreviewQuoteTemplateReportComponent',
+    moduleId: module.id,
+    templateUrl: './PreviewQuoteTemplateReportComponent.html',
+})
+
+export class PreviewQuoteTemplateReportComponent implements OnInit, AfterViewInit {
+
+    QuoteTemplateId: string;
+    QuoteId: string;
+    PdfDivKey: string = Guid.newGuid();
+    quoteTemplateSectionExtendedPMService: QuoteTemplateSectionExtendedPMService;
+    HeightPdf: number;
+    isFromLibrary: boolean = false;
+    AreaName: string;
+    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    constructor() {
+        this.quoteTemplateSectionExtendedPMService = new QuoteTemplateSectionExtendedPMService();
+    }
+
+    ngOnInit() {
+
+
+    }
+
+    ngAfterViewInit() {
+        this.GetQuoteTemplatePdfReport();
+    }
+
+
+
+    GetQuoteTemplatePdfReport() {
+        SessionLocator.CurrentSession.StartBusyIndicator("Loading...");
+        this.quoteTemplateSectionExtendedPMService.GetQuoteTemplatePdfReport(this.QuoteId, this.QuoteTemplateId, SessionLocator.LoggedUserId, this.isFromLibrary).subscribe(res => {
+            var pmResponse: ServiceResponse = res;
+            SessionLocator.CurrentSession.StopBusyIndicator();
+            if (!pmResponse.HasError && pmResponse.Result) {
+
+                var buffer = EntityResourceService.base64ToBufferConvertor(pmResponse.Result);
+                var blob = new Blob([buffer], { type: 'application/pdf' });
+                var objectURL = URL.createObjectURL(blob);
+                var doc = document.getElementById(this.PdfDivKey);
+                if (doc) {
+                    doc.innerHTML = "<iframe id='fred' style='border: 1px solid gray;' frameborder='1' scrolling='auto' height=" + this.HeightPdf+" width='100%' src=" + objectURL + "> </iframe>";
+                }
+
+            
+            }
+
+
+        });
+
+    }
+
+    CloseButtonClicked() {
+        SessionLocator.CurrentSession.CloseCurrentWindow();
+    }
+
+
+    SetWindowArgs(args: any) {
+        this.QuoteTemplateId = args.QuoteTemplateId;
+        this.QuoteId = args.QuoteId;
+        this.HeightPdf = (SessionLocator.CurrentSession.CurrentWindow.Height - 100);
+  
+        if (args.AreaName == "FromLibrary") this.isFromLibrary = true;
+
+    }
+}

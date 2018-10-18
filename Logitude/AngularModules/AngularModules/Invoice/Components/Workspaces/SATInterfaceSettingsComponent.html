@@ -1,0 +1,170 @@
+﻿
+<table *ngIf="EntityPM">
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+
+        <td style="width: 300px;">
+            <div class="MediaFill">
+                <table>
+
+
+                    <tr class="FormFieldRow">
+                        <td style="width:120px; ">
+                            <LogLabel [ObjectFieldName]="'SATInterfaceCode'" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM"></LogLabel>
+                        </td>
+
+                        <td style="width:230px; ">
+                            <LogLov [ObjectFieldName]="'SATInterfaceCode'"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="EntityPM"
+                                    [SelectedValue]="EntityPM.SATInterfaceCode"
+                                    [LookUpTableName]="'SATInterface'"
+                                    [HideColumns]="true">
+                            </LogLov>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <tr class="FormFieldRow">
+                        <td style="width:120px; ">
+                            <LogLabel [ObjectFieldName]="'ActivationDate'" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM"></LogLabel>
+                        </td>
+
+                        <td style="width:230px; ">
+                            <LogDatePicker [ObjectFieldName]="'ActivationDate'" [DataContext]="EntityPM"
+                                        [ObjectTableName]="ObjectTableName" [HideColumns]="true" [SelectedDateValue]="ActivationDate"></LogDatePicker>
+
+                           
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <tr class="FormFieldRow" *ngIf="EntityPM.SATInterfaceCode === 'PROF' || EntityPM.SATInterfaceCode === 'PROF33'">
+                        <td style="width:120px; ">
+                            <LogLabel [ObjectFieldName]="'Token'" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM"></LogLabel>
+                        </td>
+
+                        <td style="width:230px; ">
+                            <LogTextBox [ObjectFieldName]="'Token'" [InputType]="'text'" [DataContext]="EntityPM"
+                                        [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <tr class="FormFieldRow" *ngIf="EntityPM.SATInterfaceCode === 'CONT'">
+                        <td colspan="3">
+                            <div style="color:black;margin-left:12px">You need to connect your Dropbox account to enable transfer via Dropbox folder</div>
+                        </td>
+                        <td>
+                            <Hyperlink style="margin-left:3px;" (click)="ViewDropboxConnection()" [FontSize]="12" [Text]="'Dropbox Connection'"></Hyperlink> 
+                        </td>
+ 
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+
+                    <tr class="FormFieldRow" *ngIf="EntityPM.SATInterfaceCode === 'CONT'">
+                        <td style="width:120px; ">
+                            <LogLabel [Text]="'Folder'" [DataContext]="EntityPM"></LogLabel>
+                        </td>
+                        
+                        <td><input readonly="readonly" type="text" value="FromLogitude\SAT" /></td>
+                        
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <tr class="FormFieldRow" *ngIf="EntityPM.SATInterfaceCode === 'PROF' || EntityPM.SATInterfaceCode === 'PROF33'">
+                     
+                        <td style="width:120px; ">
+                            <LogLabel [ObjectFieldName]="'MetodoPagoCode'" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM"></LogLabel>
+                        </td>
+
+                        <td style="width:230px; ">
+                            <LogLov [ObjectFieldName]="'MetodoPagoCode'"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="EntityPM"
+                                    [SelectedValue]="EntityPM.MetodoPagoCode"
+                                    [LookUpTableName]="'MetodoPago'"
+                                    >
+                            </LogLov>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+
+                      
+                    </tr>
+
+                    <tr class="FormFieldRow">
+                        <td colspan="1">
+                            <div style="color:black;margin-left:12px">Integrated via</div>
+                        </td>
+                      
+                        <td>
+                            <a *ngIf="EntityPM.SATInterfaceCode === 'CONT'" href="http://www.integratunegocioenlinea.com.mx/" target="_blank">http://www.integratunegocioenlinea.com.mx</a>
+                            <a *ngIf="EntityPM.SATInterfaceCode === 'PROF' || EntityPM.SATInterfaceCode === 'PROF33'" href="http://profact.com.mx/" target="_blank">http://profact.com.mx</a>
+                            <!--<Hyperlink style="margin-left:3px;" (click)="ViewDropboxConnection()" [FontSize]="12" [Text]="'Dropbox Connection'"></Hyperlink>-->
+                        </td>
+
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+     </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

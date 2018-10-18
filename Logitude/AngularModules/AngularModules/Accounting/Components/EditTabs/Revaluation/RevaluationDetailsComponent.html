@@ -1,0 +1,301 @@
+
+
+<table *ngIf="visible">
+    <tr>
+        <td>
+            <div class="TableHolder">
+                <table>
+
+                    <tr class="TabTitleRow" style="height:50px">
+                        <td>
+                           
+                            {{ 'Revaluation.TH.Details' | TextCodeTranslationPipe}}
+
+
+
+                            <div style="width: 60px; float: right;">
+                            </div>
+                        </td>
+
+                    </tr>
+
+                    <!-- header -->
+                    <tr style="height: 140px;">
+                        <td >
+                            <table>
+                                <tr class="FormFieldRow">
+                                    <td style="width: 400px;">
+                                        <table>
+                                            <!-- Date -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                <LogLabel [ObjectFieldName]="'RevaluationNumber'" [ObjectTableName]="ObjectTableName"
+                                                          [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td style="width: 180px;">
+                                                    <LogTextBox [ObjectFieldName]="'RevaluationNumber'" [InputType]="'text'" [DataContext]="DataContext"
+                                                                 [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                   
+                                                </td>
+                                             
+                                            </tr>
+                                          
+
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'RevaluationDate'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'RevaluationDate'" [ObjectTableName]="ObjectTableName"
+                                                                   [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+
+                                                </td>
+
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'ChartOfAccountsId'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                            <td>
+                                                <LogLov [ObjectFieldName]="'ChartOfAccountsId'"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'ChartOfAccount'"
+                                                        [HideColumns]="true">
+                                                </LogLov>
+
+                                            </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'GLAccountId'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                         
+                                                                <LogLov [ObjectFieldName]="'GLAccountId'"
+                                                                        [ObjectTableName]="ObjectTableName"
+                                                                        [DataContext]="DataContext"
+                                                                        [LookUpTableName]="'GLAccount'"
+                                                                        [HideColumns]="true"
+                                                                       >
+                                                                </LogLov>
+                                                           
+                                                        </tr>
+                                                    </table>
+                                                  
+                                                   
+
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'RevaluationEnabled'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <!--<CheckBox [IsChecked]="RevaluationEnabled" (Checked)="RevaluationEnabled = $event"></CheckBox>-->
+                                                    <LogCheckBox  [Checked]="RevaluationEnabled" [HideColumns]="true" [ObjectTableName]="'Revaluation'" [ObjectFieldName]="'RevaluationEnabled'" [DataContext]="DataContext" ></LogCheckBox>
+
+
+                                                </td>
+                                            </tr>
+
+                                        </table>
+                                    </td>
+                                    <td style="width: 200px;"><div></div></td>
+                                    <td>
+                                        <table>
+                                          
+                                          
+
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 100px;">
+                                                    <LogLabel [ObjectFieldName]="'Message'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 180px;">
+                                                    <LogTextBox [ObjectFieldName]="'Message'" [InputType]="'text'" [DataContext]="DataContext"
+                                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                            <tr><td><div></div></td></tr>
+                                     
+
+                                        </table>
+                                    </td>
+                                    <td><div></div></td>
+                                </tr>
+                                <tr><td><div></div></td></tr>
+
+                            </table>
+                        </td>
+                    </tr>
+
+
+                    <!-- Journals-->
+
+                    <tr style="height: 30px;">
+                        <td >
+                            <table>
+                                <tr class="TabTitleRow">
+                                   
+                                    <td>
+                                        <div>
+                                  
+                                            {{'Accounting.General.O.Journals' | TextCodeTranslationPipe}}                            
+                                          </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <table>
+                                <tr>
+                                    <td style="height: 100%;padding-bottom: 88px;">
+                                        <div class="CellContent" style="bottom: 75px;">
+                                            <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="Journals"   (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
+                                      
+                                                <log-column [header]="'Journal.F.JournalNumber' | TextCodeTranslationPipe" [visibility]="'visibile'" [width]="'120'" [Alignment]="'center'" >
+                                                    <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                                                        <div class="TextTrimming" style="text-align:center">
+                                                            <span class="hyperlink"  (click)="JournalHyperlinkClicked(item)">{{item.JournalNumber}}</span>
+                                                        </div>
+                                                    
+                                                    </log-cell-template>
+                                                </log-column>
+
+
+                                                <log-column [header]="'Journal.F.AccountingDate' | TextCodeTranslationPipe" [width]="'120'" [Alignment]="'center'">
+                                                    <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                                                        <div class="TextTrimming" style="text-align:center">
+                                                            <span>{{item.AccountingDate | DateTimeToDatePipe}}</span>
+                                                        </div>
+
+                                                    </log-cell-template>
+                                                </log-column>
+
+
+                                                <log-column [header]="'Journal.F.StatusName' | TextCodeTranslationPipe" [width]="'120'" [Alignment]="'center'">
+                                                    <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                                                        <div class="TextTrimming" style="text-align:center">
+                                                            <span>{{item.StatusName }}</span>
+                                                        </div>
+
+                                                    </log-cell-template>
+                                                </log-column>
+                                              
+
+                                            </logitude-edit-grid>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr style="height: 30px;">
+                        <td>
+                            <table>
+                                <tr class="TabTitleRow">
+
+                                    <td>
+                                        <div >
+                                            {{'Accounting.General.O.JournalLines' | TextCodeTranslationPipe}}
+                                            
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <table>
+                                <tr>
+                                    <td style="height: 100%;padding-bottom: 88px;">
+                                        <div class="CellContent" style="bottom: 75px;">
+                                            <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="JournalLines"  >
+
+                                                <!-- Line -->
+                                                <log-column [header]="'JournalLine.F.Line' | TextCodeTranslationPipe" [binding]="'Line'" [width]="'50'" [Editable]="false" [Alignment]="'center'"></log-column>
+
+                                                <!-- ActionCode -->
+                                                <log-column [header]="'JournalLine.F.ActionCode' | TextCodeTranslationPipe" [width]="'120'" [Alignment]="'center'" [binding]="'ActionCode'">
+                                                    <log-cell-template  [IgnoreMods]="true" template="let item" #logcelltemplate>
+                                                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:center">
+                                                            <span>{{item.ActionName}}</span>
+                                                        </div>
+                                                      
+                                                    </log-cell-template>
+                                                </log-column>
+
+                                                <!-- Ref. Date -->
+                                                <log-column [header]="'JournalLine.F.DocumentDate' | TextCodeTranslationPipe" [width]="'130'" [Alignment]="'center'" [binding]="'DocumentDate'">
+                                                    <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate  >
+                                                        <div *ngIf="logcelltemplate.IsDisplayMode" style="text-align:center">
+                                                            <span>{{item.DocumentDate | DateTimeToDatePipe}}</span>
+                                                        </div>
+                                                       
+                                                    </log-cell-template>
+                                                </log-column>
+
+                                                <!-- Due Date -->
+                                                <log-column [header]="'JournalLine.F.DueDate' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="'center'" [binding]="'DueDate'">
+                                                    <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate >
+                                                        <div *ngIf="logcelltemplate.IsDisplayMode" style="text-align:center">
+                                                            <span>{{item.DueDate | DateTimeToDatePipe}}</span>
+                                                        </div>
+                                                       
+                                                    </log-cell-template>
+                                                </log-column>
+
+                                                <!-- C. Account -->
+                                                <log-column [header]="'JournalLine.F.CreditAccountName' | TextCodeTranslationPipe" [width]="'150'" [Alignment]="'center'" [binding]="'CreditAccountId'">
+                                                    <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate  >
+                                                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:center">
+                                                            <span>{{item.CreditAccountName}}</span>
+                                                        </div>
+                                                       
+                                                    </log-cell-template>
+                                                </log-column>
+
+                                             
+                                             
+
+                                            </logitude-edit-grid>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+
+
+                </table>
+                </div>
+            </td>
+        </tr>
+    </table>

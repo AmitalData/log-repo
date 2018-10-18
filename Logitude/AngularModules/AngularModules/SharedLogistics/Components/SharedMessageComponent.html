@@ -1,0 +1,89 @@
+﻿
+
+<style>
+    .MessageText {
+        white-space: normal;
+        word-wrap: break-word;
+        overflow-x: hidden;
+        overflow-y: auto;
+        line-height: 20px;
+    }
+</style>
+
+
+
+
+
+
+
+
+<!--<div style="height:100%;width:100%">
+
+    <div style="height:15px;"></div>
+    <div class="MessageText" style="vertical-align:central;height:100%;width:100%;margin:5px;">
+        <span [style.color]="TextColor" class="MessageText" style="vertical-align:central;text-align:left;font-size:14px;">
+           
+
+        </span>
+
+    </div>
+</div>-->
+
+
+<table>
+
+    <tr style="height:100%;vertical-align:top">
+     <td>
+       <table style="margin-left:5px;margin-right:5px">
+           <tr *ngIf="IsShowOkButton" style="height:15px"><td></td></tr>
+           <tr *ngIf="!IsShowOkButton" style="height:10px"><td></td></tr>
+           <tr>
+               
+               <td>
+               
+                   <span [style.color]="TextColor" class="MessageText" style="vertical-align:central;text-align:left;font-size:14px;">
+
+                       {{Message}}
+                   </span>
+             </td>
+           
+           
+           </tr>
+
+           <tr style="height:15px"><td></td></tr>
+       </table>
+
+     </td>
+    </tr>
+
+
+    <tr *ngIf="IsShowOkButton" style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div>
+
+
+                        </div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <div>
+
+                        </div>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="CloseButtonClicked()">OK</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

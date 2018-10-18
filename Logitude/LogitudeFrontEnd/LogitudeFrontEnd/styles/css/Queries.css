@@ -1,0 +1,45 @@
+﻿.QueryLink:hover {
+    cursor: pointer;
+    color: #1B90CB;
+    font-size: 12px;
+    height: 20px;
+    line-height: 20px;
+}
+
+.QueryLink {
+    cursor: pointer;
+    font-size: 12px;
+    color: #282E30;
+    color: rgb(40, 46, 48);
+    height: 20px;
+    line-height: 20px;
+    /*width: intrinsic;*/
+    width: 1px;
+    white-space: nowrap;
+    /*width: fit-content;*/
+}
+
+
+.QueriesSection div:nth-child(1) {
+    font-size: 14px;
+    color: #1B90CB;
+    color: rgb(27, 144, 203);
+    height: 22px;
+    line-height: 22px;
+}
+
+.QueriesSection div:last-child {
+    margin: 0px 0px 10px 10px;
+}
+
+.QueriesSection .Button {
+    position: absolute;
+    top: 0;
+    right: 0;   
+    width: auto;
+    min-width:45px;
+}
+.QueriesSection {    
+    position:relative;
+    /*padding-left: 5px;*/
+}

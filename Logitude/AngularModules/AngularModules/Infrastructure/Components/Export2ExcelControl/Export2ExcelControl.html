@@ -1,0 +1,49 @@
+﻿<style>
+    .linkbtn {
+        text-decoration: underline;
+        float: left;
+        color: blue;
+        font-size: 11px;
+    }
+
+        .linkbtn:hover {
+            text-decoration: underline;
+            float: left;
+            color: lightskyblue;
+            font-size: 11px;
+            cursor: pointer;
+        }
+</style>
+<table>
+    <tr>
+    <td>
+        <table>
+            <tr style="height:130px;">
+                <td>
+                    <div [style.float]="RTL == true ? 'right' : 'left'">
+                        <label style="max-width:460px;text-align:center;vertical-align:top;">
+                            <span *ngIf="busyExportingVisibile">{{'General.M.LoadingFromServer' | TextCodeTranslationPipe}}</span> <!--{{General.M.LoadingFromServer | TextCodeTranslationPipe}} ...-->
+                            <span *ngIf="btnSaveToFileVisibile" style="color:green;">{{'General.B.Loadingcompleted' | TextCodeTranslationPipe}}</span>
+                            <span *ngIf="btnRetryVisibile" style="color:red;">{{'General.B.Erroroccured' | TextCodeTranslationPipe}}</span>
+                        </label>
+                    </div>
+                    <div [style.marginLeft.px]="RTL == true ? 5 : 0" [style.marginRight.px]="RTL == true ? 5 : 0"  [style.float]="RTL == true ? 'right' : 'left'">
+                        <img *ngIf="busyExportingVisibile" src="./Images/progress2.gif" style="width:200px;" />
+                        <span *ngIf="btnSaveToFileVisibile" class="linkbtn" (click)="SaveBtnCLicked()">{{'General.B.DownloadFile' | TextCodeTranslationPipe}}</span>
+                        <span *ngIf="btnRetryVisibile" class="linkbtn" (click)="RetryBtnClicked()">{{'General.B.Retry' | TextCodeTranslationPipe}}</span>
+                    </div>
+                </td> 
+            </tr>
+            <tr>  
+                <td style="width: 100px;">
+                    <button class="Button" style="width:57px;" [style.float]="RTL == true ? 'left' : 'right'" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                </td>
+            </tr>
+          
+        </table>
+    </td>
+    </tr>
+    <tr>
+        <td></td>
+    </tr>
+</table>

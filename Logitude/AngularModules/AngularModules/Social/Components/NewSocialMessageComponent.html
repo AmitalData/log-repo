@@ -1,0 +1,120 @@
+﻿<style>
+        .InputDiv {
+        width: 100%;
+        vertical-align: top;
+        border: 1px solid #AAAAAA;
+        outline: none;
+        font-size: 11px;
+        color: #45494A;
+        background: white;
+        /*text-indent: 5px;*/
+        border-radius: 3px;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        -moz-box-shadow: inset 0 0 3px #AAAAAA;
+        -webkit-box-shadow: inset 0 0 3px #AAAAAA;
+        box-shadow: inset 0 0 3px #AAAAAA;
+    }
+
+        .InputDiv:hover {
+            border: 1px solid #3BB3E2;
+        }
+
+    .InputDivDisabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+</style>
+
+<table>
+
+
+
+
+
+    <tr style="height:100%;vertical-align:top">
+
+
+    <td>
+        <table>
+          
+
+            <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+                <td colspan="4">
+                    <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+                </td>
+            </tr>
+
+            <tr style="height:30px;">
+                <td style="width:22px;font-weight:bold;font-size:13px;text-align:left">To</td>
+                <td><EmailSearchTextBox  [Watermark]="'Add User'" [ExcludedResult]="ExcludedResult"  [EmailsText]="UserIds" [SelectedValuePath]="'Id'" [IsUsersList]="true" (EmailsTextChanged)="UserIds = $event"></EmailSearchTextBox></td>
+
+            </tr>
+            <tr style="height:10px;"><td colspan="2"></td></tr>
+
+            <tr style="height:100%">
+                <td style="width:22px"></td>
+                <td>
+              
+                    <div class="InputDiv" style="max-height:unset;height:100%">
+                        <textarea wrap="hard"
+                                  (focus)="MessageInputFocus()"
+                                  [(ngModel)]="MessageBody"
+                                   placeholder="{{Placeholder}}"
+                                 
+                                  style="box-shadow:none;border:1px solid transparent;text-indent:10px;height:100%" ondrop="return false"></textarea>
+
+                    </div>
+                </td>
+            </tr>
+            <tr style="height:10px;"><td colspan="2"></td></tr>
+            <tr style="height:20px;">
+                <td style="width:22px"></td>
+
+                <td>
+                    <div class="CheckBox">
+                        <input [(ngModel)]="IsWaitingForResponse" class="LeftCenter" style="text-align:center" [attr.id]="WaitingForResponseKey" type="checkbox" />
+                        <label style="color:black;margin-top:-3px;font-size:12px" class="LeftCenter" [attr.for]="WaitingForResponseKey">waiting for response</label>
+                    </div>
+
+                </td>
+            </tr>
+            <tr style="height:20px;"><td colspan="2"></td></tr>
+
+        </table>
+    </td>
+
+
+
+    </tr>
+
+
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <div>
+                            <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
+                        </div>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="SaveButtonClick()">Send</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

@@ -1,0 +1,317 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{29DB79D3-F160-4F0B-8C4D-6CABAB9E2DC5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Logitude.Test</RootNamespace>
+    <AssemblyName>Logitude.Test</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'All Projects|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\All Projects\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|AnyCPU'">
+    <OutputPath>bin\None\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.Edm, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Edm.5.7.0\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.OData.5.7.0\lib\net40\Microsoft.Data.OData.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.Services.Client, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Services.Client.5.7.0\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ServiceBus, Version=1.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.ServiceModel.DomainServices.Server.UnitTesting">
+      <HintPath>..\General\Dlls\Microsoft.ServiceModel.DomainServices.Server.UnitTesting.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.16\lib\net45\Microsoft.Threading.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.16\lib\net45\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.WindowsAzure.Configuration, Version=1.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.1.8.0.0\lib\net35-full\Microsoft.WindowsAzure.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Diagnostics, Version=2.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\Microsoft.WindowsAzure.Diagnostics.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.ServiceRuntime, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\Microsoft.WindowsAzure.ServiceRuntime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=8.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAzure.Storage.8.0.1\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SendGridMail">
+      <HintPath>..\packages\SendGrid.2.1.1\lib\SendGridMail.dll</HintPath>
+    </Reference>
+    <Reference Include="Smtpapi">
+      <HintPath>..\packages\smtpapi.1.0.0\lib\Smtpapi.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Services.Client" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Extensions">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.13\lib\net45\System.Net.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.13\lib\net45\System.Net.Http.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Spatial, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Spatial.5.7.0\lib\net40\System.Spatial.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\General\Dlls\Client References\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Telerik.JustMock, Version=2012.3.1016.3, Culture=neutral, PublicKeyToken=8b221631f7271365, processorArchitecture=MSIL">
+      <HintPath>..\General\Dlls\Telerik.JustMock.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.JustMock.Container, Version=0.0.0.0, Culture=neutral, PublicKeyToken=8b221631f7271365, processorArchitecture=MSIL">
+      <HintPath>..\General\Dlls\Telerik.JustMock.Container.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureEventSource.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WindowsAzureTelemetryEvents, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureTelemetryEvents.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <CodeAnalysisDependentAssemblyPaths Condition=" '$(VS100COMNTOOLS)' != '' " Include="$(VS100COMNTOOLS)..\IDE\PrivateAssemblies">
+      <Visible>False</Visible>
+    </CodeAnalysisDependentAssemblyPaths>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CommonDataModel\AccountingSettingTests.cs" />
+    <Compile Include="CommonDataModel\AccountingSystemTests.cs" />
+    <Compile Include="CommonDataModel\AddressTests.cs" />
+    <Compile Include="CommonDataModel\AirLineTests.cs" />
+    <Compile Include="CommonDataModel\BranchTests.cs" />
+    <Compile Include="CommonDataModel\CardsTests.cs" />
+    <Compile Include="CommonDataModel\ChargeTypeTests.cs" />
+    <Compile Include="CommonDataModel\CommunicationAttachmentTests.cs" />
+    <Compile Include="CommonDataModel\CommunicationLogTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CommonDataModel\CommunicationLogTypeTests.cs" />
+    <Compile Include="CommonDataModel\CommunicationStatusTypeTests.cs" />
+    <Compile Include="CommonDataModel\ContactTests.cs" />
+    <Compile Include="CommonDataModel\CountryTests.cs" />
+    <Compile Include="CommonDataModel\CurrencyTests.cs" />
+    <Compile Include="CommonDataModel\CustomAgentTests.cs" />
+    <Compile Include="CommonDataModel\CustomerTests.cs" />
+    <Compile Include="CommonDataModel\DepartmentTests.cs" />
+    <Compile Include="CommonDataModel\DimensionsUnitTests.cs" />
+    <Compile Include="CommonDataModel\DocumentInTests.cs" />
+    <Compile Include="CommonDataModel\DocumentOutTests.cs" />
+    <Compile Include="CommonDataModel\DocumentTests.cs" />
+    <Compile Include="CommonDataModel\DocumentTypeCusotmFieldsTests.cs" />
+    <Compile Include="CommonDataModel\DocumentTypeTemplateTests.cs" />
+    <Compile Include="CommonDataModel\DueTypeTests.cs" />
+    <Compile Include="CommonDataModel\FormCustomFieldTests.cs" />
+    <Compile Include="CommonDataModel\GlobalZoneTests.cs" />
+    <Compile Include="CommonDataModel\IncotermTest.cs" />
+    <Compile Include="CommonDataModel\MAWBStackTests.cs" />
+    <Compile Include="CommonDataModel\MeasurementTests.cs" />
+    <Compile Include="CommonDataModel\PackageTests.cs" />
+    <Compile Include="CommonDataModel\PackageTypeTests.cs" />
+    <Compile Include="CommonDataModel\PartnerTypeTests.cs" />
+    <Compile Include="CommonDataModel\PasswordPoliciesTests.cs" />
+    <Compile Include="CommonDataModel\PortTests.cs" />
+    <Compile Include="CommonDataModel\RankTests.cs" />
+    <Compile Include="CommonDataModel\RateClassTests.cs" />
+    <Compile Include="CommonDataModel\ShippingAgentTests.cs" />
+    <Compile Include="CommonDataModel\ShippingLineTests.cs" />
+    <Compile Include="CommonDataModel\StateTests.cs" />
+    <Compile Include="CommonDataModel\TarrifFromToTypeTests.cs" />
+    <Compile Include="CommonDataModel\TarrifHeaderTests.cs" />
+    <Compile Include="CommonDataModel\TarrifStepTests.cs" />
+    <Compile Include="CommonDataModel\TarrifTypeTests.cs" />
+    <Compile Include="CommonDataModel\TemplateFormatTests.cs" />
+    <Compile Include="CommonDataModel\TenantTests.cs" />
+    <Compile Include="CommonDataModel\TermsofUseSignatureTests.cs" />
+    <Compile Include="CommonDataModel\TermsofUseTests.cs" />
+    <Compile Include="CommonDataModel\TruckerTests.cs" />
+    <Compile Include="CommonDataModel\VatTypeTests.cs" />
+    <Compile Include="CommonDataModel\VendorTests.cs" />
+    <Compile Include="CommonDataModel\VesselTests.cs" />
+    <Compile Include="CommonDataModel\WarehouseTests.cs" />
+    <Compile Include="CommonDataModel\WeightUnitTests.cs" />
+    <Compile Include="GeneralTests\GeneralTesting.cs" />
+    <Compile Include="Helpers\GeneralMocking.cs" />
+    <Compile Include="InfrastructureModel\ChargesGroupTests.cs" />
+    <Compile Include="InfrastructureModel\CounterDefinitionTests.cs" />
+    <Compile Include="InfrastructureModel\CounterTests.cs" />
+    <Compile Include="InfrastructureModel\CustomPickListTests.cs" />
+    <Compile Include="InfrastructureModel\DescriptionOfGoodsTests.cs" />
+    <Compile Include="InfrastructureModel\DirectionTests.cs" />
+    <Compile Include="InfrastructureModel\EntityStatusTests.cs" />
+    <Compile Include="InfrastructureModel\EventTypeTests.cs" />
+    <Compile Include="InfrastructureModel\IATACodeTests.cs" />
+    <Compile Include="InfrastructureModel\MenuButtonGroupTests.cs" />
+    <Compile Include="InfrastructureModel\MenusTableTests.cs" />
+    <Compile Include="InfrastructureModel\ObjectFieldsTests.cs" />
+    <Compile Include="InfrastructureModel\ObjectTableTests.cs" />
+    <Compile Include="InfrastructureModel\PrepaidCollectTests.cs" />
+    <Compile Include="InfrastructureModel\QueryGroupTests.cs" />
+    <Compile Include="InfrastructureModel\QueryTests.cs" />
+    <Compile Include="InfrastructureModel\RatesTableTests.cs" />
+    <Compile Include="InfrastructureModel\SharedLogisticsUpdateTests.cs" />
+    <Compile Include="InfrastructureModel\TenantSettingTests.cs" />
+    <Compile Include="InfrastructureModel\TransportModeTests.cs" />
+    <Compile Include="InfrastructureModel\VolumeUnitTests.cs" />
+    <Compile Include="InvoiceModel\APInvoiceTests.cs" />
+    <Compile Include="InvoiceModel\ARInvoiceStatusTests.cs" />
+    <Compile Include="InvoiceModel\ARInvoiceTests.cs" />
+    <Compile Include="InvoiceModel\ARInvoiceTotalVATTest.cs" />
+    <Compile Include="InvoiceModel\ARInvoiceTypeTests.cs" />
+    <Compile Include="InvoiceModel\ARPaymentMethodTests.cs" />
+    <Compile Include="InvoiceModel\ARPaymentStatusTests.cs" />
+    <Compile Include="InvoiceModel\ARPaymentTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuoteModel\MarkUpTypeTests.cs" />
+    <Compile Include="QuoteModel\QuoteCustomerTypeTests.cs" />
+    <Compile Include="QuoteModel\QuoteTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="QuoteModel\QuoteTypeTests.cs" />
+    <Compile Include="ShipmentModel\AWBChargesCodeTests.cs" />
+    <Compile Include="ShipmentModel\AWBSpecialHandlingCodeTests.cs" />
+    <Compile Include="ShipmentModel\NextLegTests.cs" />
+    <Compile Include="ShipmentModel\PickUpDeliveryFromToTypeTests.cs" />
+    <Compile Include="ShipmentModel\PickUpDeliveryTypeTests.cs" />
+    <Compile Include="ShipmentModel\ShipmentCustomerTypeTests.cs" />
+    <Compile Include="ShipmentModel\ShipmentLevelTests.cs" />
+    <Compile Include="ShipmentModel\ShipmentPayableAmountTypeTests.cs" />
+    <Compile Include="ShipmentModel\ShipmentPayableStatusTests.cs" />
+    <Compile Include="ShipmentModel\ShipmentReceivableStatusTests.cs" />
+    <Compile Include="ShipmentModel\ShipmentTests.cs" />
+    <Compile Include="ShipmentModel\ShipmentTypeTests.cs" />
+    <Compile Include="SystemLogsModel\SystemLogTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JustWebFreight\WebFreight.Web\WebFreight.Web.csproj">
+      <Project>{8408E4E5-B4B7-46BC-8300-1AE163B36E2D}</Project>
+      <Name>WebFreight.Web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Customs.BL\Logitude.Customs.BL.csproj">
+      <Project>{d2951c0f-8a2b-4ee2-933a-8b6b4134f766}</Project>
+      <Name>Logitude.Customs.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Customs.Data\Logitude.Customs.Data.csproj">
+      <Project>{643f92c9-7cf1-4429-b79e-1e354b758abf}</Project>
+      <Name>Logitude.Customs.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
+      <Project>{9b477a08-8ee2-4457-88fe-17e8a6ec4d00}</Project>
+      <Name>Logitude.Server.Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.SystemLogs\Logitude.SystemLogs.csproj">
+      <Project>{9ffc5b97-f09a-4eed-a66e-d4160374ae6e}</Project>
+      <Name>Logitude.SystemLogs</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
+      <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
+      <Name>Simplog.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Global.Data.csproj">
+      <Project>{6d7ffad2-35b6-4133-8700-cf73e58d0c85}</Project>
+      <Name>Simplog.Global.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
+      <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
+      <Name>Simplog.Server.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <!--<Import Project="..\packages\Microsoft.Bcl.Build.1.0.4\tools\Microsoft.Bcl.Build.targets" />-->
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

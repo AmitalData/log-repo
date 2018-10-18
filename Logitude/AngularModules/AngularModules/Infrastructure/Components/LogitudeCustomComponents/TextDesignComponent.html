@@ -1,0 +1,412 @@
+
+
+<style type="text/css">
+    .SettingDesginButton:hover:not(:disabled) {
+        background: #fefcea; /* Old browsers */
+        background: -moz-linear-gradient(top, #fefcea 0%, #f1da36 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #fefcea 0%,#f1da36 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #fefcea 0%,#f1da36 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefcea', endColorstr='#f1da36',GradientType=0 ); /* IE6-9 */
+    }
+
+    .SettingDesginButton span, .RedButton span, .GreenButton span {
+        text-shadow: 1px 1px white;
+    }
+
+    .SettingDesginButton:disabled, .RedButton:disabled, .GreenButton:disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+    .SettingDesginButton {
+        border: 1px solid #848484;
+        background: #ffffff; /* Old browsers */
+        background: -moz-linear-gradient(top, #ffffff 0%, #dddddd 40%, #c4c4c4 51%, #e2e2e2 98%, #ffffff 99%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #ffffff 0%,#dddddd 40%,#c4c4c4 51%,#e2e2e2 98%,#ffffff 99%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #ffffff 0%,#dddddd 40%,#c4c4c4 51%,#e2e2e2 98%,#ffffff 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+    }
+
+
+    .SelectedSettingButton {
+
+        height:22px;
+        background: #fefcea; 
+        background: -moz-linear-gradient(top, #FDD59D 0%, #FDD59D 100%); 
+        background: -webkit-linear-gradient(top, #FDD59D 0%,#FDD59D 100%); 
+        background: linear-gradient(to bottom, #FDD59D 0%,#FDD59D 100%); 
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFA500', endColorstr='#FFA500',GradientType=0 );*/
+    }
+        .InputDiv {
+        height: 440px;
+        min-height: 440px;
+        max-height: 440px;
+        /*line-height: 21px;*/
+        width: 100%;
+        vertical-align:top;
+        border: 1px solid #AAAAAA;
+        outline: none;
+        font-size: 11px;
+        color: #45494A;
+        background: white;
+        /*text-indent: 5px;*/
+        border-radius: 3px;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        -moz-box-shadow: inset 0 0 3px #AAAAAA;
+        -webkit-box-shadow: inset 0 0 3px #AAAAAA;
+        box-shadow: inset 0 0 3px #AAAAAA;
+    }
+
+        .InputDiv:hover {
+            border: 1px solid #3BB3E2;
+        }
+
+    .InputDivDisabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+</style>
+
+
+
+
+<div *ngIf="QuoteTemplateTextDesignPM">
+
+    <div *ngIf="QuoteTemplateTextDesignPM.Title!='DesignAreaFreeText'" style="height:100%;width:100%;border-right:1px solid #E4E3E1;border-left:1px solid #E4E3E1;border-bottom:1px solid #E4E3E1;border-radius:6px;vertical-align:top">
+        <table style="border :none;">
+
+
+            <tr style="height:25px">
+                <td>
+
+                    <div style="background-color:#EDEDED;height:25px;border-top:1px solid #E4E3E1;border-top-Right-radius:6px; border-top-left-radius:6px;color:black;vertical-align:central">
+
+                        <table>
+                            <tr>
+                                <td style="width:5px;"><div style="width:5px"></div></td>
+                                <td style="width:50px;"><div style="width:50px;">{{QuoteTemplateTextDesignPM.Title}}</div></td>
+                                <td></td>
+                            </tr>
+                        </table>
+
+                    </div>
+
+                </td>
+
+
+
+            </tr>
+
+            <tr class="SectionBody">
+                <td>
+                    <table>
+                        <tr style="height:7px;"><td style="height:7px"></td></tr>
+                        <tr style="height:50%">
+                            <td>
+
+                                <table>
+                                    <tr>
+                                        <td style="width:7px"><div style="width:7px"></div></td>
+
+                                        <!--Font Buttons-->
+                                        <td style="width:33px"><div style="width:33px">Font:</div></td>
+                                        <td style="width:100px"><ComboBox style="width:100px;height:22px;display:inline" (SelectedItemChanged)="QuoteTemplateTextDesignPM.FontFamily=$event" [ItemsSource]="FontFamilyLists" [SelectedItem]="QuoteTemplateTextDesignPM.FontFamily"></ComboBox></td>
+                                        <td style="width:4px"><div style="width:4px"></div></td>
+
+                                        <td style="width:60px;"><ComboBox style="width:60px;height:22px;display:inline" (SelectedItemChanged)="FontSizeSelectedChange($event)" [ItemsSource]="FontSizeLists" [SelectedItem]="QuoteTemplateTextDesignPM.FontSize"></ComboBox></td>
+                                        <td style="width:6px"><div style="width:6px"></div></td>
+                                        <!--Bold Italic UnDerLine Button-->
+                                        <td style="width:62px">
+                                            <div style="width:57px;display:inline">
+                                                <button (click)="QuoteTemplateTextDesignButtonClick('BoldButton')" class="SettingDesginButton" [class.SelectedSettingButton]="QuoteTemplateTextDesignPM.FontWeight === 'bold'" style="width:21px;height:23px;display:inline; padding:0;margin-left:-5px">
+                                                    <img style="height:16px;width:16px;margin-top:-5.5px" src="./Images/Icons/Format Stylized Text.png" />
+                                                </button>
+
+                                                <button (click)="QuoteTemplateTextDesignButtonClick('ItalicButton')" class="SettingDesginButton" [class.SelectedSettingButton]="QuoteTemplateTextDesignPM.Italic" style="width:21px;height:23px;display:inline; padding:0;margin-left:-5px">
+                                                    <img style="height:16px;width:16px;margin-top:-3.5px" src="./Images/Icons/text_italic.png" />
+                                                </button>
+
+                                                <button (click)="QuoteTemplateTextDesignButtonClick('UnDerLineButton')" class="SettingDesginButton" [class.SelectedSettingButton]="QuoteTemplateTextDesignPM.UnDerLine" style="width:21px;height:23px;display:inline; padding:0;margin-left:-5px">
+                                                    <img style="height:16px;width:16px;margin-top:-6px" src="./Images/Icons/Format Underline.png" />
+                                                </button>
+                                            </div>
+                                        </td>
+
+                                        <td style="width:3px"><div style="width:3px"></div></td>
+
+                                        <!--Alignment Buttons-->
+                                        <td *ngIf="!QuoteTemplateTextDesignPM.HideAlignment" style="width:62px">
+                                            <div  style="width:57px;display:inline">
+                                                <button (click)="AlignmentButtonClick('left')" class="SettingDesginButton" [class.SelectedSettingButton]="QuoteTemplateTextDesignPM.Alignment =='left'" style="width:21px;height:23px;display:inline; padding:0;margin-left:-5px">
+                                                    <img style="height:16px;width:16px;margin-top:-5px" src="./Images/Icons/Align-left-icon.png" />
+                                                </button>
+
+                                                <button (click)="AlignmentButtonClick('center')" class="SettingDesginButton" [class.SelectedSettingButton]="QuoteTemplateTextDesignPM.Alignment =='center'" style="width:21px;height:23px;display:inline; padding:0;margin-left:-5px">
+                                                    <img style="height:16px;width:16px;margin-top:-5px" src="./Images/Icons/Align-center-icon.png" />
+                                                </button>
+                                            
+                                                <button (click)="AlignmentButtonClick('right')" class="SettingDesginButton" [class.SelectedSettingButton]="QuoteTemplateTextDesignPM.Alignment =='right'" style="width:21px;height:23px;display:inline; padding:0;margin-left:-5px">
+                                                    <img style="height:16px;width:16px;margin-top:-5px" src="./Images/Icons/Align-right-icon.png" />
+                                                </button>
+                                            </div>
+                                        </td>
+
+                                        <!--Text Color-->
+
+
+                                       <td style="width:30px">
+                                      
+                                          <input title="Text Color" [(ngModel)]="TextColor" type="color"  style="width:30px;height:22px;border:none;margin-left:-2px;border-radius:1px" >
+                                       </td>
+                                        <td style="width:3px"><div style="width:3px"></div></td>
+                                        <!--Background Color-->
+                                        <td style="width:30px">
+                                            <input title="Background Color" [(ngModel)]="BackgroundColor" type="color" style="width:30px;height:22px;border:none;border-radius:1px">
+                                        </td>
+
+                                        
+                                        <td>
+                                           <div></div>
+                                        </td>
+                                        
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <tr style="height:7px;"><td style="height:7px"></td></tr>
+                        <tr style="height:50%">
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td style="width:30px"><div style="width:30px"></div></td>
+                                        <td style="vertical-align:central">
+                                            <div     [style.background-color]="BackgroundColor" style="overflow:auto;border:1px solid #A6ACB2;min-height:27px;border-radius:2px;">
+                                               <div [style.font-weight]="QuoteTemplateTextDesignPM.FontWeight" [style.color]="TextColor" [style.text-align]="QuoteTemplateTextDesignPM.Alignment" [style.font-style]="FontStyle"   [style.text-decoration]="TextDecoration" [style.font-family]="QuoteTemplateTextDesignPM.FontFamily" [style.font-size]="SelectFonteSize" style="margin-right:5px;vertical-align:central;line-height: 27px;text-indent:5px">Sample Text  </div>  
+                                            </div>
+                                        </td>
+                                        <td style="width:30px"><div style="width:30px"></div></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr style="height:5px;"><td style="height:5px"></td></tr>
+                    </table>
+
+                </td>
+            </tr>
+
+
+        </table>
+
+
+
+    </div>
+
+
+    <div *ngIf="QuoteTemplateTextDesignPM.Title=='DesignAreaFreeText'">
+        <table>
+
+            <tr style="height:10px;"><td style="height:10px"></td></tr>
+            <tr style="height:30px">
+                <td style="height:30px">
+                    <div style="width:480px;height:30px;margin:auto;">
+                        <table>
+                            <tr>
+                                <td style="width:7px"><div style="width:7px"></div></td>
+
+                                <!--Font Buttons-->
+                                <td style="width:33px"><div style="width:33px">Font:</div></td>
+                                <td style="width:100px"><ComboBox style="width:100px;height:22px;display:inline" (SelectedItemChanged)="QuoteTemplateTextDesignPM.FontFamily=$event" [ItemsSource]="FontFamilyLists" [SelectedItem]="QuoteTemplateTextDesignPM.FontFamily"></ComboBox></td>
+                                <td style="width:4px"><div style="width:4px"></div></td>
+
+                                <td style="width:60px;"><ComboBox style="width:60px;height:22px;display:inline" (SelectedItemChanged)="FontSizeSelectedChange($event)" [ItemsSource]="FontSizeLists" [SelectedItem]="QuoteTemplateTextDesignPM.FontSize"></ComboBox></td>
+                                <td style="width:6px"><div style="width:6px"></div></td>
+                                <!--Bold Italic UnDerLine Button-->
+                                <td style="width:62px">
+                                    <div style="width:57px;display:inline">
+                                        <button (click)="QuoteTemplateTextDesignButtonClick('BoldButton')" class="SettingDesginButton" [class.SelectedSettingButton]="QuoteTemplateTextDesignPM.FontWeight === 'bold'" style="width:21px;height:23px;display:inline; padding:0;margin-left:-5px">
+                                            <img style="height:16px;width:16px;margin-top:-5.5px" src="./Images/Icons/Format Stylized Text.png" />
+                                        </button>
+
+
+                                        <button (click)="QuoteTemplateTextDesignButtonClick('ItalicButton')" class="SettingDesginButton"  [class.SelectedSettingButton]="QuoteTemplateTextDesignPM.Italic" style="width:21px;height:23px;display:inline; padding:0;margin-left:-5px">
+                                         <img style="height:16px;width:16px;margin-top:-5.5px" src="./Images/Icons/text_italic.png" />
+              
+                                        </button>
+
+
+                                        <button (click)="QuoteTemplateTextDesignButtonClick('UnDerLineButton')" class="SettingDesginButton" [class.SelectedSettingButton]="QuoteTemplateTextDesignPM.UnDerLine" style="width:21px;height:23px;display:inline; padding:0;margin-left:-5px">
+                                            <img style="height:16px;width:16px;margin-top:-6px" src="./Images/Icons/Format Underline.png" />
+                                        </button>
+                                    </div>
+                                </td>
+
+                                <td style="width:3px"><div style="width:3px"></div></td>
+
+                                <!--Alignment Buttons-->
+                                <td style="width:62px">
+                                    <div style="width:57px;display:inline">
+                                        <button (click)="AlignmentButtonClick('left')" class="SettingDesginButton" [class.SelectedSettingButton]="QuoteTemplateTextDesignPM.Alignment =='left'" style="width:21px;height:23px;display:inline; padding:0;margin-left:-5px">
+                                            <img style="height:16px;width:16px;margin-top:-5px" src="./Images/Icons/Align-left-icon.png" />
+                                        </button>
+
+                                        <button (click)="AlignmentButtonClick('center')" class="SettingDesginButton" [class.SelectedSettingButton]="QuoteTemplateTextDesignPM.Alignment =='center'" style="width:21px;height:23px;display:inline; padding:0;margin-left:-5px">
+                                            <img style="height:16px;width:16px;margin-top:-5px" src="./Images/Icons/Align-center-icon.png" />
+                                        </button>
+
+                                        <button (click)="AlignmentButtonClick('right')" class="SettingDesginButton" [class.SelectedSettingButton]="QuoteTemplateTextDesignPM.Alignment =='right'" style="width:21px;height:23px;display:inline; padding:0;margin-left:-5px">
+                                            <img style="height:16px;width:16px;margin-top:-5px" src="./Images/Icons/Align-right-icon.png" />
+                                        </button>
+                                    </div>
+                                </td>
+
+                                <!--Text Color-->
+
+
+                                <td style="width:30px">
+
+                                    <input title="Text Color" [(ngModel)]="TextColor" type="color" style="width:30px;height:22px;border:none;margin-left:-2px;border-radius:1px">
+                                </td>
+                                <td style="width:3px"><div style="width:3px"></div></td>
+                                <!--Background Color-->
+                                <td style="width:30px">
+                                    <input title="Background Color" [(ngModel)]="BackgroundColor" type="color" style="width:30px;height:22px;border:none;border-radius:1px">
+                                </td>
+
+                                <td style="width:5px"><div></div></td>
+                                <td style="width:70px">
+                                    <div style="width:70px;height:22px;position:relative;text-align:left;"><button (click)="AddDataField()" style="width:auto;background-color:#E6E6E6;height:22px;" class="Button">Add Data Field</button></div>
+                                </td>
+
+
+
+                                <td></td>
+                                <td style="width:5px"><div></div></td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+
+            <tr style="height:7px;"><td style="height:7px"></td></tr>
+
+            <tr>
+
+           
+
+                <td>
+                    <div class="MediaFill">
+
+                        <div class="InputDiv" style="height: 100%; max-height:unset;">
+
+                            <table>
+                                <tr style="height:10px"></tr>
+                                <tr style="height:100%">
+                                    <td  style="height:100%"><textarea [attr.id] = "QuoteTextAreaInputId" type="text"  [style.background-color]="BackgroundColor" [style.font-weight]="QuoteTemplateTextDesignPM.FontWeight" [style.color]="TextColor" [style.text-align]="QuoteTemplateTextDesignPM.Alignment" [style.font-style]="FontStyle" [style.text-decoration]="TextDecoration" [style.font-family]="QuoteTemplateTextDesignPM.FontFamily" [style.font-size]="SelectFonteSize" wrap="hard"
+                                      [(ngModel)]="QuoteTemplateTextDesignPM.TextValue"
+                                      style="box-shadow:none;border:1px solid transparent;height:100%" ondrop="return false"></textarea></td>
+                                </tr>
+                            </table>
+                            
+
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr style="height:20px;"><td style="height:10px"></td></tr>
+        </table>
+
+    </div>
+
+</div>
+
+ <div *ngIf="QuoteTemplateTableDesignPM" style="height:100%;width:100%;border-right:1px solid #E4E3E1;border-left:1px solid #E4E3E1;border-bottom:1px solid #E4E3E1;border-radius:6px;vertical-align:top">
+            <table style="border :none;">
+
+
+                <tr style="height:25px">
+                    <td>
+
+                        <div style="background-color:#EDEDED;height:25px;border-top:1px solid #E4E3E1;border-top-Right-radius:6px; border-top-left-radius:6px;color:black;vertical-align:central">
+
+                            <table>
+                                <tr>
+                                    <td style="width:5px;"><div style="width:5px"></div></td>
+                                    <td style="width:50px;"><div style="width:50px;">Border</div></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+
+                        </div>
+
+                    </td>
+
+
+
+                </tr>
+
+                <tr class="SectionBody">
+                    <td>
+                        <table>
+                            <tr style="height:7px;"><td style="height:7px"></td></tr>
+                            <tr style="height:50%">
+                                <td>
+
+                                    <table>
+                                        <tr>
+                                            <td style="width:7px"><div style="width:7px"></div></td>
+
+                                            <!--Font Buttons-->
+
+                                            <td style="width:110px"><div style="width:110px">Border Type:</div></td>
+                                            <td style="width:150px"><ComboBox style="width:150px;height:22px;display:inline" (SelectedItemChanged)="BorderTypesSelectedChanged($event)" [ItemsSource]="BorderTypes" [SelectedItem]="BorderTypesSelected" [Binding]="'Name'"></ComboBox></td>
+                                            <td style="width:10px"><div style="width:10px"></div></td>
+
+                                            <td style="width:30px">
+                                                <input title="Text Color" [(ngModel)]="BorderColor" type="color" style="width:30px;height:22px;border:none;margin-left:-2px;border-radius:1px" >
+                                            </td>
+
+                                            <td></td>
+
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr style="height:7px;"><td style="height:7px"></td></tr>
+                            <tr style="height:50%">
+                                <td>
+                                    <table>
+                                      <tr>
+                                        <td style="width:7px"><div style="width:7px"></div></td>
+
+
+                                        <td style="width:110px"><div style="width:110px">Border Thickness:</div></td>
+                         
+                                        <td style="width:50px">
+                                          <input [(ngModel)]="QuoteTemplateTableDesignPM.BorderThickness" type="number" style="width:50px;height:22px;border-radius:1px">
+                                        </td>
+
+
+                                        <td></td>
+
+                                      </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr style="height:5px;"><td style="height:5px"></td></tr>
+                        </table>
+
+                    </td>
+                </tr>
+
+
+            </table>
+
+
+
+        </div>
+

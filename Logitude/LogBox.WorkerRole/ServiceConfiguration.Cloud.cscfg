@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ServiceConfiguration serviceName="LogBox.WorkerRole" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="4" osVersion="*" schemaVersion="2015-04.2.6">
+  <Role name="CommunicationWorkerRole">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" value="true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" value="Jalal" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" value="MIIBnQYJKoZIhvcNAQcDoIIBjjCCAYoCAQAxggFOMIIBSgIBADAyMB4xHDAaBgNVBAMME1dpbmRvd3MgQXp1cmUgVG9vbHMCEFemyp1QSc6RQxf0wTLABuwwDQYJKoZIhvcNAQEBBQAEggEABLrOmaeshG3RRtgDxc7j1jzRmbdgWTV9t3dB3id8+httXBK2sy9P6j//az7sPOk8SfbsEYzKtuC7TcgtXEQqX1cgOB4JS+VvO/eWyP/U2UtOL279akkHr8jxH5MfEQJShWwyZiLJA3rNkij0JGBaaMxyHoOKBMIZvuSQLZb13Q+0aIo/+6luasxMbUZ2f/c9fR63cXM5MNCAt1ICx2HVjhM/ZDblfN0YjsspTNZ6T56CsGPWWTPUeMfUibcluP036xWzml1zwLb77QhrgA8RrgrOLpQlvY8M69rUKAM1FF3ew+sCdGBfG5UgvdOdyaki6EqRjJhmbkOxb/dZUP47ZTAzBgkqhkiG9w0BBwEwFAYIKoZIhvcNAwcECLS6hy7Zj8EmgBBzx7eTUUAexaOgKNkwDvgL" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" value="2030-12-28T23:59:59.0000000+02:00" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteForwarder.Enabled" value="true" />
+    </ConfigurationSettings>
+    <Certificates>
+      <Certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" thumbprint="984A3F5A2E268FAB7DD1192C6E278734E65B489D" thumbprintAlgorithm="sha1" />
+    </Certificates>
+  </Role>
+</ServiceConfiguration>

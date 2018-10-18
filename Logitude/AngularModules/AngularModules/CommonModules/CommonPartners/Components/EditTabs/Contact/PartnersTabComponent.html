@@ -1,0 +1,145 @@
+﻿
+<style type="text/css">
+    .BoxItemRow td:not(:first-child) {
+        color: #0B3861;
+    }
+
+    .BoxItemRow td:first-child {
+        color: #6E7172;
+    }
+
+    .BoxItemRow td {
+        font-size: 10px;
+    }
+
+    .BoxItemRow {
+        height: 15px;
+    }
+
+    .TemplateBoxItem {
+        float: left;
+        display: block;
+        width: 500px;
+        width: calc(33.33% - 3px);
+        height: 135px;
+        min-height: 135px;
+        margin-left: 3px;
+        margin-bottom: 3px;
+        padding: 5px;
+        background: rgba(235, 235, 235, 0.5);
+        border: 1px solid #BABABA;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+    }
+</style>
+
+<div class="TabHolder">
+    <table>
+        <tr class="TabTitleRow">
+            <td>{{'Contact.TH.Partners' | TextCodeTranslationPipe}}</td>
+        </tr>
+
+        <tr>
+            <td>
+                <div class="MediaFill">
+                    <div class="ScrollViewer">
+                        <ul class="ScrollContent">
+                            <li class="TemplateBoxItem" *ngFor="let item of ItemsSource">
+                                <table>
+                                    <tr style="height: 22px;">
+                                        <td>
+                                            <table>
+                                                <tr>
+                                                    <td style="font-size: 12px; vertical-align: top;" class="ColorBlue">
+                                                        <div class="MediaFill TextTrimming">
+                                                            {{item.EnglishName}}
+                                                        </div>
+                                                    </td>
+
+                                                    <td style="width: 5px; min-width: 5px;">
+                                                        <div></div>
+                                                    </td>
+
+                                                    <td style="width: 30px; min-width: 30px;">
+                                                        <span class="hyperlink" (click)="EditEntityClicked(item)">View</span>
+                                                    </td>
+
+                                                    <td style="width: 18px; min-width: 18px;">
+                                                        <IconButton [Name]="'Disconnect'" [IsSmall]="true" (click)="DisconnectClicked(item)" title="Disconnect"></IconButton>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <table>
+                                                <tr class="BoxItemRow">
+                                                    <td style="width: 1px;">Code:</td>
+                                                    <td style="width: 5px;">
+                                                        <div></div>
+                                                    </td>
+                                                    <td>{{item.Code}}</td>
+                                                </tr>
+
+                                                <tr class="BoxItemRow">
+                                                    <td style="width: 1px;">Name:</td>
+                                                    <td style="width: 5px;">
+                                                        <div></div>
+                                                    </td>
+
+                                                    <td>
+                                                        <div class="MediaFill TextTrimming">
+                                                            {{item.EnglishName}}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr class="BoxItemRow">
+                                                    <td style="width: 1px;">Partner Type:</td>
+                                                    <td style="width: 5px;">
+                                                        <div></div>
+                                                    </td>
+                                                    <td>{{item.PartnerTypeName}}</td>
+                                                </tr>
+                                                <tr class="BoxItemRow">
+                                                    <td style="width: 1px;">Internet Access:</td>
+                                                    <td style="width: 5px;">
+                                                        <div></div>
+                                                    </td>
+                                                    <td>
+                                                        <img *ngIf="item.InternetAccess" class="LeftCenter" src="./Images/GreenTick.png" />
+                                                    </td>
+                                                </tr>
+                                                <tr class="BoxItemRow">
+                                                    <td style="width: 1px;">Last Login:</td>
+                                                    <td style="width: 5px;">
+                                                        <div></div>
+                                                    </td>
+                                                    <td>
+                                                        <span class="Value">{{item.LastLoginDate | DateTimeToDatePipe}}</span>
+                                                        <span class="Label" style="margin-left: 5px;">{{item.LastLoginDate | DateTimeToTimePipe}}</span>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td colspan="3">
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <span class="NoDataText" *ngIf="IsNoDataVisible">No connected Partners to this contact</span>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>

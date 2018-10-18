@@ -1,0 +1,76 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Customs.Data.EntityPOCOs
+{
+   
+    public class CustomsRequestsSheet
+    {
+	 string dbms;
+
+        [Key]
+        [Column("Id")]
+	    public string Id { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+        [Column("ObjectTableId1")]
+	    public string ObjectTableId1 { get; set; }
+        [Column("EntityId1")]
+	    public string EntityId1 { get; set; }
+        [Column("ObjectTableId2")]
+	    public string ObjectTableId2 { get; set; }
+        [Column("EntityId2")]
+	    public string EntityId2 { get; set; }
+        [ForeignKey("CustomsRequestsSheetStatus")]
+        [Column("RequestStatusCode")]
+	    public string RequestStatusCode { get; set; }
+	      
+        public virtual CustomsRequestsSheetStatus CustomsRequestsSheetStatus { get; set; }
+        [Column("RequestCreateDate")]
+	    public DateTime? RequestCreateDate { get; set; }
+        [Column("AnswerCreateDate")]
+	    public DateTime? AnswerCreateDate { get; set; }
+        [ForeignKey("User")]
+        [Column("RequestOwnerId")]
+	    public string RequestOwnerId { get; set; }
+	      
+        public virtual User User { get; set; }
+        [ForeignKey("RequestCommunicationLog")]
+        [Column("RequestComminicationId")]
+	    public string RequestComminicationId { get; set; }
+	      
+        public virtual CommunicationLog RequestCommunicationLog { get; set; }
+        [Column("RequestDescription")]
+	    public string RequestDescription { get; set; }
+        [ForeignKey("InterfaceManagement")]
+        [Column("InterfaceTypeCode")]
+	    public string InterfaceTypeCode { get; set; }
+	      
+        public virtual InterfaceManagement InterfaceManagement { get; set; }
+        [Column("EntityReference")]
+	    public string EntityReference { get; set; }
+        [Column("CustomFileNo")]
+	    public string CustomFileNo { get; set; }
+        [Column("CorrelationId")]
+	    public string CorrelationId { get; set; }
+        [Column("IsDCA")]
+	    public bool IsDCA { get; set; }
+        [Column("SearchFields")]
+	    public string SearchFields { get; set; }
+        [Column("IsRestored")]
+	    public bool IsRestored { get; set; }
+        [Column("AnalyzeDcaAggregateKey")]
+	    public string AnalyzeDcaAggregateKey { get; set; }
+    }
+}
+	 

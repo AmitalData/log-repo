@@ -1,0 +1,276 @@
+﻿
+<style>
+    .iwanttohover:hover {
+        background: #DDE6F0;
+    }
+
+        .SquareIcon {
+        width: 10px;
+        height: 10px;
+        line-height: 10px;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+    }
+
+    .SectionHeader sc td, .SectionHeader sc label{
+        font-size:13px
+    }
+</style>
+
+
+
+
+<div style="position: absolute; top:0px; bottom:0px; left:0px; right:0px;margin:auto; background:white;">
+    <table style="height:100%">
+    
+        <tr>
+            <td style="height: 21px;">
+                <table>
+                    <tr>
+
+                        <td style="width: 21px; vertical-align:middle;">
+                            <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
+                        </td>
+
+
+
+                        <td style="width: 15px; vertical-align:middle;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 45px; vertical-align:middle; font-size:11px; color : #6E7172;">Search:</td>
+
+                        <td style="width: 300px; vertical-align:middle;">
+
+                            <SearchBox [Watermark]="SearchText" [ObjectTableName]="'AgentSharedManifest'" [IsQuickSearch]="true" (ItemClicked)="EditAgentSharedManifest($event)"></SearchBox>
+                         
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+
+
+
+                    </tr>
+                </table>
+            </td>
+
+        </tr>
+
+
+        <tr style="height: 8px;">
+            <td style="height: 8px;">
+                <div></div>
+            </td>
+        </tr>
+
+        <!--abed-->
+
+        <tr>
+            <td>
+                <table>
+                    <tr>
+                        <td style="width:265px;">
+                            <table>
+                                <tr class="SectionHeader">
+                                    <td>
+                                        <label>Shared Manifests Queries</label>
+                                    </td>
+                                </tr>
+
+                                <tr style="height:10px;">
+                                    <td></td>
+                                </tr>
+
+                                <tr style="vertical-align:top;height:100%;">
+                                    <td style="vertical-align:top">
+                                        <div class="ScrollViewer">
+                                            <div class="ScrollContent">
+
+                                              
+                                                <div class="QueriesSection">
+                                                    <div>Waiting for Acceptance</div>
+                                              
+                                                    <div>
+                                                        <p class="QueryLink" *ngIf="AgentSharedManifestsAirVisibility" (click)="ViewAgentSharedManifestQuery('Air')" >Air Manifests  ({{AgentSharedManifestsAirCount}})</p>
+                                                        <p class="QueryLink" *ngIf="AgentSharedManifestsOceanVisibility" (click)="ViewAgentSharedManifestQuery('Ocean')" >Ocean Manifests  ({{AgentSharedManifestsOceanCount}})</p>
+                                                        <p class="QueryLink" *ngIf="AgentSharedManifestsInlandVisibility" (click)="ViewAgentSharedManifestQuery('Inland')" >Inland Manifests  ({{AgentSharedManifestsInlandCount}})</p>
+                         
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="QueriesSection">
+                                                    <div>Others</div>
+
+                                                    <div>
+                                                        <p class="QueryLink" *ngIf="AgentSharedManifestsCancelledVisibility" (click)="ViewAgentSharedManifestQuery('Cancelled')" >Cancelled Manifests  </p>
+                                                        <p class="QueryLink" *ngIf="AgentSharedManifestsAllVisibility"  (click)="ViewAgentSharedManifestQuery('All')">All Manifests  </p>
+                                                      
+
+                                                    </div>
+                                                </div>
+
+
+                                          
+                                                <div class="QueriesSection">
+                                                    <div>My Views</div>
+                                                    <div style="width: auto; min-width: 200px;height:80px;">
+                                       
+                                                        <UsersQueryList [ReloadUserQueries]="ReloadAgentSharedManifestsQueries" [ObjectTableName]="'AgentSharedManifest'" [BackButtonTitle]="'Shared Manifests'" (BackCompletedEvent)="onAgentSharedManifestQueriesBackComplete($event)"></UsersQueryList>
+
+
+
+
+
+                                                    </div>
+                                                </div>
+
+                                                <!-- Display Settings -->
+                                                <div *ngIf="IsShareDocumentsButtonVisible" class="QueriesSection">
+                                                    <div>Display Settings</div>
+                                                    <div>
+                                                      
+                                                        <p  class="QueryLink" (click)="DocumentsPermissionsLinkClick()">Documents Permissions</p>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+
+
+
+
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!--<tr style="background-color:yellow"><td><div>sss</div></td></tr>-->
+
+                      
+
+                            </table>
+                        </td>
+
+                        <td style="width:15px;">
+                            <div></div>
+                        </td>
+
+                        <td>
+                            <table>
+                                <tr style="height: 50%;">
+                                    <td>
+                                        <table>
+                                            <tr class="SectionHeader" style="height:27px">
+                                                <td>
+                                                    <table>
+                                                        <tr>
+
+                                                            <td style="width:8px">
+                                                                <div style="width:8px"></div>
+                                                            </td>
+
+
+                                                            <td style="color: #45494A; font-size: 14px;">
+                                                                Shared Manifests (Waiting for acceptance)
+                                                            </td>
+
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td style="width: 48px; vertical-align:middle;">
+                                                                <div class="SquareIcon" style="background: #487E9F; display:inline-block;"></div>
+                                                                <span style="font-size: 12px; color: #282E30; text-indent: 15px;">Air</span>
+                                                            </td>
+
+                                                            <td style="width: 62px; vertical-align:middle;">
+                                                                <div class="SquareIcon" style="background: #DA7B38 ; display:inline-block;"></div>
+                                                                <span style="font-size: 12px; color: #282E30; text-indent: 15px;">Ocean</span>
+                                                            </td>
+
+                                                            <td style="width: 62px; vertical-align:middle;">
+                                                                <div class="SquareIcon" style="background: #21782E ; display:inline-block;"></div>
+                                                                <span style="font-size: 12px; color: #282E30; text-indent: 15px;">Inland</span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:5px">
+                                                <td></td>
+                                            </tr>
+                                            <tr style="height:20px">
+                                                <td>
+
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <table>
+                                                                    <tr>
+                                                                
+
+                                                                        <td style="width:120px">
+                                                                            <ComboBox (SelectedItemChanged)="SelectedTimeRangeItem = $event" [ItemsSource]="TimeRangeFilterList" [SelectedItem]="SelectedTimeRangeItem" [Binding]="'Title'"></ComboBox>
+                                                                        </td>
+                                                                        <td style="width:3px"></td>
+
+                                                                        <td  style="width:120px;opacity:0.5;pointer-events:none">
+                                                                            <LogDatePicker [NoObjectField]="true" [SelectedDateValue]="ToDate" [HideColumns]="true" [ObjectFieldName]="'ToDate'"  [DataContext]="DataContext"></LogDatePicker>
+                                                                        </td>
+                                                                        <td style="width:3px"></td>
+
+                                                                        <td style="width:120px;opacity:0.5;pointer-events:none">
+                                                                            <LogDatePicker [NoObjectField]="true" [SelectedDateValue]="FromDate" [HideColumns]="true" [ObjectFieldName]="'FromDate'" [DataContext]="DataContext"></LogDatePicker>
+                                                                        </td>
+                                                                        <td></td>
+
+                                                                    </tr>
+                                                                </table>
+
+                                                            </td>
+
+                                                        </tr>
+                                                    </table>
+
+
+
+
+                                                </td>
+
+                                            </tr>
+                                            <tr style="height:15px">
+                                                <td></td>
+                                            </tr>
+                                            <tr style="height:50%">
+                                                <td>
+                                         
+                                                    <div class="MediaFill">
+                                              
+                                                        <div [attr.id]="SharedManinfestInDashboardId" (click)="BarClicking()" style="height:95%;width:100%" ></div>
+                                                    </div>
+                                                </td>
+
+
+                                            </tr>
+                                            <tr></tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+
+        <!--end-->
+    </table>
+
+</div>
+
+

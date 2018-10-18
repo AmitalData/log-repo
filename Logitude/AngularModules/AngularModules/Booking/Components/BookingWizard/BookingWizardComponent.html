@@ -1,0 +1,460 @@
+﻿
+<style type="text/css">
+    .SquareIcon {
+        width: 10px;
+        height: 10px;
+        line-height: 10px;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+    }
+
+    .TabSquareIcon {
+        width: 10px;
+        height: 10px;
+        line-height: 10px;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+        display: inline-block;
+        margin-bottom: -2px;
+    }
+
+    .BookingWizardHeader .Label {
+        width: 65px;
+        vertical-align: middle;
+    }
+
+    .BookingWizardHeader .Value {
+        padding-left: 5px;
+        vertical-align: middle;
+    }
+
+    .BookingWizardHeader td {
+        vertical-align: middle;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .BookingWizardHeader {
+        width: 100%;
+        height: 75px;
+        background: #F7F7F7;
+        border: 1px solid #DADADA;
+        -webkit-border-radius: 8px 8px 0 0;
+        -moz-border-radius: 8px 8px 0 0;
+        border-radius: 8px 8px 0 0;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+    }
+
+    .ResponseProgressLayout {
+        position: absolute;
+        top: -5px;
+        bottom: -5px;
+        left: -5px;
+        right: -5px;
+        margin: auto;
+        border-radius: 8px;
+        background: -moz-linear-gradient(rgba(21, 61, 110, 0.4) 0%, rgba(21, 61, 110, 0.1) 50%, rgba(21, 61, 110, 0.4) 100%);
+        background: -webkit-linear-gradient(rgba(21, 61, 110, 0.4) 0%, rgba(21, 61, 110, 0.1) 50%, rgba(21, 61, 110, 0.4) 100%);
+        background: linear-gradient(rgba(21, 61, 110, 0.4) 0%, rgba(21, 61, 110, 0.1) 50%, rgba(21, 61, 110, 0.4) 100%);
+    }
+
+    .ResponseProgressWindow {
+        width: 230px;
+        height: 110px;
+        position: absolute;
+        left: 50%;
+        bottom: 170px;
+        transform: translateX(-50%);
+    }
+
+    .ResponseProgressWindowHeader {
+        height: 25px;
+        line-height: 25px;
+        font-size: 13px;
+        padding-left: 10px;
+        border-radius: 8px 8px 0 0;
+        -moz-border-radius: 8px 8px 0 0;
+        -webkit-border-radius: 8px 8px 0 0;
+        border: 1px solid #8F9192;
+        border-bottom: 0px;
+        background: linear-gradient(rgba(189, 191, 191, 1) 0%, rgba(143, 145, 146, 1) 100%);
+    }
+
+    .ResponseProgressWindowBody {
+        height: 100%;
+        width: 100%;
+        position: relative;
+        border-radius: 0 0 8px 8px;
+        -moz-border-radius: 0 0 8px 8px;
+        -webkit-border-radius: 0 0 8px 8px;
+        border: 1px solid #DADADA;
+        border-top: 0px;
+        background: linear-gradient(rgba(255, 255, 255, 1) 0%, rgba(208, 208, 208, 0.5) 100%);
+    }
+</style>
+
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr *ngIf="ValidationWarningsList != null && ValidationWarningsList.length > 0" style="height:1px;">
+        <td>
+            <WarningSummary [ItemsSource]="ValidationWarningsList"></WarningSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td style="vertical-align:top;">
+            <div class="BookingWizardHeader">
+                <table>
+                    <tr style="height: 5px;">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <tr style="height: 40px;">
+                        <td>
+                            <table class="FixedTable">
+                                <tr>
+                                    <td style="width: 10px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width: 200px;">
+                                        <table class="FixedTable">
+                                            <tr>
+                                                <td class="Label" style="width: 40px;">MAWB:</td>
+                                                <td class="Value">{{EntityPM.LongMaster}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="Label" style="width: 40px;">Airline:</td>
+                                                <td class="Value">{{EntityPM.MainCarriageCarrierName}}</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+
+                                    <td>
+                                        <div style="width:1px; height: calc(100% - 10px); background: #DADADA; margin:auto;"></div>
+                                    </td>
+
+                                    <td style="width: 180px;">
+                                        <table class="FixedTable">
+                                            <tr>
+                                                <td class="Label">Booking #:</td>
+                                                <td class="Value">{{EntityPM.BookingNumber}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="Label">Product:</td>
+                                                <td class="Value">{{EntityPM.BookingProductName}}</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+
+                                    <td>
+                                        <div style="width:1px; height: calc(100% - 10px); background: #DADADA; margin:auto;"></div>
+                                    </td>
+
+                                    <td style="width: 180px;">
+                                        <table class="FixedTable">
+                                            <tr>
+                                                <td class="Label">Routing:</td>
+                                                <td class="Value">{{EntityPM.Routing | ReplacePipe:',':'>'}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="Label">First Flight:</td>
+                                                <td class="Value">{{EntityPM.FirstFlight}}</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+
+                                    <td>
+                                        <div style="width:1px; height: calc(100% - 10px); background: #DADADA; margin:auto;"></div>
+                                    </td>
+
+                                    <td style="width: 280px;">
+                                        <table class="FixedTable">
+                                            <tr>
+                                                <td class="Label" style="width:105px;">Messagning Status:</td>
+                                                <td class="Value" [ngStyle]="{color: EntityPM.FFRStatusName | StringToColorPipe}">{{EntityPM.FFRStatusName}}</td>
+
+                                            </tr>
+                                            <tr>
+                                                <td class="Label">Booking Status:</td>
+                                                <td class="Value" [ngStyle]="{color: EntityPM.BookingStatusName | StringToColorPipe}">{{EntityPM.BookingStatusName}}</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+
+                                    <td style="width: 10px;">
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="TabControl" style="position: absolute; top: 50px; height: calc(100% - 50px)">
+                <div class="TabControlHead">
+                    <ul style="margin-left: 2px;">
+                        <li [class.Selected]="SelectedTabCode == 'OVE'" (click)="SelectedTabCode = 'OVE'" *ngIf="IsTabVisible_OVE">
+                            <div class="InnerChild">
+                                Overview
+                            </div>
+                        </li>
+
+                        <li [class.Selected]="SelectedTabCode == 'BKD'" (click)="SelectedTabCode = 'BKD'">
+                            <div class="InnerChild">
+                                Booking Details
+                                <div class="TabSquareIcon" [ngStyle]="{background: Fill_BKD}"></div>
+                            </div>
+                        </li>
+
+                        <li [class.Selected]="SelectedTabCode == 'PAR'" (click)="SelectedTabCode = 'PAR'">
+                            <div class="InnerChild">
+                                Partners
+                                <div class="TabSquareIcon" [ngStyle]="{background: Fill_PAR}"></div>
+                            </div>
+                        </li>
+
+                        <li [class.Selected]="SelectedTabCode == 'PAC'" (click)="SelectedTabCode = 'PAC'">
+                            <div class="InnerChild">
+                                Packages
+                                <div class="TabSquareIcon" [ngStyle]="{background: Fill_PAC}"></div>
+                            </div>
+                        </li>
+
+                        <li [class.Selected]="SelectedTabCode == 'GEN'" (click)="SelectedTabCode = 'GEN'">
+                            <div class="InnerChild">
+                                General Details
+                                <div class="TabSquareIcon" [ngStyle]="{background: Fill_GEN}"></div>
+                            </div>
+                        </li>
+
+                        <li [class.Selected]="SelectedTabCode == 'EVE'" (click)="SelectedTabCode = 'EVE'">
+                            <div class="InnerChild">
+                                Events
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="TabControlBody">
+
+                    <!-- Overview -->
+                    <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'OVE'">
+                        <div class="LocationDirective" LocationDirective Code="OVE" (DirectiveLoaded)="OverviewDirectiveLoaded()"></div>
+                    </div>
+
+                    <!-- Booking Details -->
+                    <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'BKD'">
+                        <div class="LocationDirective" LocationDirective Code="BKD"></div>
+                    </div>
+
+                    <!-- Partners -->
+                    <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'PAR'">
+                        <div class="LocationDirective" LocationDirective Code="PAR"></div>
+                    </div>
+
+                    <!-- Packages -->
+                    <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'PAC'">
+                        <div class="LocationDirective" LocationDirective Code="PAC"></div>
+                    </div>
+
+                    <!-- General Details -->
+                    <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'GEN'">
+                        <div class="LocationDirective" LocationDirective Code="GEN"></div>
+                    </div>
+
+                    <!-- Events -->
+                    <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'EVE'">
+                        <div class="LocationDirective" LocationDirective Code="EVE"></div>
+                    </div>
+
+                </div>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td style="width: 1px; vertical-align: middle;">
+                        <div class="SquareIcon" style="background: #E45A26; font-size: 11px; color: Gray; font-family: Arial; text-indent: 15px;">Required fields for creation of booking</div>
+                        <div class="SquareIcon" style="background: #FFCB00; font-size: 11px; color: Gray; font-family: Arial; text-indent: 15px; margin-top: 2px;">Required fields for sending FFR</div>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <!-- Send Response -->
+                    <td style="width: 110px;">
+                        <table>
+                            <tr>
+                                <td>
+                                    <div class="ToggleButton" *ngIf="IsSendResponseVisible" [class.ToggleButtonDisabled]="!IsSendResponseEnabled" [attr.tabindex]="IsSendResponseEnabled ? 0 : -1">
+                                        <label>Send Response</label>
+                                        <img src="./Images/ToggleIcon.png" />
+
+                                        <div class="ToggleButtonMenu" style="top: -130px;">
+                                            <button>FFA</button>
+                                            <button>FNA</button>
+                                            <button>FMA</button>
+                                            <button>FSU</button>
+                                            <button>FSA</button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <!-- More -->
+                    <td style="width: 65px;">
+                        <table>
+                            <tr>
+                                <td style="width: 5px;">
+                                    <div></div>
+                                </td>
+
+                                <td>
+                                    <div tabindex="0" class="ToggleButton">
+                                        <label>More</label>
+                                        <img src="./Images/ToggleIcon.png" />
+
+                                        <div class="ToggleButtonMenu" style="top: -80px;">
+                                            <button (click)="CopyBookingClicked()" [disabled]="!IsCopyButtonEnabled">Copy Booking</button>
+                                            <button (click)="CancelBookingClicked()" [disabled]="!IsCancelButtonEnabled">Cancel Booking</button>
+                                            <button (click)="ReactivateBookingClicked()" [disabled]="!IsReactivateButtonEnabled">Reactivate Booking</button>
+                                            <button (click)="SendToAirlineTenantClicked()" *ngIf="IsSendToAirlineTenantVisible">Send to airline tenant</button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <!-- Build Shipment-->
+                    <td style="width: 100px;">
+                        <table>
+                            <tr>
+                                <td style="width: 5px;">
+                                    <div></div>
+                                </td>
+
+                                <td>
+                                    <div class="ToggleButton" [class.ToggleButtonDisabled]="!IsBuildShipmentEnabled" [attr.tabindex]="IsBuildShipmentEnabled ? 0 : -1">
+                                        <label>Build Full AWB</label>
+                                        <img src="./Images/ToggleIcon.png" />
+
+                                        <div class="ToggleButtonMenu" style="top: -60px;">
+                                            <button (click)="BuildShipmentClicked('D')">Direct</button>
+                                            <button (click)="BuildShipmentClicked('C')">Consol</button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <!-- Send Cancellation -->
+                    <td style="width: 120px;">
+                        <table>
+                            <tr>
+                                <td style="width: 5px;">
+                                    <div></div>
+                                </td>
+
+                                <td>
+                                    <button class="Button" (click)="OnSendCancellationButtonClicked()" [disabled]="!IsSendCancellationEnabled">Send Cancellation</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <!-- Send FFR -->                    
+                    <td style="width: 98px;">
+                        <button class="Button" *ngIf="!IsUpdateBookingVisible" [disabled]="!IsSendFFREnabled" (click)="OnSendFFRButtonClicked()" >{{SendFFRContent}}</button>
+
+                        <button class="EntityChangesButton" style="cursor:pointer;" *ngIf="IsUpdateBookingVisible" (click)="OnSendFFRButtonClicked()" [disabled]="!IsSendFFREnabled">{{SendFFRContent}}</button>
+                    </td>
+
+
+                    <td style="width: 15px;">
+                        <div style="width:1px; height:22px; background: #DADADA; margin:auto;"></div>
+                    </td>
+
+                    <!-- Close -->
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CloseButtonClicked()">Close</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <!-- Save -->
+                    <td style="width: 57px;">
+                        <button *ngIf="!IsSaveButtonVisible" class="Button" [disabled]="!IsSaveButtonEnabled">
+                            <img class="LeftCenter" style="margin-left: 2px;" src="./Images/Buttons/Save.png" />
+                            <span style="line-height: 19px; margin-left: 17px;">Save</span>
+                        </button>
+
+                        <button *ngIf="IsSaveButtonVisible" class="EntityChangesButton" (click)="SaveClicked()" [disabled]="!IsSaveButtonEnabled">
+                            <img class="LeftCenter" style="margin-left: 2px;" src="./Images/Buttons/Save.Red.png" />
+                            <span style="line-height: 19px; margin-left: 17px;">Save</span>
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+<div class="ResponseProgressLayout" *ngIf="IsResponseProgressVisible">
+    <div class="FillContent">
+        <div class="ResponseProgressWindow">
+            <table>
+                <tr style="height: 25px;">
+                    <td>
+                        <div class="ResponseProgressWindowHeader">
+                            Waiting for airline answer
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div class="ResponseProgressWindowBody">
+                            <img class="CenterCenter" style="bottom: 20px;" src="./Images/ProgressBar.gif" />
+
+                            <div class="hyperlink" (mousedown)="CloseResponseProgressClicked()" style="font-size: 12px; width: 100%; text-align: center; position: absolute; bottom: 10px;">I will check response later</div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>  

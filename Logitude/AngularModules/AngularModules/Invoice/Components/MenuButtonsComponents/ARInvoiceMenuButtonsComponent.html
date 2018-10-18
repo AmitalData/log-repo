@@ -1,0 +1,116 @@
+﻿
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr style="height: 1px;">
+        <td>
+            <!-- SetAsSent -->
+            <table *ngIf="EventCode == 'SetAsSent'">
+
+                <tr class="FormFieldRow">
+                    <td [style.text-align]="isRTL ? 'right' : 'left'">{{'ARInvoice.S.SendInvoiceNotes' | TextCodeTranslationPipe}}</td>
+                </tr>
+
+                <tr style="height: 90px;">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width: 350px; height: 90px;">
+                                    <div style="height: 90px;">
+                                        <LogTextBox [ObjectFieldName]="'EventNote'" [Text]="EventNote" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+
+            <!-- AutoCreditInvoiceDate -->
+            <table *ngIf="EventCode == 'AutoCreditInvoiceDate'">
+                <tr class="FormFieldRow">
+                    <td [style.text-align]="isRTL ? 'right' : 'left'">{{'ARInvoice.S.AutoCreditingMsg2' | TextCodeTranslationPipe}}</td>
+                </tr>
+
+                <tr class="FormFieldRow">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width: 100px;">{{'ARInvoice.F.InvoiceDate' | TextCodeTranslationPipe}}:</td>
+
+                                <td style="width: 200px;">
+                                    <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'Date'" [SelectedDateValue]="Date" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+
+            <!-- AutoCreditManualNumber -->
+            <table *ngIf="EventCode == 'AutoCreditManualNumber'">
+                <tr class="FormFieldRow">
+                    <td [style.text-align]="isRTL ? 'right' : 'left'">{{'ARInvoice.S.AutoCreditingMsg3' | TextCodeTranslationPipe}}</td>
+                </tr>
+
+                <tr class="FormFieldRow">
+                    <td>
+                        <table>
+                            <tr>                                
+                                <td style="width: 250px;">
+                                    <LogTextBox [NoObjectField]="true" [ObjectFieldName]="'ManualNumber'" [Text]="ManualNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!IsOkButtonEnabled">{{OkButtonLabel}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

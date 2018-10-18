@@ -1,0 +1,335 @@
+﻿
+
+<style>
+    .OverflowSpan {
+        -ms-text-overflow: ellipsis;
+        -o-text-overflow: ellipsis;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .AllDataHeader {
+        width: calc(100% - 5px);
+        background: #DFE0E0;
+        overflow: hidden;
+        border: 1px solid #DFE0E0;
+        border-radius: 3px;
+        margin-left: 3px;
+        text-indent: 3px;
+    }
+
+
+
+
+    .LogLOVControl {
+        display: block;
+        height: 22px;
+        min-height: 22px;
+        max-height: 22px;
+        line-height: 22px;
+        width: 100%;
+        position: relative;
+    }
+
+    .LogLovContainer {
+        height: 100%;
+        width: 100%;
+        background: white;
+        font-size: 11px;
+        color: #45494A;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        position: relative;
+    }
+
+    .LogLovButton {
+        height: 100%;
+        width: 100%;
+        line-height: 22px;
+        width: 100%;
+        border: 1px solid #AAAAAA;
+        outline: none;
+        font-size: 11px;
+        color: #45494A;
+        background: white;
+        text-indent: 5px;
+        border-radius: 3px;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        -moz-box-shadow: inset 0 0 3px #AAAAAA;
+        -webkit-box-shadow: inset 0 0 3px #AAAAAA;
+        box-shadow: inset 0 0 3px #AAAAAA;
+        text-decoration: none;
+        vertical-align: middle;
+        cursor: pointer;
+    }
+
+    .DropDownInput {
+        position: relative;
+        z-index: 101010;
+        margin: 0;
+        padding: 3px 4px;
+        white-space: nowrap;
+    }
+
+    .LogLovGridHeader {
+        background: -moz-linear-gradient(50% 100% 90deg,rgba(112, 112, 112, 1) 0%,rgba(168, 168, 168, 1) 100%);
+        background: -webkit-linear-gradient(90deg, rgba(112, 112, 112, 1) 0%, rgba(168, 168, 168, 1) 100%);
+        background: -webkit-gradient(linear,50% 100%,50% 0%,color-stop(0,rgba(112, 112, 112, 1) ),color-stop(1,rgba(168, 168, 168, 1) ));
+        background: -o-linear-gradient(90deg, rgba(112, 112, 112, 1) 0%, rgba(168, 168, 168, 1) 100%);
+        background: linear-gradient(0deg, rgba(112, 112, 112, 1) 0%, rgba(168, 168, 168, 1) 100%);
+        color: white;
+        height: 20px;
+        font-size: 10px;
+        width: calc(100% - 5px);
+        overflow: hidden;
+    }
+
+    .DropDownList {
+        color: #444;
+        position: relative;
+        overflow-x: hidden;
+        overflow-y: auto;
+        margin: 0 4px 4px 0;
+        padding: 0 0 0 4px;
+        max-height: 240px;
+        background: white;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .LogLovButton:hover:not(:disabled), .LogLovButton:focus:not(:disabled) {
+        border: 1px solid #3BB3E2;
+    }
+
+    .LogLovDropdown {
+        background: white;
+        border: 1px solid #AAAAAA;
+        box-shadow: 0 4px 8px 0 #AAAAAA;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        border-top-left-radius: unset;
+        -moz-border-radius-topleft: unset;
+        -webkit-border-top-left-radius: unset;
+        border-top: none;
+        /*visibility: hidden;*/
+        z-index: 10000000;
+    }
+
+    .DropDownListItem:not(.Selected):hover {
+        background: -moz-linear-gradient(50% 17.31% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        background: -webkit-gradient(linear,50% 17.31%,50% 105.85%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    }
+
+    .DropDownListItem {
+        display: list-item;
+        cursor: pointer;
+        line-height: 15px;
+        word-wrap: break-word;
+        -webkit-touch-callout: none;
+        border-bottom: 1px solid #d5d2d2;
+        vertical-align: middle;
+    }
+
+    .Selected {
+        background: rgba(232, 247, 255, 1);
+        background: -moz-linear-gradient(50% 106.14% 90deg,rgba(133, 203, 237, 1) 0%,rgba(150, 211, 240, 1) 22.59%,rgba(196, 231, 248, 1) 67.37%,rgba(232, 247, 255, 1) 99.68%);
+        background: -webkit-linear-gradient(90deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 99.68%);
+        background: -webkit-gradient(linear,50% 106.14%,50% -10.13%,color-stop(0,rgba(133, 203, 237, 1) ),color-stop(0.2259,rgba(150, 211, 240, 1) ),color-stop(0.6737,rgba(196, 231, 248, 1) ),color-stop(0.9968,rgba(232, 247, 255, 1) ));
+        background: -o-linear-gradient(90deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 99.68%);
+        background: linear-gradient(0deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 99.68%);
+    }
+
+    li.highlighted {
+        background: -moz-linear-gradient(50% 17.31% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        background: -webkit-gradient(linear,50% 17.31%,50% 105.85%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        /*background-color: #3875d7;
+        background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(20%, #3875d7), color-stop(90%, #2a62bc));
+        background-image: -webkit-linear-gradient(#3875d7 20%, #2a62bc 90%);
+        background-image: -moz-linear-gradient(#3875d7 20%, #2a62bc 90%);
+        background-image: -o-linear-gradient(#3875d7 20%, #2a62bc 90%);
+        background-image: linear-gradient(#3875d7 20%, #2a62bc 90%);
+        color: #fff;*/
+    }
+
+    .LogLovButton:disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+    .DeleteButton {
+        visibility: hidden;
+        cursor: pointer;
+    }
+
+    .LogLovButton:hover:not(:disabled) .DeleteButton {
+        visibility: visible;
+    }
+</style>
+<div style="width:100%;height:100%" *ngIf="DataContext">
+
+    <div [id]="ErrorPopUpId"
+         FixedPosition
+         [ElementId]="ErrorPopUpId"
+         [RelativeElementId]="DivLogLovId"
+         [TopDisplacement]="-95"
+         [LeftDisplacement]="30"
+         [ComponentType]="'popup'"
+         class="ErrorPopUp"
+         *ngIf="ShowErrorPopup">
+
+        <div class="ErrorPopUpMessage">
+            {{uiProperty.ValidationError}}
+        </div>
+
+
+    </div>
+<table *ngIf="uiProperty.IsVisible" class="FixedTable" (mouseover)="OnMouseOver()" (mouseout)="OnMouseOut()">
+    <tr>
+        <td>
+            <div class="LogLOVControl" [id]="DivLogLovId">
+
+                <div class="LogLovContainer">
+
+                    <button class="LogLovButton" [ngStyle]="InputDivStyle" tabindex="0" [disabled]="IsDisabled" *ngIf="IsDisabled" (focus)="OnFocus()" (blur)="OnBlur()">
+                        <table>
+                            <tr>
+                                <td style="width: 2px;">
+                                    <div></div>
+                                </td>
+
+                                <td>
+                                    <div class="FillParent">
+                                        <div style="text-align: left;" class="TextTrimming">{{DisplayValue}}</div>
+                                    </div>
+                                </td>
+
+                                <td style="width: 2px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 4px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 10px;">
+                                    <img class="LeftCenter" src="Images/ToggleIcon.png" />
+                                </td>
+                            </tr>
+                        </table>
+                    </button>
+                    <div class="LogLovButton" tabindex="0" (click)="OnLogLovClicked()" (keydown)="OnLogLovKeyDown($event)" (focus)="OnLogLovFocus()" (blur)="OnLogLovBlur()" *ngIf="!IsDisabled">
+                        <table>
+                            <tr>
+                                <td style="width: 2px;">
+                                    <div></div>
+                                </td>
+
+                                <td>
+                                    <div class="FillParent">
+                                        <div style="text-align: left;" class="TextTrimming" >{{DisplayValue}}</div>
+                                    </div>
+                                </td>
+
+                                <td style="width: 2px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 10px;">
+                                    <img class="DeleteButton LeftCenter" src="Images/RedX.png" (click)="OnDeleteValue()" [ngStyle]="DeleteButtonNgStyle"/>
+                                </td>
+
+                                <td style="width: 4px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 10px;">
+                                    <img class="LeftCenter" src="Images/ToggleIcon.png" />
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+                   
+                    <div (mouseover)="OnDropDownMouseOver()" (mouseout)="OnDropDownMouseOut()"
+                         FixedPosition [ElementId]="DropdownId" [RelativeElementId]="DivLogLovId" [TopDisplacement]="25" [LeftDisplacement]="1"
+                         *ngIf="IsDropDownVisible" class="LogLovDropdown" [ngStyle]="LovDropDownStyle" [id]="DropdownId">
+                        <div class="DropDownInput">
+                            <input FocusMe [ElementId]="ElementId" [id]="ElementId" [(ngModel)]="SearchTextNgModel" [formControl]="SearchTextValue" type="text" autocomplete="off" tabindex="2" style="margin-top: 5px;" (keydown)="OnSearchIputKeyDown($event)" (blur)="OnSearchInputBlur()"><!--(blur)="OnBlur()"-->
+                        </div>
+
+                        <div class="LogLovGridHeader" style="position: relative;display: inline-block; margin-left:3px" *ngIf="DisplayHeader">
+                            <div *ngFor="let col of headerColumns; let colIndex = index"
+                                 [style.width.px]="col.Width"
+                                 style="height:100%; width:120px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; position: relative;display: inline-block; border-right: 1px solid rgb(103, 103, 103); margin-left:3px;">
+                                {{col.Display}}
+                            </div>
+                        </div>
+
+                        <div class="AllDataHeader" *ngIf="IsAllDataVisible">
+                            {{MyDataHeaderTitle}}
+                        </div>
+
+                        <ul class="DropDownList" *ngIf="IsDropDownVisible" [ngStyle]="MyDropDownHeight" style="height:200px">
+                            <li *ngFor="let item of ItemsSource;let i=index"
+                                class="DropDownListItem"
+                                (click)="OnSelected(item)"
+                                (mouseover)="OnLiMouseOver($event)"
+                                (mouseleave)="OnLiMouseLeave($event)">
+                                <div style="height:15px; font-size:10px; width:100%; position:relative; display: inline-block;" (mouseover)="OnLiMouseOver($event)" (mouseleave)="OnLiMouseLeave($event)">
+                                    <div *ngFor="let col of headerColumns; let colIndex = index"
+                                         [style.width.px]="col.Width"
+                                         style="height:100%; font-size:10px; overflow:hidden;text-overflow:ellipsis; white-space:nowrap; position: relative; display: inline-block; margin-left:3px;" (mouseover)="OnLiMouseOver($event)" (mouseleave)="OnLiMouseLeave($event)">
+                                        {{item[col.Field]}}
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <div class="AllDataHeader" *ngIf="IsAllDataVisible">
+                            {{AllDataHeaderTitle}}
+                        </div>
+
+                        <ul class="DropDownList" *ngIf="IsDropDownVisible && IsAllDataVisible" style="height:100px;">
+                            <li *ngFor="let item of ZeroItemsSource;let i=index"
+                                class="DropDownListItem"
+                                (click)="OnAllDataSelect(item)"
+                                (mouseover)="OnLiMouseOver($event)"
+                                (mouseleave)="OnLiMouseLeave($event)">
+                                <div style="height:15px; font-size:10px; width:100%; position:relative; display: inline-block;" (mouseover)="OnLiMouseOver($event)" (mouseleave)="OnLiMouseLeave($event)">
+                                    <div *ngFor="let col of headerColumns; let colIndex = index"
+                                         [style.width.px]="col.Width"
+                                         style="height:100%; font-size:10px; overflow:hidden;text-overflow:ellipsis; white-space:nowrap; position: relative; display: inline-block; margin-left:3px;" (mouseover)="OnLiMouseOver($event)" (mouseleave)="OnLiMouseLeave($event)">
+                                        {{item[col.Field]}}
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+
+            </div>
+            <!--<input type="text" [hidden]="true" [formControl]="ctrl" [(ngModel)]="DataContext[ObjectFieldName]" />-->
+        </td>
+
+            <!-- Search Icon Button -->
+        <td *ngIf="!HideColumns" style="width: 18px; position: relative;">
+                <img (click)="SearchButtonClicked()" *ngIf="ShowSearchButton" class="RightCenter" style="width: 14px; height: 14px; cursor: pointer;"
+                     src="./Images/LOVSearch.png" [ngStyle]="imgNgStyle"/>
+        </td>
+
+            <!-- Help Icon -->
+        <td *ngIf="!HideColumns && !HideLastColumn" style="width: 18px;">
+            <HelpIcon *ngIf="ShowHelp" [HideHeader]="true" [Text]="ObjectFieldHelp" [IconSize]="14"></HelpIcon>
+        </td>
+    </tr>
+</table>
+</div>

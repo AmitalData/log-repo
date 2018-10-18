@@ -1,0 +1,243 @@
+﻿
+<style>
+   
+
+    
+    .FormFieldRow {
+        height: auto !important;
+    }
+
+    .DisbleBox {
+        display: inline-block;
+        border: 1px solid #ffd800;
+        border-radius: 5px;
+        background: #faf5c0;
+        padding: 2px 10px;
+        margin: 5px;
+        color: gray;
+        font-family: sans-serif;
+    }
+
+    .noselect {
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none; /* Chrome/Safari/Opera */
+        -khtml-user-select: none; /* Konqueror */
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+        user-select: none; /* Non-prefixed version, currently
+                                  not supported by any browser */
+    }
+
+
+    /* Filters Overide styles */
+
+    .FiltersMenu li {
+        float: right !important;
+        border-width: 1px 1px 1px 0px !important;
+    }
+
+        .FiltersMenu li:first-child {
+            border-radius: 0px 3px 3px 0px !important;
+        }
+
+        .FiltersMenu li:last-child {
+            border-radius: 3px 0px 0px 3px !important;
+            border-left: 1px solid #6A8299 !important;
+        }
+
+        .FiltersMenu li:active:not(.SelectedFilter) {
+            /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#c4c6c6+0,dbdbdb+19,bcbec0+79,a2a4a5+100 */
+            background: #c4c6c6; /* Old browsers */
+            background: -moz-linear-gradient(top, #c4c6c6 0%, #dbdbdb 19%, #bcbec0 79%, #a2a4a5 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(top, #c4c6c6 0%,#dbdbdb 19%,#bcbec0 79%,#a2a4a5 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(to bottom, #c4c6c6 0%,#dbdbdb 19%,#bcbec0 79%,#a2a4a5 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c4c6c6', endColorstr='#a2a4a5',GradientType=0 ); /* IE6-9 */
+        }
+
+    /* Others */
+    .hidden {
+        opacity: 0;
+        visibility: collapse;
+    }
+
+    .TempDiv {
+        text-align: center;
+        font-size: 20px;
+        color: #c7c7c7;
+        width: 100%;
+        height: 100%;
+        vertical-align: middle;
+        padding-top: 250px;
+        background: #f5f5f5;
+    }
+</style>
+
+
+
+    <table>
+
+        <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+            <td colspan="4">
+                <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+            </td>
+        </tr>
+
+        <tr style="height:30px">
+            <td style="width:160px; padding-right:10px">
+                <ul class="FiltersMenu">
+                    <li id="All" style="width: 50px; height: 22px;"
+                        [class.SelectedFilter]="FilterSelectedValue == '2'" (click)="FilterItemClicked('2')" class="noselect">
+                        {{'Customs.Declaration.O.Digital' | TextCodeTranslationPipe}}
+                    </li>
+                    <li id="Errors" style="width: 50px; height: 22px;"
+                        [class.SelectedFilter]="FilterSelectedValue == '1'" (click)="FilterItemClicked('1')" class="noselect">
+                        {{'Customs.Declaration.O.Manual' | TextCodeTranslationPipe}}
+                    </li>
+                    <li id="Constraints" style="width: 50px; height: 22px;"
+                        [class.SelectedFilter]="FilterSelectedValue == '4'" (click)="FilterItemClicked('4')" class="noselect">
+                        {{'Customs.Declaration.O.Exempt' |TextCodeTranslationPipe }}
+                    </li>
+                </ul>
+            </td>
+            <td> <img class="SearchIcon" src="./Images/Search.png"  (click)="SearchMethod()" *ngIf="IsSearchIconVisibile"/></td>
+            <td></td>
+        </tr>
+
+        <tr [style.height.px]="ExemptRowHeight" *ngIf="IsExemptVisibile">
+            <td>
+                <LogLabel [ObjectFieldName]="'CertificateExemptionTypeCode'" [ObjectTableName]="ObjectTableName"
+                          [DataContext]="DataContext"></LogLabel>
+
+
+            </td>
+            <td style="width:200px">
+                <ul class="FiltersMenu">
+                    <li id="All" style="width: 50px; height: 22px;"
+                        [class.SelectedFilter]="ExemptionFilterSelectedValue == '92'" (click)="ExemptionFilterClicked('92')" class="noselect">
+                        92
+                    </li>
+                    <li id="Errors" style="width: 50px; height: 22px;"
+                        [class.SelectedFilter]="ExemptionFilterSelectedValue == '96'" (click)="ExemptionFilterClicked('96')" class="noselect">
+                      96
+                    </li>
+                    <li id="Constraints" style="width: 50px; height: 22px;"
+                        [class.SelectedFilter]="ExemptionFilterSelectedValue == 'other'" (click)="ExemptionFilterClicked('other')" class="noselect">
+                        {{'Customs.Declaration.O.Other' |TextCodeTranslationPipe }}
+                       
+                    </li>
+                </ul>
+                
+            </td>
+            <td></td>
+        </tr>
+        <tr style="height:30px" *ngIf="IsConfirmationVisibile">
+            <td>
+                <LogLabel [ObjectFieldName]="'CertificateNumber'" [ObjectTableName]="ObjectTableName"
+                          [DataContext]="DataContext"></LogLabel>
+
+            </td>
+            <td style="width:230px">
+
+                <LogTextBox [ObjectFieldName]="'CertificateNumber'" [ObjectTableName]="ObjectTableName" [Text]="CertificateNumber"
+                            [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+
+            </td>
+            <td></td>
+        </tr>
+        <tr style="height:30px" *ngIf="IsConfirmationVisibile">
+            <td>
+                <LogLabel [ObjectFieldName]="'ResConfirmationTypeCode'" [ObjectTableName]="ObjectTableName"
+                          [DataContext]="DataContext"></LogLabel>
+
+
+            </td>
+            <td style="width:230px">
+                <table>
+                    <tr>
+                        <td style="width:100px" *ngIf="ResConfirmationFilterVisibility">
+                            <ul class="FiltersMenu">
+                                <li id="All" style="width: 50px; height: 22px;"
+                                    [class.SelectedFilter]="ResConfirmationFilterSelectedValue == 'request'" (click)="ResConfirmationFilterClicked('request')" class="noselect">
+                                    {{ReqConfirmationTypeCode}}
+                                </li>
+                                <li id="Errors" style="width: 50px; height: 22px;"
+                                    [class.SelectedFilter]="ResConfirmationFilterSelectedValue == 'other'" (click)="ResConfirmationFilterClicked('other')" class="noselect">
+                                    {{'Customs.Declaration.O.Other' |TextCodeTranslationPipe }}
+                                </li>
+                               
+                            </ul>
+                        </td>
+                        <td style="width:5px" *ngIf="ResConfirmationFilterVisibility">
+
+                        </td>
+                        <td>
+                            <LogLov [ObjectFieldName]="'ResConfirmationTypeCode'"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'Customs.ConfirmationType'"
+                                    [SelectedValue]="ResConfirmationTypeCode"
+                                    [HideColumns]="true">
+                            </LogLov>
+                        </td>
+                    </tr>
+                </table>
+               
+            </td>
+            <td></td>
+        </tr>
+
+        <tr style="height:30px" *ngIf="IsExemptVisibile">
+            <td style="width:160px">
+             
+
+            </td>
+            <td style="width:200px">
+                <LogLov [ObjectFieldName]="'CertificateExemptionTypeCode'"
+              [ObjectTableName]="ObjectTableName"
+              [DataContext]="DataContext"
+              [LookUpTableName]="'Customs.CertificateExemptionType'"
+              [SelectedValue]="CertificateExemptionTypeCode"
+              [HideColumns]="true">
+               </LogLov>
+
+            </td>
+            <td></td>
+        </tr>
+        <tr></tr>
+ 
+
+   
+        <tr style="height: 32px;">
+         <!--   <td colspan="2"></td>-->
+
+            <td colspan="3">
+                <table>
+                    <tr>
+                        <td style="width:200px">
+                            <div></div>
+                        </td>
+
+                        <td style="vertical-align: bottom;width:80px">
+                            <table style="height: 22px;">
+                                <tr>
+                                    <td style="width: 57px;">
+                                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                                    </td>
+
+                                    <td style="width: 5px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width: 57px;">
+                                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+
+           
+        </tr>
+    </table>

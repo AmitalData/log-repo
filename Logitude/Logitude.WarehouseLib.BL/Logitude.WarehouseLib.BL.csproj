@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7030AB59-9900-4AB9-B37C-59D424576E85}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Logitude.WarehouseLib.BL</RootNamespace>
+    <AssemblyName>Logitude.WarehouseLib.BL</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\General\Dlls\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\General\Dlls\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\General\Dlls\System.ServiceModel.DomainServices.Server.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CloseTables\DetailsClassesGenerated\WarehouseEntryStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\WarehouseReleaseStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\WarehouseEntryStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\WarehouseReleaseStatusStruct.Generated.cs" />
+    <Compile Include="DataContracts\WarehouseEntryPackageItem.cs" />
+    <Compile Include="EntityDataMappings\Generated\WarehouseEntryDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\WarehouseEntryPackageDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\WarehouseEntryPackagesReleaseDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\WarehouseEntryStatusDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\WarehouseReleaseDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\WarehouseReleasePackageDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\WarehouseReleaseStatusDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\WarehouseEntryDataMapping.cs" />
+    <Compile Include="EntityDataMappings\WarehouseEntryPackageDataMapping.cs" />
+    <Compile Include="EntityDataMappings\WarehouseEntryPackagesReleaseDataMapping.cs" />
+    <Compile Include="EntityDataMappings\WarehouseEntryStatusDataMapping.cs" />
+    <Compile Include="EntityDataMappings\WarehouseReleaseDataMapping.cs" />
+    <Compile Include="EntityDataMappings\WarehouseReleasePackageDataMapping.cs" />
+    <Compile Include="EntityDataMappings\WarehouseReleaseStatusDataMapping.cs" />
+    <Compile Include="EntityPMs\Generated\WarehouseEntryPackagePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\WarehouseEntryPackagesReleasePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\WarehouseEntryPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\WarehouseEntryStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\WarehouseReleasePackagePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\WarehouseReleasePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\WarehouseReleaseStatusPM.Generated.cs" />
+    <Compile Include="EntityQueryServices\WarehouseEntryPackagesReleaseQueryService.cs" />
+    <Compile Include="EntityQueryServices\WarehouseEntryPackageQueryService.cs" />
+    <Compile Include="EntityQueryServices\Generated\WarehouseEntryPackageQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\WarehouseEntryPackagesReleaseQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\WarehouseEntryQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\WarehouseEntryStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\WarehouseReleasePackageQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\WarehouseReleaseQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\WarehouseReleaseStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\WarehouseEntryQueryService.cs" />
+    <Compile Include="EntityQueryServices\WarehouseEntryStatusQueryService.cs" />
+    <Compile Include="EntityQueryServices\WarehouseReleasePackageQueryService.cs" />
+    <Compile Include="EntityQueryServices\WarehouseReleaseQueryService.cs" />
+    <Compile Include="EntityQueryServices\WarehouseReleaseStatusQueryService.cs" />
+    <Compile Include="EntityUpdateServices\Generated\WarehouseEntryPackagesReleaseUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\WarehouseEntryPackageUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\WarehouseEntryStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\WarehouseEntryUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\WarehouseReleasePackageUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\WarehouseReleaseStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\WarehouseReleaseUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\WarehouseEntryPackagesReleaseUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\WarehouseEntryPackageUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\WarehouseEntryUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\WarehouseReleasePackageUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\WarehouseReleaseUpdateService.cs" />
+    <Compile Include="Helpers\ContainerNumberWarehouseValidator.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validators\WarehouseClassLevelValidator.cs" />
+    <Compile Include="Validators\WarehouseTranslateTextsClass.cs" />
+    <Compile Include="Validators\WarehouseValidationClass.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
+      <Project>{a663e7ef-b858-4bb6-bc33-e473f51b8e56}</Project>
+      <Name>Logitude.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
+      <Project>{9b477a08-8ee2-4457-88fe-17e8a6ec4d00}</Project>
+      <Name>Logitude.Server.Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.WarehouseLib.Data\Logitude.WarehouseLib.Data.csproj">
+      <Project>{54a12a5c-659c-4410-a5e7-949acd43f3a5}</Project>
+      <Name>Logitude.WarehouseLib.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
+      <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
+      <Name>Simplog.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Global.Data.csproj">
+      <Project>{6d7ffad2-35b6-4133-8700-cf73e58d0c85}</Project>
+      <Name>Simplog.Global.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
+      <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
+      <Name>Simplog.Server.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="APIDataContract\QueryService\" />
+    <Folder Include="TraceEvents\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

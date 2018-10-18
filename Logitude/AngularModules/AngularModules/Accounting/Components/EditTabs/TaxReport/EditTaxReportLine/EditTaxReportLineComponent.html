@@ -1,0 +1,123 @@
+
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td colspan="4">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td style="width: 300px">
+            <table>
+                <tr class="FormFieldRow">
+                    <td>
+                        <table>
+
+                            <!-- TransmitStatusCode -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'TransmitStatusCode'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogLov [ObjectFieldName]="'TransmitStatusCode'"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'TaxReportLineTransmitStatus'"
+                                            [HideColumns]="true">
+                                    </LogLov>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+
+                            <!-- VatNumber -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'VatNumber'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'VatNumber'" [InputType]="'text'" [DataContext]="DataContext"
+                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+
+                            <!-- Reference -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'Reference'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'Reference'" [InputType]="'text'" [DataContext]="DataContext"
+                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+
+                            <!-- ReferecneGroup -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'ReferecneGroup'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'ReferecneGroup'" [InputType]="'text'" [DataContext]="DataContext"
+                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+
+                            <!-- ReferenceDate -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'ReferenceDate'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogDatePicker [ObjectFieldName]="'ReferenceDate'" [ObjectTableName]="ObjectTableName"
+                                                   [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+
+                            <tr><td><div></div></td></tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+
+        <td><div></div></td>
+
+
+    </tr>
+
+    <tr style="height: 32px;">
+        <td colspan="4" style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'Accounting.General.B.OK' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>
+

@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://tempuri.org/LOGIDOCS" elementFormDefault="qualified" targetNamespace="http://tempuri.org/LOGIDOCS" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="LOGIDOCS">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="LogitudeDocs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LogitudeDocs">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="Id" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Tenant" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="COM_ID" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="DOC_ID" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Id" type="xs:string" />
+  <xs:element name="Tenant" type="xs:string" />
+  <xs:element name="COM_ID" type="xs:string" />
+  <xs:element name="DOC_ID" type="xs:string" />
+</xs:schema>

@@ -1,0 +1,135 @@
+Severity: High
+Object: claimimporterdeclarspage3bs
+Title: DropColumnsDuringRebuild
+The columns saleamountatclaimtime on table claimimporterdeclarspage3bs could not be matched to columns in the source table. The columns will be dropped, and any data they contain will be lost.
+----------------------------------------------------
+Severity: High
+Object: awbstockusagehistories
+Title: AddNotNullConstraintColumn
+Deployment cannot update the column firstactionbyuserid on table awbstockusagehistories because it does not allow NULL values. If you run the deployment script, deployment will fail. We recommend you edit the script before running it.
+----------------------------------------------------
+Severity: High
+Object: awbstockusagehistories
+Title: AddNotNullConstraintColumn
+Deployment cannot update the column lastactionbyuserid on table awbstockusagehistories because it does not allow NULL values. If you run the deployment script, deployment will fail. We recommend you edit the script before running it.
+----------------------------------------------------
+Severity: High
+Object: claimimporterdeclarsp3lois
+Title: AddNotNullConstraintColumn
+Deployment cannot update the column counterkey on table claimimporterdeclarsp3lois because it does not allow NULL values. If you run the deployment script, deployment will fail. We recommend you edit the script before running it.
+----------------------------------------------------
+Severity: High
+Object: claimimporterdeclarsp3lois
+Title: AddNotNullConstraintColumn
+Deployment cannot update the column lineno on table claimimporterdeclarsp3lois because it does not allow NULL values. If you run the deployment script, deployment will fail. We recommend you edit the script before running it.
+----------------------------------------------------
+Severity: High
+Object: claimsrelatedentitiesreasons
+Title: AddNotNullConstraintColumn
+Deployment cannot update the column lineno on table claimsrelatedentitiesreasons because it does not allow NULL values. If you run the deployment script, deployment will fail. We recommend you edit the script before running it.
+----------------------------------------------------
+Severity: High
+Object: claimsrelatedentsreasonsexps
+Title: AddNotNullConstraintColumn
+Deployment cannot update the column lineno on table claimsrelatedentsreasonsexps because it does not allow NULL values. If you run the deployment script, deployment will fail. We recommend you edit the script before running it.
+----------------------------------------------------
+Severity: High
+Object: claimsrelatedentsreasonsexps
+Title: AddNotNullConstraintColumn
+Deployment cannot update the column reasonlineno on table claimsrelatedentsreasonsexps because it does not allow NULL values. If you run the deployment script, deployment will fail. We recommend you edit the script before running it.
+----------------------------------------------------
+Severity: High
+Object: logitudemessagestranslogs
+Title: AddNotNullConstraintColumn
+Deployment cannot update the column directparticipant on table logitudemessagestranslogs because it does not allow NULL values. If you run the deployment script, deployment will fail. We recommend you edit the script before running it.
+----------------------------------------------------
+Severity: High
+Object: automationresultemailrecips
+Title: DropColumn
+The column(s) entitycontactvariable, userid on table automationresultemailrecips will be dropped. Any data in the columns will be lost.
+----------------------------------------------------
+Severity: High
+Object: awbstockusagehistories
+Title: DropColumn
+The column(s) firstsenddate, lastsenddate, firstsenderid, lastsenderid on table awbstockusagehistories will be dropped. Any data in the columns will be lost.
+----------------------------------------------------
+Severity: High
+Object: bookings
+Title: DropColumn
+The column(s) ffrlastsendingdate on table bookings will be dropped. Any data in the columns will be lost.
+----------------------------------------------------
+Severity: High
+Object: claimimporterdeclarsp3lois
+Title: DropColumn
+The column(s) importerloideclarationtypecode on table claimimporterdeclarsp3lois will be dropped. Any data in the columns will be lost.
+----------------------------------------------------
+Severity: High
+Object: claimsrelatedentsreasonsexps
+Title: DropColumn
+The column(s) reasonlisttypecode on table claimsrelatedentsreasonsexps will be dropped. Any data in the columns will be lost.
+----------------------------------------------------
+Severity: High
+Object: employeegroups
+Title: DropColumn
+The column(s) escalationuserid on table employeegroups will be dropped. Any data in the columns will be lost.
+----------------------------------------------------
+Severity: High
+Object: entitychanges
+Title: DropColumn
+The column(s) oldentity, currententity on table entitychanges will be dropped. Any data in the columns will be lost.
+----------------------------------------------------
+Severity: High
+Object: ticketclassifications
+Title: DropColumn
+The column(s) escalationuserid on table ticketclassifications will be dropped. Any data in the columns will be lost.
+----------------------------------------------------
+Severity: High
+Object: tickets
+Title: DropColumn
+The column(s) resolvetime on table tickets will be dropped. Any data in the columns will be lost.
+----------------------------------------------------
+Severity: High
+Object: automationconditions
+Title: DropTable
+The table automationconditions will be dropped. Any data in the table will be lost.
+----------------------------------------------------
+Severity: High
+Object: entitychangesautomations
+Title: DropTable
+The table entitychangesautomations will be dropped. Any data in the table will be lost.
+----------------------------------------------------
+Severity: High
+Object: tenantaddons
+Title: DropTable
+The table tenantaddons will be dropped. Any data in the table will be lost.
+----------------------------------------------------
+Severity: Medium
+Object: claimimporterdeclarspage3bs
+Title: RebuildTable
+The table claimimporterdeclarspage3bs will be rebuilt. To rebuild a table, the table is dropped and then recreated. A temporary table is used to store data when the table is dropped. Note that rebuilding a table can cause the deployment script to run slowly.
+----------------------------------------------------
+Severity: Medium
+Object: logitudemessagestranslogs
+Title: RebuildTable
+The table logitudemessagestranslogs will be rebuilt. To rebuild a table, the table is dropped and then recreated. A temporary table is used to store data when the table is dropped. Note that rebuilding a table can cause the deployment script to run slowly.
+----------------------------------------------------
+Severity: Medium
+Object: measurmentunits
+Title: RebuildTable
+The table measurmentunits will be rebuilt. To rebuild a table, the table is dropped and then recreated. A temporary table is used to store data when the table is dropped. Note that rebuilding a table can cause the deployment script to run slowly.
+----------------------------------------------------
+Severity: Medium
+Object: claimimporterdeclarspage3bs
+Title: EnsureDataFormat
+Ensure the data in column lineno can be converted to a NUMBER(10).
+----------------------------------------------------
+Severity: Medium
+Object: logitudemessagestranslogs
+Title: EnsureDataFormat
+Ensure the data in column directparticipant can be converted to a NUMBER(1).
+----------------------------------------------------
+Severity: Medium
+Object: measurmentunits
+Title: EnsureDataFormat
+Ensure the data in column malamid can be converted to a NUMBER(10).
+----------------------------------------------------

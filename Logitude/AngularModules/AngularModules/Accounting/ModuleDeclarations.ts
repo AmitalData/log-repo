@@ -1,0 +1,270 @@
+import {AccountingWorkspaceComponent} from './Components/Workspaces/AccountingWorkspaceComponent';
+import {GLAccountPageComponent} from './Components/Workspaces/Main/GLAccountPageComponent';
+import {JournalPageComponent} from './Components/Workspaces/Journal/JournalPageComponent';
+import {ReceivablePageComponent} from './Components/Workspaces/Receivable/ReceivablePageComponent';
+import {PayablePageComponent} from './Components/Workspaces/Payable/PayablePageComponent';
+import {BanksPageComponent} from './Components/Workspaces/Banks/BanksPageComponent';
+import {MiscPageComponent} from './Components/Workspaces/Misc/MiscPageComponent';
+
+import {NewGLAccountComponent} from './Components/NewEntity/NewGLAccountComponent';
+import {NewChartOfAccountComponent} from './Components/NewEntity/NewChartOfAccountComponent';
+import {NewCashBookComponent} from './Components/NewEntity/NewCashBookComponent';
+import {NewBankCodeComponent} from './Components/NewEntity/NewBankCodeComponent';
+import {NewBankAccountComponent} from './Components/NewEntity/NewBankAccountComponent';
+import {NewBankDepositComponent} from './Components/NewEntity/NewBankDepositComponent';
+
+import {NewCategory1Component} from './Components/Maintenance/NewCategory1Component';
+import {NewCategory2Component} from './Components/Maintenance/NewCategory2Component';
+import {NewCategory3Component} from './Components/Maintenance/NewCategory3Component';
+import {NewCategory4Component} from './Components/Maintenance/NewCategory4Component';
+import {NewCategory5Component} from './Components/Maintenance/NewCategory5Component';
+import {AutoRecoMethodComponent} from './Components/Maintenance/AutoRecoMethodComponent';
+import {NewRevaluationComponent} from './Components/NewEntity/NewRevaluationComponent';
+import {AddEditRecoExPageComponent} from './Components/NewEntity/AddEditRecoExPageComponent';
+import {NewConnectedGLAccountComponent} from './Components/EditTabs/GLAccount/NewConnectedGLAccountComponent';
+import {NewPaymentChequeComponent} from './Components/NewEntity/NewPaymentChequeComponent';
+import {NewTaxWithholdingAssessingOfficeComponent} from './Components/Maintenance/NewTaxWithholdingAssessingOfficeComponent';
+import {FullAccountingSettingsComponent} from './Components/Maintenance/FullAccountingSettingsComponent';
+import {AccountingPeriodsComponent} from './Components/Maintenance/AccountingPeriodsComponent';
+import {EditAccountingPeriodComponent} from './Components/Maintenance/EditAccountingPeriodComponent';
+import {AccountingPeriodEventComponent} from './Components/Maintenance/AccountingPeriodEventComponent';
+import {YearTransferComponent} from './Components/Maintenance/YearTransferComponent';
+import { NewTaxReportComponent} from './Components/NewEntity/NewTaxReportComponent';
+
+import {GLAccountGeneralTabComponent} from './Components/EditTabs/GLAccount/GLAccountGeneralTabComponent';
+import {GLAccountTransactionsTabComponent} from './Components/EditTabs/GLAccount/GLAccountTransactionsTabComponent';
+import {ManageReconciliationsTabComponent} from './Components/EditTabs/GLAccount/ManageReconciliationsTabComponent';
+import {JournalDetailsTabComponent} from './Components/EditTabs/Journal/JournalDetailsTabComponent';
+import {CashBookDetailsTabComponent} from './Components/EditTabs/CashBook/CashBookDetailsTabComponent';
+import {CashBookManageDepoTabComponent} from './Components/EditTabs/CashBook/CashBookManageDepoTabComponent';
+import {ChartOfAccountGeneralTabComponent} from './Components/EditTabs/ChartOfAccount/ChartOfAccountGeneralTabComponent';
+import {BankDepositDetailsTabComponent} from './Components/EditTabs/BankDeposit/BankDepositDetailsTabComponent';
+import {BankAccountGeneralTabComponent} from './Components/EditTabs/BankAccount/BankAccountGeneralTabComponent';
+import {BankPagesTabComponent} from './Components/EditTabs/BankAccount/BankPagesTabComponent';
+import {ManageRecoTabComponent} from './Components/EditTabs/BankAccount/ManageRecoTabComponent';
+import {ReconciliationDetailsTabComponent} from './Components/EditTabs/Reconciliation/ReconciliationDetailsTabComponent';
+import {RevaluationDetailsComponent} from './Components/EditTabs/Revaluation/RevaluationDetailsComponent';
+import {GLAccountTaxWithholdingTabComponent} from './Components/EditTabs/GLAccount/GLAccountTaxWithholdingTabComponent';
+import {BankCodeGeneralTabComponent} from './Components/EditTabs/BankCode/BankCodeGeneralTabComponent';
+import {ExternalRecoDetailsTabComponent} from './Components/EditTabs/ExternalReconciliation/ExternalRecoDetailsTabComponent';
+
+import {GlAccountLedgerTransactionsListTemplate} from './Components/ListTemplates/GlAccountLedgerTransactionsListTemplate';
+import {ReconcileExternalPageListTemplate} from './Components/ListTemplates/ReconcileExternalPageListTemplate';
+import {ReconcileExternalPageLineListTemplate} from './Components/ListTemplates/ReconcileExternalPageLineListTemplate';
+import {FieldTemplateComponent} from './Components/Templates/FieldTemplateComponent';
+import {ManageReconciliationListTemplate} from './Components/ListTemplates/ManageReconciliationListTemplate';
+
+import {ReconcileComponent} from './Components/Others/ReconcileComponent';
+import {ReconciledMessage} from './Components/Others/ReconciledMessage';
+import {OutOfDepositMessage} from './Components/Others/OutOfDepositMessage';
+import {Aging4CustomerChartWindowComponent} from './Components/Others/Aging4CustomerChartWindowComponent';
+import {GLAccountAdditionalDataTabComponent} from './Components/EditTabs/GLAccount/GLAccountAdditionalDataTabComponent';
+import {GLAccountSearchWindowComponent} from './Components/EditTabs/GLAccount/GLAccountSearchWindowComponent';
+import {PaymentChequeGeneralTabComponent} from './Components/EditTabs/PaymentCheque/PaymentChequeGeneralTabComponent';
+import {CancelChequeComponent} from './Components/Others/CancelChequeComponent';
+import {DropdownButtonComponent} from './Components/Others/DropdownButtonComponent';
+import {JournalReconcileComponent} from './Components/Others/JournalReconcileComponent';
+import {ExternalReconcileComponent} from './Components/Others/ExternalReconcileComponent';
+import {AddEditTaxWithholdingLineComponent} from './Components/EditTabs/GLAccount/AddEditTaxWithholdingLineComponent';
+import {TaxReportDetailsTabComponent} from './Components/EditTabs/TaxReport/TaxReportDetailsTabComponent';
+import {AccountingFlatFileDownloadComponent} from './Components/Others/AccountingFlatFileDownloadComponent';
+import { GLAccountOverviewComponent } from './Components/EditTabs/GLAccount/GLAccountOverviewComponent';
+import { TaxDeductionReportLogTabComponent } from './Components/EditTabs/TaxDeductionReport/TaxDeductionReportLogTabComponent';
+import { NewTaxDeductionReportComponent } from './Components/NewEntity/NewTaxDeductionReportComponent';
+
+// Short Titles
+import {GLAccountShortTitleComponent} from './Components/ShortTitles/GLAccountShortTitleComponent';
+import {BankAccountShortTitleComponent} from './Components/ShortTitles/BankAccountShortTitleComponent';
+import {BankDepositShortTitleComponent} from './Components/ShortTitles/BankDepositShortTitleComponent';
+import {PaymentChequeShortTitleComponent} from './Components/ShortTiTles/PaymentChequeShortTitleComponent';
+import {ReconciliationShortTitleComponent} from './Components/ShortTiTles/ReconciliationShortTitleComponent';
+import {ExternalReconciliationShortTitleComponent} from './Components/ShortTiTles/ExternalReconciliationShortTitleComponent';
+import { TaxReportShortTitleComponent } from './Components/ShortTiTles/TaxReportShortTitleComponent';
+import { EditTaxReportLineComponent } from './Components/EditTabs/TaxReport/EditTaxReportLine/EditTaxReportLineComponent';
+
+
+export const Components =
+    [
+        //Workspaces
+        AccountingWorkspaceComponent,
+        GLAccountPageComponent,
+        JournalPageComponent,
+        ReceivablePageComponent,
+        PayablePageComponent,
+        BanksPageComponent,
+        MiscPageComponent,
+
+        //New Entites
+        NewGLAccountComponent,
+        NewChartOfAccountComponent,
+        NewCashBookComponent,
+        NewBankCodeComponent,
+        NewBankAccountComponent,
+        NewBankDepositComponent,
+        AutoRecoMethodComponent,
+        NewRevaluationComponent,
+        AddEditRecoExPageComponent,
+        NewConnectedGLAccountComponent,
+        NewPaymentChequeComponent,
+        //Maintenance
+        NewCategory1Component,
+        NewCategory2Component,
+        NewCategory3Component,
+        NewCategory4Component,
+        NewCategory5Component,
+        FullAccountingSettingsComponent,
+        AccountingPeriodsComponent,
+        EditAccountingPeriodComponent,
+        AccountingPeriodEventComponent,
+        NewTaxWithholdingAssessingOfficeComponent,
+        YearTransferComponent,
+
+        //Edit Tabs
+        GLAccountGeneralTabComponent,
+        GLAccountOverviewComponent,
+        GLAccountTransactionsTabComponent,
+        ManageReconciliationsTabComponent,
+        JournalDetailsTabComponent,
+        CashBookDetailsTabComponent,
+        CashBookManageDepoTabComponent,
+        ChartOfAccountGeneralTabComponent,
+        BankDepositDetailsTabComponent,
+        BankAccountGeneralTabComponent,
+        BankPagesTabComponent,
+        ManageRecoTabComponent,
+        ReconciliationDetailsTabComponent,
+        RevaluationDetailsComponent,
+        ExternalRecoDetailsTabComponent,
+        GLAccountAdditionalDataTabComponent,
+        PaymentChequeGeneralTabComponent,
+        TaxReportDetailsTabComponent,
+        GLAccountTaxWithholdingTabComponent,
+        BankCodeGeneralTabComponent,
+        EditTaxReportLineComponent,
+        TaxDeductionReportLogTabComponent,
+        //Templates
+        GlAccountLedgerTransactionsListTemplate,
+        ReconcileExternalPageListTemplate,
+        ReconcileExternalPageLineListTemplate,
+        FieldTemplateComponent,
+        ManageReconciliationListTemplate, 
+        //Others
+        ReconcileComponent,
+        ReconciledMessage,
+        OutOfDepositMessage,
+        Aging4CustomerChartWindowComponent,
+        PaymentChequeShortTitleComponent,
+        ReconciliationShortTitleComponent,
+        ExternalReconciliationShortTitleComponent,
+        TaxReportShortTitleComponent,
+        GLAccountShortTitleComponent,
+        BankAccountShortTitleComponent,
+        BankDepositShortTitleComponent,
+        GLAccountSearchWindowComponent,
+        CancelChequeComponent,
+        DropdownButtonComponent,
+        JournalReconcileComponent,
+        ExternalReconcileComponent,
+        AddEditTaxWithholdingLineComponent,
+        NewTaxReportComponent,
+        AccountingFlatFileDownloadComponent,
+        NewTaxDeductionReportComponent,
+    ];
+
+export class ModuleDeclarations {
+    public static Get(name: string) {
+
+        var myResult: any = null;
+
+        switch (name) {
+
+            //Workspaces
+            case "AccountingWorkspaceComponent": { myResult = AccountingWorkspaceComponent; break; }
+            case "GLAccountPageComponent": { myResult = GLAccountPageComponent; break; }
+            case "JournalPageComponent": { myResult = JournalPageComponent; break; }
+            case "ReceivablePageComponent": { myResult = ReceivablePageComponent; break; }
+            case "PayablePageComponent": { myResult = PayablePageComponent; break; }
+            case "BanksPageComponent": { myResult = BanksPageComponent; break; }
+            case "MiscPageComponent": { myResult = MiscPageComponent; break; }
+
+            //New Entites
+            case "NewGLAccountComponent": { myResult = NewGLAccountComponent; break; }
+            case "NewChartOfAccountComponent": { myResult = NewChartOfAccountComponent; break; }
+            case "NewCashBookComponent": { myResult = NewCashBookComponent; break; }
+            case "NewBankCodeComponent": { myResult = NewBankCodeComponent; break; }
+            case "NewBankAccountComponent": { myResult = NewBankAccountComponent; break; }
+            case "NewBankDepositComponent": { myResult = NewBankDepositComponent; break; }
+            case "AutoRecoMethodComponent": { myResult = AutoRecoMethodComponent; break; }
+            case "NewRevaluationComponent": { myResult = NewRevaluationComponent; break; }
+            case "AddEditRecoExPageComponent": { myResult = AddEditRecoExPageComponent; break; }
+            case "NewConnectedGLAccountComponent": { myResult = NewConnectedGLAccountComponent; break; }
+            case "NewPaymentChequeComponent": { myResult = NewPaymentChequeComponent; break; }
+            case "NewTaxReportComponent": { myResult = NewTaxReportComponent; break; }
+            case "NewTaxDeductionReportComponent": { myResult = NewTaxDeductionReportComponent; break; }
+            //Maintenance
+            case "NewCategory1Component": { myResult = NewCategory1Component; break; }
+            case "NewCategory2Component": { myResult = NewCategory2Component; break; }
+            case "NewCategory3Component": { myResult = NewCategory3Component; break; }
+            case "NewCategory4Component": { myResult = NewCategory4Component; break; }
+            case "NewCategory5Component": { myResult = NewCategory5Component; break; }
+            case "FullAccountingSettingsComponent": { myResult = FullAccountingSettingsComponent; break; }
+            case "YearTransferComponent": { myResult = YearTransferComponent; break; }
+            case "AccountingPeriodsComponent": { myResult = AccountingPeriodsComponent; break; }
+            case "EditAccountingPeriodComponent": { myResult = EditAccountingPeriodComponent; break; }
+            case "AccountingPeriodEventComponent": { myResult = AccountingPeriodEventComponent; break; }
+            case "NewTaxWithholdingAssessingOfficeComponent": { myResult = NewTaxWithholdingAssessingOfficeComponent; break; }
+            //Edit Tabs
+            case "GLAccountGeneralTabComponent": { myResult = GLAccountGeneralTabComponent; break; }
+            case "GLAccountOverviewComponent": { myResult = GLAccountOverviewComponent; break; }
+            case "GLAccountTransactionsTabComponent": { myResult = GLAccountTransactionsTabComponent; break; }
+            case "ManageReconciliationsTabComponent": { myResult = ManageReconciliationsTabComponent; break; }
+            case "JournalDetailsTabComponent": { myResult = JournalDetailsTabComponent; break; }
+            case "CashBookDetailsTabComponent": { myResult = CashBookDetailsTabComponent; break; }
+            case "CashBookManageDepoTabComponent": { myResult = CashBookManageDepoTabComponent; break; } 
+            case "ChartOfAccountGeneralTabComponent": { myResult = ChartOfAccountGeneralTabComponent; break; } 
+            case "BankDepositDetailsTabComponent": { myResult = BankDepositDetailsTabComponent; break; } 
+            case "BankAccountGeneralTabComponent": { myResult = BankAccountGeneralTabComponent; break; } 
+            case "BankPagesTabComponent": { myResult = BankPagesTabComponent; break; } 
+            case "ManageRecoTabComponent": { myResult = ManageRecoTabComponent; break; } 
+            case "ReconciliationDetailsTabComponent": { myResult = ReconciliationDetailsTabComponent; break; }
+            case "RevaluationDetailsComponent": { myResult = RevaluationDetailsComponent; break; }
+            case "ExternalRecoDetailsTabComponent": { myResult = ExternalRecoDetailsTabComponent; break; }
+            case "GLAccountAdditionalDataTabComponent": { myResult = GLAccountAdditionalDataTabComponent; break; }
+            case "PaymentChequeGeneralTabComponent": { myResult = PaymentChequeGeneralTabComponent; break; }
+            case "TaxReportDetailsTabComponent": { myResult = TaxReportDetailsTabComponent; break; }
+            case "GLAccountTaxWithholdingTabComponent": { myResult = GLAccountTaxWithholdingTabComponent; break; }
+            case "BankCodeGeneralTabComponent": { myResult = BankCodeGeneralTabComponent; break; }
+            case "EditTaxReportLineComponent": { myResult = EditTaxReportLineComponent; break; }
+            case "TaxDeductionReportLogTabComponent": { myResult = TaxDeductionReportLogTabComponent; break;}
+            //Templates
+            case "GlAccountLedgerTransactionsListTemplate": { myResult = GlAccountLedgerTransactionsListTemplate; break; }
+            case "ReconcileExternalPageListTemplate": { myResult = ReconcileExternalPageListTemplate; break; }
+            case "ReconcileExternalPageLineListTemplate": { myResult = ReconcileExternalPageLineListTemplate; break; }
+            case "FieldTemplateComponent": { myResult = FieldTemplateComponent; break; }
+            case "ManageReconciliationListTemplate": { myResult = ManageReconciliationListTemplate; break; }
+            //Others
+            case "ReconcileComponent": { myResult = ReconcileComponent; break; }
+            case "ReconciledMessage": { myResult = ReconciledMessage; break; }
+            case "OutOfDepositMessage": { myResult = OutOfDepositMessage; break; }
+            case "Aging4CustomerChartWindowComponent": { myResult = Aging4CustomerChartWindowComponent; break; }
+            case "PaymentChequeShortTitleComponent": { myResult = PaymentChequeShortTitleComponent; break; }
+            case "GLAccountShortTitleComponent": { myResult = GLAccountShortTitleComponent; break; }
+            case "BankAccountShortTitleComponent": { myResult = BankAccountShortTitleComponent; break; }
+            case "BankDepositShortTitleComponent": { myResult = BankDepositShortTitleComponent; break; }
+            case "ReconciliationShortTitleComponent": { myResult = ReconciliationShortTitleComponent; break; }
+            case "ExternalReconciliationShortTitleComponent": { myResult = ExternalReconciliationShortTitleComponent; break; }
+            case "TaxReportShortTitleComponent": { myResult = TaxReportShortTitleComponent; break; }
+            case "GLAccountSearchWindowComponent": {
+                myResult = GLAccountSearchWindowComponent; break;
+            }
+            case "CancelChequeComponent": { myResult = CancelChequeComponent; break; }
+            case "DropdownButtonComponent": { myResult = DropdownButtonComponent; break; }
+            case "JournalReconcileComponent": { myResult = JournalReconcileComponent; break; }
+            case "ExternalReconcileComponent": { myResult = ExternalReconcileComponent; break; }
+            case "AddEditTaxWithholdingLineComponent": { myResult = AddEditTaxWithholdingLineComponent; break; }
+            case "AccountingFlatFileDownloadComponent": { myResult = AccountingFlatFileDownloadComponent; break; }
+        }
+
+        return myResult;
+    }
+}

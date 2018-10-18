@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <div id="inside">
+<div style="height: 55px; background-color: white; border-top: 1px solid #B1B6BA;display:table;width:100%">
+           <div style="display:table-cell;vertical-align:middle;text-indent:10px;color:#198DC8;font-size:14px" data-bind="text: ShipmentNumber">
+               
+           </div>
+        </div>
+
+        <div style="height: 47px; background-color: white; border-top: 1px solid #B1B6BA; border-bottom: 1px solid #B1B6BA;">
+               <div style="height:40px; display:inline-block; width:100%; display:table;" id="shipmentheader">        
+                  <div style="display:table-cell; vertical-align:middle; text-align:left;">
+                            <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:6px;"></div>
+                            <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:26px;"><img style="height:22px; width:24px; padding:0px; margin:0px;" data-bind="attr: { src: FromCountySRC }"/></div>
+                            <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:100px; "  data-bind="text: FromPortName"></div>
+                  </div>
+
+                   <div style="display:table-cell; vertical-align:middle; text-align:center;">
+                            <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:25px;"><img style="height:20px; width:20px;"   data-bind="attr: { src: TransportSRC }"/></div>
+                   </div>
+        
+                    <div style="display:table-cell; vertical-align:middle; text-align:right;">
+                                <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:100px;" data-bind="text: ToPortName"></div>
+                                 <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:26px; "><img style="height:22px; width:24px; padding:0px; margin:0px;" data-bind="attr: { src: ToCountySRC }"/></div>
+                                <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:6px;"></div>
+                    </div>                                
+              </div>
+        </div>
+     </div>
+   
+</body>
+</html>

@@ -1,0 +1,702 @@
+﻿using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.Server.Tools.Helpers;
+using Logitude.SystemLogs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Server.Infrastructure.Helpers;
+using Syncfusion.XlsIO;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.ServiceModel.DomainServices.Server;
+using System.Text.RegularExpressions;
+using System.Web;
+using System.Web.Services;
+using System.Xml;
+using System.Xml.Serialization;
+
+namespace WebFreight.Web.Helpers
+{
+    public class ExportToExcelHelper
+    {
+        public byte[] ExportQueryToExcel(byte[] xmlFilters, string queryId, int tenant, string userid, string typename)
+        {
+            string xmlData = "";
+            System.IO.MemoryStream memory = new System.IO.MemoryStream();
+            //try
+            //{
+            FilterSerializer filterSerializer = new FilterSerializer();
+            QueryRepository queryRep = new QueryRepository(tenant);
+            QueryColumnRepository queryColumnRep = new QueryColumnRepository(tenant);
+            QueryQuery queryQuery = new QueryQuery(queryRep);
+            QueryPM query = queryQuery.GetSingleQueryPM(queryId, tenant);
+            QueryColumnQuery queryColumnQuery = new QueryColumnQuery(queryColumnRep);
+            List<QueryColumnPM> queryColumns = queryColumnQuery.GetQueryColumnsByQueryIdAndUser(tenant, userid, query.Id).OrderBy(q => q.IndexOrder).ToList();
+            if (queryColumns.Count == 0)
+            {
+                queryColumns = queryColumnQuery.GetQueryColumnsByQueryIdAndUser(0, userid, query.Id).OrderBy(q => q.IndexOrder).ToList();
+            }
+
+            if (queryColumns.Count == 0)
+            {
+                queryColumns = queryColumnQuery.GetZeroQueryColumnsByQueryId(0, query.Id).OrderBy(q => q.IndexOrder).ToList();
+            }
+
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+            queryOperations.GetAll = true;
+            queryOperations.PageIndex = 0;
+            queryOperations.GetAll = true;
+            MethodInfo getListMethodInfo = null;
+            MethodInfo getCountMethodInfo = null;
+            object context = null;
+            if (typename != null)
+            {
+                Type contextType = Type.GetType(typename.Replace("Context", "Service"));
+
+                context = Activator.CreateInstance(contextType);
+
+                DomainServiceContext con = new DomainServiceContext(new MockServiceProvider(), DomainOperationType.Query);
+                MethodInfo methodInfo = context.GetType().GetMethod("Initialize");
+                object[] parameters1 = new object[] { con };
+                methodInfo.Invoke(context, parameters1);
+
+                //ShipmentFollowUp
+                switch (query.QuerySection)
+                {
+                    case "ShipmentFollowUp":
+                        {
+                            getListMethodInfo = context.GetType().GetMethod("GetFollowUpsByShipmentsFilter");
+                            getCountMethodInfo = context.GetType().GetMethod("GetFollowUpsByShipmentsFilterCount");
+
+                            break;
+                        }
+                    case "QuoteFollowUp":
+                        {
+                            getListMethodInfo = context.GetType().GetMethod("GetFollowUpsByQuotesFilter");
+                            getCountMethodInfo = context.GetType().GetMethod("GetFollowUpsByQuotesFilterCount");
+                            break;
+                        }
+                    default:
+                        {
+                            getListMethodInfo = query.ObjectTableName.Contains("Customs.") ? context.GetType().GetMethod("Get" + query.ObjectTableName.Split('.')[1] + "Filters") : context.GetType().GetMethod("Get" + query.ObjectTableName + "Filters");
+                            getCountMethodInfo = query.ObjectTableName.Contains("Customs.") ? context.GetType().GetMethod("Get" + query.ObjectTableName.Split('.')[1] + "FiltersCount") : context.GetType().GetMethod("Get" + query.ObjectTableName + "FiltersCount");
+                            if (getCountMethodInfo == null)
+                            {
+                                getCountMethodInfo = query.ObjectTableName.Contains("Customs.") ? context.GetType().GetMethod("Get" + query.ObjectTableName.Split('.')[1] + "FiltersCount") : context.GetType().GetMethod("Get" + query.ObjectTableName + "Count");
+
+                            }
+
+                            break;
+                        }
+                }
+
+            }
+            else
+            {
+                var MethodsInfo = getMethodsInfo("WebFreight.Web.ShipmentsModel.DomainServices.ShipmentsDomainService", query);
+                bool stop = false;
+                if (MethodsInfo != null)
+                {
+                    getListMethodInfo = MethodsInfo.ListMethodInfo;
+                    getCountMethodInfo = MethodsInfo.CountMethodInfo;
+                    context = MethodsInfo.context;
+                    stop = true;
+                }
+                if (stop == false)
+                {
+                    MethodsInfo = getMethodsInfo("WebFreight.Web.CommonDataModel.DomainServices.CommonDataDomainService", query);
+                    if (MethodsInfo != null)
+                    {
+                        getListMethodInfo = MethodsInfo.ListMethodInfo;
+                        getCountMethodInfo = MethodsInfo.CountMethodInfo;
+                        context = MethodsInfo.context;
+                        stop = true;
+                    }
+                }
+                if (stop == false)
+                {
+                    MethodsInfo = getMethodsInfo("WebFreight.Web.InfrastructureModel.DomainServices.WebFreightDomainService", query);
+                    if (MethodsInfo != null)
+                    {
+                        getListMethodInfo = MethodsInfo.ListMethodInfo;
+                        getCountMethodInfo = MethodsInfo.CountMethodInfo;
+                        context = MethodsInfo.context;
+                        stop = true;
+                    }
+                }
+                if (stop == false)
+                {
+                    MethodsInfo = getMethodsInfo("WebFreight.Web.QuoteModel.DomainServices.QuotesDomainService", query);
+                    if (MethodsInfo != null)
+                    {
+                        getListMethodInfo = MethodsInfo.ListMethodInfo;
+                        getCountMethodInfo = MethodsInfo.CountMethodInfo;
+                        context = MethodsInfo.context;
+                        stop = true;
+                    }
+                }
+                if (stop == false)
+                {
+                    MethodsInfo = getMethodsInfo("WebFreight.Web.GlobalModel.GlobalDomainService", query);
+                    if (MethodsInfo != null)
+                    {
+                        getListMethodInfo = MethodsInfo.ListMethodInfo;
+                        getCountMethodInfo = MethodsInfo.CountMethodInfo;
+                        context = MethodsInfo.context;
+                        stop = true;
+                    }
+                }
+                if (stop == false)
+                {
+                    MethodsInfo = getMethodsInfo("WebFreight.Web.CommonDataModel.DomainServices.ContactDomainService", query);
+                    if (MethodsInfo != null)
+                    {
+                        getListMethodInfo = MethodsInfo.ListMethodInfo;
+                        getCountMethodInfo = MethodsInfo.CountMethodInfo;
+                        context = MethodsInfo.context;
+                        stop = true;
+                    }
+                }
+                if (stop == false)
+                {
+                    MethodsInfo = getMethodsInfo("WebFreight.Web.CommonDataModel.DomainServices.PartnersDomainService", query);
+                    if (MethodsInfo != null)
+                    {
+                        getListMethodInfo = MethodsInfo.ListMethodInfo;
+                        getCountMethodInfo = MethodsInfo.CountMethodInfo;
+                        context = MethodsInfo.context;
+                        stop = true;
+                    }
+                }
+                if (stop == false)
+                {
+                    MethodsInfo = getMethodsInfo("WebFreight.Web.CommonDataModel.DomainServices.PaymentTermDomainService", query);
+                    if (MethodsInfo != null)
+                    {
+                        getListMethodInfo = MethodsInfo.ListMethodInfo;
+                        getCountMethodInfo = MethodsInfo.CountMethodInfo;
+                        context = MethodsInfo.context;
+                        stop = true;
+                    }
+                }
+                if (stop == false)
+                {
+                    MethodsInfo = getMethodsInfo("WebFreight.Web.BookingModel.DomainServices.BookingsDomainService", query);
+                    if (MethodsInfo != null)
+                    {
+                        getListMethodInfo = MethodsInfo.ListMethodInfo;
+                        getCountMethodInfo = MethodsInfo.CountMethodInfo;
+                        context = MethodsInfo.context;
+                        stop = true;
+                    }
+                }
+                if (stop == false)
+                {
+                    MethodsInfo = getMethodsInfo("WebFreight.Web.InvoiceModel.DomainServices.InvoiceDomainService", query);
+                    if (MethodsInfo != null)
+                    {
+                        getListMethodInfo = MethodsInfo.ListMethodInfo;
+                        getCountMethodInfo = MethodsInfo.CountMethodInfo;
+                        context = MethodsInfo.context;
+                        stop = true;
+                    }
+                }
+                if (stop == false)
+                {
+                    MethodsInfo = getMethodsInfo("WebFreight.Web.CustomModel.DomainServices.CustomDomainService", query);
+                    if (MethodsInfo != null)
+                    {
+                        getListMethodInfo = MethodsInfo.ListMethodInfo;
+                        getCountMethodInfo = MethodsInfo.CountMethodInfo;
+                        context = MethodsInfo.context;
+                        stop = true;
+                    }
+                }
+                if (stop == false)
+                {
+                    MethodsInfo = getMethodsInfo("WebFreight.Web.CustomModel.DomainServices.DeclarationDomainService", query);
+                    if (MethodsInfo != null)
+                    {
+                        getListMethodInfo = MethodsInfo.ListMethodInfo;
+                        getCountMethodInfo = MethodsInfo.CountMethodInfo;
+                        context = MethodsInfo.context;
+                        stop = true;
+                    }
+                }
+                if (stop == false)
+                {
+                    MethodsInfo = getMethodsInfo("WebFreight.Web.CustomModel.DomainServices.ClaimDomainService", query);
+                    if (MethodsInfo != null)
+                    {
+                        getListMethodInfo = MethodsInfo.ListMethodInfo;
+                        getCountMethodInfo = MethodsInfo.CountMethodInfo;
+                        context = MethodsInfo.context;
+                        stop = true;
+                    }
+                }
+
+
+                if (stop == false)
+                {
+                    MethodsInfo = getMethodsInfo("WebFreight.Web.CRMModel.DomainServices.CRMDomainService", query);
+                    if (MethodsInfo != null)
+                    {
+                        getListMethodInfo = MethodsInfo.ListMethodInfo;
+                        getCountMethodInfo = MethodsInfo.CountMethodInfo;
+                        context = MethodsInfo.context;
+                        stop = true;
+                    }
+                }
+
+                if (stop == false)
+                {
+                    MethodsInfo = getMethodsInfo("WebFreight.Web.CRMModel.DomainServices.EmployeeGroupDomainService", query);
+                    if (MethodsInfo != null)
+                    {
+                        getListMethodInfo = MethodsInfo.ListMethodInfo;
+                        getCountMethodInfo = MethodsInfo.CountMethodInfo;
+                        context = MethodsInfo.context;
+                        stop = true;
+                    }
+                }
+
+            }
+
+            System.Linq.IQueryable querableEntities = null;
+
+            if (getListMethodInfo != null && getCountMethodInfo != null)
+            {
+                //Get data count
+                xmlFilters = filterSerializer.SerializeFilterItems(queryOperations);
+
+                object[] parameters = new object[] { xmlFilters, tenant };
+                int count = (int)getCountMethodInfo.Invoke(context, parameters);
+
+                // Get dataList
+                queryOperations.PageSize = count;
+                xmlFilters = filterSerializer.SerializeFilterItems(queryOperations);
+
+                parameters = new object[] { xmlFilters, tenant };
+
+                var queryResult = getListMethodInfo.Invoke(context, parameters);
+                querableEntities = queryResult as IQueryable;
+                IEnumerator datalist =null;
+                if (querableEntities == null)
+                {
+                    //var queryResult = getListMethodInfo.Invoke(context, parameters);
+                    if (queryResult != null)
+                    {
+                        IList list = queryResult as IList;
+                        if (list != null)
+                        {
+                            //querableEntities = list.AsQueryable(); 
+                            datalist = list.GetEnumerator();
+                        }
+
+                    }
+                }
+                else
+                {
+                     datalist = querableEntities.GetEnumerator();
+                }
+                
+
+                if (datalist != null)
+                {
+
+                    //IEnumerator datalist = querableEntities.GetEnumerator();
+                    xmlData = ConvertDataList2Xml(datalist, query, queryColumns, tenant);
+
+
+                    //New instance of XlsIO is created.[Equivalent to launching MS Excel with no workbooks open].
+                    //The instantiation process consists of two steps.
+
+                    //Step 1 : Instantiate the spreadsheet creation engine.
+                    ExcelEngine excelEngine = new ExcelEngine();
+                    //Step 2 : Instantiate the excel application object.
+                    IApplication application = excelEngine.Excel;
+
+                    //A new workbook is created.[Equivalent to creating a new workbook in MS Excel]
+                    //The new workbook will have 5 worksheets
+                    IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
+                    //The first worksheet object in the worksheets collection is accessed.
+                    IWorksheet sheet = workbook.Worksheets[0];
+                    //****************************** Creating excel from xml string *****************************
+
+                    //sheet.Range["A2:H2"].Merge();
+                    //sheet.Range["A1:P1"].Merge();
+                    //sheet.Range["A1:H2"].Merge();
+                    //sheet.Range["A2:H2"].CellStyle.FillBackground = ExcelKnownColors.LightGreen;
+
+                    sheet.Range["A2:C2"].Merge();
+                    sheet.Range["A2:C2"].Text = TextCodesTranslator.TranslateText(query.NameTextCodeCode, tenant);//query.Code; //+ " " + (query.Code.Contains(query.ObjectTableName)?"": query.ObjectTableName + "s");//"First Flight";
+                    sheet.Range["A2:C2"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
+                    sheet.Range["A2:C2"].CellStyle.Font.Bold = true;
+                    sheet.Range["A2:C2"].CellStyle.Font.Color = ExcelKnownColors.Black;
+                    sheet.Range["A2:C2"].CellStyle.Font.Size = 12;
+                    sheet.Range["A2:C2"].CellStyle.Font.FontName = "Thoma";
+                    sheet.Range["A2:Z2"].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
+                    sheet.Range["A3:Z3"].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
+
+
+                    foreach (QueryColumnPM column in queryColumns)
+                    {
+                        sheet.AutofitColumn(column.IndexOrder + 1);
+
+                    }
+
+                    XmlReader reader = XmlReader.Create(new StringReader(xmlData));
+                    XmlDataDocument doc = new XmlDataDocument();
+                    doc.Load(reader);
+
+                    doc.GetElementsByTagName(query.ObjectTableName);
+                    XmlNodeList entitiesList = doc.GetElementsByTagName(query.ObjectTableName);
+
+                    if (entitiesList.Count == 0)
+                    {
+                        string ip = "";
+                        if (HttpContext.Current != null && HttpContext.Current.Request != null)
+                        {
+                            string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
+                            if (string.IsNullOrEmpty(currentIP))
+                            {
+                                currentIP = HttpContext.Current.Request.UserHostAddress;
+                            }
+                            ip = currentIP;
+                        }
+                        //ExceptionHandler.HandleException(new Exception("Error while building xml file, table columns are empty!"), DateTime.Now, tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "", "ExcelExportService : ExportQueryToExcel Method", ip);
+                        return null;
+                    }
+
+                    int[,] array = new int[,] { { 65, 0 } };
+                    foreach (XmlNode node in entitiesList.Item(0).ChildNodes)
+                    {
+                        string nodename = TranslateTextsClass.Translate(node.Name, tenant);
+                        nodename = nodename != null ? nodename : "";
+                        nodename = nodename.Replace(":", "").Replace("/", "").Replace("\"", "").Replace("?", "").Replace("*", "").Replace("[", "").Replace("]", "").Replace("(", "").Replace(")", "");
+
+                        string sheetColumn = "";
+                        if (array[0, 0] <= 90 && array[0, 1] == 0)
+                        {
+                            char a = (char)array[0, 0];
+                            sheetColumn = a.ToString();
+                            array[0, 0]++;
+                        }
+                        else
+                        {
+                            if (array[0, 1] == 0)
+                            {
+                                array[0, 0] = 65;
+                                array[0, 1] = 65;
+
+                                sheet.Range["AA2:AZ2"].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
+                                sheet.Range["AA3:AZ3"].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
+
+                            }
+                            if (array[0, 1] <= 90)
+                            {
+                                string a = sheetColumn = ((char)array[0, 0]).ToString() + ((char)array[0, 1]).ToString();
+                                array[0, 1]++;
+                            }
+                            else
+                                break;
+
+                        };
+
+                        sheet.Range[sheetColumn.ToString() + "3"].Text = nodename;
+                        IRange range = sheet.Range[sheetColumn + "3"];
+                        //sheet.Range.NumberFormat = "yyyy-mm-dd;@";
+                        range.CellStyle.Font.FontName = "Times New Roman";
+                        range.CellStyle.Font.Bold = true;
+
+                    }
+                    //TenantRepository tenantRepoitory = new TenantRepository(tenant);
+                    //var CurTenant = tenantRepoitory.GetSingleByTenant(tenant);
+                    int cellRow = 4;
+                    TenantRepository tenantRepoitory = new TenantRepository(tenant);
+                    var CurTenant = tenantRepoitory.GetSingleByTenant(tenant);
+                    foreach (XmlNode node in entitiesList)
+                    {
+                        int cellCol = 1;
+                        foreach (XmlNode childNode in node.ChildNodes)
+                        {
+
+                            QueryColumnPM column = queryColumns.Where(q => q.ObjectFieldListLabelTextCodeCode == childNode.Name || q.ObjectFieldFullNameTextCodeCode == childNode.Name).FirstOrDefault();
+
+                            switch (column.ObjectFieldDataTypeCode)
+                            {
+                                case "Text":
+                                    sheet.Range[cellRow, cellCol].Text = childNode.InnerText.Trim();
+                                    break;
+
+                                case "Boolean":
+                                    Boolean b = false;
+                                    Boolean.TryParse(childNode.InnerText.Trim(), out b);
+                                    sheet.Range[cellRow, cellCol].Boolean = b;
+                                    break;
+
+                                case "Constant":
+                                    sheet.Range[cellRow, cellCol].Text = childNode.InnerText.Trim();
+                                    break;
+
+                                case "DateTime":
+                                    DateTime date;
+                                    if (DateTime.TryParse(childNode.InnerText.Trim(), out date))
+                                    {
+                                        sheet.Range[cellRow, cellCol].DateTime = date.Date;
+                                        string datetimeformat = @"dd\/MM\/yyyy";
+                                        if (!string.IsNullOrEmpty(CurTenant.DateTimeFormat))
+                                        {
+                                            datetimeformat = CurTenant.DateTimeFormat;
+                                        }
+                                        sheet.Range[cellRow, cellCol].NumberFormat = datetimeformat;
+                                    }
+                                    else
+                                    {
+                                        sheet.Range[cellRow, cellCol].Text = "";
+                                    }
+
+
+                                    break;
+                                case "Decimal":
+                                    double dex = 0;
+                                    double.TryParse(childNode.InnerText.Trim(), out dex);
+                                    sheet.Range[cellRow, cellCol].Number = dex;
+                                    break;
+                                case "Double":
+                                    double d = 0;
+                                    double.TryParse(childNode.InnerText.Trim(), out d);
+                                    sheet.Range[cellRow, cellCol].Number = d;
+                                    break;
+                                case "Integer":
+                                    int x = 0;
+                                    int.TryParse(childNode.InnerText.Trim(), out x);
+                                    sheet.Range[cellRow, cellCol].Number = x;
+                                    break;
+
+                                default:
+                                    sheet.Range[cellRow, cellCol].Text = childNode.InnerText.Trim();
+                                    break;
+                            }
+
+                            //sheet.Range[cellRow, cellCol].Text = childNode.InnerText.Trim();
+                            //if (cellCol <= 2)
+                            //    sheet.Range[cellRow, cellCol].ColumnWidth = 30;
+
+
+
+                            cellCol++;
+                        }
+                        cellRow++;
+
+                    }
+
+
+                    //***************************************************************************
+                    //Inserting sample text into the range of cells of the first worksheet.
+                    //sheet.Range["A1:N30"].Text = "Hello World";
+
+                    //Saving the workbook to disk.
+
+                    workbook.SaveAs(memory, ExcelSaveType.SaveAsXLS);
+
+                    //No exception will be thrown if there are unsaved workbooks.
+                    excelEngine.ThrowNotSavedOnDestroy = false;
+                    excelEngine.Dispose();
+                }
+            }
+            //}
+            //catch (Exception e)
+            //{
+            //    string ip = "";
+            //    if (HttpContext.Current != null && HttpContext.Current.Request != null)
+            //    {
+            //        ip = HttpContext.Current.Request.UserHostAddress;
+            //    }
+            //    ExceptionHandler.HandleException(e, DateTime.Now, tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "", "ExcelExportService : ExportQueryToExcel Method", ip);
+            //}
+
+
+            return memory.ToArray();
+        }
+
+        private string ConvertDataList2Xml(IEnumerator dataList, QueryPM query, List<QueryColumnPM> queryColumns, int tenant)
+        {
+
+            TextCodeRepository textCodeRepoitory = new TextCodeRepository(tenant);
+            TenantRepository tenantRepoitory = new TenantRepository(tenant);
+            var CurTenant = tenantRepoitory.GetSingleByTenant(tenant);
+            string queryName = TranslateTextsClass.Translate(query.NameTextCodeCode, tenant).Replace(" ", "_") + "_" + query.ObjectTableName + "s";
+
+            queryName = ExportToExcelHelper.GetValidFileName(queryName);//queryName.Replace(":", "").Replace("/", "").Replace("\"", "").Replace("?", "").Replace("*", "").Replace("[", "").Replace("]", "").Replace("(", "").Replace(")", "").Replace("'", "");
+            queryName = queryName.Replace(":", "").Replace("/", "").Replace("\"", "").Replace("?", "").Replace("*", "").Replace("[", "").Replace("]", "").Replace("(", "").Replace(")", "").Replace("'", "");
+
+            //if (queryName.Length > 31)
+            //    queryName = queryName.Substring(0, 31);
+
+            System.Xml.Linq.XElement entities = new System.Xml.Linq.XElement(queryName);
+            try
+            {
+                int datacount = 0;
+
+                if (dataList != null)
+                {
+                    while (dataList.MoveNext())
+                    {
+                        object entity = dataList.Current;
+                        System.Xml.Linq.XElement table = new System.Xml.Linq.XElement(query.ObjectTableName);
+
+                        foreach (QueryColumnPM column in queryColumns)
+                        {
+                            string text = !string.IsNullOrWhiteSpace(column.ObjectFieldListLabelTextCodeCode) ? column.ObjectFieldListLabelTextCodeCode : column.ObjectFieldFullNameTextCodeCode;
+                            System.Xml.Linq.XElement col = new System.Xml.Linq.XElement(text);
+                            string value = " ";
+                            PropertyInfo info = entity.GetType().GetProperty(column.ObjectFieldName);
+                            if (info != null)
+                            {
+                                value = info.GetValue(entity, null) != null ? info.GetValue(entity, null).ToString() : " ";
+                            }
+                            var temp = Fix(value);
+                            //if (column.ObjectFieldDataTypeCode == "Date" || column.ObjectFieldDataTypeCode == "DateTime")
+                            //{
+                            //    string datetimeformat = @"dd\/MM\/yyyy";
+                            //    if (!string.IsNullOrEmpty(CurTenant.DateTimeFormat))
+                            //    {
+                            //        datetimeformat = CurTenant.DateTimeFormat;
+                            //    }
+                            //    temp = string.Format(datetimeformat, info.GetValue(entity, null));
+                            //}
+
+                            col.Value = temp;
+
+                            table.Add(col);
+                        }
+
+
+                        entities.Add(table);
+
+                        datacount++;
+                    }
+
+                }
+
+                if (dataList == null || datacount == 0)
+                {
+                    System.Xml.Linq.XElement table = new System.Xml.Linq.XElement(query.ObjectTableName);
+
+                    foreach (QueryColumnPM column in queryColumns)
+                    {
+                        string text = !string.IsNullOrWhiteSpace(column.ObjectFieldListLabelTextCodeCode) ? column.ObjectFieldListLabelTextCodeCode : column.ObjectFieldFullNameTextCodeCode;
+                        System.Xml.Linq.XElement col = new System.Xml.Linq.XElement(text);
+                        string value = " ";
+                        col.Value = value;
+                        table.Add(col);
+                    }
+
+
+                    entities.Add(table);
+                }
+            }
+            catch { }
+
+            return entities.ToString();
+
+
+
+        }
+
+        private static string GetValidFileName(string fileName)
+        {
+            // remove any invalid character from the filename.
+            String ret = Regex.Replace(fileName.Trim(), "[^A-Za-z0-9_. ]+", "");
+            return ret.Replace(" ", String.Empty);
+        }
+        Lazy<Regex> ControlChars = new Lazy<Regex>(() => new Regex("[\x00-\x1f]", RegexOptions.Compiled));
+
+        private string FixData_Replace(Match match)
+        {
+            if ((match.Value.Equals("\t")) || (match.Value.Equals("\n")) || (match.Value.Equals("\r")))
+                return match.Value;
+
+            return "&#" + ((int)match.Value[0]).ToString("X4") + ";";
+        }
+
+        public string Fix(object data, MatchEvaluator replacer = null)
+        {
+            if (data == null) return null;
+            string fixed_data;
+            if (replacer != null) fixed_data = ControlChars.Value.Replace(data.ToString(), replacer);
+            else fixed_data = ControlChars.Value.Replace(data.ToString(), FixData_Replace);
+            return fixed_data;
+        }
+
+        private ReflectionProperties getMethodsInfo(string ContextName, QueryPM query)
+        {
+            Type contextType = Type.GetType(ContextName);
+
+            object context = Activator.CreateInstance(contextType);
+
+            DomainServiceContext con = new DomainServiceContext(new MockServiceProvider(), DomainOperationType.Query);
+            MethodInfo methodInfo = context.GetType().GetMethod("Initialize");
+            object[] parameters1 = new object[] { con };
+            methodInfo.Invoke(context, parameters1);
+
+            MethodInfo getListMethodInfo = null;
+            MethodInfo getCountMethodInfo = null;
+            switch (query.QuerySection)
+            {
+                case "ShipmentFollowUp":
+                    {
+                        getListMethodInfo = context.GetType().GetMethod("GetFollowUpsByShipmentsFilter");
+                        getCountMethodInfo = context.GetType().GetMethod("GetFollowUpsByShipmentsFilterCount");
+
+                        break;
+                    }
+                case "QuoteFollowUp":
+                    {
+                        getListMethodInfo = context.GetType().GetMethod("GetFollowUpsByQuotesFilter");
+                        getCountMethodInfo = context.GetType().GetMethod("GetFollowUpsByQuotesFilterCount");
+                        break;
+                    }
+                default:
+                    {
+                        getListMethodInfo = query.ObjectTableName.Contains("Customs.") ? context.GetType().GetMethod("Get" + query.ObjectTableName.Split('.')[1] + "Filters") : context.GetType().GetMethod("Get" + query.ObjectTableName + "Filters");
+                        getCountMethodInfo = query.ObjectTableName.Contains("Customs.") ? context.GetType().GetMethod("Get" + query.ObjectTableName.Split('.')[1] + "FiltersCount") : context.GetType().GetMethod("Get" + query.ObjectTableName + "FiltersCount");
+                        if (getCountMethodInfo == null)
+                        {
+                            getCountMethodInfo = query.ObjectTableName.Contains("Customs.") ? context.GetType().GetMethod("Get" + query.ObjectTableName.Split('.')[1] + "FiltersCount") : context.GetType().GetMethod("Get" + query.ObjectTableName + "Count");
+
+                        }
+
+                        break;
+                    }
+            }
+
+
+
+            ReflectionProperties ReturnData = null;
+            if (getListMethodInfo != null && getCountMethodInfo != null)
+            {
+                ReturnData = new ReflectionProperties();
+                ReturnData.ListMethodInfo = getListMethodInfo;
+                ReturnData.CountMethodInfo = getCountMethodInfo;
+                ReturnData.context = context;
+            }
+            return ReturnData;
+        }
+    }
+}
+class ReflectionProperties
+{
+    public MethodInfo ListMethodInfo { get; set; }
+    public MethodInfo CountMethodInfo { get; set; }
+    public object context { get; set; }
+
+}

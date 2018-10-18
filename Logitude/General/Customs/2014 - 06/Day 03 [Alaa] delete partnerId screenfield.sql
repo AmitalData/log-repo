@@ -1,0 +1,1 @@
+delete from ScreenFields where ObjectFieldId =(select id from ObjectFields where FieldName = 'PartnerId'  and ObjectTableId = (select id from ObjectTables where Name = 'customs.item')) 

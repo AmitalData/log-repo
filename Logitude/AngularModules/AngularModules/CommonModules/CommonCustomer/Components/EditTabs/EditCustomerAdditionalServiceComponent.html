@@ -1,0 +1,94 @@
+﻿<table>
+ 
+    <tr style="height:10px"><td colspan="4"></td></tr>
+  <tr style="height:1px" *ngIf="ShowRadioButtons">
+      <td style="width:150px">
+
+          <LogLabel [ObjectFieldName]="'Potential'" [ObjectTableName]="'CustomerAdditionalService'"
+                    [DataContext]="DataContext" [Text]="'Potential / In Use'"></LogLabel>
+
+      </td>
+      <td style="width:70px">
+          <RadioButton [Name]="CustomerAdditionalServiceRadio" [IsChecked]="Potential" (Checked)="Potential=$event" [Text]="'Potential'"></RadioButton>
+
+      </td>
+      <td style="width:10px"></td>
+      <td style="width:120px">
+          <RadioButton  [Name]="CustomerAdditionalServiceRadio" [IsChecked]="InUse" (Checked)="InUse=$event" [Text]="'In Use'"></RadioButton>
+
+      </td>
+      <td>
+
+      </td>
+  </tr>
+    <tr style="height:10px"><td colspan="5"></td></tr>
+
+    <tr style="height:150px">
+        <td style="vertical-align:top" *ngIf="ShowRadioButtons">
+            <LogLabel [ObjectFieldName]="'Notes'" [ObjectTableName]="'CustomerAdditionalService'"
+                      [DataContext]="DataContext" ></LogLabel>
+        </td>
+        <td style="vertical-align:top;width:100px" *ngIf="!ShowRadioButtons">
+            <LogLabel [ObjectFieldName]="'Notes'" [ObjectTableName]="'CustomerAdditionalService'"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+        <td colspan="3">
+            <div style="height:100%;width:100%">
+                <LogTextBox [ObjectFieldName]="'Notes'" [ObjectTableName]="'CustomerAdditionalService'" [IsMultiline]="true" [InputType]="'ntext'" [DataContext]="DataContext" [HideColumns]="true" style="height:100%;width:100%"></LogTextBox>
+            </div>
+        </td>
+        <td></td>
+        <td style="width:100px" *ngIf="!ShowRadioButtons"></td>
+    </tr>
+
+    <tr>
+        <td colspan="5"></td>
+    </tr>
+    <tr style="height: 32px;" *ngIf="ShowRadioButtons">
+        <td style="vertical-align: bottom" colspan="5">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>                   
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr style="height: 32px;" *ngIf="!ShowRadioButtons">
+        <td style="vertical-align: bottom" colspan="6">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

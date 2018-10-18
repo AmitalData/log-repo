@@ -1,0 +1,51 @@
+<!ELEMENT GFUSTS (follow_up_status*)>
+<!ELEMENT follow_up_status (primary_number, status_line, status_id, status_date, status_time, follow_up_date, send_notice, expected_status, expected_status_date, expected_follow_up_date, done_id, flag_id, flag_exp, sort_by, status_partner_id, status_partner_name, xml_status, status_name, entname, primary_num_tex_part, exp_status_part_id, exp_foll_up_time, primary_number_partner_id, reference*, comments, reference_list*, user_type, source, status_save, foll_up_details*, status_place?, comments_buyer?)>
+<!ATTLIST follow_up_status id CDATA #REQUIRED>
+<!ATTLIST follow_up_status status CDATA #REQUIRED>
+<!ELEMENT primary_number (#PCDATA)>
+<!ATTLIST primary_number primary CDATA #FIXED "yes">
+<!ELEMENT status_line (#PCDATA)>
+<!ATTLIST status_line primary CDATA #FIXED "yes">
+<!ELEMENT status_id (#PCDATA)>
+<!ELEMENT status_date (#PCDATA)>
+<!ELEMENT status_time (#PCDATA)>
+<!ELEMENT follow_up_date (#PCDATA)>
+<!ELEMENT send_notice (#PCDATA)>
+<!ELEMENT expected_status (#PCDATA)>
+<!ELEMENT expected_status_date (#PCDATA)>
+<!ELEMENT expected_follow_up_date (#PCDATA)>
+<!ELEMENT done_id (#PCDATA)>
+<!ELEMENT flag_id (#PCDATA)>
+<!ELEMENT flag_exp (#PCDATA)>
+<!ELEMENT sort_by (#PCDATA)>
+<!ELEMENT status_partner_id (#PCDATA)>
+<!ELEMENT status_partner_name (#PCDATA)>
+<!ELEMENT xml_status (#PCDATA)>
+<!ELEMENT status_name (#PCDATA)>
+<!ELEMENT entname (#PCDATA)>
+<!ELEMENT primary_num_tex_part (#PCDATA)>
+<!ELEMENT exp_status_part_id (#PCDATA)>
+<!ELEMENT exp_foll_up_time (#PCDATA)>
+<!ELEMENT primary_number_partner_id (#PCDATA)>
+<!ELEMENT reference (reference-activ, reference-exp, reference-xml)>
+<!ELEMENT reference-activ (#PCDATA)>
+<!ELEMENT reference-exp (#PCDATA)>
+<!ELEMENT reference-xml (#PCDATA)>
+<!ELEMENT comments (#PCDATA)>
+<!ATTLIST comments multi_line CDATA #FIXED "yes">
+<!ELEMENT reference_list (reference_list-type, reference_list-id)>
+<!ATTLIST reference_list multi_line CDATA #FIXED "yes">
+<!ELEMENT reference_list-type (#PCDATA)>
+<!ELEMENT reference_list-id (#PCDATA)>
+<!ELEMENT user_type (#PCDATA)>
+<!ELEMENT source (#PCDATA)>
+<!ELEMENT status_save (#PCDATA)>
+<!ELEMENT foll_up_details (foll_up_details-log_date?, foll_up_details-log_time?, foll_up_details-user*)>
+<!ELEMENT foll_up_details-log_date (#PCDATA)>
+<!ELEMENT foll_up_details-log_time (#PCDATA)>
+<!ELEMENT foll_up_details-user (foll_up_details-id?, foll_up_details-partner_id?, foll_up_details-name?)>
+<!ELEMENT foll_up_details-id (#PCDATA)>
+<!ELEMENT foll_up_details-partner_id (#PCDATA)>
+<!ELEMENT foll_up_details-name (#PCDATA)>
+<!ELEMENT status_place (#PCDATA)>
+<!ELEMENT comments_buyer (#PCDATA)>

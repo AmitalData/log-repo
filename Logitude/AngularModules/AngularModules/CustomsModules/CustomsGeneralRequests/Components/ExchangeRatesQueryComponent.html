@@ -1,0 +1,139 @@
+﻿
+<div>
+    <!-- ExchangeRatesQueryComponent  view  -->
+    <custom-message-wrapper>
+
+        <!-- ExchangeRatesQueryComponent  Request  -->
+        <div class="class-request-content">
+            <!---->
+            <table style="width: 570px;padding-top: 10px;">
+
+                <tr class="FormFieldRow" >
+                    <td style="width: 200px">
+                        <LogLabel [NoObjectField]="true" [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Customs.CustomsExchangeRate.F.DateFrom'"></LogLabel>
+                    </td>
+                    <td style="width:10px"></td>
+                    <td style="width: 200px; padding-right: 36px;">
+                        <!-- ExchangeRatesQueryComponent  Request.FromDate-->
+                        <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName"
+                                       [InputType]="'date'" [DataContext]="DataContext"
+                                       [HideColumns]="true" ></LogDatePicker>
+
+                    </td>
+                    <td><div></div></td>
+                </tr>
+                <tr class="FormFieldRow" >
+                    <td style="width: 200px">
+                        <LogLabel [NoObjectField]="true" [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Customs.CustomsExchangeRate.F.DateTo'"></LogLabel>
+                    </td>
+                    <td style="width:10px"></td>
+                    <td style="width: 200px; padding-right: 36px;">
+                        <!-- ExchangeRatesQueryComponent  Request.ToDate-->
+                        <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'ToDate'"
+                                       [ObjectTableName]="ObjectTableName" [InputType]="'date'"
+                                       [DataContext]="DataContext"
+                                       [HideColumns]="true"></LogDatePicker>
+                    </td>
+
+                    <td><div></div></td>
+                </tr>
+
+                <tr class="FormFieldRow">
+                    <td style="width: 200px">
+                        <LogLabel [NoObjectField]="true" [ObjectFieldName]="'CurrencyTypeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'קוד מטבע'"></LogLabel>
+                    </td>
+                    <td style="width:10px"></td>
+
+                    <td style="width: 200px; padding-right: 36px;">
+                        <!-- ExchangeRatesQueryComponent  Request.SubjectText-->
+                        <LogLov [ObjectFieldName]="'CurrencyTypeCode'"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [HideColumns]="true"
+                                [LookUpTableName]="'Customs.CurrencyType'"
+                                [DisplayMemberPath]="'LocalName'">
+                        </LogLov>
+                    </td>
+
+                    <td><div></div></td>
+                    <td style="width: 200px"></td>
+                    <td style="width:10px"></td>
+
+                    <td style="width: 200px; padding-right: 36px;"></td>
+
+                    <td><div></div></td>
+                </tr>
+                <tr class="FormFieldRow" style="height:1px">
+                    <td><div></div></td>    
+                </tr>
+            </table>
+        </div>
+        
+        <div class="class-response-content">
+            <table style="width: 600px;height: 300px;padding-top: 10px;">
+
+                <tr class="FormFieldRow" style="height:1px">
+                    <!--background-color :aquamarine;-->
+                    <td colspan="5" style="width: 100% ; height : 100%">
+                        <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
+                            <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ExchangeRatesQueryObservableList" >
+
+                                <!-- CurrencyTypeCode -->
+                                <log-column [header]="'קוד מטבע'"
+                                            [binding]="'CurrencyTypeId'"
+                                            [width]="'100'" [Alignment]="'Right'">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div class="RightCenter">
+                                            <span>{{item.CurrencyTypeId}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
+                                <!-- CurrencyTypeName -->
+                                <log-column 
+                                            [header]="'Customs.ExchangeRate.O.CurrencyTypeName' | TextCodeTranslationPipe"
+                                            [width]="'100'" [Alignment]="'Right'"
+                                            [binding]="'Content'">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div class="RightCenter">
+                                            <span>{{item.CurrencyTypeName}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
+                                <!-- CustomsCurrencyRate -->
+                                <!--[header]="'Customs.WarehouseBlockBalance.O.ExchangeRate' | TextCodeTranslationPipe"-->
+                                <log-column 
+                                            [header]="'שער'"
+                                            [binding]="'CustomsCurrencyRate'"
+                                            [width]="'100'" [Alignment]="'Right'">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div class="RightCenter">
+                                            <span>{{item.CustomsCurrencyRate}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
+                                <!-- StartDate -->
+                                <!--[header]="'Customs.GuaranteeCertificate.F.AllocationValidity' | TextCodeTranslationPipe"-->
+                                <log-column 
+                                            [header]="'תאריך שער'"
+                                            [width]="'150'" [Alignment]="'Right'" [binding]="'StartDate'">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div class="RightCenter">
+                                            <span>{{item.StartDate  | DateTimeToDatePipe  }}</span>
+                                            
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
+                            </logitude-edit-grid>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+
+    </custom-message-wrapper>
+</div>

@@ -1,0 +1,3684 @@
+
+declare var window: any;
+declare var document: Document;
+import {Component, ChangeDetectorRef, EventEmitter, Output, OnDestroy}  from '@angular/core';
+import {SupplierInvoicePM} from '../../../../../Customs/EntityPMs/SupplierInvoicePM';
+import {CustomsVendorPMService} from '../../../../../Customs/Services/StandardPMs/CustomsVendorPMService';
+import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/ServiceResponse';
+import {CustomsVendorPM} from '../../../../../Customs/EntityPMs/CustomsVendorPM';
+import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
+import {SupplierInvoiceItemPM} from '../../../../../Customs/EntityPMs/SupplierInvoiceItemPM';
+import {ObservableCollection} from '../../../../../Infrastructure/Utilities/ObservableCollection';
+import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
+import {TradeAgreementPM} from '../../../../../Customs/EntityPMs/TradeAgreementPM';
+import {MeasurmentUnitPM} from '../../../../../Customs/EntityPMs/MeasurmentUnitPM';
+import {CustomsCountryPM} from '../../../../../Customs/EntityPMs/CustomsCountryPM';
+import {AppTool, FontTool} from '../../../../../Infrastructure/Tools';
+import {AddEditSupplierInvoiceComponent} from './AddEditSupplierInvoiceComponent';
+import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
+import {ConfirmWindow} from '../../../../../Controls/Windows/ConfirmWindow';
+import {CustomsDocumentPointerPM} from '../../../../../Customs/EntityPMs/CustomsDocumentPointerPM';
+import {ApiQueryFilters} from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import {EntityListService} from '../../../../../Infrastructure/Services/EntityListService';
+import {SupplierInvoiceFreightAmountPM} from '../../../../../Customs/EntityPMs/SupplierInvoiceFreightAmountPM';
+import {CurrencyTypePM} from '../../../../../Customs/EntityPMs/CurrencyTypePM';
+import {CustomsExchangeRateExtendedPMService} from '../../../../../Customs/Services/ExtendedPMs/CustomsExchangeRateExtendedPMService';
+import {DeclarationPM} from '../../../../../Customs/EntityPMs/DeclarationPM';
+import {CustomsExchangeRatePM} from '../../../../../Customs/EntityPMs/CustomsExchangeRatePM';
+import {SupplierInvoiceService} from '../../../../../Customs/Services/Others/SupplierInvoiceService';
+import {TermsOfSaleTypeListService}  from '../../../../../Customs/Services/StandardLists/TermsOfSaleTypeListService';
+import {TermsOfSaleTypeList} from '../../../../../Customs/EntityLists/TermsOfSaleTypeList';
+import { LuhnAlgorithm } from '../../../../../Customs/Utilities/LuhnAlgorithm';
+import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
+import {QuantityTypeMessageService} from '../../../../../Customs/Services/WebServices/QuantityTypeMessageService';
+import {LogCellTemplateComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/EditableLogGridComponent/LogCellTemplateComponent';
+import {CustomsRequiredFieldListService} from '../../../../../Customs/Services/StandardLists/CustomsRequiredFieldListService';
+import {FilterItem} from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { DeclarationWebService } from '../../../../../Customs/Services/WebServices/DeclarationWebService';
+import { CustomsVendorListService } from '../../../../../Customs/Services/StandardLists/CustomsVendorListService';
+import {SupplierInvoiceExtendedPMService} from '../../../../../Customs/Services/ExtendedPMs/SupplierInvoiceExtendedPMService';
+import {SupplierInvoicePMService} from '../../../../../Customs/Services/StandardPMs/SupplierInvoicePMService';
+import { ImporterDespositionClass } from '../../../../../Customs/DataContract/ImporterDespositionClass';
+import {DateTimeToDatePipe} from '../../../../../Controls/Pipes/DateTimeToDatePipe';
+import { SupplierInvoiceItemProcesTypePM } from '../../../../../Customs/EntityPMs/SupplierInvoiceItemProcesTypePM';
+import {ItemGovernmentProcedureTypeListService}  from  '../../../../../Customs/Services/StandardLists/ItemGovernmentProcedureTypeListService';
+import {ItemGovernmentProcedureTypeList} from '../../../../../Customs/EntityLists/ItemGovernmentProcedureTypeList';
+import {MessageWindow} from '../../../../../Controls/Windows/MessageWindow';
+import { AmitalGatewayUtil, UnifreightMessageM} from '../../../../../Infrastructure/Utilities/AmitalGatewayUtil';
+import {CustomsSettingExtendedListService} from '../../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
+import {FeatureLocator} from '../../../../../Infrastructure/Utilities/FeatureLocator';
+import { CustomsSettingListService } from '../../../../../Customs/Services/StandardLists/CustomsSettingListService';
+import { CustomsCountryListService } from '../../../../../Customs/Services/StandardLists/CustomsCountryListService';
+
+import { GITITEMCacheService } from '../../../../../Customs/Services/Others/GITITEMCacheService';
+
+@Component({
+    moduleId: module.id,
+    templateUrl: './SupplierInvoiceGeneralTabComponent.html',
+})
+
+
+export class SupplierInvoiceGeneralTabComponent extends BaseComponent
+    implements OnDestroy {
+    public InvoiceTypeFocus: boolean;
+    public DataContext: any = this;
+    public ObjectTableName: string = "Customs.SupplierInvoice";
+    public EntityPM: SupplierInvoicePM;
+    public customsVendorPMService: CustomsVendorPMService = new CustomsVendorPMService();
+    vendor: CustomsVendorPM;
+    public ItemsSource: ObservableCollection;
+    public entityResourceService: EntityResourceService = new EntityResourceService();
+    public Parent: AddEditSupplierInvoiceComponent;
+    Pointers: CustomsDocumentPointerPM[];
+    public AmountList: ObservableCollection;
+    private _entityListService: EntityListService;
+    public declarationPM: DeclarationPM;
+    isNewEntity: boolean;
+    FreightCopyList: SupplierInvoiceFreightAmountLine[];
+    public VendorFilterItems: ApiQueryFilters;
+    ChangeScrollPosition: EventEmitter<any> = new EventEmitter();
+    public vendorNumber: string = "";
+    AccumulatedMessageVisibility: boolean;
+    AccumulatedMessageText: string;
+    public supplierInvoiceService: SupplierInvoiceService = new SupplierInvoiceService();
+    public termsOfSaleTypeListService: TermsOfSaleTypeListService = new TermsOfSaleTypeListService();
+    public customsExchangeRateExtendedPMService: CustomsExchangeRateExtendedPMService = new CustomsExchangeRateExtendedPMService();
+    supplierInvoicePMService: SupplierInvoicePMService = new SupplierInvoicePMService();
+
+    public IsDisplayOnly: boolean = false;
+    public IsReadOnly: boolean = false;
+    //public IsCountryPURForItems: boolean = false;
+
+    quantityTypeMessageService: QuantityTypeMessageService = new QuantityTypeMessageService();
+    ClasificationQtyTypes: { [code: string]: any; } = {};
+    supplierInvoiceExtendedPMService: SupplierInvoiceExtendedPMService = new SupplierInvoiceExtendedPMService();
+    itemGovernmentProcedureTypeListService: ItemGovernmentProcedureTypeListService = new ItemGovernmentProcedureTypeListService();
+    customsSettingListService: CustomsSettingListService = new CustomsSettingListService();
+    IsActionButtonsEnabled: boolean = true;
+
+    ikeaFeature: any;
+    IFritz_feature: any;
+    @Output() ReloadEntityEvent: EventEmitter<any> = new EventEmitter();
+    isMasterInvoic: boolean = false;
+    IsValueForCustomsOnlyVisible: boolean = false;
+
+
+    old_currency;
+    old_amount;
+    old_vendor;
+
+    public addedVehicles: any[] = [];
+
+
+    constructor(private cd: ChangeDetectorRef) {
+        super();
+        this.ItemsSource = new ObservableCollection([]);
+        this.AmountList = new ObservableCollection([]);
+        this._entityListService = new EntityListService();
+        this.FreightCopyList = [];
+        this.VendorFilterItems = new ApiQueryFilters();
+
+        this.VendorFilterItems.addAdditionalFilter("StatusCode", "1", "NULL", null, "Equals", false, false, false, "string", false, true);
+        //  this.VendorFilterItems.addAdditionalFilter("StatusCode", "NULL", null, null, "Equals", false, false, false, "string", false, true);
+        var table = window.ObjectTables.filter(d => d.Name === 'Customs.Declaration')[0];
+
+
+
+        this.accumulationFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCUMULATION") && f.ObjectTableId == table.Id)[0];
+        if (this.accumulationFeature) {
+            this.IsAccumulationStateVisibile = true;
+            this.IsNotForAccumaltionVisibile = true;
+        }
+        this.CheckRequrierdFieldsForSend();
+        //SessionLocator.CurrentSession.SubscriptionAdd(
+        //SessionLocator.CurrentSession.SelectInvoiceItemEvent.subscribe((res) => {
+        //    var item: SupplierInvoiceItemLine = this.ItemsSource.Collection.filter(d => d.SequenceNumeric == res.filter)[0];
+        //    this.SelectedRow = item;
+        //    var index = this.ItemsSource.Collection.indexOf(item);
+        //    this.ChangeScrollPosition.emit({ RowIndex: index});
+        //    })
+        //);
+
+
+        this.ikeaFeature = FeatureLocator.Features.filter(f => (f.Code == "IKEA") && f.ObjectTableId == table.Id)[0];
+
+        //FRITZ
+        this.IFritz_feature = FeatureLocator.Features.filter(d => d.Code == "IFRITZ")[0];
+        console.log("IFritz feature: ", this.IFritz_feature);
+
+
+    }
+    public SelectInvoiceItemMethod(res) {
+        var item: SupplierInvoiceItemLine = this.ItemsSource.Collection.filter(d => d.SequenceNumeric == res.filter)[0];
+        //this.SelectedRow = item;
+        this.OnSelectedItemChanged(item); // set this.SelectedRow
+        var index = this.ItemsSource.Collection.indexOf(item);
+        this.ChangeScrollPosition.emit({ RowIndex: index });
+
+    }
+
+    ngOnDestroy() {
+        console.log("SupplierInvoiceGeneralTabComponent:ngOnDestroy");
+        this.cd = null;
+        this.Parent = null
+        if (this.ItemsSource) {
+            this.ItemsSource.Collection.forEach(item => {
+                var siil: SupplierInvoiceItemLine = item;
+                (siil as any).Dispose();
+                siil.Parent = null;
+                siil.DataContext = null;
+
+
+            });
+            this.ItemsSource.Clear();
+            this.ItemsSource = null;
+        }
+        if (this.AmountList) {
+            this.AmountList.Collection.forEach(item => {
+                var amm: SupplierInvoiceFreightAmountLine = item;
+                amm.Parent = null;
+                amm.DataContext = null;
+
+            });
+
+            this.AmountList.Clear();
+            this.AmountList = null;
+        }
+        this.FreightCopyList = null;
+        this.Dispose();
+    }
+
+    accumulationFeature: any;
+    IsNotForAccumaltionVisibile: boolean = true;
+    IsAccumulationStateVisibile: boolean = false;
+    ParentItems: SupplierInvoiceItemPM[];
+    ChildrenItems: SupplierInvoiceItemPM[];
+    ParentsCount: string;
+    ChildrenCount: string;
+    SelectedRow: SupplierInvoiceItemLine;
+    BuildItemsList() {
+        SessionLocator.CurrentSession.StartBusyIndicator("Customs.General.O.Loading");
+        this.ItemsSource.Clear();
+        this.ParentItems = [];
+        this.ChildrenItems = [];
+        var TempItemSource: SupplierInvoiceItemLine[] = [];
+        if (this.IsAccumulated) {
+            this.AccumulatedMessageVisibility = true;
+
+
+            this.ParentItems = this.EntityPM.SupplierInvoiceItems.filter(d => d.IsParent);
+
+            this.ChildrenItems = this.EntityPM.SupplierInvoiceItems.filter(d => !d.IsParent);
+
+            if (this.IsFromCustomsAnswer && !this.IsInvoiceAnswer) {
+                this.ParentsCount = "(" + this.ParentItems.length.toString() + ")";
+                this.ChildrenCount = "(" + this.ChildrenItems.length.toString() + ")";
+
+            }
+            if (this.AccumulatedFilterSelectedValue == 'Accumulated') {
+
+                this.IsReadOnly = true;
+                this.IsNotForAccumaltionVisibile = false;
+                for (var i = 0; i < this.ParentItems.length; i++) {
+                    TempItemSource.push(new SupplierInvoiceItemLine(this.ParentItems[i], this));
+                }
+
+            }
+            else if (this.AccumulatedFilterSelectedValue == 'NotAccumulated') {
+                this.ChildrenItems = this.EntityPM.SupplierInvoiceItems.filter(d => !d.IsParent);
+                if (!this.IsDisplayOnly) {
+                    this.IsReadOnly = false;
+                }
+                if (this.accumulationFeature) {
+                    this.IsNotForAccumaltionVisibile = true;
+                }
+                for (var i = 0; i < this.ChildrenItems.length; i++) {
+                    TempItemSource.push(new SupplierInvoiceItemLine(this.ChildrenItems[i], this));
+                }
+
+            }
+
+        }
+        else {
+            this.AccumulatedMessageVisibility = false;
+            for (var i = 0; i < this.EntityPM.SupplierInvoiceItems.length; i++) {
+                TempItemSource.push(new SupplierInvoiceItemLine(this.EntityPM.SupplierInvoiceItems[i], this));
+            }
+        }
+        if (this.EntityPM.IsAccumalated) {
+            //    SessionLocator.CurrentSession.AccumulatedFilterChangedEvent.emit({ filter: this.AccumulatedFilterSelectedValue, ParentCount: this.ParentItems.length, childrenCount: this.ChildrenItems.length });
+        }
+        this.ItemsSource.InsertCollection(TempItemSource);
+        SessionLocator.CurrentSession.StopBusyIndicator();
+
+        this.originalItemSource.InsertCollection(TempItemSource);
+        if (!AppTool.IsNullOrEmpty(this.FromClassificationJumpToSII)) {
+            this.SelectInvoiceItemMethod({ filter: this.FromClassificationJumpToSII });
+        }
+
+
+    }
+    originalItemSource: ObservableCollection = new ObservableCollection([]);
+    Search(text: string) {
+        var itemsSource: any = this.originalItemSource;
+        var itemSourceByItemPrice: any = this.originalItemSource;
+        if (AppTool.IsNullOrEmpty(text)) {
+            this.BuildItemsList();
+        }
+        else {
+            itemsSource = itemsSource.Collection.filter(f => f.ClassificationCode != null || f.ItemCode != null);
+            itemSourceByItemPrice = itemSourceByItemPrice.Collection.filter(f => f.ItemPrice != null);
+            var TempItemSource: SupplierInvoiceItemLine[] = [];
+
+            TempItemSource = itemsSource.filter(f => (!AppTool.IsNullOrEmpty(f.ClassificationCode) ? f.ClassificationCode.toUpperCase().includes(text.toUpperCase()) : null) || (!AppTool.IsNullOrEmpty(f.ItemCode) ? f.ItemCode.toUpperCase().includes(text.toUpperCase()) : null));
+            this.ItemsSource.InsertCollection(TempItemSource);
+            if (itemSourceByItemPrice) {
+                itemSourceByItemPrice = this.originalItemSource.Collection.filter(f => f.ItemPrice == (text));
+                if (itemSourceByItemPrice.length > 0) {
+                    if (this.ItemsSource.Length > 0) {
+                        for (let item of itemSourceByItemPrice) {
+                            var exist = TempItemSource.filter(d => d.LineNumber == item.LineNumber)[0];
+                            if (!exist) {
+                                TempItemSource.push(item);
+                            }
+
+                        } this.ItemsSource.InsertCollection(TempItemSource);
+                    }
+                    else {
+                        this.ItemsSource.InsertCollection(itemSourceByItemPrice);
+                    }
+                }
+            }
+
+
+        }
+        if (!AppTool.IsNullOrEmpty(text)) {
+            this.SearchFilterChangedEvent = SessionLocator.CurrentSession.SearchFilterChangedEvent.emit({ count: this.ItemsSource.Length });
+        }
+        else {
+            this.SearchFilterChangedEvent = SessionLocator.CurrentSession.SearchFilterChangedEvent.emit({ count: null });
+        }
+    }
+
+
+    AccumulatedFilter: string;
+    public AccumulatedFilterSelectedValue: string = 'Accumulated';
+    AccumulatedFilterItemClicked(itemValue: string) {
+        if (this.AccumulatedFilterChangedEvent) {
+            this.AccumulatedFilterChangedEvent.unsubscribe();
+            this.AccumulatedFilterChangedEvent = null;
+        }
+        if (this.AccumulatedFilterSelectedValue != itemValue) {
+            this.AccumulatedFilterSelectedValue = itemValue;
+            if (this.AccumulatedFilterSelectedValue == 'Accumulated') {
+                this.AccumulatedFilter = "parent";
+                this.AccumulatedMessageText = "חשבון צבור - פרטי מכס ניתנים לעריכה רק במצב לא צבור";
+
+                this.IsActionButtonsEnabled = false;
+            }
+            else if (this.AccumulatedFilterSelectedValue == 'NotAccumulated') {
+                this.AccumulatedFilter = "child";
+                this.AccumulatedMessageText = "חשבון צבור";
+                if (!this.IsDisplayOnly) {
+                    this.IsActionButtonsEnabled = true;
+                }
+            }
+            if (!this.IsFromCustomsAnswer || this.IsInvoiceAnswer) {
+                SessionLocator.CurrentSession.StartBusyIndicator("");
+
+                this.Parent.EntityPM = this.EntityPM;
+                if (this.Parent.EntityPM.IsDirty) {
+                    this.Parent.SaveChangesSync();
+                }
+                this.supplierInvoiceExtendedPMService.GetSingleSupplierInvoicePMWithLimitedItems(this.EntityPM.DeclarationId, this.EntityPM.InvoiceCounterKey, 0, 500, this.AccumulatedFilter).subscribe(response => {
+                    var entityPM: SupplierInvoicePM = this.EntityPM;
+                    this.EntityPM = response.Result;
+                    this.BuildItemsList();
+                    this.Parent.EntityPM.FullChildrenCount = this.EntityPM.FullChildrenCount;
+                    this.Parent.EntityPM.FullParentsCount = this.EntityPM.FullParentsCount;
+
+                    this.AccumulatedFilterChangedEvent = SessionLocator.CurrentSession.AccumulatedFilterChangedEvent.emit({ filter: this.AccumulatedFilterSelectedValue, ParentCount: this.ParentItems.length, childrenCount: this.ChildrenItems.length, entityPM: entityPM });
+                    this.Parent.EntityPM = this.EntityPM;
+
+                    SessionLocator.CurrentSession.StopBusyIndicator();
+
+                });
+            }
+            else {
+
+                this.BuildItemsList();
+            }
+
+        }
+    }
+
+    calculateTotals(deleteItem: boolean, deletedItemPrice: number) {
+        if (deleteItem) {
+            if (deletedItemPrice == null) deletedItemPrice = 0;
+            if (this.Parent.TotalForeignCurrency == null) this.Parent.TotalForeignCurrency = 0;
+
+            this.Parent.TotalForeignCurrency = this.Parent.TotalForeignCurrency - deletedItemPrice;
+            this.Parent.Difference = this.Parent.TotalForeignCurrency - (this.InvoiceAmount);
+
+
+        }
+    }
+    IsAccumulated: boolean;
+    IsFromCustomsAnswer: boolean;
+    IsInvoiceAnswer: boolean;
+    private focusTimerToken: any;
+    public AccumulatedFilterChangedEvent: any;
+    public SearchFilterChangedEvent: any;
+
+    OrangeVisibility: boolean;
+    GreenVisibility: boolean;
+    RedVisibility: boolean;
+
+    opacity: number = 1;
+    FromClassificationJumpToSII;
+    InitTab(entityPM: SupplierInvoicePM, parent: AddEditSupplierInvoiceComponent, isDisplayOnly: boolean, getFreightTotals: boolean = true, IsNewEntity, IsFromCustomsAnswer, IsInvoiceAnswer) {
+
+        this.InvoiceTypeFocus = false;
+        this.focusTimerToken = setTimeout(() => {
+            this.InvoiceTypeFocus = true;
+        }, 1);
+
+        this.EntityPM = entityPM;
+        this.Parent = parent;
+        this.IsDisplayOnly = isDisplayOnly;
+        this.IsReadOnly = isDisplayOnly;
+        this.IsActionButtonsEnabled = !isDisplayOnly;
+
+        this.Pointers = this.Parent.pointers;
+        this.declarationPM = parent.declarationPM;
+        this.IsFromCustomsAnswer = IsFromCustomsAnswer;
+        this.IsInvoiceAnswer = IsInvoiceAnswer;
+        this.oldIncoterm = this.EntityPM.IncotermCode;
+        //this.InvoiceNumber = entityPM.InvoiceNumber;
+        this.IsChecked = false;
+        this.isNewEntity = IsNewEntity;
+        if (isDisplayOnly) {
+            this.opacity = 0.5;
+        }
+        if (!this.IsFromCustomsAnswer || this.IsInvoiceAnswer) {
+            this.ParentsCount = "(" + this.EntityPM.FullParentsCount + ")";
+            this.ChildrenCount = "(" + this.EntityPM.FullChildrenCount + ")";
+        }
+        this.customsExchangeRateExtendedPMService.GetCustomsExchangeRateForDate(this.declarationPM.TaxationDateTime).subscribe(responseRate => {
+
+            if (responseRate) {
+                if (!responseRate.HasError) {
+                    this.ExchangeRates = responseRate.Result;
+                }
+            }
+            this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem").subscribe(response => {
+                this.entityResourceService.getEntityResourceByTableName("Customs.CustomsPartnersItem").subscribe(response => {
+
+                    if (this.EntityPM.IsAccumalated) {
+                        this.IsAccumulated = true;
+                        this.AccumulatedMessageText = "חשבון צבור - פרטי מכס ניתנים לעריכה רק במצב לא צבור";
+                        if (this.AccumulatedFilterSelectedValue == 'Accumulated') {
+                            this.IsActionButtonsEnabled = false;
+
+                        }
+                        else if (!this.IsDisplayOnly) {
+                            this.IsActionButtonsEnabled = true;;
+                        }
+                    }
+                    else {
+                        this.IsAccumulated = false;
+                        this.AccumulatedMessageText = null;
+
+                    }
+
+
+                    this.BuildFreightAmountsList();
+                    this.BuildItemsList();
+                    //  SessionLocator.CurrentSession.AccumulatedFilterChangedEvent.emit({ filter: this.AccumulatedFilterSelectedValue, ParentCount: this.ParentItems.length, childrenCount: this.ChildrenItems.length });
+
+                    if (getFreightTotals) {
+                        this.GetFreightTotals();
+                    }
+                    //if (entityPM.InsruancePercentage) {
+                    //    this.CalculateInsuranceAmount(entityPM.InsruancePercentage);
+
+                    //}
+
+                    if (this.InsurancePercentage == null) {
+
+                        this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", true);
+                        this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", true);
+
+
+                        if (this.InsruanceCurrencyTypeCode != null || this.InsuranceAmount != null) {
+                            this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
+                        }
+                        this.GetInsurancePercentDefault();
+                    }
+                    else {
+                        this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
+                        this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
+
+                    }
+
+                    if (this.EntityPM.InsruancePercentage) {
+                        this.CalculateInsuranceAmount(this.EntityPM.InsruancePercentage);
+                    }
+
+                    if (entityPM.SequenceNumeric != null && entityPM.SequenceNumeric != 1) {
+
+                        this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
+                        this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
+                        this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
+                    }
+                    else {
+
+                    }
+                    this.IncotermLogic(this.EntityPM.IncotermCode);
+                    this.SetScreenFieldsEditability();
+                    //this.cd.detectChanges();
+
+                    if (!AppTool.IsNullOrEmpty(this.EntityPM.VendorId)) {
+                        this.customsVendorPMService.get(this.EntityPM.VendorId).subscribe((myResponse: ServiceResponse) => {
+                            this.vendor = myResponse.Result;
+                            if (this.vendor != null) {
+                                this.vendorNumber = this.vendor.VendorNumber;
+                            }
+                        });
+                    }
+
+                    this.SetDepositionStatus();
+                    //this.GetExchagneRates();
+
+
+                });
+            });
+        });
+
+        //FRITZ
+        if (this.IFritz_feature) {
+            if (this.declarationPM.PrimaryInvoiceCounterKey && this.EntityPM.InvoiceCounterKey) {
+                if (this.EntityPM.InvoiceCounterKey.toString() == this.declarationPM.PrimaryInvoiceCounterKey) {
+                    //yes, master invoice
+                    this.isMasterInvoic = true;
+                    this.IsValueForCustomsOnlyVisible = true;
+                } else {
+                    this.isMasterInvoic = false;
+                    this.IsValueForCustomsOnlyVisible = false;
+                }
+            } else {
+                // if it is the first created invoice, then its master 
+                if (this.Parent.SaveAndNew) { // comes after click inittab
+                    this.isMasterInvoic = false;
+                    this.IsValueForCustomsOnlyVisible = false;
+                } else if (this.declarationPM.SupplierInvoices.length == 0) {
+                    this.isMasterInvoic = true;
+                    this.IsValueForCustomsOnlyVisible = true;
+                } else {
+                    this.isMasterInvoic = false;
+                    this.IsValueForCustomsOnlyVisible = false;
+                }
+            }
+
+        }
+        else {
+            this.IsValueForCustomsOnlyVisible = false;
+        }
+
+        //after save n new
+        if (this.Parent.SaveAndNew) {
+            //open frieght
+            this.AddAmountEnabled = true;
+            this.FreightAmountGridEnabled = true;
+            this.UIProperties.SetEnabled("FreightCurrencyTypeCode", "Customs.SupplierInvoice", true);
+
+            //resset is preference chck
+            this.IsPreference = false;
+        }
+
+        //if (this.Parent.IsNewEntity) {
+        SessionLocator.CurrentSession.StartBusyIndicator("Customs.General.O.Loading");
+        this.customsSettingListService.getSingleFromCache(SessionLocator.Tenant.toString())
+            .subscribe((customsSettingList: ServiceResponse) => {
+                if (customsSettingList) {
+                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    if (this.Parent.IsNewEntity) {
+                        let autoFillAccountType = customsSettingList.Result ? customsSettingList.Result.AutoFillAccountType : false;
+                        if (autoFillAccountType) {
+                            this.AccountTypeCode = "380";
+                        }
+                    }
+                    let autoUnitMeasurement = customsSettingList.Result ? customsSettingList.Result.AutoUnitMeasurement : false;
+                    if (autoUnitMeasurement) {
+                        this.IsChecked = true;
+                    }
+                }
+            });
+        //}
+
+        //this.GetCountryPURForItems();
+    }
+
+    //GetExchagneRates() {
+
+    //    this.customsExchangeRateExtendedPMService.GetCustomsExchangeRateForDate(this.declarationPM.TaxationDateTime).subscribe(response => {
+
+    //        if (response) {
+    //            if (!response.HasError) {
+    //                this.ExchangeRates = response.Result;
+    //            }
+    //        }
+    //            });
+    //}
+
+
+    SetScreenFieldsEditability() {
+
+
+
+        this.UIProperties.SetEnabled("AccountTypeCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("InvoiceNumber", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("ActualPayedAmount", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("SequenceNumeric", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("IssueDate", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("VendorId", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("IssueCountryCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("InvoiceCurrencyTypeCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("PreferenceDocumentTypeCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("IsPreference", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("PaymentTermsCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("PaymentTypeCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("ActualPayedCurrencyTypeCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("AccumalationStateCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("FreightAmountGridEnabled", this.ObjectTableName, !this.IsDisplayOnly);
+        //this.UIProperties.SetEnabled("AddAmountEnabled", this.ObjectTableName, !this.IsDisplayOnly);
+        //this.UIProperties.SetEnabled("FreightCurrencyTypeCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("IncotermCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("InvoiceAmount", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("TotalFreightAmountInInvoiceCurrency", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("TotalFreightInFreightCurrency", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("InsurancePercentage", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("TotalFreightAmountInNIS", this.ObjectTableName, !this.IsDisplayOnly);
+
+        if (this.IsDisplayOnly) {
+            this.UIProperties.SetEnabled("FreightCurrencyTypeCode", this.ObjectTableName, !this.IsDisplayOnly);
+            this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", this.ObjectTableName, !this.IsDisplayOnly);
+            this.UIProperties.SetEnabled("InsuranceAmount", this.ObjectTableName, !this.IsDisplayOnly);
+            this.UIProperties.SetEnabled("InsruancePercentage", this.ObjectTableName, !this.IsDisplayOnly);
+            this.AddAmountEnabled = !this.IsDisplayOnly;
+            this.FreightAmountGridEnabled = !this.IsDisplayOnly;
+        }
+
+    }
+    importer: ImporterDespositionClass;
+    tootltip: string;
+    SetDepositionStatus() {
+        this.supplierInvoiceExtendedPMService.GetImporterDespositionStatus(this.VendorId, this.declarationPM.ImporterId).subscribe(response => {
+            if (response) {
+                if (response.Result) {
+
+                    this.importer = response.Result;
+                    this.tootltip = new DateTimeToDatePipe().transform(this.importer.EndDate) + "," + this.importer.ImporterDespositionNumber;
+                    if (this.importer.Status == "GreenTick") {
+                        this.GreenVisibility = true;
+
+                        this.RedVisibility = false;
+                        this.OrangeVisibility = false;
+                    }
+                    else if (this.importer.Status == "RedX") {
+                        this.RedVisibility = true;
+                        this.GreenVisibility = false;
+
+                        this.OrangeVisibility = false;
+                    }
+
+                    else if (this.importer.Status == "OrangeTick") {
+                        this.OrangeVisibility = true;
+                        this.GreenVisibility = false;
+                        this.RedVisibility = false;
+
+                    }
+                    else {
+                        this.GreenVisibility = false;
+                        this.RedVisibility = false;
+                        this.OrangeVisibility = false;
+                    }
+                }
+
+
+            }
+        });
+
+    }
+
+    CheckRequrierdFieldsForSend() {
+        var customsRequiredFieldListService: CustomsRequiredFieldListService = new CustomsRequiredFieldListService();
+        var table = window.ObjectTables.filter(d => d.Name == 'Customs.SupplierInvoice')[0];
+        var filters = new ApiQueryFilters();
+        filters.addAdditionalFilter("ObjectTableId", table.Id, null, null, "Equals", false, false, false, "string");
+        customsRequiredFieldListService.getAllFromCache(filters).subscribe((response: ServiceResponse) => {
+            var requiredFields = response.Result;
+            requiredFields.forEach((field) => {
+                var objectField = window.ObjectFields.filter(d => d.Id == field.ObjectfieldId)[0];
+                this.UIProperties.SetWarning(objectField.FieldName, 'Customs.SupplierInvoice', true);
+            });
+        });
+    }
+
+    //#region Properties
+
+    private selectedFilter: string;
+    get SelectedFilter() { return this.selectedFilter; }
+    set SelectedFilter(value: string) {
+        if (this.selectedFilter != value) {
+            this.selectedFilter = value;
+
+        }
+    }
+    public FiltersList: string[] = ["Copy Now"];
+    public get AccountTypeCode() { return this.EntityPM.AccountTypeCode; }
+    public set AccountTypeCode(newValue: string) { this.EntityPM.AccountTypeCode = newValue; }
+
+    public get InvoiceNumber() { return this.EntityPM.InvoiceNumber; }
+    public set InvoiceNumber(newValue: string) { this.EntityPM.InvoiceNumber = newValue; }
+
+    public get ActualPayedAmount() { return this.EntityPM.ActualPayedAmount; }
+    public set ActualPayedAmount(newValue: number) { this.EntityPM.ActualPayedAmount = newValue; }
+
+    public get SequenceNumeric() { return this.EntityPM.SequenceNumeric; }
+    public set SequenceNumeric(newValue: number) { this.EntityPM.SequenceNumeric = newValue; }
+
+    public get IssueDate() { return this.EntityPM.IssueDate; }
+    public set IssueDate(newValue: Date) { this.EntityPM.IssueDate = newValue; }
+
+    public get VendorId() { return this.EntityPM.VendorId; }
+    public set VendorId(newValue: string) {
+
+        if (this.EntityPM.VendorId != newValue) {
+            //this.Parent.calculateCommission = true; //old code
+            //this.Parent.CalculateCommissionPercentage();
+        }
+        this.EntityPM.VendorId = newValue;
+        this.customsVendorPMService.get(newValue).subscribe((myResponse: ServiceResponse) => {
+
+            this.vendor = myResponse.Result;
+            if (this.vendor != null) {
+                this.EntityPM.IssueCountryCode = this.vendor.CountryCode;
+                this.EntityPM.IssueCountryName = "טאיוואן";
+                this.vendorNumber = this.vendor.VendorNumber;
+                this.SetDepositionStatus();
+            }
+
+            else {
+                this.GreenVisibility = false;
+                this.OrangeVisibility = false;
+                this.RedVisibility = false;
+            }
+        });
+    }
+
+
+    public get AccumalationStateCode() { return this.EntityPM.AccumalationStateCode; }
+    public set AccumalationStateCode(newValue: string) {
+        this.EntityPM.AccumalationStateCode = newValue;
+    }
+
+    public get IssueCountryCode() { return this.EntityPM.IssueCountryCode; }
+    public set IssueCountryCode(newValue: string) { this.EntityPM.IssueCountryCode = newValue; }
+
+
+    invoiceCurrency: any;
+    public get InvoiceCurrency() { return this.invoiceCurrency; }
+    public set InvoiceCurrency(newValue: any) { this.invoiceCurrency = newValue; }
+
+    InvoiceCurrencyChanged(currency) {
+        this.InvoiceCurrency = currency;
+        if (this.InvoiceCurrency)
+            this.Parent.invoiceCurrencyName = this.InvoiceCurrency.LocalName;
+        //this.Parent.CalculateCommissionPercentage();
+    }
+
+    public get InvoiceCurrencyTypeCode() { return this.EntityPM.InvoiceCurrencyTypeCode; }
+    public set InvoiceCurrencyTypeCode(newValue: string) {
+        if (this.EntityPM.InvoiceCurrencyTypeCode != newValue) {
+            //this.Parent.calculateCommission = true; //old code
+
+        }
+
+        this.EntityPM.InvoiceCurrencyTypeCode = newValue;
+
+
+        var percentage;
+
+        //if (this.declarationPM.SupplierInvoices.length > 0) {
+        //    percentage = this.declarationPM.SupplierInvoices[0].InsruancePercentage;
+        //}
+        //else {
+        //    percentage = this.InsurancePercentage;
+        //}
+
+        var firstInvoice: SupplierInvoicePM = this.Parent.Get1SupplierInvoice();
+        percentage = firstInvoice.InsruancePercentage;
+        if (percentage != null) {
+
+            this.CalculateInsuranceAmount(percentage);
+        }
+    }
+
+
+    public get PreferenceDocumentTypeCode() { return this.EntityPM.PreferenceDocumentTypeCode; }
+    public set PreferenceDocumentTypeCode(newValue: string) { this.EntityPM.PreferenceDocumentTypeCode = newValue; }
+
+
+    public get IsPreference() { return this.EntityPM.IsPreference; }
+    public set IsPreference(newValue: boolean) { this.EntityPM.IsPreference = newValue; }
+
+
+    public get PaymentTermsCode() { return this.EntityPM.PaymentTermsCode; }
+    public set PaymentTermsCode(newValue: string) { this.EntityPM.PaymentTermsCode = newValue; }
+
+    public get PaymentTypeCode() { return this.EntityPM.PaymentTypeCode; }
+    public set PaymentTypeCode(newValue: string) { this.EntityPM.PaymentTypeCode = newValue; }
+
+    public get ActualPayedCurrencyTypeCode() { return this.EntityPM.ActualPayedCurrencyTypeCode; }
+    public set ActualPayedCurrencyTypeCode(newValue: string) { this.EntityPM.ActualPayedCurrencyTypeCode = newValue; }
+
+    public get InsruanceCurrencyTypeCode() { return this.EntityPM.InsruanceCurrencyTypeCode; }
+    public set InsruanceCurrencyTypeCode(newValue: string) { this.EntityPM.InsruanceCurrencyTypeCode = newValue; }
+
+    public get InsuranceAmount() { return this.EntityPM.InsuranceAmount; }
+    public set InsuranceAmount(newValue: number) { this.EntityPM.InsuranceAmount = newValue; }
+
+    private insuranceAmountEnabled: boolean;
+    public get InsuranceAmountEnabled() { return this.insuranceAmountEnabled; }
+    public set InsuranceAmountEnabled(newValue: boolean) { this.insuranceAmountEnabled = newValue; }
+
+    private insuranceCurrencyEnabled: boolean;
+    public get InsuranceCurrencyEnabled() { return this.insuranceCurrencyEnabled; }
+    public set InsuranceCurrencyEnabled(newValue: boolean) { this.insuranceCurrencyEnabled = newValue; }
+
+    private insurancePercentageEnabled: boolean;
+    public get InsurancePercentageEnabled() { return this.insurancePercentageEnabled; }
+    public set InsurancePercentageEnabled(newValue: boolean) { this.insurancePercentageEnabled = newValue; }
+
+    public get InsruancePercentage() { return this.EntityPM.InsruancePercentage; }
+    public set InsruancePercentage(newValue: number) {
+        this.EntityPM.InsruancePercentage = newValue;
+        this.IncotermLogic(this.IncotermCode);// this code replaced all the comments below.
+        //if (!newValue) {
+        //    this.InsuranceAmount = null;
+        //    if (this.IncotermCode) {
+        //        if (!(this.IncotermCode.startsWith("D") || this.IncotermCode == "CIF" || this.IncotermCode == "CIP")) {
+        //            this.InsuranceAmount = null;
+
+        //            this.InsurancePercentage = null;
+        //            this.InsuranceAmount = null;
+        //            this.InsruanceCurrencyTypeCode = null;
+
+
+        //            this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", true);
+        //            this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", true);
+
+        //        }
+        //    }
+        //}
+
+        //else {
+        //    this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
+        //    this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
+
+        //}
+
+        if (newValue) {
+            this.CalculateInsuranceAmount(newValue);
+        }
+    }
+
+
+
+
+    //private isFreightCurrencyTypeCodeEnabled: boolean;
+    //public get IsFreightCurrencyTypeCodeEnabled() { return this.isFreightCurrencyTypeCodeEnabled; }
+    //public set IsFreightCurrencyTypeCodeEnabled(newValue: boolean) { this.isFreightCurrencyTypeCodeEnabled = newValue; }
+
+
+
+    private freightAmountGridEnabled: boolean = true;
+    public get FreightAmountGridEnabled() { return this.freightAmountGridEnabled; }
+    public set FreightAmountGridEnabled(newValue: boolean) {
+        if (this.IsDisplayOnly) {
+            this.freightAmountGridEnabled = false;
+        }
+        else {
+            this.freightAmountGridEnabled = newValue;
+        }
+    }
+
+
+    private addAmountEnabled: boolean = true;
+    public get AddAmountEnabled() { return this.addAmountEnabled; }
+    public set AddAmountEnabled(newValue: boolean) {
+        if (this.IsDisplayOnly) {
+            this.addAmountEnabled = false;
+        }
+        else {
+            this.addAmountEnabled = newValue;
+        }
+    }
+
+    public get FreightCurrencyTypeCode() { return this.EntityPM.FreightCurrencyTypeCode; }
+    public set FreightCurrencyTypeCode(newValue: string) {
+        this.EntityPM.FreightCurrencyTypeCode = newValue;
+
+        this.LoadCurrenciesExchangeRates(true);
+
+    }
+
+    incotermChanged: boolean = false;
+    allowToDelete: boolean = true;
+    oldIncoterm: string;
+    public get IncotermCode() { return this.EntityPM.IncotermCode; }
+    public set IncotermCode(newValue: string) {
+        if (this.EntityPM.IncotermCode != null) {
+            this.oldIncoterm = this.EntityPM.IncotermCode;
+        }
+
+        this.EntityPM.IncotermCode = newValue;
+        this.incotermChanged = true;
+        if (this.allowToDelete) {
+            this.IncotermLogic(this.EntityPM.IncotermCode);
+        }
+
+        this.incotermChanged = false;
+        this.allowToDelete = true;
+
+        this.GetInsurancePercentDefault();
+
+    }
+
+    private GetInsurancePercentDefault() {
+        //let goToInsuranceInUNF = false;
+
+        //if (this.declarationPM.IsConnectedToUnifreight) {
+        //    if (AmitalGatewayUtil.Instance.AmitalBrowserInUse && !AppTool.IsNullOrEmpty(this.declarationPM.CustomFileNo)) {
+        //        goToInsuranceInUNF = true;
+        //    }
+        //}
+        //}
+
+        //if (!goToInsuranceInUNF || (this.EntityPM.InvoiceCounterKey.toString() != this.declarationPM.PrimaryInvoiceCounterKey && this.declarationPM.SupplierInvoices.length > 0) ||
+        //    this.InsruancePercentage != null || this.InsuranceAmount != null || (!this.IncotermCode.startsWith("E") && !this.IncotermCode.startsWith("F"))) {
+        //    return;
+        //}
+        //if (_OpInsurancePercent != null) {
+        //    if (!_OpInsurancePercent.IsComplete) {
+        //        _OpInsurancePercent.Cancel();
+        //    }
+        //}
+
+
+        /////////////////////////
+        //In case(IsconnectedToUnifreight = True) & (ICIM_INSUR_PERCncotermCode statrs with “E” or “F”) & (InsruancePercent + InsruanceAmount = Null)  - WI 26677
+        //Check customer default “CIM_INSUR_PERC” , if has data , fill that value in InsruancePercent & calc the InsuranceValue
+        //This process will be done only on first supplier invoice 
+        /////////////////////////
+        var firstInvoice: SupplierInvoicePM = this.Parent.Get1SupplierInvoice();
+        if (!this.IsFirstInvoice()) {
+            return;
+        }
+
+        if (!this.declarationPM.IsConnectedToUnifreight) {
+            return;
+        }
+        let inco: string = this.IncotermCode || "";
+        if (inco.startsWith("E") || inco.startsWith("F") || inco.startsWith("CPT") || inco.startsWith("CFR")) {
+        } else {
+            return;
+        }
+        if (AppTool.IsNullOrZero(this.InsruancePercentage) && AppTool.IsNullOrZero(this.InsuranceAmount)) {
+            //only if user not insert 
+        } else {
+            return;
+        }
+        if (this.declarationPM.SupplierInvoices.length > 0) {
+            if (this.declarationPM.SupplierInvoices[0].SequenceNumeric == this.EntityPM.SequenceNumeric) {
+                ///first
+            } else {
+                return;
+            }
+        } else {
+            ///first 1
+        }
+
+        var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
+        myCustomsSettingExtendedListService.GetInsurancePercentDefault(this.declarationPM.CustomerCode, this.declarationPM.Tenant)
+            .subscribe(res => {
+                this._OpInsurancePercent_Completed(res.Result);// += _OpInsurancePercent_Completed;
+            });
+    }
+
+    _OpInsurancePercent_Completed(res): void {
+        //if (!_OpInsurancePercent.IsCanceled) {
+        //    if (!_OpInsurancePercent.HasError) {
+        //        _OpInsurancePercent.Completed -= _OpInsurancePercent_Completed;
+        //        if (_OpInsurancePercent.Value != null) {
+        let stringInsurancePercentage: string = //(string)_OpInsurancePercent.Value;
+            res.insurancePercent;
+        let decimalInsurancePercentage: number;
+        //decimal.TryParse(stringInsurancePercentage, out decimalInsurancePercentage);
+        var insurancePerc: number = Number(stringInsurancePercentage);
+        if (insurancePerc > 0) {
+            this.InsruancePercentage = Number(stringInsurancePercentage);  //decimal.TryParse(stringInsurancePercentage, out decimalInsurancePercentage) ? decimalInsurancePercentage : (decimal ?)null;
+        }
+        //FirePropertyChanged("InsurancePercentage");
+        //        }
+        //    }
+        //}
+    }
+
+
+    //private GetCountryPURForItems() {
+    //    SessionLocator.CurrentSession.StartBusyIndicator("Customs.General.O.Loading");
+    //    var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
+    //    myCustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_I_PUR_CTRY", "NON", "NON", this.declarationPM.Tenant)
+    //        .subscribe(response => {
+    //            SessionLocator.CurrentSession.StopBusyIndicator();
+    //            if (!response.HasError && response.Result != null && response.Result.DefaultValue == "Y") {
+    //                this.IsCountryPURForItems = true;
+    //            }
+    //        });
+    //}
+
+
+    public get InvoiceAmount() { return this.EntityPM.InvoiceAmount; }
+    public set InvoiceAmount(newValue: number) {
+
+        if (this.EntityPM.InvoiceAmount != newValue) {
+            //this.Parent.calculateCommission = true; //old
+
+        }
+        this.EntityPM.InvoiceAmount = newValue;
+        if (this.Parent.TotalForeignCurrency == null) this.Parent.TotalForeignCurrency = 0;
+        this.Parent.Difference = this.Parent.TotalForeignCurrency - (newValue);
+        var percentage;
+        //if (this.declarationPM.SupplierInvoices.length > 0) {
+        //    percentage = this.declarationPM.SupplierInvoices[0].InsruancePercentage;
+        //}
+        //else {
+        //    percentage = this.InsurancePercentage;
+        //}
+        var firstInvoice: SupplierInvoicePM = this.Parent.Get1SupplierInvoice();
+        percentage = firstInvoice.InsruancePercentage;
+        if (percentage != null) {
+
+            this.CalculateInsuranceAmount(percentage);
+        }
+
+    }
+
+    private totalFreightAmountInInvoiceCurrency: number = 0;
+    public get TotalFreightAmountInInvoiceCurrency() { return this.totalFreightAmountInInvoiceCurrency; }
+    public set TotalFreightAmountInInvoiceCurrency(newValue: number) { this.totalFreightAmountInInvoiceCurrency = newValue; }
+
+    private totalFreightInFreightCurrency: number;
+    public get TotalFreightInFreightCurrency() { return this.EntityPM.TotalFreightInFreightCurrency; }
+    public set TotalFreightInFreightCurrency(newValue: number) { this.EntityPM.TotalFreightInFreightCurrency = newValue; }
+
+
+    public get InsurancePercentage() { return this.EntityPM.InsruancePercentage; }
+    public set InsurancePercentage(newValue: number) {
+        this.EntityPM.InsruancePercentage = newValue;
+        if (newValue) {
+            this.CalculateInsuranceAmount(newValue);
+        }
+        else {
+            this.InsuranceAmount = null;
+        }
+
+
+    }
+
+    public ReCalculateInsuranceAmount() { //call from     AddEditSupplierInvoiceComponent.OkButtonClicked()
+
+        if (this.EntityPM.InsruancePercentage) {
+            this.CalculateInsuranceAmount(this.EntityPM.InsruancePercentage);
+        }
+    }
+    private totalFreightAmountInNIS: number;
+    public get TotalFreightAmountInNIS() { return this.EntityPM.TotalFreightInNIS; }
+    public set TotalFreightAmountInNIS(newValue: number) { this.EntityPM.TotalFreightInNIS = newValue; }
+
+    private isChecked: boolean;
+    public get IsChecked() { return this.isChecked; }
+    public set IsChecked(newValue: boolean) { this.isChecked = newValue; }
+
+    public get IsValueForCustomsOnly() { return this.EntityPM.IsValueForCustomsOnly; }
+    public set IsValueForCustomsOnly(newValue: boolean) { this.EntityPM.IsValueForCustomsOnly = newValue; }
+
+    //#endregion
+
+    OnInvoiceNumberLostFocus(invoiceNumberTextBox: any) {
+
+        if (this.declarationPM != null && this.declarationPM.SupplierInvoices.length >= 0) {
+            if (this.EntityPM.InvoiceNumber) {
+
+                //server method
+                //var supplierInvoiceService: SupplierInvoiceService = new SupplierInvoiceService();
+                //supplierInvoiceService.GetCheckIfInvoiceNumberExists(this.EntityPM.DeclarationId, this.EntityPM.InvoiceNumber, this.EntityPM.InvoiceCounterKey).subscribe((resp: ServiceResponse) => {
+                //    if (!resp.HasError) {
+                //        if (resp.Result) {
+                //            var newValue = this.InvoiceNumber;
+                //            var confirm = new ConfirmWindow();
+                //            confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
+                //            confirm.ShowNoButton = true;
+                //            confirm.Show(" קיים כבר חשבון ספק עם מספר חשבון זהה - שורה" + resp.Result.SequenceNumeric + "- האם להמשיך ?");
+                //            confirm.WindowClosed.subscribe((event: any) => {
+                //                confirm.Close();
+                //                this.InvoiceNumber = newValue;
+                //                if (confirm.Yes) {
+                //                    SessionLocator.SustainFocusOnCell = false;
+                //                }
+                //                else {
+                //                    SessionLocator.SustainFocusOnCell = true;
+                //                    console.log(invoiceNumberTextBox.InputId);
+                //                    var element = document.getElementById(invoiceNumberTextBox.InputId);
+                //                    if (element) {
+                //                        element.focus();
+                //                    }
+                //                }
+                //            });
+                //        }
+                //    }
+                //});
+
+                //client method
+                var invoices: SupplierInvoicePM[] = [];
+                invoices = this.declarationPM.SupplierInvoices;
+                invoices = invoices.concat(this.Parent.NewInvoices);
+                var exist = invoices.find(d => d.InvoiceNumber == this.EntityPM.InvoiceNumber);
+                if (exist) {
+                    //show confirm window
+                    var newValue = this.InvoiceNumber;
+                    var confirm = new ConfirmWindow();
+                    confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
+                    confirm.ShowNoButton = true;
+                    confirm.Show(" קיים כבר חשבון ספק עם מספר חשבון זהה - שורה" + exist.SequenceNumeric + "- האם להמשיך ?");
+                    confirm.WindowClosed.subscribe((event: any) => {
+                        confirm.Close();
+                        this.InvoiceNumber = newValue;
+                        if (confirm.Yes) {
+                            SessionLocator.SustainFocusOnCell = false;
+                        }
+                        else {
+                            SessionLocator.SustainFocusOnCell = true;
+                            console.log(invoiceNumberTextBox.InputId);
+                            var element = document.getElementById(invoiceNumberTextBox.InputId);
+                            if (element) {
+                                element.focus();
+                            }
+                        }
+                    });
+
+                }
+
+            }
+
+        }
+    }
+
+    CopyAmountList() {
+        this.FreightCopyList.length = this.AmountList.Length;
+        this.FreightCopyList = this.AmountList.Collection.concat();
+
+    }
+
+
+    CopyNowClicked() {
+
+        for (let item of this.ItemsSource.Collection) {
+            if (item.InvoiceQuantityType == null) {
+
+                if (item.QunatityTypeCode != null) {
+                    var s = item.QunatityTypeCode.slice(1, item.QunatityTypeCode.length - 1);
+                    //var s = item.QunatityTypeCode.split('(');
+                    //var st = s[1].split(')');
+
+                    item.InvoiceQuantityType = s;
+                }
+
+            }
+        }
+
+        if (this.ItemsSource.Collection.length == 500) {
+
+            var msg = new MessageWindow();
+
+            msg.Show(" עודכנו רק 500 הפריטים המוצגים");
+
+        }
+    }
+
+    UpdateProcessClicked() {
+
+        var windowArgs: any = {};
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 700;
+        logWindow.Height = 500;
+
+        logWindow.ShowCloseButton = true;
+        windowArgs.SupplierInvoicePM = this.EntityPM;
+        //  windowArgs.IsDisplayOnly = this.IsDisplayOnly;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.UpdateProcessCode");
+        logWindow.ComponentLoaded.subscribe(comp => {
+            logWindow.WindowClosed.subscribe(s => {
+                if (s) {
+                    this.SelectionCompleted(comp);
+                }
+            });
+        });
+      logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/UpdateProcessCodeComponent');
+    }
+
+    SelectionCompleted(args) {
+
+        if (args.UpdateAll) {
+            for (let item of this.EntityPM.SupplierInvoiceItems.filter(d => !d.IsParent)) {
+                var exist = item.SupplierInvoiceItemProcesTypes.filter(d => d.ProcessTypeCode == args.ProcessTypeCode)[0];
+                if (!exist) {
+                    var processType: SupplierInvoiceItemProcesTypePM = new SupplierInvoiceItemProcesTypePM(item);
+                    processType.DeclarationId = this.declarationPM.Id;
+                    processType.InvoiceCounterKey = this.EntityPM.InvoiceCounterKey;
+                    processType.InvoiceItemLineNumber = item.LineNumber;
+                    processType.Tenant = this.EntityPM.Tenant;
+                    processType.ProcessTypeCode = args.ProcessTypeCode;
+
+                    this.itemGovernmentProcedureTypeListService.getSingleFromCache(args.ProcessTypeCode).subscribe(response => {
+
+                        var result: ItemGovernmentProcedureTypeList = response.Result;
+                        processType.ProcessTypeName = result.LocalName;
+                    });
+                    item.ItemAdditionalStatus = true;
+                    item.AddSupplierInvoiceItemProcesType(processType);
+
+
+
+                }
+            }
+            for (let item of this.ItemsSource.Collection) {
+                item.ItemAdditionalStatusVisibility = true;
+            }
+            if (this.EntityPM.IsAccumalated) {
+                if (this.AccumulatedFilterSelectedValue != 'Accumulated') {
+                    var msg = new MessageWindow();
+                    msg.RTL = true;
+                    var count = this.EntityPM.SupplierInvoiceItems.length;
+                    msg.Show("קוד תהליך נשמר בהצלחה ב-" + count + " שורות ");
+                }
+            }
+            else {
+                var msg = new MessageWindow();
+                msg.RTL = true;
+
+                var count = this.EntityPM.SupplierInvoiceItems.length;
+                msg.Show("קוד תהליך נשמר בהצלחה ב-" + count + " שורות ");
+            }
+
+        }
+        else {
+            if (args.ItemsSource) {
+                var items = args.ItemsSource.Collection;
+                for (let item of this.EntityPM.SupplierInvoiceItems.filter(d => !d.IsParent)) {
+                    var number = args.ItemsSource.Collection.filter(d => d.Number == item.SequenceNumeric)[0];
+                    if (number) {
+                        var exist = item.SupplierInvoiceItemProcesTypes.filter(d => d.ProcessTypeCode == args.ProcessTypeCode)[0];
+                        if (!exist) {
+                            var processType: SupplierInvoiceItemProcesTypePM = new SupplierInvoiceItemProcesTypePM(item);
+                            processType.DeclarationId = this.declarationPM.Id;
+                            processType.InvoiceCounterKey = this.EntityPM.InvoiceCounterKey;
+                            processType.InvoiceItemLineNumber = item.LineNumber;
+                            processType.Tenant = this.EntityPM.Tenant;
+                            processType.ProcessTypeCode = args.ProcessTypeCode;
+                            this.itemGovernmentProcedureTypeListService.getSingleFromCache(args.ProcessTypeCode).subscribe(response => {
+
+                                var result: ItemGovernmentProcedureTypeList = response.Result;
+                                processType.ProcessTypeName = result.LocalName;
+                            });
+                            item.ItemAdditionalStatus = true;
+                            item.AddSupplierInvoiceItemProcesType(processType);
+
+
+
+
+                        }
+                    }
+                }
+
+                for (let item of this.ItemsSource.Collection) {
+                    var number = args.ItemsSource.Collection.filter(d => d.Number == item.SequenceNumeric)[0];
+                    if (number) {
+                        item.ItemAdditionalStatusVisibility = true;
+                    }
+                }
+                if (this.EntityPM.IsAccumalated) {
+                    if (this.AccumulatedFilterSelectedValue != 'Accumulated') {
+
+                        var msg = new MessageWindow();
+                        var ItemSourceCount = args.ItemsSource.Length;
+                        msg.RTL = true;
+                        msg.Show("קוד תהליך נשמר בהצלחה ב-" + ItemSourceCount + " שורות ");
+                        // msg.Show("קוד תהליך נשמר בהצלחה בשורות " + ItemSourceCount );
+                    }
+                }
+                else {
+                    var msg = new MessageWindow();
+                    var ItemSourceCount = args.ItemsSource.Length;
+                    msg.RTL = true;
+                    msg.Show("קוד תהליך נשמר בהצלחה ב-" + ItemSourceCount + " שורות ");
+                    //  msg.Show("קוד תהליך נשמר בהצלחה בשורות " + ItemSourceCount );
+                }
+
+            }
+        }
+
+
+    }
+
+    GetFreightTotals() {
+        this.supplierInvoiceService.GetTotalForeignCurrencyForInvoice(this.EntityPM.DeclarationId, this.EntityPM.InvoiceCounterKey).subscribe(response => {
+
+
+
+            this.Parent.TotalForeignCurrency = response.Result;
+            //for (let item of items)// this.entitypm(d=> d. SupplierInvoiceItemViewModel item in InvoiceItemsObslist.Where(d => d.entityPM.CounterKey == 0))
+            //{
+            //    if (item.ItemPrice != null)
+            //        this.TotalForeignCurrency = (TotalForeignCurrency != null ? TotalForeignCurrency : 0) + item.ItemPrice;
+            //}
+            if (isNaN(this.Parent.TotalForeignCurrency)) this.Parent.TotalForeignCurrency = 0;
+            var amount: number = this.InvoiceAmount;
+
+            if (isNaN(this.InvoiceAmount)) amount = 0;
+            this.Parent.Difference = this.Parent.TotalForeignCurrency - amount;
+
+            if (this.Parent.TotalForeignCurrency != 0) {
+                if (this.Parent.Difference != null) {
+                    if (this.Parent.Difference != 0) {
+                        this.Parent.DifferenceColor = FontTool.Red; //red
+                    }
+                    else {
+                        this.Parent.DifferenceColor = FontTool.Green; //green
+                    }
+                }
+            }
+            else {
+                this.Parent.DifferenceColor = FontTool.Black;
+            }
+
+        });
+    }
+
+    private timerToken: any;
+    public IncotermLogic(IncotermCode: string) {
+
+
+        var firstInvoice: SupplierInvoicePM = this.Parent.Get1SupplierInvoice();
+
+        if (this.EntityPM != null && this.EntityPM.IncotermCode != null) {
+            //#region for insurance
+            if (!this.IsFirstInvoice()) {
+
+                this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
+                this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
+                this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
+            }
+            else {
+
+                if (this.EntityPM.IncotermCode.startsWith("D") || this.EntityPM.IncotermCode == "CIF" || this.EntityPM.IncotermCode == "CIP") {
+
+                    if (this.incotermChanged) {
+                            if (this.InsuranceAmount == null && this.InsurancePercentage == null && this.InsruanceCurrencyTypeCode == null) {
+
+                                if (this.InsuranceAmount != null) {
+                                    this.InsuranceAmount = null;
+                                }
+                                if (this.InsruanceCurrencyTypeCode != null) {
+                                    this.InsruanceCurrencyTypeCode = null;
+                                }
+
+                                if (this.InsurancePercentage != null) {
+                                    this.InsurancePercentage = null;
+                                }
+
+                                this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
+                                this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
+                                this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
+                            }
+                            else {
+
+                                this.timerToken = setTimeout(() => {
+                                    var confirm = new ConfirmWindow();
+                                    confirm.Cancel = true;
+                                    confirm.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                                    confirm.ShowNoButton = true;
+                                    confirm.Show(TextCodeTranslator.Translate("Customs.Declaration.O.DeleteAmounts"));
+                                    confirm.WindowClosed.subscribe((event: any) => {
+                                        if (confirm.Yes) {
+                                            if (this.InsuranceAmount != null) {
+                                                this.InsuranceAmount = null;
+                                            }
+                                            if (this.InsruanceCurrencyTypeCode != null) {
+                                                this.InsruanceCurrencyTypeCode = null;
+                                            }
+
+                                            if (this.InsurancePercentage != null) {
+                                                this.InsurancePercentage = null;
+                                            }
+
+                                            this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
+                                            this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
+                                            this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
+                                        }
+
+                                        else {
+                                            this.allowToDelete = false;
+                                            this.IncotermCode = this.oldIncoterm;
+                                        }
+
+
+                                    });
+                                }, 200);
+
+                            }
+                    }
+
+                    else {
+                        if (this.InsuranceAmount != null) {
+                            this.InsuranceAmount = null;
+                        }
+                        if (this.InsruanceCurrencyTypeCode != null) {
+                            this.InsruanceCurrencyTypeCode = null;
+                        }
+
+                        if (this.InsurancePercentage != null) {
+                            this.InsurancePercentage = null;
+                        }
+
+
+                        this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
+                        this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
+                        this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
+                    }
+                }
+                else if (this.EntityPM.IncotermCode == "CPT" || this.EntityPM.IncotermCode == "CFR") {
+                    this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", true);
+                    if (this.InsurancePercentage == null) {
+
+                        this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", true);
+                        this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", true);
+
+                        if (this.InsruanceCurrencyTypeCode != null || this.InsuranceAmount != null) {
+                            this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
+                        }
+                    }
+                    else {
+
+                        this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
+                        this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
+
+                    }
+                }
+                else if (this.EntityPM.IncotermCode.startsWith("E") || this.EntityPM.IncotermCode.startsWith("F")) {
+
+                    this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", true);
+                    if (this.InsurancePercentage == null) {
+
+                        this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", true);
+                        this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", true);
+
+
+                        if (this.InsruanceCurrencyTypeCode != null || this.InsuranceAmount != null) {
+                            this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
+                        }
+                    }
+                    else {
+                        this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
+                        this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
+
+                    }
+                }
+                else {
+                    if (this.InsurancePercentage != null) {
+                        this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
+                        this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
+                    }
+                    else if (this.InsruanceCurrencyTypeCode != null || this.InsuranceAmount != null) {
+                        this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
+                    }
+                    else {
+                        this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", true);
+                        this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", true);
+                        this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", true);
+                    }
+                }
+            }
+
+        }
+        else {
+            if (!this.IsFirstInvoice()) {
+                this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
+                this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
+                this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
+            }
+            else if (!(this.EntityPM.SequenceNumeric != 1 && this.EntityPM.SequenceNumeric != null) || (this.isNewEntity && this.declarationPM.SupplierInvoices.length > 0)) {
+                this.AddAmountEnabled = true;
+                this.FreightAmountGridEnabled = true;
+                this.UIProperties.SetEnabled("FreightCurrencyTypeCode", "Customs.SupplierInvoice", true);
+
+                if (this.InsurancePercentage == null) {
+                    this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", true);
+                    this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", true);
+                    if (this.InsruanceCurrencyTypeCode != null || this.InsuranceAmount != null) {
+                        this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
+                    }
+                    else {
+                        this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", true);
+                    }
+                }
+                else {
+                    this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
+                    this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
+                }
+            }
+        }
+
+    }
+
+    //public IncotermLogic(IncotermCode: string) {
+
+
+    //    var firstInvoice: SupplierInvoicePM = this.Parent.Get1SupplierInvoice();
+
+    //    if (this.EntityPM != null && this.EntityPM.IncotermCode != null) {
+
+    //        //#region For freight 
+    //        if (this.EntityPM.IncotermCode.startsWith("D") || this.EntityPM.IncotermCode == "CIF" || this.EntityPM.IncotermCode == "CIP") {
+    //            if (this.EntityPM.SupplierInvoiceFreightAmounts.length > 0 && this.incotermChanged) {
+
+    //                this.timerToken = setTimeout(() => {
+    //                    var confirm = new ConfirmWindow();
+    //                    confirm.Cancel = true;
+    //                    confirm.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+    //                    confirm.ShowNoButton = true;
+    //                    confirm.Show(TextCodeTranslator.Translate("Customs.Declaration.O.DeleteAmounts"));
+    //                    confirm.WindowClosed.subscribe((event: any) => {
+    //                        if (confirm.Yes) {
+    //                            //for (let item of this.EntityPM.SupplierInvoiceFreightAmounts) {
+    //                            //    this.EntityPM.RemoveSupplierInvoiceFreightAmount(item);
+    //                            //}
+
+
+    //                            //for (let item of this.FreightCopyList) {
+    //                            //    this.AmountList.Remove(item);
+    //                            //}
+
+    //                            //this.FreightCurrencyTypeCode = null;
+    //                            //this.EntityPM.TotalFreightInFreightCurrency = 0;
+
+
+    //                            //this.AddAmountEnabled = false;
+
+    //                            //this.FreightAmountGridEnabled = false;
+    //                            //this.UIProperties.SetEnabled("FreightCurrencyTypeCode", "Customs.SupplierInvoice", false);
+
+    //                            if (this.InsuranceAmount != null) {
+    //                                this.InsuranceAmount = null;
+    //                            }
+    //                            if (this.InsruanceCurrencyTypeCode != null) {
+    //                                this.InsruanceCurrencyTypeCode = null;
+    //                            }
+
+    //                            if (this.InsurancePercentage != null) {
+    //                                this.InsurancePercentage = null;
+    //                            }
+
+
+    //                            this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
+    //                            this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
+    //                            this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
+
+    //                        }
+
+    //                        else {
+    //                            this.allowToDelete = false;
+    //                            this.IncotermCode = this.oldIncoterm;
+    //                            //this.termsOfSaleTypeListService.getSingle(IncotermCode).subscribe(response => {
+    //                            //    var incoterm: TermsOfSaleTypeList = response.Result;
+    //                            //    this.EntityPM.IncotermName = incoterm.LocalName;
+    //                            //});
+
+    //                        }
+
+
+
+    //                    });
+    //                }, 1);
+
+
+    //            }
+
+
+    //            else {
+
+    //                //this.AddAmountEnabled = false;
+
+    //                //this.FreightAmountGridEnabled = false;
+    //                //this.UIProperties.SetEnabled("FreightCurrencyTypeCode", "Customs.SupplierInvoice", false);
+    //            }
+
+
+
+    //        }
+    //        //else if (this.EntityPM.IncotermCode == "CPT" || this.EntityPM.IncotermCode == "CFR") {
+    //        //    if (this.EntityPM.SupplierInvoiceFreightAmounts.length > 0 && this.incotermChanged) {
+    //        //        this.timerToken = setTimeout(() => {
+    //        //            var confirm = new ConfirmWindow();
+
+
+    //        //            confirm.Cancel = true;
+    //        //            confirm.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+    //        //            confirm.ShowNoButton = true;
+    //        //            confirm.Show(TextCodeTranslator.Translate("Customs.Declaration.O.DeleteAmounts"));
+    //        //            confirm.WindowClosed.subscribe((event: any) => {
+    //        //                if (confirm.Yes) {
+
+
+    //        //                    for (let item of this.EntityPM.SupplierInvoiceFreightAmounts) {
+    //        //                        this.EntityPM.RemoveSupplierInvoiceFreightAmount(item);
+    //        //                    }
+
+    //        //                    this.CopyAmountList();
+
+    //        //                    for (let item of this.FreightCopyList) {
+    //        //                        this.AmountList.Remove(item);
+    //        //                    }
+
+    //        //                    this.FreightCurrencyTypeCode = null;
+    //        //                    this.EntityPM.TotalFreightInFreightCurrency = 0;
+
+
+    //        //                    this.AddAmountEnabled = false;
+
+    //        //                    this.FreightAmountGridEnabled = false;
+    //        //                    this.UIProperties.SetEnabled("FreightCurrencyTypeCode", "Customs.SupplierInvoice", false);
+
+    //        //                }
+
+    //        //                else {
+    //        //                    this.allowToDelete = false;
+    //        //                    IncotermCode = this.oldIncoterm;
+    //        //                }
+
+    //        //            });
+    //        //        }, 200);
+
+    //        //    }
+
+
+    //        //    else {
+    //        //        this.AddAmountEnabled = false;
+
+    //        //        this.FreightAmountGridEnabled = false;
+    //        //        this.UIProperties.SetEnabled("FreightCurrencyTypeCode", "Customs.SupplierInvoice", false);
+    //        //    }
+
+    //        //}
+    //        else if (this.EntityPM.IncotermCode.startsWith("E") || this.EntityPM.IncotermCode.startsWith("F")) {
+
+
+    //            this.AddAmountEnabled = true;
+
+    //            this.FreightAmountGridEnabled = true;
+    //            this.UIProperties.SetEnabled("FreightCurrencyTypeCode", "Customs.SupplierInvoice", true);
+    //        }
+    //        else {
+
+    //            this.AddAmountEnabled = true;
+
+    //            this.FreightAmountGridEnabled = true;
+    //            this.UIProperties.SetEnabled("FreightCurrencyTypeCode", "Customs.SupplierInvoice", true);
+    //        }
+    //        //#endregion
+
+    //        //#region for insurance
+
+
+    //        if (!this.IsFirstInvoice()) {//if ((this.EntityPM.SequenceNumeric != 1 && this.EntityPM.SequenceNumeric != null) || (this.isNewEntity && this.declarationPM.SupplierInvoices.length > 0)) {
+
+    //            this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
+    //            this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
+    //            this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
+
+
+    //        }
+    //        else {
+
+    //            if (this.EntityPM.IncotermCode.startsWith("D") || this.EntityPM.IncotermCode == "CIF" || this.EntityPM.IncotermCode == "CIP") {
+
+    //                if (this.incotermChanged) {
+    //                    if (this.EntityPM.SupplierInvoiceFreightAmounts.length == 0) {
+    //                        if (this.InsuranceAmount == null && this.InsurancePercentage == null && this.InsruanceCurrencyTypeCode == null) {
+
+    //                            if (this.InsuranceAmount != null) {
+    //                                this.InsuranceAmount = null;
+    //                            }
+    //                            if (this.InsruanceCurrencyTypeCode != null) {
+    //                                this.InsruanceCurrencyTypeCode = null;
+    //                            }
+
+    //                            if (this.InsurancePercentage != null) {
+    //                                this.InsurancePercentage = null;
+    //                            }
+
+    //                            this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
+    //                            this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
+    //                            this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
+    //                        }
+    //                        else {
+
+    //                            this.timerToken = setTimeout(() => {
+    //                                var confirm = new ConfirmWindow();
+    //                                confirm.Cancel = true;
+    //                                confirm.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+    //                                confirm.ShowNoButton = true;
+    //                                confirm.Show(TextCodeTranslator.Translate("Customs.Declaration.O.DeleteAmounts"));
+    //                                confirm.WindowClosed.subscribe((event: any) => {
+    //                                    if (confirm.Yes) {
+    //                                        //for (let item of this.EntityPM.SupplierInvoiceFreightAmounts) {
+    //                                        //    this.EntityPM.RemoveSupplierInvoiceFreightAmount(item);
+    //                                        //}
+
+
+    //                                        //for (let item of this.FreightCopyList) {
+    //                                        //    this.AmountList.Remove(item);
+    //                                        //}
+
+    //                                        //this.FreightCurrencyTypeCode = null;
+    //                                        //this.EntityPM.TotalFreightInFreightCurrency = 0;
+
+
+    //                                        //this.AddAmountEnabled = false;
+
+    //                                        //this.FreightAmountGridEnabled = false;
+    //                                        //this.UIProperties.SetEnabled("FreightCurrencyTypeCode", "Customs.SupplierInvoice", false);
+
+    //                                        if (this.InsuranceAmount != null) {
+    //                                            this.InsuranceAmount = null;
+    //                                        }
+    //                                        if (this.InsruanceCurrencyTypeCode != null) {
+    //                                            this.InsruanceCurrencyTypeCode = null;
+    //                                        }
+
+    //                                        if (this.InsurancePercentage != null) {
+    //                                            this.InsurancePercentage = null;
+    //                                        }
+
+
+    //                                        this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
+    //                                        this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
+    //                                        this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
+
+    //                                    }
+
+    //                                    else {
+    //                                        this.allowToDelete = false;
+    //                                        IncotermCode = this.oldIncoterm;
+    //                                    }
+
+
+    //                                });
+    //                            }, 200);
+
+    //                        }
+
+
+    //                    }
+    //                }
+
+    //                else {
+    //                    if (this.InsuranceAmount != null) {
+    //                        this.InsuranceAmount = null;
+    //                    }
+    //                    if (this.InsruanceCurrencyTypeCode != null) {
+    //                        this.InsruanceCurrencyTypeCode = null;
+    //                    }
+
+    //                    if (this.InsurancePercentage != null) {
+    //                        this.InsurancePercentage = null;
+    //                    }
+
+
+    //                    this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
+    //                    this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
+    //                    this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
+    //                }
+    //            }
+
+    //            else if (this.EntityPM.IncotermCode == "CPT" || this.EntityPM.IncotermCode == "CFR") {
+    //                this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", true);
+    //                if (this.InsurancePercentage == null) {
+
+    //                    this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", true);
+    //                    this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", true);
+
+    //                    if (this.InsruanceCurrencyTypeCode != null || this.InsuranceAmount != null) {
+    //                        this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
+    //                    }
+    //                }
+    //                else {
+
+    //                    this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
+    //                    this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
+
+    //                }
+    //                //this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", true);
+    //                //this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", true);
+    //                //this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", true);
+
+    //            }
+    //            else if (this.EntityPM.IncotermCode.startsWith("E") || this.EntityPM.IncotermCode.startsWith("F")) {
+
+    //                this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", true);
+    //                if (this.InsurancePercentage == null) {
+
+    //                    this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", true);
+    //                    this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", true);
+
+
+    //                    if (this.InsruanceCurrencyTypeCode != null || this.InsuranceAmount != null) {
+    //                        this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
+    //                    }
+    //                }
+    //                else {
+    //                    this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
+    //                    this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
+
+    //                }
+    //                //this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", true);
+    //                //this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", true);
+    //                //this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", true);
+
+
+    //            }
+    //            else {
+    //                if (this.InsurancePercentage != null) {
+    //                    this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
+    //                    this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
+    //                }
+    //                else if (this.InsruanceCurrencyTypeCode != null || this.InsuranceAmount != null) {
+    //                    this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
+    //                }
+    //                else {
+    //                    this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", true);
+    //                    this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", true);
+    //                    this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", true);
+    //                }
+
+
+
+    //            }
+
+
+
+    //        }
+    //        // #endregion
+
+    //    }
+
+
+    //    else {
+
+
+    //        if (!this.IsFirstInvoice()) {
+    //            this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
+    //            this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
+    //            this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
+    //        }
+    //        else if (!(this.EntityPM.SequenceNumeric != 1 && this.EntityPM.SequenceNumeric != null) || (this.isNewEntity && this.declarationPM.SupplierInvoices.length > 0)) {
+
+
+    //            this.AddAmountEnabled = true;
+    //            this.FreightAmountGridEnabled = true;
+    //            this.UIProperties.SetEnabled("FreightCurrencyTypeCode", "Customs.SupplierInvoice", true);
+
+    //            if (this.InsurancePercentage == null) {
+
+    //                this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", true);
+    //                this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", true);
+
+
+    //                if (this.InsruanceCurrencyTypeCode != null || this.InsuranceAmount != null) {
+    //                    this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
+    //                }
+    //                else {
+    //                    this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", true);
+    //                }
+    //            }
+    //            else {
+    //                this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
+    //                this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
+
+    //            }
+
+    //            //else{
+
+    //            //    this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", true);
+    //            //    this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", true);
+    //            //    this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", true);
+    //            //}
+    //        }
+    //    }
+
+    //}
+
+    AddFreightAmount() {
+        if (this.IsDisplayOnly)
+            return; // go back -_-
+
+        if (this.AddAmountEnabled) {
+            var item: SupplierInvoiceFreightAmountPM = new SupplierInvoiceFreightAmountPM(this.EntityPM);
+            item.DeclarationId = this.EntityPM.DeclarationId;
+            item.InvoiceCounterKey = this.EntityPM.InvoiceCounterKey;
+            item.Tenant = this.EntityPM.Tenant;
+            item.ChangeSetOp = "Insert";
+
+            this.EntityPM.AddSupplierInvoiceFreightAmount(item);
+            this.BuildFreightAmountsList();
+        }
+    }
+
+    Add() {
+        if (this.IsDisplayOnly)
+            return; // go back -_-
+
+        var line: number = 0;
+        var sequence: number = 0;
+        if (this.EntityPM.SupplierInvoiceItems.length > 0) {
+            if (isNaN(this.EntityPM.InvoiceItemLastLineNumber)) this.EntityPM.InvoiceItemLastLineNumber = 0;
+            line = this.EntityPM.InvoiceItemLastLineNumber;
+            this.EntityPM.InvoiceItemLastLineNumber = this.EntityPM.InvoiceItemLastLineNumber + 1;
+        }
+        else {
+            this.EntityPM.InvoiceItemLastLineNumber = 1;
+            line = 0;
+        }
+
+
+        //if (this.EntityPM.FullItemsCount < 500 || AppTool.IsNullOrEmpty(this.EntityPM.FullItemsCount)) {
+
+        // var items = this.EntityPM.SupplierInvoiceItems..sort(d => d.SequenceNumeric);
+        var items = this.EntityPM.SupplierInvoiceItems.sort((a, b) => { return (a.SequenceNumeric === b.SequenceNumeric) ? 0 : (a.SequenceNumeric < b.SequenceNumeric) ? -1 : 1 });
+        if (items.length == 0) sequence = 0;
+        else {
+            sequence = items[this.EntityPM.SupplierInvoiceItems.length - 1].SequenceNumeric;
+        }
+
+
+        //}
+        //else {
+        //    sequence = this.EntityPM.FullItemsCount;
+
+        //}
+
+        line += 1;
+        sequence += 1;
+
+        var item: SupplierInvoiceItemPM = new SupplierInvoiceItemPM(this.EntityPM);
+        item.DeclarationId = this.EntityPM.DeclarationId;
+        item.CounterKey = this.EntityPM.InvoiceCounterKey;
+        item.Tenant = this.EntityPM.Tenant;
+        item.LineNumber = line;
+        item.OrderByLineNo = line.toString();
+        item.SequenceNumeric = sequence;
+        item.LastCopyFromOrderNo = "10000";
+        this.EntityPM.FullChildrenCount++;
+        this.ChildrenCount = "(" + this.EntityPM.FullChildrenCount + ")";
+
+
+        if (!this.EntityPM.SupplierInvoiceItems.includes(item)) {
+            this.EntityPM.AddSupplierInvoiceItem(item);
+            this.ItemsSource.Insert(new SupplierInvoiceItemLine(item, this));
+            //SessionLocator.CurrentSession.ResetRowIndex();
+            if (isNaN(this.EntityPM.FullItemsCount)) this.EntityPM.FullItemsCount = 0;
+
+            this.EntityPM.FullItemsCount = this.EntityPM.FullItemsCount + 1;
+            this.EntityPM.MaxSequence = this.EntityPM.MaxSequence + 1;
+        }
+        this.calculateTotals(false, null);
+
+
+    }
+
+    Add___() {
+        if (this.IsDisplayOnly)
+            return; // go back -_-
+
+        var line: number = 0;
+        var sequence: number = 0;
+        if (this.EntityPM.SupplierInvoiceItems.length > 0) {
+            if (isNaN(this.EntityPM.InvoiceItemLastLineNumber)) this.EntityPM.InvoiceItemLastLineNumber = 0;
+            line = this.EntityPM.InvoiceItemLastLineNumber;
+        }
+
+        if (this.EntityPM.FullItemsCount < 500 || AppTool.IsNullOrEmpty(this.EntityPM.FullItemsCount)) {
+
+            // var items = this.EntityPM.SupplierInvoiceItems..sort(d => d.SequenceNumeric);
+            var items = this.EntityPM.SupplierInvoiceItems.sort((a, b) => { return (a.SequenceNumeric === b.SequenceNumeric) ? 0 : (a.SequenceNumeric < b.SequenceNumeric) ? -1 : 1 });
+            if (items.length == 0) sequence = 0;
+            else {
+                sequence = items[this.EntityPM.SupplierInvoiceItems.length - 1].SequenceNumeric;
+            }
+
+
+        }
+        else {
+            sequence = this.EntityPM.FullItemsCount;
+
+        }
+
+        line += 1;
+        sequence += 1;
+
+        var item: SupplierInvoiceItemPM = new SupplierInvoiceItemPM(this.EntityPM);
+        item.DeclarationId = this.EntityPM.DeclarationId;
+        item.CounterKey = this.EntityPM.InvoiceCounterKey;
+        item.Tenant = this.EntityPM.Tenant;
+        item.LineNumber = line;
+        item.OrderByLineNo = line.toString();
+        item.SequenceNumeric = sequence;
+        this.EntityPM.FullChildrenCount++;
+        this.ChildrenCount = "(" + this.EntityPM.FullChildrenCount + ")";
+
+
+        if (!this.EntityPM.SupplierInvoiceItems.includes(item)) {
+            this.EntityPM.AddSupplierInvoiceItem(item);
+            this.ItemsSource.Insert(new SupplierInvoiceItemLine(item, this));
+            //SessionLocator.CurrentSession.ResetRowIndex();
+            if (isNaN(this.EntityPM.FullItemsCount)) this.EntityPM.FullItemsCount = 0;
+
+            this.EntityPM.FullItemsCount = this.EntityPM.FullItemsCount + 1;
+            this.EntityPM.MaxSequence = this.EntityPM.MaxSequence + 1;
+        }
+        this.calculateTotals(false, null);
+
+
+
+    }
+
+    public filters: ApiQueryFilters = null;
+    BuildFreightAmountsList() {
+        this.AmountList.Clear();
+
+        for (var i = 0; i < this.EntityPM.SupplierInvoiceFreightAmounts.length; i++) {
+
+            this.AmountList.Insert(new SupplierInvoiceFreightAmountLine(this.EntityPM.SupplierInvoiceFreightAmounts[i], this));
+
+        }
+
+        if (this.EntityPM.SupplierInvoiceFreightAmounts.length == 0) {
+            this.FreightCurrencyTypeCode = null;
+
+        }
+
+        if (this.EntityPM.SupplierInvoiceFreightAmounts.length == 0) {
+            var item: SupplierInvoiceFreightAmountPM = new SupplierInvoiceFreightAmountPM(this.EntityPM);
+            item.DeclarationId = this.EntityPM.DeclarationId;
+            item.InvoiceCounterKey = this.EntityPM.InvoiceCounterKey;
+            item.Tenant = this.EntityPM.Tenant;
+            item.ChangeSetOp = "Insert";
+            this.EntityPM.IsDirty = false;
+            this.AmountList.Insert(new SupplierInvoiceFreightAmountLine(item, this), false);
+
+        }
+
+        this.CopyAmountList();
+    }
+
+    LoadCurrenciesExchangeRates(recalculateTotals: boolean) {
+
+
+        var currencyRates: string = "";
+
+        if (this.AmountList != null && this.AmountList.Length > 0) {
+            for (let line of this.AmountList.Collection) {
+                currencyRates = currencyRates + "," + line.CurrencyTypeCode;
+
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.FreightCurrencyTypeCode)) {
+                if (!currencyRates.includes(this.FreightCurrencyTypeCode)) {
+                    currencyRates = currencyRates + "," + this.FreightCurrencyTypeCode;
+                }
+            }
+
+
+            this.customsExchangeRateExtendedPMService.GetCustomsExchangeRateForCurrencyAndDate(currencyRates, this.declarationPM.TaxationDateTime).subscribe(response => {
+
+                var result = response.Result;
+                if (result) {
+                    this.customsExchangeRates = result;
+                    if (recalculateTotals) {
+
+                        this.UpdateTotalFreightInInvoiceCurrencyAndInNIS();
+                        this.ReCalculateInsuranceAmount();
+                    }
+                }
+
+
+
+            });
+        }
+    }
+
+    public customsExchangeRates: CustomsExchangeRatePM[];
+    UpdateTotalFreightInInvoiceCurrencyAndInNIS() {
+
+        var totalFreightInNIS: number = 0;
+        var totalFreightInInvoice: number = 0;
+
+        for (let item of this.AmountList.Collection) {
+            var amountInNIS: number;
+            var rate: CustomsExchangeRatePM;
+            if (item.CurrencyTypeCode == "ILS") {
+                amountInNIS = item.Amount;
+                totalFreightInNIS = totalFreightInNIS + amountInNIS;
+                //if (totalFreightInNIS != null) {
+                //    totalFreightInNIS = Math.round(totalFreightInNIS);
+                //}
+            }
+
+            else {
+                if (this.customsExchangeRates) {
+
+                    rate = this.customsExchangeRates.filter(d => d.CurrencyTypeCode == item.CurrencyTypeCode)[0];
+                    if (rate != null) {
+
+                        amountInNIS = item.Amount * rate.ExchangeRate;
+                        totalFreightInNIS = totalFreightInNIS + amountInNIS;
+                        //if (totalFreightInNIS != null) {
+                        //    totalFreightInNIS = Math.round(totalFreightInNIS);
+                        //}
+
+                    }
+                }
+            }
+        }
+
+        if (this.FreightCurrencyTypeCode == "ILS") {
+            totalFreightInInvoice = totalFreightInNIS;
+        }
+
+        else {
+            var invoiceRate: CustomsExchangeRatePM = this.customsExchangeRates.filter(d => d.CurrencyTypeCode == this.FreightCurrencyTypeCode)[0];
+            if (invoiceRate != null) {
+
+                totalFreightInInvoice = totalFreightInNIS / invoiceRate.ExchangeRate;
+
+            }
+
+        }
+
+        //if (totalFreightInInvoice != null) {
+        //    totalFreightInInvoice = Math.round(totalFreightInInvoice);
+        //}
+
+        if (this.EntityPM.TotalFreightInFreightCurrency != totalFreightInInvoice) {
+            this.TotalFreightAmountInInvoiceCurrency = totalFreightInInvoice;
+            this.TotalFreightInFreightCurrency = totalFreightInInvoice;
+        }
+        if (this.EntityPM.TotalFreightInNIS != totalFreightInNIS) {
+            this.TotalFreightAmountInNIS = totalFreightInNIS;
+        }
+
+        var percentage;
+        //if (this.declarationPM.SupplierInvoices.length > 0) {
+        //    percentage = this.declarationPM.SupplierInvoices[0].InsruancePercentage;
+        //}
+        //else {
+        //    percentage = this.InsurancePercentage;
+        //}
+        var firstInvoice: SupplierInvoicePM = this.Parent.Get1SupplierInvoice();
+        percentage = firstInvoice.InsruancePercentage;
+        if (percentage != null) {
+
+            this.CalculateInsuranceAmount(percentage);
+        }
+
+    }
+    ExchangeRates: CustomsExchangeRatePM[];
+    CalculateInsuranceAmount(value: number) {
+
+        var amount: number = (isNaN(this.InvoiceAmount)) ? 0 : this.InvoiceAmount;
+        var total = (isNaN(this.TotalFreightAmountInInvoiceCurrency)) ? 0 : this.TotalFreightAmountInInvoiceCurrency;
+        var firstInvoice: SupplierInvoicePM = this.Parent.Get1SupplierInvoice();
+        if (this.IsFirstInvoice()) {// if (this.SequenceNumeric == 1 || this.declarationPM.SupplierInvoices.length == 0 && !this.SequenceNumeric) {
+            if (this.InsurancePercentage == null || this.InsurancePercentage == 0) {
+                return;
+            }
+           // this.InsuranceAmount = (amount + total) * (this.InsurancePercentage / 100);
+            this.InsruanceCurrencyTypeCode = this.InvoiceCurrencyTypeCode;
+        }
+
+
+        //if (value != null) {
+        //    this.InsuranceAmount = Math.round(value);
+        //}
+        //else {
+        //    this.InsuranceAmount = value;
+        //}
+        //this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
+        //this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
+
+        //this.InsruanceCurrencyTypeCode = this.InvoiceCurrencyTypeCode;
+        var firstInvoiceRate: number = 0;
+        var totalFreight: number = 0;
+        var totalAmount: number = 0;
+        var InvocieCurrencyRate: number = 0;
+        var rate: number = 0;
+
+        var amount: number = 0;
+        var total: number = 0;
+        var ratePM: any;
+        var firstRatePM: any;
+        if (this.ExchangeRates) {// this is a bug in errorslog filter of undefined, solution: if no exchange rate try to load them if not it will not be calculated----mohammad.
+            ratePM = this.ExchangeRates.filter(d => d.CurrencyTypeCode == this.InvoiceCurrencyTypeCode)[0];//.ExchangeRate;
+            firstRatePM = this.ExchangeRates.filter(d => d.CurrencyTypeCode == firstInvoice.InvoiceCurrencyTypeCode)[0];//.FirstExchangeRate;
+        }
+        else {
+            this.LoadCurrenciesExchangeRates(true);
+            return;
+        }
+        if (firstRatePM) {
+            firstInvoiceRate = firstRatePM.ExchangeRate;
+        }
+        if (ratePM) {
+            InvocieCurrencyRate = ratePM.ExchangeRate;
+        }
+        var invoice: SupplierInvoicePM;
+        //if (this.SequenceNumeric == 1 || this.declarationPM.SupplierInvoices.length == 0 && !this.SequenceNumeric) {
+        //    invoice = this.EntityPM;
+        //}
+        //else {
+        //    invoice = this.declarationPM.SupplierInvoices[0];
+        //}
+        invoice = this.Parent.Get1SupplierInvoice();// instead of doing the above code.
+
+        amount = (isNaN(this.InvoiceAmount)) ? 0 : this.InvoiceAmount;
+        total = (isNaN(this.TotalFreightInFreightCurrency)) ? 0 : this.TotalFreightInFreightCurrency;
+        var FreightCurrencyRate = this.ExchangeRates.filter(d => d.CurrencyTypeCode == this.FreightCurrencyTypeCode)[0];
+        if (FreightCurrencyRate) {
+            rate = FreightCurrencyRate.ExchangeRate;
+            if (InvocieCurrencyRate > 0) {
+                total = total * (rate / InvocieCurrencyRate);
+            }
+            else {
+                total = total * rate;
+            }
+        }
+
+
+
+        for (let item of this.declarationPM.SupplierInvoices.filter(d => d.SequenceNumeric != this.EntityPM.SequenceNumeric)) {// loops the invoices
+
+            if (item.FreightCurrencyTypeCode != this.InvoiceCurrencyTypeCode) {//calculate the freightamount
+                if (!AppTool.IsNullOrEmpty(item.TotalFreightInFreightCurrency)) {
+                    var result = this.ExchangeRates.filter(d => d.CurrencyTypeCode == item.FreightCurrencyTypeCode)[0];//.ExchangeRate;
+                    if (result && InvocieCurrencyRate != 0) {
+                        rate = result.ExchangeRate;
+
+                        totalFreight = totalFreight + (item.TotalFreightInFreightCurrency * (rate / InvocieCurrencyRate));
+                    }
+                }
+            }
+            else {
+                totalFreight = totalFreight + item.TotalFreightInFreightCurrency;
+            }
+
+            // calculate insurance
+            if (invoice.InsruancePercentage) {// if no percentage then no automatic insurance.
+                if (item.InvoiceCurrencyTypeCode != this.InvoiceCurrencyTypeCode) {
+                    if (!AppTool.IsNullOrEmpty(item.InvoiceCurrencyTypeCode)) {
+                        var x = this.ExchangeRates.filter(d => d.CurrencyTypeCode == item.InvoiceCurrencyTypeCode)[0];
+                        if (x && InvocieCurrencyRate != 0) {
+                            rate = x.ExchangeRate;
+
+
+                            totalAmount = totalAmount + ((isNaN(item.InvoiceAmount)) ? 0 : item.InvoiceAmount * (rate / InvocieCurrencyRate));
+                        }
+                    }
+                }
+                else {
+                    totalAmount = totalAmount + ((isNaN(item.InvoiceAmount)) ? 0 : item.InvoiceAmount);
+                }
+
+            }
+
+
+        }
+        var amountInCurrentInvoiceCurrency = (amount + total + totalAmount + totalFreight) * (invoice.InsruancePercentage / 100);
+        var amountInFirstInoviceCurrency = 0;
+        if (this.IsFirstInvoice()) {
+            amountInFirstInoviceCurrency = amountInCurrentInvoiceCurrency;
+        }
+        else {
+            amountInFirstInoviceCurrency = amountInCurrentInvoiceCurrency * InvocieCurrencyRate / firstInvoiceRate;
+        }
+
+        if (isNaN(amountInFirstInoviceCurrency)) {
+            amountInFirstInoviceCurrency = 0;
+        }
+        var insAmt = amountInFirstInoviceCurrency == 0 ? null : amountInFirstInoviceCurrency;//(amount + total + totalAmount + totalFreight) * (invoice.InsruancePercentage / 100);
+        if (insAmt == null) {
+            invoice.InsuranceAmount = 0;
+        }
+        else {
+            invoice.InsuranceAmount = Number(insAmt.toFixed(2));
+        }
+        if (this.IsFirstInvoice()) {
+            this.InsuranceAmount = invoice.InsuranceAmount;
+        }
+        this.IncotermLogic(this.IncotermCode);// this is instead of just closing the two fields. below 
+        //this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
+        //this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
+
+
+
+    }
+
+
+    OnInsuranceAmountLostFocus(event) {
+
+        this.IncotermLogic(this.IncotermCode);// insteaad of doing the code below run the original code.
+        //if (AppTool.IsNullOrEmpty(this.InsuranceAmount)) {
+
+        //    if (this.InsurancePercentage == null && this.InsruanceCurrencyTypeCode == null) {
+        //        this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", true);
+
+        //        }
+
+        //    }
+
+        //    else {
+
+        //    if (this.InsurancePercentage == null) {
+        //        this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
+
+
+        //        }
+        //    }
+    }
+
+    OnInsruanceCurrencyLostFocus(event) {
+        this.IncotermLogic(this.IncotermCode);// insteaad of doing the code below run the original code.
+        //if (this.InsruanceCurrencyTypeCode != null) {
+        //    if (this.InsurancePercentage == null) {
+        //        this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
+
+
+
+        //        }
+        //    }
+        //    else {
+        //    if (this.InsurancePercentage == null && this.InsuranceAmount == null) {
+        //        this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", true);
+
+
+        //        }
+        //    }
+    }
+
+    OnRowEnded($event) {
+        //console.log("this.ItemsSource.Length : " + this.ItemsSource.Length);
+        if (($event) == this.ItemsSource.Length) {
+            setTimeout(() => this.Add(), 1);
+            //this.Add();
+
+        }
+    }
+
+    OnFocus() {
+        if (this.ItemsSource.Length == 0) {
+            this.Add();
+        }
+    }
+
+    Dispose() {
+        if (this.ItemsSource) {
+            this.ItemsSource.Collection.forEach((item) => {
+                item.Dispose();
+            });
+        }
+
+        if (this.AccumulatedFilterChangedEvent) {
+            this.AccumulatedFilterChangedEvent.unsubscribe();
+            this.AccumulatedFilterChangedEvent = null;
+        }
+
+        if (this.SearchFilterChangedEvent) {
+            this.SearchFilterChangedEvent.unsubscribe();
+            this.SearchFilterChangedEvent = null;
+        }
+    }
+
+    SearchMethod() {
+
+
+        if (!this.IsDisplayOnly) {
+            var windowArgs: any = {};
+
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 700;
+            logWindow.Height = 500;
+            windowArgs.ImporterId = this.declarationPM.ImporterId;
+            logWindow.ShowCloseButton = true;
+            windowArgs.IsDisplayOnly = this.IsDisplayOnly;
+            logWindow.WindowArgs = windowArgs;
+            logWindow.Title = "חיפוש ספקים מורחב";
+
+            logWindow.ComponentLoaded.subscribe(comp => {
+                logWindow.WindowClosed.subscribe(s => {
+                    if (s) {
+                        this.SetVendorId(comp);
+                    }
+                });
+            });
+
+          logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/VendorExtendedSearchComponent');
+        }
+
+    }
+
+    SetVendorId(args) {
+        if (args.SelectedRow) {
+
+            if (!AppTool.IsNullOrEmpty(args.SelectedRow.DBVendorID)) {
+                this.VendorId = args.SelectedRow.DBVendorID;
+            } else {
+                this.VendorId = args.SelectedRow.VendorId;
+            }
+                                            
+        }
+    }
+
+    // Action Buttons
+    UpdateCertificatesButtonClicked() {
+        var windowArgs: any = {};
+        windowArgs.EntityPM = this.EntityPM;
+        var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.MultiCertificateUpdate");
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 666;
+        logWindow.Height = 400;
+        logWindow.Title = windowTitle;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe((event: any) => {
+            if (event == 'ok') {
+
+                //client method
+                if (this.ItemsSource.Collection) {
+                    this.ItemsSource.Collection.forEach((item: SupplierInvoiceItemLine) => {
+                        item.SetCertificateStatusVisibility();
+                    });
+                }
+
+                //server method - replaced with client method
+                //this.ReloadEntity(); 
+            }
+
+        });
+      logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/MultiCertificateUpdate/MultiCertificateUpdateComponent');
+    }
+
+    ReloadEntity() {
+        this.ReloadEntityEvent.emit();
+    }
+
+    IsFirstInvoice() {
+        var firstInvoice: SupplierInvoicePM = this.Parent.Get1SupplierInvoice();
+        return (this.EntityPM.InvoiceCounterKey == firstInvoice.InvoiceCounterKey);
+    }
+
+    InvoiceAmountBlur(text) {
+
+        if (this.old_amount != this.EntityPM.InvoiceAmount ||
+            this.old_currency != this.EntityPM.InvoiceCurrencyTypeCode ||
+            this.old_vendor != this.EntityPM.VendorId)
+            this.Parent.CalculateCommissionPercentage();
+
+        this.old_amount = this.EntityPM.InvoiceAmount;
+        this.old_currency = this.EntityPM.InvoiceCurrencyTypeCode;
+        this.old_vendor = this.EntityPM.VendorId;
+    }
+
+    //#region Remark tooltip
+    onCellSelected($event, Item: SupplierInvoiceItemLine) {
+        if (this.SelectedRow != Item) {
+            this.OnSelectedItemChanged(Item);
+        }
+    }
+    OnSelectedItemChanged(selectedRow: SupplierInvoiceItemLine) {
+        console.log("OnSelectedItemChanged > ", selectedRow);
+        if (selectedRow) {
+
+            if (this.SelectedRow != selectedRow) {
+                if (this.SelectedRow) {
+                    this.SelectedRow.ShowClassifierRemarkTooltip = false; // hide CR tooltip on prev selected row
+                    selectedRow.closedManullay = false;
+
+                    //this.SelectedRow.ShowTariffErrorTooltip = false; // hide Tariff tooltip on prev selected row
+                }
+            }
+            if (!selectedRow.closedManullay)
+                selectedRow.ShowClassifierRemarkTooltip = true;
+
+            this.SelectedRow = selectedRow;
+
+        } else {
+            if (this.SelectedRow) {
+                this.SelectedRow.ShowClassifierRemarkTooltip = false;
+                this.SelectedRow.closedManullay = false;
+            }
+            this.SelectedRow = null;
+        }
+
+    }
+
+
+
+    //#endregion
+}
+
+export class SupplierInvoiceItemLine extends BaseComponent {
+    public entityPM: SupplierInvoiceItemPM = null;
+    public ObjectTableName = "Customs.SupplierInvoiceItem";
+    public DataContext = this;
+    Parent: SupplierInvoiceGeneralTabComponent;
+    public QuantityTypeCodeLoaded: any;
+    IsBlueBorderVisibile: boolean = false;
+    private declarationWebService: DeclarationWebService = new DeclarationWebService;
+    private customsVendorListService: CustomsVendorListService = new CustomsVendorListService();
+    private _CustomsCountryListService: CustomsCountryListService = new CustomsCountryListService();
+
+    public ShowClassefierRemarkInfo: boolean = false;
+    public ShowClassifierRemarkTooltip: boolean = false;
+    public ShowTariffErrorInfo: boolean = false;
+    public ShowTariffErrorTooltip: boolean = false;
+
+    public closedManullay: boolean = false;
+
+    ClassefierRemarkToolTipWrapper: string = "ClassefierRemarkToolTipWrapper";
+    ClassefierRemarkToolTip: string = "ClassefierRemarkToolTip";
+    TariffErrorToolTipWrapper: string = "TariffErrorToolTipWrapper";
+    TariffErrorToolTip: string = "TariffErrorToolTip";
+
+    constructor(EntityPM: SupplierInvoiceItemPM, parent: SupplierInvoiceGeneralTabComponent) {
+        super();
+        this.entityPM = EntityPM;
+
+        //calculate ids
+        this.ClassefierRemarkToolTipWrapper += EntityPM.SequenceNumeric;
+        this.ClassefierRemarkToolTip += EntityPM.SequenceNumeric;
+        //this.TariffErrorToolTipWrapper += EntityPM.SequenceNumeric;
+        //this.TariffErrorToolTip += EntityPM.SequenceNumeric;
+
+        ////Fill tariff error text
+        //this.TariffErrorText = "מדינה לא תואמת לקוד התעריף"; //"Tarrif doesnt match country” 
+
+        ////get currenct customs country
+        //if (this.OriginCountryCode) {
+        //    this._CustomsCountryListService.getSingle(this.OriginCountryCode).subscribe((res) => {
+        //        var entity = res.Result;
+        //        if (entity) {
+        //            this.CustomsCountry = entity;
+        //            this.OriginCountryName = this.CustomsCountry.LocalName;
+        //        }
+        //    });
+        //}
+
+        if (this.entityPM.ClasifiedRemarks) {
+            this.ShowClassefierRemarkInfo = true;
+        }
+
+
+        this.Parent = parent;
+        this.oldvalue = this.entityPM.ItemPrice;
+
+        if (this.Parent.accumulationFeature == null) {
+            this.Parent.IsNotForAccumaltionVisibile = false;
+        }
+
+        if (this.Parent.IsReadOnly) {
+            this.UIProperties.SetEnabled("NotForAccumaltion", "Customs.SupplierInvoiceItem", false);
+        }
+
+
+        if (this.entityPM.SupplierInvioceItemCertificats.length == 0) {
+            this.WarningVisiblity = false;
+            this.OkVisiblity = false;
+            this.IsBlueBorderVisibile = false;
+        }
+
+        else if (this.entityPM.CertificatesStatusCode == "1") {
+            this.OkVisiblity = true;
+        }
+
+
+        else if (this.entityPM.CertificatesStatusCode == "2") {
+            this.WarningVisiblity = true;
+        }
+        else if (this.entityPM.CertificatesStatusCode == "3") {
+            this.IsBlueBorderVisibile = true;
+            this.OkVisiblity = true;
+        }
+
+        else if (this.entityPM.CertificatesStatusCode == "4") {
+            this.WarningVisiblity = true;
+            this.IsBlueBorderVisibile = true;
+        }
+
+
+        if (this.entityPM.ItemAdditionalStatus) {
+            this.ItemAdditionalStatusVisibility = true;
+        }
+
+        else {
+
+            this.ItemAdditionalStatusVisibility = false;
+        }
+
+        if (this.entityPM.SupplierInvoiceItemVehicles.length > 0) {
+            this.VehicleOkVisiblity = true;
+        }
+
+
+
+        this.GetQuantityType(false);
+        this.QuantityTypeCodeLoaded =
+            //SessionLocator.CurrentSession.SubscriptionAdd(
+            SessionLocator.CurrentSession.QuantityTypeCodeLoadedEvent.subscribe((res) => {
+                if (this.ClassificationCode == res.ClassificationCode) {
+                    this.QunatityTypeCode = res.QuantityTypeCode;
+
+                }
+            })
+            //)
+            ;
+    }
+
+
+    //#region Properties
+
+    private editButtonName;
+    get EditButtonName() { return this.editButtonName; }
+    set EditButtonName(value: string) { this.editButtonName = value; }
+
+    private itemAdditionalStatusVisibility = false;
+    get ItemAdditionalStatusVisibility() { return this.itemAdditionalStatusVisibility; }
+    set ItemAdditionalStatusVisibility(value: boolean) { this.itemAdditionalStatusVisibility = value; }
+
+    private okVisiblity = false;
+    get OkVisiblity() { return this.okVisiblity; }
+    set OkVisiblity(value: boolean) { this.okVisiblity = value; }
+
+    private vehicleOkVisiblity = false;
+    get VehicleOkVisiblity() { return this.vehicleOkVisiblity; }
+    set VehicleOkVisiblity(value: boolean) { this.vehicleOkVisiblity = value; }
+
+
+    private wrningVisiblity = false;
+    get WarningVisiblity() { return this.wrningVisiblity; }
+    set WarningVisiblity(value: boolean) { this.wrningVisiblity = value; }
+
+    measurmentUnit: MeasurmentUnitPM;
+    get MeasurmentUnit() { return this.measurmentUnit; }
+    set MeasurmentUnit(value: MeasurmentUnitPM) {
+
+        if (this.measurmentUnit != value) {
+            this.measurmentUnit = value;
+        }
+        if (!AppTool.IsNullOrEmpty(value)) {
+            this.InvoiceQuantityTypeName = value.LocalName;
+
+
+        } else {
+            this.InvoiceQuantityTypeName = null;
+            this.InvoiceQuantityType = null;
+        }
+    }
+
+
+    tradeAgreement: TradeAgreementPM;
+    get TradeAgreement() { return this.tradeAgreement; }
+    set TradeAgreement(value: TradeAgreementPM) {
+
+        if (this.tradeAgreement != value) {
+            this.tradeAgreement = value;
+        }
+        if (!AppTool.IsNullOrEmpty(value)) {
+            this.TradeAgreementName = value.LocalName;
+
+
+        } else {
+            this.TradeAgreementName = null;
+            this.TradeAgreementCode = null;
+        }
+    }
+
+
+    customsCountry: CustomsCountryPM;
+    get CustomsCountry() { return this.customsCountry; }
+    set CustomsCountry(value: CustomsCountryPM) {
+
+        if (this.customsCountry != value) {
+            this.customsCountry = value;
+            //this.CheckTariff();
+        }
+        if (!AppTool.IsNullOrEmpty(value)) {
+            this.OriginCountryName = value.LocalName;
+          if (!AppTool.IsNullOrEmpty(this.ItemCode) && GITITEMCacheService.Instance.IsCountryPURForItems) {
+                //var itemCodeDetails = this.Parent.Parent.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
+              var itemCodeDetails = GITITEMCacheService.Instance.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
+              
+                if (itemCodeDetails != null) {
+                    itemCodeDetails.OriginCountryCode = value.Code;
+                    itemCodeDetails.OriginCountryName = value.LocalName;
+                    itemCodeDetails.IsNew = true;
+                }
+            }
+        } else {
+            this.OriginCountryName = null;
+            this.OriginCountryCode = null;
+          if (!AppTool.IsNullOrEmpty(this.ItemCode) && GITITEMCacheService.Instance.IsCountryPURForItems) {
+                //var itemCodeDetails = this.Parent.Parent.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
+              var itemCodeDetails = GITITEMCacheService.Instance.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
+                if (itemCodeDetails != null) {
+                    itemCodeDetails.OriginCountryCode = null;
+                    itemCodeDetails.OriginCountryName = null;
+                    itemCodeDetails.IsNew = true;
+                }
+            }
+        }
+    }
+
+    public get OrderByLineNo() { return this.entityPM.OrderByLineNo; }
+    public set OrderByLineNo(newValue: string) { this.entityPM.OrderByLineNo = newValue; }
+
+    public get SequenceNumeric() { return this.entityPM.SequenceNumeric; }
+    public set SequenceNumeric(newValue: number) { this.entityPM.SequenceNumeric = newValue; }
+
+    public get LineNumber() { return this.entityPM.LineNumber; }
+    public set LineNumber(newValue: number) { this.entityPM.LineNumber = newValue; }
+
+    public get ItemCode() { return this.entityPM.ItemCode; }
+    public set ItemCode(newValue: string) { this.entityPM.ItemCode = newValue; }
+
+    public get ItemDescription() { return this.entityPM.ItemDescription; }
+    public set ItemDescription(newValue: string) { this.entityPM.ItemDescription = newValue; }
+
+    public get NotForAccumaltion() { return this.entityPM.NotForAccumaltion; }
+    public set NotForAccumaltion(value: boolean) {
+        this.entityPM.NotForAccumaltion = value;
+    }
+
+    public get SearchFields() { return this.entityPM.SearchFields; }
+    public set SearchFields(value: string) {
+        this.entityPM.SearchFields = value;
+    }
+
+
+    valid: boolean = true;
+    digit: string = null;
+    checkDigit: number = 0;
+    public get ClassificationCode() { return this.entityPM.ClassificationCode; }
+    public set ClassificationCode(newValue: string) {
+
+        this.entityPM.ClassificationCode = newValue;
+
+        if (newValue == null) {
+            this.UIProperties.SetValidity("ClassificationCode", "Customs.SupplierInvoiceItem", true, "");
+
+        }
+
+    }
+
+    public get TradeAgreementCode() { return this.entityPM.TradeAgreementCode; }
+    public set TradeAgreementCode(newValue: string) {
+        this.entityPM.TradeAgreementCode = newValue;
+        //this.CheckTariff();
+    }
+
+    public get TradeAgreementName() { return this.entityPM.TradeAgreementName; }
+    public set TradeAgreementName(newValue: string) { this.entityPM.TradeAgreementName = newValue; }
+
+
+    public get InvoiceQuantity() { return this.entityPM.InvoiceQuantity; }
+    public set InvoiceQuantity(newValue: number) { this.entityPM.InvoiceQuantity = newValue; }
+
+
+    public get InvoiceQuantityType() { return this.entityPM.InvoiceQuantityType; }
+    public set InvoiceQuantityType(newValue: string) { this.entityPM.InvoiceQuantityType = newValue; }
+
+    public get InvoiceQuantityTypeName() { return this.entityPM.InvoiceQuantityTypeName; }
+    public set InvoiceQuantityTypeName(newValue: string) { this.entityPM.InvoiceQuantityTypeName = newValue; }
+    oldvalue: number = 0;
+    doCalculate: boolean = false;
+    public get ItemPrice() { return this.entityPM.ItemPrice; }
+    public set ItemPrice(newValue: number) {
+
+        if (newValue != this.entityPM.ItemPrice) {
+            this.doCalculate = true;
+            this.entityPM.ItemPrice = newValue;
+        }
+
+
+    }
+
+    public get OriginCountryCode()
+    { return this.entityPM.OriginCountryCode; }
+    public set OriginCountryCode(newValue: string) {
+        this.entityPM.OriginCountryCode = newValue;
+    }
+
+    public get OriginCountryName() { return this.entityPM.OriginCountryName; }
+    public set OriginCountryName(newValue: string) { this.entityPM.OriginCountryName = newValue; }
+
+    private qunatityTypeCode: string;
+    public get QunatityTypeCode() { return this.qunatityTypeCode; }
+    public set QunatityTypeCode(newValue: string) { this.qunatityTypeCode = newValue; }
+
+
+    public get IsParent() { return this.entityPM.IsParent; }
+    public set IsParent(newValue: boolean) { this.entityPM.IsParent = newValue; }
+
+    public get ClasifiedRemarks() { return this.entityPM.ClasifiedRemarks; }
+    public set ClasifiedRemarks(newValue: string) { this.entityPM.ClasifiedRemarks = newValue; }
+
+    _TariffErrorText: string;
+    public get TariffErrorText() { return this._TariffErrorText; }
+    public set TariffErrorText(newValue: string) { this._TariffErrorText = newValue; }
+
+
+
+    //#endregion
+
+    OnItemPriceLostFocus(value: number) {
+
+        if (this.doCalculate) {
+            if (isNaN(this.ItemPrice)) this.ItemPrice = 0;
+            if (this.Parent.Parent.TotalForeignCurrency == null) this.Parent.Parent.TotalForeignCurrency = 0;
+            if (isNaN(this.oldvalue)) this.oldvalue = 0;
+            var totalFCurr: number = this.Parent.Parent.TotalForeignCurrency;
+            this.Parent.Parent.TotalForeignCurrency = totalFCurr - this.oldvalue + this.ItemPrice;
+            this.Parent.Parent.Difference = this.Parent.Parent.TotalForeignCurrency - (this.Parent.InvoiceAmount);
+        }
+        this.oldvalue = this.entityPM.ItemPrice;
+        this.doCalculate = false;
+    }
+
+    GetQuantityType(isChangeInvoiceQuantityType: boolean = true) {
+        if (this.ClassificationCode != null) {
+            var keys = Object.keys(this.Parent.ClasificationQtyTypes);
+            if (keys.indexOf(this.ClassificationCode) > -1) {
+                var result: string = this.Parent.ClasificationQtyTypes[this.ClassificationCode];
+                if (result) {
+                    this.QunatityTypeCode = "(" + result + ")";
+                    if (this.Parent.IsChecked && isChangeInvoiceQuantityType) {
+                        if (this.InvoiceQuantityType == null && result != null) {
+                            this.InvoiceQuantityType = result;
+                        }
+                    }
+                }
+            }
+            else {
+                this.Parent.ClasificationQtyTypes[this.ClassificationCode] = null;
+                var code = this.ClassificationCode.toString().slice(0, this.ClassificationCode.toString().length - 1);
+                this.Parent.quantityTypeMessageService.GetQuantityType(code).subscribe((myServiceResponse: ServiceResponse) => {
+                    if (!myServiceResponse.HasError) {
+
+
+                        if (!myServiceResponse.HasError) {
+                            if (myServiceResponse.Result) {
+                                this.QunatityTypeCode = "(" + myServiceResponse.Result + ")";
+                            }
+                            else {
+                                this.QunatityTypeCode = null;
+                            }
+
+
+                            if (this.Parent.IsChecked && isChangeInvoiceQuantityType) {
+                                if (this.InvoiceQuantityType == null && myServiceResponse.Result != null) {
+                                    this.InvoiceQuantityType = myServiceResponse.Result;
+                                }
+                            }
+                            if (!(keys.indexOf(this.ClassificationCode) > -1)) {
+                                this.Parent.ClasificationQtyTypes[this.ClassificationCode] = myServiceResponse.Result;
+                            }
+                            SessionLocator.CurrentSession.QuantityTypeCodeLoadedEvent.emit({ ClassificationCode: this.ClassificationCode, QuantityTypeCode: this.QunatityTypeCode });
+                            //QuantityTypeCodeLoadedEvent quantityLoadedEvent = currentAssemlyLocator.EventAggregator.GetEvent<QuantityTypeCodeLoadedEvent>();
+                            //quantityLoadedEvent.Publish(new QuantityTypeCodeLoadedEventArgs() { ClassificationCode = ClassificationCode, QuantityTypeCode = this.QunatityTypeCode });
+                        }
+                    }
+
+
+
+                });
+            }
+        }
+
+        else {
+
+            this.QunatityTypeCode = null;
+        }
+    }
+
+    NotForAccumaltionChecked(checked: boolean, item: SupplierInvoiceItemPM) {
+
+        if (checked) {
+
+            this.NotForAccumaltion = true;
+        }
+        else {
+            this.NotForAccumaltion = false;
+        }
+
+    }
+
+    public pointers: CustomsDocumentPointerPM[];
+    DeleteButtonClicked() {
+        this.pointers = this.Parent.Pointers;
+
+        var pointer = this.pointers.filter(d => d.Child2EntityId === this.entityPM.LineNumber.toString())[0];
+        if (pointer == null) {
+
+            this.Delete();
+        }
+
+        else {
+
+            var confirmWindow = new ConfirmWindow();
+
+            //     confirmWindow.DisplayWariningIconImage();
+            confirmWindow.Width = 450;
+
+            confirmWindow.Title = TextCodeTranslator.Translate("Customs.General.O.Warning");
+            confirmWindow.Height = 190;
+            confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+            confirmWindow.NoButtonText = "Cancel";
+            confirmWindow.ShowWarningImage = true;
+            confirmWindow.ShowNoButton
+            confirmWindow.Show(TextCodeTranslator.Translate("Customs.General.O.InvoiceRelatedPoiner"));
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    this.Delete();
+                } else if (confirmWindow.No) {
+
+                }
+            });
+        }
+    }
+
+    Delete() {
+        if (!this.Parent.IsReadOnly) {
+            var deletedItemPrice: number = this.entityPM.ItemPrice;
+            if (this.Parent.EntityPM.SupplierInvoiceItems.includes(this.entityPM)) {
+                this.Parent.EntityPM.RemoveSupplierInvoiceItem(this.entityPM);
+                var sequence;
+                if (this.Parent.ItemsSource.Collection[0].SequenceNumeric == this.entityPM.SequenceNumeric) {
+                    sequence = this.entityPM.SequenceNumeric;
+                    this.Parent.ItemsSource.Remove(this, false); //the position of this line is important :after sequence is taken
+
+                }
+                else {
+                    this.Parent.ItemsSource.Remove(this, false);//the position of this line is important before sequence is taken
+                    sequence = this.Parent.ItemsSource.Collection[0].SequenceNumeric;
+                }
+
+
+                //var sortedCollection = this.Parent.ItemsSource.Collection.sort((a, b) => { return a.SequenceNumeric - b.SequenceNumeric });
+                this.Parent.ItemsSource.Collection.forEach((item: SupplierInvoiceItemLine) => {
+                    item.SequenceNumeric = sequence;
+                    sequence++;
+                });
+                this.Parent.EntityPM.FullItemsCount = this.Parent.EntityPM.FullItemsCount - 1;
+                this.Parent.EntityPM.FullChildrenCount--;
+                this.Parent.ChildrenCount = "(" + this.Parent.EntityPM.FullChildrenCount + ")";
+            }
+            //this.Parent.ItemsSource.Remove(this.entityPM); 
+            this.Parent.calculateTotals(true, deletedItemPrice);
+
+        }
+    }
+
+    CertificateButtonClicked(item: SupplierInvoiceItemLine) {
+        if (!AppTool.IsNullOrEmpty(item)) {
+            var windowArgs: any = {};
+            windowArgs.SupplierInvoiceItemPM = item.entityPM;
+            windowArgs.IsDisplayOnly = this.Parent.IsReadOnly;
+            var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoiceItem");
+
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 1000;
+            logWindow.Height = 600;
+            if (item.ClassificationCode != null) {
+                logWindow.Title = "אישורים לפרט מכס" + " " + item.ClassificationCode;
+            }
+            else {
+                logWindow.Title = "אישורים לפרט מכס";
+            }
+            logWindow.ShowCloseButton = false;
+            logWindow.WindowArgs = windowArgs;
+            logWindow.WindowClosed.subscribe(($event: any) => this.SetCertificateStatusVisibility());
+          logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/SupplierInvoiceItem/SupplierInvoiceItemCertificatesComponent');
+        }
+    }
+
+    EditItem(item: SupplierInvoiceItemLine) {
+        if (!AppTool.IsNullOrEmpty(item)) {
+            var windowArgs: any = {};
+            windowArgs.SupplierInvoiceItemPM = item.entityPM;
+            windowArgs.Parent = item;
+            windowArgs.IsDisplayOnly = this.Parent.IsReadOnly;
+
+            var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoiceItem");
+
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 1000;
+            logWindow.Height = 600;
+            logWindow.Title = windowTitle;
+            logWindow.ShowCloseButton = false;
+            logWindow.WindowArgs = windowArgs;
+            logWindow.WindowClosed.subscribe(($event: any) => this.SetStatusVisibility());
+
+          logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/SupplierInvoiceItem/EditSupplierInvoiceItem');
+
+
+        } else {
+            console.log("[!] There is no item to open", item);
+        }
+    }
+
+
+    SetStatusVisibility() {
+
+
+        if (this.entityPM.ItemAdditionalStatus) {
+            this.ItemAdditionalStatusVisibility = true;
+        }
+
+        else {
+
+            this.ItemAdditionalStatusVisibility = false;
+        }
+    }
+
+    public SetCertificateStatusVisibility() {
+
+
+        if (this.entityPM.CertificatesStatusCode == "1") {
+            this.OkVisiblity = true;
+            this.WarningVisiblity = false;
+            this.IsBlueBorderVisibile = false;
+        }
+
+        else if (this.entityPM.CertificatesStatusCode == "2") {
+            this.WarningVisiblity = true;
+            this.OkVisiblity = false;
+            this.IsBlueBorderVisibile = false;
+        }
+
+
+
+        else if (this.entityPM.CertificatesStatusCode == "3") {
+            this.OkVisiblity = true;
+            this.WarningVisiblity = false;
+            this.IsBlueBorderVisibile = true;
+        }
+        else if (this.entityPM.CertificatesStatusCode == "4") {
+            this.WarningVisiblity = true;
+            this.OkVisiblity = false;
+            this.IsBlueBorderVisibile = true;
+        }
+
+        else {
+            this.WarningVisiblity = false;
+            this.OkVisiblity = false;
+            this.IsBlueBorderVisibile = false;
+        }
+
+    }
+
+    ClassificationKeyUp(event, logCellTemplate: any, classificationTextBox: any) {
+        var key = event.keyCode;
+        if (key == 13) {
+            this.OnClassificationLostFocus(logCellTemplate, classificationTextBox);
+        }
+    }
+
+    OnClassificationLostFocus(logCellTemplate: any, classificationTextBox: any) {
+        var newValue = this.ClassificationCode;
+        this.valid = true;
+        this.UIProperties.SetValidity("ClassificationCode", "Customs.SupplierInvoiceItem", true, "");
+
+        if (AppTool.IsNullOrEmpty(newValue)) {
+            this.UIProperties.SetValidity("ClassificationCode", "Customs.SupplierInvoiceItem", true, "");
+        }
+        else if (newValue.toString().length > 11) {
+            this.valid = false;
+            this.UIProperties.SetValidity("ClassificationCode", "Customs.SupplierInvoiceItem", false, TextCodeTranslator.Translate("Customs.Declaration.O.CodeLong"));
+
+        }
+        else if (newValue.toString().length < 8) {
+            this.valid = false;
+            this.UIProperties.SetValidity("ClassificationCode", "Customs.SupplierInvoiceItem", false, TextCodeTranslator.Translate("Customs.Declaration.O.CodeShort"));
+
+        }
+        else if (newValue.toString().length == 8) {
+            newValue = newValue + "00";
+            this.checkDigit = LuhnAlgorithm.CalculateLuhnAlgorithm(newValue);
+            newValue = newValue + this.checkDigit;
+            this.valid = true;;
+
+        }
+        else if (newValue.toString().length == 9) {
+            this.digit = newValue.toString().substring(8);
+
+            newValue = newValue.toString().substring(0, 8) + "00" + newValue.toString().substring(8);
+            this.checkDigit = LuhnAlgorithm.CalculateLuhnAlgorithm(newValue.substring(0, 10));
+
+            if (this.digit != this.checkDigit.toString()) {
+                this.valid = false;
+                this.UIProperties.SetValidity("ClassificationCode", "Customs.SupplierInvoiceItem", false, TextCodeTranslator.Translate("Customs.Declaration.O.CorrectDigit") + this.checkDigit.toString());
+
+            }
+            else {
+                this.valid = true;
+            }
+
+        }
+        else if (newValue.toString().length == 10) {
+            this.checkDigit = LuhnAlgorithm.CalculateLuhnAlgorithm(newValue);
+            newValue = newValue + "" + this.checkDigit;
+            this.valid = true;
+
+        }
+        else if (newValue.toString().length == 11) {
+            this.digit = newValue.toString().substring(10);
+            this.checkDigit = LuhnAlgorithm.CalculateLuhnAlgorithm(newValue.toString().substring(0, 10));
+            if (this.digit != this.checkDigit.toString()) {
+                this.valid = false;
+                this.UIProperties.SetValidity("ClassificationCode", "Customs.SupplierInvoiceItem", false, TextCodeTranslator.Translate("Customs.Declaration.O.CorrectDigit") + this.checkDigit.toString());
+
+            }
+            else {
+                this.valid = true;
+            }
+
+
+        }
+
+        else {
+            this.valid = true;
+            this.UIProperties.SetValidity("ClassificationCode", "Customs.SupplierInvoiceItem", true, "");
+        }
+
+        this.ClassificationCode = newValue;
+        classificationTextBox.TextValue = newValue;
+        if (this.valid) {
+            SessionLocator.SustainFocusOnCell = false;
+
+            if (!AppTool.IsNullOrEmpty(this.ItemCode)) {
+              //var itemCodeDetails = this.Parent.Parent.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
+              var itemCodeDetails = GITITEMCacheService.Instance.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
+                if (itemCodeDetails == null) {
+                    var originCountryCode: string = null;
+                    var originCountryName: string = null;
+                  if (/*this.Parent*/GITITEMCacheService.Instance.IsCountryPURForItems) {
+                        originCountryCode = this.OriginCountryCode;
+                        originCountryName = this.OriginCountryName;
+                  }
+
+                  
+                  
+                    //this.Parent.Parent.ItemCode_LocalCache.push(new ItemCodeComponent(this.ItemCode, this.ClassificationCode, this.ItemDescription, this.Parent.vendorNumber, originCountryCode, originCountryName, true, this.InvoiceQuantityType));
+                  GITITEMCacheService.Instance.ItemCode_LocalCache.push(new ItemCodeComponent(this.ItemCode, this.ClassificationCode, this.ItemDescription, this.Parent.vendorNumber, originCountryCode, originCountryName, true, this.InvoiceQuantityType, this.Parent.declarationPM.CustomerCode));
+                }
+                else {
+                    if (itemCodeDetails.ClassificationCode != this.ClassificationCode || itemCodeDetails.ItemDescription != this.ItemDescription) {
+                        itemCodeDetails.ClassificationCode = this.ClassificationCode;
+                        itemCodeDetails.ItemDescription = this.ItemDescription;
+                        itemCodeDetails.VendorNumber = this.Parent.vendorNumber;
+                        itemCodeDetails.InvoiceQuantityType = this.InvoiceQuantityType;
+                      if (/*this.Parent*/GITITEMCacheService.Instance.IsCountryPURForItems) {
+                            itemCodeDetails.OriginCountryCode = this.OriginCountryCode;
+                            itemCodeDetails.OriginCountryName = this.OriginCountryName;
+                        }
+                        itemCodeDetails.IsNew = true;
+                    }
+                }
+            }
+            this.GetQuantityType();
+        }
+        else {
+            //var element = document.getElementById(logCellTemplate.OuterDivId);
+            // element.focus();
+            SessionLocator.SustainFocusOnCell = true;
+            SessionLocator.CurrentSession.SessionEvent.emit({ FocusNow: true, OuterDivId: logCellTemplate.OuterDivId, LogTextBoxId: classificationTextBox.InputId });
+
+        }
+        if (this.Parent.IsChecked) {
+
+            if (this.InvoiceQuantityType == null && this.QunatityTypeCode != null) {
+                var s = this.QunatityTypeCode.slice(1, this.QunatityTypeCode.length - 1);
+
+
+                this.InvoiceQuantityType = s;
+
+            }
+
+        }
+    }
+
+    OnOriginCountryCodeLostFocus(logCellTemplate: any, originCountryCodeLov: any) {
+      if (!/*this.Parent*/GITITEMCacheService.Instance.IsCountryPURForItems) {
+            return;
+        }
+
+        if (!AppTool.IsNullOrEmpty(this.ItemCode)) {
+            //var itemCodeDetails = this.Parent.Parent.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
+          var itemCodeDetails = GITITEMCacheService.Instance.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
+          
+            if (itemCodeDetails != null) {
+                itemCodeDetails.OriginCountryCode = this.OriginCountryCode != null ? this.OriginCountryCode : this.customsCountry != null ? this.customsCountry.Code : null;
+                itemCodeDetails.OriginCountryName = this.OriginCountryName != null ? this.OriginCountryName : this.customsCountry != null ? this.customsCountry.LocalName : null;
+                itemCodeDetails.IsNew = true;
+            }
+        }
+    }
+
+    ItemCodeLostFocus(logCellTemplate: LogCellTemplateComponent) {
+        if (!this.entityPM.ClassificationCode) this.entityPM.ClassificationCode = "";
+        if (!this.entityPM.ItemDescription) this.entityPM.ItemDescription = "";
+
+        if (AppTool.IsNullOrEmpty(this.ItemCode)) {
+            return;
+        }
+
+      //if (this.Parent.Parent.ItemCode_LocalCache != null && this.Parent.Parent.ItemCode_LocalCache.length > 0) {
+      if (GITITEMCacheService.Instance.ItemCode_LocalCache != null && GITITEMCacheService.Instance.ItemCode_LocalCache.length > 0) {
+            //var itemCodeDetails = this.Parent.Parent.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
+
+            var itemCodeDetails = GITITEMCacheService.Instance.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
+            if (itemCodeDetails != null) {
+                this.ClassificationCode = itemCodeDetails.ClassificationCode;
+                this.ItemDescription = itemCodeDetails.ItemDescription;
+                this.InvoiceQuantityType = itemCodeDetails.InvoiceQuantityType;
+              if (/*this.Parent*/GITITEMCacheService.Instance.IsCountryPURForItems) {
+                    this.OriginCountryCode = itemCodeDetails.OriginCountryCode;
+                    this.OriginCountryName = itemCodeDetails.OriginCountryName;
+                }
+                this.GetQuantityType();
+                return;
+            }
+        }
+
+        this.declarationWebService.GetGITITEMPartnersItemListByItemCode(this.Parent.vendorNumber, this.Parent.declarationPM.CustomerCode, this.ItemCode, 30, false)
+            .subscribe((response: ServiceResponse) => {
+                var res = response.Result;
+                if (!AppTool.IsNullOrEmpty(res) && res.length == 1) {
+                    this.PartnerItemsSelectionCompleted(this.entityPM, res[0]);
+                    return;
+                }
+                else {
+                    this.declarationWebService.GetGITITEMPartnersItemListByItemCode(this.Parent.vendorNumber, this.Parent.declarationPM.CustomerCode, this.ItemCode, 30, true)
+                        .subscribe((response: ServiceResponse) => {
+                            var res = response.Result;
+                            if (!AppTool.IsNullOrEmpty(res) && res.length == 1) {
+                                this.PartnerItemsSelectionCompleted(this.entityPM, res[0]);
+                                return;
+                            }
+                            else {
+                                this.declarationWebService.GetGITITEMPartnersItemListByName(this.Parent.vendorNumber, this.Parent.declarationPM.CustomerCode, this.ItemCode, 30)
+                                    .subscribe((response: ServiceResponse) => {
+                                        var res = response.Result;
+                                        if (!AppTool.IsNullOrEmpty(res) && res.length == 1) {
+                                            this.PartnerItemsSelectionCompleted(this.entityPM, res[0]);
+                                            return;
+                                        }
+                                    });
+                            }
+                        });
+                }
+            });
+    }
+
+    ItemCodeDblClick(logCellTemplate: LogCellTemplateComponent) {
+        if (!this.Parent.IsReadOnly) {
+            console.log("[Double Click] ", this.entityPM);
+
+            if (this.Parent.IsDisplayOnly)
+                return;
+
+            //close the cell before showing window; to avoid [true] to [false] problem
+            logCellTemplate.IsDisplayMode = true;
+            logCellTemplate.IsEditMode = false;
+
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 850;
+            logWindow.Height = 650;
+            logWindow.Title = TextCodeTranslator.Translate("Customs.CustomsPartnersItem.Q.ItemQuery");
+            logWindow.ShowCloseButton = true;
+            logWindow.WindowArgs = {
+                invoicePM: this.Parent.EntityPM,
+                customerCode: this.Parent.declarationPM.CustomerCode,
+                searchText: this.ItemCode,
+            };
+            logWindow.WindowClosed.subscribe(($event: any) => {
+                this.PartnerItemsSelectionCompleted(this.entityPM, $event);
+            });
+
+          logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/PartnersItemsSelectionComponent');
+        }
+    }
+                                     
+
+    PartnerItemsSelectionCompleted(item, partnersItem) {
+        if (!AppTool.IsNullOrEmpty(partnersItem)) {
+            console.log("Response returned: ", partnersItem);
+            if (!AppTool.IsNullOrEmpty(partnersItem.ItemCode) || !AppTool.IsNullOrEmpty(partnersItem.ClassificationCode)) {
+                item.ItemCode = partnersItem.ItemCode;
+                item.ClassificationCode = partnersItem.ClassificationCode;
+                item.ItemDescription = partnersItem.Name;
+              if (/*this.Parent*/GITITEMCacheService.Instance.IsCountryPURForItems) {
+                    item.OriginCountryCode = partnersItem.OriginCountryCode;
+                    item.OriginCountryName = partnersItem.OriginCountryName;
+                }
+                item.InvoiceQuantityType = partnersItem.InvoiceQuantityType;
+              //this.Parent.Parent.ItemCode_LocalCache.push(new ItemCodeComponent(partnersItem.ItemCode, partnersItem.ClassificationCode, partnersItem.Name, this.Parent.vendorNumber, item.OriginCountryCode, item.OriginCountryName, false, item.InvoiceQuantityType));
+              GITITEMCacheService.Instance.ItemCode_LocalCache.push(new ItemCodeComponent(partnersItem.ItemCode, partnersItem.ClassificationCode, partnersItem.Name, this.Parent.vendorNumber, item.OriginCountryCode, item.OriginCountryName, false, item.InvoiceQuantityType, this.Parent.declarationPM.CustomerCode));
+                this.GetQuantityType();
+            }
+        }
+    }
+
+    VehicleButtonClicked(item: SupplierInvoiceItemLine) {
+        if (!AppTool.IsNullOrEmpty(item)) {
+            var windowArgs: any = {};
+            windowArgs.SupplierInvoiceItemPM = item.entityPM;
+            windowArgs.IsDisplayOnly = this.Parent.IsReadOnly;
+            windowArgs.declarationPM = this.Parent.declarationPM;
+            windowArgs.parent = this.Parent;
+            windowArgs.SupplierInvoicePM = this.Parent.EntityPM;
+
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 1000;
+            logWindow.Height = 500;
+            logWindow.Title = TextCodeTranslator.Translate("General.MH.Vehicles");
+            logWindow.ShowCloseButton = false;
+            logWindow.WindowArgs = windowArgs;
+            logWindow.WindowClosed.subscribe(($event: any) => this.SetVehicleStatusVisibility());
+          logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/SupplierInvoiceItem/SupplierInvoiceItemVehicleComponent');
+        }
+    }
+
+    SetVehicleStatusVisibility() {
+
+        if (this.entityPM.VehicleStatus) {
+            this.VehicleOkVisiblity = true;
+        }
+        else {
+            this.VehicleOkVisiblity = false;
+        }
+
+    }
+
+    CopyLineClicked(copieditem: SupplierInvoiceItemLine, ItemsSource: ObservableCollection) {
+
+        var entityPM: SupplierInvoicePM = this.Parent.EntityPM;
+        if (this.Parent.IsDisplayOnly)
+            return; // go back -_-
+
+        var line: number = 0;
+        var sequence: number = 0;
+        var orderByLineNo: string;
+        if (entityPM.SupplierInvoiceItems.length > 0) {
+            if (isNaN(entityPM.InvoiceItemLastLineNumber)) entityPM.InvoiceItemLastLineNumber = 0;
+            line = entityPM.InvoiceItemLastLineNumber;
+            entityPM.InvoiceItemLastLineNumber = entityPM.InvoiceItemLastLineNumber + 1;
+        }
+
+        var copiedFromOrderByLineNo = copieditem.entityPM.OrderByLineNo;
+        var lastCopyOrderByLineNo = copieditem.entityPM.LastCopyFromOrderNo;
+        var lastCopyItem = this.Parent.ItemsSource.Collection.filter(d => d.OrderByLineNo == lastCopyOrderByLineNo)[0];
+        orderByLineNo = this.GetNextOrderByLineNumber(copiedFromOrderByLineNo, lastCopyOrderByLineNo);
+
+        line += 1;
+
+        sequence = copieditem.SequenceNumeric;// + 1;
+
+        var item: SupplierInvoiceItemPM = new SupplierInvoiceItemPM(entityPM);
+        item.DeclarationId = entityPM.DeclarationId;
+        item.CounterKey = entityPM.InvoiceCounterKey;
+        item.Tenant = entityPM.Tenant;
+        item.LineNumber = line;//entityPM.InvoiceItemLastLineNumber;
+        item.SequenceNumeric = sequence;
+        item.OrderByLineNo = orderByLineNo;
+        item.ClassificationCode = copieditem.ClassificationCode;
+        item.InvoiceQuantityType = copieditem.InvoiceQuantityType;
+        item.OriginCountryCode = copieditem.OriginCountryCode;
+        item.OriginCountryName = copieditem.OriginCountryName;
+        item.TradeAgreementCode = copieditem.TradeAgreementCode;
+        item.TradeAgreementName = copieditem.TradeAgreementName;
+        item.IsCopy = true;
+        entityPM.FullChildrenCount++;
+        copieditem.entityPM.LastCopyFromOrderNo = orderByLineNo;
+        this.Parent.ChildrenCount = "(" + entityPM.FullChildrenCount + ")";
+
+
+        if (!entityPM.SupplierInvoiceItems.includes(item)) {
+            var copiedItemIndex: number;
+            copiedItemIndex = this.Parent.ItemsSource.GetIndex(copieditem);
+            //if (lastCopyItem) {
+            //    copiedItemIndex = this.Parent.ItemsSource.GetIndex(lastCopyItem);
+            //}
+            //else {
+            //    copiedItemIndex = this.Parent.ItemsSource.GetIndex(copieditem);
+            //}
+            entityPM.AddSupplierInvoiceItem(item);
+            this.Parent.ItemsSource.InsertAtIndex(copiedItemIndex + 1, new SupplierInvoiceItemLine(item, this.Parent));
+            //this.Parent.ItemsSource.Collection.push(new SupplierInvoiceItemLine(item, this.Parent));//Insert(new SupplierInvoiceItemLine(item, this.Parent), false);
+            if (isNaN(entityPM.FullItemsCount)) entityPM.FullItemsCount = 0;
+
+            entityPM.FullItemsCount = entityPM.FullItemsCount + 1;
+            entityPM.MaxSequence = entityPM.MaxSequence + 1;
+        }
+        var sequenceNo = this.Parent.ItemsSource.Collection[0].SequenceNumeric;
+        var sortedCollection = this.Parent.ItemsSource.Collection.sort((a, b) => { return a.SequenceNumeric - b.SequenceNumeric || a.LineNumber - b.LineNumber });
+        sortedCollection.forEach((item: SupplierInvoiceItemLine) => {
+            this.Parent.ItemsSource.Collection.filter(d => d.LineNumber == item.LineNumber)[0].SequenceNumeric = sequenceNo;
+            sequenceNo++;
+        });
+        //this.Parent.ItemsSource.Collection.forEach((item: SupplierInvoiceItemLine) => {
+        //    item.SequenceNumeric = sequence;
+        //    sequence++;
+        //});
+        //this.Parent.ItemsSource.InsertCollection(sortedCollection);
+        this.Parent.calculateTotals(false, null);
+
+    }
+
+    GetNextOrderByLineNumber(copiedOrderByLineNo: string, lastCopyOrderByLineNo: string) {
+
+        var newCopyOrderbyNo: string = "";
+
+        if (AppTool.IsNullOrEmpty(lastCopyOrderByLineNo)) {
+            newCopyOrderbyNo = copiedOrderByLineNo + ".1";
+        }
+        else {
+            var lastcopyLineNoparts: string[] = lastCopyOrderByLineNo.split('.');
+            var incremetedPart: number;
+            var compinedLastPart: number;
+            var lastpartLastNo: string = lastcopyLineNoparts[lastcopyLineNoparts.length - 1];
+            var lastPartLastNoLastNo: string = lastpartLastNo.substring(lastpartLastNo.length - 1);
+
+            incremetedPart = Number(lastPartLastNoLastNo);
+            compinedLastPart = Number(lastpartLastNo);
+            var addedResult: string = "";
+            if (incremetedPart != 9) {
+                addedResult = (compinedLastPart + 1).toString();
+
+            }
+            else {
+                addedResult = lastpartLastNo + "1";
+            }
+
+            for (var i = 0; i < lastcopyLineNoparts.length - 1; i++) {
+                newCopyOrderbyNo = newCopyOrderbyNo + "." + lastcopyLineNoparts[i];
+            }
+            newCopyOrderbyNo = newCopyOrderbyNo + "." + addedResult;
+            newCopyOrderbyNo = newCopyOrderbyNo.substr(1, newCopyOrderbyNo.length - 1);
+        }
+
+        return newCopyOrderbyNo;
+    }
+
+    Dispose() {
+        this.Parent = null;
+        this.DataContext = null;
+
+
+        if (this.QuantityTypeCodeLoaded) {
+            this.QuantityTypeCodeLoaded.unsubscribe();
+        }
+
+    }
+
+
+    // timer?? because function OnSelectedItemChanged() hit before after these functions
+    CloseButtonClicked() {
+        var t = setTimeout(() => {
+            this.closedManullay = true;
+            this.ShowClassifierRemarkTooltip = false;
+        }, 20);
+    }
+
+    ExcButtonClicked() {
+        var t = setTimeout(() => {
+            this.closedManullay = false;
+            this.ShowClassifierRemarkTooltip = true;
+        }, 20);
+    }
+
+    TariffErrorButtonClicked() {
+        this.ShowTariffErrorTooltip = !this.ShowTariffErrorTooltip;
+    }
+
+    CheckTariff() {
+        if (this.TradeAgreementCode && this.OriginCountryCode) {
+            this.ShowTariffErrorInfo = (this.CustomsCountry.TarriffCode != this.TradeAgreementCode);
+        } else {
+            this.ShowTariffErrorInfo = false;
+        }
+    }
+
+
+}
+
+export class SupplierInvoiceFreightAmountLine extends BaseComponent {
+  public entityPM: SupplierInvoiceFreightAmountPM;
+  public ObjectTableName: string = "Customs.SupplierInvoiceFreightAmount";
+  public DataContext = this;
+  Parent: SupplierInvoiceGeneralTabComponent;
+  constructor(EntityPM: SupplierInvoiceFreightAmountPM, parent: SupplierInvoiceGeneralTabComponent) {
+    super();
+    this.entityPM = EntityPM;
+    this.Parent = parent;
+    if (EntityPM.ChangeSetOp == "Insert") {
+      this.UIProperties.SetEnabled("CurrencyTypeCode", "Customs.SupplierInvoiceFreightAmount", true);
+    }
+    else {
+      this.UIProperties.SetEnabled("CurrencyTypeCode", "Customs.SupplierInvoiceFreightAmount", false);
+    }
+  }
+
+  currencyType: CurrencyTypePM;
+  get CurrencyType() { return this.currencyType; }
+  set CurrencyType(value: CurrencyTypePM) {
+
+    if (this.currencyType != value) {
+      this.currencyType = value;
+    }
+    if (!AppTool.IsNullOrEmpty(value)) {
+      this.CurrencyTypeName = value.LocalName;
+
+
+    } else {
+      this.CurrencyTypeName = null;
+      this.CurrencyTypeCode = null;
+    }
+  }
+
+
+  public get CurrencyTypeCode() { return this.entityPM.CurrencyTypeCode; }
+  public set CurrencyTypeCode(newValue: string) {
+    if (this.Parent.AmountList.Length > 0) {
+      if (newValue != null) {
+        var exist = this.Parent.EntityPM.SupplierInvoiceFreightAmounts.find(d => d.CurrencyTypeCode === newValue);
+        this.entityPM.CurrencyTypeCode = newValue
+        if (exist) {
+
+
+          var confirmWindow = new ConfirmWindow();
+
+
+          confirmWindow.Width = 400;
+
+
+          confirmWindow.Height = 200;
+          confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+          confirmWindow.ShowNoButton = false;
+          confirmWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.ExistingType"));
+          this.entityPM.CurrencyTypeCode = newValue;
+          this.entityPM.CurrencyTypeCode = null;
+          // this.entityPM.CurrencyTypeName = null;
+          confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+              //this.entityPM.CurrencyTypeCode = newValue;
+              this.entityPM.CurrencyTypeCode = null;
+              this.CurrencyTypeName = null;
+              confirmWindow.Close();
+            }
+
+          });
+        }
+        else {
+          this.entityPM.CurrencyTypeCode = newValue;
+
+          if (this.Parent.AmountList.Length == 1) {
+            this.Parent.EntityPM.AddSupplierInvoiceFreightAmount(this.entityPM);
+          }
+
+
+        }
+      }
+      else {
+        this.entityPM.CurrencyTypeCode = newValue
+
+      }
+
+    }
+
+
+    if (this.Parent.EntityPM.SupplierInvoiceFreightAmounts.length == 1) {
+
+      this.Parent.FreightCurrencyTypeCode = newValue;
+
+    }
+
+    if (this.Amount != null) {
+      this.Parent.LoadCurrenciesExchangeRates(true);
+    }
+
+
+
+
+
+  }
+
+  public get CurrencyTypeName() { return this.entityPM.CurrencyTypeName; }
+  public set CurrencyTypeName(newValue: string) { this.entityPM.CurrencyTypeName = newValue; }
+
+  public get Amount() { return this.entityPM.Amount; }
+  public set Amount(newValue: number) {
+    this.entityPM.Amount = newValue;
+  }
+
+  OnAmountLostFocus(logCellTemplate: any, amountItemTextBox: any) {
+
+    this.Amount = amountItemTextBox.textValue
+    if (this.CurrencyTypeCode != null) {
+      this.Parent.LoadCurrenciesExchangeRates(true);
+    }
+  }
+
+  DeleteButtonClicked() {
+
+
+    if (this.Parent.EntityPM.SupplierInvoiceFreightAmounts.includes(this.entityPM)) {
+      this.Parent.EntityPM.RemoveSupplierInvoiceFreightAmount(this.entityPM);
+      if (this.CurrencyTypeCode == this.Parent.FreightCurrencyTypeCode) {
+        if (this.Parent.EntityPM.SupplierInvoiceFreightAmounts.length > 0) {
+          this.Parent.FreightCurrencyTypeCode = this.Parent.EntityPM.SupplierInvoiceFreightAmounts[0].CurrencyTypeCode;
+        }
+      }
+    }
+
+    this.Parent.LoadCurrenciesExchangeRates(true);
+
+    this.Parent.BuildFreightAmountsList();
+
+  }
+
+}
+
+export class ItemCodeComponent extends BaseComponent {
+  private _ItemCode: string;
+  private _ClassificationCode: string;
+  private _VendorNumber: string;
+  private _ItemDescription: string;
+  private _OriginCountryCode: string;
+  private _OriginCountryName: string;
+  private _InvoiceQuantityType: string;
+  private _IsNew: boolean;
+
+  constructor(itemCode: string, classificationCode: string, itemDescription: string, vendorNumber: string, originCountryCode: string, originCountryName: string, isNew: boolean, invoiceQuantityType: string, private _CustomerCode: string) {
+    super();
+
+    this.ItemCode = itemCode;
+    this.ClassificationCode = classificationCode;
+    this.VendorNumber = vendorNumber;
+    this.ItemDescription = itemDescription;
+    this.OriginCountryCode = originCountryCode;
+    this.OriginCountryName = originCountryName;
+    this.InvoiceQuantityType = invoiceQuantityType;
+    this.IsNew = isNew;
+  }
+
+  public get ItemCode() { return this._ItemCode; }
+  public set ItemCode(newValue: string) { this._ItemCode = newValue; }
+
+  public get ClassificationCode() { return this._ClassificationCode; }
+  public set ClassificationCode(newValue: string) { this._ClassificationCode = newValue; }
+
+  public get VendorNumber() { return this._VendorNumber; }
+  public set VendorNumber(newValue: string) { this._VendorNumber = newValue; }
+
+  public get ItemDescription() { return this._ItemDescription; }
+  public set ItemDescription(newValue: string) { this._ItemDescription = newValue; }
+
+  public get OriginCountryCode() { return this._OriginCountryCode; }
+  public set OriginCountryCode(newValue: string) { this._OriginCountryCode = newValue; }
+
+  public get OriginCountryName() { return this._OriginCountryName; }
+  public set OriginCountryName(newValue: string) { this._OriginCountryName = newValue; }
+
+  public get InvoiceQuantityType() { return this._InvoiceQuantityType; }
+  public set InvoiceQuantityType(newValue: string) { this._InvoiceQuantityType = newValue; }
+
+  public get CustomerCode() { return this._CustomerCode; }
+  public set CustomerCode(newValue: string) { this._CustomerCode = newValue; }
+
+  public get IsNew() { return this._IsNew; }
+  public set IsNew(newValue: boolean) { this._IsNew = newValue; }
+}

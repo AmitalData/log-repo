@@ -1,0 +1,800 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Customs.Def.Validators;
+  
+namespace Logitude.Customs.Def.EntityPMs
+{
+   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class ClaimsRelatedEntityPM : EntityPM
+   {
+   	  private string claimId ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ClaimId  
+	   {
+	    
+	     get
+		{
+		   return claimId;
+		 }
+		 set
+		 {
+		   if(claimId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ClaimId",OldValue=claimId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   claimId=value;
+		   }
+			
+		 }
+	   }
+	  private int tenant ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+	  private int entityCounterKey ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int EntityCounterKey  
+	   {
+	    
+	     get
+		{
+		   return entityCounterKey;
+		 }
+		 set
+		 {
+		   if(entityCounterKey != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EntityCounterKey",OldValue=entityCounterKey,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   entityCounterKey=value;
+		   }
+			
+		 }
+	   }
+	  private string claimEntityTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ClaimEntityTypeCode  
+	   {
+	    
+	     get
+		{
+		   return claimEntityTypeCode;
+		 }
+		 set
+		 {
+		   if(claimEntityTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ClaimEntityTypeCode",OldValue=claimEntityTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   claimEntityTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string claimEntityTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ClaimEntityTypeName  
+	   {
+	    
+	     get
+		{
+		   return claimEntityTypeName;
+		 }
+		 set
+		 {
+		   if(claimEntityTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ClaimEntityTypeName",OldValue=claimEntityTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   claimEntityTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private string claimEntityNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ClaimEntityNumber  
+	   {
+	    
+	     get
+		{
+		   return claimEntityNumber;
+		 }
+		 set
+		 {
+		   if(claimEntityNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ClaimEntityNumber",OldValue=claimEntityNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   claimEntityNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string externalClaimNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExternalClaimNumber  
+	   {
+	    
+	     get
+		{
+		   return externalClaimNumber;
+		 }
+		 set
+		 {
+		   if(externalClaimNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExternalClaimNumber",OldValue=externalClaimNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   externalClaimNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string courtCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CourtCode  
+	   {
+	    
+	     get
+		{
+		   return courtCode;
+		 }
+		 set
+		 {
+		   if(courtCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CourtCode",OldValue=courtCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   courtCode=value;
+		   }
+			
+		 }
+	   }
+	  private string courtName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CourtName  
+	   {
+	    
+	     get
+		{
+		   return courtName;
+		 }
+		 set
+		 {
+		   if(courtName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CourtName",OldValue=courtName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   courtName=value;
+		   }
+			
+		 }
+	   }
+	  private string proceedingNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ProceedingNumber  
+	   {
+	    
+	     get
+		{
+		   return proceedingNumber;
+		 }
+		 set
+		 {
+		   if(proceedingNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ProceedingNumber",OldValue=proceedingNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   proceedingNumber=value;
+		   }
+			
+		 }
+	   }
+	  private bool isFinancialRefundDemand ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsFinancialRefundDemand  
+	   {
+	    
+	     get
+		{
+		   return isFinancialRefundDemand;
+		 }
+		 set
+		 {
+		   if(isFinancialRefundDemand != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsFinancialRefundDemand",OldValue=isFinancialRefundDemand,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isFinancialRefundDemand=value;
+		   }
+			
+		 }
+	   }
+	  private string seconderyClaimEntityCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SeconderyClaimEntityCode  
+	   {
+	    
+	     get
+		{
+		   return seconderyClaimEntityCode;
+		 }
+		 set
+		 {
+		   if(seconderyClaimEntityCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SeconderyClaimEntityCode",OldValue=seconderyClaimEntityCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   seconderyClaimEntityCode=value;
+		   }
+			
+		 }
+	   }
+	  private string seconderyClaimEntityName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SeconderyClaimEntityName  
+	   {
+	    
+	     get
+		{
+		   return seconderyClaimEntityName;
+		 }
+		 set
+		 {
+		   if(seconderyClaimEntityName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SeconderyClaimEntityName",OldValue=seconderyClaimEntityName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   seconderyClaimEntityName=value;
+		   }
+			
+		 }
+	   }
+	  private string seconderyClaimEntityID ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SeconderyClaimEntityID  
+	   {
+	    
+	     get
+		{
+		   return seconderyClaimEntityID;
+		 }
+		 set
+		 {
+		   if(seconderyClaimEntityID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SeconderyClaimEntityID",OldValue=seconderyClaimEntityID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   seconderyClaimEntityID=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? claimAmount ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? ClaimAmount  
+	   {
+	    
+	     get
+		{
+		   return claimAmount;
+		 }
+		 set
+		 {
+		   if(claimAmount != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ClaimAmount",OldValue=claimAmount,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   claimAmount=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? declarationVersion ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? DeclarationVersion  
+	   {
+	    
+	     get
+		{
+		   return declarationVersion;
+		 }
+		 set
+		 {
+		   if(declarationVersion != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeclarationVersion",OldValue=declarationVersion,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   declarationVersion=value;
+		   }
+			
+		 }
+	   }
+	  private string committeeDecisionNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CommitteeDecisionNumber  
+	   {
+	    
+	     get
+		{
+		   return committeeDecisionNumber;
+		 }
+		 set
+		 {
+		   if(committeeDecisionNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CommitteeDecisionNumber",OldValue=committeeDecisionNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   committeeDecisionNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string abandonmentDestructionReferenc ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AbandonmentDestructionReferenc  
+	   {
+	    
+	     get
+		{
+		   return abandonmentDestructionReferenc;
+		 }
+		 set
+		 {
+		   if(abandonmentDestructionReferenc != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AbandonmentDestructionReferenc",OldValue=abandonmentDestructionReferenc,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   abandonmentDestructionReferenc=value;
+		   }
+			
+		 }
+	   }
+	  private string warehouseTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string WarehouseTypeCode  
+	   {
+	    
+	     get
+		{
+		   return warehouseTypeCode;
+		 }
+		 set
+		 {
+		   if(warehouseTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="WarehouseTypeCode",OldValue=warehouseTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   warehouseTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string warehouseTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string WarehouseTypeName  
+	   {
+	    
+	     get
+		{
+		   return warehouseTypeName;
+		 }
+		 set
+		 {
+		   if(warehouseTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="WarehouseTypeName",OldValue=warehouseTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   warehouseTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private string claimExplanation ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ClaimExplanation  
+	   {
+	    
+	     get
+		{
+		   return claimExplanation;
+		 }
+		 set
+		 {
+		   if(claimExplanation != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ClaimExplanation",OldValue=claimExplanation,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   claimExplanation=value;
+		   }
+			
+		 }
+	   }
+	  private string continuousMessagesTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContinuousMessagesTypeCode  
+	   {
+	    
+	     get
+		{
+		   return continuousMessagesTypeCode;
+		 }
+		 set
+		 {
+		   if(continuousMessagesTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContinuousMessagesTypeCode",OldValue=continuousMessagesTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   continuousMessagesTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string continuousMessagesTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContinuousMessagesTypeName  
+	   {
+	    
+	     get
+		{
+		   return continuousMessagesTypeName;
+		 }
+		 set
+		 {
+		   if(continuousMessagesTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContinuousMessagesTypeName",OldValue=continuousMessagesTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   continuousMessagesTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private string claimRequestNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ClaimRequestNumber  
+	   {
+	    
+	     get
+		{
+		   return claimRequestNumber;
+		 }
+		 set
+		 {
+		   if(claimRequestNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ClaimRequestNumber",OldValue=claimRequestNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   claimRequestNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string customsExceptions ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomsExceptions  
+	   {
+	    
+	     get
+		{
+		   return customsExceptions;
+		 }
+		 set
+		 {
+		   if(customsExceptions != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsExceptions",OldValue=customsExceptions,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customsExceptions=value;
+		   }
+			
+		 }
+	   }
+	  private string tapagNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TapagNumber  
+	   {
+	    
+	     get
+		{
+		   return tapagNumber;
+		 }
+		 set
+		 {
+		   if(tapagNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TapagNumber",OldValue=tapagNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   tapagNumber=value;
+		   }
+			
+		 }
+	   }
+	  private int? numeral ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? Numeral  
+	   {
+	    
+	     get
+		{
+		   return numeral;
+		 }
+		 set
+		 {
+		   if(numeral != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Numeral",OldValue=numeral,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   numeral=value;
+		   }
+			
+		 }
+	   }
+	  private string customsBranchCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomsBranchCode  
+	   {
+	    
+	     get
+		{
+		   return customsBranchCode;
+		 }
+		 set
+		 {
+		   if(customsBranchCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsBranchCode",OldValue=customsBranchCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customsBranchCode=value;
+		   }
+			
+		 }
+	   }
+
+	   private List<ClaimsRelatedEntitiesAmountPM> claimsRelatedEntitiesAmounts;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("ClaimsRelatedEntitiesAmount", "ClaimId,EntityCounterKey","ClaimId,CounterKey")]
+	   [DataMember]
+	   public virtual List<ClaimsRelatedEntitiesAmountPM> ClaimsRelatedEntitiesAmounts  
+	   {
+	        get
+             {
+                 if (claimsRelatedEntitiesAmounts == null)
+                 {
+                     claimsRelatedEntitiesAmounts = new List<ClaimsRelatedEntitiesAmountPM>();
+                 }
+                 return claimsRelatedEntitiesAmounts;
+              }
+             set { claimsRelatedEntitiesAmounts = value; }
+	    }
+		   
+	   private List<ClaimsRelatedEntitiesAmountPM>  deletedClaimsRelatedEntitiesAmounts;
+	   public virtual List<ClaimsRelatedEntitiesAmountPM> DeletedClaimsRelatedEntitiesAmounts  
+	   {
+	        get
+             {
+                 if ( deletedClaimsRelatedEntitiesAmounts == null)
+                 {
+                      deletedClaimsRelatedEntitiesAmounts = new List<ClaimsRelatedEntitiesAmountPM>();
+                 }
+                 return  deletedClaimsRelatedEntitiesAmounts;
+              }
+             set {  deletedClaimsRelatedEntitiesAmounts = value; }
+	    }
+	  
+	   private List<ClaimsRelatedEntitiesReasonPM> claimsRelatedEntitiesReasons;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("ClaimsRelatedEntitiesReasons", "ClaimId,EntityCounterKey","ClaimId,CounterKey")]
+	   [DataMember]
+	   public virtual List<ClaimsRelatedEntitiesReasonPM> ClaimsRelatedEntitiesReasons  
+	   {
+	        get
+             {
+                 if (claimsRelatedEntitiesReasons == null)
+                 {
+                     claimsRelatedEntitiesReasons = new List<ClaimsRelatedEntitiesReasonPM>();
+                 }
+                 return claimsRelatedEntitiesReasons;
+              }
+             set { claimsRelatedEntitiesReasons = value; }
+	    }
+		   
+	   private List<ClaimsRelatedEntitiesReasonPM>  deletedClaimsRelatedEntitiesReasons;
+	   public virtual List<ClaimsRelatedEntitiesReasonPM> DeletedClaimsRelatedEntitiesReasons  
+	   {
+	        get
+             {
+                 if ( deletedClaimsRelatedEntitiesReasons == null)
+                 {
+                      deletedClaimsRelatedEntitiesReasons = new List<ClaimsRelatedEntitiesReasonPM>();
+                 }
+                 return  deletedClaimsRelatedEntitiesReasons;
+              }
+             set {  deletedClaimsRelatedEntitiesReasons = value; }
+	    }
+	  
+	   private List<ClaimsRelatedEntsExpDeclarPM> claimsRelatedEntsExpDeclars;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("ClaimsRelatedEntsExpDeclars", "ClaimId,EntityCounterKey","ClaimId,CounterKey")]
+	   [DataMember]
+	   public virtual List<ClaimsRelatedEntsExpDeclarPM> ClaimsRelatedEntsExpDeclars  
+	   {
+	        get
+             {
+                 if (claimsRelatedEntsExpDeclars == null)
+                 {
+                     claimsRelatedEntsExpDeclars = new List<ClaimsRelatedEntsExpDeclarPM>();
+                 }
+                 return claimsRelatedEntsExpDeclars;
+              }
+             set { claimsRelatedEntsExpDeclars = value; }
+	    }
+		   
+	   private List<ClaimsRelatedEntsExpDeclarPM>  deletedClaimsRelatedEntsExpDeclars;
+	   public virtual List<ClaimsRelatedEntsExpDeclarPM> DeletedClaimsRelatedEntsExpDeclars  
+	   {
+	        get
+             {
+                 if ( deletedClaimsRelatedEntsExpDeclars == null)
+                 {
+                      deletedClaimsRelatedEntsExpDeclars = new List<ClaimsRelatedEntsExpDeclarPM>();
+                 }
+                 return  deletedClaimsRelatedEntsExpDeclars;
+              }
+             set {  deletedClaimsRelatedEntsExpDeclars = value; }
+	    }
+	  	  private bool isSendClaimsRelatedEntity ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsSendClaimsRelatedEntity  
+	   {
+	    
+	     get
+		{
+		   return isSendClaimsRelatedEntity;
+		 }
+		 set
+		 {
+		   if(isSendClaimsRelatedEntity != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsSendClaimsRelatedEntity",OldValue=isSendClaimsRelatedEntity,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isSendClaimsRelatedEntity=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

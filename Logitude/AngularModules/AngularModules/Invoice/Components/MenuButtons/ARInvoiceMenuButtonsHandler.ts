@@ -1,0 +1,857 @@
+﻿declare var window: any;
+import {AppTool} from '../../../Infrastructure/Tools';
+import {ARInvoicePM} from '../../EntityPMs/ARInvoicePM';
+import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
+import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
+import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
+import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import {InvoiceTool, CreditLimitHelper} from '../../Tools';
+import {ARInvoiceValidator}  from '../../Validators/ARInvoiceValidator';
+import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
+import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
+import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
+import {InvoiceDomainService} from '../../Services/InvoiceDomainService';
+import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
+import {GeneralPrintHelper} from '../../../Infrastructure/Helpers/GeneralPrintHelper';
+import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
+import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
+import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
+
+export class ARInvoiceMenuButtonsHandler {
+    public EntityPM: ARInvoicePM;
+    public entityArgs: EntityArgs
+    public SetEntityPM(entityArgs: EntityArgs) {
+        this.entityArgs = entityArgs;
+        this.EntityPM = entityArgs.EntityPM;
+        this.Listen();
+    }
+    public CheckButtonState(menuButtons: MenuButtonPM[]) {
+        if (this.EntityPM != null) {
+            if (this.entityArgs.EditComponent != null) {
+
+                for (var i = 0; i < menuButtons.length; i++) {
+                    var button = menuButtons[i];
+                    var myButtonIsDisabled = false;
+
+                    switch (button.EventCode) {
+                        case "SaveAsDraft":
+                            {
+                                myButtonIsDisabled = !InvoiceTool.IsEditingARInvoiceEnabled(this.EntityPM);
+                                button.LabelTextCodeCode = (this.EntityPM.IsConstituentInvoice) ? "General.B.Save" : "ARInvoice.B.SaveAsDraft";
+                                break;
+                            }
+
+                        case "CancelDraft":
+                            {
+                                button.IsHidden = this.EntityPM.IsConstituentInvoice ? true : false;
+
+                                myButtonIsDisabled = true;
+
+                                if (!AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+                                    if (this.EntityPM.StatusCode != "LL") {
+                                        if (this.EntityPM.IsConstituentInvoice) {
+                                            if (AppTool.IsNullOrEmpty(this.EntityPM.ConsolidationInvoiceId) && this.EntityPM.StatusCode == "NT") {
+                                                myButtonIsDisabled = false;
+                                            }
+                                        }
+
+                                        else if (this.EntityPM.StatusCode == "DR") {
+                                            myButtonIsDisabled = false;
+                                        }
+                                    }
+                                }
+
+                                break;
+                            }
+
+                        case "SaveAndApprove":
+                            {
+                                button.IsHidden = this.EntityPM.IsConstituentInvoice ? true : false;
+                                myButtonIsDisabled = !InvoiceTool.IsEditingARInvoiceEnabled(this.EntityPM);
+                                break;
+                            }
+
+                        case "SetAsSent":
+                            {
+                                if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+                                    myButtonIsDisabled = true;
+                                }
+
+                                else if (this.EntityPM.Sent || this.EntityPM.StatusCode == "VD" || this.EntityPM.StatusCode == "LL") {
+                                    myButtonIsDisabled = true;
+                                }
+
+                                break;
+                            }
+
+                        case "VoidARInvoice":
+                            {
+                                if (SessionLocator.TenantPM.AccountingActivated == true) {
+                                    button.IsHidden = true;
+                                }
+                                else {
+                                    if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+                                        myButtonIsDisabled = true;
+                                    }
+
+                                    else if (this.EntityPM.StatusCode == "DR" || this.EntityPM.StatusCode == "VD" || this.EntityPM.StatusCode == "LL" || this.EntityPM.StatusCode == "AC" || this.EntityPM.StatusCode == "AR" || this.EntityPM.StatusCode == "IP") {
+                                        myButtonIsDisabled = true;
+                                    }
+
+                                    else {
+                                        if (this.EntityPM.IsConstituentInvoice) {
+                                            if (!AppTool.IsNullOrEmpty(this.EntityPM.ConsolidationInvoiceId)) {
+                                                myButtonIsDisabled = true;
+                                            }
+                                        }
+
+                                        else {
+                                            if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode)) {
+                                                myButtonIsDisabled = true;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                break;
+                            }
+
+                        case "AutoCredit":
+                            {
+                                if (SessionLocator.TenantPM.AccountingActivated == true) {
+                                    if (this.EntityPM != null && this.EntityPM.IsExternalEntity) {
+                                        myButtonIsDisabled = true;
+                                    }
+                                }
+                                else {
+                                    if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+                                        myButtonIsDisabled = true;
+                                    }
+
+                                    else if (this.EntityPM.StatusCode == "LL" || this.EntityPM.StatusCode == "VD" || this.EntityPM.StatusCode == "AC" || this.EntityPM.StatusCode == "AR") {
+                                        myButtonIsDisabled = true;
+                                    }
+
+                                    else if (this.EntityPM.ARInvoiceTypeCode == "IN") {
+                                        var isEnabled = false;
+
+                                        if (!this.EntityPM.IsCancelled) {
+                                            if (this.EntityPM.IsConstituentInvoice) {
+                                                if (AppTool.IsNullOrEmpty(this.EntityPM.ConsolidationInvoiceId)) {
+                                                    isEnabled = true;
+                                                }
+                                            }
+
+                                            else {
+                                                if (this.EntityPM.StatusCode == "PP" || this.EntityPM.StatusCode == "PD" || this.EntityPM.StatusCode == "AD") {
+                                                    isEnabled = true;
+                                                }
+                                            }
+                                        }
+
+                                        myButtonIsDisabled = !isEnabled;
+                                    }
+                                }
+
+                                break;
+                            }
+
+                        case "PrintInvoice":
+                            {
+                                myButtonIsDisabled = true;
+
+                                if (this.EntityPM.Id != null) {
+                                    myButtonIsDisabled = false;
+
+                                    if (!this.EntityPM.IsConsolidationInvoice) {
+                                        //this.PrintInvoiceButtonLoaded();
+                                    }
+                                }
+
+                                break;
+                            }
+
+                        case "ReTransfer":
+                            {
+                                myButtonIsDisabled = true;
+                                button.IsHidden = this.EntityPM.IsConstituentInvoice;
+                                if (!AppTool.IsNullOrEmpty(this.EntityPM.Id) && !AppTool.IsNullOrEmpty(this.EntityPM.StatusCode)) {
+                                    if (this.EntityPM.StatusCode != "DR" && this.EntityPM.StatusCode != "VD") {
+                                        if (this.EntityPM.TransferStatusCode == "TR") {
+                                            myButtonIsDisabled = false;
+                                        }
+                                    }
+                                }
+
+                                break;
+                            }
+                    }
+
+                    button.IsDisabled = myButtonIsDisabled;
+                }
+            }
+        }
+    }
+    public MenuButtonClick(menuButton: MenuButtonPM) {
+        if (!this.isButtonClicked) {
+
+            this.StopFlags();
+            this.StopFields();
+            this.isButtonClicked = true;
+
+            switch (menuButton.EventCode) {
+                case "SaveAsDraft":
+                    {
+                        this.SaveDraftClicked();
+                        break;
+                    }
+
+                case "SaveAndApprove":
+                    {
+                        this.ApproveClicked();
+                        break;
+                    }
+
+                case "CancelDraft":
+                    {
+                        this.CancelDraftClicked();
+                        break;
+                    }
+
+                case "SetAsSent":
+                    {
+                        this.SetAsSentClicked();
+                        break;
+                    }
+
+                case "VoidARInvoice":
+                    {
+                        this.VoidClicked();
+                        break;
+                    }
+
+                case "AutoCredit":
+                    {
+                        this.AutoCreditClicked();
+                        break;
+                    }
+
+                case "PrintInvoice":
+                    {
+                        this.PrintClicked();
+                        break;
+                    }
+
+                case "ReTransfer":
+                    {
+                        this.ReTransferClicked();
+                        break;
+                    }
+            }
+        }
+    }
+
+    isValid: boolean = false;
+    isButtonClicked: boolean = false;
+    isSaveAutoCreditRequested: boolean = false;
+    isOpenAutoCreditRequested: boolean = false;
+    isPrintRequested: boolean = false;
+    StopFlags() {
+        this.isButtonClicked = false;
+        this.isPrintRequested = false;
+        this.isSaveAutoCreditRequested = false;
+        this.isOpenAutoCreditRequested = false;
+    }
+    StopFields() {
+        this.AutoCreditId = null;
+        this.AutoCreditDate = null;
+        this.AutoCreditManualNumber = null;
+    }
+    Validate() {
+        var validator = new ARInvoiceValidator();
+        var errors: string[] = validator.Validate(this.EntityPM);
+
+        this.isValid = errors.length == 0 ? true : false;
+
+        if (this.entityArgs.EditComponent != null) {
+            if (this.entityArgs.EditComponent.ValidationErrorsList == null) {
+                this.entityArgs.EditComponent.ValidationErrorsList = [];
+            }
+            this.entityArgs.EditComponent.ValidationErrorsList = errors;
+        }
+
+        if (!this.isValid) {
+            this.StopFlags();
+        }
+    }
+    Listen() {
+        if (this.entityArgs.EditComponent != null) {
+            this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+
+                if (isSaveSuccess) {
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+
+                    if (this.isSaveAutoCreditRequested) {
+                        this.SaveBeforeAutoCreditCompleted();
+                    }
+
+                    if (this.isPrintRequested) {
+                        this.InitializePrinting();
+                    }
+                }
+
+                this.StopFlags();
+            });
+        }
+
+        this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+
+            if (isLoadSuccess) {
+                this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+
+                if (this.isOpenAutoCreditRequested) {
+                    this.OpenAutoCreditScreen();
+                }
+            }
+
+            this.StopFlags();
+        });
+    }
+
+    SaveDraftClicked() {
+        if (!FeatureLocator.HasEntityPermessions("ARInvoice", "UPDT", true)) {
+            this.StopFlags();
+        }
+
+        else {
+            this.Validate();
+
+            if (this.isValid) {
+                if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+                    ServiceLocator.SendTotangoUserActivity("ARInvoice", "New Draft Invoice");
+                }
+
+                if (this.EntityPM.IsDirty) {
+                    this.EntityPM.SetVoided = false;
+                    this.EntityPM.SetApproved = false;
+                    this.EntityPM.SetReTransfer = false;
+                    this.EntityPM.SetCancelDraft = false;
+
+                    this.entityArgs.EditComponent.SaveChanges();
+                }
+
+                else {
+                    this.StopFlags();
+                }
+            }
+        }
+    }
+    ApproveClicked() {
+        if (!FeatureLocator.HasEntityPermessions("ARInvoice", "UPDT", true)) {
+            this.StopFlags();
+        }
+
+        else {
+            this.Validate();
+
+            if (this.isValid) {
+                if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+                    ServiceLocator.SendTotangoUserActivity("ARInvoice", "New Invoice");
+                }
+
+                var helper = new CreditLimitHelper(this.EntityPM);
+
+                //var isCardBlockingNewInvoiceCreation: boolean = false;
+                //if (helper.HasCreditLimitFeature && helper.IsCreditLimitActivated) {
+                //    if (this.EntityPM.BillToIsCreditLimitEnabled && this.EntityPM.BillToBlockNewInvoiceCreation) {
+                //        isCardBlockingNewInvoiceCreation = true;
+                //    }
+                //}
+
+                if (this.EntityPM.BillToBlockNewInvoiceCreation) {
+
+                    var errorText_Blocking = "Credit limit setting is blocking invoice for bill to: " + this.EntityPM.BillToName;
+
+                    var errors: string[] = [];
+                    var warnings: string[] = [];
+
+                    if (ObjectsLocator.CreditLimitSettingPM.InvoiceCreationBlock) {
+                        errors.push(errorText_Blocking);
+                    }
+
+                    else if (ObjectsLocator.CreditLimitSettingPM.InvoiceCreationWarning) {
+                        warnings.push(errorText_Blocking);
+                    }
+
+                    if (errors.length > 0 || warnings.length > 0) {
+
+                        var logWindow = new LogitudeWindow();
+                        logWindow.Width = 450;
+                        logWindow.Height = 200;
+                        logWindow.Title = TextCodeTranslator.Translate("ARInvoice.S.CreditLimit");
+                        logWindow.WindowArgs = { Errors: errors, Warnings: warnings };
+
+                        logWindow.WindowClosed.subscribe(s => {
+                            if (s) {
+                                this.ApplyApproveClicked();
+                            }
+
+                            else {
+                                this.StopFlags();
+                            }
+                        });
+
+                        logWindow.Show('./Invoice/Components/NewEntity/CreditLimitPopupComponent');
+                    }
+
+                    else {
+                        this.ApplyApproveClicked();
+                    }
+                }
+
+                else if (helper.IsActivated) {
+
+                    SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+
+                    var myService = new InvoiceDomainService();
+                    myService.GetCustomerCreditLimitActualAmount(this.EntityPM.BillToId).subscribe((myResponse: ServiceResponse) => {
+
+                        SessionLocator.CurrentSession.StopBusyIndicator();
+
+                        if (!myResponse.HasError) {
+                            helper.Run(myResponse.Result);
+                        }
+
+                        if (helper.IsValid) {
+                            this.ApplyApproveClicked();
+                        }
+
+                        else {
+
+                            var logWindow = new LogitudeWindow();
+                            logWindow.Width = 450;
+                            logWindow.Height = 200;
+                            logWindow.Title = TextCodeTranslator.Translate("ARInvoice.S.CreditLimit");
+                            logWindow.WindowArgs = { Errors: helper.Errors, Warnings: helper.Warnings, IsBlockingShipment: helper.IsBlockingShipment, ShipmentId: this.EntityPM.MainEntityId };
+                            logWindow.WindowClosed.subscribe(s => {
+                                if (s) {
+                                    this.ApplyApproveClicked();
+                                }
+
+                                else {
+                                    this.StopFlags();
+                                }
+                            });
+
+                            logWindow.Show('./Invoice/Components/NewEntity/CreditLimitPopupComponent');
+                        }
+                    });
+                }
+
+                else {
+                    this.ApplyApproveClicked();
+
+                    if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+                        var notes = "Ayman.!!!TST45@";
+
+                        if (this.EntityPM.InternalNotes == notes && this.EntityPM.PrintNotes == notes) {
+                            this.ApplyApproveClicked();
+                        }
+                    }
+                }
+            }
+
+            else {
+                this.StopFlags();
+            }
+        }
+    }
+    ApplyApproveClicked() {
+        this.EntityPM.SetVoided = false;
+        this.EntityPM.SetApproved = true;
+        this.EntityPM.SetReTransfer = false;
+        this.EntityPM.SetCancelDraft = false;
+        this.entityArgs.EditComponent.SaveChanges("Approving...");
+    }
+
+    CancelDraftClicked() {
+        this.Validate();
+
+        if (this.isValid) {
+            var myConfirmWindow = new ConfirmWindow();
+            myConfirmWindow.Width = 400;
+            myConfirmWindow.Show(TextCodeTranslator.Translate("ARInvoice.M.CancelARInvoice"));
+            myConfirmWindow.WindowClosed.subscribe(s => {
+
+                this.StopFlags();
+
+                if (myConfirmWindow.Yes) {
+                    this.EntityPM.SetVoided = false;
+                    this.EntityPM.SetApproved = false;
+                    this.EntityPM.SetReTransfer = false;
+                    this.EntityPM.SetCancelDraft = true;
+
+                    this.entityArgs.EditComponent.SaveChanges();
+                }
+            });
+        }
+
+        else {
+            this.StopFlags();
+        }
+    }
+    SetAsSentClicked() {
+        this.Validate();
+
+        if (this.isValid) {
+            var logitudeWindow = new LogitudeWindow();
+            logitudeWindow.Title = TextCodeTranslator.Translate("ARInvoice.S.SetInvoiceAsSent");
+            logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, EventCode: "SetAsSent" };
+            logitudeWindow.Show("./Invoice/Components/MenuButtonsComponents/ARInvoiceMenuButtonsComponent");
+            logitudeWindow.WindowClosed.subscribe(s => {
+
+                this.StopFlags();
+
+                if (s) {
+                    this.EntityPM.Sent = true;
+                    this.EntityPM.SetAsSent = true;
+                    this.entityArgs.EditComponent.SaveChanges();
+                }
+            });
+        }
+
+        else {
+            this.StopFlags();
+        }
+    }
+    VoidClicked() {
+        if (this.EntityPM.TransferStatusCode == "TR" && SessionLocator.AccountingSettingPM.AccountingSystemCode != "QBO" && SessionLocator.AccountingSettingPM.AccountingSystemCode != "QBOG") {
+            var messageWindow = new MessageWindow();
+            messageWindow.Show(TextCodeTranslator.Translate("ARInvoice.M.AlreadyTransferredInvoicesMsg"));
+            this.StopFlags();
+        }
+
+        else if (!SessionLocator.AccountingSettingPM.AllowVoidARI) {
+            var messageWindow = new MessageWindow();
+            messageWindow.Show(TextCodeTranslator.Translate("ARInvoice.M.AccountingSettingsDontAllowVoid"));
+            this.StopFlags();
+        }
+
+        else if (this.EntityPM.InvoicePayments.length > 0) {
+            var messageWindow = new MessageWindow();
+            messageWindow.Show(TextCodeTranslator.Translate("ARInvoice.M.DisconnectPayments"));
+            this.StopFlags();
+        }
+
+        else {
+            this.Validate();
+
+            if (this.isValid) {
+
+                if ((this.EntityPM.ARInvoiceTypeCode == "CD" || this.EntityPM.ARInvoiceTypeCode == "CC") && (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG")) {
+                    var messageWindow = new MessageWindow();
+                    messageWindow.Show("Please notice that QBO are not supporting void transmission for the credit note, you can void it manually from QBO");
+                    messageWindow.WindowClosed.subscribe(p => {
+                        this.AccountingCheck();
+                    });
+                }
+
+                else {
+                    this.AccountingCheck();
+                }
+            }
+
+            else {
+                this.StopFlags();
+            }
+        }
+    }
+    AccountingCheck() {
+        if (this.EntityPM.MainEntityId) {
+            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+
+            var myService = new InvoiceDomainService();
+            myService.GetShipmentIsAccountingClosed(this.EntityPM.MainEntityId).subscribe((myResponse: ServiceResponse) => {
+
+                SessionLocator.CurrentSession.StopBusyIndicator();
+
+                if (!myResponse.HasError) {
+                    var IsAccountingClosed = myResponse.Result;
+
+                    if (IsAccountingClosed) {
+                        var messageWindow = new MessageWindow();
+                        messageWindow.Show("Shipment is closed for accounting, it is not possible to perform this action");
+                        this.StopFlags();
+                    }
+
+                    else {
+                        this.VoidClickedProccess();
+                    }
+                }
+
+                else {
+                    this.StopFlags();
+                }
+            });
+        }
+
+        else {
+            this.VoidClickedProccess();
+        }
+    }
+    VoidClickedProccess() {
+        this.ShowConfirmVoidMessage();
+    }
+
+    ShowConfirmVoidMessage() {
+        var myConfirmWindow = new ConfirmWindow();
+        myConfirmWindow.Width = 400;
+        myConfirmWindow.Show(TextCodeTranslator.Translate("ARInvoice.M.ConfirmVoid"));
+        myConfirmWindow.WindowClosed.subscribe(s => {
+            this.StopFlags();
+            if (myConfirmWindow.Yes) {
+                this.EntityPM.SetVoided = true;
+                this.EntityPM.SetApproved = false;
+                this.EntityPM.SetReTransfer = false;
+                this.EntityPM.SetCancelDraft = false;
+                this.entityArgs.EditComponent.SaveChanges("Voiding...");
+            }
+        });
+    }
+    ReTransferClicked() {
+        this.Validate();
+
+        if (this.isValid) {
+            this.EntityPM.SetVoided = false;
+            this.EntityPM.SetApproved = false;
+            this.EntityPM.SetReTransfer = true;
+            this.EntityPM.SetCancelDraft = false;
+
+            this.entityArgs.EditComponent.SaveChanges();
+        }
+
+        else {
+            this.StopFlags();
+        }
+    }
+
+    // AutoCredit
+    AutoCreditId: string = null;
+    AutoCreditDate: Date = null;
+    AutoCreditManualNumber: string = null;
+    AutoCreditClicked() {
+        if (this.EntityPM.InvoicePayments.length > 0) {
+            var messageWindow = new MessageWindow();
+            messageWindow.Show(TextCodeTranslator.Translate("ARInvoice.S.AutoCreditingMsg1"));
+            this.StopFlags();
+        }
+
+        else if (this.EntityPM.StatusCode == "PD" || this.EntityPM.StatusCode == "PP") {
+            var messageWindow = new MessageWindow();
+            messageWindow.Show(TextCodeTranslator.Translate("ARInvoice.S.AutoCreditingMsg4"));
+            this.StopFlags();
+        }
+
+        else {
+            this.Validate();
+
+            if (this.isValid) {
+                if (this.EntityPM.MainEntityId) {
+                    SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+
+                    var myService = new InvoiceDomainService();
+                    myService.GetShipmentIsAccountingClosed(this.EntityPM.MainEntityId).subscribe((myResponse: ServiceResponse) => {
+
+                        SessionLocator.CurrentSession.StopBusyIndicator();
+
+                        if (!myResponse.HasError) {
+                            var IsAccountingClosed = myResponse.Result;
+
+                            if (IsAccountingClosed) {
+                                var messageWindow = new MessageWindow();
+                                messageWindow.Show("Shipment is closed for accounting, it is not possible to perform this action");
+                                this.StopFlags();
+                            }
+
+                            else {
+                                this.AutoCreditClickedProccess();
+                            }
+                        }
+
+                        else {
+                            this.StopFlags();
+                        }
+                    });
+                }
+
+                else {
+                    this.AutoCreditClickedProccess();
+                }
+            }
+
+            else {
+                this.StopFlags();
+            }
+        }
+    }
+    AutoCreditClickedProccess() {
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Title = TextCodeTranslator.Translate("ARInvoice.F.InvoiceDate");
+        logitudeWindow.Height = 150;
+        logitudeWindow.Width = 330;
+        logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, EventCode: "AutoCreditInvoiceDate" };
+        logitudeWindow.Show("./Invoice/Components/MenuButtonsComponents/ARInvoiceMenuButtonsComponent");
+        logitudeWindow.ComponentLoaded.subscribe(cmp => {
+            logitudeWindow.WindowClosed.subscribe(s => {
+                this.StopFlags();
+
+                if (s) {
+                    if (cmp.Date) {
+                        this.AutoCreditDate = cmp.Date;
+
+                        var myConfirmWindow = new ConfirmWindow();
+                        myConfirmWindow.Width = 400;
+                        myConfirmWindow.Show(TextCodeTranslator.Translate("ARInvoice.M.ConfirmAutoCredit"));
+                        myConfirmWindow.WindowClosed.subscribe(s => {
+                            if (myConfirmWindow.Yes) {
+                                this.isSaveAutoCreditRequested = true;
+                                this.entityArgs.EditComponent.SaveChanges(TextCodeTranslator.Translate("ARInvoice.M.CreatingAutoCredit"));
+                            }
+                        });
+                    }
+                }
+            });
+        });
+    }
+    SaveBeforeAutoCreditCompleted() {
+        if (this.EntityPM.IsInvoiceNumberManuallySet) {
+            var logitudeWindow = new LogitudeWindow();
+            logitudeWindow.Title = TextCodeTranslator.Translate("ARInvoice.M.InvoiceManualNumber");
+            logitudeWindow.Height = 200;
+            logitudeWindow.Width = 350;
+            logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, EventCode: "AutoCreditManualNumber" };
+            logitudeWindow.Show("./Invoice/Components/MenuButtonsComponents/ARInvoiceMenuButtonsComponent");
+            logitudeWindow.ComponentLoaded.subscribe(cmp => {
+                logitudeWindow.WindowClosed.subscribe(s => {
+                    this.StopFlags();
+
+                    if (s) {
+                        if (cmp.ManualNumber) {
+                            this.AutoCreditManualNumber = cmp.ManualNumber;
+                            this.InvokeAutoCredit();
+                        }
+                    }
+                });
+            });
+        }
+
+        else {
+            this.InvokeAutoCredit();
+        }
+    }
+    InvokeAutoCredit() {
+        SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("ARInvoice.M.CreatingAutoCredit"));
+
+        var myService = new InvoiceDomainService();
+        myService.AutoCreditARInvoice(this.EntityPM.Id, this.EntityPM.IsInvoiceNumberManuallySet, this.AutoCreditManualNumber, this.AutoCreditDate).subscribe((myResponse: ServiceResponse) => {
+
+            SessionLocator.CurrentSession.StopBusyIndicator();
+
+            if (myResponse.HasError) {
+                this.entityArgs.EditComponent.ValidationErrorsList = myResponse.ErrorsArray;
+            }
+
+            else {
+                this.AutoCreditId = myResponse.Result;
+                this.isOpenAutoCreditRequested = true;
+                this.entityArgs.EditComponent.ReloadEntityPM();
+            }
+        });
+    }
+    OpenAutoCreditScreen() {
+        if (!AppTool.IsNullOrEmpty(this.AutoCreditId)) {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run({ EntityId: this.AutoCreditId, ObjectTableName: 'ARInvoice', BackButtonLabel: "Invoice: " + this.EntityPM.InvoiceNumber });
+                });
+        }
+    }
+
+    // Print
+    PrintClicked() {
+        this.Validate();
+
+        if (this.isValid) {
+            this.isPrintRequested = true;
+            this.entityArgs.EditComponent.SaveChanges();
+        }
+
+        else {
+            this.StopFlags();
+        }
+    }
+    InitializePrinting() {
+        var myEntityId: string = null;
+        var myChildEntityId: string = null;
+        var myObjectTableName: string = null;
+        var mychildObjectTableId: string = null;
+        var myDocumentTypeCode: string = null;
+        var myReference: string = null;
+
+        if (this.EntityPM.IsConsolidationInvoice) {
+            myEntityId = this.EntityPM.Id;
+            myChildEntityId = null;
+            mychildObjectTableId = null;
+            myObjectTableName = "ARInvoice";
+            myDocumentTypeCode = "999C";
+            myReference = !AppTool.IsNullOrEmpty(this.EntityPM.InvoiceNumber) ? this.EntityPM.InvoiceNumber : "Draft: " + this.EntityPM.DraftNumber;
+            this.StartPrinting(myEntityId, myChildEntityId, myObjectTableName, mychildObjectTableId, myDocumentTypeCode, myReference);
+        }
+
+        else {
+
+            mychildObjectTableId = window.ObjectTables.filter(d => d.Name == "ARInvoice")[0].Id;
+            myEntityId = this.EntityPM.MainEntityId;
+            myChildEntityId = this.EntityPM.Id;
+            myReference = !AppTool.IsNullOrEmpty(this.EntityPM.InvoiceNumber) ? this.EntityPM.InvoiceNumber : "Draft: " + this.EntityPM.DraftNumber;
+
+            if (this.EntityPM.ARInvoiceTypeCode == "MN") {
+                myObjectTableName = "Master";
+                myDocumentTypeCode = "999M";
+                this.StartPrinting(myEntityId, myChildEntityId, myObjectTableName, mychildObjectTableId, myDocumentTypeCode, myReference);
+            }
+
+            else if (this.EntityPM.ARInvoiceTypeCode == "CI" || this.EntityPM.ARInvoiceTypeCode == "CC") {
+                myObjectTableName = "Shipment";
+                myDocumentTypeCode = "999CI";
+                this.StartPrinting(myEntityId, myChildEntityId, myObjectTableName, mychildObjectTableId, myDocumentTypeCode, myReference);
+            }
+
+            else {
+                SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+
+                var myService = new InvoiceDomainService();
+                myService.GetShipmentLevelCode(this.EntityPM.MainEntityId).subscribe((myResponse: ServiceResponse) => {
+
+                    SessionLocator.CurrentSession.StopBusyIndicator();
+
+                    if (!myResponse.HasError) {
+                        var myShipmentLevelCode = myResponse.Result;
+                        myObjectTableName = myShipmentLevelCode == "C" ? "Master" : "Shipment";
+                        myDocumentTypeCode = "999S";
+
+                        this.StartPrinting(myEntityId, myChildEntityId, myObjectTableName, mychildObjectTableId, myDocumentTypeCode, myReference);
+                    }
+                });
+            }
+        }
+    }
+    StartPrinting(myEntityId: string, myChildEntityId: string, myObjectTableName: string, mychildObjectTableId: string, myDocumentTypeCode: string, myReference: string) {
+        var myPrintHelper = new GeneralPrintHelper(myObjectTableName, myDocumentTypeCode, myEntityId, myChildEntityId, myReference, mychildObjectTableId);
+        if (myPrintHelper.IsLoadPrintControl) {
+            ServiceLocator.SendTotangoUserActivity("ARInvoice", "PrintInvoice");
+            myPrintHelper.ShowPrintControl();
+        }
+    }
+}

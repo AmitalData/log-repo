@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace WebFreight.Web.Security
+{
+    public class AutenticationException:Exception
+    {
+        string Message;
+        public AutenticationException()
+        {
+
+        }
+
+        public AutenticationException(string errorMessage)
+        {
+            Message = errorMessage;
+        }
+    }
+}

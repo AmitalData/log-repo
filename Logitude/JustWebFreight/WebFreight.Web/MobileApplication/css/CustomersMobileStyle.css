@@ -1,0 +1,428 @@
+﻿body {
+}
+ /*style flat skin;*/
+ .km-flat  .km-content
+{
+    margin: 0px;
+    padding: 0px;
+    border: none;
+    margin-top: -10px;
+    background-color: white;
+}
+
+.km-flat  .km-listview .km-list > li:first-child
+{
+    margin: 0px;
+    padding: 0px;
+    border: none;
+    border-radius: 0px;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+}
+
+.km-flat  .km-listview .km-list > li:last-child
+{
+    margin: 0px;
+    padding: 0px;
+    border: none;
+    border-radius: 0px;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+}
+
+
+
+.km-flat  .km-listview 
+{
+    margin: 0px;
+    padding: 0px;
+    border: none;
+}
+
+.km-flat  .km-listview :hover
+{
+ background: url("images/BigBlueBar.png");
+ border-color: #3BB3E2;
+}
+
+.km-flat .km-list  {
+    margin: 0px;
+    padding: 0px;
+    border: none;
+}
+
+
+
+
+
+
+/*.km-flat .km-header {
+    background:url("../images/imageheder.png") repeat-x ;
+}*/
+
+
+/*.km-flat .km-button  {
+  background-color:transparent;
+  border-width:0px;
+
+ 
+/*.km-flat .km-button {
+  
+}*/
+
+
+
+.listitemlable
+{
+    display:table-cell;
+    vertical-align:middle;
+    text-indent:10px;
+    color:#414A49;
+    font-family:Arial;
+    font-weight:normal;
+}
+
+.tablecellheader
+{
+    display: table-cell;
+    width: 110px;
+    vertical-align: middle;
+    text-align: left;
+    background-color: #ECF1F4;
+    text-indent: 10px;
+    color: #727679;
+    font-family: Arial;
+    font-weight: normal;
+}
+
+.tablecelltext
+{
+    display:table-cell;
+    vertical-align:middle;
+    text-indent:10px;
+    color:#414A49;
+    font-family:Arial;
+    font-weight:normal;
+}
+
+*, html, body
+{
+    margin: 0px;
+    padding: 0px;
+    border: none;
+    font-family: "Lucida Sans Unicode";
+}
+
+
+
+
+.km-ios .km-content
+{
+    margin: 0px;
+    padding: 0px;
+    border: none;
+    margin-top: -10px;
+    background-color: white;
+}
+
+.km-ios .km-listview .km-list > li:first-child
+{
+    margin: 0px;
+    padding: 0px;
+    border: none;
+    border-radius: 0px;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+}
+
+.km-ios .km-listview .km-list > li
+{
+    margin: 0px;
+    padding: 0px;
+    border: none;
+}
+
+.km-ios .km-listview
+{
+    margin: 0px;
+    padding: 0px;
+    border: none;
+}
+
+input:hover, input:focus
+{
+    outline-style: solid;
+    outline-width: 0px;
+    border: 1px solid #86eb77;
+}
+
+
+.QuoteNumberTextStyle
+{
+    font-size: 14px;
+    font-family: "Lucida Sans Unicode";
+    color: #199DD7;
+}
+
+.HeaderAdressTextStyle
+{
+     font-family: Lucida Sans Unicode;
+    font-size: 28px;
+    font-weight: bold;
+    font-style: normal;
+    text-decoration: none;
+    color: #8BC9EA;
+}
+.Nofound
+{
+   font-family: Arial;
+    color: gray;
+    font-size: 14px;
+    margin-left: 15px;                         
+}
+.HederSHDQD2TextStyle44
+{
+   font-family: Arial;
+
+    font-size: 13px;
+    color: #1E4AC0;
+    text-decoration:underline;
+}
+
+.postdata
+{
+   font-family: Lucida Sans Unicode;
+
+    font-size: 11px;
+    color: #282E30;
+
+}
+
+       .HeaderValue {
+            font-family: "Lucida Sans Unicode";
+            font-size:14px;
+            font-weight:normal;
+            font-style:normal;
+            text-decoration:none;
+            color:#333333;
+            min-width:100px;
+            white-space:nowrap;
+           
+        }
+
+.HeaderValueDate {
+      font-family: "Lucida Sans Unicode";
+            font-size:14px;
+            font-weight:normal;
+            font-style:normal;
+            text-decoration:none;
+            color:#FF003B;
+            min-width:100px;
+            white-space:nowrap;
+}
+.HeaderNameCustomer {
+    font-family: Arial;
+    font-size: 15px;
+    font-weight: bold;
+    font-style: normal;
+    text-decoration: none;
+    color:#727678;
+}
+/*hidden*/
+
+
+a:link {
+    text-decoration:initial;
+
+} 
+input
+{
+    width: 100%;
+    height: 35px;
+    border: 1px solid #D1D1D1;
+    outline-style: solid;
+    outline-width: 0px;
+    padding: 0px;
+    margin: 0px;
+}
+
+#imgcenter {
+    position:absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+
+/*stylesMobile*/
+
+.ETextStyle
+{
+    font-size: 14px;
+    font-family: "Lucida Sans Unicode";
+    color: #727678;
+}
+
+.E2TextStyle {
+    font-size: 14px;
+    font-family: "Lucida Sans Unicode";
+    color: #45494A;
+}
+
+.Value2boldTextStyle {
+    font-weight:bold;
+    font-size: 16px;
+    font-family: "Lucida Sans";
+    color: #2C2C2C;
+}
+
+.E3TextStyle {
+     font-weight:bold;
+    font-size: 14px;
+    font-family: "Lucida Sans";
+    color: #45494A;
+}
+
+.HeaderTitil {
+    font-weight:normal;
+    font-size: 18px;
+    vertical-align:central;
+    font-family: "Lucida Sans";
+    color: #727678;
+   
+}
+.SHDQD1TextStyle
+{
+    font-size: 15px;
+    font-family: "Lucida Sans Unicode";
+    color: #727678;
+}
+
+.HederSHDQD2TextStyle {
+    font-size: 15px;
+    font-family: "Lucida Sans Unicode";
+    color: #45494A;
+}
+
+.HederSHDQD2TextStyle33 {
+    font-size: 15px;
+    font-family: "Lucida Sans Unicode";
+    color: #1E4AC0;
+    text-decoration:underline;
+}
+
+.Value2TextStyle
+{
+    font-size: 16px;
+    font-family: "Lucida Sans";
+    color: #2C2C2C;
+}
+.DTextStyle
+{
+    font-size: 14px;
+    font-family: "Lucida Sans Unicode";
+    color: #1E4AC0;
+}
+
+.PTextStyle
+{
+    font-size: 15px;
+    font-family: "Lucida Sans Unicode";
+    color: #1E4AC0;
+
+}
+.C1TextStyle {
+    font-size: 13px;
+    font-family: "Lucida Sans Unicode";
+    color: #727678;
+}
+
+.selectclass {
+     /*background:url("../images/imagecomp.png") repeat-x ;*/
+    background-color:transparent;
+
+    font-weight: bold;
+    font-size: 18px;
+    font-family: "Lucida Sans";
+    color: white;
+}
+/*endstylesMobile*/
+
+
+
+.TemplateItem {
+    padding: 0;
+    margin: 0;
+    vertical-align: central;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+    vertical-align: top;
+    height: 20px;
+    line-height: 20px;
+}
+.DocumentListBoxItemlike
+    {
+        width: 100%;
+        height: 30px;
+        margin: 0px 0 5px 0;
+        border: 1px solid #D1D1D1;
+        background:#F7F7F7;
+        text-indent: 5px;
+        display: table;
+        border-radius: 5px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+    }    
+.contentlink
+        {
+            display:table-cell;
+            vertical-align: middle;             
+        }
+#ShipmentItemTemplate
+{
+    height: 164px;
+    border-bottom:none;
+    border-top:none;
+}
+#Busyindicator {
+             display: none;
+             position: absolute;
+             top: 50%;
+             left: 50%;
+             background: url("images/ajax-loader (2).gif") no-repeat;
+             width: 130px;
+             height: 20px;
+             
+             
+         }
+.km-listview li {
+             padding: 0px;
+             margin: 0px;
+              border:0px;
+         }
+.km-listview .km-list {
+             padding: 0px;
+             margin: 0px;
+             border:0px;
+         }
+.km-listview .km-list > li {
+                 padding: 0px;
+                 margin: 0px;
+                  border:0px;
+             }
+
+
+   .chart-wrapper, .chart-wrapper .k-chart {
+            height: 300px;
+            width: 300px;
+        }
+
+
+
+
+
+

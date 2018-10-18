@@ -1,0 +1,680 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{00E5D96D-DD45-47E8-AAA3-FDBFD8ADD61A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Logitude.Accounting.BL</RootNamespace>
+    <AssemblyName>Logitude.Accounting.BL</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\General\Dlls\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\General\Dlls\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\General\Dlls\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ServiceBus, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAzure.ServiceBus.3.4.4\lib\net45-full\Microsoft.ServiceBus.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Diagnostics, Version=2.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\Microsoft.WindowsAzure.Diagnostics.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.ServiceRuntime, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\Microsoft.WindowsAzure.ServiceRuntime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Stimulsoft.Report">
+      <HintPath>..\General\Dlls\StimulSoft new\Stimulsoft.Report.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureEventSource.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WindowsAzureTelemetryEvents, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureTelemetryEvents.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="APIDataContract\AccountingEntity.Generated.cs" />
+    <Compile Include="APIDataContract\AutomaticReconcile.Generated.cs" />
+    <Compile Include="APIDataContract\AutomaticReconcileMethod.Generated.cs" />
+    <Compile Include="APIDataContract\Category1.Generated.cs" />
+    <Compile Include="APIDataContract\Category2.Generated.cs" />
+    <Compile Include="APIDataContract\Category3.Generated.cs" />
+    <Compile Include="APIDataContract\Category4.Generated.cs" />
+    <Compile Include="APIDataContract\Category5.Generated.cs" />
+    <Compile Include="APIDataContract\ChartOfAccount.Generated.cs" />
+    <Compile Include="APIDataContract\ChartOfAccountsType.Generated.cs" />
+    <Compile Include="APIDataContract\GLAccount.Generated.cs" />
+    <Compile Include="APIDataContract\GLAccountType.Generated.cs" />
+    <Compile Include="APIDataContract\Journal.Generated.cs" />
+    <Compile Include="APIDataContract\JournalStatusType.Generated.cs" />
+    <Compile Include="APIDataContract\JournalType.Generated.cs" />
+    <Compile Include="APIDataContract\QueryService\AccountingEntityQueryService.Generated.cs" />
+    <Compile Include="APIDataContract\QueryService\AutomaticReconcileMethodQueryService.Generated.cs" />
+    <Compile Include="APIDataContract\QueryService\AutomaticReconcileQueryService.Generated.cs" />
+    <Compile Include="APIDataContract\QueryService\Category1QueryService.Generated.cs" />
+    <Compile Include="APIDataContract\QueryService\Category2QueryService.Generated.cs" />
+    <Compile Include="APIDataContract\QueryService\Category3QueryService.Generated.cs" />
+    <Compile Include="APIDataContract\QueryService\Category4QueryService.Generated.cs" />
+    <Compile Include="APIDataContract\QueryService\Category5QueryService.Generated.cs" />
+    <Compile Include="APIDataContract\QueryService\ChartOfAccountQueryService.Generated.cs" />
+    <Compile Include="APIDataContract\QueryService\ChartOfAccountsTypeQueryService.Generated.cs" />
+    <Compile Include="APIDataContract\QueryService\GLAccountQueryService.cs" />
+    <Compile Include="APIDataContract\QueryService\GLAccountQueryService.Generated.cs" />
+    <Compile Include="APIDataContract\QueryService\GLAccountTypeQueryService.Generated.cs" />
+    <Compile Include="APIDataContract\QueryService\JournalQueryService.cs" />
+    <Compile Include="APIDataContract\QueryService\JournalQueryService.Generated.cs" />
+    <Compile Include="APIDataContract\QueryService\JournalStatusTypeQueryService.cs" />
+    <Compile Include="APIDataContract\QueryService\JournalStatusTypeQueryService.Generated.cs" />
+    <Compile Include="APIDataContract\QueryService\JournalTypeQueryService.cs" />
+    <Compile Include="APIDataContract\QueryService\JournalTypeQueryService.Generated.cs" />
+    <Compile Include="APIDataContract\QueryService\ReconcileMethodQueryService.Generated.cs" />
+    <Compile Include="APIDataContract\QueryService\RevenueExpenseTypeQueryService.Generated.cs" />
+    <Compile Include="APIDataContract\ReconcileMethod.Generated.cs" />
+    <Compile Include="APIDataContract\RevenueExpenseType.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\AccountingEntityDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\ARPaymentChequeStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\AutomaticExternalReconcileMethodDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\AutomaticReconcileDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\BankPageEntryTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\ChartOfAccountsTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\GLAccountTotalDateTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\GLAccountTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\JournalStatusTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\JournalTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\PaymentChequeStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\PeriodTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\ReconcileExternalPageStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\ReconcileMethodDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\RevaluationStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\RevenueExpenseTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\TaxDeductionReportStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\TaxReportLineStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\TaxReportLineTransmitStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\TaxReportLineTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\TaxReportStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\VatReportStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ARPaymentChequeStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\BankPageEntryTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ChartOfAccountsTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\GLAccountTotalDateTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\JournalStatusTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ReconcileExternalPageStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\GLAccountTotalDateTypeEnum.cs" />
+    <Compile Include="CoreBL\AccountBalanceService.cs" />
+    <Compile Include="CoreBL\AccountingSettingResolver.cs" />
+    <Compile Include="CoreBL\AutomaticExternalReconcileService.cs" />
+    <Compile Include="CoreBL\AutomaticReconcileService.cs" />
+    <Compile Include="CoreBL\Batch\BatchTaxReportService.cs" />
+    <Compile Include="CoreBL\BuildTenant\ClearTenant.cs" />
+    <Compile Include="CoreBL\BuildTenant\DummyTenantProvider.cs" />
+    <Compile Include="CoreBL\BuildTenant\FullAccountingProvider.cs" />
+    <Compile Include="CoreBL\BuildTenant\IFullAccountingGenerator.cs" />
+    <Compile Include="CoreBL\CreateJournalReconcileService.cs" />
+    <Compile Include="CoreBL\CashbookService.cs" />
+    <Compile Include="CoreBL\Reconcile\AutoReconcileARPaymentService.cs" />
+    <Compile Include="CoreBL\Reconcile\CreateReconciliationService.cs" />
+    <Compile Include="CoreBL\Dashboard\GLAccountDashboard.cs" />
+    <Compile Include="CoreBL\Dashboard\ChartOfAccountBalanceM.cs" />
+    <Compile Include="CoreBL\Dashboard\ChartOfAccountDashboard.cs" />
+    <Compile Include="CoreBL\DueLocalBalanceService.cs" />
+    <Compile Include="CoreBL\IAccountingSettingResolver.cs" />
+    <Compile Include="CoreBL\IYearTransferService.cs" />
+    <Compile Include="CoreBL\JournalApproveParser.cs" />
+    <Compile Include="CoreBL\JournalFailedService.cs" />
+    <Compile Include="CoreBL\Reconcile\JournalStornoPrepareJReconcileService.cs" />
+    <Compile Include="CoreBL\JournalStornoReconcileService.cs" />
+    <Compile Include="CoreBL\JournalStornoService.cs" />
+    <Compile Include="CoreBL\JournalUpdateOnCreating.cs" />
+    <Compile Include="CoreBL\JournalLineOnUpdate.cs" />
+    <Compile Include="CoreBL\JournalUpdateOnUpdating.cs" />
+    <Compile Include="CoreBL\Reconcile\CreateAutoReconcileWhileStreamingService.cs" />
+    <Compile Include="CoreBL\Reports\AgingReportV1Service.cs" />
+    <Compile Include="CoreBL\Reports\ARPaymentChequeRedemptionService.cs" />
+    <Compile Include="CoreBL\Reports\ITrailReportBase.cs" />
+    <Compile Include="CoreBL\Reports\LedgerTransactionCardIndexService.cs" />
+    <Compile Include="CoreBL\Reports\RevenueExpenseReportService.cs" />
+    <Compile Include="CoreBL\Reports\TrailReportBase.cs" />
+    <Compile Include="CoreBL\Reports\TrailReportGLAccountCurrenciesDetailed.cs" />
+    <Compile Include="CoreBL\Reports\LedgerTransactionBalanceService.cs" />
+    <Compile Include="CoreBL\Mapping\JournalLineCreditMapping.cs" />
+    <Compile Include="CoreBL\Mapping\JournalLineDebitMapping.cs" />
+    <Compile Include="CoreBL\Mapping\JournalLineMappingBase.cs" />
+    <Compile Include="CoreBL\Mapping\JournalLineDebitTaxMapping.cs" />
+    <Compile Include="CoreBL\Reports\AgingReportService.cs" />
+    <Compile Include="CoreBL\Reports\TrailReportChartofaccount.cs" />
+    <Compile Include="CoreBL\Reports\TrailReportChartofaccountCurrenciesDetailed.cs" />
+    <Compile Include="CoreBL\Reports\TrailReportChartofaccountType.cs" />
+    <Compile Include="CoreBL\Reports\TrailReportChartofaccountTypeCurrenciesDetailed.cs" />
+    <Compile Include="CoreBL\Reports\TrailReportGLAccount.cs" />
+    <Compile Include="CoreBL\Reports\TrailReportService.cs" />
+    <Compile Include="CoreBL\ReverseEngineer\ReverseEngineerGLAccountBalance.cs" />
+    <Compile Include="CoreBL\ReverseEngineer\ReverseEngineerLedgerTransactionService.cs" />
+    <Compile Include="CoreBL\ReverseEngineer\ReverseEngineerTotalByMonthService.cs" />
+    <Compile Include="CoreBL\JournalApproveService.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\CashBookTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CashBookTypeStruct.Generated.cs" />
+    <Compile Include="CoreBL\ReverseEngineer\SystemCheckApprovedJournals.cs" />
+    <Compile Include="CoreBL\ReverseEngineer\SystemCheckGLAccount.cs" />
+    <Compile Include="CoreBL\ReverseEngineer\SystemCheckService.cs" />
+    <Compile Include="CoreBL\ReverseEngineer\SystemCheckTotals.cs" />
+    <Compile Include="CoreBL\YearTransferService.cs" />
+    <Compile Include="EntityDataMappings\AccountingCompanyTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\AccountingEntityDataMapping.cs" />
+    <Compile Include="EntityDataMappings\AccountingEntityService.cs" />
+    <Compile Include="EntityDataMappings\AccountingPeriodDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ARPaymentChequeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ARPaymentChequeStatusDataMapping.cs" />
+    <Compile Include="EntityDataMappings\AutomaticExternalReconcileMethodDataMapping.cs" />
+    <Compile Include="EntityDataMappings\AutomaticReconcileDataMapping.cs" />
+    <Compile Include="EntityDataMappings\AutomaticReconcileMethodDataMapping.cs" />
+    <Compile Include="EntityDataMappings\BankAccountCustomDataMapping.cs" />
+    <Compile Include="EntityDataMappings\BankPageEntryTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\Category1DataMapping.cs" />
+    <Compile Include="EntityDataMappings\Category2DataMapping.cs" />
+    <Compile Include="EntityDataMappings\Category3DataMapping.cs" />
+    <Compile Include="EntityDataMappings\Category4DataMapping.cs" />
+    <Compile Include="EntityDataMappings\Category5DataMapping.cs" />
+    <Compile Include="EntityDataMappings\BankAccountDataMapping.cs" />
+    <Compile Include="EntityDataMappings\BankCodeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\BankDepositDataMapping.cs" />
+    <Compile Include="EntityDataMappings\BankDepositLineDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CashBookDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CashBookLineDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CashBookTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ChartOfAccountDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ChartOfAccountsTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ExternalReconciliationDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ExternalReconciliationLineDataMapping.cs" />
+    <Compile Include="EntityDataMappings\FullAccountingSettingDataMapping.cs" />
+    <Compile Include="EntityDataMappings\Generated\AccountingCompanyTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\AccountingEntityDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\AccountingPeriodDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ARPaymentChequeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ARPaymentChequeStatusDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\AutomaticExternalReconcileMethodDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\AutomaticReconcileDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\AutomaticReconcileMethodDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\BankPageEntryTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\Category1DataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\Category2DataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\Category3DataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\Category4DataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\Category5DataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\BankAccountDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\BankCodeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\BankDepositDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\BankDepositLineDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CashBookDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CashBookLineDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CashBookTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ChartOfAccountDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ChartOfAccountsTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ExternalReconciliationDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ExternalReconciliationLineDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\FullAccountingSettingDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\GLAccountCurrencyDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\GLAccountDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\GLAccountMoreDataDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\GLAccountTotalByMonthDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\GLAccountTotalDateTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\GLAccountTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\GLAccountWithholdingTaxDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\JournalActionTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\JournalDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\JournalLineDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\JournalMoreDataDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\JournalReconcileDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\JournalStatusTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\JournalTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\LedgerTransactionDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\PaymentChequeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\PaymentChequeLineDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\PaymentChequeStatusDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\PeriodTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ReconcileExternalPageDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ReconcileExternalPageLineDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ReconcileExternalPageStatusDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ReconcileMethodDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ReconciliationDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ReconciliationLineDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\RevaluationDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\RevaluationStatusDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\RevenueExpenseTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TaxDeductionReportDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TaxDeductionReportStatusDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TaxReportDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TaxReportLineDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TaxReportLineStatusDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TaxReportLineTransmitStatusDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TaxReportLineTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TaxReportStatusDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TaxWithholdingAssessingOfficeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TestEntityDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\VatReportStatusDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\WithholdingTaxDeductionTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\GLAccountCurrencyDataMapping.cs" />
+    <Compile Include="EntityDataMappings\GLAccountDataMapping.cs" />
+    <Compile Include="EntityDataMappings\GLAccountMoreDataDataMapping.cs" />
+    <Compile Include="EntityDataMappings\GLAccountTotalByMonthDataMapping.cs" />
+    <Compile Include="EntityDataMappings\GLAccountTotalDateTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\GLAccountTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\GLAccountWithholdingTaxDataMapping.cs" />
+    <Compile Include="EntityDataMappings\JournalActionTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\JournalDataMapping.cs" />
+    <Compile Include="EntityDataMappings\JournalLineDataMapping.cs" />
+    <Compile Include="EntityDataMappings\JournalMoreDataDataMapping.cs" />
+    <Compile Include="EntityDataMappings\JournalReconcileDataMapping.cs" />
+    <Compile Include="EntityDataMappings\JournalStatusTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\JournalTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\LedgerTransactionDataMapping.cs" />
+    <Compile Include="EntityDataMappings\PaymentChequeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\PaymentChequeLineDataMapping.cs" />
+    <Compile Include="EntityDataMappings\PaymentChequeStatusDataMapping.cs" />
+    <Compile Include="EntityDataMappings\PeriodTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ReconcileExternalPageDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ReconcileExternalPageLineDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ReconcileExternalPageStatusDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ReconcileMethodDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ReconciliationDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ReconciliationLineDataMapping.cs" />
+    <Compile Include="EntityDataMappings\RevaluationDataMapping.cs" />
+    <Compile Include="EntityDataMappings\RevaluationStatusDataMapping.cs" />
+    <Compile Include="EntityDataMappings\RevenueExpenseTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TaxDeductionReportDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TaxDeductionReportStatusDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TaxReportDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TaxReportLineDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TaxReportLineStatusDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TaxReportLineTransmitStatusDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TaxReportLineTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TaxReportStatusDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TaxWithholdingAssessOfficeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TestEntityDataMapping.cs" />
+    <Compile Include="CoreBL\AccountingValidationContextServiceProvider.cs" />
+    <Compile Include="EntityDataMappings\VatReportStatusDataMapping.cs" />
+    <Compile Include="EntityDataMappings\WithholdingTaxDeductionTypeDataMapping.cs" />
+    <Compile Include="EntityPMs\JournalLinePM.cs" />
+    <Compile Include="EntityQueryServiceExt\ARPaymentChequeQueryServiceExt.cs" />
+    <Compile Include="EntityQueryServiceExt\BankAccountQueryServiceExt.cs" />
+    <Compile Include="EntityQueryServiceExt\BankCodeQueryServiceExt.cs" />
+    <Compile Include="EntityQueryServiceExt\CashBookQueryServiceExt.cs" />
+    <Compile Include="EntityQueryServiceExt\FullAccountingSettingQueryServiceExt.cs" />
+    <Compile Include="EntityQueryServiceExt\GLAccountQueryServiceExt.cs" />
+    <Compile Include="EntityQueryServiceExt\GLAccountWithholdingTaxQueryServiceExt.cs" />
+    <Compile Include="EntityQueryServiceExt\JournalQueryServiceExt.cs" />
+    <Compile Include="EntityQueryServiceExt\PaymentChequeQueryServiceExt.cs" />
+    <Compile Include="EntityQueryServices\AccountingEntityQueryService.cs" />
+    <Compile Include="EntityQueryServices\ARPaymentChequeQueryService.cs" />
+    <Compile Include="EntityQueryServices\AutomaticReconcileQueryService.cs" />
+    <Compile Include="EntityQueryServices\BankAccountQueryService.cs" />
+    <Compile Include="EntityQueryServices\BankCodeQueryService.cs" />
+    <Compile Include="EntityQueryServices\Category1QueryService.cs" />
+    <Compile Include="EntityQueryServices\Category2QueryService.cs" />
+    <Compile Include="EntityQueryServices\Category3QueryService.cs" />
+    <Compile Include="EntityQueryServices\Category4QueryService.cs" />
+    <Compile Include="EntityQueryServices\Category5QueryService.cs" />
+    <Compile Include="EntityQueryServices\ChartOfAccountsTypeQueryService.cs" />
+    <Compile Include="EntityQueryServices\ExternalReconciliationLineQueryService.cs" />
+    <Compile Include="EntityQueryServices\Generated\AccountingCompanyTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ARPaymentChequeStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\AutomaticExternalReconcileMethodQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\BankPageEntryTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ExternalReconciliationLineQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ExternalReconciliationQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\GLAccountMoreDataQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\GLAccountTotalDateTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\GLAccountWithholdingTaxQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\JournalMoreDataQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\JournalReconcileQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\PaymentChequeLineQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\PaymentChequeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\PaymentChequeStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ReconcileExternalPageLineQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ReconcileExternalPageQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ReconcileExternalPageStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\RevaluationStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TaxDeductionReportQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TaxDeductionReportStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TaxReportLineQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TaxReportLineStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TaxReportLineTransmitStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TaxReportLineTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TaxReportQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TaxReportStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TaxWithholdingAssessOfficeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\VatReportStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\WithholdingTaxDeductionTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\GLAccountMoreDataQueryService.cs" />
+    <Compile Include="EntityQueryServices\GLAccountTypeQueryService.cs" />
+    <Compile Include="EntityQueryServices\GLAccountWithholdingTaxQueryService.cs" />
+    <Compile Include="EntityQueryServices\JournalStatusTypeQueryService.cs" />
+    <Compile Include="EntityQueryServices\JournalTypeQueryService.cs" />
+    <Compile Include="EntityQueryServices\PaymentChequeLineQueryService.cs" />
+    <Compile Include="EntityQueryServices\PaymentChequeQueryService.cs" />
+    <Compile Include="EntityQueryServices\ReconcileExternalPageLineQueryService.cs" />
+    <Compile Include="EntityQueryServices\ReconcileExternalPageQueryService.cs" />
+    <Compile Include="EntityQueryServices\ReconcileMethodQueryService.cs" />
+    <Compile Include="EntityQueryServices\ReconciliationLineQueryService.cs" />
+    <Compile Include="EntityQueryServices\ExternalReconciliationQueryService.cs" />
+    <Compile Include="EntityQueryServices\RevenueExpenseTypeQueryService.cs" />
+    <Compile Include="EntityQueryServices\TaxReportQueryService.cs" />
+    <Compile Include="EntityQueryServices\TaxWithholdingAssessOfficeQueryService.cs" />
+    <Compile Include="EntityUpdateServiceExt\ARPaymentChequeUpdateServiceExt.cs" />
+    <Compile Include="EntityUpdateServiceExt\BankCodeUpdateServiceExt.cs" />
+    <Compile Include="EntityUpdateServiceExt\CashBookLineUpdateServiceExt.cs" />
+    <Compile Include="EntityUpdateServiceExt\CashBookUpdateServiceExt.cs" />
+    <Compile Include="EntityUpdateServiceExt\GLAccountUpdateServiceExt.cs" />
+    <Compile Include="EntityUpdateServiceExt\JournalVoidUpdateServiceExt.cs" />
+    <Compile Include="EntityUpdateServiceExt\PaymentChequeUpdateServiceExt.cs" />
+    <Compile Include="EntityUpdateServices\ARPaymentChequeUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\BankAccountOnCreatingService.cs" />
+    <Compile Include="EntityUpdateServices\BankAccountOnUpdatingService.cs" />
+    <Compile Include="EntityUpdateServices\BankAccountValidateService.cs" />
+    <Compile Include="EntityUpdateServices\CashBookOnCreatingService.cs" />
+    <Compile Include="EntityUpdateServices\CashBookOnUpdatingService.cs" />
+    <Compile Include="EntityUpdateServices\ExternalReconciliationUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\Generated\AccountingCompanyTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ARPaymentChequeStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\AutomaticExternalReconcileMethodUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\BankPageEntryTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ExternalReconciliationLineUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ExternalReconciliationUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\GLAccountMoreDataUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\GLAccountTotalDateTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\GLAccountWithholdingTaxUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\JournalMoreDataUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\JournalReconcileUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\PaymentChequeLineUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\PaymentChequeStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\PaymentChequeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ReconcileExternalPageLineUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ReconcileExternalPageStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ReconcileExternalPageUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\RevaluationStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\TaxDeductionReportStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\TaxDeductionReportUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\TaxReportLineStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\TaxReportLineTransmitStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\TaxReportLineTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\TaxReportLineUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\TaxReportStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\TaxReportUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\TaxWithholdingAssessOfficeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\VatReportStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\WithholdingTaxDeductionTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\GLAccountWithholdingTaxUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\IJournalUpdateServiceProvider.cs" />
+    <Compile Include="EntityUpdateServices\JournalReconcileUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\PaymentChequeLineUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\PaymentChequeUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\ReconcileExternalPageLineUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\ReconcileExternalPageUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\TaxDeductionReportUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\TaxReportLineUpdateService.cs" />
+    <Compile Include="CoreBL\TaxReportService.cs" />
+    <Compile Include="EntityUpdateServices\TaxReportUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\TaxWithholdingAssessOfficeUpdateService.cs" />
+    <Compile Include="TestService\BatchTestService.cs" />
+    <Compile Include="Utils\AccountingLogger.cs" />
+    <Compile Include="Utils\PostDatedChequesRedemptionBatch.cs" />
+    <Compile Include="Validators\AccountingPeriodValidator.cs" />
+    <Compile Include="Validators\AutomaticReconcileMethodValidator.cs" />
+    <Compile Include="Validators\ChartOfAccountValidator.cs" />
+    <Compile Include="Validators\CashBookValidator.cs" />
+    <Compile Include="Validators\GLAccountValidator.cs" />
+    <Compile Include="Validators\IJournalValidatorContextDataProvider.Shared.cs" />
+    <Compile Include="Validators\JournalActionTypeValidator.cs" />
+    <Compile Include="Validators\JournalValidator.cs" />
+    <Compile Include="Validators\ReconciliationValidator.cs" />
+    <Compile Include="Validators\RevaluationValidator.cs" />
+    <Compile Include="EntityQueryServices\AccountingPeriodQueryService.cs" />
+    <Compile Include="EntityQueryServices\AutomaticReconcileMethodQueryService.cs" />
+    <Compile Include="EntityQueryServices\BankDepositQueryService.cs" />
+    <Compile Include="EntityQueryServices\CashBookQueryService.cs" />
+    <Compile Include="EntityQueryServices\ChartOfAccountQueryService.cs" />
+    <Compile Include="EntityQueryServices\FullAccountingSettingQueryService.cs" />
+    <Compile Include="EntityQueryServices\Generated\AccountingEntityQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\AccountingPeriodQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ARPaymentChequeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\AutomaticReconcileMethodQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\AutomaticReconcileQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\Category1QueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\Category2QueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\Category3QueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\Category4QueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\Category5QueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\BankAccountQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\BankCodeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\BankDepositLineQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\BankDepositQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CashBookLineQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CashBookQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CashBookTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ChartOfAccountQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ChartOfAccountsTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\FullAccountingSettingQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\GLAccountCurrencyQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\GLAccountQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\GLAccountTotalByMonthQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\GLAccountTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\JournalActionTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\JournalLineQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\JournalQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\JournalStatusTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\JournalTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\LedgerTransactionQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\PeriodTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ReconcileMethodQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ReconciliationLineQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ReconciliationQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\RevaluationQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\RevenueExpenseTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TestEntityQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\GLAccountCurrencyQueryService.cs" />
+    <Compile Include="EntityQueryServices\GLAccountQueryService.cs" />
+    <Compile Include="EntityQueryServices\GLAccountTotalByMonthQueryService.cs" />
+    <Compile Include="EntityQueryServices\JournalActionTypeQueryService.cs" />
+    <Compile Include="EntityQueryServices\JournalLineQueryService.cs" />
+    <Compile Include="EntityQueryServices\JournalQueryService.cs" />
+    <Compile Include="EntityQueryServices\LedgerTransactionQueryService.cs" />
+    <Compile Include="EntityQueryServices\ReconciliationQueryService.cs" />
+    <Compile Include="EntityUpdateServiceExt\JournalUpdateServiceExt.cs" />
+    <Compile Include="EntityUpdateServices\AccountingEntityUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\AccountingPeriodUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\AutomaticReconcileMethodUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\BankAccountUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\BankCodeUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\BankDepositUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\CashBookTypeUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\CashBookUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\ChartOfAccountUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\Category1UpdateService.cs" />
+    <Compile Include="EntityUpdateServices\Category2UpdateService.cs" />
+    <Compile Include="EntityUpdateServices\Category3UpdateService.cs" />
+    <Compile Include="EntityUpdateServices\Category4UpdateService.cs" />
+    <Compile Include="EntityUpdateServices\Category5UpdateService.cs" />
+    <Compile Include="EntityUpdateServices\FullAccountingSettingUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\Generated\AccountingEntityUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\AccountingPeriodUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ARPaymentChequeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\AutomaticReconcileMethodUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\AutomaticReconcileUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\Category1UpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\Category2UpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\Category3UpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\Category4UpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\Category5UpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\BankAccountUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\BankCodeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\BankDepositLineUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\BankDepositUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CashBookLineUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CashBookTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CashBookUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ChartOfAccountsTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ChartOfAccountUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\FullAccountingSettingUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\GLAccountCurrencyUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\GLAccountTotalByMonthUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\GLAccountTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\GLAccountUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\JournalActionTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\JournalLineUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\JournalStatusTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\JournalTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\JournalUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\LedgerTransactionUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\PeriodTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ReconcileMethodUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ReconciliationLineUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ReconciliationUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\RevaluationUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\RevenueExpenseTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\TestEntityUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\GLAccountUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\GLAccountTotalByMonthUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\GLAccountTypeUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\JournalActionTypeUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\JournalLineUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\JournalStatusTypeUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\JournalTypeUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\JournalUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\LedgerTransactionUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\PeriodTypeUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\ReconcileMethodUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\ReconciliationUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\RevaluationUpdateService.cs" />
+    <Compile Include="Extensions\LedgerTransactionExtension.cs" />
+    <Compile Include="Extensions\Messaging\GLAccountUpsertService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\GLAccountEndOfTheYearBatch.cs" />
+    <Compile Include="Utils\GLAccountTotalsByMonthBatch.cs" />
+    <Compile Include="Utils\JournalLinePMExt.cs" />
+    <Compile Include="Utils\RevaluationBatch.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">
+      <Project>{a3799525-14a2-42fc-a2de-69ed3fd1c5d1}</Project>
+      <Name>Logitude.Accounting.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Accounting.Def\Logitude.Accounting.Def.csproj">
+      <Project>{91564685-7ee1-466d-afcd-183a1bf62259}</Project>
+      <Name>Logitude.Accounting.Def</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
+      <Project>{a663e7ef-b858-4bb6-bc33-e473f51b8e56}</Project>
+      <Name>Logitude.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.CustomsMessaging.Common\Logitude.CustomsMessaging.Common.csproj">
+      <Project>{F0039DBE-4A1A-4755-8F37-E4005EA74746}</Project>
+      <Name>Logitude.CustomsMessaging.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Infrastructure.BL\Logitude.Infrastructure.BL.csproj">
+      <Project>{BD959AB6-4476-48B3-AA4D-CFD7ED120E55}</Project>
+      <Name>Logitude.Infrastructure.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Infrastructure.Data\Logitude.Infrastructure.Data.csproj">
+      <Project>{B02E4D92-9226-4F3F-990F-66C7F66E9316}</Project>
+      <Name>Logitude.Infrastructure.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
+      <Project>{9b477a08-8ee2-4457-88fe-17e8a6ec4d00}</Project>
+      <Name>Logitude.Server.Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.SystemLogs\Logitude.SystemLogs.csproj">
+      <Project>{9ffc5b97-f09a-4eed-a66e-d4160374ae6e}</Project>
+      <Name>Logitude.SystemLogs</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
+      <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
+      <Name>Simplog.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
+      <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
+      <Name>Simplog.Server.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="TraceEvents\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CoreBL\BuildTenant\usp_AccountingStreaming.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

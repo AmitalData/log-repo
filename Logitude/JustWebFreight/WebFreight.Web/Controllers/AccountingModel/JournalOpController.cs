@@ -1,0 +1,154 @@
+﻿
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Server.Infrastructure.Helpers;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
+using WebFreight.Web.Security;
+using WebFreight.Web.Helpers;
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.Interfaces;
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
+using System.Web;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using WebFreight.Web.Helpers;
+using WebFreight.Web.Security;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Accounting.Data;
+using Logitude.Accounting.BL;
+using Logitude.Accounting.Data.EntityLists;
+using Logitude.Accounting.BL.EntityUpdateServices;
+using Logitude.Accounting.Data.EntityListQueryServices;
+using Logitude.Accounting.BL.EntityQueryServices;
+
+using Logitude.Accounting.BL.CoreBL;
+using Logitude.Accounting.BL.CoreBL.Reports;
+using Logitude.Accounting.Data.Repositories;
+using System.Transactions;
+using WebFreight.Web.AccountingModel.Reports.Journal;
+using Logitude.Accounting.Def.EntityUpdateServicesExt;
+
+namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsController.cs
+{
+    //[RoutePrefix("api/ReconciliationOp")]
+    public partial class JournalOpController : ApiController
+    {
+        public JournalOpController()
+        {
+
+        }
+        // DELETE api/<controller>/5
+        public HttpResponseMessage Delete(string JournalOp, string JournalId, int tenant, 
+            string AccountingEntityCode, string AccountingEntityReference, string AccountingEntityId)
+        {
+
+            JournalPM journalPM = null;
+            try
+            {
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    SecurityUtility.CheckContactFeature("Journal", "UPDATE", authToken.Tenant);
+
+                    IAccountingContext MyContext = AccountingContext.GetContext(tenant);
+                    
+                    //entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                    //service.Update(entityPM, true);
+                    JournalOp=JournalOp??string.Empty;
+                    switch (JournalOp.ToLower())
+                    {
+                        case "void":
+                            {
+                                var service = new JournalVoidUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+                                
+                                var StornoOverrideM = new StornoOverrideM()
+                                {
+                                    AccountingEntityCode = AccountingEntityCode,
+                                    AccountingEntityId = AccountingEntityId,
+                                    AccountingEntityReference = AccountingEntityReference,
+                                };
+                                journalPM = service.VoidJournal(JournalId, tenant, StornoOverrideM);
+                            }
+                            break;
+                        case "purge":
+                            {
+                                throw new Exception("Journal Operation purge is not implement yet ...");
+                            }
+                            break;
+                        default:
+                            throw new Exception("Journal Operation unknown");
+                            break;
+                    }
+
+                    scope.Complete();
+                    return Request.CreateResponse(HttpStatusCode.OK, journalPM);
+                }
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
+        public HttpResponseMessage GetYearTransferJournal(int year)
+        {
+
+            
+            try
+            {
+                JournalPM journal = null;
+                using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(5)))
+                {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    SecurityUtility.CheckContactFeature("Journal", "UPDATE", authToken.Tenant);
+
+                    IAccountingContext accountingContext = AccountingContext.GetContext(authToken.Tenant);
+
+                    //entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                    //service.Update(entityPM, true);
+
+                    IYearTransferService yearTransferService = new YearTransferService();
+                    journal = yearTransferService.ProccessJournal(accountingContext, year, authToken.Tenant);
+                    bool SuppressCheckGLAccountIsMultiCurrencyWI40640 = false;
+                    var parser = new JournalApproveParser(journal, false,
+                    AccountingValidationContextServiceProvider.NewJournalValidatorContextByAContext(accountingContext, journal, SuppressCheckGLAccountIsMultiCurrencyWI40640)
+                    );
+                    parser.ParseIt();
+
+                    scope.Complete();
+                    return Request.CreateResponse(HttpStatusCode.OK, journal);
+                }
+            }
+
+            
+            
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        
+    }
+}

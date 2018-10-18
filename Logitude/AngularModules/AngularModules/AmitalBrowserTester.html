@@ -1,0 +1,539 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <!--<script src="HtmlHelpers/JS/jquery-1.9.1.min.js" type="text/javascript"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+
+    <style>
+       
+        /*visibility:hidden;*/
+        /* Style the tab */
+        div.tab {
+            float: left;
+            background-color: #f1f1f1;
+            width: 0%;
+            height:100vh;
+        }
+
+       
+        /* Style the tab content */
+        .tabcontent {
+            float: left;
+            width: 100%;
+            border: none;
+            height:100vh;
+            
+        }
+        /*width: 800px;
+            font-size: 16px;
+        max-height: 700px;*/
+
+          .CustomMultiLinesText {
+        height: 300px;
+        width: 150px; 
+        white-space: normal;
+        word-wrap: break-word;
+        overflow-x: hidden;
+        overflow-y: auto;
+        
+        border: 1px solid LightGray;
+        border-radius: 3px;
+        background-color: #EBEBEB;
+    }
+
+
+
+          html, body, iframe { height: 100%;width:100%;float:right }
+    </style>
+    <script>
+        function LoginToAngular(userdata) {
+
+
+
+            var url = "api/LogitudeApplication"
+            $.ajax({
+                url: url,
+                type: 'GET',
+                contentType: 'application/json',
+
+                success: function (result) {
+
+                    if (result == true) {
+                        document.location.href = "WebPages/UpgradeScreen.aspx";
+                    }
+                    else {
+
+                        if (navigator.sayswho == "IE") {
+
+                            alert("Internet explorer is not supported in HTML5");
+                            return;
+                        }
+
+                        if (navigator.sayswho && navigator.sayswho.includes("Safari")) {
+
+                            var safari = navigator.sayswho.split('Safari')[1];
+                            var safariversionstring = safari.trim()
+                            if (safariversionstring) {
+                                var safariversion = Number(safariversionstring);
+                                // Chrome
+                                if (safariversion < 10) {
+                                    alert("The current version of safari doesn't support HTML5 ,Please upgrade to version 10 or higher");
+                                    return;
+                                }
+                            }
+                        }
+
+
+
+                        var data = JSON.stringify(userdata);
+                        window.sessionStorage.setItem("userdata", data);
+                        var version = "";
+                        if (userdata.HtmlVersion) version = userdata.HtmlVersion;
+                        //document.location.href = "Angular" + version + "/index.html";
+                        let myIframe = document.getElementById("myFrame");
+                        let myWin = myIframe.contentWindow;
+                        //myWin.SendRequestToUnifreightAsync = 
+                        //    function (MessageId) {
+                        //        alert("SendRequestToUnifreightAsync:" + MessageId);
+                        //    };
+                        myIframe.src = "index.html";//"http://localhost:3000/";
+                        
+
+                    }
+                },
+
+                error: function (jqXHR, textStatus, errorThrown) {
+
+                }
+            });
+
+
+
+        }
+
+            function getParameterByName(name, url) {
+                if (!url) url = window.location.href;
+                name = name.replace(/[\[\]]/g, "\\$&");
+                var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                    results = regex.exec(url);
+                if (!results) return null;
+                if (!results[2]) return '';
+                return decodeURIComponent(results[2].replace(/\+/g, " "));
+            }
+
+            function AmitalSSO() {
+                ///http://localhost:9996/LOgin.aspx?token=336a9151-a77f-48ae-b19d-01ea29410de9&tenant=1&AmitalSSOAngular=1
+                let amitalToken=  getParameterByName("token");
+                let amitalTenant=getParameterByName("tenant")
+                if (amitalToken) {
+                    if (amitalTenant) {
+                        if (getParameterByName("AmitalSSOAngular")) {
+
+                            $("#Container").css("display", "none");
+
+                            var url = "api/authentication?dummy=user"; //= "api/authentication";//?email=" + email + "&password=" + password;//+ "&persistCookie=" + persist;
+                            function LoginParameters() {
+
+                                this.Token = amitalToken;
+                                this.Tenant = amitalTenant;
+                            };
+                            let param = new LoginParameters();
+                            ///{"Token":"336a9151-a77f-48ae-b19d-01ea29410de9","Tenant":1}
+                            $.ajax({
+                                url: url,
+                                type: 'POST',
+                                data: JSON.stringify(param),
+                                contentType: 'application/json',
+
+                                success: function (userdata) {
+
+                                    disableForm(false);
+                                    userdata.CompanyLogins = null;
+                                    userdata.SelectedCompanyLogin = null;
+                                    userdata.Token = amitalToken;
+
+                                    UserDataPrompt = userdata;
+                                    console.log(userdata);
+
+                                    //alert("AmitalSSOAngular:" + userdata);
+                                    if (!userdata.HasError) {
+
+                                        LoginToAngular(userdata);
+
+                                    }
+                                    else {
+                                        window.location.href = "WWW.AMITAL.CO.IL";
+                                    }
+
+
+                                },
+
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    window.location.href = "WWW.AMITAL.CO.IL";
+                                }
+                            });
+                            //let version = "20170424";
+                            //document.location.href = "Angular" + version + "/index.html";
+                        }
+                    }
+                }
+            }
+            $(document).ready(function () {
+                //alert();
+                //AmitalSSO();
+            });
+    </script>
+</head>
+<body style="margin:0px;padding:0px;overflow:hidden" >
+
+    <!--style="visibility:hidden;"-->
+    <div class="tab" >
+        <div id="responseDiv" class="CustomMultiLinesText"></div>
+
+        <button onclick="ShowDeclarationByIdReturnCloseSave();">ShowDeclarationById</button>
+        <button onclick="ShowDeclarationStatusOrManifestQuery();">ShowDeclarationStatusOrManifestQuery</button>
+        <button onclick="ShowSupplierInvoiceSelectorByDecIdReturnChosenChildren();">ShowSupplierInvoiceSelectorByDecIdReturnChosenChildren</button>
+        <button onclick="ShowDeclarationCertificatesByGroupsUnifreightCallBack();">ShowDeclarationCertificatesByGroupsUnifreightCallBack</button>
+        <button onclick="RaiseCheckInsuranseReturnIsNeededAmountCallBack();">RaiseCheckInsuranseReturnIsNeededAmountCallBack</button>
+        
+        <button onclick="ShowClientReturnIfExist();">ShowClientReturnIfExist</button>
+        
+        
+
+        <button onclick="RaiseCFIFILMLockReturnCFIFILMAlreadyLockMessage(true, false)">toCancell</button>
+        <button onclick="RaiseCFIFILMLockReturnCFIFILMAlreadyLockMessage(false, true)">Lock</button>
+        <button onclick="RaiseCFIFILMLockReturnCFIFILMAlreadyLockMessage(false, false)">UnLock</button>
+
+        <button onclick="RaiseInstructionReturnCanIContinueMessageCallBack(true)">Instr>Continue</button>
+        <button onclick="RaiseInstructionReturnCanIContinueMessageCallBack(false)">Inst>!Continue</button>
+
+        <button onclick="GetRihbitFromTransmissionsMessage()">GetRihbitFromTransmissionsMessage</button>
+        <button onclick="MapDocumentTypeCustomsData()">MapDocumentTypeCustomsData</button>
+    </div>
+
+    <!--<div  class="tabcontent">-->
+        <!--<iframe id="myFrame" src="" style="width: 100%;height: 100%">-->
+    <!--frameborder="0" scrolling="no"-->  
+            <iframe id="myFrame" src=""  style="width:90%" ></iframe>
+            
+    <!--</div>-->
+
+
+    
+        
+    
+
+    
+
+    <script>
+       
+        var _JavascriptGateway = new Object();
+        _JavascriptGateway.LastRequestFromAngular = new Object();
+        _JavascriptGateway.SendRequestJSONToUnifreightAsync = function (myRequestWrapperJSON) {
+            let responseDiv = document.getElementById("responseDiv");
+            responseDiv.innerText = myRequestWrapperJSON;
+            _JavascriptGateway.LastRequestFromAngular = JSON.parse(myRequestWrapperJSON);
+            if (_JavascriptGateway.LastRequestFromAngular.MessageID == "RaiseCFIFILMLockReturnCFIFILMAlreadyLockMessage") {
+                alert("toCancell? or Lock/UnLock??")
+            } else if (_JavascriptGateway.LastRequestFromAngular.MessageID == "NoteUnifreightIamReady") {
+               // ShowDeclarationByIdReturnCloseSave();
+            
+            } else if (_JavascriptGateway.LastRequestFromAngular.MessageID == "RaiseInstructionReturnCanIContinueMessage") {
+                alert("RaiseInstructionReturn ***** CanIContinueMessage !!!! ??")
+        }
+            
+                
+            
+        };
+        function RaiseUnifaceRequestEvent(objParams) {
+            //var event = new CustomEvent('UnifaceRequestEvent', { 'detail': 'heeellos', 'data2': '1111' });
+            var event = new CustomEvent('UnifaceRequestEvent', { 'detail': objParams, });
+            document.getElementById("myFrame").contentWindow.dispatchEvent(event);
+        }
+        function LogIn() {
+            //..call LP_UNIFACEREQUEST("","","GoUrlLoginWithToken",LF_GOURLLOGINWITHTOKEN(0),MOREPARAMS)
+            //"token=edb910a5-28b7-459e-b33e-5bc460d3abcc·;Url=http://192.116.221.103:80/oracle·;forceGo2Url=0"
+            let data = '{"AmitalBrowserInUse":true,"$id":"1","UserName":"yaronc@amital.co.il","Id":"1-7","CardId":null,"CardType":null,"CurrentTenant":1,"IsUser":true,"Technology":"PR","IsLocked":false,"IpRestricted":false,"InValidMailOrPassword":false,"HasError":false,"ExceptionMessage":null,"MustChangePassword":false,"CompanyLogins":null,"ContactsCount":0,"HtmlVersion":"20170419","Token":"8cc3c94b-d3d2-4986-b9c6-7b4bea430a0d","UserId":"1-7","Tenant":0,"InvalidToken":false,"InvalidMobileAccessPermission":false,"SelectedCompanyLogin":null,"InActive":false,"PrivateLablehasZeroTenant":false,"IsBrandingEnabled":false,"Unlicensed":false,"IsAuthenticated":true,"Name":"yaronc@amital.co.il","Roles":null}';
+            data.Token = "H6UPpoY6t7SHBHdGJfB9hw=="; // 563
+
+            data.Name = "itzik.xxx@amital.co.il";
+            data.UserName = data.Name;
+            data.Token = "itzik.xxx@amital.co.il"; // 571
+            data.Token = "0208563c-37e9-4f47-80e1-42792837b693";//571 
+            data = '{"AmitalBrowserInUse":true,"$id":"1","UserName":"odelia@amital.co.il","Id":"1-7","CardId":null,"CardType":null,"CurrentTenant":1,"IsUser":true,"Technology":"PR","IsLocked":false,"IpRestricted":false,"InValidMailOrPassword":false,"HasError":false,"ExceptionMessage":null,"MustChangePassword":false,"CompanyLogins":null,"ContactsCount":0,"HtmlVersion":"20170419","Token":"916FA154-E417-4CE6-BD66-56AB4D81821F","UserId":"1-10","Tenant":0,"InvalidToken":false,"InvalidMobileAccessPermission":false,"SelectedCompanyLogin":null,"InActive":false,"PrivateLablehasZeroTenant":false,"IsBrandingEnabled":false,"Unlicensed":false,"IsAuthenticated":true,"Name":"odelia@amital.co.il","Roles":null}';
+            //data = '{"AmitalBrowserInUse":true, "$id":"1","UserName":"itzik@amital.co.il","Id":"1-9","CardId":null,"CardType":null,"CurrentTenant":1,"IsUser":true,"Technology":"PR","IsLocked":false,"IpRestricted":false,"InValidMailOrPassword":false,"HasError":false,"ExceptionMessage":null,"MustChangePassword":false,"CompanyLogins":null,"ContactsCount":0,"HtmlVersion":"2017071802","Token":"7EF61F35-358E-46EB-984C-B66992F43824","UserId":"1-9","Tenant":0,"InvalidToken":false,"InvalidMobileAccessPermission":false,"SelectedCompanyLogin":null,"InActive":false,"PrivateLablehasZeroTenant":false,"IsBrandingEnabled":false,"Unlicensed":false,"IsAuthenticated":true,"Name":"itzik@amital.co.il","Roles":null}';
+            //data = '{"AmitalBrowserInUse":true, "$id":"1","UserName":"sana@amital.co.il","Id":"1-9","CardId":null,"CardType":null,"CurrentTenant":1,"IsUser":true,"Technology":"PR","IsLocked":false,"IpRestricted":false,"InValidMailOrPassword":false,"HasError":false,"ExceptionMessage":null,"MustChangePassword":false,"CompanyLogins":null,"ContactsCount":0,"HtmlVersion":"2017071802","Token":"7359E8CF-19AE-40C5-BFA4-740531F3079C","UserId":"1-9","Tenant":0,"InvalidToken":false,"InvalidMobileAccessPermission":false,"SelectedCompanyLogin":null,"InActive":false,"PrivateLablehasZeroTenant":false,"IsBrandingEnabled":false,"Unlicensed":false,"IsAuthenticated":true,"Name":"sana@amital.co.il","Roles":null}';
+            //data = '{"AmitalBrowserInUse":true, "$id":"1","UserName":"amitr@amital.co.il","Id":"1-9","CardId":null,"CardType":null,"CurrentTenant":1,"IsUser":true,"Technology":"PR","IsLocked":false,"IpRestricted":false,"InValidMailOrPassword":false,"HasError":false,"ExceptionMessage":null,"MustChangePassword":false,"CompanyLogins":null,"ContactsCount":0,"HtmlVersion":"2017071802","Token":"046F6AB1-ADFB-46EC-B797-8D40F52AD435","UserId":"1-9","Tenant":0,"InvalidToken":false,"InvalidMobileAccessPermission":false,"SelectedCompanyLogin":null,"InActive":false,"PrivateLablehasZeroTenant":false,"IsBrandingEnabled":false,"Unlicensed":false,"IsAuthenticated":true,"Name":"amitr@amital.co.il","Roles":null}';
+
+
+
+            //561  0223a8cd-2e72-4551-9e5e-a7a340186b1a 
+            data = '{"AmitalBrowserInUse":true, "$id":"1","UserName":"itzik@amital.co.il","Id":"1-9","CardId":null,"CardType":null,"CurrentTenant":1,"IsUser":true,"Technology":"PR","IsLocked":false,"IpRestricted":false,"InValidMailOrPassword":false,"HasError":false,"ExceptionMessage":null,"MustChangePassword":false,"CompanyLogins":null,"ContactsCount":0,"HtmlVersion":"2017071802","Token":"0223a8cd-2e72-4551-9e5e-a7a340186b1a","UserId":"1-9","Tenant":0,"InvalidToken":false,"InvalidMobileAccessPermission":false,"SelectedCompanyLogin":null,"InActive":false,"PrivateLablehasZeroTenant":false,"IsBrandingEnabled":false,"Unlicensed":false,"IsAuthenticated":true,"Name":"itzik@amital.co.il","Roles":null}';
+            //561  6CC019C0-E61C-42FF-A4A8-4488362C195
+            data = '{"AmitalBrowserInUse":true, "$id":"1","UserName":"itzik.xxx@amital.co.il","Id":"1-10","CardId":null,"CardType":null,"CurrentTenant":1,"IsUser":true,"Technology":null,"IsLocked":false,"IpRestricted":false,"InValidMailOrPassword":false,"HasError":false,"ExceptionMessage":null,"MustChangePassword":false,"CompanyLogins":[{"$id":"2","Tenant":1,"CompanyName":"56.1-Prod (1)","CustomerName":null,"IsUser":true,"CardId":null,"CardType":null,"Email":"itzik.xxx@amital.co.il","ContactId":"1-10","LicensedUser":true,"InternetAccess":false,"URL":null,"Extension":null,"Id":null,"PrivateLabelId":null}],"ContactsCount":1,"HtmlVersion":"20180617","Token":"6CC019C0-E61C-42FF-A4A8-4488362C195A","UserId":"1-10","Tenant":1,"InvalidToken":false,"InvalidMobileAccessPermission":false,"SelectedCompanyLogin":{"$ref":"2"},"InActive":false,"PrivateLablehasZeroTenant":false,"IsBrandingEnabled":false,"Unlicensed":false,"SilverlightEndDate":null,"IsTwoFactorAuthenticationRequired":false,"CodeExpirationDate":null,"UserMobileNumber":null,"TwoFactorkey":null,"KeepUserLoggedIn":false,"IsAuthenticated":true,"Name":"itzik.xxx@amital.co.il","Roles":null}';
+            data = '{ "AmitalBrowserInUse": true, "$id": "1", "UserName": "itzik.xxx@amital.co.il", "Id": "1-10", "CardId": null, "CardType": null, "CurrentTenant": 1, "IsUser": true, "Technology": null, "IsLocked": false, "IpRestricted": false, "InValidMailOrPassword": false, "HasError": false, "ExceptionMessage": null, "MustChangePassword": false, "CompanyLogins": [{ "$id": "2", "Tenant": 1, "CompanyName": "57.1-Prod (1)", "CustomerName": null, "IsUser": true, "CardId": null, "CardType": null, "Email": "itzik.xxx@amital.co.il", "ContactId": "1-10", "LicensedUser": true, "InternetAccess": false, "URL": null, "Extension": null, "Id": null, "PrivateLabelId": null }], "ContactsCount": 1, "HtmlVersion": "20180731", "Token": "2d98afe9-8136-460d-b42d-f229fbfe4319", "UserId": "1-10", "Tenant": 1, "InvalidToken": false, "InvalidMobileAccessPermission": false, "SelectedCompanyLogin": null, "InActive": false, "PrivateLablehasZeroTenant": false, "IsBrandingEnabled": false, "Unlicensed": false, "SilverlightEndDate": null, "IsTwoFactorAuthenticationRequired": false, "CodeExpirationDate": null, "UserMobileNumber": null, "TwoFactorkey": null, "KeepUserLoggedIn": false, "IsAuthenticated": true, "Name": "itzik.xxx@amital.co.il", "Roles": null }';
+            //93601636-48E9-4267-A3A6-B3040AF9F18B sana@amital.co.il
+            //data = '{"AmitalBrowserInUse":true, "$id":"1","UserName":"sana@amital.co.il","Id":"1-9","CardId":null,"CardType":null,"CurrentTenant":1,"IsUser":true,"Technology":"PR","IsLocked":false,"IpRestricted":false,"InValidMailOrPassword":false,"HasError":false,"ExceptionMessage":null,"MustChangePassword":false,"CompanyLogins":null,"ContactsCount":0,"HtmlVersion":"2017071802","Token":"93601636-48E9-4267-A3A6-B3040AF9F18B","UserId":"1-9","Tenant":0,"InvalidToken":false,"InvalidMobileAccessPermission":false,"SelectedCompanyLogin":null,"InActive":false,"PrivateLablehasZeroTenant":false,"IsBrandingEnabled":false,"Unlicensed":false,"IsAuthenticated":true,"Name":"sana@amital.co.il","Roles":null}';
+
+            //562  CHANGEFRAMEWORK >> OPEN NEW SESSION >> COPY FROM NETWORK !!!
+            ///data = '{"$id":"1","UserName":"itzik.xxx@amital.co.il","Id":"1-10","CardId":null,"CardType":null,"CurrentTenant":1,"IsUser":true,"Technology":null,"IsLocked":false,"IpRestricted":false,"InValidMailOrPassword":false,"HasError":false,"ExceptionMessage":null,"MustChangePassword":false,"CompanyLogins":[{"$id":"2","Tenant":1,"CompanyName":"5.6.2-Next (1)","CustomerName":null,"IsUser":true,"CardId":null,"CardType":null,"Email":"itzik.xxx@amital.co.il","ContactId":"1-10","LicensedUser":true,"InternetAccess":false,"URL":null,"Extension":null,"Id":null,"PrivateLabelId":null}],"ContactsCount":1,"HtmlVersion":"20180513","Token":"DC07A1CB-B3E9-4370-A1DF-0B9BA2AD0FFD","UserId":"1-10","Tenant":1,"InvalidToken":false,"InvalidMobileAccessPermission":false,"SelectedCompanyLogin":{"$ref":"2"},"InActive":false,"PrivateLablehasZeroTenant":false,"IsBrandingEnabled":false,"Unlicensed":false,"SilverlightEndDate":null,"IsTwoFactorAuthenticationRequired":false,"CodeExpirationDate":null,"UserMobileNumber":null,"TwoFactorkey":null,"KeepUserLoggedIn":false,"IsAuthenticated":true,"Name":"itzik.xxx@amital.co.il","Roles":null}';
+
+            //58cOURIER 
+            data = '{ "AmitalBrowserInUse":true,  "$id":"1","UserName":"itzik.xxx@amital.co.il","Id":"1-10","CardId":null,"CardType":null,"CurrentTenant":1,"IsUser":true,"Technology":"PR","IsLocked":false,"IpRestricted":false,"InValidMailOrPassword":false,"HasError":false,"ExceptionMessage":null,"MustChangePassword":false,"CompanyLogins":[{"$id":"2","Tenant":1,"CompanyName":"tenant1-58B (1)","CustomerName":null,"IsUser":true,"CardId":null,"CardType":null,"Email":"itzik.xxx@amital.co.il","ContactId":"1-10","LicensedUser":true,"InternetAccess":false,"URL":null,"Extension":null,"Id":null,"PrivateLabelId":null}],"ContactsCount":1,"HtmlVersion":"2018071702","Token":"mwU9WRxVcCkyQBNeCCiwFzkXJMoRy8tMRrg=","UserId":"1-10","Tenant":1,"InvalidToken":false,"InvalidMobileAccessPermission":false,"SelectedCompanyLogin":null,"InActive":false,"PrivateLablehasZeroTenant":false,"IsBrandingEnabled":false,"Unlicensed":false,"SilverlightEndDate":null,"IsTwoFactorAuthenticationRequired":false,"CodeExpirationDate":null,"UserMobileNumber":null,"TwoFactorkey":null,"KeepUserLoggedIn":false,"PasswordExpirationDateMessage":null,"IsPasswordExpirationDate":false,"DocumentDownloadToken":"XY+S85V2GHQlNyP4xkc/WnLrRxWQLJ2l6bs=","IsAuthenticated":true,"Name":"itzik.xxx@amital.co.il","Roles":null}';
+
+            data.AmitalBrowserInUse = true;
+            window.sessionStorage.setItem("userdata", data);
+            let myIframe = document.getElementById("myFrame");
+            let myWin = myIframe.contentWindow;
+            //myWin.SendRequestToUnifreightAsync = 
+            //    function (MessageId) {
+            //        alert("SendRequestToUnifreightAsync:" + MessageId);
+            //    };
+            myIframe.src = "index.html";//"http://localhost:3000/";
+
+        }
+        
+
+        function ShowDeclarationByIdReturnCloseSave() {
+            var json = '{"UnifreightEntity"  :  "CFIFILEM" , "UnifreightEntityNumber"  :  "171910681" , "LogitudeEntity"  :  "Customs.Declaration" , "LogitudeEntityNumber"  :  "1-204503" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "ShowDeclarationByIdReturnCloseSave" , "formtitle"  :  "הצהרת יבוא"}';
+            
+            var objParams = JSON.parse(json);
+            objParams.Requset = new Array();
+            //objParams.Requset.push(["Requset.JumpTo", "Payment"]);
+            //objParams.Requset.push(["Requset.JumpTo", "RequestSheet"]);
+            objParams.Requset.push(["Requset.JumpTo", "Answer"]);
+            
+            
+            RaiseUnifaceRequestEvent(objParams);
+        }
+
+        function ShowDeclarationStatusOrManifestQuery() {
+            var json = '{"UnifreightEntity"  :  "CFIFILEM" , "UnifreightEntityNumber"  :  "171910681" , "LogitudeEntity"  :  "Customs.Declaration" , "LogitudeEntityNumber"  :  "1-115619" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "ShowDeclarationStatusQuery" , "formtitle"  :  "הצהרת יבוא"}';
+            
+            
+            var objParams = JSON.parse(json);
+            objParams["LogitudeCommandId"] = "ShowDeclarationStatusQuery";
+            objParams["LogitudeCommandId"] = "ShowManifestQuery";
+            
+
+            objParams["LogitudeCommandId"] = "ShowDeclarationStatusQuery";
+            
+            objParams.Requset = new Array();
+            //objParams.Requset.push(["Requset.JumpTo", "Payment"]);
+            //objParams.Requset.push(["Requset.JumpTo", "RequestSheet"]);
+            objParams.Requset.push(["Requset.JumpTo", "Answer"]);
+
+
+            RaiseUnifaceRequestEvent(objParams);
+        } 
+        function ShowSupplierInvoiceSelectorByDecIdReturnChosenChildren() {
+            var json = '{ "UnifreightEntity"  :  "CFIFILEM" , "UnifreightEntityNumber"  :  "172900228" , "LogitudeEntity"  :  "Customs.Declaration" , "LogitudeEntityNumber"  :  "1-115619" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "ShowSupplierInvoiceSelectorByDecIdReturnChosenChildren" , "formtitle"  :  "חשבונית ספק"}';
+
+            var objParams = JSON.parse(json);
+            objParams.Requset = new Array();
+            //objParams.Requset.push(["Requset.IsLocked", 'true']);
+            //objParams.Requset.push(["Requset.LockedMessage", 'File 172900376 is in use on another screen() - try again later !. Locked by  (Session )']);
+
+
+
+            //entyList[] = "true";
+            //entyList["Requset.LockedMessage"] = "File 172900376 is in use on another screen() - try again later !. Locked by  (Session )";
+            RaiseUnifaceRequestEvent(objParams);
+        }
+        function MapDocumentTypeCustomsData() {
+            var json = '{ "UnifreightEntity"  :  "GTBDOC" , "UnifreightEntityNumber"  :  "FSI" , "LogitudeEntity"  :  "Customs.DocumentTypeCustomsData" , "LogitudeEntityNumber"  :  "" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "MapDocumentTypeCustomsData" , "formtitle"  :  "חשבונית ספק"}';
+
+            var objParams = JSON.parse(json);
+            objParams.Requset = new Array();
+
+
+            objParams.Requset = new Array();
+            //objParams.Requset.push(["Requset.JumpTo", "Payment"]);
+            //objParams.Requset.push(["Requset.JumpTo", "RequestSheet"]);
+            objParams.Requset.push(["Requset.UnifaceNAME_HEB", "חן ספק "]);
+
+            //objParams.Requset.push(["Requset.IsLocked", 'true']);
+            //objParams.Requset.push(["Requset.LockedMessage", 'File 172900376 is in use on another screen() - try again later !. Locked by  (Session )']);
+
+
+
+            //entyList[] = "true";
+            //entyList["Requset.LockedMessage"] = "File 172900376 is in use on another screen() - try again later !. Locked by  (Session )";
+            RaiseUnifaceRequestEvent(objParams);
+        }
+
+        function ShowClientReturnIfExist() {
+            let objParams =
+            {
+                UnifreightEntity: "GNDCARD",
+                UnifreightEntityNumber: "10009065",
+                LogitudeEntity: "Customs.Client",
+                LogitudeEntityNumber: "049028392",
+                LogitudeViewModel: "UnifreightMassageHandler",
+                LogitudeCommandId: "ShowClientReturnIfExist"
+                //Requset: [], 
+                //Response: [] 
+            };
+            objParams.UnifreightEntityNumber = "511393159";
+            objParams.UnifreightEntityNumber = "not exist";
+            objParams.Requset = new Array();
+            objParams.Response = new Array();
+            RaiseUnifaceRequestEvent(objParams);
+        }
+        function RaiseCFIFILMLockReturnCFIFILMAlreadyLockMessage(toCancell,isLock) {
+            if (_JavascriptGateway.LastRequestFromAngular &&
+                (_JavascriptGateway.LastRequestFromAngular.MessageID == "RaiseCFIFILMLockReturnCFIFILMAlreadyLockMessage"
+                ||
+                _JavascriptGateway.LastRequestFromAngular.MessageID == "RaiseLockIIGEntReturnEntityAlreadyLockMessage"
+                )
+                ) {
+                if (!_JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Request) {
+                    _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Request = [];
+                }
+                _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Response = _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Request;
+                let myItem = ["Response.InstructionCancel", toCancell.toString()];
+                _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Response.push(myItem);
+                let myisLock = ["Response.CFIFILMAlreadyLock", isLock.toString()];
+                _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Response.push(myisLock);
+
+                let myGenisLock = ["Response.EntityAlreadyLock", isLock.toString()];
+                _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Response.push(myGenisLock);
+
+                RaiseUnifaceRequestEvent(_JavascriptGateway.LastRequestFromAngular.UnifreightMessage);
+                alert("u choose toCancell :" + toCancell + " isLock :" + isLock  + " !!!");
+            } else {
+                alert("Wrong Number");
+            }
+        }
+        
+        function ShowDeclarationCertificatesByGroupsUnifreightCallBack() {
+
+            //=·; =
+            if (_JavascriptGateway.LastRequestFromAngular &&
+            _JavascriptGateway.LastRequestFromAngular.MessageID == "ShowDeclarationCertificatesByGroupsUnifreightCallBack") {
+                if (!_JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Request) {
+                    _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Request = [];
+                }
+
+                //"CertificateNumber=2522255·;ResponseConfirmationTypeCode=·;AttachmentTypeCode=·;ExternalCertificatCode=281"
+                //"CertificateNumber=125222·;ResponseConfirmationTypeCode=·;AttachmentTypeCode=·;ExternalCertificatCode=280"
+                _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Response = _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Request;
+                let myItem = ["Response.ExternalCertificatCode", 280];//281];//279];
+                _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Response.push(myItem);
+                let myisLock = ["Response.CertificateNumber", 125222];//"2522255"];///"2132244"];
+                _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Response.push(myisLock);
+                myisLock = ["Response.ResponseConfirmationTypeCode", "0302"]; //"0421"];
+                myisLock = ["Response.ResponseConfirmationTypeCode", ""]; 
+                _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Response.push(myisLock);
+                myisLock = ["Response.AttachmentTypeCode", "2"]//"2"];
+                myisLock = ["Response.AttachmentTypeCode", ""]//"2"];
+                _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Response.push(myisLock);
+
+                RaiseUnifaceRequestEvent(_JavascriptGateway.LastRequestFromAngular.UnifreightMessage);
+                // alert("u choose toCancell :" + toCancell + " isLock :" + isLock  + " !!!");
+            } else {
+                alert("Wrong Number");
+            }
+        }
+
+        var FreightAmount = 100;
+        function RaiseCheckInsuranseReturnIsNeededAmountCallBack() {
+
+            //=·; =
+            if (_JavascriptGateway.LastRequestFromAngular &&
+            _JavascriptGateway.LastRequestFromAngular.MessageID == "RaiseCheckInsuranseReturnIsNeededAmount") {
+                if (!_JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Request) {
+                    _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Request = [];
+                }
+
+                //"CertificateNumber=2522255·;ResponseConfirmationTypeCode=·;AttachmentTypeCode=·;ExternalCertificatCode=281"
+                //"CertificateNumber=125222·;ResponseConfirmationTypeCode=·;AttachmentTypeCode=·;ExternalCertificatCode=280"
+                _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Response = _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Request;
+                let myItem = ["Response.Action", "OPEN"];//281];//279];
+                _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Response.push(myItem);
+                alert(_JavascriptGateway.LastRequestFromAngular.UnifreightMessage.LogitudeViewModel);
+                if (_JavascriptGateway.LastRequestFromAngular.UnifreightMessage.LogitudeViewModel == "AddEditSupplierInvoiceComponent")
+                    _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Response.push(["Response.InsuranseAmount", "123"]);
+                    _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Response.push(["Response.InsuranseCurrency", "USD"]);
+
+                    FreightAmount = FreightAmount + 1;
+                    _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Response.push(["Response.FreightAmount", FreightAmount.toString()]);
+                    _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Response.push(["Response.FreightAmountCurr", "USD"]);
+
+                    FreightAmount = FreightAmount + 1;
+                    _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Response.push(["Response.ExpensesAmount", FreightAmount.toString()]);
+                    _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Response.push(["Response.ExpensesAmountCurr", "USD"]);
+
+
+                    _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Response.push(["Response.InsuranseIsNeeded", "true"]);
+                    //_JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Response.push(["Response.ForceMessage", "1"]); 
+                    //_JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Response.push(["Response.InsuranceMessage", " errrororo roro r"]);
+
+
+                    RaiseUnifaceRequestEvent(_JavascriptGateway.LastRequestFromAngular.UnifreightMessage);
+
+            } else {
+                alert("Wrong Number");
+            }
+        }
+
+
+
+        function RaiseInstructionReturnCanIContinueMessageCallBack(toContinue) {
+
+            //=·; =
+                if (_JavascriptGateway.LastRequestFromAngular &&
+                _JavascriptGateway.LastRequestFromAngular.MessageID == "RaiseInstructionReturnCanIContinueMessage") {
+                    if (!_JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Request) {
+                        _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Request = [];
+                    }
+                     /*
+                    ....putitem/id P_RESPONSELIST, "Response.InstructionReturnCanIContinue", "false" 
+                    ....putitem/id P_RESPONSELIST, "Response.UnifreightResponseStatus", "false"
+                    */
+                    _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Response = _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Request;
+                    let myItem = ["Response.InstructionReturnCanIContinue", toContinue.toString()];
+                    _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Response.push(myItem);
+                    let myisLock = ["Response.UnifreightResponseStatus", toContinue.toString()];
+                    _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Response.push(myisLock);
+                    RaiseUnifaceRequestEvent(_JavascriptGateway.LastRequestFromAngular.UnifreightMessage);
+                    alert("u choose toContinue:" + toContinue + " !!!");
+
+                    
+                   
+                } else {
+                alert("Wrong Number");
+        }
+        }
+
+        function GetRihbitFromTransmissionsMessage() {
+            if (_JavascriptGateway.LastRequestFromAngular &&
+                _JavascriptGateway.LastRequestFromAngular.MessageID == "GetRihbitFromTransmissions") {
+                if (!_JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Request) {
+                    _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Request = [];
+                }
+                _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Response = _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Request;
+                let list = [];
+                var obj = { "RichbitFileNumber": "2251314421", "VehicleChassisNumber": "JAANPR75HD7104632", "LineNumber": "", "VehicleModel": "", "EngineNumber": "", "WindowNumber": "" };
+                list.push(obj)
+                var obj1 = { "RichbitFileNumber": "963367365", "VehicleChassisNumber": "JA32453232", "LineNumber": "", "VehicleModel": "", "EngineNumber": "", "WindowNumber": "" };
+                list.push(obj1);
+                let jsonRihbitData = JSON.stringify(list);
+                let myItem = ["Response.RihbitData", jsonRihbitData];
+                _JavascriptGateway.LastRequestFromAngular.UnifreightMessage.Response.push(myItem);
+                
+                RaiseUnifaceRequestEvent(_JavascriptGateway.LastRequestFromAngular.UnifreightMessage);
+                alert("Return Car :");
+            } else {
+                alert("Wrong Number");
+            }
+        }
+       
+
+     
+        
+     
+    LogIn();
+    </script>
+</body>
+</html>

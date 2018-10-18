@@ -1,0 +1,13 @@
+﻿
+open 192.168.10.88
+amital
+Saas256
+cd amital/ClientBin
+put "logitude.customs.xap"
+put "Simplog.Infrastructure.xap"
+cd ..
+rename web.config _web.config
+rename _web.config web.config
+
+close
+bye

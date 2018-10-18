@@ -1,0 +1,173 @@
+﻿
+<style type="text/css">
+    .ComboBox:hover, .ComboBox:focus {
+        border: 1px solid #3BB3E2;
+    }
+
+    .SelectedComboboxItem {
+        background: rgba(232, 247, 255, 1);
+        background: -moz-linear-gradient(50% 106.14% 90deg,rgba(133, 203, 237, 1) 0%,rgba(150, 211, 240, 1) 22.59%,rgba(196, 231, 248, 1) 67.37%,rgba(232, 247, 255, 1) 99.68%);
+        background: -webkit-linear-gradient(90deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 99.68%);
+        background: -webkit-gradient(linear,50% 106.14%,50% -10.13%,color-stop(0,rgba(133, 203, 237, 1) ),color-stop(0.2259,rgba(150, 211, 240, 1) ),color-stop(0.6737,rgba(196, 231, 248, 1) ),color-stop(0.9968,rgba(232, 247, 255, 1) ));
+        background: -o-linear-gradient(90deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 99.68%);
+        background: linear-gradient(0deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 99.68%);
+    }
+
+    .ComboBoxItem:not(.SelectedComboboxItem):hover {
+        background: -moz-linear-gradient(50% 17.31% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        background: -webkit-gradient(linear,50% 17.31%,50% 105.85%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    }
+
+    .ComboBoxItem {
+        height: 22px;
+        min-height: 22px;
+        line-height: 22px;
+        width: 100%;
+        border: 1px solid #AAAAAA;
+        border: 1px solid transparent;
+        margin-top: 1px;
+        text-align: left;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    .ComboBoxDropdown ul {
+        padding: 1px;
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .ComboBoxDropdown {
+        background: white;
+        border: 1px solid #AAAAAA;
+        box-shadow: 0px 4px 2px 0 #e8e8e8;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        border-top: none;
+        z-index: 1;
+        overflow: hidden;
+        position: fixed;
+        top: 23px;
+    }
+
+    .ComboBoxBlueBox {
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    }
+
+    .ComboBox {
+        display: block;
+        height: 22px;
+        max-height: 22px;
+        line-height: 22px;
+        outline: none;
+        width: 100%;
+        background: white;
+        border: 1px solid #AAAAAA;
+        font-size: 11px;
+        color: #45494A;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        position: relative;
+        cursor: default;
+        overflow: hidden;
+    }
+
+    .ComboBoxDisabled {
+        display: block;
+        height: 22px;
+        max-height: 22px;
+        line-height: 22px;
+        outline: none;
+        width: 100%;
+        background: white;
+        border: 1px solid #AAAAAA;
+        font-size: 11px;
+        color: #45494A;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        position: relative;
+        opacity: 0.5;
+        pointer-events: none;
+    }
+</style>
+
+<div class="ComboBox"
+     [attr.id]="ControlId"
+     (keydown)="OnKeyDown($event)"
+     (blur)="OnLostFocus()"
+     tabindex="0"
+     [class.ComboBoxDisabled]="IsDisabled"
+     (mouseover)="IsMouseOverControl = true;"
+     (mouseleave)="IsMouseOverControl = false;">
+
+    <table *ngIf="!IsGreenButton" [class.ComboBoxBlueBox]="IsBlueBox" (mousedown)="mousedown()">
+        <tr>
+            <td style="width: 5px;">
+                <div></div>
+            </td>
+
+            <td>
+                <div class="FillParent">
+                    <div [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" class="TextTrimming">{{Text}}</div>
+                    <div [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" class="TextTrimming Label" *ngIf="!Text">{{WaterMark}}</div>
+                </div>
+            </td>
+
+            <td style="width: 3px;">
+                <div></div>
+            </td>
+
+            <td style="width: 10px;">
+                <img [className]="LayoutDirection == 'rtl' ? 'RightCenter' : 'LeftCenter'" src="Images/ToggleIcon.png" />
+            </td>
+        </tr>
+    </table>
+
+    <table *ngIf="IsGreenButton" style="background-color:#08AA63;color: white; text-align:center;" [class.ComboBoxBlueBox]="IsBlueBox">
+        <tr>
+            <td style="width: 5px;">
+                <div></div>
+            </td>
+
+            <td>
+                <div class="FillParent" (mousedown)="mousedownGreenButton()">
+                    <div style="text-align: center;" class="TextTrimming">{{Text}}</div>
+                    <div style="text-align: center;" class="TextTrimming Label" *ngIf="!Text">{{WaterMark}}</div>
+                </div>
+            </td>
+
+            <td style="width: 5px;">
+                <span class="CellSeparator"></span>
+            </td>
+
+            <td style="width: 20px;" (mousedown)="mousedown()">
+                <img class="CenterCenter" src="Images/ToggleIcon.png" />
+            </td>
+        </tr>
+    </table>
+
+    <div class="ComboBoxDropdown" [attr.id]="DropdownId" [hidden]="!IsOpened">
+        <div class="ScrollViewer">
+            <ul class="ScrollContent" [attr.id]="ListControlId">
+                <li class="ComboBoxItem TextTrimming" [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" *ngFor="let item of ItemsSource" [class.SelectedComboboxItem]="item === SelectedItem" (mousedown)="ItemClicked(item)">
+                    <span *ngIf="Binding == null">{{item}}</span>
+                    <span *ngIf="Binding != null">{{item[Binding]}}</span>
+                </li>
+            </ul>
+        </div>
+
+        <div *ngIf="ItemsSource == null || ItemsSource.length == 0" class="NoDataText" style="top:5px;">No items found</div>
+    </div>
+</div>
+
+

@@ -1,0 +1,43 @@
+﻿<style>
+    img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 12px;
+        height: 10px;
+        margin-top: -6px;
+        margin-left: -5px;
+    }
+</style>
+<div>
+    <div class="TextTrimming" *ngIf="fieldName == 'LastSignAt'">
+        <span *ngIf="_ShowDate" ><span>{{_SignStationList.LastSignAt  | DateTimeToDatePipe  }}</span> <span>{{_SignStationList.LastSignAt | DateTimeToTimePipe :'L12' }}</span></span>
+
+    </div>
+    
+    <div class="TextTrimming RightCenter" *ngIf="fieldName == 'Status'">
+
+        <span [style.color]="_Color">{{StatusHebrew}}</span>
+
+    </div>
+
+    <div class="TextTrimming" *ngIf="fieldName == 'IsPersonalSignOn'">
+        <img *ngIf="_SignStationList['IsPersonalSignOn']" title="Is Personal Sign" src="./Images/CheckBoxIcon.png" />
+    </div>
+
+
+    <div class="TextTrimming" *ngIf="fieldName == 'IsCompanySignOn'">
+        <img *ngIf="_SignStationList['IsCompanySignOn']" title="Is Company Sign" src="./Images/CheckBoxIcon.png" />
+    </div>
+
+
+
+    <!--<div class="TextTrimming RightCenter" style="margin-right:10px;" *ngIf="fieldName == 'TestSign' ">
+        <button 
+                [disabled]="!_SignStationList['IsOk']" 
+                class="Button" (click)="TestSignCommandAction()">
+            Test
+        </button>
+    </div>-->
+
+</div>

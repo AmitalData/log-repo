@@ -1,0 +1,88 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data;
+ 
+namespace Logitude.Customs.Data.EntityMapping
+{
+ 
+    public class SupplierInvoiceMap : EntityTypeConfiguration<SupplierInvoice>
+    {
+	    string dbms;
+        public SupplierInvoiceMap()
+        { 
+			  this.ToTable("SupplierInvoices", "Customs");
+		
+		    this.HasKey(t => new { t.DeclarationId, t.InvoiceCounterKey });
+	 
+            this.Property(t => t.DeclarationId).HasColumnName("DeclarationId").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.InvoiceCounterKey).HasColumnName("InvoiceCounterKey").IsRequired().HasDatabaseGeneratedOption(null);
+
+            this.Property(t => t.Tenant).HasColumnName("Tenant");
+
+            this.Property(t => t.SequenceNumeric).HasColumnName("SequenceNumeric");
+
+            this.Property(t => t.InvoiceNumber).HasColumnName("InvoiceNumber").HasMaxLength(35).IsUnicode(false);
+
+            this.Property(t => t.IssueDate).HasColumnName("IssueDate");
+
+            this.Property(t => t.AccountTypeCode).HasColumnName("AccountTypeCode").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.IsPreference).HasColumnName("IsPreference");
+
+            this.Property(t => t.PreferenceDocumentTypeCode).HasColumnName("PreferenceDocumentTypeCode").HasMaxLength(8).IsUnicode(false);
+
+            this.Property(t => t.PaymentTypeCode).HasColumnName("PaymentTypeCode").HasMaxLength(4).IsUnicode(false);
+
+            this.Property(t => t.InvoiceCurrencyTypeCode).HasColumnName("InvoiceCurrencyTypeCode").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.InvoiceAmount).HasColumnName("InvoiceAmount").HasPrecision(16, 2);
+
+            this.Property(t => t.ActualPayedCurrencyTypeCode).HasColumnName("ActualPayedCurrencyTypeCode").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.ActualPayedAmount).HasColumnName("ActualPayedAmount").HasPrecision(16, 2);
+
+            this.Property(t => t.VendorId).HasColumnName("VendorId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.IncotermCode).HasColumnName("IncotermCode").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.IssueCountryCode).HasColumnName("IssueCountryCode").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.PaymentTermsCode).HasColumnName("PaymentTermsCode").HasMaxLength(17).IsUnicode(false);
+
+            this.Property(t => t.TotalFreightInFreightCurrency).HasColumnName("TotalFreightInFreightCurrency").HasPrecision(16, 2);
+
+            this.Property(t => t.TotalFreightInNIS).HasColumnName("TotalFreightInNIS").HasPrecision(16, 2);
+
+            this.Property(t => t.ExchangeRate).HasColumnName("ExchangeRate").HasPrecision(12, 10);
+
+            this.Property(t => t.InsruanceCurrencyTypeCode).HasColumnName("InsruanceCurrencyTypeCode").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.InsuranceAmount).HasColumnName("InsuranceAmount").HasPrecision(16, 2);
+
+            this.Property(t => t.InsruancePercentage).HasColumnName("InsruancePercentage").HasPrecision(7, 4);
+
+            this.Property(t => t.FreightCurrencyTypeCode).HasColumnName("FreightCurrencyTypeCode").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.IsAccumalated).HasColumnName("IsAccumalated");
+
+            this.Property(t => t.AccumalationStateCode).HasColumnName("AccumalationStateCode").IsRequired().HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.UnfInvoiceCounterKey).HasColumnName("UnfInvoiceCounterKey").HasMaxLength(30).IsUnicode(false);
+
+            this.Property(t => t.VendorComissionPercentage).HasColumnName("VendorComissionPercentage").HasPrecision(7, 4);
+
+            this.Property(t => t.InvoiceAmountInUSD).HasColumnName("InvoiceAmountInUSD").HasPrecision(16, 2);
+        }
+    }
+}
+	 

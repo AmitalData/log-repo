@@ -1,0 +1,25 @@
+<xs:schema
+    attributeFormDefault="unqualified"
+	elementFormDefault="qualified"
+    xmlns:GCCSCargoImp="http://www.champ.aero/GCCS/CargoXML"
+	targetNamespace="http://www.champ.aero/GCCS/CargoXML"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    version="2.0"
+>
+	<xs:include schemaLocation="common.xsd"/>
+
+    <xs:complexType name="AirWaybillDataRequest">
+        <xs:sequence>
+            <xs:element name="StandardMessageIdentification" type="GCCSCargoImp:StandardMessageIdentification"/>
+            <xs:element name="AWBIdentification" type="GCCSCargoImp:AWBIdentification"/>
+            <xs:element name="RequestReference" type="GCCSCargoImp:RequestReference"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="RequestReference">
+        <xs:choice>
+            <xs:element name="RequestingOfficeMessageAddress" type="GCCSCargoImp:OfficeMessageAddress"/>
+            <xs:element name="RequestingParticipantIdentification" type="GCCSCargoImp:AWBParticipantIdentification"/>
+        </xs:choice>
+        <xs:attribute name="RequestingOfficeFileReference" type="GCCSCargoImp:BookingFileReference" use="optional"/>
+    </xs:complexType>
+</xs:schema>

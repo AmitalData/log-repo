@@ -1,0 +1,36 @@
+﻿<table>
+    <tr style="height:21px;">
+        <td>
+            <ul class="PagesMenu">
+                <li [class.SelectedPageMenu]="SelectedItem == 'TIMESHEET'" (click)="SelectedItem = 'TIMESHEET'">Time Sheet</li>
+
+                <li [class.SelectedPageMenu]="SelectedItem == 'SETTINGS'" (click)="SelectedItem = 'SETTINGS'">Settings</li>
+
+                <li [class.SelectedPageMenu]="SelectedItem == 'REPORTS'" (click)="SelectedItem = 'REPORTS'">Reports</li>
+
+            </ul>
+        </td>
+    </tr>
+
+    <tr style="height:10px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="CellStretch">
+            <div class="CellContent" [hidden]="SelectedItem != 'TIMESHEET'" style="overflow-x:auto">
+                <div LocationDirective Code="TIMESHEET"></div>
+            </div>
+
+            <div class="CellContent" [hidden]="SelectedItem != 'SETTINGS'">
+                <div LocationDirective Code="SETTINGS"></div>
+            </div>
+
+            <div class="CellContent" [hidden]="SelectedItem != 'REPORTS'">
+                <div LocationDirective Code="REPORTS"></div>
+            </div>
+        </td>
+    </tr>
+</table>

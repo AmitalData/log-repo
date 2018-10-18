@@ -1,0 +1,1 @@
+update Features set IsOld=0 where Code='ACCOUNTINGREOPEN'

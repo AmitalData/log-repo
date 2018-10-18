@@ -1,0 +1,166 @@
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs; 
+using Logitude.Customs.Data;
+
+namespace Logitude.Customs.BL.EntityDataMappings
+{
+   
+   public partial class DeclarationErrorMappingDataMapping: IMapping<DeclarationErrorMappingPM, DeclarationErrorMapping>,IMappingEncodeBase64NVARCHARFields<DeclarationErrorMappingPM>
+   {
+          public enum POCOPropertyNames
+          { 
+		     None,  
+	         Id, 
+	         DocumentSectionCode, 
+	         TagID, 
+	         Field, 
+	         Entity, 
+	         Skip,
+	      }
+
+
+	      public enum PMPropertyNames
+          { 
+		     None,  
+	         Id, 
+	         DocumentSectionCode, 
+	         TagID, 
+	         Field, 
+	         Entity, 
+	         Skip,
+	      }
+
+		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
+        List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
+    
+	    public void PMToPOCO(DeclarationErrorMappingPM entityPM, DeclarationErrorMapping entityPOCO)
+        {
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DocumentSectionCode))
+            {
+				entityPOCO.DocumentSectionCode = entityPM.DocumentSectionCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TagID))
+            {
+				entityPOCO.TagID = entityPM.TagID;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field))
+            {
+				entityPOCO.Field = entityPM.Field;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Entity))
+            {
+				entityPOCO.Entity = entityPM.Entity;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Skip))
+            {
+				entityPOCO.Skip = entityPM.Skip;
+			}
+			}
+
+		public void POCOToPM(DeclarationErrorMappingPM entityPM, DeclarationErrorMapping entityPOCO)
+        {
+			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
+            {
+					entityPM.Id = entityPOCO.Id;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DocumentSectionCode))
+            {
+					entityPM.DocumentSectionCode = entityPOCO.DocumentSectionCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TagID))
+            {
+					entityPM.TagID = entityPOCO.TagID;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Field))
+            {
+					entityPM.Field = entityPOCO.Field;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Entity))
+            {
+					entityPM.Entity = entityPOCO.Entity;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Skip))
+            {
+					entityPM.Skip = entityPOCO.Skip;
+            }
+
+		}
+
+		public void PMToOldPM(DeclarationErrorMappingPM entityPM, DeclarationErrorMappingPM oldEntityPM)
+        {
+		     oldEntityPM.ChangedProperties.Clear();
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DocumentSectionCode))
+            {
+                oldEntityPM.DocumentSectionCode = entityPM.DocumentSectionCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TagID))
+            {
+                oldEntityPM.TagID = entityPM.TagID;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Field))
+            {
+                oldEntityPM.Field = entityPM.Field;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Entity))
+            {
+                oldEntityPM.Entity = entityPM.Entity;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Skip))
+            {
+                oldEntityPM.Skip = entityPM.Skip;
+            }
+			
+		}
+
+	    public void EncodeBase64NVARCHARFields(DeclarationErrorMappingPM entityPM)
+        {
+            if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
+            {
+                return;
+
+            }
+            entityPM.EncodeBase64NVARCHARFieldsBy=null;
+		}
+
+
+	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
+        {
+            CustomMappedPOCOProperties.Add(pocoPropertyName);
+        }
+
+        public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
+        {
+            CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+			  
+   }
+}
+	 

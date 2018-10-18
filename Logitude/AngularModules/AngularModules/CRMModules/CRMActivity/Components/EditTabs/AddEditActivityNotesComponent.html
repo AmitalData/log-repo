@@ -1,0 +1,80 @@
+﻿<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <td style="width: 450px;">
+                        <div class="MediaFill">
+                            <LogTextBox [ObjectFieldName]="'Notes'" [Text]="DataContext.Notes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true" [HideColumns]="true"></LogTextBox>
+                        </div>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr style="height:10px;">
+        <td><div></div></td>
+    </tr>
+    <tr style="height: 35px;">
+        <td>
+           <table>
+               <tr style="height:22px;">
+                   <td style="width:75px;" class="Label">Create by: </td>
+                   <td>
+                       <div>
+                           {{DataContext.CreatedByUserName}} <span style="color:#1B90CB;">({{DataContext.CreateDate| DateTimeToDatePipe}})</span>
+                       </div>
+                   </td>
+               </tr>
+               <tr style="height:22px;">
+                   <td class="Label">Modified by: </td>
+                   <td>
+                       <div>
+                           {{DataContext.UpdatedByUserName}} <span style="color:#1B90CB;">({{DataContext.UpdateDate| DateTimeToDatePipe}})</span>
+                       </div>
+                   </td>
+               </tr>
+               <tr><td><div></div></td></tr>
+           </table>
+        </td>
+    </tr>
+    <tr style="height:10px;">
+        <td><div></div></td>
+    </tr>
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td style="float:left;width:130px;" *ngIf="DataContext.PostToFollowersVisibility">
+                        <LogCheckBox [ObjectFieldName]="'PostToFollowers'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Post to my followers'"></LogCheckBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="OkButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

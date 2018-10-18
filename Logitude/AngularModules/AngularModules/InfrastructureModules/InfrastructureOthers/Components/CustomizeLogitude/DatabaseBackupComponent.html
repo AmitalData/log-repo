@@ -1,0 +1,55 @@
+﻿
+
+<table>
+    <tr style="height:30px">
+      
+
+        <td>
+            <div style="height:30px">
+                <span style="vertical-align:top;text-align:left;width:30px;height:30px;">{{PreparingTextBlock}}</span>  
+          
+                <span style="width:30px;height:30px;vertical-align:top;margin-left:10px"><img style="margin-top:-5px" *ngIf="IsShowProgressLoading" src="Images/progressDownload.gif" /></span>  
+            </div>
+
+        </td>
+    </tr>
+
+   
+    <tr style="height:5px"><td></td></tr>
+
+
+    <tr style="height: 32px;">
+        <td>
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 120px;">
+                        <div>
+                            <button class="Button" (click)="BuildDatabaseBackup()"> {{'General.B.BuildBackup' | TextCodeTranslationPipe}} </button>
+                        </div>
+                    </td>
+
+                    <td style="width: 20px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width:120px;">
+                        <button [disabled]="DownloadBackupBtnDisable" class="Button" (click)="DownloadDatabaseBackup()">{{'General.B.DownloadBackup' | TextCodeTranslationPipe}} </button>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+   
+
+    <tr><td></td></tr>
+</table>
+

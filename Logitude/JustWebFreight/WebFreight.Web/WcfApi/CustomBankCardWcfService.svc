@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="WebFreight.Web.WcfApi.CustomBankCardWcfService" CodeBehind="CustomBankCardWcfService.svc.cs" %>

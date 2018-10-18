@@ -1,0 +1,643 @@
+﻿
+<style type="text/css">
+    .LogitudeHelperFollowups {
+        position: relative;
+        width: 40px;
+        height: 24px;
+        padding: 0 !important;
+        display: block;
+    }
+
+    .LogitudeHelperFollowupsHeadOpened {
+        background: #F2F4F4;
+        border: 1px solid #AAAAAA;
+        border-radius: 4px 4px 0 0;
+        -moz-border-radius: 4px 4px 0 0;
+        -webkit-border-radius: 4px 4px 0 0;
+        box-shadow: 0px 0px 2px 2px #DADADA;
+        -moz-box-shadow: 0px 0px 2px 2px #DADADA;
+        -webkit-box-shadow: 0px 0px 2px 2px #DADADA;
+    }
+
+    .LogitudeHelperFollowupsBody {
+        position: fixed;
+        background: white;
+        z-index: 1;
+        top: 24px;
+        border: 1px solid #AAAAAA;
+        border-radius: 0 0 4px 4px;
+        -moz-border-radius: 0 0 4px 4px;
+        -webkit-border-radius: 0 0 4px 4px;
+        box-shadow: 0px 2px 3px 2px #DADADA;
+        -moz-box-shadow: 0px 2px 3px 2px #DADADA;
+        -webkit-box-shadow: 0px 2px 3px 2px #DADADA;
+    }
+
+    .FollowupItem:hover {
+        cursor: pointer;
+        background: -moz-linear-gradient(50% 106.14% 90deg,rgba(133, 203, 237, 1) 0%,rgba(150, 211, 240, 1) 22.59%,rgba(196, 231, 248, 1) 67.37%,rgba(232, 247, 255, 1) 100%);
+        background: -webkit-linear-gradient(90deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 100%);
+        background: linear-gradient(0deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 100%);
+        transition: 0.3s;
+    }
+
+    .FollowupItem {
+        cursor: pointer;
+        border-bottom: 1px solid #D1D1D1;
+    }
+
+    .FollowupTooltip {
+        position: fixed;
+        background-image: url('./_Resources/Images/Icons/Tooltips/CellTooltip.png');
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    .FollowupTooltipTextArea {
+        padding: 2px;
+        padding-left: 4px;
+        text-indent: 0px;
+        font-size: 10px;
+        color: #45494A;
+        border: none !important;
+        box-shadow: none !important;
+        -moz-box-shadow: none !important;
+        -webkit-box-shadow: none !important;
+        background: transparent !important;
+    }
+
+    .NumericButtonDisabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+    .NumericButton:hover {
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(221, 232, 245, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(221, 232, 245, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+    }
+
+    .NumericButton {
+        width: 15px;
+        height: 10px;
+        border: 1px solid #6A8299;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        position: relative;
+    }
+</style>
+
+<div [attr.id]="ComponentId" class="LogitudeHelperFollowups" [hidden]="!IsComponentVisible">
+
+    <!-- Head -->
+    <div class="MediaFillAbsolute" [class.LogitudeHelperFollowupsHeadOpened]="IsOpened">
+        <div class="CenterCenter" style="width: 34px; height: 14px;">
+            <button [attr.id]="ComponentButtonId"
+                    class="MediaFillRelative"
+                    (click)="OnButtonClicked()"
+                    (blur)="OnButtonLostFocus()"
+                    (mouseover)="IsMouseOverButton = true;"
+                    (mouseleave)="IsMouseOverButton = false;"
+                    style="cursor: pointer; padding:0; background: none;">
+
+                <table style="width: 34px; height: 14px;">
+                    <tr>
+                        <td style="text-align: center; font-size: 12px; color: #282E30;">{{ItemsSource.length}}</td>
+
+                        <td style="width: 1px;">
+                            <img style="float: right;" [attr.src]="IconPath" />
+                        </td>
+                    </tr>
+                </table>
+            </button>
+        </div>
+    </div>
+
+    <!-- Body -->
+    <div [hidden]="!IsOpened"
+         class="LogitudeHelperFollowupsBody"
+         [attr.id]="ComponentContentId"
+         [style.width.px]="Width"
+         [style.height.px]="Height"
+         (mouseover)="IsMouseOver = true;"
+         (mouseleave)="IsMouseOver = false;">
+
+        <div class="MediaFillRelative">
+            <div style="height: 6px; width: 38px; background: #F2F4F4; position: absolute; top:-4px; right:0; z-index: 2;"></div>
+
+            <!-- Normal View -->
+            <table *ngIf="IsNormalViewVisible">
+                <tr style="height: 25px;">
+                    <td style="background: #F2F4F4; border-bottom: 1px solid #AAAAAA;">
+                        <table>
+                            <tr>
+                                <td style="width: 5px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="font-size: 14px; color: #1B90CB;">{{ItemsSource.length}} Follow Ups</td>
+
+                                <td style="width: 1px;">
+                                    <button class="Button" style="height: 20px;" (click)="AddFollowupClicked()">
+                                        <img src="./_Resources/Images/Icons/Followups/Add.png" />
+                                        <span style="font-size: 10px; color : #45494A;">Add</span>
+                                    </button>
+                                </td>
+
+                                <td style="width: 5px;">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div class="MediaFill">
+                            <ScrollViewer>
+                                <ul>
+                                    <li class="FollowupItem"
+                                        *ngFor="let item of ItemsSource"
+                                        [attr.id]="item.ItemId"
+                                        [style.height.px]="item.ListItemHeight"
+                                        [style.background-color]="item.Background"
+                                        (mousedown)="EditFollowupClicked(item)"
+                                        (mouseover)="item.ShowTooltip(true)"
+                                        (mouseleave)="item.ShowTooltip(false)">
+                                        <table>
+                                            <tr>
+                                                <td style="width: 30px;">
+                                                    <img style="display: block; margin: auto;" [attr.src]="item.IconPath" />
+                                                </td>
+
+                                                <td>
+                                                    <table>
+                                                        <tr style="height: 2px;">
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr style="height: 15px;">
+                                                            <td>
+                                                                <div class="MediaFill TextTrimming" style="font-size: 12px;" [ngStyle]="{color: item.TextColor}">
+                                                                    {{item.Name}}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td style="vertical-align: top;">
+                                                                <div class="MediaFill TextTrimming" style="font-size: 10px; color: #6E7172;">
+                                                                    {{item.Notes}}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+
+                                                <td style="width: 80px; font-size: 11px; color: #45494A;">
+                                                    {{item.Date | DateTimeToDatePipe}}
+                                                </td>
+
+                                                <td style="width: 15px;">
+                                                    <img src="./_Resources/Images/Icons/Followups/EditLine.png" style="cursor: pointer; float: left;" [attr.title]="'General.B.Edit' | TextCodeTranslationPipe" />
+                                                </td>
+
+                                                <td style="width: 5px;">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                        <div [attr.id]="item.ItemTooltipId" class="FollowupTooltip" [style.height.px]="item.TooltipHeight" [style.width.px]="item.TooltipWidth" [hidden]="!item.IsShowTooltip">
+                                            <div class="MediaFillRelative">
+                                                <div class="MarginAbsolute15" style="left: 12px; top: 13px; right: 30px;">
+                                                    <table>
+                                                        <tr style="height: 25px;">
+                                                            <td>
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width: 1px;">
+                                                                            <img style="float: left" [attr.src]="item.IconPath" />
+                                                                        </td>
+
+                                                                        <td style="width: 5px;">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td style="font-size: 12px; color: #1B90CB;">{{item.Name}}: Notes</td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>
+                                                                <div class="MediaFill">
+                                                                    <textarea class="FollowupTooltipTextArea" [readonly]="true">{{item.Notes}}</textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </ScrollViewer>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+            <!-- Add View -->
+            <table *ngIf="IsAddViewVisible && AddDataContext">
+                <tr style="height: 25px;">
+                    <td style="background: #F2F4F4; border-bottom: 1px solid #AAAAAA;">
+                        <table>
+                            <tr>
+                                <td style="width: 30px;">
+                                    <img style="display: block; margin: auto;" src="./_Resources/Images/Icons/Followups/Reminder.png" />
+                                </td>
+
+                                <td style="font-size: 14px; color: #1B90CB;">New Follow Up</td>
+
+                                <td style="width: 5px;">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div class="MediaFill">
+                            <div class="MarginAbsolute5" style="top: 0px; right: 10px;">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <table>
+
+                                                <!-- Event Type -->
+                                                <tr class="FormFieldRow">
+                                                    <td style="width: 70px;">
+                                                        <LogLabel [ObjectFieldName]="'EventTypeId'" [ObjectTableName]="ObjectTableName" [DataContext]="AddDataContext"></LogLabel>
+                                                    </td>
+
+                                                    <td (mouseover)="IsMouseOverInputBox = true;" (mouseleave)="IsMouseOverInputBox = false;">
+                                                        <ComboBox [ItemsSource]="EventTypes" [Binding]="'EnglishName'" [SelectedItem]="AddDataContext.SelectedEventType" (SelectedItemChanged)="AddDataContext.SelectedEventType = $event" (LostFocus)="OnInputBoxLostFocus()"></ComboBox>
+                                                    </td>
+                                                </tr>
+
+                                                <!-- Date -->
+                                                <tr class="FormFieldRow">
+                                                    <td>
+                                                        <LogLabel [ObjectFieldName]="'Date'" [ObjectTableName]="ObjectTableName" [DataContext]="AddDataContext"></LogLabel>
+                                                    </td>
+
+                                                    <td>
+                                                        <table>
+                                                            <tr>
+                                                                <td (mouseover)="IsMouseOverInputBox = true;" (mouseleave)="IsMouseOverInputBox = false;">
+                                                                    <LogDatePicker [ObjectFieldName]="'Date'" [SelectedDateValue]="AddDataContext.Date" [ObjectTableName]="ObjectTableName" [DataContext]="AddDataContext" [HideColumns]="true" (LostFocus)="OnInputBoxLostFocus()"></LogDatePicker>
+                                                                </td>
+
+                                                                <td style="width: 15px;">
+                                                                    <div class="NumericButton" (mousedown)="AddDataContext.NumericButtonClicked(true)">
+                                                                        <img class="CenterCenter" style="height: 3px; width: 5px;" src="./Images/Buttons/Up.png" />
+                                                                    </div>
+                                                                    <div class="NumericButton" (mousedown)="AddDataContext.NumericButtonClicked(false)">
+                                                                        <img class="CenterCenter" style="height: 3px; width: 5px;" src="./Images/Buttons/Down.png" />
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+
+                                                <!-- OwnerUserId -->
+                                                <tr class="FormFieldRow">
+                                                    <td>
+                                                        <LogLabel [ObjectFieldName]="'OwnerUserId'" [ObjectTableName]="ObjectTableName" [DataContext]="AddDataContext"></LogLabel>
+                                                    </td>
+
+                                                    <td (mouseover)="IsMouseOverInputBox = true;" (mouseleave)="IsMouseOverInputBox = false;">
+                                                        <LogLov [ObjectFieldName]="'OwnerUserId'"
+                                                                [SelectedValue]="AddDataContext.OwnerUserId"
+                                                                [ObjectTableName]="ObjectTableName"
+                                                                [DataContext]="AddDataContext"
+                                                                [LookUpTableName]="'User'"
+                                                                [HideColumns]="true"
+                                                                (LostFocus)="OnInputBoxLostFocus()">
+                                                        </LogLov>
+                                                    </td>
+                                                </tr>
+
+                                                <tr style="height: 5px;">
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+
+                                                <!-- Notes -->
+                                                <tr style="height: 70px;">
+                                                    <td>
+                                                        <LogLabel [ObjectFieldName]="'Notes'" [ObjectTableName]="ObjectTableName" [DataContext]="AddDataContext"></LogLabel>
+                                                    </td>
+
+                                                    <td (mouseover)="IsMouseOverInputBox = true;" (mouseleave)="IsMouseOverInputBox = false;">
+                                                        <div class="MediaFill">
+                                                            <LogTextBox [ObjectFieldName]="'Notes'" [Text]="AddDataContext.Notes" [ObjectTableName]="ObjectTableName" [DataContext]="AddDataContext" [IsMultiline]="true" [HideColumns]="true" (LostFocus)="OnInputBoxLostFocus()"></LogTextBox>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+                                    <tr style="height: 32px;">
+                                        <td>
+                                            <table style="height: 22px;">
+                                                <tr>
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+
+                                                    <td style="width: 57px;">
+                                                        <button class="Button" (click)="AddDataContext.CancelButtonClicked()">Cancel</button>
+                                                    </td>
+
+                                                    <td style="width: 5px;">
+                                                        <div></div>
+                                                    </td>
+
+                                                    <td style="width: 57px;">
+                                                        <button class="RedButton" (click)="AddDataContext.OkButtonClicked()">Ok</button>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+            <!-- Edit View -->
+            <table *ngIf="IsEditViewVisible && EditDataContext">
+                <tr style="height: 25px;">
+                    <td style="background: #F2F4F4; border-bottom: 1px solid #AAAAAA;">
+                        <table>
+                            <tr>
+                                <td style="width: 30px;">
+                                    <img *ngIf="!EditDataContext.Done" style="display: block; margin: auto;" [attr.src]="EditDataContext.IconPath" />
+                                    <img *ngIf="EditDataContext.Done" style="display: block; margin: auto;" src="./_Resources/Images/Icons/Followups/Done_Green.png" />
+                                </td>
+
+                                <td style="width: 1px; font-size: 14px; color: #1B90CB;" [ngStyle]="{'text-decoration-line': EditDataContext.Done ? 'line-through' : 'none'}">
+                                    {{EditDataContext.Name}}
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 1px;">
+                                    <IconButton [Name]="'DeleteFollowup'" [IsEnabled]="!EditDataContext.Done" (click)="EditDataContext.DeleteFollowupClicked()" [attr.title]="'General.B.Delete' | TextCodeTranslationPipe"></IconButton>
+                                </td>
+
+                                <td style="width: 5px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 1px;">
+                                    <IconButton [Name]="'DoneFollowup'" *ngIf="!EditDataContext.Done" (click)="EditDataContext.DoneFollowupClicked()" [attr.title]="'FollowUp.M.MarkAsDone' | TextCodeTranslationPipe"></IconButton>
+                                    <IconButton [Name]="'DoneFollowup'" *ngIf="EditDataContext.Done" (click)="EditDataContext.UnDoneFollowupClicked()" [attr.title]="'FollowUp.M.MarkAsUnDone' | TextCodeTranslationPipe"></IconButton>
+                                </td>
+
+                                <td style="width: 5px;">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div class="MediaFill">
+                            <div class="MarginAbsolute5" style="top: 0px; right: 10px;">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <table>
+
+                                                <!-- Date -->
+                                                <tr class="FormFieldRow">
+                                                    <td style="width: 70px;">
+                                                        <LogLabel [ObjectFieldName]="'Date'" [ObjectTableName]="ObjectTableName" [DataContext]="EditDataContext"></LogLabel>
+                                                    </td>
+
+                                                    <td>
+                                                        <table>
+                                                            <tr>
+                                                                <td (mouseover)="IsMouseOverInputBox = true;" (mouseleave)="IsMouseOverInputBox = false;">
+                                                                    <LogDatePicker [ObjectFieldName]="'Date'" [SelectedDateValue]="EditDataContext.Date" [ObjectTableName]="ObjectTableName" [DataContext]="EditDataContext" [HideColumns]="true" (LostFocus)="OnInputBoxLostFocus()"></LogDatePicker>
+                                                                </td>
+
+                                                                <td style="width: 15px;">
+                                                                    <div class="NumericButton" [class.NumericButtonDisabled]="EditDataContext.Done" (mousedown)="EditDataContext.DateNumericButtonClicked(true)">
+                                                                        <img class="CenterCenter" style="height: 3px; width: 5px;" src="./Images/Buttons/Up.png" />
+                                                                    </div>
+                                                                    <div class="NumericButton" [class.NumericButtonDisabled]="EditDataContext.Done" (mousedown)="EditDataContext.DateNumericButtonClicked(false)">
+                                                                        <img class="CenterCenter" style="height: 3px; width: 5px;" src="./Images/Buttons/Down.png" />
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+
+                                                <!-- OwnerUserId -->
+                                                <tr class="FormFieldRow">
+                                                    <td>
+                                                        <LogLabel [ObjectFieldName]="'OwnerUserId'" [ObjectTableName]="ObjectTableName" [DataContext]="EditDataContext"></LogLabel>
+                                                    </td>
+
+                                                    <td (mouseover)="IsMouseOverInputBox = true;" (mouseleave)="IsMouseOverInputBox = false;">
+                                                        <LogLov [ObjectFieldName]="'OwnerUserId'"
+                                                                [SelectedValue]="EditDataContext.OwnerUserId"
+                                                                [ObjectTableName]="ObjectTableName"
+                                                                [DataContext]="EditDataContext"
+                                                                [LookUpTableName]="'User'"
+                                                                [HideColumns]="true"
+                                                                (LostFocus)="OnInputBoxLostFocus()">
+                                                        </LogLov>
+                                                    </td>
+                                                </tr>
+
+                                                <tr style="height: 5px;">
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+
+                                                <!-- Notes -->
+                                                <tr style="height: 70px;">
+                                                    <td>
+                                                        <LogLabel [ObjectFieldName]="'Notes'" [ObjectTableName]="ObjectTableName" [DataContext]="EditDataContext"></LogLabel>
+                                                    </td>
+
+                                                    <td (mouseover)="IsMouseOverInputBox = true;" (mouseleave)="IsMouseOverInputBox = false;">
+                                                        <div class="MediaFill">
+                                                            <LogTextBox [ObjectFieldName]="'Notes'" [Text]="EditDataContext.Notes" [ObjectTableName]="ObjectTableName" [DataContext]="EditDataContext" [IsMultiline]="true" [HideColumns]="true" (LostFocus)="OnInputBoxLostFocus()" [DontAllowAutoSelect]="true"></LogTextBox>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr style="height: 110px;" *ngIf="EditDataContext.Done">
+                                                    <td colspan="2">
+                                                        <table>
+                                                            <tr style="height: 10px;">
+                                                                <td>
+                                                                    <div style="height: 1px; background: #DADADA;"></div>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td>
+                                                                    <table>
+                                                                        <!-- DoneDateTime -->
+                                                                        <tr class="FormFieldRow">
+                                                                            <td style="width: 70px;">
+                                                                                <LogLabel [ObjectFieldName]="'DoneDateTime'" [ObjectTableName]="ObjectTableName" [DataContext]="EditDataContext"></LogLabel>
+                                                                            </td>
+
+                                                                            <td>
+                                                                                <table>
+                                                                                    <tr>
+                                                                                        <td (mouseover)="IsMouseOverInputBox = true;" (mouseleave)="IsMouseOverInputBox = false;">
+                                                                                            <LogDatePicker [ObjectFieldName]="'DoneDateTime'" [SelectedDateValue]="EditDataContext.DoneDateTime" [ObjectTableName]="ObjectTableName" [DataContext]="EditDataContext" [HideColumns]="true" (LostFocus)="OnInputBoxLostFocus()"></LogDatePicker>
+                                                                                        </td>
+
+                                                                                        <td style="width: 15px;">
+                                                                                            <div class="NumericButton" (mousedown)="EditDataContext.DoneDateNumericButtonClicked(true)">
+                                                                                                <img class="CenterCenter" style="height: 3px; width: 5px;" src="./Images/Buttons/Up.png" />
+                                                                                            </div>
+                                                                                            <div class="NumericButton" (mousedown)="EditDataContext.DoneDateNumericButtonClicked(false)">
+                                                                                                <img class="CenterCenter" style="height: 3px; width: 5px;" src="./Images/Buttons/Down.png" />
+                                                                                            </div>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </td>
+                                                                        </tr>
+
+                                                                        <tr style="height: 5px;">
+                                                                            <td>
+                                                                                <div></div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div></div>
+                                                                            </td>
+                                                                        </tr>
+
+                                                                        <!-- DoneNote -->
+                                                                        <tr style="height: 70px;">
+                                                                            <td>
+                                                                                <LogLabel [ObjectFieldName]="'DoneNote'" [ObjectTableName]="ObjectTableName" [DataContext]="EditDataContext"></LogLabel>
+                                                                            </td>
+
+                                                                            <td (mouseover)="IsMouseOverInputBox = true;" (mouseleave)="IsMouseOverInputBox = false;">
+                                                                                <div class="MediaFill">
+                                                                                    <LogTextBox [ObjectFieldName]="'DoneNote'" [Text]="EditDataContext.DoneNote" [ObjectTableName]="ObjectTableName" [DataContext]="EditDataContext" [IsMultiline]="true" [HideColumns]="true" (LostFocus)="OnInputBoxLostFocus()"></LogTextBox>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+
+                                                                        <tr>
+                                                                            <td>
+                                                                                <div></div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div></div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+                                    <tr style="height: 32px;">
+                                        <td>
+                                            <table style="height: 22px;">
+                                                <tr>
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+
+                                                    <td style="width: 57px;">
+                                                        <button class="Button" (click)="EditDataContext.CancelButtonClicked()">Cancel</button>
+                                                    </td>
+
+                                                    <td style="width: 5px;">
+                                                        <div></div>
+                                                    </td>
+
+                                                    <td style="width: 57px;">
+                                                        <button class="RedButton" (click)="EditDataContext.OkButtonClicked()">Ok</button>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+Severity: High
+Object: arpayments
+Title: AddNotNullConstraintColumn
+Deployment cannot update the column transferstatuscode on table arpayments because it does not allow NULL values. If you run the deployment script, deployment will fail. We recommend you edit the script before running it.
+----------------------------------------------------
+Severity: High
+Object: supplierinvoices
+Title: AddNotNullConstraintColumn
+Deployment cannot update the column accumalationstatecode on table supplierinvoices because it does not allow NULL values. If you run the deployment script, deployment will fail. We recommend you edit the script before running it.
+----------------------------------------------------
+Severity: Medium
+Object: cardexternalcodebycurrencies
+Title: ColumnRename
+The following column(s) on table cardexternalcodebycurrencies will be renamed: externaltableid to externalrecievabletableid. If this is a false positive, turn the "Detect renamed columns" option off in the project options and rerun the comparison.
+----------------------------------------------------
+Severity: Medium
+Object: chargestypes
+Title: ColumnRename
+The following column(s) on table chargestypes will be renamed: chargestypeexternalcode to receivableschargestypeextcode. If this is a false positive, turn the "Detect renamed columns" option off in the project options and rerun the comparison.
+----------------------------------------------------

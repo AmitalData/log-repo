@@ -1,0 +1,1 @@
+alter table Customs.Declarations add ErrosXml varchar(8000) null

@@ -1,0 +1,797 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Customs.Def.Validators;
+  
+namespace Logitude.Customs.Def.EntityPMs
+{
+   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class ProceduralFaultPM : EntityPM
+   {
+   	  private string id ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Id  
+	   {
+	    
+	     get
+		{
+		   return id;
+		 }
+		 set
+		 {
+		   if(id != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   id=value;
+		   }
+			
+		 }
+	   }
+	  private int tenant ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+	  private string proceduralFaultNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ProceduralFaultNumber  
+	   {
+	    
+	     get
+		{
+		   return proceduralFaultNumber;
+		 }
+		 set
+		 {
+		   if(proceduralFaultNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ProceduralFaultNumber",OldValue=proceduralFaultNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   proceduralFaultNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string proceduralFaultStatusCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ProceduralFaultStatusCode  
+	   {
+	    
+	     get
+		{
+		   return proceduralFaultStatusCode;
+		 }
+		 set
+		 {
+		   if(proceduralFaultStatusCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ProceduralFaultStatusCode",OldValue=proceduralFaultStatusCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   proceduralFaultStatusCode=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? createDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? CreateDate  
+	   {
+	    
+	     get
+		{
+		   return createDate;
+		 }
+		 set
+		 {
+		   if(createDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreateDate",OldValue=createDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   createDate=value;
+		   }
+			
+		 }
+	   }
+	  private string inputTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string InputTypeCode  
+	   {
+	    
+	     get
+		{
+		   return inputTypeCode;
+		 }
+		 set
+		 {
+		   if(inputTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InputTypeCode",OldValue=inputTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   inputTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string inspectionTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string InspectionTypeCode  
+	   {
+	    
+	     get
+		{
+		   return inspectionTypeCode;
+		 }
+		 set
+		 {
+		   if(inspectionTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InspectionTypeCode",OldValue=inspectionTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   inspectionTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string proceduralFaultCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ProceduralFaultCode  
+	   {
+	    
+	     get
+		{
+		   return proceduralFaultCode;
+		 }
+		 set
+		 {
+		   if(proceduralFaultCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ProceduralFaultCode",OldValue=proceduralFaultCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   proceduralFaultCode=value;
+		   }
+			
+		 }
+	   }
+	  private string proceduralFaultInputProcesCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ProceduralFaultInputProcesCode  
+	   {
+	    
+	     get
+		{
+		   return proceduralFaultInputProcesCode;
+		 }
+		 set
+		 {
+		   if(proceduralFaultInputProcesCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ProceduralFaultInputProcesCode",OldValue=proceduralFaultInputProcesCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   proceduralFaultInputProcesCode=value;
+		   }
+			
+		 }
+	   }
+	  private string ransomViolationTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string RansomViolationTypeCode  
+	   {
+	    
+	     get
+		{
+		   return ransomViolationTypeCode;
+		 }
+		 set
+		 {
+		   if(ransomViolationTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RansomViolationTypeCode",OldValue=ransomViolationTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   ransomViolationTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? ransomViolationSum ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? RansomViolationSum  
+	   {
+	    
+	     get
+		{
+		   return ransomViolationSum;
+		 }
+		 set
+		 {
+		   if(ransomViolationSum != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RansomViolationSum",OldValue=ransomViolationSum,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   ransomViolationSum=value;
+		   }
+			
+		 }
+	   }
+	  private string remarks ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Remarks  
+	   {
+	    
+	     get
+		{
+		   return remarks;
+		 }
+		 set
+		 {
+		   if(remarks != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Remarks",OldValue=remarks,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   remarks=value;
+		   }
+			
+		 }
+	   }
+	  private bool isCustomerResponsibility ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsCustomerResponsibility  
+	   {
+	    
+	     get
+		{
+		   return isCustomerResponsibility;
+		 }
+		 set
+		 {
+		   if(isCustomerResponsibility != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsCustomerResponsibility",OldValue=isCustomerResponsibility,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isCustomerResponsibility=value;
+		   }
+			
+		 }
+	   }
+	  private bool isAgentProceduralFaultCountabl ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsAgentProceduralFaultCountabl  
+	   {
+	    
+	     get
+		{
+		   return isAgentProceduralFaultCountabl;
+		 }
+		 set
+		 {
+		   if(isAgentProceduralFaultCountabl != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsAgentProceduralFaultCountabl",OldValue=isAgentProceduralFaultCountabl,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isAgentProceduralFaultCountabl=value;
+		   }
+			
+		 }
+	   }
+	  private bool isCustProceduralFaultCountabl ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsCustProceduralFaultCountabl  
+	   {
+	    
+	     get
+		{
+		   return isCustProceduralFaultCountabl;
+		 }
+		 set
+		 {
+		   if(isCustProceduralFaultCountabl != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsCustProceduralFaultCountabl",OldValue=isCustProceduralFaultCountabl,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isCustProceduralFaultCountabl=value;
+		   }
+			
+		 }
+	   }
+	  private bool isAgentResponsibility ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsAgentResponsibility  
+	   {
+	    
+	     get
+		{
+		   return isAgentResponsibility;
+		 }
+		 set
+		 {
+		   if(isAgentResponsibility != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsAgentResponsibility",OldValue=isAgentResponsibility,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isAgentResponsibility=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? updateDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? UpdateDate  
+	   {
+	    
+	     get
+		{
+		   return updateDate;
+		 }
+		 set
+		 {
+		   if(updateDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdateDate",OldValue=updateDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   updateDate=value;
+		   }
+			
+		 }
+	   }
+	  private string leadingDocumentVersion ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LeadingDocumentVersion  
+	   {
+	    
+	     get
+		{
+		   return leadingDocumentVersion;
+		 }
+		 set
+		 {
+		   if(leadingDocumentVersion != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LeadingDocumentVersion",OldValue=leadingDocumentVersion,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   leadingDocumentVersion=value;
+		   }
+			
+		 }
+	   }
+	  private string notes ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Notes  
+	   {
+	    
+	     get
+		{
+		   return notes;
+		 }
+		 set
+		 {
+		   if(notes != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Notes",OldValue=notes,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   notes=value;
+		   }
+			
+		 }
+	   }
+	  private bool isCancelled ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsCancelled  
+	   {
+	    
+	     get
+		{
+		   return isCancelled;
+		 }
+		 set
+		 {
+		   if(isCancelled != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsCancelled",OldValue=isCancelled,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isCancelled=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? cancellationDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? CancellationDate  
+	   {
+	    
+	     get
+		{
+		   return cancellationDate;
+		 }
+		 set
+		 {
+		   if(cancellationDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CancellationDate",OldValue=cancellationDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   cancellationDate=value;
+		   }
+			
+		 }
+	   }
+	  private string searchFields ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SearchFields  
+	   {
+	    
+	     get
+		{
+		   return searchFields;
+		 }
+		 set
+		 {
+		   if(searchFields != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchFields",OldValue=searchFields,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   searchFields=value;
+		   }
+			
+		 }
+	   }
+	  private string declarationId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DeclarationId  
+	   {
+	    
+	     get
+		{
+		   return declarationId;
+		 }
+		 set
+		 {
+		   if(declarationId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeclarationId",OldValue=declarationId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   declarationId=value;
+		   }
+			
+		 }
+	   }
+
+	   private List<ProceduralFaultsConnEntityPM> proceduralFaultsConnEntities;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("ProceduralFaultsProceduralFaultsConnEntities", "Id","ProceduralFaultId")]
+	   [DataMember]
+	   public virtual List<ProceduralFaultsConnEntityPM> ProceduralFaultsConnEntities  
+	   {
+	        get
+             {
+                 if (proceduralFaultsConnEntities == null)
+                 {
+                     proceduralFaultsConnEntities = new List<ProceduralFaultsConnEntityPM>();
+                 }
+                 return proceduralFaultsConnEntities;
+              }
+             set { proceduralFaultsConnEntities = value; }
+	    }
+		   
+	   private List<ProceduralFaultsConnEntityPM>  deletedProceduralFaultsConnEntities;
+	   public virtual List<ProceduralFaultsConnEntityPM> DeletedProceduralFaultsConnEntities  
+	   {
+	        get
+             {
+                 if ( deletedProceduralFaultsConnEntities == null)
+                 {
+                      deletedProceduralFaultsConnEntities = new List<ProceduralFaultsConnEntityPM>();
+                 }
+                 return  deletedProceduralFaultsConnEntities;
+              }
+             set {  deletedProceduralFaultsConnEntities = value; }
+	    }
+	  	  private string proceduralFaultStatusName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ProceduralFaultStatusName  
+	   {
+	    
+	     get
+		{
+		   return proceduralFaultStatusName;
+		 }
+		 set
+		 {
+		   if(proceduralFaultStatusName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ProceduralFaultStatusName",OldValue=proceduralFaultStatusName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   proceduralFaultStatusName=value;
+		   }
+			
+		 }
+	   }
+	  private string inputTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string InputTypeName  
+	   {
+	    
+	     get
+		{
+		   return inputTypeName;
+		 }
+		 set
+		 {
+		   if(inputTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InputTypeName",OldValue=inputTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   inputTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private string inspectionTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string InspectionTypeName  
+	   {
+	    
+	     get
+		{
+		   return inspectionTypeName;
+		 }
+		 set
+		 {
+		   if(inspectionTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InspectionTypeName",OldValue=inspectionTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   inspectionTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private string proceduralFaultName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ProceduralFaultName  
+	   {
+	    
+	     get
+		{
+		   return proceduralFaultName;
+		 }
+		 set
+		 {
+		   if(proceduralFaultName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ProceduralFaultName",OldValue=proceduralFaultName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   proceduralFaultName=value;
+		   }
+			
+		 }
+	   }
+	  private string proceduralFaultInputProcesName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ProceduralFaultInputProcesName  
+	   {
+	    
+	     get
+		{
+		   return proceduralFaultInputProcesName;
+		 }
+		 set
+		 {
+		   if(proceduralFaultInputProcesName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ProceduralFaultInputProcesName",OldValue=proceduralFaultInputProcesName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   proceduralFaultInputProcesName=value;
+		   }
+			
+		 }
+	   }
+	  private string ransomViolationTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string RansomViolationTypeName  
+	   {
+	    
+	     get
+		{
+		   return ransomViolationTypeName;
+		 }
+		 set
+		 {
+		   if(ransomViolationTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RansomViolationTypeName",OldValue=ransomViolationTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   ransomViolationTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private string customFileNo ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomFileNo  
+	   {
+	    
+	     get
+		{
+		   return customFileNo;
+		 }
+		 set
+		 {
+		   if(customFileNo != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomFileNo",OldValue=customFileNo,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customFileNo=value;
+		   }
+			
+		 }
+	   }
+	  private string customerName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomerName  
+	   {
+	    
+	     get
+		{
+		   return customerName;
+		 }
+		 set
+		 {
+		   if(customerName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerName",OldValue=customerName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customerName=value;
+		   }
+			
+		 }
+	   }
+	  private string declarationNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DeclarationNumber  
+	   {
+	    
+	     get
+		{
+		   return declarationNumber;
+		 }
+		 set
+		 {
+		   if(declarationNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeclarationNumber",OldValue=declarationNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   declarationNumber=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

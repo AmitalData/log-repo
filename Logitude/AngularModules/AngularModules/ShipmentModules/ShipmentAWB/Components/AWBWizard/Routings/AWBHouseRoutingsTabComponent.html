@@ -1,0 +1,119 @@
+﻿
+<div class="TableHolder">
+    <table>
+        <tr style="height: 1px;">
+            <td style="width: 400px;">
+                <table>
+                    <tr class="FormFieldRow">
+                        <td style="width: 150px;">
+                            <div></div>
+                        </td>
+
+                        <td>
+                            <CheckBox [IsChecked]="HasPreCarriage" (Checked)="HasPreCarriage = $event" [IsEnabled]="IsEditingEnabled" [Text]="'Add Pre-carriage'"></CheckBox>
+                        </td>
+                    </tr>
+
+                    <tr class="FormFieldRow" *ngIf="HasPreCarriage">
+                        <td style="width: 150px;">
+                            <LogLabel [ObjectFieldName]="'PreCarriageFromPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogLov [ObjectFieldName]="'PreCarriageFromPortId'"
+                                    [SelectedValue]="PreCarriageFromPortId"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'Port'"
+                                    [DependencyFilter1Value]="'A'"
+                                    (SelectedItemChanged)="PreCarriageFromPort = $event">
+                            </LogLov>
+                        </td>
+                    </tr>
+
+                    <tr class="FormFieldRow">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'MainCarriageFromPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.Departure'"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogLov [ObjectFieldName]="'MainCarriageFromPortId'"
+                                    [SelectedValue]="MainCarriageFromPortId"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'Port'"
+                                    [DependencyFilter1Value]="'A'"
+                                    (SelectedItemChanged)="MainCarriageFromPort = $event">
+                            </LogLov>
+                        </td>
+                    </tr>
+
+                    <tr class="FormFieldRow">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'ToPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.Destination'"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogLov [ObjectFieldName]="'ToPortId'"
+                                    [SelectedValue]="ToPortId"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'Port'"
+                                    [DependencyFilter1Value]="'A'"
+                                    (SelectedItemChanged)="ToPort = $event">
+                            </LogLov>
+                        </td>
+                    </tr>
+
+                    <tr class="FormFieldRow">
+                        <td style="width: 150px;">
+                            <div></div>
+                        </td>
+
+                        <td>
+                            <CheckBox [IsChecked]="HasOnCarriage" (Checked)="HasOnCarriage = $event" [IsEnabled]="IsEditingEnabled" [Text]="'Add On-carriage'"></CheckBox>
+                        </td>
+                    </tr>
+
+                    <tr class="FormFieldRow" *ngIf="HasOnCarriage">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'OnCarriageToPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogLov [ObjectFieldName]="'OnCarriageToPortId'"
+                                    [SelectedValue]="OnCarriageToPortId"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'Port'"
+                                    [DependencyFilter1Value]="'A'"
+                                    (SelectedItemChanged)="OnCarriageToPort = $event">
+                            </LogLov>
+                        </td>
+                    </tr>
+
+                    <tr class="FormFieldRow">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'House'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [ShowWarning]="ShowWarning_House"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogTextBox [ObjectFieldName]="'House'" [Text]="House" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+
+            <td>
+                <div></div>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                <div></div>
+            </td>
+        </tr>
+    </table>
+</div>
+

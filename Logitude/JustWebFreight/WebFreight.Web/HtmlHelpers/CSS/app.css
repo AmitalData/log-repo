@@ -1,0 +1,75 @@
+body {
+	padding-top: 60px; padding-bottom: 40px;
+}
+footer p {
+	font-size: 0.9em;
+}
+.sidebar-nav {
+	padding: 9px 0px;
+}
+.hero-unit {
+	padding: 40px; position: relative;
+}
+.hero-unit h1 {
+	color: rgb(239, 101, 42);
+}
+.row-fluid h3 {
+	color: rgb(239, 101, 42);
+}
+footer {
+	color: rgb(239, 101, 42);
+}
+footer a {
+	color: rgb(239, 101, 42);
+}
+.row-fluid h3 {
+	margin-top: 15px; margin-bottom: 5px;
+}
+.row-fluid p {
+	margin-bottom: 5px; margin-left: 2px;
+}
+.spacer {
+	height: 20px;
+}
+.brand img {
+	height: 24px; vertical-align: bottom;
+}
+.navbar .brand {
+	color: rgb(239, 101, 42);
+}
+.code {
+	padding-right: 10px; margin-left: 20px; border-right-color: rgb(239, 101, 42); border-right-width: 1px; border-right-style: solid;
+}
+.code p {
+	font-size: 0.9em;
+}
+.example {
+	margin: 20px;
+}
+.example input {
+	margin: 3px;
+}
+.example button {
+	margin: 3px;
+}
+.option {
+	text-align: left; font-weight: bold;
+}
+.options {
+	padding: 3px; border: 1px solid rgb(197, 197, 197); margin-top: 10px; background-color: rgb(238, 238, 238);
+}
+.options div:nth-child(2n).row-fluid {
+	background-color: rgb(255, 255, 255);
+}
+h3.nospace {
+	margin-top: 5px;
+}
+.note {
+	font-size: 0.9em; font-style: italic;
+}
+.home h2 {
+	height: 37px;
+}
+.home img {
+	height: 37px; vertical-align: bottom;
+}

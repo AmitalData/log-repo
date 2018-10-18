@@ -1,0 +1,69 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.Customs.BL.EntityDataMappings;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Data.EntityKeys;
+using Logitude.Customs.Data;
+using Simplog.Server.Infrastructure;
+namespace Logitude.Customs.BL.EntityQueryServices
+{ 
+   public partial class ClaimImporterDeclarsPage3BQueryService: EntityQueryService<ClaimImporterDeclarsPage3B,ClaimImporterDeclarsPage3BKeys,ClaimImporterDeclarsPage3BPM,ClaimPM,ClaimKeys>
+   {
+   
+        ClaimImporterDeclarsPage3BRepository repository;
+		ICustomContext  context;
+        public ClaimImporterDeclarsPage3BQueryService(int tenant)
+        {
+		    context = CustomContext.GetContext(tenant);
+            MainContext = context;
+            repository = new ClaimImporterDeclarsPage3BRepository(context);
+            Repository = repository;
+            mapping = new ClaimImporterDeclarsPage3BDataMapping();
+        }
+
+        public ClaimImporterDeclarsPage3BQueryService(ClaimImporterDeclarsPage3BRepository repository)
+        {
+            this.repository = repository;
+            Repository = repository;
+            mapping = new ClaimImporterDeclarsPage3BDataMapping();
+        }
+
+        public ClaimImporterDeclarsPage3BQueryService(ICustomContext context)
+        {
+            this.repository = new ClaimImporterDeclarsPage3BRepository(context);
+            this.context = context;
+
+            MainContext = context;
+            Repository = repository;
+            mapping = new ClaimImporterDeclarsPage3BDataMapping();
+        }
+		 
+		public  ClaimImporterDeclarsPage3BPM GetSingle(string claimid, int lineno,bool getComposition, bool getFromCache)
+        {
+             EntityKeys = new ClaimImporterDeclarsPage3BKeys(){ ClaimId = claimid, LineNo = lineno };
+
+			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
+        }
+
+       
+	    protected override EntityKeyFields GetKeys(ClaimImporterDeclarsPage3B entityPOCO)
+        {
+            ClaimImporterDeclarsPage3BKeys entityKeys = new ClaimImporterDeclarsPage3BKeys() { ClaimId = entityPOCO.ClaimId, LineNo = entityPOCO.LineNo,  };
+            return entityKeys;
+        }
+     
+	 
+   }
+   
+}
+	 

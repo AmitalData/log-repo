@@ -1,0 +1,1 @@
+delete from QueryColumns where QueryId in (select Id from Queries where ObjectTableId = (select Id from ObjectTables where Name = 'Ticket'))

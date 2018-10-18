@@ -1,0 +1,481 @@
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs; 
+using Logitude.Customs.Data;
+
+namespace Logitude.Customs.BL.EntityDataMappings
+{
+   
+   public partial class CourierMasterDataMapping: IMapping<CourierMasterPM, CourierMaster>,IMappingEncodeBase64NVARCHARFields<CourierMasterPM>
+   {
+          public enum POCOPropertyNames
+          { 
+		     None,  
+	         Id, 
+	         Tenant, 
+	         CreateDateTime, 
+	         CreatedByUserId, 
+	         UpdateDateTime, 
+	         SearchFields, 
+	         AirlineId, 
+	         MAWB, 
+	         HAWB, 
+	         EstimatedArrivalDate, 
+	         GatewayPortCode, 
+	         OriginPortCode, 
+	         IsOpen, 
+	         IsCancelled, 
+	         UpdatedByUserId, 
+	         MAWBTypeCode, 
+	         ManifestNumber, 
+	         PackageQuantity, 
+	         GrossMassMeasure, 
+	         ShortHAWB, 
+	         FlightNumber, 
+	         DepartureDate,
+	      }
+
+
+	      public enum PMPropertyNames
+          { 
+		     None,  
+	         Id, 
+	         Tenant, 
+	         CreateDateTime, 
+	         CreatedByUserId, 
+	         UpdateDateTime, 
+	         SearchFields, 
+	         CreatedByUserName, 
+	         AirlineId, 
+	         AirlineName, 
+	         MAWB, 
+	         MAWBTypeName, 
+	         HAWB, 
+	         EstimatedArrivalDate, 
+	         GatewayPortCode, 
+	         GatewayPortName, 
+	         OriginPortCode, 
+	         OriginPortName, 
+	         IsOpen, 
+	         IsCancelled, 
+	         UpdatedByUserId, 
+	         UpdatedByUserName, 
+	         AirlinePrefix, 
+	         SelectedDeclarationChanged, 
+	         ConnectedDeclarations, 
+	         NotConnectedDeclarations, 
+	         MAWBTypeCode, 
+	         ManifestNumber, 
+	         PackageQuantity, 
+	         GrossMassMeasure, 
+	         ShortHAWB, 
+	         FlightNumber, 
+	         DepartureDate, 
+	         EstimatedArrivalDateOnly, 
+	         EstimatedArrivalTimeOnly,
+	      }
+
+		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
+        List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
+    
+	    public void PMToPOCO(CourierMasterPM entityPM, CourierMaster entityPOCO)
+        {
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateDateTime))
+            {
+				entityPOCO.CreateDateTime = entityPM.CreateDateTime;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreatedByUserId))
+            {
+				entityPOCO.CreatedByUserId = entityPM.CreatedByUserId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdateDateTime))
+            {
+				entityPOCO.UpdateDateTime = entityPM.UpdateDateTime;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
+            {
+				entityPOCO.SearchFields = entityPM.SearchFields;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AirlineId))
+            {
+				entityPOCO.AirlineId = entityPM.AirlineId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MAWB))
+            {
+				entityPOCO.MAWB = entityPM.MAWB;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HAWB))
+            {
+				entityPOCO.HAWB = entityPM.HAWB;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EstimatedArrivalDate))
+            {
+				entityPOCO.EstimatedArrivalDate = entityPM.EstimatedArrivalDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GatewayPortCode))
+            {
+				entityPOCO.GatewayPortCode = entityPM.GatewayPortCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OriginPortCode))
+            {
+				entityPOCO.OriginPortCode = entityPM.OriginPortCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsOpen))
+            {
+				entityPOCO.IsOpen = entityPM.IsOpen;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCancelled))
+            {
+				entityPOCO.IsCancelled = entityPM.IsCancelled;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdatedByUserId))
+            {
+				entityPOCO.UpdatedByUserId = entityPM.UpdatedByUserId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MAWBTypeCode))
+            {
+				entityPOCO.MAWBTypeCode = entityPM.MAWBTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ManifestNumber))
+            {
+				entityPOCO.ManifestNumber = entityPM.ManifestNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PackageQuantity))
+            {
+				entityPOCO.PackageQuantity = entityPM.PackageQuantity;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GrossMassMeasure))
+            {
+				entityPOCO.GrossMassMeasure = entityPM.GrossMassMeasure;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShortHAWB))
+            {
+				entityPOCO.ShortHAWB = entityPM.ShortHAWB;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FlightNumber))
+            {
+				entityPOCO.FlightNumber = entityPM.FlightNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DepartureDate))
+            {
+				entityPOCO.DepartureDate = entityPM.DepartureDate;
+			}
+			
+				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
+		  }
+
+		public void POCOToPM(CourierMasterPM entityPM, CourierMaster entityPOCO)
+        {
+			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
+            {
+					entityPM.Id = entityPOCO.Id;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
+            {
+					entityPM.Tenant = entityPOCO.Tenant;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CreateDateTime))
+            {
+					entityPM.CreateDateTime = entityPOCO.CreateDateTime;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CreatedByUserId))
+            {
+					entityPM.CreatedByUserId = entityPOCO.CreatedByUserId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.UpdateDateTime))
+            {
+					entityPM.UpdateDateTime = entityPOCO.UpdateDateTime;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SearchFields))
+            {
+					entityPM.SearchFields = entityPOCO.SearchFields;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AirlineId))
+            {
+					entityPM.AirlineId = entityPOCO.AirlineId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MAWB))
+            {
+					entityPM.MAWB = entityPOCO.MAWB;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.HAWB))
+            {
+					entityPM.HAWB = entityPOCO.HAWB;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EstimatedArrivalDate))
+            {
+					entityPM.EstimatedArrivalDate = entityPOCO.EstimatedArrivalDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.GatewayPortCode))
+            {
+					entityPM.GatewayPortCode = entityPOCO.GatewayPortCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.OriginPortCode))
+            {
+					entityPM.OriginPortCode = entityPOCO.OriginPortCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsOpen))
+            {
+					entityPM.IsOpen = entityPOCO.IsOpen;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsCancelled))
+            {
+					entityPM.IsCancelled = entityPOCO.IsCancelled;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.UpdatedByUserId))
+            {
+					entityPM.UpdatedByUserId = entityPOCO.UpdatedByUserId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MAWBTypeCode))
+            {
+					entityPM.MAWBTypeCode = entityPOCO.MAWBTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ManifestNumber))
+            {
+					entityPM.ManifestNumber = entityPOCO.ManifestNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PackageQuantity))
+            {
+					entityPM.PackageQuantity = entityPOCO.PackageQuantity;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.GrossMassMeasure))
+            {
+					entityPM.GrossMassMeasure = entityPOCO.GrossMassMeasure;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ShortHAWB))
+            {
+					entityPM.ShortHAWB = entityPOCO.ShortHAWB;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FlightNumber))
+            {
+					entityPM.FlightNumber = entityPOCO.FlightNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DepartureDate))
+            {
+					entityPM.DepartureDate = entityPOCO.DepartureDate;
+            }
+
+		}
+
+		public void PMToOldPM(CourierMasterPM entityPM, CourierMasterPM oldEntityPM)
+        {
+		     oldEntityPM.ChangedProperties.Clear();
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+                oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateDateTime))
+            {
+                oldEntityPM.CreateDateTime = entityPM.CreateDateTime;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreatedByUserId))
+            {
+                oldEntityPM.CreatedByUserId = entityPM.CreatedByUserId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdateDateTime))
+            {
+                oldEntityPM.UpdateDateTime = entityPM.UpdateDateTime;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
+            {
+                oldEntityPM.SearchFields = entityPM.SearchFields;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AirlineId))
+            {
+                oldEntityPM.AirlineId = entityPM.AirlineId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MAWB))
+            {
+                oldEntityPM.MAWB = entityPM.MAWB;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HAWB))
+            {
+                oldEntityPM.HAWB = entityPM.HAWB;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EstimatedArrivalDate))
+            {
+                oldEntityPM.EstimatedArrivalDate = entityPM.EstimatedArrivalDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GatewayPortCode))
+            {
+                oldEntityPM.GatewayPortCode = entityPM.GatewayPortCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OriginPortCode))
+            {
+                oldEntityPM.OriginPortCode = entityPM.OriginPortCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsOpen))
+            {
+                oldEntityPM.IsOpen = entityPM.IsOpen;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCancelled))
+            {
+                oldEntityPM.IsCancelled = entityPM.IsCancelled;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdatedByUserId))
+            {
+                oldEntityPM.UpdatedByUserId = entityPM.UpdatedByUserId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MAWBTypeCode))
+            {
+                oldEntityPM.MAWBTypeCode = entityPM.MAWBTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ManifestNumber))
+            {
+                oldEntityPM.ManifestNumber = entityPM.ManifestNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PackageQuantity))
+            {
+                oldEntityPM.PackageQuantity = entityPM.PackageQuantity;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GrossMassMeasure))
+            {
+                oldEntityPM.GrossMassMeasure = entityPM.GrossMassMeasure;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShortHAWB))
+            {
+                oldEntityPM.ShortHAWB = entityPM.ShortHAWB;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FlightNumber))
+            {
+                oldEntityPM.FlightNumber = entityPM.FlightNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DepartureDate))
+            {
+                oldEntityPM.DepartureDate = entityPM.DepartureDate;
+            }
+			
+		}
+
+	    public void EncodeBase64NVARCHARFields(CourierMasterPM entityPM)
+        {
+            if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
+            {
+                return;
+
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.SearchFields)) //T4 find type == nText 
+            {
+                entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.MAWB)) //T4 find type == nText 
+            {
+                entityPM.MAWB = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.MAWB));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.HAWB)) //T4 find type == nText 
+            {
+                entityPM.HAWB = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.HAWB));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.ShortHAWB)) //T4 find type == nText 
+            {
+                entityPM.ShortHAWB = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ShortHAWB));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.FlightNumber)) //T4 find type == nText 
+            {
+                entityPM.FlightNumber = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.FlightNumber));
+            }
+            entityPM.EncodeBase64NVARCHARFieldsBy=null;
+		}
+
+
+	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
+        {
+            CustomMappedPOCOProperties.Add(pocoPropertyName);
+        }
+
+        public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
+        {
+            CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+		
+		private void BuildSearchFieldsGenerated(CourierMasterPM entityPM, CourierMaster entityPOCO, bool isNewEntity)
+        {
+            string mySearchFields = "";
+			
+           
+            entityPM.SearchFields += mySearchFields;
+            entityPOCO.SearchFields += mySearchFields;
+        }
+			  
+   }
+}
+	 

@@ -1,0 +1,441 @@
+﻿
+
+
+<div  *ngIf="SharedManifestHeaderData" >
+
+    <table  *ngIf="SharedManifestHeaderData.ShipmentLevelCode!='C'">
+
+        <tr style="height:7px"><td colspan="6"><div style="height:7px"></div></td></tr>
+
+        <tr>
+
+
+            <td style="width:7px;"><div style="width:7px"></div></td>
+
+            <td style="width:20px;color:gray">
+                <div style="margin-top:3px">
+                    <img class="LeftCenter" src="./Images/Directions/I.png" />
+                </div>
+
+
+
+            </td>
+
+            <td style="width:7px;"><div style="width:7px"></div></td>
+
+            <td>
+                <table>
+                    <tr>
+                        <td style="width:33.3%">
+                            <table>
+                                <tr>
+                                    <td style="width:65px"><div style="color:#6E7172;font-size:12px;width:65px">Route:</div> </td>
+
+                                    <td style="width:100%;">
+
+                                        <div class="TextTrimming" style="width:175px;">
+                                            {{SharedManifestHeaderData.Route}}
+                                        </div>
+
+
+
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </td>
+                        <td style="width:33.3%">
+                            <table>
+                                <tr>
+                                    <td style="width:55px"><div style="color:#6E7172;font-size:12px;width:55px">Master:</div> </td>
+                                    <td style="width:100%;">
+                                        <div  class="TextTrimming" style="width:183px;">{{SharedManifestHeaderData.LongMaster}} </div>
+
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+
+                        <td style="width:33.3%">
+                            <table>
+                                <tr>
+                                    <td style="width:100px"><div style="color:#6E7172;font-size:12px;width:100px">Create Date:</div> </td>
+                                    <td style="width:100%;">
+                                        <div class="TextTrimming" style="width:145px">{{SharedManifestHeaderData.CreateDate | DateTimeToDatePipe}} {{SharedManifestHeaderData.CreateDate | DateTimeToTimePipe}}</div>
+
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+
+
+
+
+
+
+        </tr>
+
+        <tr style="height:7px"><td colspan="6"><div style="height:7px"></div></td></tr>
+
+        <tr>
+            <td style="width:7px;"><div style="width:7px;"></div></td>
+
+            <td style="width:20px;color:gray">
+                <img class="LeftCenter" *ngIf="SharedManifestHeaderData.TransportModeId == 'A'" src="./Images/Icons/A.png" />
+                <img class="LeftCenter" *ngIf="SharedManifestHeaderData.TransportModeId == 'O'" src="./Images/Icons/O.png" />
+                <img class="LeftCenter" *ngIf="SharedManifestHeaderData.TransportModeId == 'I'" src="./Images/Icons/I.png" />
+
+            </td>
+
+            <td style="width:7px;"><div style="width:7px"></div></td>
+            <td>
+                <table>
+                    <tr>
+                        <td style="width:33.3%">
+                            <table>
+                                <tr>
+                                    <td style="width:65px"><div style="color:#6E7172;font-size:12px;width:65px">Agent:</div> </td>
+
+                                    <td style="width:100%;">
+
+                                        <div  class="TextTrimming" style="width:175px">
+                                            {{SharedManifestHeaderData.AgentName}}
+                                        </div>
+
+
+
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </td>
+                        <td style="width:33.3%">
+                            <table>
+                                <tr>
+                                    <td style="width:55px"><div style="color:#6E7172;font-size:12px;width:55px">Shipper:</div> </td>
+                                    <td style="width:100%;">
+                                        <div class="TextTrimming" style="width:183px">{{SharedManifestHeaderData.ShipperName}} </div>
+
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+
+                        <td style="width:33.3%">
+                            <table>
+                                <tr>
+                                    <td style="width:100px"><div style="color:#6E7172;font-size:12px;width:100px">Shipment Type:</div> </td>
+                                    <td style="width:100%;">
+                                        <div  class="TextTrimming" style="width:145px">{{SharedManifestHeaderData.ShipmentLevelName}} </div>
+
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+
+        </tr>
+
+
+        <tr style="height:7px"><td colspan="6"><div style="height:7px"></div></td></tr>
+
+        <tr>
+            <td style="width:7px;"><div style="width:7px;"></div></td>
+
+            <td style="width:20px;"></td>
+            <td style="width:7px;"><div style="width:7px"></div></td>
+
+            <td>
+                <table>
+                    <tr>
+                        <td style="width:33.3%">
+                            <table>
+                                <tr>
+                                    <td style="width:65px"><div style="color:#6E7172;font-size:12px;width:65px">Agent Ref:</div> </td>
+
+                                    <td style="width:100%;">
+
+                                        <div  class="TextTrimming" style="width:175px">
+                                            {{SharedManifestHeaderData.AgentReference}}
+                                        </div>
+
+
+
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </td>
+                        <td style="width:33.3%">
+                            <table>
+                                <tr>
+                                    <td style="width:55px"><div style="color:#6E7172;font-size:12px;width:55px">Carrier:</div> </td>
+                                    <td style="width:100%;">
+                                        <div  class="TextTrimming" style="width:183px">{{SharedManifestHeaderData.CarrierName}} </div>
+
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+
+                        <td style="width:33.3%">
+                            <table>
+                                <tr>
+                                    <td style="width:100px"><div style="color:#6E7172;font-size:12px;width:100px">PP/CC:</div> </td>
+                                    <td style="width:100%;">
+                                        <div class="TextTrimming" style="width:145px">{{SharedManifestHeaderData.FreightPrepaidCollectId}}{{SharedManifestHeaderData.OtherPrepaidCollectId}} </div>
+
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+
+
+
+        </tr>
+
+        <tr style="height:7px"><td colspan="6"><div style="height:7px"></div></td></tr>
+    </table>
+
+    <table *ngIf="SharedManifestHeaderData.ShipmentLevelCode=='C'">
+
+        <tr style="height:7px"><td colspan="6"><div style="height:7px"></div></td></tr>
+
+        <tr>
+
+
+            <td style="width:7px;"><div style="width:7px"></div></td>
+
+            <td style="width:80px;color:gray">
+
+                <div style="margin-top:3px">
+                   
+                    <img class="LeftCenter" src="./Images/Directions/I.png" />
+                </div>
+
+            </td>
+
+            <td style="width:7px;"><div style="width:7px"></div></td>
+
+            <td>
+                <table>
+                    <tr>
+                        <td style="width:33.3%">
+                            <table>
+                                <tr>
+                                    <td style="width:70px"><div style="color:#6E7172;font-size:12px;width:70px">Agent:</div> </td>
+
+                                    <td style="width:100%;">
+
+                                        <div class="TextTrimming" style="width:160px;">
+                                            {{SharedManifestHeaderData.AgentName}}
+                                        </div>
+
+
+
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </td>
+
+                        <td style="width:33.3%">
+                            <table>
+                                <tr>
+                                    <td style="width:85px"><div style="color:#6E7172;font-size:12px;width:85px">Carrier:</div> </td>
+                                    <td style="width:100%;">
+                                        <div class="TextTrimming" style="width:145px;">{{SharedManifestHeaderData.CarrierName}} </div>
+
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+
+                        <td style="width:33.3%">
+                            <table>
+                                <tr>
+                                    <td style="width:85px"><div style="color:#6E7172;font-size:12px;width:85px">Create Date:</div> </td>
+                                    <td style="width:100%;">
+                                        <div class="TextTrimming" style="width:125px;">{{SharedManifestHeaderData.CreateDate | DateTimeToDatePipe}} {{SharedManifestHeaderData.CreateDate | DateTimeToTimePipe}}</div>
+
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+
+
+
+        </tr>
+
+        <tr style="height:7px"><td colspan="6"><div style="height:7px"></div></td></tr>
+
+        <tr>
+
+
+            <td style="width:7px;"><div style="width:7px"></div></td>
+
+            <td style="width:80px;color:gray">
+
+                <img class="LeftCenter" *ngIf="SharedManifestHeaderData.TransportModeId == 'A'" src="./Images/Icons/A.png" />
+                <img class="LeftCenter" *ngIf="SharedManifestHeaderData.TransportModeId == 'O'" src="./Images/Icons/O.png" />
+                <img class="LeftCenter" *ngIf="SharedManifestHeaderData.TransportModeId == 'I'" src="./Images/Icons/I.png" />
+
+            </td>
+
+            <td style="width:7px;"><div style="width:7px"></div></td>
+
+            <td>
+                <table>
+                    <tr>
+                        <td style="width:33.3%">
+                            <table>
+                                <tr>
+                                    <td style="width:70px"><div style="color:#6E7172;font-size:12px;width:70px">Agent Ref:</div> </td>
+
+                                    <td style="width:100%;">
+
+                                        <div class="TextTrimming" style="width:160px">
+                                            {{SharedManifestHeaderData.AgentReference}}
+                                        </div>
+
+
+
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </td>
+
+                        <td style="width:33.3%">
+                            <table>
+                                <tr>
+                                    <td style="width:85px"><div style="color:#6E7172;font-size:12px;width:85px">Master:</div> </td>
+                                    <td style="width:100%;">
+                                        <div class="TextTrimming" style="width:145px;">{{SharedManifestHeaderData.LongMaster}} </div>
+
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+
+                        <td style="width:33.3%">
+                            <table>
+                                <tr>
+                                    <td style="width:85px"><div style="color:#6E7172;font-size:12px;width:85px">Departure</div> </td>
+                                    <td style="width:100%;">
+                                        <div class="TextTrimming" style="width:125px;">{{SharedManifestHeaderData.MainCarriageATD | DateTimeToDatePipe}} {{SharedManifestHeaderData.MainCarriageATD | DateTimeToTimePipe}}</div>
+
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+
+
+
+        </tr>
+
+
+        <tr style="height:7px"><td colspan="6"><div style="height:7px"></div></td></tr>
+
+        <tr>
+
+
+            <td style="width:7px;"><div style="width:7px"></div></td>
+
+            <td style="width:80px;color:gray">
+
+                <div class="TextTrimming" style="width:80px;">
+                    {{SharedManifestHeaderData.ShipmentLevelName}}
+                </div>
+
+            </td>
+
+            <td style="width:7px;"><div style="width:7px"></div></td>
+
+            <td>
+                <table>
+                    <tr>
+                        <td style="width:33.3%">
+                            <table>
+                                <tr>
+                                    <td style="width:70px"><div style="color:#6E7172;font-size:12px;width:70px">PP/CC:</div> </td>
+                                    <td style="width:100%;">
+                                        <div class="TextTrimming" style="width:160px">{{SharedManifestHeaderData.FreightPrepaidCollectId}}{{SharedManifestHeaderData.OtherPrepaidCollectId}} </div>
+
+
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </td>
+
+                        <td style="width:33.3%">
+                            <table>
+                                <tr>
+                                    <td style="width:85px"><div style="color:#6E7172;font-size:12px;width:85px">Master Date:</div> </td>
+                                    <td style="width:100%;">
+                                        <div class="TextTrimming" style="width:145px;">{{SharedManifestHeaderData.MAWBOBLDate | DateTimeToDatePipe}} {{SharedManifestHeaderData.MasterDate | DateTimeToTimePipe}} </div>
+
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+
+                        <td style="width:33.3%">
+                            <table>
+                                <tr>
+                                    <td style="width:85px"><div style="color:#6E7172;font-size:12px;width:85px">Arrival:</div> </td>
+                                    <td style="width:100%;">
+                                        <div class="TextTrimming" style="width:125px;">{{SharedManifestHeaderData.MainCarriageETA | DateTimeToDatePipe}} {{SharedManifestHeaderData.MainCarriageETA | DateTimeToTimePipe}}</div>
+
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+
+
+
+        </tr>
+
+
+        <tr style="height:7px"><td colspan="6"><div style="height:7px"></div></td></tr>
+
+    </table>
+</div>
+
+

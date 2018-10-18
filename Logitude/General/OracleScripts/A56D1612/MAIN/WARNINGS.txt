@@ -1,0 +1,5 @@
+Severity: Medium
+Object: documentsmetadatatypes
+Title: RebuildTable
+The table documentsmetadatatypes will be rebuilt. To rebuild a table, the table is dropped and then recreated. A temporary table is used to store data when the table is dropped. Note that rebuilding a table can cause the deployment script to run slowly.
+----------------------------------------------------

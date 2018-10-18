@@ -1,0 +1,13 @@
+﻿<!ELEMENT CUSTOMCERTIFICATES_LU (CUSTOMCERTIFICATE.AMITAL*)>
+<!ELEMENT CUSTOMCERTIFICATE.AMITAL (DeclarationId?, Mode?, CustomFileNo?, Tenant?, CertificateGroup*, CustomerId?, TaxationDate?)>
+<!ELEMENT DeclarationId (#PCDATA)>
+<!ELEMENT Mode (#PCDATA)>
+<!ELEMENT CustomFileNo (#PCDATA)>
+<!ELEMENT Tenant (#PCDATA)>
+<!ELEMENT CustomerId (#PCDATA)>
+<!ELEMENT TaxationDate (#PCDATA)>
+<!ELEMENT CertificateGroup (ClassificationCode?, ItemCode?, OriginCountryCode?, VendorNumber?)>
+<!ELEMENT ClassificationCode (#PCDATA)>
+<!ELEMENT ItemCode (#PCDATA)>
+<!ELEMENT OriginCountryCode (#PCDATA)>
+<!ELEMENT VendorNumber (#PCDATA)>

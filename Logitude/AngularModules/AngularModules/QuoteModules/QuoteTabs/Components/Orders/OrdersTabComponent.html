@@ -1,0 +1,397 @@
+﻿
+<style type="text/css">
+    .RatioBox .NumericButtonDisabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+    .RatioBox .NumericButton:hover {
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(221, 232, 245, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(221, 232, 245, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+    }
+
+    .RatioBox .NumericButton {
+        width: 15px;
+        height: 10px;
+        border: 1px solid #6A8299;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        position: relative;
+    }
+
+    .RatioBox {
+        height: 22px;
+        min-height: 22px;
+        max-height: 22px;
+        line-height: 21px;
+        width: 70px;
+        border: 1px solid #AAAAAA;
+        outline: none;
+        font-size: 11px;
+        color: #45494A;
+        background: white;
+        border-radius: 3px;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        -moz-box-shadow: inset 0 0 3px #AAAAAA;
+        -webkit-box-shadow: inset 0 0 3px #AAAAAA;
+        box-shadow: inset 0 0 3px #AAAAAA;
+        overflow: hidden;
+    }
+</style>
+
+<div class="TabHolder">
+    <table>
+        <tr class="TabTitleRow">
+            <td>
+                <table>
+                    <tr>
+                        <td *ngIf="!IsLCLQuote">{{'Quote.TH.Overview' | TextCodeTranslationPipe}}</td>
+                        <td *ngIf="IsLCLQuote">{{'Quote.TH.Details' | TextCodeTranslationPipe}}</td>
+
+                        <td>
+                            <div></div>
+                        </td>
+
+                        <td style="width: 21px">
+                            <IconButton [Name]="'Settings'" [title]="MeasurmentsButtonToolTip" (click)="MeasurmentsSettingsClicked()"></IconButton>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <!-- Measurment -->
+        <tr style="height: 34px;" [hidden]="IsMeasurmentsHidden">
+            <td>
+                <table>
+                    <tr>
+                        <td>
+                            <div style="width: 145px; display: block; float:left;">
+                                <LogLabel [HideColumns]="true" [ObjectFieldName]="'GrossWeightUnitCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                <LogLov [ObjectFieldName]="'GrossWeightUnitCode'"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext"
+                                        [LookUpTableName]="'WeightUnit'"
+                                        [SelectedValue]="GrossWeightUnitCode"
+                                        [HideColumns]="true">
+                                </LogLov>
+                            </div>
+
+                            <div style="width: 170px; display: block; float:left; margin-left: 15px;">
+                                <LogLabel [HideColumns]="true" [ObjectFieldName]="'ChargeableWeightUnitCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="ChargeableWeightUnitCodeLabel"></LogLabel>
+                                <LogLov [ObjectFieldName]="'ChargeableWeightUnitCode'"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext"
+                                        [LookUpTableName]="'WeightUnit'"
+                                        [SelectedValue]="ChargeableWeightUnitCode"
+                                        [HideColumns]="true">
+                                </LogLov>
+                            </div>
+
+                            <div style="width: 140px; display: block; float:left; margin-left: 15px;">
+                                <LogLabel [HideColumns]="true" [ObjectFieldName]="'DimensionsUnitCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                <LogLov [ObjectFieldName]="'DimensionsUnitCode'"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext"
+                                        [LookUpTableName]="'DimensionsUnit'"
+                                        [SelectedValue]="DimensionsUnitCode"
+                                        [HideColumns]="true"
+                                        [DependencyFilter1Value]="DimensionsDependencyProperty1"
+                                        [DependencyFilter1IsList]="DimensionsDependencyProperty1IsList"                                        
+                                        >
+                                </LogLov>
+                            </div>
+
+                            <div style="width: 140px; display: block; float:left; margin-left: 15px;">
+                                <LogLabel [HideColumns]="true" [ObjectFieldName]="'VolumeUnitCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                <LogLov [ObjectFieldName]="'VolumeUnitCode'"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext"
+                                        [LookUpTableName]="'VolumeUnit'"
+                                        [SelectedValue]="VolumeUnitCode"
+                                        [HideColumns]="true">
+                                </LogLov>
+                            </div>
+
+                            <div style="width: 70px; display: block; float:left; margin-left: 15px;">
+                                <LogLabel [HideColumns]="true" [ObjectFieldName]="'Ratio'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+
+                                <div class="RatioBox" [class.NumericButtonDisabled]="!IsQuoteEditEnabled">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 15px; font-size: 11px; padding-left: 3px;">1:</td>
+
+                                            <td style="font-size: 11px; padding-left: 2px;">
+                                                {{Ratio | NumbersPipe:'N2'}}
+                                            </td>
+
+                                            <td style="width: 15px;">
+                                                <div class="NumericButton" [class.NumericButtonDisabled]="!IsQuoteEditEnabled" (mousedown)="NumericButtonClicked(true)">
+                                                    <img class="CenterCenter" style="height: 3px; width: 5px;" src="./Images/Buttons/Up.png" />
+                                                </div>
+                                                <div class="NumericButton" [class.NumericButtonDisabled]="!IsQuoteEditEnabled" (mousedown)="NumericButtonClicked(false)">
+                                                    <img class="CenterCenter" style="height: 3px; width: 5px;" src="./Images/Buttons/Down.png" />
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div style="width: 110px; display: block; float:left; margin-left: 2px;" *ngIf="IsDimFactorVisible">
+                                <LogLabel [HideColumns]="true" [ObjectFieldName]="'DimFactor'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                <LogTextBox [ObjectFieldName]="'DimFactor'" [Text]="DimFactor" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr style="height: 5px;">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <!-- Quote Details -->
+        <tr style="height:257px;">
+            <td>
+                <div class="MediaFill">
+                    <SectionBox>
+                        <SectionHead>{{'Quote.S.Details.QuoteDetails' | TextCodeTranslationPipe}}</SectionHead>
+                        <SectionBody>
+                            <table>
+                                <tr>
+                                    <td style="width:310px;">
+                                        <table>
+
+                                            <!-- Incoterm -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 110px;">
+                                                    <LogLabel [ObjectFieldName]="'IncotermId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 210px;">
+                                                    <LogLov [ObjectFieldName]="'IncotermId'"
+                                                            [SelectedValue]="IncotermId"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'Incoterm'">
+                                                    </LogLov>
+                                                </td>
+                                            </tr>
+
+                                            <!-- Move Type -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'MoveTypeId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'MoveTypeId'"
+                                                            [SelectedValue]="MoveTypeId"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'MoveType'"
+                                                            [DependencyFilter1Value]="TransportModeId">
+                                                    </LogLov>
+                                                </td>
+                                            </tr>
+
+                                            <!-- Expiration Days -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'ExpirationDays'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogTextBox [ObjectFieldName]="'ExpirationDays'"
+                                                                [ObjectTableName]="ObjectTableName"
+                                                                [DataContext]="DataContext"
+                                                                [Text]="ExpirationDays">
+                                                    </LogTextBox>
+                                                </td>
+                                            </tr>
+
+                                            <!-- Expiration Date -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'ExpirationDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'ExpirationDate'"
+                                                                   [SelectedDateValue]="ExpirationDate"
+                                                                   [ObjectTableName]="ObjectTableName"
+                                                                   [DataContext]="DataContext">
+                                                    </LogDatePicker>
+                                                </td>
+                                            </tr>
+
+                                            <!-- Expiration Time -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'ExpirationDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Quote.S.Details.ExpirationTime'"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'ExpirationDate'"
+                                                                   [SelectedDateValue]="ExpirationDate"
+                                                                   [ObjectTableName]="ObjectTableName"
+                                                                   [DataContext]="DataContext"
+                                                                   [InputType]="'time'">
+                                                    </LogDatePicker>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td colspan="2">
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width:10px;">
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td style="width:22px;">
+                                                                <LogCheckBox [ObjectFieldName]="'IsAutomaticallyClosed'"
+                                                                             [ObjectTableName]="ObjectTableName"
+                                                                             [DataContext]="DataContext"
+                                                                             [Checked]="IsAutomaticallyClosed"
+                                                                             [HideColumns]="true">
+                                                                </LogCheckBox>
+                                                            </td>
+
+                                                            <td class="Label" style="width:1px;">{{'Quote.S.Details.CloseAutomatically' | TextCodeTranslationPipe}}</td>
+
+                                                            <td style="width:5px;">
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td style="width:43px;">
+                                                                <LogTextBox [ObjectFieldName]="'AutomaticallyCloseDays'"
+                                                                            [ObjectTableName]="ObjectTableName"
+                                                                            [DataContext]="DataContext"
+                                                                            [HideColumns]="true"
+                                                                            [Text]="AutomaticallyCloseDays">
+                                                                </LogTextBox>
+                                                            </td>
+
+                                                            <td style="width:3px;">
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td class="Label">{{'Quote.S.Details.Days' | TextCodeTranslationPipe}}</td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'AutomaticallyCloseDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'AutomaticallyCloseDate'"
+                                                                   [SelectedDateValue]="AutomaticallyCloseDate"
+                                                                   [ObjectTableName]="ObjectTableName"
+                                                                   [DataContext]="DataContext">
+                                                    </LogDatePicker>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                        </table>
+                                    </td>
+
+                                    <td style="width:10px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width:340px;">
+                                        <table>
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 130px;">
+                                                    <LogLabel [ObjectFieldName]="'TransitTime'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 210px;">
+                                                    <LogTextBox [ObjectFieldName]="'TransitTime'"
+                                                                [ObjectTableName]="ObjectTableName"
+                                                                [DataContext]="DataContext"
+                                                                [Text]="TransitTime">
+                                                    </LogTextBox>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'DepartureFrequency'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogTextBox [ObjectFieldName]="'DepartureFrequency'"
+                                                                [ObjectTableName]="ObjectTableName"
+                                                                [DataContext]="DataContext"
+                                                                [Text]="DepartureFrequency">
+                                                    </LogTextBox>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </SectionBody>
+                    </SectionBox>
+                </div>
+            </td>
+        </tr>
+
+        <tr style="height:10px;">
+            <td>
+                <div></div>
+            </td>
+        </tr>
+
+        <!-- General Details -->
+        <tr>
+            <td>
+                <div class="MediaFill">
+                    <SectionBox [Scrolling]="true">
+                        <SectionHead>{{'Quote.S.Details.GeneralDetails' | TextCodeTranslationPipe}}</SectionHead>
+                        <SectionBody>
+                            <div [class.NewQuoteFieldsDisabled]="!IsQuoteEditEnabled">
+                                <div class="LocationDirective" #Child></div>
+                            </div>
+                        </SectionBody>
+                    </SectionBox>
+                </div>                
+            </td>
+        </tr>
+
+    </table>
+</div>
+

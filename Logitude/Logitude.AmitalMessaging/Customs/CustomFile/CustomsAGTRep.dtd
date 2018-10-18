@@ -1,0 +1,17 @@
+﻿<!ELEMENT CustomsAGT (CustomsAGTRep*)>
+<!ELEMENT CustomsAGTRep (MasavSentDate?, CustomsFile?, DeclarationNum?, AgentMasavPayment*)>
+<!ELEMENT MasavSentDate (#PCDATA)>
+<!ELEMENT CustomsFile (#PCDATA)>
+<!ELEMENT DeclarationNum (#PCDATA)>
+<!ELEMENT AgentMasavPayment (PaymentID?, PaymentMethodAmount?, PaymentType?, Bank?, Branch?, AccountNumber?, PaymentProcess?, AccountingCustomsFile?, AGTEntity*)>
+<!ELEMENT PaymentID (#PCDATA)>
+<!ELEMENT PaymentMethodAmount (#PCDATA)>
+<!ELEMENT PaymentType (#PCDATA)>
+<!ELEMENT Bank (#PCDATA)>
+<!ELEMENT Branch (#PCDATA)>
+<!ELEMENT AccountNumber (#PCDATA)>
+<!ELEMENT PaymentProcess (#PCDATA)>
+<!ELEMENT AccountingCustomsFile (#PCDATA)>
+<!ELEMENT AGTEntity (Primary?, Entname?)>
+<!ELEMENT Primary (#PCDATA)>
+<!ELEMENT Entname (#PCDATA)>

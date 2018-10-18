@@ -1,0 +1,377 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Customs.Def.Validators;
+  
+namespace Logitude.Customs.Def.EntityPMs
+{
+   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class SupplierInvoiceItemVehicleAddPM : EntityPM
+   {
+   	  private string declarationId ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DeclarationId  
+	   {
+	    
+	     get
+		{
+		   return declarationId;
+		 }
+		 set
+		 {
+		   if(declarationId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeclarationId",OldValue=declarationId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   declarationId=value;
+		   }
+			
+		 }
+	   }
+	  private int invoiceCounterKey ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int InvoiceCounterKey  
+	   {
+	    
+	     get
+		{
+		   return invoiceCounterKey;
+		 }
+		 set
+		 {
+		   if(invoiceCounterKey != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InvoiceCounterKey",OldValue=invoiceCounterKey,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   invoiceCounterKey=value;
+		   }
+			
+		 }
+	   }
+	  private int invoiceItemLineNumber ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int InvoiceItemLineNumber  
+	   {
+	    
+	     get
+		{
+		   return invoiceItemLineNumber;
+		 }
+		 set
+		 {
+		   if(invoiceItemLineNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InvoiceItemLineNumber",OldValue=invoiceItemLineNumber,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   invoiceItemLineNumber=value;
+		   }
+			
+		 }
+	   }
+	  private int lineNumber ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int LineNumber  
+	   {
+	    
+	     get
+		{
+		   return lineNumber;
+		 }
+		 set
+		 {
+		   if(lineNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LineNumber",OldValue=lineNumber,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   lineNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string vehicleModel ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string VehicleModel  
+	   {
+	    
+	     get
+		{
+		   return vehicleModel;
+		 }
+		 set
+		 {
+		   if(vehicleModel != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VehicleModel",OldValue=vehicleModel,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   vehicleModel=value;
+		   }
+			
+		 }
+	   }
+	  private string richbitNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string RichbitNumber  
+	   {
+	    
+	     get
+		{
+		   return richbitNumber;
+		 }
+		 set
+		 {
+		   if(richbitNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RichbitNumber",OldValue=richbitNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   richbitNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string chassisNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ChassisNumber  
+	   {
+	    
+	     get
+		{
+		   return chassisNumber;
+		 }
+		 set
+		 {
+		   if(chassisNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChassisNumber",OldValue=chassisNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   chassisNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string engineNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string EngineNumber  
+	   {
+	    
+	     get
+		{
+		   return engineNumber;
+		 }
+		 set
+		 {
+		   if(engineNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EngineNumber",OldValue=engineNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   engineNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string windowNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string WindowNumber  
+	   {
+	    
+	     get
+		{
+		   return windowNumber;
+		 }
+		 set
+		 {
+		   if(windowNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="WindowNumber",OldValue=windowNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   windowNumber=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? vehicleValue ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? VehicleValue  
+	   {
+	    
+	     get
+		{
+		   return vehicleValue;
+		 }
+		 set
+		 {
+		   if(vehicleValue != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VehicleValue",OldValue=vehicleValue,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   vehicleValue=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? chassisTax ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? ChassisTax  
+	   {
+	    
+	     get
+		{
+		   return chassisTax;
+		 }
+		 set
+		 {
+		   if(chassisTax != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChassisTax",OldValue=chassisTax,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   chassisTax=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? chassisPurchaseTax ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? ChassisPurchaseTax  
+	   {
+	    
+	     get
+		{
+		   return chassisPurchaseTax;
+		 }
+		 set
+		 {
+		   if(chassisPurchaseTax != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChassisPurchaseTax",OldValue=chassisPurchaseTax,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   chassisPurchaseTax=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? chassisVat ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? ChassisVat  
+	   {
+	    
+	     get
+		{
+		   return chassisVat;
+		 }
+		 set
+		 {
+		   if(chassisVat != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChassisVat",OldValue=chassisVat,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   chassisVat=value;
+		   }
+			
+		 }
+	   }
+	  private string exempt_type ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Exempt_type  
+	   {
+	    
+	     get
+		{
+		   return exempt_type;
+		 }
+		 set
+		 {
+		   if(exempt_type != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Exempt_type",OldValue=exempt_type,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   exempt_type=value;
+		   }
+			
+		 }
+	   }
+	  private int tenant ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BD959AB6-4476-48B3-AA4D-CFD7ED120E55}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Logitude.Infrastructure.BL</RootNamespace>
+    <AssemblyName>Logitude.Infrastructure.BL</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\General\Dlls\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\General\Dlls\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CloseTables\DetailsClassesGenerated\BatchTaskExecutionStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\BatchTaskExecutionStatusStruct.Generated.cs" />
+    <Compile Include="EntityDataMappings\BatchTaskExecutionDataMapping.cs" />
+    <Compile Include="EntityDataMappings\BatchTaskExecutionStatusDataMapping.cs" />
+    <Compile Include="EntityDataMappings\BusinessProcessQueueDataMapping.cs" />
+    <Compile Include="EntityDataMappings\BusinessRoleDataMapping.cs" />
+    <Compile Include="EntityDataMappings\Generated\BatchTaskExecutionDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\BatchTaskExecutionStatusDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\BusinessProcessQueueDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\BusinessRoleDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\LBPTeamMemberDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\SharedLogisticsSettingDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TeamDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TeamMemberBusinessRoleDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\LBPTeamMemberDataMapping.cs" />
+    <Compile Include="EntityDataMappings\SharedLogisticsSettingDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TeamDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TeamMemberBusinessRoleDataMapping.cs" />
+    <Compile Include="EntityPMs\Generated\BatchTaskExecutionPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\BatchTaskExecutionStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\BusinessProcessQueuePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\BusinessRolePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\LBPTeamMemberPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SharedLogisticsSettingPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\TeamMemberBusinessRolePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\TeamPM.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\BatchTaskExecutionQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\BatchTaskExecutionStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\BusinessProcessQueueQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\BusinessRoleQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\LBPTeamMemberQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\SharedLogisticsSettingQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TeamMemberBusinessRoleQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TeamQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\LBPTeamMemberQueryService.cs" />
+    <Compile Include="EntityQueryServices\TeamQueryService.cs" />
+    <Compile Include="EntityUpdateServices\BatchTaskExecutionUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\BusinessRoleUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\Generated\BatchTaskExecutionStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\BatchTaskExecutionUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\BusinessProcessQueueUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\BusinessRoleUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\LBPTeamMemberUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\SharedLogisticsSettingUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\TeamMemberBusinessRoleUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\TeamUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\LBPTeamMemberUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\TeamMemberBusinessRoleUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\TeamUpdateService.cs" />
+    <Compile Include="ExtendedServices\BatchTaskExecutionsService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validators\InfrastructureTranslateTextsClass.cs" />
+    <Compile Include="Validators\InfrastructureValidationClass.cs" />
+    <Compile Include="Validators\InfrastructureValidationClass.Shared.cs" />
+    <Compile Include="Validators\InfrastructureClassLevelValidator.cs" />
+    <Compile Include="Validators\InfrastructureClassLevelValidator.Shared.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <Compile Include="EntityUpdateServices\BusinessProcessQueueUpdateService.cs" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="APIDataContract\" />
+    <Folder Include="DataContracts\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="TraceEvents\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
+      <Project>{a663e7ef-b858-4bb6-bc33-e473f51b8e56}</Project>
+      <Name>Logitude.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Infrastructure.Data\Logitude.Infrastructure.Data.csproj">
+      <Project>{b02e4d92-9226-4f3f-990f-66c7f66e9316}</Project>
+      <Name>Logitude.Infrastructure.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
+      <Project>{9b477a08-8ee2-4457-88fe-17e8a6ec4d00}</Project>
+      <Name>Logitude.Server.Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
+      <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
+      <Name>Simplog.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Global.Data.csproj">
+      <Project>{6d7ffad2-35b6-4133-8700-cf73e58d0c85}</Project>
+      <Name>Simplog.Global.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
+      <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
+      <Name>Simplog.Server.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

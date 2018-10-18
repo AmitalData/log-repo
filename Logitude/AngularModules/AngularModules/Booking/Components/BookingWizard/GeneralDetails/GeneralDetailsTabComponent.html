@@ -1,0 +1,269 @@
+﻿
+<div class="ScrollViewer">
+    <div class="ScrollContent">
+        <div class="TableHolder">
+            <table>
+                <tr>
+                    <td style="width: 300px;">
+                        <table>
+
+                            <!-- Booking Product -->
+                            <tr class="FormFieldRow" *ngIf="IsBookingProductVisibile">
+                                <td style="width: 140px;">
+                                    <LogLabel [ObjectFieldName]="'BookingProductId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [ShowWarning]="ShowWarning_BookingProduct"></LogLabel>
+                                </td>
+
+                                <td style="width: 125px;">
+                                    <LogLov [ObjectFieldName]="'BookingProductId'"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'BookingProduct'"
+                                            [DependencyFilter1Value]="TenantZeroAirlineId">
+                                    </LogLov>
+                                </td>
+
+                            </tr>
+
+                            <!-- Carrier Tarrif Reference -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 140px;">
+                                    <LogLabel [ObjectFieldName]="'AWBCarrierTarrifReference'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [ShowWarning]="ShowWarning_TarrifReference"></LogLabel>
+                                </td>
+
+                                <td style="width: 125px;">
+                                    <LogTextBox [ObjectFieldName]="'AWBCarrierTarrifReference'" [Text]="AWBCarrierTarrifReference" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+
+                            </tr>
+
+                            <!-- Special Handling Codes -->
+                            <tr style="height: auto;">
+                                <td colspan="2">
+                                    <table>
+                                        <tr style="height: 25px;">
+                                            <td style="vertical-align: bottom;">
+                                                <LogLabel [ObjectFieldName]="'AWBSpecialHandlingCodeId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [ShowWarning]="ShowWarning_AWBSpecialHandlingCodes"></LogLabel>
+                                            </td>
+                                        </tr>
+
+                                        <tr style="height: 25px;">
+                                            <td>
+                                                <table class="FixedTable">
+                                                    <tr>
+                                                        <td>
+                                                            <LogLov [ObjectFieldName]="'AWBSpecialHandlingCodeId1'"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'AWBSpecialHandlingCode'"
+                                                                    [DependencyFilter1Value]="TenantZeroAirlineId">
+                                                            </LogLov>
+                                                        </td>
+
+                                                        <td style="width: 2px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogLov [ObjectFieldName]="'AWBSpecialHandlingCodeId2'"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'AWBSpecialHandlingCode'"
+                                                                    [DependencyFilter1Value]="TenantZeroAirlineId">
+                                                            </LogLov>
+                                                        </td>
+
+                                                        <td style="width: 2px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogLov [ObjectFieldName]="'AWBSpecialHandlingCodeId3'"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'AWBSpecialHandlingCode'"
+                                                                    [DependencyFilter1Value]="TenantZeroAirlineId">
+                                                            </LogLov>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr style="height: 25px;">
+                                            <td>
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <LogLov [ObjectFieldName]="'AWBSpecialHandlingCodeId4'"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'AWBSpecialHandlingCode'"
+                                                                    [DependencyFilter1Value]="TenantZeroAirlineId">
+                                                            </LogLov>
+                                                        </td>
+
+                                                        <td style="width: 2px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogLov [ObjectFieldName]="'AWBSpecialHandlingCodeId5'"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'AWBSpecialHandlingCode'"
+                                                                    [DependencyFilter1Value]="TenantZeroAirlineId">
+                                                            </LogLov>
+                                                        </td>
+
+                                                        <td style="width: 2px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogLov [ObjectFieldName]="'AWBSpecialHandlingCodeId6'"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'AWBSpecialHandlingCode'"
+                                                                    [DependencyFilter1Value]="TenantZeroAirlineId">
+                                                            </LogLov>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr style="height: 25px;">
+                                            <td>
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <LogLov [ObjectFieldName]="'AWBSpecialHandlingCodeId7'"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'AWBSpecialHandlingCode'"
+                                                                    [DependencyFilter1Value]="TenantZeroAirlineId">
+                                                            </LogLov>
+                                                        </td>
+
+                                                        <td style="width: 2px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogLov [ObjectFieldName]="'AWBSpecialHandlingCodeId8'"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'AWBSpecialHandlingCode'"
+                                                                    [DependencyFilter1Value]="TenantZeroAirlineId">
+                                                            </LogLov>
+                                                        </td>
+
+                                                        <td style="width: 2px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td style="width:100px;">
+                                                            <!--<LogLov [ObjectFieldName]="'AWBSpecialHandlingCodeId9'"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'AWBSpecialHandlingCode'"
+                                                                    [DependencyFilter1Value]="TenantZeroAirlineId">
+                                                            </LogLov>-->
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <!-- Special Service Request -->
+                            <tr style="height: auto;">
+                                <td colspan="2">
+                                    <table>
+                                        <tr style="height: 25px;">
+                                            <td style="vertical-align: bottom;">
+                                                <LogLabel [ObjectFieldName]="'SpecialServicesRequest'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [ShowWarning]="ShowWarning_SpecialServicesRequest"></LogLabel>
+                                            </td>
+                                        </tr>
+                                        <tr style="height: 60px;">
+                                            <td style="height: 60px; vertical-align: top;">
+                                                <div style="height: 100%; width: 100%;">
+                                                    <LogTextBox [ObjectFieldName]="'SpecialServicesRequest'" [Text]="SpecialServicesRequest" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <!-- Other Services Information -->
+                            <tr style="height: auto;">
+                                <td colspan="2">
+                                    <table>
+                                        <tr style="height: 25px;">
+                                            <td style="vertical-align: bottom;">
+                                                <LogLabel [ObjectFieldName]="'OtherServicesInformation'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [ShowWarning]="ShowWarning_OtherServicesInformation"></LogLabel>
+                                            </td>
+                                        </tr>
+                                        <tr style="height: 60px;">
+                                            <td style="height: 60px; vertical-align: top;">
+                                                <div style="height: 100%; width: 100%;">
+                                                    <LogTextBox [ObjectFieldName]="'OtherServicesInformation'" [Text]="OtherServicesInformation" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="2">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td style="width: 30px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 300px;">
+                        <table>
+                            <!-- Notes -->
+                            <tr style="height: 1px;">
+                                <td>
+                                    <table>
+                                        <tr style="height: 25px;">
+                                            <td style="vertical-align: bottom;">
+                                                <LogLabel [ObjectFieldName]="'Notes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                        </tr>
+                                        <tr style="height: 80px;">
+                                            <td style="height: 80px; vertical-align: top;">
+                                                <div style="height: 100%; width: 100%;">
+                                                    <LogTextBox [ObjectFieldName]="'Notes'" [Text]="Notes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

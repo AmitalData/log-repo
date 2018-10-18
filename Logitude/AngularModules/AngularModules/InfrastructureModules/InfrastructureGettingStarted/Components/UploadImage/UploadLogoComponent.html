@@ -1,0 +1,444 @@
+﻿
+<style>
+        .iwanttohover:hover {
+            background: #DDE6F0;
+        }
+
+        .warp {
+        width:400px;
+
+        word-wrap: break-word;
+    }
+
+
+       /*.custom-file-input::-webkit-file-upload-button {
+      visibility: hidden;
+    }
+
+       .custom-file-input {
+            display: inline-block;
+            position: relative;
+            color: #533e00;
+        }
+        .custom-file-input input {
+            visibility: hidden;
+            width: 100px;
+        }
+        .custom-file-input:before {
+            content: 'Upload';
+
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(221, 232, 245, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(221, 232, 245, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+        padding: 5px 0px;
+        text-align: center;
+        font-size: 10pt;
+        left: 0;
+        right: 0;
+        display: block;
+        outline: none;
+        text-align: center;
+        font-size: 11px;
+        color: #45494A;
+        width: 100%;
+        height: 22px;
+        border: 1px solid #6A8299;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        text-shadow: 1px 1px white;
+        position: relative;
+        cursor: pointer;
+        }
+        .custom-file-input:hover:before {
+        border: 1px solid #3BB3E2;
+        -webkit-box-shadow: 0px 0px 6px 0px #3BB3E2;
+        -moz-box-shadow: 0px 0px 6px 0px #3BB3E2;
+        box-shadow: 0px 0px 6px 0px #3BB3E2;
+        }
+            .custom-file-input:active:before {
+        border: 1px solid #3BB3E2;
+        -webkit-box-shadow: 0px 0px 6px 0px #3BB3E2;
+        -moz-box-shadow: 0px 0px 6px 0px #3BB3E2;
+        box-shadow: 0px 0px 6px 0px #3BB3E2;
+        }*/
+
+
+
+
+
+
+
+</style>
+
+<table>
+    <tr>
+        <td>
+            <ScrollViewer>
+                <table>
+
+                    <tr *ngIf="DemoMessageVisibility" style="height: 1px">
+                        <td>
+                            <div style="height:25px;border-radius:5px;background-color:#FFFBDA;border:2px solid #FFDEA1;">
+                                <table>
+                                    <tr>
+                                        <td style="width:3px;">
+                                            <div style="width:3px"></div>
+                                        </td>
+                                        <td style="font-size:12px;vertical-align:central">
+                                            This is a demo tenant, therefore you can't edit the system settings
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr style="height:20px">
+                        <td>
+                            <table>
+                                <tr>
+                                    <td class="warp">
+                                        <p class="warp" style="font-size:11px;color:gray;font-family:Arial ">Your company logo will appear in all outgoing documents and messages To upload it: Click the Upload button.</p>
+                                    </td>
+
+                                </tr>
+
+                            </table>
+                        </td>
+                    </tr>
+
+
+                    <tr style="height:10px;">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="height:22px;">
+                            <table>
+
+                                <tr style="height:22px">
+
+                                    <td style="width: 57px;margin-left:10px">
+                                        <button [class.HyperlinkDisabled]="DemoMessageVisibility" style="width: 57px;" class="Button" (click)="OpenUpLoadLogo()">Upload</button>
+                                        <input [attr.id]="LogoFileHtmlId" accept=".jpg,.jpeg,.JPG,.JPEG" type="file" [(ngModel)]="DataImage" (change)="UploadogoFile($event)" style="display:none" class="upload" />
+                                    </td>
+
+                                    <td *ngIf="ShowUploadVerySmallLogo" style="width: 10px;">
+                                        <div style="width:10px"></div>
+                                    </td>
+
+                                    <td *ngIf="ShowUploadVerySmallLogo" style="width: 120px;">
+                                        <button [class.HyperlinkDisabled]="DemoMessageVisibility" style="width:120px;" class="Button" (click)="OpenUpLoadMobileLogo()">Upload Mobile Logo</button>
+                                        <input accept=".png,.PNG" [attr.id]="MobileLogoFileHtmlId" type="file" [(ngModel)]="DataImage" (change)="UploadMobileLogoFile($event)" style="display:none" class="upload" />
+                                    </td>
+
+
+                                    <td *ngIf="ShowUploadSharedLogisLogo" style="width: 10px;">
+                                        <div style="width:10px"></div>
+                                    </td>
+
+                                    <td *ngIf="ShowUploadSharedLogisLogo" style="width: 120px;">
+                                        <button [class.HyperlinkDisabled]="DemoMessageVisibility" style="width:170px;" class="Button" (click)="OpenUpLoadSharedLogisticsLogo()">Upload Shared Logistics Logo</button>
+                                        <input accept=".png,.PNG" [attr.id]="SharedLogisticsLogoFileHtmlId" type="file" [(ngModel)]="DataImage" (change)="UploadSharedLogisticsLogoFile($event)" style="display:none" class="upload" />
+                                    </td>
+
+                                    <td style="width:10px;">
+                                        <div style="width:10px"></div>
+                                    </td>
+
+
+                                    <td style="text-align:left;">
+                                        <img *ngIf="IsShowProgressLoading" style="height:25px;margin-top:-5px" src="Images/progress2.gif" />
+
+                                        <span *ngIf="IsShowMessageComplate" style="font-size:12px; color:#6E7172">File resized and uploaded successfully</span>
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+
+
+                                </tr>
+
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr style="height:10px;">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <tr style="height:20px;">
+                        <td>
+                            <table>
+                                <tr>
+                                    <td style="width:300px">
+                                        <div style="font-size:12px;color:gray;width:178px">mainly used for document</div>
+                                    </td>
+                                    <td style="width:20px;"></td>
+                                    <td>
+                                        <div style="font-size:12px;color:gray">mainly used for signature and e-mail </div>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <table>
+                                <tr>
+                                    <td style="vertical-align:top;width:300px">
+
+
+                                        <div style="height:315px;width:300px;vertical-align:top; border-right:2px solid #E4E3E1;border-left:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-radius:5px">
+                                            <table style="height:100%;width:100%; ">
+
+                                                <tr>
+
+                                                    <td>
+                                                        <div style="background-color:#EDEDED;height:25px;color:black;border-top:2px solid #E4E3E1;border-bottom:0px solid gray;border-radius:0px">
+                                                            <p style="font-size:12px;margin-left:5px;margin-top:0px;color:#1B90CB;text-align:left;vertical-align:central">logo (300 pixles)</p>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr style="height:100%">
+                                                    <td align="center" style="height:100%;vertical-align:central">
+
+                                                        <div valign="center" align="center" style="vertical-align:top;background-color:white;text-align:center;height:288px">
+                                                            <img style="width:auto;  top: 2px; left: 0; right: 0;bottom: 2px; margin: auto;vertical-align:central;height:auto;background-color:white;max-width: 100%;max-height: 100%;position: absolute;border:0px solid #ffffff" [attr.id]="logoHtmlId" src="#" />
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+
+
+                                            </table>
+
+
+
+
+                                        </div>
+
+
+
+                                    </td>
+
+                                    <td style="width:10px;">
+                                        <div style="width:15px"></div>
+                                    </td>
+
+                                    <td style="text-align:left;width:160px;">
+                                        <table style="text-align:left;">
+
+                                            <!--SmallLogo Logo Area-->
+                                            <tr style="vertical-align:top">
+                                                <td style="vertical-align:top">
+
+                                                    <div style="height:175px;width:153px;vertical-align:top; border-right:2px solid #E4E3E1;border-left:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-radius:5px">
+                                                        <table style="height:100%;width:100%; ">
+
+                                                            <tr>
+
+                                                                <td>
+                                                                    <div style="background-color:#EDEDED;height:25px;color:black;border-top:2px solid #E4E3E1;border-bottom:0px solid gray;border-radius:0px">
+                                                                        <p style="font-size:12px;margin-left:5px;margin-top:0px;color:#1B90CB;text-align:left;vertical-align:central">Small Logo (150 pixles)</p>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr style="height:100%">
+                                                                <td align="center" style="height:100%;vertical-align:central">
+
+                                                                    <div valign="center" align="center" style="vertical-align:top;background-color:white;text-align:center;height:145px">
+
+
+
+                                                                        <img style="width:auto; top: 0; left: 0; right: 0;bottom: 0; margin: auto;vertical-align:central;height:auto;background-color:white;max-width: 100%;max-height: 100%;position: absolute;border:0px solid #ffffff" [attr.id]="SmalllogoHtmlId" src="#" />
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+
+
+
+                                                        </table>
+
+
+
+
+                                                    </div>
+
+
+                                                </td>
+                                            </tr>
+
+
+
+                                            <!--VerySmallLogo Logo Area-->
+                                            <tr *ngIf="ShowUploadVerySmallLogo" style="height:20px">
+                                                <td>
+                                                    <div style="font-size:12px;color:gray;">mainly used for the mobile app</div>
+                                                </td>
+                                            </tr>
+
+                                            <tr *ngIf="ShowUploadVerySmallLogo" style="vertical-align:central;text-align:center">
+                                                <td>
+
+
+                                                    <!--abed-->
+                                                    <div style="height:90px;width:153px;vertical-align:top; border-right:2px solid #E4E3E1;border-left:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-radius:5px">
+                                                        <table style="height:100%;width:100%; ">
+
+                                                            <tr>
+
+                                                                <td>
+                                                                    <div style="background-color:#EDEDED;height:25px;color:black;border-top:2px solid #E4E3E1;border-bottom:0px solid gray;border-radius:0px">
+                                                                        <p style="font-size:12px;margin-left:5px;margin-top:0px;color:#1B90CB;text-align:left;vertical-align:central">Mobile Logo (65 pixles)</p>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr style="height:100%">
+                                                                <td align="center" style="height:100%;vertical-align:central">
+
+                                                                    <div valign="center" align="center" style="vertical-align:top;background-color:white;text-align:center;height:63px">
+
+
+
+                                                                        <img style="width:auto;  top: 0; left: 0; right: 0;bottom: 0; margin: auto;vertical-align:central;height:auto;background-color:white;max-width: 100%;max-height: 100%;position: absolute;border:0px solid #ffffff" [attr.id]="MobilelogoHtmlId" src="#" />
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+
+
+
+                                                        </table>
+
+
+
+
+                                                    </div>
+
+                                                </td>
+                                            </tr>
+
+
+
+                                            <!--Shared Logistics Logo Area-->
+
+                                            <tr *ngIf="ShowUploadSharedLogisLogo && !ShowUploadVerySmallLogo" style="height:10px">
+                                                <td style="height:10px"></td>
+                                            </tr>
+
+                                            <tr *ngIf="ShowUploadSharedLogisLogo" style="height:20px">
+                                                <td>
+                                                    <div style="font-size:12px;color:gray">mainly used for the  shared logistics app</div>
+                                                </td>
+                                            </tr>
+
+                                            <tr *ngIf="ShowUploadSharedLogisLogo" style="vertical-align:central;text-align:center">
+                                                <td>
+
+
+                                                    <!--abed-->
+                                                    <div style="height:90px;width:205px;vertical-align:top; border-right:2px solid #E4E3E1;border-left:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-radius:5px">
+                                                        <table style="height:100%;width:100%; ">
+
+                                                            <tr>
+
+                                                                <td>
+                                                                    <div style="background-color:#EDEDED;height:25px;color:black;border-top:2px solid #E4E3E1;border-bottom:0px solid gray;border-radius:0px">
+                                                                        <p style="font-size:12px;margin-left:5px;margin-top:0px;color:#1B90CB;text-align:left;vertical-align:central">Shared Logistics Logo (65 pixles)</p>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr style="height:100%">
+                                                                <td align="center" style="height:100%;vertical-align:central">
+
+                                                                    <div valign="center" align="center" style="vertical-align:top;background-color:white;text-align:center;height:60px">
+
+
+
+                                                                        <img style="width:auto;  top: 0; left: 0; right: 0;bottom: 0; margin: auto;vertical-align:central;height:auto;background-color:white;max-width: 100%;max-height: 100%;position: absolute;border:0px solid #ffffff" [attr.id]="SharedLogisticsLogoHtmlId" src="#" />
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+
+
+
+                                                        </table>
+
+
+
+
+                                                    </div>
+
+                                                </td>
+                                            </tr>
+
+
+                                            <tr style="height:100%">
+                                                <td style="height:100%"></td>
+                                            </tr>
+
+
+
+
+                                        </table>
+                                    </td>
+
+
+                                    <td style="width:100%;">
+                                        <div style="width:100%"></div>
+                                    </td>
+
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                </table>
+            </ScrollViewer>
+</td>
+    </tr>
+
+    <tr *ngIf="!IsHideAreaCloseButton" style="height: 32px;">
+        <td colspan="2" style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <div>
+                            <!--<button class="Button" (click)="CloseButtonClicked()">Cancel</button>-->
+                        </div>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td d style="width: 57px;">
+                        <button class="Button" (click)="SaveButtonClicked()">Close</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+

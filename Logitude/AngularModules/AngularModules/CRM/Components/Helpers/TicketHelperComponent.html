@@ -1,0 +1,86 @@
+﻿<style type="text/css">
+    /* The CSS */
+    .styled-select {
+        width: 250px;
+    }
+
+        .styled-select ul {
+            padding: 3px;
+            margin: 0;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            /*-webkit-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+            -moz-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+            box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;*/
+            background-color: #08AA63;
+            color: white;
+            border: none;
+            outline: none;
+            display: inline-block;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            cursor: pointer;
+            width: 100% !important;
+        }
+
+            .styled-select ul li {
+                background-color: #f8f8f8;
+                color: black;
+                width: 100% !important;
+            }
+
+    /* Targetting Webkit browsers only. FF will show the dropdown arrow with so much padding. */
+    @media screen and (-webkit-min-device-pixel-ratio:0) {
+        .styled-select ul {
+            padding-right: 18px;
+        }
+    }
+
+    .styled-select label {
+        position: relative;
+        width: 100% !important;
+    }
+
+        .styled-select label:after {
+            content: '>';
+            color: #aaa;
+            font: 11px "Consolas", monospace;
+            -webkit-transform: rotate(90deg);
+            -moz-transform: rotate(90deg);
+            -ms-transform: rotate(90deg);
+            transform: rotate(90deg);
+            right: 8px;
+            top: 2px;
+            padding: 0 0 2px;
+            border-bottom: 1px solid #ddd;
+            position: absolute;
+            pointer-events: none;
+            background-color: blue;
+        }
+
+        .styled-select label:before {
+            content: '';
+            right: 6px;
+            top: 0px;
+            width: 20px;
+            height: 20px;
+            background-color: #f8f8f8;
+            position: absolute;
+            pointer-events: none;
+            display: block;
+        }
+</style>
+
+<table style="height: 24px;">
+    <tr style="height: 24px;width:100%;">
+        <!--<td style="width:250px;">
+            <ComboBox style="width:250px;display:flex;" [ItemsSource]="StagesList" (SelectedItemChanged)="OptionSelectionChanged($event)" [IsGreenButton]="true" [SelectedItem]="StageButtonContent" [Binding]="'Name'"></ComboBox>
+        </td>-->
+        <td style="width:250px;float:left;">
+            <div class="MediaFill">
+                <SendButton [ItemsSource]="StagesList" (SelectedItemChanged)="OptionSelectionChanged($event)" [SelectedItem]="StageButtonContent" [Binding]="'Name'"></SendButton>
+            </div>
+        </td>
+    </tr>
+</table>

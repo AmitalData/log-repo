@@ -1,0 +1,5 @@
+Severity: High
+Object: supplierinvoiceitems
+Title: DropColumn
+The column(s) unfinvoicecounterkey on table supplierinvoiceitems will be dropped. Any data in the columns will be lost.
+----------------------------------------------------

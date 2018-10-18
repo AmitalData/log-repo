@@ -1,0 +1,354 @@
+﻿
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table *ngIf="IsResourcesReady">
+
+                <!-- General -->
+                <tr style="height: 1px;">
+                    <td>
+                        <table>
+                            <tr class="SectionHeader" style="height: 22px; border: 1px solid #AAAAAA; border-bottom:0;">
+                                <td style="font-size: 12px; padding-left: 10px;">General</td>
+                            </tr>
+
+                            <tr style="border: 1px solid #AAAAAA; border-top:0;">
+                                <td style="padding: 2px; padding-left: 5px;">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 440px;">
+                                                <table>
+
+                                                    <!-- Mode -->
+                                                    <tr class="FormFieldRow">
+                                                        <td style="width: 90px;">
+                                                            <LogLabel [ObjectFieldName]="'INTTRASettingModeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td style="width: 300px;">
+                                                            <table>
+                                                                <tr>
+                                                                    <td>
+                                                                        <RadioButton [Name]="'ModeRadio'" [IsChecked]="INTTRASettingModeCode == 'TEST'" (Checked)="INTTRASettingModeCode = 'TEST'" [Text]="'Test'"></RadioButton>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <RadioButton [Name]="'ModeRadio'" [IsChecked]="INTTRASettingModeCode == 'PROD'" (Checked)="INTTRASettingModeCode = 'PROD'" [Text]="'Production'"></RadioButton>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- Out Settings -->
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'OutSettingsHost'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogTextBox [ObjectFieldName]="'OutSettingsHost'" [Text]="OutSettingsHost" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                        </td>
+
+                                                        <td style="padding-left: 5px;">
+                                                            <div>
+                                                                <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditFTPClicked('Out')" [IsEnabled]="OutSettingsId != null"></IconButton>
+                                                                <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddFTPClicked('Out')"></IconButton>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- In Settings -->
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'InSettingsHost'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogTextBox [ObjectFieldName]="'InSettingsHost'" [Text]="InSettingsHost" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                        </td>
+
+                                                        <td style="padding-left: 5px;">
+                                                            <div>
+                                                                <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditFTPClicked('In')" [IsEnabled]="InSettingsId != null"></IconButton>
+                                                                <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddFTPClicked('In')"></IconButton>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+
+                                            <td style="width: 30px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td>
+                                                <table>
+
+                                                    <tr class="FormFieldRow">
+                                                        <td style="width: 90px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td style="width: 250px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td>
+                                                            <div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- INTTRAId -->
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'INTTRAId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogTextBox [ObjectFieldName]="'INTTRAId'" [Text]="INTTRAId" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                        </td>
+
+                                                        <td>
+                                                            <div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- INTTRAAlias -->
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'INTTRAAlias'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td>
+                                                            <LogTextBox [ObjectFieldName]="'INTTRAAlias'" [Text]="INTTRAAlias" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                        </td>
+
+                                                        <td>
+                                                            <div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr style="height: 10px;">
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- Branches -->
+                <tr>
+                    <td>
+                        <div class="MediaFill">
+                            <table>
+                                <tr class="SectionHeader" style="height: 22px; border: 1px solid #AAAAAA; border-bottom:0;">
+                                    <td style="font-size: 12px; padding-left: 10px;">Branches Settings</td>
+                                </tr>
+
+                                <tr style="border: 1px solid #AAAAAA; border-top:0;">
+                                    <td>
+                                        <div class="MediaFill">
+                                            <div class="MediaFillAbsolute" style="top: 2px; right: 2px; bottom: 2px; left: 2px;">
+                                                <div class="SimpleGridView">
+                                                    <div class="SimpleGridViewHeader">
+                                                        <table>
+                                                            <tr>
+                                                                <td style="width: 200px; min-width: 200px; max-width: 200px;">Branch</td>
+                                                                <td style="width: 150px; min-width: 150px; max-width: 150px;">INTTRA ID</td>
+                                                                <td style="width: 150px; min-width: 150px; max-width: 150px;">Party Alias</td>
+                                                                <td style="width: 150px; min-width: 150px; max-width: 150px;">Contact</td>
+
+                                                                <td class="LastChild">
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+
+                                                    <div class="SimpleGridViewBody">
+                                                        <table>
+                                                            <tr class="SimpleGridViewRow" *ngFor="let item of Branches">
+
+                                                                <td class="CellDisabled" style="width: 200px; min-width: 200px; max-width: 200px;">
+                                                                    {{item.EnglishName}}
+                                                                </td>
+
+                                                                <td class="CellStretched" style="width: 150px; min-width: 150px; max-width: 150px;">
+                                                                    <LogTextBox [ObjectFieldName]="'INTTRAId'" [ObjectTableName]="'Branch'" [DataContext]="item" [Text]="item.INTTRAId" [HideColumns]="true"></LogTextBox>
+                                                                </td>
+
+                                                                <td class="CellStretched" style="width: 150px; min-width: 150px; max-width: 150px;">
+                                                                    <LogTextBox [ObjectFieldName]="'INTTRAAlias'" [ObjectTableName]="'Branch'" [DataContext]="item" [Text]="item.INTTRAAlias" [HideColumns]="true"></LogTextBox>
+                                                                </td>
+
+                                                                <td class="CellStretched" style="width: 150px; min-width: 150px; max-width: 150px;">
+                                                                    <LogLov [ObjectFieldName]="'INTTRAContactId'"
+                                                                            [ObjectTableName]="'Branch'"
+                                                                            [SelectedValue]="item.INTTRAContactId"
+                                                                            [DataContext]="item"
+                                                                            [LookUpTableName]="'Contact'"
+                                                                            [HideColumns]="true">
+                                                                    </LogLov>
+                                                                </td>
+
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td colspan="5">
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr style="height: 10px;">
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- Registration -->
+                <tr>
+                    <td>
+                        <div class="MediaFill">
+                            <table>
+                                <tr class="SectionHeader" style="height: 22px; border: 1px solid #AAAAAA; border-bottom:0;">
+                                    <td style="font-size: 12px; padding-left: 10px;">Registration</td>
+                                </tr>
+
+                                <tr style="border: 1px solid #AAAAAA; border-top:0;">
+                                    <td style="padding: 2px;">
+                                        <div class="SimpleGridView" style="min-height:50px;vertical-align:top;">
+                                            <div class="SimpleGridViewHeaderDark">
+                                                <table>
+                                                    <tr>
+                                                        <td style="width: 60px; min-width: 60px; max-width: 60px;">Code</td>
+                                                        <td style="width: 200px; min-width: 200px; max-width: 200px;">Name</td>
+
+                                                        <td *ngFor="let branch of Branches" style="width: 120px; min-width: 120px; max-width: 120px;">
+                                                            {{branch.EnglishName}}
+                                                        </td>
+
+                                                        <td class="LastChild">
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+
+                                            <div class="SimpleGridViewBody">
+
+                                                <table>
+                                                    <tr class="SimpleGridViewRow" *ngFor="let item of RegistrationList">
+                                                        <td class="GridViewCell" style="width: 60px; min-width: 60px; max-width: 60px;">
+                                                            {{item.Code}}
+                                                        </td>
+
+                                                        <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px;">
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="width: 18px;" *ngIf="item.Notes">
+                                                                        <HelpIcon [IconSize]="14" [Header]="'Registration Notes'" [Text]="item.Notes"></HelpIcon>
+                                                                    </td>
+
+                                                                    <td style="width: 5px;" *ngIf="item.Notes">
+                                                                        <div></div>
+                                                                    </td>
+
+                                                                    <td>{{item.Name}}</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+
+                                                        <td *ngFor="let itemCarrier of item.Carriers" style="width: 120px; min-width: 120px; max-width: 120px;">
+                                                            <div class="MediaFill">
+                                                                <div class="MediaFillRelative">
+                                                                    <div class="CenterCenter" style="width: 16px; height: 16px;">
+                                                                        <CheckBox [IsChecked]="itemCarrier.IsRegistered" (Checked)="itemCarrier.IsRegistered = $event"></CheckBox>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td colspan="3">
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+
+
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

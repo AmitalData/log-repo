@@ -1,0 +1,53 @@
+﻿import { AddEditRequiredFieldsComponent } from './Components/RequiredFields/AddEditRequiredFieldsComponent';
+import { CustomsClosedTablesComponent } from './Components/CustomsClosedTablesComponent';
+import { ClosedTableNotExistedComponent } from './Components/ClosedTableNotExistedComponent';
+import { CustomsSettingsComponent } from './Components/CustomsSettingsComponent';
+import { RequiredFieldsComponent } from './Components/RequiredFields/RequiredFieldsComponent';
+import { InterfaceManagementComponent } from './Components/InterfaceManagementComponent';
+import { AddEditInterfaceManagementComponent } from './Components/AddEditInterfaceManagementComponent';
+import { LoadTestComponent } from './Components/LoadTestComponent';
+import { SignStationsComponent } from './Components/SignStationsComponent';
+import { DocumentTypeCustomsDataComponent } from './Components/DocumentTypeCustomsDataComponent';
+import { CustomsDocumentsDefinitionComponent } from './Components/CustomsDocumentsDefinitionComponent';
+import { AddEditCustomsAirlineComponent } from './Components/AddEditCustomsAirlineComponent';
+
+export const Components =
+    [
+        AddEditRequiredFieldsComponent,
+        CustomsClosedTablesComponent,
+        ClosedTableNotExistedComponent,
+        CustomsSettingsComponent,
+        RequiredFieldsComponent,
+        InterfaceManagementComponent,
+        AddEditInterfaceManagementComponent,
+        LoadTestComponent,
+        SignStationsComponent,
+        DocumentTypeCustomsDataComponent,
+        CustomsDocumentsDefinitionComponent,
+        AddEditCustomsAirlineComponent,
+    ];
+
+export class ModuleDeclarations {
+    public static Get(name: string) {
+
+        var myResult: any = null;
+
+        switch (name) {
+            case "AddEditRequiredFieldsComponent": { myResult = AddEditRequiredFieldsComponent; break; }
+            case "CustomsClosedTablesComponent": { myResult = CustomsClosedTablesComponent; break; }
+            case "ClosedTableNotExistedComponent": { myResult = ClosedTableNotExistedComponent; break; }
+            case "CustomsSettingsComponent": { myResult = CustomsSettingsComponent; break; }
+            case "RequiredFieldsComponent": { myResult = RequiredFieldsComponent; break; }
+            case "InterfaceManagementComponent": { myResult = InterfaceManagementComponent; break; }
+            case "AddEditInterfaceManagementComponent": { myResult = AddEditInterfaceManagementComponent; break; }
+            case "LoadTestComponent": { myResult = LoadTestComponent; break; }
+            case "SignStationsComponent": { myResult = SignStationsComponent; break; }
+            case "DocumentTypeCustomsDataComponent": { myResult = DocumentTypeCustomsDataComponent; break; }
+            case "CustomsDocumentsDefinitionComponent": { myResult = CustomsDocumentsDefinitionComponent; break; }
+            case "AddEditCustomsAirlineComponent": { myResult = AddEditCustomsAirlineComponent; break; }
+
+        }
+
+        return myResult;
+    }
+}

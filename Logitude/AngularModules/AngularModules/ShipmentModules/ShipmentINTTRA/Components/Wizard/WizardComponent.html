@@ -1,0 +1,193 @@
+﻿
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="IsValidationSingleLine"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr style="height: 1px;" *ngIf="IsLimited">
+        <td>
+            <div class="OrangeInfo" style="margin: 5px;">
+                SI re-sending to INTTRA is not allowed
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div class="MediaFill">
+                <table>
+                    <tr>
+                        <td>
+                            <table>
+
+                                <!-- EmergencyContactId -->
+                                <tr class="FormFieldRow">
+                                    <td style="width: 130px;">
+                                        <LogLabel [ObjectFieldName]="'EmergencyContactId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'EmergencyContactId'"
+                                                [SelectedValue]="EmergencyContactId"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Contact'">
+                                        </LogLov>
+                                    </td>
+                                </tr>
+
+                                <!-- INTTRAContractNumber -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'INTTRAContractNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'INTTRAContractNumber'" [Text]="INTTRAContractNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+                                </tr>
+
+                                <!-- INTTRADocumentTypeCode -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'INTTRADocumentTypeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'INTTRADocumentTypeCode'"
+                                                [SelectedValue]="INTTRADocumentTypeCode"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'INTTRADocumentType'">
+                                        </LogLov>
+                                    </td>
+                                </tr>
+
+                                <!-- INTTRADocumentQTY -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'INTTRADocumentQTY'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'INTTRADocumentQTY'" [Text]="INTTRADocumentQTY" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+                                </tr>
+
+                                <!-- INTTRAIsFreighted -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'INTTRAIsFreighted'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogCheckBox [ObjectFieldName]="'INTTRAIsFreighted'" [Checked]="INTTRAIsFreighted" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="2">
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td style="width: 15px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 370px;">
+                            <table>
+
+                                <!-- SIHasAttachList -->
+                                <!--<tr class="FormFieldRow">
+                                    <td style="width: 130px;">
+                                        <LogLabel [ObjectFieldName]="'SIHasAttachList'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogCheckBox [ObjectFieldName]="'SIHasAttachList'" [Checked]="SIHasAttachList" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                    </td>
+                                </tr>-->
+                                <!-- INTTRAInstructions -->
+                                <tr class="FormFieldRow" style="height: 85px;">
+                                    <td style="width: 90px;">
+                                        <LogLabel [ObjectFieldName]="'INTTRAInstructions'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <div class="MediaFill">
+                                            <LogTextBox [ObjectFieldName]="'INTTRAInstructions'" [Text]="INTTRAInstructions" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr style="height: 10px;">
+                                    <td colspan="2">
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <!-- INTTRAComments -->
+                                <tr class="FormFieldRow" style="height: 85px;">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'INTTRAComments'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <div class="MediaFill">
+                                            <LogTextBox [ObjectFieldName]="'INTTRAComments'" [Text]="INTTRAComments" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="2">
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 150px;">
+        <td style="text-align: center; vertical-align: middle; font-size: 14px; color: #009161;">
+            {{ResultMessage}}
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td style="width: 57px;" *ngIf="SimulatorIsVisible">
+                        <button class="Button" (click)="SimulateClicked()">Simulate</button>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CloseButtonClicked()">Close</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="SendButtonClicked()" [disabled]="IsLimited">Send</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

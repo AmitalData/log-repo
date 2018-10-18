@@ -1,0 +1,669 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Diagnostics;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using AmitalCustomsWindowsService.Tester.CustomMessage;
+using Unifreight.Data.AmitalModel;
+using CustomsWorkerRole;
+using CustomsWorkerRole.Test;
+using AmitalCustomsWindowsService.Utils;
+using AmitalCustomsWindowsService.Tester.SU;
+using System.Xml.Linq;
+using Logitude.CustomsMessaging.Testers.Messages;
+using Logitude.Server.Tools.Utils;
+using Simplog.Server.Infrastructure;
+//using System.Windows.Interactivity;
+
+namespace AmitalCustomsWindowsService.Tester
+{
+    public partial class TesterForm : Form
+    {
+        public TesterForm()
+        {
+            InitializeComponent();
+            TraceListener debugListener = new MyTraceListener(this.textBoxLogger);
+            Debug.Listeners.Add(debugListener);
+            _CBWorkerRole.Items.Add("CustomsCommandGetCustomRequestWR");
+            _CBWorkerRole.Items.Add("CustomsCommandSignRequestWR");
+            _CBWorkerRole.Items.Add("CustomsCommandSendDCAWR");
+            _CBWorkerRole.Items.Add("CustomsCommandSendDCAUploadStatusWR");
+            _CBWorkerRole.Items.Add("CustomsCommandSendWSReceiveCorrelationWR");
+            _CBWorkerRole.Items.Add("CustomsCommandDownloadDcaReceiveCorrelationWR");
+            _CBWorkerRole.Items.Add("CustomsCommandAnalyzeResponseWR");
+
+            ///customsMessagingSheetWRToolStripMenuItem_Click(this, null);
+        }
+
+        private void BlobToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            setBlob();
+        }
+
+        private void setBlob()
+        {
+            string filename = Guid.NewGuid().ToString() + ".xml";
+            var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+            Logitude.Server.Tools.Communications.SetBolb(1, filename, "Amital", GetByte());
+            stopwatch.Stop();
+            Debug.WriteLine("SetBlob:" + filename + ":Took:" + stopwatch.Elapsed.ToString());
+        }
+
+        private byte[] GetByte()
+        {
+            return File.ReadAllBytes(toolStripTextBoxBolbXml.Text); 
+            
+        }
+
+        private void multiBlobToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                 setBlob();
+            }
+        }
+
+        
+
+        private void toDcaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var frm = new Send380Form())
+            {
+                frm.ShowDialog();
+            }
+        }
+
+        
+
+        private void stToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //using (
+            var cntxt = AmitalContext.GetContext(GetTenant());//)
+            {
+                var rec = cntxt.CCUTAXES.FirstOrDefault();
+            }
+        }
+
+        private void updateCloseTableToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+        //    var d = new AmitalCustomsWindowsService.BL.WorkerOnce<CustomsWorkerRole.UpdateClosedTablesWR>(1, 1, true) { ServiceStarted = true };
+          //  d.ExecuteTask(); 
+        }
+
+        
+
+        
+
+        private void customsMessagingSheetWRToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var d = new AmitalCustomsWindowsService.BL.WorkerOnce<CustomsWorkerRole.CustomsMessagingSheetWR>(10, 1, checkBoxDebugMode.Checked) { ServiceStarted = true };
+            d.ExecuteTask(); 
+        }
+
+        private void sendDataToExternalServicesWRToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            var d = new AmitalCustomsWindowsService.BL.WorkerOnce<CustomsWorkerRole.SendDataToExternalServicesWR>(10, 1, checkBoxDebugMode.Checked) { ServiceStarted = true };
+            d.ExecuteTask(); 
+        }
+
+        async Task DownloadDcaMessageSheetWRAsync()
+        {
+
+            var d = new AmitalCustomsWindowsService.BL.WorkerOnce<CustomsWorkerRole.DownloadDcaMessageSheetWR>(
+                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text, GetTenant()) { ServiceStarted = true, FromTesterForm=true };
+            d.ExecuteTask();
+
+        }
+
+        private async void downloadDcaMessageSheetWRToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var d = new AmitalCustomsWindowsService.BL.WorkerOnce<CustomsWorkerRole.DownloadDcaMessageSheetWR>(
+                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text, GetTenant()) { ServiceStarted = true, FromTesterForm = true };
+            d.ExecuteTask();
+        }
+
+        private int GetTenant()
+        {
+            int i;
+            if (int.TryParse(_TBTenant.Text, out i))
+            {
+                return i;
+            }
+            throw new Exception("Please insert tenant in setting !!!");
+            
+        }
+
+        private void _CBInterfaceID_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void statisticToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var AllQ = CustomsWorkerRole.Utils.ServiceBusUtil.ShowAll();
+                Debug.WriteLine(AllQ);
+            }
+            catch (Exception eee)
+            {
+
+                Debug.WriteLine("CustomsWorkerRole.Utils.ServiceBusUtil.ShowAll failed :" + eee.ToString());
+            }
+
+        }
+
+        
+
+       
+       
+       
+
+        private void testItToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dynamic d;
+            switch (_CBWorkerRole.Text)
+            {
+                case "CustomsCommandGetCustomRequestWR":
+                    d = new AmitalCustomsWindowsService.BL.WorkerOnce<CustomsCommandGetCustomRequestWR>(
+                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text) { ServiceStarted = true, };
+                    break;
+                case "CustomsCommandSignRequestWR":
+                    d = new AmitalCustomsWindowsService.BL.WorkerOnce<CustomsCommandSignRequestWR>(
+                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text) { ServiceStarted = true, };
+                    break;
+                case "CustomsCommandSendDCAWR":
+                    d = new AmitalCustomsWindowsService.BL.WorkerOnce<CustomsCommandSendDCAWR>(
+                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text) { ServiceStarted = true, };
+                    break;
+                case "CustomsCommandSendDCAUploadStatusWR":
+                    d = new AmitalCustomsWindowsService.BL.WorkerOnce<CustomsCommandSendDCAUploadStatusWR>(
+                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text) { ServiceStarted = true, };
+                    break;
+                case "CustomsCommandSendWSReceiveCorrelationWR":
+                    d = new AmitalCustomsWindowsService.BL.WorkerOnce<CustomsCommandSendWSReceiveCorrelationWR>(
+                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text) { ServiceStarted = true, };
+                    break;
+                case "CustomsCommandDownloadDcaReceiveCorrelationWR":
+                    d = new AmitalCustomsWindowsService.BL.WorkerOnce<CustomsCommandDownloadDcaReceiveCorrelationWR>(
+                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text) { ServiceStarted = true, };
+                    break;
+                case "CustomsCommandAnalyzeResponseWR":
+                    d = new AmitalCustomsWindowsService.BL.WorkerOnce<CustomsCommandAnalyzeResponseWR>(
+                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text) { ServiceStarted = true, };
+                    break;
+                default:
+                    return;
+            }
+            d.ExecuteTask(); 
+
+        }
+
+        private void viaUpdateCloseTableToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //var wr = new UpdateClosedTablesWR();
+                //wr.WorkOnce();
+            }
+            catch (Exception ex)
+            {
+
+                Debug.WriteLine(ex.ToString()); 
+            }
+            
+        }
+
+        private void testToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //http://lodmpn05/DSVWebFreightDebug/api/DeclarationWebService/GetDeclarationMandatoryTicketList/?parentEntityId=1-92241&parentEntityCode=Declaration
+            //DbContextBaseUtil.ToLog = true;
+            clsTester.GetDeclarationMandatoryTicketList(parentEntityId: "1-92241", parentEntityCode: "Declaration");
+            //clsTester.TestLockTab();
+            return;
+            clsTester.TestNull();
+        }
+
+        private void signUpWorkerRoleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //try
+            //{
+
+
+                string email; string Company;
+                using (var signUpForm = new SignUpForm())
+                {
+                    if (signUpForm.ShowDialog() != System.Windows.Forms.DialogResult.OK)
+                    {
+                        return;
+                    }
+                    email = signUpForm.Email;
+                    Company = signUpForm.Company;
+
+                }
+
+                var signUpWorkerRole = new CommunicationWorkerRole.SignUpWorkerRoleWinService();
+                var dardcODED = true;
+                if (dardcODED)
+                {
+                    var password = signUpWorkerRole.CreatTenant(email, Company);
+                    Logger.LogMe("CreatTenant:email=" + email + ":Pass=" + password, false);
+                }
+                else
+                {
+                    signUpWorkerRole.WorkOnceSuppressClearQ();
+                }
+                Debug.WriteLine("signUpWorkerRole.WorkOnce END !!");
+            //}
+            //catch (Exception ee)
+            //{
+            //    Logger.LogMe(ee.ToString(), true); 
+            //    //throw;
+            //}
+        }
+
+        private void sendEmailToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var parameters = new CommunicationWorkerRole.EmailParameters()
+            {
+                From = "admin@fnarsoft.com",
+                To = "jalal@logitudeworld.com",//;itzik@amital.co.il;YaronC@AMITAL.CO.IL",
+                Cc = "",
+                Bcc = "",
+                Subject = "SignUp complete successfully for " ,
+                Body = "emailbody",
+            };
+                    parameters.To += ";itzik@amital.co.il;YaronC@AMITAL.CO.IL";
+                    parameters.Tenant = 92;
+            Debug.WriteLine(parameters.To);
+            CommunicationWorkerRole.EmailingHelper.SendEmail(parameters);
+        }
+
+        private void send1966ByDCAToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            clsTester.SendDCA19666(); 
+        }
+
+        private void logErrorSmtpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                throw new Exception("logErrorSmtpToolStripMenuItem_Click");
+            }
+            catch (Exception e1)
+            {
+
+                Logger.LogMe(e1.ToString(), true);  
+            }
+        }
+
+        private void communicationLogWorkerRoleWinServiceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var wr = new CommunicationWorkerRole.CommunicationLogWorkerRoleWinService();
+            wr.WorkOnce();
+            Debug.WriteLine("CommunicationWorkerRole.WorkOnce END !!");
+        }
+
+        private void repushQToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var customsRequestsSheetsId =_txCustomsRequestsSheetsId.Text;
+            clsTester.RepushQ(customsRequestsSheetsId);
+        }
+
+        private void downLoadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void passwordCheckServiceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //var passwordCheckService = new PasswordCheckService();
+        }
+
+        private void _tsComboBoxTenant_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void downloadFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+
+            openFileDialog1.InitialDirectory = "c:\\";
+            openFileDialog1.Filter = "All files (*.*)|*.*";
+            openFileDialog1.FilterIndex = 2;
+            openFileDialog1.RestoreDirectory = true;
+
+            if (openFileDialog1.ShowDialog() != DialogResult.OK)
+            {
+                return ;
+            }
+            var dcaFile = openFileDialog1.FileName;
+            var bytsDcaFile = File.ReadAllBytes(dcaFile);
+            var base64InnerUTF8 =Base64InnerUTF8(dcaFile, new StringBuilder());
+            openFileDialog1.Dispose();
+            dcaFile=Path.GetFileName(dcaFile);
+
+            
+            CustomsWorkerRole.DCA.DCATester.DownloadFile(GetTenant(), dcaFile, 
+                //bytsDcaFile
+                base64InnerUTF8 
+                );
+            
+        }
+        private static string Base64InnerUTF8(string CurFileName, StringBuilder sbLog)
+        {
+            var myEncoding = System.Text.Encoding.UTF8;
+            sbLog.AppendLine("!defaultEncoding Change to UTF8= " + myEncoding.EncodingName);
+
+            sbLog.AppendLine("ReadAllText (UTF8) ..");
+            string txt = File.ReadAllText(CurFileName, myEncoding);
+            var checkParse = false;
+            if (checkParse)
+            {
+                sbLog.AppendLine("XDocument.Parse(txt)..");
+                var myXDocument = XDocument.Parse(txt);
+            }
+            sbLog.AppendLine("ToBase64_EncodeUTF8 ..");
+            var base64String = ToBase64_EncodeByEncoding(txt, myEncoding);
+
+            return base64String;
+        }
+
+        static string ToBase64_EncodeByEncoding(string data, Encoding myEncoding)
+        {
+            try
+            {
+                byte[] encData_byte = new byte[data.Length];
+
+                //Standard
+
+                encData_byte = myEncoding.GetBytes(data);
+
+                string encodedData = Convert.ToBase64String(encData_byte);
+                return encodedData;
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Error in base64Encode" + e.Message);
+            }
+        }
+        private void IIGGatewayServiceURLStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+
+            CustomsWorkerRole.Test.clsTester.SpeedTest(this.IIGGatewayServiceURLStripMenuItem.Text, GetTenant());
+
+            
+
+            Task[] taskArray = new Task[10 ];
+            for (int i = 0; i < taskArray.Length; i++)
+            {
+                taskArray[i] = Task.Factory.StartNew((Object obj) =>
+                {
+                    
+                    //data.ThreadNum = Thread.CurrentThread.ManagedThreadId;
+                    //Console.WriteLine("Task #{0} created at {1} on thread #{2}.",
+                    //                  data.Name, data.CreationTime, data.ThreadNum);
+                    for (int j = 0; j < 2; j++)
+                    {
+                        CustomsWorkerRole.Test.clsTester.SpeedTest(this.IIGGatewayServiceURLStripMenuItem.Text, GetTenant());    
+                    }
+                },
+                                                     i);
+            }
+            Task.WaitAll(taskArray);     
+        }
+        LoadTesterForm _LoadTest;
+        private void loadTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_LoadTest==null)
+            {
+                _LoadTest = new LoadTesterForm();
+                _LoadTest.Initialize(GetTenant()); 
+                _LoadTest.Show();    
+            }
+            
+
+        }
+
+        
+
+        
+
+        
+
+        private void testSpeedTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            IIGGatewayServiceURLStripMenuItem_Click(sender, e);
+        }
+
+        private void debugStepToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            CustomsWorkerRole.Test.clsTester.DebugRQStep(
+                _CBInterfaceID.Text, GetTenant(), _TBID.Text,
+                _CBWorkerRole.Text);
+
+
+        }
+
+        private void reqSheetStatisticToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            var s = new ReqSheetStatisticClass();
+            s.GetStatisticSub();
+            ReqSheetStatisticClass.DoIt(
+                (emailbody, subj) =>
+                {
+                    var parameters = new CommunicationWorkerRole.EmailParameters()
+                    {
+                        From = "admin@fnarsoft.com",
+                        SwitchFromWithUserNameIfValid = true,
+                        To = "itzik@amital.co.il;YaronC@AMITAL.CO.IL;bbwrweim@mailparser.io",
+                        Cc = "",
+                        Bcc = "",
+                        Subject = subj,
+                        Body ="ReqSheetStatistic " + Environment.MachineName + "/ " + Environment.UserDomainName +
+                        emailbody,
+                    };
+                    //parameters.To += ";itzik@amital.co.il;YaronC@AMITAL.CO.IL";
+                    //parameters.Tenant = 92;
+                    Debug.WriteLine(parameters.To);
+                    Debug.WriteLine(emailbody);
+                    
+                    CommunicationWorkerRole.EmailingHelper.SendEmail(parameters);
+                },true);
+        }
+
+        private void memLeakToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void grantCCUToToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                MessageBox.Show("Move to Logitude.Update");
+                
+                //Debug.WriteLine(CustomsWorkerRole.Test.clsTester.GrantCCUTo(GetTenant()));
+            }
+            catch (Exception ee)
+            {
+
+                Debug.WriteLine(ee.ToString());
+                MessageBox.Show("maybe tenant not exist !!!");
+            }
+            
+        }
+
+        private void buildDcaAggregrateTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            CustomsWorkerRole.Test.clsTester.BuildDcaAggregrateFile(@"c:\temp\");
+            
+        }
+
+        private void frizGetDecXmlToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var tenant = GetTenant();
+            var DecId = "1-2642";
+            var xml = CustomsWorkerRole.Test.clsTester.GetDeclarationXml(tenant, DecId);
+            var file= Path.Combine(@"c:\",DecId +".xml");
+            File.WriteAllText(file, xml);
+            Debug.WriteLine(file); 
+
+            var checkXml = @"C:\Program Files (x86)\Microsoft Visual Studio 11.0\DeclarationPM.FromXsd.xml";
+            var xmlCheck=File.ReadAllText(checkXml);
+            CustomsWorkerRole.Test.clsTester.PutDeclarationXml(xmlCheck);
+
+        }
+
+        private void speedTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void rePushAnalyzeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            CustomsWorkerRole.Test.clsTester.ReQueue(
+                _CBInterfaceID.Text, GetTenant(), _TBID.Text
+                //_CBWorkerRole.Text
+                );
+        }
+
+        private void loadTestAPIToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //var createCustomFile = new Logitude.CustomsMessaging.Testers.LoadTest.CreateCustomFileService();
+            
+            
+            //var fileNo = createCustomFile.SendHybridInterface(createCustomFile.GetShipmentAM());
+
+            //Debug.WriteLine("Created File :" + fileNo);
+
+            //var resDec = createCustomFile.DeclarationUpsert(fileNo);
+            //var declarationId = createCustomFile.GetDeclarationId(fileNo);
+
+            //createCustomFile.DeletSI(declarationId);
+            //createCustomFile.PutCopyDeclaration(declarationId, "");
+            //createCustomFile.SendDeclaration(declarationId);
+            //createCustomFile.PostPrintRequestRequest(declarationId);
+            //DeclarartionController.PutCopyDeclaration
+
+
+
+        }
+
+        private void sendInBatchToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            CustomsWorkerRole.Test.clsTester.SendDeclarationsThatCanResendInBatch();
+        }
+
+        private void restoreDecToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var tst = new CustomsWorkerRole.Test.clsTester();
+            tst.RestoreAlDec();
+
+        }
+
+        private void Send8373ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var tst = new CustomsWorkerRole.Test.clsTester();
+            tst.Send8373();
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            DbContextBaseUtil.ToLog = checkBox1.Checked;
+        }
+
+        private void clearCacheToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Logitude.BL.Helpers.TableLastUpdateClass.UpdateCacheTableHistory();
+            Logitude.BL.Helpers.TableLastUpdateClass.UpdateSystemMetaDataHistory();
+        }
+
+        private void uploadMultiToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+           
+        }
+
+        private void checkUniqueUploadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void UploadMultiDoit_Click(object sender, EventArgs e)
+        {
+            var uploadMulti = new CustomsWorkerRole.Test.UploadMulti();
+            uploadMulti.TestMulti();
+        }
+
+        private void toolStripMenuItemcheckUniqueUpload_Click(object sender, EventArgs e)
+        {
+            string input = checkUniqueUploadTextBox1.Text;
+            var di = new System.IO.DirectoryInfo(input);
+            if (di.Exists)
+            {
+                var fiList = di.GetFiles("*").ToList();
+                var notUniqeNames =
+                    //(from fi in fiList
+                    //                 group fi by fi.Length into g
+                    //                 where g.Count() > 1
+                    //                 select //g.Select ( r=>r.Name)                                     //g.SelectMany(g1 => g1.Name)
+                    //                g.SelectMany( r=>r.Name)
+
+                    //     ).ToList();
+                    fiList
+                    .GroupBy(r => r.Length)
+                    .Where(g => g.Count() > 1)
+                    .SelectMany(r => r)
+                    .Select( fi=> fi.Name)
+                    .ToList()
+                    ;
+               
+                    
+                    ;
+                notUniqeNames.ForEach(r =>
+                {
+                    Debug.WriteLine(r);
+                }
+                );
+
+            }
+            else
+            {
+                Debug.WriteLine("folder Not Exist ");
+            }
+        }
+
+        private void fTPCommunicationWorkerRoleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            bool testIt = false;
+            if (testIt)
+            {
+                var tst = new CustomsWorkerRole.Test.clsTester();
+                tst.FtpMamanTester();
+            }
+            var d = new AmitalCustomsWindowsService.BL.WorkerOnce<CommunicationWorkerRole.FTPCommunicationWorkerRoleWinService>(10, 1, checkBoxDebugMode.Checked) { ServiceStarted = true };
+            d.ExecuteTask();
+        }
+        private void asDataSetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var tst = new CustomsWorkerRole.Test.clsTester();
+            tst.TestAsDataSet("1306");
+
+        }
+    }
+}

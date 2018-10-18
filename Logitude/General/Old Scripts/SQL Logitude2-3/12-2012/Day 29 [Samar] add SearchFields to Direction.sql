@@ -1,0 +1,1 @@
+alter table Directions add [SearchFields] nvarchar (1000)   NULL

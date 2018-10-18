@@ -1,0 +1,215 @@
+﻿<!-- PrintRequestComponent view  -->
+<style>
+    .MessageBox {
+        width:200px;
+        height:30px;
+        padding: 2px 10px;
+        margin: 5px;
+        color: green;
+        font-family: sans-serif;
+        font-size:12px;
+        text-align:center;
+    }
+</style>
+
+<div>
+
+    <custom-message-wrapper [CustomSendOptionsButtonCanForcePersonalSign]="false"
+                            [IsShowCustomResponseContent] ="false">
+
+        <!-- Request -->
+        <div class="class-request-content">
+            <table style="width: 450px;height: 350px;padding-top: 10px;">
+                <!-- Request Fields -->
+                <!--Radio Buttons-->
+                <tr class="FormFieldRow">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:120px">
+                                    <div class="RadioButton">
+                                        <input id="ByDeclarationRadio" type="radio" name="DeclarationRadio" 
+                                               [checked]="IsSearchByDeclarationRadio" (click)="SetIsByDeclarationNumber(true)" />
+                                        <label for="ByDeclarationRadio">{{'Customs.Declaration.O.SearchByDeclaration' | TextCodeTranslationPipe}}</label>
+                                    </div>
+                                </td>
+                                <td style="width:120px">
+                                    <div class="RadioButton">
+                                        <input id="ByCargoRadio" type="radio" name="CargoRadio" [checked]="IsSearchByCargoRadio" (click)="SetIsByCargo(true)" />
+                                        <label for="ByCargoRadio">{{'Customs.Declaration.O.SearchByCargo' | TextCodeTranslationPipe}}</label>
+                                    </div>
+                                </td>
+                                <td> <div></div> </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr class="MessageBox" *ngIf="IsSuccessMessageVisible">
+                    <td>
+                        <table>
+                            <tr>
+                                <td class="MessageBox">
+                                    {{'Customs.DeclarationPrintQuery.O.SuccessMessgae'| TextCodeTranslationPipe}}
+                                </td>
+
+                                <td><div></div></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <!--ByDeclarationRadio-->
+                <tr class="FormFieldRow" *ngIf="IsSearchByDeclarationRadio" style="height: 80px;">
+                    <td>
+                        <table style="width: 450px; padding-top: 10px;">                     
+                             <tr class="FormFieldRow" *ngFor="let declarationPrintItem of DeclarationPrintList" >
+                                <td style="width: 110px">
+                                    <LogLabel [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Customs.DeclarationPrintQuery.O.DeclarationNumber'"></LogLabel>
+                                </td>
+                                <td style="width: 110px;">
+                                    <!-- Request.CustomFileNo-->
+                                    <LogTextBox [ObjectFieldName]="'CustomFileNo'"
+                                                [InputType]="'text'"
+                                                [DataContext]="declarationPrintItem" [ObjectTableName]="ObjectTableName"
+                                                [HideColumns]="true"
+                                                [HideLastColumn]="true"
+                                                (LostFocus)="declarationPrintItem.CustomFileNoTextChanged($event)"
+                                                [Text]="declarationPrintItem.CustomFileNo"></LogTextBox>
+                                </td>
+
+                                <td style="width: 5px;"><div></div></td>
+
+                                <td style="width: 150px;">
+                                    <!-- Request.DeclarationNumber-->
+                                    <LogTextBox [ObjectFieldName]="'DeclarationNumber'" 
+                                                [InputType]="'text'"
+                                                [DataContext]="declarationPrintItem" [ObjectTableName]="ObjectTableName"
+                                                [HideLastColumn]="true"
+                                                [HideColumns]="true" [Text]="declarationPrintItem.DeclarationNumber"
+                                                (LostFocus)="declarationPrintItem.DeclarationNumberTextChanged($event)"></LogTextBox>
+                                </td>
+
+                                <td style="width: 10px;"><div></div></td>
+
+                                <td style="height: 20px;">
+                                    <div style="width: 18px; float: left; height:20px;">
+                                        <IconButton [IsSmall]="true"
+                                                    [Name]="'Add'"
+                                                    (click)="AddDeclarationPrint(declarationPrintItem)"
+                                                    style="float:left;"></IconButton>
+                                    </div>
+                                </td>
+
+                                <td style="width: 5px;"><div></div></td>
+
+                                <td style="height: 20px;">
+                                    <div style="width: 18px; float: left; height:20px;">
+                                        <IconButton [Name]="'Delete'" [IsSmall]="true" 
+                                                    (click)="RemoveDeclarationPrint(declarationPrintItem)" [IsEnabled]="!IsDisplayOnly"></IconButton>
+                                    </div>
+                                </td>
+
+                                <td style="height: 20px;" *ngIf="declarationPrintItem.VGreenVisibility">
+                                    <div style="width: 18px; float: left; height:20px;">
+                                        <img title="DeclarationPrintV" src="./Images/CheckBoxIcon.png" />
+                                    </div>
+                                 </td>
+
+                                <td style="height: 20px;" *ngIf="declarationPrintItem.XRedVisibility">
+                                    <div style="width: 18px; float: left; height:20px;">
+                                        <img title="DeclarationPrintX" src="./Images/RedX.png" />
+                                    </div>
+                                </td>
+
+                                <td style="width: 10px;"><div></div></td>
+
+                                <td style="width:230px; height: 20px;" *ngIf="declarationPrintItem.PrintErrorText">
+                                        <LogTextBox [ObjectFieldName]="'PrintErrorText'"
+                                                    [InputType]="text"
+                                                    [DataContext]="declarationPrintItem" [ObjectTableName]="ObjectTableName"
+                                                    [HideLastColumn]="true"
+                                                    [HideColumns]="true" [Text]="declarationPrintItem.PrintErrorText"></LogTextBox>
+                                </td>
+
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <!--ByCargoRadio-->
+                <tr class="FormFieldRow" *ngIf="IsSearchByCargoRadio">
+                    <td>
+                        <table style="width: 370px; padding-top: 10px;">
+                            <tr class="FormFieldRow">
+                                <td style="width: 100px;">
+                                    <LogLabel [ObjectFieldName]="'CargoTypeCode'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.CargoIdentifierType'"></LogLabel>
+                                </td>
+                                <td style="width: 120px;">
+                                    <LogLov [ObjectFieldName]="'CargoTypeCode'"
+                                            [ObjectTableName]="'Customs.CargoIdentifireType'"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Customs.CargoIdentifireType'"
+                                            [HideLastColumn]="true">
+                                    </LogLov>
+                                </td>
+                                <td> <div></div> </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td style="width: 100px;">
+                                    <LogLabel [ObjectFieldName]="'ManifestNumber'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.CargoIdentifierKey1'"></LogLabel>
+                                </td>
+                                <td style="width: 150px;">
+                                    <LogTextBox [ObjectFieldName]="'ManifestNumber'" [Text]="ManifestNumber" [DataContext]="DataContext" [HideLastColumn]="true"></LogTextBox>
+                                </td>
+                                <td> <div></div> </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td style="width: 100px;">
+                                    <LogLabel [ObjectFieldName]="'SecondCargoID'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.CargoIdentifierKey2'"></LogLabel>
+                                </td>
+                                <td style="width: 150px;">
+                                    <LogTextBox [ObjectFieldName]="'SecondCargoID'" [Text]="SecondCargoID" [DataContext]="DataContext" [HideLastColumn]="true"></LogTextBox>
+                                </td>
+                                <td> <div></div> </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td style="width: 100px;">
+                                    <LogLabel [ObjectFieldName]="'ThirdCargoID'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.CargoIdentifierKey3'"></LogLabel>
+                                </td>
+                                <td style="width: 150px;">
+                                    <LogTextBox [ObjectFieldName]="'ThirdCargoID'" [Text]="ManifestNumber" [DataContext]="DataContext" [HideLastColumn]="true"></LogTextBox>
+                                </td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><div></div></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Response -->
+        <div class="class-response-content">
+            <table style="width: 0px;height: 0px;">
+                <tr class="FormFieldRow" style="width: 50% ; height : 5%" *ngIf="ResponseMessage != null">
+                    <td style="width: 100px;">
+                        <LogLabel [ObjectFieldName]="'ResultTitle'" [DataContext]="DataContext" [TextCode]="'Customs.Declaration.O.PrintRequest'"></LogLabel>
+                    </td>
+
+                    <td><div></div></td>
+                </tr>
+            </table>
+        </div>
+
+    </custom-message-wrapper>
+</div>

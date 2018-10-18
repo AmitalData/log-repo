@@ -1,0 +1,227 @@
+﻿
+<style type="text/css">
+    .LogitudeEmailSearchInput::-webkit-input-placeholder {
+        font-family: Arial;
+        font-size: 11px;
+        color: #8F9293;
+        font-style: italic;
+    }
+
+    .LogitudeEmailSearchInput:-moz-placeholder {
+        font-family: Arial;
+        font-size: 11px;
+        color: #8F9293;
+        font-style: italic;
+    }
+
+    .LogitudeEmailSearchInput::-moz-placeholder {
+        font-family: Arial;
+        font-size: 11px;
+        color: #8F9293;
+        font-style: italic;
+    }
+
+    .LogitudeEmailSearchInput:-ms-input-placeholder {
+        font-family: Arial;
+        font-size: 11px;
+        color: #8F9293;
+        font-style: italic;
+    }
+
+    .LogitudeEmailSearchInputFocus::-webkit-input-placeholder {
+        color: transparent;
+    }
+
+    .LogitudeEmailSearchInputFocus:-moz-placeholder {
+        color: transparent;
+    }
+
+    .LogitudeEmailSearchInputFocus::-moz-placeholder {
+        color: transparent;
+    }
+
+    .LogitudeEmailSearchInputFocus:-ms-input-placeholder {
+        color: transparent;
+    }
+
+    .LogitudeEmailSearchDropDown {
+        position: fixed;
+        border: 1px solid #83A5D2;
+        background: white;
+        z-index: 1;
+    }
+
+    .LogitudeEmailSearchDropDownItemSelected {
+        cursor: pointer;
+        border: 1px solid #3BB3E2;
+        background: -moz-linear-gradient(50% 106.14% 90deg,rgba(133, 203, 237, 1) 0%,rgba(150, 211, 240, 1) 22.59%,rgba(196, 231, 248, 1) 67.37%,rgba(232, 247, 255, 1) 100%);
+        background: -webkit-linear-gradient(90deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 100%);
+        background: -webkit-gradient(linear,50% 106.14%,50% -10.13%,color-stop(0,rgba(133, 203, 237, 1) ),color-stop(0.2259,rgba(150, 211, 240, 1) ),color-stop(0.6737,rgba(196, 231, 248, 1) ),color-stop(1,rgba(232, 247, 255, 1) ));
+        background: -o-linear-gradient(90deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 100%);
+        background: linear-gradient(0deg, rgba(133, 203, 237, 1) 0%, rgba(150, 211, 240, 1) 22.59%, rgba(196, 231, 248, 1) 67.37%, rgba(232, 247, 255, 1) 100%);
+    }
+
+    .LogitudeEmailSearchDropDownItem:not(.LogitudeEmailSearchDropDownItemSelected):hover {
+        cursor: pointer;
+        border: 1px solid rgba(131, 165, 210, 0.5);
+        background: -moz-linear-gradient(50% 17.31% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 0.3) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 0.3) 100%);
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 0.3) 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 0.3) 100%);
+    }
+
+    .LogitudeEmailSearchDropDownItem {
+        height: 22px;
+        width: 100%;
+        border: 1px solid white;
+    }
+
+
+    .LogitudeEmailSearchXButton:hover .InnerControl {
+        background: rgba(238, 170, 75, 0.1);
+    }
+
+    .LogitudeEmailSearchXButton:hover {
+        border: 1px solid Orange;
+    }
+
+    LogitudeEmailSearchXButton .InnerControl {
+        width: 11px;
+        height: 11px;
+        border: 1px solid white;
+        background: rgba(106, 130, 153, 0.1);
+    }
+
+    .LogitudeEmailSearchXButton {
+        width: 13px;
+        height: 13px;
+        border: 1px solid #6A8299;
+        cursor: pointer;
+        position: relative;
+    }
+
+    .LogitudeEmailSearchTextBoxItem {
+        height: 18px;
+        min-height: 18px;
+        line-height: 18px;
+        margin-left: 2px;
+        margin-top: 1px;
+        border: 1px solid #83A5D2;
+        display: inline-block;
+        float: left;
+        padding-left: 2px;
+        padding-right: 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+    }
+
+    .LogitudeEmailSearchTextBox input {
+        height: 20px;
+        min-height: 20px;
+        max-height: 20px;
+        border: none;
+        outline: none;
+        font-size: 11px;
+        color: #45494A;
+        background: transparent;
+        text-indent: 2px;
+        border-radius: 0px;
+        -webkit-border-radius: 0px;
+        -moz-border-radius: 0px;
+        -moz-box-shadow: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
+
+    .LogitudeEmailSearchTextBox:hover {
+        border: 1px solid #3BB3E2;
+    }
+
+    .LogitudeEmailSearchTextBox {
+        min-height: 22px;
+        width: 100%;
+        border: 1px solid #AAAAAA;
+        outline: none;
+        font-size: 11px;
+        color: #45494A;
+        background: white;
+        border-radius: 3px;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        background: white;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .EmailBoxDisabled {
+        display: block;
+        height: 22px;
+        max-height: 22px;
+        line-height: 22px;
+        outline: none;
+        width: 100%;
+        background: white;
+        font-size: 11px;
+        color: #45494A;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        position: relative;
+        opacity: 0.5;
+        pointer-events: none;
+    }
+</style>
+
+<table>
+    <tr>
+        <td style="vertical-align: top;">
+            <div [attr.id]="ComponentId" class="LogitudeEmailSearchTextBox" [class.EmailBoxDisabled]="IsDisabled">
+
+                <!-- Selected Items -->
+                <div [attr.id]="ContainerId" class="LogitudeEmailSearchTextBoxItem" *ngFor="let item of SelectedItems">
+
+                    <div style="float: left; line-height: 16px;">{{item.EnglishName}}</div>
+
+                    <div style="float: left; line-height: 16px; margin-left: 5px; margin-top: 1px;" class="LogitudeEmailSearchXButton" (mousedown)="RemoveItem(item)">
+                        <div class="InnerControl CenterCenter">
+                            <img src="./Images/Tab.X.Gray.png" class="CenterCenter" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Separator -->
+                <div [attr.id]="SeparatorId" style="width: 1px; height: 20px; float: left; display: inline-block;"></div>
+
+                <!-- TextArea -->
+                <!-- [class.LogitudeEmailSearchInputFocus]="IsFocused || SelectedItems.length > 0" -->
+                <div [attr.id]="InputId" style="height: 20px; position:absolute; left:0; right:0; top:0; bottom:0;">
+                    <input class="LogitudeEmailSearchInput"
+                           [class.LogitudeEmailSearchInputFocus]="IsFocused"
+                           [attr.id]="TextAreaId"
+                           style="background: transparent !important; height: 20px !important;"
+                           [(ngModel)]="SearchText"
+                           placeholder="{{Placeholder}}"
+                           (focus)="IsFocused = true"
+                           (blur)="OnLostFocus()"
+                           (keydown)="OnKeyDown($event)" />
+                </div>
+            </div>
+
+            <div [attr.id]="ComponentDropDownId" class="LogitudeEmailSearchDropDown" [hidden]="!IsOpened" [style.height.px]="DropDownHeight">
+                <div class="ScrollViewer" style="overflow-x:auto;">
+                    <div class="ScrollContent">
+                        <div class="LogitudeEmailSearchDropDownItem" *ngFor="let item of ItemsSource" (mousedown)="AddItem(item)" [class.LogitudeEmailSearchDropDownItemSelected]="item.Selected">
+                            <table [attr.id]="item.ElementId">
+                                <tr>
+                                    <td style="padding-left: 4px; width: 1px;">{{item.EnglishName}}</td>
+                                    <td style="padding-left: 4px;">&lt;{{item.Email}}&gt;</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>

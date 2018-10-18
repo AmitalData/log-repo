@@ -1,0 +1,1 @@
+alter table [Customs].[SupplierInvoiceItems] drop column  INV_LINE_CONN 

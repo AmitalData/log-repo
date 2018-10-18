@@ -1,0 +1,2 @@
+alter table tenantManagements
+drop column productionenddate

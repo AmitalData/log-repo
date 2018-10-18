@@ -1,0 +1,231 @@
+﻿.HyperlinkButton:hover, .HyperlinkButton:focus {
+    height: auto !important;
+    width: auto !important;
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    color: #1E8DC4 !important;
+    display: inline-block !important;
+}
+
+.HyperlinkButton {
+    height: auto !important;
+    width: auto !important;
+    line-height: unset !important;
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    color: #1E4AC4;
+    font-size: 10px;
+    cursor: pointer;
+    text-decoration: underline;
+    display: inline-block;
+}
+
+.LoginButton:hover {
+    cursor: pointer;
+    background: #cc0029;
+}
+
+.LoginButton {
+    height: 30px;
+    width: 100px;
+    cursor: pointer;
+    text-align: center;
+    text-shadow: 1px 1px 0px #b23e35;
+    border-radius: 6px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border: 1px solid #d83526;
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: bold;
+    font-style: normal;
+    box-shadow: inset 0px 1px 0px 0px #f29c93;
+    -moz-box-shadow: inset 0px 1px 0px 0px #f29c93;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #f29c93;
+    background: #fe1a00;
+    background: linear-gradient(to bottom, #fe1a00 5%, #ce0100 100% );
+    background: -moz-linear-gradient( center top, #fe1a00 5%, #ce0100 100% );
+    background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #fe1a00), color-stop(1, #ce0100) );
+}
+
+.UnLockButton:hover {
+    cursor: pointer;
+    background: #cc0029;
+}
+
+.UnLockButton {
+    height: 30px;
+    width: 100px;
+    cursor: pointer;
+    text-align: center;
+    text-shadow: 1px 1px 0px #b23e35;
+    border-radius: 6px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border: 1px solid #d83526;
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: bold;
+    font-style: normal;
+    box-shadow: inset 0px 1px 0px 0px #f29c93;
+    -moz-box-shadow: inset 0px 1px 0px 0px #f29c93;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #f29c93;
+    background: #F1315A;
+    background: linear-gradient(to bottom, #F1315A 5%, #F1315A 100% );
+    background: -moz-linear-gradient( center top, #F1315A 5%, #F1315A 100% );
+    background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #F1315A), color-stop(1, #F1315A) );
+}
+
+.EntityChangesButton:hover:not(:disabled) {
+    background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(255, 197, 129, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(255, 197, 129, 1) 100%);
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(255, 197, 129, 1) ));
+    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(255, 197, 129, 1) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(255, 197, 129, 1) 100%);
+    -webkit-box-shadow: 0px 0px 6px 0px #FF994B;
+    -moz-box-shadow: 0px 0px 6px 0px #FF994B;
+    box-shadow: 0px 0px 6px 0px #FF994B;
+}
+
+.EntityChangesButton span {
+    text-shadow: 1px 1px white;
+}
+
+.EntityChangesButton {
+    display: block;
+    outline: none;
+    text-align: center;
+    font-size: 11px;
+    color: #45494A;
+    width: 100%;
+    height: 22px;
+    border: 1px solid #EDC093;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    cursor: pointer;
+    position: relative;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(237, 192, 147, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(237, 192, 147, 1) ));
+    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+    -webkit-box-shadow: 0px 0px 6px 0px #EDC093;
+    -moz-box-shadow: 0px 0px 6px 0px #EDC093;
+    box-shadow: 0px 0px 6px 0px #EDC093;
+    text-shadow: 1px 1px white;
+}
+
+.RedButton:focus:not(:disabled) {
+    border: 1px solid #EDC093;
+    -webkit-box-shadow: 0px 0px 6px 0px #EDC093;
+    -moz-box-shadow: 0px 0px 6px 0px #EDC093;
+    box-shadow: 0px 0px 6px 0px #EDC093;
+}
+
+.Button:focus:not(:disabled) {
+    border: 1px solid #3BB3E2;
+    -webkit-box-shadow: 0px 0px 6px 0px #3BB3E2;
+    -moz-box-shadow: 0px 0px 6px 0px #3BB3E2;
+    box-shadow: 0px 0px 6px 0px #3BB3E2;
+}
+
+.GreenButton:hover:not(:disabled) {
+    background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(0, 145, 97, 0.5) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(0, 145, 97, 0.5) 100%);
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(0, 145, 97, 0.5) ));
+    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(0, 145, 97, 0.5) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(0, 145, 97, 0.5) 100%);
+}
+
+.RedButton:hover:not(:disabled) {
+    background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(237, 192, 147, 0.85) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 0.85) 100%);
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(237, 192, 147, 0.85) ));
+    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 0.85) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 0.85) 100%);
+}
+
+.Button:hover:not(:disabled) {
+    background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(221, 232, 245, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(221, 232, 245, 1) ));
+    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+}
+
+.Button span, .RedButton span, .GreenButton span {
+    text-shadow: 1px 1px white;
+}
+
+.Button:disabled, .RedButton:disabled, .GreenButton:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.GreenButton {
+    border: 1px solid #009161;
+    background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(0, 145, 97, 0.6) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(0, 145, 97, 0.6) 100%);
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(0, 145, 97, 0.6) ));
+    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(0, 145, 97, 0.6) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(0, 145, 97, 0.6) 100%);
+}
+
+.RedButton {
+    background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(237, 192, 147, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(237, 192, 147, 1) ));
+    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+}
+
+.Button {
+    background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
+    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+}
+
+.Button, .RedButton, .GreenButton {
+    /*display: block;*/
+    outline: none;
+    text-align: center;
+    font-size: 11px;
+    color: #45494A;
+    /*width: 100%;*/
+    height: 22px;
+    border: 1px solid #6A8299;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    text-shadow: 1px 1px white;
+    position: relative;
+    cursor: pointer;
+}
+
+button, .Button, .RedButton, .GreenButton, .EntityChangesButton {
+    height: 22px;
+    padding: 0 5px;
+    /*width: 100%;*/
+    /*min-width: 100%;*/
+
+    /*display:inline-block;
+    width: auto !important;*/ 
+
+    display: block ;
+    width: 100% ;
+    
+    /*min-width: 100%;*/
+}
+
+/*http://www.w3schools.com/css/css3_buttons.asp*/
+/*http://www.w3schools.com/css/css_form.asp*/

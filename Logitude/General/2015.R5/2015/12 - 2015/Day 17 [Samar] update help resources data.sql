@@ -1,0 +1,6 @@
+update HelpResources set IsNew = 1, UpdateDate = GETDATE() where Code = '6'
+update HelpResources set IsNew = 1, UpdateDate = GETDATE() where Code = '7'
+update HelpResources set IsNew = 1, UpdateDate = GETDATE() where Code = '14'
+update HelpResources set IsNew = 1, UpdateDate = GETDATE() where Code = '15'
+update HelpResources set IsNew = 1, UpdateDate = GETDATE() where Code = '16'
+update HelpResources set IsNew = 1, UpdateDate = GETDATE() where Code = 'REL001'

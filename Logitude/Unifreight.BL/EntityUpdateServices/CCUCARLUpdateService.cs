@@ -1,0 +1,70 @@
+﻿using Logitude.Server.Tools;
+using Logitude.Server.Tools.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Unifreight.BL.EntityDataMappings;
+using Unifreight.Data.AmitalModel.EntityKeys;
+using Unifreight.BL.EntityPMs;
+using Unifreight.Data.AmitalModel;
+using Unifreight.Data.AmitalModel.Repsitories;
+using Unifreight.Data.AmitalModel.EntityPOCOs;
+using Logitude.Server.Tools.Utils;
+
+namespace Unifreight.BL.EntityUpdateServices
+{
+    public class CCUCARLUpdateService : EntityUpdateService<CCUCARL, CCUCARLPM, SupplierInvoiceItem105PM>
+    {  
+        public CCUCARLUpdateService(AmitalContext context)
+        {
+            MainContext = context;
+            Repository = new CCUCARLRepository(context);
+
+            Mapping = new CCUCARLDataMapping();
+            AdditionalContexts = new Dictionary<string, Simplog.Server.Infrastructure.IContext>();
+        }
+        
+        protected override Simplog.Server.Infrastructure.EntityKeyFields GetKeys(CCUCARLPM entityPM)
+        {
+            return new CCUCARLKeys() { FILENO = entityPM.FILENO, LINENO = entityPM.LINENO, COUNTER = entityPM.COUNTER };
+        }
+
+        protected override void OnCreating(CCUCARLPM entityPM, SupplierInvoiceItem105PM entityParentPM)
+        {
+            entityPM.FILENO = entityParentPM.FILENO;
+            entityPM.LINENO = entityParentPM.LINENO;
+        }
+
+        protected override void OnUpdating(CCUCARLPM entityPM)
+        {
+
+        }
+        protected override void OnUpdating(CCUCARLPM entityPM, CCUCARL entityPOCO)
+        {
+            try
+            {
+                base.OnUpdating(entityPM, entityPOCO);
+            }
+            finally
+            {
+                var myLogChangesService = new LogChangesService();
+                myLogChangesService.
+                    LogIt<CCUCARLPM, CCUCARL>("2018062018HD312280.LogUntilDateyyyyMMdd", entityPM, entityPOCO);
+            }
+        }
+        protected override void AfterUpdating(CCUCARLPM entityPM, SupplierInvoiceItem105PM entityParentPM)
+        {
+            if (entityParentPM.CCUCARLs.Count == 0) return;
+
+        }
+
+        internal void FastDeleteComposition(CCUFILEMKeys entityKeyFields)
+        {
+            (Repository as CCUCARLRepository).FastDeleteMulti(entityKeyFields);
+        }
+    }
+}
+
+

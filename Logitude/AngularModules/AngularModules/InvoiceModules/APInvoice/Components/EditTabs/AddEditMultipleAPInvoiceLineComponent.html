@@ -1,0 +1,252 @@
+﻿
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <td>
+                        <table>
+
+                            <!-- ChargesTypeId -->
+                            <tr class="FormFieldRow">
+                                <td style="width:120px; ">
+                                    <LogLabel [ObjectFieldName]="'ChargesTypeId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td style="width:230px; ">
+                                    <LogLov [ObjectFieldName]="'ChargesTypeId'"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [SelectedValue]="DataContext.ChargesTypeId"
+                                            [LookUpTableName]="'ChargesType'">
+                                    </LogLov>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <!-- VatTypeId -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'VatTypeId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogLov [ObjectFieldName]="'VatTypeId'"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [SelectedValue]="DataContext.VatTypeId"
+                                            [LookUpTableName]="'VatType'"
+                                            [HideMaintenanceIcon]="true"
+                                            [HideAddLink]="true">
+                                    </LogLov>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+
+                            </tr>
+
+                            <!-- VatPercentage -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'VatPercentage'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <div class="MediaFill">
+                                        <div class="MediaFillRelative">
+                                            <LogTextBox [ObjectFieldName]="'VatPercentage'" [Text]="DataContext.VatPercentage" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            <div class="Value" style="position: absolute; left: 10px; top: 7px;" *ngIf="DataContext.VatIsMultiPercentage">Multi</div>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <!-- VendorId -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'VendorId'" [NoObjectField]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'APInvoiceLine.F.Vendor'"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogLov [ObjectFieldName]="'VendorId'"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [SelectedValue]="DataContext.VendorId"
+                                            [LookUpTableName]="'Card'">
+                                    </LogLov>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <!-- ForiegnCurrencyId -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'ForiegnCurrencyId'" [NoObjectField]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'APInvoiceLine.F.Currency'"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogLov [ObjectFieldName]="'ForiegnCurrencyId'"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [SelectedValue]="DataContext.ForiegnCurrencyId"
+                                            [LookUpTableName]="'Currency'">
+                                    </LogLov>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <!-- ExpectedAmount -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'ExpectedAmount'" [NoObjectField]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'APInvoiceLine.F.ExpectedAmount'"></LogLabel>
+                                </td>
+
+                                <td [style.text-align]="isRTL ? 'right' : 'left'">
+                                    {{DataContext.ExpectedAmount | NumbersPipe:'N2'}}
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <!-- OtherInvoicesAmounts -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'OtherInvoicesAmounts'" [NoObjectField]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'APInvoiceLine.F.OtherInvoices'"></LogLabel>
+                                </td>
+
+                                <td [style.text-align]="isRTL ? 'right' : 'left'">
+                                    {{DataContext.OtherInvoicesAmounts | NumbersPipe:'N2'}}
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <!-- InvoiceCurrencyAmount -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'InvoiceCurrencyAmount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogTextBox [InputType]="'sigdouble'" [ObjectFieldName]="'InvoiceCurrencyAmount'" [Text]="DataContext.InvoiceCurrencyAmount" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <!-- OpenAmount -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'OpenAmount'" [NoObjectField]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'APInvoiceLine.F.OpenAmount'"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogTextBox [InputType]="'sigdouble'" [NoObjectField]="true" [ObjectFieldName]="'OpenAmount'" [Text]="DataContext.OpenAmount" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="3">
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </td>
+
+                    <td style="width:60px;">
+                        <div></div>
+                    </td>
+
+                    <!-- Notes -->
+                    <td style="width:300px;">
+                        <table>
+                            <tr style="height: 1px;">
+                                <td>
+                                    <table>
+                                        <tr style="height: 25px;">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'Notes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                        </tr>
+                                        <tr style="height: 95px;">
+                                            <td style="height: 95px; vertical-align: top;">
+                                                <div style="height: 100%; width: 100%;">
+                                                    <LogTextBox [ObjectFieldName]="'Notes'" [Text]="DataContext.Notes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

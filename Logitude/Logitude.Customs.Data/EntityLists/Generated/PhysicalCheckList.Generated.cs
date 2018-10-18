@@ -1,0 +1,96 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization; 
+
+namespace Logitude.Customs.Data.EntityLists
+{
+   [DataContract]
+   public partial class PhysicalCheckList
+   {
+   
+       [Key]
+       [DataMember]
+       public string Id  { get; set; }
+       [DataMember]
+       public int Tenant  { get; set; }
+       [DataMember]
+       public string StorageSiteCode  { get; set; }
+       [DataMember]
+       public string StorageSiteName  { get; set; }
+       [DataMember]
+       public string CheckSiteCode  { get; set; }
+       [DataMember]
+       public string CheckSiteName  { get; set; }
+       [DataMember]
+       public string QueueTypeCode  { get; set; }
+       [DataMember]
+       public string QueueTypeName  { get; set; }
+       [DataMember]
+       public string OperationCode  { get; set; }
+       [DataMember]
+       public string CheckId  { get; set; }
+       [DataMember]
+       public string ContainerNubmer  { get; set; }
+       [DataMember]
+       public DateTime OpenDate  { get; set; }
+       [DataMember]
+       public DateTime? LimitDate  { get; set; }
+       [DataMember]
+       public string CargoIdentifierKey1  { get; set; }
+       [DataMember]
+       public string CargoIdentifierKey2  { get; set; }
+       [DataMember]
+       public string CargoIdentifierKey3  { get; set; }
+       [DataMember]
+       public string RowNumber  { get; set; }
+       [DataMember]
+       public string CheckEssence  { get; set; }
+       [DataMember]
+       public bool IsClosed  { get; set; }
+       [DataMember]
+       public string SearchFields  { get; set; }
+       [DataMember]
+       public string StatusMessageCode  { get; set; }
+       [DataMember]
+       public string CargoTypeCode  { get; set; }
+       [DataMember]
+       public string InitiatorTypeCode  { get; set; }
+       [DataMember]
+       public string ImporterNumber  { get; set; }
+       [DataMember]
+       public string CargoIdentifierTypeCode  { get; set; }
+       [DataMember]
+       public string OperationName  { get; set; }
+       [DataMember]
+       public string DeclarationNo  { get; set; }
+       [DataMember]
+       public string CargoIdentifierTypeName  { get; set; }
+       [DataMember]
+       public string CheckSiteId  { get; set; }
+       [DataMember]
+       public string CustomerCode  { get; set; }
+       [DataMember]
+       public string CustomerName  { get; set; }
+       [DataMember]
+       public string CustomFileNo  { get; set; }
+       [DataMember]
+       public string StatusMessageName  { get; set; }
+       [DataMember]
+       public bool IsComprehensiveCheck  { get; set; }
+       [DataMember]
+       public string CheckTypeCode  { get; set; }
+       [DataMember]
+       public string CheckTypeName  { get; set; }
+       [DataMember]
+       public string CustomerId  { get; set; }
+       [DataMember]
+       public bool NoEscortRequired  { get; set; }
+   }
+
+}
+	 

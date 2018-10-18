@@ -1,0 +1,69 @@
+
+   
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.CloseTablesClasses;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Def.EntityPMs; 
+using Logitude.Accounting.Data;
+
+namespace Logitude.Accounting.BL
+{
+   public class BankPageEntryTypeDetails : BankPageEntryType, ICloseTable<BankPageEntryType, BankPageEntryTypeDetails>
+   {
+       public List<BankPageEntryTypeDetails> GetAll()
+       {
+		    var all = new List<BankPageEntryTypeDetails>();  
+            all.Add(new BankPageEntryTypeDetails()
+            {    
+                Code = "1", 
+                SearchFields = "1,Manual,ידני,", 
+                Inactive = false, 
+                EnglishName = "Manual", 
+                LocalName = "ידני", 
+			});
+			 
+            all.Add(new BankPageEntryTypeDetails()
+            {    
+                Code = "2", 
+                SearchFields = "2,File,קובץ ,", 
+                Inactive = false, 
+                EnglishName = "File", 
+                LocalName = "קובץ ", 
+			});
+			 
+            all.Add(new BankPageEntryTypeDetails()
+            {    
+                Code = "3", 
+                SearchFields = "3,Interface,מסר ,", 
+                Inactive = false, 
+                EnglishName = "Interface", 
+                LocalName = "מסר ", 
+			});
+			
+            return all;
+       }
+
+	    public void MapPoco(BankPageEntryType newPoco)
+        {   
+		    newPoco.Code = this.Code;  
+			newPoco.SearchFields = GetSearchFields(this);   
+		    newPoco.Inactive = this.Inactive;  
+		    newPoco.EnglishName = this.EnglishName;  
+		    newPoco.LocalName = this.LocalName;   
+        }
+
+		public string GetSearchFields(BankPageEntryType rec)
+        {   
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.EnglishName,",",rec.LocalName,",");
+        }
+   }
+}
+
